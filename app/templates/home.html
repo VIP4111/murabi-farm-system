@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>مرحباً، {{ user.name }}</h2>
+  <p style="color:var(--muted);">مسمّاك الوظيفي: {{ user.role.display_name }}</p>
+</div>
+
+{% if user.has_permission('tasks.view_own') %}
+<div class="card">
+  <h3>مهامي</h3>
+  <p style="color:var(--muted); font-size:13px;">
+    <a class="btn light" href="{{ url_for('team.tasks_list') }}">فتح صفحة المهام ←</a>
+  </p>
+</div>
+{% endif %}
+
+{% if user.has_permission('animals.view') %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>التنبيهات</h3>
+    <span class="badge {{ 'off' if alerts_count else 'on' }}">{{ alerts_count }}</span>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">
+    <a class="btn light" href="{{ url_for('core.alerts_list') }}">فتح كل التنبيهات ←</a>
+  </p>
+</div>
+{% endif %}
+
+<div class="card">
+  <h3 style="margin-bottom:12px;">إجراءات سريعة</h3>
+  <div class="quick">
+    {% if user.has_permission('animals.manage') %}
+    <a href="{{ url_for('core.animals_new') }}"><span class="emoji">➕</span> حيوان جديد</a>
+    {% endif %}
+    {% if user.has_permission('animals.view') %}
+    <a href="{{ url_for('core.animals_list') }}"><span class="emoji">🐑</span> الحيوانات</a>
+    {% endif %}
+    {% if user.has_permission('health.view') %}
+    <a href="{{ url_for('health.vet_visits_list') }}"><span class="emoji">🩺</span> البيطرة</a>
+    <a href="{{ url_for('health.vaccinations_list') }}"><span class="emoji">💉</span> التطعيمات</a>
+    <a href="{{ url_for('health.diseases_list') }}"><span class="emoji">🌡️</span> الأمراض</a>
+    <a href="{{ url_for('health.pharmacy_list') }}"><span class="emoji">💊</span> الصيدلية</a>
+    {% endif %}
+    {% if user.has_permission('repro.view') %}
+    <a href="{{ url_for('repro.programs_list') }}"><span class="emoji">🐣</span> التكاثر</a>
+    {% endif %}
+    {% if user.has_permission('feed.view') %}
+    <a href="{{ url_for('feed.calculator') }}"><span class="emoji">🌾</span> العلف</a>
+    {% endif %}
+    <a href="{{ url_for('team.reports_list') }}"><span class="emoji">📋</span> البلاغات</a>
+    <a href="{{ url_for('team.tasks_list') }}"><span class="emoji">✅</span> المهام</a>
+    {% if user.has_permission('finance.full.manage') %}
+    <a href="{{ url_for('finance.finance_list') }}"><span class="emoji">💰</span> المالية</a>
+    {% elif user.has_permission('finance.health.view') %}
+    <a href="{{ url_for('finance.finance_health_view') }}"><span class="emoji">💰</span> مالية الصحة</a>
+    {% endif %}
+    {% if user.has_permission('analytics.view') %}
+    <a href="{{ url_for('reports.overview') }}"><span class="emoji">📊</span> التقارير</a>
+    {% endif %}
+    {% if user.has_permission('assistant.use') %}
+    <a href="{{ url_for('assistant.chat') }}"><span class="emoji">🤖</span> المساعد الذكي</a>
+    {% endif %}
+    {% if user.has_permission('settings.manage') %}
+    <a href="{{ url_for('core.settings_home') }}"><span class="emoji">⚙️</span> الإعدادات</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

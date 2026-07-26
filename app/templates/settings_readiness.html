@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+{% set criticals = checks|selectattr('level', 'equalto', 'critical')|list %}
+{% set warnings = checks|selectattr('level', 'equalto', 'warning')|list %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← الإعدادات</a>
+  <h2 style="margin-top:12px;">فحص الجاهزية قبل النشر</h2>
+  <p style="color:var(--muted); font-size:13px;">قائمة تحقق آلية لنقاط شائعة تُنسى قبل تشغيل النظام على قطيع حقيقي — عرض فقط، بدون أي تعديل تلقائي على بياناتك.</p>
+  {% if criticals %}
+  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">🚨 {{ criticals|length }} نقطة حرجة تحتاج معالجة فورية قبل أي استخدام فعلي.</div>
+  {% elif warnings %}
+  <div class="notice">⚠️ {{ warnings|length }} نقطة تستاهل انتباهك — مو حرجة، لكن يفضّل معالجتها.</div>
+  {% else %}
+  <div class="notice" style="background:#f2fbf5; border-color:#b7e4c7; color:#146c3a;">✅ كل الفحوصات سليمة.</div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>الحالة</th><th>البند</th><th>التفصيل</th></tr>
+    {% for c in checks %}
+    <tr>
+      <td>
+        {% if c.level == 'critical' %}<span class="badge off">🚨 حرج</span>
+        {% elif c.level == 'warning' %}<span class="badge" style="background:#fff4d7; color:#6c4b00; border-color:#f1d88b;">⚠️ تنبيه</span>
+        {% else %}<span class="badge on">✅ سليم</span>{% endif %}
+      </td>
+      <td><b>{{ c.label }}</b></td>
+      <td style="color:var(--muted); font-size:13px;">{{ c.detail }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

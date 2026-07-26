@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="{{ html_lang }}" dir="{{ html_dir }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}نظام إدارة الحلال{% endblock %}</title>
+  {% if current_user.is_authenticated %}
+  {# دعم العمل بدون إنترنت (بند 41، وسِّع لكل الأدوار والشاشات ببند 53) —
+     كان مقصوراً على عامل/دكتور/ممرض بثمانية شاشات ميدانية فقط؛ صار متاحاً
+     لأي مستخدم بأي دور الآن، بما فيها العمليات الجماعية والمالية. #}
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+  <meta name="theme-color" content="#6f4e2f">
+  <script src="{{ url_for('static', filename='offline_sync.js') }}" defer></script>
+  {% endif %}
+  <style>
+    /* هوية بصرية مأخوذة من تصميم المستخدم الأصلي (Index.html) — نفس
+       المتغيرات والمكوّنات، مطبّقة على القوالب الحالية بدون تغيير بنيتها. */
+    :root{
+      --bg:#f4efe7;
+      --card:#ffffff;
+      --primary:#6f4e2f;
+      --primary2:#8b633d;
+      --green:#23a455;
+      --blue:#d8f0ff;
+      --text:#24180f;
+      --muted:#7b6b5c;
+      --danger:#c0392b;
+      --warning:#d68910;
+      --line:#eadfce;
+      --shadow:0 12px 30px rgba(70,45,25,.12);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    .top{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:linear-gradient(180deg,#fffaf2,#fbf8f1);
+      padding:14px 20px 12px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand{display:flex; align-items:center; gap:10px; min-width:0;}
+    .logo{
+      width:42px; height:42px; border-radius:16px;
+      background:linear-gradient(135deg,var(--primary),#c09a61);
+      display:grid; place-items:center; color:#fff; font-size:22px;
+      box-shadow:var(--shadow); flex:0 0 auto;
+    }
+    .brand h1{font-size:17px; margin:0; line-height:1.2; white-space:nowrap;}
+
+    .icon-btn{
+      border:0; background:#fff; color:var(--primary); border-radius:16px;
+      padding:10px 12px; font-weight:700; box-shadow:0 4px 14px rgba(80,50,20,.09);
+      cursor:pointer; font-size:16px; flex:0 0 auto;
+    }
+
+    /* -------- قائمة جانبية (drawer) -------- */
+    .side-drawer{position:fixed; inset:0; z-index:90; display:none; background:rgba(24,16,10,.42);}
+    .side-drawer.active{display:block;}
+    body.drawer-open{overflow:hidden;}
+    .side-menu{
+      position:absolute; top:0; right:0; width:min(88vw,360px); height:100%;
+      overflow:auto; background:#fbf8f1; border-left:1px solid var(--line);
+      box-shadow:-18px 0 42px rgba(50,30,15,.22); padding:14px;
+    }
+    .side-menu-head{
+      position:sticky; top:0; z-index:1; display:flex; align-items:center;
+      justify-content:space-between; gap:12px; padding:6px 0 12px; margin-bottom:8px;
+      background:#fbf8f1; border-bottom:1px solid var(--line);
+    }
+    .side-menu-head b{display:block; font-size:18px;}
+    .side-menu-head small{display:block; color:var(--muted); margin-top:4px;}
+    .drawer-group{margin:14px 0 18px;}
+    .drawer-group-title{color:var(--muted); font-size:12px; font-weight:900; margin:0 2px 8px;}
+    .drawer-link{
+      width:100%; border:1px solid var(--line); background:#fff; color:var(--text);
+      border-radius:16px; padding:10px; margin-bottom:8px; display:flex; align-items:center;
+      gap:10px; text-align:right; cursor:pointer; text-decoration:none;
+      box-shadow:0 6px 16px rgba(70,45,25,.06);
+    }
+    .drawer-link.active{border-color:var(--primary); color:var(--primary); background:#f7efe4; box-shadow:0 0 0 2px rgba(111,78,47,.08);}
+    .drawer-link.danger{color:var(--danger);}
+    .drawer-icon{width:34px; height:34px; border-radius:13px; background:#f4efe7; display:grid; place-items:center; flex:0 0 auto; font-size:18px;}
+    .drawer-text{min-width:0; flex:1;}
+    .drawer-text b{display:block; font-size:14px; line-height:1.4;}
+    .x{width:38px; height:38px; border:0; border-radius:14px; background:#fff; color:var(--danger); font-weight:900; cursor:pointer;}
+
+    /* -------- شبكة إجراءات سريعة (الرئيسية) -------- */
+    .quick{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+    @media(min-width:700px){.quick{grid-template-columns:repeat(4,1fr);}}
+    .quick a{
+      border:0; background:#fff; border-radius:20px; padding:14px 8px; min-height:88px;
+      box-shadow:0 8px 22px rgba(70,45,25,.08); color:var(--text); text-decoration:none;
+      font-weight:700; font-size:13px; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:8px; text-align:center;
+    }
+    .quick .emoji{font-size:26px;}
+
+    main{max-width:1000px; margin:20px auto; padding:0 20px 60px;}
+
+    .card{
+      background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+      padding:16px 18px; box-shadow:0 8px 22px rgba(70,45,25,.08); margin-bottom:14px;
+    }
+    .card h2{margin:0 0 4px; font-size:18px;}
+    .card h3{margin:0 0 4px;}
+
+    table{width:100%; border-collapse:separate; border-spacing:0 8px; font-size:13.5px;}
+    th{text-align:right; color:var(--muted); font-size:12px; padding:4px 9px; font-weight:700;}
+    td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px 9px; vertical-align:middle;}
+    td:first-child{border-right:1px solid var(--line); border-radius:0 14px 14px 0;}
+    td:last-child{border-left:1px solid var(--line); border-radius:14px 0 0 14px;}
+
+    .flash{
+      background:#24180f; color:#fff; border-radius:16px; padding:12px 16px;
+      margin-bottom:14px; font-weight:800; box-shadow:var(--shadow);
+    }
+    .flash.success{background:#146c3a;}
+    .flash.error{background:#9f2419;}
+    .flash.warning{background:#a15c07;}
+
+    .btn{
+      display:inline-block; border:0; border-radius:16px; padding:11px 16px;
+      font-weight:800; cursor:pointer; background:var(--primary); color:#fff;
+      box-shadow:0 8px 20px rgba(111,78,47,.18); text-decoration:none; font-size:14px;
+    }
+    .btn.light{background:#fff; color:var(--primary); border:1px solid var(--line); box-shadow:none;}
+    .btn.danger{background:var(--danger);}
+    .btn.green{background:var(--green);}
+
+    .badge{
+      display:inline-flex; align-items:center; gap:4px; padding:5px 10px;
+      border-radius:999px; background:#fff; color:var(--primary); font-size:12px;
+      border:1px solid var(--line);
+    }
+    .badge.on{background:#f2fbf5; color:#146c3a; border-color:#b7e4c7;}
+    .badge.off{background:#fff5f2; color:#8b1e16; border-color:#ffd0c7;}
+
+    input, select, textarea{
+      width:100%; border:1px solid var(--line); background:#fff; border-radius:16px;
+      padding:11px 12px; font-size:14.5px; font-family:inherit; outline:none;
+      margin-bottom:10px;
+    }
+    textarea{min-height:80px; resize:vertical;}
+    label{display:block; font-weight:800; margin:11px 0 6px; font-size:13px; color:#4b3420;}
+
+    .notice{background:#fff4d7; border:1px solid #f1d88b; color:#6c4b00; border-radius:18px; padding:12px; margin:10px 0; font-size:13px; line-height:1.7;}
+    .empty{text-align:center; color:var(--muted); padding:24px 10px; background:#fff; border:1px dashed var(--line); border-radius:22px;}
+
+    .workflow-map{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;}
+    @media (min-width:760px){.workflow-map{grid-template-columns:repeat(5,minmax(0,1fr));}}
+    .workflow-stage{background:#fff; border:1px solid var(--line); border-radius:16px; padding:11px; min-height:100px;}
+    .workflow-stage.active{border-color:var(--primary); box-shadow:0 0 0 2px rgba(94,64,36,.12);}
+    .workflow-stage.done{border-color:#b7e4c7; background:#f9fdfa;}
+    .workflow-stage b{display:block; font-size:13px; margin:6px 0;}
+    .workflow-stage small{display:block; color:var(--muted); line-height:1.5;}
+
+    .gate-list{display:grid; gap:8px; margin-top:10px;}
+    .gate-row{background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px 12px; display:flex; gap:10px; align-items:flex-start;}
+    .gate-row.fail{border-color:#ffd0c7; background:#fff5f2;}
+
+    .stat{background:rgba(255,255,255,.75); border:1px solid var(--line); border-radius:18px; padding:12px;}
+    .stat b{font-size:22px; display:block;}
+    .stat span{font-size:12px; color:var(--muted);}
+
+    /* -------- تبويبات حبوب (pill tabs) -------- */
+    .tabs{display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px;}
+    .tab-btn{
+      flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--muted);
+      border-radius:999px; padding:9px 16px; font-weight:800; font-size:13px;
+      cursor:pointer; white-space:nowrap;
+    }
+    .tab-btn.active{background:var(--primary); color:#fff; border-color:var(--primary);}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
+
+    .timeline{display:grid; gap:10px;}
+    .timeline-row{background:#fff; border:1px solid var(--line); border-radius:16px; padding:10px 12px; display:flex; gap:10px; align-items:flex-start;}
+    .timeline-icon{font-size:18px; flex:0 0 auto;}
+    .timeline-body{min-width:0; flex:1;}
+    .timeline-body b{display:block; font-size:13.5px;}
+    .timeline-body small{display:block; color:var(--muted); margin-top:2px;}
+    .timeline-date{flex:0 0 auto; color:var(--muted); font-size:12px; white-space:nowrap;}
+  </style>
+  <script>
+    function showTab(name){
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.toggle('active', p.dataset.tab === name); });
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab === name); });
+      if(window.history && window.history.replaceState){
+        var url = new URL(window.location);
+        url.searchParams.set('tab', name);
+        window.history.replaceState(null, '', url);
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="top">
+    {% if current_user.is_authenticated %}<button class="icon-btn" onclick="openDrawer()">☰</button>{% endif %}
+    <div class="brand">
+      <div class="logo">🐑</div>
+      <h1>{{ _('نظام إدارة الحلال') }}</h1>
+    </div>
+    {% if current_user.is_authenticated %}<span style="color:var(--muted); font-size:13px;">{{ current_user.name }}</span>{% endif %}
+  </div>
+
+  {% if current_user.is_authenticated %}
+  <div class="side-drawer" id="sideDrawer" onclick="if(event.target===this) closeDrawer()">
+    <div class="side-menu">
+      <div class="side-menu-head">
+        <div>
+          <b>{{ current_user.name }}</b>
+          <small>{{ current_user.role.display_name }}</small>
+        </div>
+        <button class="x" onclick="closeDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('الرئيسية') }}</div>
+        <a class="drawer-link" href="{{ url_for('core.home') }}"><span class="drawer-icon">🏠</span><span class="drawer-text"><b>{{ _('الرئيسية') }}</b></span></a>
+        {% if current_user.has_permission('animals.view') %}<a class="drawer-link" href="{{ url_for('core.alerts_list') }}"><span class="drawer-icon">🔔</span><span class="drawer-text"><b>{{ _('التنبيهات') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('assistant.use') %}<a class="drawer-link" href="{{ url_for('assistant.chat') }}"><span class="drawer-icon">🤖</span><span class="drawer-text"><b>{{ _('المساعد الذكي') }}</b></span></a>{% endif %}
+      </div>
+
+      {% if current_user.has_permission('animals.view') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('الحلال') }}</div>
+        <a class="drawer-link" href="{{ url_for('core.animals_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('الحيوانات') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('batches.batches_list') }}"><span class="drawer-icon">📦</span><span class="drawer-text"><b>{{ _('دفعات استقبال جديدة') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('core.barns_list') }}"><span class="drawer-icon">🏚️</span><span class="drawer-text"><b>{{ _('الحظائر') }}</b></span></a>
+        {% if current_user.has_permission('repro.view') %}<a class="drawer-link" href="{{ url_for('repro.programs_list') }}"><span class="drawer-icon">🐣</span><span class="drawer-text"><b>{{ _('التكاثر') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('repro.view') %}<a class="drawer-link" href="{{ url_for('ostrich.eggs_list') }}"><span class="drawer-icon">🦤</span><span class="drawer-text"><b>{{ _('النعام (بيض/تفقيس)') }}</b></span></a>{% endif %}
+      </div>
+      {% endif %}
+
+      {% if current_user.has_permission('health.view') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('الصحة') }}</div>
+        <a class="drawer-link" href="{{ url_for('health.pharmacy_list') }}"><span class="drawer-icon">💊</span><span class="drawer-text"><b>{{ _('الصيدلية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.vet_visits_list') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('الزيارات البيطرية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.diseases_list') }}"><span class="drawer-icon">🌡️</span><span class="drawer-text"><b>{{ _('الأمراض') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.vaccinations_list') }}"><span class="drawer-icon">💉</span><span class="drawer-text"><b>{{ _('التطعيمات') }}</b></span></a>
+        {% if current_user.has_permission('health.manage') %}
+        <a class="drawer-link" href="{{ url_for('health.diagnose_start') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('المساعد التشخيصي') }}</b></span></a>
+        {% endif %}
+        <a class="drawer-link" href="{{ url_for('health.injection_guide') }}"><span class="drawer-icon">📋</span><span class="drawer-text"><b>{{ _('دليل الحقن الميداني') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.protocols_list') }}"><span class="drawer-icon">📑</span><span class="drawer-text"><b>{{ _('بروتوكولات العلاج') }}</b></span></a>
+      </div>
+      {% endif %}
+
+      {% if current_user.has_permission('feed.view') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('العلف') }}</div>
+        <a class="drawer-link" href="{{ url_for('feed.calculator') }}"><span class="drawer-icon">🌾</span><span class="drawer-text"><b>{{ _('حاسبة العلف') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('feed.fcr_report') }}"><span class="drawer-icon">📈</span><span class="drawer-text"><b>{{ _('معدل التحويل الغذائي (FCR)') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('feed.optimizer') }}"><span class="drawer-icon">⚖️</span><span class="drawer-text"><b>{{ _('موازِن العليقة التلقائي') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('warehouses.warehouses_list') }}"><span class="drawer-icon">🏬</span><span class="drawer-text"><b>{{ _('المستودعات') }}</b></span></a>
+      </div>
+      {% endif %}
+
+      {% if current_user.has_permission('climate.view') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('المناخ') }}</div>
+        <a class="drawer-link" href="{{ url_for('climate.dashboard') }}"><span class="drawer-icon">☀️</span><span class="drawer-text"><b>{{ _('رادار المناخ والإجهاد الحراري') }}</b></span></a>
+      </div>
+      {% endif %}
+
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('الفريق') }}</div>
+        <a class="drawer-link" href="{{ url_for('team.tasks_list') }}"><span class="drawer-icon">✅</span><span class="drawer-text"><b>{{ _('المهام') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('team.reports_list') }}"><span class="drawer-icon">📋</span><span class="drawer-text"><b>{{ _('البلاغات') }}</b></span></a>
+        {% if current_user.has_permission('users.manage') %}<a class="drawer-link" href="{{ url_for('team.members_list') }}"><span class="drawer-icon">👥</span><span class="drawer-text"><b>{{ _('أعضاء الفريق') }}</b></span></a>{% endif %}
+      </div>
+
+      {% if current_user.has_permission('finance.full.manage') or current_user.has_permission('finance.health.view') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">المالية</div>
+        {% if current_user.has_permission('finance.full.manage') %}<a class="drawer-link" href="{{ url_for('finance.finance_list') }}"><span class="drawer-icon">💰</span><span class="drawer-text"><b>المالية</b></span></a>{% endif %}
+        {% if current_user.has_permission('finance.health.view') and not current_user.has_permission('finance.full.manage') %}<a class="drawer-link" href="{{ url_for('finance.finance_health_view') }}"><span class="drawer-icon">💰</span><span class="drawer-text"><b>مالية الصحة</b></span></a>{% endif %}
+      </div>
+      {% endif %}
+
+      {% if current_user.has_permission('analytics.view') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">التقارير</div>
+        <a class="drawer-link" href="{{ url_for('reports.overview') }}"><span class="drawer-icon">📊</span><span class="drawer-text"><b>التقارير التحليلية</b></span></a>
+      </div>
+      {% endif %}
+
+      {% if current_user.has_permission('settings.manage') %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">النظام</div>
+        <a class="drawer-link" href="{{ url_for('core.settings_home') }}"><span class="drawer-icon">⚙️</span><span class="drawer-text"><b>الإعدادات</b></span></a>
+      </div>
+      {% endif %}
+
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('اللغة') }}</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          {% for code, label in [('ar','العربية'), ('en','English'), ('am','አማርኛ'), ('hi','हिन्दी')] %}
+          <form method="post" action="{{ url_for('core.set_language') }}">
+            <input type="hidden" name="language" value="{{ code }}">
+            <button type="submit" class="badge {{ 'on' if current_user.language == code else '' }}" style="cursor:pointer; border:1px solid var(--line);">{{ label }}</button>
+          </form>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="drawer-group">
+        <a class="drawer-link danger" href="{{ url_for('auth.logout') }}"><span class="drawer-icon">🚪</span><span class="drawer-text"><b>{{ _('خروج') }}</b></span></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function openDrawer(){document.getElementById('sideDrawer').classList.add('active'); document.body.classList.add('drawer-open');}
+    function closeDrawer(){document.getElementById('sideDrawer').classList.remove('active'); document.body.classList.remove('drawer-open');}
+  </script>
+  {% endif %}
+
+  <main>
+    {% if current_user.is_authenticated %}
+    {# مؤشرات الأوف لاين (بند 53) — موحَّدة بكل الموقع الآن بدل تكرارها
+       بكل قالب نموذج على حدة، بما إن offline_sync.js صار عاماً لكل
+       الأدوار والشاشات. #}
+    {% from "_offline_widgets.html" import offline_status_banner %}
+    {{ offline_status_banner() }}
+    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

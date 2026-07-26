@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>تسجيل نتيجة الفقس</h2>
+  <table>
+    <tr><td>الأم</td><td>{{ egg.mother.animal_no if egg.mother else '-' }}</td></tr>
+    <tr><td>تاريخ البيض</td><td>{{ egg.lay_date }}</td></tr>
+    <tr><td>الحاضنة</td><td>{{ egg.incubator.code if egg.incubator else '-' }}</td></tr>
+    <tr><td>بداية الحضانة</td><td>{{ egg.incubation_start_date or '-' }}</td></tr>
+    <tr><td>الفقس المتوقع</td><td>{{ expected or '-' }}</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">فقست بنجاح</h3>
+  <form method="post" data-offline>
+    <input type="hidden" name="hatch_result" value="hatched">
+    <label>تاريخ الفقس الفعلي</label><input name="actual_hatch_date" type="date" required value="{{ today }}">
+    <label>رقم الفرخ الجديد</label><input name="animal_no" required placeholder="مثال: OST-2026-001">
+    <label>الجنس (لو معروف، غالباً غير معروف عند الفقس)</label>
+    <select name="gender">
+      <option value="">غير محدد بعد</option>
+      <option value="ذكر">ذكر</option>
+      <option value="أنثى">أنثى</option>
+    </select>
+    <label>الوزن عند الفقس (كجم، اختياري)</label><input name="weight" type="number" step="0.01">
+    <button class="btn green" type="submit">تسجيل الفقس وإضافة الفرخ</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">فشل الفقس</h3>
+  <form method="post" data-offline>
+    <input type="hidden" name="hatch_result" value="failed">
+    <label>سبب الفشل</label><input name="fail_reason" required placeholder="مثال: بيضة غير مخصّبة">
+    <button class="btn danger" type="submit">تسجيل الفشل</button>
+  </form>
+</div>
+{% endblock %}

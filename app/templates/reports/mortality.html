@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>التقارير</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ label }}</p>
+</div>
+
+{% include "reports/_nav.html" %}
+{% include "reports/_filter.html" %}
+
+<div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+  {% for name, value in data.kpis %}
+  <div class="stat"><b>{{ value }}</b><span>{{ name }}</span></div>
+  {% endfor %}
+</div>
+
+{% if data.reason_breakdown %}
+<div class="card">
+  <h3 style="font-size:15px;">التوزيع حسب السبب</h3>
+  <table>
+    <tr><th>السبب</th><th>العدد</th></tr>
+    {% for reason, count in data.reason_breakdown %}
+    <tr><td>{{ reason }}</td><td>{{ count }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+{% if data.time_distribution %}
+<div class="card">
+  <h3 style="font-size:15px;">التوزيع الزمني</h3>
+  <table>
+    <tr><th>الفترة</th><th>عدد الحالات</th></tr>
+    {% for bucket, count in data.time_distribution %}
+    <tr><td>{{ bucket }}</td><td>{{ count }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<div class="card">
+  <h3 style="font-size:15px;">تفاصيل حالات النفوق</h3>
+  <table>
+    <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
+    {% for row in data.table.rows %}
+    <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+    {% else %}
+    <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">لا يوجد حالات نفوق بهذي الفترة.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

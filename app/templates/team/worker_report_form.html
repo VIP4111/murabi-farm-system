@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% from "team/_report_widgets.html" import animal_info_widget, voice_note_widget %}
+{% block title %}{{ cfg.label }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الرئيسية') }}</a>
+  <h2 style="margin-top:12px;">{{ cfg.icon }} {{ cfg.label }}</h2>
+</div>
+
+{% if my_tasks %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('مهامك المفتوحة بهذا التصنيف') }}</h3>
+  {% for t in my_tasks %}
+  {% set locked = t.depends_on_task_id and t.depends_on and t.depends_on.status != 'done' %}
+  <div class="timeline-row">
+    <div class="timeline-body" style="flex:1;">
+      <b>{{ t.title }}</b>
+      <small>{{ t.barn.barn_name if t.barn else '' }}{{ ' — ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ (_('الموعد:') + ' ' + t.due_date|string) if t.due_date else '' }}</small>
+    </div>
+    {% if locked %}
+    <span class="badge off" title="{{ _('بانتظار:') }} {{ t.depends_on.title }}">🔒 {{ _('مقفلة') }}</span>
+    {% elif t.status == 'pending' %}
+    <form method="post" action="{{ url_for('team.task_start', task_id=t.id) }}">
+      <button class="btn" type="submit" style="padding:6px 12px; font-size:12px;">{{ _('بدء') }}</button>
+    </form>
+    {% elif t.status == 'in_progress' %}
+    <form method="post" action="{{ url_for('team.task_complete', task_id=t.id) }}" style="display:flex; gap:6px; align-items:center;">
+      {% if t.requires_photo %}<input name="evidence_image_url" placeholder="{{ _('رابط صورة (إلزامي)') }}" required style="margin-bottom:0; width:140px;">{% endif %}
+      <button class="btn green" type="submit" style="padding:6px 12px; font-size:12px;">{{ _('تم الإنجاز') }}</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('بلاغ جديد بهذا التصنيف') if my_tasks else _('تسجيل بلاغ') }}</h3>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.') }}</p>
+  <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
+  <form method="post" enctype="multipart/form-data" data-offline id="workerReportForm">
+    <label>{{ _('الحيوان المرتبط') }}</label>
+    <select name="animal_id" id="animalSelect">
+      <option value="">-</option>
+      {% for a in animals %}<option value="{{ a.id }}">{{ a.animal_no }}{{ ' — ' + a.name if a.name }}</option>{% endfor %}
+    </select>
+    {{ animal_info_widget() }}
+    <label>{{ _('الحظيرة') }}</label>
+    <select name="barn_id" id="barnSelect">
+      <option value="">-</option>
+      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+    </select>
+    <label>{{ _('الملاحظة / التفاصيل') }}</label>
+    <textarea name="description" rows="4" required placeholder="{{ _('اكتب وش لاحظت هنا...') }}"></textarea>
+    {{ voice_note_widget() }}
+    <label>{{ _('رابط صورة (اختياري)') }}</label>
+    <input name="evidence_image_url" placeholder="https://...">
+    <button class="btn" type="submit" style="width:100%; margin-top:6px;">{{ _('إرسال البلاغ') }}</button>
+  </form>
+</div>
+<script>
+(function(){
+  var form = document.getElementById('workerReportForm');
+  var errorBox = document.getElementById('animalOrBarnError');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    var animalId = document.getElementById('animalSelect').value;
+    var barnId = document.getElementById('barnSelect').value;
+    if (!animalId && !barnId) {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // يمنع أي مستمع submit ثاني (مثل offline_sync.js) من يكمل
+      errorBox.style.display = 'block';
+      errorBox.scrollIntoView({behavior: 'smooth', block: 'center'});
+    } else {
+      errorBox.style.display = 'none';
+    }
+  });
+})();
+</script>
+{% endblock %}

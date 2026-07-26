@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>المهام</h2>
+    {% if current_user.has_permission('tasks.assign_any') %}<a class="btn" href="{{ url_for('team.tasks_new') }}">+ توزيع مهمة</a>{% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">مهامي</h3>
+  <table>
+    <tr><th>العنوان</th><th>النوع</th><th>الحظيرة/الحيوان</th><th>الموعد</th><th>الحالة</th><th></th></tr>
+    {% for t in my_tasks %}
+    {% set locked = t.depends_on_task_id and t.depends_on and t.depends_on.status != 'done' %}
+    {% set overdue = t.due_date and t.due_date < today %}
+    <tr {{ 'style="background:#fff5f2;"' if overdue }}>
+      <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a>{% if overdue %} <span class="badge off" title="فات موعدها">⏰ متأخرة</span>{% endif %}</td>
+      <td>{{ t.task_type }}</td>
+      <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
+      <td>{{ t.due_date or '-' }}</td>
+      <td>{{ t.status|ar_status }}</td>
+      <td>
+        {% if locked %}
+        <span class="badge off" title="بانتظار: {{ t.depends_on.title }}">🔒 مقفلة</span>
+        {% elif t.status == 'pending' %}
+        <form method="post" action="{{ url_for('team.task_start', task_id=t.id) }}" style="display:inline;">
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">بدء</button>
+        </form>
+        {% elif t.status == 'in_progress' %}
+        <form method="post" action="{{ url_for('team.task_complete', task_id=t.id) }}" style="display:flex; gap:6px;">
+          {% if t.requires_photo %}<input name="evidence_image_url" placeholder="رابط صورة (إلزامي)" required style="margin-bottom:0;">{% endif %}
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">تم</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">ما عندك مهام حالياً.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% if current_user.has_permission('tasks.review_daily') %}
+<div class="card">
+  <h3 style="font-size:15px;">مهام مقترحة (بانتظار مراجعتك)</h3>
+  <table>
+    <tr><th>العنوان</th><th>النوع</th><th>الحظيرة/الحيوان</th><th>الموعد</th><th></th></tr>
+    {% for t in suggested %}
+    <tr>
+      <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a></td>
+      <td>{{ t.task_type }}</td>
+      <td>{{ t.barn.barn_name if t.barn else '' }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
+      <td>{{ t.due_date or '-' }}</td>
+      <td style="display:flex; gap:6px; flex-wrap:wrap;">
+        <form method="post" action="{{ url_for('team.task_approve', task_id=t.id) }}">
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">موافقة</button>
+        </form>
+        <form method="post" action="{{ url_for('team.task_postpone', task_id=t.id) }}" style="display:flex; gap:4px;">
+          <input name="due_date" type="date" required style="margin-bottom:0; width:auto;">
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">تأجيل</button>
+        </form>
+        <form method="post" action="{{ url_for('team.task_soft_delete', task_id=t.id) }}">
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px; background:#a32d2d;">حذف</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد مهام مقترحة حالياً.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">مهام وزّعتها (نشطة)</h3>
+  <table>
+    <tr><th>العنوان</th><th>المكلَّف</th><th>الموعد</th><th>الحالة</th></tr>
+    {% for t in assigned_by_me %}
+    <tr><td>{{ t.title }}</td><td>{{ t.assignee.name if t.assignee else '-' }}</td><td>{{ t.due_date or '-' }}</td><td>{{ t.status|ar_status }}</td></tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">لا يوجد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+{% if current_user.has_permission('tasks.delete_final') %}
+<div class="card">
+  <h3 style="font-size:15px;">صندوق مراجعة المالك (مهام محذوفة من الدكتور)</h3>
+  <table>
+    <tr><th>العنوان</th><th>السبب</th><th></th></tr>
+    {% for t in review_box %}
+    <tr>
+      <td>{{ t.title }}</td>
+      <td>{{ t.notes or '-' }}</td>
+      <td style="display:flex; gap:6px;">
+        <form method="post" action="{{ url_for('team.task_restore', task_id=t.id) }}">
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">استرجاع</button>
+        </form>
+        <form method="post" action="{{ url_for('team.task_delete_final', task_id=t.id) }}" onsubmit="return confirm('حذف نهائي — ما يرجع. متأكد؟');">
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px; background:#a32d2d;">حذف نهائي</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="3" style="color:#888;">فاضي.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}

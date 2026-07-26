@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>أعضاء الفريق</h2>
+    <a class="btn" href="{{ url_for('team.members_new') }}">+ عضو جديد</a>
+  </div>
+  <table>
+    <tr><th>الاسم</th><th>الجوال</th><th>الدور</th><th>اللغة</th><th>الحالة</th><th></th></tr>
+    {% for m in members %}
+    <tr>
+      <td>{{ m.name }}</td>
+      <td>{{ m.phone }}</td>
+      <td>{{ m.role.display_name if m.role else '-' }}</td>
+      <td>{{ m.language }}</td>
+      <td>{% if m.is_active_account %}<span class="badge on">نشط</span>{% else %}<span class="badge off">معطّل</span>{% endif %}</td>
+      <td>
+        {% if m.id != current_user.id %}
+        <form method="post" action="{{ url_for('team.members_toggle', user_id=m.id) }}">
+          <button class="btn" type="submit" style="{% if m.is_active_account %}background:#a32d2d;{% endif %} padding:4px 10px; font-size:12px;">{{ 'تعطيل' if m.is_active_account else 'تفعيل' }}</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">لا يوجد أعضاء بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

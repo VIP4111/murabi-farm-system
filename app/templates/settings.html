@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>الإعدادات الزمنية</h2>
+  <p style="color:var(--muted); font-size:13px;">تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...).</p>
+  <form method="post" action="{{ url_for('core.farm_settings_save') }}">
+    <label>مدة الحمل (يوم)</label><input name="gestation_days" type="number" value="{{ fs.gestation_days }}">
+    <label>مدة الإسفنجة (يوم)</label><input name="sponge_duration_days" type="number" value="{{ fs.sponge_duration_days }}">
+    <label>دخول الفحل بعد إزالة الإسفنجة (يوم)</label><input name="ram_entry_after_sponge_days" type="number" value="{{ fs.ram_entry_after_sponge_days }}">
+    <label>تغيير علف الحامل قبل الولادة (يوم)</label><input name="pre_birth_feed_change_days" type="number" value="{{ fs.pre_birth_feed_change_days }}">
+    <label>علف الأم بعد الولادة (يوم)</label><input name="postpartum_feed_days" type="number" value="{{ fs.postpartum_feed_days }}">
+    <label>بيع الذكر بعد الولادة (يوم)</label><input name="male_sale_after_birth_days" type="number" value="{{ fs.male_sale_after_birth_days }}">
+    <label>التنبيه قبل الموعد (يوم)</label><input name="alert_before_days" type="number" value="{{ fs.alert_before_days }}">
+    <label>تكرار التحصينات الدورية (يوم)</label><input name="vaccination_repeat_days" type="number" value="{{ fs.vaccination_repeat_days }}">
+    <label>مدة عزل المولود والأم (يوم)</label><input name="isolation_days" type="number" value="{{ fs.isolation_days }}">
+    <label>فحص الدكتور الإلزامي بعد الولادة (ساعة)</label><input name="doctor_check_hours" type="number" value="{{ fs.doctor_check_hours }}">
+    <label>تحصين الأم بعد الولادة (يوم)</label><input name="postpartum_vaccination_days" type="number" value="{{ fs.postpartum_vaccination_days }}">
+    <label>أقل عمر للتقريع الأول (يوم)</label><input name="min_breeding_age_days" type="number" value="{{ fs.min_breeding_age_days }}">
+    <label>أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)</label><input name="min_rest_after_birth_days" type="number" value="{{ fs.min_rest_after_birth_days }}">
+    <h3 style="font-size:14px; margin-top:16px;">البيع الذكي (بند 19)</h3>
+    <label>هامش الربح المستهدف (%)</label><input name="target_profit_margin_percent" type="number" step="0.1" value="{{ fs.target_profit_margin_percent }}">
+    <label>سن البيع العادي للذكور (يوم)</label><input name="regular_sale_age_days" type="number" value="{{ fs.regular_sale_age_days }}">
+    <label>أقل سن لبيع الأضاحي (يوم)</label><input name="udhiyah_min_age_days" type="number" value="{{ fs.udhiyah_min_age_days }}">
+    <label>أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)</label><input name="female_delayed_conception_days" type="number" value="{{ fs.female_delayed_conception_days }}">
+    <label>أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)</label><input name="report_stale_hours" type="number" value="{{ fs.report_stale_hours }}">
+    <label>مدة حضانة بيض النعام (يوم)</label><input name="ostrich_incubation_days" type="number" value="{{ fs.ostrich_incubation_days }}">
+    <button class="btn" type="submit">حفظ الإعدادات</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>الخدمات</h2>
+  <p style="color:#666; font-size:13px;">فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات.</p>
+  {% for s in services %}
+  <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
+    <div>
+      <div>{{ s.name }}</div>
+      {% if s.requirements_note %}<div style="font-size:12px; color:#888;">{{ s.requirements_note }}</div>{% endif %}
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="badge {{ 'on' if s.is_enabled else 'off' }}">{{ 'مفعّل' if s.is_enabled else 'غير مفعّل' }}</span>
+      <form method="post" action="{{ url_for('core.toggle_service', service_id=s.id) }}">
+        <button class="btn" type="submit">{{ 'تعطيل' if s.is_enabled else 'تفعيل' }}</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>المسميات الوظيفية</h2>
+    <a class="btn" href="{{ url_for('core.role_new') }}">+ مسمّى جديد</a>
+  </div>
+  <table>
+    <tr><th>الاسم</th><th>عدد الصلاحيات</th><th>نوع</th><th></th></tr>
+    {% for r in roles %}
+    <tr>
+      <td>{{ r.display_name }}</td>
+      <td>{{ r.permissions|length }}</td>
+      <td>{{ 'جاهز افتراضياً' if r.is_system else 'مضاف من المالك' }}</td>
+      <td>
+        {% if not (r.is_system and r.name == 'owner') %}
+        <a href="{{ url_for('core.role_edit', role_id=r.id) }}">تعديل الصلاحيات</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2>النظام والصيانة</h2>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <a class="btn light" href="{{ url_for('core.readiness_check') }}">✅ فحص الجاهزية قبل النشر</a>
+    <a class="btn light" href="{{ url_for('core.backup_list') }}">📦 النسخ الاحتياطي</a>
+    {% if current_user.has_permission('audit.view') %}
+    <a class="btn light" href="{{ url_for('core.audit_log_list') }}">🧾 سجل التدقيق</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

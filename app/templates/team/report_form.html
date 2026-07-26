@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% from "team/_report_widgets.html" import animal_info_widget, voice_note_widget %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>رفع بلاغ جديد</h2>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.</p>
+  {% if scoped %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">القوائم أدناه مقصورة على حظائرك المسؤول عنها.</p>{% endif %}
+  <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.</div>
+  <form method="post" enctype="multipart/form-data" id="reportForm" data-offline>
+    <label>نوع البلاغ</label>
+    <select name="report_type">
+      <option value="مرض">مرض</option>
+      <option value="مشكلة">مشكلة</option>
+      <option value="صيانة">صيانة</option>
+      <option value="أخرى">أخرى</option>
+    </select>
+    <label>الحيوان المرتبط</label>
+    <select name="animal_id" id="animalSelect">
+      <option value="">-</option>
+      {% for a in animals %}<option value="{{ a.id }}">{{ a.animal_no }}</option>{% endfor %}
+    </select>
+    {{ animal_info_widget() }}
+    <label>الحظيرة</label>
+    <select name="barn_id" id="barnSelect">
+      <option value="">-</option>
+      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+    </select>
+    <label>وصف البلاغ</label><textarea name="description" rows="4" required></textarea>
+    {{ voice_note_widget() }}
+    <label>رابط صورة (اختياري)</label><input name="evidence_image_url" placeholder="https://...">
+    <button class="btn" type="submit">رفع البلاغ</button>
+  </form>
+</div>
+<script>
+(function(){
+  var form = document.getElementById('reportForm');
+  var errorBox = document.getElementById('animalOrBarnError');
+  form.addEventListener('submit', function(e){
+    var animalId = document.getElementById('animalSelect').value;
+    var barnId = document.getElementById('barnSelect').value;
+    if (!animalId && !barnId) {
+      e.preventDefault();
+      errorBox.style.display = 'block';
+      errorBox.scrollIntoView({behavior: 'smooth', block: 'center'});
+    } else {
+      errorBox.style.display = 'none';
+    }
+  });
+})();
+</script>
+{% endblock %}

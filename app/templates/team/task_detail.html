@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>{{ task.title }}</h2>
+    <a class="btn light" href="{{ url_for('team.tasks_list') }}">← رجوع للمهام</a>
+  </div>
+  <p><b>الحالة:</b> {{ task.status|ar_status }}{% if task.due_date %} — <b>الموعد:</b> {{ task.due_date }}{% if task.due_date < today %} <span class="badge off">⏰ متأخرة</span>{% endif %}{% endif %}</p>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">📋 تفصيل المهمة</h3>
+  <p><b>السبب/الدافع:</b> {{ ctx.reason or '-' }}</p>
+  <p><b>الحظيرة:</b> {{ ctx.barn.barn_name if ctx.barn else '-' }} — <b>عدد الرؤوس بالدفعة:</b> {{ ctx.head_count }}</p>
+  {% if ctx.head_count > 1 %}
+  <details>
+    <summary style="cursor:pointer; color:var(--muted); font-size:13px;">عرض كل رؤوس الدفعة ({{ ctx.head_count }})</summary>
+    <ul style="margin-top:6px;">
+      {% for s in ctx.siblings %}
+      <li>{{ s.animal.animal_no if s.animal else '-' }} — {{ s.status|ar_status }}{% if s.id == task.id %} (هذه المهمة){% endif %}</li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+
+  {% if ctx.pharmacy %}
+  <hr>
+  <p><b>الدواء المخطَّط:</b> {{ ctx.pharmacy.name }} ({{ ctx.pharmacy.unit or '' }})</p>
+  <p><b>الجرعة لكل رأس:</b> {{ ctx.quantity_per_head }} — <b>الجرعة الإجمالية للدفعة:</b> {{ ctx.total_quantity }}</p>
+  <p><b>المخزون الحالي:</b> {{ ctx.stock_now }} — <b>المتبقي المتوقع بعد التنفيذ:</b> {{ ctx.stock_after }}
+    {% if ctx.stock_insufficient %}<span class="badge off">⚠️ المخزون لا يكفي كامل الدفعة</span>{% endif %}
+  </p>
+  {% endif %}
+
+  {% if ctx.next_action %}
+  <p style="color:var(--muted); font-size:13px;">➡️ <b>المهمة التالية بالسلسلة:</b> {{ ctx.next_action }}</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">الإجراءات</h3>
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    {% if ctx.pharmacy and task.status not in ('done', 'cancelled', 'deleted_pending_review') %}
+    {% set exec_endpoint = {'vet_visit': 'health.vet_visits_new', 'disease': 'health.diseases_new', 'vaccination': 'health.vaccinations_new'}.get(task.planned_treatment_kind) %}
+    {% if exec_endpoint %}
+    <a class="btn" href="{{ url_for(exec_endpoint, task_id=task.id, animal_id=task.animal_id, pharmacy_id=task.planned_pharmacy_id, quantity_used=task.planned_quantity) }}">🩺 تأكيد التنفيذ</a>
+    {% endif %}
+    {% endif %}
+
+    {% if task.status == 'suggested' and current_user.has_permission('tasks.review_daily') %}
+    <form method="post" action="{{ url_for('team.task_approve', task_id=task.id) }}">
+      <button class="btn" type="submit">موافقة</button>
+    </form>
+    <form method="post" action="{{ url_for('team.task_soft_delete', task_id=task.id) }}">
+      <button class="btn" type="submit" style="background:#a32d2d;">حذف</button>
+    </form>
+    {% endif %}
+
+    {% if task.status == 'pending' and task.assignee_id == current_user.id %}
+    <form method="post" action="{{ url_for('team.task_start', task_id=task.id) }}">
+      <button class="btn" type="submit">بدء</button>
+    </form>
+    {% elif task.status == 'in_progress' and task.assignee_id == current_user.id %}
+    <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" style="display:flex; gap:6px;">
+      {% if task.requires_photo %}<input name="evidence_image_url" placeholder="رابط صورة (إلزامي)" required style="margin-bottom:0;">{% endif %}
+      <button class="btn" type="submit">تم</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

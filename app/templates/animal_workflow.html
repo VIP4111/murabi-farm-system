@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>دورة الإنتاج — {{ animal.animal_no }}</h2>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <a class="btn light" href="{{ url_for('core.animal_detail', animal_id=animal.id) }}">◀ صفحة تفاصيل الرأس</a>
+      <span class="badge {{ 'on' if wf.status == 'active' else 'off' }}">{{ wf.status|ar_status }}</span>
+    </div>
+  </div>
+  <table>
+    <tr><td>المسار</td><td>{{ route_label }}</td></tr>
+    <tr><td>المرحلة الحالية</td><td><strong>{{ wf.stage_name }}</strong> (رقم {{ wf.current_stage }} من 10)</td></tr>
+    <tr><td>قرار المصير</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
+    {% if wf.out_of_order_count %}<tr><td>أحداث بترتيب غير منتظم</td><td>{{ wf.out_of_order_count }}</td></tr>{% endif %}
+  </table>
+
+  {% if missing_items %}
+  <h3 style="margin-top:18px; font-size:15px;">متطلبات ناقصة للانتقال</h3>
+  <div class="gate-list">
+    {% for item in missing_items %}
+    <div class="gate-row fail"><span>❌ {{ item }}</span></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h3 style="margin-top:18px; font-size:15px;">خط سير المراحل</h3>
+  <div class="workflow-map">
+    {% for idx, code, name in stages %}
+    {% if idx in active_stages %}
+    <div class="workflow-stage {{ 'active' if idx == wf.current_stage else ('done' if idx < wf.current_stage else '') }}">
+      <span style="font-size:11px; color:var(--muted);">مرحلة {{ idx }}</span>
+      <b>{{ name }}</b>
+      {% if idx < wf.current_stage %}<small>✅ مكتملة</small>
+      {% elif idx == wf.current_stage %}<small style="color:var(--primary); font-weight:800;">◀ الحالية</small>
+      {% else %}<small>لاحقة</small>{% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% if current_user.has_permission('animals.manage') %}
+<div class="card">
+  <h3 style="font-size:15px;">بيانات تخطيط السوق (تدعم بوابة مرحلة "تخطيط السوق")</h3>
+  <form method="post" action="{{ url_for('core.animal_workflow_plan', animal_id=animal.id) }}" data-offline>
+    <label>تاريخ بيع مستهدف</label><input name="target_sale_date" type="date" value="{{ wf.target_sale_date or '' }}">
+    <label>قيمة تقديرية</label><input name="estimated_value" type="number" step="0.01" value="{{ wf.estimated_value or '' }}">
+    <label>هامش ربح مستهدف (%)</label><input name="target_profit_margin" type="number" step="0.01" value="{{ wf.target_profit_margin or '' }}">
+    <label>تاريخ فطام (لو ينطبق)</label><input name="weaning_date" type="date" value="{{ wf.weaning_date or '' }}">
+    <button class="btn" type="submit">حفظ</button>
+  </form>
+</div>
+
+{% if animal.status == 'active' %}
+<div class="card" id="exit">
+  <h3 style="font-size:15px;">قرار الخروج</h3>
+  <div style="display:flex; gap:16px; flex-wrap:wrap;">
+    <form method="post" action="{{ url_for('core.animal_sell', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
+      <label>بيع — السعر</label><input name="sale_price" type="number" step="0.01" required>
+      <label>تاريخ البيع</label><input name="sale_date" type="date">
+      <label>ملاحظات</label><input name="notes">
+      <button class="btn" type="submit">تسجيل البيع</button>
+    </form>
+    <form method="post" action="{{ url_for('core.animal_mark_dead', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
+      <label>نفوق — السبب</label><input name="reason">
+      <label>تاريخ النفوق</label><input name="death_date" type="date">
+      <button class="btn danger" type="submit">تسجيل النفوق</button>
+    </form>
+    <form method="post" action="{{ url_for('core.animal_archive', animal_id=animal.id) }}" style="flex:1; min-width:220px;" onsubmit="return confirm('تأكيد الأرشفة؟');" data-offline>
+      <label>أرشفة — السبب</label><input name="reason">
+      <label><input name="force" type="checkbox" style="width:auto; display:inline-block;"> تجاوز وجود عمليات مالية مرتبطة</label>
+      <button class="btn" type="submit">أرشفة</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+
+<div class="card">
+  <h3 style="font-size:15px;">سجل أحداث الدورة</h3>
+  <table>
+    <tr><th>التاريخ</th><th>الحدث</th><th>المرحلة</th><th>الحالة</th><th>المتطلب التالي</th></tr>
+    {% for e in events %}
+    <tr>
+      <td>{{ e.event_date }}</td>
+      <td>{{ e.event_type }}</td>
+      <td>{{ e.stage_name }}</td>
+      <td>{{ e.cycle_status|ar_status }}</td>
+      <td>{{ e.next_required_fix or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد أحداث مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

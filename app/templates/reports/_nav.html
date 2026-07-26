@@ -1,0 +1,5 @@
+<div class="tabs">
+  {% for key, (label, _) in reports.items() %}
+  <a class="tab-btn {{ 'active' if key == active_key }}" href="{{ url_for('reports.' + key, range=range_key, start=start, end=end) }}">{{ label }}</a>
+  {% endfor %}
+</div>

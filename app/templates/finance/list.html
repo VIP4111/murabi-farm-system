@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="display:flex; gap:24px; flex-wrap:wrap;">
+  <div><div style="color:#888; font-size:13px;">إجمالي الداخل (بيع)</div><div style="font-size:22px; font-weight:bold; color:#0f6e56;">{{ "%.2f"|format(total_in) }}</div></div>
+  <div><div style="color:#888; font-size:13px;">إجمالي الخارج (شراء+مصروف)</div><div style="font-size:22px; font-weight:bold; color:#a32d2d;">{{ "%.2f"|format(total_out) }}</div></div>
+</div>
+
+{% if total_debt_in %}
+<div class="card">
+  <h3 style="font-size:15px;">الديون (منفصلة عن الداخل/الخارج التشغيلي)</h3>
+  <div style="display:flex; gap:24px; flex-wrap:wrap;">
+    <div><div style="color:#888; font-size:13px;">دعم خارجي مستلم</div><div style="font-size:18px; font-weight:bold;">{{ "%.2f"|format(total_debt_in) }}</div></div>
+    <div><div style="color:#888; font-size:13px;">مُسدَّد</div><div style="font-size:18px; font-weight:bold;">{{ "%.2f"|format(total_debt_repaid) }}</div></div>
+    <div><div style="color:#888; font-size:13px;">المتبقي عليك</div><div style="font-size:18px; font-weight:bold; color:{{ '#a32d2d' if debt_outstanding > 0 else '#0f6e56' }};">{{ "%.2f"|format(debt_outstanding) }}</div></div>
+  </div>
+</div>
+{% endif %}
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>المالية</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('finance.monthly_cost_report') }}">تقرير تكلفة الرأس الشهرية</a>
+      <a class="btn" href="{{ url_for('finance.finance_new') }}">+ عملية جديدة</a>
+    </div>
+  </div>
+  <table>
+    <tr><th>التاريخ</th><th>النوع</th><th>البند</th><th>المبلغ</th><th>الحالة</th><th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.date }}</td>
+      <td>{{ {'sale':'بيع','purchase':'شراء','expense':'مصروف','debt_in':'دعم خارجي (دين)','debt_repayment':'سداد دين'}.get(r.operation_type, r.operation_type) }}</td>
+      <td>{{ r.item or '-' }}</td>
+      <td>{{ r.amount }}</td>
+      <td>{% if r.is_cancelled %}<span class="badge off">ملغاة</span>{% else %}<span class="badge on">سارية</span>{% endif %}</td>
+      <td>
+        {% if not r.is_cancelled %}
+        <form method="post" action="{{ url_for('finance.finance_cancel', row_id=r.id) }}" onsubmit="return confirm('تأكيد الإلغاء؟');">
+          <input type="hidden" name="reason" value="ألغيت من قائمة المالية">
+          <button class="btn" type="submit" style="background:#a32d2d;">إلغاء</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">لا يوجد عمليات مالية بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

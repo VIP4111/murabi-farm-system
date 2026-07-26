@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>الحظائر</h2>
+    {% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_new') }}">+ حظيرة جديدة</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>الرقم</th><th>الاسم</th><th>النوع</th><th>السعة</th><th>المسؤول</th><th>عدد الحيوانات</th><th></th></tr>
+    {% for b in barns %}
+    <tr>
+      <td>{{ b.barn_no }}</td>
+      <td>{{ b.barn_name }}</td>
+      <td>{{ b.barn_type or '-' }}</td>
+      <td>{{ b.capacity or '-' }}</td>
+      <td>{{ b.responsible_worker.name if b.responsible_worker else '-' }}</td>
+      <td>{{ b.animals|length }}</td>
+      <td>{% if current_user.has_permission('barns.manage') %}<a href="{{ url_for('core.barns_edit', barn_id=b.id) }}">تعديل</a>{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" style="color:#888;">لا يوجد حظائر مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

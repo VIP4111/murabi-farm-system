@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>التطعيمات</h2>
+    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vaccinations_new') }}">+ تطعيم جديد</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>التاريخ</th><th>الحيوان</th><th>اللقاح</th><th>الموعد القادم</th></tr>
+    {% for r in rows %}
+    <tr><td>{{ r.date }}</td><td>{{ r.animal.animal_no }}</td><td>{{ r.vaccine_name }}</td><td>{{ r.next_due_date or '-' }}</td></tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">لا يوجد تطعيمات مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

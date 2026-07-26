@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>التقارير</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ label }}</p>
+</div>
+
+{% include "reports/_nav.html" %}
+{% include "reports/_filter.html" %}
+
+<div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+  {% for name, value in data.kpis %}
+  <div class="stat"><b>{{ value }}</b><span>{{ name }}</span></div>
+  {% endfor %}
+</div>
+
+{% if data.category_breakdown %}
+<div class="card">
+  <h3 style="font-size:15px;">توزيع المصروفات/المشتريات حسب التصنيف</h3>
+  <table>
+    <tr><th>التصنيف</th><th>الإجمالي</th></tr>
+    {% for cat, total in data.category_breakdown %}
+    <tr><td>{{ cat }}</td><td>{{ "%.2f"|format(total) }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<div class="card">
+  <h3 style="font-size:15px;">عمليات البيع</h3>
+  <table>
+    <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
+    {% for row in data.table.rows %}
+    <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+    {% else %}
+    <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">لا يوجد عمليات بيع بهذي الفترة.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

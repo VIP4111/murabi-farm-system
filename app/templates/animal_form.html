@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>{{ 'تعديل بيانات الحيوان' if animal else 'تسجيل حيوان جديد' }}</h2>
+  <form method="post" data-offline>
+    {% if animal %}
+    <label>الرقم</label><input name="animal_no" required value="{{ animal.animal_no }}">
+    {% if animal.animal_no.startswith('TEMP-') %}
+    <p style="color:var(--danger); font-size:12px; margin:-6px 0 10px;">رقم مؤقت (TEMP) — لسا ما استبدلته برقم/رقعة دائمة.</p>
+    {% endif %}
+    {% else %}
+    <label>الرقم (اختياري لو ولادة بدون رقعة جاهزة بعد — يُولَّد رقم مؤقت تلقائياً)</label>
+    <input name="animal_no" placeholder="مثال: BR-2026-001 — أو اتركه فاضي لو ولادة بدون رقعة">
+    {% endif %}
+    <label>الاسم (اختياري)</label><input name="name" value="{{ animal.name or '' if animal }}">
+
+    <label>الفصيلة</label>
+    <select name="species" {{ 'disabled' if animal }}>
+      <option value="sheep_goat" {{ 'selected' if animal and animal.species == 'sheep_goat' }}>حلال (ضأن/ماعز)</option>
+      <option value="ostrich" {{ 'selected' if animal and animal.species == 'ostrich' }}>نعام</option>
+    </select>
+    {% if animal %}<input type="hidden" name="species" value="{{ animal.species }}">{% endif %}
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">النعام ما يدخل دورة الإنتاج (تقريع/حمل/فطام) — إنتاج البيض والتفقيس له صفحته الخاصة بقائمة "النعام".</p>
+
+    <label>السلالة</label>
+    <select name="breed">
+      {% for b in breeds %}<option value="{{ b }}" {{ 'selected' if (animal.breed if animal else 'عام/غير محدد') == b }}>{{ b }}</option>{% endfor %}
+    </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "نعيمي" يفعّل تلقائياً حظر النحاس (بند إضافي 51) على أي دواء/علف عالي النحاس يُسجَّل لهذا الرأس.</p>
+
+    {% if animal %}
+    <label>المصدر</label>
+    <input value="{{ {'purchase':'شراء','birth':'ولادة بالمزرعة','gift':'هدية/دعم عيني','opening_balance':'رصيد افتتاحي'}.get(animal.source.value, animal.source.value) }}" disabled>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">المصدر لا يتغيّر بعد الإنشاء (مرتبط بحركة مالية وحدث دورة إنتاج تسجّلا أصلاً) — لو أُدخل غلط، الأصح أرشفة هذا الرأس وإضافة رأس جديد صحيح.</p>
+    {% else %}
+    <label>المصدر</label>
+    <select name="source" required>
+      <option value="purchase">شراء</option>
+      <option value="birth">ولادة بالمزرعة</option>
+      <option value="gift">هدية / دعم عيني</option>
+      <option value="opening_balance">رصيد افتتاحي (موجود أصلاً بالقطيع)</option>
+    </select>
+    {% endif %}
+
+    <label>الجنس</label>
+    <select name="gender" required>
+      <option value="ذكر" {{ 'selected' if animal and animal.gender == 'ذكر' }}>ذكر</option>
+      <option value="أنثى" {{ 'selected' if animal and animal.gender == 'أنثى' }}>أنثى</option>
+    </select>
+
+    <label>اللون</label><input name="color" placeholder="مثال: أبيض" value="{{ animal.color or '' if animal }}">
+
+    <label>الغرض (يحدّد مسار دورة الإنتاج لاحقاً)</label>
+    <select name="purpose">
+      <option value="" {{ 'selected' if animal and not animal.purpose }}>غير محدد بعد</option>
+      <option value="تربية" {{ 'selected' if animal and animal.purpose == 'تربية' }}>تربية</option>
+      <option value="تسمين" {{ 'selected' if animal and animal.purpose == 'تسمين' }}>تسمين</option>
+      <option value="بيع" {{ 'selected' if animal and animal.purpose == 'بيع' }}>بيع سريع</option>
+    </select>
+
+    <label>الحظيرة (اختياري)</label>
+    <select name="barn_id">
+      <option value="">بدون حظيرة</option>
+      {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if animal and animal.barn_id == b.id }}>{{ b.barn_name }}</option>{% endfor %}
+    </select>
+
+    {% if not animal %}
+    <label>الأم (مطلوب فقط لو المصدر "ولادة")</label>
+    <select name="mother_id">
+      <option value="">-</option>
+      {% for m in mothers %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
+    </select>
+
+    <label>الأب (اختياري، لو معروف ومسجّل بالنظام)</label>
+    <select name="father_id">
+      <option value="">-</option>
+      {% for f in fathers %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
+    </select>
+    {% endif %}
+
+    <label>تاريخ الولادة (لو المصدر ولادة)</label><input name="birth_date" type="date" value="{{ animal.birth_date.isoformat() if animal and animal.birth_date }}">
+    <label>تاريخ الشراء (لو المصدر شراء)</label><input name="purchase_date" type="date" value="{{ animal.purchase_date.isoformat() if animal and animal.purchase_date }}">
+    <label>تاريخ الدخول (لو المصدر هدية أو رصيد افتتاحي)</label><input name="entry_date" type="date" value="{{ animal.entry_date.isoformat() if animal and animal.entry_date }}">
+    <label>الوزن (كجم)</label><input name="weight" type="number" step="0.01" value="{{ animal.weight if animal }}">
+    <label>السعر / القيمة التقديرية</label><input name="price" type="number" step="0.01" value="{{ animal.price if animal }}">
+    <label>رابط الصورة (اختياري)</label><input name="image_url" placeholder="https://..." value="{{ animal.image_url or '' if animal }}">
+
+    <button class="btn" type="submit">حفظ</button>
+  </form>
+</div>
+{% endblock %}

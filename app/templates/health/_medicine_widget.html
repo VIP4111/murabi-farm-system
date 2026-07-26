@@ -1,0 +1,113 @@
+{# ودجت مشتركة لعرض "طريقة الاستخدام" و"ملاحظة الجرعة المرجعية" لدواء
+   مختار من قائمة الصيدلية — مرجع وصفي بس (كتبه الدكتور نفسه عند إضافة
+   الدواء)، مو حساب أو اقتراح جرعة تلقائي. تُستخدم بشاشات الزيارة
+   البيطرية/الأمراض/التطعيمات الثلاث.
+
+   نفس الودجت صارت (بند إضافي، 2026-07-23) تسوي شيئين إضافيين — كلاهما
+   واجهة بس، السيرفر يعيد نفس الحساب بشكل حاسم (`health_service.py`):
+   1) تفعيل `required` على حقل الكمية أول ما يُختار دواء (سلامة بيانات).
+   2) معاينة حية للتكلفة المتوقعة (الكمية × سعر الوحدة) قبل الحفظ. #}
+
+{% macro medicine_option_attrs(m) %}data-usage="{{ m.usage_method or '' }}" data-dosage="{{ m.standard_dosage_note or '' }}" data-price="{{ m.unit_price or '' }}" data-stock="{{ m.available_qty or 0 }}" data-minstock="{{ m.min_stock_qty or 0 }}"{% endmacro %}
+
+{% macro medicine_info_widget(select_id, quantity_id=None, cost_id=None) %}
+<div id="{{ select_id }}Info" class="notice" style="display:none; margin-top:-4px;"></div>
+<div id="{{ select_id }}StockWarning" class="notice" style="display:none; margin-top:-4px; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;"></div>
+{% if cost_id is none and quantity_id %}
+<div id="{{ select_id }}CostPreview" style="display:none; font-size:12px; color:var(--muted); margin:-6px 0 10px;"></div>
+{% endif %}
+<script>
+(function(){
+  // دليل الحقن الميداني (بند إضافي، 2026-07-24) — نفس بيانات
+  // `/health/injection-guide`، مصدر واحد يُحقَن هنا JSON بدل تكرار المحتوى.
+  var INJECTION_GUIDE = {{ (injection_guide or {}) | tojson }};
+  var sel = document.getElementById('{{ select_id }}');
+  var box = document.getElementById('{{ select_id }}Info');
+  var stockBox = document.getElementById('{{ select_id }}StockWarning');
+  {% if quantity_id %}
+  var qtyInput = document.getElementById('{{ quantity_id }}');
+  {% endif %}
+  {% if cost_id %}
+  var costInput = document.getElementById('{{ cost_id }}');
+  {% elif quantity_id %}
+  var costPreview = document.getElementById('{{ select_id }}CostPreview');
+  {% endif %}
+  if (!sel || !box) return;
+
+  function selectedOption(){ return sel.options[sel.selectedIndex]; }
+
+  function updateInfo(){
+    var opt = selectedOption();
+    var usage = opt ? opt.getAttribute('data-usage') : '';
+    var dosage = opt ? opt.getAttribute('data-dosage') : '';
+    var guide = usage ? INJECTION_GUIDE[usage] : null;
+    if (!usage && !dosage) { box.style.display = 'none'; }
+    else {
+      box.innerHTML =
+        (usage ? '<b>{{ _("طريقة الاستخدام:") }}</b> ' + usage : '') +
+        (dosage ? '<br><b>{{ _("ملاحظة الجرعة المرجعية:") }}</b> ' + dosage : '') +
+        (guide ? '<br><b>{{ _("دليل الحقن الميداني:") }}</b> ' + guide.notes : '');
+      box.style.display = 'block';
+    }
+  }
+
+  // فحص مخزون تلقائي (بند إضافي، 2026-07-24) — تنبيه فوري لو الدواء
+  // المختار وصل لحده الأدنى أو أقل، بدون أي طلب شبكة إضافي (نفس بيانات
+  // القائمة المنسدلة أصلاً). السيرفر يبقى الحاسم الفعلي لحظر السحب
+  // السالب (`Pharmacy.deduct_stock`، بند 46) — هذا تنبيه واجهة بس.
+  function updateStockWarning(){
+    if (!stockBox) return;
+    var opt = selectedOption();
+    if (!sel.value || !opt) { stockBox.style.display = 'none'; return; }
+    var stock = parseFloat(opt.getAttribute('data-stock'));
+    var minStock = parseFloat(opt.getAttribute('data-minstock'));
+    if (isNaN(stock) || isNaN(minStock) || stock > minStock) { stockBox.style.display = 'none'; return; }
+    stockBox.innerHTML = stock <= 0
+      ? '⚠️ {{ _("هذا الدواء نفد من المخزون —") }} <a href="{{ url_for("health.pharmacy_shortages") }}">{{ _("راجع نواقص الصيدلية والبدائل") }}</a>'
+      : '⚠️ {{ _("المخزون منخفض (") }}' + stock + '{{ _(") — راجع نواقص الصيدلية للبدائل") }}';
+    stockBox.style.display = 'block';
+  }
+
+  {% if quantity_id %}
+  function updateRequired(){
+    var hasMedicine = !!sel.value;
+    if (qtyInput) qtyInput.required = hasMedicine;
+  }
+  {% endif %}
+
+  {% if quantity_id and (cost_id or true) %}
+  function updateCost(){
+    var opt = selectedOption();
+    var price = opt ? parseFloat(opt.getAttribute('data-price')) : NaN;
+    var qty = qtyInput ? parseFloat(qtyInput.value) : NaN;
+    var hasCost = sel.value && !isNaN(price) && !isNaN(qty) && qty > 0;
+    var total = hasCost ? Math.round(price * qty * 100) / 100 : null;
+    {% if cost_id %}
+    if (costInput && hasCost) costInput.value = total;
+    {% elif quantity_id %}
+    if (costPreview) {
+      if (hasCost) {
+        costPreview.textContent = '{{ _("التكلفة المتوقعة:") }} ' + total;
+        costPreview.style.display = 'block';
+      } else {
+        costPreview.style.display = 'none';
+      }
+    }
+    {% endif %}
+  }
+  {% endif %}
+
+  sel.addEventListener('change', function(){
+    updateInfo();
+    updateStockWarning();
+    {% if quantity_id %}updateRequired(); updateCost();{% endif %}
+  });
+  {% if quantity_id %}
+  if (qtyInput) qtyInput.addEventListener('input', updateCost);
+  {% endif %}
+  updateInfo();
+  updateStockWarning();
+  {% if quantity_id %}updateRequired();{% endif %}
+})();
+</script>
+{% endmacro %}

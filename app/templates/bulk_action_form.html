@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ action_label }}</h2>
+    <a class="btn light" href="{{ url_for('core.animals_list') }}">إلغاء ← رجوع لسجل الحيوانات</a>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">هذا الإجراء رح يُطبَّق على {{ animals|length }} رأس محدّدة أدناه.</p>
+</div>
+
+{% if action == 'weight' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_weight') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>التاريخ (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th><th>الوزن (كجم)</th><th>ملاحظة</th></tr>
+      {% for a in animals %}
+      <tr>
+        <td>{{ a.animal_no }}</td>
+        <td>{{ a.name or '-' }}</td>
+        <td><input name="weight_{{ a.id }}" type="number" step="0.01" value="{{ a.weight or '' }}"></td>
+        <td><input name="note_{{ a.id }}"></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <p style="color:var(--muted); font-size:12px;">اترك حقل الوزن فاضي لأي رأس تبي تتخطاه.</p>
+    <button class="btn" type="submit">حفظ الأوزان</button>
+  </form>
+</div>
+
+{% elif action == 'vaccination' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_vaccination') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>اسم اللقاح</label><input name="vaccine_name" required>
+    <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
+    <label>الموعد القادم (اختياري)</label><input name="next_due_date" type="date">
+    <label>الدواء من الصيدلية (اختياري)</label>
+    <select name="pharmacy_id">
+      <option value="">بدون ربط</option>
+      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }} (سحب: {{ m.withdrawal_days }} يوم)</option>{% endfor %}
+    </select>
+    <label>الكمية المستخدمة لكل رأس</label><input name="quantity_used_per_head" type="number" step="0.01">
+    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
+    </table>
+    <button class="btn" type="submit">تسجيل التحصين للكل</button>
+  </form>
+</div>
+
+{% elif action == 'note' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_note') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>التاريخ</label><input name="date" type="date" value="{{ today }}">
+    <label>ملاحظة عامة (تُضاف لكل الرؤوس)</label><textarea name="general_note" required></textarea>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th><th>ملاحظة إضافية لهذا الرأس (اختياري)</th></tr>
+      {% for a in animals %}
+      <tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td><input name="note_{{ a.id }}"></td></tr>
+      {% endfor %}
+    </table>
+    <button class="btn" type="submit">حفظ الملاحظات</button>
+  </form>
+</div>
+
+{% elif action == 'barn_move' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_barn_move') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>الحظيرة الجديدة</label>
+    <select name="barn_id" required>
+      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+    </select>
+    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th><th>الحظيرة الحالية</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.barn.barn_name if a.barn else '-' }}</td></tr>{% endfor %}
+    </table>
+    <button class="btn" type="submit">نقل الكل للحظيرة الجديدة</button>
+  </form>
+</div>
+
+{% elif action == 'sale' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_sale') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>تاريخ البيع (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
+    <label>ملاحظة عامة (اختياري، مثلاً اسم المشتري)</label><input name="notes">
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th><th>سعر البيع</th></tr>
+      {% for a in animals %}
+      <tr>
+        <td>{{ a.animal_no }}</td>
+        <td>{{ a.name or '-' }}</td>
+        <td><input name="price_{{ a.id }}" type="number" step="0.01" value="{{ a.price or '' }}"></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <p style="color:var(--muted); font-size:12px;">اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة.</p>
+    <button class="btn" type="submit">بيع الكل</button>
+  </form>
+</div>
+
+{% elif action == 'mark_dead' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_mark_dead') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>تاريخ النفوق (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
+    <label>السبب (اختياري، يُسجَّل لكل الرؤوس)</label><textarea name="reason"></textarea>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
+    </table>
+    <p style="color:var(--muted); font-size:12px;">تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل.</p>
+    <button class="btn danger" type="submit" onclick="return confirm('تأكيد تسجيل نفوق {{ animals|length }} رأس؟')">تسجيل النفوق للكل</button>
+  </form>
+</div>
+
+{% elif action == 'disease' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_disease') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>اسم المرض</label>
+    <input name="disease_name" required list="diseaseTypesList" placeholder="اختر من القائمة أو اكتب اسماً جديداً">
+    <datalist id="diseaseTypesList">{% for t in disease_types %}<option value="{{ t.name }}">{% endfor %}</datalist>
+    <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
+    <label>الشدة</label>
+    <select name="severity">
+      <option value="light">بسيطة</option>
+      <option value="medium">متوسطة</option>
+      <option value="severe">شديدة</option>
+    </select>
+    <label>الدواء من الصيدلية (اختياري)</label>
+    <select name="pharmacy_id">
+      <option value="">بدون دواء</option>
+      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }}{{ ' — ' + m.usage_method if m.usage_method }} (سحب: {{ m.withdrawal_days }} يوم)</option>{% endfor %}
+    </select>
+    <label>الكمية المستخدمة لكل رأس</label><input name="quantity_used_per_head" type="number" step="0.01">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة.</p>
+    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
+    </table>
+    <button class="btn" type="submit">تسجيل الحالة للكل</button>
+  </form>
+</div>
+
+{% elif action == 'isolation' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_isolation') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
+    <label>سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)</label><textarea name="reason"></textarea>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th><th>الحظيرة الحالية</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.barn.barn_name if a.barn else '-' }}</td></tr>{% endfor %}
+    </table>
+    <p style="color:var(--muted); font-size:12px;">ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل).</p>
+    <button class="btn" type="submit">عزل الكل</button>
+  </form>
+</div>
+
+{% elif action == 'sonar' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_sonar') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>تاريخ الفحص (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
+    <label>الطبيب (اختياري)</label>
+    <select name="doctor_id">
+      <option value="">بدون تحديد</option>
+      {% for d in doctors %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
+    </select>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th><th>النتيجة</th><th>عدد الأجنة</th></tr>
+      {% for a in animals %}
+      <tr>
+        <td>{{ a.animal_no }}</td>
+        <td>{{ a.name or '-' }}</td>
+        <td>
+          <select name="result_{{ a.id }}">
+            <option value="">—</option>
+            <option value="حامل">حامل</option>
+            <option value="غير حامل">غير حامل</option>
+            <option value="غير واضح">غير واضح</option>
+          </select>
+        </td>
+        <td><input name="embryo_{{ a.id }}" type="number" min="0" step="1"></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <button class="btn" type="submit">حفظ نتائج الكل</button>
+  </form>
+</div>
+
+{% elif action == 'treatment_plan' %}
+<div class="card">
+  <p style="color:var(--muted); font-size:13px;">
+    ⚠️ هذا الإجراء <b>ما يسجّل ولا يخصم أي شيء الآن</b> (بند إضافي 50) — بس يولّد مهمة
+    "علاج مخطَّط" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم "تأكيد التنفيذ" الفعلي
+    لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية).
+  </p>
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_treatment_plan') }}" data-offline>
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>الدواء المخطَّط</label>
+    <select name="pharmacy_id" required>
+      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }} (سحب: {{ m.withdrawal_days }} يوم)</option>{% endfor %}
+    </select>
+    <label>الجرعة لكل رأس</label><input name="quantity_per_head" type="number" step="0.01" required>
+    <label>نوع التسجيل عند التنفيذ</label>
+    <select name="treatment_kind" required>
+      <option value="vet_visit">زيارة بيطرية</option>
+      <option value="disease">علاج/مرض</option>
+      <option value="vaccination">تطعيم</option>
+    </select>
+    <label>سبب المهمة/الدافع</label><textarea name="reason" placeholder="مثال: فحص دوري كشف انتشار طفيليات بالحظيرة"></textarea>
+    <label>الموعد المستهدف للتنفيذ</label><input name="due_date" type="date" value="{{ today }}">
+    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة ({{ animals|length }})</h3>
+    <table>
+      <tr><th>الرقم</th><th>الاسم</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
+    </table>
+    <button class="btn" type="submit">إنشاء خطة العلاج (مقترحة)</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

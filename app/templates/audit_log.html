@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← الإعدادات</a>
+  <h2 style="margin-top:12px;">سجل التدقيق</h2>
+  <p style="color:var(--muted); font-size:13px;">آخر {{ rows|length }} حدث حسّاس بالنظام (حذف، اعتماد صلاحيات، إغلاق بلاغ...) — الأحدث أولاً.</p>
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>الوقت</th><th>مين</th><th>الإجراء</th><th>على</th><th>تفاصيل</th></tr>
+    {% for row in rows %}
+    <tr>
+      <td>{{ row.created_at.strftime('%Y-%m-%d %H:%M') if row.created_at else '-' }}</td>
+      <td>{{ row.actor.name if row.actor else '-' }}</td>
+      <td>{{ row.action }}</td>
+      <td>{{ row.entity_type or '-' }}{{ ' #' + row.entity_id|string if row.entity_id }}</td>
+      <td style="max-width:280px; overflow-wrap:anywhere;">{{ row.details or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">ما فيه أي حدث مسجّل بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

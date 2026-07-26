@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>شراء دفعة جديدة</h2>
+    <a class="btn light" href="{{ url_for('core.animals_list') }}">إلغاء ← رجوع لسجل الحيوانات</a>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">إضافة عدة رؤوس مشتراة دفعة واحدة — كل صف يمر بنفس نقطة الدخول الموحّدة لإنشاء الحيوانات، فيسجَّل له تلقائياً حركة مالية "شراء" وحدث دورة إنتاج، تماماً كأنه أُضيف من شاشة "+ حيوان جديد" فرداً فرداً.</p>
+</div>
+
+<div class="card">
+  <form method="post" id="bulkPurchaseForm" data-offline>
+    <div style="display:flex; gap:14px; flex-wrap:wrap;">
+      <div>
+        <label>تاريخ الشراء (لكل الدفعة)</label>
+        <input name="purchase_date" type="date" required value="{{ today }}">
+      </div>
+      <div>
+        <label>الفصيلة</label>
+        <select name="species">
+          <option value="sheep_goat">حلال (ضأن/ماعز)</option>
+          <option value="ostrich">نعام</option>
+        </select>
+      </div>
+      <div>
+        <label>الحظيرة (لكل الدفعة)</label>
+        <select name="barn_id">
+          <option value="">بدون حظيرة</option>
+          {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <table id="rowsTable" style="margin-top:14px;">
+      <tr><th>رقم الحيوان</th><th>الجنس</th><th>الوزن (كجم)</th><th>سعر الشراء</th></tr>
+      {% for i in range(8) %}
+      <tr>
+        <td><input name="animal_no_{{ i }}"></td>
+        <td>
+          <select name="gender_{{ i }}">
+            <option value="ذكر">ذكر</option>
+            <option value="أنثى">أنثى</option>
+          </select>
+        </td>
+        <td><input name="weight_{{ i }}" type="number" step="0.01"></td>
+        <td><input name="price_{{ i }}" type="number" step="0.01"></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <input type="hidden" name="row_count" id="rowCount" value="8">
+    <button class="btn light" type="button" id="addRowBtn" style="margin-top:8px;">+ إضافة صف</button>
+    <p style="color:var(--muted); font-size:12px;">اترك رقم الحيوان فاضي لأي صف تبي تتجاهله.</p>
+    <button class="btn" type="submit" style="margin-top:10px;">حفظ الدفعة كاملة</button>
+  </form>
+</div>
+
+<script>
+  (function(){
+    var table = document.getElementById('rowsTable');
+    var rowCountInput = document.getElementById('rowCount');
+    var addBtn = document.getElementById('addRowBtn');
+    addBtn.addEventListener('click', function(){
+      var i = parseInt(rowCountInput.value, 10);
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input name="animal_no_' + i + '"></td>' +
+        '<td><select name="gender_' + i + '"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></td>' +
+        '<td><input name="weight_' + i + '" type="number" step="0.01"></td>' +
+        '<td><input name="price_' + i + '" type="number" step="0.01"></td>';
+      table.appendChild(tr);
+      rowCountInput.value = i + 1;
+    });
+  })();
+</script>
+{% endblock %}

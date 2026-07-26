@@ -1,0 +1,30 @@
+{# بطاقة تنبيه "غير متصل" + عداد البلاغات/السجلات بانتظار المزامنة —
+   يُستخدم بكل شاشات الإدخال القابلة للعمل بدون إنترنت (offline_sync.js
+   يتحكم بإظهارها/تحديثها). من بند 53: صار متاحاً لكل الأدوار وكل
+   الشاشات، مو بس الثمانية الميدانية الأصلية. #}
+{% macro offline_status_banner() %}
+<div data-offline-banner class="notice" style="display:none;">
+  📴 {{ _('غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي.') }}
+</div>
+<div data-offline-pending-wrap style="display:none;">
+  <span class="badge off">🔄 <span data-offline-badge>0</span> {{ _('بانتظار الرفع بجهازك') }}</span>
+</div>
+
+{# لوحة مراجعة الإدخالات المرفوضة (بند 53) — إدخال أوف لاين اتزامن فعلياً
+   لكن السيرفر رفضه تحقّقياً (نفاد مخزون، حظر نحاس، بوابة دورة إنتاج...)
+   يظهر هنا صراحة بدل ما يُفقد بصمت — إعادة محاولة أو تجاهل نهائي. #}
+<div data-offline-failed-wrap style="display:none; margin-bottom:12px;">
+  <div class="badge off" style="margin-bottom:6px;">⚠️ <span data-offline-failed-badge>0</span> {{ _('إدخالات رُفضت عند المزامنة — تحتاج مراجعتك') }}</div>
+  <div data-offline-failed-list></div>
+</div>
+
+<script>
+  {# offline_sync.js ملف ثابت (مو Jinja) — ما يقدر يترجم مباشرة، فنمرّر
+     له النصوص المترجمة عبر متغيّرات جافاسكربت بدل نص ثابت مدمج فيه. #}
+  window.OFFLINE_QUEUED_MESSAGE = {{ _('ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما يرجع الاتصال.')|tojson }};
+  window.OFFLINE_REJECTED_LABEL = {{ _('رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة.')|tojson }};
+  window.OFFLINE_RETRY_LABEL = {{ _('إعادة المحاولة')|tojson }};
+  window.OFFLINE_DISCARD_LABEL = {{ _('تجاهل نهائياً')|tojson }};
+  window.OFFLINE_DISCARD_CONFIRM = {{ _('تجاهل هذا الإدخال نهائياً بدون رفعه؟')|tojson }};
+</script>
+{% endmacro %}

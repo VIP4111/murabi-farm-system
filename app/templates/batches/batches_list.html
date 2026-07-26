@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+{% set stage_labels = {1: 'حجر صحي وأوليات', 2: 'ترقيم وفحص سلامة', 3: 'موزَّعة (مكتملة)'} %}
+{% set source_labels = {'purchase': 'شراء', 'gift': 'هدية/دعم'} %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>دفعات استقبال قطيع جديد</h2>
+    {% if current_user.has_permission('animals.manage') %}
+    <a class="btn" href="{{ url_for('batches.batches_new') }}">+ دفعة جديدة</a>
+    {% endif %}
+  </div>
+  <table>
+    <tr><th>رقم الدفعة</th><th>المصدر</th><th>تاريخ الوصول</th><th>عدد الرؤوس</th><th>المرحلة</th><th></th></tr>
+    {% for b in batches %}
+    <tr>
+      <td>{{ b.batch_no }}</td>
+      <td>{{ source_labels.get(b.source, b.source) }}</td>
+      <td>{{ b.arrival_date }}</td>
+      <td>{{ b.animals|length }}</td>
+      <td><span class="badge {{ 'on' if b.stage == 3 else '' }}">{{ stage_labels.get(b.stage, b.stage) }}</span></td>
+      <td><a class="btn light" style="padding:6px 12px; font-size:12px;" href="{{ url_for('batches.batch_detail', batch_id=b.id) }}">تفاصيل ←</a></td>
+    </tr>
+    {% else %}<tr><td colspan="6" style="color:#888;">لا يوجد دفعات مسجَّلة بعد.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

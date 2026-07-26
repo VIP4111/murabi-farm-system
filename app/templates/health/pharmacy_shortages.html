@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>❗ نواقص الصيدلية</h2>
+    <a class="btn light" href="{{ url_for('health.pharmacy_list') }}">← رجوع للصيدلية</a>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "قائمة المشتريات المطلوبة"، تُحدَّث تلقائياً كل ما تغيّر المخزون.</p>
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>الاسم</th><th>الفئة</th><th>المتوفر</th><th>الحد الأدنى</th><th>بدائل بنفس الفئة</th></tr>
+    {% for i in items %}
+    <tr>
+      <td>{{ i.name }}</td>
+      <td>{{ i.category or '-' }}</td>
+      <td style="color:var(--danger); font-weight:800;">{{ i.available_qty }} {{ i.unit or '' }}</td>
+      <td>{{ i.min_stock_qty or 0 }}</td>
+      <td style="font-size:12px;">
+        {% set alts = alternatives.get(i.id, []) %}
+        {% if alts %}{{ alts|map(attribute='name')|join('، ') }}{% else %}-{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد نواقص حالياً 🎉</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

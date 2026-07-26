@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>تشخيص حمل جديد</h2>
+  <form method="post" data-offline>
+    <label>التاريخ</label><input name="date" type="date" required>
+    <label>الأنثى</label>
+    <select name="female_id" required>
+      {% for f in females %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
+    </select>
+    <label>التقريع المرتبط (اختياري)</label>
+    <select name="mating_id">
+      <option value="">-</option>
+      {% for m in matings %}<option value="{{ m.id }}">{{ m.female.animal_no }} — {{ m.date }}</option>{% endfor %}
+    </select>
+    <label><input name="confirmed" type="checkbox" style="width:auto; display:inline-block;"> مؤكّد؟</label>
+    <label>تاريخ السونار</label><input name="sonar_date" type="date">
+    <label>عدد الأجنّة</label><input name="embryo_count" type="number">
+    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">حفظ</button>
+  </form>
+</div>
+{% endblock %}

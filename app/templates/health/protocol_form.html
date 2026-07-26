@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:640px;">
+  <h2>بروتوكول علاج جديد</h2>
+  <form method="post" data-offline>
+    <label>الاسم</label><input name="name" required placeholder="مثال: بروتوكول التهاب الرئة">
+    <label>الوصف (اختياري)</label><textarea name="description" rows="2"></textarea>
+    <label>المرض المرتبط (اختياري)</label>
+    <select name="disease_type_id">
+      <option value="">-</option>
+      {% for d in disease_types %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
+    </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
+      لو مُحدَّد، زر "طبّق هذا البروتوكول" يظهر تلقائياً بنتيجة المساعد التشخيصي عند مطابقة هذا المرض.
+    </p>
+
+    <h3 style="font-size:14px; margin-top:16px;">الخطوات (دواء محدد من الصيدلية لكل خطوة)</h3>
+    {% for i in step_slots %}
+    <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
+      <input name="day_offset_{{ i }}" type="number" value="0" title="يوم الاستحقاق من بداية التطبيق" style="width:70px;" placeholder="يوم">
+      <input name="step_title_{{ i }}" placeholder="عنوان الخطوة" style="flex:2; min-width:140px;">
+      <select name="pharmacy_id_{{ i }}" style="flex:2; min-width:140px;">
+        <option value="">الدواء -</option>
+        {% for m in medicines %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
+      </select>
+      <input name="quantity_{{ i }}" type="number" step="0.01" placeholder="الكمية" style="width:90px;">
+      <select name="treatment_kind_{{ i }}" style="width:130px;">
+        {% for code, label in treatment_kinds %}<option value="{{ code }}">{{ label }}</option>{% endfor %}
+      </select>
+    </div>
+    {% endfor %}
+    <p style="font-size:12px; color:#888;">اترك أي صف فاضي لو ما تحتاجه — لازم عنوان + دواء + كمية عشان تُحفظ الخطوة.</p>
+
+    <button class="btn" type="submit">حفظ البروتوكول</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="color:#888; font-size:13px;">إجمالي تكاليف الصحة والعلاج</div>
+  <div style="font-size:22px; font-weight:bold; color:#a32d2d;">{{ "%.2f"|format(total) }}</div>
+</div>
+
+<div class="card">
+  <h2>تكاليف الزيارات البيطرية</h2>
+  <table>
+    <tr><th>التاريخ</th><th>الحيوان</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th></tr>
+    {% for v in visits %}
+    <tr>
+      <td>{{ v.date }}</td>
+      <td>{{ v.animal.animal_no }}</td>
+      <td>{{ v.doctor.name }}</td>
+      <td>{{ v.diagnosis or '-' }}</td>
+      <td>{{ "%.2f"|format(v.cost or 0) }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد زيارات مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2>تكاليف علاج الأمراض</h2>
+  <table>
+    <tr><th>التاريخ</th><th>الحيوان</th><th>المرض</th><th>الحالة</th><th>التكلفة</th></tr>
+    {% for d in diseases %}
+    <tr>
+      <td>{{ d.date }}</td>
+      <td>{{ d.animal.animal_no }}</td>
+      <td>{{ d.disease_name }}</td>
+      <td>{{ d.status|ar_status }}</td>
+      <td>{{ "%.2f"|format(d.treatment_cost or 0) }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد أمراض مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>توزيع المستودعات — {{ item.name }}</h2>
+  <div style="color:var(--muted); font-size:13px; margin-bottom:10px;">الإجمالي الحالي: {{ item.available_qty }}</div>
+  <table>
+    <tr><th>المستودع</th><th>الكمية</th><th></th></tr>
+    {% for e in breakdown %}
+    <tr>
+      <td>{{ e.warehouse.name }}{% if e.is_default %} <span class="badge">افتراضي</span>{% endif %}</td>
+      <td>{{ e.qty }}</td>
+      <td>{% if e.inconsistent %}<span class="badge off" title="الإجمالي انخفض تحت المُوزَّع فعلياً بمستودعات مسمّاة — راجع حركات هذا الصنف">⚠️ غير متّسق</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card" style="max-width:480px;">
+  <h3 style="font-size:15px;">تحويل بين مستودعين</h3>
+  <form method="post" action="{{ url_for('warehouses.item_transfer', kind=kind, item_id=item.id) }}" data-offline>
+    <label>من</label>
+    <select name="from_warehouse_id" required>
+      {% for w in all_warehouses %}<option value="{{ w.id }}">{{ w.name }}{% if w.is_default %} (افتراضي){% endif %}</option>{% endfor %}
+    </select>
+    <label>إلى</label>
+    <select name="to_warehouse_id" required>
+      {% for w in all_warehouses %}<option value="{{ w.id }}">{{ w.name }}{% if w.is_default %} (افتراضي){% endif %}</option>{% endfor %}
+    </select>
+    <label>الكمية</label>
+    <input name="qty" type="number" step="0.01" required>
+    <button class="btn" type="submit">تحويل</button>
+  </form>
+  <p style="color:var(--muted); font-size:12px; margin-top:8px;">
+    التحويل لا يغيّر الإجمالي الحالي إطلاقاً — مجرد نقل مكان تخزين داخل المزرعة.
+  </p>
+</div>
+{% endblock %}

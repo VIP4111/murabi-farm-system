@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>برامج الشياع التوأمي</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.programs_new') }}">+ برنامج جديد</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>#</th><th>الأنثى</th><th>البروتوكول</th><th>بداية</th><th>الطبيب المشرف</th><th>الحالة</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td><a href="{{ url_for('repro.program_detail', program_id=r.id) }}">{{ r.id }}</a></td>
+      <td>{{ r.ewe.animal_no }}</td>
+      <td>{{ r.protocol_name or '-' }}</td>
+      <td>{{ r.start_date }}</td>
+      <td>{{ r.supervising_doctor.name if r.supervising_doctor else '-' }}</td>
+      <td>{{ r.status|ar_status }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">لا يوجد برامج شياع توأمي مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

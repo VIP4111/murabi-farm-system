@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>البيع الذكي وتفادي الخسارة</h2>
+    <a class="btn light" href="{{ url_for('core.animals_list') }}">← رجوع لسجل الحيوانات</a>
+  </div>
+  <div class="notice">
+    <strong>الذكور</strong>: الأهم عمرهم — بيع عادي بعمر 6 أشهر، وبيع
+    الأضاحي يحتاج عمر أعلى من 6 أشهر (سن الجذعة الشرعي)، والوزن الثانوي
+    (لو متوقف/يتراجع، يستهلك علف بدون فايدة).
+    <strong>الإناث</strong>: أي علامة من الأربع (تأخر حمل، ما حملت
+    إطلاقاً، ترفض الرضاعة، الضرع تالف) = توصية بيع فورية بغض النظر عن
+    باقي العوامل. القيم (الأعمار، هامش الربح، مدة التأخر) كلها قابلة
+    للتعديل من <a href="{{ url_for('core.settings_home') }}">شاشة الإعدادات</a>.
+  </div>
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>الرقم</th><th>الجنس</th><th>الدرجة</th><th>التوصية</th><th>النافذة المقترحة</th><th>السبب</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id) }}">{{ r.animal.animal_no }}</a></td>
+      <td>{{ r.animal.gender or '-' }}</td>
+      <td><strong>{{ r.score }}</strong></td>
+      <td>
+        <span class="badge {{ 'off' if r.score >= 60 else 'on' }}">{{ r.label }}</span>
+      </td>
+      <td>{{ r.window }}</td>
+      <td style="font-size:12.5px; color:var(--muted);">{{ r.reasons|join(' — ') }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">لا يوجد حيوانات نشطة لتقييمها.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

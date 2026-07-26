@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>احتمالات التشخيص{{ ' — ' + animal.animal_no if animal else '' }}</h2>
+    <a class="btn light" href="{{ url_for('health.diagnose_start', animal_id=animal.id if animal else none) }}">← تعديل الأعراض</a>
+  </div>
+  <div class="notice">
+    ⚠️ <b>ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار النهائي للدكتور المعالج دائماً.</b>
+    الأعراض المُدخَلة: {{ entered_symptoms|join('، ') if entered_symptoms else '-' }}
+    {% if free_text %}<br>ملاحظة حرة: {{ free_text }}{% endif %}
+  </div>
+</div>
+
+{% if emergency %}
+<div class="flash warning" style="position:static; margin-bottom:16px;">
+  🚨 <b>بروتوكول طوارئ مفعَّل — {{ animal.animal_no }}</b><br>
+  الحالة: {{ emergency.isolation_result }}<br>
+  اشتباه تفريقي: {{ emergency.differentials|join(' / ') }}<br>
+  {% for a in emergency.advice %}<span style="font-size:13px;">{{ a }}</span><br>{% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+  {% if not results %}
+  <p style="color:var(--muted);">ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم المناسب.</p>
+  <a class="btn" href="{{ url_for('health.diseases_new', animal_id=animal.id if animal else none) }}">تسجيل حالة مرضية يدوياً</a>
+  {% else %}
+  <table>
+    <tr><th>الاحتمال</th><th>درجة التطابق</th><th>الأعراض المطابقة</th><th></th></tr>
+    {% for r in results %}
+    <tr>
+      <td>{{ r.disease_type.name }}</td>
+      <td>{{ r.score }}</td>
+      <td style="font-size:12px; color:var(--muted);">{{ r.matched_symptoms|join('، ') }}</td>
+      <td>
+        <a class="btn light" style="padding:6px 12px; font-size:12px;"
+           href="{{ url_for('health.diseases_new', animal_id=animal.id if animal else none, disease_name=r.disease_type.name, diagnosis_note='مقترح من المساعد التشخيصي — درجة تطابق ' ~ r.score) }}">
+          استخدم هذا الاحتمال ←
+        </a>
+        {% for p in protocols_by_disease.get(r.disease_type.id, []) %}
+        {% if animal %}
+        <a class="btn" style="padding:6px 12px; font-size:12px;"
+           href="{{ url_for('health.protocols_apply', protocol_id=p.id, animal_id=animal.id) }}">
+          💊 طبّق بروتوكول "{{ p.name }}" ←
+        </a>
+        {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

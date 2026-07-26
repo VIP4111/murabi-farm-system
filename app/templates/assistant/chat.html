@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}المساعد الذكي{% endblock %}
+{% block content %}
+<style>
+  .chat-card{padding:0; overflow:hidden; display:flex; flex-direction:column; height:calc(100vh - 160px); min-height:420px;}
+  .chat-head{padding:14px 18px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex:0 0 auto;}
+  .chat-head h2{margin:0; font-size:16px;}
+  .chat-body{flex:1; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:10px;}
+  .bubble{max-width:82%; padding:10px 14px; border-radius:18px; font-size:14px; line-height:1.7; white-space:pre-wrap;}
+  .bubble.user{align-self:flex-end; background:var(--primary); color:#fff; border-bottom-left-radius:6px;}
+  .bubble.assistant{align-self:flex-start; background:#fff; border:1px solid var(--line); color:var(--text); border-bottom-right-radius:6px;}
+  .bubble small{display:block; margin-top:6px; opacity:.65; font-size:11px;}
+  .chat-empty{color:var(--muted); text-align:center; padding:30px 10px; font-size:13.5px;}
+  .chat-foot{flex:0 0 auto; padding:12px 14px; border-top:1px solid var(--line); background:#fbf8f1;}
+  .chat-form{display:flex; gap:8px; align-items:flex-end;}
+  .chat-form textarea{margin:0; min-height:44px; max-height:120px; resize:none; flex:1;}
+  .chat-form button{flex:0 0 auto; height:44px;}
+  .chat-suggestions{display:flex; gap:6px; overflow-x:auto; padding:0 0 10px;}
+  .chat-suggestions button{flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--primary); border-radius:999px; padding:7px 12px; font-size:12px; cursor:pointer; white-space:nowrap;}
+  .typing{align-self:flex-start; color:var(--muted); font-size:12.5px; padding:0 4px;}
+</style>
+
+<div class="card chat-card">
+  <div class="chat-head">
+    <h2>🤖 المساعد الذكي</h2>
+    <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('مسح كل المحادثة؟');">
+      <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">مسح المحادثة</button>
+    </form>
+  </div>
+
+  <div class="chat-body" id="chatBody">
+    {% if not messages %}
+    <div class="chat-empty" id="chatEmpty">
+      اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة.
+    </div>
+    {% endif %}
+    {% for m in messages %}
+    <div class="bubble {{ m.role }}">
+      {{ m.content }}
+      <small>{{ m.created_at.strftime('%H:%M') if m.created_at else '' }}</small>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="chat-foot">
+    <div class="chat-suggestions">
+      <button type="button" onclick="askSuggestion('كم عدد الحيوانات بالمزرعة؟')">كم عدد الحيوانات؟</button>
+      <button type="button" onclick="askSuggestion('كم رأس حوامل لدينا؟')">كم حوامل؟</button>
+      <button type="button" onclick="askSuggestion('ما حالة الحاضنات اليوم؟')">حالة الحاضنات</button>
+      <button type="button" onclick="askSuggestion('كم التكلفة اليومية للأعلاف؟')">تكلفة العلف</button>
+      <button type="button" onclick="askSuggestion('وش التنبيهات الحالية؟')">التنبيهات</button>
+    </div>
+    <form class="chat-form" id="chatForm" method="post" action="{{ url_for('assistant.send') }}">
+      <textarea id="chatInput" name="message" placeholder="اكتب سؤالك هنا..." required></textarea>
+      <button type="submit" class="btn">إرسال</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  var chatBody = document.getElementById('chatBody');
+  var chatForm = document.getElementById('chatForm');
+  var chatInput = document.getElementById('chatInput');
+  var chatEmpty = document.getElementById('chatEmpty');
+
+  function scrollToBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
+  scrollToBottom();
+
+  function addBubble(role, text, time){
+    if(chatEmpty){ chatEmpty.remove(); chatEmpty = null; }
+    var div = document.createElement('div');
+    div.className = 'bubble ' + role;
+    div.textContent = text;
+    var small = document.createElement('small');
+    small.textContent = time || '';
+    div.appendChild(small);
+    chatBody.appendChild(div);
+    scrollToBottom();
+  }
+
+  function askSuggestion(text){
+    chatInput.value = text;
+    chatForm.requestSubmit ? chatForm.requestSubmit() : chatForm.submit();
+  }
+
+  chatForm.addEventListener('submit', function(e){
+    var text = chatInput.value.trim();
+    if(!text) return;
+    e.preventDefault();
+    addBubble('user', text, new Date().toTimeString().slice(0,5));
+    chatInput.value = '';
+    chatInput.disabled = true;
+    var typing = document.createElement('div');
+    typing.className = 'typing';
+    typing.textContent = 'المساعد يكتب...';
+    chatBody.appendChild(typing);
+    scrollToBottom();
+
+    fetch(chatForm.action, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: text})
+    }).then(function(r){ return r.json(); }).then(function(data){
+      typing.remove();
+      if(data.error){
+        addBubble('assistant', 'صار خطأ: ' + data.error, '');
+      } else {
+        addBubble('assistant', data.reply, (data.created_at || '').slice(11,16));
+      }
+    }).catch(function(){
+      typing.remove();
+      addBubble('assistant', 'تعذّر الاتصال بالمساعد. حاول مرة ثانية.', '');
+    }).finally(function(){
+      chatInput.disabled = false;
+      chatInput.focus();
+    });
+  });
+
+  chatInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      chatForm.requestSubmit ? chatForm.requestSubmit() : chatForm.submit();
+    }
+  });
+</script>
+{% endblock %}

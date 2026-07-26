@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}الرئيسية{% endblock %}
+{% block content %}
+<style>
+  .worker-greet{text-align:center; padding:6px 0 4px;}
+  .worker-greet h2{margin:0; font-size:19px;}
+  .worker-greet p{color:var(--muted); margin:4px 0 0; font-size:13px;}
+  .worker-grid{display:grid; grid-template-columns:1fr; gap:14px; margin-top:16px;}
+  @media (min-width:600px){.worker-grid{grid-template-columns:1fr 1fr;}}
+  .worker-btn{
+    display:flex; align-items:center; gap:16px; background:#fff; border:1px solid var(--line);
+    border-radius:24px; padding:22px 20px; text-decoration:none; color:var(--text);
+    box-shadow:0 10px 26px rgba(70,45,25,.10); min-height:96px;
+  }
+  .worker-btn:active{box-shadow:0 4px 12px rgba(70,45,25,.10); transform:translateY(1px);}
+  .worker-btn .emoji{font-size:38px; flex:0 0 auto; width:56px; text-align:center;}
+  .worker-btn b{display:block; font-size:17px; line-height:1.4;}
+  .worker-btn small{display:block; color:var(--muted); font-size:12.5px; margin-top:3px;}
+  .worker-btn.tasks{background:linear-gradient(135deg,var(--primary),#8b633d); color:#fff; border-color:transparent;}
+  .worker-btn.tasks small{color:rgba(255,255,255,.8);}
+</style>
+
+<div class="card">
+  <div class="worker-greet">
+    <h2>{{ _('أهلاً') }} {{ user.name }} 👋</h2>
+    <p>{{ _('اختر الإجراء اللي تبي تسجّله') }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3 style="margin:0; font-size:15px;">🔔 {{ _('تنبيهاتي') }}</h3>
+    <span class="badge {{ 'off' if my_alerts_count else 'on' }}">{{ my_alerts_count }}</span>
+  </div>
+  <p style="color:var(--muted); font-size:13px; margin:6px 0 10px;">{{ _('تنبيهات حظائرك اللي أنت مسؤول عنها بس.') }}</p>
+  <a class="btn light" href="{{ url_for('core.alerts_mine') }}">{{ _('فتح تنبيهاتي') }} ←</a>
+</div>
+
+<div class="card">
+  <div class="worker-grid">
+    <a class="worker-btn" href="{{ url_for('team.worker_quick_report', category='health') }}">
+      <span class="emoji">🩺</span>
+      <span><b>{{ _('فحص / حالة صحية') }}</b><small>{{ _('تسجيل ملاحظة أو بلاغ عن حالة حيوان') }}</small></span>
+    </a>
+    <a class="worker-btn" href="{{ url_for('team.worker_quick_report', category='isolation') }}">
+      <span class="emoji">🚧</span>
+      <span><b>{{ _('نقل إلى العزل') }}</b><small>{{ _('الإبلاغ عن حيوان يحتاج عزل') }}</small></span>
+    </a>
+    <a class="worker-btn" href="{{ url_for('team.worker_quick_report', category='feed') }}">
+      <span class="emoji">🌾</span>
+      <span><b>{{ _('تغذية / عليقة') }}</b><small>{{ _('تسجيل ملاحظة عن التغذية اليومية') }}</small></span>
+    </a>
+    <a class="worker-btn" href="{{ url_for('team.worker_quick_report', category='ostrich') }}">
+      <span class="emoji">🥚</span>
+      <span><b>{{ _('بيض / حضانة (نعام)') }}</b><small>{{ _('الإبلاغ عن بيضة جديدة أو ملاحظة حضانة') }}</small></span>
+    </a>
+    <a class="worker-btn tasks" href="{{ url_for('team.tasks_list') }}" style="grid-column:1 / -1;">
+      <span class="emoji">✅</span>
+      <span><b>{{ _('مهامي اليوم') }}</b><small>{{ _('عرض وإنجاز المهام المطلوبة منك') }}</small></span>
+    </a>
+  </div>
+</div>
+{% endblock %}

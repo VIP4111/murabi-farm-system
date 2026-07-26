@@ -1,0 +1,35 @@
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+Flask-Migrate==4.0.7
+python-dotenv==1.0.1
+Werkzeug==3.0.3
+email-validator==2.2.0
+reportlab==5.0.0
+arabic-reshaper==3.0.1
+python-bidi==0.6.11
+openpyxl==3.1.5
+Flask-Babel==4.0.0
+
+# اختبارات آلية (بند إضافي، 2026-07-24) — pytest فقط، بدون plugins إضافية
+pytest==9.1.1
+
+# موازِن العليقة (بند إضافي، 2026-07-24) — scipy.optimize.linprog لحل
+# مسألة "خلطة العلف الأرخص" (Diet Problem الكلاسيكية) كبرمجة خطية حقيقية،
+# بدل تخمين يدوي. numpy تبعية تلقائية لـscipy.
+scipy==1.18.0
+
+# اختياري — يُثبَّت بس لو فعّلت ترقية المساعد الذكي لـClaude API (بند 25)
+# بإضافة ANTHROPIC_API_KEY بملف .env. بدون المفتاح، المساعد يشتغل بمحرك
+# محلي بالكامل بدون هذي الحزمة إطلاقاً.
+# anthropic
+
+# رادار المناخ والإجهاد الحراري (بند إضافي 49) — أول اتصال خارجي فعلي
+# بالمشروع، لجلب توقعات الطقس من Open-Meteo (مجاني بدون مفتاح، بقرارك
+# الصريح).
+requests==2.34.2
+
+# سيرفر إنتاج/اختبار (بند إضافي، 2026-07-25) — python run.py المدمج بـFlask
+# للتطوير المحلي فقط؛ gunicorn هو اللي يشغّل التطبيق فعلياً بأي نشر حقيقي
+# (Dockerfile/Procfile). راجع DEPLOY.md.
+gunicorn==23.0.0

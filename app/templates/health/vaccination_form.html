@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "health/_medicine_widget.html" import medicine_option_attrs, medicine_info_widget with context %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>{{ _('تسجيل تطعيم') }}</h2>
+  {% if prefill_task_id %}
+  <div class="notice">ℹ️ {{ _('تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة تلقائياً.') }}</div>
+  {% endif %}
+  <form method="post" data-offline>
+    {% if prefill_task_id %}<input type="hidden" name="task_id" value="{{ prefill_task_id }}">{% endif %}
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
+    <label>{{ _('الحيوان') }}</label>
+    <select name="animal_id" required>
+      {% for a in animals %}<option value="{{ a.id }}" {{ 'selected' if prefill_animal_id == a.id }}>{{ a.animal_no }}</option>{% endfor %}
+    </select>
+    <label>{{ _('اسم اللقاح') }}</label><input name="vaccine_name" required>
+    <label>{{ _('الموعد القادم (اختياري)') }}</label><input name="next_due_date" type="date">
+    <label>{{ _('الدواء المستخدم من الصيدلية (اختياري)') }}</label>
+    <select name="pharmacy_id" id="pharmacySelect">
+      <option value="">{{ _('بدون ربط') }}</option>
+      {% for m in medicines %}<option value="{{ m.id }}" {{ medicine_option_attrs(m) }} {{ 'selected' if prefill_pharmacy_id == m.id }}>{{ m.name }}{{ ' — ' + m.usage_method if m.usage_method }} ({{ _('سحب:') }} {{ m.withdrawal_days }} {{ _('يوم') }})</option>{% endfor %}
+    </select>
+    <label>{{ _('الكمية المستخدمة') }}</label><input name="quantity_used" id="quantityUsed" type="number" step="0.01" value="{{ prefill_quantity_used or '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('إلزامية لو اخترت دواء أعلاه.') }}</p>
+    {{ medicine_info_widget('pharmacySelect', 'quantityUsed') }}
+    <label>{{ _('سبب التجاوز (لو ظهر تحذير تكرار جرعة الطفيليات)') }}</label>
+    <textarea name="redose_override_reason" rows="2" placeholder="{{ _('املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار') }}"></textarea>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
+  </form>
+</div>
+{% endblock %}

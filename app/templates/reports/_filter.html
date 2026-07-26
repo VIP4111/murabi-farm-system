@@ -1,0 +1,22 @@
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+      {% for key, label in range_labels.items() %}
+      {% if key != 'custom' %}
+      <a class="btn {{ '' if key == range_key else 'light' }}" style="padding:8px 14px; font-size:13px;" href="{{ url_for('reports.' + active_key, range=key) }}">{{ label }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('reports.export', report_key=active_key, fmt='xlsx', range=range_key, start=start, end=end) }}">تصدير Excel</a>
+      <a class="btn light" href="{{ url_for('reports.export', report_key=active_key, fmt='pdf', range=range_key, start=start, end=end) }}">تصدير PDF</a>
+    </div>
+  </div>
+  <form method="get" action="{{ url_for('reports.' + active_key) }}" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; margin-top:12px;">
+    <input type="hidden" name="range" value="custom">
+    <div><label style="margin:0 0 4px;">من</label><input name="start" type="date" value="{{ start }}" style="margin:0;"></div>
+    <div><label style="margin:0 0 4px;">إلى</label><input name="end" type="date" value="{{ end }}" style="margin:0;"></div>
+    <button class="btn {{ '' if range_key == 'custom' else 'light' }}" type="submit" style="padding:10px 16px;">نطاق مخصص</button>
+  </form>
+  <p style="color:var(--muted); font-size:12px; margin-top:8px;">الفترة الحالية: {{ start }} → {{ end }}</p>
+</div>

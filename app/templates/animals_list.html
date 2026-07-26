@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>سجل الحيوانات</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('core.smart_sale_report') }}">البيع الذكي وتفادي الخسارة</a>
+      {% if current_user.has_permission('animals.manage') %}
+      <a class="btn light" href="{{ url_for('core.animals_bulk_purchase') }}">+ شراء دفعة جديدة</a>
+      <a class="btn" href="{{ url_for('core.animals_new') }}">+ حيوان جديد</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  {% for key, (label, _) in filters.items() %}
+  <a class="tab-btn {{ 'active' if key == active_filter }}" href="{{ url_for('core.animals_list', filter=key, barn_id=active_barn_id) }}">{{ label }} ({{ counts[key] }})</a>
+  {% endfor %}
+</div>
+
+<div class="card" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+  <form method="get" style="display:flex; align-items:center; gap:8px; margin:0;">
+    <input type="hidden" name="filter" value="{{ active_filter }}">
+    <label style="margin:0; white-space:nowrap;">فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)</label>
+    <select name="barn_id" onchange="this.form.submit()" style="width:auto; margin:0;">
+      <option value="">كل الحظائر</option>
+      {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if active_barn_id == b.id }}>{{ b.barn_name }}</option>{% endfor %}
+    </select>
+  </form>
+  {% if active_barn_id %}<a class="btn light" href="{{ url_for('core.animals_list', filter=active_filter) }}" style="padding:6px 12px; font-size:13px;">إلغاء فلترة الحظيرة ✕</a>{% endif %}
+</div>
+
+{% if active_filter != 'all' %}
+<div class="notice">
+  {% set defs = {
+    'lambs': 'البهم: عمرها أقل من 6 أشهر (يحتاج تاريخ ولادة مسجّل).',
+    'males': 'الذكور: كل الرؤوس النشطة بجنس ذكر.',
+    'near_birth': 'قريب الولادة: حمل مؤكد وتاريخ الولادة المتوقع خلال 30 يوم القادمة.',
+    'mated': 'المقرعات: عندها تقريع مسجّل خلال آخر دورة حمل (بغض النظر عن تأكيد الحمل).',
+    'productive': 'دافع: أنثى بعمر سنة فأكثر وعندها ولادة واحدة على الأقل خلال آخر 400 يوم.',
+    'unproductive': 'غير دافع: أنثى بعمر سنة فأكثر بدون أي ولادة خلال آخر 400 يوم.',
+    'nursing': 'المرضعات: عندها مولود عمره أقل من 90 يوم.',
+    'fattening': 'التسمين: الغرض المسجّل للحيوان = تسمين.',
+    'dead': 'النفوق: كل الرؤوس بحالة نافق.',
+    'ready_to_mate': 'جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات).',
+    'ostrich': 'النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — راجع سجل البيض والتفقيس من القائمة الجانبية.',
+  } %}
+  {{ defs.get(active_filter, '') }} هذا تعريف اجتهادي قابل للتعديل — كلّمني لو عندك تعريف مختلف.
+</div>
+{% endif %}
+
+{% set can_bulk = current_user.has_permission('animals.manage') or current_user.has_permission('health.manage') or current_user.has_permission('repro.manage') %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_select') }}" id="bulkForm">
+    {% if can_bulk and animals %}
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px; padding:10px; background:var(--bg); border-radius:14px;">
+      <span style="font-size:13px; color:var(--muted);"><span id="selCount">0</span> محدّد</span>
+      <select name="bulk_action" style="width:auto; margin:0;">
+        {% if current_user.has_permission('animals.manage') %}
+        <option value="weight">وزن جماعي</option>
+        <option value="note">ملاحظة جماعية</option>
+        <option value="barn_move">نقل حظيرة جماعي</option>
+        <option value="sale">بيع جماعي</option>
+        <option value="mark_dead">تسجيل نفوق جماعي</option>
+        {% endif %}
+        {% if current_user.has_permission('health.manage') %}
+        <option value="vaccination">تحصين جماعي</option>
+        <option value="disease">علاج/مرض جماعي</option>
+        <option value="isolation">عزل جماعي</option>
+        <option value="treatment_plan">خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)</option>
+        {% endif %}
+        {% if current_user.has_permission('repro.manage') %}
+        <option value="sonar">فحص سونار جماعي</option>
+        {% endif %}
+      </select>
+      <button class="btn" type="submit">متابعة الإجراء الجماعي</button>
+    </div>
+    {% endif %}
+    <table>
+      <tr>
+        {% if can_bulk %}<th><input type="checkbox" id="selectAll" style="width:auto; margin:0;"></th>{% endif %}
+        <th>الرقم</th><th>الاسم</th><th>المصدر</th><th>الحظيرة</th><th>الحالة</th><th>المرحلة</th><th>فترة سحب</th>
+      </tr>
+      {% set source_labels = {'birth': 'مولود بالمزرعة', 'purchase': 'شراء', 'gift': 'هدية/دعم', 'opening_balance': 'رصيد افتتاحي'} %}
+      {% for a in animals %}
+      <tr>
+        {% if can_bulk %}<td><input type="checkbox" class="animalChk" name="animal_ids" value="{{ a.id }}" style="width:auto; margin:0;"></td>{% endif %}
+        <td><a href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
+        <td>{{ a.name or '-' }}</td>
+        <td>{{ source_labels.get(a.source.value, a.source.value) }}</td>
+        <td>{{ a.barn.barn_name if a.barn else '-' }}</td>
+        <td>{{ a.status|ar_status }}</td>
+        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">نعام — بدون دورة</span>{% else %}<a href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
+        <td>
+          {% if withdrawal_map.get(a.id) %}
+          <span class="badge off" title="ممنوع البيع/الذبح — يُرفع تلقائياً">حتى {{ withdrawal_map[a.id] }} (باقي {{ (withdrawal_map[a.id] - today).days }} يوم)</span>
+          {% else %}<span class="badge on">آمن</span>{% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" style="color:#888;">{{ 'لا يوجد حيوانات ضمن هذا الفلتر حالياً.' if active_filter != 'all' else 'لا يوجد حيوانات مسجّلة بعد.' }}</td></tr>
+      {% endfor %}
+    </table>
+  </form>
+</div>
+<script>
+  (function(){
+    var selectAll = document.getElementById('selectAll');
+    var countEl = document.getElementById('selCount');
+    function updateCount(){
+      var checked = document.querySelectorAll('.animalChk:checked').length;
+      if(countEl) countEl.textContent = checked;
+    }
+    if(selectAll){
+      selectAll.addEventListener('change', function(){
+        document.querySelectorAll('.animalChk').forEach(function(c){ c.checked = selectAll.checked; });
+        updateCount();
+      });
+    }
+    document.querySelectorAll('.animalChk').forEach(function(c){ c.addEventListener('change', updateCount); });
+  })();
+</script>
+{% endblock %}

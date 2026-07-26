@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>دليل الحقن الميداني</h2>
+    <a class="btn light" href="{{ url_for('health.pharmacy_list') }}">← رجوع للصيدلية</a>
+  </div>
+  <div class="notice">
+    ⚠️ <b>إرشاد ميداني عام لطرق الحقن الأساسية — مو بروتوكولاً طبياً دقيقاً لحالة أو دواء معيّن.</b>
+    راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية).
+  </div>
+</div>
+
+<div class="card">
+  {% for method, info in guide.items() %}
+  <div style="padding:12px 0; border-bottom:1px solid var(--line);">
+    <h3 style="font-size:15px; margin:0 0 6px;">{{ info.title }}</h3>
+    <p style="color:var(--muted); font-size:13px; margin:0;">{{ info.notes }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

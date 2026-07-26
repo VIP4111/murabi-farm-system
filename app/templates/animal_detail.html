@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+{% block title %}{{ animal.animal_no }} — تفاصيل الرأس{% endblock %}
+{% block content %}
+{% set source_labels = {'birth': 'مولود بالمزرعة', 'purchase': 'شراء', 'gift': 'هدية/دعم', 'opening_balance': 'رصيد افتتاحي'} %}
+{% set active_tab = request.args.get('tab', 'summary') %}
+
+<div class="card">
+  <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+    {% if animal.image_url %}
+    <img src="{{ animal.image_url }}" alt="" style="width:72px; height:72px; border-radius:18px; object-fit:cover; flex:0 0 auto;">
+    {% else %}
+    <div style="width:72px; height:72px; border-radius:18px; background:var(--bg); display:grid; place-items:center; font-size:30px; flex:0 0 auto;">{{ '🦤' if animal.species == 'ostrich' else '🐑' }}</div>
+    {% endif %}
+    <div style="flex:1; min-width:200px;">
+      <h2>{{ animal.name or animal.animal_no }}</h2>
+      <div style="color:var(--muted); font-size:13px;">
+        رقم {{ animal.animal_no }}
+        {% if age_label %}· العمر {{ age_label }}{% endif %}
+        {% if animal.color %}· {{ animal.color }}{% endif %}
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+        <span class="badge {{ 'on' if animal.status == 'active' else 'off' }}">{{ animal.status|ar_status }}</span>
+        <span class="badge">{{ animal.gender or '-' }}</span>
+        <span class="badge">{{ source_labels.get(animal.source.value, animal.source.value) }}</span>
+        <span class="badge">{{ animal.barn.barn_name if animal.barn else 'بدون حظيرة' }}</span>
+        {% if withdrawal_until %}<span class="badge off" title="ممنوع البيع/الذبح — يُرفع تلقائياً">🚫 فترة سحب حتى {{ withdrawal_until }} (باقي {{ withdrawal_days_left }} يوم)</span>{% endif %}
+      </div>
+    </div>
+    <div style="flex:0 0 auto; display:flex; flex-direction:column; gap:8px;">
+      {% if animal.species == 'ostrich' %}
+      <a class="btn light" href="{{ url_for('ostrich.eggs_list') }}">سجل النعام (بيض/تفقيس) ◀</a>
+      {% else %}
+      <a class="btn light" href="{{ url_for('core.animal_workflow', animal_id=animal.id) }}">دورة الإنتاج ◀</a>
+      {% if current_user.has_permission('animals.manage') %}<a class="btn" href="{{ url_for('core.animal_workflow', animal_id=animal.id) }}#exit">إجراءات الخروج</a>{% endif %}
+      {% endif %}
+      {% if current_user.has_permission('animals.manage') %}<a class="btn light" href="{{ url_for('core.animals_edit', animal_id=animal.id) }}">تعديل البيانات</a>{% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+  {% if animal.species == 'ostrich' %}
+  <div class="stat"><b>نعام</b><span>الفصيلة — بدون دورة إنتاج (مجترات فقط)</span></div>
+  {% else %}
+  <div class="stat"><b>{{ wf.stage_name or '-' }}</b><span>مرحلة الدورة ({{ wf.current_stage }}/10)</span></div>
+  {% endif %}
+  <div class="stat"><b>{{ animal.weight or '-' }}</b><span>آخر وزن مسجّل (كجم)</span></div>
+  <div class="stat"><b>{{ open_diseases_count }}</b><span>أمراض مفتوحة حالياً</span></div>
+  <div class="stat"><b>{{ births|length }}</b><span>عدد الولادات المسجّلة</span></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn {{ 'active' if active_tab=='summary' }}" data-tab="summary" onclick="showTab('summary')">ملخص</button>
+  <button class="tab-btn {{ 'active' if active_tab=='timeline' }}" data-tab="timeline" onclick="showTab('timeline')">التسلسل الزمني</button>
+  <button class="tab-btn {{ 'active' if active_tab=='vet' }}" data-tab="vet" onclick="showTab('vet')">سجل بيطري</button>
+  <button class="tab-btn {{ 'active' if active_tab=='diseases' }}" data-tab="diseases" onclick="showTab('diseases')">الأمراض</button>
+  <button class="tab-btn {{ 'active' if active_tab=='vaccinations' }}" data-tab="vaccinations" onclick="showTab('vaccinations')">التحصينات</button>
+  <button class="tab-btn {{ 'active' if active_tab=='repro' }}" data-tab="repro" onclick="showTab('repro')">التكاثر</button>
+  <button class="tab-btn {{ 'active' if active_tab=='births' }}" data-tab="births" onclick="showTab('births')">الولادات</button>
+  <button class="tab-btn {{ 'active' if active_tab=='weights' }}" data-tab="weights" onclick="showTab('weights')">الأوزان</button>
+  <button class="tab-btn {{ 'active' if active_tab=='milk' }}" data-tab="milk" onclick="showTab('milk')">الحليب</button>
+  <button class="tab-btn {{ 'active' if active_tab=='notes' }}" data-tab="notes" onclick="showTab('notes')">ملاحظات</button>
+  <button class="tab-btn {{ 'active' if active_tab=='finance' }}" data-tab="finance" onclick="showTab('finance')">المالية</button>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='summary' }}" data-tab="summary">
+  <div class="card">
+    <h3 style="font-size:15px;">بيانات أساسية</h3>
+    <table>
+      <tr><td>الجنس</td><td>{{ animal.gender or '-' }}</td></tr>
+      <tr><td>اللون</td><td>{{ animal.color or '-' }}</td></tr>
+      <tr><td>الغرض</td><td>{{ animal.purpose or '-' }}</td></tr>
+      <tr><td>الأم</td><td>{% if animal.mother %}<a href="{{ url_for('core.animal_detail', animal_id=animal.mother.id) }}">{{ animal.mother.animal_no }}</a>{% else %}-{% endif %}</td></tr>
+      <tr><td>الأب</td><td>{% if animal.father %}<a href="{{ url_for('core.animal_detail', animal_id=animal.father.id) }}">{{ animal.father.animal_no }}</a>{% else %}-{% endif %}</td></tr>
+      <tr><td>تاريخ الولادة</td><td>{{ animal.birth_date or '-' }}</td></tr>
+      <tr><td>تاريخ الشراء</td><td>{{ animal.purchase_date or '-' }}</td></tr>
+      <tr><td>تاريخ الدخول للمزرعة</td><td>{{ animal.entry_date or '-' }}</td></tr>
+      <tr><td>الحظيرة</td><td>{{ animal.barn.barn_name if animal.barn else '-' }}</td></tr>
+      <tr><td>السعر</td><td>{{ animal.price or '-' }}</td></tr>
+    </table>
+  </div>
+
+  {% if animal.mother_id %}
+  {% set br = animal.birth_record %}
+  <div class="card">
+    <h3 style="font-size:15px;">قائمة تحقق الولادة</h3>
+    {% if current_user.has_permission('health.manage') %}
+    <form method="post" action="{{ url_for('core.animal_birth_record_save', animal_id=animal.id) }}" data-offline>
+      {% set fields = [
+        ('breathing_ok', 'تنفّس طبيعي', br.breathing_ok if br else none),
+        ('standing_ok', 'وقف على قوائمه', br.standing_ok if br else none),
+        ('colostrum_received', 'رضع اللبأ', br.colostrum_received if br else none),
+        ('cord_treated', 'تعقيم السرة', br.cord_treated if br else none),
+      ] %}
+      {% for name, label, value in fields %}
+      <label>{{ label }}</label>
+      <select name="{{ name }}">
+        <option value="" {{ 'selected' if value is none }}>-- غير محدد --</option>
+        <option value="yes" {{ 'selected' if value == true }}>نعم</option>
+        <option value="no" {{ 'selected' if value == false }}>لا</option>
+      </select>
+      {% endfor %}
+      <label>عيوب خلقية (اتركه فاضي لو ما فيه)</label>
+      <textarea name="birth_defects">{{ br.birth_defects if br else '' }}</textarea>
+      <button class="btn" type="submit">حفظ قائمة التحقق</button>
+    </form>
+    {% else %}
+    <table>
+      <tr><td>تنفّس طبيعي</td><td>{{ 'نعم' if br and br.breathing_ok else ('لا' if br and br.breathing_ok == false else 'غير محدد') }}</td></tr>
+      <tr><td>وقف على قوائمه</td><td>{{ 'نعم' if br and br.standing_ok else ('لا' if br and br.standing_ok == false else 'غير محدد') }}</td></tr>
+      <tr><td>رضع اللبأ</td><td>{{ 'نعم' if br and br.colostrum_received else ('لا' if br and br.colostrum_received == false else 'غير محدد') }}</td></tr>
+      <tr><td>تعقيم السرة</td><td>{{ 'نعم' if br and br.cord_treated else ('لا' if br and br.cord_treated == false else 'غير محدد') }}</td></tr>
+      <tr><td>عيوب خلقية</td><td>{{ (br.birth_defects if br else none) or 'لا يوجد' }}</td></tr>
+    </table>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if animal.gender == 'أنثى' %}
+  <div class="card">
+    <h3 style="font-size:15px;">علامات بيع (محرك البيع الذكي — بند 19)</h3>
+    <p style="color:var(--muted); font-size:12px;">أي علامة "نعم" هنا تعني توصية بيع فورية بتقرير <a href="{{ url_for('core.smart_sale_report') }}">البيع الذكي</a>، بغض النظر عن باقي العوامل.</p>
+    {% if current_user.has_permission('health.manage') %}
+    <form method="post" action="{{ url_for('core.animal_repro_flags_save', animal_id=animal.id) }}" data-offline>
+      {% set rflags = [
+        ('refuses_nursing', 'ترفض إرضاع مولودها', animal.refuses_nursing),
+        ('udder_damaged', 'الضرع/الدرة تالفة', animal.udder_damaged),
+      ] %}
+      {% for name, label, value in rflags %}
+      <label>{{ label }}</label>
+      <select name="{{ name }}">
+        <option value="" {{ 'selected' if value is none }}>-- غير محدد --</option>
+        <option value="yes" {{ 'selected' if value == true }}>نعم</option>
+        <option value="no" {{ 'selected' if value == false }}>لا</option>
+      </select>
+      {% endfor %}
+      <button class="btn" type="submit">حفظ</button>
+    </form>
+    {% else %}
+    <table>
+      <tr><td>ترفض إرضاع مولودها</td><td>{{ 'نعم' if animal.refuses_nursing else ('لا' if animal.refuses_nursing == false else 'غير محدد') }}</td></tr>
+      <tr><td>الضرع/الدرة تالفة</td><td>{{ 'نعم' if animal.udder_damaged else ('لا' if animal.udder_damaged == false else 'غير محدد') }}</td></tr>
+    </table>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='timeline' }}" data-tab="timeline">
+  <div class="card">
+    <h3 style="font-size:15px;">كل السجلات مرتبة بالتاريخ</h3>
+    <div class="timeline">
+      {% for e in timeline %}
+      <div class="timeline-row">
+        <span class="timeline-icon">{{ e.icon }}</span>
+        <div class="timeline-body">
+          <b>[{{ e.category }}] {{ e.label }}</b>
+          {% if e.detail %}<small>{{ e.detail }}</small>{% endif %}
+        </div>
+        <span class="timeline-date">{{ e.date or '-' }}</span>
+      </div>
+      {% else %}
+      <div class="empty">لا يوجد سجلات مرتبطة بهذا الحيوان بعد.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='vet' }}" data-tab="vet">
+  {% if current_user.has_permission('health.manage') %}
+  <div class="card">
+    <h3 style="font-size:15px;">بروتوكولات العلاج</h3>
+    <a class="btn light" href="{{ url_for('health.protocols_list', animal_id=animal.id) }}">💊 طبّق بروتوكول علاج جاهز على هذا الرأس ←</a>
+  </div>
+  {% endif %}
+  <div class="card">
+    <h3 style="font-size:15px;">الزيارات البيطرية</h3>
+    <table>
+      <tr><th>التاريخ</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th></tr>
+      {% for v in vet_visits %}
+      <tr><td>{{ v.date }}</td><td>{{ v.doctor.name if v.doctor else '-' }}</td><td>{{ v.diagnosis or '-' }}</td><td>{{ v.cost }}</td></tr>
+      {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد زيارات مسجّلة.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='diseases' }}" data-tab="diseases">
+  <div class="card">
+    <h3 style="font-size:15px;">الأمراض</h3>
+    <table>
+      <tr><th>التاريخ</th><th>المرض</th><th>الشدة</th><th>الحالة</th></tr>
+      {% for d in diseases %}
+      <tr>
+        <td>{{ d.date }}</td><td>{{ d.disease_name }}</td><td>{{ d.severity or '-' }}</td>
+        <td><span class="badge {{ 'off' if d.status == 'active' else 'on' }}">{{ d.status|ar_status }}</span></td>
+      </tr>
+      {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد أمراض مسجّلة.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='vaccinations' }}" data-tab="vaccinations">
+  <div class="card">
+    <h3 style="font-size:15px;">التحصينات</h3>
+    <table>
+      <tr><th>التاريخ</th><th>اللقاح</th><th>الجرعة القادمة</th></tr>
+      {% for vc in vaccinations %}
+      <tr><td>{{ vc.date }}</td><td>{{ vc.vaccine_name }}</td><td>{{ vc.next_due_date or '-' }}</td></tr>
+      {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد تحصينات مسجّلة.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='repro' }}" data-tab="repro">
+  <div class="card">
+    <h3 style="font-size:15px;">التقريع</h3>
+    <table>
+      <tr><th>التاريخ</th><th>الدور</th><th>الطرف الآخر</th></tr>
+      {% for m in matings %}
+      <tr>
+        <td>{{ m.date }}</td>
+        <td>{{ 'أنثى' if m.female_id == animal.id else 'فحل' }}</td>
+        <td>{% set other = m.male if m.female_id == animal.id else m.female %}{{ other.animal_no if other else (m.male_note or '-') }}</td>
+      </tr>
+      {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد تقريع مسجّل.</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="font-size:15px;">تشخيص الحمل</h3>
+    <table>
+      <tr><th>التاريخ</th><th>الحالة</th><th>عدد الأجنة</th></tr>
+      {% for p in pregnancies %}
+      <tr><td>{{ p.date }}</td><td>{{ 'مؤكد' if p.confirmed else 'قيد الفحص' }}</td><td>{{ p.embryo_count or '-' }}</td></tr>
+      {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد تشخيص حمل مسجّل.</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="font-size:15px;">فحوصات السونار</h3>
+    <table>
+      <tr><th>التاريخ</th><th>النتيجة</th><th>عدد الأجنة</th></tr>
+      {% for s in sonar_results %}
+      <tr><td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td><td>{{ s.embryo_count or '-' }}</td></tr>
+      {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد فحوصات سونار مسجّلة.</td></tr>{% endfor %}
+    </table>
+  </div>
+  {% if twin_programs %}
+  <div class="card">
+    <h3 style="font-size:15px;">برامج الشياع التوأمي</h3>
+    <table>
+      <tr><th>البرنامج</th><th>البدء</th><th>الحالة</th></tr>
+      {% for prog in twin_programs %}
+      <tr><td><a href="{{ url_for('repro.program_detail', program_id=prog.id) }}">{{ prog.protocol_name or ('برنامج #' ~ prog.id) }}</a></td><td>{{ prog.start_date }}</td><td>{{ prog.status|ar_status }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='births' }}" data-tab="births">
+  <div class="card">
+    <h3 style="font-size:15px;">الولادات</h3>
+    <table>
+      <tr><th>التاريخ</th><th>رقم المولود</th><th>الجنس</th><th>الوزن عند الولادة</th></tr>
+      {% for b in births %}
+      <tr>
+        <td>{{ b.birth_date or '-' }}</td>
+        <td><a href="{{ url_for('core.animal_detail', animal_id=b.id) }}">{{ b.animal_no }}</a></td>
+        <td>{{ b.gender or '-' }}</td>
+        <td>{{ b.weight or '-' }}</td>
+      </tr>
+      {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد ولادات مسجّلة لهذا الحيوان.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='weights' }}" data-tab="weights">
+  {% if current_user.has_permission('animals.manage') %}
+  <div class="card">
+    <h3 style="font-size:15px;">تسجيل وزن جديد</h3>
+    <form method="post" action="{{ url_for('core.animal_weight_new', animal_id=animal.id) }}" data-offline>
+      <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
+      <label>الوزن (كجم)</label><input name="weight" type="number" step="0.01" required>
+      <label>ملاحظات</label><input name="notes">
+      <button class="btn" type="submit">حفظ</button>
+    </form>
+  </div>
+  {% endif %}
+  <div class="card">
+    <h3 style="font-size:15px;">سجل الأوزان</h3>
+    <table>
+      <tr><th>التاريخ</th><th>الوزن (كجم)</th><th>ملاحظات</th></tr>
+      {% for w in weights %}
+      <tr><td>{{ w.date }}</td><td>{{ w.weight }}</td><td>{{ w.notes or '-' }}</td></tr>
+      {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد أوزان مسجّلة بعد.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='milk' }}" data-tab="milk">
+  {% if current_user.has_permission('animals.manage') %}
+  <div class="card">
+    <h3 style="font-size:15px;">تسجيل حلبة جديدة</h3>
+    <form method="post" action="{{ url_for('core.animal_milk_new', animal_id=animal.id) }}" data-offline>
+      <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
+      <label>الجلسة</label>
+      <select name="session">
+        <option value="صباح">صباح</option>
+        <option value="مساء">مساء</option>
+      </select>
+      <label>الكمية (لتر)</label><input name="quantity_liters" type="number" step="0.01" required>
+      <label>ملاحظات</label><input name="notes">
+      <button class="btn" type="submit">حفظ</button>
+    </form>
+  </div>
+  {% endif %}
+  <div class="card">
+    <h3 style="font-size:15px;">سجل الحليب</h3>
+    <table>
+      <tr><th>التاريخ</th><th>الجلسة</th><th>الكمية (لتر)</th><th>ملاحظات</th></tr>
+      {% for mr in milk_records %}
+      <tr><td>{{ mr.date }}</td><td>{{ mr.session }}</td><td>{{ mr.quantity_liters }}</td><td>{{ mr.notes or '-' }}</td></tr>
+      {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد حليب مسجّل بعد.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='notes' }}" data-tab="notes">
+  {% if current_user.has_permission('animals.manage') %}
+  <div class="card">
+    <h3 style="font-size:15px;">إضافة ملاحظة</h3>
+    <form method="post" action="{{ url_for('core.animal_note_new', animal_id=animal.id) }}" data-offline>
+      <label>التاريخ</label><input name="date" type="date" value="{{ today }}">
+      <label>الملاحظة</label><textarea name="note" required></textarea>
+      <button class="btn" type="submit">حفظ</button>
+    </form>
+  </div>
+  {% endif %}
+  <div class="card">
+    <h3 style="font-size:15px;">الملاحظات المسجّلة</h3>
+    <table>
+      <tr><th>التاريخ</th><th>الملاحظة</th><th>بواسطة</th></tr>
+      {% for n in notes %}
+      <tr><td>{{ n.date }}</td><td>{{ n.note }}</td><td>{{ n.created_by.name if n.created_by else '-' }}</td></tr>
+      {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد ملاحظات بعد.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel {{ 'active' if active_tab=='finance' }}" data-tab="finance">
+  <div class="card">
+    <h3 style="font-size:15px;">تقرير تكلفة الرأس الفردي</h3>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:10px 0;">
+      <div class="stat"><b>{{ purchase_cost }}</b><span>تكلفة الشراء</span></div>
+      <div class="stat"><b>{{ direct_medical_cost }}</b><span>تكاليف طبية مباشرة (زيارات + أمراض + تحصينات)</span></div>
+      <div class="stat"><b>{{ feed_cost_estimate.total }}</b><span>تقدير تكلفة العلف ({{ feed_cost_estimate.days }} يوم)</span></div>
+      <div class="stat"><b>{{ indirect_cost_share }}</b><span>نصيبه من المصاريف غير المباشرة (إيجار/صيانة/رواتب — موزَّعة على القطيع)</span></div>
+      <div class="stat" style="background:var(--primary); color:#fff; grid-column:1/-1;"><b>{{ total_cost_estimate }}</b><span style="color:rgba(255,255,255,.8);">الإجمالي التقديري منذ الدخول</span></div>
+    </div>
+    {% if not feed_cost_estimate.available %}
+    <div class="notice">⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة، أو ما فيه خطة تغذية فعّالة لحظيرته حالياً.</div>
+    {% endif %}
+    <div class="notice">
+      ℹ️ <b>تنبيهات صادقة على هذا التقرير</b>: (1) تقدير العلف تقريبي —
+      يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام
+      ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة
+      (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة <b>الحالي</b>، مو
+      العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير "تكلفة الرأس
+      الشهرية" ببند 18) — ويعتمد كمان على تعليم المصروف كـ"غير مباشر" عند
+      إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً
+      من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع
+      للقيمة اليدوية اللي أدخلها الدكتور وقتها.
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:15px;">الحركات المالية المرتبطة</h3>
+    <table>
+      <tr><th>التاريخ</th><th>النوع</th><th>الوصف</th><th>المبلغ</th></tr>
+      {% set op_labels = {'sale': 'بيع', 'purchase': 'شراء', 'expense': 'مصروف'} %}
+      {% for f in finance_rows %}
+      <tr><td>{{ f.date }}</td><td>{{ op_labels.get(f.operation_type, f.operation_type) }}</td><td>{{ f.item or f.description or '-' }}</td><td>{{ f.amount }}</td></tr>
+      {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد حركات مالية مرتبطة بهذا الحيوان.</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;">
+  <h2>محاولة تقريع جديدة — برنامج #{{ program.id }} ({{ program.ewe.animal_no }})</h2>
+  <form method="post" data-offline>
+    <label>تاريخ التقريع</label><input name="mating_date" type="date" required>
+    <label>الفحل (لو مسجّل بالنظام)</label>
+    <select name="ram_id">
+      <option value="">-</option>
+      {% for m in males %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
+    </select>
+    <label>وصف الفحل (لو خارجي)</label><input name="ram_note">
+    <label>حالة التأكيد</label>
+    <select name="confirmation_status">
+      <option value="pending">قيد الانتظار</option>
+      <option value="confirmed">مؤكّدة</option>
+      <option value="failed">فشلت</option>
+    </select>
+    <label>لاحظها</label><input name="observed_by">
+    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">حفظ</button>
+  </form>
+</div>
+{% endblock %}

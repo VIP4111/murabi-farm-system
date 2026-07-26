@@ -1,0 +1,87 @@
+{# ودجتان مشتركتان بين نموذج البلاغ العادي (report_form.html) ونموذج
+   العامل المبسّط (worker_report_form.html) — بند 28:
+   1) بطاقة معلومات الحيوان التلقائية (species/gender/age/barn/status).
+   2) مسجّل ملاحظة صوتية بسيط (MediaRecorder) بدل الكتابة.
+   الاثنان يفترضان وجود عنصر select بمعرّف `animalSelect` بنفس الصفحة. #}
+
+{% macro animal_info_widget() %}
+<div id="animalInfoCard" class="notice" style="display:none; margin-top:-4px;"></div>
+<script>
+(function(){
+  var sel = document.getElementById('animalSelect');
+  var card = document.getElementById('animalInfoCard');
+  if (!sel || !card) return;
+  sel.addEventListener('change', function(){
+    var id = sel.value;
+    if (!id) { card.style.display = 'none'; card.innerHTML = ''; return; }
+    fetch('/animals/' + id + '/quick-info').then(function(r){ return r.json(); }).then(function(d){
+      card.innerHTML =
+        '<b>' + d.animal_no + '</b> — ' + d.species_label +
+        ' — {{ _("الجنس:") }} ' + d.gender + ' — {{ _("العمر:") }} ' + d.age_label +
+        '<br>{{ _("الحظيرة:") }} ' + d.barn_name + ' — {{ _("الحالة:") }} ' + d.status_label +
+        (d.image_url ? '<br><a href="' + d.image_url + '" target="_blank">{{ _("صورة الحيوان") }}</a>' : '');
+      card.style.display = 'block';
+    }).catch(function(){ card.style.display = 'none'; });
+  });
+})();
+</script>
+{% endmacro %}
+
+{% macro voice_note_widget() %}
+<label>{{ _('ملاحظة صوتية (اختياري — بديل عن الكتابة)') }}</label>
+<div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+  <button type="button" id="voiceRecordBtn" class="btn light">🎙️ {{ _('تسجيل صوتي') }}</button>
+  <span id="voiceStatus" style="font-size:12px; color:var(--muted);"></span>
+</div>
+<audio id="voicePreview" controls style="display:none; width:100%; margin-bottom:10px;"></audio>
+<input type="file" name="voice_note" id="voiceNoteInput" accept="audio/*" style="display:none">
+<script>
+(function(){
+  var btn = document.getElementById('voiceRecordBtn');
+  var status = document.getElementById('voiceStatus');
+  var preview = document.getElementById('voicePreview');
+  var fileInput = document.getElementById('voiceNoteInput');
+  if (!btn) return;
+
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    btn.disabled = true;
+    status.textContent = '{{ _("التسجيل الصوتي غير مدعوم بهذا المتصفح") }}';
+    return;
+  }
+
+  var mediaRecorder = null, chunks = [], recording = false, stream = null;
+
+  btn.addEventListener('click', function(){
+    if (!recording) {
+      navigator.mediaDevices.getUserMedia({audio: true}).then(function(s){
+        stream = s;
+        chunks = [];
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = function(e){ if (e.data.size > 0) chunks.push(e.data); };
+        mediaRecorder.onstop = function(){
+          var blob = new Blob(chunks, {type: 'audio/webm'});
+          var file = new File([blob], 'voice-note.webm', {type: 'audio/webm'});
+          var dt = new DataTransfer();
+          dt.items.add(file);
+          fileInput.files = dt.files;
+          preview.src = URL.createObjectURL(blob);
+          preview.style.display = 'block';
+          stream.getTracks().forEach(function(t){ t.stop(); });
+          status.textContent = '{{ _("تم التسجيل — استمع للمراجعة قبل الإرسال") }}';
+        };
+        mediaRecorder.start();
+        recording = true;
+        btn.textContent = '⏹️ {{ _("إيقاف التسجيل") }}';
+        status.textContent = '{{ _("جاري التسجيل...") }}';
+      }).catch(function(err){
+        status.textContent = '{{ _("تعذّر الوصول للمايكروفون:") }} ' + err.message;
+      });
+    } else {
+      mediaRecorder.stop();
+      recording = false;
+      btn.textContent = '🎙️ {{ _("تسجيل صوتي") }}';
+    }
+  });
+})();
+</script>
+{% endmacro %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>التقريع</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.matings_new') }}">+ تقريع جديد</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>التاريخ</th><th>الأنثى</th><th>الفحل</th><th>الحظيرة</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.date }}</td>
+      <td>{{ r.female.animal_no }}</td>
+      <td>{{ r.male.animal_no if r.male else (r.male_note or '-') }}</td>
+      <td>{{ r.barn.barn_name if r.barn else '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">لا يوجد عمليات تقريع مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

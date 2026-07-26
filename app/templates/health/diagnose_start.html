@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>المساعد التشخيصي</h2>
+    <a class="btn light" href="{{ url_for('health.diseases_list') }}">← رجوع لسجل الأمراض</a>
+  </div>
+  <div class="notice">
+    ⚠️ <b>هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً.</b>
+    السجل المرضي يبقى "مفتوحاً" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً.
+  </div>
+</div>
+
+<div class="card">
+  <form method="get">
+    <label>الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)</label>
+    <select name="animal_id">
+      <option value="">-</option>
+      {% for a in animals %}<option value="{{ a.id }}" {{ 'selected' if animal_id == a.id }}>{{ a.animal_no }}{{ ' — ' + a.name if a.name }}</option>{% endfor %}
+    </select>
+
+    <label>العرض الرئيسي</label>
+    <select name="primary" required>
+      <option value="">اختر عرضاً رئيسياً...</option>
+      {% for s in primary_symptoms %}<option value="{{ s.id }}" {{ 'selected' if selected_primary_id == s.id }}>{{ s.name }}</option>{% endfor %}
+    </select>
+    <button class="btn" type="submit">التالي — عرض الأسئلة المتابعة</button>
+  </form>
+</div>
+
+{% if selected_primary_id %}
+<div class="card">
+  <h3 style="font-size:15px;">أعراض مصاحبة (اختر كل ما ينطبق)</h3>
+  {% if not secondary_symptoms %}
+  <p style="color:var(--muted); font-size:13px;">ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية.</p>
+  {% endif %}
+  <form method="post" action="{{ url_for('health.diagnose_result') }}">
+    <input type="hidden" name="animal_id" value="{{ animal_id or '' }}">
+    <input type="hidden" name="symptom_ids" value="{{ selected_primary_id }}">
+    {% for s in secondary_symptoms %}
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+      <input type="checkbox" name="symptom_ids" value="{{ s.id }}" style="width:auto; margin:0;">
+      {{ s.name }}
+    </label>
+    {% endfor %}
+    <label>أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)</label>
+    <textarea name="free_text_symptoms" rows="2" placeholder="مثال: يمتنع عن الأكل منذ يومين..."></textarea>
+    <button class="btn" type="submit">احسب الاحتمالات</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

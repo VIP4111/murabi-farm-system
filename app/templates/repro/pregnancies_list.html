@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>تشخيص الحمل</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.pregnancies_new') }}">+ تشخيص جديد</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>التاريخ</th><th>الأنثى</th><th>مؤكّد</th><th>تاريخ السونار</th><th>عدد الأجنّة</th><th>الولادة المتوقعة</th><th>النتيجة</th><th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.date }}</td>
+      <td>{{ r.female.animal_no }}</td>
+      <td>{% if r.confirmed %}<span class="badge on">نعم</span>{% else %}<span class="badge off">لا</span>{% endif %}</td>
+      <td>{{ r.sonar_date or '-' }}</td>
+      <td>{{ r.embryo_count or '-' }}</td>
+      <td>{{ expected_birth[r.id] }}</td>
+      <td>{% if r.outcome == 'abortion' %}<span class="badge off">⛔ إجهاض {{ r.outcome_date }}</span>{% else %}-{% endif %}</td>
+      <td>
+        {% if current_user.has_permission('repro.manage') and not r.outcome %}
+        <form method="post" action="{{ url_for('repro.pregnancies_abort', pregnancy_id=r.id) }}"
+              onsubmit="return confirm('تسجيل إجهاض لـ{{ r.female.animal_no }} — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟');"
+              style="display:flex; gap:4px; align-items:center;">
+          <input type="hidden" name="outcome_date" value="{{ today }}">
+          <input name="notes" placeholder="ملاحظة (اختياري)" style="margin-bottom:0; width:120px;">
+          <button class="btn light" type="submit" style="padding:4px 10px; font-size:12px; background:#a32d2d; color:#fff;">تسجيل إجهاض</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="8" style="color:#888;">لا يوجد تشخيصات حمل مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

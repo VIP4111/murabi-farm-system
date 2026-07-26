@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>الأمراض</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('health.disease_types_list') }}">قائمة الأمراض الشائعة</a>
+      {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.diseases_new') }}">+ حالة جديدة</a>{% endif %}
+    </div>
+  </div>
+  <table>
+    <tr><th>التاريخ</th><th>الحيوان</th><th>المرض</th><th>الشدة</th><th>الحالة</th><th>فترة السحب حتى</th><th></th></tr>
+    {% for d in diseases %}
+    <tr>
+      <td>{{ d.date }}</td><td>{{ d.animal.animal_no }}</td><td>{{ d.disease_name }}</td>
+      <td>{{ d.severity or '-' }}</td><td>{{ d.status|ar_status }}</td>
+      <td>{% if d.withdrawal_until %}<span class="badge off">{{ d.withdrawal_until }}</span>{% else %}-{% endif %}</td>
+      <td>
+        {% if d.status == 'active' and current_user.has_permission('health.manage') %}
+        <form method="post" action="{{ url_for('health.disease_close', disease_id=d.id) }}" style="display:flex; gap:6px;" onsubmit="return confirm('تأكيد إغلاق السجل المرضي؟');">
+          <input name="recovery_note" placeholder="ملاحظة التعافي (إلزامي)" required style="margin-bottom:0;">
+          <button class="btn" type="submit" style="padding:8px 12px; font-size:12px;">إغلاق</button>
+        </form>
+        {% elif d.status == 'closed' %}
+        <span style="font-size:12px; color:var(--muted);">{{ d.recovery_note or '' }}</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" style="color:#888;">لا يوجد حالات مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

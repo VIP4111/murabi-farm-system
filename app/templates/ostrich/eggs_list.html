@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>سجل النعام — البيض والتفقيس</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('ostrich.incubators_list') }}">الحاضنات</a>
+      {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('ostrich.eggs_new') }}">+ تسجيل بيضة</a>{% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <a class="tab-btn {{ 'active' if status == 'all' }}" href="{{ url_for('ostrich.eggs_list', status='all') }}">الكل</a>
+  <a class="tab-btn {{ 'active' if status == 'pending' }}" href="{{ url_for('ostrich.eggs_list', status='pending') }}">قيد الحضانة/الانتظار</a>
+  <a class="tab-btn {{ 'active' if status == 'hatched' }}" href="{{ url_for('ostrich.eggs_list', status='hatched') }}">فقست</a>
+  <a class="tab-btn {{ 'active' if status == 'failed' }}" href="{{ url_for('ostrich.eggs_list', status='failed') }}">فشلت</a>
+</div>
+
+<div class="card">
+  <table>
+    <tr><th>الأم</th><th>تاريخ البيض</th><th>الجودة</th><th>الحاضنة</th><th>بداية الحضانة</th><th>الفقس المتوقع</th><th>الحالة</th><th></th></tr>
+    {% for e in eggs %}
+    <tr>
+      <td>{% if e.mother %}<a href="{{ url_for('core.animal_detail', animal_id=e.mother.id) }}">{{ e.mother.animal_no }}</a>{% else %}-{% endif %}</td>
+      <td>{{ e.lay_date }}</td>
+      <td>{{ e.quality or '-' }}</td>
+      <td>{{ e.incubator.code if e.incubator else '-' }}</td>
+      <td>{{ e.incubation_start_date or '-' }}</td>
+      <td>{{ expected[e.id] or '-' }}</td>
+      <td>
+        {% if e.hatch_result == 'pending' %}<span class="badge">بانتظار</span>
+        {% elif e.hatch_result == 'hatched' %}<span class="badge on">فقست — {{ e.hatched_animal.animal_no if e.hatched_animal else '' }}</span>
+        {% else %}<span class="badge off">فشلت</span>{% endif %}
+      </td>
+      <td>
+        {% if current_user.has_permission('repro.manage') and e.hatch_result == 'pending' %}
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          {% if not e.incubator_id %}
+          <form method="post" action="{{ url_for('ostrich.eggs_place', egg_id=e.id) }}" style="display:flex; gap:4px;">
+            <select name="incubator_id" required style="margin:0; width:auto;">
+              <option value="">اختر حاضنة</option>
+              {% for inc in incubators %}<option value="{{ inc.id }}">{{ inc.code }}</option>{% endfor %}
+            </select>
+            <input name="incubation_start_date" type="date" required style="margin:0; width:auto;" value="{{ e.lay_date }}">
+            <button class="btn" type="submit" style="padding:6px 10px; font-size:12px;">إدخال حاضنة</button>
+          </form>
+          {% endif %}
+          <a class="btn light" href="{{ url_for('ostrich.eggs_hatch', egg_id=e.id) }}" style="padding:6px 10px; font-size:12px;">تسجيل نتيجة الفقس</a>
+        </div>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="8" style="color:#888;">لا يوجد بيض مسجّل بهذا الفلتر.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

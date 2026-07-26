@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>الحاضنات</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('ostrich.eggs_list') }}">← سجل البيض</a>
+      {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('ostrich.incubators_new') }}">+ حاضنة جديدة</a>{% endif %}
+    </div>
+  </div>
+  <table>
+    <tr><th>الرمز</th><th>الاسم</th><th>السعة</th><th>الحالة</th><th>ملاحظات</th></tr>
+    {% for inc in incubators %}
+    <tr>
+      <td>{{ inc.code }}</td>
+      <td>{{ inc.name or '-' }}</td>
+      <td>{{ inc.capacity or '-' }}</td>
+      <td><span class="badge {{ 'on' if inc.status == 'active' else 'off' }}">{{ 'نشطة' if inc.status == 'active' else 'غير نشطة' }}</span></td>
+      <td>{{ inc.notes or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد حاضنات مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

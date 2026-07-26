@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>حركة مخزون العلف</h2>
+    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.movements_new') }}">+ حركة جديدة</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>التاريخ</th><th>المكوّن</th><th>النوع</th><th>الكمية</th><th>قبل</th><th>بعد</th><th>الحظيرة/الحيوان</th></tr>
+    {% for m in rows %}
+    <tr>
+      <td>{{ m.created_at.strftime('%Y-%m-%d') }}</td>
+      <td>{{ m.feed.name }}</td>
+      <td>{% if m.movement_type == 'in' %}<span class="badge on">وارد</span>{% else %}<span class="badge off">صادر</span>{% endif %}</td>
+      <td>{{ m.quantity }}</td>
+      <td>{{ m.before_qty }}</td>
+      <td>{{ m.after_qty }}</td>
+      <td>{{ m.barn.barn_name if m.barn else '' }}{{ m.animal.animal_no if m.animal else '' }}{{ '-' if not m.barn and not m.animal }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" style="color:#888;">لا يوجد حركات مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
