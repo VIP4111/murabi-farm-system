@@ -296,3 +296,6 @@ def test_bulk_treatment_plan_creates_linked_suggested_tasks_without_deducting(ap
     assert all(t.status == "suggested" for t in tasks)
     assert all(t.planned_pharmacy_id == pharmacy.id for t in tasks)
     assert all(t.planned_quantity == 2 for t in tasks)
+
+# ملاحظة: اختبارات تتبّع تنفيذ العامل بدقة (بند إضافي 54) موجودة كاملة
+# بملف مخصَّص `tests/test_task_worker_execution.py` — لا تُكرَّر هنا.

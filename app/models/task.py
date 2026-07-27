@@ -61,6 +61,21 @@ class Task(db.Model):
     completion_note = db.Column(db.Text)
     completion_evidence_image_url = db.Column(db.String(255))
 
+    # تتبّع تنفيذ العامل بدقة (بند 27.11 — كان موثّقاً كفجوة، أُغلق ببند
+    # إضافي 54) — مين باشر التنفيذ فعلياً (قد يختلف عن assignee_id لو
+    # عامل ثاني غطّى المناوبة)، مدة التنفيذ الفعلية بالدقائق، وحالة/سبب
+    # التعذّر لو ما قدر العامل يُنجزها، مع ملاحظة صوتية منفصلة عن صورة
+    # الدليل. server_time_source ثابت "server" على كل توقيت — توثيق إن
+    # الوقت من ساعة السيرفر مو جهاز العامل (قد يكون غير دقيق أو معطَّل).
+    accepted_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    accepted_by = db.relationship("User", foreign_keys=[accepted_by_id])
+    duration_minutes = db.Column(db.Integer)
+    server_time_source = db.Column(db.String(16))
+
+    failed_at = db.Column(db.DateTime)
+    failure_reason = db.Column(db.String(64))
+    voice_note_url = db.Column(db.String(255))
+
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)

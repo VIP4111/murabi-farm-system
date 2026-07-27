@@ -42,6 +42,13 @@ def sales():
     return _render("sales")
 
 
+@reports_bp.route("/activity")
+@login_required
+@require_permission("analytics.view")
+def activity():
+    return _render("activity")
+
+
 def _render(report_key):
     label, data, start, end, range_key = _load(report_key)
     return render_template(

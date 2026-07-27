@@ -192,6 +192,10 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     from app.core import pregnancy_care_service
     pregnancy_care_service.generate_late_pregnancy_tasks()
 
+    # مهام يومية تلقائية (بند إضافي 55.1) — نفس الفلسفة بالضبط.
+    from app.core import daily_task_service
+    daily_task_service.generate_daily_husbandry_tasks()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()

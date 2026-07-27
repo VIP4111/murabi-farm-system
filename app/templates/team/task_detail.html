@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "team/_report_widgets.html" import voice_note_widget %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -60,12 +61,60 @@
     <form method="post" action="{{ url_for('team.task_start', task_id=task.id) }}">
       <button class="btn" type="submit">بدء</button>
     </form>
-    {% elif task.status == 'in_progress' and task.assignee_id == current_user.id %}
-    <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" style="display:flex; gap:6px;">
-      {% if task.requires_photo %}<input name="evidence_image_url" placeholder="رابط صورة (إلزامي)" required style="margin-bottom:0;">{% endif %}
-      <button class="btn" type="submit">تم</button>
-    </form>
     {% endif %}
   </div>
 </div>
+
+{% if task.status == 'in_progress' and task.assignee_id == current_user.id %}
+<div class="card">
+  <h3 style="font-size:15px;">✅ إنجاز المهمة</h3>
+  <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" enctype="multipart/form-data">
+    <label>ملاحظة (اختياري)</label>
+    <textarea name="note" rows="2"></textarea>
+    <label>{{ 'صورة دليل (إلزامي)' if task.requires_photo else 'صورة دليل (اختياري)' }}</label>
+    <input type="file" name="evidence_image" accept="image/*" {{ 'required' if task.requires_photo }}>
+    <p class="notice" style="font-size:12px;">تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض.</p>
+    {{ voice_note_widget() }}
+    <button class="btn" type="submit">تم الإنجاز</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">⚠️ تعذّر التنفيذ</h3>
+  <p style="color:var(--muted); font-size:13px;">لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة.</p>
+  <form method="post" action="{{ url_for('team.task_fail', task_id=task.id) }}" enctype="multipart/form-data">
+    <label>سبب التعذّر</label>
+    <select name="reason" required>
+      <option value="">اختر السبب...</option>
+      {% for r in failure_reasons %}
+      <option value="{{ r }}">{{ r }}</option>
+      {% endfor %}
+    </select>
+    <label>تفاصيل إضافية (اختياري)</label>
+    <textarea name="note" rows="2"></textarea>
+    <label>صورة توضيحية (اختياري)</label>
+    <input type="file" name="evidence_image" accept="image/*">
+    <button class="btn" type="submit" style="background:#a32d2d;">تسجيل التعذّر</button>
+  </form>
+</div>
+{% endif %}
+
+{% if task.status == 'failed' %}
+<div class="card">
+  <h3 style="font-size:15px;">⚠️ سبب التعذّر</h3>
+  <p><b>{{ task.failure_reason }}</b>{% if task.completion_note %} — {{ task.completion_note }}{% endif %}</p>
+  {% if task.completion_evidence_image_url %}<p><a href="{{ task.completion_evidence_image_url }}" target="_blank">عرض الصورة</a></p>{% endif %}
+</div>
+{% endif %}
+
+{% if task.status == 'done' %}
+<div class="card">
+  <h3 style="font-size:15px;">✅ تفاصيل الإنجاز</h3>
+  <p><b>المدة:</b> {{ (task.duration_minutes ~ ' دقيقة') if task.duration_minutes is not none else '-' }}
+     — <b>باشرها:</b> {{ task.accepted_by.name if task.accepted_by else '-' }}</p>
+  {% if task.completion_note %}<p><b>ملاحظة:</b> {{ task.completion_note }}</p>{% endif %}
+  {% if task.completion_evidence_image_url %}<p><a href="{{ task.completion_evidence_image_url }}" target="_blank">عرض صورة الدليل</a></p>{% endif %}
+  {% if task.voice_note_url %}<audio controls style="width:100%;"><source src="{{ task.voice_note_url }}"></audio>{% endif %}
+</div>
+{% endif %}
 {% endblock %}

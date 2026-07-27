@@ -362,7 +362,8 @@ def task_detail(task_id):
     ):
         abort(403)
     ctx = tsvc.task_rich_context(task)
-    return render_template("team/task_detail.html", task=task, ctx=ctx, today=date.today())
+    return render_template("team/task_detail.html", task=task, ctx=ctx, today=date.today(),
+                            failure_reasons=tsvc.FAILURE_REASONS)
 
 
 @team_bp.route("/tasks/new", methods=["GET", "POST"])
@@ -414,12 +415,34 @@ def task_start(task_id):
 def task_complete(task_id):
     task = Task.query.get_or_404(task_id)
     try:
-        tsvc.complete_task(task, actor=current_user, note=request.form.get("note"),
-                            evidence_image_url=request.form.get("evidence_image_url") or None)
+        tsvc.complete_task(
+            task, actor=current_user, note=request.form.get("note"),
+            evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
+            voice_note_url=svc.save_voice_note(request.files.get("voice_note")),
+        )
         flash("تم إنجاز المهمة", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
-    return redirect(url_for("team.tasks_list"))
+    return redirect(request.referrer or url_for("team.tasks_list"))
+
+
+@team_bp.route("/tasks/<int:task_id>/fail", methods=["POST"])
+@login_required
+def task_fail(task_id):
+    """تعذّر تنفيذ المهمة (بند إضافي 54) — العامل يسجّل صراحة سبب عدم
+    الإنجاز بدل ما يبقى صامتاً، مع ملاحظة وصورة/صوت اختياريين."""
+    task = Task.query.get_or_404(task_id)
+    try:
+        tsvc.fail_task(
+            task, actor=current_user, reason=request.form.get("reason"),
+            note=request.form.get("note"),
+            evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
+            voice_note_url=svc.save_voice_note(request.files.get("voice_note")),
+        )
+        flash("تم تسجيل تعذّر المهمة", "success")
+    except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        flash(str(e), "error")
+    return redirect(request.referrer or url_for("team.tasks_list"))
 
 
 @team_bp.route("/tasks/<int:task_id>/approve", methods=["POST"])

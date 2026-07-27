@@ -17,7 +17,7 @@ from sqlalchemy import func
 from app.extensions import db
 from app.models import (
     Animal, Finance, CycleEvent, AuditLog, Vaccination, Disease,
-    Mating, Pregnancy,
+    Mating, Pregnancy, Task, VetVisit, AnimalWeight, MilkRecord, Report,
 )
 from app.models.animal import AnimalSource
 
@@ -234,9 +234,85 @@ def sales_report(start: date, end: date) -> dict:
     }
 
 
+def _activity_row(dt, category, title, animal_no, details):
+    return [str(dt), category, title, animal_no or "-", details or "-"]
+
+
+def activity_report(start: date, end: date) -> dict:
+    """تقرير إنجاز اليوم (بند إضافي 55.2) — فكرة أساسها كود "مقاني"، لكن
+    بدل تكرار سجل نشاط جديد (النظام أصلاً فيه جداول موثّقة لكل عملية)،
+    يجمع من الجداول الفعلية الموجودة نفسها لنفس النطاق الزمني المشترك مع
+    بقية التقارير — بدون أي جدول أو ازدواجية منطق جديدة."""
+    items = []
+
+    for t in Task.query.filter(
+        Task.status.in_(("done", "failed")),
+        db.or_(
+            db.and_(Task.completed_at.isnot(None), func.date(Task.completed_at).between(start, end)),
+            db.and_(Task.failed_at.isnot(None), func.date(Task.failed_at).between(start, end)),
+        ),
+    ).all():
+        animal_no = t.animal.animal_no if t.animal else ""
+        if t.status == "done":
+            when = t.completed_at.date() if t.completed_at else start
+            detail = t.completion_note or ("مباشرها: " + t.accepted_by.name if t.accepted_by else "-")
+            items.append((when, _activity_row(when, "مهمة مكتملة", t.title, animal_no, detail)))
+        else:
+            when = t.failed_at.date() if t.failed_at else start
+            detail = f"{t.failure_reason or ''} — {t.completion_note or ''}".strip(" —")
+            items.append((when, _activity_row(when, "مهمة متعذّرة", t.title, animal_no, detail)))
+
+    for d in Disease.query.filter(Disease.date.between(start, end)).all():
+        animal_no = d.animal.animal_no if d.animal else ""
+        items.append((d.date, _activity_row(d.date, "مرض", d.disease_name, animal_no, d.severity)))
+
+    for v in Vaccination.query.filter(Vaccination.date.between(start, end)).all():
+        animal_no = v.animal.animal_no if v.animal else ""
+        items.append((v.date, _activity_row(v.date, "تحصين", v.vaccine_name, animal_no, "")))
+
+    for vv in VetVisit.query.filter(VetVisit.date.between(start, end)).all():
+        animal_no = vv.animal.animal_no if vv.animal else ""
+        items.append((vv.date, _activity_row(vv.date, "زيارة بيطرية", vv.diagnosis or "-", animal_no, "")))
+
+    for w in AnimalWeight.query.filter(AnimalWeight.date.between(start, end)).all():
+        animal_no = w.animal.animal_no if w.animal else ""
+        items.append((w.date, _activity_row(w.date, "وزن", f"{w.weight:g} كجم", animal_no, w.notes)))
+
+    for m in MilkRecord.query.filter(MilkRecord.date.between(start, end)).all():
+        animal_no = m.animal.animal_no if m.animal else ""
+        items.append((m.date, _activity_row(
+            m.date, "حليب", f"{m.quantity_liters:g} لتر ({m.session})", animal_no, m.notes)))
+
+    for f in Finance.query.filter(Finance.date.between(start, end), Finance.is_cancelled.is_(False)).all():
+        animal_no = f.related_animal.animal_no if f.related_animal else ""
+        items.append((f.date, _activity_row(f.date, "مالية", f.item or f.operation_type, animal_no,
+                                             f"{f.amount:,.2f}")))
+
+    for r in Report.query.filter(func.date(Report.created_at).between(start, end)).all():
+        animal_no = r.animal.animal_no if r.animal else ""
+        when = r.created_at.date() if r.created_at else start
+        items.append((when, _activity_row(when, "بلاغ", r.report_type or "-", animal_no, r.status)))
+
+    items.sort(key=lambda x: x[0], reverse=True)
+    rows = [row for _, row in items]
+
+    by_category: dict[str, int] = {}
+    for _, row in items:
+        by_category[row[1]] = by_category.get(row[1], 0) + 1
+
+    kpis = [(cat, count) for cat, count in sorted(by_category.items(), key=lambda x: -x[1])]
+    kpis = kpis or [("لا يوجد نشاط بهذي الفترة", 0)]
+
+    return {
+        "kpis": kpis,
+        "table": {"columns": ["التاريخ", "الفئة", "العنوان", "الحيوان", "التفاصيل"], "rows": rows},
+    }
+
+
 REPORTS = {
     "overview": ("التقرير الشامل", overview_report),
     "mortality": ("تقرير النفوق", mortality_report),
     "births": ("تقرير الولادات والإنتاج", births_report),
     "sales": ("تقرير المبيعات والمالية", sales_report),
+    "activity": ("تقرير إنجاز اليوم", activity_report),
 }

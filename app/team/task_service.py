@@ -13,6 +13,20 @@ def _now():
     return datetime.now(timezone.utc)
 
 
+# أسباب تعذّر تنفيذ مهمة (بند إضافي 54) — قائمة مقفلة بدل نص حر، عشان
+# تصير قابلة للتصفية والتقارير لاحقاً (مين يتكرر معه نقص الأدوات مثلاً).
+FAILURE_REASONS = [
+    "نقص الأدوات",
+    "نقص العلف",
+    "نقص الماء",
+    "الحيوان غير موجود",
+    "خطر يمنع التنفيذ",
+    "تعليمات غير واضحة",
+    "مهمة عاجلة أخرى",
+    "سبب آخر",
+]
+
+
 class TaskPermissionError(Exception):
     pass
 
@@ -213,6 +227,17 @@ def _check_not_locked(task: Task) -> None:
         raise TaskStateError(f"لازم تكمل المهمة السابقة أولاً: \"{task.depends_on.title}\"")
 
 
+def _duration_minutes_since_start(task: Task, end_time) -> int | None:
+    """مدة التنفيذ الفعلية بالدقائق من `started_at` — None لو المهمة
+    اتنجزت/تعذّرت بدون ما تمر بمرحلة "بدء" (نادر، بس ممكن)."""
+    if not task.started_at:
+        return None
+    started = task.started_at
+    if started.tzinfo is None:
+        started = started.replace(tzinfo=timezone.utc)
+    return max(0, round((end_time - started).total_seconds() / 60))
+
+
 def start_task(task: Task, *, actor) -> Task:
     if task.assignee_id != actor.id:
         raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
@@ -221,11 +246,13 @@ def start_task(task: Task, *, actor) -> Task:
     _check_not_locked(task)
     task.status = "in_progress"
     task.started_at = _now()
+    task.accepted_by_id = actor.id
+    task.server_time_source = "server"
     db.session.commit()
     return task
 
 
-def complete_task(task: Task, *, actor, note=None, evidence_image_url=None) -> Task:
+def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voice_note_url=None) -> Task:
     if task.assignee_id != actor.id:
         raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
     if task.status not in ("pending", "in_progress"):
@@ -233,11 +260,41 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None) -> T
     _check_not_locked(task)
     if task.requires_photo and not evidence_image_url:
         raise TaskStateError("هذي المهمة تتطلب إرفاق صورة.")
+    now = _now()
     task.status = "done"
-    task.completed_at = _now()
+    task.completed_at = now
     task.completion_note = note
     task.completion_evidence_image_url = evidence_image_url
+    task.voice_note_url = voice_note_url
+    task.duration_minutes = _duration_minutes_since_start(task, now)
+    task.server_time_source = "server"
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.complete",
                              entity_type="Task", entity_id=task.id))
+    db.session.commit()
+    return task
+
+
+def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, voice_note_url=None) -> Task:
+    """تعذّر تنفيذ المهمة (بند إضافي 54) — بدل ما يظل العامل صامتاً أو
+    يضغط "بدء" بلا أي أثر، يسجّل صراحة إنه ما قدر ينجزها وليش، بسبب من
+    قائمة مقفلة (`FAILURE_REASONS`) عشان تصير قابلة للمتابعة والتحليل."""
+    if task.assignee_id != actor.id:
+        raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
+    if task.status not in ("pending", "in_progress"):
+        raise TaskStateError("المهمة مو بحالة تسمح بتسجيل التعذّر.")
+    _check_not_locked(task)
+    if reason not in FAILURE_REASONS:
+        raise TaskStateError("سبب التعذّر غير معروف.")
+    now = _now()
+    task.status = "failed"
+    task.failed_at = now
+    task.failure_reason = reason
+    task.completion_note = note
+    task.completion_evidence_image_url = evidence_image_url
+    task.voice_note_url = voice_note_url
+    task.duration_minutes = _duration_minutes_since_start(task, now)
+    task.server_time_source = "server"
+    db.session.add(AuditLog(actor_user_id=actor.id, action="task.fail",
+                             entity_type="Task", entity_id=task.id, details=reason))
     db.session.commit()
     return task
