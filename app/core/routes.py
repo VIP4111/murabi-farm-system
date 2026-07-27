@@ -13,9 +13,10 @@ from app.core import smart_sale_service
 from app.core import alerts_service
 from app.core import backup_service
 from app.core import readiness_service
+from app.core import setup_checklist_service
 from app.auth.decorators import require_permission
 from app.extensions import db
-from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent
+from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings
 from app.models.animal import AnimalSource
 from app.permissions_registry import PERMISSIONS
 
@@ -55,7 +56,27 @@ def home():
         return render_template("worker_home.html", user=current_user, my_alerts_count=my_alerts_count)
 
     alerts_count = len(alerts_service.get_alerts()) if current_user.has_permission("animals.view") else 0
-    return render_template("home.html", user=current_user, alerts_count=alerts_count)
+
+    setup_checklist_items = None
+    if current_user.role.name == "owner" and not FarmSettings.get().setup_checklist_dismissed:
+        setup_checklist_items = setup_checklist_service.get_setup_checklist_items()
+
+    return render_template(
+        "home.html", user=current_user, alerts_count=alerts_count,
+        setup_checklist_items=setup_checklist_items,
+    )
+
+
+@core_bp.route("/setup-checklist/dismiss", methods=["POST"])
+@login_required
+def setup_checklist_dismiss():
+    """صاحب الحلال بس يقدر يتجاهلها — نفس منطق أي إعداد عام للمزرعة."""
+    if current_user.role.name != "owner":
+        abort(403)
+    settings = FarmSettings.get()
+    settings.setup_checklist_dismissed = True
+    db.session.commit()
+    return redirect(url_for("core.home"))
 
 
 def _my_barn_ids(user) -> list[int]:

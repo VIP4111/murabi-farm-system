@@ -19,6 +19,18 @@ def test_owner_can_view_animals_list(app, logged_in_client):
     assert resp.status_code == 200
 
 
+def test_owner_home_shows_setup_checklist_when_nothing_added_yet(app, logged_in_client):
+    resp = logged_in_client.get("/")
+    assert resp.status_code == 200
+    assert "خطوات تجهيز النظام لأول مرة".encode() in resp.data
+
+
+def test_owner_can_dismiss_setup_checklist(app, logged_in_client):
+    resp = logged_in_client.post("/setup-checklist/dismiss", follow_redirects=True)
+    assert resp.status_code == 200
+    assert "خطوات تجهيز النظام لأول مرة".encode() not in resp.data
+
+
 def test_owner_can_view_animal_edit_form(app, logged_in_client):
     animal = make_animal(animal_no="ROUTE-01")
     resp = logged_in_client.get(f"/animals/{animal.id}/edit")

@@ -39,6 +39,11 @@ class FarmSettings(db.Model):
     min_breeding_age_days = db.Column(db.Integer, default=240, nullable=False)
     min_rest_after_birth_days = db.Column(db.Integer, default=60, nullable=False)
 
+    # قائمة تهيئة النظام بالصفحة الرئيسية (بند إضافي، 2026-07-27) — تختفي
+    # نهائياً بعد ما صاحب الحلال يضغط "تجاهل" بنفسه، بغض النظر هل خلّص
+    # كل البنود أو لا (طلب صريح: "مرة وحدة بس، عندي أزرار تتكفل بهالموضوع").
+    setup_checklist_dismissed = db.Column(db.Boolean, default=False, nullable=False)
+
     # محرك البيع الذكي (بند 19 بالمواصفة) — قيمك أنت بالضبط (2026-07-23):
     # الذكور يُباعون عادة بعمر 6 أشهر (180 يوم)، وسن الأضحية الشرعي
     # الأدنى للجذعة من الضأن هو 6 أشهر كاملة بالضبط (حديث "لا تذبحوا إلا

@@ -5,6 +5,24 @@
   <p style="color:var(--muted);">مسمّاك الوظيفي: {{ user.role.display_name }}</p>
 </div>
 
+{% if setup_checklist_items %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>خطوات تجهيز النظام لأول مرة</h3>
+    <form method="post" action="{{ url_for('core.setup_checklist_dismiss') }}">
+      <button class="btn light" type="submit" style="font-size:12px; padding:4px 10px;">تجاهل، ما أحتاجها</button>
+    </form>
+  </div>
+  <p style="color:var(--muted); font-size:13px; margin-top:-4px;">هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا.</p>
+  {% for item in setup_checklist_items %}
+  <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-top:1px solid var(--line);">
+    <span>{{ '✅' if item.done else '⬜' }} {{ item.label }}</span>
+    {% if not item.done %}<a class="btn light" href="{{ url_for(item.endpoint) }}" style="font-size:12px; padding:4px 10px;">+ إضافة</a>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 {% if user.has_permission('tasks.view_own') %}
 <div class="card">
   <h3>مهامي</h3>
