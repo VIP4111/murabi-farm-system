@@ -53,8 +53,8 @@
     <label>{{ _('الملاحظة / التفاصيل') }}</label>
     <textarea name="description" rows="4" required placeholder="{{ _('اكتب وش لاحظت هنا...') }}"></textarea>
     {{ voice_note_widget() }}
-    <label>{{ _('رابط صورة (اختياري)') }}</label>
-    <input name="evidence_image_url" placeholder="https://...">
+    <label>{{ _('صورة (اختياري)') }}</label>
+    <input type="file" name="evidence_image" accept="image/*">
     <button class="btn" type="submit" style="width:100%; margin-top:6px;">{{ _('إرسال البلاغ') }}</button>
   </form>
 </div>

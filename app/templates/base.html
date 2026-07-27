@@ -243,7 +243,12 @@
         <a class="drawer-link" href="{{ url_for('core.animals_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('الحيوانات') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('batches.batches_list') }}"><span class="drawer-icon">📦</span><span class="drawer-text"><b>{{ _('دفعات استقبال جديدة') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('core.barns_list') }}"><span class="drawer-icon">🏚️</span><span class="drawer-text"><b>{{ _('الحظائر') }}</b></span></a>
-        {% if current_user.has_permission('repro.view') %}<a class="drawer-link" href="{{ url_for('repro.programs_list') }}"><span class="drawer-icon">🐣</span><span class="drawer-text"><b>{{ _('التكاثر') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('repro.view') %}
+        <a class="drawer-link" href="{{ url_for('repro.matings_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('التقريع') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.pregnancies_list') }}"><span class="drawer-icon">🤰</span><span class="drawer-text"><b>{{ _('تشخيص الحمل') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.sonar_list') }}"><span class="drawer-icon">📟</span><span class="drawer-text"><b>{{ _('فحص السونار') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.programs_list') }}"><span class="drawer-icon">🐣</span><span class="drawer-text"><b>{{ _('برامج التزامن التناسلي (متقدّم)') }}</b></span></a>
+        {% endif %}
         {% if current_user.has_permission('repro.view') %}<a class="drawer-link" href="{{ url_for('ostrich.eggs_list') }}"><span class="drawer-icon">🦤</span><span class="drawer-text"><b>{{ _('النعام (بيض/تفقيس)') }}</b></span></a>{% endif %}
       </div>
       {% endif %}

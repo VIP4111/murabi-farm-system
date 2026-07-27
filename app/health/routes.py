@@ -64,7 +64,7 @@ def _inject_injection_guide():
 def pharmacy_list():
     items = Pharmacy.query.order_by(Pharmacy.name).all()
     return render_template(
-        "health/pharmacy_list.html", items=items,
+        "health/pharmacy_list.html", items=items, today=date.today(),
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
     )
 
@@ -111,6 +111,7 @@ def pharmacy_new():
             min_stock_qty=float(request.form.get("min_stock_qty") or 0),
             unit=request.form.get("unit"),
             unit_price=float(request.form["unit_price"]) if request.form.get("unit_price") else None,
+            expiry_date=date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None,
             withdrawal_days=int(request.form.get("withdrawal_days") or 0),
             usage_method=request.form.get("usage_method") or None,
             standard_dosage_note=request.form.get("standard_dosage_note") or None,
@@ -141,6 +142,7 @@ def pharmacy_edit(pharmacy_id):
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.unit = request.form.get("unit")
         item.unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None
+        item.expiry_date = date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None
         item.withdrawal_days = int(request.form.get("withdrawal_days") or 0)
         item.usage_method = request.form.get("usage_method") or None
         item.standard_dosage_note = request.form.get("standard_dosage_note") or None

@@ -8,12 +8,16 @@
   <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.</div>
   <form method="post" enctype="multipart/form-data" id="reportForm" data-offline>
     <label>نوع البلاغ</label>
-    <select name="report_type">
-      <option value="مرض">مرض</option>
-      <option value="مشكلة">مشكلة</option>
-      <option value="صيانة">صيانة</option>
-      <option value="أخرى">أخرى</option>
-    </select>
+    <div style="display:flex; gap:6px; align-items:center;">
+      <select name="report_type" id="reportTypeSelect" style="flex:1;">
+        <option value="مرض">مرض</option>
+        <option value="مشكلة">مشكلة</option>
+        <option value="صيانة">صيانة</option>
+        <option value="أخرى">أخرى</option>
+      </select>
+      <button type="button" class="btn light" id="addReportTypeBtn" style="flex:0 0 auto; padding:8px 12px;" title="إضافة نوع بلاغ جديد">+ إضافة</button>
+    </div>
+    <input type="text" id="newReportTypeInput" placeholder="اكتب نوع البلاغ الجديد هنا" style="display:none; margin-top:6px;">
     <label>الحيوان المرتبط</label>
     <select name="animal_id" id="animalSelect">
       <option value="">-</option>
@@ -27,11 +31,39 @@
     </select>
     <label>وصف البلاغ</label><textarea name="description" rows="4" required></textarea>
     {{ voice_note_widget() }}
-    <label>رابط صورة (اختياري)</label><input name="evidence_image_url" placeholder="https://...">
+    <label>صورة (اختياري)</label>
+    <input type="file" name="evidence_image" accept="image/*">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اضغط هنا وتقدر تختار "الكاميرا" لتصوير مباشر أو "معرض الصور" لصورة محفوظة عندك.</p>
     <button class="btn" type="submit">رفع البلاغ</button>
   </form>
 </div>
 <script>
+(function(){
+  var addBtn = document.getElementById('addReportTypeBtn');
+  var newInput = document.getElementById('newReportTypeInput');
+  var select = document.getElementById('reportTypeSelect');
+  addBtn.addEventListener('click', function(){
+    newInput.style.display = (newInput.style.display === 'none') ? 'block' : 'none';
+    if (newInput.style.display === 'block') newInput.focus();
+  });
+  function addCustomType(){
+    var val = newInput.value.trim();
+    if (!val) return;
+    var exists = Array.prototype.some.call(select.options, function(o){ return o.value === val; });
+    if (!exists) {
+      var opt = document.createElement('option');
+      opt.value = val; opt.textContent = val;
+      select.appendChild(opt);
+    }
+    select.value = val;
+    newInput.value = '';
+    newInput.style.display = 'none';
+  }
+  newInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') { e.preventDefault(); addCustomType(); }
+  });
+  newInput.addEventListener('blur', addCustomType);
+})();
 (function(){
   var form = document.getElementById('reportForm');
   var errorBox = document.getElementById('animalOrBarnError');

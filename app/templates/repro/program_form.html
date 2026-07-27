@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>برنامج شياع توأمي جديد</h2>
+  <h2>برنامج تزامن تناسلي جديد (للتوأمة)</h2>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">
+    برنامج متقدّم يُستخدم لما تبي تزوّد فرص التوأمة عند نعجة معينة، عن طريق
+    جهاز مهبلي (إسفنجة) يُدخل ويُزال بمواعيد محددة، مع حقن هرمونية، لضبط
+    وقت استعدادها للتلقيح (يُسمّى طبياً "الشياع"). لو تبي تسجّل تقريعاً
+    عادياً بدون هذا التزامن، استخدم شاشة "التقريع" العادية بدل هذي.
+  </p>
   <form method="post" data-offline>
     <label>الأنثى</label>
     <select name="ewe_id" required>
       {% for f in females %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
     </select>
-    <label>اسم البروتوكول</label><input name="protocol_name" placeholder="مثال: تزامن شياع + إسفنجة CIDR">
-    <label>الطبيب المشرف</label>
-    <select name="supervising_doctor_id">
-      <option value="">-</option>
-      {% for d in doctors %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
-    </select>
-    <label>الفحل (لو مسجّل بالنظام)</label>
+    <label>الفحل (لو مسجّل بالنظام، اختياري)</label>
     <select name="ram_id">
       <option value="">-</option>
       {% for m in males %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
     </select>
-    <label>وصف الفحل (لو خارجي)</label><input name="ram_note">
 
     <label>تاريخ بداية البرنامج</label><input name="start_date" type="date" required>
-    <label>موعد إدخال الجهاز (مخطط)</label><input name="device_insert_planned_at" type="date">
-    <label>موعد إزالة الجهاز (مخطط)</label><input name="device_remove_planned_at" type="date">
-    <label>بداية نافذة الشياع المتوقعة</label><input name="expected_estrus_start" type="date">
-    <label>نهاية نافذة الشياع المتوقعة</label><input name="expected_estrus_end" type="date">
-    <label>بداية نافذة التقريع</label><input name="mating_window_start" type="date">
-    <label>نهاية نافذة التقريع</label><input name="mating_window_end" type="date">
+
+    <label>موعد إدخال الجهاز المهبلي (مخطط)</label><input name="device_insert_planned_at" type="date">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اليوم اللي تخطط تدخل فيه الإسفنجة/الجهاز المهبلي للنعجة — الخطوة الأولى بالتزامن.</p>
+    <label>موعد إزالة الجهاز المهبلي (مخطط)</label><input name="device_remove_planned_at" type="date">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اليوم اللي تخطط تشيل فيه نفس الجهاز — عادة بعد أسبوع إلى أسبوعين من الإدخال.</p>
+
+    <label>بداية الفترة المتوقعة لاستعداد النعجة (الشياع)</label><input name="expected_estrus_start" type="date">
+    <label>نهاية الفترة المتوقعة لاستعداد النعجة (الشياع)</label><input name="expected_estrus_end" type="date">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">الفترة المتوقعة اللي تكون فيها النعجة جاهزة للتلقيح بعد إزالة الجهاز — عادة يوم إلى ثلاثة أيام بعدها.</p>
+
+    <label>بداية نافذة التقريع الفعلي</label><input name="mating_window_start" type="date">
+    <label>نهاية نافذة التقريع الفعلي</label><input name="mating_window_end" type="date">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">الفترة اللي تسوّي فيها التقريع الفعلي (بالفحل أو بالتلقيح الصناعي) بعد ظهور علامات الاستعداد.</p>
 
     <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
     <button class="btn" type="submit">حفظ</button>

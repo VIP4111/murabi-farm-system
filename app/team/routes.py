@@ -171,7 +171,7 @@ def reports_new():
             report_type=request.form.get("report_type") or None,
             animal_id=request.form.get("animal_id") or None,
             barn_id=request.form.get("barn_id") or None,
-            evidence_image_url=request.form.get("evidence_image_url") or None,
+            evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
             evidence_audio_url=svc.save_voice_note(request.files.get("voice_note")),
         )
         flash("تم رفع البلاغ", "success")
@@ -508,7 +508,7 @@ def worker_quick_report(category):
             report_type=cfg["report_type"],
             animal_id=request.form.get("animal_id") or None,
             barn_id=request.form.get("barn_id") or None,
-            evidence_image_url=request.form.get("evidence_image_url") or None,
+            evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
             evidence_audio_url=svc.save_voice_note(request.files.get("voice_note")),
         )
         flash("تم رفع البلاغ — راح يوصل للدكتور", "success")

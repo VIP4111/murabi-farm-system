@@ -47,6 +47,35 @@ def save_voice_note(file_storage) -> str | None:
     return f"/static/uploads/audio/{filename}"
 
 
+ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
+MAX_IMAGE_BYTES = 8 * 1024 * 1024  # 8MB — نفس حد الملاحظة الصوتية
+
+
+def save_evidence_image(file_storage) -> str | None:
+    """
+    حفظ صورة دليل مرفوعة من نموذج البلاغ عن طريق الكاميرا أو معرض الصور
+    (بدل رابط نصي كان يتطلب من المستخدم رفع الصورة لمكان خارجي بنفسه أولاً).
+    نفس فلسفة `save_voice_note` بالضبط: تخزين محلي بسيط، ترجع None بصمت
+    لأي إدخال غير صالح بدل رفع استثناء، لأن الصورة اختيارية أصلاً.
+    """
+    if not file_storage or not file_storage.filename:
+        return None
+    ext = file_storage.filename.rsplit(".", 1)[-1].lower() if "." in file_storage.filename else ""
+    if ext not in ALLOWED_IMAGE_EXTENSIONS:
+        return None
+    file_storage.stream.seek(0, os.SEEK_END)
+    size = file_storage.stream.tell()
+    file_storage.stream.seek(0)
+    if size == 0 or size > MAX_IMAGE_BYTES:
+        return None
+
+    upload_dir = os.path.join(current_app.static_folder, "uploads", "images")
+    os.makedirs(upload_dir, exist_ok=True)
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    file_storage.save(os.path.join(upload_dir, filename))
+    return f"/static/uploads/images/{filename}"
+
+
 class ReportPermissionError(Exception):
     """يُرفع لما يحاول مستخدم يسوي انتقال حالة ما يملك الحق فيه."""
 

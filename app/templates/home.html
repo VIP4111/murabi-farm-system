@@ -42,7 +42,10 @@
     <a href="{{ url_for('health.pharmacy_list') }}"><span class="emoji">💊</span> الصيدلية</a>
     {% endif %}
     {% if user.has_permission('repro.view') %}
-    <a href="{{ url_for('repro.programs_list') }}"><span class="emoji">🐣</span> التكاثر</a>
+    <a href="{{ url_for('repro.matings_list') }}"><span class="emoji">🐑</span> التقريع</a>
+    <a href="{{ url_for('repro.pregnancies_list') }}"><span class="emoji">🤰</span> تشخيص الحمل</a>
+    <a href="{{ url_for('repro.sonar_list') }}"><span class="emoji">📟</span> فحص السونار</a>
+    <a href="{{ url_for('repro.programs_list') }}"><span class="emoji">🐣</span> برامج التزامن التناسلي</a>
     {% endif %}
     {% if user.has_permission('feed.view') %}
     <a href="{{ url_for('feed.calculator') }}"><span class="emoji">🌾</span> العلف</a>

@@ -21,7 +21,10 @@
     <label>الوحدة</label><input name="unit" placeholder="مل / حبة / علبة" value="{{ item.unit if item else '' }}">
     <label>سعر الوحدة (اختياري)</label><input name="unit_price" type="number" step="0.01" placeholder="مثال: 2.5" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق.</p>
+    <label>تاريخ انتهاء الصلاحية (اختياري)</label><input name="expiry_date" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.</p>
     <label>فترة السحب (بالأيام)</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها.</p>
     <label>طريقة الاستخدام (اختياري)</label>
     <select name="usage_method">
       <option value="">-</option>
