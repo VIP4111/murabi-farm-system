@@ -15,6 +15,8 @@
 6. حيوانات "ترتيب غير منتظم" بمحرك الدورة
 7. بلاغات جديدة بانتظار استلام لفترة طويلة
 8. (إضافي) حيوانات جاهزة للبيع الآن حسب محرك البيع الذكي (بند 19)
+9. (إضافي، بند 51) تأخر الشياع كتنبيه مستقل
+10. (إضافي، بند 56) حظيرة بدون عامل مسؤول — تذكير بس، ما يمنع الحفظ
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -23,7 +25,7 @@
 """
 from datetime import date, timedelta
 from app.models import (
-    Animal, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings,
+    Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings,
 )
 
 
@@ -177,6 +179,23 @@ def _delayed_estrus(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+def _barns_without_responsible_worker() -> list[dict]:
+    """حظيرة بدون عامل مسؤول (بند إضافي 56) — الحقل اختياري عمداً بشاشة
+    إنشاء/تعديل الحظيرة، لكن بدونه ما توجّه له أي مهام تلقائية (بند 27)
+    ولا تظهر بشاشة "تنبيهاتي" لأي عامل (بند 20) — تنبيه تذكيري بس، مو
+    منع حفظ، حسب قرارك الصريح."""
+    rows = Barn.query.filter(Barn.responsible_worker_id.is_(None)).all()
+    return [
+        {
+            "category": "حظيرة بدون مسؤول", "icon": "👷",
+            "label": f"حظيرة {b.barn_no} ({b.barn_name}) — بدون عامل مسؤول",
+            "detail": "المهام والتنبيهات التلقائية لهذي الحظيرة ما توجّه لأحد لين تحدد مسؤولاً.",
+            "urgent": False, "animal_id": None, "barn_id": b.id,
+        }
+        for b in rows
+    ]
+
+
 def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     """
     `barn_ids=None` (الافتراضي، سلوك بند 20 الأصلي بدون تغيير): كل
@@ -200,6 +219,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
+        + _barns_without_responsible_worker()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
