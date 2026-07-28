@@ -33,23 +33,103 @@
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_vaccination') }}" data-offline>
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>اسم اللقاح</label><input name="vaccine_name" required>
     <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
-    <label>الموعد القادم (اختياري)</label><input name="next_due_date" type="date">
-    <label>الدواء من الصيدلية (اختياري)</label>
-    <select name="pharmacy_id">
-      <option value="">بدون ربط</option>
-      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }} (سحب: {{ m.withdrawal_days }} يوم)</option>{% endfor %}
-    </select>
-    <label>الكمية المستخدمة لكل رأس</label><input name="quantity_used_per_head" type="number" step="0.01">
+
+    <div id="vaccineSlot1">
+      <label>اللقاح الأول</label>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <select name="vaccine_1_pharmacy_id" class="vaccineSelect" data-slot="1" required style="flex:1;">
+          <option value="">اختر لقاح من الصيدلية</option>
+          {% for v in vaccines %}
+          <option value="{{ v.id }}">{{ v.name }}{% if v.protection_days %} (حماية {{ v.protection_days }} يوم){% endif %}</option>
+          {% endfor %}
+        </select>
+        <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="إضافة لقاح جديد للصيدلية" target="_blank">➕</a>
+      </div>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة "لقاح" — الموعد القادم ينجدول تلقائياً من مدة الحماية المسجَّلة عليه.</p>
+    </div>
+
+    <button type="button" id="addSecondVaccineBtn" class="btn light" style="font-size:12px; margin-bottom:10px;">+ إضافة تحصين ثاني</button>
+
+    <div id="vaccineSlot2" style="display:none;">
+      <label>اللقاح الثاني</label>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <select name="vaccine_2_pharmacy_id" class="vaccineSelect" data-slot="2" style="flex:1;">
+          <option value="">اختر لقاح من الصيدلية</option>
+          {% for v in vaccines %}
+          <option value="{{ v.id }}">{{ v.name }}{% if v.protection_days %} (حماية {{ v.protection_days }} يوم){% endif %}</option>
+          {% endfor %}
+        </select>
+        <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="إضافة لقاح جديد للصيدلية" target="_blank">➕</a>
+      </div>
+    </div>
+
     <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <p style="color:var(--muted); font-size:12px; margin:-4px 0 8px;">أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول "الجرعة حسب العمر" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً.</p>
     <table>
-      <tr><th>الرقم</th><th>الاسم</th></tr>
-      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
+      <tr>
+        <th>الرقم</th><th>الاسم</th><th>العمر (يوم)</th>
+        <th class="vaccineCol" data-slot="1">تحصين اللقاح الأول</th>
+        <th class="vaccineCol" data-slot="2" style="display:none;">تحصين اللقاح الثاني</th>
+      </tr>
+      {% for a in animals %}
+      <tr class="animalRow" data-age-days="{{ a.age_days if a.age_days is not none else '' }}">
+        <td>{{ a.animal_no }}</td>
+        <td>{{ a.name or '-' }}</td>
+        <td>{{ a.age_days if a.age_days is not none else '-' }}</td>
+        <td class="vaccineCol" data-slot="1">
+          <div style="display:flex; gap:4px; align-items:center;">
+            <input type="checkbox" name="vaccinated_1_{{ a.id }}" value="1" style="width:auto;">
+            <input type="number" step="0.01" name="dose_1_{{ a.id }}" class="doseInput" data-slot="1" placeholder="مل" style="width:70px; margin-bottom:0;">
+          </div>
+        </td>
+        <td class="vaccineCol" data-slot="2" style="display:none;">
+          <div style="display:flex; gap:4px; align-items:center;">
+            <input type="checkbox" name="vaccinated_2_{{ a.id }}" value="1" style="width:auto;">
+            <input type="number" step="0.01" name="dose_2_{{ a.id }}" class="doseInput" data-slot="2" placeholder="مل" style="width:70px; margin-bottom:0;">
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
     </table>
-    <button class="btn" type="submit">تسجيل التحصين للكل</button>
+    <button class="btn" type="submit" style="margin-top:10px;">تسجيل التحصين للكل</button>
   </form>
 </div>
+<script>
+(function(){
+  var addBtn = document.getElementById('addSecondVaccineBtn');
+  var slot2 = document.getElementById('vaccineSlot2');
+  if (addBtn && slot2) {
+    addBtn.addEventListener('click', function(){
+      slot2.style.display = '';
+      document.querySelectorAll('.vaccineCol[data-slot="2"]').forEach(function(el){ el.style.display = ''; });
+      addBtn.style.display = 'none';
+    });
+  }
+
+  document.querySelectorAll('.vaccineSelect').forEach(function(select){
+    select.addEventListener('change', function(){
+      var slot = select.getAttribute('data-slot');
+      var pharmacyId = select.value;
+      if (!pharmacyId) return;
+      fetch('/health/pharmacy/' + pharmacyId + '/dose-rules')
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          document.querySelectorAll('.animalRow').forEach(function(row){
+            var ageRaw = row.getAttribute('data-age-days');
+            var age = ageRaw === '' ? null : parseInt(ageRaw, 10);
+            var doseInput = row.querySelector('.doseInput[data-slot="' + slot + '"]');
+            if (!doseInput || age === null) return;
+            var match = (data.rules || []).find(function(r){
+              return age >= r.age_from_days && age <= r.age_to_days;
+            });
+            if (match) doseInput.value = match.dose_ml;
+          });
+        });
+    });
+  });
+})();
+</script>
 
 {% elif action == 'note' %}
 <div class="card">

@@ -190,11 +190,17 @@ def animals_bulk_select():
         return redirect(url_for("core.animals_list"))
 
     animals = Animal.query.filter(Animal.id.in_(animal_ids)).order_by(Animal.animal_no).all()
+    # عمر كل رأس بالأيام (بند إضافي 60) — يُستخدم بس لعرض/مطابقة جدول
+    # الجرعة حسب العمر بشاشة التحصين الجماعي (`PharmacyDoseRule`)، مو
+    # لحساب أي جرعة — مجرد قيمة معروضة على الرأس نفسه.
+    for a in animals:
+        a.age_days = (date.today() - a.birth_date).days if a.birth_date else None
     return render_template(
         "bulk_action_form.html", animals=animals, action=action,
         action_label=BULK_ACTIONS[action], today=date.today().isoformat(),
         barns=Barn.query.order_by(Barn.barn_name).all(),
         pharmacies=Pharmacy.query.filter_by(status="active").all(),
+        vaccines=Pharmacy.query.filter_by(status="active", medicine_class="vaccine").all(),
         doctors=Doctor.query.filter_by(status="active").all(),
         disease_types=DiseaseType.query.order_by(DiseaseType.name).all(),
     )
@@ -228,20 +234,42 @@ def animals_bulk_apply_weight():
 @login_required
 @require_permission("health.manage")
 def animals_bulk_apply_vaccination():
+    from app.models import Pharmacy
+
     animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
-    next_due = request.form.get("next_due_date")
+    record_date = date.fromisoformat(request.form["date"])
+
+    # لقاحين بحد أقصى بنفس الجلسة (بند إضافي 60) — كل لقاح مربوط إلزامياً
+    # بدواء صيدلية فعلي من فئة "لقاح"، وكل رأس له مربع تأشير مستقل لكل
+    # لقاح (اللي ما تؤشر عليه ما ينحصّن به إطلاقاً).
+    vaccine_slots = []
+    for slot_no in (1, 2):
+        pharmacy_id = request.form.get(f"vaccine_{slot_no}_pharmacy_id")
+        if not pharmacy_id:
+            continue
+        pharmacy = Pharmacy.query.get(int(pharmacy_id))
+        if not pharmacy or pharmacy.medicine_class != "vaccine":
+            flash("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)", "error")
+            return redirect(url_for("core.animals_list"))
+        doses = {}
+        for animal_id in animal_ids:
+            if not request.form.get(f"vaccinated_{slot_no}_{animal_id}"):
+                continue
+            dose_raw = request.form.get(f"dose_{slot_no}_{animal_id}")
+            doses[animal_id] = float(dose_raw) if dose_raw else None
+        if doses:
+            vaccine_slots.append({"pharmacy_id": pharmacy.id, "doses": doses})
+
+    if not vaccine_slots:
+        flash("لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه", "error")
+        return redirect(url_for("core.animals_list"))
+
     results = bulk_service.apply_bulk_vaccination(
-        animal_ids=animal_ids,
-        vaccine_name=request.form["vaccine_name"],
-        record_date=date.fromisoformat(request.form["date"]),
-        next_due_date=date.fromisoformat(next_due) if next_due else None,
-        pharmacy_id=request.form.get("pharmacy_id") or None,
-        quantity_used_per_head=float(request.form["quantity_used_per_head"]) if request.form.get("quantity_used_per_head") else None,
-        actor_user_id=current_user.id,
+        record_date=record_date, actor_user_id=current_user.id, vaccine_slots=vaccine_slots,
     )
     done = sum(1 for r in results.values() if r == "تم")
-    flash(f"تحصين جماعي: {done} من {len(animal_ids)} تم تسجيلهم", "success")
-    for animal_id, r in results.items():
+    flash(f"تحصين جماعي: {done} تسجيل ناجح", "success")
+    for (pharmacy_id, animal_id), r in results.items():
         if r.startswith("مرفوض"):
             flash(f"رأس #{animal_id}: {r}", "error")
     return redirect(url_for("core.animals_list"))

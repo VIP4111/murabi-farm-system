@@ -57,6 +57,11 @@ class Pharmacy(db.Model):
     usage_method = db.Column(db.String(32))  # حقن عضل/حقن وريدي/حقن تحت الجلد/فموي/موضعي/رذاذ
     standard_dosage_note = db.Column(db.Text)
 
+    # مدة الحماية باللقاح بالأيام (بند إضافي، 2026-07-28) — يُستخدم فقط
+    # لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ
+    # التحصين + هذي المدة). ما له علاقة بحساب جرعة — مجرد مدة زمنية.
+    protection_days = db.Column(db.Integer, nullable=True)
+
     notes = db.Column(db.Text)
     status = db.Column(db.String(32), default="active", nullable=False)
     created_at = db.Column(db.DateTime, default=_now)

@@ -56,14 +56,14 @@ def test_bulk_barn_move_moves_all_and_logs_audit(app):
 
 
 def test_bulk_vaccination_rejects_animal_when_stock_runs_out_mid_batch(app):
-    """كمية مشتركة (2) لكل رأس، مخزون 3 وحدات بس — الرأس الأول ينجح
+    """جرعة (2) مل لكل رأس، مخزون 3 وحدات بس — الرأس الأول ينجح
     (يستهلك 2)، الثاني يُرفض (المتبقي 1 أقل من المطلوب)."""
     a1 = make_animal(animal_no="BV-01")
     a2 = make_animal(animal_no="BV-02")
-    pharmacy = make_pharmacy(name="لقاح جماعي", available_qty=3)
+    pharmacy = make_pharmacy(name="لقاح جماعي", available_qty=3, medicine_class="vaccine")
     results = bulk_service.apply_bulk_vaccination(
-        animal_ids=[a1.id, a2.id], vaccine_name="لقاح", record_date=date.today(),
-        next_due_date=None, pharmacy_id=pharmacy.id, quantity_used_per_head=2, actor_user_id=1,
+        record_date=date.today(), actor_user_id=1,
+        vaccine_slots=[{"pharmacy_id": pharmacy.id, "doses": {a1.id: 2, a2.id: 2}}],
     )
     outcomes = list(results.values())
     assert outcomes.count("تم") == 1

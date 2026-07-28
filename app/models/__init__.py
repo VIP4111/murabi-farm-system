@@ -6,6 +6,7 @@ from app.models.animal_options import SpeciesType, Breed, AnimalColor
 from app.models.settings import ServiceToggle
 from app.models.audit import AuditLog
 from app.models.pharmacy import Pharmacy
+from app.models.pharmacy_dose_rule import PharmacyDoseRule
 from app.models.doctor import Doctor
 from app.models.health import VetVisit, Disease, Vaccination, DiseaseType, Symptom, DiseaseSymptomLink
 from app.models.finance import Finance
@@ -32,7 +33,7 @@ __all__ = [
     "Role", "Permission", "role_permissions",
     "User", "Barn", "Animal", "SpeciesType", "Breed", "AnimalColor",
     "ServiceToggle", "AuditLog",
-    "Pharmacy", "Doctor",
+    "Pharmacy", "PharmacyDoseRule", "Doctor",
     "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink",
     "Finance",
     "Mating", "Pregnancy", "TwinEstrusProgram", "TwinEstrusAttempt",

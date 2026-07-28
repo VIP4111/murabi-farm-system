@@ -1,13 +1,14 @@
 from datetime import date
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 
 from app.health import health_bp
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import (
-    Pharmacy, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog, DiseaseType, Symptom,
-    FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep, ProtocolApplication,
+    Pharmacy, PharmacyDoseRule, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog,
+    DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
+    ProtocolApplication,
 )
 from app.health import health_service
 from app.team import task_service as tsvc
@@ -97,6 +98,24 @@ def pharmacy_shortages():
     return render_template("health/pharmacy_shortages.html", items=items, alternatives=alternatives)
 
 
+def _save_dose_rules(pharmacy_id: int) -> None:
+    """جدول "الجرعة حسب العمر" (بند إضافي، 2026-07-28) — استبدال كامل
+    بسيط بدل تحديث جزئي (نفس فلسفة المشروع بتفضيل البساطة الصحيحة على
+    التعقيد الذكي): يمسح كل صفوف هذا الدواء ويعيد إنشاءها من القوائم
+    المُرسَلة، ويتجاهل أي صف فاضي أو غير مكتمل بصمت."""
+    PharmacyDoseRule.query.filter_by(pharmacy_id=pharmacy_id).delete()
+    froms = request.form.getlist("dose_age_from")
+    tos = request.form.getlist("dose_age_to")
+    doses = request.form.getlist("dose_ml")
+    for age_from, age_to, dose_ml in zip(froms, tos, doses):
+        if not (age_from and age_to and dose_ml):
+            continue
+        db.session.add(PharmacyDoseRule(
+            pharmacy_id=pharmacy_id,
+            age_from_days=int(age_from), age_to_days=int(age_to), dose_ml=float(dose_ml),
+        ))
+
+
 @health_bp.route("/pharmacy/new", methods=["GET", "POST"])
 @login_required
 @require_permission("pharmacy.manage")
@@ -115,9 +134,12 @@ def pharmacy_new():
             withdrawal_days=int(request.form.get("withdrawal_days") or 0),
             usage_method=request.form.get("usage_method") or None,
             standard_dosage_note=request.form.get("standard_dosage_note") or None,
+            protection_days=int(request.form["protection_days"]) if request.form.get("protection_days") else None,
             notes=request.form.get("notes"),
         )
         db.session.add(item)
+        db.session.flush()
+        _save_dose_rules(item.id)
         db.session.commit()
         flash("تمت إضافة الدواء", "success")
         return redirect(url_for("health.pharmacy_list"))
@@ -126,6 +148,22 @@ def pharmacy_new():
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
     )
+
+
+@health_bp.route("/pharmacy/<int:pharmacy_id>/dose-rules")
+@login_required
+@require_permission("health.view")
+def pharmacy_dose_rules_json(pharmacy_id):
+    """نقطة نهاية JSON صغيرة (نفس نمط `/animals/<id>/quick-info` ببند 28)
+    — تُستخدم من شاشة التحصين الجماعي لجلب جدول الجرعة حسب العمر لدواء
+    مختار، وتحسب الجرعة المطابقة لكل رأس بجافاسكربت بالمتصفح (بحث بسيط
+    بجدول كتبه الدكتور، مو حساباً جديداً)."""
+    rules = PharmacyDoseRule.query.filter_by(pharmacy_id=pharmacy_id).order_by(PharmacyDoseRule.age_from_days).all()
+    pharmacy = Pharmacy.query.get_or_404(pharmacy_id)
+    return jsonify({
+        "protection_days": pharmacy.protection_days,
+        "rules": [{"age_from_days": r.age_from_days, "age_to_days": r.age_to_days, "dose_ml": r.dose_ml} for r in rules],
+    })
 
 
 @health_bp.route("/pharmacy/<int:pharmacy_id>/edit", methods=["GET", "POST"])
@@ -146,7 +184,9 @@ def pharmacy_edit(pharmacy_id):
         item.withdrawal_days = int(request.form.get("withdrawal_days") or 0)
         item.usage_method = request.form.get("usage_method") or None
         item.standard_dosage_note = request.form.get("standard_dosage_note") or None
+        item.protection_days = int(request.form["protection_days"]) if request.form.get("protection_days") else None
         item.notes = request.form.get("notes")
+        _save_dose_rules(item.id)
         db.session.commit()
         flash("تم تحديث بيانات الدواء", "success")
         return redirect(url_for("health.pharmacy_list"))
@@ -154,6 +194,7 @@ def pharmacy_edit(pharmacy_id):
         "health/pharmacy_form.html", item=item,
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        dose_rules=item.dose_rules,
     )
 
 

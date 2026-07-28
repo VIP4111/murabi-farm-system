@@ -35,8 +35,48 @@
     <label>ملاحظة الجرعة المرجعية (اختياري)</label>
     <textarea name="standard_dosage_note" rows="2" placeholder="مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة">{{ item.standard_dosage_note if item else '' }}</textarea>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً.</p>
+
+    <label>مدة الحماية بالأيام (للقاحات — اختياري)</label>
+    <input name="protection_days" type="number" value="{{ item.protection_days if item and item.protection_days is not none else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تُستخدم فقط لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً.</p>
+
+    <label>الجرعة حسب العمر (اختياري)</label>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد.</p>
+    <div id="doseRulesRows">
+      {% for r in (dose_rules or []) %}
+      <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
+        <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" value="{{ r.age_from_days }}" style="flex:1; margin-bottom:0;">
+        <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" value="{{ r.age_to_days }}" style="flex:1; margin-bottom:0;">
+        <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" value="{{ r.dose_ml }}" style="flex:1; margin-bottom:0;">
+      </div>
+      {% endfor %}
+      <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
+        <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" style="flex:1; margin-bottom:0;">
+        <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" style="flex:1; margin-bottom:0;">
+        <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" style="flex:1; margin-bottom:0;">
+      </div>
+    </div>
+    <button type="button" id="addDoseRowBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ إضافة عمر آخر</button>
+
     <label>ملاحظات</label><input name="notes" value="{{ item.notes if item else '' }}">
     <button class="btn" type="submit">حفظ</button>
   </form>
 </div>
+<script>
+(function(){
+  var btn = document.getElementById('addDoseRowBtn');
+  var container = document.getElementById('doseRulesRows');
+  if (!btn || !container) return;
+  btn.addEventListener('click', function(){
+    var row = document.createElement('div');
+    row.className = 'doseRuleRow';
+    row.style.cssText = 'display:flex; gap:6px; margin-bottom:6px;';
+    row.innerHTML =
+      '<input name="dose_age_from" type="number" placeholder="من عمر (يوم)" style="flex:1; margin-bottom:0;">' +
+      '<input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" style="flex:1; margin-bottom:0;">' +
+      '<input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" style="flex:1; margin-bottom:0;">';
+    container.appendChild(row);
+  });
+})();
+</script>
 {% endblock %}

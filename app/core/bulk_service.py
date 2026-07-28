@@ -53,39 +53,52 @@ def apply_bulk_weight(*, animal_ids: list[int], record_date: date,
     return results
 
 
-def apply_bulk_vaccination(*, animal_ids: list[int], vaccine_name: str, record_date: date,
-                            next_due_date: date | None, pharmacy_id: int | None,
-                            quantity_used_per_head: float | None, actor_user_id: int) -> dict:
-    from app.health import health_service
-    from app.models import Pharmacy, FarmSettings
+def apply_bulk_vaccination(*, record_date: date, actor_user_id: int,
+                            vaccine_slots: list[dict]) -> dict:
+    """كل عنصر بـ vaccine_slots: {"pharmacy_id": int, "doses": {animal_id: جرعة_مل_أو_None}}.
 
-    pharmacy = Pharmacy.query.get(int(pharmacy_id)) if pharmacy_id else None
-    redose_days = FarmSettings.get().antiparasitic_redose_days
+    `doses` يحتوي بس الرؤوس اللي أُشِّر عليها فعلياً كـ"طعّمت" بهذا اللقاح
+    (بند إضافي 60) — أي رأس ما تؤشر عليه ما ينحصّن به إطلاقاً، ولو انحصّن
+    بلقاح ثاني بنفس الجلسة. الموعد القادم يُحسب تلقائياً من `Pharmacy.
+    protection_days` (تاريخ التحصين + هذي المدة) لما تكون مسجَّلة، وتُنشأ
+    حركة مصروف واحدة (Finance) لكل لقاح بإجمالي تكلفة كل الرؤوس المحصَّنة
+    به — بنفس نمط `create_animal`'s الخاص بمصروف الشراء التلقائي."""
+    from app.health import health_service
+    from app.models import Pharmacy, Finance
+    from datetime import timedelta
+
     results = {}
-    for animal_id in animal_ids:
-        animal = Animal.query.get(animal_id)
-        if not animal:
-            results[animal_id] = "غير موجود"
-            continue
-        # حارس منع تكرار جرعة الطفيليات (بند إضافي 50) — بلا خيار تجاوز
-        # بمستوى الدفعة الجماعية (يحتاج سبباً صريحاً لكل رأس)؛ لو الطبيب
-        # متأكد من التكرار لرأس معيّن، يسجّله فردياً بشاشة التطعيم العادية.
-        guard = health_service.redose_guard_warning(animal_id=animal_id, pharmacy=pharmacy, redose_days=redose_days)
-        if guard:
-            results[animal_id] = f"مرفوض — {guard['message']}"
-            continue
-        try:
-            health_service.record_vaccination(
-                actor_user_id=actor_user_id, animal_id=animal_id, vaccine_name=vaccine_name,
-                date_=record_date, next_due_date=next_due_date,
-                pharmacy_id=pharmacy_id, quantity_used=quantity_used_per_head,
-            )
-            results[animal_id] = "تم"
-        except health_service.IncompleteRecordError as e:
-            # سلامة المخزون (بند إضافي، 2026-07-23): كمية مشتركة لكل رأس —
-            # لو المخزون خلص بمنتصف الدفعة، الرؤوس السابقة تبقى مسجَّلة
-            # صح والباقي يُرفض برسالة واضحة، بدل ما يكسر الطلب كامل.
-            results[animal_id] = f"مرفوض — {e}"
+    for slot in vaccine_slots:
+        pharmacy = Pharmacy.query.get(int(slot["pharmacy_id"]))
+        next_due_date = (
+            record_date + timedelta(days=pharmacy.protection_days)
+            if pharmacy.protection_days else None
+        )
+        total_cost = 0.0
+        for animal_id, dose_ml in slot["doses"].items():
+            animal = Animal.query.get(animal_id)
+            if not animal:
+                results[(pharmacy.id, animal_id)] = "غير موجود"
+                continue
+            try:
+                vacc = health_service.record_vaccination(
+                    actor_user_id=actor_user_id, animal_id=animal_id, vaccine_name=pharmacy.name,
+                    date_=record_date, next_due_date=next_due_date,
+                    pharmacy_id=pharmacy.id, quantity_used=dose_ml,
+                )
+                results[(pharmacy.id, animal_id)] = "تم"
+                total_cost += vacc.cost or 0
+            except health_service.IncompleteRecordError as e:
+                # سلامة المخزون/الجرعة (بند إضافي، 2026-07-23 + 60): لو
+                # المخزون خلص أو الجرعة غير مكتملة بمنتصف الدفعة، الرؤوس
+                # السابقة تبقى مسجَّلة صح والباقي يُرفض برسالة واضحة.
+                results[(pharmacy.id, animal_id)] = f"مرفوض — {e}"
+        if total_cost:
+            db.session.add(Finance(
+                date=record_date, operation_type="expense", category="تحصين",
+                item=f"تحصين جماعي — {pharmacy.name}", amount=round(total_cost, 2),
+            ))
+            db.session.commit()
     return results
 
 
