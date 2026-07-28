@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 from flask_babel import lazy_gettext as _l
+from sqlalchemy.exc import IntegrityError
 
 from datetime import date
 
@@ -75,6 +76,39 @@ def members_new():
         flash("تمت إضافة العضو", "success")
         return redirect(url_for("team.members_list"))
     return render_template("team/member_form.html", roles=Role.query.order_by(Role.id).all())
+
+
+@team_bp.route("/members/<int:user_id>/edit", methods=["GET", "POST"])
+@login_required
+@require_permission("users.manage")
+def members_edit(user_id):
+    """تعديل بيانات عضو فريق موجود + تغيير كلمة المرور (بند إضافي 58) —
+    كلمة المرور الجديدة اختيارية: تتغيّر بس لو الحقل تعبّى، عن طريق
+    `User.set_password()` مباشرة بدون حاجة لمعرفة كلمة المرور القديمة
+    (المالك يدير حساب غيره، مو نفسه)."""
+    user = User.query.get_or_404(user_id)
+    if request.method == "POST":
+        user.name = request.form["name"].strip()
+        user.phone = request.form["phone"].strip()
+        user.role_id = int(request.form["role_id"])
+        user.language = request.form.get("language") or "ar"
+        new_password = request.form.get("new_password", "").strip()
+        if new_password:
+            user.set_password(new_password)
+        db.session.add(user)
+        try:
+            db.session.add(AuditLog(actor_user_id=current_user.id, action="user.edit",
+                                     entity_type="User", entity_id=user.id,
+                                     details="password_changed" if new_password else None))
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f'رقم الجوال "{request.form["phone"]}" مستخدم من قبل', "error")
+            return redirect(url_for("team.members_edit", user_id=user.id))
+        flash("تم تحديث بيانات العضو" + (" وكلمة المرور" if new_password else ""), "success")
+        return redirect(url_for("team.members_list"))
+    return render_template("team/member_edit_form.html", member=user,
+                            roles=Role.query.order_by(Role.id).all())
 
 
 @team_bp.route("/members/<int:user_id>/toggle", methods=["POST"])

@@ -14,7 +14,8 @@
       <td>{{ m.role.display_name if m.role else '-' }}</td>
       <td>{{ m.language }}</td>
       <td>{% if m.is_active_account %}<span class="badge on">نشط</span>{% else %}<span class="badge off">معطّل</span>{% endif %}</td>
-      <td>
+      <td style="display:flex; gap:6px;">
+        <a class="btn light" href="{{ url_for('team.members_edit', user_id=m.id) }}" style="padding:4px 10px; font-size:12px;">تعديل</a>
         {% if m.id != current_user.id %}
         <form method="post" action="{{ url_for('team.members_toggle', user_id=m.id) }}">
           <button class="btn" type="submit" style="{% if m.is_active_account %}background:#a32d2d;{% endif %} padding:4px 10px; font-size:12px;">{{ 'تعطيل' if m.is_active_account else 'تفعيل' }}</button>

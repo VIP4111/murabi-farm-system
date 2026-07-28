@@ -15,28 +15,34 @@
     {% endif %}
 
     <label>اللون</label>
-    <select name="color" required>
-      <option value="">اختر اللون...</option>
-      {% for c in colors %}<option value="{{ c.name }}" {{ 'selected' if animal and animal.color == c.name }}>{{ c.name }}</option>{% endfor %}
-    </select>
-    <a href="{{ url_for('core.colors_new') }}" style="font-size:12px;">+ إضافة لون جديد</a>
+    <div style="display:flex; gap:6px; align-items:center;">
+      <select name="color" required style="flex:1; margin-bottom:0;">
+        <option value="">اختر اللون...</option>
+        {% for c in colors %}<option value="{{ c.name }}" {{ 'selected' if animal and animal.color == c.name }}>{{ c.name }}</option>{% endfor %}
+      </select>
+      <a class="btn light" href="{{ url_for('core.colors_new') }}" title="إضافة لون جديد" style="padding:6px 10px; font-size:16px; line-height:1; flex:0 0 auto;">➕</a>
+    </div>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين.</p>
 
     <label>الاسم (اختياري)</label><input name="name" value="{{ animal.name or '' if animal }}">
 
     <label>الفصيلة</label>
-    <select name="species" id="speciesSelect" {{ 'disabled' if animal }}>
-      {% for s in species_types %}<option value="{{ s.code }}" {{ 'selected' if animal and animal.species == s.code }}>{{ s.label_ar }}</option>{% endfor %}
-    </select>
-    {% if not animal %}<a href="{{ url_for('core.species_types_new') }}" style="font-size:12px;">+ إضافة فصيلة جديدة</a>{% endif %}
+    <div style="display:flex; gap:6px; align-items:center;">
+      <select name="species" id="speciesSelect" {{ 'disabled' if animal }} style="flex:1; margin-bottom:0;">
+        {% for s in species_types %}<option value="{{ s.code }}" {{ 'selected' if animal and animal.species == s.code }}>{{ s.label_ar }}</option>{% endfor %}
+      </select>
+      {% if not animal %}<a class="btn light" href="{{ url_for('core.species_types_new') }}" title="إضافة فصيلة جديدة" style="padding:6px 10px; font-size:16px; line-height:1; flex:0 0 auto;">➕</a>{% endif %}
+    </div>
     {% if animal %}<input type="hidden" name="species" value="{{ animal.species }}">{% endif %}
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">أي فصيلة غير "حلال" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً.</p>
 
     <label>السلالة</label>
-    <select name="breed">
-      {% for b in breeds %}<option value="{{ b.name }}" {{ 'selected' if (animal.breed if animal else 'عام/غير محدد') == b.name }}>{{ b.name }}</option>{% endfor %}
-    </select>
-    <a href="{{ url_for('core.breeds_new') }}" style="font-size:12px;">+ إضافة سلالة جديدة</a>
+    <div style="display:flex; gap:6px; align-items:center;">
+      <select name="breed" style="flex:1; margin-bottom:0;">
+        {% for b in breeds %}<option value="{{ b.name }}" {{ 'selected' if (animal.breed if animal else 'عام/غير محدد') == b.name }}>{{ b.name }}</option>{% endfor %}
+      </select>
+      <a class="btn light" href="{{ url_for('core.breeds_new') }}" title="إضافة سلالة جديدة" style="padding:6px 10px; font-size:16px; line-height:1; flex:0 0 auto;">➕</a>
+    </div>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">تحديد "نعيمي" يفعّل تلقائياً حظر النحاس (بند إضافي 51) على أي دواء/علف عالي النحاس يُسجَّل لهذا الرأس.</p>
 
     {% if animal %}
@@ -86,22 +92,35 @@
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">اختيار حظيرة العزل لرأس مشترى جديد يولّد له تلقائياً مهام رش وقائي وتحصين مبدئي إلزامية.</p>
 
     {% if not animal %}
-    <label>الأم (مطلوب فقط لو المصدر "ولادة")</label>
-    <select name="mother_id">
-      <option value="">-</option>
-      {% for m in mothers %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
-    </select>
+    <div data-source-group="birth">
+      <label>الأم (مطلوب فقط لو المصدر "ولادة")</label>
+      <select name="mother_id">
+        <option value="">-</option>
+        {% for m in mothers %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
+      </select>
 
-    <label>الأب (اختياري، لو معروف ومسجّل بالنظام)</label>
-    <select name="father_id">
-      <option value="">-</option>
-      {% for f in fathers %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
-    </select>
+      <label>الأب (اختياري، لو معروف ومسجّل بالنظام)</label>
+      <select name="father_id">
+        <option value="">-</option>
+        {% for f in fathers %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
+      </select>
+
+      <label>تاريخ الولادة</label><input name="birth_date" type="date">
+    </div>
+
+    <div data-source-group="purchase">
+      <label>تاريخ الشراء</label><input name="purchase_date" type="date">
+    </div>
+
+    <div data-source-group="gift,opening_balance">
+      <label>تاريخ الدخول</label><input name="entry_date" type="date">
+    </div>
+    {% else %}
+    <label>تاريخ الولادة (لو المصدر ولادة)</label><input name="birth_date" type="date" value="{{ animal.birth_date.isoformat() if animal.birth_date }}">
+    <label>تاريخ الشراء (لو المصدر شراء)</label><input name="purchase_date" type="date" value="{{ animal.purchase_date.isoformat() if animal.purchase_date }}">
+    <label>تاريخ الدخول (لو المصدر هدية أو رصيد افتتاحي)</label><input name="entry_date" type="date" value="{{ animal.entry_date.isoformat() if animal.entry_date }}">
     {% endif %}
 
-    <label>تاريخ الولادة (لو المصدر ولادة)</label><input name="birth_date" type="date" value="{{ animal.birth_date.isoformat() if animal and animal.birth_date }}">
-    <label>تاريخ الشراء (لو المصدر شراء)</label><input name="purchase_date" type="date" value="{{ animal.purchase_date.isoformat() if animal and animal.purchase_date }}">
-    <label>تاريخ الدخول (لو المصدر هدية أو رصيد افتتاحي)</label><input name="entry_date" type="date" value="{{ animal.entry_date.isoformat() if animal and animal.entry_date }}">
     <label>الوزن (كجم)</label><input name="weight" type="number" step="0.01" value="{{ animal.weight if animal }}">
     <label>السعر / القيمة التقديرية</label><input name="price" type="number" step="0.01" value="{{ animal.price if animal }}">
     <label>رابط الصورة (اختياري)</label><input name="image_url" placeholder="https://..." value="{{ animal.image_url or '' if animal }}">
@@ -117,6 +136,7 @@
   var animalNoHint = document.getElementById('animalNoHint');
   var genderSelect = document.getElementById('genderSelect');
   var pregnancySection = document.getElementById('pregnancySection');
+  var sourceGroups = document.querySelectorAll('[data-source-group]');
 
   function updateAnimalNoRequired(){
     if (!sourceSelect || !animalNoInput) return;
@@ -136,16 +156,27 @@
     pregnancySection.style.display = (isFemale && !isBirth) ? 'block' : 'none';
   }
 
+  function updateSourceGroups(){
+    if (!sourceSelect) return;
+    var current = sourceSelect.value;
+    sourceGroups.forEach(function(el){
+      var groups = el.getAttribute('data-source-group').split(',');
+      el.style.display = groups.indexOf(current) !== -1 ? 'block' : 'none';
+    });
+  }
+
   if (sourceSelect) {
     sourceSelect.addEventListener('change', function(){
       updateAnimalNoRequired();
       updatePregnancySection();
+      updateSourceGroups();
     });
   }
   if (genderSelect) genderSelect.addEventListener('change', updatePregnancySection);
 
   updateAnimalNoRequired();
   updatePregnancySection();
+  updateSourceGroups();
 })();
 </script>
 {% endif %}
