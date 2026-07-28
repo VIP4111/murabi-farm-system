@@ -15,13 +15,24 @@ class Pharmacy(db.Model):
     # `category` النصي الحر (المستخدم أصلاً لاقتراح البدائل بنفس
     # التصنيف، بند 48) — هذي تحديداً عشان حارس منع تكرار جرعة الطفيليات
     # خلال 30 يوماً يحتاج تمييزاً موثوقاً لا يعتمد على دقة كتابة الطبيب.
-    MEDICINE_CLASSES = ["antiparasitic", "antibiotic", "vaccine", "supplement", "other"]
+    MEDICINE_CLASSES = ["antiparasitic", "antibiotic", "vaccine", "supplement", "topical_disinfectant", "other"]
     MEDICINE_CLASS_LABELS_AR = {
         "antiparasitic": "مضاد طفيليات/ديدان",
         "antibiotic": "مضاد حيوي",
-        "vaccine": "لقاح",
-        "supplement": "مكمّل غذائي",
+        "vaccine": "لقاح/تحصين",
+        "supplement": "فيتامينات ومكمّلات",
+        "topical_disinfectant": "مطهرات وعلاجات موضعية",
         "other": "أخرى",
+    }
+
+    # ظروف التخزين (بند إضافي 61، 2026-07-28) — وصفي بس، ما يشغّل أي منطق
+    # آلي (لا تنبيه ولا حظر) — يظهر بفورم الدواء عشان العامل يعرف وين
+    # يحفظ الدواء فعلياً.
+    STORAGE_CONDITIONS = ["refrigerated", "dry_dark", "frozen"]
+    STORAGE_CONDITION_LABELS_AR = {
+        "refrigerated": "مبرّد (2-8° مئوية)",
+        "dry_dark": "مكان جاف ومظلم (أقل من 25° مئوية)",
+        "frozen": "مجمَّد",
     }
 
     id = db.Column(db.Integer, primary_key=True)
@@ -61,6 +72,15 @@ class Pharmacy(db.Model):
     # لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ
     # التحصين + هذي المدة). ما له علاقة بحساب جرعة — مجرد مدة زمنية.
     protection_days = db.Column(db.Integer, nullable=True)
+
+    # الجرعة الافتراضية للرأس بالمل (بند إضافي 61، 2026-07-28) — رقم واحد
+    # ثابت يكتبه الدكتور، منفصل عن جدول "الجرعة حسب العمر" (`PharmacyDoseRule`)
+    # — يُستخدم بس كقيمة احتياطية تُعرض بشاشة التحصين الجماعي لو عمر الرأس
+    # ما طابق أي نطاق بالجدول، وتبقى قابلة للتعديل اليدوي دائماً.
+    default_dose_ml = db.Column(db.Float, nullable=True)
+
+    # ظروف التخزين (بند إضافي 61) — انظر STORAGE_CONDITIONS بالأعلى.
+    storage_condition = db.Column(db.String(20), nullable=True)
 
     notes = db.Column(db.Text)
     status = db.Column(db.String(32), default="active", nullable=False)

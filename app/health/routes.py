@@ -6,7 +6,7 @@ from app.health import health_bp
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import (
-    Pharmacy, PharmacyDoseRule, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog,
+    Pharmacy, PharmacyDoseRule, UsageRoute, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
     ProtocolApplication,
 )
@@ -135,6 +135,8 @@ def pharmacy_new():
             usage_method=request.form.get("usage_method") or None,
             standard_dosage_note=request.form.get("standard_dosage_note") or None,
             protection_days=int(request.form["protection_days"]) if request.form.get("protection_days") else None,
+            default_dose_ml=float(request.form["default_dose_ml"]) if request.form.get("default_dose_ml") else None,
+            storage_condition=request.form.get("storage_condition") or None,
             notes=request.form.get("notes"),
         )
         db.session.add(item)
@@ -143,10 +145,14 @@ def pharmacy_new():
         db.session.commit()
         flash("تمت إضافة الدواء", "success")
         return redirect(url_for("health.pharmacy_list"))
+    UsageRoute.seed_defaults()
     return render_template(
         "health/pharmacy_form.html",
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        storage_conditions=Pharmacy.STORAGE_CONDITIONS,
+        storage_condition_labels=Pharmacy.STORAGE_CONDITION_LABELS_AR,
+        usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
     )
 
 
@@ -157,11 +163,14 @@ def pharmacy_dose_rules_json(pharmacy_id):
     """نقطة نهاية JSON صغيرة (نفس نمط `/animals/<id>/quick-info` ببند 28)
     — تُستخدم من شاشة التحصين الجماعي لجلب جدول الجرعة حسب العمر لدواء
     مختار، وتحسب الجرعة المطابقة لكل رأس بجافاسكربت بالمتصفح (بحث بسيط
-    بجدول كتبه الدكتور، مو حساباً جديداً)."""
+    بجدول كتبه الدكتور، مو حساباً جديداً). `default_dose_ml` تُرجَع كقيمة
+    احتياطية (بند إضافي 61) تُستخدم بالواجهة بس لو عمر الرأس ما طابق أي
+    نطاق بالجدول — تبقى نفس رقم الدكتور، صفر حساب."""
     rules = PharmacyDoseRule.query.filter_by(pharmacy_id=pharmacy_id).order_by(PharmacyDoseRule.age_from_days).all()
     pharmacy = Pharmacy.query.get_or_404(pharmacy_id)
     return jsonify({
         "protection_days": pharmacy.protection_days,
+        "default_dose_ml": pharmacy.default_dose_ml,
         "rules": [{"age_from_days": r.age_from_days, "age_to_days": r.age_to_days, "dose_ml": r.dose_ml} for r in rules],
     })
 
@@ -185,17 +194,45 @@ def pharmacy_edit(pharmacy_id):
         item.usage_method = request.form.get("usage_method") or None
         item.standard_dosage_note = request.form.get("standard_dosage_note") or None
         item.protection_days = int(request.form["protection_days"]) if request.form.get("protection_days") else None
+        item.default_dose_ml = float(request.form["default_dose_ml"]) if request.form.get("default_dose_ml") else None
+        item.storage_condition = request.form.get("storage_condition") or None
         item.notes = request.form.get("notes")
         _save_dose_rules(item.id)
         db.session.commit()
         flash("تم تحديث بيانات الدواء", "success")
         return redirect(url_for("health.pharmacy_list"))
+    UsageRoute.seed_defaults()
     return render_template(
         "health/pharmacy_form.html", item=item,
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        storage_conditions=Pharmacy.STORAGE_CONDITIONS,
+        storage_condition_labels=Pharmacy.STORAGE_CONDITION_LABELS_AR,
+        usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
         dose_rules=item.dose_rules,
     )
+
+
+@health_bp.route("/usage-routes/new", methods=["GET", "POST"])
+@login_required
+@require_permission("medical_options.manage")
+def usage_routes_new():
+    """إضافة "طريقة استخدام" جديدة للقائمة (بند إضافي 61) — نفس نمط
+    disease_types_new/breeds_new/colors_new بالضبط."""
+    if request.method == "POST":
+        name = request.form["name"].strip()
+        if not name:
+            flash("اسم الطريقة مطلوب", "error")
+            return redirect(url_for("health.usage_routes_new"))
+        if UsageRoute.query.filter_by(name=name).first():
+            flash(f'"{name}" موجودة بالقائمة أصلاً', "error")
+            return redirect(url_for("health.usage_routes_new"))
+        db.session.add(UsageRoute(name=name))
+        db.session.commit()
+        flash("تمت إضافة طريقة الاستخدام", "success")
+        return redirect(url_for("health.pharmacy_new"))
+    return render_template("animal_option_form.html", title="إضافة طريقة استخدام جديدة",
+                            back_endpoint="health.pharmacy_new")
 
 
 # ---------- الأمراض الشائعة (بند إضافي، 2026-07-23) ----------

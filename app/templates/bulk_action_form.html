@@ -119,11 +119,15 @@
             var ageRaw = row.getAttribute('data-age-days');
             var age = ageRaw === '' ? null : parseInt(ageRaw, 10);
             var doseInput = row.querySelector('.doseInput[data-slot="' + slot + '"]');
-            if (!doseInput || age === null) return;
-            var match = (data.rules || []).find(function(r){
+            if (!doseInput) return;
+            var match = age === null ? null : (data.rules || []).find(function(r){
               return age >= r.age_from_days && age <= r.age_to_days;
             });
+            // لو ما فيه نطاق عمري مطابق (أو العمر مجهول)، نرجع للجرعة
+            // الافتراضية الثابتة المسجَّلة على الدواء (بند إضافي 61) —
+            // تبقى نفس رقم الدكتور، وقابلة للتعديل اليدوي دائماً.
             if (match) doseInput.value = match.dose_ml;
+            else if (data.default_dose_ml != null) doseInput.value = data.default_dose_ml;
           });
         });
     });
