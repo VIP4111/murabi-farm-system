@@ -167,7 +167,7 @@ def _delayed_estrus(fs: FarmSettings) -> list[dict]:
 
     alerts = []
     for a in Animal.query.filter_by(status="active", gender="أنثى").all():
-        if a.species == "ostrich":
+        if a.species != "sheep_goat":
             continue
         if _is_reproductively_delayed(a, fs):
             alerts.append({

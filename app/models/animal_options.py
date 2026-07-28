@@ -1,0 +1,68 @@
+"""
+قوائم مرجعية قابلة للتوسّع لتسجيل الحيوان (بند إضافي، 2026-07-28) — نفس
+فلسفة `DiseaseType` بالضبط: جدول صغير + زر "+ إضافة" (`animals.manage`)
+بدل قائمة Python ثابتة (`Animal.BREEDS` القديمة) أو نص حر بدون اقتراحات.
+
+`SpeciesType.code` **يبقى قيمة برمجية ثابتة يقرأها الكود** (`sheep_goat`/
+`ostrich`/...) — إضافة فصيلة جديدة من الواجهة ما تبني نظاماً موازياً
+تلقائياً (زي النعام)، فأي فصيلة غير "حلال" (`sheep_goat`) **ما تدخل محرك
+دورة الإنتاج افتراضياً** لحمايتها من خلل بيانات حقيقي (راجع تحذير قدّمناه
+للمستخدم قبل البناء، وافق عليه صراحة). `Breed`/`AnimalColor` أبسط —
+`Animal.breed`/`Animal.color` يبقيان نص حر بالجدول (بدون FK) تماماً مثل
+`Disease.disease_name`؛ هذي الجداول مرجع اقتراحات فقط.
+"""
+from datetime import datetime, timezone
+from app.extensions import db
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+class SpeciesType(db.Model):
+    __tablename__ = "species_types"
+
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(20), unique=True, nullable=False)
+    label_ar = db.Column(db.String(80), nullable=False)
+    created_at = db.Column(db.DateTime, default=_now)
+
+    @classmethod
+    def seed_defaults(cls) -> None:
+        if cls.query.count() > 0:
+            return
+        db.session.add(cls(code="sheep_goat", label_ar="حلال (ضأن/ماعز)"))
+        db.session.add(cls(code="ostrich", label_ar="نعام"))
+        db.session.commit()
+
+
+class Breed(db.Model):
+    __tablename__ = "breeds"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=_now)
+
+    @classmethod
+    def seed_defaults(cls) -> None:
+        if cls.query.count() > 0:
+            return
+        for n in ("نعيمي", "عام/غير محدد"):
+            db.session.add(cls(name=n))
+        db.session.commit()
+
+
+class AnimalColor(db.Model):
+    __tablename__ = "animal_colors"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=_now)
+
+    @classmethod
+    def seed_defaults(cls) -> None:
+        if cls.query.count() > 0:
+            return
+        for n in ("أبيض", "أسود", "أحمر", "بني", "رمادي", "مبرقش"):
+            db.session.add(cls(name=n))
+        db.session.commit()

@@ -19,7 +19,7 @@ from app.feed.feed_service import ration_profile
 
 def herd_summary() -> dict:
     animals = Animal.query.filter_by(status="active").all()
-    ruminants = [a for a in animals if a.species != "ostrich"]
+    ruminants = [a for a in animals if a.species == "sheep_goat"]
     ostriches = [a for a in animals if a.species == "ostrich"]
     return {
         "total_active": len(animals),
@@ -36,7 +36,7 @@ def pregnant_summary() -> dict:
     """نفس منطق '_is_currently_pregnant' بـ animal_filters_service: آخر
     حمل مؤكد للأنثى وما فيه ولادة مسجّلة بعده."""
     pregnant = []
-    for female in Animal.query.filter_by(status="active", gender="أنثى").filter(Animal.species != "ostrich").all():
+    for female in Animal.query.filter_by(status="active", gender="أنثى").filter(Animal.species == "sheep_goat").all():
         last_pregnancy = (
             Pregnancy.query.filter_by(female_id=female.id, confirmed=True)
             .order_by(Pregnancy.date.desc()).first()

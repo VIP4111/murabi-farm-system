@@ -17,6 +17,7 @@ from app.core import setup_checklist_service
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings
+from app.models import SpeciesType, Breed, AnimalColor
 from app.models.animal import AnimalSource
 from app.permissions_registry import PERMISSIONS
 
@@ -473,12 +474,113 @@ SOURCE_FORM_MAP = {
 }
 
 
+# حظائر النظام الإلزامية (بند إضافي، 2026-07-28) — تُزرع تلقائياً أول
+# مرة تحتاجها الشاشة (نفس نمط `FarmSettings.get()` الموجود أصلاً)، عشان
+# أي مزرعة جديدة تلقى هذي الحظائر جاهزة للاختيار بدون ما يضطر المالك
+# ينشئها يدوياً. `barn_type="عزل"` نفس القيمة اللي تبحث عنها أصلاً
+# `isolation_service`/`batch_service` (بدون تعديل عليهم) — "عزل_مرض"
+# قيمة جديدة مخصّصة لبروتوكول الإجهاض/الحالات المرضية تحديداً.
+_SYSTEM_BARNS = [
+    ("Q-NEW", "حظيرة العزل للمستجدين", "عزل"),
+    ("PREG", "حظيرة الحوامل", "حوامل"),
+    ("A", "A-عادية", "عادية"),
+    ("Q-SICK", "حظيرة عزل مرض", "عزل_مرض"),
+]
+
+
+def _seed_system_barns() -> None:
+    existing_types = {b.barn_type for b in Barn.query.filter(Barn.barn_type.isnot(None)).all()}
+    created = False
+    for barn_no, barn_name, barn_type in _SYSTEM_BARNS:
+        if barn_type in existing_types:
+            continue
+        if Barn.query.filter_by(barn_no=barn_no).first():
+            continue
+        db.session.add(Barn(barn_no=barn_no, barn_name=barn_name, barn_type=barn_type))
+        created = True
+    if created:
+        db.session.commit()
+
+
+@core_bp.route("/animals/species-types/new", methods=["GET", "POST"])
+@login_required
+@require_permission("animals.manage")
+def species_types_new():
+    """إضافة فصيلة جديدة (بند إضافي، 2026-07-28) — **تحذير مقصود بالواجهة**:
+    فصيلة جديدة ما تدخل محرك دورة الإنتاج تلقائياً (مبني على بيولوجيا
+    الحلال فقط) — نفس معاملة النعام حالياً، بأمان، لين يُبنى لها نظام
+    مخصّص لاحقاً لو احتجتِه."""
+    if request.method == "POST":
+        value = request.form["name"].strip()
+        if not value:
+            flash("اسم الفصيلة مطلوب", "error")
+            return redirect(url_for("core.species_types_new"))
+        if SpeciesType.query.filter_by(code=value).first():
+            flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
+            return redirect(url_for("core.species_types_new"))
+        db.session.add(SpeciesType(code=value, label_ar=value))
+        db.session.commit()
+        flash("تمت إضافة الفصيلة", "success")
+        return redirect(url_for("core.animals_new"))
+    return render_template("animal_option_form.html", title="إضافة فصيلة جديدة",
+                            back_endpoint="core.animals_new",
+                            warning="فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص.")
+
+
+@core_bp.route("/animals/breeds/new", methods=["GET", "POST"])
+@login_required
+@require_permission("animals.manage")
+def breeds_new():
+    if request.method == "POST":
+        value = request.form["name"].strip()
+        if not value:
+            flash("اسم السلالة مطلوب", "error")
+            return redirect(url_for("core.breeds_new"))
+        if Breed.query.filter_by(name=value).first():
+            flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
+            return redirect(url_for("core.breeds_new"))
+        db.session.add(Breed(name=value))
+        db.session.commit()
+        flash("تمت إضافة السلالة", "success")
+        return redirect(url_for("core.animals_new"))
+    return render_template("animal_option_form.html", title="إضافة سلالة جديدة",
+                            back_endpoint="core.animals_new")
+
+
+@core_bp.route("/animals/colors/new", methods=["GET", "POST"])
+@login_required
+@require_permission("animals.manage")
+def colors_new():
+    if request.method == "POST":
+        value = request.form["name"].strip()
+        if not value:
+            flash("اسم اللون مطلوب", "error")
+            return redirect(url_for("core.colors_new"))
+        if AnimalColor.query.filter_by(name=value).first():
+            flash(f'"{value}" موجود بالقائمة أصلاً', "error")
+            return redirect(url_for("core.colors_new"))
+        db.session.add(AnimalColor(name=value))
+        db.session.commit()
+        flash("تمت إضافة اللون", "success")
+        return redirect(url_for("core.animals_new"))
+    return render_template("animal_option_form.html", title="إضافة لون جديد",
+                            back_endpoint="core.animals_new")
+
+
 @core_bp.route("/animals/new", methods=["GET", "POST"])
 @login_required
 @require_permission("animals.manage")
 def animals_new():
     if request.method == "POST":
         source = request.form["source"]
+        # الحظيرة إلزامية (بند إضافي، 2026-07-28) — ما فيه خيار "بدون
+        # حظيرة" بالواجهة، بس نتحقق هنا كمان لو الطلب وصل مباشر للسيرفر.
+        if not request.form.get("barn_id"):
+            flash("الحظيرة مطلوبة", "error")
+            return redirect(url_for("core.animals_new"))
+        if not request.form.get("color"):
+            flash("اللون مطلوب", "error")
+            return redirect(url_for("core.animals_new"))
         try:
             animal = create_animal(
                 animal_no=request.form.get("animal_no", "").strip() or None,
@@ -498,6 +600,7 @@ def animals_new():
                 name=request.form.get("name") or None,
                 image_url=request.form.get("image_url") or None,
                 breed=request.form.get("breed") or None,
+                is_pregnant_at_intake=bool(request.form.get("is_pregnant_at_intake")),
             )
         except ValueError as e:
             flash(str(e), "error")
@@ -518,12 +621,18 @@ def animals_new():
         flash("تمت إضافة الحيوان", "success")
         return redirect(url_for("core.animals_list"))
 
+    _seed_system_barns()
+    SpeciesType.seed_defaults()
+    Breed.seed_defaults()
+    AnimalColor.seed_defaults()
     return render_template(
         "animal_form.html",
         barns=Barn.query.order_by(Barn.barn_name).all(),
         mothers=Animal.query.filter_by(gender="أنثى").order_by(Animal.animal_no).all(),
         fathers=Animal.query.filter_by(gender="ذكر").order_by(Animal.animal_no).all(),
-        breeds=Animal.BREEDS,
+        breeds=Breed.query.order_by(Breed.name).all(),
+        species_types=SpeciesType.query.order_by(SpeciesType.label_ar).all(),
+        colors=AnimalColor.query.order_by(AnimalColor.name).all(),
     )
 
 
@@ -543,6 +652,12 @@ def animals_edit(animal_id):
         new_no = request.form.get("animal_no", "").strip()
         if not new_no:
             flash("رقم الحيوان مطلوب", "error")
+            return redirect(url_for("core.animals_edit", animal_id=animal.id))
+        if not request.form.get("barn_id"):
+            flash("الحظيرة مطلوبة", "error")
+            return redirect(url_for("core.animals_edit", animal_id=animal.id))
+        if not request.form.get("color"):
+            flash("اللون مطلوب", "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
         animal.animal_no = new_no
         animal.name = request.form.get("name") or None
@@ -571,10 +686,14 @@ def animals_edit(animal_id):
         flash("تم تحديث بيانات الحيوان", "success")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
 
+    _seed_system_barns()
+    Breed.seed_defaults()
+    AnimalColor.seed_defaults()
     return render_template(
         "animal_form.html", animal=animal,
         barns=Barn.query.order_by(Barn.barn_name).all(),
-        breeds=Animal.BREEDS,
+        breeds=Breed.query.order_by(Breed.name).all(),
+        colors=AnimalColor.query.order_by(AnimalColor.name).all(),
     )
 
 
@@ -633,7 +752,7 @@ def animal_detail(animal_id):
     profile = animal_profile_service.get_profile(animal)
     # النعام ما يدخل محرك دورة الإنتاج (بند 23) — مبني على بيولوجيا
     # المجترات فقط (تقريع/حمل/فطام)، فما ننشئ له صف ProductionWorkflow.
-    wf = cycle_engine.get_or_create_workflow(animal) if animal.species != "ostrich" else None
+    wf = cycle_engine.get_or_create_workflow(animal) if animal.species == "sheep_goat" else None
     withdrawal_until = animal_under_withdrawal(animal.id)
     return render_template(
         "animal_detail.html", wf=wf,
@@ -738,6 +857,9 @@ def animal_workflow(animal_id):
     if animal.species == "ostrich":
         flash("النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس).", "error")
         return redirect(url_for("ostrich.eggs_list"))
+    if animal.species != "sheep_goat":
+        flash("هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد.", "error")
+        return redirect(url_for("core.animal_detail", animal_id=animal.id))
     wf = cycle_engine.get_or_create_workflow(animal)
     cycle_engine.evaluate(animal)
     db.session.commit()

@@ -47,8 +47,10 @@ def _active_query():
 
 def _ruminant_query():
     """الفلاتر المبنية على بيولوجيا التكاثر (حمل/تقريع/فطام...) ما تنطبق
-    على النعام (بند 23) — نستثنيه هنا صراحة."""
-    return _active_query().filter(Animal.species != "ostrich")
+    إلا على "حلال" (بند 23 + توسعة إضافة الفصائل 2026-07-28) — النعام
+    وأي فصيلة جديدة تُضاف لاحقاً (ما بُني لها نظام تكاثر مخصّص بعد)
+    مستثناة هنا صراحة بأمان."""
+    return _active_query().filter(Animal.species == "sheep_goat")
 
 
 def _ostriches():
@@ -100,7 +102,7 @@ def _nursing():
     cutoff = date.today() - timedelta(days=NURSING_MAX_CHILD_AGE_DAYS)
     mother_ids = {
         a.mother_id for a in Animal.query.filter(
-            Animal.mother_id.isnot(None), Animal.birth_date >= cutoff, Animal.species != "ostrich",
+            Animal.mother_id.isnot(None), Animal.birth_date >= cutoff, Animal.species == "sheep_goat",
         ).all()
     }
     return _ruminant_query().filter(Animal.id.in_(mother_ids)).all() if mother_ids else []

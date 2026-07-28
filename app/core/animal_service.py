@@ -6,11 +6,68 @@
 تسجيل ولادة، استيراد جماعي) يجب يمر من هالدالة ولا يسوي إدخال مباشر
 لجدول Animal.
 """
-from datetime import date
+from datetime import date, timedelta
 from app.extensions import db
 from app.models.animal import Animal, AnimalSource
 from app.models.animal_log import AnimalWeight, AnimalNote
 from app.models.milk_record import MilkRecord
+
+
+def _maybe_start_purchase_quarantine(animal: Animal) -> None:
+    """رأس مشترى وُضع بحظيرة العزل (بند إضافي، 2026-07-28) يحصل تلقائياً
+    على نفس مهمتي بداية دفعة الاستقبال (بند 52): رش وقائي وتحصين مبدئي —
+    اختيار المالك لحظيرة العزل وقت التسجيل هو اللي يفعّل هذا، مو تلقائي
+    بغض النظر عن الحظيرة المختارة (نفس مبدأ الاستقلالية اللي بُنيت عليه
+    شاشة تسجيل الحيوان من الأساس)."""
+    if not animal.barn_id:
+        return
+    from app.models import Barn
+    from app.team import task_service
+
+    barn = Barn.query.get(animal.barn_id)
+    if not barn or barn.barn_type != "عزل":
+        return
+
+    task_service.create_suggested_task(
+        title=f"🧴 رش وقائي — {animal.animal_no} (وافد جديد)",
+        task_type="batch_spray", barn_id=animal.barn_id, animal_id=animal.id,
+        due_date=date.today(), source_type="Animal", source_id=animal.id,
+        notes="رش وقائي ضد الطفيليات الخارجية عند الاستقبال — قبل الاختلاط بباقي القطيع.",
+    )
+    task_service.create_suggested_task(
+        title=f"💉 تحصين مبدئي إلزامي — {animal.animal_no} (وافد جديد)",
+        task_type="batch_initial_vaccination", barn_id=animal.barn_id, animal_id=animal.id,
+        due_date=date.today(), source_type="Animal", source_id=animal.id,
+        notes="تحصين مبدئي عند الاستقبال حسب البروتوكول المتّبع بالمزرعة — إلزامي قبل خلط الرأس بالقطيع.",
+    )
+
+
+def _register_pregnancy_intake(animal: Animal, *, intake_date: date) -> None:
+    """أنثى أُعلن عنها حامل وقت التسجيل (بند إضافي، 2026-07-28) — تُسجَّل
+    كحمل غير مؤكَّد بعد (`Pregnancy.confirmed=False`، نفس جدول الحمل
+    الموجود أصلاً بند 10 — بدون أي حقل جديد على Animal) بانتظار تأكيد
+    الطبيب، وتتولّد مهمة "نقل لحظيرة الحوامل" مستحقة بنهاية فترة العزل.
+    إنجاز هذي المهمة تحديداً هو اللي ينفّذ النقل الفعلي (نفس نمط
+    `complete_task_via_treatment` — إجراء خاص يشغّله إنجاز نوع مهمة
+    معيّن، انظر `task_service.complete_task`)."""
+    from app.models import Pregnancy, FarmSettings
+    from app.team import task_service
+
+    db.session.add(Pregnancy(
+        female_id=animal.id, date=intake_date, confirmed=False,
+        notes="أُعلن عنها حامل وقت تسجيل الحيوان — بانتظار تأكيد الطبيب.",
+    ))
+
+    settings = FarmSettings.get()
+    task_service.create_suggested_task(
+        title=f"🤰 نقل {animal.animal_no} لحظيرة الحوامل بعد انتهاء العزل",
+        task_type="move_to_pregnant_barn",
+        animal_id=animal.id, barn_id=animal.barn_id,
+        due_date=intake_date + timedelta(days=settings.isolation_days),
+        source_type="PregnancyIntake", source_id=animal.id,
+        notes="أُعلنت حامل وقت الشراء/الدخول — تأكد من العزل والفحص أولاً، ثم أنجز هذي المهمة لنقلها فعلياً لحظيرة الحوامل.",
+    )
+    db.session.commit()
 
 
 def generate_temp_animal_no(mother: Animal) -> str:
@@ -43,6 +100,7 @@ def create_animal(
     name: str | None = None,
     image_url: str | None = None,
     breed: str | None = None,
+    is_pregnant_at_intake: bool = False,
 ) -> Animal:
     if source == AnimalSource.BIRTH and mother_id is None:
         raise ValueError("الحيوان المولود لازم يكون مربوط بأم (mother_id)")
@@ -103,15 +161,21 @@ def create_animal(
         ))
         db.session.commit()
 
-    if species != "ostrich":
+    if species == "sheep_goat":
         # محرك دورة الإنتاج (CycleEvent/ProductionWorkflow) مبني بالكامل
-        # على بيولوجيا المجترات — النعام ما يدخله إطلاقاً، فما نسجّل له
-        # حتى حدث "source" الأساسي (بند 23).
+        # على بيولوجيا المجترات — أي فصيلة غير "حلال" (نعام أو أي فصيلة
+        # جديدة تُضاف لاحقاً من شاشة الفصائل) ما تدخله إطلاقاً، فما نسجّل
+        # لها حتى حدث "source" الأساسي (بند 23 + توسعة إضافة الفصائل
+        # 2026-07-28: فصيلة جديدة تُعامَل بأمان كالنعام افتراضياً، لأنها
+        # ما بُني لها نظام دورة مخصّص بعد).
         from app.core.cycle_engine import record_cycle_event
         record_cycle_event(animal, "source", source_type="Animal", source_id=animal.id,
                             event_date=birth_date or purchase_date or entry_date or date.today())
 
-    if source == AnimalSource.BIRTH and mother_id and species != "ostrich":
+    if source == AnimalSource.PURCHASE and species == "sheep_goat":
+        _maybe_start_purchase_quarantine(animal)
+
+    if source == AnimalSource.BIRTH and mother_id and species == "sheep_goat":
         # خطة العزل التلقائية مبنية بالكامل على بيولوجيا المجترات (حظيرة
         # عزل، فحص دكتور، تحصين أم/مولود) — ما تنطبق على النعام، اللي
         # دورته (بيض→حضانة→فقس) مبنية بـapp/core/ostrich_service.py.
@@ -122,6 +186,9 @@ def create_animal(
 
             from app.core.isolation_service import start_isolation_plan
             start_isolation_plan(mother=mother, newborn=animal, birth_date_=birth_date or date.today())
+
+    if gender == "أنثى" and is_pregnant_at_intake and source != AnimalSource.BIRTH:
+        _register_pregnancy_intake(animal, intake_date=purchase_date or entry_date or date.today())
 
     return animal
 

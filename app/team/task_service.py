@@ -270,8 +270,26 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
     task.server_time_source = "server"
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.complete",
                              entity_type="Task", entity_id=task.id))
+
+    if task.task_type == "move_to_pregnant_barn" and task.animal_id:
+        _move_to_pregnant_barn(task)
+
     db.session.commit()
     return task
+
+
+def _move_to_pregnant_barn(task: Task) -> None:
+    """نقل فعلي لحظيرة الحوامل (بند إضافي، 2026-07-28) — يُنفَّذ فقط
+    عند إنجاز مهمة "نقل لحظيرة الحوامل" نفسها (نفس نمط
+    `complete_task_via_treatment`: إجراء خاص يشغّله إنجاز نوع مهمة
+    معيّن)، بعد ما العزل والفحص خلصا فعلياً حسب تقدير الدكتور/المالك."""
+    from app.models import Barn
+
+    barn = Barn.query.filter_by(barn_type="حوامل").order_by(Barn.id).first()
+    if not barn:
+        return
+    task.animal.barn_id = barn.id
+    db.session.add(task.animal)
 
 
 def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, voice_note_url=None) -> Task:

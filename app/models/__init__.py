@@ -2,6 +2,7 @@ from app.models.role import Role, Permission, role_permissions
 from app.models.user import User
 from app.models.barn import Barn
 from app.models.animal import Animal
+from app.models.animal_options import SpeciesType, Breed, AnimalColor
 from app.models.settings import ServiceToggle
 from app.models.audit import AuditLog
 from app.models.pharmacy import Pharmacy
@@ -29,7 +30,7 @@ from app.models.warehouse import Warehouse, FeedWarehouseStock, PharmacyWarehous
 
 __all__ = [
     "Role", "Permission", "role_permissions",
-    "User", "Barn", "Animal",
+    "User", "Barn", "Animal", "SpeciesType", "Breed", "AnimalColor",
     "ServiceToggle", "AuditLog",
     "Pharmacy", "Doctor",
     "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink",
