@@ -47,6 +47,8 @@
         <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="إضافة لقاح جديد للصيدلية" target="_blank">➕</a>
       </div>
       <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة "لقاح" — الموعد القادم ينجدول تلقائياً من مدة الحماية المسجَّلة عليه.</p>
+      <p id="stockIndicator1" class="notice" style="display:none; font-size:12px; margin:-6px 0 10px;"></p>
+      <a id="restockLink1" class="btn light" href="#" title="فتح صفحة الدواء لتحديث المخزون" target="_blank" style="display:none; font-size:12px; margin:-4px 0 10px;">+ تحديث مخزون هذا اللقاح</a>
     </div>
 
     <button type="button" id="addSecondVaccineBtn" class="btn light" style="font-size:12px; margin-bottom:10px;">+ إضافة تحصين ثاني</button>
@@ -62,6 +64,8 @@
         </select>
         <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="إضافة لقاح جديد للصيدلية" target="_blank">➕</a>
       </div>
+      <p id="stockIndicator2" class="notice" style="display:none; font-size:12px; margin:-6px 0 10px;"></p>
+      <a id="restockLink2" class="btn light" href="#" title="فتح صفحة الدواء لتحديث المخزون" target="_blank" style="display:none; font-size:12px; margin:-4px 0 10px;">+ تحديث مخزون هذا اللقاح</a>
     </div>
 
     <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
@@ -107,14 +111,66 @@
     });
   }
 
+  // شريط فحص المخزون المباشر (بند إضافي 64) — عرض بس، يحسب الاحتياج
+  // (مجموع جرعات الرؤوس المؤشَّرة فعلاً) مقابل المخزون المتوفر، ويلوّن
+  // أخضر/أحمر. السيرفر يبقى الحاسم الفعلي لخصم/رفض المخزون
+  // (Pharmacy.deduct_stock) — هذا تحذير مسبق بس قبل الإرسال.
+  var slotStock = {}; // {slot: {available_qty, unit}}
+
+  function recomputeStockIndicator(slot){
+    var box = document.getElementById('stockIndicator' + slot);
+    if (!box) return;
+    var stock = slotStock[slot];
+    if (!stock || stock.available_qty == null) { box.style.display = 'none'; return; }
+
+    var totalNeeded = 0, headsChecked = 0, headsWithDose = 0;
+    document.querySelectorAll('.animalRow').forEach(function(row){
+      var checkbox = row.querySelector('input[type="checkbox"][name^="vaccinated_' + slot + '_"]');
+      var doseInput = row.querySelector('.doseInput[data-slot="' + slot + '"]');
+      if (!checkbox || !checkbox.checked) return;
+      headsChecked++;
+      var dose = doseInput ? parseFloat(doseInput.value) : NaN;
+      if (!isNaN(dose) && dose > 0) { totalNeeded += dose; headsWithDose++; }
+    });
+
+    if (headsChecked === 0) { box.style.display = 'none'; return; }
+
+    box.style.display = 'block';
+    if (totalNeeded <= stock.available_qty) {
+      box.style.cssText = 'display:block; background:#f0f9f0; border-color:#c8e6c9; color:#1e6b1e; font-size:12px; margin:-6px 0 10px;';
+      box.textContent = '🟢 المخزون كافٍ — الاحتياج ' + totalNeeded.toFixed(2) + ' ' + (stock.unit || '') +
+        ' من أصل ' + stock.available_qty + ' ' + (stock.unit || '') + ' متوفرة.';
+    } else {
+      var avgDose = headsWithDose > 0 ? (totalNeeded / headsWithDose) : 0;
+      var coverableHeads = avgDose > 0 ? Math.floor(stock.available_qty / avgDose) : 0;
+      box.style.cssText = 'display:block; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16; font-size:12px; margin:-6px 0 10px;';
+      box.textContent = '🔴 المخزون ما يكفي — الاحتياج ' + totalNeeded.toFixed(2) + ' ' + (stock.unit || '') +
+        ' والمتوفر ' + stock.available_qty + ' ' + (stock.unit || '') +
+        ' (يكفي تقريباً لـ' + coverableHeads + ' رأس من أصل ' + headsChecked +
+        ') — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً).';
+    }
+  }
+
   document.querySelectorAll('.vaccineSelect').forEach(function(select){
     select.addEventListener('change', function(){
       var slot = select.getAttribute('data-slot');
       var pharmacyId = select.value;
-      if (!pharmacyId) return;
+      var restockLink = document.getElementById('restockLink' + slot);
+      var stockBox = document.getElementById('stockIndicator' + slot);
+      if (!pharmacyId) {
+        delete slotStock[slot];
+        if (restockLink) restockLink.style.display = 'none';
+        if (stockBox) stockBox.style.display = 'none';
+        return;
+      }
+      if (restockLink) {
+        restockLink.href = '/health/pharmacy/' + pharmacyId + '/edit';
+        restockLink.style.display = '';
+      }
       fetch('/health/pharmacy/' + pharmacyId + '/dose-rules')
         .then(function(r){ return r.json(); })
         .then(function(data){
+          slotStock[slot] = {available_qty: data.available_qty, unit: data.unit};
           document.querySelectorAll('.animalRow').forEach(function(row){
             var ageRaw = row.getAttribute('data-age-days');
             var age = ageRaw === '' ? null : parseInt(ageRaw, 10);
@@ -129,7 +185,17 @@
             if (match) doseInput.value = match.dose_ml;
             else if (data.default_dose_ml != null) doseInput.value = data.default_dose_ml;
           });
+          recomputeStockIndicator(slot);
         });
+    });
+  });
+
+  document.querySelectorAll('.animalRow').forEach(function(row){
+    ['1', '2'].forEach(function(slot){
+      var checkbox = row.querySelector('input[type="checkbox"][name^="vaccinated_' + slot + '_"]');
+      var doseInput = row.querySelector('.doseInput[data-slot="' + slot + '"]');
+      if (checkbox) checkbox.addEventListener('change', function(){ recomputeStockIndicator(slot); });
+      if (doseInput) doseInput.addEventListener('input', function(){ recomputeStockIndicator(slot); });
     });
   });
 })();

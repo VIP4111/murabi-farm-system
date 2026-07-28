@@ -169,12 +169,16 @@ def pharmacy_dose_rules_json(pharmacy_id):
     مختار، وتحسب الجرعة المطابقة لكل رأس بجافاسكربت بالمتصفح (بحث بسيط
     بجدول كتبه الدكتور، مو حساباً جديداً). `default_dose_ml` تُرجَع كقيمة
     احتياطية (بند إضافي 61) تُستخدم بالواجهة بس لو عمر الرأس ما طابق أي
-    نطاق بالجدول — تبقى نفس رقم الدكتور، صفر حساب."""
+    نطاق بالجدول — تبقى نفس رقم الدكتور، صفر حساب. `available_qty`
+    تُرجَع (بند إضافي 64) لشريط فحص المخزون المباشر — عرض بس، السيرفر
+    يبقى الحاسم الفعلي لخصم/رفض المخزون (`Pharmacy.deduct_stock`)."""
     rules = PharmacyDoseRule.query.filter_by(pharmacy_id=pharmacy_id).order_by(PharmacyDoseRule.age_from_days).all()
     pharmacy = Pharmacy.query.get_or_404(pharmacy_id)
     return jsonify({
         "protection_days": pharmacy.protection_days,
         "default_dose_ml": pharmacy.default_dose_ml,
+        "available_qty": pharmacy.available_qty,
+        "unit": pharmacy.unit,
         "rules": [{"age_from_days": r.age_from_days, "age_to_days": r.age_to_days, "dose_ml": r.dose_ml} for r in rules],
     })
 
