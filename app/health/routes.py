@@ -6,7 +6,7 @@ from app.health import health_bp
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import (
-    Pharmacy, PharmacyDoseRule, UsageRoute, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog,
+    Pharmacy, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
     ProtocolApplication,
 )
@@ -81,16 +81,18 @@ def pharmacy_shortages():
     items = (Pharmacy.query.filter_by(status="active")
              .filter(Pharmacy.available_qty <= db.func.coalesce(Pharmacy.min_stock_qty, 0))
              .order_by(Pharmacy.name).all())
-    # بدائل بنفس الفئة (بند إضافي، 2026-07-24) — أدوية نشطة، فوق حدها
-    # الأدنى فعلياً، بنفس تصنيف الدواء الناقص — اقتراح سريع بدون أي
-    # افتراض علمي (نفس الاسم/الشركة/التركيبة)، بس تصنيف مطابق كما أدخله
-    # الدكتور بنفسه بحقل "الفئة".
+    # بدائل بنفس فئة الدواء (بند إضافي، 2026-07-24 — أُعيد ربطها بـ
+    # `medicine_class` بدل حقل "الفئة" النصي الحر بعد إلغائه من الفورم
+    # ببند 61، 2026-07-28: `medicine_class` قائمة مغلقة أدق وما تعتمد على
+    # دقة كتابة الطبيب) — أدوية نشطة، فوق حدها الأدنى فعلياً، بنفس فئة
+    # الدواء الناقص — اقتراح سريع بدون أي افتراض علمي (نفس الاسم/الشركة/
+    # التركيبة).
     alternatives = {}
     for item in items:
-        if not item.category:
+        if not item.medicine_class:
             continue
         alternatives[item.id] = (
-            Pharmacy.query.filter_by(status="active", category=item.category)
+            Pharmacy.query.filter_by(status="active", medicine_class=item.medicine_class)
             .filter(Pharmacy.id != item.id)
             .filter(Pharmacy.available_qty > db.func.coalesce(Pharmacy.min_stock_qty, 0))
             .all()
@@ -123,9 +125,7 @@ def pharmacy_new():
     if request.method == "POST":
         item = Pharmacy(
             name=request.form["name"],
-            category=request.form.get("category"),
             medicine_class=request.form.get("medicine_class") or None,
-            contains_high_copper=bool(request.form.get("contains_high_copper")),
             available_qty=float(request.form.get("available_qty") or 0),
             min_stock_qty=float(request.form.get("min_stock_qty") or 0),
             unit=request.form.get("unit"),
@@ -150,9 +150,11 @@ def pharmacy_new():
         "health/pharmacy_form.html",
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_guide=health_service.MEDICINE_CLASS_GUIDE,
         storage_conditions=Pharmacy.STORAGE_CONDITIONS,
         storage_condition_labels=Pharmacy.STORAGE_CONDITION_LABELS_AR,
         usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
+        drug_catalog=DrugCatalogEntry.query.order_by(DrugCatalogEntry.name).all(),
     )
 
 
@@ -182,9 +184,12 @@ def pharmacy_edit(pharmacy_id):
     item = Pharmacy.query.get_or_404(pharmacy_id)
     if request.method == "POST":
         item.name = request.form["name"]
-        item.category = request.form.get("category")
         item.medicine_class = request.form.get("medicine_class") or None
-        item.contains_high_copper = bool(request.form.get("contains_high_copper"))
+        # حقل "يحتوي نحاساً مرتفعاً" اتحذف من الفورم (بند إضافي 62، بتأكيد
+        # صريح من المستخدم) — تعمّدنا عدم لمس `item.contains_high_copper`
+        # هنا: لو مسّينا هذا السطر، أي دواء موسوم مسبقاً بنحاس مرتفع كان
+        # راح يُصفَّر صامتاً بأول تعديل عادي له (سعر/مخزون...)، فيفقد حظر
+        # النعيمي (بند 51) فعاليته للأدوية الموجودة أصلاً، مو بس الجديدة.
         item.available_qty = float(request.form.get("available_qty") or 0)
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.unit = request.form.get("unit")
@@ -206,9 +211,11 @@ def pharmacy_edit(pharmacy_id):
         "health/pharmacy_form.html", item=item,
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_guide=health_service.MEDICINE_CLASS_GUIDE,
         storage_conditions=Pharmacy.STORAGE_CONDITIONS,
         storage_condition_labels=Pharmacy.STORAGE_CONDITION_LABELS_AR,
         usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
+        drug_catalog=DrugCatalogEntry.query.order_by(DrugCatalogEntry.name).all(),
         dose_rules=item.dose_rules,
     )
 
@@ -233,6 +240,34 @@ def usage_routes_new():
         return redirect(url_for("health.pharmacy_new"))
     return render_template("animal_option_form.html", title="إضافة طريقة استخدام جديدة",
                             back_endpoint="health.pharmacy_new")
+
+
+@health_bp.route("/drug-catalog/new", methods=["GET", "POST"])
+@login_required
+@require_permission("medical_options.manage")
+def drug_catalog_new():
+    """إضافة اسم دواء جديد لكتالوج الاقتراحات (بند إضافي 62) — منفصل
+    عن صفوف الصيدلية الفعلية (`Pharmacy`)، مجرد قائمة أسماء معروفة تُصفَّى
+    حسب فئة الدواء بفورم "دواء جديد"."""
+    if request.method == "POST":
+        name = request.form["name"].strip()
+        medicine_class = request.form.get("medicine_class") or None
+        if not name:
+            flash("اسم الدواء مطلوب", "error")
+            return redirect(url_for("health.drug_catalog_new", medicine_class=medicine_class or ""))
+        if DrugCatalogEntry.query.filter_by(name=name).first():
+            flash(f'"{name}" موجود بالكتالوج أصلاً', "error")
+            return redirect(url_for("health.drug_catalog_new", medicine_class=medicine_class or ""))
+        db.session.add(DrugCatalogEntry(name=name, medicine_class=medicine_class))
+        db.session.commit()
+        flash("تمت إضافة الدواء للكتالوج", "success")
+        return redirect(url_for("health.pharmacy_new"))
+    return render_template(
+        "health/drug_catalog_form.html",
+        medicine_classes=Pharmacy.MEDICINE_CLASSES,
+        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        preselected_class=request.args.get("medicine_class") or "",
+    )
 
 
 # ---------- الأمراض الشائعة (بند إضافي، 2026-07-23) ----------

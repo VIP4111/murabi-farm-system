@@ -18,9 +18,11 @@ def test_shortage_list_only_shows_items_at_or_below_threshold(app, logged_in_cli
 
 
 def test_shortage_list_suggests_same_category_alternative(app, logged_in_client):
-    short_item = Pharmacy(name="مضاد حيوي أ", category="مضاد حيوي", available_qty=0, min_stock_qty=5, status="active")
-    healthy_alt = Pharmacy(name="مضاد حيوي ب", category="مضاد حيوي", available_qty=50, min_stock_qty=5, status="active")
-    other_category = Pharmacy(name="فيتامين", category="فيتامين", available_qty=50, min_stock_qty=5, status="active")
+    """بند 61 (2026-07-28) أعاد ربط البدائل بـ`medicine_class` (قائمة
+    مغلقة) بدل حقل "الفئة" النصي الحر بعد إلغائه من الفورم."""
+    short_item = Pharmacy(name="مضاد حيوي أ", medicine_class="antibiotic", available_qty=0, min_stock_qty=5, status="active")
+    healthy_alt = Pharmacy(name="مضاد حيوي ب", medicine_class="antibiotic", available_qty=50, min_stock_qty=5, status="active")
+    other_category = Pharmacy(name="فيتامين", medicine_class="supplement", available_qty=50, min_stock_qty=5, status="active")
     db.session.add_all([short_item, healthy_alt, other_category])
     db.session.commit()
 

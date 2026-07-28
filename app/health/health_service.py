@@ -51,6 +51,43 @@ def injection_guide_for(usage_method: str | None) -> dict | None:
     return INJECTION_GUIDE.get(usage_method) if usage_method else None
 
 
+# دليل فئات الدواء (بند إضافي 62، 2026-07-28) — مرجع عام مختصر يشرح
+# الغرض من كل فئة دواء، بنفس مبدأ INJECTION_GUIDE بالأعلى بالضبط: نص
+# ثابت كتبه إنسان مرة وحدة، يُعرض بس، ما يُحسب ولا يُخترع لدواء معيّن —
+# زر "ℹ️ دليل الدواء" بفورم الصيدلية يعرض هذا حسب الفئة المختارة فقط،
+# وليس تشخيصاً أو توصية علاج لحيوان بعينه.
+MEDICINE_CLASS_GUIDE = {
+    "vaccine": {
+        "title": "لقاح/تحصين",
+        "notes": "يُعطى وقائياً قبل التعرّض للمرض لبناء مناعة الجسم ضده — ما يُستخدم لعلاج مرض قائم فعلاً. يحتاج عادة جرعة تنشيطية بعد مدة معيّنة (مدة الحماية) لاستمرار الوقاية.",
+    },
+    "antibiotic": {
+        "title": "مضاد حيوي",
+        "notes": "يُستخدم لعلاج عدوى بكتيرية قائمة فعلاً، بعد تشخيص الدكتور — له عادة فترة سحب قبل بيع/حلب الحيوان. ما يُجدي مع الفيروسات.",
+    },
+    "antiparasitic": {
+        "title": "مضاد طفيليات/ديدان",
+        "notes": "يُعطى دورياً حسب برنامج المزرعة لمكافحة الطفيليات الداخلية/الخارجية — التكرار المتقارب جداً بدون داعٍ قد يقلل فعاليته لاحقاً (نفس حارس منع التكرار خلال 30 يوماً بالنظام).",
+    },
+    "supplement": {
+        "title": "فيتامينات ومكمّلات",
+        "notes": "يدعم التغذية العامة أو يسدّ نقصاً غذائياً محدداً (مثل السيلينيوم) — مو علاجاً لمرض قائم، ومعظمها بدون فترة سحب.",
+    },
+    "topical_disinfectant": {
+        "title": "مطهرات وعلاجات موضعية",
+        "notes": "يُستخدم على سطح الجلد/الجرح مباشرة (تطهير، تندّب، طفيليات خارجية موضعية) — عادة أقل امتصاصاً جهازياً من الحقن/الفموي.",
+    },
+    "other": {
+        "title": "أخرى",
+        "notes": "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه.",
+    },
+}
+
+
+def medicine_class_guide_for(medicine_class: str | None) -> dict | None:
+    return MEDICINE_CLASS_GUIDE.get(medicine_class) if medicine_class else None
+
+
 def _withdrawal_until(event_date: date, pharmacy: Pharmacy | None) -> date | None:
     if pharmacy and pharmacy.withdrawal_days:
         return event_date + timedelta(days=pharmacy.withdrawal_days)

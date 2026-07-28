@@ -3,37 +3,32 @@
 <div class="card" style="max-width:420px;">
   <h2>{{ 'تعديل دواء' if item else 'دواء جديد' }}</h2>
   <form method="post" data-offline>
-    <label>الاسم</label><input name="name" required value="{{ item.name if item else '' }}">
-    <label>الفئة</label><input name="category" value="{{ item.category if item else '' }}">
+
     <label>فئة الدواء</label>
-    <select name="medicine_class">
+    <select name="medicine_class" id="medicineClassSelect">
       <option value="">-</option>
       {% for code in medicine_classes %}
       <option value="{{ code }}" {{ 'selected' if item and item.medicine_class == code }}>{{ medicine_class_labels[code] }}</option>
       {% endfor %}
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">قائمة ثابتة منفصلة عن "الفئة" النصية أعلاه — تحديد "مضاد طفيليات/ديدان" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً.</p>
-    <label><input type="checkbox" name="contains_high_copper" value="1" {{ 'checked' if item and item.contains_high_copper }} style="width:auto; margin-left:6px;"> يحتوي نحاساً مرتفعاً</label>
-    <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته "نعيمي" (بند إضافي 51) — بلا خيار تجاوز.</p>
-    <label>الكمية المتوفرة</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
-    <label>الحد الأدنى للتنبيه (بند إضافي، 2026-07-24)</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة "نواقص الصيدلية" — نفس قائمة المشتريات المطلوبة.</p>
-    <label>الوحدة</label><input name="unit" placeholder="مل / حبة / علبة" value="{{ item.unit if item else '' }}">
-    <label>سعر الوحدة (اختياري)</label><input name="unit_price" type="number" step="0.01" placeholder="مثال: 2.5" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق.</p>
-    <label>تاريخ انتهاء الصلاحية (اختياري)</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
-    <p id="expiryBadge" style="font-size:12px; margin:-6px 0 10px; font-weight:bold;"></p>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.</p>
-    <label>ظروف التخزين (اختياري)</label>
-    <select name="storage_condition">
-      <option value="">-</option>
-      {% for code in storage_conditions %}
-      <option value="{{ code }}" {{ 'selected' if item and item.storage_condition == code }}>{{ storage_condition_labels[code] }}</option>
-      {% endfor %}
-    </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي.</p>
-    <label>فترة السحب (بالأيام)</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها.</p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "مضاد طفيليات/ديدان" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية "اسم الدواء" والحقول الشرطية تحت.</p>
+
+    <label>الاسم</label>
+    <div style="display:flex; gap:6px; align-items:center;">
+      <select name="name" id="drugNameSelect" required style="flex:1;">
+        <option value="">اختر اسم دواء</option>
+        {% for e in drug_catalog %}
+        <option value="{{ e.name }}" data-class="{{ e.medicine_class or '' }}" {{ 'selected' if item and item.name == e.name }}>{{ e.name }}</option>
+        {% endfor %}
+        {% if item and item.name not in drug_catalog|map(attribute='name')|list %}
+        <option value="{{ item.name }}" selected>{{ item.name }}</option>
+        {% endif %}
+      </select>
+      <a class="btn light" id="drugCatalogAddBtn" href="{{ url_for('health.drug_catalog_new') }}" title="إضافة اسم دواء جديد" target="_blank">➕</a>
+      <button type="button" class="btn light" id="drugGuideBtn" title="دليل الدواء">ℹ️</button>
+    </div>
+    <p id="drugGuideBox" class="notice" style="display:none; margin:6px 0 10px;"></p>
+
     <label>طريقة الاستخدام (اختياري)</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="usage_method" style="flex:1;">
@@ -48,31 +43,58 @@
     <textarea name="standard_dosage_note" rows="2" placeholder="مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة">{{ item.standard_dosage_note if item else '' }}</textarea>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً.</p>
 
-    <label>مدة الحماية بالأيام (للقاحات — اختياري)</label>
-    <input name="protection_days" type="number" value="{{ item.protection_days if item and item.protection_days is not none else '' }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تُستخدم فقط لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً.</p>
+    <label>تاريخ انتهاء الصلاحية (اختياري)</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
+    <p id="expiryBadge" style="font-size:12px; margin:-6px 0 10px; font-weight:bold;"></p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.</p>
 
-    <label>الجرعة الافتراضية للرأس بالمل (للقاحات — اختياري)</label>
-    <input name="default_dose_ml" type="number" step="0.01" value="{{ item.default_dose_ml if item and item.default_dose_ml is not none else '' }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول "الجرعة حسب العمر" تحت.</p>
-
-    <label>الجرعة حسب العمر (اختياري)</label>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد.</p>
-    <div id="doseRulesRows">
-      {% for r in (dose_rules or []) %}
-      <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
-        <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" value="{{ r.age_from_days }}" style="flex:1; margin-bottom:0;">
-        <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" value="{{ r.age_to_days }}" style="flex:1; margin-bottom:0;">
-        <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" value="{{ r.dose_ml }}" style="flex:1; margin-bottom:0;">
-      </div>
+    <label>ظروف التخزين (اختياري)</label>
+    <select name="storage_condition">
+      <option value="">-</option>
+      {% for code in storage_conditions %}
+      <option value="{{ code }}" {{ 'selected' if item and item.storage_condition == code }}>{{ storage_condition_labels[code] }}</option>
       {% endfor %}
-      <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
-        <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" style="flex:1; margin-bottom:0;">
-        <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" style="flex:1; margin-bottom:0;">
-        <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" style="flex:1; margin-bottom:0;">
-      </div>
+    </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي.</p>
+
+    <div id="withdrawalGroup" style="display:none;">
+      <label>فترة السحب (بالأيام)</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها.</p>
     </div>
-    <button type="button" id="addDoseRowBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ إضافة عمر آخر</button>
+
+    <div id="vaccineGroup" style="display:none;">
+      <label>مدة الحماية بالأيام (للقاحات — اختياري)</label>
+      <input name="protection_days" type="number" value="{{ item.protection_days if item and item.protection_days is not none else '' }}">
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تُستخدم فقط لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً.</p>
+
+      <label>الجرعة الافتراضية للرأس بالمل (اختياري)</label>
+      <input name="default_dose_ml" type="number" step="0.01" value="{{ item.default_dose_ml if item and item.default_dose_ml is not none else '' }}">
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول "الجرعة حسب العمر" تحت.</p>
+
+      <label>الجرعة حسب العمر (اختياري)</label>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد.</p>
+      <div id="doseRulesRows">
+        {% for r in (dose_rules or []) %}
+        <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
+          <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" value="{{ r.age_from_days }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" value="{{ r.age_to_days }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" value="{{ r.dose_ml }}" style="flex:1; margin-bottom:0;">
+        </div>
+        {% endfor %}
+        <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
+          <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" style="flex:1; margin-bottom:0;">
+          <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" style="flex:1; margin-bottom:0;">
+          <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" style="flex:1; margin-bottom:0;">
+        </div>
+      </div>
+      <button type="button" id="addDoseRowBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ إضافة عمر آخر</button>
+    </div>
+
+    <label>الكمية المتوفرة</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
+    <label>الوحدة</label><input name="unit" placeholder="مل / حبة / علبة" value="{{ item.unit if item else '' }}">
+    <label>الحد الأدنى للتنبيه (بند إضافي، 2026-07-24)</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة "نواقص الصيدلية" — نفس قائمة المشتريات المطلوبة.</p>
+    <label>سعر الوحدة (اختياري)</label><input name="unit_price" type="number" step="0.01" placeholder="مثال: 2.5" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق.</p>
 
     <label>ملاحظات</label><input name="notes" value="{{ item.notes if item else '' }}">
     <button class="btn" type="submit">حفظ</button>
@@ -115,6 +137,75 @@
   }
   input.addEventListener('change', update);
   update();
+})();
+</script>
+<script>
+(function(){
+  // دليل فئات الدواء (بند إضافي 62) — نفس نمط دليل الحقن الميداني: نص
+  // ثابت كتبه إنسان، يُعرض بس حسب الفئة المختارة، صفر تشخيص/توصية لدواء بعينه.
+  var MEDICINE_CLASS_GUIDE = {{ (medicine_class_guide or {}) | tojson }};
+  var classSelect = document.getElementById('medicineClassSelect');
+  var nameSelect = document.getElementById('drugNameSelect');
+  var addBtn = document.getElementById('drugCatalogAddBtn');
+  var guideBtn = document.getElementById('drugGuideBtn');
+  var guideBox = document.getElementById('drugGuideBox');
+  var withdrawalGroup = document.getElementById('withdrawalGroup');
+  var vaccineGroup = document.getElementById('vaccineGroup');
+  if (!classSelect) return;
+
+  var WITHDRAWAL_CLASSES = ['antibiotic', 'antiparasitic', 'topical_disinfectant'];
+
+  function currentSelectedName(){
+    return nameSelect ? nameSelect.value : '';
+  }
+
+  function updateNameFilter(){
+    if (!nameSelect) return;
+    var cls = classSelect.value;
+    var keepValue = currentSelectedName();
+    Array.prototype.forEach.call(nameSelect.options, function(opt){
+      if (!opt.value) { opt.hidden = false; return; }
+      var optClass = opt.getAttribute('data-class') || '';
+      opt.hidden = !!(cls && optClass && optClass !== cls);
+    });
+    // يحافظ على القيمة المختارة سابقاً حتى لو صارت غير ظاهرة بالفلترة الجديدة
+    nameSelect.value = keepValue;
+  }
+
+  function updateAddLink(){
+    if (!addBtn) return;
+    var url = new URL(addBtn.getAttribute('href'), window.location.origin);
+    url.searchParams.set('medicine_class', classSelect.value || '');
+    addBtn.setAttribute('href', url.pathname + url.search);
+  }
+
+  function updateConditionalGroups(){
+    var cls = classSelect.value;
+    if (withdrawalGroup) withdrawalGroup.style.display = WITHDRAWAL_CLASSES.indexOf(cls) !== -1 ? '' : 'none';
+    if (vaccineGroup) vaccineGroup.style.display = cls === 'vaccine' ? '' : 'none';
+  }
+
+  function updateAll(){
+    updateNameFilter();
+    updateAddLink();
+    updateConditionalGroups();
+  }
+
+  classSelect.addEventListener('change', updateAll);
+  updateAll();
+
+  if (guideBtn && guideBox) {
+    guideBtn.addEventListener('click', function(){
+      var guide = MEDICINE_CLASS_GUIDE[classSelect.value];
+      if (!guide) {
+        guideBox.style.display = 'block';
+        guideBox.textContent = 'اختر فئة الدواء أولاً لعرض دليلها.';
+        return;
+      }
+      guideBox.style.display = guideBox.style.display === 'block' ? 'none' : 'block';
+      guideBox.innerHTML = '<b>' + guide.title + '</b><br>' + guide.notes;
+    });
+  }
 })();
 </script>
 {% endblock %}
