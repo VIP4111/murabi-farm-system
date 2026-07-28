@@ -106,6 +106,45 @@ def create_app(config_class=Config):
     def ar_status(value):
         return STATUS_LABELS_AR.get(value, value)
 
+    # أسماء عربية لأنواع المهام (بند إضافي 66، 2026-07-28) — نفس نمط
+    # STATUS_LABELS_AR بالضبط. القائمة الكاملة الفعلية لكل القيم
+    # المستخدمة عبر الكود (isolation_service/protocol_service/
+    # animal_service/batch_service/daily_task_service/pregnancy_care_service/
+    # climate_service/core.routes/task_service) — بدون هذا كان يطلع النص
+    # الخام (مثال "daily_husbandry") مباشرة بشاشة المهام.
+    TASK_TYPE_LABELS_AR = {
+        "custom": "مهمة عامة",
+        "isolation_check": "فحص عزل",
+        "doctor_review": "مراجعة الدكتور",
+        "cord_antisepsis": "تعقيم السرّة",
+        "selenium_dose": "جرعة سيلينيوم",
+        "colostrum_check": "متابعة اللبأ/الرضاعة",
+        "weighing": "وزن",
+        "vaccination_due": "تحصين مستحق",
+        "feed_switch": "تبديل علف",
+        "abortion_sampling": "أخذ عينات إجهاض",
+        "abortion_barn_monitor": "مراقبة حظيرة بعد إجهاض",
+        "protocol_step": "خطوة بروتوكول علاج",
+        "batch_spray": "رش وقائي (دفعة)",
+        "batch_initial_vaccination": "تحصين مبدئي (دفعة)",
+        "move_to_pregnant_barn": "نقل لحظيرة الحوامل",
+        "batch_tagging_check": "فحص ترقيم (دفعة)",
+        "batch_feed_link": "ربط علف (دفعة)",
+        "daily_husbandry": "رعاية يومية",
+        "late_pregnancy_care": "رعاية حمل متأخر",
+        "planned_treatment": "علاج مخطَّط",
+        "reweigh_followup": "متابعة إعادة وزن",
+        "heat_feed_timing": "تعديل توقيت العلف (إجهاد حراري)",
+        "heat_water_additive": "إضافة ماء (إجهاد حراري)",
+        "heat_ventilation": "فحص تهوية (إجهاد حراري)",
+        "heat_shade": "فحص تظليل (إجهاد حراري)",
+        "shearing": "جزّ صوف",
+    }
+
+    @app.template_filter("ar_task_type")
+    def ar_task_type(value):
+        return TASK_TYPE_LABELS_AR.get(value, value)
+
     @app.route("/_healthz")
     def health():
         # فحص تقني بسيط لتشغيل السيرفر - غير مرتبط بوحدة الصحة البيطرية
