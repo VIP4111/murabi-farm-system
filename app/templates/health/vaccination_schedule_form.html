@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;">
+  <h2>جدولة تحصين جديد</h2>
+  <form method="post" data-offline>
+    <label>الحظيرة</label>
+    <select name="barn_id" id="barnSelect" required>
+      <option value="">اختر حظيرة</option>
+      {% for b in barns %}
+      <option value="{{ b.id }}">{{ b.barn_name }}</option>
+      {% endfor %}
+    </select>
+    <p id="headCountHint" style="color:var(--muted); font-size:12px; margin:-6px 0 10px;"></p>
+
+    <label>اللقاح</label>
+    <select name="pharmacy_id" required>
+      <option value="">اختر لقاح من الصيدلية</option>
+      {% for v in vaccines %}
+      <option value="{{ v.id }}">{{ v.name }}</option>
+      {% endfor %}
+    </select>
+
+    <label>التاريخ المخطَّط</label>
+    <input name="planned_date" type="date" required value="{{ today }}">
+
+    <label>ملاحظات (اختياري)</label>
+    <input name="notes">
+
+    <button class="btn" type="submit">جدولة</button>
+    <a class="btn light" href="{{ url_for('health.vaccination_schedule_list') }}">إلغاء</a>
+  </form>
+</div>
+<script>
+(function(){
+  var barnSelect = document.getElementById('barnSelect');
+  var hint = document.getElementById('headCountHint');
+  var BARN_COUNTS = {{ barn_head_counts | tojson }};
+  if (!barnSelect || !hint) return;
+  function update(){
+    var count = BARN_COUNTS[barnSelect.value];
+    hint.textContent = count === undefined ? '' : ('عدد الرؤوس الحالي بهذي الحظيرة: ' + count);
+  }
+  barnSelect.addEventListener('change', update);
+  update();
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>تقويم التحصينات</h2>
+    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vaccination_schedule_new') }}">+ جدولة تحصين جديد</a>{% endif %}
+  </div>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة.</p>
+
+  <h3 style="font-size:14px;">القادمة</h3>
+  <table>
+    <tr><th>الحظيرة</th><th>اللقاح</th><th>التاريخ المخطَّط</th><th>عدد الرؤوس الآن</th><th>ملاحظات</th><th>إجراءات</th></tr>
+    {% for s in upcoming %}
+    <tr>
+      <td>{{ s.barn.barn_name }}</td>
+      <td>{{ s.pharmacy.name }}</td>
+      <td>
+        {{ s.planned_date }}
+        {% set days_left = (s.planned_date - today).days %}
+        {% if days_left < 0 %}<span style="color:#8b1e16;"> (متأخر {{ -days_left }} يوم)</span>
+        {% elif days_left == 0 %}<span style="color:#8b6d1e;"> (اليوم)</span>
+        {% else %}<span style="color:var(--muted);"> (بعد {{ days_left }} يوم)</span>{% endif %}
+      </td>
+      <td>{{ s.live_head_count() }}</td>
+      <td>{{ s.notes or '-' }}</td>
+      <td>
+        {% if current_user.has_permission('health.manage') %}
+        <a class="btn light" href="{{ url_for('core.animals_list', barn_id=s.barn_id) }}" title="افتح قائمة الحظيرة لبدء التحصين الجماعي">ابدأ التحصين</a>
+        <form method="post" action="{{ url_for('health.vaccination_schedule_complete', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('تعليم هذي الجدولة كمكتملة؟');">
+          <button type="submit" class="btn light">تم</button>
+        </form>
+        <form method="post" action="{{ url_for('health.vaccination_schedule_cancel', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('إلغاء هذي الجدولة؟');">
+          <button type="submit" class="btn light">إلغاء</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">لا يوجد تحصينات مجدولة حالياً.</td></tr>
+    {% endfor %}
+  </table>
+
+  <h3 style="font-size:14px; margin-top:20px;">سابقة (آخر 30)</h3>
+  <table>
+    <tr><th>الحظيرة</th><th>اللقاح</th><th>التاريخ المخطَّط</th><th>الحالة</th></tr>
+    {% for s in past %}
+    <tr>
+      <td>{{ s.barn.barn_name }}</td>
+      <td>{{ s.pharmacy.name }}</td>
+      <td>{{ s.planned_date }}</td>
+      <td>{{ 'مكتملة ✅' if s.status == 'completed' else 'ملغاة ❌' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">لا يوجد سجل سابق.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

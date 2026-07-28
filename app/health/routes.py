@@ -6,7 +6,8 @@ from app.health import health_bp
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import (
-    Pharmacy, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, Doctor, VetVisit, Disease, Vaccination, Animal, AuditLog,
+    Pharmacy, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
+    Disease, Vaccination, Animal, AuditLog, Barn,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
     ProtocolApplication,
 )
@@ -652,3 +653,82 @@ def protocols_apply(protocol_id):
         prefill_animal_id=request.args.get("animal_id", type=int),
         today=date.today().isoformat(),
     )
+
+
+# ---------- تقويم التحصينات (بند إضافي 63، 2026-07-28) ----------
+# جدولة تحصين جماعي مستقبلي لحظيرة كاملة — مفهوم جديد منفصل عن
+# next_due_date (اللي يُحسب بعد تحصين فعلي، مو قبله). هذا البند يبني
+# الجدول + شاشات إدارته بس (إنشاء/عرض/إلغاء/تعليم كمكتمل يدوياً) — ربطه
+# التلقائي بشاشة التحصين الجماعي الفعلية (بدء مباشر من الحظيرة، شريط
+# مخزون حي) هو بند لاحق منفصل.
+
+@health_bp.route("/vaccination-schedule")
+@login_required
+@require_permission("health.view")
+def vaccination_schedule_list():
+    upcoming = (VaccinationSchedule.query.filter_by(status="scheduled")
+                .order_by(VaccinationSchedule.planned_date).all())
+    past = (VaccinationSchedule.query.filter(VaccinationSchedule.status != "scheduled")
+            .order_by(VaccinationSchedule.planned_date.desc()).limit(30).all())
+    return render_template(
+        "health/vaccination_schedule_list.html",
+        upcoming=upcoming, past=past, today=date.today(),
+    )
+
+
+@health_bp.route("/vaccination-schedule/new", methods=["GET", "POST"])
+@login_required
+@require_permission("health.manage")
+def vaccination_schedule_new():
+    if request.method == "POST":
+        pharmacy = Pharmacy.query.get_or_404(int(request.form["pharmacy_id"]))
+        if pharmacy.medicine_class != "vaccine":
+            flash("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)", "error")
+            return redirect(url_for("health.vaccination_schedule_new"))
+        schedule = VaccinationSchedule(
+            barn_id=int(request.form["barn_id"]),
+            pharmacy_id=pharmacy.id,
+            planned_date=date.fromisoformat(request.form["planned_date"]),
+            notes=request.form.get("notes") or None,
+        )
+        db.session.add(schedule)
+        db.session.add(AuditLog(actor_user_id=current_user.id, action="vaccination_schedule.create",
+                                 entity_type="VaccinationSchedule", details=f"barn={schedule.barn_id}"))
+        db.session.commit()
+        flash("تمت جدولة التحصين", "success")
+        return redirect(url_for("health.vaccination_schedule_list"))
+    barns = Barn.query.order_by(Barn.barn_name).all()
+    return render_template(
+        "health/vaccination_schedule_form.html",
+        barns=barns,
+        vaccines=Pharmacy.query.filter_by(status="active", medicine_class="vaccine").all(),
+        today=date.today().isoformat(),
+        barn_head_counts={b.id: Animal.query.filter_by(barn_id=b.id, status="active").count() for b in barns},
+    )
+
+
+@health_bp.route("/vaccination-schedule/<int:schedule_id>/cancel", methods=["POST"])
+@login_required
+@require_permission("health.manage")
+def vaccination_schedule_cancel(schedule_id):
+    schedule = VaccinationSchedule.query.get_or_404(schedule_id)
+    schedule.status = "cancelled"
+    db.session.commit()
+    flash("تم إلغاء الجدولة", "success")
+    return redirect(url_for("health.vaccination_schedule_list"))
+
+
+@health_bp.route("/vaccination-schedule/<int:schedule_id>/complete", methods=["POST"])
+@login_required
+@require_permission("health.manage")
+def vaccination_schedule_complete(schedule_id):
+    """تعليم يدوي بالوقت الحالي (بند 63) — لو التحصين الفعلي صار عبر
+    شاشة التحصين الجماعي العادية بدون ربط تلقائي بعد. الربط الآلي
+    (تعليم تلقائي عند تنفيذ التحصين الفعلي) بند لاحق."""
+    from datetime import datetime, timezone
+    schedule = VaccinationSchedule.query.get_or_404(schedule_id)
+    schedule.status = "completed"
+    schedule.completed_at = datetime.now(timezone.utc)
+    db.session.commit()
+    flash("تم تعليم الجدولة كمكتملة", "success")
+    return redirect(url_for("health.vaccination_schedule_list"))

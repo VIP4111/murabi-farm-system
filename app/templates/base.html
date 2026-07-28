@@ -260,6 +260,7 @@
         <a class="drawer-link" href="{{ url_for('health.vet_visits_list') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('الزيارات البيطرية') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('health.diseases_list') }}"><span class="drawer-icon">🌡️</span><span class="drawer-text"><b>{{ _('الأمراض') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('health.vaccinations_list') }}"><span class="drawer-icon">💉</span><span class="drawer-text"><b>{{ _('التطعيمات') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.vaccination_schedule_list') }}"><span class="drawer-icon">📅</span><span class="drawer-text"><b>{{ _('تقويم التحصينات') }}</b></span></a>
         {% if current_user.has_permission('health.manage') %}
         <a class="drawer-link" href="{{ url_for('health.diagnose_start') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('المساعد التشخيصي') }}</b></span></a>
         {% endif %}

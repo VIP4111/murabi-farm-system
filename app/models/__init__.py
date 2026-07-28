@@ -9,6 +9,7 @@ from app.models.pharmacy import Pharmacy
 from app.models.pharmacy_dose_rule import PharmacyDoseRule
 from app.models.usage_route import UsageRoute
 from app.models.drug_catalog import DrugCatalogEntry
+from app.models.vaccination_schedule import VaccinationSchedule
 from app.models.doctor import Doctor
 from app.models.health import VetVisit, Disease, Vaccination, DiseaseType, Symptom, DiseaseSymptomLink
 from app.models.finance import Finance
@@ -35,7 +36,7 @@ __all__ = [
     "Role", "Permission", "role_permissions",
     "User", "Barn", "Animal", "SpeciesType", "Breed", "AnimalColor",
     "ServiceToggle", "AuditLog",
-    "Pharmacy", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "Doctor",
+    "Pharmacy", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "VaccinationSchedule", "Doctor",
     "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink",
     "Finance",
     "Mating", "Pregnancy", "TwinEstrusProgram", "TwinEstrusAttempt",
