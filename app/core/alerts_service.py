@@ -17,6 +17,8 @@
 8. (إضافي) حيوانات جاهزة للبيع الآن حسب محرك البيع الذكي (بند 19)
 9. (إضافي، بند 51) تأخر الشياع كتنبيه مستقل
 10. (إضافي، بند 56) حظيرة بدون عامل مسؤول — تذكير بس، ما يمنع الحفظ
+11. (إضافي، بند 65) نقص مخزون متوقّع لتحصين مجدول قريب (تقويم التحصينات،
+    بند 63) — رؤوس الحظيرة الحي × الجرعة الافتراضية مقابل المخزون
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -196,6 +198,58 @@ def _barns_without_responsible_worker() -> list[dict]:
     ]
 
 
+def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
+    """تنبيه استباقي بنقص مخزون تحصين مجدول (بند إضافي 65) — يفحص كل
+    جدولة قادمة (`VaccinationSchedule` بحالة scheduled، بند 63) ضمن
+    نفس نافذة التنبيه العامة لكل هذا الملف (`FarmSettings.alert_before_days`
+    — استخدمت هذا بدل رقم 7 ثابت عشان يبقى متّسقاً مع بقية التنبيهات
+    وقابلاً للتعديل من إعدادات المزرعة)، ويقارن الاحتياج المتوقع (عدد
+    رؤوس الحظيرة الحي × الجرعة الافتراضية المسجَّلة على اللقاح، بند 61)
+    مقابل المخزون المتوفر حالياً. لو الجرعة الافتراضية غير مسجَّلة، ما
+    فيه أساس رقمي للمقارنة (صفر حساب من غير رقم كتبه الدكتور) — يكتفي
+    بتذكير عام بدون تقدير كمية."""
+    from app.models import VaccinationSchedule
+    today = date.today()
+    window_end = today + timedelta(days=fs.alert_before_days)
+    schedules = (VaccinationSchedule.query.filter_by(status="scheduled")
+                 .filter(VaccinationSchedule.planned_date >= today,
+                         VaccinationSchedule.planned_date <= window_end).all())
+    alerts = []
+    for s in schedules:
+        head_count = s.live_head_count()
+        days_left = (s.planned_date - today).days
+        label = f"{s.barn.barn_name} — {s.pharmacy.name} (بعد {days_left} يوم)"
+        unit = s.pharmacy.unit or ""
+        if s.pharmacy.default_dose_ml and head_count:
+            needed = head_count * s.pharmacy.default_dose_ml
+            available = s.pharmacy.available_qty or 0
+            if needed > available:
+                shortage = needed - available
+                alerts.append({
+                    "category": "نقص مخزون تحصين مجدول", "icon": "📦",
+                    "label": label,
+                    "detail": (f"الاحتياج المتوقع {needed:.2f} {unit} لـ{head_count} رأس، "
+                               f"والمتوفر {available:g} {unit} فقط — يوصى بشراء "
+                               f"{shortage:.2f} {unit} إضافية على الأقل قبل الموعد."),
+                    "urgent": days_left <= 2, "animal_id": None, "barn_id": s.barn_id,
+                })
+            else:
+                alerts.append({
+                    "category": "تذكير تحصين مجدول", "icon": "📅",
+                    "label": label,
+                    "detail": f"المخزون كافٍ ({available:g} {unit}) لـ{head_count} رأس — جهّز الحظيرة بالموعد.",
+                    "urgent": False, "animal_id": None, "barn_id": s.barn_id,
+                })
+        else:
+            alerts.append({
+                "category": "تذكير تحصين مجدول", "icon": "📅",
+                "label": label,
+                "detail": f"{head_count} رأس بالحظيرة حالياً — سجّل جرعة افتراضية على الدواء لمقارنة المخزون تلقائياً.",
+                "urgent": False, "animal_id": None, "barn_id": s.barn_id,
+            })
+    return alerts
+
+
 def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     """
     `barn_ids=None` (الافتراضي، سلوك بند 20 الأصلي بدون تغيير): كل
@@ -219,7 +273,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
-        + _barns_without_responsible_worker()
+        + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
