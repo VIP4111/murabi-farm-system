@@ -41,29 +41,53 @@ def test_pharmacy_new_ignores_category_even_if_posted(app, logged_in_client):
     assert item.category is None
 
 
-def test_pharmacy_form_has_no_copper_checkbox(app, logged_in_client):
-    """بند 62 (تأكيد صريح من المستخدم): خيار "يحتوي نحاساً مرتفعاً" اتحذف
-    نهائياً من الفورم."""
+def test_pharmacy_form_has_copper_checkbox(app, logged_in_client):
+    """حرِج (بند 51 + بند 62): مربع "يحتوي نحاساً مرتفعاً" لازم يبقى
+    بالفورم — هو الوسيلة الوحيدة لتفعيل حظر النعيمي لأي دواء جديد."""
     resp = logged_in_client.get("/health/pharmacy/new")
     assert resp.status_code == 200
-    assert b'name="contains_high_copper"' not in resp.data
+    assert b'name="contains_high_copper"' in resp.data
 
 
-def test_editing_pharmacy_item_preserves_existing_copper_flag(app, logged_in_client):
-    """حرِج: بما إن مربع النحاس اتحذف من الفورم، أي تعديل عادي (تحديث
-    السعر مثلاً) ما لازم يصفّر `contains_high_copper` لدواء موسوم مسبقاً
-    — لو صار كذا، حظر النعيمي (بند 51) يفقد فعاليته للأدوية القديمة."""
+def test_new_pharmacy_item_can_be_marked_high_copper(app, logged_in_client):
+    resp = logged_in_client.post("/health/pharmacy/new", data={
+        "name": "مكمّل نحاسي جديد", "contains_high_copper": "1",
+    }, follow_redirects=True)
+    assert resp.status_code == 200
+    item = Pharmacy.query.filter_by(name="مكمّل نحاسي جديد").one()
+    assert item.contains_high_copper is True
+
+
+def test_editing_with_checkbox_checked_preserves_copper_flag(app, logged_in_client):
+    """المربع يُعرض checked تلقائياً لو كان الدواء موسوماً أصلاً — لو
+    الطبيب ما لمسه (يبقى checked)، القيمة الحقيقية تُرسَل مع الفورم
+    وتبقى True، مو تُصفَّر صامتاً."""
     item = Pharmacy(name="مكمّل نحاسي 62", contains_high_copper=True, status="active")
     db.session.add(item)
     db.session.commit()
 
     resp = logged_in_client.post(f"/health/pharmacy/{item.id}/edit", data={
-        "name": item.name, "unit_price": "9.5",
+        "name": item.name, "unit_price": "9.5", "contains_high_copper": "1",
     }, follow_redirects=True)
     assert resp.status_code == 200
     db.session.refresh(item)
     assert item.contains_high_copper is True
     assert item.unit_price == 9.5
+
+
+def test_unchecking_copper_checkbox_on_edit_clears_flag(app, logged_in_client):
+    """تعديل صريح: الطبيب يفكّ التأشير عمداً (مثلاً تصحيح خطأ سابق) —
+    القيمة تتصفّر، وهذا سلوك مقصود، مو فقدان بيانات صامت."""
+    item = Pharmacy(name="مكمّل نحاسي 62-ب", contains_high_copper=True, status="active")
+    db.session.add(item)
+    db.session.commit()
+
+    resp = logged_in_client.post(f"/health/pharmacy/{item.id}/edit", data={
+        "name": item.name,
+    }, follow_redirects=True)
+    assert resp.status_code == 200
+    db.session.refresh(item)
+    assert item.contains_high_copper is False
 
 
 def test_shortages_alternatives_still_work_after_category_removed_from_form(app, logged_in_client):

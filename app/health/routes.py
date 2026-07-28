@@ -126,6 +126,7 @@ def pharmacy_new():
         item = Pharmacy(
             name=request.form["name"],
             medicine_class=request.form.get("medicine_class") or None,
+            contains_high_copper=bool(request.form.get("contains_high_copper")),
             available_qty=float(request.form.get("available_qty") or 0),
             min_stock_qty=float(request.form.get("min_stock_qty") or 0),
             unit=request.form.get("unit"),
@@ -185,11 +186,7 @@ def pharmacy_edit(pharmacy_id):
     if request.method == "POST":
         item.name = request.form["name"]
         item.medicine_class = request.form.get("medicine_class") or None
-        # حقل "يحتوي نحاساً مرتفعاً" اتحذف من الفورم (بند إضافي 62، بتأكيد
-        # صريح من المستخدم) — تعمّدنا عدم لمس `item.contains_high_copper`
-        # هنا: لو مسّينا هذا السطر، أي دواء موسوم مسبقاً بنحاس مرتفع كان
-        # راح يُصفَّر صامتاً بأول تعديل عادي له (سعر/مخزون...)، فيفقد حظر
-        # النعيمي (بند 51) فعاليته للأدوية الموجودة أصلاً، مو بس الجديدة.
+        item.contains_high_copper = bool(request.form.get("contains_high_copper"))
         item.available_qty = float(request.form.get("available_qty") or 0)
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.unit = request.form.get("unit")
