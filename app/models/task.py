@@ -25,6 +25,14 @@ class Task(db.Model):
     assignee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     assignee = db.relationship("User", foreign_keys=[assignee_id])
 
+    # الدور المستهدف (بند إضافي 68، 2026-07-28) — منفصل عمداً عن
+    # assignee_id: مهمة "مقترحة" كثيراً ما ما لها شخص معيّن بعد (خصوصاً
+    # لو الحظيرة بلا عامل مسؤول)، فيحتاج فلتر الدور معياراً يبقى شغّالاً
+    # حتى قبل التعيين الفعلي. يخزّن `Role.name` (worker/doctor/accountant/
+    # ...) — نص حر مو FK صارم، عشان يبقى مرناً مع أدوار مخصَّصة يضيفها
+    # المالك لاحقاً من الإعدادات.
+    target_role = db.Column(db.String(32), nullable=True)
+
     barn_id = db.Column(db.Integer, db.ForeignKey("barns.id"), nullable=True)
     barn = db.relationship("Barn")
     animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True)
@@ -32,6 +40,14 @@ class Task(db.Model):
 
     due_date = db.Column(db.Date)
     requires_photo = db.Column(db.Boolean, default=False, nullable=False)
+
+    # ترتيب عرض ثانوي (بند إضافي 67، 2026-07-28) — لما أكثر من مهمة
+    # يتشاركون نفس due_date (حالة المهام اليومية التلقائية بالذات)، ما
+    # فيه معيار حاسم لترتيب عرضهم غير ترتيب الإدراج بقاعدة البيانات
+    # (غير مضمون). رقم أصغر = يظهر أول — يُستخدم بالذات لفرض تسلسل
+    # العمل الميداني المنطقي (تنظيف ← ماء/علف ← فحص القطيع)، صفر افتراضي
+    # لبقية أنواع المهام (ما يأثّر على ترتيبها).
+    sort_order = db.Column(db.Integer, default=0, nullable=False)
 
     source_type = db.Column(db.String(32))
     source_id = db.Column(db.Integer)

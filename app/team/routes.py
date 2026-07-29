@@ -357,27 +357,50 @@ def report_close(report_id):
     return _redirect_back(report_id)
 
 
+ROLE_FILTER_TABS = [
+    ("all", "الكل"),
+    ("worker", "العامل"),
+    ("doctor", "الطبيب البيطري"),
+    ("accountant", "المحاسب"),
+]
+
+
 @team_bp.route("/tasks")
 @login_required
 def tasks_list():
+    # ترتيب ثانوي بـsort_order (بند إضافي 67) — يفرض تسلسل العمل الميداني
+    # المنطقي (تنظيف ← ماء/علف ← فحص قطيع) لما أكثر من مهمة يتشاركون
+    # نفس due_date، بدل الاعتماد على ترتيب إدراج قاعدة البيانات غير المضمون.
     my_tasks = (Task.query
                 .filter(Task.assignee_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
-                .order_by(Task.due_date).all())
+                .order_by(Task.due_date, Task.sort_order).all())
     suggested = []
     review_box = []
     assigned_by_me = []
+    role_filter = request.args.get("role", "all")
+    if role_filter not in dict(ROLE_FILTER_TABS):
+        role_filter = "all"
     if current_user.has_permission("tasks.review_daily"):
-        suggested = Task.query.filter_by(status="suggested").order_by(Task.due_date).all()
+        suggested = Task.query.filter_by(status="suggested").order_by(Task.due_date, Task.sort_order).all()
+        # فلترة حسب الدور المستهدف (بند إضافي 68) — تطابق target_role
+        # الصريح، أو دور الشخص المعيّن فعلاً لو ما فيه target_role
+        # مسجَّل (مهام قديمة أو مُنشأة قبل هذا البند).
+        if role_filter != "all":
+            suggested = [
+                t for t in suggested
+                if t.target_role == role_filter
+                or (not t.target_role and t.assignee and t.assignee.role and t.assignee.role.name == role_filter)
+            ]
     if current_user.has_permission("tasks.delete_final"):
         review_box = Task.query.filter_by(status="deleted_pending_review").order_by(Task.updated_at.desc()).all()
     if current_user.has_permission("tasks.assign_any"):
         assigned_by_me = (Task.query
                           .filter(Task.created_by_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
-                          .order_by(Task.due_date).all())
+                          .order_by(Task.due_date, Task.sort_order).all())
     return render_template(
         "team/tasks_list.html",
         my_tasks=my_tasks, suggested=suggested, review_box=review_box, assigned_by_me=assigned_by_me,
-        today=date.today(),
+        today=date.today(), role_tabs=ROLE_FILTER_TABS, active_role=role_filter,
     )
 
 

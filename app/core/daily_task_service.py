@@ -47,11 +47,19 @@ def _build_context() -> dict:
 
 
 def _rule_definitions(ctx: dict) -> list[dict]:
+    # الترتيب هنا (بند إضافي 67، 2026-07-28) يطابق التسلسل الميداني
+    # المنطقي الفعلي بالحظيرة صباحاً — طلب صريح من المستخدم: تنظيف
+    # المعالف/المشارب أولاً (قبل أي شي ثاني تحتاج تكون الحظيرة نظيفة)،
+    # بعدها تعبئة الماء وتوفير الأملاح، وأخيراً الفحص اليومي الشامل
+    # للقطيع (أدق قيمة بعد ما الحظيرة صارت جاهزة ونظيفة). `sort_order`
+    # يحفظ هذا الترتيب فعلياً بشاشة العرض (مو بس بترتيب التوليد الداخلي)
+    # — قبل هذا البند كانت الشاشة تعتمد على due_date بس بدون معيار ثانٍ
+    # حاسم لو تشارك أكثر من مهمة نفس التاريخ.
     defs = [
         {
-            "key": "daily_herd_check", "always": True,
-            "title": "🔍 فحص يومي للقطيع",
-            "notes": "افحص الشهية والاجترار والحركة والتنفس والبراز والعرج والجروح بكل الحظائر.",
+            "key": "daily_barn_cleaning", "always": True,
+            "title": "🧹 تنظيف المعالف والحظائر",
+            "notes": "راجع جفاف الأرضية والتهوية والزحام، ونظّف المعالف والمشارب.",
         },
         {
             "key": "daily_water_check", "always": True,
@@ -59,9 +67,9 @@ def _rule_definitions(ctx: dict) -> list[dict]:
             "notes": "تأكد من نظافة المشارب وتوفر ماء نظيف وأملاح مناسبة طوال اليوم.",
         },
         {
-            "key": "daily_barn_cleaning", "always": True,
-            "title": "🧹 تنظيف المعالف والحظائر",
-            "notes": "راجع جفاف الأرضية والتهوية والزحام، ونظّف المعالف والمشارب.",
+            "key": "daily_herd_check", "always": True,
+            "title": "🔍 فحص يومي للقطيع",
+            "notes": "افحص الشهية والاجترار والحركة والتنفس والبراز والعرج والجروح بكل الحظائر.",
         },
         {
             "key": "daily_isolation_review", "condition": ctx["needs_isolation_review"],
@@ -97,7 +105,7 @@ def generate_daily_husbandry_tasks() -> list:
     created = []
 
     for for_date in (today - timedelta(days=1), today):
-        for rule in rules:
+        for order, rule in enumerate(rules):
             source_id = _source_id(rule["key"], for_date)
             existing = Task.query.filter_by(source_type=SOURCE_TYPE, source_id=source_id).first()
             if existing:
@@ -105,7 +113,7 @@ def generate_daily_husbandry_tasks() -> list:
             task = task_service.create_suggested_task(
                 title=rule["title"], task_type="daily_husbandry",
                 due_date=for_date, source_type=SOURCE_TYPE, source_id=source_id,
-                notes=rule["notes"],
+                notes=rule["notes"], sort_order=order, target_role="worker",
             )
             created.append(task)
 

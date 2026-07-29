@@ -37,7 +37,7 @@ class TaskStateError(Exception):
 
 def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=None,
                  animal_id=None, due_date=None, requires_photo=False, notes=None,
-                 depends_on_task_id=None) -> Task:
+                 depends_on_task_id=None, target_role=None) -> Task:
     """تعيين مهمة مباشر من الدكتور/المالك — بدون مرحلة اقتراح."""
     if not actor.has_permission("tasks.assign_any"):
         raise TaskPermissionError("ما تملك صلاحية توزيع المهام.")
@@ -50,6 +50,7 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
         assignee_id=assignee_id, barn_id=barn_id, animal_id=animal_id,
         due_date=due_date, requires_photo=requires_photo, notes=notes,
         created_by_id=actor.id, depends_on_task_id=depends_on_task_id or None,
+        target_role=target_role or None,
     )
     db.session.add(task)
     db.session.flush()
@@ -60,7 +61,8 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
 
 
 def create_suggested_task(*, title, task_type, barn_id=None, animal_id=None, due_date=None,
-                           requires_photo=False, source_type=None, source_id=None, notes=None) -> Task:
+                           requires_photo=False, source_type=None, source_id=None, notes=None,
+                           sort_order=0, target_role=None) -> Task:
     """مهمة تتولّد تلقائياً من النظام (محرك الدورة، خطة العزل...) — تحتاج
     مراجعة الدكتور قبل ما توصل للعامل."""
     assignee_id = None
@@ -72,7 +74,8 @@ def create_suggested_task(*, title, task_type, barn_id=None, animal_id=None, due
         title=title, task_type=task_type, status="suggested",
         assignee_id=assignee_id, barn_id=barn_id, animal_id=animal_id,
         due_date=due_date, requires_photo=requires_photo, notes=notes,
-        source_type=source_type, source_id=source_id,
+        source_type=source_type, source_id=source_id, sort_order=sort_order,
+        target_role=target_role or None,
     )
     db.session.add(task)
     db.session.commit()

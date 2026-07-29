@@ -41,6 +41,11 @@
 {% if current_user.has_permission('tasks.review_daily') %}
 <div class="card">
   <h3 style="font-size:15px;">مهام مقترحة (بانتظار مراجعتك)</h3>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+    {% for key, label in role_tabs %}
+    <a class="tab-btn {{ 'active' if key == active_role }}" href="{{ url_for('team.tasks_list', role=key) }}">{{ label }}</a>
+    {% endfor %}
+  </div>
   <table>
     <tr><th>العنوان</th><th>النوع</th><th>الحظيرة/الحيوان</th><th>الموعد</th><th></th></tr>
     {% for t in suggested %}
