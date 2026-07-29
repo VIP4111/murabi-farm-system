@@ -411,6 +411,17 @@ def tasks_list():
         assigned_by_me = (Task.query
                           .filter(Task.created_by_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
                           .order_by(Task.due_date, Task.sort_order).all())
+    # "جدول المهام المعتمدة" (بند إضافي 70) — نظرة عامة على كل المهام
+    # المعتمدة (المولَّدة تلقائياً بعد اعتمادها، أو المعيَّنة يدوياً)
+    # عبر المزرعة كلها، بغض النظر عن مين المكلَّف بها — يختلف عن "مهامي"
+    # (خاصة بالمستخدم الحالي بس) و"مهام وزّعتها" (خاصة بمن أنشأها يدوياً
+    # بس). مرئية لمن يملك صلاحية مراجعة/توزيع المهام (نفس مجموعة صلاحيات
+    # "مهام مقترحة").
+    approved_tasks = []
+    if current_user.has_permission("tasks.review_daily") or current_user.has_permission("tasks.assign_any"):
+        approved_tasks = (Task.query
+                           .filter(Task.status.in_(["pending", "in_progress"]))
+                           .order_by(Task.due_date, Task.sort_order).all())
     modal_context = {}
     if current_user.has_permission("tasks.assign_any"):
         # نفس بيانات فورم "توزيع مهمة" (بند إضافي 69) — تُحمَّل هنا
@@ -425,6 +436,7 @@ def tasks_list():
     return render_template(
         "team/tasks_list.html",
         my_tasks=my_tasks, suggested=suggested, review_box=review_box, assigned_by_me=assigned_by_me,
+        approved_tasks=approved_tasks,
         today=date.today(), role_tabs=ROLE_FILTER_TABS, active_role=role_filter,
         **modal_context,
     )

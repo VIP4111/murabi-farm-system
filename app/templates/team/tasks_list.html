@@ -82,7 +82,8 @@
 
 {% if current_user.has_permission('tasks.review_daily') %}
 <div class="card">
-  <h3 style="font-size:15px;">مهام مقترحة (بانتظار مراجعتك)</h3>
+  <h3 style="font-size:15px;">مهام مقترحة بانتظار الاعتماد</h3>
+  <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً.</p>
   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
     {% for key, label in role_tabs %}
     <a class="tab-btn {{ 'active' if key == active_role }}" href="{{ url_for('team.tasks_list', role=key) }}">{{ label }}</a>
@@ -98,7 +99,7 @@
       <td>{{ t.due_date or '-' }}</td>
       <td class="actions-col">
         <form method="post" action="{{ url_for('team.task_approve', task_id=t.id) }}">
-          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px; width:100%;">موافقة</button>
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px; width:100%;">اعتماد وإرسال</button>
         </form>
         <form method="post" action="{{ url_for('team.task_postpone', task_id=t.id) }}">
           <input name="due_date" type="date" required>
@@ -111,6 +112,25 @@
     </tr>
     {% else %}
     <tr><td colspan="5" style="color:#888;">لا يوجد مهام مقترحة حالياً.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">جدول المهام المعتمدة</h3>
+  <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها "تم الإنجاز".</p>
+  <table>
+    <tr><th>العنوان</th><th>المكلَّف</th><th>الحظيرة/الحيوان</th><th>الموعد</th><th>الحالة</th></tr>
+    {% for t in approved_tasks %}
+    <tr>
+      <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a></td>
+      <td>{{ t.assignee.name if t.assignee else 'بدون تعيين' }}</td>
+      <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
+      <td>{{ t.due_date or '-' }}</td>
+      <td>{{ t.status|ar_status }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد مهام معتمدة حالياً.</td></tr>
     {% endfor %}
   </table>
 </div>
