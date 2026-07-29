@@ -11,7 +11,7 @@ idempotency: عمود `Task.source_id` عدد صحيح (مو نص)، فما نق
 نفس الرقم دائماً ويمنع التكرار عبر `source_type` ثابت + `source_id`.
 """
 import zlib
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from app.models import Animal, Disease, Task
 from app.team import task_service
@@ -95,16 +95,26 @@ def _rule_definitions(ctx: dict) -> list[dict]:
     return [d for d in defs if d.get("always") or d.get("condition")]
 
 
-def generate_daily_husbandry_tasks() -> list:
-    """يولّد المهام الناقصة لليوم وأمس (تغطية لو فات يوم بدون فتح الشاشة).
-    ترجع فقط المهام اللي أُنشئت الآن — تكرار الاستدعاء لاحقاً بنفس اليوم
-    يرجّع قائمة فاضية."""
-    today = date.today()
+EVENING_PREVIEW_HOUR = 18  # الساعة 6 مساءً — من هذا الوقت تفتح مهام الغد مسبقاً
+
+
+def generate_daily_husbandry_tasks(*, now: datetime | None = None) -> list:
+    """يولّد المهام الناقصة لليوم وأمس (تغطية لو فات يوم بدون فتح الشاشة)،
+    وابتداءً من الساعة 6 مساءً (بند إضافي 72، بطلب صريح) يولّد مهام الغد
+    مسبقاً أيضاً — عشان يفتح المجال للتحضير المسائي بدل ما تنحبس مهام
+    الغد لين تبدأ صباحاً. ترجع فقط المهام اللي أُنشئت الآن — تكرار
+    الاستدعاء لاحقاً بنفس اليوم/الساعة يرجّع قائمة فاضية."""
+    now = now or datetime.now()
+    today = now.date()
     ctx = _build_context()
     rules = _rule_definitions(ctx)
     created = []
 
-    for for_date in (today - timedelta(days=1), today):
+    target_dates = [today - timedelta(days=1), today]
+    if now.hour >= EVENING_PREVIEW_HOUR:
+        target_dates.append(today + timedelta(days=1))
+
+    for for_date in target_dates:
         for order, rule in enumerate(rules):
             source_id = _source_id(rule["key"], for_date)
             existing = Task.query.filter_by(source_type=SOURCE_TYPE, source_id=source_id).first()

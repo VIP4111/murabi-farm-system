@@ -126,6 +126,43 @@
     td:first-child{border-right:1px solid var(--line); border-radius:0 14px 14px 0;}
     td:last-child{border-left:1px solid var(--line); border-radius:14px 0 0 14px;}
 
+    /* جدول مدمج (بند إضافي 71، 2026-07-28) — بديل مصغَّر لنمط "الكروت"
+       أعلاه، مستخدَم بشاشة المهام تحديداً حالياً: هيدر واحد ملوّن بخط
+       سفلي واضح، صفوف رفيعة متلاصقة (بدون فجوة/دوران زوايا لكل صف)،
+       وعمود إجراءات بأزرار صغيرة أفقية بدل التكديس العمودي الكبير.
+       عمداً class منفصل، مو تعديل على `table` العام — عشان ما يغيّر
+       شكل بقية شاشات الموقع اللي ما اشتكى منها أحد. */
+    table.compact-table{border-collapse:collapse; border-spacing:0;}
+    table.compact-table thead th{
+      background:#f4efe7; border-bottom:2px solid var(--line);
+      padding:9px; text-align:right;
+    }
+    table.compact-table td{
+      border-radius:0; border-right:none; border-left:none;
+      border-top:none; border-bottom:1px solid var(--line);
+      padding:7px 9px; background:transparent;
+    }
+    table.compact-table td:first-child, table.compact-table td:last-child{border-radius:0;}
+    table.compact-table tbody tr:hover td{background:#faf7f2;}
+    table.compact-table td.actions-col{
+      display:flex; flex-direction:row; flex-wrap:wrap; gap:4px; min-width:0;
+    }
+    table.compact-table td.actions-col form{margin:0; display:inline-flex;}
+    table.compact-table td.actions-col button, table.compact-table td.actions-col .btn{
+      padding:3px 8px; font-size:11.5px; width:auto;
+    }
+    table.compact-table td.actions-col input[type="date"]{
+      width:auto; padding:3px 6px; margin-bottom:0; font-size:11.5px;
+    }
+    /* عنوان المهمة كشارة بيضاء بإطار ملوّن بدل رابط أزرق تقليدي (بند
+       إضافي 72) — يبقى رابطاً فعلياً (نفس السلوك)، بس بمظهر مختلف. */
+    table.compact-table td a{
+      color:var(--text); background:#fff; text-decoration:none;
+      border:1.5px solid var(--primary2); border-radius:8px;
+      padding:2px 9px; display:inline-block; font-weight:600;
+    }
+    table.compact-table td a:hover{background:#f4efe7;}
+
     .flash{
       background:#24180f; color:#fff; border-radius:16px; padding:12px 16px;
       margin-bottom:14px; font-weight:800; box-shadow:var(--shadow);

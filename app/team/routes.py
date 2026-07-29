@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from flask_babel import lazy_gettext as _l
 from sqlalchemy.exc import IntegrityError
 
-from datetime import date
+from datetime import date, timedelta
 
 from app.team import team_bp
 from app.team import report_service as svc
@@ -559,10 +559,18 @@ def task_approve(task_id):
 @login_required
 def task_postpone(task_id):
     task = Task.query.get_or_404(task_id)
+    # بند إضافي 72 — زر تأجيل بضغطة وحدة بلا خانة تاريخ يدوية: يؤجّل
+    # ليوم واحد من موعدها الحالي (أو من اليوم لو ما فيها موعد أصلاً).
+    # لسا نقبل due_date صريح لو انبعث (توافق خلفي)، بس الفورم الجديد
+    # ما يرسله.
+    due_date_raw = request.form.get("due_date")
+    if due_date_raw:
+        new_due_date = date.fromisoformat(due_date_raw)
+    else:
+        new_due_date = (task.due_date or date.today()) + timedelta(days=1)
     try:
-        tsvc.postpone_suggested_task(task, actor=current_user,
-                                      new_due_date=date.fromisoformat(request.form["due_date"]))
-        flash("تم تأجيل المهمة", "success")
+        tsvc.postpone_suggested_task(task, actor=current_user, new_due_date=new_due_date)
+        flash("تم تأجيل المهمة ليوم واحد", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
