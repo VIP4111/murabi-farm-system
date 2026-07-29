@@ -12,6 +12,17 @@ def _make_user_with_role(role_name, phone):
     return user
 
 
+def _suggested_table(resp):
+    """نطاق البحث محصور بجدول "مهام مقترحة" بالذات — بند إضافي 69 أضاف
+    نافذة "توزيع مهمة" المنبثقة بقائمة منسدلة تسرد كل المهام المفتوحة
+    (بدون فلترة دور)، فبحث بكامل الصفحة يلتقط نصها هي، مو الجدول
+    المقصود فعلياً بهذا الاختبار."""
+    body = resp.data.decode("utf-8")
+    start = body.index("مهام مقترحة")
+    end = body.index("مهام وزّعتها")
+    return body[start:end]
+
+
 def test_daily_husbandry_tasks_get_worker_target_role(app):
     from app.core import daily_task_service
     daily_task_service.generate_daily_husbandry_tasks()
@@ -28,8 +39,9 @@ def test_role_filter_shows_only_matching_target_role(app, logged_in_client):
 
     resp = logged_in_client.get("/team/tasks?role=worker")
     assert resp.status_code == 200
-    assert "مهمة عامل".encode() in resp.data
-    assert "مهمة طبيب".encode() not in resp.data
+    table = _suggested_table(resp)
+    assert "مهمة عامل" in table
+    assert "مهمة طبيب" not in table
 
 
 def test_role_filter_all_shows_everything(app, logged_in_client):
@@ -55,10 +67,10 @@ def test_role_filter_falls_back_to_assignee_role_when_no_target_role(app, logged
 
     resp = logged_in_client.get("/team/tasks?role=doctor")
     assert resp.status_code == 200
-    assert "مهمة مُعيَّنة لدكتور بدون target_role".encode() in resp.data
+    assert "مهمة مُعيَّنة لدكتور بدون target_role" in _suggested_table(resp)
 
     resp2 = logged_in_client.get("/team/tasks?role=worker")
-    assert "مهمة مُعيَّنة لدكتور بدون target_role".encode() not in resp2.data
+    assert "مهمة مُعيَّنة لدكتور بدون target_role" not in _suggested_table(resp2)
 
 
 def test_invalid_role_query_param_falls_back_to_all(app, logged_in_client):

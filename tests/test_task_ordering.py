@@ -41,7 +41,14 @@ def test_tasks_list_route_orders_by_due_date_then_sort_order(app, logged_in_clie
     resp = logged_in_client.get("/team/tasks")
     assert resp.status_code == 200
     body = resp.data.decode("utf-8")
-    assert body.index("أولى بالترتيب") < body.index("متأخرة الترتيب")
+    # نطاق البحث محصور بجدول "مهام مقترحة" بالذات (بند إضافي 69 أضاف
+    # نافذة "توزيع مهمة" المنبثقة اللي فيها قائمة منسدلة تسرد كل المهام
+    # المفتوحة أيضاً بترتيب مختلف — بحث بكامل الصفحة يلتقط نص القائمة
+    # المنسدلة تلك، مو الجدول الفعلي المقصود بهذا الاختبار).
+    table_start = body.index("مهام مقترحة")
+    table_end = body.index("مهام وزّعتها")
+    table = body[table_start:table_end]
+    assert table.index("أولى بالترتيب") < table.index("متأخرة الترتيب")
 
 
 def test_sort_order_defaults_to_zero_for_manually_assigned_tasks(app):

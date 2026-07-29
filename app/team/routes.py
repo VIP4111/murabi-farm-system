@@ -364,6 +364,20 @@ ROLE_FILTER_TABS = [
     ("accountant", "المحاسب"),
 ]
 
+# قائمة مختارة لفورم "توزيع مهمة" اليدوي (بند إضافي 69) — مو كل 26 قيمة
+# فعلية لـ`task_type` (أغلبها تتولّد آلياً من محركات النظام نفسها، مو
+# شي يختاره المستخدم يدوياً) — بس الأنواع المعقولة لمهمة يوزّعها إنسان
+# مباشرة. "shearing" أُزيلت (كانت خياراً ميتاً — تأكّدت بفحص الكود إن
+# ما فيه أي مكان يُنشئ مهمة بهذا النوع فعلياً).
+MANUAL_TASK_TYPE_OPTIONS = [
+    ("custom", "مهمة عامة"),
+    ("isolation_check", "فحص عزل"),
+    ("weighing", "وزن"),
+    ("vaccination_due", "تحصين مستحق"),
+    ("feed_switch", "تبديل علف"),
+    ("doctor_review", "مراجعة الدكتور"),
+]
+
 
 @team_bp.route("/tasks")
 @login_required
@@ -397,10 +411,22 @@ def tasks_list():
         assigned_by_me = (Task.query
                           .filter(Task.created_by_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
                           .order_by(Task.due_date, Task.sort_order).all())
+    modal_context = {}
+    if current_user.has_permission("tasks.assign_any"):
+        # نفس بيانات فورم "توزيع مهمة" (بند إضافي 69) — تُحمَّل هنا
+        # عشان النافذة المنبثقة الجديدة تفتح فوراً بدون طلب شبكة إضافي.
+        modal_context = dict(
+            workers=User.query.filter_by(is_active_account=True).order_by(User.name).all(),
+            barns=Barn.query.order_by(Barn.barn_name).all(),
+            animals=Animal.query.order_by(Animal.animal_no).all(),
+            open_tasks=Task.query.filter(Task.status.in_(["pending", "in_progress", "suggested"])).order_by(Task.due_date).all(),
+            task_type_options=MANUAL_TASK_TYPE_OPTIONS,
+        )
     return render_template(
         "team/tasks_list.html",
         my_tasks=my_tasks, suggested=suggested, review_box=review_box, assigned_by_me=assigned_by_me,
         today=date.today(), role_tabs=ROLE_FILTER_TABS, active_role=role_filter,
+        **modal_context,
     )
 
 
@@ -440,6 +466,7 @@ def tasks_new():
                 requires_photo=bool(request.form.get("requires_photo")),
                 notes=request.form.get("notes"),
                 depends_on_task_id=request.form.get("depends_on_task_id") or None,
+                target_role=request.form.get("target_role") or None,
             )
             flash("تم توزيع المهمة", "success")
             return redirect(url_for("team.tasks_list"))
@@ -452,6 +479,8 @@ def tasks_new():
         barns=Barn.query.order_by(Barn.barn_name).all(),
         animals=Animal.query.order_by(Animal.animal_no).all(),
         open_tasks=open_tasks,
+        task_type_options=MANUAL_TASK_TYPE_OPTIONS,
+        role_tabs=ROLE_FILTER_TABS,
     )
 
 

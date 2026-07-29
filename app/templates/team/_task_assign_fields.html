@@ -1,0 +1,44 @@
+{# حقول توزيع مهمة مشتركة (بند إضافي 69) — نفس الفورم يُستخدم بالصفحة
+   الكاملة (team/task_form.html، احتياطي بدون جافاسكربت) وبالنافذة
+   المنبثقة (team/tasks_list.html) — مصدر واحد، صفر تكرار محتوى. #}
+<label>العنوان</label><input name="title" required>
+<label>النوع</label>
+<select name="task_type">
+  {% for code, label in task_type_options %}
+  <option value="{{ code }}">{{ label }}</option>
+  {% endfor %}
+</select>
+
+<label>الدور المستهدف (اختياري)</label>
+<select name="target_role" class="targetRoleSelect">
+  <option value="">-</option>
+  {% for key, label in role_tabs if key != 'all' %}
+  <option value="{{ key }}">{{ label }}</option>
+  {% endfor %}
+</select>
+<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">يحدّد مين المهمة موجَّهة له بشكل عام — يقدر يبقى بدون شخص معيّن بعد، ويظهر بفلترة الدور بشاشة المهام.</p>
+
+<label>المكلَّف (اختياري لو حددت حظيرة)</label>
+<select name="assignee_id" class="assigneeSelect">
+  <option value="">-</option>
+  {% for w in workers %}<option value="{{ w.id }}" data-role="{{ w.role.name if w.role else '' }}">{{ w.name }}</option>{% endfor %}
+</select>
+<label>الحظيرة (اختياري — يعيّن العامل المسؤول تلقائياً لو ما حددت مكلَّف)</label>
+<select name="barn_id">
+  <option value="">-</option>
+  {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+</select>
+<label>الحيوان (اختياري)</label>
+<select name="animal_id">
+  <option value="">-</option>
+  {% for a in animals %}<option value="{{ a.id }}">{{ a.animal_no }}</option>{% endfor %}
+</select>
+<label>الموعد</label><input name="due_date" type="date">
+<label>مهمة سابقة (اختياري — تسلسل المهام)</label>
+<select name="depends_on_task_id">
+  <option value="">بدون تسلسل — تُبدأ فوراً</option>
+  {% for t in open_tasks %}<option value="{{ t.id }}">{{ t.title }} ({{ t.assignee.name if t.assignee else 'غير معيّنة' }})</option>{% endfor %}
+</select>
+<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">لو حدّدت مهمة سابقة، هذي المهمة تبقى مقفلة على العامل لين المهمة السابقة تصير "منجزة".</p>
+<label><input name="requires_photo" type="checkbox" style="width:auto; display:inline-block;"> يتطلب إرفاق صورة عند الإنجاز</label>
+<label>التفاصيل / ملاحظات</label><textarea name="notes" rows="2"></textarea>

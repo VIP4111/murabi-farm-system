@@ -3,42 +3,24 @@
 <div class="card" style="max-width:460px;">
   <h2>توزيع مهمة جديدة</h2>
   <form method="post" data-offline>
-    <label>العنوان</label><input name="title" required>
-    <label>النوع</label>
-    <select name="task_type">
-      <option value="custom">عام</option>
-      <option value="isolation_check">فحص عزل</option>
-      <option value="weighing">وزن</option>
-      <option value="vaccination_due">تحصين مستحق</option>
-      <option value="feed_switch">تبديل علف</option>
-      <option value="doctor_review">مراجعة طبيب</option>
-      <option value="shearing">قص صوف</option>
-    </select>
-    <label>المكلَّف (اختياري لو حددت حظيرة)</label>
-    <select name="assignee_id">
-      <option value="">-</option>
-      {% for w in workers %}<option value="{{ w.id }}">{{ w.name }}</option>{% endfor %}
-    </select>
-    <label>الحظيرة (اختياري — يعيّن العامل المسؤول تلقائياً لو ما حددت مكلَّف)</label>
-    <select name="barn_id">
-      <option value="">-</option>
-      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
-    </select>
-    <label>الحيوان (اختياري)</label>
-    <select name="animal_id">
-      <option value="">-</option>
-      {% for a in animals %}<option value="{{ a.id }}">{{ a.animal_no }}</option>{% endfor %}
-    </select>
-    <label>الموعد</label><input name="due_date" type="date">
-    <label>مهمة سابقة (اختياري — تسلسل المهام)</label>
-    <select name="depends_on_task_id">
-      <option value="">بدون تسلسل — تُبدأ فوراً</option>
-      {% for t in open_tasks %}<option value="{{ t.id }}">{{ t.title }} ({{ t.assignee.name if t.assignee else 'غير معيّنة' }})</option>{% endfor %}
-    </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">لو حدّدت مهمة سابقة، هذي المهمة تبقى مقفلة على العامل لين المهمة السابقة تصير "منجزة".</p>
-    <label><input name="requires_photo" type="checkbox" style="width:auto; display:inline-block;"> يتطلب إرفاق صورة عند الإنجاز</label>
-    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
+    {% include "team/_task_assign_fields.html" %}
     <button class="btn" type="submit">توزيع</button>
   </form>
 </div>
+<script>
+(function(){
+  var roleSelect = document.querySelector('.targetRoleSelect');
+  var assigneeSelect = document.querySelector('.assigneeSelect');
+  if (!roleSelect || !assigneeSelect) return;
+  function updateAssigneeOptions(){
+    var role = roleSelect.value;
+    Array.prototype.forEach.call(assigneeSelect.options, function(opt){
+      if (!opt.value) { opt.hidden = false; return; }
+      opt.hidden = !!(role && opt.getAttribute('data-role') !== role);
+    });
+  }
+  roleSelect.addEventListener('change', updateAssigneeOptions);
+  updateAssigneeOptions();
+})();
+</script>
 {% endblock %}
