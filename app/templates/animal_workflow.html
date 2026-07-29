@@ -18,8 +18,11 @@
   {% if missing_items %}
   <h3 style="margin-top:18px; font-size:15px;">متطلبات ناقصة للانتقال</h3>
   <div class="gate-list">
-    {% for item in missing_items %}
-    <div class="gate-row fail"><span>❌ {{ item }}</span></div>
+    {% for item, action in missing_items_with_actions %}
+    <div class="gate-row fail" style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+      <span>❌ {{ item }}</span>
+      {% if action %}<a class="btn light" href="{{ action[1] }}" style="padding:4px 10px; font-size:12.5px;">{{ action[0] }}</a>{% endif %}
+    </div>
     {% endfor %}
   </div>
   {% endif %}

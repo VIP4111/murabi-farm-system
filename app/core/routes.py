@@ -877,6 +877,34 @@ def animal_note_new(animal_id):
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="notes"))
 
 
+# خريطة "متطلب ناقص ← زر ينقل للمكان المقصود" (بند إضافي 73، 2026-07-29)
+# — مطابقة بادئة نص عليها (مو مساواة تامة، عشان فيه متطلبات نصها متغيّر
+# برقم مثل "فترة حجر 21 يوم..."). كل بند بالقائمة (نص جزئي، تسمية الزر،
+# دالة تبني الرابط) — أول تطابق يفوز. اللي ماله تطابق يرجع بلا زر
+# (بدل رابط مخترع لصفحة مو موجودة فعلياً).
+_MISSING_ITEM_ACTIONS = [
+    ("وزن مسجّل", "تسجيل وزن ←", lambda aid: url_for("core.animal_detail", animal_id=aid, tab="weights")),
+    ("وزن عند الولادة", "تسجيل وزن ←", lambda aid: url_for("core.animal_detail", animal_id=aid, tab="weights")),
+    ("فحص صحي أو زيارة بيطرية أو تطعيم", "زيارة بيطرية ←", lambda aid: url_for("health.vet_visits_new", animal_id=aid)),
+    ("فحص دكتور خلال فترة العزل", "زيارة بيطرية ←", lambda aid: url_for("health.vet_visits_new", animal_id=aid)),
+    ("فحص خصوبة/زيارة بيطرية", "زيارة بيطرية ←", lambda aid: url_for("health.vet_visits_new", animal_id=aid)),
+    ("تحصين المولود", "تسجيل تحصين ←", lambda aid: url_for("health.vaccinations_new", animal_id=aid)),
+    ("تحصين الأم بعد الولادة", "تسجيل تحصين ←", lambda aid: url_for("health.vaccinations_new", animal_id=aid)),
+    ("لا يوجد أمراض مفتوحة", "مراجعة الأمراض ←", lambda aid: url_for("core.animal_detail", animal_id=aid, tab="diseases")),
+    ("فترة حجر", "تفاصيل الرأس ←", lambda aid: url_for("core.animal_detail", animal_id=aid)),
+    ("رقم الحيوان", "تعديل بيانات الرأس ←", lambda aid: url_for("core.animals_edit", animal_id=aid)),
+    ("تاريخ الميلاد أو الشراء", "تعديل بيانات الرأس ←", lambda aid: url_for("core.animals_edit", animal_id=aid)),
+    ("تاريخ الدخول", "تعديل بيانات الرأس ←", lambda aid: url_for("core.animals_edit", animal_id=aid)),
+]
+
+
+def _missing_item_action(item_text: str, animal_id: int):
+    for prefix, label, build_url in _MISSING_ITEM_ACTIONS:
+        if item_text.startswith(prefix) or prefix in item_text:
+            return label, build_url(animal_id)
+    return None
+
+
 @core_bp.route("/animals/<int:animal_id>/workflow")
 @login_required
 @require_permission("animals.view")
@@ -892,13 +920,18 @@ def animal_workflow(animal_id):
     cycle_engine.evaluate(animal)
     db.session.commit()
     events = CycleEvent.query.filter_by(animal_id=animal.id).order_by(CycleEvent.created_at.desc()).all()
+    missing_items = (wf.missing_items or "").split("|") if wf.missing_items else []
+    missing_items_with_actions = [
+        (item, _missing_item_action(item, animal.id)) for item in missing_items
+    ]
     return render_template(
         "animal_workflow.html",
         animal=animal, wf=wf, events=events,
         stages=cycle_engine.STAGES,
         active_stages=cycle_engine.ROUTE_STAGES[wf.route],
         route_label=cycle_engine.ROUTE_LABELS[wf.route],
-        missing_items=(wf.missing_items or "").split("|") if wf.missing_items else [],
+        missing_items=missing_items,
+        missing_items_with_actions=missing_items_with_actions,
     )
 
 

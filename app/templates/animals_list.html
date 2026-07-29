@@ -93,9 +93,11 @@
         <td>{{ a.status|ar_status }}</td>
         <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">نعام — بدون دورة</span>{% else %}<a href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
         <td>
+          <a href="{{ url_for('core.animal_detail', animal_id=a.id) }}" style="text-decoration:none;">
           {% if withdrawal_map.get(a.id) %}
-          <span class="badge off" title="ممنوع البيع/الذبح — يُرفع تلقائياً">حتى {{ withdrawal_map[a.id] }} (باقي {{ (withdrawal_map[a.id] - today).days }} يوم)</span>
-          {% else %}<span class="badge on">آمن</span>{% endif %}
+          <span class="badge off" title="ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس">حتى {{ withdrawal_map[a.id] }} (باقي {{ (withdrawal_map[a.id] - today).days }} يوم)</span>
+          {% else %}<span class="badge on" title="اضغط لتفاصيل الرأس">آمن</span>{% endif %}
+          </a>
         </td>
       </tr>
       {% else %}
