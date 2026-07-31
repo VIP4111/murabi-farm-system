@@ -10,10 +10,13 @@ def test_daily_husbandry_type_shows_arabic_label_not_raw_string(app, logged_in_c
 
 
 def test_ar_task_type_filter_maps_known_values(app):
+    # قيم TASK_TYPE_LABELS_AR صارت _l() (بند إضافي 74) — تحتاج سياق طلب
+    # حقيقي عشان تُحسم للغة (select_locale يقرأ session/current_user).
     filt = app.jinja_env.filters["ar_task_type"]
-    assert filt("daily_husbandry") == "رعاية يومية"
-    assert filt("move_to_pregnant_barn") == "نقل لحظيرة الحوامل"
-    assert filt("batch_spray") == "رش وقائي (دفعة)"
+    with app.test_request_context():
+        assert filt("daily_husbandry") == "رعاية يومية"
+        assert filt("move_to_pregnant_barn") == "نقل لحظيرة الحوامل"
+        assert filt("batch_spray") == "رش وقائي (دفعة)"
 
 
 def test_ar_task_type_filter_falls_back_to_raw_value_for_unknown_type(app):

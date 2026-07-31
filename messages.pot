@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-23 17:23+0300\n"
+"POT-Creation-Date: 2026-07-31 13:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,108 +21,240 @@ msgstr ""
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr ""
 
-#: app/templates/_offline_widgets.html:6
+#: app/templates/_offline_widgets.html:7
 msgid ""
 "غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً "
 "وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
 msgstr ""
 
-#: app/templates/_offline_widgets.html:9
+#: app/templates/_offline_widgets.html:10
 msgid "بانتظار الرفع بجهازك"
 msgstr ""
 
-#: app/templates/_offline_widgets.html:14
+#: app/templates/_offline_widgets.html:17
+msgid "إدخالات رُفضت عند المزامنة — تحتاج مراجعتك"
+msgstr ""
+
+#: app/templates/_offline_widgets.html:24
 msgid ""
 "ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما "
 "يرجع الاتصال."
 msgstr ""
 
-#: app/templates/base.html:217
-msgid "نظام إدارة الحلال"
+#: app/templates/_offline_widgets.html:25
+msgid "رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
 msgstr ""
 
-#: app/templates/base.html:234 app/templates/base.html:235
-#: app/templates/team/worker_report_form.html:7
-msgid "الرئيسية"
+#: app/templates/_offline_widgets.html:26
+msgid "إعادة المحاولة"
 msgstr ""
 
-#: app/templates/base.html:236
+#: app/templates/_offline_widgets.html:27
+msgid "تجاهل نهائياً"
+msgstr ""
+
+#: app/templates/_offline_widgets.html:28
+msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
+msgstr ""
+
+#: app/templates/alerts_list.html:5 app/templates/worker_home.html:32
+msgid "تنبيهاتي"
+msgstr ""
+
+#: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:51
+#: app/templates/base.html:301
 msgid "التنبيهات"
 msgstr ""
 
-#: app/templates/base.html:237
+#: app/templates/alerts_list.html:6
+msgid "تنبيه"
+msgstr ""
+
+#: app/templates/alerts_list.html:10
+msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
+msgstr ""
+
+#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:18
+msgid "حظيرة"
+msgstr ""
+
+#: app/templates/alerts_list.html:11
+msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
+msgstr ""
+
+#: app/templates/alerts_list.html:15
+msgid ""
+"عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
+"تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
+"حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر "
+"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم "
+"التحصينات). النافذة الزمنية من"
+msgstr ""
+
+#: app/templates/alerts_list.html:15
+msgid "الإعدادات"
+msgstr ""
+
+#: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
+msgid "فتح"
+msgstr ""
+
+#: app/templates/alerts_list.html:33
+msgid "ولا تنبيه حالياً — كل شي مضبوط."
+msgstr ""
+
+#: app/templates/base.html:282
+msgid "نظام إدارة الحلال"
+msgstr ""
+
+#: app/templates/base.html:299 app/templates/base.html:300
+#: app/templates/team/worker_report_form.html:6
+#: app/templates/worker_home.html:2
+msgid "الرئيسية"
+msgstr ""
+
+#: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
+#: app/templates/base.html:302
 msgid "المساعد الذكي"
 msgstr ""
 
-#: app/templates/base.html:242
+#: app/templates/base.html:307
 msgid "الحلال"
 msgstr ""
 
-#: app/templates/base.html:243
+#: app/templates/base.html:308
 msgid "الحيوانات"
 msgstr ""
 
-#: app/templates/base.html:244
+#: app/templates/base.html:309
+msgid "دفعات استقبال جديدة"
+msgstr ""
+
+#: app/templates/base.html:310
 msgid "الحظائر"
 msgstr ""
 
-#: app/templates/base.html:245
-msgid "التكاثر"
+#: app/templates/base.html:312
+msgid "التقريع"
 msgstr ""
 
-#: app/templates/base.html:246
+#: app/templates/base.html:313
+msgid "تشخيص الحمل"
+msgstr ""
+
+#: app/templates/base.html:314
+msgid "فحص السونار"
+msgstr ""
+
+#: app/templates/base.html:315
+msgid "برامج التزامن التناسلي (متقدّم)"
+msgstr ""
+
+#: app/templates/base.html:317
 msgid "النعام (بيض/تفقيس)"
 msgstr ""
 
-#: app/templates/base.html:252
+#: app/templates/base.html:323
 msgid "الصحة"
 msgstr ""
 
-#: app/templates/base.html:253
+#: app/templates/base.html:324
 msgid "الصيدلية"
 msgstr ""
 
-#: app/templates/base.html:254
+#: app/templates/base.html:325
 msgid "الزيارات البيطرية"
 msgstr ""
 
-#: app/templates/base.html:255
+#: app/templates/base.html:326
 msgid "الأمراض"
 msgstr ""
 
-#: app/templates/base.html:256
+#: app/templates/base.html:327
 msgid "التطعيمات"
 msgstr ""
 
-#: app/templates/base.html:262
+#: app/templates/base.html:328
+msgid "تقويم التحصينات"
+msgstr ""
+
+#: app/templates/base.html:330
+msgid "المساعد التشخيصي"
+msgstr ""
+
+#: app/templates/base.html:332
+msgid "دليل الحقن الميداني"
+msgstr ""
+
+#: app/templates/base.html:333
+msgid "بروتوكولات العلاج"
+msgstr ""
+
+#: app/templates/base.html:339
 msgid "العلف"
 msgstr ""
 
-#: app/templates/base.html:263
+#: app/templates/base.html:340
 msgid "حاسبة العلف"
 msgstr ""
 
-#: app/templates/base.html:268
+#: app/templates/base.html:341
+msgid "معدل التحويل الغذائي (FCR)"
+msgstr ""
+
+#: app/templates/base.html:342
+msgid "موازِن العليقة التلقائي"
+msgstr ""
+
+#: app/templates/base.html:343
+msgid "المستودعات"
+msgstr ""
+
+#: app/templates/base.html:349
+msgid "المناخ"
+msgstr ""
+
+#: app/templates/base.html:350
+msgid "رادار المناخ والإجهاد الحراري"
+msgstr ""
+
+#: app/templates/base.html:355
 msgid "الفريق"
 msgstr ""
 
-#: app/templates/base.html:269
+#: app/templates/base.html:356 app/templates/team/tasks_list.html:5
 msgid "المهام"
 msgstr ""
 
-#: app/templates/base.html:270
+#: app/templates/base.html:357 app/templates/team/reports_list.html:5
 msgid "البلاغات"
 msgstr ""
 
-#: app/templates/base.html:271
+#: app/templates/base.html:358
 msgid "أعضاء الفريق"
 msgstr ""
 
-#: app/templates/base.html:297
+#: app/templates/base.html:363 app/templates/base.html:364
+msgid "المالية"
+msgstr ""
+
+#: app/templates/base.html:365
+msgid "مالية الصحة"
+msgstr ""
+
+#: app/templates/base.html:371
+msgid "التقارير"
+msgstr ""
+
+#: app/templates/base.html:372
+msgid "التقارير التحليلية"
+msgstr ""
+
+#: app/templates/base.html:384
 msgid "اللغة"
 msgstr ""
 
-#: app/templates/base.html:309
+#: app/templates/base.html:396
 msgid "خروج"
 msgstr ""
 
@@ -142,240 +274,337 @@ msgstr ""
 msgid "دخول"
 msgstr ""
 
-#: app/templates/worker_home.html:26
+#: app/templates/worker_home.html:25
 msgid "أهلاً"
 msgstr ""
 
-#: app/templates/worker_home.html:27
+#: app/templates/worker_home.html:26
 msgid "اختر الإجراء اللي تبي تسجّله"
 msgstr ""
 
-#: app/templates/worker_home.html:34
-msgid "تنبيهاتي"
-msgstr ""
-
-#: app/templates/worker_home.html:37
+#: app/templates/worker_home.html:35
 msgid "تنبيهات حظائرك اللي أنت مسؤول عنها بس."
 msgstr ""
 
-#: app/templates/worker_home.html:38
+#: app/templates/worker_home.html:36
 msgid "فتح تنبيهاتي"
 msgstr ""
 
-#: app/templates/worker_home.html:45
+#: app/templates/worker_home.html:43
 msgid "فحص / حالة صحية"
 msgstr ""
 
-#: app/templates/worker_home.html:45
+#: app/templates/worker_home.html:43
 msgid "تسجيل ملاحظة أو بلاغ عن حالة حيوان"
 msgstr ""
 
-#: app/templates/worker_home.html:49
+#: app/templates/worker_home.html:47
 msgid "نقل إلى العزل"
 msgstr ""
 
-#: app/templates/worker_home.html:49
+#: app/templates/worker_home.html:47
 msgid "الإبلاغ عن حيوان يحتاج عزل"
 msgstr ""
 
-#: app/templates/worker_home.html:53
+#: app/templates/worker_home.html:51
 msgid "تغذية / عليقة"
 msgstr ""
 
-#: app/templates/worker_home.html:53
+#: app/templates/worker_home.html:51
 msgid "تسجيل ملاحظة عن التغذية اليومية"
 msgstr ""
 
-#: app/templates/worker_home.html:57
+#: app/templates/worker_home.html:55
 msgid "بيض / حضانة (نعام)"
 msgstr ""
 
-#: app/templates/worker_home.html:57
+#: app/templates/worker_home.html:55
 msgid "الإبلاغ عن بيضة جديدة أو ملاحظة حضانة"
 msgstr ""
 
-#: app/templates/worker_home.html:61
+#: app/templates/worker_home.html:59
 msgid "مهامي اليوم"
 msgstr ""
 
-#: app/templates/worker_home.html:61
+#: app/templates/worker_home.html:59
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr ""
 
-#: app/templates/health/_medicine_widget.html:21
+#: app/templates/assistant/chat.html:26
+msgid "مسح كل المحادثة؟"
+msgstr ""
+
+#: app/templates/assistant/chat.html:27
+msgid "مسح المحادثة"
+msgstr ""
+
+#: app/templates/assistant/chat.html:34
+msgid ""
+"اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد "
+"تشغيلي عن المزرعة."
+msgstr ""
+
+#: app/templates/assistant/chat.html:47
+msgid "كم عدد الحيوانات؟"
+msgstr ""
+
+#: app/templates/assistant/chat.html:48
+msgid "كم حوامل؟"
+msgstr ""
+
+#: app/templates/assistant/chat.html:49
+msgid "حالة الحاضنات"
+msgstr ""
+
+#: app/templates/assistant/chat.html:50
+msgid "تكلفة العلف"
+msgstr ""
+
+#: app/templates/assistant/chat.html:54
+msgid "اكتب سؤالك هنا..."
+msgstr ""
+
+#: app/templates/assistant/chat.html:55
+msgid "إرسال"
+msgstr ""
+
+#: app/templates/assistant/chat.html:95
+msgid "المساعد يكتب..."
+msgstr ""
+
+#: app/templates/assistant/chat.html:106
+msgid "صار خطأ:"
+msgstr ""
+
+#: app/templates/assistant/chat.html:112
+msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:47
 msgid "طريقة الاستخدام:"
 msgstr ""
 
-#: app/templates/health/_medicine_widget.html:22
+#: app/templates/health/_medicine_widget.html:48
 msgid "ملاحظة الجرعة المرجعية:"
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:49
+msgid "دليل الحقن الميداني:"
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:66
+msgid "هذا الدواء نفد من المخزون —"
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:66
+msgid "راجع نواقص الصيدلية والبدائل"
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:67
+msgid "المخزون منخفض ("
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:67
+msgid ") — راجع نواقص الصيدلية للبدائل"
+msgstr ""
+
+#: app/templates/health/_medicine_widget.html:90
+msgid "التكلفة المتوقعة:"
 msgstr ""
 
 #: app/templates/health/disease_form.html:6
 msgid "تسجيل حالة مرضية"
 msgstr ""
 
-#: app/templates/health/disease_form.html:9
-#: app/templates/health/vaccination_form.html:9
-#: app/templates/health/vet_visit_form.html:9
+#: app/templates/health/disease_form.html:13
+#: app/templates/health/vaccination_form.html:7
+#: app/templates/health/vet_visit_form.html:7
+msgid ""
+"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز "
+"المهمة تلقائياً."
+msgstr ""
+
+#: app/templates/health/disease_form.html:17
+#: app/templates/health/vaccination_form.html:11
+#: app/templates/health/vet_visit_form.html:11
 msgid "التاريخ"
 msgstr ""
 
-#: app/templates/health/disease_form.html:10
-#: app/templates/health/vaccination_form.html:10
-#: app/templates/health/vet_visit_form.html:10
+#: app/templates/health/disease_form.html:18
+#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vet_visit_form.html:12
+#: app/templates/team/report_detail.html:11
 msgid "الحيوان"
 msgstr ""
 
-#: app/templates/health/disease_form.html:14
+#: app/templates/health/disease_form.html:22
 msgid "اسم المرض"
 msgstr ""
 
-#: app/templates/health/disease_form.html:15
+#: app/templates/health/disease_form.html:23
 msgid "اختر من القائمة أو اكتب اسماً جديداً"
 msgstr ""
 
-#: app/templates/health/disease_form.html:19
+#: app/templates/health/disease_form.html:27
 msgid "الشدة"
 msgstr ""
 
-#: app/templates/health/disease_form.html:21
+#: app/templates/health/disease_form.html:29
 msgid "بسيطة"
 msgstr ""
 
-#: app/templates/health/disease_form.html:22
+#: app/templates/health/disease_form.html:30
 msgid "متوسطة"
 msgstr ""
 
-#: app/templates/health/disease_form.html:23
+#: app/templates/health/disease_form.html:31
 msgid "شديدة"
 msgstr ""
 
-#: app/templates/health/disease_form.html:25
-#: app/templates/health/vet_visit_form.html:19
+#: app/templates/health/disease_form.html:33
+#: app/templates/health/vet_visit_form.html:21
 msgid "الدواء المستخدم (اختياري)"
 msgstr ""
 
-#: app/templates/health/disease_form.html:27
-#: app/templates/health/vet_visit_form.html:21
+#: app/templates/health/disease_form.html:35
+#: app/templates/health/vet_visit_form.html:23
 msgid "بدون دواء"
 msgstr ""
 
-#: app/templates/health/disease_form.html:28
-#: app/templates/health/vaccination_form.html:19
-#: app/templates/health/vet_visit_form.html:22
+#: app/templates/health/disease_form.html:36
+#: app/templates/health/vaccination_form.html:21
+#: app/templates/health/vet_visit_form.html:24
 msgid "سحب:"
 msgstr ""
 
-#: app/templates/health/disease_form.html:28
-#: app/templates/health/vaccination_form.html:19
-#: app/templates/health/vet_visit_form.html:22
+#: app/templates/health/disease_form.html:36
+#: app/templates/health/vaccination_form.html:21
+#: app/templates/health/vet_visit_form.html:24
 msgid "يوم"
 msgstr ""
 
-#: app/templates/health/disease_form.html:31
-#: app/templates/health/vaccination_form.html:22
-#: app/templates/health/vet_visit_form.html:25
+#: app/templates/health/disease_form.html:38
+#: app/templates/health/vaccination_form.html:23
+#: app/templates/health/vet_visit_form.html:26
 msgid "الكمية المستخدمة"
 msgstr ""
 
-#: app/templates/health/disease_form.html:32
+#: app/templates/health/disease_form.html:39
+#: app/templates/health/vaccination_form.html:24
+#: app/templates/health/vet_visit_form.html:27
+msgid "إلزامية لو اخترت دواء أعلاه."
+msgstr ""
+
+#: app/templates/health/disease_form.html:40
 msgid "تكلفة العلاج"
 msgstr ""
 
-#: app/templates/health/disease_form.html:33
-#: app/templates/health/vaccination_form.html:23
-#: app/templates/health/vet_visit_form.html:28
-#: app/templates/repro/sonar_form.html:35
+#: app/templates/health/disease_form.html:42
+#: app/templates/health/vaccination_form.html:26
+#: app/templates/health/vet_visit_form.html:30
+msgid "سبب التجاوز (لو ظهر تحذير تكرار جرعة الطفيليات)"
+msgstr ""
+
+#: app/templates/health/disease_form.html:43
+#: app/templates/health/vaccination_form.html:27
+#: app/templates/health/vet_visit_form.html:31
+msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
+msgstr ""
+
+#: app/templates/health/disease_form.html:44
+#: app/templates/health/vaccination_form.html:28
+#: app/templates/health/vet_visit_form.html:33
+#: app/templates/repro/sonar_form.html:33
 msgid "حفظ"
 msgstr ""
 
-#: app/templates/health/vaccination_form.html:6
+#: app/templates/health/vaccination_form.html:5
 msgid "تسجيل تطعيم"
 msgstr ""
 
-#: app/templates/health/vaccination_form.html:14
+#: app/templates/health/vaccination_form.html:16
 msgid "اسم اللقاح"
 msgstr ""
 
-#: app/templates/health/vaccination_form.html:15
+#: app/templates/health/vaccination_form.html:17
 msgid "الموعد القادم (اختياري)"
 msgstr ""
 
-#: app/templates/health/vaccination_form.html:16
+#: app/templates/health/vaccination_form.html:18
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr ""
 
-#: app/templates/health/vaccination_form.html:18
+#: app/templates/health/vaccination_form.html:20
 msgid "بدون ربط"
 msgstr ""
 
-#: app/templates/health/vet_visit_form.html:6
+#: app/templates/health/vet_visit_form.html:5
 msgid "تسجيل زيارة بيطرية"
 msgstr ""
 
-#: app/templates/health/vet_visit_form.html:14
-#: app/templates/repro/sonar_form.html:28
+#: app/templates/health/vet_visit_form.html:16
+#: app/templates/repro/sonar_form.html:26
 msgid "الطبيب"
 msgstr ""
 
-#: app/templates/health/vet_visit_form.html:18
+#: app/templates/health/vet_visit_form.html:20
 msgid "التشخيص"
 msgstr ""
 
-#: app/templates/health/vet_visit_form.html:26
+#: app/templates/health/vet_visit_form.html:28
 msgid "التكلفة"
 msgstr ""
 
-#: app/templates/health/vet_visit_form.html:27
-#: app/templates/repro/sonar_form.html:34
+#: app/templates/health/vet_visit_form.html:32
+#: app/templates/repro/sonar_form.html:32
 msgid "ملاحظات"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:5
+#: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:8
+#: app/templates/repro/sonar_form.html:6
 msgid "تاريخ الفحص"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:9
+#: app/templates/repro/sonar_form.html:7
 msgid "الأنثى"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:13
+#: app/templates/repro/sonar_form.html:11
 msgid "برنامج الشياع التوأمي المرتبط (اختياري)"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:18
+#: app/templates/repro/sonar_form.html:16
 msgid "عمر الحمل (بالأيام)"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:19
+#: app/templates/repro/sonar_form.html:17
 msgid "النتيجة"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:22
+#: app/templates/repro/sonar_form.html:20
 msgid "حامل"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:23
+#: app/templates/repro/sonar_form.html:21
 msgid "غير حامل"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:24
+#: app/templates/repro/sonar_form.html:22
 msgid "غير مؤكد"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:26
+#: app/templates/repro/sonar_form.html:24
 msgid "عدد الأجنّة"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:27
+#: app/templates/repro/sonar_form.html:25
 msgid "نبض واضح؟"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:33
+#: app/templates/repro/sonar_form.html:31
 msgid "موعد إعادة الفحص"
 msgstr ""
 
@@ -388,10 +617,12 @@ msgid "العمر:"
 msgstr ""
 
 #: app/templates/team/_report_widgets.html:21
+#: app/templates/team/task_detail.html:15
 msgid "الحظيرة:"
 msgstr ""
 
 #: app/templates/team/_report_widgets.html:21
+#: app/templates/team/task_detail.html:9
 msgid "الحالة:"
 msgstr ""
 
@@ -428,63 +659,629 @@ msgstr ""
 msgid "تعذّر الوصول للمايكروفون:"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:14
-msgid "مهامك المفتوحة بهذا التصنيف"
+#: app/templates/team/report_detail.html:5
+msgid "بلاغ"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:20
-msgid "الموعد:"
+#: app/templates/team/report_detail.html:9
+#: app/templates/team/reports_list.html:24
+#: app/templates/team/reports_list.html:34
+#: app/templates/team/reports_list.html:45
+#: app/templates/team/reports_list.html:56
+#: app/templates/team/reports_list.html:75
+#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+msgid "النوع"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:23
-msgid "بانتظار:"
+#: app/templates/team/report_detail.html:10
+#: app/templates/team/reports_list.html:24
+#: app/templates/team/reports_list.html:34
+#: app/templates/team/reports_list.html:45
+#: app/templates/team/reports_list.html:75
+msgid "رفعه"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:23
-msgid "مقفلة"
+#: app/templates/team/report_detail.html:15
+msgid "نعام"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:26
-msgid "بدء"
+#: app/templates/team/report_detail.html:15
+msgid "حلال (ضأن/ماعز)"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:30
-msgid "رابط صورة (إلزامي)"
+#: app/templates/team/report_detail.html:22
+#: app/templates/team/report_form.html:27
+#: app/templates/team/worker_report_form.html:45
+msgid "الحظيرة"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:31
-msgid "تم الإنجاز"
+#: app/templates/team/report_detail.html:23
+#: app/templates/team/reports_list.html:24
+#: app/templates/team/reports_list.html:34
+#: app/templates/team/reports_list.html:45
+#: app/templates/team/reports_list.html:56
+#: app/templates/team/reports_list.html:75
+msgid "الوصف"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:40
-msgid "بلاغ جديد بهذا التصنيف"
+#: app/templates/team/report_detail.html:24
+msgid "صورة مرفقة"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:40
-msgid "تسجيل بلاغ"
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/task_detail.html:106
+msgid "عرض الصورة"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:42
-msgid "الحيوان المرتبط (اختياري)"
+#: app/templates/team/report_detail.html:25
+msgid "ملاحظة صوتية"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:48
-msgid "الحظيرة (اختياري)"
+#: app/templates/team/report_detail.html:26
+msgid "الدكتور المسؤول"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:53
-msgid "الملاحظة / التفاصيل"
+#: app/templates/team/report_detail.html:27
+#: app/templates/team/report_detail.html:91
+msgid "محوّلة لـ"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:54
-msgid "اكتب وش لاحظت هنا..."
+#: app/templates/team/report_detail.html:29
+msgid "دليل التنفيذ"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:56
+#: app/templates/team/report_detail.html:29
+msgid "صورة"
+msgstr ""
+
+#: app/templates/team/report_detail.html:31
+#: app/templates/team/reports_list.html:75
+msgid "سبب الإلغاء"
+msgstr ""
+
+#: app/templates/team/report_detail.html:32
+#: app/templates/team/report_detail.html:45
+msgid "سبب التأجيل"
+msgstr ""
+
+#: app/templates/team/report_detail.html:33
+msgid "أغلقها"
+msgstr ""
+
+#: app/templates/team/report_detail.html:39
+msgid "إجراءات (صندوق الوارد)"
+msgstr ""
+
+#: app/templates/team/report_detail.html:42
+msgid "قبول البلاغ"
+msgstr ""
+
+#: app/templates/team/report_detail.html:46
+#: app/templates/team/tasks_list.html:108
+msgid "تأجيل"
+msgstr ""
+
+#: app/templates/team/report_detail.html:48
+msgid "تأكيد الإلغاء؟ تنتقل لصاحب الحلال."
+msgstr ""
+
+#: app/templates/team/report_detail.html:49
+msgid "سبب الإلغاء (إلزامي)"
+msgstr ""
+
+#: app/templates/team/report_detail.html:50
+msgid "إلغاء"
+msgstr ""
+
+#: app/templates/team/report_detail.html:59
+msgid "رجّعه لصندوق الوارد"
+msgstr ""
+
+#: app/templates/team/report_detail.html:66
+msgid "نفّذها بنفسك"
+msgstr ""
+
+#: app/templates/team/report_detail.html:68
+#: app/templates/team/task_detail.html:72
+msgid "ملاحظة (اختياري)"
+msgstr ""
+
+#: app/templates/team/report_detail.html:69
+msgid "تنفيذ وإغلاق مباشرة"
+msgstr ""
+
+#: app/templates/team/report_detail.html:73
+msgid "أو حوّلها لعضو ثاني"
+msgstr ""
+
+#: app/templates/team/report_detail.html:75
+msgid "حوّل لـ"
+msgstr ""
+
+#: app/templates/team/report_detail.html:83
+msgid "تعليمات التنفيذ (إلزامي)"
+msgstr ""
+
+#: app/templates/team/report_detail.html:84
+msgid "تحويل"
+msgstr ""
+
+#: app/templates/team/report_detail.html:91
+msgid "بانتظار تنفيذه."
+msgstr ""
+
+#: app/templates/team/report_detail.html:97
+msgid "تسجيل الإنجاز"
+msgstr ""
+
+#: app/templates/team/report_detail.html:99
+msgid "ملاحظة/دليل الإنجاز"
+msgstr ""
+
+#: app/templates/team/report_detail.html:100
 msgid "رابط صورة (اختياري)"
 msgstr ""
 
-#: app/templates/team/worker_report_form.html:58
+#: app/templates/team/report_detail.html:101
+#: app/templates/team/task_detail.html:78
+msgid "تم الإنجاز"
+msgstr ""
+
+#: app/templates/team/report_detail.html:108
+msgid "مراجعة وإغلاق"
+msgstr ""
+
+#: app/templates/team/report_detail.html:110
+msgid "ملاحظة إغلاق (اختياري)"
+msgstr ""
+
+#: app/templates/team/report_detail.html:111
+msgid "إغلاق البلاغ"
+msgstr ""
+
+#: app/templates/team/report_detail.html:118
+#: app/templates/team/tasks_list.html:172
+msgid "حذف نهائي — ما يرجع. متأكد؟"
+msgstr ""
+
+#: app/templates/team/report_detail.html:119
+#: app/templates/team/tasks_list.html:173
+msgid "حذف نهائي"
+msgstr ""
+
+#: app/templates/team/report_form.html:5
+msgid "رفع بلاغ جديد"
+msgstr ""
+
+#: app/templates/team/report_form.html:6
+#: app/templates/team/worker_report_form.html:36
+msgid "لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ."
+msgstr ""
+
+#: app/templates/team/report_form.html:7
+msgid "القوائم أدناه مقصورة على حظائرك المسؤول عنها."
+msgstr ""
+
+#: app/templates/team/report_form.html:8
+#: app/templates/team/worker_report_form.html:37
+msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال."
+msgstr ""
+
+#: app/templates/team/report_form.html:10
+msgid "نوع البلاغ"
+msgstr ""
+
+#: app/templates/team/report_form.html:13
+msgid "مرض"
+msgstr ""
+
+#: app/templates/team/report_form.html:14
+msgid "مشكلة"
+msgstr ""
+
+#: app/templates/team/report_form.html:15
+msgid "صيانة"
+msgstr ""
+
+#: app/templates/team/report_form.html:16
+msgid "أخرى"
+msgstr ""
+
+#: app/templates/team/report_form.html:18
+msgid "إضافة نوع بلاغ جديد"
+msgstr ""
+
+#: app/templates/team/report_form.html:18
+msgid "إضافة"
+msgstr ""
+
+#: app/templates/team/report_form.html:20
+msgid "اكتب نوع البلاغ الجديد هنا"
+msgstr ""
+
+#: app/templates/team/report_form.html:21
+#: app/templates/team/worker_report_form.html:39
+msgid "الحيوان المرتبط"
+msgstr ""
+
+#: app/templates/team/report_form.html:32
+msgid "وصف البلاغ"
+msgstr ""
+
+#: app/templates/team/report_form.html:34
+#: app/templates/team/worker_report_form.html:53
+msgid "صورة (اختياري)"
+msgstr ""
+
+#: app/templates/team/report_form.html:36
+msgid ""
+"اضغط هنا وتقدر تختار \"الكاميرا\" لتصوير مباشر أو \"معرض الصور\" لصورة "
+"محفوظة عندك."
+msgstr ""
+
+#: app/templates/team/report_form.html:37
+msgid "رفع البلاغ"
+msgstr ""
+
+#: app/templates/team/reports_list.html:6
+msgid "بلاغ جديد"
+msgstr ""
+
+#: app/templates/team/reports_list.html:22
+msgid "صندوق الوارد (بلاغات جديدة)"
+msgstr ""
+
+#: app/templates/team/reports_list.html:24
+#: app/templates/team/reports_list.html:34
+#: app/templates/team/reports_list.html:45
+#: app/templates/team/reports_list.html:56
+#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:146
+msgid "الحالة"
+msgstr ""
+
+#: app/templates/team/reports_list.html:26
+msgid "صندوق الوارد فاضي."
+msgstr ""
+
+#: app/templates/team/reports_list.html:32
+msgid "بلاغات مستلمة مني"
+msgstr ""
+
+#: app/templates/team/reports_list.html:36
+msgid "لا يوجد بلاغات مستلمة حالياً."
+msgstr ""
+
+#: app/templates/team/reports_list.html:43
+msgid "محوّلة لي للتنفيذ"
+msgstr ""
+
+#: app/templates/team/reports_list.html:47
+msgid "لا يوجد بلاغات محوّلة لك حالياً."
+msgstr ""
+
+#: app/templates/team/reports_list.html:54
+msgid "بلاغاتي المرفوعة"
+msgstr ""
+
+#: app/templates/team/reports_list.html:65
+msgid "ما رفعت أي بلاغ بعد."
+msgstr ""
+
+#: app/templates/team/reports_list.html:73
+msgid "بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)"
+msgstr ""
+
+#: app/templates/team/reports_list.html:85
+msgid "لا يوجد بلاغات ملغاة."
+msgstr ""
+
+#: app/templates/team/task_detail.html:7
+msgid "رجوع للمهام"
+msgstr ""
+
+#: app/templates/team/task_detail.html:9
+#: app/templates/team/worker_report_form.html:18
+msgid "الموعد:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:9 app/templates/team/tasks_list.html:61
+msgid "متأخرة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:13
+msgid "تفصيل المهمة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:14
+msgid "السبب/الدافع:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:15
+msgid "عدد الرؤوس بالدفعة:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:18
+msgid "عرض كل رؤوس الدفعة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:21
+msgid "هذه المهمة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:29
+msgid "الدواء المخطَّط:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:30
+msgid "الجرعة لكل رأس:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:30
+msgid "الجرعة الإجمالية للدفعة:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:31
+msgid "المخزون الحالي:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:31
+msgid "المتبقي المتوقع بعد التنفيذ:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:32
+msgid "المخزون لا يكفي كامل الدفعة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:37
+msgid "المهمة التالية بالسلسلة:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:55
+#: app/templates/team/tasks_list.html:95 app/templates/team/tasks_list.html:162
+msgid "الإجراءات"
+msgstr ""
+
+#: app/templates/team/task_detail.html:47
+msgid "تأكيد التنفيذ"
+msgstr ""
+
+#: app/templates/team/task_detail.html:53
+msgid "موافقة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:56
+#: app/templates/team/tasks_list.html:111
+msgid "حذف"
+msgstr ""
+
+#: app/templates/team/task_detail.html:62 app/templates/team/tasks_list.html:71
+#: app/templates/team/worker_report_form.html:24
+msgid "بدء"
+msgstr ""
+
+#: app/templates/team/task_detail.html:70
+msgid "إنجاز المهمة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:74
+msgid "صورة دليل (إلزامي)"
+msgstr ""
+
+#: app/templates/team/task_detail.html:74
+msgid "صورة دليل (اختياري)"
+msgstr ""
+
+#: app/templates/team/task_detail.html:76
+msgid "تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض."
+msgstr ""
+
+#: app/templates/team/task_detail.html:83
+msgid "تعذّر التنفيذ"
+msgstr ""
+
+#: app/templates/team/task_detail.html:84
+msgid ""
+"لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور "
+"مباشرة."
+msgstr ""
+
+#: app/templates/team/task_detail.html:86
+#: app/templates/team/task_detail.html:104
+msgid "سبب التعذّر"
+msgstr ""
+
+#: app/templates/team/task_detail.html:88
+msgid "اختر السبب..."
+msgstr ""
+
+#: app/templates/team/task_detail.html:93
+msgid "تفاصيل إضافية (اختياري)"
+msgstr ""
+
+#: app/templates/team/task_detail.html:95
+msgid "صورة توضيحية (اختياري)"
+msgstr ""
+
+#: app/templates/team/task_detail.html:97
+msgid "تسجيل التعذّر"
+msgstr ""
+
+#: app/templates/team/task_detail.html:112
+msgid "تفاصيل الإنجاز"
+msgstr ""
+
+#: app/templates/team/task_detail.html:113
+msgid "المدة:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:113
+msgid "دقيقة"
+msgstr ""
+
+#: app/templates/team/task_detail.html:114
+msgid "باشرها:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:115
+msgid "ملاحظة:"
+msgstr ""
+
+#: app/templates/team/task_detail.html:116
+msgid "عرض صورة الدليل"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:7
+msgid "توزيع مهمة"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:16
+msgid "توزيع مهمة جديدة"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:19
+msgid "توزيع"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:21
+msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:53
+msgid "مهامي"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:162
+msgid "العنوان"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/tasks_list.html:126
+msgid "الحظيرة/الحيوان"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:146
+msgid "الموعد"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:61
+msgid "فات موعدها"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:68
+#: app/templates/team/worker_report_form.html:21
+msgid "بانتظار:"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:68
+#: app/templates/team/worker_report_form.html:21
+msgid "مقفلة"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:74
+#: app/templates/team/worker_report_form.html:27
+msgid "إنجاز / تعذّر ←"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:79
+msgid "ما عندك مهام حالياً."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:87
+msgid "مهام مقترحة بانتظار الاعتماد"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:88
+msgid ""
+"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
+"تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:105
+msgid "اعتماد وإرسال"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:108
+msgid "تأجيل ليوم واحد"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:116
+msgid "لا يوجد مهام مقترحة حالياً."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:123
+msgid "جدول المهام المعتمدة"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:124
+msgid ""
+"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
+"عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:146
+msgid "المكلَّف"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:131
+msgid "بدون تعيين"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:137
+msgid "لا يوجد مهام معتمدة حالياً."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:144
+msgid "مهام وزّعتها (نشطة)"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:151
+msgid "لا يوجد."
+msgstr ""
+
+#: app/templates/team/tasks_list.html:160
+msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:162
+msgid "السبب"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:170
+msgid "استرجاع"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:178
+msgid "فاضي."
+msgstr ""
+
+#: app/templates/team/worker_report_form.html:12
+msgid "مهامك المفتوحة بهذا التصنيف"
+msgstr ""
+
+#: app/templates/team/worker_report_form.html:35
+msgid "بلاغ جديد بهذا التصنيف"
+msgstr ""
+
+#: app/templates/team/worker_report_form.html:35
+msgid "تسجيل بلاغ"
+msgstr ""
+
+#: app/templates/team/worker_report_form.html:50
+msgid "الملاحظة / التفاصيل"
+msgstr ""
+
+#: app/templates/team/worker_report_form.html:51
+msgid "اكتب وش لاحظت هنا..."
+msgstr ""
+
+#: app/templates/team/worker_report_form.html:55
 msgid "إرسال البلاغ"
 msgstr ""
 

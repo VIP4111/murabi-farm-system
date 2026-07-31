@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}المساعد الذكي{% endblock %}
+{% block title %}{{ _('المساعد الذكي') }}{% endblock %}
 {% block content %}
 <style>
   .chat-card{padding:0; overflow:hidden; display:flex; flex-direction:column; height:calc(100vh - 160px); min-height:420px;}
@@ -22,16 +22,16 @@
 
 <div class="card chat-card">
   <div class="chat-head">
-    <h2>🤖 المساعد الذكي</h2>
-    <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('مسح كل المحادثة؟');">
-      <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">مسح المحادثة</button>
+    <h2>🤖 {{ _('المساعد الذكي') }}</h2>
+    <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('{{ _('مسح كل المحادثة؟') }}');">
+      <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">{{ _('مسح المحادثة') }}</button>
     </form>
   </div>
 
   <div class="chat-body" id="chatBody">
     {% if not messages %}
     <div class="chat-empty" id="chatEmpty">
-      اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة.
+      {{ _('اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة.') }}
     </div>
     {% endif %}
     {% for m in messages %}
@@ -44,15 +44,15 @@
 
   <div class="chat-foot">
     <div class="chat-suggestions">
-      <button type="button" onclick="askSuggestion('كم عدد الحيوانات بالمزرعة؟')">كم عدد الحيوانات؟</button>
-      <button type="button" onclick="askSuggestion('كم رأس حوامل لدينا؟')">كم حوامل؟</button>
-      <button type="button" onclick="askSuggestion('ما حالة الحاضنات اليوم؟')">حالة الحاضنات</button>
-      <button type="button" onclick="askSuggestion('كم التكلفة اليومية للأعلاف؟')">تكلفة العلف</button>
-      <button type="button" onclick="askSuggestion('وش التنبيهات الحالية؟')">التنبيهات</button>
+      <button type="button" onclick="askSuggestion('كم عدد الحيوانات بالمزرعة؟')">{{ _('كم عدد الحيوانات؟') }}</button>
+      <button type="button" onclick="askSuggestion('كم رأس حوامل لدينا؟')">{{ _('كم حوامل؟') }}</button>
+      <button type="button" onclick="askSuggestion('ما حالة الحاضنات اليوم؟')">{{ _('حالة الحاضنات') }}</button>
+      <button type="button" onclick="askSuggestion('كم التكلفة اليومية للأعلاف؟')">{{ _('تكلفة العلف') }}</button>
+      <button type="button" onclick="askSuggestion('وش التنبيهات الحالية؟')">{{ _('التنبيهات') }}</button>
     </div>
     <form class="chat-form" id="chatForm" method="post" action="{{ url_for('assistant.send') }}">
-      <textarea id="chatInput" name="message" placeholder="اكتب سؤالك هنا..." required></textarea>
-      <button type="submit" class="btn">إرسال</button>
+      <textarea id="chatInput" name="message" placeholder="{{ _('اكتب سؤالك هنا...') }}" required></textarea>
+      <button type="submit" class="btn">{{ _('إرسال') }}</button>
     </form>
   </div>
 </div>
@@ -92,7 +92,7 @@
     chatInput.disabled = true;
     var typing = document.createElement('div');
     typing.className = 'typing';
-    typing.textContent = 'المساعد يكتب...';
+    typing.textContent = {{ _('المساعد يكتب...')|tojson }};
     chatBody.appendChild(typing);
     scrollToBottom();
 
@@ -103,13 +103,13 @@
     }).then(function(r){ return r.json(); }).then(function(data){
       typing.remove();
       if(data.error){
-        addBubble('assistant', 'صار خطأ: ' + data.error, '');
+        addBubble('assistant', {{ _('صار خطأ:')|tojson }} + ' ' + data.error, '');
       } else {
         addBubble('assistant', data.reply, (data.created_at || '').slice(11,16));
       }
     }).catch(function(){
       typing.remove();
-      addBubble('assistant', 'تعذّر الاتصال بالمساعد. حاول مرة ثانية.', '');
+      addBubble('assistant', {{ _('تعذّر الاتصال بالمساعد. حاول مرة ثانية.')|tojson }}, '');
     }).finally(function(){
       chatInput.disabled = false;
       chatInput.focus();

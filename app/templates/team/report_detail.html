@@ -2,52 +2,52 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>بلاغ #{{ r.id }}</h2>
+    <h2>{{ _('بلاغ') }} #{{ r.id }}</h2>
     <span class="badge {{ 'on' if r.status in ['new','accepted'] else 'off' }}">{{ r.status|ar_status }}</span>
   </div>
   <table>
-    <tr><td>النوع</td><td>{{ r.report_type or '-' }}</td></tr>
-    <tr><td>رفعه</td><td>{{ r.reporter.name }} — {{ r.created_at.strftime('%Y-%m-%d %H:%M') if r.created_at else '-' }}</td></tr>
-    <tr><td>الحيوان</td><td>
+    <tr><td>{{ _('النوع') }}</td><td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td></tr>
+    <tr><td>{{ _('رفعه') }}</td><td>{{ r.reporter.name }} — {{ r.created_at.strftime('%Y-%m-%d %H:%M') if r.created_at else '-' }}</td></tr>
+    <tr><td>{{ _('الحيوان') }}</td><td>
       {% if r.animal %}
       {{ r.animal.animal_no }}
       <span style="color:var(--muted); font-size:12.5px;">
-        — {{ 'نعام' if r.animal.species == 'ostrich' else 'حلال (ضأن/ماعز)' }}
+        — {{ _('نعام') if r.animal.species == 'ostrich' else _('حلال (ضأن/ماعز)') }}
         {% if r.animal.gender %} — {{ r.animal.gender }}{% endif %}
         — {{ r.animal.status|ar_status }}
-        {% if r.animal.barn %} — حظيرة {{ r.animal.barn.barn_name }}{% endif %}
+        {% if r.animal.barn %} — {{ _('حظيرة') }} {{ r.animal.barn.barn_name }}{% endif %}
       </span>
       {% else %}-{% endif %}
     </td></tr>
-    <tr><td>الحظيرة</td><td>{{ r.barn.barn_name if r.barn else '-' }}</td></tr>
-    <tr><td>الوصف</td><td>{{ r.description }}</td></tr>
-    {% if r.evidence_image_url %}<tr><td>صورة مرفقة</td><td><a href="{{ r.evidence_image_url }}" target="_blank">عرض الصورة</a></td></tr>{% endif %}
-    {% if r.evidence_audio_url %}<tr><td>ملاحظة صوتية</td><td><audio controls src="{{ r.evidence_audio_url }}" style="height:32px; max-width:260px;"></audio></td></tr>{% endif %}
-    <tr><td>الدكتور المسؤول</td><td>{{ r.manager.name if r.manager else '-' }}</td></tr>
-    <tr><td>محوّلة لـ</td><td>{{ r.executor.name if r.executor else '-' }}{% if r.transfer_note %} — {{ r.transfer_note }}{% endif %}</td></tr>
+    <tr><td>{{ _('الحظيرة') }}</td><td>{{ r.barn.barn_name if r.barn else '-' }}</td></tr>
+    <tr><td>{{ _('الوصف') }}</td><td>{{ r.description }}</td></tr>
+    {% if r.evidence_image_url %}<tr><td>{{ _('صورة مرفقة') }}</td><td><a href="{{ r.evidence_image_url }}" target="_blank">{{ _('عرض الصورة') }}</a></td></tr>{% endif %}
+    {% if r.evidence_audio_url %}<tr><td>{{ _('ملاحظة صوتية') }}</td><td><audio controls src="{{ r.evidence_audio_url }}" style="height:32px; max-width:260px;"></audio></td></tr>{% endif %}
+    <tr><td>{{ _('الدكتور المسؤول') }}</td><td>{{ r.manager.name if r.manager else '-' }}</td></tr>
+    <tr><td>{{ _('محوّلة لـ') }}</td><td>{{ r.executor.name if r.executor else '-' }}{% if r.transfer_note %} — {{ r.transfer_note }}{% endif %}</td></tr>
     {% if r.execution_note or r.execution_evidence_image_url %}
-    <tr><td>دليل التنفيذ</td><td>{{ r.execution_note or '-' }}{% if r.execution_evidence_image_url %} — <a href="{{ r.execution_evidence_image_url }}" target="_blank">صورة</a>{% endif %}</td></tr>
+    <tr><td>{{ _('دليل التنفيذ') }}</td><td>{{ r.execution_note or '-' }}{% if r.execution_evidence_image_url %} — <a href="{{ r.execution_evidence_image_url }}" target="_blank">{{ _('صورة') }}</a>{% endif %}</td></tr>
     {% endif %}
-    {% if r.status == 'cancelled' %}<tr><td>سبب الإلغاء</td><td>{{ r.cancel_reason }}</td></tr>{% endif %}
-    {% if r.status == 'postponed' %}<tr><td>سبب التأجيل</td><td>{{ r.postpone_reason }}</td></tr>{% endif %}
-    {% if r.status == 'closed' %}<tr><td>أغلقها</td><td>{{ r.closer.name if r.closer else '-' }} — {{ r.closed_at.strftime('%Y-%m-%d %H:%M') if r.closed_at else '-' }}</td></tr>{% endif %}
+    {% if r.status == 'cancelled' %}<tr><td>{{ _('سبب الإلغاء') }}</td><td>{{ r.cancel_reason }}</td></tr>{% endif %}
+    {% if r.status == 'postponed' %}<tr><td>{{ _('سبب التأجيل') }}</td><td>{{ r.postpone_reason }}</td></tr>{% endif %}
+    {% if r.status == 'closed' %}<tr><td>{{ _('أغلقها') }}</td><td>{{ r.closer.name if r.closer else '-' }} — {{ r.closed_at.strftime('%Y-%m-%d %H:%M') if r.closed_at else '-' }}</td></tr>{% endif %}
   </table>
 </div>
 
 {% if r.status == 'new' and can_manage %}
 <div class="card">
-  <h3 style="font-size:15px;">إجراءات (صندوق الوارد)</h3>
+  <h3 style="font-size:15px;">{{ _('إجراءات (صندوق الوارد)') }}</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">
     <form method="post" action="{{ url_for('team.report_accept', report_id=r.id) }}">
-      <button class="btn" type="submit">قبول البلاغ</button>
+      <button class="btn" type="submit">{{ _('قبول البلاغ') }}</button>
     </form>
     <form method="post" action="{{ url_for('team.report_postpone', report_id=r.id) }}" style="display:flex; gap:8px; align-items:flex-start;">
-      <input name="reason" placeholder="سبب التأجيل" required style="margin-bottom:0;">
-      <button class="btn" type="submit">تأجيل</button>
+      <input name="reason" placeholder="{{ _('سبب التأجيل') }}" required style="margin-bottom:0;">
+      <button class="btn" type="submit">{{ _('تأجيل') }}</button>
     </form>
-    <form method="post" action="{{ url_for('team.report_cancel', report_id=r.id) }}" style="display:flex; gap:8px; align-items:flex-start;" onsubmit="return confirm('تأكيد الإلغاء؟ تنتقل لصاحب الحلال.');">
-      <input name="reason" placeholder="سبب الإلغاء (إلزامي)" required style="margin-bottom:0;">
-      <button class="btn" type="submit" style="background:#a32d2d;">إلغاء</button>
+    <form method="post" action="{{ url_for('team.report_cancel', report_id=r.id) }}" style="display:flex; gap:8px; align-items:flex-start;" onsubmit="return confirm('{{ _('تأكيد الإلغاء؟ تنتقل لصاحب الحلال.') }}');">
+      <input name="reason" placeholder="{{ _('سبب الإلغاء (إلزامي)') }}" required style="margin-bottom:0;">
+      <button class="btn" type="submit" style="background:#a32d2d;">{{ _('إلغاء') }}</button>
     </form>
   </div>
 </div>
@@ -56,23 +56,23 @@
 {% if r.status == 'postponed' and can_manage %}
 <div class="card">
   <form method="post" action="{{ url_for('team.report_resume', report_id=r.id) }}">
-    <button class="btn" type="submit">رجّعه لصندوق الوارد</button>
+    <button class="btn" type="submit">{{ _('رجّعه لصندوق الوارد') }}</button>
   </form>
 </div>
 {% endif %}
 
 {% if r.status == 'accepted' and is_my_report and not r.executor_id %}
 <div class="card">
-  <h3 style="font-size:15px;">نفّذها بنفسك</h3>
+  <h3 style="font-size:15px;">{{ _('نفّذها بنفسك') }}</h3>
   <form method="post" action="{{ url_for('team.report_self_execute', report_id=r.id) }}">
-    <label>ملاحظة (اختياري)</label><input name="note">
-    <button class="btn" type="submit">تنفيذ وإغلاق مباشرة</button>
+    <label>{{ _('ملاحظة (اختياري)') }}</label><input name="note">
+    <button class="btn" type="submit">{{ _('تنفيذ وإغلاق مباشرة') }}</button>
   </form>
 </div>
 <div class="card">
-  <h3 style="font-size:15px;">أو حوّلها لعضو ثاني</h3>
+  <h3 style="font-size:15px;">{{ _('أو حوّلها لعضو ثاني') }}</h3>
   <form method="post" action="{{ url_for('team.report_transfer', report_id=r.id) }}">
-    <label>حوّل لـ</label>
+    <label>{{ _('حوّل لـ') }}</label>
     <select name="executor_id" required>
       {% for role_name, members in executors_by_role.items() %}
       <optgroup label="{{ role_name }}">
@@ -80,43 +80,43 @@
       </optgroup>
       {% endfor %}
     </select>
-    <label>تعليمات التنفيذ (إلزامي)</label><textarea name="note" rows="2" required></textarea>
-    <button class="btn" type="submit">تحويل</button>
+    <label>{{ _('تعليمات التنفيذ (إلزامي)') }}</label><textarea name="note" rows="2" required></textarea>
+    <button class="btn" type="submit">{{ _('تحويل') }}</button>
   </form>
 </div>
 {% endif %}
 
 {% if r.status == 'accepted' and is_my_report and r.executor_id %}
 <div class="card">
-  <p>محوّلة لـ <strong>{{ r.executor.name }}</strong> — بانتظار تنفيذه.</p>
+  <p>{{ _('محوّلة لـ') }} <strong>{{ r.executor.name }}</strong> — {{ _('بانتظار تنفيذه.') }}</p>
 </div>
 {% endif %}
 
 {% if r.status == 'accepted' and is_executor %}
 <div class="card">
-  <h3 style="font-size:15px;">تسجيل الإنجاز</h3>
+  <h3 style="font-size:15px;">{{ _('تسجيل الإنجاز') }}</h3>
   <form method="post" action="{{ url_for('team.report_execute', report_id=r.id) }}">
-    <label>ملاحظة/دليل الإنجاز</label><textarea name="note" rows="2"></textarea>
-    <label>رابط صورة (اختياري)</label><input name="evidence_image_url" placeholder="https://...">
-    <button class="btn" type="submit">تم الإنجاز</button>
+    <label>{{ _('ملاحظة/دليل الإنجاز') }}</label><textarea name="note" rows="2"></textarea>
+    <label>{{ _('رابط صورة (اختياري)') }}</label><input name="evidence_image_url" placeholder="https://...">
+    <button class="btn" type="submit">{{ _('تم الإنجاز') }}</button>
   </form>
 </div>
 {% endif %}
 
 {% if r.status == 'executed_pending_review' and is_my_report %}
 <div class="card">
-  <h3 style="font-size:15px;">مراجعة وإغلاق</h3>
+  <h3 style="font-size:15px;">{{ _('مراجعة وإغلاق') }}</h3>
   <form method="post" action="{{ url_for('team.report_close', report_id=r.id) }}">
-    <label>ملاحظة إغلاق (اختياري)</label><input name="note">
-    <button class="btn" type="submit">إغلاق البلاغ</button>
+    <label>{{ _('ملاحظة إغلاق (اختياري)') }}</label><input name="note">
+    <button class="btn" type="submit">{{ _('إغلاق البلاغ') }}</button>
   </form>
 </div>
 {% endif %}
 
 {% if r.status == 'cancelled' and can_delete %}
 <div class="card">
-  <form method="post" action="{{ url_for('team.report_delete', report_id=r.id) }}" onsubmit="return confirm('حذف نهائي — ما يرجع. متأكد؟');">
-    <button class="btn" type="submit" style="background:#a32d2d;">حذف نهائي</button>
+  <form method="post" action="{{ url_for('team.report_delete', report_id=r.id) }}" onsubmit="return confirm('{{ _('حذف نهائي — ما يرجع. متأكد؟') }}');">
+    <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف نهائي') }}</button>
   </form>
 </div>
 {% endif %}

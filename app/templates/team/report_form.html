@@ -2,39 +2,39 @@
 {% from "team/_report_widgets.html" import animal_info_widget, voice_note_widget %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>رفع بلاغ جديد</h2>
-  <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.</p>
-  {% if scoped %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">القوائم أدناه مقصورة على حظائرك المسؤول عنها.</p>{% endif %}
-  <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.</div>
+  <h2>{{ _('رفع بلاغ جديد') }}</h2>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.') }}</p>
+  {% if scoped %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('القوائم أدناه مقصورة على حظائرك المسؤول عنها.') }}</p>{% endif %}
+  <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
   <form method="post" enctype="multipart/form-data" id="reportForm" data-offline>
-    <label>نوع البلاغ</label>
+    <label>{{ _('نوع البلاغ') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="report_type" id="reportTypeSelect" style="flex:1;">
-        <option value="مرض">مرض</option>
-        <option value="مشكلة">مشكلة</option>
-        <option value="صيانة">صيانة</option>
-        <option value="أخرى">أخرى</option>
+        <option value="مرض">{{ _('مرض') }}</option>
+        <option value="مشكلة">{{ _('مشكلة') }}</option>
+        <option value="صيانة">{{ _('صيانة') }}</option>
+        <option value="أخرى">{{ _('أخرى') }}</option>
       </select>
-      <button type="button" class="btn light" id="addReportTypeBtn" style="flex:0 0 auto; padding:8px 12px;" title="إضافة نوع بلاغ جديد">+ إضافة</button>
+      <button type="button" class="btn light" id="addReportTypeBtn" style="flex:0 0 auto; padding:8px 12px;" title="{{ _('إضافة نوع بلاغ جديد') }}">+ {{ _('إضافة') }}</button>
     </div>
-    <input type="text" id="newReportTypeInput" placeholder="اكتب نوع البلاغ الجديد هنا" style="display:none; margin-top:6px;">
-    <label>الحيوان المرتبط</label>
+    <input type="text" id="newReportTypeInput" placeholder="{{ _('اكتب نوع البلاغ الجديد هنا') }}" style="display:none; margin-top:6px;">
+    <label>{{ _('الحيوان المرتبط') }}</label>
     <select name="animal_id" id="animalSelect">
       <option value="">-</option>
       {% for a in animals %}<option value="{{ a.id }}">{{ a.animal_no }}</option>{% endfor %}
     </select>
     {{ animal_info_widget() }}
-    <label>الحظيرة</label>
+    <label>{{ _('الحظيرة') }}</label>
     <select name="barn_id" id="barnSelect">
       <option value="">-</option>
       {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <label>وصف البلاغ</label><textarea name="description" rows="4" required></textarea>
+    <label>{{ _('وصف البلاغ') }}</label><textarea name="description" rows="4" required></textarea>
     {{ voice_note_widget() }}
-    <label>صورة (اختياري)</label>
+    <label>{{ _('صورة (اختياري)') }}</label>
     <input type="file" name="evidence_image" accept="image/*">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اضغط هنا وتقدر تختار "الكاميرا" لتصوير مباشر أو "معرض الصور" لصورة محفوظة عندك.</p>
-    <button class="btn" type="submit">رفع البلاغ</button>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('اضغط هنا وتقدر تختار "الكاميرا" لتصوير مباشر أو "معرض الصور" لصورة محفوظة عندك.') }}</p>
+    <button class="btn" type="submit">{{ _('رفع البلاغ') }}</button>
   </form>
 </div>
 <script>

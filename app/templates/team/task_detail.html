@@ -4,21 +4,21 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>{{ task.title }}</h2>
-    <a class="btn light" href="{{ url_for('team.tasks_list') }}">← رجوع للمهام</a>
+    <a class="btn light" href="{{ url_for('team.tasks_list') }}">← {{ _('رجوع للمهام') }}</a>
   </div>
-  <p><b>الحالة:</b> {{ task.status|ar_status }}{% if task.due_date %} — <b>الموعد:</b> {{ task.due_date }}{% if task.due_date < today %} <span class="badge off">⏰ متأخرة</span>{% endif %}{% endif %}</p>
+  <p><b>{{ _('الحالة:') }}</b> {{ task.status|ar_status }}{% if task.due_date %} — <b>{{ _('الموعد:') }}</b> {{ task.due_date }}{% if task.due_date < today %} <span class="badge off">⏰ {{ _('متأخرة') }}</span>{% endif %}{% endif %}</p>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">📋 تفصيل المهمة</h3>
-  <p><b>السبب/الدافع:</b> {{ ctx.reason or '-' }}</p>
-  <p><b>الحظيرة:</b> {{ ctx.barn.barn_name if ctx.barn else '-' }} — <b>عدد الرؤوس بالدفعة:</b> {{ ctx.head_count }}</p>
+  <h3 style="font-size:15px;">📋 {{ _('تفصيل المهمة') }}</h3>
+  <p><b>{{ _('السبب/الدافع:') }}</b> {{ ctx.reason or '-' }}</p>
+  <p><b>{{ _('الحظيرة:') }}</b> {{ ctx.barn.barn_name if ctx.barn else '-' }} — <b>{{ _('عدد الرؤوس بالدفعة:') }}</b> {{ ctx.head_count }}</p>
   {% if ctx.head_count > 1 %}
   <details>
-    <summary style="cursor:pointer; color:var(--muted); font-size:13px;">عرض كل رؤوس الدفعة ({{ ctx.head_count }})</summary>
+    <summary style="cursor:pointer; color:var(--muted); font-size:13px;">{{ _('عرض كل رؤوس الدفعة') }} ({{ ctx.head_count }})</summary>
     <ul style="margin-top:6px;">
       {% for s in ctx.siblings %}
-      <li>{{ s.animal.animal_no if s.animal else '-' }} — {{ s.status|ar_status }}{% if s.id == task.id %} (هذه المهمة){% endif %}</li>
+      <li>{{ s.animal.animal_no if s.animal else '-' }} — {{ s.status|ar_status }}{% if s.id == task.id %} ({{ _('هذه المهمة') }}){% endif %}</li>
       {% endfor %}
     </ul>
   </details>
@@ -26,40 +26,40 @@
 
   {% if ctx.pharmacy %}
   <hr>
-  <p><b>الدواء المخطَّط:</b> {{ ctx.pharmacy.name }} ({{ ctx.pharmacy.unit or '' }})</p>
-  <p><b>الجرعة لكل رأس:</b> {{ ctx.quantity_per_head }} — <b>الجرعة الإجمالية للدفعة:</b> {{ ctx.total_quantity }}</p>
-  <p><b>المخزون الحالي:</b> {{ ctx.stock_now }} — <b>المتبقي المتوقع بعد التنفيذ:</b> {{ ctx.stock_after }}
-    {% if ctx.stock_insufficient %}<span class="badge off">⚠️ المخزون لا يكفي كامل الدفعة</span>{% endif %}
+  <p><b>{{ _('الدواء المخطَّط:') }}</b> {{ ctx.pharmacy.name }} ({{ ctx.pharmacy.unit or '' }})</p>
+  <p><b>{{ _('الجرعة لكل رأس:') }}</b> {{ ctx.quantity_per_head }} — <b>{{ _('الجرعة الإجمالية للدفعة:') }}</b> {{ ctx.total_quantity }}</p>
+  <p><b>{{ _('المخزون الحالي:') }}</b> {{ ctx.stock_now }} — <b>{{ _('المتبقي المتوقع بعد التنفيذ:') }}</b> {{ ctx.stock_after }}
+    {% if ctx.stock_insufficient %}<span class="badge off">⚠️ {{ _('المخزون لا يكفي كامل الدفعة') }}</span>{% endif %}
   </p>
   {% endif %}
 
   {% if ctx.next_action %}
-  <p style="color:var(--muted); font-size:13px;">➡️ <b>المهمة التالية بالسلسلة:</b> {{ ctx.next_action }}</p>
+  <p style="color:var(--muted); font-size:13px;">➡️ <b>{{ _('المهمة التالية بالسلسلة:') }}</b> {{ ctx.next_action }}</p>
   {% endif %}
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">الإجراءات</h3>
+  <h3 style="font-size:15px;">{{ _('الإجراءات') }}</h3>
   <div style="display:flex; gap:8px; flex-wrap:wrap;">
     {% if ctx.pharmacy and task.status not in ('done', 'cancelled', 'deleted_pending_review') %}
     {% set exec_endpoint = {'vet_visit': 'health.vet_visits_new', 'disease': 'health.diseases_new', 'vaccination': 'health.vaccinations_new'}.get(task.planned_treatment_kind) %}
     {% if exec_endpoint %}
-    <a class="btn" href="{{ url_for(exec_endpoint, task_id=task.id, animal_id=task.animal_id, pharmacy_id=task.planned_pharmacy_id, quantity_used=task.planned_quantity) }}">🩺 تأكيد التنفيذ</a>
+    <a class="btn" href="{{ url_for(exec_endpoint, task_id=task.id, animal_id=task.animal_id, pharmacy_id=task.planned_pharmacy_id, quantity_used=task.planned_quantity) }}">🩺 {{ _('تأكيد التنفيذ') }}</a>
     {% endif %}
     {% endif %}
 
     {% if task.status == 'suggested' and current_user.has_permission('tasks.review_daily') %}
     <form method="post" action="{{ url_for('team.task_approve', task_id=task.id) }}">
-      <button class="btn" type="submit">موافقة</button>
+      <button class="btn" type="submit">{{ _('موافقة') }}</button>
     </form>
     <form method="post" action="{{ url_for('team.task_soft_delete', task_id=task.id) }}">
-      <button class="btn" type="submit" style="background:#a32d2d;">حذف</button>
+      <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف') }}</button>
     </form>
     {% endif %}
 
     {% if task.status == 'pending' and task.assignee_id == current_user.id %}
     <form method="post" action="{{ url_for('team.task_start', task_id=task.id) }}">
-      <button class="btn" type="submit">بدء</button>
+      <button class="btn" type="submit">{{ _('بدء') }}</button>
     </form>
     {% endif %}
   </div>
@@ -67,53 +67,53 @@
 
 {% if task.status == 'in_progress' and task.assignee_id == current_user.id %}
 <div class="card">
-  <h3 style="font-size:15px;">✅ إنجاز المهمة</h3>
+  <h3 style="font-size:15px;">✅ {{ _('إنجاز المهمة') }}</h3>
   <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" enctype="multipart/form-data">
-    <label>ملاحظة (اختياري)</label>
+    <label>{{ _('ملاحظة (اختياري)') }}</label>
     <textarea name="note" rows="2"></textarea>
-    <label>{{ 'صورة دليل (إلزامي)' if task.requires_photo else 'صورة دليل (اختياري)' }}</label>
+    <label>{{ _('صورة دليل (إلزامي)') if task.requires_photo else _('صورة دليل (اختياري)') }}</label>
     <input type="file" name="evidence_image" accept="image/*" {{ 'required' if task.requires_photo }}>
-    <p class="notice" style="font-size:12px;">تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض.</p>
+    <p class="notice" style="font-size:12px;">{{ _('تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض.') }}</p>
     {{ voice_note_widget() }}
-    <button class="btn" type="submit">تم الإنجاز</button>
+    <button class="btn" type="submit">{{ _('تم الإنجاز') }}</button>
   </form>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">⚠️ تعذّر التنفيذ</h3>
-  <p style="color:var(--muted); font-size:13px;">لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة.</p>
+  <h3 style="font-size:15px;">⚠️ {{ _('تعذّر التنفيذ') }}</h3>
+  <p style="color:var(--muted); font-size:13px;">{{ _('لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة.') }}</p>
   <form method="post" action="{{ url_for('team.task_fail', task_id=task.id) }}" enctype="multipart/form-data">
-    <label>سبب التعذّر</label>
+    <label>{{ _('سبب التعذّر') }}</label>
     <select name="reason" required>
-      <option value="">اختر السبب...</option>
+      <option value="">{{ _('اختر السبب...') }}</option>
       {% for r in failure_reasons %}
-      <option value="{{ r }}">{{ r }}</option>
+      <option value="{{ r }}">{{ failure_reason_labels.get(r, r) }}</option>
       {% endfor %}
     </select>
-    <label>تفاصيل إضافية (اختياري)</label>
+    <label>{{ _('تفاصيل إضافية (اختياري)') }}</label>
     <textarea name="note" rows="2"></textarea>
-    <label>صورة توضيحية (اختياري)</label>
+    <label>{{ _('صورة توضيحية (اختياري)') }}</label>
     <input type="file" name="evidence_image" accept="image/*">
-    <button class="btn" type="submit" style="background:#a32d2d;">تسجيل التعذّر</button>
+    <button class="btn" type="submit" style="background:#a32d2d;">{{ _('تسجيل التعذّر') }}</button>
   </form>
 </div>
 {% endif %}
 
 {% if task.status == 'failed' %}
 <div class="card">
-  <h3 style="font-size:15px;">⚠️ سبب التعذّر</h3>
-  <p><b>{{ task.failure_reason }}</b>{% if task.completion_note %} — {{ task.completion_note }}{% endif %}</p>
-  {% if task.completion_evidence_image_url %}<p><a href="{{ task.completion_evidence_image_url }}" target="_blank">عرض الصورة</a></p>{% endif %}
+  <h3 style="font-size:15px;">⚠️ {{ _('سبب التعذّر') }}</h3>
+  <p><b>{{ failure_reason_labels.get(task.failure_reason, task.failure_reason) }}</b>{% if task.completion_note %} — {{ task.completion_note }}{% endif %}</p>
+  {% if task.completion_evidence_image_url %}<p><a href="{{ task.completion_evidence_image_url }}" target="_blank">{{ _('عرض الصورة') }}</a></p>{% endif %}
 </div>
 {% endif %}
 
 {% if task.status == 'done' %}
 <div class="card">
-  <h3 style="font-size:15px;">✅ تفاصيل الإنجاز</h3>
-  <p><b>المدة:</b> {{ (task.duration_minutes ~ ' دقيقة') if task.duration_minutes is not none else '-' }}
-     — <b>باشرها:</b> {{ task.accepted_by.name if task.accepted_by else '-' }}</p>
-  {% if task.completion_note %}<p><b>ملاحظة:</b> {{ task.completion_note }}</p>{% endif %}
-  {% if task.completion_evidence_image_url %}<p><a href="{{ task.completion_evidence_image_url }}" target="_blank">عرض صورة الدليل</a></p>{% endif %}
+  <h3 style="font-size:15px;">✅ {{ _('تفاصيل الإنجاز') }}</h3>
+  <p><b>{{ _('المدة:') }}</b> {{ (task.duration_minutes ~ ' ' ~ _('دقيقة')) if task.duration_minutes is not none else '-' }}
+     — <b>{{ _('باشرها:') }}</b> {{ task.accepted_by.name if task.accepted_by else '-' }}</p>
+  {% if task.completion_note %}<p><b>{{ _('ملاحظة:') }}</b> {{ task.completion_note }}</p>{% endif %}
+  {% if task.completion_evidence_image_url %}<p><a href="{{ task.completion_evidence_image_url }}" target="_blank">{{ _('عرض صورة الدليل') }}</a></p>{% endif %}
   {% if task.voice_note_url %}<audio controls style="width:100%;"><source src="{{ task.voice_note_url }}"></audio>{% endif %}
 </div>
 {% endif %}

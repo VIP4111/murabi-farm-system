@@ -1,6 +1,7 @@
 import os
 from flask import Flask, send_from_directory
 from flask_login import current_user
+from flask_babel import lazy_gettext as _l
 from app.config import Config
 from app.extensions import db, migrate, login_manager, babel
 
@@ -76,30 +77,34 @@ def create_app(config_class=Config):
     from app.cli import register_cli
     register_cli(app)
 
+    # قيم `_l()` بدل نص عربي خام (بند إضافي 74، 2026-07-31) — عشان
+    # ar_status/ar_task_type تترجم فعلياً للأمهرية/الهندية/الإنجليزية
+    # بشاشات العامل المترجمة (كانت قبل كذا تطلع عربي دايماً بغض النظر
+    # عن لغة المستخدم، وهذا سبب رئيسي لتداخل الكلمتين اللي لاحظه المستخدم).
     STATUS_LABELS_AR = {
-        "active": "نشط",
-        "inactive": "غير نشط",
-        "sold": "مباع",
-        "dead": "نافق",
-        "unpaid": "غير مدفوع",
-        "paid": "مدفوع",
-        "closed": "مغلق",
-        "deleted": "محذوف/مؤرشف",
-        "out_of_order": "ترتيب غير منتظم",
-        "new": "جديد",
-        "postponed": "مؤجّل",
-        "executed_pending_review": "منفّذ — بانتظار المراجعة",
-        "suggested": "مقترحة",
-        "in_progress": "قيد التنفيذ",
-        "done": "منجزة",
-        "deleted_pending_review": "بانتظار مراجعة المالك",
-        "completed": "مكتمل",
-        "cancelled": "ملغى",
-        "pending": "قيد الانتظار",
-        "eligible": "مؤهّلة",
-        "not_eligible": "غير مؤهّلة",
-        "confirmed": "مؤكّدة",
-        "failed": "فشلت",
+        "active": _l("نشط"),
+        "inactive": _l("غير نشط"),
+        "sold": _l("مباع"),
+        "dead": _l("نافق"),
+        "unpaid": _l("غير مدفوع"),
+        "paid": _l("مدفوع"),
+        "closed": _l("مغلق"),
+        "deleted": _l("محذوف/مؤرشف"),
+        "out_of_order": _l("ترتيب غير منتظم"),
+        "new": _l("جديد"),
+        "postponed": _l("مؤجّل"),
+        "executed_pending_review": _l("منفّذ — بانتظار المراجعة"),
+        "suggested": _l("مقترحة"),
+        "in_progress": _l("قيد التنفيذ"),
+        "done": _l("منجزة"),
+        "deleted_pending_review": _l("بانتظار مراجعة المالك"),
+        "completed": _l("مكتمل"),
+        "cancelled": _l("ملغى"),
+        "pending": _l("قيد الانتظار"),
+        "eligible": _l("مؤهّلة"),
+        "not_eligible": _l("غير مؤهّلة"),
+        "confirmed": _l("مؤكّدة"),
+        "failed": _l("فشلت"),
     }
 
     @app.template_filter("ar_status")
@@ -113,37 +118,57 @@ def create_app(config_class=Config):
     # climate_service/core.routes/task_service) — بدون هذا كان يطلع النص
     # الخام (مثال "daily_husbandry") مباشرة بشاشة المهام.
     TASK_TYPE_LABELS_AR = {
-        "custom": "مهمة عامة",
-        "isolation_check": "فحص عزل",
-        "doctor_review": "مراجعة الدكتور",
-        "cord_antisepsis": "تعقيم السرّة",
-        "selenium_dose": "جرعة سيلينيوم",
-        "colostrum_check": "متابعة اللبأ/الرضاعة",
-        "weighing": "وزن",
-        "vaccination_due": "تحصين مستحق",
-        "feed_switch": "تبديل علف",
-        "abortion_sampling": "أخذ عينات إجهاض",
-        "abortion_barn_monitor": "مراقبة حظيرة بعد إجهاض",
-        "protocol_step": "خطوة بروتوكول علاج",
-        "batch_spray": "رش وقائي (دفعة)",
-        "batch_initial_vaccination": "تحصين مبدئي (دفعة)",
-        "move_to_pregnant_barn": "نقل لحظيرة الحوامل",
-        "batch_tagging_check": "فحص ترقيم (دفعة)",
-        "batch_feed_link": "ربط علف (دفعة)",
-        "daily_husbandry": "رعاية يومية",
-        "late_pregnancy_care": "رعاية حمل متأخر",
-        "planned_treatment": "علاج مخطَّط",
-        "reweigh_followup": "متابعة إعادة وزن",
-        "heat_feed_timing": "تعديل توقيت العلف (إجهاد حراري)",
-        "heat_water_additive": "إضافة ماء (إجهاد حراري)",
-        "heat_ventilation": "فحص تهوية (إجهاد حراري)",
-        "heat_shade": "فحص تظليل (إجهاد حراري)",
-        "shearing": "جزّ صوف",
+        "custom": _l("مهمة عامة"),
+        "isolation_check": _l("فحص عزل"),
+        "doctor_review": _l("مراجعة الدكتور"),
+        "cord_antisepsis": _l("تعقيم السرّة"),
+        "selenium_dose": _l("جرعة سيلينيوم"),
+        "colostrum_check": _l("متابعة اللبأ/الرضاعة"),
+        "weighing": _l("وزن"),
+        "vaccination_due": _l("تحصين مستحق"),
+        "feed_switch": _l("تبديل علف"),
+        "abortion_sampling": _l("أخذ عينات إجهاض"),
+        "abortion_barn_monitor": _l("مراقبة حظيرة بعد إجهاض"),
+        "protocol_step": _l("خطوة بروتوكول علاج"),
+        "batch_spray": _l("رش وقائي (دفعة)"),
+        "batch_initial_vaccination": _l("تحصين مبدئي (دفعة)"),
+        "move_to_pregnant_barn": _l("نقل لحظيرة الحوامل"),
+        "batch_tagging_check": _l("فحص ترقيم (دفعة)"),
+        "batch_feed_link": _l("ربط علف (دفعة)"),
+        "daily_husbandry": _l("رعاية يومية"),
+        "late_pregnancy_care": _l("رعاية حمل متأخر"),
+        "planned_treatment": _l("علاج مخطَّط"),
+        "reweigh_followup": _l("متابعة إعادة وزن"),
+        "heat_feed_timing": _l("تعديل توقيت العلف (إجهاد حراري)"),
+        "heat_water_additive": _l("إضافة ماء (إجهاد حراري)"),
+        "heat_ventilation": _l("فحص تهوية (إجهاد حراري)"),
+        "heat_shade": _l("فحص تظليل (إجهاد حراري)"),
+        "shearing": _l("جزّ صوف"),
     }
 
     @app.template_filter("ar_task_type")
     def ar_task_type(value):
         return TASK_TYPE_LABELS_AR.get(value, value)
+
+    # أنواع بلاغ معروفة (بند إضافي 74) — نفس القيم الفعلية المستخدمة عبر
+    # WORKER_REPORT_CATEGORIES (app/team/routes.py) وقائمة report_form.html
+    # الافتراضية. القيمة المخزّنة بـReport.report_type تبقى عربي دايماً؛
+    # أي نوع بلاغ مخصّص كتبه المستخدم يدوياً (زر "+ إضافة") يرجع كما هو
+    # بدون ترجمة (fallback آمن، نفس أسلوب ar_status/ar_task_type).
+    REPORT_TYPE_LABELS_AR = {
+        "حالة صحية": _l("حالة صحية"),
+        "نقل للعزل": _l("نقل للعزل"),
+        "تغذية / عليقة": _l("تغذية / عليقة"),
+        "بيض / حضانة نعام": _l("بيض / حضانة نعام"),
+        "مرض": _l("مرض"),
+        "مشكلة": _l("مشكلة"),
+        "صيانة": _l("صيانة"),
+        "أخرى": _l("أخرى"),
+    }
+
+    @app.template_filter("ar_report_type")
+    def ar_report_type(value):
+        return REPORT_TYPE_LABELS_AR.get(value, value)
 
     @app.route("/_healthz")
     def health():

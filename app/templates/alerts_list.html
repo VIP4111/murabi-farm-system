@@ -2,21 +2,17 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ 'تنبيهاتي' if mine else 'التنبيهات' }}</h2>
-    <span class="badge {{ 'off' if alerts|length else 'on' }}">{{ alerts|length }} تنبيه</span>
+    <h2>{{ _('تنبيهاتي') if mine else _('التنبيهات') }}</h2>
+    <span class="badge {{ 'off' if alerts|length else 'on' }}">{{ alerts|length }} {{ _('تنبيه') }}</span>
   </div>
   {% if mine %}
   <p style="color:var(--muted); font-size:13px;">
-    مقصورة على الحظائر اللي أنت مسؤول عنها ({{ my_barn_ids|length }} حظيرة).
-    {% if not my_barn_ids %}ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة.{% endif %}
+    {{ _('مقصورة على الحظائر اللي أنت مسؤول عنها') }} ({{ my_barn_ids|length }} {{ _('حظيرة') }}).
+    {% if not my_barn_ids %}{{ _('ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة.') }}{% endif %}
   </p>
   {% else %}
   <p style="color:var(--muted); font-size:13px;">
-    عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب
-    قاربت تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة
-    من فترة، حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة
-    للبيع الآن، حظائر بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات
-    مجدولة قريبة (تقويم التحصينات). النافذة الزمنية من <a href="{{ url_for('core.settings_home') }}">الإعدادات</a>.
+    {{ _('عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم التحصينات). النافذة الزمنية من') }} <a href="{{ url_for('core.settings_home') }}">{{ _('الإعدادات') }}</a>.
   </p>
   {% endif %}
 </div>
@@ -30,11 +26,11 @@
         <b>[{{ a.category }}] {{ a.label }}</b>
         {% if a.detail %}<small>{{ a.detail }}</small>{% endif %}
       </div>
-      {% if a.animal_id and current_user.has_permission('animals.view') %}<a class="btn light" href="{{ url_for('core.animal_detail', animal_id=a.animal_id) }}">فتح</a>
-      {% elif not a.animal_id and a.barn_id and current_user.has_permission('barns.manage') %}<a class="btn light" href="{{ url_for('core.barns_edit', barn_id=a.barn_id) }}">فتح</a>{% endif %}
+      {% if a.animal_id and current_user.has_permission('animals.view') %}<a class="btn light" href="{{ url_for('core.animal_detail', animal_id=a.animal_id) }}">{{ _('فتح') }}</a>
+      {% elif not a.animal_id and a.barn_id and current_user.has_permission('barns.manage') %}<a class="btn light" href="{{ url_for('core.barns_edit', barn_id=a.barn_id) }}">{{ _('فتح') }}</a>{% endif %}
     </div>
     {% else %}
-    <div class="empty">ولا تنبيه حالياً — كل شي مضبوط. 🎉</div>
+    <div class="empty">{{ _('ولا تنبيه حالياً — كل شي مضبوط.') }} 🎉</div>
     {% endfor %}
   </div>
 </div>

@@ -358,10 +358,10 @@ def report_close(report_id):
 
 
 ROLE_FILTER_TABS = [
-    ("all", "الكل"),
-    ("worker", "العامل"),
-    ("doctor", "الطبيب البيطري"),
-    ("accountant", "المحاسب"),
+    ("all", _l("الكل")),
+    ("worker", _l("العامل")),
+    ("doctor", _l("الطبيب البيطري")),
+    ("accountant", _l("المحاسب")),
 ]
 
 # قائمة مختارة لفورم "توزيع مهمة" اليدوي (بند إضافي 69) — مو كل 26 قيمة
@@ -370,12 +370,12 @@ ROLE_FILTER_TABS = [
 # مباشرة. "shearing" أُزيلت (كانت خياراً ميتاً — تأكّدت بفحص الكود إن
 # ما فيه أي مكان يُنشئ مهمة بهذا النوع فعلياً).
 MANUAL_TASK_TYPE_OPTIONS = [
-    ("custom", "مهمة عامة"),
-    ("isolation_check", "فحص عزل"),
-    ("weighing", "وزن"),
-    ("vaccination_due", "تحصين مستحق"),
-    ("feed_switch", "تبديل علف"),
-    ("doctor_review", "مراجعة الدكتور"),
+    ("custom", _l("مهمة عامة")),
+    ("isolation_check", _l("فحص عزل")),
+    ("weighing", _l("وزن")),
+    ("vaccination_due", _l("تحصين مستحق")),
+    ("feed_switch", _l("تبديل علف")),
+    ("doctor_review", _l("مراجعة الدكتور")),
 ]
 
 
@@ -458,7 +458,8 @@ def task_detail(task_id):
         abort(403)
     ctx = tsvc.task_rich_context(task)
     return render_template("team/task_detail.html", task=task, ctx=ctx, today=date.today(),
-                            failure_reasons=tsvc.FAILURE_REASONS)
+                            failure_reasons=tsvc.FAILURE_REASONS,
+                            failure_reason_labels=tsvc.FAILURE_REASON_LABELS)
 
 
 @team_bp.route("/tasks/new", methods=["GET", "POST"])

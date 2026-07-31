@@ -2,15 +2,15 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>البلاغات</h2>
-    {% if current_user.has_permission('reports.submit') %}<a class="btn" href="{{ url_for('team.reports_new') }}">+ بلاغ جديد</a>{% endif %}
+    <h2>{{ _('البلاغات') }}</h2>
+    {% if current_user.has_permission('reports.submit') %}<a class="btn" href="{{ url_for('team.reports_new') }}">+ {{ _('بلاغ جديد') }}</a>{% endif %}
   </div>
 </div>
 
 {% macro report_row(r) %}
 <tr>
   <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
-  <td>{{ r.report_type or '-' }}</td>
+  <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
   <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
   <td>{{ r.reporter.name }}</td>
   <td>{{ r.status|ar_status }}</td>
@@ -19,50 +19,50 @@
 
 {% if current_user.has_permission('reports.manage') %}
 <div class="card">
-  <h3 style="font-size:15px;">صندوق الوارد (بلاغات جديدة)</h3>
+  <h3 style="font-size:15px;">{{ _('صندوق الوارد (بلاغات جديدة)') }}</h3>
   <table>
-    <tr><th>#</th><th>النوع</th><th>الوصف</th><th>رفعه</th><th>الحالة</th></tr>
+    <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in inbox %}{{ report_row(r) }}{% else %}
-    <tr><td colspan="5" style="color:#888;">صندوق الوارد فاضي.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('صندوق الوارد فاضي.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">بلاغات مستلمة مني</h3>
+  <h3 style="font-size:15px;">{{ _('بلاغات مستلمة مني') }}</h3>
   <table>
-    <tr><th>#</th><th>النوع</th><th>الوصف</th><th>رفعه</th><th>الحالة</th></tr>
+    <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_accepted %}{{ report_row(r) }}{% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد بلاغات مستلمة حالياً.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد بلاغات مستلمة حالياً.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">محوّلة لي للتنفيذ</h3>
+  <h3 style="font-size:15px;">{{ _('محوّلة لي للتنفيذ') }}</h3>
   <table>
-    <tr><th>#</th><th>النوع</th><th>الوصف</th><th>رفعه</th><th>الحالة</th></tr>
+    <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_executor_tasks %}{{ report_row(r) }}{% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد بلاغات محوّلة لك حالياً.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد بلاغات محوّلة لك حالياً.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
 
 {% if current_user.has_permission('reports.submit') %}
 <div class="card">
-  <h3 style="font-size:15px;">بلاغاتي المرفوعة</h3>
+  <h3 style="font-size:15px;">{{ _('بلاغاتي المرفوعة') }}</h3>
   <table>
-    <tr><th>#</th><th>النوع</th><th>الوصف</th><th>الحالة</th></tr>
+    <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_reports %}
     <tr>
       <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
-      <td>{{ r.report_type or '-' }}</td>
+      <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
       <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
       <td>{{ r.status|ar_status }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">ما رفعت أي بلاغ بعد.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('ما رفعت أي بلاغ بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
@@ -70,19 +70,19 @@
 
 {% if current_user.has_permission('reports.delete_final') %}
 <div class="card">
-  <h3 style="font-size:15px;">بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)</h3>
+  <h3 style="font-size:15px;">{{ _('بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)') }}</h3>
   <table>
-    <tr><th>#</th><th>النوع</th><th>الوصف</th><th>رفعه</th><th>سبب الإلغاء</th></tr>
+    <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('سبب الإلغاء') }}</th></tr>
     {% for r in cancelled %}
     <tr>
       <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
-      <td>{{ r.report_type or '-' }}</td>
+      <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
       <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
       <td>{{ r.reporter.name }}</td>
       <td>{{ r.cancel_reason or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد بلاغات ملغاة.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد بلاغات ملغاة.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
