@@ -95,3 +95,85 @@ def build_pdf(title: str, columns: list[str], rows: list[list], subtitle: str | 
     c.save()
     buf.seek(0)
     return buf
+
+
+def build_invoice_pdf(finance_row, animal, farm_settings) -> io.BytesIO:
+    """فاتورة بيع رسمية (بند إضافي 75) — المزرعة بائع، تصدر لمشترٍ. تخطيط
+    مستند مفرد (رأس/طرفين/بند واحد/إجمالي) مو جدول تقرير، بس بنفس خط
+    وأدوات build_pdf أعلاه (الخط العربي المسجَّل مرة وحدة، ودالة ar())."""
+    _ensure_font()
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=A4)
+    width, height = A4
+    right_margin = width - 20 * mm
+    left_margin = 20 * mm
+    y = height - 25 * mm
+
+    c.setFont("Arabic", 18)
+    c.drawRightString(right_margin, y, ar("فاتورة بيع"))
+    y -= 8 * mm
+    c.setFont("Arabic", 11)
+    c.drawRightString(right_margin, y, ar(f"رقم الفاتورة: {finance_row.invoice_number}"))
+    y -= 6 * mm
+    c.drawRightString(right_margin, y, ar(f"التاريخ: {finance_row.date}"))
+    y -= 12 * mm
+
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("البائع"))
+    y -= 6 * mm
+    c.setFont("Arabic", 10)
+    for line in (farm_settings.farm_name, farm_settings.farm_phone, farm_settings.farm_address):
+        if line:
+            c.drawRightString(right_margin, y, ar(line))
+            y -= 5.5 * mm
+    if not (farm_settings.farm_name or farm_settings.farm_phone or farm_settings.farm_address):
+        c.drawRightString(right_margin, y, ar("نظام إدارة الحلال"))
+        y -= 5.5 * mm
+
+    y -= 6 * mm
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("المشتري"))
+    y -= 6 * mm
+    c.setFont("Arabic", 10)
+    if finance_row.buyer_name:
+        c.drawRightString(right_margin, y, ar(finance_row.buyer_name))
+        y -= 5.5 * mm
+    if finance_row.buyer_phone:
+        c.drawRightString(right_margin, y, ar(finance_row.buyer_phone))
+        y -= 5.5 * mm
+    if not (finance_row.buyer_name or finance_row.buyer_phone):
+        c.drawRightString(right_margin, y, ar("غير مسجَّل"))
+        y -= 5.5 * mm
+
+    y -= 12 * mm
+    col_item = right_margin
+    col_amount = left_margin + 30 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(col_item, y, ar("البيان"))
+    c.drawRightString(col_amount, y, ar("المبلغ"))
+    y -= 3 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 8 * mm
+
+    item_label = f"بيع رأس رقم {animal.animal_no}" if animal else (finance_row.item or "بيع")
+    c.setFont("Arabic", 10)
+    c.drawRightString(col_item, y, ar(item_label))
+    c.drawRightString(col_amount, y, ar(f"{finance_row.amount:,.2f}"))
+    y -= 6 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    c.setFont("Arabic", 13)
+    c.drawRightString(right_margin, y, ar(f"الإجمالي: {finance_row.amount:,.2f}"))
+
+    if finance_row.description:
+        y -= 12 * mm
+        c.setFont("Arabic", 9)
+        c.drawRightString(right_margin, y, ar(f"ملاحظات: {finance_row.description}"))
+
+    c.save()
+    buf.seek(0)
+    return buf

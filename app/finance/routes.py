@@ -56,6 +56,7 @@ def monthly_cost_report():
 @require_permission("finance.full.manage")
 def finance_new():
     if request.method == "POST":
+        from app.finance.finance_service import save_invoice_file
         row = Finance(
             date=date.fromisoformat(request.form["date"]),
             operation_type=request.form["operation_type"],
@@ -66,6 +67,7 @@ def finance_new():
             payment_method=request.form.get("payment_method"),
             related_animal_id=request.form.get("related_animal_id") or None,
             is_indirect=bool(request.form.get("is_indirect")),
+            invoice_file_url=save_invoice_file(request.files.get("invoice_file")),
         )
         db.session.add(row)
         db.session.commit()

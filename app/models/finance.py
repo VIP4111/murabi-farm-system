@@ -34,3 +34,16 @@ class Finance(db.Model):
     cancel_reason = db.Column(db.Text)
 
     created_at = db.Column(db.DateTime, default=_now)
+
+    # الفاتورة (بند إضافي 75، 2026-07-31) — تفرقة مقصودة حسب اتجاه العملية:
+    # بيع = المزرعة هي البائع فتُصدر فاتورة (invoice_number/invoice_issued_at،
+    # تُبنى PDF عند أول إصدار وتبقى ثابتة بعدها)؛ شراء/مصروف = المزرعة هي
+    # المشتري فترفق فاتورة المورّد الجاهزة إن وجدت (invoice_file_url) بدون
+    # أي توليد. no_invoice علم صريح للبيع غير الرسمي (نقدي بدون فاتورة) —
+    # مختلف عن "لسه ما صدرت الفاتورة".
+    invoice_number = db.Column(db.String(40), unique=True, nullable=True)
+    invoice_issued_at = db.Column(db.DateTime, nullable=True)
+    invoice_file_url = db.Column(db.String(255), nullable=True)
+    no_invoice = db.Column(db.Boolean, default=False, nullable=False)
+    buyer_name = db.Column(db.String(120), nullable=True)
+    buyer_phone = db.Column(db.String(30), nullable=True)

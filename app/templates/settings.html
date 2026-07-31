@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
+  <h2>بيانات المزرعة</h2>
+  <p style="color:var(--muted); font-size:13px;">تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية.</p>
+  <form method="post" action="{{ url_for('core.farm_identity_save') }}">
+    <label>اسم المزرعة</label><input name="farm_name" value="{{ fs.farm_name or '' }}">
+    <label>جوال المزرعة</label><input name="farm_phone" value="{{ fs.farm_phone or '' }}">
+    <label>عنوان المزرعة</label><input name="farm_address" value="{{ fs.farm_address or '' }}">
+    <button class="btn" type="submit">حفظ بيانات المزرعة</button>
+  </form>
+</div>
+
+<div class="card">
   <h2>الإعدادات الزمنية</h2>
   <p style="color:var(--muted); font-size:13px;">تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...).</p>
   <form method="post" action="{{ url_for('core.farm_settings_save') }}">

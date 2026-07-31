@@ -62,7 +62,13 @@
     <form method="post" action="{{ url_for('core.animal_sell', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
       <label>بيع — السعر</label><input name="sale_price" type="number" step="0.01" required>
       <label>تاريخ البيع</label><input name="sale_date" type="date">
+      <label>اسم المشتري (اختياري — يظهر بالفاتورة)</label><input name="buyer_name">
+      <label>جوال المشتري (اختياري)</label><input name="buyer_phone">
       <label>ملاحظات</label><input name="notes">
+      <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+        <input name="no_invoice" type="checkbox" value="1" style="width:auto; display:inline-block;">
+        لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)
+      </label>
       <button class="btn" type="submit">تسجيل البيع</button>
     </form>
     <form method="post" action="{{ url_for('core.animal_mark_dead', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
@@ -74,6 +80,29 @@
       <label>أرشفة — السبب</label><input name="reason">
       <label><input name="force" type="checkbox" style="width:auto; display:inline-block;"> تجاوز وجود عمليات مالية مرتبطة</label>
       <button class="btn" type="submit">أرشفة</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+{% if animal.status == 'sold' and sale_finance %}
+<div class="card" id="sale-invoice">
+  <h3 style="font-size:15px;">بيانات البيع</h3>
+  <table>
+    <tr><td>السعر</td><td>{{ sale_finance.amount }}</td></tr>
+    <tr><td>تاريخ البيع</td><td>{{ sale_finance.date }}</td></tr>
+    {% if sale_finance.buyer_name %}<tr><td>المشتري</td><td>{{ sale_finance.buyer_name }}{% if sale_finance.buyer_phone %} — {{ sale_finance.buyer_phone }}{% endif %}</td></tr>{% endif %}
+    {% if sale_finance.invoice_number %}<tr><td>رقم الفاتورة</td><td>{{ sale_finance.invoice_number }}</td></tr>{% endif %}
+  </table>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+    {% if sale_finance.no_invoice %}
+    <span class="badge off" style="align-self:center;">لا توجد فاتورة لهذا البيع</span>
+    {% else %}
+    <a class="btn" href="{{ url_for('core.animal_sale_invoice', animal_id=animal.id) }}">🧾 {{ 'تنزيل الفاتورة' if sale_finance.invoice_number else 'إصدار فاتورة' }}</a>
+    {% endif %}
+    <form method="post" action="{{ url_for('finance.finance_cancel', row_id=sale_finance.id) }}" onsubmit="return confirm('استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق).');">
+      <input type="hidden" name="reason" value="استرجاع بيع من صفحة دورة الإنتاج">
+      <button class="btn light" type="submit">↩️ استرجاع البيع</button>
     </form>
   </div>
 </div>

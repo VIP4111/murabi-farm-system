@@ -25,7 +25,7 @@
     </div>
   </div>
   <table>
-    <tr><th>التاريخ</th><th>النوع</th><th>البند</th><th>المبلغ</th><th>الحالة</th><th></th></tr>
+    <tr><th>التاريخ</th><th>النوع</th><th>البند</th><th>المبلغ</th><th>الحالة</th><th>الفاتورة</th><th></th></tr>
     {% for r in rows %}
     <tr>
       <td>{{ r.date }}</td>
@@ -33,6 +33,16 @@
       <td>{{ r.item or '-' }}</td>
       <td>{{ r.amount }}</td>
       <td>{% if r.is_cancelled %}<span class="badge off">ملغاة</span>{% else %}<span class="badge on">سارية</span>{% endif %}</td>
+      <td>
+        {% if r.operation_type == 'sale' %}
+          {% if r.no_invoice %}<span class="badge off" style="font-size:11px;">بدون فاتورة</span>
+          {% elif r.invoice_number %}<a href="{{ url_for('core.animal_sale_invoice', animal_id=r.related_animal_id) }}" style="font-size:12.5px;">🧾 {{ r.invoice_number }}</a>
+          {% elif r.related_animal_id %}<a href="{{ url_for('core.animal_sale_invoice', animal_id=r.related_animal_id) }}" style="font-size:12.5px;">🧾 إصدار</a>
+          {% else %}-{% endif %}
+        {% else %}
+          {% if r.invoice_file_url %}<a href="{{ r.invoice_file_url }}" target="_blank" style="font-size:12.5px;">📎 عرض</a>{% else %}-{% endif %}
+        {% endif %}
+      </td>
       <td>
         {% if not r.is_cancelled %}
         <form method="post" action="{{ url_for('finance.finance_cancel', row_id=r.id) }}" onsubmit="return confirm('تأكيد الإلغاء؟');">
@@ -43,7 +53,7 @@
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد عمليات مالية بعد.</td></tr>
+    <tr><td colspan="7" style="color:#888;">لا يوجد عمليات مالية بعد.</td></tr>
     {% endfor %}
   </table>
 </div>

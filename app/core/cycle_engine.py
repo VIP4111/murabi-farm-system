@@ -442,7 +442,8 @@ def assert_exit_allowed(animal: Animal) -> None:
         )
 
 
-def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_date=None, notes=None):
+def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_date=None, notes=None,
+                 buyer_name=None, buyer_phone=None, no_invoice=False):
     from app.models import Finance, AuditLog
 
     sale_date = sale_date or date.today()
@@ -452,6 +453,7 @@ def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_d
     fin = Finance(
         date=sale_date, operation_type="sale", category="بيع رأس",
         item=f"بيع {animal.animal_no}", amount=sale_price, related_animal_id=animal.id,
+        buyer_name=buyer_name, buyer_phone=buyer_phone, no_invoice=no_invoice,
     )
     db.session.add(fin)
     animal.status = "sold"

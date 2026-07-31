@@ -16,6 +16,12 @@ class FarmSettings(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
+    # هوية المزرعة لرأس الفاتورة (بند إضافي 75، 2026-07-31) — كلها اختيارية
+    # عمداً، فراغها ما يمنع إصدار الفاتورة (يظهر بدون السطر الفاضي بس).
+    farm_name = db.Column(db.String(160), nullable=True)
+    farm_phone = db.Column(db.String(30), nullable=True)
+    farm_address = db.Column(db.String(255), nullable=True)
+
     gestation_days = db.Column(db.Integer, default=150, nullable=False)
     sponge_duration_days = db.Column(db.Integer, default=14, nullable=False)
     ram_entry_after_sponge_days = db.Column(db.Integer, default=1, nullable=False)

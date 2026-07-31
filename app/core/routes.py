@@ -16,7 +16,7 @@ from app.core import readiness_service
 from app.core import setup_checklist_service
 from app.auth.decorators import require_permission
 from app.extensions import db
-from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings
+from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
 from app.models import SpeciesType, Breed, AnimalColor
 from app.models.animal import AnimalSource
 from app.permissions_registry import PERMISSIONS
@@ -609,6 +609,7 @@ def animals_new():
         if not request.form.get("color"):
             flash("اللون مطلوب", "error")
             return redirect(url_for("core.animals_new"))
+        from app.finance.finance_service import save_invoice_file
         try:
             animal = create_animal(
                 animal_no=request.form.get("animal_no", "").strip() or None,
@@ -629,6 +630,7 @@ def animals_new():
                 image_url=request.form.get("image_url") or None,
                 breed=request.form.get("breed") or None,
                 is_pregnant_at_intake=bool(request.form.get("is_pregnant_at_intake")),
+                invoice_file_url=save_invoice_file(request.files.get("invoice_file")),
             )
         except ValueError as e:
             flash(str(e), "error")
@@ -924,6 +926,11 @@ def animal_workflow(animal_id):
     missing_items_with_actions = [
         (item, _missing_item_action(item, animal.id)) for item in missing_items
     ]
+    sale_finance = None
+    if animal.status == "sold":
+        sale_finance = (Finance.query
+                         .filter_by(related_animal_id=animal.id, operation_type="sale", is_cancelled=False)
+                         .order_by(Finance.id.desc()).first())
     return render_template(
         "animal_workflow.html",
         animal=animal, wf=wf, events=events,
@@ -932,7 +939,34 @@ def animal_workflow(animal_id):
         route_label=cycle_engine.ROUTE_LABELS[wf.route],
         missing_items=missing_items,
         missing_items_with_actions=missing_items_with_actions,
+        sale_finance=sale_finance,
     )
+
+
+@core_bp.route("/animals/<int:animal_id>/sale-invoice")
+@login_required
+@require_permission("animals.view")
+def animal_sale_invoice(animal_id):
+    """يبني/يرجّع فاتورة بيع الحيوان — رقم الفاتورة يثبت أول مرة بس، أي
+    تنزيل بعده لنفس السجل يرجّع نفس PDF بدون رقم جديد (بند إضافي 75)."""
+    from flask import send_file
+    from app.finance.finance_service import issue_sale_invoice
+    from app.reports.export_service import build_invoice_pdf
+
+    animal = Animal.query.get_or_404(animal_id)
+    fin = (Finance.query
+           .filter_by(related_animal_id=animal.id, operation_type="sale", is_cancelled=False)
+           .order_by(Finance.id.desc()).first())
+    if not fin:
+        flash("ما فيه عملية بيع مسجّلة لهذا الحيوان.", "error")
+        return redirect(url_for("core.animal_workflow", animal_id=animal.id))
+    if fin.no_invoice:
+        flash("هذا البيع مسجَّل بدون فاتورة.", "error")
+        return redirect(url_for("core.animal_workflow", animal_id=animal.id))
+    fin = issue_sale_invoice(fin)
+    buf = build_invoice_pdf(fin, animal, FarmSettings.get())
+    return send_file(buf, mimetype="application/pdf", as_attachment=True,
+                      download_name=f"{fin.invoice_number}.pdf")
 
 
 @core_bp.route("/animals/<int:animal_id>/workflow/plan", methods=["POST"])
@@ -965,6 +999,9 @@ def animal_sell(animal_id):
             actor_user_id=current_user.id,
             sale_date=date.fromisoformat(request.form["sale_date"]) if request.form.get("sale_date") else None,
             notes=request.form.get("notes"),
+            buyer_name=request.form.get("buyer_name") or None,
+            buyer_phone=request.form.get("buyer_phone") or None,
+            no_invoice=bool(request.form.get("no_invoice")),
         )
         flash("تم تسجيل البيع", "success")
     except cycle_engine.CycleExitBlocked as e:
@@ -1110,6 +1147,23 @@ def farm_settings_save():
     db.session.add(fs)
     db.session.commit()
     flash("تم حفظ الإعدادات الزمنية", "success")
+    return redirect(url_for("core.settings_home"))
+
+
+@core_bp.route("/settings/farm-identity", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def farm_identity_save():
+    """بيانات هوية المزرعة لرأس فاتورة البيع (بند إضافي 75) — منفصلة عمداً
+    عن farm_settings_save لأنها نصوص حرة، مو أرقام تُحوَّل بـint()/float()."""
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+    fs.farm_name = request.form.get("farm_name") or None
+    fs.farm_phone = request.form.get("farm_phone") or None
+    fs.farm_address = request.form.get("farm_address") or None
+    db.session.add(fs)
+    db.session.commit()
+    flash("تم حفظ بيانات المزرعة", "success")
     return redirect(url_for("core.settings_home"))
 
 

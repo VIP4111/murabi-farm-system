@@ -101,6 +101,7 @@ def create_animal(
     image_url: str | None = None,
     breed: str | None = None,
     is_pregnant_at_intake: bool = False,
+    invoice_file_url: str | None = None,
 ) -> Animal:
     if source == AnimalSource.BIRTH and mother_id is None:
         raise ValueError("الحيوان المولود لازم يكون مربوط بأم (mother_id)")
@@ -158,6 +159,7 @@ def create_animal(
         db.session.add(Finance(
             date=purchase_date or date.today(), operation_type="purchase", category="شراء حيوان",
             item=f"شراء {animal_no}", amount=price, related_animal_id=animal.id,
+            invoice_file_url=invoice_file_url,
         ))
         db.session.commit()
 
