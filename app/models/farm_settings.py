@@ -102,6 +102,13 @@ class FarmSettings(db.Model):
     ca_phosphorus_tolerance = db.Column(db.Float, default=0.5, nullable=False)
     abortion_barn_monitor_days = db.Column(db.Integer, default=14, nullable=False)
 
+    # جدولة تلقائية حقيقية (بند إضافي 78، 2026-08-01) — يمنع تكرار توليد
+    # المهام اليومية أكثر من مرة بنفس اليوم لو أكثر من عملية worker
+    # بغانيكورن حاولت بنفس الوقت (حراسة بسيطة، مو قفل موزَّع مثالي —
+    # المنطق نفسه بـdaily_task_service أصلاً idempotent فيصير احتياطاً
+    # مزدوجاً، مو الحارس الوحيد).
+    last_daily_tasks_auto_run = db.Column(db.Date, nullable=True)
+
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
 
     @classmethod

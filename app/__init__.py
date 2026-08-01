@@ -83,6 +83,9 @@ def create_app(config_class=Config):
     from app.cli import register_cli
     register_cli(app)
 
+    from app.core.scheduler import init_scheduler
+    init_scheduler(app)
+
     # قيم `_l()` بدل نص عربي خام (بند إضافي 74، 2026-07-31) — عشان
     # ar_status/ar_task_type تترجم فعلياً للأمهرية/الهندية/الإنجليزية
     # بشاشات العامل المترجمة (كانت قبل كذا تطلع عربي دايماً بغض النظر
