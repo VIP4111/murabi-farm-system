@@ -33,11 +33,11 @@ def save_invoice_file(file_storage) -> str | None:
     if size == 0 or size > MAX_INVOICE_BYTES:
         return None
 
-    upload_dir = os.path.join(current_app.static_folder, "uploads", "invoices")
+    upload_dir = os.path.join(current_app.config["UPLOAD_DIR"], "invoices")
     os.makedirs(upload_dir, exist_ok=True)
     filename = f"{uuid.uuid4().hex}.{ext}"
     file_storage.save(os.path.join(upload_dir, filename))
-    return f"/static/uploads/invoices/{filename}"
+    return f"/uploads/invoices/{filename}"
 
 
 def _generate_invoice_number() -> str:

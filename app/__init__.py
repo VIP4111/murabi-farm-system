@@ -15,6 +15,12 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    # UPLOAD_DIR افتراضياً جوّا static/uploads (نفس مكانه القديم بالضبط)
+    # لو ما انضبط env var — يُحسم هنا لأنه يحتاج app.static_folder
+    # الجاهز (بند إضافي 77).
+    if not app.config.get("UPLOAD_DIR"):
+        app.config["UPLOAD_DIR"] = os.path.join(app.static_folder, "uploads")
+
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
@@ -192,6 +198,16 @@ def create_app(config_class=Config):
         # فحص تقني بسيط لتشغيل السيرفر - غير مرتبط بوحدة الصحة البيطرية
         # (app/health/) عمداً لتفادي تضارب الأسماء بين الاثنين.
         return {"status": "ok"}
+
+    @app.route("/uploads/<path:subpath>")
+    def uploaded_file(subpath):
+        # بند إضافي 77 — يقدّم الملفات المرفوعة من UPLOAD_DIR القابل
+        # للتوجيه (بدل الاعتماد على static/ دايماً)، عشان لو انضبط على
+        # قرص دائم، الروابط المولَّدة حديثاً (/uploads/...) تشتغل بغض
+        # النظر عن مكان التخزين الفعلي. نفس مستوى الحماية القديم بالضبط
+        # (بدون تسجيل دخول — نفس سلوك static/ من الأساس، الحماية الوحيدة
+        # كانت وما زالت اسم ملف عشوائي UUID غير قابل للتخمين).
+        return send_from_directory(app.config["UPLOAD_DIR"], subpath)
 
     @app.route("/sw.js")
     def service_worker():

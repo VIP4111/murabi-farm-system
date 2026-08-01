@@ -33,3 +33,15 @@ requests==2.34.2
 # للتطوير المحلي فقط؛ gunicorn هو اللي يشغّل التطبيق فعلياً بأي نشر حقيقي
 # (Dockerfile/Procfile). راجع DEPLOY.md.
 gunicorn==23.0.0
+
+# قابلية الاتصال بـPostgreSQL (بند إضافي 77، 2026-08-01) — بدون هذا،
+# لو ضُبط DATABASE_URL على رابط Postgres، SQLAlchemy يفشل بخطأ "no
+# module named psycopg2" عند أول طلب. binary= بدون حاجة لأدوات بناء
+# بسيرفر النشر (أبسط وأضمن من psycopg2 العادي على Render). بدون
+# DATABASE_URL، التطبيق يستمر يشتغل بـSQLite كالمعتاد — هذا مجرد تجهيز.
+psycopg2-binary==2.9.12
+
+# جدولة تلقائية حقيقية (بند إضافي 78، 2026-08-01) — أول Cron حقيقي
+# بالمشروع، يشغّل توليد المهام اليومية مرة كل يوم داخل عملية التطبيق
+# نفسها (بدون خدمة Render منفصلة). راجع app/core/scheduler.py.
+APScheduler==3.11.1

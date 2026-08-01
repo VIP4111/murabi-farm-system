@@ -40,11 +40,11 @@ def save_voice_note(file_storage) -> str | None:
     if size == 0 or size > MAX_AUDIO_BYTES:
         return None
 
-    upload_dir = os.path.join(current_app.static_folder, "uploads", "audio")
+    upload_dir = os.path.join(current_app.config["UPLOAD_DIR"], "audio")
     os.makedirs(upload_dir, exist_ok=True)
     filename = f"{uuid.uuid4().hex}.{ext}"
     file_storage.save(os.path.join(upload_dir, filename))
-    return f"/static/uploads/audio/{filename}"
+    return f"/uploads/audio/{filename}"
 
 
 ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
@@ -69,11 +69,11 @@ def save_evidence_image(file_storage) -> str | None:
     if size == 0 or size > MAX_IMAGE_BYTES:
         return None
 
-    upload_dir = os.path.join(current_app.static_folder, "uploads", "images")
+    upload_dir = os.path.join(current_app.config["UPLOAD_DIR"], "images")
     os.makedirs(upload_dir, exist_ok=True)
     filename = f"{uuid.uuid4().hex}.{ext}"
     file_storage.save(os.path.join(upload_dir, filename))
-    return f"/static/uploads/images/{filename}"
+    return f"/uploads/images/{filename}"
 
 
 class ReportPermissionError(Exception):
