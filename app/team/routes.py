@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, abort
+from flask import render_template, request, redirect, url_for, flash, abort, jsonify
 from flask_login import login_required, current_user
 from flask_babel import lazy_gettext as _l
 from sqlalchemy.exc import IntegrityError
@@ -388,6 +388,11 @@ def tasks_list():
     my_tasks = (Task.query
                 .filter(Task.assignee_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
                 .order_by(Task.due_date, Task.sort_order).all())
+    # جزء HTML مستقل لجدول "مهامي" بس (بند إضافي 81) — يُطلَب بـfetch
+    # بعد إجراء AJAX (زر "بدء") بدل إعادة تحميل الصفحة كاملة. رجوع مبكر
+    # قبل أي استعلام إضافي غير لازم لهذا الطلب المصغَّر.
+    if request.args.get("fragment") == "my_tasks":
+        return render_template("team/_my_tasks_rows.html", my_tasks=my_tasks, today=date.today())
     suggested = []
     review_box = []
     assigned_by_me = []
@@ -500,11 +505,21 @@ def tasks_new():
 @team_bp.route("/tasks/<int:task_id>/start", methods=["POST"])
 @login_required
 def task_start(task_id):
+    # استجابة AJAX (بند إضافي 81) — رمز حالة حقيقي (200/400) بدل flash+
+    # redirect دايماً، عشان fetch() بالواجهة يقدر يميّز نجاح/فشل فعلياً
+    # (redirect المتابَع تلقائياً يرجّع 200 حتى لو صار خطأ منطق أعمال،
+    # فما نقدر نعتمد عليه هنا). النموذج العادي (بدون JS) يبقى يشتغل
+    # زي قبل بالضبط.
+    is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.start_task(task, actor=current_user)
+        if is_ajax:
+            return jsonify(ok=True)
         flash("بدأت المهمة", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        if is_ajax:
+            return jsonify(ok=False, error=str(e)), 400
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
 

@@ -54,34 +54,35 @@
   <h3 style="font-size:15px;">{{ _('مهامي') }}</h3>
   <table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
-    <tbody>
-    {% for t in my_tasks %}
-    {% set locked = t.depends_on_task_id and t.depends_on and t.depends_on.status != 'done' %}
-    {% set overdue = t.due_date and t.due_date < today %}
-    <tr {{ 'style="background:#fff5f2;"' if overdue }}>
-      <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a>{% if overdue %} <span class="badge off" title="{{ _('فات موعدها') }}">⏰ {{ _('متأخرة') }}</span>{% endif %}</td>
-      <td>{{ t.task_type|ar_task_type }}</td>
-      <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
-      <td>{{ t.due_date or '-' }}</td>
-      <td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td>
-      <td class="actions-col">
-        {% if locked %}
-        <span class="badge off" title="{{ _('بانتظار:') }} {{ t.depends_on.title }}">🔒 {{ _('مقفلة') }}</span>
-        {% elif t.status == 'pending' %}
-        <form method="post" action="{{ url_for('team.task_start', task_id=t.id) }}">
-          <button class="btn" type="submit">{{ _('بدء') }}</button>
-        </form>
-        {% elif t.status == 'in_progress' %}
-        <a class="btn" href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ _('إنجاز / تعذّر ←') }}</a>
-        {% endif %}
-      </td>
-    </tr>
-    {% else %}
-    <tr><td colspan="6" style="color:#888;">{{ _('ما عندك مهام حالياً.') }}</td></tr>
-    {% endfor %}
+    <tbody id="myTasksBody">
+    {% include "team/_my_tasks_rows.html" %}
     </tbody>
   </table>
 </div>
+<script>
+(function(){
+  // ترقية تدريجية (بند إضافي 81) — زر "بدء" يُرسَل عبر fetch بدل
+  // إعادة تحميل الصفحة كاملة؛ لو فشل fetch لأي سبب (مثلاً JS معطَّل
+  // أو الشبكة انقطعت وقت الإرسال)، نرجع لإرسال الفورم عادي (data-offline
+  // الموجود بأماكن ثانية بالموقع يتكفّل بطابور المزامنة وقتها).
+  var body = document.getElementById('myTasksBody');
+  if (!body) return;
+  body.addEventListener('submit', function(e){
+    var form = e.target.closest('.js-task-start-form');
+    if (!form) return;
+    e.preventDefault();
+    fetch(form.action, {
+      method: 'POST',
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+    }).then(function(r){
+      if (!r.ok) throw new Error('bad status');
+      return fetch(location.pathname + '?fragment=my_tasks', {headers: {'X-Requested-With': 'XMLHttpRequest'}});
+    }).then(function(r){ return r.text(); })
+      .then(function(html){ body.innerHTML = html; })
+      .catch(function(){ form.submit(); });
+  });
+})();
+</script>
 
 {% if current_user.has_permission('tasks.review_daily') %}
 <div class="card">
