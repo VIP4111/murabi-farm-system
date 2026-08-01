@@ -34,47 +34,63 @@ const PRECACHE_URLS = [
 // الخروج (تخزينها بلا فائدة — ما تقدر تسجّل دخول فعلي وأنت أوفلاين).
 const EXCLUDED_PATH_PREFIXES = ["/uploads/", "/login", "/logout"];
 
-function isCacheablePath(requestUrl) {
+// origin كوسيط اختياري (بند إضافي 83 — اختبارات آلية على الجافاسكربت،
+// نقطة 9 من قائمة نقاط الضعف) — يخلي الدالة قابلة للاختبار بـNode.js
+// خارج بيئة Service Worker الحقيقية بدون محاكاة `self` كاملة. بالمتصفح
+// الفعلي دايماً تُستدعى بدون هذا الوسيط، فترجع لنفس السلوك القديم بالضبط.
+function isCacheablePath(requestUrl, origin) {
+  origin = origin || self.location.origin;
   try {
     var url = new URL(requestUrl);
-    if (url.origin !== self.location.origin) return false;
+    if (url.origin !== origin) return false;
     return !EXCLUDED_PATH_PREFIXES.some(function (p) { return url.pathname.startsWith(p); });
   } catch (e) {
     return false;
   }
 }
 
-self.addEventListener("install", (event) => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) =>
-      Promise.all(PRECACHE_URLS.map((url) => cache.add(url).catch(() => {})))
-    )
-  );
-});
+// تسجيل الأحداث محصور ببيئة Service Worker حقيقية بس (بند إضافي 83) —
+// `self.addEventListener` غير موجود بـNode.js، وهذا الشرط يخلي نفس
+// الملف قابل لـ`require()` وقت الاختبار بدون أي خطأ عند التحميل.
+if (typeof self !== "undefined" && typeof self.addEventListener === "function") {
+  self.addEventListener("install", (event) => {
+    self.skipWaiting();
+    event.waitUntil(
+      caches.open(CACHE_NAME).then((cache) =>
+        Promise.all(PRECACHE_URLS.map((url) => cache.add(url).catch(() => {})))
+      )
+    );
+  });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches
-      .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
-});
+  self.addEventListener("activate", (event) => {
+    event.waitUntil(
+      caches
+        .keys()
+        .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+        .then(() => self.clients.claim())
+    );
+  });
 
-self.addEventListener("fetch", (event) => {
-  const req = event.request;
-  // نتدخّل بس بطلبات GET من نفس الموقع، ما عدا الاستثناءات أعلاه — أي
-  // طلب ثاني (POST، أو ملف مرفوع، أو دخول/خروج) يمرّ عادي بدون أي تدخّل.
-  if (req.method !== "GET" || !isCacheablePath(req.url)) return;
+  self.addEventListener("fetch", (event) => {
+    const req = event.request;
+    // نتدخّل بس بطلبات GET من نفس الموقع، ما عدا الاستثناءات أعلاه — أي
+    // طلب ثاني (POST، أو ملف مرفوع، أو دخول/خروج) يمرّ عادي بدون أي تدخّل.
+    if (req.method !== "GET" || !isCacheablePath(req.url)) return;
 
-  event.respondWith(
-    fetch(req)
-      .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-        return res;
-      })
-      .catch(() => caches.match(req))
-  );
-});
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+  });
+}
+
+// تصدير للاختبار بـNode.js (بند إضافي 83) — بلا أثر بالمتصفح الفعلي،
+// `module` غير معرَّف هناك فهذا الشرط ما يتنفَّذ إطلاقاً وقت التشغيل الحي.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { isCacheablePath, EXCLUDED_PATH_PREFIXES };
+}

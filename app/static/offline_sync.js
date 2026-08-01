@@ -18,7 +18,10 @@
  * فشل تحقّق يبقى ظاهراً بلوحة مراجعة صريحة، اختلاف = نجاح حقيقي يُحذف.
  */
 (function () {
-  if ("serviceWorker" in navigator) {
+  // typeof navigator (بدل مرجع مباشر) — يخلي هذا الملف قابل لـ`require()`
+  // بـNode.js وقت الاختبار (بند إضافي 83) بدون خطأ عند التحميل، لأن
+  // `navigator`/`window`/`document` غير معرَّفين هناك إطلاقاً.
+  if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(function () {});
   }
 
@@ -123,9 +126,13 @@
     return fd;
   }
 
-  function samePath(urlA, urlB) {
+  // origin كوسيط اختياري (بند إضافي 83 — اختبارات آلية على الجافاسكربت)
+  // يخلي الدالة قابلة للاختبار بـNode.js بدون بيئة متصفح حقيقية. الاستدعاء
+  // الفعلي بالمتصفح دايماً بدون هذا الوسيط، فيرجع لنفس السلوك القديم.
+  function samePath(urlA, urlB, origin) {
+    origin = origin || location.origin;
     try {
-      return new URL(urlA, location.origin).pathname === new URL(urlB, location.origin).pathname;
+      return new URL(urlA, origin).pathname === new URL(urlB, origin).pathname;
     } catch (e) {
       return false;
     }
@@ -248,18 +255,28 @@
     });
   }
 
-  window.addEventListener("online", function () { setBannerVisible(false); flushQueue(); });
-  window.addEventListener("offline", function () { setBannerVisible(true); });
+  // ربط أحداث المتصفح الحقيقية محصور ببيئة متصفح فعلية بس (بند إضافي 83)
+  // — `window`/`document` غير معرَّفين بـNode.js، وهذا الشرط يخلي الملف
+  // قابل لـ`require()` وقت الاختبار بدون تنفيذ أي سلوك متصفح حي.
+  if (typeof window !== "undefined") {
+    window.addEventListener("online", function () { setBannerVisible(false); flushQueue(); });
+    window.addEventListener("offline", function () { setBannerVisible(true); });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    setBannerVisible(!navigator.onLine);
-    attachFormInterception();
-    updateBadges();
-    flushQueue();
-  });
+    document.addEventListener("DOMContentLoaded", function () {
+      setBannerVisible(!navigator.onLine);
+      attachFormInterception();
+      updateBadges();
+      flushQueue();
+    });
 
-  // احتياط دوري — بعض المتصفحات (خصوصاً iOS Safari) ما تدعم Background
-  // Sync API إطلاقاً، فهذا التايمر هو الضمانة الأساسية لإعادة المحاولة
-  // حتى لو الصفحة مفتوحة بس بدون حدث "online" صريح.
-  setInterval(flushQueue, 30000);
+    // احتياط دوري — بعض المتصفحات (خصوصاً iOS Safari) ما تدعم Background
+    // Sync API إطلاقاً، فهذا التايمر هو الضمانة الأساسية لإعادة المحاولة
+    // حتى لو الصفحة مفتوحة بس بدون حدث "online" صريح.
+    setInterval(flushQueue, 30000);
+  }
+
+  // تصدير للاختبار بـNode.js (بند إضافي 83) — بلا أثر بالمتصفح الفعلي.
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = { samePath };
+  }
 })();
