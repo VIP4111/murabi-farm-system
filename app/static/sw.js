@@ -9,76 +9,46 @@
  * المنسدلة (الحيوانات، الأدوية...) والتقارير بالصفحة المخزّنة تعكس آخر
  * مرة فُتحت وهو متصل — مو بالضرورة أحدث بيانات لحظياً لو تغيّر شي بعدها.
  *
- * صفحات المسار الثابت (OFFLINE_URLS) تُخزَّن مسبقاً عند تثبيت الـService
- * Worker. صفحات فيها مُعرِّف رقمي بالمسار (تفاصيل رأس، تعديل صنف...) ما
- * يُعرَف مسبقاً — تُطابَق بأنماط (OFFLINE_URL_PATTERNS) وتُخزَّن أول مرة
- * تُفتح وهي متصلة (تخزين انتهازي عادي، نفس فكرة أي PWA).
+ * **بند إضافي 82 (2026-08-02) — تغطية أوسع من الصفحات المُزارة مسبقاً
+ * (نقطة 8 من قائمة نقاط الضعف)**: قبل هذا البند، أي صفحة ما كانت مذكورة
+ * صراحة بـOFFLINE_URLS أو تطابق أحد OFFLINE_URL_PATTERNS تُتجاهَل تماماً
+ * من الـService Worker — تعلّق فاضية لو فُتحت أول مرة وأنت أوفلاين، حتى
+ * لو زرتها فعلياً وأنت متصل قبل شوي. الحل: قلبنا المنطق من "قائمة سماح"
+ * (allowlist) إلى "قائمة استثناء" (denylist) — أي صفحة GET من نفس الموقع
+ * تُخزَّن تلقائياً أول ما تُفتح وأنت متصل، ما عدا استثناءات صريحة محدودة
+ * (رفع/تنزيل ملفات، تسجيل دخول/خروج). صفر صيانة يدوية لقائمة مسارات
+ * مستقبلاً — أي صفحة جديدة تُبنى تدخل التغطية تلقائياً بدون أي تعديل
+ * على هذا الملف.
  */
-const CACHE_NAME = "murabi-offline-v2";
+const CACHE_NAME = "murabi-offline-v3";
 
-const OFFLINE_URLS = [
-  "/",
-  "/alerts", "/alerts/mine",
-  "/animals", "/animals/new", "/animals/bulk-purchase", "/animals/bulk/select", "/animals/smart-sale",
-  "/assistant/",
-  "/barns", "/barns/new",
-  "/batches/", "/batches/new",
-  "/climate/", "/climate/settings",
-  "/feed/items", "/feed/items/new",
-  "/feed/rations", "/feed/rations/new",
-  "/feed/barn-plans", "/feed/barn-plans/new",
-  "/feed/movements", "/feed/movements/new",
-  "/feed/calculator", "/feed/optimizer", "/feed/fcr",
-  "/finance/", "/finance/new", "/finance/health", "/finance/monthly-cost-report",
-  "/health/vet-visits", "/health/vet-visits/new",
-  "/health/diseases", "/health/diseases/new",
-  "/health/vaccinations", "/health/vaccinations/new",
-  "/health/pharmacy", "/health/pharmacy/new", "/health/pharmacy/shortages",
-  "/health/disease-types", "/health/disease-types/new",
-  "/health/doctors", "/health/doctors/new",
-  "/health/protocols", "/health/protocols/new",
-  "/health/injection-guide", "/health/diagnose",
-  "/ostrich/eggs", "/ostrich/eggs/new", "/ostrich/incubators", "/ostrich/incubators/new",
-  "/repro/matings", "/repro/matings/new",
-  "/repro/pregnancies", "/repro/pregnancies/new",
-  "/repro/programs", "/repro/programs/new",
-  "/repro/sonar", "/repro/sonar/new",
-  "/reports/", "/reports/births", "/reports/mortality", "/reports/sales",
-  "/settings", "/settings/audit", "/settings/backup",
-  "/team/tasks", "/team/tasks/new",
-  "/team/members", "/team/members/new",
-  "/team/reports", "/team/reports/new",
-  "/team/worker/report/health", "/team/worker/report/isolation",
-  "/team/worker/report/feed", "/team/worker/report/ostrich",
-  "/warehouses/", "/warehouses/new",
+// صفحات القوائم القديمة تبقى مُخزَّنة مسبقاً عند التثبيت (تجربة أول
+// استخدام أسرع، قبل حتى ما يزور المستخدم أي صفحة). التخزين الفعلي بعد
+// كذا يصير تلقائياً لأي صفحة تُزار (راجع isCacheablePath تحت).
+const PRECACHE_URLS = [
+  "/", "/team/tasks", "/team/reports", "/alerts/mine",
 ];
 
-// صفحات فيها مُعرِّف رقمي بالمسار — تُخزَّن انتهازياً أول ما تُزار وهي متصلة
-const OFFLINE_URL_PATTERNS = [
-  /^\/animals\/\d+$/,
-  /^\/animals\/\d+\/edit$/,
-  /^\/animals\/\d+\/workflow$/,
-  /^\/barns\/\d+\/edit$/,
-  /^\/batches\/\d+$/,
-  /^\/feed\/items\/\d+\/edit$/,
-  /^\/feed\/rations\/\d+$/,
-  /^\/health\/pharmacy\/\d+\/edit$/,
-  /^\/health\/protocols\/\d+\/apply$/,
-  /^\/ostrich\/eggs\/\d+\/hatch$/,
-  /^\/repro\/programs\/\d+$/,
-  /^\/repro\/programs\/\d+\/attempts\/new$/,
-  /^\/repro\/programs\/\d+\/devices\/new$/,
-  /^\/repro\/programs\/\d+\/injections\/new$/,
-  /^\/team\/reports\/\d+$/,
-  /^\/team\/tasks\/\d+$/,
-  /^\/warehouses\/item\/(feed|pharmacy)\/\d+$/,
-];
+// مسارات مستثناة صراحة من التخزين المؤقت — ملفات مرفوعة (قد تكون كبيرة،
+// وتخزينها أوفلاين ما يفيد لأنها أصلاً ثابتة بعد الرفع)، وصفحات الدخول/
+// الخروج (تخزينها بلا فائدة — ما تقدر تسجّل دخول فعلي وأنت أوفلاين).
+const EXCLUDED_PATH_PREFIXES = ["/uploads/", "/login", "/logout"];
+
+function isCacheablePath(requestUrl) {
+  try {
+    var url = new URL(requestUrl);
+    if (url.origin !== self.location.origin) return false;
+    return !EXCLUDED_PATH_PREFIXES.some(function (p) { return url.pathname.startsWith(p); });
+  } catch (e) {
+    return false;
+  }
+}
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) =>
-      Promise.all(OFFLINE_URLS.map((url) => cache.add(url).catch(() => {})))
+      Promise.all(PRECACHE_URLS.map((url) => cache.add(url).catch(() => {})))
     )
   );
 });
@@ -92,21 +62,11 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-function isOfflineEnabledPath(requestUrl) {
-  try {
-    var pathname = new URL(requestUrl).pathname;
-    if (OFFLINE_URLS.includes(pathname)) return true;
-    return OFFLINE_URL_PATTERNS.some(function (re) { return re.test(pathname); });
-  } catch (e) {
-    return false;
-  }
-}
-
 self.addEventListener("fetch", (event) => {
   const req = event.request;
-  // نتدخّل بس بطلبات GET للصفحات المشمولة — أي طلب ثاني (POST، أو صفحة
-  // خارج القائمة) يمرّ عادي بدون أي تدخّل من الـService Worker.
-  if (req.method !== "GET" || !isOfflineEnabledPath(req.url)) return;
+  // نتدخّل بس بطلبات GET من نفس الموقع، ما عدا الاستثناءات أعلاه — أي
+  // طلب ثاني (POST، أو ملف مرفوع، أو دخول/خروج) يمرّ عادي بدون أي تدخّل.
+  if (req.method !== "GET" || !isCacheablePath(req.url)) return;
 
   event.respondWith(
     fetch(req)
