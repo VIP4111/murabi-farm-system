@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-01 23:47+0300\n"
+"POT-Creation-Date: 2026-08-02 01:51+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: am <LL@li.org>\n"
 "Language: am\n"
+"Language-Team: am <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: app/__init__.py:94
@@ -312,11 +312,11 @@ msgstr "ሌላ ምክንያት"
 
 #: app/templates/_offline_widgets.html:7
 msgid ""
-"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع "
-"تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
+"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً "
+"وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
 msgstr ""
-"አሁን ኢንተርኔት የለም — በዚህ ገጽ ላይ የምታስገባው መረጃ በመሳሪያህ ላይ ይቀመጣል እና ግንኙነት ሲመለስ በራስ-ሰር "
-"ይላካል፣ ምንም ማድረግ ሳያስፈልግህ።"
+"አሁን ኢንተርኔት የለም — በዚህ ገጽ ላይ የምታስገባው መረጃ በመሳሪያህ ላይ ይቀመጣል እና ግንኙነት ሲመለስ "
+"በራስ-ሰር ይላካል፣ ምንም ማድረግ ሳያስፈልግህ።"
 
 #: app/templates/_offline_widgets.html:10
 msgid "بانتظار الرفع بجهازك"
@@ -328,13 +328,12 @@ msgstr "በማመሳሰል ጊዜ ውድቅ የተደረጉ ግቤቶች — ግ
 
 #: app/templates/_offline_widgets.html:24
 msgid ""
-"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما يرجع "
-"الاتصال."
+"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما "
+"يرجع الاتصال."
 msgstr "አሁን ኢንተርኔት የለም — መረጃው በመሳሪያህ ላይ ተቀምጧል እና ግንኙነት ሲመለስ በራስ-ሰር ይላካል።"
 
 #: app/templates/_offline_widgets.html:25
-msgid ""
-"رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
+msgid "رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
 msgstr "በማመሳሰል ጊዜ በሰርቨሩ ውድቅ ተደርጓል፣ ይገምግሙት እና በእጅ እንደገና ያስገቡ ወይም እንደገና ይሞክሩ።"
 
 #: app/templates/_offline_widgets.html:26
@@ -366,13 +365,12 @@ msgstr "ማንቂያ"
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr "እርስዎ ኃላፊነት በሚወስዱባቸው በረቶች ብቻ የተገደበ"
 
-#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:18
+#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:19
 msgid "حظيرة"
 msgstr "በረት"
 
 #: app/templates/alerts_list.html:11
-msgid ""
-"ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
+msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
 msgstr "እስካሁን ኃላፊነት የወሰዱበት በረት የለም — ወደ በረት እንዲመደቡ የእርሻውን ባለቤት ያነጋግሩ።"
 
 #: app/templates/alerts_list.html:15
@@ -380,13 +378,13 @@ msgid ""
 "عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
 "تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
 "حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر "
-"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم التحصينات). "
-"النافذة الزمنية من"
+"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم "
+"التحصينات). النافذة الزمنية من"
 msgstr ""
 "በቀጥታ ከሲስተም ውሂብ የተገኘ የቀጥታ እይታ — የደረሱ ክትባቶች፣ ሊያልቁ የተቃረቡ የመታቀብ ወቅቶች፣ ቅርብ ጊዜ "
 "የሚጠበቁ ልደቶች፣ የመራቢያ መሳሪያ ቀጠሮዎች፣ ለረጅም ጊዜ ክፍት የሆኑ በሽታዎች፣ ቅደም ተከተላቸው ያልተስተካከሉ "
-"እንስሳት፣ በመጠባበቅ ላይ ያሉ ሪፖርቶች፣ አሁን ለሽያጭ ዝግጁ የሆኑ እንስሳት፣ ኃላፊ ሠራተኛ የሌላቸው በረቶች፣ እና "
-"ለተያዙ ክትባቶች የሚጠበቅ የክምችት እጥረት (የክትባት ቀን መቁጠሪያ)። የጊዜ መስኮቱ ከ"
+"እንስሳት፣ በመጠባበቅ ላይ ያሉ ሪፖርቶች፣ አሁን ለሽያጭ ዝግጁ የሆኑ እንስሳት፣ ኃላፊ ሠራተኛ የሌላቸው በረቶች፣ "
+"እና ለተያዙ ክትባቶች የሚጠበቅ የክምችት እጥረት (የክትባት ቀን መቁጠሪያ)። የጊዜ መስኮቱ ከ"
 
 #: app/templates/alerts_list.html:15
 msgid "الإعدادات"
@@ -401,8 +399,8 @@ msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "አሁን ምንም ማንቂያ የለም — ሁሉም ነገር ደህና ነው።"
 
 #: app/templates/base.html:318
-msgid "نظام إدارة الحلال"
-msgstr "የእንስሳት አስተዳደር ስርዓት"
+msgid "مراح بو علي"
+msgstr "مراح بو علي"
 
 #: app/templates/base.html:335 app/templates/base.html:336
 #: app/templates/team/worker_report_form.html:6
@@ -519,11 +517,11 @@ msgstr "የአየር ንብረት እና የሙቀት ጭንቀት ራዳር"
 msgid "الفريق"
 msgstr "ቡድን"
 
-#: app/templates/base.html:392 app/templates/team/tasks_list.html:5
+#: app/templates/base.html:392 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "ተግባራት"
 
-#: app/templates/base.html:393 app/templates/team/reports_list.html:5
+#: app/templates/base.html:393 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "ሪፖርቶች"
 
@@ -623,8 +621,7 @@ msgstr "ውይይት አጥፋ"
 msgid ""
 "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد "
 "تشغيلي عن المزرعة."
-msgstr ""
-"ስለ መንጋው ሁኔታ፣ እርግዝና፣ መታቀፊያዎች፣ መኖ፣ ማንቂያዎች፣ ወይም ማንኛውም የእርሻ አሠራር መመሪያ ይጠይቁኝ።"
+msgstr "ስለ መንጋው ሁኔታ፣ እርግዝና፣ መታቀፊያዎች፣ መኖ፣ ማንቂያዎች፣ ወይም ማንኛውም የእርሻ አሠራር መመሪያ ይጠይቁኝ።"
 
 #: app/templates/assistant/chat.html:47
 msgid "كم عدد الحيوانات؟"
@@ -702,8 +699,8 @@ msgstr "የበሽታ ሁኔታ መዝግብ"
 #: app/templates/health/vaccination_form.html:7
 #: app/templates/health/vet_visit_form.html:7
 msgid ""
-"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة"
-" تلقائياً."
+"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز "
+"المهمة تلقائياً."
 msgstr ""
 "ከታቀደ የሕክምና ተግባር በራስ-ሰር ተሞልቷል — ከማስቀመጥዎ በፊት ይገምግሙ። እዚህ ማስቀመጥ ተግባሩን በራስ-ሰር "
 "ያጠናቅቃል።"
@@ -717,7 +714,7 @@ msgstr "ቀን"
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/vaccination_form.html:12
 #: app/templates/health/vet_visit_form.html:12
-#: app/templates/team/report_detail.html:11
+#: app/templates/team/report_detail.html:12
 msgid "الحيوان"
 msgstr "እንስሳ"
 
@@ -892,6 +889,40 @@ msgstr "ግልጽ የልብ ትርታ?"
 msgid "موعد إعادة الفحص"
 msgstr "የድጋሚ ምርመራ ቀጠሮ"
 
+#: app/templates/team/_my_tasks_rows.html:13
+msgid "فات موعدها"
+msgstr "ጊዜው አልፏል"
+
+#: app/templates/team/_my_tasks_rows.html:13
+#: app/templates/team/task_detail.html:9
+msgid "متأخرة"
+msgstr "የዘገየ"
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "بانتظار:"
+msgstr "በመጠባበቅ ላይ:"
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "مقفلة"
+msgstr "ተቆልፏል"
+
+#: app/templates/team/_my_tasks_rows.html:23
+#: app/templates/team/task_detail.html:62
+#: app/templates/team/worker_report_form.html:24
+msgid "بدء"
+msgstr "ጀምር"
+
+#: app/templates/team/_my_tasks_rows.html:26
+#: app/templates/team/worker_report_form.html:27
+msgid "إنجاز / تعذّر ←"
+msgstr "አጠናቅቅ / አልተከናወነም ←"
+
+#: app/templates/team/_my_tasks_rows.html:31
+msgid "ما عندك مهام حالياً."
+msgstr "አሁን ምንም ተግባር የለዎትም።"
+
 #: app/templates/team/_report_widgets.html:20
 msgid "الجنس:"
 msgstr "ጾታ:"
@@ -943,193 +974,193 @@ msgstr "በመቅዳት ላይ..."
 msgid "تعذّر الوصول للمايكروفون:"
 msgstr "ማይክሮፎን ማግኘት አልተቻለም:"
 
-#: app/templates/team/report_detail.html:5
+#: app/templates/team/report_detail.html:6
 msgid "بلاغ"
 msgstr "ሪፖርት"
 
-#: app/templates/team/report_detail.html:9
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/report_detail.html:10
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
 msgid "النوع"
 msgstr "ዓይነት"
 
-#: app/templates/team/report_detail.html:10
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:76
 msgid "رفعه"
 msgstr "ያስገባው"
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "نعام"
 msgstr "ሰጎን"
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "حلال (ضأن/ماعز)"
 msgstr "እንስሳት (በግ/ፍየል)"
 
-#: app/templates/team/report_detail.html:22
+#: app/templates/team/report_detail.html:23
 #: app/templates/team/report_form.html:27
 #: app/templates/team/worker_report_form.html:45
 msgid "الحظيرة"
 msgstr "በረት"
 
-#: app/templates/team/report_detail.html:23
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
 msgid "الوصف"
 msgstr "መግለጫ"
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 msgid "صورة مرفقة"
 msgstr "የተያያዘ ፎቶ"
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 #: app/templates/team/task_detail.html:106
 msgid "عرض الصورة"
 msgstr "ፎቶ ይመልከቱ"
 
-#: app/templates/team/report_detail.html:25
+#: app/templates/team/report_detail.html:26
 msgid "ملاحظة صوتية"
 msgstr "የድምጽ ማስታወሻ"
 
-#: app/templates/team/report_detail.html:26
+#: app/templates/team/report_detail.html:27
 msgid "الدكتور المسؤول"
 msgstr "ኃላፊው ዶክተር"
 
-#: app/templates/team/report_detail.html:27
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:28
+#: app/templates/team/report_detail.html:92
 msgid "محوّلة لـ"
 msgstr "ወደ ተላልፏል"
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "دليل التنفيذ"
 msgstr "የአፈጻጸም ማስረጃ"
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "صورة"
 msgstr "ፎቶ"
 
-#: app/templates/team/report_detail.html:31
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:32
+#: app/templates/team/reports_list.html:76
 msgid "سبب الإلغاء"
 msgstr "የመሰረዝ ምክንያት"
 
-#: app/templates/team/report_detail.html:32
-#: app/templates/team/report_detail.html:45
+#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:46
 msgid "سبب التأجيل"
 msgstr "የማዘግየት ምክንያት"
 
-#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:34
 msgid "أغلقها"
 msgstr "የዘጋው"
 
-#: app/templates/team/report_detail.html:39
+#: app/templates/team/report_detail.html:40
 msgid "إجراءات (صندوق الوارد)"
 msgstr "እርምጃዎች (ገቢ ሳጥን)"
 
-#: app/templates/team/report_detail.html:42
+#: app/templates/team/report_detail.html:43
 msgid "قبول البلاغ"
 msgstr "ሪፖርቱን ተቀበል"
 
-#: app/templates/team/report_detail.html:46
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/report_detail.html:47
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل"
 msgstr "አዘግይ"
 
-#: app/templates/team/report_detail.html:48
+#: app/templates/team/report_detail.html:49
 msgid "تأكيد الإلغاء؟ تنتقل لصاحب الحلال."
 msgstr "መሰረዙ ይረጋገጥ? ወደ እርሻው ባለቤት ይተላለፋል።"
 
-#: app/templates/team/report_detail.html:49
+#: app/templates/team/report_detail.html:50
 msgid "سبب الإلغاء (إلزامي)"
 msgstr "የመሰረዝ ምክንያት (ግዴታ)"
 
-#: app/templates/team/report_detail.html:50
+#: app/templates/team/report_detail.html:51
 msgid "إلغاء"
 msgstr "ሰርዝ"
 
-#: app/templates/team/report_detail.html:59
+#: app/templates/team/report_detail.html:60
 msgid "رجّعه لصندوق الوارد"
 msgstr "ወደ ገቢ ሳጥን መልስ"
 
-#: app/templates/team/report_detail.html:66
+#: app/templates/team/report_detail.html:67
 msgid "نفّذها بنفسك"
 msgstr "እራስዎ ያከናውኑት"
 
-#: app/templates/team/report_detail.html:68
+#: app/templates/team/report_detail.html:69
 #: app/templates/team/task_detail.html:72
 msgid "ملاحظة (اختياري)"
 msgstr "ማስታወሻ (አማራጭ)"
 
-#: app/templates/team/report_detail.html:69
+#: app/templates/team/report_detail.html:70
 msgid "تنفيذ وإغلاق مباشرة"
 msgstr "ወዲያውኑ አከናውን እና ዝጋ"
 
-#: app/templates/team/report_detail.html:73
+#: app/templates/team/report_detail.html:74
 msgid "أو حوّلها لعضو ثاني"
 msgstr "ወይም ለሌላ አባል አስተላልፍ"
 
-#: app/templates/team/report_detail.html:75
+#: app/templates/team/report_detail.html:76
 msgid "حوّل لـ"
 msgstr "ወደ አስተላልፍ"
 
-#: app/templates/team/report_detail.html:83
+#: app/templates/team/report_detail.html:84
 msgid "تعليمات التنفيذ (إلزامي)"
 msgstr "የአፈጻጸም መመሪያ (ግዴታ)"
 
-#: app/templates/team/report_detail.html:84
+#: app/templates/team/report_detail.html:85
 msgid "تحويل"
 msgstr "አስተላልፍ"
 
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:92
 msgid "بانتظار تنفيذه."
 msgstr "እንዲያከናውኑት በመጠበቅ ላይ።"
 
-#: app/templates/team/report_detail.html:97
+#: app/templates/team/report_detail.html:98
 msgid "تسجيل الإنجاز"
 msgstr "መጠናቀቁን መዝግብ"
 
-#: app/templates/team/report_detail.html:99
+#: app/templates/team/report_detail.html:100
 msgid "ملاحظة/دليل الإنجاز"
 msgstr "የመጠናቀቅ ማስታወሻ/ማስረጃ"
 
-#: app/templates/team/report_detail.html:100
+#: app/templates/team/report_detail.html:101
 msgid "رابط صورة (اختياري)"
 msgstr "የፎቶ ማገናኛ (አማራጭ)"
 
-#: app/templates/team/report_detail.html:101
+#: app/templates/team/report_detail.html:102
 #: app/templates/team/task_detail.html:78
 msgid "تم الإنجاز"
 msgstr "ተጠናቅቋል"
 
-#: app/templates/team/report_detail.html:108
+#: app/templates/team/report_detail.html:109
 msgid "مراجعة وإغلاق"
 msgstr "ገምግም እና ዝጋ"
 
-#: app/templates/team/report_detail.html:110
+#: app/templates/team/report_detail.html:111
 msgid "ملاحظة إغلاق (اختياري)"
 msgstr "የመዝጊያ ማስታወሻ (አማራጭ)"
 
-#: app/templates/team/report_detail.html:111
+#: app/templates/team/report_detail.html:112
 msgid "إغلاق البلاغ"
 msgstr "ሪፖርቱን ዝጋ"
 
-#: app/templates/team/report_detail.html:118
-#: app/templates/team/tasks_list.html:172
+#: app/templates/team/report_detail.html:119
+#: app/templates/team/tasks_list.html:174
 msgid "حذف نهائي — ما يرجع. متأكد؟"
 msgstr "ቋሚ ስረዛ — መመለስ አይቻልም። እርግጠኛ ነዎት?"
 
-#: app/templates/team/report_detail.html:119
-#: app/templates/team/tasks_list.html:173
+#: app/templates/team/report_detail.html:120
+#: app/templates/team/tasks_list.html:175
 msgid "حذف نهائي"
 msgstr "ቋሚ ስረዛ"
 
@@ -1191,57 +1222,56 @@ msgstr "እዚህ ይንኩ እና ቀጥታ ለመቅረጽ \"ካሜራ\" ወ�
 msgid "رفع البلاغ"
 msgstr "ሪፖርት አስገባ"
 
-#: app/templates/team/reports_list.html:6
+#: app/templates/team/reports_list.html:7
 msgid "بلاغ جديد"
 msgstr "አዲስ ሪፖርት"
 
-#: app/templates/team/reports_list.html:22
+#: app/templates/team/reports_list.html:23
 msgid "صندوق الوارد (بلاغات جديدة)"
 msgstr "ገቢ ሳጥን (አዲስ ሪፖርቶች)"
 
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/tasks_list.html:55
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الحالة"
 msgstr "ሁኔታ"
 
-#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:27
 msgid "صندوق الوارد فاضي."
 msgstr "ገቢ ሳጥኑ ባዶ ነው።"
 
-#: app/templates/team/reports_list.html:32
+#: app/templates/team/reports_list.html:33
 msgid "بلاغات مستلمة مني"
 msgstr "የተቀበልኳቸው ሪፖርቶች"
 
-#: app/templates/team/reports_list.html:36
+#: app/templates/team/reports_list.html:37
 msgid "لا يوجد بلاغات مستلمة حالياً."
 msgstr "አሁን የተቀበሉ ሪፖርቶች የሉም።"
 
-#: app/templates/team/reports_list.html:43
+#: app/templates/team/reports_list.html:44
 msgid "محوّلة لي للتنفيذ"
 msgstr "ለማስፈጸም ወደ እኔ ተላልፏል"
 
-#: app/templates/team/reports_list.html:47
+#: app/templates/team/reports_list.html:48
 msgid "لا يوجد بلاغات محوّلة لك حالياً."
 msgstr "አሁን ወደ እርስዎ የተላለፉ ሪፖርቶች የሉም።"
 
-#: app/templates/team/reports_list.html:54
+#: app/templates/team/reports_list.html:55
 msgid "بلاغاتي المرفوعة"
 msgstr "ያስገባኋቸው ሪፖርቶች"
 
-#: app/templates/team/reports_list.html:65
+#: app/templates/team/reports_list.html:66
 msgid "ما رفعت أي بلاغ بعد."
 msgstr "እስካሁን ምንም ሪፖርት አላስገቡም።"
 
-#: app/templates/team/reports_list.html:73
+#: app/templates/team/reports_list.html:74
 msgid "بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)"
 msgstr "የተሰረዙ ሪፖርቶች (የመጨረሻ ስረዛ ወይም ማህደር በመጠበቅ ላይ)"
 
-#: app/templates/team/reports_list.html:85
+#: app/templates/team/reports_list.html:86
 msgid "لا يوجد بلاغات ملغاة."
 msgstr "የተሰረዙ ሪፖርቶች የሉም።"
 
@@ -1253,10 +1283,6 @@ msgstr "ወደ ተግባራት ተመለስ"
 #: app/templates/team/worker_report_form.html:18
 msgid "الموعد:"
 msgstr "ቀጠሮ:"
-
-#: app/templates/team/task_detail.html:9 app/templates/team/tasks_list.html:61
-msgid "متأخرة"
-msgstr "የዘገየ"
 
 #: app/templates/team/task_detail.html:13
 msgid "تفصيل المهمة"
@@ -1306,9 +1332,8 @@ msgstr "ክምችቱ ለጠቅላላው ጭነት በቂ አይደለም"
 msgid "المهمة التالية بالسلسلة:"
 msgstr "በሰንሰለቱ ውስጥ ቀጣይ ተግባር:"
 
-#: app/templates/team/task_detail.html:42
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:56
+#: app/templates/team/tasks_list.html:97 app/templates/team/tasks_list.html:164
 msgid "الإجراءات"
 msgstr "እርምጃዎች"
 
@@ -1321,15 +1346,9 @@ msgid "موافقة"
 msgstr "አጽድቅ"
 
 #: app/templates/team/task_detail.html:56
-#: app/templates/team/tasks_list.html:111
+#: app/templates/team/tasks_list.html:113
 msgid "حذف"
 msgstr "ሰርዝ"
-
-#: app/templates/team/task_detail.html:62
-#: app/templates/team/tasks_list.html:71
-#: app/templates/team/worker_report_form.html:24
-msgid "بدء"
-msgstr "ጀምር"
 
 #: app/templates/team/task_detail.html:70
 msgid "إنجاز المهمة"
@@ -1402,137 +1421,114 @@ msgstr "ማስታወሻ:"
 msgid "عرض صورة الدليل"
 msgstr "የማስረጃ ፎቶ ይመልከቱ"
 
-#: app/templates/team/tasks_list.html:7
+#: app/templates/team/tasks_list.html:8
 msgid "توزيع مهمة"
 msgstr "ተግባር መድብ"
 
-#: app/templates/team/tasks_list.html:16
+#: app/templates/team/tasks_list.html:17
 msgid "توزيع مهمة جديدة"
 msgstr "አዲስ ተግባር መድብ"
 
-#: app/templates/team/tasks_list.html:19
+#: app/templates/team/tasks_list.html:20
 msgid "توزيع"
 msgstr "መድብ"
 
-#: app/templates/team/tasks_list.html:21
+#: app/templates/team/tasks_list.html:22
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
 msgstr "የግቤት ስህተት ካለ፣ ሙሉውን ገጽ ለማስተካከል ይከፍታል።"
 
-#: app/templates/team/tasks_list.html:53
+#: app/templates/team/tasks_list.html:54
 msgid "مهامي"
 msgstr "ተግባሮቼ"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
+#: app/templates/team/tasks_list.html:164
 msgid "العنوان"
 msgstr "ርዕስ"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
 msgid "الحظيرة/الحيوان"
 msgstr "በረት/እንስሳ"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الموعد"
 msgstr "ቀጠሮ"
 
-#: app/templates/team/tasks_list.html:61
-msgid "فات موعدها"
-msgstr "ጊዜው አልፏል"
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "بانتظار:"
-msgstr "በመጠባበቅ ላይ:"
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "مقفلة"
-msgstr "ተቆልፏል"
-
-#: app/templates/team/tasks_list.html:74
-#: app/templates/team/worker_report_form.html:27
-msgid "إنجاز / تعذّر ←"
-msgstr "አጠናቅቅ / አልተከናወነም ←"
-
-#: app/templates/team/tasks_list.html:79
-msgid "ما عندك مهام حالياً."
-msgstr "አሁን ምንም ተግባር የለዎትም።"
-
-#: app/templates/team/tasks_list.html:87
+#: app/templates/team/tasks_list.html:89
 msgid "مهام مقترحة بانتظار الاعتماد"
 msgstr "ማጽደቅ በመጠባበቅ ላይ ያሉ የተጠቆሙ ተግባራት"
 
-#: app/templates/team/tasks_list.html:88
+#: app/templates/team/tasks_list.html:90
 msgid ""
-"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج "
-"اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
+"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
+"تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
 msgstr ""
-"በሲስተሙ ሞተሮች በራስ-ሰር የተፈጠሩ ተግባራት (ክትባት/መራባት/ዕለታዊ እንክብካቤ...) — ወደ ተመዳቢው ከመድረሳቸው "
-"በፊት ማጽደቅዎን ይፈልጋሉ።"
+"በሲስተሙ ሞተሮች በራስ-ሰር የተፈጠሩ ተግባራት (ክትባት/መራባት/ዕለታዊ እንክብካቤ...) — ወደ ተመዳቢው "
+"ከመድረሳቸው በፊት ማጽደቅዎን ይፈልጋሉ።"
 
-#: app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:107
 msgid "اعتماد وإرسال"
 msgstr "አጽድቅ እና ላክ"
 
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل ليوم واحد"
 msgstr "በአንድ ቀን አዘግይ"
 
-#: app/templates/team/tasks_list.html:116
+#: app/templates/team/tasks_list.html:118
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr "አሁን የተጠቆሙ ተግባራት የሉም።"
 
-#: app/templates/team/tasks_list.html:123
+#: app/templates/team/tasks_list.html:125
 msgid "جدول المهام المعتمدة"
 msgstr "የፀደቁ ተግባራት ሠንጠረዥ"
 
-#: app/templates/team/tasks_list.html:124
+#: app/templates/team/tasks_list.html:126
 msgid ""
-"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر "
-"المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
+"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
+"عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
 msgstr ""
 "በእርግጥ የፀደቁ ሁሉም ተግባራት (ከማጽደቅ በኋላ በራስ-ሰር፣ ወይም በእጅ የተመደቡ) በመላው እርሻ — ተመዳቢው "
 "እንዲያከናውን እና \"ተጠናቋል\" ብሎ እንዲያመልክት በመጠበቅ ላይ።"
 
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "المكلَّف"
 msgstr "ተመዳቢ"
 
-#: app/templates/team/tasks_list.html:131
+#: app/templates/team/tasks_list.html:133
 msgid "بدون تعيين"
 msgstr "ያልተመደበ"
 
-#: app/templates/team/tasks_list.html:137
+#: app/templates/team/tasks_list.html:139
 msgid "لا يوجد مهام معتمدة حالياً."
 msgstr "አሁን የፀደቁ ተግባራት የሉም።"
 
-#: app/templates/team/tasks_list.html:144
+#: app/templates/team/tasks_list.html:146
 msgid "مهام وزّعتها (نشطة)"
 msgstr "የመደብኳቸው ተግባራት (ንቁ)"
 
-#: app/templates/team/tasks_list.html:151
+#: app/templates/team/tasks_list.html:153
 msgid "لا يوجد."
 msgstr "የለም።"
 
-#: app/templates/team/tasks_list.html:160
+#: app/templates/team/tasks_list.html:162
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr "የባለቤት ግምገማ ሳጥን (በዶክተሩ የተሰረዙ ተግባራት)"
 
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:164
 msgid "السبب"
 msgstr "ምክንያት"
 
-#: app/templates/team/tasks_list.html:170
+#: app/templates/team/tasks_list.html:172
 msgid "استرجاع"
 msgstr "መልስ"
 
-#: app/templates/team/tasks_list.html:178
+#: app/templates/team/tasks_list.html:180
 msgid "فاضي."
 msgstr "ባዶ ነው።"
 
@@ -1565,3 +1561,7 @@ msgstr "ሪፖርት ላክ"
 
 #~ msgid "الحيوان المرتبط (اختياري)"
 #~ msgstr "የተያያዘ እንስሳ (አማራጭ)"
+
+#~ msgid "نظام إدارة الحلال"
+#~ msgstr "የእንስሳት አስተዳደር ስርዓት"
+

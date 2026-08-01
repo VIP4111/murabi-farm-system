@@ -130,7 +130,7 @@ def build_invoice_pdf(finance_row, animal, farm_settings) -> io.BytesIO:
             c.drawRightString(right_margin, y, ar(line))
             y -= 5.5 * mm
     if not (farm_settings.farm_name or farm_settings.farm_phone or farm_settings.farm_address):
-        c.drawRightString(right_margin, y, ar("نظام إدارة الحلال"))
+        c.drawRightString(right_margin, y, ar("مراح بو علي"))
         y -= 5.5 * mm
 
     y -= 6 * mm

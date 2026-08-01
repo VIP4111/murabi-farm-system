@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-01 23:47+0300\n"
+"POT-Creation-Date: 2026-08-02 01:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -362,7 +362,7 @@ msgstr ""
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr ""
 
-#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:18
+#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:19
 msgid "حظيرة"
 msgstr ""
 
@@ -392,7 +392,7 @@ msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr ""
 
 #: app/templates/base.html:318
-msgid "نظام إدارة الحلال"
+msgid "مراح بو علي"
 msgstr ""
 
 #: app/templates/base.html:335 app/templates/base.html:336
@@ -510,11 +510,11 @@ msgstr ""
 msgid "الفريق"
 msgstr ""
 
-#: app/templates/base.html:392 app/templates/team/tasks_list.html:5
+#: app/templates/base.html:392 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr ""
 
-#: app/templates/base.html:393 app/templates/team/reports_list.html:5
+#: app/templates/base.html:393 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr ""
 
@@ -705,7 +705,7 @@ msgstr ""
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/vaccination_form.html:12
 #: app/templates/health/vet_visit_form.html:12
-#: app/templates/team/report_detail.html:11
+#: app/templates/team/report_detail.html:12
 msgid "الحيوان"
 msgstr ""
 
@@ -880,6 +880,40 @@ msgstr ""
 msgid "موعد إعادة الفحص"
 msgstr ""
 
+#: app/templates/team/_my_tasks_rows.html:13
+msgid "فات موعدها"
+msgstr ""
+
+#: app/templates/team/_my_tasks_rows.html:13
+#: app/templates/team/task_detail.html:9
+msgid "متأخرة"
+msgstr ""
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "بانتظار:"
+msgstr ""
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "مقفلة"
+msgstr ""
+
+#: app/templates/team/_my_tasks_rows.html:23
+#: app/templates/team/task_detail.html:62
+#: app/templates/team/worker_report_form.html:24
+msgid "بدء"
+msgstr ""
+
+#: app/templates/team/_my_tasks_rows.html:26
+#: app/templates/team/worker_report_form.html:27
+msgid "إنجاز / تعذّر ←"
+msgstr ""
+
+#: app/templates/team/_my_tasks_rows.html:31
+msgid "ما عندك مهام حالياً."
+msgstr ""
+
 #: app/templates/team/_report_widgets.html:20
 msgid "الجنس:"
 msgstr ""
@@ -931,193 +965,193 @@ msgstr ""
 msgid "تعذّر الوصول للمايكروفون:"
 msgstr ""
 
-#: app/templates/team/report_detail.html:5
+#: app/templates/team/report_detail.html:6
 msgid "بلاغ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:9
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/report_detail.html:10
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
 msgid "النوع"
 msgstr ""
 
-#: app/templates/team/report_detail.html:10
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:76
 msgid "رفعه"
 msgstr ""
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "نعام"
 msgstr ""
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "حلال (ضأن/ماعز)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:22
+#: app/templates/team/report_detail.html:23
 #: app/templates/team/report_form.html:27
 #: app/templates/team/worker_report_form.html:45
 msgid "الحظيرة"
 msgstr ""
 
-#: app/templates/team/report_detail.html:23
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
 msgid "الوصف"
 msgstr ""
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 msgid "صورة مرفقة"
 msgstr ""
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 #: app/templates/team/task_detail.html:106
 msgid "عرض الصورة"
 msgstr ""
 
-#: app/templates/team/report_detail.html:25
+#: app/templates/team/report_detail.html:26
 msgid "ملاحظة صوتية"
 msgstr ""
 
-#: app/templates/team/report_detail.html:26
+#: app/templates/team/report_detail.html:27
 msgid "الدكتور المسؤول"
 msgstr ""
 
-#: app/templates/team/report_detail.html:27
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:28
+#: app/templates/team/report_detail.html:92
 msgid "محوّلة لـ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "دليل التنفيذ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "صورة"
 msgstr ""
 
-#: app/templates/team/report_detail.html:31
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:32
+#: app/templates/team/reports_list.html:76
 msgid "سبب الإلغاء"
 msgstr ""
 
-#: app/templates/team/report_detail.html:32
-#: app/templates/team/report_detail.html:45
+#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:46
 msgid "سبب التأجيل"
 msgstr ""
 
-#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:34
 msgid "أغلقها"
 msgstr ""
 
-#: app/templates/team/report_detail.html:39
+#: app/templates/team/report_detail.html:40
 msgid "إجراءات (صندوق الوارد)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:42
+#: app/templates/team/report_detail.html:43
 msgid "قبول البلاغ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:46
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/report_detail.html:47
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل"
 msgstr ""
 
-#: app/templates/team/report_detail.html:48
+#: app/templates/team/report_detail.html:49
 msgid "تأكيد الإلغاء؟ تنتقل لصاحب الحلال."
 msgstr ""
 
-#: app/templates/team/report_detail.html:49
+#: app/templates/team/report_detail.html:50
 msgid "سبب الإلغاء (إلزامي)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:50
+#: app/templates/team/report_detail.html:51
 msgid "إلغاء"
 msgstr ""
 
-#: app/templates/team/report_detail.html:59
+#: app/templates/team/report_detail.html:60
 msgid "رجّعه لصندوق الوارد"
 msgstr ""
 
-#: app/templates/team/report_detail.html:66
+#: app/templates/team/report_detail.html:67
 msgid "نفّذها بنفسك"
 msgstr ""
 
-#: app/templates/team/report_detail.html:68
+#: app/templates/team/report_detail.html:69
 #: app/templates/team/task_detail.html:72
 msgid "ملاحظة (اختياري)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:69
+#: app/templates/team/report_detail.html:70
 msgid "تنفيذ وإغلاق مباشرة"
 msgstr ""
 
-#: app/templates/team/report_detail.html:73
+#: app/templates/team/report_detail.html:74
 msgid "أو حوّلها لعضو ثاني"
 msgstr ""
 
-#: app/templates/team/report_detail.html:75
+#: app/templates/team/report_detail.html:76
 msgid "حوّل لـ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:83
+#: app/templates/team/report_detail.html:84
 msgid "تعليمات التنفيذ (إلزامي)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:84
+#: app/templates/team/report_detail.html:85
 msgid "تحويل"
 msgstr ""
 
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:92
 msgid "بانتظار تنفيذه."
 msgstr ""
 
-#: app/templates/team/report_detail.html:97
+#: app/templates/team/report_detail.html:98
 msgid "تسجيل الإنجاز"
 msgstr ""
 
-#: app/templates/team/report_detail.html:99
+#: app/templates/team/report_detail.html:100
 msgid "ملاحظة/دليل الإنجاز"
 msgstr ""
 
-#: app/templates/team/report_detail.html:100
+#: app/templates/team/report_detail.html:101
 msgid "رابط صورة (اختياري)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:101
+#: app/templates/team/report_detail.html:102
 #: app/templates/team/task_detail.html:78
 msgid "تم الإنجاز"
 msgstr ""
 
-#: app/templates/team/report_detail.html:108
+#: app/templates/team/report_detail.html:109
 msgid "مراجعة وإغلاق"
 msgstr ""
 
-#: app/templates/team/report_detail.html:110
+#: app/templates/team/report_detail.html:111
 msgid "ملاحظة إغلاق (اختياري)"
 msgstr ""
 
-#: app/templates/team/report_detail.html:111
+#: app/templates/team/report_detail.html:112
 msgid "إغلاق البلاغ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:118
-#: app/templates/team/tasks_list.html:172
+#: app/templates/team/report_detail.html:119
+#: app/templates/team/tasks_list.html:174
 msgid "حذف نهائي — ما يرجع. متأكد؟"
 msgstr ""
 
-#: app/templates/team/report_detail.html:119
-#: app/templates/team/tasks_list.html:173
+#: app/templates/team/report_detail.html:120
+#: app/templates/team/tasks_list.html:175
 msgid "حذف نهائي"
 msgstr ""
 
@@ -1179,56 +1213,56 @@ msgstr ""
 msgid "رفع البلاغ"
 msgstr ""
 
-#: app/templates/team/reports_list.html:6
+#: app/templates/team/reports_list.html:7
 msgid "بلاغ جديد"
 msgstr ""
 
-#: app/templates/team/reports_list.html:22
+#: app/templates/team/reports_list.html:23
 msgid "صندوق الوارد (بلاغات جديدة)"
 msgstr ""
 
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الحالة"
 msgstr ""
 
-#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:27
 msgid "صندوق الوارد فاضي."
 msgstr ""
 
-#: app/templates/team/reports_list.html:32
+#: app/templates/team/reports_list.html:33
 msgid "بلاغات مستلمة مني"
 msgstr ""
 
-#: app/templates/team/reports_list.html:36
+#: app/templates/team/reports_list.html:37
 msgid "لا يوجد بلاغات مستلمة حالياً."
 msgstr ""
 
-#: app/templates/team/reports_list.html:43
+#: app/templates/team/reports_list.html:44
 msgid "محوّلة لي للتنفيذ"
 msgstr ""
 
-#: app/templates/team/reports_list.html:47
+#: app/templates/team/reports_list.html:48
 msgid "لا يوجد بلاغات محوّلة لك حالياً."
 msgstr ""
 
-#: app/templates/team/reports_list.html:54
+#: app/templates/team/reports_list.html:55
 msgid "بلاغاتي المرفوعة"
 msgstr ""
 
-#: app/templates/team/reports_list.html:65
+#: app/templates/team/reports_list.html:66
 msgid "ما رفعت أي بلاغ بعد."
 msgstr ""
 
-#: app/templates/team/reports_list.html:73
+#: app/templates/team/reports_list.html:74
 msgid "بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)"
 msgstr ""
 
-#: app/templates/team/reports_list.html:85
+#: app/templates/team/reports_list.html:86
 msgid "لا يوجد بلاغات ملغاة."
 msgstr ""
 
@@ -1239,10 +1273,6 @@ msgstr ""
 #: app/templates/team/task_detail.html:9
 #: app/templates/team/worker_report_form.html:18
 msgid "الموعد:"
-msgstr ""
-
-#: app/templates/team/task_detail.html:9 app/templates/team/tasks_list.html:61
-msgid "متأخرة"
 msgstr ""
 
 #: app/templates/team/task_detail.html:13
@@ -1293,8 +1323,8 @@ msgstr ""
 msgid "المهمة التالية بالسلسلة:"
 msgstr ""
 
-#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:55
-#: app/templates/team/tasks_list.html:95 app/templates/team/tasks_list.html:162
+#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:56
+#: app/templates/team/tasks_list.html:97 app/templates/team/tasks_list.html:164
 msgid "الإجراءات"
 msgstr ""
 
@@ -1307,13 +1337,8 @@ msgid "موافقة"
 msgstr ""
 
 #: app/templates/team/task_detail.html:56
-#: app/templates/team/tasks_list.html:111
+#: app/templates/team/tasks_list.html:113
 msgid "حذف"
-msgstr ""
-
-#: app/templates/team/task_detail.html:62 app/templates/team/tasks_list.html:71
-#: app/templates/team/worker_report_form.html:24
-msgid "بدء"
 msgstr ""
 
 #: app/templates/team/task_detail.html:70
@@ -1387,133 +1412,110 @@ msgstr ""
 msgid "عرض صورة الدليل"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:7
+#: app/templates/team/tasks_list.html:8
 msgid "توزيع مهمة"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:16
+#: app/templates/team/tasks_list.html:17
 msgid "توزيع مهمة جديدة"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:19
+#: app/templates/team/tasks_list.html:20
 msgid "توزيع"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:21
+#: app/templates/team/tasks_list.html:22
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:53
+#: app/templates/team/tasks_list.html:54
 msgid "مهامي"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
+#: app/templates/team/tasks_list.html:164
 msgid "العنوان"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
 msgid "الحظيرة/الحيوان"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الموعد"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:61
-msgid "فات موعدها"
-msgstr ""
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "بانتظار:"
-msgstr ""
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "مقفلة"
-msgstr ""
-
-#: app/templates/team/tasks_list.html:74
-#: app/templates/team/worker_report_form.html:27
-msgid "إنجاز / تعذّر ←"
-msgstr ""
-
-#: app/templates/team/tasks_list.html:79
-msgid "ما عندك مهام حالياً."
-msgstr ""
-
-#: app/templates/team/tasks_list.html:87
+#: app/templates/team/tasks_list.html:89
 msgid "مهام مقترحة بانتظار الاعتماد"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:88
+#: app/templates/team/tasks_list.html:90
 msgid ""
 "مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
 "تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:107
 msgid "اعتماد وإرسال"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل ليوم واحد"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:116
+#: app/templates/team/tasks_list.html:118
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:123
+#: app/templates/team/tasks_list.html:125
 msgid "جدول المهام المعتمدة"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:124
+#: app/templates/team/tasks_list.html:126
 msgid ""
 "كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
 "عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "المكلَّف"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:131
+#: app/templates/team/tasks_list.html:133
 msgid "بدون تعيين"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:137
+#: app/templates/team/tasks_list.html:139
 msgid "لا يوجد مهام معتمدة حالياً."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:144
+#: app/templates/team/tasks_list.html:146
 msgid "مهام وزّعتها (نشطة)"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:151
+#: app/templates/team/tasks_list.html:153
 msgid "لا يوجد."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:160
+#: app/templates/team/tasks_list.html:162
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:164
 msgid "السبب"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:170
+#: app/templates/team/tasks_list.html:172
 msgid "استرجاع"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:178
+#: app/templates/team/tasks_list.html:180
 msgid "فاضي."
 msgstr ""
 

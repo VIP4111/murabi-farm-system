@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-01 23:47+0300\n"
+"POT-Creation-Date: 2026-08-02 01:51+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
 "Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: app/__init__.py:94
@@ -312,12 +312,12 @@ msgstr "Other reason"
 
 #: app/templates/_offline_widgets.html:7
 msgid ""
-"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع "
-"تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
+"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً "
+"وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
 msgstr ""
-"No internet connection right now — any data you enter on this page is saved "
-"locally and uploaded automatically once the connection returns, without you "
-"needing to do anything."
+"No internet connection right now — any data you enter on this page is "
+"saved locally and uploaded automatically once the connection returns, "
+"without you needing to do anything."
 
 #: app/templates/_offline_widgets.html:10
 msgid "بانتظار الرفع بجهازك"
@@ -329,15 +329,14 @@ msgstr "Entries rejected during sync — need your review"
 
 #: app/templates/_offline_widgets.html:24
 msgid ""
-"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما يرجع "
-"الاتصال."
+"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما "
+"يرجع الاتصال."
 msgstr ""
-"No internet right now — the data has been saved locally and will be uploaded"
-" automatically once the connection returns."
+"No internet right now — the data has been saved locally and will be "
+"uploaded automatically once the connection returns."
 
 #: app/templates/_offline_widgets.html:25
-msgid ""
-"رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
+msgid "رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
 msgstr ""
 "Rejected by the server during sync — review it and re-enter manually, or "
 "retry."
@@ -371,31 +370,30 @@ msgstr "Alert"
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr "Limited to the barns you're responsible for"
 
-#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:18
+#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:19
 msgid "حظيرة"
 msgstr "barn"
 
 #: app/templates/alerts_list.html:11
-msgid ""
-"ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
+msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
 msgstr ""
-"You're not responsible for any barn yet — ask the farm owner to assign you "
-"one."
+"You're not responsible for any barn yet — ask the farm owner to assign "
+"you one."
 
 #: app/templates/alerts_list.html:15
 msgid ""
 "عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
 "تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
 "حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر "
-"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم التحصينات). "
-"النافذة الزمنية من"
+"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم "
+"التحصينات). النافذة الزمنية من"
 msgstr ""
-"A live view derived directly from system data — vaccinations due, withdrawal"
-" periods ending soon, upcoming expected births, breeding-device reminders, "
-"long-open diseases, out-of-order animals, pending reports, animals ready for"
-" sale now, barns with no responsible worker, and expected stock shortages "
-"for upcoming scheduled vaccinations (vaccination calendar). The time window "
-"comes from"
+"A live view derived directly from system data — vaccinations due, "
+"withdrawal periods ending soon, upcoming expected births, breeding-device"
+" reminders, long-open diseases, out-of-order animals, pending reports, "
+"animals ready for sale now, barns with no responsible worker, and "
+"expected stock shortages for upcoming scheduled vaccinations (vaccination"
+" calendar). The time window comes from"
 
 #: app/templates/alerts_list.html:15
 msgid "الإعدادات"
@@ -410,8 +408,8 @@ msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "No alerts right now — all good."
 
 #: app/templates/base.html:318
-msgid "نظام إدارة الحلال"
-msgstr "Livestock Management System"
+msgid "مراح بو علي"
+msgstr "مراح بو علي"
 
 #: app/templates/base.html:335 app/templates/base.html:336
 #: app/templates/team/worker_report_form.html:6
@@ -528,11 +526,11 @@ msgstr "Climate & heat stress radar"
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:392 app/templates/team/tasks_list.html:5
+#: app/templates/base.html:392 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:393 app/templates/team/reports_list.html:5
+#: app/templates/base.html:393 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
@@ -633,8 +631,8 @@ msgid ""
 "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد "
 "تشغيلي عن المزرعة."
 msgstr ""
-"Ask me about the herd's status, pregnancy, incubators, feed, alerts, or any "
-"operational guidance about the farm."
+"Ask me about the herd's status, pregnancy, incubators, feed, alerts, or "
+"any operational guidance about the farm."
 
 #: app/templates/assistant/chat.html:47
 msgid "كم عدد الحيوانات؟"
@@ -712,8 +710,8 @@ msgstr "Record Disease Case"
 #: app/templates/health/vaccination_form.html:7
 #: app/templates/health/vet_visit_form.html:7
 msgid ""
-"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة"
-" تلقائياً."
+"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز "
+"المهمة تلقائياً."
 msgstr ""
 "Auto-filled from a planned treatment task — review before saving. Saving "
 "here automatically completes the task."
@@ -727,7 +725,7 @@ msgstr "Date"
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/vaccination_form.html:12
 #: app/templates/health/vet_visit_form.html:12
-#: app/templates/team/report_detail.html:11
+#: app/templates/team/report_detail.html:12
 msgid "الحيوان"
 msgstr "Animal"
 
@@ -804,8 +802,8 @@ msgstr "Override reason (if the repeat-antiparasitic-dose warning appeared)"
 #: app/templates/health/vet_visit_form.html:31
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr ""
-"Only fill this if the screen returned a warning — write the medical reason "
-"for repeating."
+"Only fill this if the screen returned a warning — write the medical "
+"reason for repeating."
 
 #: app/templates/health/disease_form.html:44
 #: app/templates/health/vaccination_form.html:28
@@ -904,6 +902,40 @@ msgstr "Clear heartbeat?"
 msgid "موعد إعادة الفحص"
 msgstr "Recheck date"
 
+#: app/templates/team/_my_tasks_rows.html:13
+msgid "فات موعدها"
+msgstr "Past due"
+
+#: app/templates/team/_my_tasks_rows.html:13
+#: app/templates/team/task_detail.html:9
+msgid "متأخرة"
+msgstr "Overdue"
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "بانتظار:"
+msgstr "Waiting on:"
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "مقفلة"
+msgstr "Locked"
+
+#: app/templates/team/_my_tasks_rows.html:23
+#: app/templates/team/task_detail.html:62
+#: app/templates/team/worker_report_form.html:24
+msgid "بدء"
+msgstr "Start"
+
+#: app/templates/team/_my_tasks_rows.html:26
+#: app/templates/team/worker_report_form.html:27
+msgid "إنجاز / تعذّر ←"
+msgstr "Complete / Fail ←"
+
+#: app/templates/team/_my_tasks_rows.html:31
+msgid "ما عندك مهام حالياً."
+msgstr "You have no tasks right now."
+
 #: app/templates/team/_report_widgets.html:20
 msgid "الجنس:"
 msgstr "Gender:"
@@ -955,193 +987,193 @@ msgstr "Recording..."
 msgid "تعذّر الوصول للمايكروفون:"
 msgstr "Could not access the microphone:"
 
-#: app/templates/team/report_detail.html:5
+#: app/templates/team/report_detail.html:6
 msgid "بلاغ"
 msgstr "Report"
 
-#: app/templates/team/report_detail.html:9
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/report_detail.html:10
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
 msgid "النوع"
 msgstr "Type"
 
-#: app/templates/team/report_detail.html:10
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:76
 msgid "رفعه"
 msgstr "Submitted by"
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "نعام"
 msgstr "Ostrich"
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "حلال (ضأن/ماعز)"
 msgstr "Livestock (sheep/goat)"
 
-#: app/templates/team/report_detail.html:22
+#: app/templates/team/report_detail.html:23
 #: app/templates/team/report_form.html:27
 #: app/templates/team/worker_report_form.html:45
 msgid "الحظيرة"
 msgstr "Barn"
 
-#: app/templates/team/report_detail.html:23
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
 msgid "الوصف"
 msgstr "Description"
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 msgid "صورة مرفقة"
 msgstr "Attached photo"
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 #: app/templates/team/task_detail.html:106
 msgid "عرض الصورة"
 msgstr "View photo"
 
-#: app/templates/team/report_detail.html:25
+#: app/templates/team/report_detail.html:26
 msgid "ملاحظة صوتية"
 msgstr "Voice note"
 
-#: app/templates/team/report_detail.html:26
+#: app/templates/team/report_detail.html:27
 msgid "الدكتور المسؤول"
 msgstr "Responsible doctor"
 
-#: app/templates/team/report_detail.html:27
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:28
+#: app/templates/team/report_detail.html:92
 msgid "محوّلة لـ"
 msgstr "Transferred to"
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "دليل التنفيذ"
 msgstr "Execution evidence"
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "صورة"
 msgstr "Photo"
 
-#: app/templates/team/report_detail.html:31
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:32
+#: app/templates/team/reports_list.html:76
 msgid "سبب الإلغاء"
 msgstr "Cancellation reason"
 
-#: app/templates/team/report_detail.html:32
-#: app/templates/team/report_detail.html:45
+#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:46
 msgid "سبب التأجيل"
 msgstr "Postponement reason"
 
-#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:34
 msgid "أغلقها"
 msgstr "Closed by"
 
-#: app/templates/team/report_detail.html:39
+#: app/templates/team/report_detail.html:40
 msgid "إجراءات (صندوق الوارد)"
 msgstr "Actions (inbox)"
 
-#: app/templates/team/report_detail.html:42
+#: app/templates/team/report_detail.html:43
 msgid "قبول البلاغ"
 msgstr "Accept report"
 
-#: app/templates/team/report_detail.html:46
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/report_detail.html:47
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل"
 msgstr "Postpone"
 
-#: app/templates/team/report_detail.html:48
+#: app/templates/team/report_detail.html:49
 msgid "تأكيد الإلغاء؟ تنتقل لصاحب الحلال."
 msgstr "Confirm cancellation? It goes to the farm owner."
 
-#: app/templates/team/report_detail.html:49
+#: app/templates/team/report_detail.html:50
 msgid "سبب الإلغاء (إلزامي)"
 msgstr "Cancellation reason (required)"
 
-#: app/templates/team/report_detail.html:50
+#: app/templates/team/report_detail.html:51
 msgid "إلغاء"
 msgstr "Cancel"
 
-#: app/templates/team/report_detail.html:59
+#: app/templates/team/report_detail.html:60
 msgid "رجّعه لصندوق الوارد"
 msgstr "Return to inbox"
 
-#: app/templates/team/report_detail.html:66
+#: app/templates/team/report_detail.html:67
 msgid "نفّذها بنفسك"
 msgstr "Execute it yourself"
 
-#: app/templates/team/report_detail.html:68
+#: app/templates/team/report_detail.html:69
 #: app/templates/team/task_detail.html:72
 msgid "ملاحظة (اختياري)"
 msgstr "Note (optional)"
 
-#: app/templates/team/report_detail.html:69
+#: app/templates/team/report_detail.html:70
 msgid "تنفيذ وإغلاق مباشرة"
 msgstr "Execute and close directly"
 
-#: app/templates/team/report_detail.html:73
+#: app/templates/team/report_detail.html:74
 msgid "أو حوّلها لعضو ثاني"
 msgstr "Or transfer it to another member"
 
-#: app/templates/team/report_detail.html:75
+#: app/templates/team/report_detail.html:76
 msgid "حوّل لـ"
 msgstr "Transfer to"
 
-#: app/templates/team/report_detail.html:83
+#: app/templates/team/report_detail.html:84
 msgid "تعليمات التنفيذ (إلزامي)"
 msgstr "Execution instructions (required)"
 
-#: app/templates/team/report_detail.html:84
+#: app/templates/team/report_detail.html:85
 msgid "تحويل"
 msgstr "Transfer"
 
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:92
 msgid "بانتظار تنفيذه."
 msgstr "Waiting for them to execute it."
 
-#: app/templates/team/report_detail.html:97
+#: app/templates/team/report_detail.html:98
 msgid "تسجيل الإنجاز"
 msgstr "Record completion"
 
-#: app/templates/team/report_detail.html:99
+#: app/templates/team/report_detail.html:100
 msgid "ملاحظة/دليل الإنجاز"
 msgstr "Completion note/evidence"
 
-#: app/templates/team/report_detail.html:100
+#: app/templates/team/report_detail.html:101
 msgid "رابط صورة (اختياري)"
 msgstr "Image link (optional)"
 
-#: app/templates/team/report_detail.html:101
+#: app/templates/team/report_detail.html:102
 #: app/templates/team/task_detail.html:78
 msgid "تم الإنجاز"
 msgstr "Done"
 
-#: app/templates/team/report_detail.html:108
+#: app/templates/team/report_detail.html:109
 msgid "مراجعة وإغلاق"
 msgstr "Review and close"
 
-#: app/templates/team/report_detail.html:110
+#: app/templates/team/report_detail.html:111
 msgid "ملاحظة إغلاق (اختياري)"
 msgstr "Closing note (optional)"
 
-#: app/templates/team/report_detail.html:111
+#: app/templates/team/report_detail.html:112
 msgid "إغلاق البلاغ"
 msgstr "Close report"
 
-#: app/templates/team/report_detail.html:118
-#: app/templates/team/tasks_list.html:172
+#: app/templates/team/report_detail.html:119
+#: app/templates/team/tasks_list.html:174
 msgid "حذف نهائي — ما يرجع. متأكد؟"
 msgstr "Permanent delete — cannot be undone. Are you sure?"
 
-#: app/templates/team/report_detail.html:119
-#: app/templates/team/tasks_list.html:173
+#: app/templates/team/report_detail.html:120
+#: app/templates/team/tasks_list.html:175
 msgid "حذف نهائي"
 msgstr "Permanent delete"
 
@@ -1153,8 +1185,8 @@ msgstr "Submit a new report"
 #: app/templates/team/worker_report_form.html:36
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ."
 msgstr ""
-"You must select at least the animal or the barn — so the report doesn't lose"
-" its tracking."
+"You must select at least the animal or the barn — so the report doesn't "
+"lose its tracking."
 
 #: app/templates/team/report_form.html:7
 msgid "القوائم أدناه مقصورة على حظائرك المسؤول عنها."
@@ -1200,64 +1232,63 @@ msgid ""
 "اضغط هنا وتقدر تختار \"الكاميرا\" لتصوير مباشر أو \"معرض الصور\" لصورة "
 "محفوظة عندك."
 msgstr ""
-"Tap here and you can choose \"Camera\" to shoot directly, or \"Gallery\" for"
-" a saved photo."
+"Tap here and you can choose \"Camera\" to shoot directly, or \"Gallery\" "
+"for a saved photo."
 
 #: app/templates/team/report_form.html:37
 msgid "رفع البلاغ"
 msgstr "Submit report"
 
-#: app/templates/team/reports_list.html:6
+#: app/templates/team/reports_list.html:7
 msgid "بلاغ جديد"
 msgstr "New report"
 
-#: app/templates/team/reports_list.html:22
+#: app/templates/team/reports_list.html:23
 msgid "صندوق الوارد (بلاغات جديدة)"
 msgstr "Inbox (new reports)"
 
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/tasks_list.html:55
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الحالة"
 msgstr "Status"
 
-#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:27
 msgid "صندوق الوارد فاضي."
 msgstr "Inbox is empty."
 
-#: app/templates/team/reports_list.html:32
+#: app/templates/team/reports_list.html:33
 msgid "بلاغات مستلمة مني"
 msgstr "Reports I've accepted"
 
-#: app/templates/team/reports_list.html:36
+#: app/templates/team/reports_list.html:37
 msgid "لا يوجد بلاغات مستلمة حالياً."
 msgstr "No accepted reports right now."
 
-#: app/templates/team/reports_list.html:43
+#: app/templates/team/reports_list.html:44
 msgid "محوّلة لي للتنفيذ"
 msgstr "Transferred to me for execution"
 
-#: app/templates/team/reports_list.html:47
+#: app/templates/team/reports_list.html:48
 msgid "لا يوجد بلاغات محوّلة لك حالياً."
 msgstr "No reports transferred to you right now."
 
-#: app/templates/team/reports_list.html:54
+#: app/templates/team/reports_list.html:55
 msgid "بلاغاتي المرفوعة"
 msgstr "My submitted reports"
 
-#: app/templates/team/reports_list.html:65
+#: app/templates/team/reports_list.html:66
 msgid "ما رفعت أي بلاغ بعد."
 msgstr "You haven't submitted any report yet."
 
-#: app/templates/team/reports_list.html:73
+#: app/templates/team/reports_list.html:74
 msgid "بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)"
 msgstr "Cancelled reports (awaiting final delete or archive)"
 
-#: app/templates/team/reports_list.html:85
+#: app/templates/team/reports_list.html:86
 msgid "لا يوجد بلاغات ملغاة."
 msgstr "No cancelled reports."
 
@@ -1269,10 +1300,6 @@ msgstr "Back to tasks"
 #: app/templates/team/worker_report_form.html:18
 msgid "الموعد:"
 msgstr "Due:"
-
-#: app/templates/team/task_detail.html:9 app/templates/team/tasks_list.html:61
-msgid "متأخرة"
-msgstr "Overdue"
 
 #: app/templates/team/task_detail.html:13
 msgid "تفصيل المهمة"
@@ -1322,9 +1349,8 @@ msgstr "Stock isn't enough for the whole batch"
 msgid "المهمة التالية بالسلسلة:"
 msgstr "Next task in the sequence:"
 
-#: app/templates/team/task_detail.html:42
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:56
+#: app/templates/team/tasks_list.html:97 app/templates/team/tasks_list.html:164
 msgid "الإجراءات"
 msgstr "Actions"
 
@@ -1337,15 +1363,9 @@ msgid "موافقة"
 msgstr "Approve"
 
 #: app/templates/team/task_detail.html:56
-#: app/templates/team/tasks_list.html:111
+#: app/templates/team/tasks_list.html:113
 msgid "حذف"
 msgstr "Delete"
-
-#: app/templates/team/task_detail.html:62
-#: app/templates/team/tasks_list.html:71
-#: app/templates/team/worker_report_form.html:24
-msgid "بدء"
-msgstr "Start"
 
 #: app/templates/team/task_detail.html:70
 msgid "إنجاز المهمة"
@@ -1361,8 +1381,7 @@ msgstr "Evidence photo (optional)"
 
 #: app/templates/team/task_detail.html:76
 msgid "تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض."
-msgstr ""
-"You can take a photo directly with the camera, or upload from the gallery."
+msgstr "You can take a photo directly with the camera, or upload from the gallery."
 
 #: app/templates/team/task_detail.html:83
 msgid "تعذّر التنفيذ"
@@ -1373,8 +1392,8 @@ msgid ""
 "لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور "
 "مباشرة."
 msgstr ""
-"If you couldn't complete the task, record the reason here instead of leaving"
-" it silent — it goes straight to the doctor."
+"If you couldn't complete the task, record the reason here instead of "
+"leaving it silent — it goes straight to the doctor."
 
 #: app/templates/team/task_detail.html:86
 #: app/templates/team/task_detail.html:104
@@ -1421,138 +1440,115 @@ msgstr "Note:"
 msgid "عرض صورة الدليل"
 msgstr "View evidence photo"
 
-#: app/templates/team/tasks_list.html:7
+#: app/templates/team/tasks_list.html:8
 msgid "توزيع مهمة"
 msgstr "Assign task"
 
-#: app/templates/team/tasks_list.html:16
+#: app/templates/team/tasks_list.html:17
 msgid "توزيع مهمة جديدة"
 msgstr "Assign a new task"
 
-#: app/templates/team/tasks_list.html:19
+#: app/templates/team/tasks_list.html:20
 msgid "توزيع"
 msgstr "Assign"
 
-#: app/templates/team/tasks_list.html:21
+#: app/templates/team/tasks_list.html:22
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
 msgstr "If there's an input error, the full page opens for you to fix it."
 
-#: app/templates/team/tasks_list.html:53
+#: app/templates/team/tasks_list.html:54
 msgid "مهامي"
 msgstr "My tasks"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
+#: app/templates/team/tasks_list.html:164
 msgid "العنوان"
 msgstr "Title"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
 msgid "الحظيرة/الحيوان"
 msgstr "Barn/animal"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الموعد"
 msgstr "Due date"
 
-#: app/templates/team/tasks_list.html:61
-msgid "فات موعدها"
-msgstr "Past due"
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "بانتظار:"
-msgstr "Waiting on:"
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "مقفلة"
-msgstr "Locked"
-
-#: app/templates/team/tasks_list.html:74
-#: app/templates/team/worker_report_form.html:27
-msgid "إنجاز / تعذّر ←"
-msgstr "Complete / Fail ←"
-
-#: app/templates/team/tasks_list.html:79
-msgid "ما عندك مهام حالياً."
-msgstr "You have no tasks right now."
-
-#: app/templates/team/tasks_list.html:87
+#: app/templates/team/tasks_list.html:89
 msgid "مهام مقترحة بانتظار الاعتماد"
 msgstr "Suggested tasks awaiting approval"
 
-#: app/templates/team/tasks_list.html:88
+#: app/templates/team/tasks_list.html:90
 msgid ""
-"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج "
-"اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
+"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
+"تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
 msgstr ""
 "Tasks auto-generated by the system's engines (vaccination/breeding/daily "
 "care...) — need your approval before they actually reach the assignee."
 
-#: app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:107
 msgid "اعتماد وإرسال"
 msgstr "Approve and send"
 
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل ليوم واحد"
 msgstr "Postpone by one day"
 
-#: app/templates/team/tasks_list.html:116
+#: app/templates/team/tasks_list.html:118
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr "No suggested tasks right now."
 
-#: app/templates/team/tasks_list.html:123
+#: app/templates/team/tasks_list.html:125
 msgid "جدول المهام المعتمدة"
 msgstr "Approved tasks table"
 
-#: app/templates/team/tasks_list.html:124
+#: app/templates/team/tasks_list.html:126
 msgid ""
-"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر "
-"المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
+"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
+"عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
 msgstr ""
 "All tasks that have actually been approved (automatic after approval, or "
 "manually assigned) across the whole farm — waiting for the assignee to "
 "execute and mark \"done\"."
 
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "المكلَّف"
 msgstr "Assignee"
 
-#: app/templates/team/tasks_list.html:131
+#: app/templates/team/tasks_list.html:133
 msgid "بدون تعيين"
 msgstr "Unassigned"
 
-#: app/templates/team/tasks_list.html:137
+#: app/templates/team/tasks_list.html:139
 msgid "لا يوجد مهام معتمدة حالياً."
 msgstr "No approved tasks right now."
 
-#: app/templates/team/tasks_list.html:144
+#: app/templates/team/tasks_list.html:146
 msgid "مهام وزّعتها (نشطة)"
 msgstr "Tasks I've assigned (active)"
 
-#: app/templates/team/tasks_list.html:151
+#: app/templates/team/tasks_list.html:153
 msgid "لا يوجد."
 msgstr "None."
 
-#: app/templates/team/tasks_list.html:160
+#: app/templates/team/tasks_list.html:162
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr "Owner review box (tasks deleted by the doctor)"
 
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:164
 msgid "السبب"
 msgstr "Reason"
 
-#: app/templates/team/tasks_list.html:170
+#: app/templates/team/tasks_list.html:172
 msgid "استرجاع"
 msgstr "Restore"
 
-#: app/templates/team/tasks_list.html:178
+#: app/templates/team/tasks_list.html:180
 msgid "فاضي."
 msgstr "Empty."
 
@@ -1585,3 +1581,7 @@ msgstr "Submit Report"
 
 #~ msgid "الحيوان المرتبط (اختياري)"
 #~ msgstr "Related animal (optional)"
+
+#~ msgid "نظام إدارة الحلال"
+#~ msgstr "Livestock Management System"
+

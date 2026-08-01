@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-01 23:47+0300\n"
+"POT-Creation-Date: 2026-08-02 01:51+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: hi <LL@li.org>\n"
 "Language: hi\n"
+"Language-Team: hi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: app/__init__.py:94
@@ -312,12 +312,12 @@ msgstr "अन्य कारण"
 
 #: app/templates/_offline_widgets.html:7
 msgid ""
-"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع "
-"تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
+"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً "
+"وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
 msgstr ""
-"अभी इंटरनेट कनेक्शन नहीं है — इस पेज पर आप जो भी डेटा दर्ज करते हैं वह आपके "
-"डिवाइस पर सुरक्षित रहेगा और कनेक्शन वापस आते ही अपने आप अपलोड हो जाएगा, आपको"
-" कुछ करने की ज़रूरत नहीं है।"
+"अभी इंटरनेट कनेक्शन नहीं है — इस पेज पर आप जो भी डेटा दर्ज करते हैं वह "
+"आपके डिवाइस पर सुरक्षित रहेगा और कनेक्शन वापस आते ही अपने आप अपलोड हो "
+"जाएगा, आपको कुछ करने की ज़रूरत नहीं है।"
 
 #: app/templates/_offline_widgets.html:10
 msgid "بانتظار الرفع بجهازك"
@@ -329,18 +329,17 @@ msgstr "सिंक के दौरान अस्वीकृत प्र�
 
 #: app/templates/_offline_widgets.html:24
 msgid ""
-"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما يرجع "
-"الاتصال."
+"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما "
+"يرجع الاتصال."
 msgstr ""
-"अभी इंटरनेट नहीं है — डेटा आपके डिवाइस पर सुरक्षित कर दिया गया है और कनेक्शन"
-" वापस आते ही अपने आप अपलोड हो जाएगा।"
+"अभी इंटरनेट नहीं है — डेटा आपके डिवाइस पर सुरक्षित कर दिया गया है और "
+"कनेक्शन वापस आते ही अपने आप अपलोड हो जाएगा।"
 
 #: app/templates/_offline_widgets.html:25
-msgid ""
-"رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
+msgid "رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
 msgstr ""
-"सिंक के दौरान सर्वर ने अस्वीकार किया — समीक्षा करके फिर से मैन्युअल रूप से "
-"दर्ज करें, या दोबारा प्रयास करें।"
+"सिंक के दौरान सर्वर ने अस्वीकार किया — समीक्षा करके फिर से मैन्युअल रूप "
+"से दर्ज करें, या दोबारा प्रयास करें।"
 
 #: app/templates/_offline_widgets.html:26
 msgid "إعادة المحاولة"
@@ -371,13 +370,12 @@ msgstr "सूचना"
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr "केवल उन बाड़ों तक सीमित जिनके आप ज़िम्मेदार हैं"
 
-#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:18
+#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:19
 msgid "حظيرة"
 msgstr "बाड़ा"
 
 #: app/templates/alerts_list.html:11
-msgid ""
-"ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
+msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
 msgstr ""
 "अभी आपके ज़िम्मे कोई बाड़ा नहीं है — फार्म मालिक से बाड़ा असाइन करने को "
 "कहें।"
@@ -387,14 +385,15 @@ msgid ""
 "عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
 "تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
 "حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر "
-"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم التحصينات). "
-"النافذة الزمنية من"
+"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم "
+"التحصينات). النافذة الزمنية من"
 msgstr ""
-"सिस्टम डेटा से सीधे बना लाइव व्यू — देय टीकाकरण, समाप्त होने वाली प्रतीक्षा "
-"अवधि, आगामी अपेक्षित प्रसव, प्रजनन उपकरण अनुस्मारक, लंबे समय से खुली "
-"बीमारियाँ, अनियमित क्रम वाले पशु, लंबित रिपोर्टें, अभी बिक्री के लिए तैयार "
-"पशु, बिना ज़िम्मेदार कर्मचारी के बाड़े, और आगामी निर्धारित टीकाकरण के लिए "
-"अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से आती है"
+"सिस्टम डेटा से सीधे बना लाइव व्यू — देय टीकाकरण, समाप्त होने वाली "
+"प्रतीक्षा अवधि, आगामी अपेक्षित प्रसव, प्रजनन उपकरण अनुस्मारक, लंबे समय से"
+" खुली बीमारियाँ, अनियमित क्रम वाले पशु, लंबित रिपोर्टें, अभी बिक्री के "
+"लिए तैयार पशु, बिना ज़िम्मेदार कर्मचारी के बाड़े, और आगामी निर्धारित "
+"टीकाकरण के लिए अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से "
+"आती है"
 
 #: app/templates/alerts_list.html:15
 msgid "الإعدادات"
@@ -409,8 +408,8 @@ msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "अभी कोई सूचना नहीं — सब ठीक है।"
 
 #: app/templates/base.html:318
-msgid "نظام إدارة الحلال"
-msgstr "पशुधन प्रबंधन प्रणाली"
+msgid "مراح بو علي"
+msgstr "مراح بو علي"
 
 #: app/templates/base.html:335 app/templates/base.html:336
 #: app/templates/team/worker_report_form.html:6
@@ -527,11 +526,11 @@ msgstr "जलवायु और गर्मी तनाव रडार"
 msgid "الفريق"
 msgstr "टीम"
 
-#: app/templates/base.html:392 app/templates/team/tasks_list.html:5
+#: app/templates/base.html:392 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "कार्य"
 
-#: app/templates/base.html:393 app/templates/team/reports_list.html:5
+#: app/templates/base.html:393 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्टें"
 
@@ -711,11 +710,11 @@ msgstr "बीमारी का मामला दर्ज करें"
 #: app/templates/health/vaccination_form.html:7
 #: app/templates/health/vet_visit_form.html:7
 msgid ""
-"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة"
-" تلقائياً."
+"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز "
+"المهمة تلقائياً."
 msgstr ""
-"एक नियोजित उपचार कार्य से स्वतः भरा गया — सहेजने से पहले समीक्षा करें। यहाँ "
-"सहेजने से कार्य स्वतः पूरा हो जाता है।"
+"एक नियोजित उपचार कार्य से स्वतः भरा गया — सहेजने से पहले समीक्षा करें। "
+"यहाँ सहेजने से कार्य स्वतः पूरा हो जाता है।"
 
 #: app/templates/health/disease_form.html:17
 #: app/templates/health/vaccination_form.html:11
@@ -726,7 +725,7 @@ msgstr "तारीख़"
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/vaccination_form.html:12
 #: app/templates/health/vet_visit_form.html:12
-#: app/templates/team/report_detail.html:11
+#: app/templates/team/report_detail.html:12
 msgid "الحيوان"
 msgstr "जानवर"
 
@@ -903,6 +902,40 @@ msgstr "स्पष्ट धड़कन?"
 msgid "موعد إعادة الفحص"
 msgstr "पुनः जांच की तारीख़"
 
+#: app/templates/team/_my_tasks_rows.html:13
+msgid "فات موعدها"
+msgstr "समय बीत गया"
+
+#: app/templates/team/_my_tasks_rows.html:13
+#: app/templates/team/task_detail.html:9
+msgid "متأخرة"
+msgstr "अतिदेय"
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "بانتظار:"
+msgstr "प्रतीक्षा में:"
+
+#: app/templates/team/_my_tasks_rows.html:20
+#: app/templates/team/worker_report_form.html:21
+msgid "مقفلة"
+msgstr "लॉक्ड"
+
+#: app/templates/team/_my_tasks_rows.html:23
+#: app/templates/team/task_detail.html:62
+#: app/templates/team/worker_report_form.html:24
+msgid "بدء"
+msgstr "शुरू करें"
+
+#: app/templates/team/_my_tasks_rows.html:26
+#: app/templates/team/worker_report_form.html:27
+msgid "إنجاز / تعذّر ←"
+msgstr "पूर्ण करें / विफल ←"
+
+#: app/templates/team/_my_tasks_rows.html:31
+msgid "ما عندك مهام حالياً."
+msgstr "अभी आपके पास कोई कार्य नहीं है।"
+
 #: app/templates/team/_report_widgets.html:20
 msgid "الجنس:"
 msgstr "लिंग:"
@@ -954,193 +987,193 @@ msgstr "रिकॉर्डिंग जारी है..."
 msgid "تعذّر الوصول للمايكروفون:"
 msgstr "माइक्रोफ़ोन तक पहुंच नहीं हो सकी:"
 
-#: app/templates/team/report_detail.html:5
+#: app/templates/team/report_detail.html:6
 msgid "بلاغ"
 msgstr "रिपोर्ट"
 
-#: app/templates/team/report_detail.html:9
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
+#: app/templates/team/report_detail.html:10
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
 msgid "النوع"
 msgstr "प्रकार"
 
-#: app/templates/team/report_detail.html:10
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:76
 msgid "رفعه"
 msgstr "प्रस्तुतकर्ता"
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "نعام"
 msgstr "शुतुरमुर्ग"
 
-#: app/templates/team/report_detail.html:15
+#: app/templates/team/report_detail.html:16
 msgid "حلال (ضأن/ماعز)"
 msgstr "पशुधन (भेड़/बकरी)"
 
-#: app/templates/team/report_detail.html:22
+#: app/templates/team/report_detail.html:23
 #: app/templates/team/report_form.html:27
 #: app/templates/team/worker_report_form.html:45
 msgid "الحظيرة"
 msgstr "बाड़ा"
 
-#: app/templates/team/report_detail.html:23
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/reports_list.html:76
 msgid "الوصف"
 msgstr "विवरण"
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 msgid "صورة مرفقة"
 msgstr "संलग्न फ़ोटो"
 
-#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_detail.html:25
 #: app/templates/team/task_detail.html:106
 msgid "عرض الصورة"
 msgstr "फ़ोटो देखें"
 
-#: app/templates/team/report_detail.html:25
+#: app/templates/team/report_detail.html:26
 msgid "ملاحظة صوتية"
 msgstr "ध्वनि नोट"
 
-#: app/templates/team/report_detail.html:26
+#: app/templates/team/report_detail.html:27
 msgid "الدكتور المسؤول"
 msgstr "ज़िम्मेदार डॉक्टर"
 
-#: app/templates/team/report_detail.html:27
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:28
+#: app/templates/team/report_detail.html:92
 msgid "محوّلة لـ"
 msgstr "स्थानांतरित किया गया"
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "دليل التنفيذ"
 msgstr "निष्पादन प्रमाण"
 
-#: app/templates/team/report_detail.html:29
+#: app/templates/team/report_detail.html:30
 msgid "صورة"
 msgstr "फ़ोटो"
 
-#: app/templates/team/report_detail.html:31
-#: app/templates/team/reports_list.html:75
+#: app/templates/team/report_detail.html:32
+#: app/templates/team/reports_list.html:76
 msgid "سبب الإلغاء"
 msgstr "रद्द करने का कारण"
 
-#: app/templates/team/report_detail.html:32
-#: app/templates/team/report_detail.html:45
+#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:46
 msgid "سبب التأجيل"
 msgstr "स्थगन का कारण"
 
-#: app/templates/team/report_detail.html:33
+#: app/templates/team/report_detail.html:34
 msgid "أغلقها"
 msgstr "बंद किया गया"
 
-#: app/templates/team/report_detail.html:39
+#: app/templates/team/report_detail.html:40
 msgid "إجراءات (صندوق الوارد)"
 msgstr "कार्रवाइयाँ (इनबॉक्स)"
 
-#: app/templates/team/report_detail.html:42
+#: app/templates/team/report_detail.html:43
 msgid "قبول البلاغ"
 msgstr "रिपोर्ट स्वीकार करें"
 
-#: app/templates/team/report_detail.html:46
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/report_detail.html:47
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل"
 msgstr "स्थगित करें"
 
-#: app/templates/team/report_detail.html:48
+#: app/templates/team/report_detail.html:49
 msgid "تأكيد الإلغاء؟ تنتقل لصاحب الحلال."
 msgstr "रद्द करने की पुष्टि करें? यह फार्म मालिक के पास जाएगा।"
 
-#: app/templates/team/report_detail.html:49
+#: app/templates/team/report_detail.html:50
 msgid "سبب الإلغاء (إلزامي)"
 msgstr "रद्द करने का कारण (आवश्यक)"
 
-#: app/templates/team/report_detail.html:50
+#: app/templates/team/report_detail.html:51
 msgid "إلغاء"
 msgstr "रद्द करें"
 
-#: app/templates/team/report_detail.html:59
+#: app/templates/team/report_detail.html:60
 msgid "رجّعه لصندوق الوارد"
 msgstr "इनबॉक्स में वापस भेजें"
 
-#: app/templates/team/report_detail.html:66
+#: app/templates/team/report_detail.html:67
 msgid "نفّذها بنفسك"
 msgstr "इसे स्वयं निष्पादित करें"
 
-#: app/templates/team/report_detail.html:68
+#: app/templates/team/report_detail.html:69
 #: app/templates/team/task_detail.html:72
 msgid "ملاحظة (اختياري)"
 msgstr "टिप्पणी (वैकल्पिक)"
 
-#: app/templates/team/report_detail.html:69
+#: app/templates/team/report_detail.html:70
 msgid "تنفيذ وإغلاق مباشرة"
 msgstr "सीधे निष्पादित करें और बंद करें"
 
-#: app/templates/team/report_detail.html:73
+#: app/templates/team/report_detail.html:74
 msgid "أو حوّلها لعضو ثاني"
 msgstr "या किसी अन्य सदस्य को स्थानांतरित करें"
 
-#: app/templates/team/report_detail.html:75
+#: app/templates/team/report_detail.html:76
 msgid "حوّل لـ"
 msgstr "स्थानांतरित करें"
 
-#: app/templates/team/report_detail.html:83
+#: app/templates/team/report_detail.html:84
 msgid "تعليمات التنفيذ (إلزامي)"
 msgstr "निष्पादन निर्देश (आवश्यक)"
 
-#: app/templates/team/report_detail.html:84
+#: app/templates/team/report_detail.html:85
 msgid "تحويل"
 msgstr "स्थानांतरित करें"
 
-#: app/templates/team/report_detail.html:91
+#: app/templates/team/report_detail.html:92
 msgid "بانتظار تنفيذه."
 msgstr "उनके निष्पादन की प्रतीक्षा में।"
 
-#: app/templates/team/report_detail.html:97
+#: app/templates/team/report_detail.html:98
 msgid "تسجيل الإنجاز"
 msgstr "पूर्णता दर्ज करें"
 
-#: app/templates/team/report_detail.html:99
+#: app/templates/team/report_detail.html:100
 msgid "ملاحظة/دليل الإنجاز"
 msgstr "पूर्णता नोट/प्रमाण"
 
-#: app/templates/team/report_detail.html:100
+#: app/templates/team/report_detail.html:101
 msgid "رابط صورة (اختياري)"
 msgstr "फ़ोटो लिंक (वैकल्पिक)"
 
-#: app/templates/team/report_detail.html:101
+#: app/templates/team/report_detail.html:102
 #: app/templates/team/task_detail.html:78
 msgid "تم الإنجاز"
 msgstr "पूर्ण हुआ"
 
-#: app/templates/team/report_detail.html:108
+#: app/templates/team/report_detail.html:109
 msgid "مراجعة وإغلاق"
 msgstr "समीक्षा करें और बंद करें"
 
-#: app/templates/team/report_detail.html:110
+#: app/templates/team/report_detail.html:111
 msgid "ملاحظة إغلاق (اختياري)"
 msgstr "समापन टिप्पणी (वैकल्पिक)"
 
-#: app/templates/team/report_detail.html:111
+#: app/templates/team/report_detail.html:112
 msgid "إغلاق البلاغ"
 msgstr "रिपोर्ट बंद करें"
 
-#: app/templates/team/report_detail.html:118
-#: app/templates/team/tasks_list.html:172
+#: app/templates/team/report_detail.html:119
+#: app/templates/team/tasks_list.html:174
 msgid "حذف نهائي — ما يرجع. متأكد؟"
 msgstr "स्थायी रूप से हटाएं — वापस नहीं किया जा सकता। क्या आप सुनिश्चित हैं?"
 
-#: app/templates/team/report_detail.html:119
-#: app/templates/team/tasks_list.html:173
+#: app/templates/team/report_detail.html:120
+#: app/templates/team/tasks_list.html:175
 msgid "حذف نهائي"
 msgstr "स्थायी रूप से हटाएं"
 
@@ -1151,13 +1184,11 @@ msgstr "नई रिपोर्ट सबमिट करें"
 #: app/templates/team/report_form.html:6
 #: app/templates/team/worker_report_form.html:36
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ."
-msgstr ""
-"कम से कम पशु या बाड़ा चुनना ज़रूरी है — ताकि रिपोर्ट का ट्रैकिंग न खोए।"
+msgstr "कम से कम पशु या बाड़ा चुनना ज़रूरी है — ताकि रिपोर्ट का ट्रैकिंग न खोए।"
 
 #: app/templates/team/report_form.html:7
 msgid "القوائم أدناه مقصورة على حظائرك المسؤول عنها."
-msgstr ""
-"नीचे दी गई सूचियाँ केवल उन बाड़ों तक सीमित हैं जिनके आप ज़िम्मेदार हैं।"
+msgstr "नीचे दी गई सूचियाँ केवल उन बाड़ों तक सीमित हैं जिनके आप ज़िम्मेदार हैं।"
 
 #: app/templates/team/report_form.html:8
 #: app/templates/team/worker_report_form.html:37
@@ -1199,64 +1230,63 @@ msgid ""
 "اضغط هنا وتقدر تختار \"الكاميرا\" لتصوير مباشر أو \"معرض الصور\" لصورة "
 "محفوظة عندك."
 msgstr ""
-"यहाँ टैप करें और सीधे फ़ोटो लेने के लिए \"कैमरा\" या सहेजी गई फ़ोटो के लिए "
-"\"गैलरी\" चुन सकते हैं।"
+"यहाँ टैप करें और सीधे फ़ोटो लेने के लिए \"कैमरा\" या सहेजी गई फ़ोटो के "
+"लिए \"गैलरी\" चुन सकते हैं।"
 
 #: app/templates/team/report_form.html:37
 msgid "رفع البلاغ"
 msgstr "रिपोर्ट सबमिट करें"
 
-#: app/templates/team/reports_list.html:6
+#: app/templates/team/reports_list.html:7
 msgid "بلاغ جديد"
 msgstr "नई रिपोर्ट"
 
-#: app/templates/team/reports_list.html:22
+#: app/templates/team/reports_list.html:23
 msgid "صندوق الوارد (بلاغات جديدة)"
 msgstr "इनबॉक्स (नई रिपोर्टें)"
 
-#: app/templates/team/reports_list.html:24
-#: app/templates/team/reports_list.html:34
-#: app/templates/team/reports_list.html:45
-#: app/templates/team/reports_list.html:56
-#: app/templates/team/tasks_list.html:55
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/reports_list.html:25
+#: app/templates/team/reports_list.html:35
+#: app/templates/team/reports_list.html:46
+#: app/templates/team/reports_list.html:57
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الحالة"
 msgstr "स्थिति"
 
-#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:27
 msgid "صندوق الوارد فاضي."
 msgstr "इनबॉक्स खाली है।"
 
-#: app/templates/team/reports_list.html:32
+#: app/templates/team/reports_list.html:33
 msgid "بلاغات مستلمة مني"
 msgstr "मेरे द्वारा स्वीकृत रिपोर्टें"
 
-#: app/templates/team/reports_list.html:36
+#: app/templates/team/reports_list.html:37
 msgid "لا يوجد بلاغات مستلمة حالياً."
 msgstr "अभी कोई स्वीकृत रिपोर्ट नहीं।"
 
-#: app/templates/team/reports_list.html:43
+#: app/templates/team/reports_list.html:44
 msgid "محوّلة لي للتنفيذ"
 msgstr "निष्पादन के लिए मुझे स्थानांतरित"
 
-#: app/templates/team/reports_list.html:47
+#: app/templates/team/reports_list.html:48
 msgid "لا يوجد بلاغات محوّلة لك حالياً."
 msgstr "अभी आपको कोई रिपोर्ट स्थानांतरित नहीं की गई।"
 
-#: app/templates/team/reports_list.html:54
+#: app/templates/team/reports_list.html:55
 msgid "بلاغاتي المرفوعة"
 msgstr "मेरी सबमिट की गई रिपोर्टें"
 
-#: app/templates/team/reports_list.html:65
+#: app/templates/team/reports_list.html:66
 msgid "ما رفعت أي بلاغ بعد."
 msgstr "आपने अभी तक कोई रिपोर्ट सबमिट नहीं की।"
 
-#: app/templates/team/reports_list.html:73
+#: app/templates/team/reports_list.html:74
 msgid "بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)"
 msgstr "रद्द की गई रिपोर्टें (अंतिम विलोपन या संग्रहण की प्रतीक्षा में)"
 
-#: app/templates/team/reports_list.html:85
+#: app/templates/team/reports_list.html:86
 msgid "لا يوجد بلاغات ملغاة."
 msgstr "कोई रद्द रिपोर्ट नहीं।"
 
@@ -1268,10 +1298,6 @@ msgstr "कार्यों पर वापस जाएं"
 #: app/templates/team/worker_report_form.html:18
 msgid "الموعد:"
 msgstr "नियत तारीख़:"
-
-#: app/templates/team/task_detail.html:9 app/templates/team/tasks_list.html:61
-msgid "متأخرة"
-msgstr "अतिदेय"
 
 #: app/templates/team/task_detail.html:13
 msgid "تفصيل المهمة"
@@ -1321,9 +1347,8 @@ msgstr "स्टॉक पूरे बैच के लिए पर्या�
 msgid "المهمة التالية بالسلسلة:"
 msgstr "क्रम में अगला कार्य:"
 
-#: app/templates/team/task_detail.html:42
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:56
+#: app/templates/team/tasks_list.html:97 app/templates/team/tasks_list.html:164
 msgid "الإجراءات"
 msgstr "कार्रवाइयाँ"
 
@@ -1336,15 +1361,9 @@ msgid "موافقة"
 msgstr "स्वीकृत करें"
 
 #: app/templates/team/task_detail.html:56
-#: app/templates/team/tasks_list.html:111
+#: app/templates/team/tasks_list.html:113
 msgid "حذف"
 msgstr "हटाएं"
-
-#: app/templates/team/task_detail.html:62
-#: app/templates/team/tasks_list.html:71
-#: app/templates/team/worker_report_form.html:24
-msgid "بدء"
-msgstr "शुरू करें"
 
 #: app/templates/team/task_detail.html:70
 msgid "إنجاز المهمة"
@@ -1371,8 +1390,8 @@ msgid ""
 "لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور "
 "مباشرة."
 msgstr ""
-"यदि आप कार्य पूरा नहीं कर सके, तो चुप रहने के बजाय यहाँ कारण दर्ज करें — यह "
-"सीधे डॉक्टर तक पहुँचता है।"
+"यदि आप कार्य पूरा नहीं कर सके, तो चुप रहने के बजाय यहाँ कारण दर्ज करें — "
+"यह सीधे डॉक्टर तक पहुँचता है।"
 
 #: app/templates/team/task_detail.html:86
 #: app/templates/team/task_detail.html:104
@@ -1419,138 +1438,115 @@ msgstr "टिप्पणी:"
 msgid "عرض صورة الدليل"
 msgstr "प्रमाण फ़ोटो देखें"
 
-#: app/templates/team/tasks_list.html:7
+#: app/templates/team/tasks_list.html:8
 msgid "توزيع مهمة"
 msgstr "कार्य असाइन करें"
 
-#: app/templates/team/tasks_list.html:16
+#: app/templates/team/tasks_list.html:17
 msgid "توزيع مهمة جديدة"
 msgstr "नया कार्य असाइन करें"
 
-#: app/templates/team/tasks_list.html:19
+#: app/templates/team/tasks_list.html:20
 msgid "توزيع"
 msgstr "असाइन करें"
 
-#: app/templates/team/tasks_list.html:21
+#: app/templates/team/tasks_list.html:22
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
 msgstr "यदि इनपुट में त्रुटि हो, तो सुधार के लिए पूरा पेज खुलेगा।"
 
-#: app/templates/team/tasks_list.html:53
+#: app/templates/team/tasks_list.html:54
 msgid "مهامي"
 msgstr "मेरे कार्य"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
+#: app/templates/team/tasks_list.html:164
 msgid "العنوان"
 msgstr "शीर्षक"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
 msgid "الحظيرة/الحيوان"
 msgstr "बाड़ा/पशु"
 
-#: app/templates/team/tasks_list.html:55 app/templates/team/tasks_list.html:95
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:56 app/templates/team/tasks_list.html:97
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "الموعد"
 msgstr "नियत तारीख़"
 
-#: app/templates/team/tasks_list.html:61
-msgid "فات موعدها"
-msgstr "समय बीत गया"
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "بانتظار:"
-msgstr "प्रतीक्षा में:"
-
-#: app/templates/team/tasks_list.html:68
-#: app/templates/team/worker_report_form.html:21
-msgid "مقفلة"
-msgstr "लॉक्ड"
-
-#: app/templates/team/tasks_list.html:74
-#: app/templates/team/worker_report_form.html:27
-msgid "إنجاز / تعذّر ←"
-msgstr "पूर्ण करें / विफल ←"
-
-#: app/templates/team/tasks_list.html:79
-msgid "ما عندك مهام حالياً."
-msgstr "अभी आपके पास कोई कार्य नहीं है।"
-
-#: app/templates/team/tasks_list.html:87
+#: app/templates/team/tasks_list.html:89
 msgid "مهام مقترحة بانتظار الاعتماد"
 msgstr "अनुमोदन की प्रतीक्षा में सुझाए गए कार्य"
 
-#: app/templates/team/tasks_list.html:88
+#: app/templates/team/tasks_list.html:90
 msgid ""
-"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج "
-"اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
+"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
+"تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
 msgstr ""
-"सिस्टम के इंजनों द्वारा स्वतः बनाए गए कार्य (टीकाकरण/प्रजनन/दैनिक देखभाल...)"
-" — असाइनी तक पहुँचने से पहले आपके अनुमोदन की आवश्यकता है।"
+"सिस्टम के इंजनों द्वारा स्वतः बनाए गए कार्य (टीकाकरण/प्रजनन/दैनिक "
+"देखभाल...) — असाइनी तक पहुँचने से पहले आपके अनुमोदन की आवश्यकता है।"
 
-#: app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:107
 msgid "اعتماد وإرسال"
 msgstr "अनुमोदित करें और भेजें"
 
-#: app/templates/team/tasks_list.html:108
+#: app/templates/team/tasks_list.html:110
 msgid "تأجيل ليوم واحد"
 msgstr "एक दिन के लिए स्थगित करें"
 
-#: app/templates/team/tasks_list.html:116
+#: app/templates/team/tasks_list.html:118
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr "अभी कोई सुझाया गया कार्य नहीं।"
 
-#: app/templates/team/tasks_list.html:123
+#: app/templates/team/tasks_list.html:125
 msgid "جدول المهام المعتمدة"
 msgstr "अनुमोदित कार्यों की तालिका"
 
-#: app/templates/team/tasks_list.html:124
+#: app/templates/team/tasks_list.html:126
 msgid ""
-"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر "
-"المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
+"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
+"عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
 msgstr ""
 "खेत भर में सभी वास्तव में अनुमोदित कार्य (अनुमोदन के बाद स्वचालित, या "
 "मैन्युअल रूप से असाइन) — असाइनी के निष्पादन और \"पूर्ण\" चिह्नित करने की "
 "प्रतीक्षा में।"
 
-#: app/templates/team/tasks_list.html:126
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:128
+#: app/templates/team/tasks_list.html:148
 msgid "المكلَّف"
 msgstr "असाइनी"
 
-#: app/templates/team/tasks_list.html:131
+#: app/templates/team/tasks_list.html:133
 msgid "بدون تعيين"
 msgstr "असाइन नहीं किया गया"
 
-#: app/templates/team/tasks_list.html:137
+#: app/templates/team/tasks_list.html:139
 msgid "لا يوجد مهام معتمدة حالياً."
 msgstr "अभी कोई अनुमोदित कार्य नहीं।"
 
-#: app/templates/team/tasks_list.html:144
+#: app/templates/team/tasks_list.html:146
 msgid "مهام وزّعتها (نشطة)"
 msgstr "मेरे द्वारा असाइन किए गए कार्य (सक्रिय)"
 
-#: app/templates/team/tasks_list.html:151
+#: app/templates/team/tasks_list.html:153
 msgid "لا يوجد."
 msgstr "कोई नहीं।"
 
-#: app/templates/team/tasks_list.html:160
+#: app/templates/team/tasks_list.html:162
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr "मालिक समीक्षा बॉक्स (डॉक्टर द्वारा हटाए गए कार्य)"
 
-#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:164
 msgid "السبب"
 msgstr "कारण"
 
-#: app/templates/team/tasks_list.html:170
+#: app/templates/team/tasks_list.html:172
 msgid "استرجاع"
 msgstr "पुनर्स्थापित करें"
 
-#: app/templates/team/tasks_list.html:178
+#: app/templates/team/tasks_list.html:180
 msgid "فاضي."
 msgstr "खाली।"
 
@@ -1583,3 +1579,7 @@ msgstr "रिपोर्ट भेजें"
 
 #~ msgid "الحيوان المرتبط (اختياري)"
 #~ msgstr "संबंधित पशु (वैकल्पिक)"
+
+#~ msgid "نظام إدارة الحلال"
+#~ msgstr "पशुधन प्रबंधन प्रणाली"
+

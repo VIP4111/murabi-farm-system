@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}نظام إدارة الحلال{% endblock %}</title>
+  <title>{% block title %}مراح بو علي{% endblock %}</title>
   {% if current_user.is_authenticated %}
   {# دعم العمل بدون إنترنت (بند 41، وسِّع لكل الأدوار والشاشات ببند 53) —
      كان مقصوراً على عامل/دكتور/ممرض بثمانية شاشات ميدانية فقط؛ صار متاحاً
@@ -315,7 +315,7 @@
     {% if current_user.is_authenticated %}<button class="icon-btn" onclick="openDrawer()">☰</button>{% endif %}
     <div class="brand">
       <div class="logo">🐑</div>
-      <h1>{{ _('نظام إدارة الحلال') }}</h1>
+      <h1>{{ _('مراح بو علي') }}</h1>
     </div>
     {% if current_user.is_authenticated %}<span style="color:var(--muted); font-size:13px;">{{ current_user.name }}</span>{% endif %}
   </div>
