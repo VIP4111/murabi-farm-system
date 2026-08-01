@@ -26,11 +26,41 @@ class User(UserMixin, db.Model):
     is_active_account = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DateTime, default=_now)
 
+    # قفل بعد محاولات دخول فاشلة متكررة (بند إضافي 86، 2026-08-02) —
+    # ما فيه أي حد سابق لعدد المحاولات، يعني أي حد يقدر يجرّب كلمات مرور
+    # بلا نهاية على أي رقم جوال. 5 محاولات فاشلة متتالية = قفل 15 دقيقة.
+    # يُصفَّر عند أول دخول ناجح.
+    failed_login_attempts = db.Column(db.Integer, default=0, nullable=False)
+    locked_until = db.Column(db.DateTime, nullable=True)
+
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)
 
     def check_password(self, raw_password: str) -> bool:
         return check_password_hash(self.password_hash, raw_password)
+
+    LOCKOUT_THRESHOLD = 5
+    LOCKOUT_MINUTES = 15
+
+    @staticmethod
+    def _now_naive_utc():
+        # SQLite يخزّن DateTime بدون معلومة المنطقة الزمنية (naive) — لازم
+        # نقارن بنفس النوع، وإلا TypeError عند المقارنة (aware مقابل naive).
+        # عمداً منفصلة عن _now() المشترَكة (تُستخدم لأعمدة تُعرَض بس، مو تُقارَن).
+        return datetime.now(timezone.utc).replace(tzinfo=None)
+
+    def is_locked(self) -> bool:
+        return bool(self.locked_until and self.locked_until > self._now_naive_utc())
+
+    def register_failed_login(self) -> None:
+        from datetime import timedelta
+        self.failed_login_attempts = (self.failed_login_attempts or 0) + 1
+        if self.failed_login_attempts >= self.LOCKOUT_THRESHOLD:
+            self.locked_until = self._now_naive_utc() + timedelta(minutes=self.LOCKOUT_MINUTES)
+
+    def register_successful_login(self) -> None:
+        self.failed_login_attempts = 0
+        self.locked_until = None
 
     # Flask-Login يحتاج is_active (اسم مختلف عن حقلنا is_active_account)
     @property

@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flask_babel import gettext as _
 
 from app.auth import auth_bp
+from app.extensions import db
 from app.models import User
 
 
@@ -29,7 +30,17 @@ def login():
         password = request.form.get("password", "")
         user = User.query.filter_by(phone=phone).first()
 
+        # قفل بعد محاولات فاشلة متكررة (بند إضافي 86) — ما كان فيه أي حد
+        # سابق، يعني بروت-فورس بلا نهاية على أي رقم جوال معروف. نتحقق من
+        # القفل قبل حتى فحص كلمة المرور، عشان محاولة صحيحة أثناء القفل
+        # ما تمرّ سهواً.
+        if user and user.is_locked():
+            flash(_("الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد 15 دقيقة."), "error")
+            return render_template("login.html")
+
         if user and user.is_active_account and user.check_password(password):
+            user.register_successful_login()
+            db.session.commit()
             # remember=True (كوكي دخول طويل الأمد) — ضروري لدعم العمل بدون
             # إنترنت (عامل/دكتور/ممرض): لو تطبيق الـPWA أُغلق تماماً بالجوال
             # وهو أوف لاين، لازم الجلسة تبقى صالحة لما يرجع الاتصال عشان
@@ -38,6 +49,10 @@ def login():
             # مو تطبيق عام لمستخدمين غرباء).
             login_user(user, remember=True)
             return redirect(url_for("core.home"))
+
+        if user and user.is_active_account:
+            user.register_failed_login()
+            db.session.commit()
 
         flash(_("رقم الجوال أو كلمة المرور غير صحيحة"), "error")
 
