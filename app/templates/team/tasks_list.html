@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import status_badge %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -62,7 +63,7 @@
       <td>{{ t.task_type|ar_task_type }}</td>
       <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
       <td>{{ t.due_date or '-' }}</td>
-      <td><span class="badge" data-state="{{ t.status|task_badge_state }}">{{ t.status|ar_status }}</span></td>
+      <td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td>
       <td class="actions-col">
         {% if locked %}
         <span class="badge off" title="{{ _('بانتظار:') }} {{ t.depends_on.title }}">🔒 {{ _('مقفلة') }}</span>
@@ -131,7 +132,7 @@
       <td>{{ t.assignee.name if t.assignee else _('بدون تعيين') }}</td>
       <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
       <td>{{ t.due_date or '-' }}</td>
-      <td>{{ t.status|ar_status }}</td>
+      <td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td>
     </tr>
     {% else %}
     <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد مهام معتمدة حالياً.') }}</td></tr>
@@ -146,7 +147,7 @@
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
     <tbody>
     {% for t in assigned_by_me %}
-    <tr><td>{{ t.title }}</td><td>{{ t.assignee.name if t.assignee else '-' }}</td><td>{{ t.due_date or '-' }}</td><td>{{ t.status|ar_status }}</td></tr>
+    <tr><td>{{ t.title }}</td><td>{{ t.assignee.name if t.assignee else '-' }}</td><td>{{ t.due_date or '-' }}</td><td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td></tr>
     {% else %}
     <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد.') }}</td></tr>
     {% endfor %}

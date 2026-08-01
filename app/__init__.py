@@ -182,19 +182,28 @@ def create_app(config_class=Config):
     # تحويل حالة المهمة إلى إحدى 5 حالات شارة موحّدة (نظام تصميم
     # claude.ai/design، بند إضافي 76) — Task.status له أكثر من 5 قيمة
     # فعلية، فهذا تجميع بصري بس (fallback "pending" الأكثر حياداً)،
-    # القيمة الفعلية المخزّنة ما تتغيّر.
-    TASK_STATUS_BADGE_STATE = {
+    # القيمة الفعلية المخزّنة ما تتغيّر. عُمِّم لكل قيم STATUS_LABELS_AR
+    # (بند إضافي 80، إعادة استخدام المكوّنات) — مو مقصور على المهام بس،
+    # عشان أي شاشة ثانية (بلاغات، أدوية، بروتوكولات...) تقدر تستخدم نفس
+    # الشارة الموحّدة بدل تكرار منطق التلوين بكل قالب.
+    STATUS_BADGE_STATE = {
         "pending": "pending", "suggested": "pending", "postponed": "pending",
-        "executed_pending_review": "pending",
-        "in_progress": "active",
-        "done": "completed", "completed": "completed",
-        "failed": "overdue",
+        "executed_pending_review": "pending", "new": "pending", "unpaid": "pending",
+        "in_progress": "active", "active": "active", "eligible": "active",
+        "done": "completed", "completed": "completed", "paid": "completed",
+        "closed": "completed", "sold": "completed", "confirmed": "completed",
+        "failed": "overdue", "out_of_order": "overdue",
         "cancelled": "cancelled", "deleted_pending_review": "cancelled", "deleted": "cancelled",
+        "inactive": "cancelled", "dead": "cancelled", "not_eligible": "cancelled",
     }
+
+    @app.template_filter("status_badge_state")
+    def status_badge_state(value):
+        return STATUS_BADGE_STATE.get(value, "pending")
 
     @app.template_filter("task_badge_state")
     def task_badge_state(value):
-        return TASK_STATUS_BADGE_STATE.get(value, "pending")
+        return STATUS_BADGE_STATE.get(value, "pending")
 
     @app.route("/_healthz")
     def health():

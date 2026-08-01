@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% from "_macros.html" import status_badge %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('بلاغ') }} #{{ r.id }}</h2>
-    <span class="badge {{ 'on' if r.status in ['new','accepted'] else 'off' }}">{{ r.status|ar_status }}</span>
+    {{ status_badge(r.status|status_badge_state, r.status|ar_status) }}
   </div>
   <table>
     <tr><td>{{ _('النوع') }}</td><td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td></tr>

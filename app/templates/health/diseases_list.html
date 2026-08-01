@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import status_badge %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -13,7 +14,7 @@
     {% for d in diseases %}
     <tr>
       <td>{{ d.date }}</td><td>{{ d.animal.animal_no }}</td><td>{{ d.disease_name }}</td>
-      <td>{{ d.severity or '-' }}</td><td>{{ d.status|ar_status }}</td>
+      <td>{{ d.severity or '-' }}</td><td>{{ status_badge(d.status|status_badge_state, d.status|ar_status) }}</td>
       <td>{% if d.withdrawal_until %}<span class="badge off">{{ d.withdrawal_until }}</span>{% else %}-{% endif %}</td>
       <td>
         {% if d.status == 'active' and current_user.has_permission('health.manage') %}

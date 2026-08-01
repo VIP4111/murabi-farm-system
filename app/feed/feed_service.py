@@ -165,7 +165,11 @@ def _check_copper_toxicity(feed: Feed, animal_id) -> None:
     """حظر نحاس سلالة النعيمي على مستوى العلف (بند إضافي 51) — نفس
     منطق `health_service._check_copper_toxicity` بالضبط، لكن مقصور
     على حركات علف مرتبطة برأس محدد (بقرارك الصريح — حركات مستوى
-    الحظيرة العامة بدون animal_id لا تُفحص)."""
+    الحظيرة العامة بدون animal_id لا تُفحص).
+
+    **قرار متعمَّد (بند إضافي 80، 2026-08-02)**: "نعيمي" تبقى مطابقة
+    نص ثابتة بالكود عمداً، مو حقل قابل للتعديل من الواجهة — راجع نفس
+    الملاحظة بـ`health_service._check_copper_toxicity` للتفاصيل."""
     if not feed.contains_high_copper or not animal_id:
         return
     from app.models import Animal

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import status_badge %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -13,7 +14,7 @@
   <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
   <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
   <td>{{ r.reporter.name }}</td>
-  <td>{{ r.status|ar_status }}</td>
+  <td>{{ status_badge(r.status|status_badge_state, r.status|ar_status) }}</td>
 </tr>
 {% endmacro %}
 
@@ -59,7 +60,7 @@
       <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
       <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
       <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
-      <td>{{ r.status|ar_status }}</td>
+      <td>{{ status_badge(r.status|status_badge_state, r.status|ar_status) }}</td>
     </tr>
     {% else %}
     <tr><td colspan="4" style="color:#888;">{{ _('ما رفعت أي بلاغ بعد.') }}</td></tr>
