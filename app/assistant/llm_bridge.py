@@ -26,7 +26,12 @@ SYSTEM_PROMPT_TEMPLATE = """أنت المساعد الذكي لنظام "مرب�
 {context}
 """
 
-DEFAULT_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-opus-4-8")
+# بند إضافي 84، 2026-08-02 — القيمة القديمة "claude-opus-4-8" مو معرِّف
+# نموذج حقيقي إطلاقاً (خطأ كتابي من بند 25، ما اكتُشف لأن ask() يبتلع
+# كل الاستثناءات ويرجع None بصمت — لو حد فعّل المفتاح، كانت كل محاولة
+# تفشل بصمت وترجع لنفس "لم أفهم سؤالك" بدون أي مؤشر خطأ). صار
+# claude-sonnet-5 (قدرة عالية وتكلفة معقولة، الافتراضي الموصى به حالياً).
+DEFAULT_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5")
 
 
 def is_configured() -> bool:
@@ -52,5 +57,14 @@ def ask(question: str, context_text: str) -> str | None:
         )
         text = next((b.text for b in response.content if b.type == "text"), None)
         return text.strip() if text else None
-    except Exception:
+    except Exception as e:
+        # نبتلع الاستثناء عمداً (المستخدم يرجع لـfallback محلي سلس)، لكن
+        # نسجّله بسجلات السيرفر — بدون هذا، خطأ إعداد حقيقي (مفتاح غلط،
+        # اسم نموذج غلط زي الخطأ اللي اكتشفناه بند 84) يختفي بصمت للأبد
+        # ومستحيل تشخيصه لاحقاً.
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.ask failed: %s", e)
+        except Exception:
+            pass
         return None
