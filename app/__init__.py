@@ -170,6 +170,23 @@ def create_app(config_class=Config):
     def ar_report_type(value):
         return REPORT_TYPE_LABELS_AR.get(value, value)
 
+    # تحويل حالة المهمة إلى إحدى 5 حالات شارة موحّدة (نظام تصميم
+    # claude.ai/design، بند إضافي 76) — Task.status له أكثر من 5 قيمة
+    # فعلية، فهذا تجميع بصري بس (fallback "pending" الأكثر حياداً)،
+    # القيمة الفعلية المخزّنة ما تتغيّر.
+    TASK_STATUS_BADGE_STATE = {
+        "pending": "pending", "suggested": "pending", "postponed": "pending",
+        "executed_pending_review": "pending",
+        "in_progress": "active",
+        "done": "completed", "completed": "completed",
+        "failed": "overdue",
+        "cancelled": "cancelled", "deleted_pending_review": "cancelled", "deleted": "cancelled",
+    }
+
+    @app.template_filter("task_badge_state")
+    def task_badge_state(value):
+        return TASK_STATUS_BADGE_STATE.get(value, "pending")
+
     @app.route("/_healthz")
     def health():
         # فحص تقني بسيط لتشغيل السيرفر - غير مرتبط بوحدة الصحة البيطرية

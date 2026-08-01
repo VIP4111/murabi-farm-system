@@ -62,7 +62,7 @@
       <td>{{ t.task_type|ar_task_type }}</td>
       <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
       <td>{{ t.due_date or '-' }}</td>
-      <td>{{ t.status|ar_status }}</td>
+      <td><span class="badge" data-state="{{ t.status|task_badge_state }}">{{ t.status|ar_status }}</span></td>
       <td class="actions-col">
         {% if locked %}
         <span class="badge off" title="{{ _('بانتظار:') }} {{ t.depends_on.title }}">🔒 {{ _('مقفلة') }}</span>

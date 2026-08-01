@@ -29,6 +29,14 @@
       --line:#eadfce;
       --shadow:0 12px 30px rgba(70,45,25,.12);
       --radius:22px;
+
+      /* مقياس مسافات/أنصاف أقطار موثَّق (نظام تصميم claude.ai/design،
+         بند إضافي 76، 2026-08-01) — توثيق وتسمية للقيم المتفرقة
+         الموجودة أصلاً بالقوالب، بدون تغيير أي قيمة حالية. تُستخدم فقط
+         بمكوّنات جديدة/معدَّلة من الآن، القوالب الحالية غير مُلزَمة. */
+      --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+      --space-5:24px; --space-6:32px; --space-7:48px;
+      --radius-sm:10px; --radius-md:16px; --radius-lg:22px; --radius-full:999px;
     }
 
     *{box-sizing:border-box}
@@ -187,6 +195,34 @@
     }
     .badge.on{background:#f2fbf5; color:#146c3a; border-color:#b7e4c7;}
     .badge.off{background:#fff5f2; color:#8b1e16; border-color:#ffd0c7;}
+
+    /* شارات حالة موحّدة بـ5 دلالات ثابتة (نظام تصميم claude.ai/design،
+       بند إضافي 76) — إضافية، ما تلغي .badge.on/.off الموجودة بكل
+       الموقع. استخدام جديد: <span class="badge" data-state="active">. */
+    .badge[data-state]{border:none; font-weight:700;}
+    .badge[data-state]::before{content:""; width:7px; height:7px; border-radius:50%; flex:0 0 auto;}
+    .badge[data-state="active"]{background:#e8f7ee; color:#1c8a46;}
+    .badge[data-state="active"]::before{background:#23a455;}
+    .badge[data-state="pending"]{background:#fbf0dc; color:#a86a0a;}
+    .badge[data-state="pending"]::before{background:#d68910;}
+    .badge[data-state="overdue"]{background:#fbe7e4; color:#a5301f;}
+    .badge[data-state="overdue"]::before{background:#c0392b;}
+    .badge[data-state="completed"]{background:#f1e9df; color:#6f4e2f;}
+    .badge[data-state="completed"]::before{background:#6f4e2f;}
+    .badge[data-state="cancelled"]{background:#efe9e0; color:#7b6b5c;}
+    .badge[data-state="cancelled"]::before{background:#7b6b5c;}
+
+    /* كثافة عرض "العامل" (نظام تصميم claude.ai/design، بند إضافي 76) —
+       نفس المكوّنات (.btn) بحجم لمس أكبر، تُفعَّل بإضافة سمة data-density
+       بقيمة comfortable على عنصر غلاف (مطبَّقة على وسم main بأسفل هذا
+       الملف لدور العامل تحديداً) بدل تصميم منفصل. أخصّية CSS لقواعد
+       table.compact-table الحالية أعلى، فما تتأثر أزرارها الصغيرة بهذا
+       التكبير. */
+    [data-density="comfortable"] .btn{
+      font-size:19px; padding:18px 32px; border-radius:18px;
+      min-height:56px; display:inline-flex; align-items:center; justify-content:center;
+    }
+    [data-density="comfortable"] .btn.light{border-width:2px;}
 
     input, select, textarea{
       width:100%; border:1px solid var(--line); background:#fff; border-radius:16px;
@@ -403,7 +439,7 @@
   </script>
   {% endif %}
 
-  <main>
+  <main{% if current_user.is_authenticated and current_user.role.name == 'worker' %} data-density="comfortable"{% endif %}>
     {% if current_user.is_authenticated %}
     {# مؤشرات الأوف لاين (بند 53) — موحَّدة بكل الموقع الآن بدل تكرارها
        بكل قالب نموذج على حدة، بما إن offline_sync.js صار عاماً لكل
