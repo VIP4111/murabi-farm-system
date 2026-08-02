@@ -218,6 +218,8 @@ def complete_task_via_treatment(task: Task, *, actor) -> Task:
 
     if task.task_type == "protocol_step":
         _maybe_close_protocol_application(task)
+    if task.task_type == "isolation_check":
+        _maybe_close_isolation_plan(task)
 
     db.session.commit()
     return task
@@ -299,8 +301,50 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
     if task.task_type == "protocol_step":
         _maybe_close_protocol_application(task)
 
+    if task.task_type == "isolation_check":
+        _maybe_close_isolation_plan(task)
+
     db.session.commit()
     return task
+
+
+def _maybe_close_isolation_plan(task: Task) -> None:
+    """إغلاق تلقائي لخطة العزل بعد الولادة (بند إضافي 102) — قبل هذا،
+    `start_isolation_plan` (بند 4) كانت تولّد سلسلة مهام "فحص عزل يومي"
+    (`isolation_check`) بعدد أيام العزل المضبوط بالإعدادات، وتتوقف
+    السلسلة بصمت بعد آخر يوم — ما فيه أي مهمة ختامية تؤكد إن العزل خلص
+    فعلياً وصار آمن يخلط الأم والمولود بباقي القطيع.
+
+    تُستدعى فقط لما آخر مهمة `isolation_check` بنفس `source_id`
+    (المولود) توصل لحالة نهائية. مقيَّدة بـ`task_type == "isolation_check"`
+    بس (يُتحقَّق منه بمكان الاستدعاء) عشان مهمة التأكيد نفسها ما تعيد
+    تشغيل هذا المنطق."""
+    if task.source_type != "IsolationPlan" or not task.source_id:
+        return
+    remaining_open = Task.query.filter(
+        Task.source_type == "IsolationPlan", Task.source_id == task.source_id,
+        Task.task_type == "isolation_check", Task.id != task.id,
+        Task.status.in_(OPEN_TASK_STATUSES),
+    ).count()
+    if remaining_open:
+        return
+    from app.models import Animal
+    newborn = Animal.query.get(task.source_id)
+    if not newborn:
+        return
+    mother = newborn.mother
+    title = f"✅ تأكيد انتهاء العزل — جاهز للاختلاط بالقطيع — {newborn.animal_no}"
+    if mother:
+        title += f" وأمه {mother.animal_no}"
+    create_suggested_task(
+        title=title,
+        task_type="isolation_release_check",
+        barn_id=task.barn_id, animal_id=newborn.id,
+        due_date=date.today(),
+        source_type="IsolationPlan", source_id=newborn.id,
+        notes="كل أيام العزل اليومية المجدولة اكتملت (منجزة/فاشلة/ملغاة) — "
+              "تأكد الأم والمولود بصحة جيدة قبل ما تنقلهم من حظيرة العزل.",
+    )
 
 
 def _maybe_close_protocol_application(task: Task) -> None:
@@ -379,6 +423,8 @@ def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, 
 
     if task.task_type == "protocol_step":
         _maybe_close_protocol_application(task)
+    if task.task_type == "isolation_check":
+        _maybe_close_isolation_plan(task)
 
     db.session.commit()
     return task

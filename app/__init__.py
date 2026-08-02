@@ -168,6 +168,7 @@ def create_app(config_class=Config):
         "shearing": _l("جزّ صوف"),
         "sonar_recheck": _l("إعادة فحص سونار"),
         "protocol_effectiveness_review": _l("تقييم فعالية العلاج"),
+        "isolation_release_check": _l("تأكيد انتهاء العزل"),
     }
 
     @app.template_filter("ar_task_type")
