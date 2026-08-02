@@ -18,6 +18,18 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # حماية كوكي الجلسة (بند إضافي 87، 2026-08-02، نقطة 5 من التحليل
+    # الثاني) — قبل هذا ما كان فيه أي إعداد صريح، يعني كوكي الدخول ممكن
+    # تُرسَل حتى بوصلة HTTP غير مشفّرة لو حد اعترض حركة الشبكة. نفعّلها
+    # تلقائياً على Render (يضبط RENDER=true بنفسه، والموقع دايماً HTTPS
+    # هناك)، وتبقى معطّلة محلياً/بالمعاينة عشان ما تكسر تسجيل الدخول على
+    # http://localhost أثناء التطوير والاختبار.
+    _on_render = os.environ.get("RENDER", "").lower() == "true"
+    SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "true" if _on_render else "false").lower() == "true"
+    SESSION_COOKIE_SAMESITE = "Lax"
+    REMEMBER_COOKIE_SECURE = SESSION_COOKIE_SECURE
+    REMEMBER_COOKIE_SAMESITE = "Lax"
+
     # مجلد تخزين الملفات المرفوعة (صور بلاغات، ملاحظات صوتية، فواتير) —
     # بند إضافي 77، 2026-08-01. افتراضياً جوّا static/ (نفس السلوك
     # القديم تماماً، صفر تغيير بدون إعداد إضافي). لو فيه قرص دائم

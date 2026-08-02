@@ -31,6 +31,14 @@ def run_checks() -> list[dict]:
     else:
         checks.append({"level": "ok", "label": "SECRET_KEY", "detail": "تم تخصيصه."})
 
+    if not current_app.config.get("SESSION_COOKIE_SECURE"):
+        checks.append({
+            "level": "warning", "label": "أمان كوكي الجلسة",
+            "detail": "SESSION_COOKIE_SECURE غير مفعّل — طبيعي محلياً/بالمعاينة، لكن لازم يكون مفعّل تلقائياً على Render (بند 87).",
+        })
+    else:
+        checks.append({"level": "ok", "label": "أمان كوكي الجلسة", "detail": "مفعّل — كوكي الدخول ما تُرسَل إلا عبر HTTPS."})
+
     if current_app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite:"):
         checks.append({
             "level": "warning", "label": "قاعدة البيانات SQLite",

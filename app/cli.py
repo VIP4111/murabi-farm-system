@@ -54,6 +54,27 @@ DISEASE_SYMPTOMS = {
 
 
 def register_cli(app):
+    @app.cli.command("reset-password")
+    @click.argument("phone")
+    @click.argument("new_password")
+    def reset_password(phone, new_password):
+        """إعادة تعيين كلمة مرور أي حساب (يشمل حساب المالك نفسه) —
+        بند إضافي 88، نقطة 3 من التحليل الثاني. النظام ما فيه بريد
+        إلكتروني أصلاً (تسجيل الدخول برقم الجوال بس)، فما فيه معنى
+        لخطوة "استرجاع عبر إيميل" — البديل هذا الأمر، يُشغَّل من تبويب
+        Shell بلوحة Render مباشرة، بدون أي بنية بريد جديدة.
+        يصفّر أيضاً قفل بند 86 (failed_login_attempts/locked_until)
+        عشان الحساب يرجع يشتغل فوراً بعد التغيير."""
+        user = User.query.filter_by(phone=phone).first()
+        if not user:
+            click.echo(f"ما فيه حساب برقم الجوال: {phone}")
+            return
+        user.set_password(new_password)
+        user.failed_login_attempts = 0
+        user.locked_until = None
+        db.session.commit()
+        click.echo(f"تم تغيير كلمة مرور {user.name} ({phone}) بنجاح.")
+
     @app.cli.command("seed")
     def seed():
         """تهيئة النظام أول مرة: الصلاحيات، الأدوار الافتراضية، حساب المالك، والخدمات."""
