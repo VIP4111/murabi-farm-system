@@ -99,3 +99,54 @@ class Pharmacy(db.Model):
                 f'({available}) — حدّث المخزون أولاً أو قلّل الكمية.'
             )
         self.available_qty = available - qty
+        self._consume_batches_fifo(qty)
+
+    def add_stock(self, qty: float) -> None:
+        self.available_qty = (self.available_qty or 0) + qty
+
+    def _consume_batches_fifo(self, qty: float) -> None:
+        """بند إضافي 96 — خصم الكمية من أقدم دفعة شراء أولاً (FIFO)، عشان
+        الدواء اللي دخل أول يخرج أول ويقارب تاريخ انتهائه ينخصم قبل غيره.
+        هذي نقطة الاختيار المركزية الوحيدة (`deduct_stock` نفسها لها
+        نداء واحد فقط بكل المشروع، من `health_service.py`)، فالتعديل هنا
+        يغطي كل مسارات الاستخدام بدون أي تعديل بمكان ثاني. لو الدفعات
+        المسجَّلة (`remaining_qty`) مجموعها أقل من الكمية المطلوبة — ينقص
+        اللي متوفر منها بس ويتجاهل الباقي بصمت، لأن `available_qty` يبقى
+        المرجع الرسمي دائماً (دواء أُضيف مخزونه يدوياً قبل بدء استخدام
+        الدفعات، مثلاً، ما له دفعة يتسجّل منها)."""
+        remaining_to_deduct = qty
+        batches = sorted(
+            [b for b in self.batches if (b.remaining_qty or 0) > 0],
+            key=lambda b: b.purchase_date,
+        )
+        for batch in batches:
+            if remaining_to_deduct <= 0:
+                break
+            take = min(batch.remaining_qty, remaining_to_deduct)
+            batch.remaining_qty -= take
+            remaining_to_deduct -= take
+
+
+class PharmacyBatch(db.Model):
+    """دفعة شراء دواء بتاريخها الخاص (بند إضافي 96) — قبل هذا، كل شراء
+    جديد كان يُضاف بصمت لرقم `Pharmacy.available_qty` الإجمالي بدون أي
+    أثر لتاريخ الشراء أو تاريخ انتهاء تلك الدفعة تحديداً (`expiry_date`
+    كان حقلاً واحداً للدواء كله، مو لكل عملية شراء منفصلة)."""
+    __tablename__ = "pharmacy_batches"
+
+    id = db.Column(db.Integer, primary_key=True)
+    pharmacy_id = db.Column(db.Integer, db.ForeignKey("pharmacy.id"), nullable=False)
+    pharmacy = db.relationship("Pharmacy", backref=db.backref("batches", cascade="all, delete-orphan"))
+
+    purchase_date = db.Column(db.Date, nullable=False)
+    quantity = db.Column(db.Float, nullable=False)
+    # الكمية المتبقية من هذي الدفعة تحديداً — تنخصم تدريجياً (FIFO) عند
+    # أي استخدام فعلي، منفصلة عن `quantity` (الكمية الأصلية وقت الشراء،
+    # تبقى ثابتة كسجل تاريخي).
+    remaining_qty = db.Column(db.Float, nullable=False)
+    expiry_date = db.Column(db.Date, nullable=True)
+    unit_price = db.Column(db.Float, nullable=True)
+
+    notes = db.Column(db.Text)
+    created_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    created_at = db.Column(db.DateTime, default=_now)

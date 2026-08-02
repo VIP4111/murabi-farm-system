@@ -252,26 +252,45 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
 
 
 def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
-    """قرب انتهاء صلاحية دواء (بند إضافي 94) — قبل هذا `Pharmacy.expiry_date`
-    كان يُخزَّن بدون أي منطق تنبيه يستخدمه، يعني ما فيه طريقة تعرف إلا لو
-    فتحت شاشة الدواء بنفسك بالصدفة وشفت التاريخ. نفس نافذة التنبيه العامة
-    (`alert_before_days`) المستخدمة ببقية هذا الملف. **نطاق متعمَّد**:
-    دواء منتهي فعلاً (تاريخ بالماضي) يظهر أيضاً بنفس القائمة كـ"عاجل" —
-    ما فيه منع استخدام تلقائي (قرار الدكتور يبقى قرار الدكتور)، بس
-    التنبيه يوضّح الوضع بصراحة."""
+    """قرب انتهاء صلاحية دواء (بند إضافي 94، ووسّعت لتغطية الدفعات
+    ببند 96) — قبل بند 94 `Pharmacy.expiry_date` كان يُخزَّن بدون أي
+    منطق تنبيه يستخدمه. بعد بند 96 (دفعات شراء منفصلة بتاريخ انتهاء
+    خاص لكل دفعة، `PharmacyBatch`)، صار لازم نفحص المصدرين معاً:
+    `Pharmacy.expiry_date` (الحقل القديم، لسا مدعوم لدواء ما استُخدم
+    فيه فورم الشراء الجديد بعد) + أقرب تاريخ انتهاء بين دفعات لسا فيها
+    مخزون فعلي (`remaining_qty > 0` — دفعة خلصت كمياتها ما تستاهل
+    تنبيهاً حتى لو تاريخها قرب). نفس نافذة التنبيه العامة
+    (`alert_before_days`). **نطاق متعمَّد**: دواء منتهي فعلاً (تاريخ
+    بالماضي) يظهر أيضاً بنفس القائمة كـ"عاجل" — ما فيه منع استخدام
+    تلقائي (قرار الدكتور يبقى قرار الدكتور)، بس التنبيه يوضّح الوضع
+    بصراحة. لو الدواء الواحد له أكثر من تاريخ مقارب، يظهر بتنبيه واحد
+    بس بأقرب تاريخ (مو تنبيه مكرر لكل دفعة)."""
+    from app.models import PharmacyBatch
     today = date.today()
     window_end = today + timedelta(days=fs.alert_before_days)
-    rows = (Pharmacy.query.filter(Pharmacy.expiry_date.isnot(None))
-            .filter(Pharmacy.status == "active")
-            .filter(Pharmacy.expiry_date <= window_end).all())
+
+    earliest_expiry: dict[int, date] = {}
+    for p in Pharmacy.query.filter(Pharmacy.status == "active", Pharmacy.expiry_date.isnot(None)).all():
+        earliest_expiry[p.id] = p.expiry_date
+
+    for b in PharmacyBatch.query.filter(PharmacyBatch.remaining_qty > 0, PharmacyBatch.expiry_date.isnot(None)).all():
+        prev = earliest_expiry.get(b.pharmacy_id)
+        if prev is None or b.expiry_date < prev:
+            earliest_expiry[b.pharmacy_id] = b.expiry_date
+
     alerts = []
-    for p in rows:
-        expired = p.expiry_date < today
+    for pharmacy_id, expiry in earliest_expiry.items():
+        if expiry > window_end:
+            continue
+        p = Pharmacy.query.get(pharmacy_id)
+        if not p or p.status != "active":
+            continue
+        expired = expiry < today
         alerts.append({
             "category": "قرب انتهاء صلاحية دواء", "icon": "⏳",
             "label": f"{p.name} — {p.available_qty or 0:g} {p.unit or ''}",
-            "detail": (f"منتهي الصلاحية منذ {today - p.expiry_date}" if expired
-                       else f"تنتهي صلاحيته بتاريخ {p.expiry_date}"),
+            "detail": (f"منتهي الصلاحية منذ {today - expiry}" if expired
+                       else f"تنتهي صلاحيته بتاريخ {expiry}"),
             "urgent": expired, "animal_id": None, "barn_id": None,
         })
     return alerts

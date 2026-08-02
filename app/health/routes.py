@@ -6,7 +6,7 @@ from app.health import health_bp
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import (
-    Pharmacy, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
+    Pharmacy, PharmacyBatch, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
     Disease, Vaccination, Animal, AuditLog, Barn,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
     ProtocolApplication,
@@ -219,6 +219,45 @@ def pharmacy_edit(pharmacy_id):
         usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
         drug_catalog=DrugCatalogEntry.query.order_by(DrugCatalogEntry.name).all(),
         dose_rules=item.dose_rules,
+    )
+
+
+@health_bp.route("/pharmacy/<int:pharmacy_id>/purchase", methods=["GET", "POST"])
+@login_required
+@require_permission("pharmacy.manage")
+def pharmacy_purchase(pharmacy_id):
+    """تسجيل عملية شراء دواء (بند إضافي 96) — قبل هذا، أي إضافة مخزون
+    كانت بالكتابة فوق `available_qty` مباشرة من فورم التعديل، بدون أي
+    أثر لتاريخ الشراء أو تاريخ انتهاء تلك الدفعة تحديداً. هذا الفورم
+    الجديد يسجّل دفعة مستقلة (`PharmacyBatch`) بتاريخها وتاريخ انتهائها
+    الخاص، ويزيد `available_qty` الإجمالي تلقائياً بنفس الكمية —
+    فورم التعديل المباشر يبقى شغّال زي ما هو لتصحيحات المخزون العامة،
+    مو بديلاً عن هذا الفورم."""
+    item = Pharmacy.query.get_or_404(pharmacy_id)
+    if request.method == "POST":
+        quantity = float(request.form["quantity"])
+        batch = PharmacyBatch(
+            pharmacy_id=item.id,
+            purchase_date=date.fromisoformat(request.form["purchase_date"]),
+            quantity=quantity,
+            remaining_qty=quantity,
+            expiry_date=date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None,
+            unit_price=float(request.form["unit_price"]) if request.form.get("unit_price") else None,
+            notes=request.form.get("notes"),
+            created_by_id=current_user.id,
+        )
+        item.add_stock(quantity)
+        db.session.add(batch)
+        db.session.add(item)
+        db.session.add(AuditLog(actor_user_id=current_user.id, action="pharmacy.purchase",
+                                 entity_type="Pharmacy", entity_id=item.id,
+                                 details=f"+{quantity:g} {item.unit or ''}"))
+        db.session.commit()
+        flash("تم تسجيل عملية الشراء", "success")
+        return redirect(url_for("health.pharmacy_edit", pharmacy_id=item.id))
+    return render_template(
+        "health/pharmacy_purchase_form.html", item=item, today=date.today().isoformat(),
+        batches=PharmacyBatch.query.filter_by(pharmacy_id=item.id).order_by(PharmacyBatch.purchase_date.desc()).all(),
     )
 
 
