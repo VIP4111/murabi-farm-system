@@ -20,6 +20,7 @@
 11. (إضافي، بند 65) نقص مخزون متوقّع لتحصين مجدول قريب (تقويم التحصينات،
     بند 63) — رؤوس الحظيرة الحي × الجرعة الافتراضية مقابل المخزون
 12. (إضافي، بند 94) قرب انتهاء صلاحية دواء بالصيدلية (Pharmacy.expiry_date)
+13. (إضافي، بند 97) تباطؤ نمو مشبوه — رأس أبطأ بوضوح من متوسط حظيرته
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -29,6 +30,7 @@
 from datetime import date, timedelta
 from app.models import (
     Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
+    AnimalWeight,
 )
 
 
@@ -296,6 +298,78 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+WEIGHT_TREND_WINDOW_DAYS = 90
+WEIGHT_TREND_MIN_COHORT = 3
+WEIGHT_TREND_RATIO_THRESHOLD = 0.5
+
+
+def _weight_gain_underperformers() -> list[dict]:
+    """كشف مبكر لتباطؤ نمو مشبوه (بند إضافي 97) — قبل هذا، سجلات الوزن
+    (`AnimalWeight`) كانت تُستخدم بس لعرض السجل التاريخي وحساب FCR/جاهزية
+    البيع، بدون أي مقارنة بين الرؤوس تكشف مشكلة صحية مبكرة قبل ما تظهر
+    أعراضها. الفكرة: رأس معدل زيادة وزنه أبطأ بوضوح من رفاقه بنفس
+    الحظيرة (تغذية/بيئة مشتركة تقريباً) مؤشر مبكر حقيقي (طفيليات، مرض
+    مبكر، مشكلة تغذية فردية) — بدون أي بيانات جديدة تحتاج إدخالها
+    يدوياً، كلها مستنتجة من سجلات الوزن الموجودة أصلاً.
+
+    **نطاق متعمَّد** (قيم اجتهادية موثّقة بالثوابت أعلى الدالة، قابلة
+    للتعديل لاحقاً لو أعطيتني أرقام حقيقية): نافذة المقارنة آخر 90 يوم
+    (`WEIGHT_TREND_WINDOW_DAYS`)، أقل حظيرة تُقارَن فيها الرؤوس 3 رؤوس
+    عندها بيانات كافية (`WEIGHT_TREND_MIN_COHORT`، تفادياً لمقارنة رأس
+    وحيد بنفسه)، وحد التنبيه معدل نمو الرأس أقل من 50% من متوسط حظيرته
+    (`WEIGHT_TREND_RATIO_THRESHOLD`). رأس ينقص وزنه فعلياً (معدل سالب)
+    يُعتبر "عاجل" دايماً بغض النظر عن حظيرته."""
+    window_start = date.today() - timedelta(days=WEIGHT_TREND_WINDOW_DAYS)
+    rows = (AnimalWeight.query.join(Animal)
+            .filter(Animal.status == "active", AnimalWeight.date >= window_start)
+            .order_by(AnimalWeight.animal_id, AnimalWeight.date).all())
+
+    by_animal: dict[int, list[AnimalWeight]] = {}
+    for w in rows:
+        by_animal.setdefault(w.animal_id, []).append(w)
+
+    rate_by_animal: dict[int, float] = {}
+    animal_by_id: dict[int, Animal] = {}
+    for animal_id, weights in by_animal.items():
+        if len(weights) < 2:
+            continue
+        first, last = weights[0], weights[-1]
+        days = (last.date - first.date).days
+        if days <= 0:
+            continue
+        rate_by_animal[animal_id] = (last.weight - first.weight) / days
+        animal_by_id[animal_id] = first.animal
+
+    by_barn: dict[int, list[int]] = {}
+    for animal_id, animal in animal_by_id.items():
+        if animal.barn_id:
+            by_barn.setdefault(animal.barn_id, []).append(animal_id)
+
+    alerts = []
+    for barn_id, animal_ids in by_barn.items():
+        if len(animal_ids) < WEIGHT_TREND_MIN_COHORT:
+            continue
+        barn_avg = sum(rate_by_animal[a] for a in animal_ids) / len(animal_ids)
+        if barn_avg <= 0:
+            continue  # الحظيرة كلها بلا نمو موجب — ما فيه مرجع مقارنة موثوق
+        for animal_id in animal_ids:
+            rate = rate_by_animal[animal_id]
+            losing_weight = rate < 0
+            underperforming = 0 <= rate < barn_avg * WEIGHT_TREND_RATIO_THRESHOLD
+            if not (losing_weight or underperforming):
+                continue
+            animal = animal_by_id[animal_id]
+            alerts.append({
+                "category": "تباطؤ نمو مشبوه", "icon": "📉",
+                "label": f"{animal.animal_no} — معدل نموه {rate:.2f} كجم/يوم",
+                "detail": (f"ينقص وزنه فعلياً (متوسط حظيرته {barn_avg:.2f} كجم/يوم) — يوصى بفحص صحي عاجل"
+                           if losing_weight else
+                           f"أبطأ بوضوح من متوسط حظيرته ({barn_avg:.2f} كجم/يوم) — يوصى بفحص صحي"),
+                "urgent": losing_weight, "animal_id": animal_id, "barn_id": barn_id,
+            })
+    return alerts
+
+
 def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     """
     `barn_ids=None` (الافتراضي، سلوك بند 20 الأصلي بدون تغيير): كل
@@ -320,7 +394,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
-        + _medicine_expiring_soon(fs)
+        + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
