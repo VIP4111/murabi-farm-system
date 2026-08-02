@@ -181,6 +181,18 @@ def sonar_new():
         from app.core.cycle_engine import record_cycle_event
         record_cycle_event(row.ewe, "sonar", source_type="SonarResult", source_id=row.id, event_date=row.exam_date)
 
+        # بند إضافي 100 — قبل هذا، `recheck_date` كان يُدخَل بالفورم
+        # ويُخزَّن بدون أي أثر فعلي: ما فيه أي مهمة أو تذكير يُنشأ منه،
+        # فيبقى "بيانات ميتة" لو الدكتور ما راجع سجل السونار بنفسه صدفة.
+        if row.recheck_date:
+            from app.team import task_service
+            task_service.create_suggested_task(
+                title=f"📟 إعادة فحص سونار — {row.ewe.animal_no}",
+                task_type="sonar_recheck", animal_id=row.ewe_id, barn_id=row.ewe.barn_id,
+                due_date=row.recheck_date, source_type="SonarResult", source_id=row.id,
+                notes=f"نتيجة الفحص السابق ({row.exam_date}): {row.result or 'غير محدد'}.",
+            )
+
         flash("تم تسجيل فحص السونار", "success")
         return redirect(url_for("repro.sonar_list"))
     return render_template(
