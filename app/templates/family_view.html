@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>متابعة المزرعة</title>
+<style>
+  :root{
+    --bg:#f4efe7; --card:#ffffff; --text:#2b2118; --muted:#6b5c4c;
+    --primary:#6f4e2f; --line:#e4dccf; --ok:#3a7d3a; --warn:#b5862b; --bad:#a3372f;
+  }
+  [data-mode="dark"]{
+    --bg:#1c1712; --card:#2a231c; --text:#f2ece3; --muted:#c9bcaa;
+    --primary:#c99a5f; --line:#3d342a; --ok:#7fd67f; --warn:#e0b45a; --bad:#e88a80;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+    font-size:22px; line-height:1.6; padding:20px;
+  }
+  h1{font-size:32px; margin:0 0 6px;}
+  h2{font-size:26px; margin:28px 0 10px; border-bottom:3px solid var(--line); padding-bottom:8px;}
+  .topbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;}
+  .toggle-btn{
+    font-size:22px; padding:14px 24px; border-radius:14px; border:2px solid var(--primary);
+    background:var(--card); color:var(--text); cursor:pointer;
+  }
+  .date{color:var(--muted); font-size:20px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:18px 20px; margin-bottom:18px;
+  }
+  .worker-name{font-size:26px; font-weight:800; margin-bottom:10px;}
+  .task-row{padding:10px 0; border-bottom:1px solid var(--line); display:flex; gap:12px; align-items:flex-start;}
+  .task-row:last-child{border-bottom:none;}
+  .badge{
+    flex:0 0 auto; font-size:18px; font-weight:800; padding:4px 12px; border-radius:999px; color:#fff;
+  }
+  .badge-ok{background:var(--ok);}
+  .badge-bad{background:var(--bad);}
+  .badge-wait{background:var(--warn);}
+  .task-title{font-weight:700;}
+  .task-note{color:var(--muted); font-size:19px; margin-top:2px;}
+  .stock-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:12px;}
+  .stock-item{background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:14px;}
+  .stock-name{font-weight:800; font-size:22px;}
+  .stock-qty{color:var(--muted); font-size:20px; margin-top:4px;}
+  .empty{color:var(--muted); text-align:center; padding:20px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>👋 متابعة المزرعة</h1>
+    <div class="date">{{ today }}</div>
+  </div>
+  <button class="toggle-btn" id="modeToggle">🌙 الوضع الليلي</button>
+</div>
+
+<h2>👷 تقدّم العمال اليوم</h2>
+{% for p in progress %}
+<div class="card">
+  <div class="worker-name">{{ p.worker.name }}</div>
+
+  {% if p.done_today %}
+  <div style="margin-bottom:10px;">
+    {% for t in p.done_today %}
+    <div class="task-row">
+      {% if t.status == 'done' %}
+      <span class="badge badge-ok">✅ تم</span>
+      {% else %}
+      <span class="badge badge-bad">⚠️ ما قدر</span>
+      {% endif %}
+      <div>
+        <div class="task-title">{{ t.title }}</div>
+        {% if t.completion_note %}<div class="task-note">{{ t.completion_note }}</div>{% endif %}
+        {% if t.failure_reason %}<div class="task-note">السبب: {{ t.failure_reason }}</div>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if p.open_tasks %}
+  <div>
+    {% for t in p.open_tasks %}
+    <div class="task-row">
+      <span class="badge badge-wait">⏳ باقي</span>
+      <div>
+        <div class="task-title">{{ t.title }}</div>
+        {% if t.due_date %}<div class="task-note">الموعد: {{ t.due_date }}</div>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% else %}
+<p class="empty">ما فيه أي عامل عليه مهام حالياً.</p>
+{% endfor %}
+
+<h2>🌾 المستودع (العلف)</h2>
+<div class="card">
+  <div class="stock-grid">
+    {% for f in feed_items %}
+    <div class="stock-item">
+      <div class="stock-name">{{ f.name }}</div>
+      <div class="stock-qty">{{ f.available_qty|round(1) if f.available_qty else 0 }} {{ f.unit or '' }}</div>
+    </div>
+    {% else %}
+    <p class="empty">ما فيه أصناف علف مسجَّلة.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<h2>💊 الصيدلية</h2>
+<div class="card">
+  <div class="stock-grid">
+    {% for m in pharmacy_items %}
+    <div class="stock-item">
+      <div class="stock-name">{{ m.name }}</div>
+      <div class="stock-qty">{{ m.available_qty|round(1) if m.available_qty else 0 }} {{ m.unit or '' }}</div>
+    </div>
+    {% else %}
+    <p class="empty">ما فيه أدوية مسجَّلة.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('modeToggle');
+  var saved = localStorage.getItem('familyViewMode');
+  if (saved === 'dark') { root.setAttribute('data-mode', 'dark'); btn.textContent = '☀️ الوضع النهاري'; }
+  btn.addEventListener('click', function(){
+    var isDark = root.getAttribute('data-mode') === 'dark';
+    if (isDark) {
+      root.removeAttribute('data-mode');
+      localStorage.setItem('familyViewMode', 'light');
+      btn.textContent = '🌙 الوضع الليلي';
+    } else {
+      root.setAttribute('data-mode', 'dark');
+      localStorage.setItem('familyViewMode', 'dark');
+      btn.textContent = '☀️ الوضع النهاري';
+    }
+  });
+})();
+</script>
+</body>
+</html>

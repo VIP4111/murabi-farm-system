@@ -100,6 +100,9 @@
     {% if current_user.has_permission('audit.view') %}
     <a class="btn light" href="{{ url_for('core.audit_log_list') }}">🧾 سجل التدقيق</a>
     {% endif %}
+    {% if current_user.has_permission('analytics.view') %}
+    <a class="btn light" href="{{ url_for('core.family_view') }}" target="_blank">👋 شاشة متابعة مبسّطة</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
