@@ -27,9 +27,11 @@
         {% if current_user.has_permission('health.manage') %}
         <a class="btn light" href="{{ url_for('core.animals_list', barn_id=s.barn_id) }}" title="افتح قائمة الحظيرة لبدء التحصين الجماعي">ابدأ التحصين</a>
         <form method="post" action="{{ url_for('health.vaccination_schedule_complete', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('تعليم هذي الجدولة كمكتملة؟');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn light">تم</button>
         </form>
         <form method="post" action="{{ url_for('health.vaccination_schedule_cancel', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('إلغاء هذي الجدولة؟');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn light">إلغاء</button>
         </form>
         {% endif %}

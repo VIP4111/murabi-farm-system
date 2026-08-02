@@ -13,6 +13,7 @@
 
 <div class="card">
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>خط العرض (Latitude)</label>
     <input name="farm_latitude" type="number" step="any" required value="{{ fs.farm_latitude if fs.farm_latitude is not none else '' }}" placeholder="مثال: 24.7136">
     <label>خط الطول (Longitude)</label>

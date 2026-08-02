@@ -3,6 +3,7 @@
 <div class="card" style="max-width:420px;">
   <h2>محاولة تقريع جديدة — برنامج #{{ program.id }} ({{ program.ewe.animal_no }})</h2>
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>تاريخ التقريع</label><input name="mating_date" type="date" required>
     <label>الفحل (لو مسجّل بالنظام)</label>
     <select name="ram_id">

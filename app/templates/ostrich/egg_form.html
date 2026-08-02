@@ -6,6 +6,7 @@
   <div class="notice">ما فيه أنثى نعام مسجّلة حالياً — سجّل أنثى نعام أول من <a href="{{ url_for('core.animals_new') }}">تسجيل حيوان جديد</a> (اختر الفصيلة "نعام").</div>
   {% endif %}
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الأم</label>
     <select name="mother_id" required>
       {% for m in mothers %}<option value="{{ m.id }}">{{ m.animal_no }}{{ ' — ' + m.name if m.name }}</option>{% endfor %}

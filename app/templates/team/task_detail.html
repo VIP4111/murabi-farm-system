@@ -50,15 +50,18 @@
 
     {% if task.status == 'suggested' and current_user.has_permission('tasks.review_daily') %}
     <form method="post" action="{{ url_for('team.task_approve', task_id=task.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">{{ _('موافقة') }}</button>
     </form>
     <form method="post" action="{{ url_for('team.task_soft_delete', task_id=task.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف') }}</button>
     </form>
     {% endif %}
 
     {% if task.status == 'pending' and task.assignee_id == current_user.id %}
     <form method="post" action="{{ url_for('team.task_start', task_id=task.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">{{ _('بدء') }}</button>
     </form>
     {% endif %}
@@ -69,6 +72,7 @@
 <div class="card">
   <h3 style="font-size:15px;">✅ {{ _('إنجاز المهمة') }}</h3>
   <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" enctype="multipart/form-data">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('ملاحظة (اختياري)') }}</label>
     <textarea name="note" rows="2"></textarea>
     <label>{{ _('صورة دليل (إلزامي)') if task.requires_photo else _('صورة دليل (اختياري)') }}</label>
@@ -83,6 +87,7 @@
   <h3 style="font-size:15px;">⚠️ {{ _('تعذّر التنفيذ') }}</h3>
   <p style="color:var(--muted); font-size:13px;">{{ _('لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة.') }}</p>
   <form method="post" action="{{ url_for('team.task_fail', task_id=task.id) }}" enctype="multipart/form-data">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('سبب التعذّر') }}</label>
     <select name="reason" required>
       <option value="">{{ _('اختر السبب...') }}</option>

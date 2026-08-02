@@ -3,6 +3,7 @@
 <div class="card" style="max-width:420px;">
   <h2>جهاز تكاثر جديد — برنامج #{{ program.id }} ({{ program.ewe.animal_no }})</h2>
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>نوع الجهاز</label><input name="device_type" required placeholder="مثال: إسفنجة CIDR">
     <label>الاسم التجاري</label><input name="trade_name">
     <label>تاريخ الإدخال</label><input name="inserted_at" type="date" required>

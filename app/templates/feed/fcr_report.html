@@ -13,6 +13,7 @@
 
 <div class="card">
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الحظيرة</label>
     <select name="barn_id" required>
       {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if barn_id == b.id }}>{{ b.barn_name }}</option>{% endfor %}

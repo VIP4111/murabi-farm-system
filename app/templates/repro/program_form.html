@@ -9,6 +9,7 @@
     عادياً بدون هذا التزامن، استخدم شاشة "التقريع" العادية بدل هذي.
   </p>
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الأنثى</label>
     <select name="ewe_id" required>
       {% for f in females %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}

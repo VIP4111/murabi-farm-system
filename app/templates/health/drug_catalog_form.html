@@ -3,6 +3,7 @@
 <div class="card" style="max-width:420px;">
   <h2>إضافة اسم دواء جديد</h2>
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الاسم</label>
     <input name="name" required autofocus>
     <label>فئة الدواء (اختياري)</label>

@@ -24,6 +24,7 @@
   <div class="chat-head">
     <h2>🤖 {{ _('المساعد الذكي') }}</h2>
     <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('{{ _('مسح كل المحادثة؟') }}');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">{{ _('مسح المحادثة') }}</button>
     </form>
   </div>
@@ -51,6 +52,7 @@
       <button type="button" onclick="askSuggestion('وش التنبيهات الحالية؟')">{{ _('التنبيهات') }}</button>
     </div>
     <form class="chat-form" id="chatForm" method="post" action="{{ url_for('assistant.send') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <textarea id="chatInput" name="message" placeholder="{{ _('اكتب سؤالك هنا...') }}" required></textarea>
       <button type="submit" class="btn">{{ _('إرسال') }}</button>
     </form>
@@ -98,7 +100,10 @@
 
     fetch(chatForm.action, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
+      },
       body: JSON.stringify({message: text})
     }).then(function(r){ return r.json(); }).then(function(data){
       typing.remove();

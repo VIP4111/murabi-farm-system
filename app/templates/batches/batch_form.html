@@ -8,6 +8,7 @@
     مهمتا "رش وقائي" و"تحصين مبدئي".
   </p>
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>المصدر</label>
     <select name="source" required>
       {% for s in sources %}<option value="{{ s }}">{{ source_labels.get(s, s) }}</option>{% endfor %}

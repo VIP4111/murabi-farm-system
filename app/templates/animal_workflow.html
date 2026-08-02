@@ -47,6 +47,7 @@
 <div class="card">
   <h3 style="font-size:15px;">بيانات تخطيط السوق (تدعم بوابة مرحلة "تخطيط السوق")</h3>
   <form method="post" action="{{ url_for('core.animal_workflow_plan', animal_id=animal.id) }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>تاريخ بيع مستهدف</label><input name="target_sale_date" type="date" value="{{ wf.target_sale_date or '' }}">
     <label>قيمة تقديرية</label><input name="estimated_value" type="number" step="0.01" value="{{ wf.estimated_value or '' }}">
     <label>هامش ربح مستهدف (%)</label><input name="target_profit_margin" type="number" step="0.01" value="{{ wf.target_profit_margin or '' }}">
@@ -60,6 +61,7 @@
   <h3 style="font-size:15px;">قرار الخروج</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">
     <form method="post" action="{{ url_for('core.animal_sell', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label>بيع — السعر</label><input name="sale_price" type="number" step="0.01" required>
       <label>تاريخ البيع</label><input name="sale_date" type="date">
       <label>اسم المشتري (اختياري — يظهر بالفاتورة)</label><input name="buyer_name">
@@ -72,11 +74,13 @@
       <button class="btn" type="submit">تسجيل البيع</button>
     </form>
     <form method="post" action="{{ url_for('core.animal_mark_dead', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label>نفوق — السبب</label><input name="reason">
       <label>تاريخ النفوق</label><input name="death_date" type="date">
       <button class="btn danger" type="submit">تسجيل النفوق</button>
     </form>
     <form method="post" action="{{ url_for('core.animal_archive', animal_id=animal.id) }}" style="flex:1; min-width:220px;" onsubmit="return confirm('تأكيد الأرشفة؟');" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label>أرشفة — السبب</label><input name="reason">
       <label><input name="force" type="checkbox" style="width:auto; display:inline-block;"> تجاوز وجود عمليات مالية مرتبطة</label>
       <button class="btn" type="submit">أرشفة</button>
@@ -101,6 +105,7 @@
     <a class="btn" href="{{ url_for('core.animal_sale_invoice', animal_id=animal.id) }}">🧾 {{ 'تنزيل الفاتورة' if sale_finance.invoice_number else 'إصدار فاتورة' }}</a>
     {% endif %}
     <form method="post" action="{{ url_for('finance.finance_cancel', row_id=sale_finance.id) }}" onsubmit="return confirm('استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق).');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="hidden" name="reason" value="استرجاع بيع من صفحة دورة الإنتاج">
       <button class="btn light" type="submit">↩️ استرجاع البيع</button>
     </form>

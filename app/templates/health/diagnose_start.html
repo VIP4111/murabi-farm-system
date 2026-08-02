@@ -35,6 +35,7 @@
   <p style="color:var(--muted); font-size:13px;">ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية.</p>
   {% endif %}
   <form method="post" action="{{ url_for('health.diagnose_result') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="hidden" name="animal_id" value="{{ animal_id or '' }}">
     <input type="hidden" name="symptom_ids" value="{{ selected_primary_id }}">
     {% for s in secondary_symptoms %}

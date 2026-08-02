@@ -10,6 +10,7 @@
 
 <div class="card">
   <form method="post" id="bulkPurchaseForm" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div style="display:flex; gap:14px; flex-wrap:wrap;">
       <div>
         <label>تاريخ الشراء (لكل الدفعة)</label>

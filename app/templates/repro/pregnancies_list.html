@@ -21,6 +21,7 @@
         <form method="post" action="{{ url_for('repro.pregnancies_abort', pregnancy_id=r.id) }}"
               onsubmit="return confirm('تسجيل إجهاض لـ{{ r.female.animal_no }} — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟');"
               style="display:flex; gap:4px; align-items:center;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input type="hidden" name="outcome_date" value="{{ today }}">
           <input name="notes" placeholder="ملاحظة (اختياري)" style="margin-bottom:0; width:120px;">
           <button class="btn light" type="submit" style="padding:4px 10px; font-size:12px; background:#a32d2d; color:#fff;">تسجيل إجهاض</button>

@@ -8,6 +8,7 @@
       <a class="btn light" href="{{ url_for('climate.settings') }}">⚙️ إعدادات الموقع والحدود</a>
       {% endif %}
       <form method="post" action="{{ url_for('climate.refresh') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button class="btn light" type="submit">🔄 تحديث الآن</button>
       </form>
     </div>

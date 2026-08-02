@@ -15,6 +15,7 @@
     راجع طبيبك قبل ما تعتمد عليها بقرارات شراء فعلية.
   </p>
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>اختر حيوان (يستخدم وزنه الفعلي)</label>
     <select name="animal_id">
       <option value="">- أدخل وزن يدوي بدل ما تختار -</option>

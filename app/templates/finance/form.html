@@ -3,6 +3,7 @@
 <div class="card" style="max-width:460px;">
   <h2>عملية مالية جديدة</h2>
   <form method="post" enctype="multipart/form-data" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>التاريخ</label><input name="date" type="date" required>
     <label>النوع</label>
     <select name="operation_type" required>

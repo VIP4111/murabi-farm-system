@@ -3,6 +3,7 @@
 <div class="card" style="max-width:420px;">
   <h2>مسمّى وظيفي جديد</h2>
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الاسم الظاهر بالواجهة</label><input name="display_name" required placeholder="مثال: ممرض">
     <label>الاسم الداخلي (إنجليزي، بدون مسافات)</label><input name="name" placeholder="مثال: nurse">
     <button class="btn" type="submit">حفظ ثم تحديد الصلاحيات</button>

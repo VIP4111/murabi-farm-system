@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# رمز CSRF (بند إضافي 93) — مصدر وحيد يقرأه أي fetch POST بجافاسكربت
+     بالموقع (مثلاً chat.html وtasks_list.html) عبر header X-CSRFToken،
+     بدل ما يعتمد كل ملف على حقل مخفي داخل فورم معيّن. #}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{% block title %}مراح بو علي{% endblock %}</title>
   {% if current_user.is_authenticated %}
   {# دعم العمل بدون إنترنت (بند 41، وسِّع لكل الأدوار والشاشات ببند 53) —
@@ -421,6 +425,7 @@
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           {% for code, label in [('ar','العربية'), ('en','English'), ('am','አማርኛ'), ('hi','हिन्दी')] %}
           <form method="post" action="{{ url_for('core.set_language') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="language" value="{{ code }}">
             <button type="submit" class="badge {{ 'on' if current_user.language == code else '' }}" style="cursor:pointer; border:1px solid var(--line);">{{ label }}</button>
           </form>

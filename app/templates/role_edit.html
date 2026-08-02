@@ -3,6 +3,7 @@
 <div class="card" style="max-width:560px;">
   <h2>صلاحيات: {{ role.display_name }}</h2>
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الاسم الظاهر بالواجهة</label><input name="display_name" value="{{ role.display_name }}" required>
     <label style="margin-top:10px; display:block;">الصلاحيات</label>
     <div style="max-height:400px; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding:10px;">

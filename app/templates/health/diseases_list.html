@@ -19,6 +19,7 @@
       <td>
         {% if d.status == 'active' and current_user.has_permission('health.manage') %}
         <form method="post" action="{{ url_for('health.disease_close', disease_id=d.id) }}" style="display:flex; gap:6px;" onsubmit="return confirm('تأكيد إغلاق السجل المرضي؟');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input name="recovery_note" placeholder="ملاحظة التعافي (إلزامي)" required style="margin-bottom:0;">
           <button class="btn" type="submit" style="padding:8px 12px; font-size:12px;">إغلاق</button>
         </form>

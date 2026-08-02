@@ -46,6 +46,7 @@
       <td>
         {% if not r.is_cancelled %}
         <form method="post" action="{{ url_for('finance.finance_cancel', row_id=r.id) }}" onsubmit="return confirm('تأكيد الإلغاء؟');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input type="hidden" name="reason" value="ألغيت من قائمة المالية">
           <button class="btn" type="submit" style="background:#a32d2d;">إلغاء</button>
         </form>

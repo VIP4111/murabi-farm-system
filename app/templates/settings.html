@@ -4,6 +4,7 @@
   <h2>بيانات المزرعة</h2>
   <p style="color:var(--muted); font-size:13px;">تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية.</p>
   <form method="post" action="{{ url_for('core.farm_identity_save') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>اسم المزرعة</label><input name="farm_name" value="{{ fs.farm_name or '' }}">
     <label>جوال المزرعة</label><input name="farm_phone" value="{{ fs.farm_phone or '' }}">
     <label>عنوان المزرعة</label><input name="farm_address" value="{{ fs.farm_address or '' }}">
@@ -15,6 +16,7 @@
   <h2>الإعدادات الزمنية</h2>
   <p style="color:var(--muted); font-size:13px;">تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...).</p>
   <form method="post" action="{{ url_for('core.farm_settings_save') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>مدة الحمل (يوم)</label><input name="gestation_days" type="number" value="{{ fs.gestation_days }}">
     <label>مدة الإسفنجة (يوم)</label><input name="sponge_duration_days" type="number" value="{{ fs.sponge_duration_days }}">
     <label>دخول الفحل بعد إزالة الإسفنجة (يوم)</label><input name="ram_entry_after_sponge_days" type="number" value="{{ fs.ram_entry_after_sponge_days }}">
@@ -51,6 +53,7 @@
     <div style="display:flex; align-items:center; gap:10px;">
       <span class="badge {{ 'on' if s.is_enabled else 'off' }}">{{ 'مفعّل' if s.is_enabled else 'غير مفعّل' }}</span>
       <form method="post" action="{{ url_for('core.toggle_service', service_id=s.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button class="btn" type="submit">{{ 'تعطيل' if s.is_enabled else 'تفعيل' }}</button>
       </form>
     </div>

@@ -3,6 +3,7 @@
 <div style="display:flex; justify-content:center; gap:6px; margin-top:20px; flex-wrap:wrap;">
   {% for code, label in [('ar','العربية'), ('en','English'), ('am','አማርኛ'), ('hi','हिन्दी')] %}
   <form method="post" action="{{ url_for('auth.set_pre_login_language') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="hidden" name="language" value="{{ code }}">
     <button type="submit" class="badge {{ 'on' if html_lang == code else '' }}" style="cursor:pointer; border:1px solid var(--line);">{{ label }}</button>
   </form>
@@ -11,6 +12,7 @@
 <div class="card" style="max-width:340px; margin:20px auto 60px;">
   <h2 style="text-align:center;">{{ _('تسجيل الدخول') }}</h2>
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('رقم الجوال') }}</label>
     <input type="text" name="phone" required>
     <label>{{ _('كلمة المرور') }}</label>

@@ -7,6 +7,7 @@
   <div class="notice">ℹ️ {{ _('تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة تلقائياً.') }}</div>
   {% endif %}
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% if prefill_task_id %}<input type="hidden" name="task_id" value="{{ prefill_task_id }}">{% endif %}
     <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
     <label>{{ _('الحيوان') }}</label>

@@ -20,6 +20,7 @@
     <span class="badge off" title="{{ _('بانتظار:') }} {{ t.depends_on.title }}">🔒 {{ _('مقفلة') }}</span>
     {% elif t.status == 'pending' %}
     <form method="post" action="{{ url_for('team.task_start', task_id=t.id) }}" class="js-task-start-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">{{ _('بدء') }}</button>
     </form>
     {% elif t.status == 'in_progress' %}

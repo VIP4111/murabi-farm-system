@@ -18,6 +18,7 @@
 <div class="card" style="max-width:480px;">
   <h3 style="font-size:15px;">تحويل بين مستودعين</h3>
   <form method="post" action="{{ url_for('warehouses.item_transfer', kind=kind, item_id=item.id) }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>من</label>
     <select name="from_warehouse_id" required>
       {% for w in all_warehouses %}<option value="{{ w.id }}">{{ w.name }}{% if w.is_default %} (افتراضي){% endif %}</option>{% endfor %}

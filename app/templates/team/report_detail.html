@@ -40,13 +40,16 @@
   <h3 style="font-size:15px;">{{ _('إجراءات (صندوق الوارد)') }}</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">
     <form method="post" action="{{ url_for('team.report_accept', report_id=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">{{ _('قبول البلاغ') }}</button>
     </form>
     <form method="post" action="{{ url_for('team.report_postpone', report_id=r.id) }}" style="display:flex; gap:8px; align-items:flex-start;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input name="reason" placeholder="{{ _('سبب التأجيل') }}" required style="margin-bottom:0;">
       <button class="btn" type="submit">{{ _('تأجيل') }}</button>
     </form>
     <form method="post" action="{{ url_for('team.report_cancel', report_id=r.id) }}" style="display:flex; gap:8px; align-items:flex-start;" onsubmit="return confirm('{{ _('تأكيد الإلغاء؟ تنتقل لصاحب الحلال.') }}');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input name="reason" placeholder="{{ _('سبب الإلغاء (إلزامي)') }}" required style="margin-bottom:0;">
       <button class="btn" type="submit" style="background:#a32d2d;">{{ _('إلغاء') }}</button>
     </form>
@@ -57,6 +60,7 @@
 {% if r.status == 'postponed' and can_manage %}
 <div class="card">
   <form method="post" action="{{ url_for('team.report_resume', report_id=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <button class="btn" type="submit">{{ _('رجّعه لصندوق الوارد') }}</button>
   </form>
 </div>
@@ -66,6 +70,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('نفّذها بنفسك') }}</h3>
   <form method="post" action="{{ url_for('team.report_self_execute', report_id=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('ملاحظة (اختياري)') }}</label><input name="note">
     <button class="btn" type="submit">{{ _('تنفيذ وإغلاق مباشرة') }}</button>
   </form>
@@ -73,6 +78,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('أو حوّلها لعضو ثاني') }}</h3>
   <form method="post" action="{{ url_for('team.report_transfer', report_id=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('حوّل لـ') }}</label>
     <select name="executor_id" required>
       {% for role_name, members in executors_by_role.items() %}
@@ -97,6 +103,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('تسجيل الإنجاز') }}</h3>
   <form method="post" action="{{ url_for('team.report_execute', report_id=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('ملاحظة/دليل الإنجاز') }}</label><textarea name="note" rows="2"></textarea>
     <label>{{ _('رابط صورة (اختياري)') }}</label><input name="evidence_image_url" placeholder="https://...">
     <button class="btn" type="submit">{{ _('تم الإنجاز') }}</button>
@@ -108,6 +115,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('مراجعة وإغلاق') }}</h3>
   <form method="post" action="{{ url_for('team.report_close', report_id=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('ملاحظة إغلاق (اختياري)') }}</label><input name="note">
     <button class="btn" type="submit">{{ _('إغلاق البلاغ') }}</button>
   </form>
@@ -117,6 +125,7 @@
 {% if r.status == 'cancelled' and can_delete %}
 <div class="card">
   <form method="post" action="{{ url_for('team.report_delete', report_id=r.id) }}" onsubmit="return confirm('{{ _('حذف نهائي — ما يرجع. متأكد؟') }}');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف نهائي') }}</button>
   </form>
 </div>

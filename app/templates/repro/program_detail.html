@@ -16,6 +16,7 @@
   </table>
   {% if current_user.has_permission('repro.manage') and p.status == 'active' %}
   <form method="post" action="{{ url_for('repro.program_set_status', program_id=p.id) }}" style="display:flex; gap:8px; align-items:center; margin-top:10px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <select name="status" style="width:auto; margin-bottom:0;">
       <option value="completed">إنهاء البرنامج (مكتمل)</option>
       <option value="cancelled">إلغاء البرنامج</option>
@@ -40,6 +41,7 @@
         {{ d.actual_remove_at or '-' }}
         {% if current_user.has_permission('repro.manage') and not d.actual_remove_at %}
         <form method="post" action="{{ url_for('repro.program_device_remove', program_id=p.id, device_id=d.id) }}" style="display:inline;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">تسجيل الإزالة اليوم</button>
         </form>
         {% endif %}

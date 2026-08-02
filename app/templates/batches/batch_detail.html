@@ -17,10 +17,12 @@
   {% if current_user.has_permission('gates.approve') %}
     {% if batch.stage == STAGE_QUARANTINE %}
     <form method="post" action="{{ url_for('batches.batch_advance', batch_id=batch.id) }}" style="margin-top:10px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">🏷️ تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)</button>
     </form>
     {% elif batch.stage == STAGE_TAGGING %}
     <form method="post" action="{{ url_for('batches.batch_distribute', batch_id=batch.id) }}" style="margin-top:14px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <h3 style="font-size:14px;">توزيع الدفعة على الحظائر الدائمة</h3>
       <table>
         <tr><th>الرأس</th><th>حظيرة دائمة</th></tr>
@@ -61,10 +63,12 @@
         {% if current_user.has_permission('animals.manage') %}
           {% if a.batch_hold_reason %}
           <form method="post" action="{{ url_for('batches.animal_release', animal_id=a.id) }}" style="display:inline;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button class="btn light" style="padding:4px 10px; font-size:12px;" type="submit">تحرير الاستبعاد</button>
           </form>
           {% else %}
           <form method="post" action="{{ url_for('batches.animal_hold', animal_id=a.id) }}" style="display:flex; gap:4px; align-items:center;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input name="reason" placeholder="سبب الاستبعاد" required style="width:140px; padding:4px;">
             <button class="btn light" style="padding:4px 10px; font-size:12px;" type="submit">استبعاد/عزل فردي</button>
           </form>
@@ -72,6 +76,7 @@
         {% endif %}
         {% if current_user.has_permission('gates.approve') and not a.batch_hold_reason and batch.stage > STAGE_QUARANTINE %}
         <form method="post" action="{{ url_for('batches.animal_catch_up', animal_id=a.id) }}" style="display:inline-flex; gap:4px; align-items:center; margin-inline-start:6px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           {% if batch.stage == STAGE_DISTRIBUTED %}
           <select name="barn_id" style="padding:4px;">
             <option value="">حظيرة -</option>

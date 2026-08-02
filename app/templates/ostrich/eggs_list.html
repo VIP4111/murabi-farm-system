@@ -38,6 +38,7 @@
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           {% if not e.incubator_id %}
           <form method="post" action="{{ url_for('ostrich.eggs_place', egg_id=e.id) }}" style="display:flex; gap:4px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <select name="incubator_id" required style="margin:0; width:auto;">
               <option value="">اختر حاضنة</option>
               {% for inc in incubators %}<option value="{{ inc.id }}">{{ inc.code }}</option>{% endfor %}

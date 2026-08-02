@@ -53,6 +53,7 @@
 {% set can_bulk = current_user.has_permission('animals.manage') or current_user.has_permission('health.manage') or current_user.has_permission('repro.manage') %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_select') }}" id="bulkForm">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% if can_bulk and animals %}
     <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px; padding:10px; background:var(--bg); border-radius:14px;">
       <span style="font-size:13px; color:var(--muted);"><span id="selCount">0</span> محدّد</span>

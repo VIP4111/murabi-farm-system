@@ -3,7 +3,7 @@ from flask import Flask, send_from_directory
 from flask_login import current_user
 from flask_babel import lazy_gettext as _l
 from app.config import Config
-from app.extensions import db, migrate, login_manager, babel
+from app.extensions import db, migrate, login_manager, babel, csrf
 
 # لغات RTL بين اللغات المدعومة (بند إضافي، 2026-07-23) — العربي فقط
 # حالياً. الأمهرية والهندية بأبجديتيهما الأصليتين LTR رغم إنها لغات
@@ -24,6 +24,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+    csrf.init_app(app)
 
     def select_locale():
         # لغة المستخدم المسجّل دخوله (User.language) هي المصدر الأساسي —

@@ -4,6 +4,7 @@
   <h2>{{ title }}</h2>
   {% if warning %}<p class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ warning }}</p>{% endif %}
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الاسم</label>
     <input name="name" required autofocus>
     <button class="btn" type="submit">إضافة</button>

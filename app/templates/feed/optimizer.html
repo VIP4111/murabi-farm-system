@@ -10,6 +10,7 @@
     بأقل تكلفة تحقق احتياج البروتين والطاقة — تقدير مبسّط، راجع طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً.
   </p>
   <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>اختر حيوان (يستخدم وزنه الفعلي)</label>
     <select name="animal_id">
       <option value="">- أدخل وزن يدوي بدل ما تختار -</option>

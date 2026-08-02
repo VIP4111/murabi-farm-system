@@ -19,6 +19,7 @@
     واحدة صغيرة) — راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً.
   </p>
   <form method="post" action="{{ url_for('core.backup_create') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <button class="btn" type="submit">📦 إنشاء نسخة احتياطية الآن</button>
   </form>
   {% endif %}

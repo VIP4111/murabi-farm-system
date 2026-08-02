@@ -9,6 +9,7 @@
     {% endfor %}
   </table>
   <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الرأس</label>
     <select name="animal_id" required>
       <option value="">-</option>

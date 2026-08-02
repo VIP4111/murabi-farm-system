@@ -10,6 +10,7 @@
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h3>خطوات تجهيز النظام لأول مرة</h3>
     <form method="post" action="{{ url_for('core.setup_checklist_dismiss') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn light" type="submit" style="font-size:12px; padding:4px 10px;">تجاهل، ما أحتاجها</button>
     </form>
   </div>

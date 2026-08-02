@@ -11,6 +11,7 @@
 {% if action == 'weight' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_weight') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
     <table>
@@ -32,6 +33,7 @@
 {% elif action == 'vaccination' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_vaccination') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
 
@@ -204,6 +206,7 @@
 {% elif action == 'note' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_note') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ</label><input name="date" type="date" value="{{ today }}">
     <label>ملاحظة عامة (تُضاف لكل الرؤوس)</label><textarea name="general_note" required></textarea>
@@ -220,6 +223,7 @@
 {% elif action == 'barn_move' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_barn_move') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>الحظيرة الجديدة</label>
     <select name="barn_id" required>
@@ -237,6 +241,7 @@
 {% elif action == 'sale' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_sale') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>تاريخ البيع (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
     <label>ملاحظة عامة (اختياري، مثلاً اسم المشتري)</label><input name="notes">
@@ -258,6 +263,7 @@
 {% elif action == 'mark_dead' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_mark_dead') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>تاريخ النفوق (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
     <label>السبب (اختياري، يُسجَّل لكل الرؤوس)</label><textarea name="reason"></textarea>
@@ -273,6 +279,7 @@
 {% elif action == 'disease' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_disease') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>اسم المرض</label>
     <input name="disease_name" required list="diseaseTypesList" placeholder="اختر من القائمة أو اكتب اسماً جديداً">
@@ -303,6 +310,7 @@
 {% elif action == 'isolation' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_isolation') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
     <label>سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)</label><textarea name="reason"></textarea>
@@ -318,6 +326,7 @@
 {% elif action == 'sonar' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_sonar') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>تاريخ الفحص (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
     <label>الطبيب (اختياري)</label>
@@ -355,6 +364,7 @@
     لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية).
   </p>
   <form method="post" action="{{ url_for('core.animals_bulk_apply_treatment_plan') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>الدواء المخطَّط</label>
     <select name="pharmacy_id" required>
