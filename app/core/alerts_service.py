@@ -21,6 +21,7 @@
     بند 63) — رؤوس الحظيرة الحي × الجرعة الافتراضية مقابل المخزون
 12. (إضافي، بند 94) قرب انتهاء صلاحية دواء بالصيدلية (Pharmacy.expiry_date)
 13. (إضافي، بند 97) تباطؤ نمو مشبوه — رأس أبطأ بوضوح من متوسط حظيرته
+14. (إضافي، بند 99) مهمة متعذّرة بانتظار المراجعة — آخر 3 أيام
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -30,7 +31,7 @@
 from datetime import date, timedelta
 from app.models import (
     Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
-    AnimalWeight,
+    AnimalWeight, Task,
 )
 
 
@@ -298,6 +299,37 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+FAILED_TASK_ALERT_WINDOW_DAYS = 3
+
+
+def _failed_tasks_pending_review() -> list[dict]:
+    """مهام متعذّرة بانتظار مراجعة (بند إضافي 99) — قبل هذا، `fail_task`
+    كان يسجّل الحالة والسبب بس (`app/team/task_service.py`)، بدون أي
+    أثر يذكّر أحد. مهمة تعذّرت (نقص أدوات، الحيوان مو موجود، خطر
+    يمنع التنفيذ...) تبقى معلَّقة بصمت — ما فيه تصعيد ولا إعادة جدولة
+    ولا حتى تنبيه يلفت نظر المالك/الدكتور لمتابعتها.
+
+    **نطاق متعمَّد**: ما فيه آلية "تمّت المراجعة" بعد (يحتاج حقل جديد
+    بـ`Task`، خارج نطاق هذا البند) — التنبيه يظهر لأي مهمة تعذّرت خلال
+    آخر 3 أيام بس (`FAILED_TASK_ALERT_WINDOW_DAYS`، نافذة زمنية بدل
+    تنبيه دائم بلا نهاية)، بدل تتبّع حالة مراجعة فعلية. لو احتجت متابعة
+    فعلية (إعادة تعيين، إنشاء مهمة بديلة)، يبقى قرار وإجراء يدوي من
+    المالك."""
+    from datetime import datetime, timezone
+    cutoff = datetime.now(timezone.utc).replace(tzinfo=None) - timedelta(days=FAILED_TASK_ALERT_WINDOW_DAYS)
+    rows = (Task.query.filter(Task.status == "failed", Task.failed_at.isnot(None))
+            .filter(Task.failed_at >= cutoff).all())
+    return [
+        {
+            "category": "مهمة متعذّرة بانتظار المراجعة", "icon": "🚫",
+            "label": f"{t.title} — {t.failure_reason or 'سبب غير محدد'}",
+            "detail": (t.completion_note or "").strip() or "بدون ملاحظة إضافية من العامل.",
+            "urgent": True, "animal_id": t.animal_id, "barn_id": t.barn_id,
+        }
+        for t in rows
+    ]
+
+
 WEIGHT_TREND_WINDOW_DAYS = 90
 WEIGHT_TREND_MIN_COHORT = 3
 WEIGHT_TREND_RATIO_THRESHOLD = 0.5
@@ -395,6 +427,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
         + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
+        + _failed_tasks_pending_review()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
