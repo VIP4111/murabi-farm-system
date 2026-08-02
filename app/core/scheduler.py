@@ -18,23 +18,43 @@ from apscheduler.schedulers.background import BackgroundScheduler
 _scheduler = None
 
 
-def _run_daily_tasks_job(app):
+def _generate_if_needed_today():
+    """المنطق الفعلي مشترك بين الـCron (وقت 3 فجراً) وبين نقطة التدارك
+    عند أول طلب باليوم (بند إضافي 89، نقطة 6). لازم تُستدعى داخل
+    app_context فعّال أصلاً."""
     from app.extensions import db
     from app.models import FarmSettings
     from app.core import daily_task_service
 
+    today = date.today()
+    settings = FarmSettings.get()
+    # حارس بسيط (مو قفل موزَّع مثالي) يمنع تكرار التوليد أكثر من
+    # مرة بنفس اليوم لو أكثر من عملية worker حاولت بنفس الوقت —
+    # `generate_daily_husbandry_tasks` نفسها idempotent أصلاً
+    # فهذا احتياط مزدوج، مو الحارس الوحيد ضد التكرار.
+    if settings.last_daily_tasks_auto_run == today:
+        return
+    daily_task_service.generate_daily_husbandry_tasks(now=datetime.now())
+    settings.last_daily_tasks_auto_run = today
+    db.session.commit()
+
+
+def _run_daily_tasks_job(app):
     with app.app_context():
-        today = date.today()
-        settings = FarmSettings.get()
-        # حارس بسيط (مو قفل موزَّع مثالي) يمنع تكرار التوليد أكثر من
-        # مرة بنفس اليوم لو أكثر من عملية worker حاولت بنفس الوقت —
-        # `generate_daily_husbandry_tasks` نفسها idempotent أصلاً
-        # فهذا احتياط مزدوج، مو الحارس الوحيد ضد التكرار.
-        if settings.last_daily_tasks_auto_run == today:
-            return
-        daily_task_service.generate_daily_husbandry_tasks(now=datetime.now())
-        settings.last_daily_tasks_auto_run = today
-        db.session.commit()
+        _generate_if_needed_today()
+
+
+def catch_up_daily_tasks_before_request():
+    """بند إضافي 89، نقطة 6 (نقد ذاتي على بند 78) — Render المجاني يطفي
+    العملية بعد ~15 دقيقة خمول ويشغّلها من جديد عند أول طلب وارد.
+    الـCron الداخلي (BackgroundScheduler، الساعة 3 فجراً UTC) ما ينفع
+    لو العملية نايمة بالضبط بتلك اللحظة — غالب الوقت على الخطة
+    المجانية. هذا catch-up بسيط: كل طلب وارد يتأكد (بفحص خفيف من قاعدة
+    البيانات) إن مهام اليوم تولّدت، ولو لأ يولّدها فوراً بدل ما ينتظر
+    الـCron. التكلفة استعلام واحد خفيف لكل طلب، والتوليد الفعلي (المكلف
+    قليلاً) يصير مرة وحدة كل يوم بس بحكم نفس حارس last_daily_tasks_auto_run
+    أعلاه."""
+    _generate_if_needed_today()
 
 
 def init_scheduler(app):

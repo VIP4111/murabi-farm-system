@@ -83,8 +83,20 @@ def create_app(config_class=Config):
     from app.cli import register_cli
     register_cli(app)
 
-    from app.core.scheduler import init_scheduler
+    from app.core.scheduler import init_scheduler, catch_up_daily_tasks_before_request
     init_scheduler(app)
+
+    if not app.config.get("TESTING"):
+        @app.before_request
+        def _catch_up_daily_tasks():
+            # بند إضافي 89 (نقطة 6) — تدارك لو الـCron الداخلي فاته
+            # (Render المجاني نايم وقت الساعة 3 فجراً)، بدل ما نعتمد
+            # على توقيت دقيق قد ما يصير أصلاً. فشل هذا الفحص عمداً ما
+            # يوقف الطلب نفسه — مجرد تدارك أفضلية، مو مسار حرج.
+            try:
+                catch_up_daily_tasks_before_request()
+            except Exception as e:
+                app.logger.warning("catch_up_daily_tasks_before_request failed: %s", e)
 
     # قيم `_l()` بدل نص عربي خام (بند إضافي 74، 2026-07-31) — عشان
     # ar_status/ar_task_type تترجم فعلياً للأمهرية/الهندية/الإنجليزية
