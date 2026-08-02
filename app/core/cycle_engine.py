@@ -465,6 +465,13 @@ def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_d
     wf.status = "complete"
     wf.notes = (wf.notes + " | " if wf.notes else "") + (notes or "")
     db.session.add(wf)
+
+    # بند إضافي 98 — أي مهمة مفتوحة لهذا الرأس (تحصين، رش، خطوة بروتوكول
+    # علاج...) تُلغى تلقائياً؛ رأس مباع ما له أي عمل ميداني معلَّق يستاهل
+    # بقاءه بقوائم العمال اليومية.
+    from app.team import task_service
+    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} انباع")
+
     db.session.commit()
 
     record_cycle_event(animal, "sale", source_type="Finance", source_id=fin.id, event_date=sale_date)
@@ -497,6 +504,11 @@ def mark_animal_dead(animal: Animal, *, actor_user_id: int, reason=None, death_d
     wf.status = "complete"
     wf.notes = (wf.notes + " | " if wf.notes else "") + (reason or "")
     db.session.add(wf)
+
+    # بند إضافي 98 — نفس منطق sell_animal بالضبط.
+    from app.team import task_service
+    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} نفق")
+
     db.session.commit()
 
     record_cycle_event(animal, "death", source_type="Finance", source_id=source_id, event_date=death_date)
@@ -519,6 +531,11 @@ def delete_animal(animal: Animal, *, actor_user_id: int, force: bool = False, re
     wf.status = "complete"
     wf.notes = (wf.notes + " | " if wf.notes else "") + (reason or "")
     db.session.add(wf)
+
+    # بند إضافي 98 — نفس منطق sell_animal/mark_animal_dead بالضبط.
+    from app.team import task_service
+    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} اتحذف/أُرشف")
+
     db.session.commit()
 
     record_cycle_event(animal, "archive", event_date=date.today())

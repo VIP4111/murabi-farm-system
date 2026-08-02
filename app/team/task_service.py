@@ -334,3 +334,23 @@ def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, 
                              entity_type="Task", entity_id=task.id, details=reason))
     db.session.commit()
     return task
+
+
+OPEN_TASK_STATUSES = ("suggested", "pending", "in_progress", "postponed")
+
+
+def cancel_open_tasks_for_animal(animal, *, reason: str) -> list[Task]:
+    """إلغاء كل مهام رأس معيّن اللي لسا مفتوحة (بند إضافي 98) — قبل هذا
+    البند، بيع/نفوق رأس كان يحدّث حالته بس، بدون ما يلمس أي مهمة مرتبطة
+    فيه (تحصين، رش، خطوة بروتوكول علاج...). المهام تبقى معلّقة تشير
+    لرأس مو موجود فعلياً، والعامل يفتحها يومياً بلا فايدة. يشمل مهام
+    خطوات البروتوكول العلاجي كمان (`source_type='ProtocolApplication'`)
+    لأنها كلها `Task` عادية بـ`animal_id` نفسه — صفر جدول ثاني يحتاج
+    تعديل. مهام منجزة/فاشلة/ملغاة أصلاً ما تُلمَس — سجل تاريخي، مو
+    عمل معلّق."""
+    tasks = Task.query.filter(Task.animal_id == animal.id, Task.status.in_(OPEN_TASK_STATUSES)).all()
+    for t in tasks:
+        t.status = "cancelled"
+        t.notes = (t.notes + " | " if t.notes else "") + reason
+        db.session.add(t)
+    return tasks
