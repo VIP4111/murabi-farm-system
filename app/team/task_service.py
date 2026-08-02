@@ -215,6 +215,10 @@ def complete_task_via_treatment(task: Task, *, actor) -> Task:
     task.completion_note = "أُنجزت تلقائياً عند تأكيد تنفيذ العلاج المخطَّط."
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.complete_via_treatment",
                              entity_type="Task", entity_id=task.id))
+
+    if task.task_type == "protocol_step":
+        _maybe_close_protocol_application(task)
+
     db.session.commit()
     return task
 
@@ -292,8 +296,48 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
     if task.task_type == "move_to_pregnant_barn" and task.animal_id:
         _move_to_pregnant_barn(task)
 
+    if task.task_type == "protocol_step":
+        _maybe_close_protocol_application(task)
+
     db.session.commit()
     return task
+
+
+def _maybe_close_protocol_application(task: Task) -> None:
+    """إغلاق تلقائي لتطبيق بروتوكول العلاج (بند إضافي 101) — قبل هذا،
+    `apply_protocol` كان يولّد مهمة مستقلة لكل خطوة (بند 52)، بدون أي
+    كود يفحص هل كل الخطوات خلصت — البروتوكول ينتهي بصمت بلا أي تقييم
+    لفعالية العلاج ولا حتى إغلاق فعلي لـ`ProtocolApplication` نفسه.
+    تُستدعى فقط لما آخر خطوة `protocol_step` بنفس التطبيق توصل لحالة
+    نهائية (منجزة/فاشلة/ملغاة — أي حالة برة `OPEN_TASK_STATUSES`)،
+    فتنشئ مهمة مقترحة واحدة "تقييم فعالية العلاج" بعد يومين. مقيَّدة
+    بـ`task_type == "protocol_step"` بس (يُتحقَّق منه بمكان الاستدعاء)
+    عشان مهمة التقييم نفسها (لها نفس source_type/source_id) ما تعيد
+    تشغيل هذا المنطق لما تُنجَز."""
+    if task.source_type != "ProtocolApplication" or not task.source_id:
+        return
+    remaining_open = Task.query.filter(
+        Task.source_type == "ProtocolApplication", Task.source_id == task.source_id,
+        Task.id != task.id, Task.status.in_(OPEN_TASK_STATUSES),
+    ).count()
+    if remaining_open:
+        return
+    from app.models import ProtocolApplication
+    application = ProtocolApplication.query.get(task.source_id)
+    if not application:
+        return
+    animal = application.animal
+    create_suggested_task(
+        title=f'📋 تقييم فعالية العلاج — {application.protocol.name}'
+              + (f' — {animal.animal_no}' if animal else ''),
+        task_type="protocol_effectiveness_review",
+        barn_id=animal.barn_id if animal else None,
+        animal_id=application.animal_id,
+        due_date=date.today() + timedelta(days=2),
+        source_type="ProtocolApplication", source_id=application.id,
+        notes=f'كل خطوات بروتوكول "{application.protocol.name}" اكتملت (منجزة/فاشلة/ملغاة) — '
+              "راجع استجابة الرأس للعلاج ووثّق النتيجة.",
+    )
 
 
 def _move_to_pregnant_barn(task: Task) -> None:
@@ -332,6 +376,10 @@ def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, 
     task.server_time_source = "server"
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.fail",
                              entity_type="Task", entity_id=task.id, details=reason))
+
+    if task.task_type == "protocol_step":
+        _maybe_close_protocol_application(task)
+
     db.session.commit()
     return task
 

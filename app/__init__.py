@@ -167,6 +167,7 @@ def create_app(config_class=Config):
         "heat_shade": _l("فحص تظليل (إجهاد حراري)"),
         "shearing": _l("جزّ صوف"),
         "sonar_recheck": _l("إعادة فحص سونار"),
+        "protocol_effectiveness_review": _l("تقييم فعالية العلاج"),
     }
 
     @app.template_filter("ar_task_type")
