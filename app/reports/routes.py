@@ -49,6 +49,13 @@ def activity():
     return _render("activity")
 
 
+@reports_bp.route("/purchase_request")
+@login_required
+@require_permission("analytics.view")
+def purchase_request():
+    return _render("purchase_request")
+
+
 def _render(report_key):
     label, data, start, end, range_key = _load(report_key)
     return render_template(

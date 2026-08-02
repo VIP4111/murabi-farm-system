@@ -19,6 +19,7 @@
 10. (إضافي، بند 56) حظيرة بدون عامل مسؤول — تذكير بس، ما يمنع الحفظ
 11. (إضافي، بند 65) نقص مخزون متوقّع لتحصين مجدول قريب (تقويم التحصينات،
     بند 63) — رؤوس الحظيرة الحي × الجرعة الافتراضية مقابل المخزون
+12. (إضافي، بند 94) قرب انتهاء صلاحية دواء بالصيدلية (Pharmacy.expiry_date)
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -27,7 +28,7 @@
 """
 from datetime import date, timedelta
 from app.models import (
-    Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings,
+    Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
 )
 
 
@@ -250,6 +251,32 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
+    """قرب انتهاء صلاحية دواء (بند إضافي 94) — قبل هذا `Pharmacy.expiry_date`
+    كان يُخزَّن بدون أي منطق تنبيه يستخدمه، يعني ما فيه طريقة تعرف إلا لو
+    فتحت شاشة الدواء بنفسك بالصدفة وشفت التاريخ. نفس نافذة التنبيه العامة
+    (`alert_before_days`) المستخدمة ببقية هذا الملف. **نطاق متعمَّد**:
+    دواء منتهي فعلاً (تاريخ بالماضي) يظهر أيضاً بنفس القائمة كـ"عاجل" —
+    ما فيه منع استخدام تلقائي (قرار الدكتور يبقى قرار الدكتور)، بس
+    التنبيه يوضّح الوضع بصراحة."""
+    today = date.today()
+    window_end = today + timedelta(days=fs.alert_before_days)
+    rows = (Pharmacy.query.filter(Pharmacy.expiry_date.isnot(None))
+            .filter(Pharmacy.status == "active")
+            .filter(Pharmacy.expiry_date <= window_end).all())
+    alerts = []
+    for p in rows:
+        expired = p.expiry_date < today
+        alerts.append({
+            "category": "قرب انتهاء صلاحية دواء", "icon": "⏳",
+            "label": f"{p.name} — {p.available_qty or 0:g} {p.unit or ''}",
+            "detail": (f"منتهي الصلاحية منذ {today - p.expiry_date}" if expired
+                       else f"تنتهي صلاحيته بتاريخ {p.expiry_date}"),
+            "urgent": expired, "animal_id": None, "barn_id": None,
+        })
+    return alerts
+
+
 def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     """
     `barn_ids=None` (الافتراضي، سلوك بند 20 الأصلي بدون تغيير): كل
@@ -274,6 +301,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
+        + _medicine_expiring_soon(fs)
     )
     if barn_ids is not None:
         allowed = set(barn_ids)

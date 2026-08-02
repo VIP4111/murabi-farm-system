@@ -18,6 +18,7 @@ from app.extensions import db
 from app.models import (
     Animal, Finance, CycleEvent, AuditLog, Vaccination, Disease,
     Mating, Pregnancy, Task, VetVisit, AnimalWeight, MilkRecord, Report,
+    Feed, FeedMovement, Pharmacy,
 )
 from app.models.animal import AnimalSource
 
@@ -309,10 +310,75 @@ def activity_report(start: date, end: date) -> dict:
     }
 
 
+def purchase_request_report(start: date, end: date) -> dict:
+    """تقرير طلب الشراء (بند إضافي 95) — بناءً على طلبك الصريح: الاحتياج
+    يُحسب من الاستهلاك الفعلي الحقيقي بالفترة المختارة (مو تخمين حسب
+    عدد الرؤوس)، نفس فلسفة "الاستهلاك الفعلي أذكى" اللي اخترتها. العلف
+    يُحسب من حركات `FeedMovement` الصادرة (نفس الجدول اللي يسجّله توزيع
+    العلف الفعلي على الحظائر أصلاً)، والدواء من مجموع `quantity_used`
+    بسجلات الزيارات/الأمراض/التطعيمات لنفس الفترة — كلها بيانات حقيقية
+    مسجَّلة أصلاً بالنظام، بدون أي جدول جديد.
+
+    المعادلة لكل صنف: معدل الاستهلاك اليومي (المستهلك ÷ عدد أيام الفترة)
+    × 30 يوم = الاحتياج المتوقع للشهر القادم. لو (الاحتياج المتوقع +
+    الحد الأدنى المطلوب بالمخزون) أكبر من المخزون الحالي، يظهر الصنف
+    بالتقرير بالكمية المقترح شراؤها. أصناف ما تحتاج شراء (المخزون كافٍ)
+    عمداً ما تظهر — التقرير غرضه قائمة شراء عملية، مو جرد كامل."""
+    days = max((end - start).days + 1, 1)
+    rows = []
+
+    feed_consumed = dict(
+        db.session.query(FeedMovement.feed_id, func.coalesce(func.sum(FeedMovement.quantity), 0.0))
+        .filter(FeedMovement.movement_type == "out", func.date(FeedMovement.created_at).between(start, end))
+        .group_by(FeedMovement.feed_id).all()
+    )
+    for feed in Feed.query.filter_by(status="active").all():
+        consumed = feed_consumed.get(feed.id, 0.0)
+        projected_30d = (consumed / days) * 30
+        current = feed.available_qty or 0
+        suggested = max(0.0, projected_30d + (feed.min_stock_qty or 0) - current)
+        if suggested > 0:
+            rows.append(["علف", feed.name, f"{consumed:g}", f"{projected_30d:.1f}",
+                         f"{current:g}", f"{suggested:.1f}", feed.unit or "-"])
+
+    def _pharmacy_usage(model):
+        return (db.session.query(model.pharmacy_id, func.coalesce(func.sum(model.quantity_used), 0.0))
+                .filter(model.pharmacy_id.isnot(None), model.date.between(start, end))
+                .group_by(model.pharmacy_id).all())
+
+    med_consumed: dict[int, float] = {}
+    for pid, qty in _pharmacy_usage(VetVisit) + _pharmacy_usage(Disease) + _pharmacy_usage(Vaccination):
+        med_consumed[pid] = med_consumed.get(pid, 0.0) + (qty or 0.0)
+    for p in Pharmacy.query.filter_by(status="active").all():
+        consumed = med_consumed.get(p.id, 0.0)
+        projected_30d = (consumed / days) * 30
+        current = p.available_qty or 0
+        suggested = max(0.0, projected_30d + (p.min_stock_qty or 0) - current)
+        if suggested > 0:
+            rows.append(["دواء", p.name, f"{consumed:g}", f"{projected_30d:.1f}",
+                         f"{current:g}", f"{suggested:.1f}", p.unit or "-"])
+
+    active_animals = Animal.query.filter_by(status="active").count()
+    kpis = [
+        ("عدد الرؤوس النشطة", active_animals),
+        ("عدد الأصناف المطلوب شراؤها", len(rows)),
+        ("فترة قياس الاستهلاك (أيام)", days),
+    ]
+    return {
+        "kpis": kpis,
+        "table": {
+            "columns": ["النوع", "الصنف", "المستهلك بالفترة", "الاحتياج المتوقع (30 يوم)",
+                        "المخزون الحالي", "الكمية المقترح شراؤها", "الوحدة"],
+            "rows": rows,
+        },
+    }
+
+
 REPORTS = {
     "overview": ("التقرير الشامل", overview_report),
     "mortality": ("تقرير النفوق", mortality_report),
     "births": ("تقرير الولادات والإنتاج", births_report),
     "sales": ("تقرير المبيعات والمالية", sales_report),
     "activity": ("تقرير إنجاز اليوم", activity_report),
+    "purchase_request": ("تقرير طلب الشراء", purchase_request_report),
 }
