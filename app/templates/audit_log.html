@@ -7,6 +7,33 @@
 </div>
 
 <div class="card">
+  <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+    <div><label style="margin:0 0 4px;">من</label><input name="start" type="date" value="{{ start }}" style="margin:0;"></div>
+    <div><label style="margin:0 0 4px;">إلى</label><input name="end" type="date" value="{{ end }}" style="margin:0;"></div>
+    <div>
+      <label style="margin:0 0 4px;">المستخدم</label>
+      <select name="actor_user_id" style="margin:0;">
+        <option value="">الكل</option>
+        {% for u in users %}
+        <option value="{{ u.id }}" {{ 'selected' if actor_user_id == u.id }}>{{ u.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label style="margin:0 0 4px;">نوع الإجراء</label>
+      <select name="action" style="margin:0;">
+        <option value="">الكل</option>
+        {% for a in actions %}
+        <option value="{{ a }}" {{ 'selected' if action == a }}>{{ a }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn" type="submit" style="padding:10px 16px;">فلترة</button>
+    <a class="btn light" href="{{ url_for('core.audit_log_list') }}" style="padding:10px 16px;">مسح الفلترة</a>
+  </form>
+</div>
+
+<div class="card">
   <table>
     <tr><th>الوقت</th><th>مين</th><th>الإجراء</th><th>على</th><th>تفاصيل</th></tr>
     {% for row in rows %}

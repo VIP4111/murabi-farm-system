@@ -1141,9 +1141,15 @@ def farm_settings_save():
         "min_breeding_age_days", "min_rest_after_birth_days",
         "regular_sale_age_days", "udhiyah_min_age_days", "female_delayed_conception_days",
         "report_stale_hours", "ostrich_incubation_days",
+        # بند إضافي 105 — كانت مخزَّنة بدون أي شاشة تعديل.
+        "quarantine_days", "reweigh_followup_days", "antiparasitic_redose_days",
+        "concentrate_increase_window_days", "abortion_barn_monitor_days",
     ):
         setattr(fs, field, int(request.form[field]))
     fs.target_profit_margin_percent = float(request.form["target_profit_margin_percent"])
+    fs.concentrate_increase_max_percent_weekly = float(request.form["concentrate_increase_max_percent_weekly"])
+    fs.ca_phosphorus_target_ratio = float(request.form["ca_phosphorus_target_ratio"])
+    fs.ca_phosphorus_tolerance = float(request.form["ca_phosphorus_tolerance"])
     db.session.add(fs)
     db.session.commit()
     flash("تم حفظ الإعدادات الزمنية", "success")
@@ -1277,9 +1283,32 @@ def backup_download(filename):
 @login_required
 @require_permission("audit.view")
 def audit_log_list():
-    from app.models import AuditLog
-    rows = AuditLog.query.order_by(AuditLog.created_at.desc()).limit(200).all()
-    return render_template("audit_log.html", rows=rows)
+    # فلترة (بند إضافي 104) — قبل هذا آخر 200 حدث بس بدون أي فلترة،
+    # يصير غير عملي بمزرعة نشطة بسرعة (200 حدث ممكن تصير ساعات قليلة).
+    from app.models import AuditLog, User
+    query = AuditLog.query
+
+    start = request.args.get("start")
+    end = request.args.get("end")
+    actor_user_id = request.args.get("actor_user_id", type=int)
+    action = request.args.get("action")
+
+    if start:
+        query = query.filter(db.func.date(AuditLog.created_at) >= start)
+    if end:
+        query = query.filter(db.func.date(AuditLog.created_at) <= end)
+    if actor_user_id:
+        query = query.filter(AuditLog.actor_user_id == actor_user_id)
+    if action:
+        query = query.filter(AuditLog.action == action)
+
+    rows = query.order_by(AuditLog.created_at.desc()).limit(200).all()
+    actions = [r[0] for r in db.session.query(AuditLog.action).distinct().order_by(AuditLog.action).all()]
+    return render_template(
+        "audit_log.html", rows=rows, actions=actions,
+        users=User.query.order_by(User.name).all(),
+        start=start or "", end=end or "", actor_user_id=actor_user_id, action=action or "",
+    )
 
 
 # ---------- استكمال البيانات والجاهزية (بند 33) ----------

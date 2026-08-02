@@ -37,6 +37,15 @@
     <label>أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)</label><input name="female_delayed_conception_days" type="number" value="{{ fs.female_delayed_conception_days }}">
     <label>أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)</label><input name="report_stale_hours" type="number" value="{{ fs.report_stale_hours }}">
     <label>مدة حضانة بيض النعام (يوم)</label><input name="ostrich_incubation_days" type="number" value="{{ fs.ostrich_incubation_days }}">
+    <h3 style="font-size:14px; margin-top:16px;">الصحة والتغذية (بند إضافي 105 — كانت مخفية بدون شاشة تعديل)</h3>
+    <label>حجر الحيوان الوافد قبل الاختلاط (يوم)</label><input name="quarantine_days" type="number" value="{{ fs.quarantine_days }}">
+    <label>تذكير إعادة الوزن بعد العلاج (يوم)</label><input name="reweigh_followup_days" type="number" value="{{ fs.reweigh_followup_days }}">
+    <label>أقل مدة بين جرعتين مضاد طفيليات (يوم)</label><input name="antiparasitic_redose_days" type="number" value="{{ fs.antiparasitic_redose_days }}">
+    <label>أقصى زيادة أسبوعية للمركّزات (%)</label><input name="concentrate_increase_max_percent_weekly" type="number" step="0.1" value="{{ fs.concentrate_increase_max_percent_weekly }}">
+    <label>نافذة قياس زيادة المركّزات (يوم)</label><input name="concentrate_increase_window_days" type="number" value="{{ fs.concentrate_increase_window_days }}">
+    <label>نسبة الكالسيوم/الفوسفور المستهدفة</label><input name="ca_phosphorus_target_ratio" type="number" step="0.1" value="{{ fs.ca_phosphorus_target_ratio }}">
+    <label>هامش تسامح نسبة الكالسيوم/الفوسفور</label><input name="ca_phosphorus_tolerance" type="number" step="0.1" value="{{ fs.ca_phosphorus_tolerance }}">
+    <label>مراقبة الحظيرة بعد إجهاض (يوم)</label><input name="abortion_barn_monitor_days" type="number" value="{{ fs.abortion_barn_monitor_days }}">
     <button class="btn" type="submit">حفظ الإعدادات</button>
   </form>
 </div>
