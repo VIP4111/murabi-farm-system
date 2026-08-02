@@ -1,0 +1,28 @@
+{#
+صفوف جدول "مهام مقترحة بانتظار الاعتماد" (بند إضافي 91، نقطة 8) —
+استُخرجت لملف مستقل بنفس فكرة _my_tasks_rows.html (بند 81) بالضبط:
+تُستخدم بالصفحة الكاملة وكجزء HTML مستقل يُطلَب عبر fetch بعد
+اعتماد/تأجيل/حذف بدل إعادة تحميل الصفحة كاملة. يحتاج متغيّر suggested
+بأي مكان يُضمَّن فيه.
+#}
+{% for t in suggested %}
+<tr>
+  <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a></td>
+  <td>{{ t.task_type|ar_task_type }}</td>
+  <td>{{ t.barn.barn_name if t.barn else '' }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
+  <td>{{ t.due_date or '-' }}</td>
+  <td class="actions-col">
+    <form method="post" action="{{ url_for('team.task_approve', task_id=t.id) }}" class="js-task-suggested-form">
+      <button class="btn" type="submit">{{ _('اعتماد وإرسال') }}</button>
+    </form>
+    <form method="post" action="{{ url_for('team.task_postpone', task_id=t.id) }}" class="js-task-suggested-form">
+      <button class="btn" type="submit" title="{{ _('تأجيل ليوم واحد') }}">{{ _('تأجيل') }}</button>
+    </form>
+    <form method="post" action="{{ url_for('team.task_soft_delete', task_id=t.id) }}" class="js-task-suggested-form">
+      <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف') }}</button>
+    </form>
+  </td>
+</tr>
+{% else %}
+<tr><td colspan="5" style="color:#888;">{{ _('لا يوجد مهام مقترحة حالياً.') }}</td></tr>
+{% endfor %}

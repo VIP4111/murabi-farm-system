@@ -28,5 +28,5 @@ def test_suggested_task_row_has_thead_tbody_structure(app, logged_in_client):
     thead_idx = body.index("مهام مقترحة بانتظار الاعتماد")
     window = body[thead_idx:thead_idx + 1200]
     assert "<thead>" in window
-    assert "<tbody>" in window
-    assert window.index("<thead>") < window.index("<tbody>")
+    assert "<tbody" in window
+    assert window.index("<thead>") < window.index("<tbody")

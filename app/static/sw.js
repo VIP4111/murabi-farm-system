@@ -20,7 +20,7 @@
  * مستقبلاً — أي صفحة جديدة تُبنى تدخل التغطية تلقائياً بدون أي تعديل
  * على هذا الملف.
  */
-const CACHE_NAME = "murabi-offline-v3";
+const CACHE_NAME = "murabi-offline-v4";
 
 // صفحات القوائم القديمة تبقى مُخزَّنة مسبقاً عند التثبيت (تجربة أول
 // استخدام أسرع، قبل حتى ما يزور المستخدم أي صفحة). التخزين الفعلي بعد
@@ -33,6 +33,31 @@ const PRECACHE_URLS = [
 // وتخزينها أوفلاين ما يفيد لأنها أصلاً ثابتة بعد الرفع)، وصفحات الدخول/
 // الخروج (تخزينها بلا فائدة — ما تقدر تسجّل دخول فعلي وأنت أوفلاين).
 const EXCLUDED_PATH_PREFIXES = ["/uploads/", "/login", "/logout"];
+
+// حد أقصى لعدد الصفحات المخزَّنة (بند إضافي 91، نقطة 7 من التحليل
+// الثاني — نقد ذاتي على بند 82) — قبل هذا البند، كل صفحة GET من نفس
+// الموقع كانت تُضاف للكاش بلا أي حد أقصى، والتنظيف الوحيد كان مسح
+// كامل عند تغيير CACHE_NAME يدوياً. مع مرور الوقت (شاشات تفاصيل
+// حيوان/تقرير كثيرة، كل وحدة برقم مختلف بالمسار) الكاش يكبر بلا
+// نهاية. Cache API ما فيها انتهاء صلاحية مدمج، فهذا تقليم بسيط أقرب
+// لـFIFO: لو تجاوز العدد الحد، نحذف الأقدم (أول المُدخَلين حسب ترتيب
+// keys()) لين نرجع تحت الحد.
+const MAX_CACHE_ENTRIES = 150;
+
+// دالة صرفة قابلة للاختبار بـNode.js (نفس نمط isCacheablePath) —
+// تاخذ قائمة روابط الكاش الحالية وترجّع اللي لازم يُحذَف بس.
+function keysToEvict(cachedUrls, maxEntries) {
+  if (cachedUrls.length <= maxEntries) return [];
+  return cachedUrls.slice(0, cachedUrls.length - maxEntries);
+}
+
+function trimCache(cache) {
+  return cache.keys().then(function (requests) {
+    var urls = requests.map(function (r) { return r.url; });
+    var evict = keysToEvict(urls, MAX_CACHE_ENTRIES);
+    return Promise.all(evict.map(function (url) { return cache.delete(url); }));
+  });
+}
 
 // origin كوسيط اختياري (بند إضافي 83 — اختبارات آلية على الجافاسكربت،
 // نقطة 9 من قائمة نقاط الضعف) — يخلي الدالة قابلة للاختبار بـNode.js
@@ -81,7 +106,7 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
       fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy).then(() => trimCache(cache)));
           return res;
         })
         .catch(() => caches.match(req))
@@ -92,5 +117,5 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
 // تصدير للاختبار بـNode.js (بند إضافي 83) — بلا أثر بالمتصفح الفعلي،
 // `module` غير معرَّف هناك فهذا الشرط ما يتنفَّذ إطلاقاً وقت التشغيل الحي.
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { isCacheablePath, EXCLUDED_PATH_PREFIXES };
+  module.exports = { isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES };
 }

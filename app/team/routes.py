@@ -410,6 +410,12 @@ def tasks_list():
                 if t.target_role == role_filter
                 or (not t.target_role and t.assignee and t.assignee.role and t.assignee.role.name == role_filter)
             ]
+    # جزء HTML مستقل لجدول "مهام مقترحة بانتظار الاعتماد" بس (بند
+    # إضافي 91، نقطة 8 — توسيع نمط AJAX من بند 81 ليشمل اعتماد/تأجيل/
+    # حذف المهام المقترحة، مو زر "بدء" بس). نفس فكرة fragment=my_tasks
+    # أعلاه بالضبط.
+    if request.args.get("fragment") == "suggested_tasks":
+        return render_template("team/_suggested_tasks_rows.html", suggested=suggested)
     if current_user.has_permission("tasks.delete_final"):
         review_box = Task.query.filter_by(status="deleted_pending_review").order_by(Task.updated_at.desc()).all()
     if current_user.has_permission("tasks.assign_any"):
@@ -562,11 +568,18 @@ def task_fail(task_id):
 @team_bp.route("/tasks/<int:task_id>/approve", methods=["POST"])
 @login_required
 def task_approve(task_id):
+    # استجابة AJAX (بند إضافي 91، نقطة 8 — نفس نمط بند 81 بالضبط
+    # لزر "بدء") بدل flash+redirect دايماً.
+    is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.approve_suggested_task(task, actor=current_user)
+        if is_ajax:
+            return jsonify(ok=True)
         flash("تم اعتماد المهمة — نزلت للعامل", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        if is_ajax:
+            return jsonify(ok=False, error=str(e)), 400
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
 
@@ -574,6 +587,7 @@ def task_approve(task_id):
 @team_bp.route("/tasks/<int:task_id>/postpone", methods=["POST"])
 @login_required
 def task_postpone(task_id):
+    is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     task = Task.query.get_or_404(task_id)
     # بند إضافي 72 — زر تأجيل بضغطة وحدة بلا خانة تاريخ يدوية: يؤجّل
     # ليوم واحد من موعدها الحالي (أو من اليوم لو ما فيها موعد أصلاً).
@@ -586,8 +600,12 @@ def task_postpone(task_id):
         new_due_date = (task.due_date or date.today()) + timedelta(days=1)
     try:
         tsvc.postpone_suggested_task(task, actor=current_user, new_due_date=new_due_date)
+        if is_ajax:
+            return jsonify(ok=True)
         flash("تم تأجيل المهمة ليوم واحد", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        if is_ajax:
+            return jsonify(ok=False, error=str(e)), 400
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
 
@@ -595,11 +613,16 @@ def task_postpone(task_id):
 @team_bp.route("/tasks/<int:task_id>/soft-delete", methods=["POST"])
 @login_required
 def task_soft_delete(task_id):
+    is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.soft_delete_suggested_task(task, actor=current_user, reason=request.form.get("reason"))
+        if is_ajax:
+            return jsonify(ok=True)
         flash("تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        if is_ajax:
+            return jsonify(ok=False, error=str(e)), 400
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
 
