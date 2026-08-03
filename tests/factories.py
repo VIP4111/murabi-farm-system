@@ -3,7 +3,7 @@
 from datetime import date
 
 from app.extensions import db
-from app.models import Barn, Pharmacy, Feed, DiseaseType, Symptom, DiseaseSymptomLink, WeatherReading
+from app.models import Barn, Pharmacy, Feed, DiseaseType, Symptom, DiseaseSymptomLink, WeatherReading, Equipment
 from app.models.animal import Animal, AnimalSource
 
 
@@ -45,6 +45,13 @@ def make_feed(name="علف اختبار", available_qty=100, unit_price=None,
                 calcium_percent=calcium_percent, phosphorus_percent=phosphorus_percent,
                 feed_class=feed_class, contains_high_copper=contains_high_copper,
                 unit="كجم", status="active")
+    db.session.add(item)
+    db.session.commit()
+    return item
+
+
+def make_equipment(name="أداة اختبار", available_qty=10, unit="قطعة", unit_price=None):
+    item = Equipment(name=name, available_qty=available_qty, unit=unit, unit_price=unit_price, status="active")
     db.session.add(item)
     db.session.commit()
     return item

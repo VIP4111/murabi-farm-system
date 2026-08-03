@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;">
+  <h2>حركة مخزون — {{ item.name }}</h2>
+  <p style="color:var(--muted); font-size:12px;">المتوفر حالياً: {{ item.available_qty }} {{ item.unit }}</p>
+  <form method="post" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>نوع الحركة</label>
+    <select name="movement_type" required>
+      <option value="in">وارد (شراء)</option>
+      <option value="out">صادر (صرف/استهلاك)</option>
+    </select>
+    <label>الكمية</label><input name="quantity" type="number" step="any" min="0.01" required>
+    <label>الحظيرة (اختياري)</label>
+    <select name="barn_id">
+      <option value="">-</option>
+      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+    </select>
+    <label>ملاحظة (اختياري)</label><textarea name="note" rows="2"></textarea>
+    <button class="btn" type="submit">تسجيل الحركة</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">آخر الحركات</h3>
+  <table>
+    <tr><th>التاريخ</th><th>النوع</th><th>الكمية</th><th>الرصيد بعدها</th><th>ملاحظة</th></tr>
+    {% for m in movements %}
+    <tr>
+      <td>{{ m.created_at.strftime('%Y-%m-%d %H:%M') if m.created_at else '-' }}</td>
+      <td>{{ 'وارد' if m.movement_type == 'in' else 'صادر' }}</td>
+      <td>{{ m.quantity }} {{ item.unit }}</td>
+      <td>{{ m.after_qty }} {{ item.unit }}</td>
+      <td>{{ m.note or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">ما فيه حركات مسجَّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

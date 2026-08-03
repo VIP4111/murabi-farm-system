@@ -52,6 +52,10 @@ PERMISSIONS = [
     ("feed.view", "عرض بيانات العلف والمخزون"),
     ("feed.manage", "إدارة العلف والوصفات وخطط التغذية"),
 
+    # مستودع المعدات (بند إضافي 108)
+    ("equipment.view", "عرض مخزون المعدات"),
+    ("equipment.manage", "إدارة مخزون المعدات (إضافة/شراء/صرف)"),
+
     # التقارير التحليلية (بند 22) — اسم مختلف عمداً عن reports.* الحالية
     # (تلك خاصة ببلاغات الفريق/التذاكر، مو التقارير التحليلية هنا).
     ("analytics.view", "عرض التقارير التحليلية (شامل، نفوق، ولادات، مبيعات) والتصدير"),
@@ -87,6 +91,7 @@ DEFAULT_ROLES = {
             "tasks.assign_any", "tasks.review_daily",
             "reports.manage",
             "feed.view",
+            "equipment.view",
             "analytics.view",
             "assistant.use",
             "climate.view",

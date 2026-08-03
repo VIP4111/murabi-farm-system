@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>مستودع المعدات</h2>
+    {% if current_user.has_permission('equipment.manage') %}<a class="btn" href="{{ url_for('equipment.items_new') }}">+ صنف جديد</a>{% endif %}
+  </div>
+  <table>
+    <tr><th>الاسم</th><th>الفئة</th><th>المتوفر</th><th>السعر/وحدة</th><th></th></tr>
+    {% for i in items %}
+    <tr>
+      <td>{{ i.name }}</td>
+      <td>{{ i.category or '-' }}</td>
+      <td>
+        {{ i.available_qty }} {{ i.unit }}
+        {% if i.min_stock_qty and i.available_qty <= i.min_stock_qty %}<span class="badge off">منخفض</span>{% endif %}
+      </td>
+      <td>{{ i.unit_price or '-' }}</td>
+      <td>
+        {% if current_user.has_permission('equipment.manage') %}
+        <a href="{{ url_for('equipment.items_edit', item_id=i.id) }}">تعديل</a>
+        · <a href="{{ url_for('equipment.items_movement', item_id=i.id) }}">📦 حركة (شراء/صرف)</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">لا يوجد أصناف معدات مسجّلة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

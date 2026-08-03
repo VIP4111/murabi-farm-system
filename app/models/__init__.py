@@ -31,6 +31,7 @@ from app.models.climate import WeatherReading
 from app.models.protocol import TreatmentProtocol, TreatmentProtocolStep, ProtocolApplication
 from app.models.animal_batch import AnimalBatch
 from app.models.warehouse import Warehouse, FeedWarehouseStock, PharmacyWarehouseStock
+from app.models.equipment import Equipment, EquipmentMovement
 
 __all__ = [
     "Role", "Permission", "role_permissions",
@@ -54,4 +55,5 @@ __all__ = [
     "TreatmentProtocol", "TreatmentProtocolStep", "ProtocolApplication",
     "AnimalBatch",
     "Warehouse", "FeedWarehouseStock", "PharmacyWarehouseStock",
+    "Equipment", "EquipmentMovement",
 ]
