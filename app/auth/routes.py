@@ -11,8 +11,10 @@ from app.models import User
 def set_pre_login_language():
     """
     اختيار لغة شاشة الدخول نفسها قبل تسجيل الدخول (بند إضافي، 2026-07-23)
-    — يُخزَّن بالجلسة المؤقتة بس (`session['lang']`)، ويُستبدَل بلغة
-    الحساب (`User.language`) تلقائياً بعد الدخول الفعلي.
+    — يُخزَّن بالجلسة المؤقتة (`session['lang']`) ويغيّر شكل شاشة الدخول
+    فوراً. **بند إضافي 113**: صار يُحفَظ تلقائياً كلغة دائمة للحساب
+    (`User.language`) أول ما يسجّل المستخدم دخول بنجاح — قبل هذا كان
+    يُتجاهَل بصمت بعد الدخول (راجع `login()`).
     """
     lang = request.form.get("language")
     if lang in current_app.config["SUPPORTED_LANGUAGES"]:
@@ -40,6 +42,16 @@ def login():
 
         if user and user.is_active_account and user.check_password(password):
             user.register_successful_login()
+            # بند إضافي 113 — قبل هذا، اختيار اللغة بشاشة الدخول
+            # (`session['lang']`) كان يتغيّر شكل شاشة الدخول نفسها بس،
+            # ويُتجاهَل بصمت بعد الدخول الفعلي (select_locale يعطي
+            # الأولوية لـUser.language المحفوظة، "ar" افتراضياً لأي
+            # حساب ما غيّرها من قبل عبر مبدّل اللغة بالقائمة الجانبية —
+            # مبدّل حقيقي لكنه غير معروف لأغلب المستخدمين). صار الاختيار
+            # الصريح قبل الدخول يُحفَظ تلقائياً لحساب المستخدم نفسه.
+            picked_lang = session.pop("lang", None)
+            if picked_lang and picked_lang in current_app.config["SUPPORTED_LANGUAGES"]:
+                user.language = picked_lang
             db.session.commit()
             # remember=True (كوكي دخول طويل الأمد) — ضروري لدعم العمل بدون
             # إنترنت (عامل/دكتور/ممرض): لو تطبيق الـPWA أُغلق تماماً بالجوال
