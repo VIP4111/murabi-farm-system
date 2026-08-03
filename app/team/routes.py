@@ -8,7 +8,7 @@ from datetime import date, timedelta
 from app.team import team_bp
 from app.team import report_service as svc
 from app.team import task_service as tsvc
-from app.auth.decorators import require_permission
+from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
 from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate
 
@@ -189,6 +189,15 @@ def _validate_scoped_report(barn_ids, animal_id, barn_id):
 def reports_new():
     barn_ids = _scoped_barn_ids()
     if request.method == "POST":
+        # تحديد معدل الطلبات (بند إضافي 119) — بس على POST الفعلي، مو
+        # فتح الفورم (GET) بلا داعٍ. مطبَّق يدوياً هنا (مو بديكوريتر
+        # `rate_limited` الجاهز) لأن الراوت GET+POST مع بعض.
+        from app.core.rate_limit_service import check_and_record, RateLimitExceeded
+        try:
+            check_and_record(user_id=current_user.id, key="report_submit", max_calls=10, window_seconds=300)
+        except RateLimitExceeded as e:
+            flash(f"بلاغات كثيرة بوقت قصير — حاول بعد {e.retry_after_seconds} ثانية.", "error")
+            return redirect(url_for("team.reports_new"))
         # سلامة البيانات (بند إضافي، 2026-07-23): بلاغ بدون حيوان ولا حظيرة
         # يفقد تتبّعه — لازم واحد منهم على الأقل، حتى لو الفحص بالواجهة
         # (JS) تجاوَزه المستخدم أو أُرسل الطلب مباشرة للسيرفر.
@@ -588,6 +597,7 @@ def task_start(task_id):
 
 @team_bp.route("/tasks/<int:task_id>/complete", methods=["POST"])
 @login_required
+@rate_limited("task_evidence_upload", max_calls=30, window_seconds=300)
 def task_complete(task_id):
     task = Task.query.get_or_404(task_id)
     try:
@@ -604,6 +614,7 @@ def task_complete(task_id):
 
 @team_bp.route("/tasks/<int:task_id>/fail", methods=["POST"])
 @login_required
+@rate_limited("task_evidence_upload", max_calls=30, window_seconds=300)
 def task_fail(task_id):
     """تعذّر تنفيذ المهمة (بند إضافي 54) — العامل يسجّل صراحة سبب عدم
     الإنجاز بدل ما يبقى صامتاً، مع ملاحظة وصورة/صوت اختياريين."""

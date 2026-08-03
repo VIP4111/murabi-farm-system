@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from app.assistant import assistant_bp
 from app.assistant import nlu_service as svc
-from app.auth.decorators import require_permission
+from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
 from app.models import AssistantMessage
 
@@ -24,6 +24,7 @@ def chat():
 @assistant_bp.route("/send", methods=["POST"])
 @login_required
 @require_permission("assistant.use")
+@rate_limited("assistant_send", max_calls=30, window_seconds=300)
 def send():
     message_text = (request.get_json(silent=True) or {}).get("message", "").strip() if request.is_json \
         else request.form.get("message", "").strip()

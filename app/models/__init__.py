@@ -5,6 +5,7 @@ from app.models.animal import Animal
 from app.models.animal_options import SpeciesType, Breed, AnimalColor
 from app.models.settings import ServiceToggle
 from app.models.audit import AuditLog
+from app.models.rate_limit import RateLimitHit
 from app.models.pharmacy import Pharmacy, PharmacyBatch
 from app.models.pharmacy_dose_rule import PharmacyDoseRule
 from app.models.usage_route import UsageRoute
@@ -36,7 +37,7 @@ from app.models.equipment import Equipment, EquipmentMovement
 __all__ = [
     "Role", "Permission", "role_permissions",
     "User", "Barn", "Animal", "SpeciesType", "Breed", "AnimalColor",
-    "ServiceToggle", "AuditLog",
+    "ServiceToggle", "AuditLog", "RateLimitHit",
     "Pharmacy", "PharmacyBatch", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "VaccinationSchedule", "Doctor",
     "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink",
     "Finance",
