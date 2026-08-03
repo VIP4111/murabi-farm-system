@@ -42,8 +42,12 @@ class Equipment(db.Model):
 
 
 class EquipmentMovement(db.Model):
-    """حركة مخزون معدات — وارد (شراء) أو صادر (استهلاك/تلف/فقد) — نفس
-    بنية `FeedMovement` بالضبط."""
+    """حركة مخزون معدات — وارد (شراء) أو صادر — نفس بنية `FeedMovement`
+    بالضبط، + تتبّع استعارة/استرجاع (بند إضافي 110). المعدات خلافاً
+    للعلف/الدواء غالباً **تُستعار وترجع** (مقص، أداة) مو تُستهلك نهائياً
+    — حركة "صادر" ممكن تكون استعارة (`borrowed_by_id` معبّى، `returned_at`
+    فاضي لين ترجع) أو صرف نهائي عادي (الاثنين فاضيين، نفس السلوك القديم
+    بدون تغيير)."""
     __tablename__ = "equipment_movements"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -57,6 +61,15 @@ class EquipmentMovement(db.Model):
 
     barn_id = db.Column(db.Integer, db.ForeignKey("barns.id"), nullable=True)
     barn = db.relationship("Barn")
+
+    # استعارة/استرجاع (بند إضافي 110) — مين استلم القطعة ومتى ترجعها.
+    # `borrowed_by_id` يُعبَّى بس لو حركة الصادر استعارة (مو صرف نهائي
+    # لمواد استهلاكية زي المسامير). `returned_at` فاضي لين تُسجَّل
+    # الإرجاع فعلياً — أي صف فيه `borrowed_by_id` بدون `returned_at`
+    # يعني القطعة لسا عند حد.
+    borrowed_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    borrowed_by = db.relationship("User", foreign_keys=[borrowed_by_id])
+    returned_at = db.Column(db.DateTime, nullable=True)
 
     note = db.Column(db.Text)
     created_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)

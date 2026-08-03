@@ -1322,41 +1322,64 @@ def readiness_check():
 
 # ---------- شاشة متابعة مبسّطة (بند إضافي 106) ----------
 
+FAMILY_VIEW_ROLES = [
+    ("owner", "مهام صاحب الحلال"),
+    ("doctor", "مهام الطبيب"),
+    ("worker", "مهام العامل"),
+]
+
+
 @core_bp.route("/family-view")
 @login_required
 @require_permission("analytics.view")
 def family_view():
-    """شاشة عرض بس (مو تعديل) مصمَّمة لمستخدم مسنّ ما يحتاج يتنقّل بين
-    شاشات النظام المعتادة — خط كبير، صفحة واحدة، بدون قوائم متفرّعة.
-    تجمع 3 أشياء طلبها المالك تحديداً: تقدّم كل عامل اليوم (منجز/باقي)
-    وملاحظاته، مخزون العلف، ومخزون الصيدلية. كلها بيانات موجودة أصلاً
-    بالنظام — صفر جدول أو منطق جديد، عرض مُجمَّع بس."""
-    from app.models import User, Task, Feed, Pharmacy
+    """شاشة عرض ومتابعة مبسّطة (بند 106، وسّعت بند إضافي 109) مصمَّمة
+    لمستخدم مسنّ — خط كبير، تنقّل بأزرار كبيرة بدل قوائم متفرّعة.
+    المهام مبوَّبة حسب الدور (صاحب الحلال/الطبيب/العامل) بدل حسب كل
+    عامل لحاله — يشمل مهام بلا عامل محدد تطابق دور المستخدم (بند 107)."""
+    from app.models import User, Task, Feed, Pharmacy, Equipment, Role
+    from app.core import stock_stats_service
+    from app.equipment import equipment_service
 
     today = date.today()
-    worker_ids = {
-        row[0] for row in db.session.query(Task.assignee_id).filter(Task.assignee_id.isnot(None)).distinct().all()
-    }
-    workers = User.query.filter(User.id.in_(worker_ids), User.is_active_account.is_(True)).order_by(User.name).all()
 
-    progress = []
-    for w in workers:
+    def _tasks_for_role(role_name):
+        user_ids = [u.id for u in User.query.join(Role).filter(
+            Role.name == role_name, User.is_active_account.is_(True)).all()]
+        assignee_filter = Task.assignee_id.in_(user_ids) if user_ids else False
         done_today = (Task.query.filter(
-            Task.assignee_id == w.id, Task.status.in_(("done", "failed")),
+            assignee_filter, Task.status.in_(("done", "failed")),
             db.or_(
                 db.and_(Task.completed_at.isnot(None), db.func.date(Task.completed_at) == today),
                 db.and_(Task.failed_at.isnot(None), db.func.date(Task.failed_at) == today),
             ),
         ).order_by(Task.completed_at.desc()).all())
-        open_tasks = (Task.query.filter(Task.assignee_id == w.id, Task.status.in_(("pending", "in_progress")))
-                      .order_by(Task.due_date).all())
-        if not done_today and not open_tasks:
-            continue
-        progress.append({"worker": w, "done_today": done_today, "open_tasks": open_tasks})
+        open_tasks = (Task.query.filter(
+            Task.status.in_(("pending", "in_progress")),
+            db.or_(assignee_filter, db.and_(Task.assignee_id.is_(None), Task.target_role == role_name)),
+        ).order_by(Task.due_date).all())
+        return done_today, open_tasks
 
-    feed_items = Feed.query.filter_by(status="active").order_by(Feed.name).all()
-    pharmacy_items = Pharmacy.query.filter_by(status="active").order_by(Pharmacy.name).all()
+    tasks_by_role = {}
+    for role_name, role_label in FAMILY_VIEW_ROLES:
+        done_today, open_tasks = _tasks_for_role(role_name)
+        tasks_by_role[role_name] = {"label": role_label, "done_today": done_today, "open_tasks": open_tasks}
+
+    feed_items = [
+        {"item": f, "stats": stock_stats_service.feed_consumption_stats(f)}
+        for f in Feed.query.filter_by(status="active").order_by(Feed.name).all()
+    ]
+    pharmacy_items = [
+        {"item": p, "stats": stock_stats_service.pharmacy_consumption_stats(p)}
+        for p in Pharmacy.query.filter_by(status="active").order_by(Pharmacy.name).all()
+    ]
+    equipment_items = [
+        {"item": e, "stats": equipment_service.consumption_stats(e),
+         "borrows": equipment_service.outstanding_borrows(e)}
+        for e in Equipment.query.filter_by(status="active").order_by(Equipment.name).all()
+    ]
 
     return render_template(
-        "family_view.html", progress=progress, feed_items=feed_items, pharmacy_items=pharmacy_items, today=today,
+        "family_view.html", tasks_by_role=tasks_by_role, family_view_roles=FAMILY_VIEW_ROLES,
+        feed_items=feed_items, pharmacy_items=pharmacy_items, equipment_items=equipment_items, today=today,
     )

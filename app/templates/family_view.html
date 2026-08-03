@@ -16,62 +16,77 @@
   *{box-sizing:border-box;}
   body{
     margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", Tahoma, Arial, sans-serif;
-    font-size:22px; line-height:1.6; padding:20px;
+    font-size:22px; line-height:1.6; padding:16px; padding-top:56px; position:relative;
   }
-  h1{font-size:32px; margin:0 0 6px;}
-  h2{font-size:26px; margin:28px 0 10px; border-bottom:3px solid var(--line); padding-bottom:8px;}
-  .topbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;}
-  .toggle-btn{
-    font-size:22px; padding:14px 24px; border-radius:14px; border:2px solid var(--primary);
-    background:var(--card); color:var(--text); cursor:pointer;
+  h1{font-size:30px; margin:0 0 6px;}
+  h2{font-size:26px; margin:20px 0 10px; border-bottom:3px solid var(--line); padding-bottom:8px;}
+  .mode-toggle{
+    position:absolute; top:10px; left:10px; font-size:14px; padding:6px 10px; border-radius:10px;
+    border:2px solid var(--primary); background:var(--card); color:var(--text); cursor:pointer; z-index:10;
   }
-  .date{color:var(--muted); font-size:20px;}
+  .date{color:var(--muted); font-size:18px; margin-bottom:16px;}
+  .big-btn{
+    display:block; width:100%; font-size:26px; font-weight:800; padding:22px; margin-bottom:14px;
+    border-radius:18px; border:2px solid var(--primary); background:var(--card); color:var(--text); cursor:pointer;
+    text-align:center; text-decoration:none;
+  }
+  .back-btn{
+    font-size:18px; padding:10px 20px; border-radius:12px; border:2px solid var(--primary);
+    background:var(--card); color:var(--text); cursor:pointer; margin-bottom:14px;
+  }
   .card{
     background:var(--card); border:1px solid var(--line); border-radius:18px;
-    padding:18px 20px; margin-bottom:18px;
+    padding:18px 20px; margin-bottom:16px;
   }
-  .worker-name{font-size:26px; font-weight:800; margin-bottom:10px;}
-  .task-row{padding:10px 0; border-bottom:1px solid var(--line); display:flex; gap:12px; align-items:flex-start;}
+  .task-row{padding:10px 0; border-bottom:1px solid var(--line); display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap;}
   .task-row:last-child{border-bottom:none;}
-  .badge{
-    flex:0 0 auto; font-size:18px; font-weight:800; padding:4px 12px; border-radius:999px; color:#fff;
-  }
-  .badge-ok{background:var(--ok);}
-  .badge-bad{background:var(--bad);}
-  .badge-wait{background:var(--warn);}
-  .task-title{font-weight:700;}
-  .task-note{color:var(--muted); font-size:19px; margin-top:2px;}
-  .stock-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:12px;}
-  .stock-item{background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:14px;}
+  .badge{flex:0 0 auto; font-size:17px; font-weight:800; padding:4px 12px; border-radius:999px; color:#fff;}
+  .badge-ok{background:var(--ok);} .badge-bad{background:var(--bad);} .badge-wait{background:var(--warn);}
+  .task-title{font-weight:700; font-size:21px;}
+  .task-note{color:var(--muted); font-size:18px; margin-top:2px;}
+  .task-actions{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;}
+  .task-actions form{margin:0;}
+  .action-btn{font-size:16px; padding:8px 16px; border-radius:10px; border:2px solid var(--primary); background:var(--bg); color:var(--text); cursor:pointer;}
+  .action-btn.cancel{border-color:var(--bad); color:var(--bad);}
+  .stock-item{background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:10px;}
   .stock-name{font-weight:800; font-size:22px;}
-  .stock-qty{color:var(--muted); font-size:20px; margin-top:4px;}
+  .stock-row{color:var(--muted); font-size:19px; margin-top:4px;}
   .empty{color:var(--muted); text-align:center; padding:20px;}
+  [data-view]{display:none;}
+  [data-view].active{display:block;}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div>
-    <h1>👋 متابعة المزرعة</h1>
-    <div class="date">{{ today }}</div>
-  </div>
-  <button class="toggle-btn" id="modeToggle">🌙 الوضع الليلي</button>
+<button class="mode-toggle" id="modeToggle">🌙</button>
+
+<!-- ===== الرئيسية ===== -->
+<div data-view="home" class="active">
+  <h1>👋 متابعة المزرعة</h1>
+  <div class="date">{{ today }}</div>
+  <button class="big-btn" data-goto="tasks">📋 المهام</button>
+  <button class="big-btn" data-goto="inventory">📦 المخزون</button>
 </div>
 
-<h2>👷 تقدّم العمال اليوم</h2>
-{% for p in progress %}
-<div class="card">
-  <div class="worker-name">{{ p.worker.name }}</div>
+<!-- ===== المهام: اختيار الدور ===== -->
+<div data-view="tasks">
+  <button class="back-btn" data-goto="home">→ رجوع</button>
+  <h1>📋 المهام</h1>
+  {% for role_name, role_label in family_view_roles %}
+  <button class="big-btn" data-goto="tasks-{{ role_name }}">{{ role_label }}</button>
+  {% endfor %}
+</div>
 
-  {% if p.done_today %}
-  <div style="margin-bottom:10px;">
-    {% for t in p.done_today %}
+{% for role_name, role_label in family_view_roles %}
+<div data-view="tasks-{{ role_name }}">
+  <button class="back-btn" data-goto="tasks">→ رجوع</button>
+  <h1>{{ role_label }}</h1>
+  {% set data = tasks_by_role[role_name] %}
+  {% if data.done_today or data.open_tasks %}
+  <div class="card">
+    {% for t in data.done_today %}
     <div class="task-row">
-      {% if t.status == 'done' %}
-      <span class="badge badge-ok">✅ تم</span>
-      {% else %}
-      <span class="badge badge-bad">⚠️ ما قدر</span>
-      {% endif %}
+      {% if t.status == 'done' %}<span class="badge badge-ok">🔒 قفل المهمة</span>{% else %}<span class="badge badge-bad">⚠️ ما قدر</span>{% endif %}
       <div>
         <div class="task-title">{{ t.title }}</div>
         {% if t.completion_note %}<div class="task-note">{{ t.completion_note }}</div>{% endif %}
@@ -79,53 +94,89 @@
       </div>
     </div>
     {% endfor %}
-  </div>
-  {% endif %}
-
-  {% if p.open_tasks %}
-  <div>
-    {% for t in p.open_tasks %}
+    {% for t in data.open_tasks %}
     <div class="task-row">
       <span class="badge badge-wait">⏳ باقي</span>
       <div>
         <div class="task-title">{{ t.title }}</div>
         {% if t.due_date %}<div class="task-note">الموعد: {{ t.due_date }}</div>{% endif %}
+        <div class="task-actions">
+          <form method="post" action="{{ url_for('team.task_postpone_active', task_id=t.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="action-btn" type="submit">⏭️ تأجيل</button>
+          </form>
+          <form method="post" action="{{ url_for('team.task_cancel_active', task_id=t.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="action-btn cancel" type="submit">✖ إلغاء</button>
+          </form>
+        </div>
       </div>
     </div>
     {% endfor %}
   </div>
+  {% else %}
+  <p class="empty">ما فيه مهام حالياً.</p>
   {% endif %}
 </div>
-{% else %}
-<p class="empty">ما فيه أي عامل عليه مهام حالياً.</p>
 {% endfor %}
 
-<h2>🌾 المستودع (العلف)</h2>
-<div class="card">
-  <div class="stock-grid">
-    {% for f in feed_items %}
-    <div class="stock-item">
-      <div class="stock-name">{{ f.name }}</div>
-      <div class="stock-qty">{{ f.available_qty|round(1) if f.available_qty else 0 }} {{ f.unit or '' }}</div>
-    </div>
-    {% else %}
-    <p class="empty">ما فيه أصناف علف مسجَّلة.</p>
-    {% endfor %}
-  </div>
+<!-- ===== المخزون: اختيار النوع ===== -->
+<div data-view="inventory">
+  <button class="back-btn" data-goto="home">→ رجوع</button>
+  <h1>📦 المخزون</h1>
+  <button class="big-btn" data-goto="inventory-feed">🌾 الأعلاف</button>
+  <button class="big-btn" data-goto="inventory-pharmacy">💊 الصيدلية</button>
+  <button class="big-btn" data-goto="inventory-equipment">🛠️ المعدات</button>
 </div>
 
-<h2>💊 الصيدلية</h2>
-<div class="card">
-  <div class="stock-grid">
-    {% for m in pharmacy_items %}
-    <div class="stock-item">
-      <div class="stock-name">{{ m.name }}</div>
-      <div class="stock-qty">{{ m.available_qty|round(1) if m.available_qty else 0 }} {{ m.unit or '' }}</div>
-    </div>
-    {% else %}
-    <p class="empty">ما فيه أدوية مسجَّلة.</p>
-    {% endfor %}
+<div data-view="inventory-feed">
+  <button class="back-btn" data-goto="inventory">→ رجوع</button>
+  <h1>🌾 الأعلاف</h1>
+  {% for row in feed_items %}
+  <div class="stock-item">
+    <div class="stock-name">{{ row.item.name }}</div>
+    <div class="stock-row">المتبقي: {{ row.item.available_qty|round(1) if row.item.available_qty else 0 }} {{ row.item.unit or '' }}</div>
+    <div class="stock-row">المستهلك اليوم: {{ row.stats.consumed_day|round(1) }} — بالشهر: {{ row.stats.consumed_month|round(1) }}</div>
   </div>
+  {% else %}
+  <p class="empty">ما فيه أصناف علف مسجَّلة.</p>
+  {% endfor %}
+</div>
+
+<div data-view="inventory-pharmacy">
+  <button class="back-btn" data-goto="inventory">→ رجوع</button>
+  <h1>💊 الصيدلية</h1>
+  {% for row in pharmacy_items %}
+  <div class="stock-item">
+    <div class="stock-name">{{ row.item.name }}</div>
+    <div class="stock-row">المتبقي: {{ row.item.available_qty|round(1) if row.item.available_qty else 0 }} {{ row.item.unit or '' }}</div>
+    <div class="stock-row">المستهلك اليوم: {{ row.stats.consumed_day|round(1) }} — بالشهر: {{ row.stats.consumed_month|round(1) }}</div>
+  </div>
+  {% else %}
+  <p class="empty">ما فيه أدوية مسجَّلة.</p>
+  {% endfor %}
+</div>
+
+<div data-view="inventory-equipment">
+  <button class="back-btn" data-goto="inventory">→ رجوع</button>
+  <h1>🛠️ المعدات</h1>
+  {% for row in equipment_items %}
+  <div class="stock-item">
+    <div class="stock-name">{{ row.item.name }}</div>
+    <div class="stock-row">المتبقي: {{ row.item.available_qty|round(1) if row.item.available_qty else 0 }} {{ row.item.unit or '' }}</div>
+    <div class="stock-row">المصروف اليوم: {{ row.stats.consumed_day|round(1) }} — بالشهر: {{ row.stats.consumed_month|round(1) }}</div>
+    {% if row.borrows %}
+    <div class="stock-row" style="color:var(--warn); font-weight:700;">
+      ⏳ مستعارة حالياً:
+      {% for b in row.borrows %}
+      {{ b.borrowed_by.name if b.borrowed_by else '-' }} ({{ b.created_at.strftime('%Y-%m-%d %H:%M') if b.created_at else '-' }}){{ '، ' if not loop.last }}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% else %}
+  <p class="empty">ما فيه أصناف معدات مسجَّلة.</p>
+  {% endfor %}
 </div>
 
 <script>
@@ -133,18 +184,20 @@
   var root = document.documentElement;
   var btn = document.getElementById('modeToggle');
   var saved = localStorage.getItem('familyViewMode');
-  if (saved === 'dark') { root.setAttribute('data-mode', 'dark'); btn.textContent = '☀️ الوضع النهاري'; }
+  if (saved === 'dark') { root.setAttribute('data-mode', 'dark'); btn.textContent = '☀️'; }
   btn.addEventListener('click', function(){
     var isDark = root.getAttribute('data-mode') === 'dark';
-    if (isDark) {
-      root.removeAttribute('data-mode');
-      localStorage.setItem('familyViewMode', 'light');
-      btn.textContent = '🌙 الوضع الليلي';
-    } else {
-      root.setAttribute('data-mode', 'dark');
-      localStorage.setItem('familyViewMode', 'dark');
-      btn.textContent = '☀️ الوضع النهاري';
-    }
+    if (isDark) { root.removeAttribute('data-mode'); localStorage.setItem('familyViewMode', 'light'); btn.textContent = '🌙'; }
+    else { root.setAttribute('data-mode', 'dark'); localStorage.setItem('familyViewMode', 'dark'); btn.textContent = '☀️'; }
+  });
+
+  var views = document.querySelectorAll('[data-view]');
+  function goto(name){
+    views.forEach(function(v){ v.classList.toggle('active', v.getAttribute('data-view') === name); });
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(){ goto(b.getAttribute('data-goto')); });
   });
 })();
 </script>

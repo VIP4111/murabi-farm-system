@@ -1,13 +1,20 @@
 """مستودع المعدات (بند إضافي 108) — نفس بنية `feed_service.record_movement`
 بالضبط، بدون منطق نحاس/نبأت (ما ينطبق على معدات)."""
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 from app.extensions import db
 from app.models import Equipment, EquipmentMovement
 
 
+def _now():
+    return datetime.now(timezone.utc)
+
+
 def record_movement(*, item: Equipment, movement_type: str, quantity: float, barn_id=None,
-                     note=None, created_by_id=None) -> EquipmentMovement:
+                     note=None, created_by_id=None, borrowed_by_id=None) -> EquipmentMovement:
+    """`borrowed_by_id` (بند إضافي 110) — يُعبَّى بس لو الصادر استعارة
+    (أداة ترجع)، مو صرف نهائي. القطعة تُخصَم من الرصيد فوراً وقت
+    الاستعارة (نفس أي صادر عادي) — ترجع للرصيد لما تُسجَّل `return_item`."""
     before = item.available_qty or 0
     if movement_type == "in":
         item.add_stock(quantity)
@@ -19,11 +26,37 @@ def record_movement(*, item: Equipment, movement_type: str, quantity: float, bar
         equipment_id=item.id, movement_type=movement_type, quantity=quantity,
         before_qty=before, after_qty=after, barn_id=barn_id,
         note=note, created_by_id=created_by_id,
+        borrowed_by_id=borrowed_by_id if movement_type == "out" else None,
     )
     db.session.add(mv)
     db.session.add(item)
     db.session.commit()
     return mv
+
+
+def return_item(movement: EquipmentMovement) -> EquipmentMovement:
+    """تسجيل استرجاع قطعة مستعارة (بند إضافي 110) — يرجّع الكمية
+    للرصيد ويختم `returned_at` بوقت السيرفر. يرفض لو الحركة مو استعارة
+    أصلاً أو رجعت من قبل — عشان ما ينضاف رصيد مرتين بالغلط."""
+    if not movement.borrowed_by_id:
+        raise ValueError("هذي الحركة مو استعارة أصلاً.")
+    if movement.returned_at:
+        raise ValueError("هذي القطعة مسجَّلة راجعة من قبل.")
+    movement.returned_at = _now()
+    movement.equipment.add_stock(movement.quantity)
+    db.session.add(movement)
+    db.session.add(movement.equipment)
+    db.session.commit()
+    return movement
+
+
+def outstanding_borrows(item):
+    """قطع مستعارة لسا ما رجعت (بند إضافي 110) — تُستخدم بشاشة والدك
+    المبسّطة عشان يشوف مين مستلم شنو بدون ما يفتح شاشة الحركات الكاملة."""
+    return (EquipmentMovement.query
+            .filter_by(equipment_id=item.id, returned_at=None)
+            .filter(EquipmentMovement.borrowed_by_id.isnot(None))
+            .order_by(EquipmentMovement.created_at.desc()).all())
 
 
 def consumption_stats(item, *, day_lookback: int = 1, month_lookback: int = 30) -> dict:

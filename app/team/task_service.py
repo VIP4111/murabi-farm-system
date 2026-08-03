@@ -445,6 +445,39 @@ def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, 
     return task
 
 
+def postpone_active_task(task: Task, *, actor, new_due_date=None) -> Task:
+    """تأجيل مهمة فعلية (بند إضافي 109 — شاشة والدك) — مختلفة عن
+    `postpone_suggested_task` (تعمل على `suggested` بس، من شاشة مراجعة
+    الدكتور اليومية). هذي لمهمة `pending`/`in_progress` فعلية، بيوم
+    واحد افتراضياً لو ما انبعث تاريخ صريح — نفس منطق زر "تأجيل" بضغطة
+    وحدة (بند 72)."""
+    if not actor.has_permission("tasks.assign_any"):
+        raise TaskPermissionError("ما تملك صلاحية تأجيل المهام.")
+    if task.status not in ("pending", "in_progress"):
+        raise TaskStateError("هذي المهمة مو بحالة تسمح بالتأجيل.")
+    task.due_date = new_due_date or ((task.due_date or date.today()) + timedelta(days=1))
+    db.session.add(AuditLog(actor_user_id=actor.id, action="task.postpone_active",
+                             entity_type="Task", entity_id=task.id))
+    db.session.commit()
+    return task
+
+
+def cancel_active_task(task: Task, *, actor, reason=None) -> Task:
+    """إلغاء مهمة فعلية يدوياً (بند إضافي 109) — نفس حالة `cancelled`
+    المستخدمة تلقائياً ببند 98 (بيع/نفوق رأس)، بس هنا بقرار يدوي صريح
+    من صاحب صلاحية توزيع المهام."""
+    if not actor.has_permission("tasks.assign_any"):
+        raise TaskPermissionError("ما تملك صلاحية إلغاء المهام.")
+    if task.status not in ("pending", "in_progress"):
+        raise TaskStateError("هذي المهمة مو بحالة تسمح بالإلغاء.")
+    task.status = "cancelled"
+    task.notes = (task.notes + " | " if task.notes else "") + (reason or "أُلغيت يدوياً")
+    db.session.add(AuditLog(actor_user_id=actor.id, action="task.cancel_active",
+                             entity_type="Task", entity_id=task.id))
+    db.session.commit()
+    return task
+
+
 OPEN_TASK_STATUSES = ("suggested", "pending", "in_progress", "postponed")
 
 

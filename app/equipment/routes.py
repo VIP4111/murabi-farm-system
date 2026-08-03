@@ -5,7 +5,7 @@ from app.equipment import equipment_bp
 from app.equipment import equipment_service as svc
 from app.auth.decorators import require_permission
 from app.extensions import db
-from app.models import Equipment, EquipmentMovement, Barn
+from app.models import Equipment, EquipmentMovement, Barn, User
 
 
 @equipment_bp.route("/items")
@@ -67,6 +67,7 @@ def items_movement(item_id):
                 quantity=float(request.form["quantity"]),
                 barn_id=request.form.get("barn_id") or None,
                 note=request.form.get("note"), created_by_id=current_user.id,
+                borrowed_by_id=request.form.get("borrowed_by_id") or None,
             )
             flash("تم تسجيل الحركة", "success")
         except ValueError as e:
@@ -74,5 +75,22 @@ def items_movement(item_id):
         return redirect(url_for("equipment.items_movement", item_id=item.id))
     movements = (EquipmentMovement.query.filter_by(equipment_id=item.id)
                  .order_by(EquipmentMovement.created_at.desc()).limit(50).all())
-    return render_template("equipment/item_movement.html", item=item, movements=movements,
-                            barns=Barn.query.order_by(Barn.barn_name).all())
+    return render_template(
+        "equipment/item_movement.html", item=item, movements=movements,
+        barns=Barn.query.order_by(Barn.barn_name).all(),
+        users=User.query.filter_by(is_active_account=True).order_by(User.name).all(),
+    )
+
+
+@equipment_bp.route("/movements/<int:movement_id>/return", methods=["POST"])
+@login_required
+@require_permission("equipment.manage")
+def movement_return(movement_id):
+    """تسجيل استرجاع قطعة مستعارة (بند إضافي 110)."""
+    movement = EquipmentMovement.query.get_or_404(movement_id)
+    try:
+        svc.return_item(movement)
+        flash("تم تسجيل استرجاع القطعة", "success")
+    except ValueError as e:
+        flash(str(e), "error")
+    return redirect(url_for("equipment.items_movement", item_id=movement.equipment_id))

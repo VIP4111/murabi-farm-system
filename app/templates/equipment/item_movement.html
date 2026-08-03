@@ -11,6 +11,11 @@
       <option value="out">صادر (صرف/استهلاك)</option>
     </select>
     <label>الكمية</label><input name="quantity" type="number" step="any" min="0.01" required>
+    <label>لو صادر — مين استلمها؟ (اختياري — عبّه بس لو استعارة ترجع، مو صرف نهائي)</label>
+    <select name="borrowed_by_id">
+      <option value="">-- صرف نهائي (بدون استعارة) --</option>
+      {% for u in users %}<option value="{{ u.id }}">{{ u.name }}</option>{% endfor %}
+    </select>
     <label>الحظيرة (اختياري)</label>
     <select name="barn_id">
       <option value="">-</option>
@@ -24,17 +29,32 @@
 <div class="card">
   <h3 style="font-size:15px;">آخر الحركات</h3>
   <table>
-    <tr><th>التاريخ</th><th>النوع</th><th>الكمية</th><th>الرصيد بعدها</th><th>ملاحظة</th></tr>
+    <tr><th>التاريخ</th><th>النوع</th><th>الكمية</th><th>الرصيد بعدها</th><th>الاستعارة</th><th>ملاحظة</th></tr>
     {% for m in movements %}
     <tr>
       <td>{{ m.created_at.strftime('%Y-%m-%d %H:%M') if m.created_at else '-' }}</td>
       <td>{{ 'وارد' if m.movement_type == 'in' else 'صادر' }}</td>
       <td>{{ m.quantity }} {{ item.unit }}</td>
       <td>{{ m.after_qty }} {{ item.unit }}</td>
+      <td>
+        {% if m.borrowed_by_id %}
+          {% if m.returned_at %}
+          <span class="badge on">✅ رجعت — {{ m.borrowed_by.name if m.borrowed_by else '-' }}<br>{{ m.returned_at.strftime('%Y-%m-%d %H:%M') }}</span>
+          {% else %}
+          <span class="badge off">⏳ عند: {{ m.borrowed_by.name if m.borrowed_by else '-' }}</span>
+          <form method="post" action="{{ url_for('equipment.movement_return', movement_id=m.id) }}" style="margin-top:4px;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn light" type="submit" style="font-size:11px; padding:4px 8px;">تسجيل استرجاع</button>
+          </form>
+          {% endif %}
+        {% else %}
+        -
+        {% endif %}
+      </td>
       <td>{{ m.note or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه حركات مسجَّلة بعد.</td></tr>
+    <tr><td colspan="6" style="color:#888;">ما فيه حركات مسجَّلة بعد.</td></tr>
     {% endfor %}
   </table>
 </div>

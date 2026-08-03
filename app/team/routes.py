@@ -683,6 +683,33 @@ def task_soft_delete(task_id):
     return redirect(url_for("team.tasks_list"))
 
 
+@team_bp.route("/tasks/<int:task_id>/postpone-active", methods=["POST"])
+@login_required
+def task_postpone_active(task_id):
+    """تأجيل مهمة فعلية (بند إضافي 109 — أزرار شاشة والدك المبسّطة).
+    يرجّع لنفس الصفحة اللي جاء منها الطلب (`request.referrer`) — الشاشة
+    تُستخدم من `/family-view` بس، ما تحتاج شاشة مهام كاملة بعدها."""
+    task = Task.query.get_or_404(task_id)
+    try:
+        tsvc.postpone_active_task(task, actor=current_user)
+        flash("تم تأجيل المهمة ليوم واحد", "success")
+    except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        flash(str(e), "error")
+    return redirect(request.referrer or url_for("core.family_view"))
+
+
+@team_bp.route("/tasks/<int:task_id>/cancel-active", methods=["POST"])
+@login_required
+def task_cancel_active(task_id):
+    task = Task.query.get_or_404(task_id)
+    try:
+        tsvc.cancel_active_task(task, actor=current_user)
+        flash("تم إلغاء المهمة", "success")
+    except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        flash(str(e), "error")
+    return redirect(request.referrer or url_for("core.family_view"))
+
+
 @team_bp.route("/tasks/<int:task_id>/restore", methods=["POST"])
 @login_required
 def task_restore(task_id):
