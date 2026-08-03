@@ -95,3 +95,22 @@ class Task(db.Model):
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
+
+
+class DailyTaskTemplate(db.Model):
+    """قالب مهمة يومية متكررة يديره صاحب الحلال/الدكتور مباشرة من الواجهة
+    (بند إضافي 107) — قبل هذا البند، المهام اليومية الثابتة (تنظيف/سقاية/
+    فحص) كانت 3 قواعد مكتوبة بالكود نفسه (`daily_task_service._rule_
+    definitions`)، وإضافة أو إيقاف أي وحدة منها يحتاج تعديل كود فعلي.
+    القواعد "الذكية" الأربع الباقية (مراجعة عزل/مواليد/فطام/سحب دواء —
+    تعتمد على شرط حي بحالة المزرعة، مو مجرد نص ثابت) بقيت بالكود عمداً،
+    ما تحوّلت لقوالب."""
+    __tablename__ = "daily_task_templates"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    notes = db.Column(db.Text)
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
+    sort_order = db.Column(db.Integer, default=0, nullable=False)
+    created_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    created_at = db.Column(db.DateTime, default=_now)

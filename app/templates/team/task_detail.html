@@ -59,7 +59,7 @@
     </form>
     {% endif %}
 
-    {% if task.status == 'pending' and task.assignee_id == current_user.id %}
+    {% if task.status == 'pending' and (task.assignee_id == current_user.id or (task.assignee_id is none and task.target_role == (current_user.role.name if current_user.role else none))) %}
     <form method="post" action="{{ url_for('team.task_start', task_id=task.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">{{ _('بدء') }}</button>

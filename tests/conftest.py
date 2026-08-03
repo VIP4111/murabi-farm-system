@@ -35,6 +35,7 @@ def app():
     with application.app_context():
         db.create_all()
         _seed_permissions_and_roles()
+        _seed_daily_task_templates()
         yield application
         db.session.remove()
         db.drop_all()
@@ -58,6 +59,17 @@ def _seed_permissions_and_roles():
         db.session.add(role)
         db.session.flush()
         role.permissions = [code_to_permission[c] for c in cfg["permissions"]]
+    db.session.commit()
+
+
+def _seed_daily_task_templates():
+    """نفس بيانات `app/cli.py:DEFAULT_DAILY_TASK_TEMPLATES` (بند إضافي 107)
+    — القوالب الثابتة الثلاثة اللي كانت مكتوبة بالكود مباشرة قبل هذا
+    البند. اختبارات `daily_task_service` تعتمد على وجودها افتراضياً."""
+    from app.cli import DEFAULT_DAILY_TASK_TEMPLATES
+    from app.models import DailyTaskTemplate
+    for order, (title, notes) in enumerate(DEFAULT_DAILY_TASK_TEMPLATES):
+        db.session.add(DailyTaskTemplate(title=title, notes=notes, sort_order=order))
     db.session.commit()
 
 

@@ -10,7 +10,7 @@ from app.team import report_service as svc
 from app.team import task_service as tsvc
 from app.auth.decorators import require_permission
 from app.extensions import db
-from app.models import User, Role, Animal, Barn, Report, Task, AuditLog
+from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate
 
 
 # ---------- واجهة العامل المبسّطة (بند 27) ----------
@@ -385,8 +385,19 @@ def tasks_list():
     # ترتيب ثانوي بـsort_order (بند إضافي 67) — يفرض تسلسل العمل الميداني
     # المنطقي (تنظيف ← ماء/علف ← فحص قطيع) لما أكثر من مهمة يتشاركون
     # نفس due_date، بدل الاعتماد على ترتيب إدراج قاعدة البيانات غير المضمون.
+    # بند إضافي 107 — قبل هذا كانت المهام المعيَّنة لي بس تظهر؛ المهام
+    # اليومية المشتركة (بلا `assignee_id`، تولّد بـtarget_role="worker")
+    # كانت ما تظهر لأي عامل إطلاقاً حتى بعد اعتمادها. صارت تظهر لأي عامل
+    # يطابق دوره — أول وحد يبدأها يصير مسؤولها فعلياً (`_claim_if_unassigned`).
+    my_role_name = current_user.role.name if current_user.role else None
     my_tasks = (Task.query
-                .filter(Task.assignee_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
+                .filter(
+                    Task.status.in_(["pending", "in_progress"]),
+                    db.or_(
+                        Task.assignee_id == current_user.id,
+                        db.and_(Task.assignee_id.is_(None), Task.target_role == my_role_name),
+                    ),
+                )
                 .order_by(Task.due_date, Task.sort_order).all())
     # جزء HTML مستقل لجدول "مهامي" بس (بند إضافي 81) — يُطلَب بـfetch
     # بعد إجراء AJAX (زر "بدء") بدل إعادة تحميل الصفحة كاملة. رجوع مبكر
@@ -461,8 +472,12 @@ def task_detail(task_id):
     والمتوقع بعد التنفيذ، والمهمة التالية بسلسلة الأتمتة. مسموحة
     لصاحبها أو لمن يملك صلاحية مراجعة/توزيع المهام."""
     task = Task.query.get_or_404(task_id)
+    my_role_name = current_user.role.name if current_user.role else None
     if not (
         task.assignee_id == current_user.id
+        # بند إضافي 107 — مهمة يومية مشتركة بلا عامل محدد، تطابق دور
+        # المستخدم الحالي (نفس منطق شاشة "مهامي").
+        or (task.assignee_id is None and task.target_role == my_role_name)
         or current_user.has_permission("tasks.review_daily")
         or current_user.has_permission("tasks.assign_any")
     ):
@@ -471,6 +486,47 @@ def task_detail(task_id):
     return render_template("team/task_detail.html", task=task, ctx=ctx, today=date.today(),
                             failure_reasons=tsvc.FAILURE_REASONS,
                             failure_reason_labels=tsvc.FAILURE_REASON_LABELS)
+
+
+@team_bp.route("/tasks/daily-templates", methods=["GET", "POST"])
+@login_required
+@require_permission("tasks.assign_any")
+def daily_templates_list():
+    """"مهام العامل التلقائية" (بند إضافي 107) — الدكتور/المالك يضيف أو
+    يوقف مهمة يومية متكررة (تنظيف/سقاية/فحص...) من هنا مباشرة، بدون أي
+    تعديل كود. القوالب هنا تُقرأ يومياً بـ`daily_task_service._rule_
+    definitions` وتتحول لمهام فعلية توصل للعامل تلقائياً (بند إضافي 107
+    نفسه — بدون انتظار اعتماد، خلافاً لبقية المهام التلقائية بالنظام)."""
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        if not title:
+            flash("عنوان المهمة مطلوب", "error")
+            return redirect(url_for("team.daily_templates_list"))
+        max_order = db.session.query(db.func.coalesce(db.func.max(DailyTaskTemplate.sort_order), 0)).scalar()
+        db.session.add(DailyTaskTemplate(
+            title=title, notes=request.form.get("notes") or None,
+            sort_order=max_order + 1, created_by_id=current_user.id,
+        ))
+        db.session.add(AuditLog(actor_user_id=current_user.id, action="daily_task_template.create"))
+        db.session.commit()
+        flash("تمت إضافة المهمة اليومية", "success")
+        return redirect(url_for("team.daily_templates_list"))
+    templates = DailyTaskTemplate.query.order_by(DailyTaskTemplate.sort_order).all()
+    return render_template("team/daily_templates.html", templates=templates)
+
+
+@team_bp.route("/tasks/daily-templates/<int:template_id>/toggle", methods=["POST"])
+@login_required
+@require_permission("tasks.assign_any")
+def daily_template_toggle(template_id):
+    template = DailyTaskTemplate.query.get_or_404(template_id)
+    template.is_active = not template.is_active
+    db.session.add(AuditLog(actor_user_id=current_user.id,
+                             action="daily_task_template.toggle", entity_type="DailyTaskTemplate",
+                             entity_id=template.id, details=f"is_active={template.is_active}"))
+    db.session.commit()
+    flash("تم إيقاف المهمة اليومية" if not template.is_active else "تم تفعيل المهمة اليومية", "success")
+    return redirect(url_for("team.daily_templates_list"))
 
 
 @team_bp.route("/tasks/new", methods=["GET", "POST"])

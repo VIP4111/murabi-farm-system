@@ -6,6 +6,7 @@
     <h2>{{ _('المهام') }}</h2>
     {% if current_user.has_permission('tasks.assign_any') %}
     <button type="button" class="btn" id="openAssignTaskModalBtn">+ {{ _('توزيع مهمة') }}</button>
+    <a class="btn light" href="{{ url_for('team.daily_templates_list') }}">⚙️ {{ _('مهام العامل التلقائية') }}</a>
     {% endif %}
   </div>
 </div>

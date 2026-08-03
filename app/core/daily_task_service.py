@@ -55,22 +55,18 @@ def _rule_definitions(ctx: dict) -> list[dict]:
     # يحفظ هذا الترتيب فعلياً بشاشة العرض (مو بس بترتيب التوليد الداخلي)
     # — قبل هذا البند كانت الشاشة تعتمد على due_date بس بدون معيار ثانٍ
     # حاسم لو تشارك أكثر من مهمة نفس التاريخ.
-    defs = [
-        {
-            "key": "daily_barn_cleaning", "always": True,
-            "title": "🧹 تنظيف المعالف والحظائر",
-            "notes": "راجع جفاف الأرضية والتهوية والزحام، ونظّف المعالف والمشارب.",
-        },
-        {
-            "key": "daily_water_check", "always": True,
-            "title": "💧 فحص الماء والأملاح",
-            "notes": "تأكد من نظافة المشارب وتوفر ماء نظيف وأملاح مناسبة طوال اليوم.",
-        },
-        {
-            "key": "daily_herd_check", "always": True,
-            "title": "🔍 فحص يومي للقطيع",
-            "notes": "افحص الشهية والاجترار والحركة والتنفس والبراز والعرج والجروح بكل الحظائر.",
-        },
+    # القوالب الثابتة (بند إضافي 107) — قبل هذا كانت 3 قواعد مكتوبة هنا
+    # مباشرة بالكود؛ صارت تُقرأ من `DailyTaskTemplate` (شاشة "مهام العامل
+    # التلقائية")، عشان صاحب الحلال/الدكتور يقدر يضيف أو يوقف مهمة يومية
+    # بدون أي تعديل كود. المفتاح مبني من رقم القالب نفسه (ثابت عبر الزمن
+    # طالما القالب موجود) — يحافظ على idempotency نفسها (`_source_id`).
+    from app.models import DailyTaskTemplate
+    template_defs = [
+        {"key": f"daily_template_{t.id}", "always": True, "title": t.title, "notes": t.notes or ""}
+        for t in DailyTaskTemplate.query.filter_by(is_active=True).order_by(DailyTaskTemplate.sort_order).all()
+    ]
+
+    defs = template_defs + [
         {
             "key": "daily_isolation_review", "condition": ctx["needs_isolation_review"],
             "title": "🚧 مراجعة العزل والحجر",
@@ -124,6 +120,7 @@ def generate_daily_husbandry_tasks(*, now: datetime | None = None) -> list:
                 title=rule["title"], task_type="daily_husbandry",
                 due_date=for_date, source_type=SOURCE_TYPE, source_id=source_id,
                 notes=rule["notes"], sort_order=order, target_role="worker",
+                auto_approve=True,
             )
             created.append(task)
 

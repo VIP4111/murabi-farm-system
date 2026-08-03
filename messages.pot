@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-02 19:30+0300\n"
+"POT-Creation-Date: 2026-08-03 09:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1013,7 +1013,7 @@ msgstr ""
 #: app/templates/team/reports_list.html:46
 #: app/templates/team/reports_list.html:57
 #: app/templates/team/reports_list.html:76
-#: app/templates/team/tasks_list.html:57 app/templates/team/tasks_list.html:101
+#: app/templates/team/tasks_list.html:58 app/templates/team/tasks_list.html:102
 msgid "النوع"
 msgstr ""
 
@@ -1179,12 +1179,12 @@ msgid "إغلاق البلاغ"
 msgstr ""
 
 #: app/templates/team/report_detail.html:127
-#: app/templates/team/tasks_list.html:188
+#: app/templates/team/tasks_list.html:189
 msgid "حذف نهائي — ما يرجع. متأكد؟"
 msgstr ""
 
 #: app/templates/team/report_detail.html:129
-#: app/templates/team/tasks_list.html:190
+#: app/templates/team/tasks_list.html:191
 msgid "حذف نهائي"
 msgstr ""
 
@@ -1258,8 +1258,8 @@ msgstr ""
 #: app/templates/team/reports_list.html:35
 #: app/templates/team/reports_list.html:46
 #: app/templates/team/reports_list.html:57
-#: app/templates/team/tasks_list.html:57 app/templates/team/tasks_list.html:141
-#: app/templates/team/tasks_list.html:161
+#: app/templates/team/tasks_list.html:58 app/templates/team/tasks_list.html:142
+#: app/templates/team/tasks_list.html:162
 msgid "الحالة"
 msgstr ""
 
@@ -1356,9 +1356,9 @@ msgstr ""
 msgid "المهمة التالية بالسلسلة:"
 msgstr ""
 
-#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:57
-#: app/templates/team/tasks_list.html:101
-#: app/templates/team/tasks_list.html:177
+#: app/templates/team/task_detail.html:42 app/templates/team/tasks_list.html:58
+#: app/templates/team/tasks_list.html:102
+#: app/templates/team/tasks_list.html:178
 msgid "الإجراءات"
 msgstr ""
 
@@ -1445,94 +1445,98 @@ msgstr ""
 msgid "توزيع مهمة"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:17
+#: app/templates/team/tasks_list.html:9
+msgid "مهام العامل التلقائية"
+msgstr ""
+
+#: app/templates/team/tasks_list.html:18
 msgid "توزيع مهمة جديدة"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:21
+#: app/templates/team/tasks_list.html:22
 msgid "توزيع"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:23
+#: app/templates/team/tasks_list.html:24
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:55
+#: app/templates/team/tasks_list.html:56
 msgid "مهامي"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:57 app/templates/team/tasks_list.html:101
-#: app/templates/team/tasks_list.html:141
-#: app/templates/team/tasks_list.html:161
-#: app/templates/team/tasks_list.html:177
+#: app/templates/team/tasks_list.html:58 app/templates/team/tasks_list.html:102
+#: app/templates/team/tasks_list.html:142
+#: app/templates/team/tasks_list.html:162
+#: app/templates/team/tasks_list.html:178
 msgid "العنوان"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:57 app/templates/team/tasks_list.html:101
-#: app/templates/team/tasks_list.html:141
+#: app/templates/team/tasks_list.html:58 app/templates/team/tasks_list.html:102
+#: app/templates/team/tasks_list.html:142
 msgid "الحظيرة/الحيوان"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:57 app/templates/team/tasks_list.html:101
-#: app/templates/team/tasks_list.html:141
-#: app/templates/team/tasks_list.html:161
+#: app/templates/team/tasks_list.html:58 app/templates/team/tasks_list.html:102
+#: app/templates/team/tasks_list.html:142
+#: app/templates/team/tasks_list.html:162
 msgid "الموعد"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:93
+#: app/templates/team/tasks_list.html:94
 msgid "مهام مقترحة بانتظار الاعتماد"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:94
+#: app/templates/team/tasks_list.html:95
 msgid ""
 "مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
 "تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:138
+#: app/templates/team/tasks_list.html:139
 msgid "جدول المهام المعتمدة"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:139
+#: app/templates/team/tasks_list.html:140
 msgid ""
 "كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
 "عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:141
-#: app/templates/team/tasks_list.html:161
+#: app/templates/team/tasks_list.html:142
+#: app/templates/team/tasks_list.html:162
 msgid "المكلَّف"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:146
+#: app/templates/team/tasks_list.html:147
 msgid "بدون تعيين"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:152
+#: app/templates/team/tasks_list.html:153
 msgid "لا يوجد مهام معتمدة حالياً."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:159
+#: app/templates/team/tasks_list.html:160
 msgid "مهام وزّعتها (نشطة)"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:166
+#: app/templates/team/tasks_list.html:167
 msgid "لا يوجد."
 msgstr ""
 
-#: app/templates/team/tasks_list.html:175
+#: app/templates/team/tasks_list.html:176
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:177
+#: app/templates/team/tasks_list.html:178
 msgid "السبب"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:186
+#: app/templates/team/tasks_list.html:187
 msgid "استرجاع"
 msgstr ""
 
-#: app/templates/team/tasks_list.html:195
+#: app/templates/team/tasks_list.html:196
 msgid "فاضي."
 msgstr ""
 

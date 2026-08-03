@@ -58,10 +58,12 @@ def test_withdrawal_review_only_created_when_open_disease_exists(app):
     assert any("💊" in t.title for t in created)
 
 
-def test_all_daily_tasks_created_as_suggested_status(app):
+def test_all_daily_tasks_created_as_pending_status(app):
+    # بند إضافي 107 — توصل تلقائياً للعامل بدون انتظار اعتماد الدكتور
+    # (خلافاً لبقية المهام التلقائية بالنظام، اللي تبقى "مقترحة").
     created = svc.generate_daily_husbandry_tasks(now=MORNING)
     assert created
-    assert all(t.status == "suggested" for t in created)
+    assert all(t.status == "pending" for t in created)
     assert all(t.source_type == svc.SOURCE_TYPE for t in created)
 
 

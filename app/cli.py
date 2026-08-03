@@ -1,7 +1,17 @@
 import click
 from app.extensions import db
-from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink
+from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate
 from app.permissions_registry import PERMISSIONS, DEFAULT_ROLES
+
+# مهام يومية ثابتة افتراضية (بند إضافي 107) — كانت مكتوبة بالكود مباشرة
+# بـdaily_task_service._rule_definitions قبل هذا البند؛ صارت بيانات
+# بقاعدة البيانات، قابلة للتعديل من شاشة "مهام العامل التلقائية" بدون
+# أي تعديل كود.
+DEFAULT_DAILY_TASK_TEMPLATES = [
+    ("🧹 تنظيف المعالف والحظائر", "راجع جفاف الأرضية والتهوية والزحام، ونظّف المعالف والمشارب."),
+    ("💧 فحص الماء والأملاح", "تأكد من نظافة المشارب وتوفر ماء نظيف وأملاح مناسبة طوال اليوم."),
+    ("🔍 فحص يومي للقطيع", "افحص الشهية والاجترار والحركة والتنفس والبراز والعرج والجروح بكل الحظائر."),
+]
 
 
 DEFAULT_SERVICES = [
@@ -160,6 +170,11 @@ def register_cli(app):
                     db.session.add(DiseaseSymptomLink(
                         disease_type_id=disease_type.id, symptom_id=symptom.id, weight=weight,
                     ))
+
+        # قوالب المهام اليومية الافتراضية (بند إضافي 107)
+        if not DailyTaskTemplate.query.first():
+            for order, (title, notes) in enumerate(DEFAULT_DAILY_TASK_TEMPLATES):
+                db.session.add(DailyTaskTemplate(title=title, notes=notes, sort_order=order))
 
         db.session.commit()
         click.echo("تمت التهيئة بنجاح.")

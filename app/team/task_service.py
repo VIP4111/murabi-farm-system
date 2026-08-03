@@ -77,16 +77,19 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
 
 def create_suggested_task(*, title, task_type, barn_id=None, animal_id=None, due_date=None,
                            requires_photo=False, source_type=None, source_id=None, notes=None,
-                           sort_order=0, target_role=None) -> Task:
+                           sort_order=0, target_role=None, auto_approve=False) -> Task:
     """مهمة تتولّد تلقائياً من النظام (محرك الدورة، خطة العزل...) — تحتاج
-    مراجعة الدكتور قبل ما توصل للعامل."""
+    مراجعة الدكتور قبل ما توصل للعامل، إلا لو `auto_approve=True` (بند
+    إضافي 107 — المهام اليومية الروتينية تحديداً: تنظيف/سقاية/فحص عام،
+    ما فيها قرار طبي يستاهل انتظار مراجعة، وتعطيلها كان يعني العامل ما
+    يشوف حتى المهام الأساسية لو الدكتور غاب يوم)."""
     assignee_id = None
     if barn_id:
         from app.models import Barn
         barn = Barn.query.get(barn_id)
         assignee_id = barn.responsible_worker_id if barn else None
     task = Task(
-        title=title, task_type=task_type, status="suggested",
+        title=title, task_type=task_type, status="pending" if auto_approve else "suggested",
         assignee_id=assignee_id, barn_id=barn_id, animal_id=animal_id,
         due_date=due_date, requires_photo=requires_photo, notes=notes,
         source_type=source_type, source_id=source_id, sort_order=sort_order,
@@ -262,7 +265,17 @@ def _duration_minutes_since_start(task: Task, end_time) -> int | None:
     return max(0, round((end_time - started).total_seconds() / 60))
 
 
+def _claim_if_unassigned(task: Task, actor) -> None:
+    """مهمة يومية مشتركة بلا عامل محدد (بند إضافي 107 — تولّد بدون
+    `assignee_id`، تظهر لكل عمال نفس الدور عبر `target_role`) تُنسب
+    تلقائياً لأول عامل يبدأها فعلياً — نفس منطق لوحة مهام مشتركة، أول
+    وحد يمسكها يصير مسؤولها."""
+    if task.assignee_id is None:
+        task.assignee_id = actor.id
+
+
 def start_task(task: Task, *, actor) -> Task:
+    _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
         raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
     if task.status != "pending":
@@ -277,6 +290,7 @@ def start_task(task: Task, *, actor) -> Task:
 
 
 def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voice_note_url=None) -> Task:
+    _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
         raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
     if task.status not in ("pending", "in_progress"):
@@ -402,6 +416,7 @@ def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, 
     """تعذّر تنفيذ المهمة (بند إضافي 54) — بدل ما يظل العامل صامتاً أو
     يضغط "بدء" بلا أي أثر، يسجّل صراحة إنه ما قدر ينجزها وليش، بسبب من
     قائمة مقفلة (`FAILURE_REASONS`) عشان تصير قابلة للمتابعة والتحليل."""
+    _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
         raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
     if task.status not in ("pending", "in_progress"):

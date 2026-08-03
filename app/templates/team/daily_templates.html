@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;">
+  <h2>مهام العامل التلقائية</h2>
+  <p style="color:var(--muted); font-size:12px;">هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها.</p>
+  <form method="post" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>عنوان المهمة</label><input name="title" required placeholder="مثال: تنظيف مظلات الحظيرة B">
+    <label>ملاحظات (اختياري)</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">إضافة مهمة يومية</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">القائمة الحالية</h3>
+  <table>
+    <tr><th>العنوان</th><th>الملاحظات</th><th>الحالة</th><th></th></tr>
+    {% for t in templates %}
+    <tr>
+      <td>{{ t.title }}</td>
+      <td style="max-width:260px; overflow-wrap:anywhere;">{{ t.notes or '-' }}</td>
+      <td><span class="badge {{ 'on' if t.is_active else 'off' }}">{{ 'فعّالة' if t.is_active else 'موقوفة' }}</span></td>
+      <td>
+        <form method="post" action="{{ url_for('team.daily_template_toggle', template_id=t.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn light" type="submit">{{ 'إيقاف' if t.is_active else 'تفعيل' }}</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">ما فيه مهام يومية مضافة بعد.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
