@@ -171,6 +171,7 @@ def create_app(config_class=Config):
         "sonar_recheck": _l("إعادة فحص سونار"),
         "protocol_effectiveness_review": _l("تقييم فعالية العلاج"),
         "isolation_release_check": _l("تأكيد انتهاء العزل"),
+        "withdrawal_reminder": _l("تذكير انتهاء فترة سحب الدواء"),
     }
 
     @app.template_filter("ar_task_type")

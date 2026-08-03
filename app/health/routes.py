@@ -565,6 +565,22 @@ def disease_close(disease_id):
     from app.core.cycle_engine import record_cycle_event
     record_cycle_event(disease.animal, "disease", source_type="Disease", source_id=disease.id)
 
+    # بند إضافي 111 — قبل هذا، `withdrawal_until` كان يُحسب ويُخزَّن
+    # وقت تسجيل الدواء (`_withdrawal_until`)، ويُستخدم بس كبوابة منع
+    # بيع (`animal_under_withdrawal`) — بدون أي تذكير فعلي ينبّهك لما
+    # تنتهي الفترة فعلاً. إغلاق المرض (نهاية العلاج) هو أنسب لحظة
+    # نولّد فيها التذكير، لأنها أول نقطة نتأكد فيها إن العلاج خلص فعلاً.
+    if disease.withdrawal_until:
+        from app.team import task_service
+        task_service.create_suggested_task(
+            title=f"✅ تأكد انتهاء فترة سحب الدواء — {disease.animal.animal_no}",
+            task_type="withdrawal_reminder", animal_id=disease.animal_id,
+            barn_id=disease.animal.barn_id, due_date=disease.withdrawal_until,
+            source_type="Disease", source_id=disease.id,
+            notes=f"العلاج ({disease.disease_name}) خلص وأُغلق — تأكد إن فترة سحب "
+                  f"الدواء انتهت فعلاً ({disease.withdrawal_until}) قبل أي بيع أو ذبح.",
+        )
+
     flash("تم إغلاق السجل المرضي", "success")
     return redirect(url_for("health.diseases_list"))
 
