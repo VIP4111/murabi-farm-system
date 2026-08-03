@@ -22,6 +22,7 @@
 12. (إضافي، بند 94) قرب انتهاء صلاحية دواء بالصيدلية (Pharmacy.expiry_date)
 13. (إضافي، بند 97) تباطؤ نمو مشبوه — رأس أبطأ بوضوح من متوسط حظيرته
 14. (إضافي، بند 99) مهمة متعذّرة بانتظار المراجعة — آخر 3 أيام
+15. (إضافي، بند 112) عزل بدون حظيرة عزل مصنّفة — مهام isolation_check بلا حظيرة
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -302,6 +303,32 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
 FAILED_TASK_ALERT_WINDOW_DAYS = 3
 
 
+def _isolation_without_barn() -> list[dict]:
+    """عزل بدون حظيرة عزل مصنّفة (بند إضافي 112) — لو ما فيه أي حظيرة
+    `barn_type="عزل"` وقت ولادة، `start_isolation_plan` (بند 4) كانت
+    تولّد مهام العزل بدون أي حظيرة (`barn_id=None`) بصمت — الأم والمولود
+    يبقون بحظيرتهم العادية، بدون أي تنبيه يخبرك إنك تحتاج تنشئ حظيرة
+    عزل. هذا التنبيه يفحص العرَض المباشر: مهمة `isolation_check` مفتوحة
+    بدون `barn_id` — بدل فحص "هل توجد حظيرة عزل" بشكل عام (كان يصير
+    تنبيهاً دائماً حتى لمزرعة ما احتاجت عزل بعد، بدون أي فايدة فعلية)."""
+    from app.models import Task
+    rows = (Task.query.filter(
+        Task.task_type == "isolation_check", Task.barn_id.is_(None),
+        Task.status.in_(("suggested", "pending", "in_progress", "postponed")),
+    ).all())
+    if not rows:
+        return []
+    animal_ids = sorted({t.animal_id for t in rows if t.animal_id})
+    return [{
+        "category": "عزل بدون حظيرة مصنّفة", "icon": "🚧",
+        "label": f"{len(animal_ids)} رأس بمهام عزل بدون حظيرة عزل فعلية",
+        "detail": "ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً "
+                  "لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من "
+                  "شاشة الحظائر عشان العزل التلقائي يشتغل صح للولادات الجاية.",
+        "urgent": True, "animal_id": None, "barn_id": None,
+    }]
+
+
 def _failed_tasks_pending_review() -> list[dict]:
     """مهام متعذّرة بانتظار مراجعة (بند إضافي 99) — قبل هذا، `fail_task`
     كان يسجّل الحالة والسبب بس (`app/team/task_service.py`)، بدون أي
@@ -427,7 +454,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
         + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
-        + _failed_tasks_pending_review()
+        + _failed_tasks_pending_review() + _isolation_without_barn()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
