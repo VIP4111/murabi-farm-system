@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-04 13:19+0300\n"
+"POT-Creation-Date: 2026-08-04 19:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,8 +229,8 @@ msgstr ""
 msgid "تذكير انتهاء فترة سحب الدواء"
 msgstr ""
 
-#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:483
-#: app/templates/worker_home.html:45
+#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:484
+#: app/templates/worker_home.html:55
 msgid "حالة طارئة"
 msgstr ""
 
@@ -242,7 +242,7 @@ msgstr ""
 msgid "نقل للعزل"
 msgstr ""
 
-#: app/__init__.py:190 app/team/routes.py:43 app/templates/worker_home.html:57
+#: app/__init__.py:190 app/team/routes.py:43 app/templates/worker_home.html:67
 msgid "تغذية / عليقة"
 msgstr ""
 
@@ -274,15 +274,15 @@ msgstr ""
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr ""
 
-#: app/team/routes.py:35 app/templates/worker_home.html:49
+#: app/team/routes.py:35 app/templates/worker_home.html:59
 msgid "فحص / حالة صحية"
 msgstr ""
 
-#: app/team/routes.py:39 app/templates/worker_home.html:53
+#: app/team/routes.py:39 app/templates/worker_home.html:63
 msgid "نقل إلى العزل"
 msgstr ""
 
-#: app/team/routes.py:47 app/templates/worker_home.html:61
+#: app/team/routes.py:47 app/templates/worker_home.html:71
 msgid "بيض / حضانة (نعام)"
 msgstr ""
 
@@ -370,12 +370,13 @@ msgstr ""
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr ""
 
-#: app/templates/alerts_list.html:5 app/templates/worker_home.html:34
+#: app/templates/alerts_list.html:5 app/templates/today.html:34
+#: app/templates/worker_home.html:44
 msgid "تنبيهاتي"
 msgstr ""
 
 #: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:52
-#: app/templates/base.html:353
+#: app/templates/base.html:354
 msgid "التنبيهات"
 msgstr ""
 
@@ -409,6 +410,8 @@ msgid "الإعدادات"
 msgstr ""
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
+#: app/templates/today.html:24 app/templates/today.html:66
+#: app/templates/worker_home.html:38
 msgid "فتح"
 msgstr ""
 
@@ -426,156 +429,161 @@ msgstr ""
 msgid "الرئيسية"
 msgstr ""
 
+#: app/templates/base.html:353 app/templates/today.html:3
+#: app/templates/today.html:6 app/templates/worker_home.html:35
+msgid "صفحة اليوم"
+msgstr ""
+
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:354
+#: app/templates/base.html:355
 msgid "المساعد الذكي"
 msgstr ""
 
-#: app/templates/base.html:359
+#: app/templates/base.html:360
 msgid "الحلال"
 msgstr ""
 
-#: app/templates/base.html:360
+#: app/templates/base.html:361
 msgid "الحيوانات"
 msgstr ""
 
-#: app/templates/base.html:361
+#: app/templates/base.html:362
 msgid "دفعات استقبال جديدة"
 msgstr ""
 
-#: app/templates/base.html:362
+#: app/templates/base.html:363
 msgid "الحظائر"
 msgstr ""
 
-#: app/templates/base.html:364
+#: app/templates/base.html:365
 msgid "التقريع"
 msgstr ""
 
-#: app/templates/base.html:365
+#: app/templates/base.html:366
 msgid "تشخيص الحمل"
 msgstr ""
 
-#: app/templates/base.html:366
+#: app/templates/base.html:367
 msgid "فحص السونار"
 msgstr ""
 
-#: app/templates/base.html:367
+#: app/templates/base.html:368
 msgid "برامج التزامن التناسلي (متقدّم)"
 msgstr ""
 
-#: app/templates/base.html:369
+#: app/templates/base.html:370
 msgid "النعام (بيض/تفقيس)"
 msgstr ""
 
-#: app/templates/base.html:375
+#: app/templates/base.html:376
 msgid "الصحة"
 msgstr ""
 
-#: app/templates/base.html:376
+#: app/templates/base.html:377
 msgid "الصيدلية"
 msgstr ""
 
-#: app/templates/base.html:377
+#: app/templates/base.html:378
 msgid "الزيارات البيطرية"
 msgstr ""
 
-#: app/templates/base.html:378
+#: app/templates/base.html:379
 msgid "الأمراض"
 msgstr ""
 
-#: app/templates/base.html:379
+#: app/templates/base.html:380
 msgid "التطعيمات"
 msgstr ""
 
-#: app/templates/base.html:380
+#: app/templates/base.html:381
 msgid "تقويم التحصينات"
 msgstr ""
 
-#: app/templates/base.html:382
+#: app/templates/base.html:383
 msgid "المساعد التشخيصي"
 msgstr ""
 
-#: app/templates/base.html:384
+#: app/templates/base.html:385
 msgid "دليل الحقن الميداني"
 msgstr ""
 
-#: app/templates/base.html:385
+#: app/templates/base.html:386
 msgid "بروتوكولات العلاج"
 msgstr ""
 
-#: app/templates/base.html:391
+#: app/templates/base.html:392
 msgid "العلف"
 msgstr ""
 
-#: app/templates/base.html:392
+#: app/templates/base.html:393
 msgid "حاسبة العلف"
 msgstr ""
 
-#: app/templates/base.html:393
+#: app/templates/base.html:394
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr ""
 
-#: app/templates/base.html:394
+#: app/templates/base.html:395
 msgid "موازِن العليقة التلقائي"
 msgstr ""
 
-#: app/templates/base.html:395
+#: app/templates/base.html:396
 msgid "المستودعات"
 msgstr ""
 
-#: app/templates/base.html:401
+#: app/templates/base.html:402
 msgid "المعدات"
 msgstr ""
 
-#: app/templates/base.html:402
+#: app/templates/base.html:403
 msgid "مستودع المعدات"
 msgstr ""
 
-#: app/templates/base.html:408
+#: app/templates/base.html:409
 msgid "المناخ"
 msgstr ""
 
-#: app/templates/base.html:409
+#: app/templates/base.html:410
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr ""
 
-#: app/templates/base.html:414
+#: app/templates/base.html:415
 msgid "الفريق"
 msgstr ""
 
-#: app/templates/base.html:415 app/templates/team/tasks_list.html:6
+#: app/templates/base.html:416 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr ""
 
-#: app/templates/base.html:416 app/templates/team/reports_list.html:6
+#: app/templates/base.html:417 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr ""
 
-#: app/templates/base.html:417
+#: app/templates/base.html:418
 msgid "أعضاء الفريق"
 msgstr ""
 
-#: app/templates/base.html:422 app/templates/base.html:423
+#: app/templates/base.html:423 app/templates/base.html:424
 msgid "المالية"
 msgstr ""
 
-#: app/templates/base.html:424
+#: app/templates/base.html:425
 msgid "مالية الصحة"
 msgstr ""
 
-#: app/templates/base.html:430
+#: app/templates/base.html:431
 msgid "التقارير"
 msgstr ""
 
-#: app/templates/base.html:431
+#: app/templates/base.html:432
 msgid "التقارير التحليلية"
 msgstr ""
 
-#: app/templates/base.html:443
+#: app/templates/base.html:444
 msgid "اللغة"
 msgstr ""
 
-#: app/templates/base.html:456
+#: app/templates/base.html:457
 msgid "خروج"
 msgstr ""
 
@@ -595,6 +603,32 @@ msgstr ""
 msgid "دخول"
 msgstr ""
 
+#: app/templates/today.html:7
+msgid ""
+"مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما "
+"تتنقّل بين شاشات."
+msgstr ""
+
+#: app/templates/today.html:12
+msgid "مهامي المفتوحة"
+msgstr ""
+
+#: app/templates/today.html:27
+msgid "ما عندك مهام مفتوحة حالياً."
+msgstr ""
+
+#: app/templates/today.html:47
+msgid "ولا تنبيه حالياً."
+msgstr ""
+
+#: app/templates/today.html:55
+msgid "بلاغاتي المفتوحة"
+msgstr ""
+
+#: app/templates/today.html:69
+msgid "ما عندك بلاغات مفتوحة حالياً."
+msgstr ""
+
 #: app/templates/worker_home.html:27
 msgid "أهلاً"
 msgstr ""
@@ -603,39 +637,43 @@ msgstr ""
 msgid "اختر الإجراء اللي تبي تسجّله"
 msgstr ""
 
-#: app/templates/worker_home.html:37
+#: app/templates/worker_home.html:36
+msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
+msgstr ""
+
+#: app/templates/worker_home.html:47
 msgid "تنبيهات حظائرك اللي أنت مسؤول عنها بس."
 msgstr ""
 
-#: app/templates/worker_home.html:38
+#: app/templates/worker_home.html:48
 msgid "فتح تنبيهاتي"
 msgstr ""
 
-#: app/templates/worker_home.html:45
+#: app/templates/worker_home.html:55
 msgid "بلاغ فوري لحالة تحتاج تدخّل سريع"
 msgstr ""
 
-#: app/templates/worker_home.html:49
+#: app/templates/worker_home.html:59
 msgid "تسجيل ملاحظة أو بلاغ عن حالة حيوان"
 msgstr ""
 
-#: app/templates/worker_home.html:53
+#: app/templates/worker_home.html:63
 msgid "الإبلاغ عن حيوان يحتاج عزل"
 msgstr ""
 
-#: app/templates/worker_home.html:57
+#: app/templates/worker_home.html:67
 msgid "تسجيل ملاحظة عن التغذية اليومية"
 msgstr ""
 
-#: app/templates/worker_home.html:61
+#: app/templates/worker_home.html:71
 msgid "الإبلاغ عن بيضة جديدة أو ملاحظة حضانة"
 msgstr ""
 
-#: app/templates/worker_home.html:65
+#: app/templates/worker_home.html:75
 msgid "مهامي اليوم"
 msgstr ""
 
-#: app/templates/worker_home.html:65
+#: app/templates/worker_home.html:75
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr ""
 

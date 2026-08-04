@@ -17,7 +17,7 @@ from app.core import setup_checklist_service
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
-from app.models import SpeciesType, Breed, AnimalColor
+from app.models import SpeciesType, Breed, AnimalColor, Task, Report
 from app.models.animal import AnimalSource
 from app.permissions_registry import PERMISSIONS
 
@@ -103,6 +103,40 @@ def alerts_mine():
     my_barn_ids = _my_barn_ids(current_user)
     alerts = alerts_service.get_alerts(barn_ids=my_barn_ids)
     return render_template("alerts_list.html", alerts=alerts, mine=True, my_barn_ids=my_barn_ids)
+
+
+@core_bp.route("/today")
+@login_required
+def today():
+    """صفحة اليوم (بند إضافي 122) — تجمع مهامي المفتوحة، تنبيهات حظائري،
+    وبلاغاتي المفتوحة بشاشة وحدة، بدل ما يتنقّل المستخدم بين 3 شاشات كل
+    صباح. لا منطق جديد — نفس استعلامات tasks_list/alerts_mine/reports_list
+    الموجودة أصلاً، مجمَّعة هنا للعرض بس."""
+    my_role_name = current_user.role.name if current_user.role else None
+    my_tasks = (Task.query
+                .filter(
+                    Task.status.in_(["pending", "in_progress"]),
+                    db.or_(
+                        Task.assignee_id == current_user.id,
+                        db.and_(Task.assignee_id.is_(None), Task.target_role == my_role_name),
+                    ),
+                )
+                .order_by(Task.due_date, Task.sort_order).all())
+
+    my_barn_ids = _my_barn_ids(current_user)
+    alerts = alerts_service.get_alerts(barn_ids=my_barn_ids)
+
+    my_open_reports = []
+    if current_user.has_permission("reports.submit"):
+        my_open_reports = (Report.query
+                            .filter(Report.reporter_id == current_user.id,
+                                    Report.status.notin_(["closed", "cancelled"]))
+                            .order_by(Report.created_at.desc()).all())
+
+    return render_template(
+        "today.html", my_tasks=my_tasks, alerts=alerts,
+        my_open_reports=my_open_reports, today=date.today(),
+    )
 
 
 @core_bp.route("/animals")

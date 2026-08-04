@@ -30,6 +30,16 @@
 </div>
 
 <div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+    <div>
+      <h3 style="margin:0; font-size:15px;">🗓️ {{ _('صفحة اليوم') }}</h3>
+      <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة') }}</p>
+    </div>
+    <a class="btn" href="{{ url_for('core.today') }}">{{ _('فتح') }} ←</a>
+  </div>
+</div>
+
+<div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h3 style="margin:0; font-size:15px;">🔔 {{ _('تنبيهاتي') }}</h3>
     <span class="badge {{ 'off' if my_alerts_count else 'on' }}">{{ my_alerts_count }}</span>

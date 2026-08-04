@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-04 13:19+0300\n"
+"POT-Creation-Date: 2026-08-04 19:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -230,8 +230,8 @@ msgstr "Confirm isolation end"
 msgid "تذكير انتهاء فترة سحب الدواء"
 msgstr "Withdrawal period end reminder"
 
-#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:483
-#: app/templates/worker_home.html:45
+#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:484
+#: app/templates/worker_home.html:55
 msgid "حالة طارئة"
 msgstr "Emergency"
 
@@ -243,7 +243,7 @@ msgstr "Health condition"
 msgid "نقل للعزل"
 msgstr "Transfer to isolation"
 
-#: app/__init__.py:190 app/team/routes.py:43 app/templates/worker_home.html:57
+#: app/__init__.py:190 app/team/routes.py:43 app/templates/worker_home.html:67
 msgid "تغذية / عليقة"
 msgstr "Feeding / ration"
 
@@ -277,15 +277,15 @@ msgstr ""
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "Incorrect phone number or password"
 
-#: app/team/routes.py:35 app/templates/worker_home.html:49
+#: app/team/routes.py:35 app/templates/worker_home.html:59
 msgid "فحص / حالة صحية"
 msgstr "Checkup / Health status"
 
-#: app/team/routes.py:39 app/templates/worker_home.html:53
+#: app/team/routes.py:39 app/templates/worker_home.html:63
 msgid "نقل إلى العزل"
 msgstr "Move to Isolation"
 
-#: app/team/routes.py:47 app/templates/worker_home.html:61
+#: app/team/routes.py:47 app/templates/worker_home.html:71
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
 
@@ -380,12 +380,13 @@ msgstr "Discard permanently"
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr "Discard this entry permanently without uploading it?"
 
-#: app/templates/alerts_list.html:5 app/templates/worker_home.html:34
+#: app/templates/alerts_list.html:5 app/templates/today.html:34
+#: app/templates/worker_home.html:44
 msgid "تنبيهاتي"
 msgstr "My Alerts"
 
 #: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:52
-#: app/templates/base.html:353
+#: app/templates/base.html:354
 msgid "التنبيهات"
 msgstr "Alerts"
 
@@ -427,6 +428,8 @@ msgid "الإعدادات"
 msgstr "Settings"
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
+#: app/templates/today.html:24 app/templates/today.html:66
+#: app/templates/worker_home.html:38
 msgid "فتح"
 msgstr "Open"
 
@@ -444,156 +447,161 @@ msgstr "مراح بو علي"
 msgid "الرئيسية"
 msgstr "Home"
 
+#: app/templates/base.html:353 app/templates/today.html:3
+#: app/templates/today.html:6 app/templates/worker_home.html:35
+msgid "صفحة اليوم"
+msgstr "Today's page"
+
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:354
+#: app/templates/base.html:355
 msgid "المساعد الذكي"
 msgstr "Smart Assistant"
 
-#: app/templates/base.html:359
+#: app/templates/base.html:360
 msgid "الحلال"
 msgstr "Livestock"
 
-#: app/templates/base.html:360
+#: app/templates/base.html:361
 msgid "الحيوانات"
 msgstr "Animals"
 
-#: app/templates/base.html:361
+#: app/templates/base.html:362
 msgid "دفعات استقبال جديدة"
 msgstr "New intake batches"
 
-#: app/templates/base.html:362
+#: app/templates/base.html:363
 msgid "الحظائر"
 msgstr "Barns"
 
-#: app/templates/base.html:364
+#: app/templates/base.html:365
 msgid "التقريع"
 msgstr "Mating"
 
-#: app/templates/base.html:365
+#: app/templates/base.html:366
 msgid "تشخيص الحمل"
 msgstr "Pregnancy diagnosis"
 
-#: app/templates/base.html:366
+#: app/templates/base.html:367
 msgid "فحص السونار"
 msgstr "Sonar exam"
 
-#: app/templates/base.html:367
+#: app/templates/base.html:368
 msgid "برامج التزامن التناسلي (متقدّم)"
 msgstr "Estrus synchronization programs (advanced)"
 
-#: app/templates/base.html:369
+#: app/templates/base.html:370
 msgid "النعام (بيض/تفقيس)"
 msgstr "Ostriches (eggs/hatching)"
 
-#: app/templates/base.html:375
+#: app/templates/base.html:376
 msgid "الصحة"
 msgstr "Health"
 
-#: app/templates/base.html:376
+#: app/templates/base.html:377
 msgid "الصيدلية"
 msgstr "Pharmacy"
 
-#: app/templates/base.html:377
+#: app/templates/base.html:378
 msgid "الزيارات البيطرية"
 msgstr "Vet Visits"
 
-#: app/templates/base.html:378
+#: app/templates/base.html:379
 msgid "الأمراض"
 msgstr "Diseases"
 
-#: app/templates/base.html:379
+#: app/templates/base.html:380
 msgid "التطعيمات"
 msgstr "Vaccinations"
 
-#: app/templates/base.html:380
+#: app/templates/base.html:381
 msgid "تقويم التحصينات"
 msgstr "Vaccination calendar"
 
-#: app/templates/base.html:382
+#: app/templates/base.html:383
 msgid "المساعد التشخيصي"
 msgstr "Diagnostic assistant"
 
-#: app/templates/base.html:384
+#: app/templates/base.html:385
 msgid "دليل الحقن الميداني"
 msgstr "Field injection guide"
 
-#: app/templates/base.html:385
+#: app/templates/base.html:386
 msgid "بروتوكولات العلاج"
 msgstr "Treatment protocols"
 
-#: app/templates/base.html:391
+#: app/templates/base.html:392
 msgid "العلف"
 msgstr "Feed"
 
-#: app/templates/base.html:392
+#: app/templates/base.html:393
 msgid "حاسبة العلف"
 msgstr "Feed Calculator"
 
-#: app/templates/base.html:393
+#: app/templates/base.html:394
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "Feed conversion ratio (FCR)"
 
-#: app/templates/base.html:394
+#: app/templates/base.html:395
 msgid "موازِن العليقة التلقائي"
 msgstr "Automatic ration balancer"
 
-#: app/templates/base.html:395
+#: app/templates/base.html:396
 msgid "المستودعات"
 msgstr "Warehouses"
 
-#: app/templates/base.html:401
+#: app/templates/base.html:402
 msgid "المعدات"
 msgstr "Equipment"
 
-#: app/templates/base.html:402
+#: app/templates/base.html:403
 msgid "مستودع المعدات"
 msgstr "Equipment warehouse"
 
-#: app/templates/base.html:408
+#: app/templates/base.html:409
 msgid "المناخ"
 msgstr "Climate"
 
-#: app/templates/base.html:409
+#: app/templates/base.html:410
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "Climate & heat stress radar"
 
-#: app/templates/base.html:414
+#: app/templates/base.html:415
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:415 app/templates/team/tasks_list.html:6
+#: app/templates/base.html:416 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:416 app/templates/team/reports_list.html:6
+#: app/templates/base.html:417 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:417
+#: app/templates/base.html:418
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:422 app/templates/base.html:423
+#: app/templates/base.html:423 app/templates/base.html:424
 msgid "المالية"
 msgstr "Finance"
 
-#: app/templates/base.html:424
+#: app/templates/base.html:425
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:430
+#: app/templates/base.html:431
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:431
+#: app/templates/base.html:432
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:443
+#: app/templates/base.html:444
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:456
+#: app/templates/base.html:457
 msgid "خروج"
 msgstr "Logout"
 
@@ -613,6 +621,32 @@ msgstr "Password"
 msgid "دخول"
 msgstr "Login"
 
+#: app/templates/today.html:7
+msgid ""
+"مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما "
+"تتنقّل بين شاشات."
+msgstr "Your open tasks, barn alerts, and open reports — all here instead of switching between screens."
+
+#: app/templates/today.html:12
+msgid "مهامي المفتوحة"
+msgstr "My open tasks"
+
+#: app/templates/today.html:27
+msgid "ما عندك مهام مفتوحة حالياً."
+msgstr "You have no open tasks right now."
+
+#: app/templates/today.html:47
+msgid "ولا تنبيه حالياً."
+msgstr "No alerts right now."
+
+#: app/templates/today.html:55
+msgid "بلاغاتي المفتوحة"
+msgstr "My open reports"
+
+#: app/templates/today.html:69
+msgid "ما عندك بلاغات مفتوحة حالياً."
+msgstr "You have no open reports right now."
+
 #: app/templates/worker_home.html:27
 msgid "أهلاً"
 msgstr "Welcome"
@@ -621,39 +655,43 @@ msgstr "Welcome"
 msgid "اختر الإجراء اللي تبي تسجّله"
 msgstr "Choose the action you want to record"
 
-#: app/templates/worker_home.html:37
+#: app/templates/worker_home.html:36
+msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
+msgstr "Your tasks, alerts, and open reports in one screen"
+
+#: app/templates/worker_home.html:47
 msgid "تنبيهات حظائرك اللي أنت مسؤول عنها بس."
 msgstr "Alerts for the barns you're responsible for only."
 
-#: app/templates/worker_home.html:38
+#: app/templates/worker_home.html:48
 msgid "فتح تنبيهاتي"
 msgstr "Open my alerts"
 
-#: app/templates/worker_home.html:45
+#: app/templates/worker_home.html:55
 msgid "بلاغ فوري لحالة تحتاج تدخّل سريع"
 msgstr "Instant report for a situation needing urgent action"
 
-#: app/templates/worker_home.html:49
+#: app/templates/worker_home.html:59
 msgid "تسجيل ملاحظة أو بلاغ عن حالة حيوان"
 msgstr "Record a note or report about an animal's condition"
 
-#: app/templates/worker_home.html:53
+#: app/templates/worker_home.html:63
 msgid "الإبلاغ عن حيوان يحتاج عزل"
 msgstr "Report an animal that needs isolation"
 
-#: app/templates/worker_home.html:57
+#: app/templates/worker_home.html:67
 msgid "تسجيل ملاحظة عن التغذية اليومية"
 msgstr "Record a note about daily feeding"
 
-#: app/templates/worker_home.html:61
+#: app/templates/worker_home.html:71
 msgid "الإبلاغ عن بيضة جديدة أو ملاحظة حضانة"
 msgstr "Report a new egg or incubation note"
 
-#: app/templates/worker_home.html:65
+#: app/templates/worker_home.html:75
 msgid "مهامي اليوم"
 msgstr "My Tasks Today"
 
-#: app/templates/worker_home.html:65
+#: app/templates/worker_home.html:75
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr "View and complete your assigned tasks"
 
