@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 16:55+0300\n"
+"POT-Creation-Date: 2026-08-04 13:19+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -110,15 +110,15 @@ msgstr "पुष्टि की गई"
 msgid "فشلت"
 msgstr "विफल"
 
-#: app/__init__.py:145 app/team/routes.py:373
+#: app/__init__.py:145 app/team/routes.py:386
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:146 app/team/routes.py:374
+#: app/__init__.py:146 app/team/routes.py:387
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:147 app/team/routes.py:378
+#: app/__init__.py:147 app/team/routes.py:391
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -134,15 +134,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:151 app/team/routes.py:375
+#: app/__init__.py:151 app/team/routes.py:388
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:152 app/team/routes.py:376
+#: app/__init__.py:152 app/team/routes.py:389
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:153 app/team/routes.py:377
+#: app/__init__.py:153 app/team/routes.py:390
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -230,73 +230,78 @@ msgstr "पृथक्करण समाप्ति की पुष्टि
 msgid "تذكير انتهاء فترة سحب الدواء"
 msgstr "प्रतीक्षा अवधि समाप्ति अनुस्मारक"
 
-#: app/__init__.py:187
+#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:483
+#: app/templates/worker_home.html:45
+msgid "حالة طارئة"
+msgstr "आपातकालीन स्थिति"
+
+#: app/__init__.py:188
 msgid "حالة صحية"
 msgstr "स्वास्थ्य स्थिति"
 
-#: app/__init__.py:188
+#: app/__init__.py:189
 msgid "نقل للعزل"
 msgstr "आइसोलेशन में स्थानांतरण"
 
-#: app/__init__.py:189 app/team/routes.py:39 app/templates/worker_home.html:51
+#: app/__init__.py:190 app/team/routes.py:43 app/templates/worker_home.html:57
 msgid "تغذية / عليقة"
 msgstr "आहार / राशन"
 
-#: app/__init__.py:190
+#: app/__init__.py:191
 msgid "بيض / حضانة نعام"
 msgstr "शुतुरमुर्ग अंडे / इनक्यूबेशन"
 
-#: app/__init__.py:191 app/templates/team/report_form.html:14
+#: app/__init__.py:192 app/templates/team/report_form.html:14
 msgid "مرض"
 msgstr "बीमारी"
 
-#: app/__init__.py:192 app/templates/team/report_form.html:15
+#: app/__init__.py:193 app/templates/team/report_form.html:15
 msgid "مشكلة"
 msgstr "समस्या"
 
-#: app/__init__.py:193 app/templates/team/report_form.html:16
+#: app/__init__.py:194 app/templates/team/report_form.html:16
 msgid "صيانة"
 msgstr "रखरखाव"
 
-#: app/__init__.py:194 app/templates/team/report_form.html:17
+#: app/__init__.py:195 app/templates/team/report_form.html:17
 msgid "أخرى"
 msgstr "अन्य"
 
-#: app/auth/routes.py:38
+#: app/auth/routes.py:40
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد 15 دقيقة."
 msgstr ""
 "बार-बार असफल लॉगिन प्रयासों के कारण यह खाता अस्थायी रूप से लॉक है — 15 "
 "मिनट बाद फिर से प्रयास करें।"
 
-#: app/auth/routes.py:57
+#: app/auth/routes.py:69
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "फ़ोन नंबर या पासवर्ड गलत है"
 
-#: app/team/routes.py:31 app/templates/worker_home.html:43
+#: app/team/routes.py:35 app/templates/worker_home.html:49
 msgid "فحص / حالة صحية"
 msgstr "जांच / स्वास्थ्य स्थिति"
 
-#: app/team/routes.py:35 app/templates/worker_home.html:47
+#: app/team/routes.py:39 app/templates/worker_home.html:53
 msgid "نقل إلى العزل"
 msgstr "आइसोलेशन में स्थानांतरण"
 
-#: app/team/routes.py:43 app/templates/worker_home.html:55
+#: app/team/routes.py:47 app/templates/worker_home.html:61
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:361
+#: app/team/routes.py:374
 msgid "الكل"
 msgstr "सभी"
 
-#: app/team/routes.py:362
+#: app/team/routes.py:375
 msgid "العامل"
 msgstr "कर्मचारी"
 
-#: app/team/routes.py:363
+#: app/team/routes.py:376
 msgid "الطبيب البيطري"
 msgstr "पशु चिकित्सक"
 
-#: app/team/routes.py:364
+#: app/team/routes.py:377
 msgid "المحاسب"
 msgstr "लेखाकार"
 
@@ -375,12 +380,12 @@ msgstr "स्थायी रूप से हटाएं"
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr "इस प्रविष्टि को अपलोड किए बिना स्थायी रूप से हटाएं?"
 
-#: app/templates/alerts_list.html:5 app/templates/worker_home.html:32
+#: app/templates/alerts_list.html:5 app/templates/worker_home.html:34
 msgid "تنبيهاتي"
 msgstr "मेरी सूचनाएं"
 
 #: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:52
-#: app/templates/base.html:341
+#: app/templates/base.html:353
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
@@ -429,166 +434,166 @@ msgstr "खोलें"
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "अभी कोई सूचना नहीं — सब ठीक है।"
 
-#: app/templates/base.html:322
+#: app/templates/base.html:334
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:339 app/templates/base.html:340
+#: app/templates/base.html:351 app/templates/base.html:352
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
 msgid "الرئيسية"
 msgstr "मुख्य पृष्ठ"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:342
+#: app/templates/base.html:354
 msgid "المساعد الذكي"
 msgstr "स्मार्ट सहायक"
 
-#: app/templates/base.html:347
+#: app/templates/base.html:359
 msgid "الحلال"
 msgstr "पशुधन"
 
-#: app/templates/base.html:348
+#: app/templates/base.html:360
 msgid "الحيوانات"
 msgstr "जानवर"
 
-#: app/templates/base.html:349
+#: app/templates/base.html:361
 msgid "دفعات استقبال جديدة"
 msgstr "नए इनटेक बैच"
 
-#: app/templates/base.html:350
+#: app/templates/base.html:362
 msgid "الحظائر"
 msgstr "बाड़े"
 
-#: app/templates/base.html:352
+#: app/templates/base.html:364
 msgid "التقريع"
 msgstr "प्रजनन"
 
-#: app/templates/base.html:353
+#: app/templates/base.html:365
 msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
 
-#: app/templates/base.html:354
+#: app/templates/base.html:366
 msgid "فحص السونار"
 msgstr "सोनार जांच"
 
-#: app/templates/base.html:355
+#: app/templates/base.html:367
 msgid "برامج التزامن التناسلي (متقدّم)"
 msgstr "प्रजनन चक्र सिंक्रोनाइज़ेशन प्रोग्राम (उन्नत)"
 
-#: app/templates/base.html:357
+#: app/templates/base.html:369
 msgid "النعام (بيض/تفقيس)"
 msgstr "शुतुरमुर्ग (अंडे/हैचिंग)"
 
-#: app/templates/base.html:363
+#: app/templates/base.html:375
 msgid "الصحة"
 msgstr "स्वास्थ्य"
 
-#: app/templates/base.html:364
+#: app/templates/base.html:376
 msgid "الصيدلية"
 msgstr "फार्मेसी"
 
-#: app/templates/base.html:365
+#: app/templates/base.html:377
 msgid "الزيارات البيطرية"
 msgstr "पशु चिकित्सक यात्राएं"
 
-#: app/templates/base.html:366
+#: app/templates/base.html:378
 msgid "الأمراض"
 msgstr "बीमारियाँ"
 
-#: app/templates/base.html:367
+#: app/templates/base.html:379
 msgid "التطعيمات"
 msgstr "टीकाकरण"
 
-#: app/templates/base.html:368
+#: app/templates/base.html:380
 msgid "تقويم التحصينات"
 msgstr "टीकाकरण कैलेंडर"
 
-#: app/templates/base.html:370
+#: app/templates/base.html:382
 msgid "المساعد التشخيصي"
 msgstr "निदान सहायक"
 
-#: app/templates/base.html:372
+#: app/templates/base.html:384
 msgid "دليل الحقن الميداني"
 msgstr "फील्ड इंजेक्शन गाइड"
 
-#: app/templates/base.html:373
+#: app/templates/base.html:385
 msgid "بروتوكولات العلاج"
 msgstr "उपचार प्रोटोकॉल"
 
-#: app/templates/base.html:379
+#: app/templates/base.html:391
 msgid "العلف"
 msgstr "चारा"
 
-#: app/templates/base.html:380
+#: app/templates/base.html:392
 msgid "حاسبة العلف"
 msgstr "चारा कैलकुलेटर"
 
-#: app/templates/base.html:381
+#: app/templates/base.html:393
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
 
-#: app/templates/base.html:382
+#: app/templates/base.html:394
 msgid "موازِن العليقة التلقائي"
 msgstr "स्वचालित राशन संतुलक"
 
-#: app/templates/base.html:383
+#: app/templates/base.html:395
 msgid "المستودعات"
 msgstr "गोदाम"
 
-#: app/templates/base.html:389
+#: app/templates/base.html:401
 msgid "المعدات"
 msgstr "उपकरण"
 
-#: app/templates/base.html:390
+#: app/templates/base.html:402
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
-#: app/templates/base.html:396
+#: app/templates/base.html:408
 msgid "المناخ"
 msgstr "जलवायु"
 
-#: app/templates/base.html:397
+#: app/templates/base.html:409
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "जलवायु और गर्मी तनाव रडार"
 
-#: app/templates/base.html:402
+#: app/templates/base.html:414
 msgid "الفريق"
 msgstr "टीम"
 
-#: app/templates/base.html:403 app/templates/team/tasks_list.html:6
+#: app/templates/base.html:415 app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "कार्य"
 
-#: app/templates/base.html:404 app/templates/team/reports_list.html:6
+#: app/templates/base.html:416 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:405
+#: app/templates/base.html:417
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:410 app/templates/base.html:411
+#: app/templates/base.html:422 app/templates/base.html:423
 msgid "المالية"
 msgstr "वित्त"
 
-#: app/templates/base.html:412
+#: app/templates/base.html:424
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:418
+#: app/templates/base.html:430
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:419
+#: app/templates/base.html:431
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
-#: app/templates/base.html:431
+#: app/templates/base.html:443
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:444
+#: app/templates/base.html:456
 msgid "خروج"
 msgstr "लॉग आउट"
 
@@ -608,43 +613,47 @@ msgstr "पासवर्ड"
 msgid "دخول"
 msgstr "लॉग इन"
 
-#: app/templates/worker_home.html:25
+#: app/templates/worker_home.html:27
 msgid "أهلاً"
 msgstr "स्वागत है"
 
-#: app/templates/worker_home.html:26
+#: app/templates/worker_home.html:28
 msgid "اختر الإجراء اللي تبي تسجّله"
 msgstr "वह कार्रवाई चुनें जिसे आप दर्ज करना चाहते हैं"
 
-#: app/templates/worker_home.html:35
+#: app/templates/worker_home.html:37
 msgid "تنبيهات حظائرك اللي أنت مسؤول عنها بس."
 msgstr "केवल उन बाड़ों की सूचनाएं जिनके आप ज़िम्मेदार हैं।"
 
-#: app/templates/worker_home.html:36
+#: app/templates/worker_home.html:38
 msgid "فتح تنبيهاتي"
 msgstr "मेरी सूचनाएं खोलें"
 
-#: app/templates/worker_home.html:43
+#: app/templates/worker_home.html:45
+msgid "بلاغ فوري لحالة تحتاج تدخّل سريع"
+msgstr "तुरंत कार्रवाई की जरूरत वाली स्थिति के लिए फौरन रिपोर्ट"
+
+#: app/templates/worker_home.html:49
 msgid "تسجيل ملاحظة أو بلاغ عن حالة حيوان"
 msgstr "जानवर की स्थिति के बारे में नोट या रिपोर्ट दर्ज करें"
 
-#: app/templates/worker_home.html:47
+#: app/templates/worker_home.html:53
 msgid "الإبلاغ عن حيوان يحتاج عزل"
 msgstr "ऐसे जानवर की रिपोर्ट करें जिसे अलग करने की आवश्यकता है"
 
-#: app/templates/worker_home.html:51
+#: app/templates/worker_home.html:57
 msgid "تسجيل ملاحظة عن التغذية اليومية"
 msgstr "दैनिक आहार के बारे में नोट दर्ज करें"
 
-#: app/templates/worker_home.html:55
+#: app/templates/worker_home.html:61
 msgid "الإبلاغ عن بيضة جديدة أو ملاحظة حضانة"
 msgstr "नए अंडे या इनक्यूबेशन नोट की रिपोर्ट करें"
 
-#: app/templates/worker_home.html:59
+#: app/templates/worker_home.html:65
 msgid "مهامي اليوم"
 msgstr "आज के मेरे कार्य"
 
-#: app/templates/worker_home.html:59
+#: app/templates/worker_home.html:65
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr "अपने सौंपे गए कार्य देखें और पूरे करें"
 

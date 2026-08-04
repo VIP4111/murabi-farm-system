@@ -301,6 +301,18 @@
     .timeline-body b{display:block; font-size:13.5px;}
     .timeline-body small{display:block; color:var(--muted); margin-top:2px;}
     .timeline-date{flex:0 0 auto; color:var(--muted); font-size:12px; white-space:nowrap;}
+
+    /* زر طوارئ عائم (بند إضافي 121) — ثابت بكل الشاشات، يفتح مباشرة
+       بلاغ "حالة طارئة" (نفس مسار worker_quick_report الموجود، فئة
+       جديدة بس) بدون المرور بالقائمة الجانبية — أهم لحظة لسهولة
+       الاستخدام هي وقت الطوارئ الفعلي، مو الاستخدام العادي. */
+    .emergency-fab{
+      position:fixed; bottom:22px; left:18px; z-index:80;
+      width:60px; height:60px; border-radius:50%; background:var(--danger);
+      color:#fff; display:flex; align-items:center; justify-content:center;
+      font-size:26px; text-decoration:none; box-shadow:0 10px 26px rgba(192,57,43,.45);
+    }
+    .emergency-fab:active{box-shadow:0 4px 12px rgba(192,57,43,.4); transform:translateY(1px);}
   </style>
   <script>
     function showTab(name){
@@ -466,5 +478,9 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
+  {% if current_user.is_authenticated and current_user.has_permission('reports.submit')
+        and not (request.endpoint == 'team.worker_quick_report' and request.view_args.get('category') == 'emergency') %}
+  <a class="emergency-fab" href="{{ url_for('team.worker_quick_report', category='emergency') }}" title="{{ _('حالة طارئة') }}">🚨</a>
+  {% endif %}
 </body>
 </html>

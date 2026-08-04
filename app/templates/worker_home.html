@@ -18,6 +18,8 @@
   .worker-btn small{display:block; color:var(--muted); font-size:12.5px; margin-top:3px;}
   .worker-btn.tasks{background:linear-gradient(135deg,var(--primary),#8b633d); color:#fff; border-color:transparent;}
   .worker-btn.tasks small{color:rgba(255,255,255,.8);}
+  .worker-btn.emergency{background:var(--danger); color:#fff; border-color:transparent;}
+  .worker-btn.emergency small{color:rgba(255,255,255,.85);}
 </style>
 
 <div class="card">
@@ -38,6 +40,10 @@
 
 <div class="card">
   <div class="worker-grid">
+    <a class="worker-btn emergency" href="{{ url_for('team.worker_quick_report', category='emergency') }}" style="grid-column:1 / -1;">
+      <span class="emoji">🚨</span>
+      <span><b>{{ _('حالة طارئة') }}</b><small>{{ _('بلاغ فوري لحالة تحتاج تدخّل سريع') }}</small></span>
+    </a>
     <a class="worker-btn" href="{{ url_for('team.worker_quick_report', category='health') }}">
       <span class="emoji">🩺</span>
       <span><b>{{ _('فحص / حالة صحية') }}</b><small>{{ _('تسجيل ملاحظة أو بلاغ عن حالة حيوان') }}</small></span>

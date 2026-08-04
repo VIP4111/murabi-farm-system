@@ -27,6 +27,10 @@ from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTa
 # ثابتة بغض النظر عن لغة العامل اللي رفع البلاغ (تجنّباً لتضارب قيم
 # بلغات مختلفة بنفس الحقل).
 WORKER_REPORT_CATEGORIES = {
+    "emergency": {
+        "label": _l("حالة طارئة"), "icon": "🚨", "report_type": "حالة طارئة",
+        "task_types": [], "species_filter": None,
+    },
     "health": {
         "label": _l("فحص / حالة صحية"), "icon": "🩺", "report_type": "حالة صحية",
         "task_types": ["isolation_check", "doctor_review"], "species_filter": None,
