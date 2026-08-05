@@ -6,19 +6,22 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>التاريخ</label><input name="date" type="date" required>
     <label>النوع</label>
-    <select name="operation_type" required>
+    <select name="operation_type" id="operationTypeSelect" required>
       <option value="sale">بيع</option>
       <option value="purchase">شراء</option>
       <option value="expense">مصروف</option>
       <option value="debt_in">دعم خارجي (دين على الحلال)</option>
       <option value="debt_repayment">سداد دين</option>
     </select>
+    <div id="debtInHint">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
       "دعم خارجي" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين
       عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم
       الجهة بحقل "البند" عشان تقدر تتابع الدين لكل جهة.
     </p>
+    </div>
     <label>التصنيف</label><input name="category" placeholder="أعلاف / أدوية / رواتب ...">
+    <div id="indirectExpenseGroup">
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
       <input type="checkbox" name="is_indirect" value="1" style="width:auto; margin:0;">
       مصروف غير مباشر (إيجار/صيانة/رواتب — يخص القطيع كله مو حيوان محدد)
@@ -28,6 +31,7 @@
       بتقرير "تكلفة الرأس الشهرية/السنوية" وكنصيب فردي بصفحة تفاصيل كل
       رأس.
     </p>
+    </div>
     <label>البند</label><input name="item">
     <label>الوصف</label><textarea name="description" rows="2"></textarea>
     <label>المبلغ</label><input name="amount" type="number" step="0.01" required>
@@ -51,4 +55,20 @@
     <button class="btn" type="submit">حفظ</button>
   </form>
 </div>
+<script>
+(function(){
+  // إخفاء الحقول اللي ما تنطبق على النوع المختار (بند إضافي 124) —
+  // يقلّل زحمة الفورم لأكثر حالة استخدام شيوعاً (بيع)، بدل إظهار كل
+  // الحقول دايماً بغض النظر عن النوع.
+  var select = document.getElementById('operationTypeSelect');
+  var debtHint = document.getElementById('debtInHint');
+  var indirectGroup = document.getElementById('indirectExpenseGroup');
+  function sync(){
+    debtHint.style.display = (select.value === 'debt_in') ? 'block' : 'none';
+    indirectGroup.style.display = (select.value === 'expense' || select.value === 'purchase') ? 'block' : 'none';
+  }
+  select.addEventListener('change', sync);
+  sync();
+})();
+</script>
 {% endblock %}

@@ -148,6 +148,10 @@
     .card h3{margin:0 0 4px;}
 
     table{width:100%; border-collapse:separate; border-spacing:0 8px; font-size:13.5px;}
+    /* غلاف تمرير أفقي لأي جدول عريض على الجوال (بند إضافي 124) —
+       يمنع تمدّد الصفحة كلها أفقياً (تجربة سيئة على اللمس)، الجدول
+       نفسه يتمرّر لحاله داخل حدوده. */
+    .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
     th{text-align:right; color:var(--muted); font-size:12px; padding:4px 9px; font-weight:700;}
     td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px 9px; vertical-align:middle;}
     td:first-child{border-right:1px solid var(--line); border-radius:0 14px 14px 0;}

@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <div style="color:#888; font-size:13px;">إجمالي تكاليف الصحة والعلاج</div>
-  <div style="font-size:22px; font-weight:bold; color:#a32d2d;">{{ "%.2f"|format(total) }}</div>
+  <div class="stat" style="max-width:220px;">
+    <b style="color:#a32d2d;">{{ "%.2f"|format(total) }}</b>
+    <span>إجمالي تكاليف الصحة والعلاج</span>
+  </div>
 </div>
 
 <div class="card">
   <h2>تكاليف الزيارات البيطرية</h2>
+  <div class="table-scroll" style="margin-top:10px;">
   <table>
     <tr><th>التاريخ</th><th>الحيوان</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th></tr>
     {% for v in visits %}
@@ -21,10 +24,12 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد زيارات مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 
 <div class="card">
   <h2>تكاليف علاج الأمراض</h2>
+  <div class="table-scroll" style="margin-top:10px;">
   <table>
     <tr><th>التاريخ</th><th>الحيوان</th><th>المرض</th><th>الحالة</th><th>التكلفة</th></tr>
     {% for d in diseases %}
@@ -39,5 +44,6 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد أمراض مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}
