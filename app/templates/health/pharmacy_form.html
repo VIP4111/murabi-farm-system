@@ -8,6 +8,7 @@
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
+    <div class="form-section-title">بيانات الدواء الأساسية</div>
     <label>فئة الدواء</label>
     <select name="medicine_class" id="medicineClassSelect">
       <option value="">-</option>
@@ -47,6 +48,7 @@
     <textarea name="standard_dosage_note" rows="2" placeholder="مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة">{{ item.standard_dosage_note if item else '' }}</textarea>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً.</p>
 
+    <div class="form-section-title">الصلاحية والتخزين</div>
     <label>تاريخ انتهاء الصلاحية (اختياري)</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
     <p id="expiryBadge" style="font-size:12px; margin:-6px 0 10px; font-weight:bold;"></p>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.</p>
@@ -93,6 +95,7 @@
       <button type="button" id="addDoseRowBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ إضافة عمر آخر</button>
     </div>
 
+    <div class="form-section-title">المخزون والسعر</div>
     <label>الكمية المتوفرة</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
     <label>الوحدة</label><input name="unit" placeholder="مل / حبة / علبة" value="{{ item.unit if item else '' }}">
     <label>الحد الأدنى للتنبيه (بند إضافي، 2026-07-24)</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">
@@ -100,6 +103,7 @@
     <label>سعر الوحدة (اختياري)</label><input name="unit_price" type="number" step="0.01" placeholder="مثال: 2.5" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق.</p>
 
+    <div class="form-section-title">أمان إضافي وملاحظات</div>
     <label style="font-size:13px;"><input type="checkbox" name="contains_high_copper" value="1" {{ 'checked' if item and item.contains_high_copper }} style="width:auto; margin-left:6px;"> يحتوي نحاساً مرتفعاً</label>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته "نعيمي" (بند إضافي 51) — بلا خيار تجاوز.</p>
 

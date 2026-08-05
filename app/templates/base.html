@@ -258,6 +258,16 @@
     textarea{min-height:80px; resize:vertical;}
     label{display:block; font-weight:800; margin:11px 0 6px; font-size:13px; color:#4b3420;}
 
+    /* عنوان قسم داخل فورم طويل (بند إضافي 125) — يقسّم الفورم بصرياً
+       لمجموعات منطقية (بيانات أساسية، مخزون، أمان...) بدل تدفّق مسطّح
+       طويل بلا فواصل. خط علوي رفيع + نص صغير مرتفع، نفس روح
+       `.drawer-group-title` الموجودة أصلاً بالقائمة الجانبية. */
+    .form-section-title{
+      font-size:11.5px; font-weight:900; color:var(--muted); letter-spacing:.3px;
+      text-transform:uppercase; margin:22px 0 4px; padding-top:14px; border-top:1px solid var(--line);
+    }
+    .form-section-title:first-child{margin-top:0; padding-top:0; border-top:none;}
+
     /* بند إضافي 66، 2026-07-28 — حقول التاريخ الأصلية (input type=date)
        ترث اتجاه RTL من <html dir="rtl">، فيظهر ترتيب يوم/شهر/سنة داخل
        الحقل نفسه معكوساً بصرياً (متصفح Chrome/Safari تحديداً). فرض
