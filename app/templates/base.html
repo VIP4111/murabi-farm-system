@@ -120,10 +120,25 @@
       box-shadow:0 8px 22px rgba(70,45,25,.08); color:var(--text); text-decoration:none;
       font-weight:700; font-size:13px; display:flex; flex-direction:column;
       align-items:center; justify-content:center; gap:8px; text-align:center;
+      transition:transform .08s ease, box-shadow .08s ease;
     }
+    .quick a:active{transform:translateY(1px) scale(.97); box-shadow:0 3px 10px rgba(70,45,25,.10);}
     .quick .emoji{font-size:26px;}
 
+    /* مجموعات مصنَّفة داخل شبكة الإجراءات السريعة (بند إضافي 123 —
+       تبسيط لوحات صاحب الحلال/الدكتور/الممرض/المحاسب) — عنوان صغير
+       فوق كل مجموعة بدل شبكة واحدة مسطّحة طويلة، يخفّف الازدحام
+       البصري ويسهّل المسح البصري السريع للفئة المطلوبة. */
+    .quick-group{margin-top:18px;}
+    .quick-group:first-child{margin-top:0;}
+    .quick-group-title{color:var(--muted); font-size:12px; font-weight:900; margin:0 2px 10px;}
+
+
     main{max-width:1000px; margin:20px auto; padding:0 20px 60px;}
+    /* هامش سفلي إضافي على الجوال (بند إضافي 123) — زر الطوارئ العائم
+       ثابت بأسفل الشاشة، وبدون هذا الهامش يتراكب بصرياً مع آخر صف
+       بشبكة الإجراءات السريعة على الشاشات الضيقة. */
+    @media(max-width:600px){main{padding-bottom:100px;}}
 
     .card{
       background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
@@ -187,7 +202,10 @@
       display:inline-block; border:0; border-radius:16px; padding:11px 16px;
       font-weight:800; cursor:pointer; background:var(--primary); color:#fff;
       box-shadow:0 8px 20px rgba(111,78,47,.18); text-decoration:none; font-size:14px;
+      transition:transform .08s ease, box-shadow .08s ease;
     }
+    /* تأكيد لمسي بسيط عند الضغط (بند إضافي 123) — بدون أي JS إضافي. */
+    .btn:active{transform:translateY(1px) scale(.98); box-shadow:0 3px 10px rgba(111,78,47,.18);}
     .btn.light{background:#fff; color:var(--primary); border:1px solid var(--line); box-shadow:none;}
     .btn.danger{background:var(--danger);}
     .btn.green{background:var(--green);}

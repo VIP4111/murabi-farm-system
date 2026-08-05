@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-04 19:45+0300\n"
+"POT-Creation-Date: 2026-08-04 23:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -230,7 +230,7 @@ msgstr "पृथक्करण समाप्ति की पुष्टि
 msgid "تذكير انتهاء فترة سحب الدواء"
 msgstr "प्रतीक्षा अवधि समाप्ति अनुस्मारक"
 
-#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:484
+#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:498
 #: app/templates/worker_home.html:55
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -267,13 +267,13 @@ msgstr "रखरखाव"
 msgid "أخرى"
 msgstr "अन्य"
 
-#: app/auth/routes.py:40
+#: app/auth/routes.py:45
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد 15 دقيقة."
 msgstr ""
 "बार-बार असफल लॉगिन प्रयासों के कारण यह खाता अस्थायी रूप से लॉक है — 15 "
 "मिनट बाद फिर से प्रयास करें।"
 
-#: app/auth/routes.py:69
+#: app/auth/routes.py:74
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "फ़ोन नंबर या पासवर्ड गलत है"
 
@@ -386,7 +386,7 @@ msgid "تنبيهاتي"
 msgstr "मेरी सूचनाएं"
 
 #: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:52
-#: app/templates/base.html:354
+#: app/templates/base.html:368
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
@@ -423,13 +423,13 @@ msgstr ""
 "टीकाकरण के लिए अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से "
 "आती है"
 
-#: app/templates/alerts_list.html:15
+#: app/templates/alerts_list.html:15 app/templates/home.html:107
 msgid "الإعدادات"
 msgstr "सेटिंग्स"
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
-#: app/templates/today.html:24 app/templates/today.html:66
-#: app/templates/worker_home.html:38
+#: app/templates/home.html:34 app/templates/today.html:24
+#: app/templates/today.html:66 app/templates/worker_home.html:38
 msgid "فتح"
 msgstr "खोलें"
 
@@ -437,173 +437,239 @@ msgstr "खोलें"
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "अभी कोई सूचना नहीं।"
 
-#: app/templates/base.html:334
+#: app/templates/base.html:348
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:351 app/templates/base.html:352
+#: app/templates/base.html:365 app/templates/base.html:366
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
 msgid "الرئيسية"
 msgstr "मुख्य पृष्ठ"
 
-#: app/templates/base.html:353 app/templates/today.html:3
-#: app/templates/today.html:6 app/templates/worker_home.html:35
+#: app/templates/base.html:367 app/templates/home.html:31
+#: app/templates/today.html:3 app/templates/today.html:6
+#: app/templates/worker_home.html:35
 msgid "صفحة اليوم"
 msgstr "आज का पेज"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:355
+#: app/templates/base.html:369 app/templates/home.html:104
 msgid "المساعد الذكي"
 msgstr "स्मार्ट सहायक"
 
-#: app/templates/base.html:360
+#: app/templates/base.html:374
 msgid "الحلال"
 msgstr "पशुधन"
 
-#: app/templates/base.html:361
+#: app/templates/base.html:375 app/templates/home.html:48
 msgid "الحيوانات"
 msgstr "जानवर"
 
-#: app/templates/base.html:362
+#: app/templates/base.html:376
 msgid "دفعات استقبال جديدة"
 msgstr "नए इनटेक बैच"
 
-#: app/templates/base.html:363
+#: app/templates/base.html:377
 msgid "الحظائر"
 msgstr "बाड़े"
 
-#: app/templates/base.html:365
+#: app/templates/base.html:379 app/templates/home.html:72
 msgid "التقريع"
 msgstr "प्रजनन"
 
-#: app/templates/base.html:366
+#: app/templates/base.html:380 app/templates/home.html:73
 msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
 
-#: app/templates/base.html:367
+#: app/templates/base.html:381 app/templates/home.html:74
 msgid "فحص السونار"
 msgstr "सोनार जांच"
 
-#: app/templates/base.html:368
+#: app/templates/base.html:382
 msgid "برامج التزامن التناسلي (متقدّم)"
 msgstr "प्रजनन चक्र सिंक्रोनाइज़ेशन प्रोग्राम (उन्नत)"
 
-#: app/templates/base.html:370
+#: app/templates/base.html:384
 msgid "النعام (بيض/تفقيس)"
 msgstr "शुतुरमुर्ग (अंडे/हैचिंग)"
 
-#: app/templates/base.html:376
+#: app/templates/base.html:390 app/templates/home.html:58
 msgid "الصحة"
 msgstr "स्वास्थ्य"
 
-#: app/templates/base.html:377
+#: app/templates/base.html:391 app/templates/home.html:63
 msgid "الصيدلية"
 msgstr "फार्मेसी"
 
-#: app/templates/base.html:378
+#: app/templates/base.html:392
 msgid "الزيارات البيطرية"
 msgstr "पशु चिकित्सक यात्राएं"
 
-#: app/templates/base.html:379
+#: app/templates/base.html:393 app/templates/home.html:62
 msgid "الأمراض"
 msgstr "बीमारियाँ"
 
-#: app/templates/base.html:380
+#: app/templates/base.html:394 app/templates/home.html:61
 msgid "التطعيمات"
 msgstr "टीकाकरण"
 
-#: app/templates/base.html:381
+#: app/templates/base.html:395
 msgid "تقويم التحصينات"
 msgstr "टीकाकरण कैलेंडर"
 
-#: app/templates/base.html:383
+#: app/templates/base.html:397
 msgid "المساعد التشخيصي"
 msgstr "निदान सहायक"
 
-#: app/templates/base.html:385
+#: app/templates/base.html:399
 msgid "دليل الحقن الميداني"
 msgstr "फील्ड इंजेक्शन गाइड"
 
-#: app/templates/base.html:386
+#: app/templates/base.html:400
 msgid "بروتوكولات العلاج"
 msgstr "उपचार प्रोटोकॉल"
 
-#: app/templates/base.html:392
+#: app/templates/base.html:406 app/templates/home.html:85
 msgid "العلف"
 msgstr "चारा"
 
-#: app/templates/base.html:393
+#: app/templates/base.html:407
 msgid "حاسبة العلف"
 msgstr "चारा कैलकुलेटर"
 
-#: app/templates/base.html:394
+#: app/templates/base.html:408
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
 
-#: app/templates/base.html:395
+#: app/templates/base.html:409
 msgid "موازِن العليقة التلقائي"
 msgstr "स्वचालित राशन संतुलक"
 
-#: app/templates/base.html:396
+#: app/templates/base.html:410
 msgid "المستودعات"
 msgstr "गोदाम"
 
-#: app/templates/base.html:402
+#: app/templates/base.html:416
 msgid "المعدات"
 msgstr "उपकरण"
 
-#: app/templates/base.html:403
+#: app/templates/base.html:417
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
-#: app/templates/base.html:409
+#: app/templates/base.html:423
 msgid "المناخ"
 msgstr "जलवायु"
 
-#: app/templates/base.html:410
+#: app/templates/base.html:424
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "जलवायु और गर्मी तनाव रडार"
 
-#: app/templates/base.html:415
+#: app/templates/base.html:429
 msgid "الفريق"
 msgstr "टीम"
 
-#: app/templates/base.html:416 app/templates/team/tasks_list.html:6
+#: app/templates/base.html:430 app/templates/home.html:46
+#: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "कार्य"
 
-#: app/templates/base.html:417 app/templates/team/reports_list.html:6
+#: app/templates/base.html:431 app/templates/home.html:45
+#: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:418
+#: app/templates/base.html:432
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:423 app/templates/base.html:424
+#: app/templates/base.html:437 app/templates/base.html:438
+#: app/templates/home.html:88
 msgid "المالية"
 msgstr "वित्त"
 
-#: app/templates/base.html:425
+#: app/templates/base.html:439 app/templates/home.html:90
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:431
+#: app/templates/base.html:445 app/templates/home.html:93
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:432
+#: app/templates/base.html:446
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
-#: app/templates/base.html:444
+#: app/templates/base.html:458
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:457
+#: app/templates/base.html:471
 msgid "خروج"
 msgstr "लॉग आउट"
+
+#: app/templates/home.html:4
+msgid "مرحباً،"
+msgstr "स्वागत है,"
+
+#: app/templates/home.html:5
+msgid "مسمّاك الوظيفي:"
+msgstr "आपका पद:"
+
+#: app/templates/home.html:11
+msgid "خطوات تجهيز النظام لأول مرة"
+msgstr "पहली बार सिस्टम सेटअप के चरण"
+
+#: app/templates/home.html:14
+msgid "تجاهل، ما أحتاجها"
+msgstr "छोड़ें, मुझे जरूरत नहीं"
+
+#: app/templates/home.html:17
+msgid ""
+"هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس "
+"الأزرار السريعة تحت بدون ما ترجع لهنا."
+msgstr "यह बस एक त्वरित गाइड है — हर चरण खुद पूरा होते ही चेक हो जाता है, और आपको यहां वापस आए बिना नीचे वही त्वरित बटन इस्तेमाल कर सकते हैं।"
+
+#: app/templates/home.html:21 app/templates/team/report_form.html:19
+msgid "إضافة"
+msgstr "जोड़ें"
+
+#: app/templates/home.html:32 app/templates/worker_home.html:36
+msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
+msgstr "आपके कार्य, सूचनाएं, और खुली रिपोर्टें एक स्क्रीन पर"
+
+#: app/templates/home.html:40
+msgid "إجراءات سريعة"
+msgstr "त्वरित कार्रवाइयाँ"
+
+#: app/templates/home.html:43
+msgid "الأكثر استخدامًا"
+msgstr "सबसे ज्यादा उपयोग होने वाले"
+
+#: app/templates/home.html:51
+msgid "حيوان جديد"
+msgstr "नया जानवर"
+
+#: app/templates/home.html:60
+msgid "البيطرة"
+msgstr "पशु चिकित्सा"
+
+#: app/templates/home.html:70
+msgid "التكاثر"
+msgstr "प्रजनन"
+
+#: app/templates/home.html:75
+msgid "برامج التزامن"
+msgstr "सिंक कार्यक्रम"
+
+#: app/templates/home.html:82
+msgid "العلف والمالية والتقارير"
+msgstr "चारा, वित्त और रिपोर्टें"
+
+#: app/templates/home.html:101
+msgid "النظام"
+msgstr "सिस्टम"
 
 #: app/templates/login.html:13
 msgid "تسجيل الدخول"
@@ -621,11 +687,19 @@ msgstr "पासवर्ड"
 msgid "دخول"
 msgstr "लॉग इन"
 
+#: app/templates/login.html:26
+msgid ""
+"وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع "
+"يستخدمه فريقك فعلياً."
+msgstr "टेस्ट मोड चालू है — बिना पासवर्ड लॉगिन। अगर आपकी टीम इस साइट का वास्तव में उपयोग कर रही है तो इसे सेटिंग्स से बंद करें।"
+
 #: app/templates/today.html:7
 msgid ""
 "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما "
 "تتنقّل بين شاشات."
-msgstr "आपके खुले कार्य, आपकी बाड़ों की सूचनाएं, और आपकी खुली रिपोर्टें — सब यहां, स्क्रीनों के बीच जाने की जगह।"
+msgstr ""
+"आपके खुले कार्य, आपकी बाड़ों की सूचनाएं, और आपकी खुली रिपोर्टें — सब "
+"यहां, स्क्रीनों के बीच जाने की जगह।"
 
 #: app/templates/today.html:12
 msgid "مهامي المفتوحة"
@@ -654,10 +728,6 @@ msgstr "स्वागत है"
 #: app/templates/worker_home.html:28
 msgid "اختر الإجراء اللي تبي تسجّله"
 msgstr "वह कार्रवाई चुनें जिसे आप दर्ज करना चाहते हैं"
-
-#: app/templates/worker_home.html:36
-msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
-msgstr "आपके कार्य, सूचनाएं, और खुली रिपोर्टें एक स्क्रीन पर"
 
 #: app/templates/worker_home.html:47
 msgid "تنبيهات حظائرك اللي أنت مسؤول عنها بس."
@@ -1296,10 +1366,6 @@ msgstr "रिपोर्ट प्रकार"
 #: app/templates/team/report_form.html:19
 msgid "إضافة نوع بلاغ جديد"
 msgstr "नया रिपोर्ट प्रकार जोड़ें"
-
-#: app/templates/team/report_form.html:19
-msgid "إضافة"
-msgstr "जोड़ें"
 
 #: app/templates/team/report_form.html:21
 msgid "اكتب نوع البلاغ الجديد هنا"

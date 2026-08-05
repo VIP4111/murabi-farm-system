@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-04 19:45+0300\n"
+"POT-Creation-Date: 2026-08-04 23:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -230,7 +230,7 @@ msgstr "የመለያየት ማብቂያ ማረጋገጫ"
 msgid "تذكير انتهاء فترة سحب الدواء"
 msgstr "የመታቀቢያ ጊዜ ማብቂያ ማስታወሻ"
 
-#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:484
+#: app/__init__.py:187 app/team/routes.py:31 app/templates/base.html:498
 #: app/templates/worker_home.html:55
 msgid "حالة طارئة"
 msgstr "አስቸኳይ ሁኔታ"
@@ -267,11 +267,11 @@ msgstr "ጥገና"
 msgid "أخرى"
 msgstr "ሌላ"
 
-#: app/auth/routes.py:40
+#: app/auth/routes.py:45
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد 15 دقيقة."
 msgstr "በተደጋጋሚ ያልተሳኩ የመግቢያ ሙከራዎች ምክንያት ይህ መለያ ለጊዜው ተቆልፏል — ከ15 ደቂቃ በኋላ እንደገና ይሞክሩ።"
 
-#: app/auth/routes.py:69
+#: app/auth/routes.py:74
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "የስልክ ቁጥር ወይም የይለፍ ቃል ትክክል አይደለም"
 
@@ -379,7 +379,7 @@ msgid "تنبيهاتي"
 msgstr "ማንቂያዎቼ"
 
 #: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:52
-#: app/templates/base.html:354
+#: app/templates/base.html:368
 msgid "التنبيهات"
 msgstr "ማንቂያዎች"
 
@@ -412,13 +412,13 @@ msgstr ""
 "እንስሳት፣ በመጠባበቅ ላይ ያሉ ሪፖርቶች፣ አሁን ለሽያጭ ዝግጁ የሆኑ እንስሳት፣ ኃላፊ ሠራተኛ የሌላቸው በረቶች፣ "
 "እና ለተያዙ ክትባቶች የሚጠበቅ የክምችት እጥረት (የክትባት ቀን መቁጠሪያ)። የጊዜ መስኮቱ ከ"
 
-#: app/templates/alerts_list.html:15
+#: app/templates/alerts_list.html:15 app/templates/home.html:107
 msgid "الإعدادات"
 msgstr "ቅንብሮች"
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
-#: app/templates/today.html:24 app/templates/today.html:66
-#: app/templates/worker_home.html:38
+#: app/templates/home.html:34 app/templates/today.html:24
+#: app/templates/today.html:66 app/templates/worker_home.html:38
 msgid "فتح"
 msgstr "ክፈት"
 
@@ -426,173 +426,239 @@ msgstr "ክፈት"
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "አሁን ምንም ማንቂያ የለም — ሁሉም ነገር ደህና ነው።"
 
-#: app/templates/base.html:334
+#: app/templates/base.html:348
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:351 app/templates/base.html:352
+#: app/templates/base.html:365 app/templates/base.html:366
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
 msgid "الرئيسية"
 msgstr "መነሻ"
 
-#: app/templates/base.html:353 app/templates/today.html:3
-#: app/templates/today.html:6 app/templates/worker_home.html:35
+#: app/templates/base.html:367 app/templates/home.html:31
+#: app/templates/today.html:3 app/templates/today.html:6
+#: app/templates/worker_home.html:35
 msgid "صفحة اليوم"
 msgstr "የዛሬ ገጽ"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:355
+#: app/templates/base.html:369 app/templates/home.html:104
 msgid "المساعد الذكي"
 msgstr "ብልህ ረዳት"
 
-#: app/templates/base.html:360
+#: app/templates/base.html:374
 msgid "الحلال"
 msgstr "እንስሳት"
 
-#: app/templates/base.html:361
+#: app/templates/base.html:375 app/templates/home.html:48
 msgid "الحيوانات"
 msgstr "እንስሳት"
 
-#: app/templates/base.html:362
+#: app/templates/base.html:376
 msgid "دفعات استقبال جديدة"
 msgstr "አዲስ የመግቢያ ጭነቶች"
 
-#: app/templates/base.html:363
+#: app/templates/base.html:377
 msgid "الحظائر"
 msgstr "በረቶች"
 
-#: app/templates/base.html:365
+#: app/templates/base.html:379 app/templates/home.html:72
 msgid "التقريع"
 msgstr "ማዳቀል"
 
-#: app/templates/base.html:366
+#: app/templates/base.html:380 app/templates/home.html:73
 msgid "تشخيص الحمل"
 msgstr "የእርግዝና ምርመራ"
 
-#: app/templates/base.html:367
+#: app/templates/base.html:381 app/templates/home.html:74
 msgid "فحص السونار"
 msgstr "የአልትራሳውንድ ምርመራ"
 
-#: app/templates/base.html:368
+#: app/templates/base.html:382
 msgid "برامج التزامن التناسلي (متقدّم)"
 msgstr "የመራቢያ ዑደት ማመሳሰያ ፕሮግራሞች (የላቀ)"
 
-#: app/templates/base.html:370
+#: app/templates/base.html:384
 msgid "النعام (بيض/تفقيس)"
 msgstr "ሰጎን (እንቁላል/ማቀፊያ)"
 
-#: app/templates/base.html:376
+#: app/templates/base.html:390 app/templates/home.html:58
 msgid "الصحة"
 msgstr "ጤና"
 
-#: app/templates/base.html:377
+#: app/templates/base.html:391 app/templates/home.html:63
 msgid "الصيدلية"
 msgstr "መድሃኒት ቤት"
 
-#: app/templates/base.html:378
+#: app/templates/base.html:392
 msgid "الزيارات البيطرية"
 msgstr "የእንስሳት ሐኪም ጉብኝቶች"
 
-#: app/templates/base.html:379
+#: app/templates/base.html:393 app/templates/home.html:62
 msgid "الأمراض"
 msgstr "በሽታዎች"
 
-#: app/templates/base.html:380
+#: app/templates/base.html:394 app/templates/home.html:61
 msgid "التطعيمات"
 msgstr "ክትባቶች"
 
-#: app/templates/base.html:381
+#: app/templates/base.html:395
 msgid "تقويم التحصينات"
 msgstr "የክትባት ቀን መቁጠሪያ"
 
-#: app/templates/base.html:383
+#: app/templates/base.html:397
 msgid "المساعد التشخيصي"
 msgstr "የምርመራ ረዳት"
 
-#: app/templates/base.html:385
+#: app/templates/base.html:399
 msgid "دليل الحقن الميداني"
 msgstr "የመስክ መርፌ መመሪያ"
 
-#: app/templates/base.html:386
+#: app/templates/base.html:400
 msgid "بروتوكولات العلاج"
 msgstr "የሕክምና ፕሮቶኮሎች"
 
-#: app/templates/base.html:392
+#: app/templates/base.html:406 app/templates/home.html:85
 msgid "العلف"
 msgstr "መኖ"
 
-#: app/templates/base.html:393
+#: app/templates/base.html:407
 msgid "حاسبة العلف"
 msgstr "የመኖ ማስያ"
 
-#: app/templates/base.html:394
+#: app/templates/base.html:408
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "የመኖ ልወጣ መጠን (FCR)"
 
-#: app/templates/base.html:395
+#: app/templates/base.html:409
 msgid "موازِن العليقة التلقائي"
 msgstr "ራስ-ሰር የመኖ ማመጣጠኛ"
 
-#: app/templates/base.html:396
+#: app/templates/base.html:410
 msgid "المستودعات"
 msgstr "መጋዘኖች"
 
-#: app/templates/base.html:402
+#: app/templates/base.html:416
 msgid "المعدات"
 msgstr "መሣሪያዎች"
 
-#: app/templates/base.html:403
+#: app/templates/base.html:417
 msgid "مستودع المعدات"
 msgstr "የመሣሪያ መጋዘን"
 
-#: app/templates/base.html:409
+#: app/templates/base.html:423
 msgid "المناخ"
 msgstr "የአየር ንብረት"
 
-#: app/templates/base.html:410
+#: app/templates/base.html:424
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "የአየር ንብረት እና የሙቀት ጭንቀት ራዳር"
 
-#: app/templates/base.html:415
+#: app/templates/base.html:429
 msgid "الفريق"
 msgstr "ቡድን"
 
-#: app/templates/base.html:416 app/templates/team/tasks_list.html:6
+#: app/templates/base.html:430 app/templates/home.html:46
+#: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "ተግባራት"
 
-#: app/templates/base.html:417 app/templates/team/reports_list.html:6
+#: app/templates/base.html:431 app/templates/home.html:45
+#: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "ሪፖርቶች"
 
-#: app/templates/base.html:418
+#: app/templates/base.html:432
 msgid "أعضاء الفريق"
 msgstr "የቡድን አባላት"
 
-#: app/templates/base.html:423 app/templates/base.html:424
+#: app/templates/base.html:437 app/templates/base.html:438
+#: app/templates/home.html:88
 msgid "المالية"
 msgstr "ፋይናንስ"
 
-#: app/templates/base.html:425
+#: app/templates/base.html:439 app/templates/home.html:90
 msgid "مالية الصحة"
 msgstr "የጤና ፋይናንስ"
 
-#: app/templates/base.html:431
+#: app/templates/base.html:445 app/templates/home.html:93
 msgid "التقارير"
 msgstr "ሪፖርቶች"
 
-#: app/templates/base.html:432
+#: app/templates/base.html:446
 msgid "التقارير التحليلية"
 msgstr "የትንተና ሪፖርቶች"
 
-#: app/templates/base.html:444
+#: app/templates/base.html:458
 msgid "اللغة"
 msgstr "ቋንቋ"
 
-#: app/templates/base.html:457
+#: app/templates/base.html:471
 msgid "خروج"
 msgstr "ውጣ"
+
+#: app/templates/home.html:4
+msgid "مرحباً،"
+msgstr "እንኳን ደህና መጣህ፣"
+
+#: app/templates/home.html:5
+msgid "مسمّاك الوظيفي:"
+msgstr "የስራ ማዕረግህ:"
+
+#: app/templates/home.html:11
+msgid "خطوات تجهيز النظام لأول مرة"
+msgstr "የመጀመሪያ ማዋቀሪያ ደረጃዎች"
+
+#: app/templates/home.html:14
+msgid "تجاهل، ما أحتاجها"
+msgstr "አልፍ፣ አላስፈልገኝም"
+
+#: app/templates/home.html:17
+msgid ""
+"هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس "
+"الأزرار السريعة تحت بدون ما ترجع لهنا."
+msgstr "ይህ ፈጣን መመሪያ ብቻ ነው — እያንዳንዱ ንጥል ስትሠራው በራሱ ይረጋገጣል፣ እና ወደዚህ ሳትመለስ ከታች ያሉትን ተመሳሳይ ፈጣን አዝራሮች መጠቀም ትችላለህ።"
+
+#: app/templates/home.html:21 app/templates/team/report_form.html:19
+msgid "إضافة"
+msgstr "ጨምር"
+
+#: app/templates/home.html:32 app/templates/worker_home.html:36
+msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
+msgstr "ተግባሮችህ፣ ማንቂያዎችህ፣ እና ክፍት ሪፖርቶችህ በአንድ ገጽ"
+
+#: app/templates/home.html:40
+msgid "إجراءات سريعة"
+msgstr "ፈጣን እርምጃዎች"
+
+#: app/templates/home.html:43
+msgid "الأكثر استخدامًا"
+msgstr "በብዛት ጥቅም ላይ የዋሉ"
+
+#: app/templates/home.html:51
+msgid "حيوان جديد"
+msgstr "አዲስ እንስሳ"
+
+#: app/templates/home.html:60
+msgid "البيطرة"
+msgstr "የእንስሳት ህክምና"
+
+#: app/templates/home.html:70
+msgid "التكاثر"
+msgstr "መራቢያ"
+
+#: app/templates/home.html:75
+msgid "برامج التزامن"
+msgstr "የማመሳሰያ ፕሮግራሞች"
+
+#: app/templates/home.html:82
+msgid "العلف والمالية والتقارير"
+msgstr "መኖ፣ ፋይናንስ እና ሪፖርቶች"
+
+#: app/templates/home.html:101
+msgid "النظام"
+msgstr "ስርዓት"
 
 #: app/templates/login.html:13
 msgid "تسجيل الدخول"
@@ -610,11 +676,19 @@ msgstr "የይለፍ ቃል"
 msgid "دخول"
 msgstr "ግባ"
 
+#: app/templates/login.html:26
+msgid ""
+"وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع "
+"يستخدمه فريقك فعلياً."
+msgstr "የሙከራ ሁነታ ነቅቷል — ያለ የይለፍ ቃል መግባት። ቡድንህ ይህን ጣቢያ በትክክል የሚጠቀም ከሆነ ከቅንብሮች አጥፋው።"
+
 #: app/templates/today.html:7
 msgid ""
 "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما "
 "تتنقّل بين شاشات."
-msgstr "ክፍት ተግባሮችህ፣ የበረትህ ማንቂያዎች፣ እና ክፍት ሪፖርቶችህ — ሁሉም እዚህ ነው፣ በስክሪኖች መካከል ከመዘዋወር ይልቅ።"
+msgstr ""
+"ክፍት ተግባሮችህ፣ የበረትህ ማንቂያዎች፣ እና ክፍት ሪፖርቶችህ — ሁሉም እዚህ ነው፣ በስክሪኖች መካከል ከመዘዋወር "
+"ይልቅ።"
 
 #: app/templates/today.html:12
 msgid "مهامي المفتوحة"
@@ -643,10 +717,6 @@ msgstr "እንኳን ደህና መጣህ"
 #: app/templates/worker_home.html:28
 msgid "اختر الإجراء اللي تبي تسجّله"
 msgstr "መመዝገብ የምትፈልገውን እርምጃ ምረጥ"
-
-#: app/templates/worker_home.html:36
-msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
-msgstr "ተግባሮችህ፣ ማንቂያዎችህ፣ እና ክፍት ሪፖርቶችህ በአንድ ገጽ"
 
 #: app/templates/worker_home.html:47
 msgid "تنبيهات حظائرك اللي أنت مسؤول عنها بس."
@@ -1281,10 +1351,6 @@ msgstr "የሪፖርት ዓይነት"
 #: app/templates/team/report_form.html:19
 msgid "إضافة نوع بلاغ جديد"
 msgstr "አዲስ የሪፖርት ዓይነት ጨምር"
-
-#: app/templates/team/report_form.html:19
-msgid "إضافة"
-msgstr "ጨምር"
 
 #: app/templates/team/report_form.html:21
 msgid "اكتب نوع البلاغ الجديد هنا"

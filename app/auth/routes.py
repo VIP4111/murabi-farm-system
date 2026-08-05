@@ -1,10 +1,15 @@
-from flask import render_template, redirect, url_for, request, flash, session, current_app
+from flask import render_template, redirect, url_for, request, flash, session, current_app, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_babel import gettext as _
 
 from app.auth import auth_bp
 from app.extensions import db
-from app.models import User
+from app.models import User, ServiceToggle
+
+
+def _quick_login_enabled() -> bool:
+    toggle = ServiceToggle.query.filter_by(key="dev_quick_login").first()
+    return bool(toggle and toggle.is_enabled)
 
 
 @auth_bp.route("/login/language", methods=["POST"])
@@ -68,7 +73,30 @@ def login():
 
         flash(_("رقم الجوال أو كلمة المرور غير صحيحة"), "error")
 
-    return render_template("login.html")
+    quick_login_accounts = []
+    if _quick_login_enabled():
+        quick_login_accounts = (User.query.filter_by(is_active_account=True)
+                                 .order_by(User.name).all())
+    return render_template("login.html", quick_login_accounts=quick_login_accounts)
+
+
+@auth_bp.route("/login/quick", methods=["POST"])
+def quick_login():
+    """دخول سريع بلا كلمة مرور (بند إضافي 123) — للتجربة/التطوير بس.
+    الفحص الحاسم هنا خادمي (`_quick_login_enabled()`)، مو مجرد إخفاء
+    الزر بالواجهة — حتى لو حد عرف الرابط مباشرة، يُرفض لو الخدمة موقوفة
+    من الإعدادات (موقوفة افتراضياً)."""
+    if current_user.is_authenticated:
+        return redirect(url_for("core.home"))
+    if not _quick_login_enabled():
+        abort(403)
+    user = User.query.get_or_404(request.form.get("user_id", type=int))
+    if not user.is_active_account:
+        abort(403)
+    user.register_successful_login()
+    db.session.commit()
+    login_user(user, remember=True)
+    return redirect(url_for("core.home"))
 
 
 @auth_bp.route("/logout")

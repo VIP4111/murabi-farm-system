@@ -20,4 +20,19 @@
     <button class="btn" style="width:100%;" type="submit">{{ _('دخول') }}</button>
   </form>
 </div>
+
+{% if quick_login_accounts %}
+<div class="card" style="max-width:340px; margin:-40px auto 60px; border:2px dashed var(--warning); background:#fff9ec;">
+  <div class="notice" style="margin:0 0 10px;">⚠️ {{ _('وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع يستخدمه فريقك فعلياً.') }}</div>
+  <div style="display:grid; gap:8px;">
+    {% for acc in quick_login_accounts %}
+    <form method="post" action="{{ url_for('auth.quick_login') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="user_id" value="{{ acc.id }}">
+      <button class="btn light" type="submit" style="width:100%; text-align:right;">{{ acc.name }} — {{ acc.role.display_name }}</button>
+    </form>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
 {% endblock %}

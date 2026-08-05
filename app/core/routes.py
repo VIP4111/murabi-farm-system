@@ -56,14 +56,12 @@ def home():
         my_alerts_count = len(alerts_service.get_alerts(barn_ids=_my_barn_ids(current_user)))
         return render_template("worker_home.html", user=current_user, my_alerts_count=my_alerts_count)
 
-    alerts_count = len(alerts_service.get_alerts()) if current_user.has_permission("animals.view") else 0
-
     setup_checklist_items = None
     if current_user.role.name == "owner" and not FarmSettings.get().setup_checklist_dismissed:
         setup_checklist_items = setup_checklist_service.get_setup_checklist_items()
 
     return render_template(
-        "home.html", user=current_user, alerts_count=alerts_count,
+        "home.html", user=current_user,
         setup_checklist_items=setup_checklist_items,
     )
 
