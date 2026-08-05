@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% from "_macros.html" import status_badge %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>برنامج #{{ p.id }} — {{ p.ewe.animal_no }}</h2>
-    <span class="badge {{ 'on' if p.status == 'active' else 'off' }}">{{ p.status|ar_status }}</span>
+    {{ status_badge(p.status|status_badge_state, p.status|ar_status) }}
   </div>
+  <div class="table-scroll">
   <table>
     <tr><td>البروتوكول</td><td>{{ p.protocol_name or '-' }}</td></tr>
     <tr><td>الطبيب المشرف</td><td>{{ p.supervising_doctor.name if p.supervising_doctor else '-' }}</td></tr>
@@ -14,6 +16,7 @@
     <tr><td>نافذة التقريع</td><td>{{ p.mating_window_start or '-' }} → {{ p.mating_window_end or '-' }}</td></tr>
     <tr><td>ملاحظات</td><td>{{ p.notes or '-' }}</td></tr>
   </table>
+  </div>
   {% if current_user.has_permission('repro.manage') and p.status == 'active' %}
   <form method="post" action="{{ url_for('repro.program_set_status', program_id=p.id) }}" style="display:flex; gap:8px; align-items:center; margin-top:10px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -31,6 +34,7 @@
     <h2>الأجهزة (إسفنجة / جهاز هرموني)</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_device_new', program_id=p.id) }}">+ جهاز جديد</a>{% endif %}
   </div>
+  <div class="table-scroll">
   <table>
     <tr><th>النوع</th><th>الاسم التجاري</th><th>الإدخال</th><th>الإزالة المخطّطة</th><th>الإزالة الفعلية</th><th>فقدان مبكر</th></tr>
     {% for d in p.devices %}
@@ -46,12 +50,13 @@
         </form>
         {% endif %}
       </td>
-      <td>{% if d.early_loss %}<span class="badge off">نعم</span>{% else %}-{% endif %}</td>
+      <td>{% if d.early_loss %}{{ status_badge('overdue', 'نعم') }}{% else %}-{% endif %}</td>
     </tr>
     {% else %}
     <tr><td colspan="6" style="color:#888;">لا يوجد أجهزة مسجّلة.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 
 <div class="card">
@@ -59,6 +64,7 @@
     <h2>الحقن الهرمونية</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_injection_new', program_id=p.id) }}">+ حقنة جديدة</a>{% endif %}
   </div>
+  <div class="table-scroll">
   <table>
     <tr><th>الهرمون</th><th>الجرعة</th><th>الطريق</th><th>مخطّط</th><th>فعلي</th><th>مين أعطاها</th></tr>
     {% for h in p.hormone_injections %}
@@ -74,6 +80,7 @@
     <tr><td colspan="6" style="color:#888;">لا يوجد حقن مسجّلة.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 
 <div class="card">
@@ -81,19 +88,21 @@
     <h2>محاولات التقريع</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_attempt_new', program_id=p.id) }}">+ محاولة جديدة</a>{% endif %}
   </div>
+  <div class="table-scroll">
   <table>
     <tr><th>التاريخ</th><th>الفحل</th><th>الحالة</th><th>لاحظها</th></tr>
     {% for a in p.attempts %}
     <tr>
       <td>{{ a.mating_date }}</td>
       <td>{{ a.ram.animal_no if a.ram else (a.ram_note or '-') }}</td>
-      <td>{{ a.confirmation_status|ar_status }}</td>
+      <td>{{ status_badge(a.confirmation_status|status_badge_state, a.confirmation_status|ar_status) }}</td>
       <td>{{ a.observed_by or '-' }}</td>
     </tr>
     {% else %}
     <tr><td colspan="4" style="color:#888;">لا يوجد محاولات مسجّلة.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 
 <div class="card">
@@ -101,17 +110,19 @@
     <h2>فحوصات السونار</h2>
     <a class="btn" href="{{ url_for('repro.sonar_new') }}">+ فحص جديد</a>
   </div>
+  <div class="table-scroll">
   <table>
     <tr><th>التاريخ</th><th>النتيجة</th><th>عدد الأجنّة</th><th>نبض</th></tr>
     {% for s in p.sonar_results %}
     <tr>
       <td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td>
       <td>{{ s.embryo_count or '-' }}</td>
-      <td>{% if s.heartbeat %}<span class="badge on">نعم</span>{% else %}-{% endif %}</td>
+      <td>{% if s.heartbeat %}{{ status_badge('active', 'نعم') }}{% else %}-{% endif %}</td>
     </tr>
     {% else %}
     <tr><td colspan="4" style="color:#888;">لا يوجد فحوصات مرتبطة بهذا البرنامج بعد.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}

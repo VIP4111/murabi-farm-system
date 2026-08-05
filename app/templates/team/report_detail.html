@@ -51,7 +51,7 @@
     <form method="post" action="{{ url_for('team.report_cancel', report_id=r.id) }}" style="display:flex; gap:8px; align-items:flex-start;" onsubmit="return confirm('{{ _('تأكيد الإلغاء؟ تنتقل لصاحب الحلال.') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input name="reason" placeholder="{{ _('سبب الإلغاء (إلزامي)') }}" required style="margin-bottom:0;">
-      <button class="btn" type="submit" style="background:#a32d2d;">{{ _('إلغاء') }}</button>
+      <button class="btn danger" type="submit">{{ _('إلغاء') }}</button>
     </form>
   </div>
 </div>
@@ -126,7 +126,7 @@
 <div class="card">
   <form method="post" action="{{ url_for('team.report_delete', report_id=r.id) }}" onsubmit="return confirm('{{ _('حذف نهائي — ما يرجع. متأكد؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف نهائي') }}</button>
+    <button class="btn danger" type="submit">{{ _('حذف نهائي') }}</button>
   </form>
 </div>
 {% endif %}

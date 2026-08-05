@@ -17,6 +17,7 @@
 <div class="card">
   <h3 style="font-size:15px;">الأصناف اللي تحتاج شراء بناءً على الاستهلاك الفعلي بالفترة المختارة</h3>
   <p style="color:var(--muted); font-size:12px; margin-top:-6px;">الاحتياج المتوقع = معدل الاستهلاك اليومي بالفترة × 30 يوم. أصناف مخزونها كافٍ ما تظهر هنا عمداً.</p>
+  <div class="table-scroll">
   <table>
     <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
     {% for row in data.table.rows %}
@@ -25,5 +26,6 @@
     <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">ما فيه أصناف تحتاج شراء حالياً — المخزون كافٍ لكل شي حسب الاستهلاك الفعلي بهذي الفترة.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}

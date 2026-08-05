@@ -16,6 +16,7 @@
 
 <div class="card">
   <h3 style="font-size:15px;">كل ما تم إنجازه أو تسجيله بهذي الفترة</h3>
+  <div class="table-scroll">
   <table>
     <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
     {% for row in data.table.rows %}
@@ -24,5 +25,6 @@
     <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">ما فيه نشاط مسجَّل بهذي الفترة.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}

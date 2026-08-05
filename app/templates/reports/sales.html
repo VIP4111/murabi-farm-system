@@ -28,6 +28,7 @@
 
 <div class="card">
   <h3 style="font-size:15px;">عمليات البيع</h3>
+  <div class="table-scroll">
   <table>
     <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
     {% for row in data.table.rows %}
@@ -36,5 +37,6 @@
     <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">لا يوجد عمليات بيع بهذي الفترة.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}
