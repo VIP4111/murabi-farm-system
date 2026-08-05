@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>الأعراض (شجرة التشخيص)</h2>
+    {% if current_user.has_permission('medical_options.manage') %}
+    <a class="btn" href="{{ url_for('health.symptoms_new') }}">+ إضافة عرض</a>
+    {% endif %}
+  </div>
+  <p style="color:var(--muted); font-size:13px;">
+    قائمة كل الأعراض المستخدمة بالمساعد التشخيصي (`/health/diagnose`) —
+    الأعراض "الرئيسية" تبدأ منها الشجرة، والباقي أسئلة متابعة تظهر حسب
+    الأمراض المرتبطة بها. لربط عرض بمرض معيّن ووزنه، افتح صفحة المرض
+    من <a href="{{ url_for('health.disease_types_list') }}">قائمة الأمراض الشائعة</a>.
+  </p>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+  <table>
+    <tr><th>الاسم</th><th>النوع</th></tr>
+    {% for s in symptoms %}
+    <tr>
+      <td>{{ s.name }}</td>
+      <td>{% if s.is_primary %}<span class="badge on">رئيسي</span>{% else %}<span class="badge">متابعة</span>{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="2" style="color:#888;">القائمة فاضية.</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endblock %}

@@ -9,7 +9,7 @@ from app.models import (
     Pharmacy, PharmacyBatch, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
     Disease, Vaccination, Animal, AuditLog, Barn,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
-    ProtocolApplication,
+    ProtocolApplication, DiseaseSymptomLink,
 )
 from app.health import health_service
 from app.team import task_service as tsvc
@@ -335,6 +335,115 @@ def disease_types_new():
         flash("تمت إضافة المرض للقائمة", "success")
         return redirect(url_for("health.disease_types_list"))
     return render_template("health/disease_type_form.html")
+
+
+# ---------- شجرة التشخيص: إدارة الأعراض والروابط (بند إضافي 127، المرحلة 1) ----------
+# قبل هذا البند، شجرة القرار التشخيصية (Symptom/DiseaseSymptomLink) كانت
+# تُبنى مرة وحدة بس عند `flask seed` (بيانات ثابتة بـapp/cli.py) — أي
+# تعديل (وزن، إضافة/حذف رابط مرض↔عرض) يحتاج تعديل كود ونشر جديد. صار
+# قابلاً للتعديل بالكامل من الواجهة، بنفس صلاحية بقية "الخيارات الطبية"
+# (medical_options.manage).
+
+@health_bp.route("/symptoms")
+@login_required
+@require_permission("health.view")
+def symptoms_list():
+    symptoms = Symptom.query.order_by(Symptom.name).all()
+    return render_template("health/symptoms_list.html", symptoms=symptoms)
+
+
+@health_bp.route("/symptoms/new", methods=["GET", "POST"])
+@login_required
+@require_permission("medical_options.manage")
+def symptoms_new():
+    if request.method == "POST":
+        name = request.form["name"].strip()
+        if not name:
+            flash("اسم العرض مطلوب", "error")
+            return redirect(url_for("health.symptoms_new"))
+        if Symptom.query.filter_by(name=name).first():
+            flash(f'"{name}" موجود بالقائمة أصلاً', "error")
+            return redirect(url_for("health.symptoms_new"))
+        db.session.add(Symptom(name=name, is_primary=bool(request.form.get("is_primary"))))
+        db.session.commit()
+        flash("تمت إضافة العرض", "success")
+        return redirect(url_for("health.symptoms_list"))
+    return render_template("health/symptom_form.html")
+
+
+@health_bp.route("/disease-types/<int:disease_id>")
+@login_required
+@require_permission("health.view")
+def disease_type_detail(disease_id):
+    """شاشة إدارة أعراض مرض معيّن — الوزن (1-3) وحقلي "إجباري"/
+    "استبعادي" الجديدين (بند إضافي 127) قابلين للتعديل هنا مباشرة، بلا
+    حاجة لأي تعديل كود أو بذر جديد."""
+    disease = DiseaseType.query.get_or_404(disease_id)
+    linked_symptom_ids = {l.symptom_id for l in disease.symptom_links}
+    available_symptoms = Symptom.query.filter(~Symptom.id.in_(linked_symptom_ids)).order_by(Symptom.name).all() \
+        if linked_symptom_ids else Symptom.query.order_by(Symptom.name).all()
+    return render_template(
+        "health/disease_type_detail.html",
+        disease=disease,
+        links=sorted(disease.symptom_links, key=lambda l: l.symptom.name),
+        available_symptoms=available_symptoms,
+    )
+
+
+@health_bp.route("/disease-types/<int:disease_id>/links/new", methods=["POST"])
+@login_required
+@require_permission("medical_options.manage")
+def disease_symptom_link_new(disease_id):
+    disease = DiseaseType.query.get_or_404(disease_id)
+    symptom_id = request.form.get("symptom_id", type=int)
+    if not symptom_id:
+        flash("لازم تختار عرض", "error")
+        return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
+    if DiseaseSymptomLink.query.filter_by(disease_type_id=disease.id, symptom_id=symptom_id).first():
+        flash("هذا العرض مربوط بهذا المرض أصلاً", "error")
+        return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
+    symptom = Symptom.query.get_or_404(symptom_id)
+    link = DiseaseSymptomLink(
+        disease_type_id=disease.id, symptom_id=symptom_id,
+        weight=max(1, min(3, request.form.get("weight", type=int) or 1)),
+        is_required=bool(request.form.get("is_required")),
+        is_exclusionary=bool(request.form.get("is_exclusionary")),
+    )
+    db.session.add(link)
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.create",
+                             entity_type="DiseaseSymptomLink", details=f"{disease.name} + {symptom.name}"))
+    db.session.commit()
+    flash("تمت إضافة الرابط", "success")
+    return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
+
+
+@health_bp.route("/disease-types/links/<int:link_id>/update", methods=["POST"])
+@login_required
+@require_permission("medical_options.manage")
+def disease_symptom_link_update(link_id):
+    link = DiseaseSymptomLink.query.get_or_404(link_id)
+    link.weight = max(1, min(3, request.form.get("weight", type=int) or 1))
+    link.is_required = bool(request.form.get("is_required"))
+    link.is_exclusionary = bool(request.form.get("is_exclusionary"))
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.update",
+                             entity_type="DiseaseSymptomLink", entity_id=link.id))
+    db.session.commit()
+    flash("تم تحديث الرابط", "success")
+    return redirect(url_for("health.disease_type_detail", disease_id=link.disease_type_id))
+
+
+@health_bp.route("/disease-types/links/<int:link_id>/delete", methods=["POST"])
+@login_required
+@require_permission("medical_options.manage")
+def disease_symptom_link_delete(link_id):
+    link = DiseaseSymptomLink.query.get_or_404(link_id)
+    disease_id = link.disease_type_id
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.delete",
+                             entity_type="DiseaseSymptomLink", entity_id=link.id))
+    db.session.delete(link)
+    db.session.commit()
+    flash("تم حذف الرابط", "success")
+    return redirect(url_for("health.disease_type_detail", disease_id=disease_id))
 
 
 # ---------- الأطباء ----------

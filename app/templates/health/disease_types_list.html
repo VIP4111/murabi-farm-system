@@ -9,18 +9,25 @@
   </div>
   <p style="color:var(--muted); font-size:13px;">
     مرجع اقتراحات فقط لتسريع تسجيل "اسم المرض" بشاشة الأمراض — أي اسم
-    غير موجود هنا يُكتب يدوياً عادي بدون أي قيد.
+    غير موجود هنا يُكتب يدوياً عادي بدون أي قيد. لإدارة الأعراض
+    المرتبطة بكل مرض (شجرة المساعد التشخيصي)، افتح المرض من الجدول
+    تحت، أو راجع <a href="{{ url_for('health.symptoms_list') }}">قائمة الأعراض</a> نفسها.
   </p>
 </div>
 
 <div class="card">
+  <div class="table-scroll">
   <table>
-    <tr><th>الاسم</th><th>ملاحظات</th></tr>
+    <tr><th>الاسم</th><th>ملاحظات</th><th></th></tr>
     {% for t in types %}
-    <tr><td>{{ t.name }}</td><td>{{ t.notes or '-' }}</td></tr>
+    <tr>
+      <td>{{ t.name }}</td><td>{{ t.notes or '-' }}</td>
+      <td><a class="btn light" style="padding:4px 10px; font-size:12px;" href="{{ url_for('health.disease_type_detail', disease_id=t.id) }}">إدارة الأعراض ←</a></td>
+    </tr>
     {% else %}
-    <tr><td colspan="2" style="color:#888;">القائمة فاضية.</td></tr>
+    <tr><td colspan="3" style="color:#888;">القائمة فاضية.</td></tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}

@@ -71,8 +71,9 @@ def make_symptom(name="عرض اختبار", is_primary=False):
     return s
 
 
-def link_symptom(disease_type, symptom, weight=1):
-    link = DiseaseSymptomLink(disease_type_id=disease_type.id, symptom_id=symptom.id, weight=weight)
+def link_symptom(disease_type, symptom, weight=1, is_required=False, is_exclusionary=False):
+    link = DiseaseSymptomLink(disease_type_id=disease_type.id, symptom_id=symptom.id, weight=weight,
+                               is_required=is_required, is_exclusionary=is_exclusionary)
     db.session.add(link)
     db.session.commit()
     return link

@@ -53,6 +53,15 @@ class DiseaseSymptomLink(db.Model):
     symptom = db.relationship("Symptom")
     weight = db.Column(db.Integer, default=1, nullable=False)
 
+    # مرحلة 1 من تطوير المحرك (بند إضافي 127) — الحقول مخزَّنة وقابلة
+    # للتعديل من لوحة إدارة الأوزان من الآن، لكن `score_diagnoses`
+    # (app/health/health_service.py) **لسا ما يقرأها** — التأثير الفعلي
+    # على الحساب (غرامة عدم وجود عرض إجباري، رفض/خصم عند وجود عرض
+    # استبعادي) مؤجَّل عمداً للمرحلة 3 (معادلة الوزن الجديدة)، حسب خطة
+    # مرحلية متفَق عليها معك.
+    is_required = db.Column(db.Boolean, default=False, nullable=False)
+    is_exclusionary = db.Column(db.Boolean, default=False, nullable=False)
+
     __table_args__ = (db.UniqueConstraint("disease_type_id", "symptom_id", name="uq_disease_symptom"),)
 
 
