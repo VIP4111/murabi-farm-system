@@ -11,7 +11,7 @@
   الشكل يُستخدم للعرض بالشاشة وللتصدير (PDF/Excel) بدون ازدواجية منطق.
 - تفاصيل إضافية حسب التقرير (توزيع الأسباب، توزيع زمني...).
 """
-from datetime import date, timedelta
+from datetime import date, timedelta, timezone
 from calendar import monthrange
 from sqlalchemy import func
 from app.extensions import db
@@ -49,6 +49,24 @@ def parse_date_range(args) -> tuple[date, date, str]:
     return today.replace(day=1), today, "month"
 
 
+def _to_local_date(dt) -> date:
+    """أعمدة completed_at/failed_at/created_at تُخزَّن بلا tzinfo لكنها
+    فعلياً وقت UTC (راجع _now() بكل الموديلات) بينما start/end هنا تواريخ
+    محلية (date.today()). لو خادم Flask بتوقيت أمام UTC (مثلاً +3)، أول
+    ساعات بعد منتصف الليل المحلي: date.today() صار "بكرة" بينما completed_at
+    لسه "اليوم" بتوقيت UTC — يعيد بناء التاريخ المحلي الصحيح بدل مقارنة
+    تاريخ UTC مباشرة بتاريخ محلي."""
+    return dt.replace(tzinfo=timezone.utc).astimezone().date()
+
+
+def _utc_datetime_widened(column, start: date, end: date):
+    """فلتر SQL أولي موسّع بيوم بكل جهة (يغطي أي فرق توقيت ممكن) لعمود
+    UTC مقابل نطاق تاريخ محلي — التحقق الدقيق يصير بعدها ببايثون عبر
+    _to_local_date، بدل الاعتماد على func.date() مباشرة اللي يقارن
+    تاريخ UTC الخام بتاريخ محلي ويفوّت سجلات قرب منتصف الليل."""
+    return func.date(column).between(start - timedelta(days=1), end + timedelta(days=1))
+
+
 def _finance_agg(operation_types, start, end):
     row = (
         db.session.query(func.count(Finance.id), func.coalesce(func.sum(Finance.amount), 0.0))
@@ -65,9 +83,10 @@ def _finance_agg(operation_types, start, end):
 def overview_report(start: date, end: date) -> dict:
     active_count = Animal.query.filter_by(status="active").count()
 
-    new_entries = Animal.query.filter(
-        func.date(Animal.created_at) >= start, func.date(Animal.created_at) <= end,
-    ).count()
+    new_entries = sum(
+        1 for a in Animal.query.filter(_utc_datetime_widened(Animal.created_at, start, end)).all()
+        if a.created_at and start <= _to_local_date(a.created_at) <= end
+    )
 
     deaths_count = CycleEvent.query.filter(
         CycleEvent.event_type == "death", CycleEvent.event_date.between(start, end),
@@ -249,17 +268,21 @@ def activity_report(start: date, end: date) -> dict:
     for t in Task.query.filter(
         Task.status.in_(("done", "failed")),
         db.or_(
-            db.and_(Task.completed_at.isnot(None), func.date(Task.completed_at).between(start, end)),
-            db.and_(Task.failed_at.isnot(None), func.date(Task.failed_at).between(start, end)),
+            db.and_(Task.completed_at.isnot(None), _utc_datetime_widened(Task.completed_at, start, end)),
+            db.and_(Task.failed_at.isnot(None), _utc_datetime_widened(Task.failed_at, start, end)),
         ),
     ).all():
         animal_no = t.animal.animal_no if t.animal else ""
         if t.status == "done":
-            when = t.completed_at.date() if t.completed_at else start
+            when = _to_local_date(t.completed_at) if t.completed_at else start
+            if not (start <= when <= end):
+                continue
             detail = t.completion_note or ("مباشرها: " + t.accepted_by.name if t.accepted_by else "-")
             items.append((when, _activity_row(when, "مهمة مكتملة", t.title, animal_no, detail)))
         else:
-            when = t.failed_at.date() if t.failed_at else start
+            when = _to_local_date(t.failed_at) if t.failed_at else start
+            if not (start <= when <= end):
+                continue
             detail = f"{t.failure_reason or ''} — {t.completion_note or ''}".strip(" —")
             items.append((when, _activity_row(when, "مهمة متعذّرة", t.title, animal_no, detail)))
 
@@ -289,9 +312,11 @@ def activity_report(start: date, end: date) -> dict:
         items.append((f.date, _activity_row(f.date, "مالية", f.item or f.operation_type, animal_no,
                                              f"{f.amount:,.2f}")))
 
-    for r in Report.query.filter(func.date(Report.created_at).between(start, end)).all():
+    for r in Report.query.filter(_utc_datetime_widened(Report.created_at, start, end)).all():
+        when = _to_local_date(r.created_at) if r.created_at else start
+        if not (start <= when <= end):
+            continue
         animal_no = r.animal.animal_no if r.animal else ""
-        when = r.created_at.date() if r.created_at else start
         items.append((when, _activity_row(when, "بلاغ", r.report_type or "-", animal_no, r.status)))
 
     items.sort(key=lambda x: x[0], reverse=True)
