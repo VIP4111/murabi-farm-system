@@ -5,7 +5,8 @@
     <h2>حركة مخزون العلف</h2>
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.movements_new') }}">+ حركة جديدة</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>التاريخ</th><th>المكوّن</th><th>النوع</th><th>الكمية</th><th>قبل</th><th>بعد</th><th>الحظيرة/الحيوان</th></tr>
     {% for m in rows %}
     <tr>
@@ -21,5 +22,6 @@
     <tr><td colspan="7" style="color:#888;">لا يوجد حركات مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

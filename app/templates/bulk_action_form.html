@@ -14,7 +14,8 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th><th>الوزن (كجم)</th><th>ملاحظة</th></tr>
       {% for a in animals %}
       <tr>
@@ -25,6 +26,7 @@
       </tr>
       {% endfor %}
     </table>
+</div>
     <p style="color:var(--muted); font-size:12px;">اترك حقل الوزن فاضي لأي رأس تبي تتخطاه.</p>
     <button class="btn" type="submit">حفظ الأوزان</button>
   </form>
@@ -72,7 +74,8 @@
 
     <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
     <p style="color:var(--muted); font-size:12px; margin:-4px 0 8px;">أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول "الجرعة حسب العمر" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً.</p>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr>
         <th>الرقم</th><th>الاسم</th><th>العمر (يوم)</th>
         <th class="vaccineCol" data-slot="1">تحصين اللقاح الأول</th>
@@ -98,6 +101,7 @@
       </tr>
       {% endfor %}
     </table>
+</div>
     <button class="btn" type="submit" style="margin-top:10px;">تسجيل التحصين للكل</button>
   </form>
 </div>
@@ -210,12 +214,14 @@
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ</label><input name="date" type="date" value="{{ today }}">
     <label>ملاحظة عامة (تُضاف لكل الرؤوس)</label><textarea name="general_note" required></textarea>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th><th>ملاحظة إضافية لهذا الرأس (اختياري)</th></tr>
       {% for a in animals %}
       <tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td><input name="note_{{ a.id }}"></td></tr>
       {% endfor %}
     </table>
+</div>
     <button class="btn" type="submit">حفظ الملاحظات</button>
   </form>
 </div>
@@ -230,10 +236,12 @@
       {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
     <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th><th>الحظيرة الحالية</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.barn.barn_name if a.barn else '-' }}</td></tr>{% endfor %}
     </table>
+</div>
     <button class="btn" type="submit">نقل الكل للحظيرة الجديدة</button>
   </form>
 </div>
@@ -245,7 +253,8 @@
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>تاريخ البيع (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
     <label>ملاحظة عامة (اختياري، مثلاً اسم المشتري)</label><input name="notes">
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th><th>سعر البيع</th></tr>
       {% for a in animals %}
       <tr>
@@ -255,6 +264,7 @@
       </tr>
       {% endfor %}
     </table>
+</div>
     <p style="color:var(--muted); font-size:12px;">اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة.</p>
     <button class="btn" type="submit">بيع الكل</button>
   </form>
@@ -267,10 +277,12 @@
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>تاريخ النفوق (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
     <label>السبب (اختياري، يُسجَّل لكل الرؤوس)</label><textarea name="reason"></textarea>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
     </table>
+</div>
     <p style="color:var(--muted); font-size:12px;">تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل.</p>
     <button class="btn danger" type="submit" onclick="return confirm('تأكيد تسجيل نفوق {{ animals|length }} رأس؟')">تسجيل النفوق للكل</button>
   </form>
@@ -299,10 +311,12 @@
     <label>الكمية المستخدمة لكل رأس</label><input name="quantity_used_per_head" type="number" step="0.01">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة.</p>
     <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
     </table>
+</div>
     <button class="btn" type="submit">تسجيل الحالة للكل</button>
   </form>
 </div>
@@ -314,10 +328,12 @@
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
     <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
     <label>سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)</label><textarea name="reason"></textarea>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th><th>الحظيرة الحالية</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.barn.barn_name if a.barn else '-' }}</td></tr>{% endfor %}
     </table>
+</div>
     <p style="color:var(--muted); font-size:12px;">ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل).</p>
     <button class="btn" type="submit">عزل الكل</button>
   </form>
@@ -334,7 +350,8 @@
       <option value="">بدون تحديد</option>
       {% for d in doctors %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
     </select>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th><th>النتيجة</th><th>عدد الأجنة</th></tr>
       {% for a in animals %}
       <tr>
@@ -352,6 +369,7 @@
       </tr>
       {% endfor %}
     </table>
+</div>
     <button class="btn" type="submit">حفظ نتائج الكل</button>
   </form>
 </div>
@@ -380,10 +398,12 @@
     <label>سبب المهمة/الدافع</label><textarea name="reason" placeholder="مثال: فحص دوري كشف انتشار طفيليات بالحظيرة"></textarea>
     <label>الموعد المستهدف للتنفيذ</label><input name="due_date" type="date" value="{{ today }}">
     <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة ({{ animals|length }})</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>الرقم</th><th>الاسم</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
     </table>
+</div>
     <button class="btn" type="submit">إنشاء خطة العلاج (مقترحة)</button>
   </form>
 </div>

@@ -29,11 +29,13 @@
 {% if requirement %}
 <div class="card">
   <h3 style="font-size:15px;">الاحتياج المستهدف</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>احتياج المادة الجافة اليومي</td><td>{{ requirement.daily_dry_matter_kg }} كجم</td></tr>
     <tr><td>هدف بروتين خام</td><td>{{ requirement.target_protein_percent }}%</td></tr>
     <tr><td>هدف طاقة ممثلة</td><td>{{ requirement.target_energy_kcal_per_kg }} كيلوكالوري/كجم</td></tr>
   </table>
+</div>
 </div>
 {% endif %}
 
@@ -43,7 +45,8 @@
   <div class="notice">⚠️ {{ result.reason }}</div>
   {% else %}
   <h3 style="font-size:15px;">الخلطة المقترحة (الأرخص تكلفة)</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>المكوّن</th><th>الكمية (كجم/رأس/يوم)</th><th>النسبة</th><th>التكلفة</th><th>المخزون كافٍ؟</th></tr>
     {% for b in result.blend %}
     <tr>
@@ -55,6 +58,7 @@
     </tr>
     {% endfor %}
   </table>
+</div>
   <div class="stat" style="background:var(--primary); color:#fff; margin-top:10px;"><b>{{ result.total_daily_cost }}</b><span style="color:rgba(255,255,255,.8);">إجمالي التكلفة اليومية للرأس</span></div>
   {% if not result.all_stock_ok %}
   <div class="notice" style="margin-top:10px;">⚠️ مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع <a href="{{ url_for('feed.items_list') }}">مكوّنات العلف</a>.</div>

@@ -18,7 +18,8 @@
 </div>
 
 <div class="card">
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الأم</th><th>تاريخ البيض</th><th>الجودة</th><th>الحاضنة</th><th>بداية الحضانة</th><th>الفقس المتوقع</th><th>الحالة</th><th></th></tr>
     {% for e in eggs %}
     <tr>
@@ -56,5 +57,6 @@
     <tr><td colspan="8" style="color:#888;">لا يوجد بيض مسجّل بهذا الفلتر.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

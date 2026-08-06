@@ -5,7 +5,8 @@
     <h2>مكوّنات العلف</h2>
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.items_new') }}">+ مكوّن جديد</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الاسم</th><th>الفئة</th><th>فئة العلف</th><th>بروتين%</th><th>طاقة (ك.كالوري/كجم)</th><th>المتوفر</th><th>السعر/وحدة</th><th>نفاد متوقع</th><th></th></tr>
     {% for i in items %}
     <tr>
@@ -31,5 +32,6 @@
     <tr><td colspan="9" style="color:#888;">لا يوجد مكوّنات علف مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

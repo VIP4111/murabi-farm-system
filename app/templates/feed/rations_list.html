@@ -5,7 +5,8 @@
     <h2>وصفات العلف</h2>
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.rations_new') }}">+ وصفة جديدة</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الاسم</th><th>الغرض</th><th>بروتين%</th><th>طاقة</th><th>تكلفة/كجم</th></tr>
     {% for r in rations %}
     <tr>
@@ -19,5 +20,6 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد وصفات مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

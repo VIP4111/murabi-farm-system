@@ -5,7 +5,8 @@
     <h2>التقريع</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.matings_new') }}">+ تقريع جديد</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>التاريخ</th><th>الأنثى</th><th>الفحل</th><th>الحظيرة</th></tr>
     {% for r in rows %}
     <tr>
@@ -18,5 +19,6 @@
     <tr><td colspan="4" style="color:#888;">لا يوجد عمليات تقريع مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

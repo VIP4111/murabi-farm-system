@@ -27,7 +27,8 @@
 {% endif %}
 
 <div class="card">
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الشهر</th><th>إجمالي التكلفة</th><th>عدد الرؤوس</th><th>تكلفة الرأس</th></tr>
     {% for r in rows %}
     <tr>
@@ -40,5 +41,6 @@
     <tr><td colspan="4" style="color:#888;">لا يوجد بيانات.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

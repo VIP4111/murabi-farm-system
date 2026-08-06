@@ -2,13 +2,15 @@
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>تسجيل نتيجة الفقس</h2>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>الأم</td><td>{{ egg.mother.animal_no if egg.mother else '-' }}</td></tr>
     <tr><td>تاريخ البيض</td><td>{{ egg.lay_date }}</td></tr>
     <tr><td>الحاضنة</td><td>{{ egg.incubator.code if egg.incubator else '-' }}</td></tr>
     <tr><td>بداية الحضانة</td><td>{{ egg.incubation_start_date or '-' }}</td></tr>
     <tr><td>الفقس المتوقع</td><td>{{ expected or '-' }}</td></tr>
   </table>
+</div>
 </div>
 
 <div class="card">

@@ -34,17 +34,20 @@
 {% if result %}
 <div class="card">
   <h3 style="font-size:15px;">النتيجة</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>الحالة المستخدمة</td><td>{{ result.state }}</td></tr>
     <tr><td>احتياج المادة الجافة اليومي</td><td>{{ result.daily_dry_matter_kg }} كجم</td></tr>
     <tr><td>هدف بروتين خام</td><td>{{ result.target_protein_percent }}%</td></tr>
     <tr><td>هدف طاقة ممثلة</td><td>{{ result.target_energy_kcal_per_kg }} كيلوكالوري/كجم</td></tr>
   </table>
 </div>
+</div>
 
 <div class="card">
   <h3 style="font-size:15px;">أقرب الوصفات (مرتّبة: تطابق ثم أرخص تكلفة)</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الوصفة</th><th>تطابق</th><th>بروتين%</th><th>طاقة</th><th>تكلفة/رأس/يوم</th><th>المخزون كافٍ؟</th></tr>
     {% for r in recommendations %}
     <tr>
@@ -59,6 +62,7 @@
     <tr><td colspan="6" style="color:#888;">ما فيه وصفات مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endif %}
 {% endblock %}

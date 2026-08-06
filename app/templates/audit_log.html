@@ -34,7 +34,8 @@
 </div>
 
 <div class="card">
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الوقت</th><th>مين</th><th>الإجراء</th><th>على</th><th>تفاصيل</th></tr>
     {% for row in rows %}
     <tr>
@@ -48,5 +49,6 @@
     <tr><td colspan="5" style="color:#888;">ما فيه أي حدث مسجّل بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

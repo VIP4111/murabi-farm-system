@@ -40,7 +40,8 @@
   <h3>توقّع 7 أيام</h3>
   {% if forecast.readings %}
   <div style="overflow-x:auto;">
-    <table>
+    <div class="table-scroll">
+<table>
       <thead><tr><th>التاريخ</th><th>أعلى حرارة (°م)</th><th>الرطوبة عند الذروة (%)</th><th>THI</th><th>مستوى الإجهاد</th></tr></thead>
       <tbody>
         {% for r in forecast.readings %}
@@ -54,6 +55,7 @@
         {% endfor %}
       </tbody>
     </table>
+</div>
   </div>
   {% else %}
   <p style="color:var(--muted);">لا توجد بيانات طقس محفوظة بعد.</p>

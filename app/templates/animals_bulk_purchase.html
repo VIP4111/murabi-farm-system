@@ -32,7 +32,8 @@
       </div>
     </div>
 
-    <table id="rowsTable" style="margin-top:14px;">
+    <div class="table-scroll">
+<table id="rowsTable" style="margin-top:14px;">
       <tr><th>رقم الحيوان</th><th>الجنس</th><th>الوزن (كجم)</th><th>سعر الشراء</th></tr>
       {% for i in range(8) %}
       <tr>
@@ -48,6 +49,7 @@
       </tr>
       {% endfor %}
     </table>
+</div>
     <input type="hidden" name="row_count" id="rowCount" value="8">
     <button class="btn light" type="button" id="addRowBtn" style="margin-top:8px;">+ إضافة صف</button>
     <p style="color:var(--muted); font-size:12px;">اترك رقم الحيوان فاضي لأي صف تبي تتجاهله.</p>

@@ -5,7 +5,8 @@
     <h2>تشخيص الحمل</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.pregnancies_new') }}">+ تشخيص جديد</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>التاريخ</th><th>الأنثى</th><th>مؤكّد</th><th>تاريخ السونار</th><th>عدد الأجنّة</th><th>الولادة المتوقعة</th><th>النتيجة</th><th></th></tr>
     {% for r in rows %}
     <tr>
@@ -33,5 +34,6 @@
     <tr><td colspan="8" style="color:#888;">لا يوجد تشخيصات حمل مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

@@ -8,7 +8,8 @@
       {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('ostrich.incubators_new') }}">+ حاضنة جديدة</a>{% endif %}
     </div>
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الرمز</th><th>الاسم</th><th>السعة</th><th>الحالة</th><th>ملاحظات</th></tr>
     {% for inc in incubators %}
     <tr>
@@ -22,5 +23,6 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد حاضنات مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

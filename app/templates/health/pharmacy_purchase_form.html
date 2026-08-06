@@ -27,7 +27,8 @@
 
 <div class="card">
   <h3 style="font-size:15px;">سجل عمليات الشراء لهذا الدواء</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>تاريخ الشراء</th><th>الكمية الأصلية</th><th>المتبقي منها</th><th>تاريخ الانتهاء</th><th>سعر الوحدة</th></tr>
     {% for b in batches %}
     <tr>
@@ -41,5 +42,6 @@
     <tr><td colspan="5" style="color:#888;">ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

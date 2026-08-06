@@ -5,7 +5,8 @@
     <h2>الزيارات البيطرية</h2>
     {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vet_visits_new') }}">+ زيارة جديدة</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>التاريخ</th><th>الحيوان</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th><th>فترة السحب حتى</th></tr>
     {% for v in visits %}
     <tr>
@@ -17,5 +18,6 @@
     <tr><td colspan="6" style="color:#888;">لا يوجد زيارات مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

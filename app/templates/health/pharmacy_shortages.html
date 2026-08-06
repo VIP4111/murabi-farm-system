@@ -9,7 +9,8 @@
 </div>
 
 <div class="card">
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الاسم</th><th>الفئة</th><th>المتوفر</th><th>الحد الأدنى</th><th>بدائل بنفس الفئة</th></tr>
     {% for i in items %}
     <tr>
@@ -26,5 +27,6 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد نواقص حالياً 🎉</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

@@ -8,7 +8,8 @@
   <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة.</p>
 
   <h3 style="font-size:14px;">القادمة</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الحظيرة</th><th>اللقاح</th><th>التاريخ المخطَّط</th><th>عدد الرؤوس الآن</th><th>ملاحظات</th><th>إجراءات</th></tr>
     {% for s in upcoming %}
     <tr>
@@ -41,9 +42,11 @@
     <tr><td colspan="6" style="color:#888;">لا يوجد تحصينات مجدولة حالياً.</td></tr>
     {% endfor %}
   </table>
+</div>
 
   <h3 style="font-size:14px; margin-top:20px;">سابقة (آخر 30)</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الحظيرة</th><th>اللقاح</th><th>التاريخ المخطَّط</th><th>الحالة</th></tr>
     {% for s in past %}
     <tr>
@@ -56,5 +59,6 @@
     <tr><td colspan="4" style="color:#888;">لا يوجد سجل سابق.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

@@ -9,7 +9,8 @@
     <a class="btn" href="{{ url_for('batches.batches_new') }}">+ دفعة جديدة</a>
     {% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>رقم الدفعة</th><th>المصدر</th><th>تاريخ الوصول</th><th>عدد الرؤوس</th><th>المرحلة</th><th></th></tr>
     {% for b in batches %}
     <tr>
@@ -22,5 +23,6 @@
     </tr>
     {% else %}<tr><td colspan="6" style="color:#888;">لا يوجد دفعات مسجَّلة بعد.</td></tr>{% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

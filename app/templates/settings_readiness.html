@@ -16,7 +16,8 @@
 </div>
 
 <div class="card">
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الحالة</th><th>البند</th><th>التفصيل</th></tr>
     {% for c in checks %}
     <tr>
@@ -30,5 +31,6 @@
     </tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

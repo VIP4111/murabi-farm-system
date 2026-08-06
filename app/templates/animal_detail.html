@@ -66,7 +66,8 @@
 <div class="tab-panel {{ 'active' if active_tab=='summary' }}" data-tab="summary">
   <div class="card">
     <h3 style="font-size:15px;">بيانات أساسية</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><td>الجنس</td><td>{{ animal.gender or '-' }}</td></tr>
       <tr><td>اللون</td><td>{{ animal.color or '-' }}</td></tr>
       <tr><td>الغرض</td><td>{{ animal.purpose or '-' }}</td></tr>
@@ -78,6 +79,7 @@
       <tr><td>الحظيرة</td><td>{{ animal.barn.barn_name if animal.barn else '-' }}</td></tr>
       <tr><td>السعر</td><td>{{ animal.price or '-' }}</td></tr>
     </table>
+</div>
   </div>
 
   {% if animal.mother_id %}
@@ -106,13 +108,15 @@
       <button class="btn" type="submit">حفظ قائمة التحقق</button>
     </form>
     {% else %}
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><td>تنفّس طبيعي</td><td>{{ 'نعم' if br and br.breathing_ok else ('لا' if br and br.breathing_ok == false else 'غير محدد') }}</td></tr>
       <tr><td>وقف على قوائمه</td><td>{{ 'نعم' if br and br.standing_ok else ('لا' if br and br.standing_ok == false else 'غير محدد') }}</td></tr>
       <tr><td>رضع اللبأ</td><td>{{ 'نعم' if br and br.colostrum_received else ('لا' if br and br.colostrum_received == false else 'غير محدد') }}</td></tr>
       <tr><td>تعقيم السرة</td><td>{{ 'نعم' if br and br.cord_treated else ('لا' if br and br.cord_treated == false else 'غير محدد') }}</td></tr>
       <tr><td>عيوب خلقية</td><td>{{ (br.birth_defects if br else none) or 'لا يوجد' }}</td></tr>
     </table>
+</div>
     {% endif %}
   </div>
   {% endif %}
@@ -139,10 +143,12 @@
       <button class="btn" type="submit">حفظ</button>
     </form>
     {% else %}
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><td>ترفض إرضاع مولودها</td><td>{{ 'نعم' if animal.refuses_nursing else ('لا' if animal.refuses_nursing == false else 'غير محدد') }}</td></tr>
       <tr><td>الضرع/الدرة تالفة</td><td>{{ 'نعم' if animal.udder_damaged else ('لا' if animal.udder_damaged == false else 'غير محدد') }}</td></tr>
     </table>
+</div>
     {% endif %}
   </div>
   {% endif %}
@@ -177,19 +183,22 @@
   {% endif %}
   <div class="card">
     <h3 style="font-size:15px;">الزيارات البيطرية</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th></tr>
       {% for v in vet_visits %}
       <tr><td>{{ v.date }}</td><td>{{ v.doctor.name if v.doctor else '-' }}</td><td>{{ v.diagnosis or '-' }}</td><td>{{ v.cost }}</td></tr>
       {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد زيارات مسجّلة.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
 <div class="tab-panel {{ 'active' if active_tab=='diseases' }}" data-tab="diseases">
   <div class="card">
     <h3 style="font-size:15px;">الأمراض</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>المرض</th><th>الشدة</th><th>الحالة</th></tr>
       {% for d in diseases %}
       <tr>
@@ -198,25 +207,29 @@
       </tr>
       {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد أمراض مسجّلة.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
 <div class="tab-panel {{ 'active' if active_tab=='vaccinations' }}" data-tab="vaccinations">
   <div class="card">
     <h3 style="font-size:15px;">التحصينات</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>اللقاح</th><th>الجرعة القادمة</th></tr>
       {% for vc in vaccinations %}
       <tr><td>{{ vc.date }}</td><td>{{ vc.vaccine_name }}</td><td>{{ vc.next_due_date or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد تحصينات مسجّلة.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
 <div class="tab-panel {{ 'active' if active_tab=='repro' }}" data-tab="repro">
   <div class="card">
     <h3 style="font-size:15px;">التقريع</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>الدور</th><th>الطرف الآخر</th></tr>
       {% for m in matings %}
       <tr>
@@ -226,34 +239,41 @@
       </tr>
       {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد تقريع مسجّل.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
   <div class="card">
     <h3 style="font-size:15px;">تشخيص الحمل</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>الحالة</th><th>عدد الأجنة</th></tr>
       {% for p in pregnancies %}
       <tr><td>{{ p.date }}</td><td>{{ 'مؤكد' if p.confirmed else 'قيد الفحص' }}</td><td>{{ p.embryo_count or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد تشخيص حمل مسجّل.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
   <div class="card">
     <h3 style="font-size:15px;">فحوصات السونار</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>النتيجة</th><th>عدد الأجنة</th></tr>
       {% for s in sonar_results %}
       <tr><td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td><td>{{ s.embryo_count or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد فحوصات سونار مسجّلة.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
   {% if twin_programs %}
   <div class="card">
     <h3 style="font-size:15px;">برامج الشياع التوأمي</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>البرنامج</th><th>البدء</th><th>الحالة</th></tr>
       {% for prog in twin_programs %}
       <tr><td><a href="{{ url_for('repro.program_detail', program_id=prog.id) }}">{{ prog.protocol_name or ('برنامج #' ~ prog.id) }}</a></td><td>{{ prog.start_date }}</td><td>{{ prog.status|ar_status }}</td></tr>
       {% endfor %}
     </table>
+</div>
   </div>
   {% endif %}
 </div>
@@ -261,7 +281,8 @@
 <div class="tab-panel {{ 'active' if active_tab=='births' }}" data-tab="births">
   <div class="card">
     <h3 style="font-size:15px;">الولادات</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>رقم المولود</th><th>الجنس</th><th>الوزن عند الولادة</th></tr>
       {% for b in births %}
       <tr>
@@ -272,6 +293,7 @@
       </tr>
       {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد ولادات مسجّلة لهذا الحيوان.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
@@ -290,12 +312,14 @@
   {% endif %}
   <div class="card">
     <h3 style="font-size:15px;">سجل الأوزان</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>الوزن (كجم)</th><th>ملاحظات</th></tr>
       {% for w in weights %}
       <tr><td>{{ w.date }}</td><td>{{ w.weight }}</td><td>{{ w.notes or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد أوزان مسجّلة بعد.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
@@ -319,12 +343,14 @@
   {% endif %}
   <div class="card">
     <h3 style="font-size:15px;">سجل الحليب</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>الجلسة</th><th>الكمية (لتر)</th><th>ملاحظات</th></tr>
       {% for mr in milk_records %}
       <tr><td>{{ mr.date }}</td><td>{{ mr.session }}</td><td>{{ mr.quantity_liters }}</td><td>{{ mr.notes or '-' }}</td></tr>
       {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد حليب مسجّل بعد.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
@@ -342,12 +368,14 @@
   {% endif %}
   <div class="card">
     <h3 style="font-size:15px;">الملاحظات المسجّلة</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>الملاحظة</th><th>بواسطة</th></tr>
       {% for n in notes %}
       <tr><td>{{ n.date }}</td><td>{{ n.note }}</td><td>{{ n.created_by.name if n.created_by else '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد ملاحظات بعد.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 
@@ -378,13 +406,15 @@
   </div>
   <div class="card">
     <h3 style="font-size:15px;">الحركات المالية المرتبطة</h3>
-    <table>
+    <div class="table-scroll">
+<table>
       <tr><th>التاريخ</th><th>النوع</th><th>الوصف</th><th>المبلغ</th></tr>
       {% set op_labels = {'sale': 'بيع', 'purchase': 'شراء', 'expense': 'مصروف'} %}
       {% for f in finance_rows %}
       <tr><td>{{ f.date }}</td><td>{{ op_labels.get(f.operation_type, f.operation_type) }}</td><td>{{ f.item or f.description or '-' }}</td><td>{{ f.amount }}</td></tr>
       {% else %}<tr><td colspan="4" style="color:#888;">لا يوجد حركات مالية مرتبطة بهذا الحيوان.</td></tr>{% endfor %}
     </table>
+</div>
   </div>
 </div>
 {% endblock %}

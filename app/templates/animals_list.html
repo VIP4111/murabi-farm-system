@@ -78,7 +78,8 @@
       <button class="btn" type="submit">متابعة الإجراء الجماعي</button>
     </div>
     {% endif %}
-    <table>
+    <div class="table-scroll">
+<table>
       <tr>
         {% if can_bulk %}<th><input type="checkbox" id="selectAll" style="width:auto; margin:0;"></th>{% endif %}
         <th>الرقم</th><th>الاسم</th><th>المصدر</th><th>الحظيرة</th><th>الحالة</th><th>المرحلة</th><th>فترة سحب</th>
@@ -105,6 +106,7 @@
       <tr><td colspan="8" style="color:#888;">{{ 'لا يوجد حيوانات ضمن هذا الفلتر حالياً.' if active_filter != 'all' else 'لا يوجد حيوانات مسجّلة بعد.' }}</td></tr>
       {% endfor %}
     </table>
+</div>
   </form>
 </div>
 <script>

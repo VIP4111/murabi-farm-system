@@ -5,7 +5,8 @@
     <h2>برامج الشياع التوأمي</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.programs_new') }}">+ برنامج جديد</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>#</th><th>الأنثى</th><th>البروتوكول</th><th>بداية</th><th>الطبيب المشرف</th><th>الحالة</th></tr>
     {% for r in rows %}
     <tr>
@@ -20,5 +21,6 @@
     <tr><td colspan="6" style="color:#888;">لا يوجد برامج شياع توأمي مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

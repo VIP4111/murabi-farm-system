@@ -2,12 +2,14 @@
 {% block content %}
 <div class="card" style="max-width:420px;">
   <h2>تطبيق بروتوكول: {{ protocol.name }}</h2>
-  <table style="margin-bottom:14px;">
+  <div class="table-scroll">
+<table style="margin-bottom:14px;">
     <tr><th>يوم</th><th>الخطوة</th><th>الدواء</th><th>الكمية</th></tr>
     {% for s in protocol.steps %}
     <tr><td>{{ s.day_offset }}</td><td>{{ s.step_title }}</td><td>{{ s.pharmacy.name }}</td><td>{{ s.quantity }}</td></tr>
     {% endfor %}
   </table>
+</div>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>الرأس</label>

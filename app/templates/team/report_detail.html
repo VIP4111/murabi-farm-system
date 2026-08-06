@@ -6,7 +6,8 @@
     <h2>{{ _('بلاغ') }} #{{ r.id }}</h2>
     {{ status_badge(r.status|status_badge_state, r.status|ar_status) }}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>{{ _('النوع') }}</td><td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td></tr>
     <tr><td>{{ _('رفعه') }}</td><td>{{ r.reporter.name }} — {{ r.created_at.strftime('%Y-%m-%d %H:%M') if r.created_at else '-' }}</td></tr>
     <tr><td>{{ _('الحيوان') }}</td><td>
@@ -33,6 +34,7 @@
     {% if r.status == 'postponed' %}<tr><td>{{ _('سبب التأجيل') }}</td><td>{{ r.postpone_reason }}</td></tr>{% endif %}
     {% if r.status == 'closed' %}<tr><td>{{ _('أغلقها') }}</td><td>{{ r.closer.name if r.closer else '-' }} — {{ r.closed_at.strftime('%Y-%m-%d %H:%M') if r.closed_at else '-' }}</td></tr>{% endif %}
   </table>
+</div>
 </div>
 
 {% if r.status == 'new' and can_manage %}

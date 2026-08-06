@@ -2,7 +2,8 @@
 {% block content %}
 <div class="card">
   <h2>{{ ration.name }}</h2>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>الغرض</td><td>{{ ration.purpose or '-' }}</td></tr>
     {% if profile %}
     <tr><td>بروتين خام موزون</td><td>{{ profile.protein_percent }}%</td></tr>
@@ -12,10 +13,12 @@
     <tr><td>ملاحظات</td><td>{{ ration.notes or '-' }}</td></tr>
   </table>
 </div>
+</div>
 
 <div class="card">
   <h3 style="font-size:15px;">المكوّنات</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>المكوّن</th><th>النسبة</th><th>بروتين%</th><th>طاقة</th><th>السعر/وحدة</th></tr>
     {% for item in ration.items %}
     <tr>
@@ -29,5 +32,6 @@
     <tr><td colspan="5" style="color:#888;">ما فيه مكوّنات.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

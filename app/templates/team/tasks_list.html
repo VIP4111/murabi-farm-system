@@ -54,12 +54,14 @@
 
 <div class="card">
   <h3 style="font-size:15px;">{{ _('مهامي') }}</h3>
-  <table class="compact-table">
+  <div class="table-scroll">
+<table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
     <tbody id="myTasksBody">
     {% include "team/_my_tasks_rows.html" %}
     </tbody>
   </table>
+</div>
 </div>
 <script>
 (function(){
@@ -98,12 +100,14 @@
     <a class="tab-btn {{ 'active' if key == active_role }}" href="{{ url_for('team.tasks_list', role=key) }}">{{ label }}</a>
     {% endfor %}
   </div>
-  <table class="compact-table">
+  <div class="table-scroll">
+<table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
     <tbody id="suggestedTasksBody">
     {% include "team/_suggested_tasks_rows.html" %}
     </tbody>
   </table>
+</div>
 </div>
 <script>
 (function(){
@@ -138,7 +142,8 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('جدول المهام المعتمدة') }}</h3>
   <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">{{ _('كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها "تم الإنجاز".') }}</p>
-  <table class="compact-table">
+  <div class="table-scroll">
+<table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
     <tbody>
     {% for t in approved_tasks %}
@@ -155,10 +160,12 @@
     </tbody>
   </table>
 </div>
+</div>
 
 <div class="card">
   <h3 style="font-size:15px;">{{ _('مهام وزّعتها (نشطة)') }}</h3>
-  <table class="compact-table">
+  <div class="table-scroll">
+<table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
     <tbody>
     {% for t in assigned_by_me %}
@@ -169,12 +176,14 @@
     </tbody>
   </table>
 </div>
+</div>
 {% endif %}
 
 {% if current_user.has_permission('tasks.delete_final') %}
 <div class="card">
   <h3 style="font-size:15px;">{{ _('صندوق مراجعة المالك (مهام محذوفة من الدكتور)') }}</h3>
-  <table class="compact-table">
+  <div class="table-scroll">
+<table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('السبب') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
     <tbody>
     {% for t in review_box %}
@@ -197,6 +206,7 @@
     {% endfor %}
     </tbody>
   </table>
+</div>
 </div>
 {% endif %}
 {% endblock %}

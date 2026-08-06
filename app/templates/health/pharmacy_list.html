@@ -8,7 +8,8 @@
       {% if current_user.has_permission('pharmacy.manage') %}<a class="btn" href="{{ url_for('health.pharmacy_new') }}">+ دواء جديد</a>{% endif %}
     </div>
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الاسم</th><th>الفئة</th><th>فئة الدواء</th><th>الكمية</th><th>سعر الوحدة</th><th>تاريخ الانتهاء</th><th>فترة السحب (يوم)</th><th>طريقة الاستخدام</th><th>الحالة</th><th></th></tr>
     {% for i in items %}
     <tr>
@@ -32,5 +33,6 @@
     <tr><td colspan="10" style="color:#888;">لا يوجد أدوية مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

@@ -28,7 +28,8 @@
 
 <div class="card">
   <h3 style="font-size:15px;">آخر الحركات</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>التاريخ</th><th>النوع</th><th>الكمية</th><th>الرصيد بعدها</th><th>الاستعارة</th><th>ملاحظة</th></tr>
     {% for m in movements %}
     <tr>
@@ -57,5 +58,6 @@
     <tr><td colspan="6" style="color:#888;">ما فيه حركات مسجَّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

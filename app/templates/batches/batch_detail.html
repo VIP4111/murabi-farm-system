@@ -24,7 +24,8 @@
     <form method="post" action="{{ url_for('batches.batch_distribute', batch_id=batch.id) }}" style="margin-top:14px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <h3 style="font-size:14px;">توزيع الدفعة على الحظائر الدائمة</h3>
-      <table>
+      <div class="table-scroll">
+<table>
         <tr><th>الرأس</th><th>حظيرة دائمة</th></tr>
         {% for a in batch.animals %}
         {% if not a.batch_hold_reason and a.status == 'active' %}
@@ -40,6 +41,7 @@
         {% endif %}
         {% endfor %}
       </table>
+</div>
       <button class="btn" type="submit" style="margin-top:8px;">🌾 توزيع الدفعة</button>
     </form>
     {% endif %}
@@ -48,7 +50,8 @@
 
 <div class="card">
   <h3 style="font-size:15px;">رؤوس الدفعة</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الرقم</th><th>الحظيرة الحالية</th><th>الاستبعاد الفردي</th><th></th></tr>
     {% for a in batch.animals %}
     <tr>
@@ -90,5 +93,6 @@
     </tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

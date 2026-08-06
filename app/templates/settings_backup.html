@@ -27,7 +27,8 @@
 
 <div class="card">
   <h3 style="font-size:15px;">النسخ المحفوظة ({{ backups|length }})</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الملف</th><th>الحجم</th><th>التاريخ</th><th></th></tr>
     {% for b in backups %}
     <tr>
@@ -40,5 +41,6 @@
     <tr><td colspan="4" style="color:#888;">ما فيه أي نسخة احتياطية بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

@@ -8,12 +8,14 @@
       <span class="badge {{ 'on' if wf.status == 'active' else 'off' }}">{{ wf.status|ar_status }}</span>
     </div>
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>المسار</td><td>{{ route_label }}</td></tr>
     <tr><td>المرحلة الحالية</td><td><strong>{{ wf.stage_name }}</strong> (رقم {{ wf.current_stage }} من 10)</td></tr>
     <tr><td>قرار المصير</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
     {% if wf.out_of_order_count %}<tr><td>أحداث بترتيب غير منتظم</td><td>{{ wf.out_of_order_count }}</td></tr>{% endif %}
   </table>
+</div>
 
   {% if missing_items %}
   <h3 style="margin-top:18px; font-size:15px;">متطلبات ناقصة للانتقال</h3>
@@ -92,12 +94,14 @@
 {% if animal.status == 'sold' and sale_finance %}
 <div class="card" id="sale-invoice">
   <h3 style="font-size:15px;">بيانات البيع</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><td>السعر</td><td>{{ sale_finance.amount }}</td></tr>
     <tr><td>تاريخ البيع</td><td>{{ sale_finance.date }}</td></tr>
     {% if sale_finance.buyer_name %}<tr><td>المشتري</td><td>{{ sale_finance.buyer_name }}{% if sale_finance.buyer_phone %} — {{ sale_finance.buyer_phone }}{% endif %}</td></tr>{% endif %}
     {% if sale_finance.invoice_number %}<tr><td>رقم الفاتورة</td><td>{{ sale_finance.invoice_number }}</td></tr>{% endif %}
   </table>
+</div>
   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
     {% if sale_finance.no_invoice %}
     <span class="badge off" style="align-self:center;">لا توجد فاتورة لهذا البيع</span>
@@ -116,7 +120,8 @@
 
 <div class="card">
   <h3 style="font-size:15px;">سجل أحداث الدورة</h3>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>التاريخ</th><th>الحدث</th><th>المرحلة</th><th>الحالة</th><th>المتطلب التالي</th></tr>
     {% for e in events %}
     <tr>
@@ -130,5 +135,6 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد أحداث مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

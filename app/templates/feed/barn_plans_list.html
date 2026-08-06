@@ -5,7 +5,8 @@
     <h2>خطط تغذية الحظائر</h2>
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.barn_plans_new') }}">+ خطة جديدة</a>{% endif %}
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الحظيرة</th><th>الوصفة</th><th>كمية/رأس/يوم</th><th>من</th><th>إلى</th></tr>
     {% for p in plans %}
     <tr>
@@ -19,5 +20,6 @@
     <tr><td colspan="5" style="color:#888;">لا يوجد خطط تغذية مسجّلة بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

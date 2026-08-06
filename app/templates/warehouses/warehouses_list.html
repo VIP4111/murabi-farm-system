@@ -9,11 +9,13 @@
     طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً موزَّع (مستودع رئيسي، صيدلية فرعية،
     حظيرة تغذية مباشرة...). للتحويل أو معاينة توزيع صنف معيّن، افتح صفحته من قائمة الأعلاف أو الصيدلية.
   </p>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الاسم</th><th>النوع</th><th>ملاحظة الموقع</th></tr>
     {% for w in warehouses %}
     <tr><td>{{ w.name }}</td><td>{{ type_labels.get(w.warehouse_type, w.warehouse_type) }}</td><td>{{ w.location_note or '-' }}</td></tr>
     {% else %}<tr><td colspan="3" style="color:#888;">لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي.</td></tr>{% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

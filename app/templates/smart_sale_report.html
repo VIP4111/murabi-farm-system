@@ -17,7 +17,8 @@
 </div>
 
 <div class="card">
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الرقم</th><th>الجنس</th><th>الدرجة</th><th>التوصية</th><th>النافذة المقترحة</th><th>السبب</th></tr>
     {% for r in rows %}
     <tr>
@@ -34,5 +35,6 @@
     <tr><td colspan="6" style="color:#888;">لا يوجد حيوانات نشطة لتقييمها.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}

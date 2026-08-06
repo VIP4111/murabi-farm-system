@@ -5,7 +5,8 @@
     <h2>أعضاء الفريق</h2>
     <a class="btn" href="{{ url_for('team.members_new') }}">+ عضو جديد</a>
   </div>
-  <table>
+  <div class="table-scroll">
+<table>
     <tr><th>الاسم</th><th>الجوال</th><th>الدور</th><th>اللغة</th><th>الحالة</th><th></th></tr>
     {% for m in members %}
     <tr>
@@ -28,5 +29,6 @@
     <tr><td colspan="6" style="color:#888;">لا يوجد أعضاء بعد.</td></tr>
     {% endfor %}
   </table>
+</div>
 </div>
 {% endblock %}
