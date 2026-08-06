@@ -3,7 +3,7 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ action_label }}</h2>
-    <a class="btn light" href="{{ url_for('core.animals_list') }}">إلغاء ← رجوع لسجل الحيوانات</a>
+    <a class="btn light" href="{{ url_for('core.animals_bulk_home') }}">إلغاء ← رجوع للإجراء الجماعي</a>
   </div>
   <p style="color:var(--muted); font-size:13px;">هذا الإجراء رح يُطبَّق على {{ animals|length }} رأس محدّدة أدناه.</p>
 </div>

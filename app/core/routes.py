@@ -137,10 +137,11 @@ def today():
     )
 
 
-@core_bp.route("/animals")
-@login_required
-@require_permission("animals.view")
-def animals_list():
+def _animals_list_context(*, bulk_mode: bool) -> dict:
+    """سياق مشترك بين "سجل الحيوانات" (تصفح عادي) و"الإجراء الجماعي"
+    (بند إضافي 132) — نفس منطق الفلترة بالضبط، الفرق الوحيد هو
+    `bulk_mode` اللي يتحكم بعرض عمود التأشير وشريط الإجراء الجماعي
+    بالقالب."""
     from app.health.health_service import animal_under_withdrawal
 
     filter_key = request.args.get("filter", "all")
@@ -157,13 +158,34 @@ def animals_list():
         animals = [a for a in animals if a.barn_id == int(barn_filter_id)]
 
     withdrawal_map = {a.id: animal_under_withdrawal(a.id) for a in animals}
-    return render_template(
-        "animals_list.html", animals=animals, withdrawal_map=withdrawal_map, today=date.today(),
+    return dict(
+        animals=animals, withdrawal_map=withdrawal_map, today=date.today(),
         filters=animal_filters_service.FILTERS, active_filter=filter_key,
         counts=animal_filters_service.get_counts(),
         barns=Barn.query.order_by(Barn.barn_name).all(),
         active_barn_id=int(barn_filter_id) if barn_filter_id else None,
+        bulk_mode=bulk_mode,
     )
+
+
+@core_bp.route("/animals")
+@login_required
+@require_permission("animals.view")
+def animals_list():
+    return render_template("animals_list.html", **_animals_list_context(bulk_mode=False))
+
+
+@core_bp.route("/animals/bulk")
+@login_required
+@require_permission("animals.view")
+def animals_bulk_home():
+    """شاشة "الإجراء الجماعي" (بند إضافي 132) — نفس شاشة سجل الحيوانات
+    بالضبط بس مع شريط التأشير الجماعي، بدل ما تكون مدمجة داخل سجل
+    الحيوانات العادي (كانت قبل هذا البند). مربوطة من القائمة الجانبية
+    بدل رابط "دفعات استقبال جديدة" السابق — شاشة الحجر الصحي نفسها
+    (`batches.batches_list`) لسا موجودة زي ما هي، بس صار الوصول لها عبر
+    زر "🏥 متابعة الحجر الصحي" بأعلى هذي الشاشة بدل رابط جانبي مستقل."""
+    return render_template("animals_list.html", **_animals_list_context(bulk_mode=True))
 
 
 @core_bp.route("/animals/smart-sale")
@@ -212,14 +234,20 @@ BULK_ACTIONS = {
 def animals_bulk_select():
     from app.models import Pharmacy, Doctor, DiseaseType
 
-    animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
     action = request.form.get("bulk_action")
+    # "استقبال دفعة جديدة" (بند إضافي 132) — مو إجراء يُطبَّق على رؤوس
+    # مؤشَّرة مسبقاً (هذي رؤوس جديدة أصلاً لسا ما انسجلت)، فتوجيه مباشر
+    # لنفس نموذج الشراء الجماعي القديم بدل المرور بمنطق التأشير تحت.
+    if action == "new_batch":
+        return redirect(url_for("core.animals_bulk_purchase"))
+
+    animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
     if not animal_ids:
         flash("لازم تحدد رأس واحد على الأقل", "error")
-        return redirect(url_for("core.animals_list"))
+        return redirect(url_for("core.animals_bulk_home"))
     if action not in BULK_ACTIONS:
         flash("إجراء جماعي غير معروف", "error")
-        return redirect(url_for("core.animals_list"))
+        return redirect(url_for("core.animals_bulk_home"))
 
     animals = Animal.query.filter(Animal.id.in_(animal_ids)).order_by(Animal.animal_no).all()
     # عمر كل رأس بالأيام (بند إضافي 60) — يُستخدم بس لعرض/مطابقة جدول
@@ -259,7 +287,7 @@ def animals_bulk_apply_weight():
     )
     done = sum(1 for r in results.values() if r.startswith("تم"))
     flash(f"وزن جماعي: {done} من {len(animal_ids)} تم تسجيلهم", "success")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/vaccination", methods=["POST"])
@@ -282,7 +310,7 @@ def animals_bulk_apply_vaccination():
         pharmacy = Pharmacy.query.get(int(pharmacy_id))
         if not pharmacy or pharmacy.medicine_class != "vaccine":
             flash("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)", "error")
-            return redirect(url_for("core.animals_list"))
+            return redirect(url_for("core.animals_bulk_home"))
         doses = {}
         for animal_id in animal_ids:
             if not request.form.get(f"vaccinated_{slot_no}_{animal_id}"):
@@ -294,7 +322,7 @@ def animals_bulk_apply_vaccination():
 
     if not vaccine_slots:
         flash("لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه", "error")
-        return redirect(url_for("core.animals_list"))
+        return redirect(url_for("core.animals_bulk_home"))
 
     results = bulk_service.apply_bulk_vaccination(
         record_date=record_date, actor_user_id=current_user.id, vaccine_slots=vaccine_slots,
@@ -304,7 +332,7 @@ def animals_bulk_apply_vaccination():
     for (pharmacy_id, animal_id), r in results.items():
         if r.startswith("مرفوض"):
             flash(f"رأس #{animal_id}: {r}", "error")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/note", methods=["POST"])
@@ -323,7 +351,7 @@ def animals_bulk_apply_note():
         extra_notes_by_id=extra_notes_by_id, actor_user_id=current_user.id,
     )
     flash(f"ملاحظة جماعية: أُضيفت لـ{len(results)} رأس", "success")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/barn-move", methods=["POST"])
@@ -335,7 +363,7 @@ def animals_bulk_apply_barn_move():
         animal_ids=animal_ids, barn_id=int(request.form["barn_id"]), actor_user_id=current_user.id,
     )
     flash(f"نقل حظيرة جماعي: تم نقل {len(results)} رأس", "success")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/sale", methods=["POST"])
@@ -360,7 +388,7 @@ def animals_bulk_apply_sale():
             flash(f"رأس #{animal_id}: {r}", "error")
         elif "تنبيه" in r:
             flash(f"رأس #{animal_id}: {r.split('— تنبيه: ')[-1]}", "warning")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/mark-dead", methods=["POST"])
@@ -374,7 +402,7 @@ def animals_bulk_apply_mark_dead():
         reason=request.form.get("reason") or None, actor_user_id=current_user.id,
     )
     flash(f"تسجيل نفوق جماعي: تم تسجيله لـ{len(results)} رأس (بدون شرط اكتمال الدورة)", "success")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/disease", methods=["POST"])
@@ -396,7 +424,7 @@ def animals_bulk_apply_disease():
     for animal_id, r in results.items():
         if r.startswith("مرفوض"):
             flash(f"رأس #{animal_id}: {r}", "error")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/treatment-plan", methods=["POST"])
@@ -460,7 +488,7 @@ def animals_bulk_apply_isolation():
     for animal_id, r in results.items():
         if r.startswith("مرفوض"):
             flash(r, "error")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk/apply/sonar", methods=["POST"])
@@ -484,7 +512,7 @@ def animals_bulk_apply_sonar():
         doctor_id=request.form.get("doctor_id") or None, actor_user_id=current_user.id,
     )
     flash(f"فحص سونار جماعي: تم تسجيله لـ{len(results)} رأس", "success")
-    return redirect(url_for("core.animals_list"))
+    return redirect(url_for("core.animals_bulk_home"))
 
 
 @core_bp.route("/animals/bulk-purchase", methods=["GET", "POST"])
@@ -517,7 +545,7 @@ def animals_bulk_purchase():
         for animal_no, r in results.items():
             if r.startswith("مرفوض"):
                 flash(f"{animal_no}: {r}", "error")
-        return redirect(url_for("core.animals_list"))
+        return redirect(url_for("core.animals_bulk_home"))
 
     return render_template(
         "animals_bulk_purchase.html",

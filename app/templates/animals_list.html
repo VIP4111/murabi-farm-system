@@ -2,12 +2,15 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <h2>سجل الحيوانات</h2>
+    <h2>{{ 'الإجراء الجماعي' if bulk_mode else 'سجل الحيوانات' }}</h2>
     <div style="display:flex; gap:8px;">
+      {% if bulk_mode %}
+      <a class="btn light" href="{{ url_for('batches.batches_list') }}">🏥 متابعة الحجر الصحي</a>
+      {% else %}
       <a class="btn light" href="{{ url_for('core.smart_sale_report') }}">البيع الذكي وتفادي الخسارة</a>
       {% if current_user.has_permission('animals.manage') %}
-      <a class="btn light" href="{{ url_for('core.animals_bulk_purchase') }}">+ شراء دفعة جديدة</a>
       <a class="btn" href="{{ url_for('core.animals_new') }}">+ حيوان جديد</a>
+      {% endif %}
       {% endif %}
     </div>
   </div>
@@ -50,11 +53,13 @@
 </div>
 {% endif %}
 
-{% set can_bulk = current_user.has_permission('animals.manage') or current_user.has_permission('health.manage') or current_user.has_permission('repro.manage') %}
+{% set can_bulk = bulk_mode and (current_user.has_permission('animals.manage') or current_user.has_permission('health.manage') or current_user.has_permission('repro.manage')) %}
 <div class="card">
+  {% if bulk_mode %}
   <form method="post" action="{{ url_for('core.animals_bulk_select') }}" id="bulkForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    {% if can_bulk and animals %}
+  {% endif %}
+    {% if can_bulk %}
     <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px; padding:10px; background:var(--bg); border-radius:14px;">
       <span style="font-size:13px; color:var(--muted);"><span id="selCount">0</span> محدّد</span>
       <select name="bulk_action" style="width:auto; margin:0;">
@@ -64,6 +69,7 @@
         <option value="barn_move">نقل حظيرة جماعي</option>
         <option value="sale">بيع جماعي</option>
         <option value="mark_dead">تسجيل نفوق جماعي</option>
+        <option value="new_batch">استقبال دفعة جديدة</option>
         {% endif %}
         {% if current_user.has_permission('health.manage') %}
         <option value="vaccination">تحصين جماعي</option>
@@ -107,8 +113,9 @@
       {% endfor %}
     </table>
 </div>
-  </form>
+  {% if bulk_mode %}</form>{% endif %}
 </div>
+{% if bulk_mode %}
 <script>
   (function(){
     var selectAll = document.getElementById('selectAll');
@@ -126,4 +133,5 @@
     document.querySelectorAll('.animalChk').forEach(function(c){ c.addEventListener('change', updateCount); });
   })();
 </script>
+{% endif %}
 {% endblock %}

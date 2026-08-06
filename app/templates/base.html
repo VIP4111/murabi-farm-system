@@ -412,7 +412,7 @@
       <div class="drawer-group">
         <div class="drawer-group-title">{{ _('الحلال') }}</div>
         <a class="drawer-link" href="{{ url_for('core.animals_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('الحيوانات') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('batches.batches_list') }}"><span class="drawer-icon">📦</span><span class="drawer-text"><b>{{ _('دفعات استقبال جديدة') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('core.animals_bulk_home') }}"><span class="drawer-icon">📦</span><span class="drawer-text"><b>{{ _('الإجراء الجماعي') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('core.barns_list') }}"><span class="drawer-icon">🏚️</span><span class="drawer-text"><b>{{ _('الحظائر') }}</b></span></a>
         {% if current_user.has_permission('repro.view') %}
         <a class="drawer-link" href="{{ url_for('repro.matings_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('التقريع') }}</b></span></a>
