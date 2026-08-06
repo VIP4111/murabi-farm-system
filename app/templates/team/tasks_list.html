@@ -197,7 +197,7 @@
         </form>
         <form method="post" action="{{ url_for('team.task_delete_final', task_id=t.id) }}" onsubmit="return confirm('{{ _('حذف نهائي — ما يرجع. متأكد؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف نهائي') }}</button>
+          <button class="btn danger" type="submit">{{ _('حذف نهائي') }}</button>
         </form>
       </td>
     </tr>

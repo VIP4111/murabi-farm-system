@@ -55,7 +55,7 @@
     </form>
     <form method="post" action="{{ url_for('team.task_soft_delete', task_id=task.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف') }}</button>
+      <button class="btn danger" type="submit">{{ _('حذف') }}</button>
     </form>
     {% endif %}
 
@@ -99,7 +99,7 @@
     <textarea name="note" rows="2"></textarea>
     <label>{{ _('صورة توضيحية (اختياري)') }}</label>
     <input type="file" name="evidence_image" accept="image/*">
-    <button class="btn" type="submit" style="background:#a32d2d;">{{ _('تسجيل التعذّر') }}</button>
+    <button class="btn danger" type="submit">{{ _('تسجيل التعذّر') }}</button>
   </form>
 </div>
 {% endif %}

@@ -20,7 +20,7 @@
         {% if m.id != current_user.id %}
         <form method="post" action="{{ url_for('team.members_toggle', user_id=m.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="btn" type="submit" style="{% if m.is_active_account %}background:#a32d2d;{% endif %} padding:4px 10px; font-size:12px;">{{ 'تعطيل' if m.is_active_account else 'تفعيل' }}</button>
+          <button class="btn{{ ' danger' if m.is_active_account }}" type="submit" style="padding:4px 10px; font-size:12px;">{{ 'تعطيل' if m.is_active_account else 'تفعيل' }}</button>
         </form>
         {% endif %}
       </td>

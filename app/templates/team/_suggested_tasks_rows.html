@@ -22,7 +22,7 @@
     </form>
     <form method="post" action="{{ url_for('team.task_soft_delete', task_id=t.id) }}" class="js-task-suggested-form">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button class="btn" type="submit" style="background:#a32d2d;">{{ _('حذف') }}</button>
+      <button class="btn danger" type="submit">{{ _('حذف') }}</button>
     </form>
   </td>
 </tr>
