@@ -213,6 +213,43 @@ def record_vaccination(*, actor_user_id, animal_id, vaccine_name, date_, next_du
     return vacc
 
 
+# نطاق الحرارة الطبيعية للمجترات الصغيرة (غنم/ماعز بالغ) — مرجع عام
+# موثّق (بند إضافي 127، المرحلة 2)، يُستخدم للعرض التوجيهي فقط، بدون
+# أي تشخيص أو حساب جرعة. النطاق الطبيعي يتفاوت قليلاً حسب المرجع
+# والعمر والحالة الفسيولوجية — رقم إرشادي عام، مو حداً طبياً قاطعاً.
+NORMAL_TEMP_RANGE_C = (38.5, 40.0)
+
+
+def classify_temperature(temp_c: float | None) -> str | None:
+    """تصنيف نصي بسيط لدرجة حرارة مُدخَلة — عرض توجيهي بشاشة نتيجة
+    التشخيص بس، لا يدخل بحساب الاحتمالات حالياً (مؤجَّل للمرحلة 3
+    "معادلة الوزن الموزونة" حسب الخطة المتفَق عليها)."""
+    if temp_c is None:
+        return None
+    low, high = NORMAL_TEMP_RANGE_C
+    if temp_c < low:
+        return "منخفضة عن الطبيعي"
+    if temp_c > high:
+        return "مرتفعة عن الطبيعي (حمى محتملة)"
+    return "ضمن النطاق الطبيعي"
+
+
+def animal_age_label(animal) -> str | None:
+    """تسمية عمر مبسّطة (نفس منطق `animal_profile_service._age_label`،
+    منسوخة هنا محلياً بدل استيراد دالة خاصة عبر وحدة ثانية) — تُعرض
+    كسياق بشاشة نتيجة التشخيص، بدون أي تأثير على الترتيب حالياً."""
+    if not animal or not animal.birth_date:
+        return None
+    days = (date.today() - animal.birth_date).days
+    if days < 0:
+        return None
+    if days < 60:
+        return f"{days} يوم"
+    if days < 730:
+        return f"{days // 30} شهر"
+    return f"{days // 365} سنة"
+
+
 def related_symptoms(primary_symptom_id: int) -> list[Symptom]:
     """شجرة القرار التشخيصية، الخطوة الثانية (بند إضافي، 2026-07-24) —
     بعد اختيار عرض رئيسي، نجمع كل الأعراض الثانوية المرتبطة بأي مرض

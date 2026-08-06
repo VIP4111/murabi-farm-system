@@ -659,13 +659,17 @@ def diagnose_start():
     الصفحة — بدون جافاسكربت، إعادة تحميل بس."""
     primary_id = request.args.get("primary", type=int)
     secondary_symptoms = health_service.related_symptoms(primary_id) if primary_id else []
+    animal_id = request.args.get("animal_id", type=int)
+    selected_animal = Animal.query.get(animal_id) if animal_id else None
     return render_template(
         "health/diagnose_start.html",
         animals=Animal.query.filter_by(status="active").order_by(Animal.animal_no).all(),
         primary_symptoms=Symptom.query.filter_by(is_primary=True).order_by(Symptom.name).all(),
         selected_primary_id=primary_id,
         secondary_symptoms=secondary_symptoms,
-        animal_id=request.args.get("animal_id", type=int),
+        animal_id=animal_id,
+        temperature=request.args.get("temperature", type=float),
+        selected_animal_age=health_service.animal_age_label(selected_animal),
     )
 
 
@@ -697,12 +701,16 @@ def diagnose_result():
         ).all():
             protocols_by_disease.setdefault(p.disease_type_id, []).append(p)
 
+    temperature = request.form.get("temperature", type=float)
     return render_template(
         "health/diagnose_result.html",
         results=results, animal=animal, entered_symptoms=matched_names,
         free_text=request.form.get("free_text_symptoms"),
         today=date.today().isoformat(),
         emergency=emergency,
+        temperature=temperature,
+        temperature_note=health_service.classify_temperature(temperature),
+        animal_age=health_service.animal_age_label(animal),
         protocols_by_disease=protocols_by_disease,
     )
 

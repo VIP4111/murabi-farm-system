@@ -9,7 +9,14 @@
     ⚠️ <b>ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار النهائي للدكتور المعالج دائماً.</b>
     الأعراض المُدخَلة: {{ entered_symptoms|join('، ') if entered_symptoms else '-' }}
     {% if free_text %}<br>ملاحظة حرة: {{ free_text }}{% endif %}
+    {% if animal_age %}<br>عمر الرأس: {{ animal_age }}{% endif %}
+    {% if temperature is not none %}<br>درجة الحرارة: {{ temperature }}° — {{ temperature_note }}{% endif %}
   </div>
+  {% if temperature is not none and temperature_note == 'مرتفعة عن الطبيعي (حمى محتملة)' %}
+  <p class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">
+    🌡️ الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور.
+  </p>
+  {% endif %}
 </div>
 
 {% if emergency %}

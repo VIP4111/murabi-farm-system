@@ -18,6 +18,13 @@
       <option value="">-</option>
       {% for a in animals %}<option value="{{ a.id }}" {{ 'selected' if animal_id == a.id }}>{{ a.animal_no }}{{ ' — ' + a.name if a.name }}</option>{% endfor %}
     </select>
+    {% if selected_animal_age %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">عمر الرأس: {{ selected_animal_age }}</p>{% endif %}
+
+    <label>درجة الحرارة (اختياري، °C)</label>
+    <input type="number" step="0.1" name="temperature" value="{{ temperature if temperature is not none else '' }}" placeholder="مثال: 39.5">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
+      عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً.
+    </p>
 
     <label>العرض الرئيسي</label>
     <select name="primary" required>
@@ -37,6 +44,7 @@
   <form method="post" action="{{ url_for('health.diagnose_result') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="hidden" name="animal_id" value="{{ animal_id or '' }}">
+    <input type="hidden" name="temperature" value="{{ temperature if temperature is not none else '' }}">
     <input type="hidden" name="symptom_ids" value="{{ selected_primary_id }}">
     {% for s in secondary_symptoms %}
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
