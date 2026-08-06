@@ -213,6 +213,9 @@
     .btn.light{background:#fff; color:var(--primary); border:1px solid var(--line); box-shadow:none;}
     .btn.danger{background:var(--danger);}
     .btn.green{background:var(--green);}
+    /* حالة تحميل عامة عند الإرسال (بند إضافي 130) — يترافق مع سكربت
+       document.addEventListener('submit', ...) بأسفل هذا الملف. */
+    .btn:disabled{opacity:.65; cursor:wait; transform:none;}
 
     .badge{
       display:inline-flex; align-items:center; gap:4px; padding:5px 10px;
@@ -356,6 +359,24 @@
         window.history.replaceState(null, '', url);
       }
     }
+
+    // مؤشر تحميل عام على زر الإرسال (بند إضافي 130) — يمنع الضغط
+    // المزدوج أثناء انتظار رد السيرفر، ويعطي تأكيداً بصرياً فورياً.
+    // مرحلة الفقاعة (bubble) عمداً بمستوى document — تشتغل بعد أي
+    // معالج submit خاص بالفورم نفسه (onsubmit="return confirm(...)"،
+    // فحوصات JS، أو اعتراض offline_sync.js) فتحترم `defaultPrevented`
+    // الصحيح: لو حد من هذول ألغى الإرسال (رفض التأكيد، خطأ تحقّق،
+    // تخزين أوف لاين)، ما تتدخّل ولا تعطّل الزر بلا داعٍ.
+    document.addEventListener('submit', function(e){
+      if (e.defaultPrevented) return;
+      var form = e.target;
+      if (!(form instanceof HTMLFormElement)) return;
+      var btn = form.querySelector('button[type="submit"]');
+      if (!btn || btn.disabled) return;
+      btn.disabled = true;
+      btn.dataset.originalHtml = btn.innerHTML;
+      btn.innerHTML = '⏳ ' + btn.innerHTML;
+    }, false);
   </script>
 </head>
 <body>
