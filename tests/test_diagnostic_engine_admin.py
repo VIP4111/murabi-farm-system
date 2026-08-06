@@ -83,23 +83,21 @@ def test_disease_symptom_link_delete_removes_row(app, client):
     assert DiseaseSymptomLink.query.get(link.id) is None
 
 
-def test_new_fields_do_not_affect_existing_scoring_engine(app):
-    """تأكيد صريح إن المرحلة 1 لا تغيّر سلوك score_diagnoses — التأثير
-    الفعلي لـis_required/is_exclusionary مؤجَّل للمرحلة 3."""
-    disease = make_disease_type("مرض اختبار عدم التأثير")
-    required_symptom = make_symptom("عرض إجباري لم يُدخَل")
-    exclusionary_symptom = make_symptom("عرض استبعادي مُدخَل")
-    other_symptom = make_symptom("عرض عادي")
+def test_required_and_exclusionary_fields_now_affect_scoring_since_phase3(app):
+    """بند إضافي 127 المرحلة 3 — التأثير الفعلي لـis_required/
+    is_exclusionary صار مفعَّلاً (كان مخزَّناً بس بالمرحلة 1). عرض
+    استبعادي مُدخَل يستبعد المرض كلياً من النتائج."""
+    disease = make_disease_type("مرض اختبار التأثير الفعلي")
+    required_symptom = make_symptom("عرض إجباري لم يُدخَل ٢")
+    exclusionary_symptom = make_symptom("عرض استبعادي مُدخَل ٢")
+    other_symptom = make_symptom("عرض عادي ٢")
     link_symptom(disease, required_symptom, weight=2, is_required=True)
     link_symptom(disease, exclusionary_symptom, weight=1, is_exclusionary=True)
     link_symptom(disease, other_symptom, weight=2)
 
-    # المستخدم أدخل العرض الاستبعادي وما أدخل الإجباري — بالمنطق
-    # القديم البسيط (جمع أوزان فقط)، المرض لازم يظهر بالنتيجة عادي.
+    # العرض الاستبعادي مُدخَل -> المرض يُستبعد كلياً من النتائج.
     results = health_service.score_diagnoses(symptom_ids=[exclusionary_symptom.id, other_symptom.id])
-    assert len(results) == 1
-    assert results[0]["disease_type"].name == "مرض اختبار عدم التأثير"
-    assert results[0]["score"] == 3
+    assert results == []
 
 
 def test_disease_type_detail_page_permission_gated_for_management(app, client):

@@ -269,29 +269,68 @@ def related_symptoms(primary_symptom_id: int) -> list[Symptom]:
     return Symptom.query.filter(Symptom.id.in_(symptom_ids)).order_by(Symptom.name).all()
 
 
-def score_diagnoses(*, symptom_ids: list[int]) -> list[dict]:
-    """محرك التطابق (بند إضافي، 2026-07-24) — يجمع أوزان الأعراض
-    المُدخَلة لكل مرض ويرتّبها تنازلياً. **مطابقة أنماط ضد مرجع معرفة
-    عامة موثّقة، مو تشخيصاً مخبرياً مؤكَّداً** — النتيجة تبقى اقتراحاً
-    يحتاج مراجعة الدكتور وإغلاقاً فعلياً بعد تعافٍ موثّق (`Disease.status`،
-    قاعدة 12.3 الموجودة أصلاً)."""
+# معامل السياق (بند إضافي 127، المرحلة 3) — حرارة مرتفعة (حمى محتملة)
+# ترفع احتمالية الحالات الالتهابية/المعدية بشكل عام، نفس التنبيه
+# النصي اللي أضفناه بالمرحلة 2. رقم بسيط وموثَّق، مو معادلة طبية دقيقة.
+FEVER_CONTEXT_MULTIPLIER = 1.15
+
+
+def score_diagnoses(*, symptom_ids: list[int], temperature: float | None = None) -> list[dict]:
+    """محرك التطابق (بند إضافي، 2026-07-24؛ معادلة موزونة بند إضافي 127
+    المرحلة 3) — لكل مرض له عرض مطابق واحد على الأقل:
+    1. `raw_score` = مجموع أوزان الأعراض المطابقة (نفس المنطق القديم،
+       يبقى بحقل `score` للتوافق الخلفي).
+    2. **غرامة** = مجموع أوزان أي "عرض إجباري" مرتبط بالمرض بس ما
+       دخل بأعراض المستخدم.
+    3. **استبعاد كامل** لو أي "عرض استبعادي" مرتبط بالمرض دخل فعلاً
+       بأعراض المستخدم — المرض ما يظهر بالنتائج إطلاقاً.
+    4. الناتج (بعد الغرامة) يُضرب بمعامل السياق (حمى محتملة فقط حالياً).
+    5. **النسبة المئوية** = الناتج ÷ أقصى نقاط ممكنة لهذا المرض (مجموع
+       أوزان *كل* أعراضه المعروفة، مو المطابقة بس) — 0-100، مقرَّبة.
+
+    **يبقى مرجع مطابقة أنماط، مو تشخيصاً مخبرياً مؤكَّداً** — النتيجة
+    اقتراح يحتاج مراجعة الدكتور وإغلاقاً فعلياً بعد تعافٍ موثّق
+    (`Disease.status`، قاعدة 12.3 الموجودة أصلاً)."""
     if not symptom_ids:
         return []
-    links = DiseaseSymptomLink.query.filter(DiseaseSymptomLink.symptom_id.in_(symptom_ids)).all()
-    scores: dict[int, dict] = {}
-    for link in links:
-        entry = scores.setdefault(link.disease_type_id, {"score": 0, "matched_symptoms": []})
-        entry["score"] += link.weight
-        entry["matched_symptoms"].append(link.symptom.name)
+    entered = set(symptom_ids)
+    matched_links = DiseaseSymptomLink.query.filter(DiseaseSymptomLink.symptom_id.in_(symptom_ids)).all()
+    disease_ids = {link.disease_type_id for link in matched_links}
+    if not disease_ids:
+        return []
+    all_links = DiseaseSymptomLink.query.filter(DiseaseSymptomLink.disease_type_id.in_(disease_ids)).all()
+    links_by_disease: dict[int, list] = {}
+    for link in all_links:
+        links_by_disease.setdefault(link.disease_type_id, []).append(link)
+
+    context_multiplier = 1.0
+    if temperature is not None and classify_temperature(temperature) == "مرتفعة عن الطبيعي (حمى محتملة)":
+        context_multiplier = FEVER_CONTEXT_MULTIPLIER
 
     results = []
-    for disease_type_id, data in scores.items():
+    for disease_type_id, links in links_by_disease.items():
+        matched = [l for l in links if l.symptom_id in entered]
+        if not matched:
+            continue
+        if any(l.is_exclusionary and l.symptom_id in entered for l in links):
+            continue
+
+        raw_score = sum(l.weight for l in matched)
+        missing_required = [l for l in links if l.is_required and l.symptom_id not in entered]
+        penalty = sum(l.weight for l in missing_required)
+        adjusted = max(0, raw_score - penalty) * context_multiplier
+        max_possible = sum(l.weight for l in links) or 1
+        match_percent = round(min(100, (adjusted / max_possible) * 100))
+
         results.append({
             "disease_type": DiseaseType.query.get(disease_type_id),
-            "score": data["score"],
-            "matched_symptoms": data["matched_symptoms"],
+            "score": raw_score,
+            "match_percent": match_percent,
+            "matched_symptoms": [l.symptom.name for l in matched],
+            "missing_required_symptoms": [l.symptom.name for l in missing_required],
+            "context_boosted": context_multiplier > 1.0,
         })
-    results.sort(key=lambda r: -r["score"])
+    results.sort(key=lambda r: (-r["match_percent"], -r["score"]))
     return results
 
 

@@ -678,7 +678,8 @@ def diagnose_start():
 @require_permission("health.manage")
 def diagnose_result():
     symptom_ids = [int(x) for x in request.form.getlist("symptom_ids")]
-    results = health_service.score_diagnoses(symptom_ids=symptom_ids)
+    temperature = request.form.get("temperature", type=float)
+    results = health_service.score_diagnoses(symptom_ids=symptom_ids, temperature=temperature)
     animal = Animal.query.get(int(request.form["animal_id"])) if request.form.get("animal_id") else None
     matched_names = [s.name for s in Symptom.query.filter(Symptom.id.in_(symptom_ids)).all()] if symptom_ids else []
 
@@ -701,7 +702,6 @@ def diagnose_result():
         ).all():
             protocols_by_disease.setdefault(p.disease_type_id, []).append(p)
 
-    temperature = request.form.get("temperature", type=float)
     return render_template(
         "health/diagnose_result.html",
         results=results, animal=animal, entered_symptoms=matched_names,
