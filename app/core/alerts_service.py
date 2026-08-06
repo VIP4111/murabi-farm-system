@@ -186,6 +186,29 @@ def _delayed_estrus(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+def _incomplete_animal_data() -> list[dict]:
+    """بيانات ناقصة (بند إضافي 135) — الحفظ يبقى بدون أي شرط (قرارك
+    الصريح: خلني أسجل عادي)، بس أي رأس ناقص حقل مهم (جنس/وزن/غرض، +
+    سعر للشراء/الهدية/الرصيد الافتتاحي بس، مو المولود) يطلع له تنبيه
+    هنا فوراً — نفس منطق `data_completeness_service.missing_fields`
+    بالضبط، مكان واحد بس للفحص."""
+    from app.core import data_completeness_service as dcs
+
+    alerts = []
+    for a in Animal.query.filter_by(status="active").all():
+        missing = dcs.missing_fields(a)
+        if not missing:
+            continue
+        missing_labels = "، ".join(dcs.FIELD_LABELS_AR[f] for f in missing)
+        alerts.append({
+            "category": "بيانات ناقصة", "icon": "📋",
+            "label": f"{a.animal_no} — ناقصها: {missing_labels}",
+            "detail": "أكمّل هذي البيانات من شاشة تعديل الحيوان.",
+            "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
+        })
+    return alerts
+
+
 def _barns_without_responsible_worker() -> list[dict]:
     """حظيرة بدون عامل مسؤول (بند إضافي 56) — الحقل اختياري عمداً بشاشة
     إنشاء/تعديل الحظيرة، لكن بدونه ما توجّه له أي مهام تلقائية (بند 27)
@@ -456,6 +479,10 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     from app.core import barn_physiology_service
     barn_physiology_service.generate_barn_move_tasks()
 
+    # بيانات ناقصة (بند إضافي 135) — نفس الفلسفة.
+    from app.core import data_completeness_service
+    data_completeness_service.generate_completion_tasks()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
@@ -463,6 +490,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
         + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
         + _failed_tasks_pending_review() + _isolation_without_barn()
+        + _incomplete_animal_data()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)

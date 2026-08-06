@@ -44,7 +44,7 @@ def test_weight_loss_is_always_urgent(app):
     _add_weights(losing, 20, daily_gain=-0.1)
 
     alerts = get_alerts()
-    matching = [a for a in alerts if "LOSS-01" in a["label"]]
+    matching = [a for a in alerts if a["category"] == "تباطؤ نمو مشبوه" and "LOSS-01" in a["label"]]
     assert len(matching) == 1
     assert matching[0]["urgent"] is True
 
@@ -72,5 +72,5 @@ def test_animal_with_single_weight_record_ignored(app):
     db.session.commit()
 
     alerts = get_alerts()
-    matching = [a for a in alerts if "ONE-03" in a["label"]]
+    matching = [a for a in alerts if a["category"] == "تباطؤ نمو مشبوه" and "ONE-03" in a["label"]]
     assert len(matching) == 0
