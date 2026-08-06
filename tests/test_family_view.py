@@ -2,7 +2,7 @@
 لمستخدم مسنّ. المهام صارت مبوَّبة حسب الدور (صاحب الحلال/الطبيب/العامل)
 بدل حسب كل عامل لحاله، والمخزون صار 3 أقسام (علف/صيدلية/معدات) بمعدل
 استهلاك يوم/شهر، مع أزرار تأجيل/إلغاء فعلية للمهام المفتوحة."""
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 from app.extensions import db
 from app.models import Task
@@ -34,6 +34,21 @@ def test_worker_completed_today_shows_lock_and_note(app, logged_in_client, worke
     assert "مهمة منجزة اختبار" in body
     assert "خلصت زي ما تبي" in body
     assert "قفل المهمة" in body
+
+
+def test_completed_at_utc_near_local_midnight_still_shown_today(app, logged_in_client, worker):
+    """completed_at يُخزَّن UTC (راجع _now() بـ app/team/task_service.py) بينما
+    "اليوم" هنا date.today() محلي — بخادم بتوقيت أمام UTC (هذا الجهاز +3)،
+    أول ساعات بعد منتصف الليل المحلي كانت func.date(completed_at) == today
+    القديمة تفوّت المهمة لأن تاريخ UTC الخام لسه "أمس". يتحقق من الإصلاح
+    باستخدام وقت UTC حقيقي حالي، بدون أي محاكاة للساعة."""
+    t = Task(title="مهمة إنجاز الآن اختبار", task_type="custom", status="done",
+              assignee_id=worker.id, completed_at=datetime.now(timezone.utc))
+    db.session.add(t)
+    db.session.commit()
+
+    resp = logged_in_client.get("/family-view")
+    assert "مهمة إنجاز الآن اختبار" in resp.data.decode()
 
 
 def test_old_done_task_not_shown(app, logged_in_client, worker):
