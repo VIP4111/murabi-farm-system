@@ -390,6 +390,54 @@ def disease_type_detail(disease_id):
     )
 
 
+@health_bp.route("/disease-types/link-wizard", methods=["GET", "POST"])
+@login_required
+@require_permission("medical_options.manage")
+def link_wizard():
+    """معالج تفاعلي خطوة بخطوة (بند إضافي 127، تكملة) — بديل شاشة
+    الجدول لمن يفضّل تدفّق أسئلة مبسّط: مرض ← أعراض (اختيار متعدد) ←
+    قوة العرض ← خيارات الأمان، بنفس الحقول والقيود الموجودة أصلاً
+    (وزن 1-3، إجباري/استبعادي/عزل). خطوات الواجهة كلها JS بلا تنقّل
+    صفحات — POST واحد بالنهاية ينشئ رابط لكل عرض مختار بنفس القيم."""
+    if request.method == "POST":
+        disease = DiseaseType.query.get_or_404(request.form.get("disease_id", type=int))
+        symptom_ids = [int(x) for x in request.form.getlist("symptom_ids")]
+        if not symptom_ids:
+            flash("لازم تختار عرض واحد على الأقل", "error")
+            return redirect(url_for("health.link_wizard"))
+        weight = max(1, min(3, request.form.get("weight", type=int) or 2))
+        is_required = bool(request.form.get("is_required"))
+        is_exclusionary = bool(request.form.get("is_exclusionary"))
+        requires_isolation = bool(request.form.get("requires_isolation"))
+
+        created, updated = 0, 0
+        for symptom_id in symptom_ids:
+            link = DiseaseSymptomLink.query.filter_by(disease_type_id=disease.id, symptom_id=symptom_id).first()
+            if link:
+                link.weight, link.is_required = weight, is_required
+                link.is_exclusionary, link.requires_isolation = is_exclusionary, requires_isolation
+                updated += 1
+            else:
+                db.session.add(DiseaseSymptomLink(
+                    disease_type_id=disease.id, symptom_id=symptom_id, weight=weight,
+                    is_required=is_required, is_exclusionary=is_exclusionary,
+                    requires_isolation=requires_isolation,
+                ))
+                created += 1
+        db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.wizard_batch",
+                                 entity_type="DiseaseType", entity_id=disease.id,
+                                 details=f"{disease.name}: +{created} جديد، {updated} محدَّث"))
+        db.session.commit()
+        flash(f"تم — {created} رابط جديد و{updated} تحديث لمرض {disease.name}", "success")
+        return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
+
+    return render_template(
+        "health/disease_link_wizard.html",
+        diseases=DiseaseType.query.order_by(DiseaseType.name).all(),
+        symptoms=Symptom.query.order_by(Symptom.name).all(),
+    )
+
+
 @health_bp.route("/disease-types/<int:disease_id>/links/new", methods=["POST"])
 @login_required
 @require_permission("medical_options.manage")
@@ -408,6 +456,7 @@ def disease_symptom_link_new(disease_id):
         weight=max(1, min(3, request.form.get("weight", type=int) or 1)),
         is_required=bool(request.form.get("is_required")),
         is_exclusionary=bool(request.form.get("is_exclusionary")),
+        requires_isolation=bool(request.form.get("requires_isolation")),
     )
     db.session.add(link)
     db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.create",
@@ -425,6 +474,7 @@ def disease_symptom_link_update(link_id):
     link.weight = max(1, min(3, request.form.get("weight", type=int) or 1))
     link.is_required = bool(request.form.get("is_required"))
     link.is_exclusionary = bool(request.form.get("is_exclusionary"))
+    link.requires_isolation = bool(request.form.get("requires_isolation"))
     db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.update",
                              entity_type="DiseaseSymptomLink", entity_id=link.id))
     db.session.commit()

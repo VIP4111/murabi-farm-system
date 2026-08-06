@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>الأمراض الشائعة (قائمة الاقتراحات)</h2>
-    {% if current_user.has_permission('medical_options.manage') %}
-    <a class="btn" href="{{ url_for('health.disease_types_new') }}">+ إضافة مرض</a>
-    {% endif %}
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      {% if current_user.has_permission('medical_options.manage') %}
+      <a class="btn light" href="{{ url_for('health.link_wizard') }}">🧭 معالج ربط عرض بمرض</a>
+      <a class="btn" href="{{ url_for('health.disease_types_new') }}">+ إضافة مرض</a>
+      {% endif %}
+    </div>
   </div>
   <p style="color:var(--muted); font-size:13px;">
     مرجع اقتراحات فقط لتسريع تسجيل "اسم المرض" بشاشة الأمراض — أي اسم

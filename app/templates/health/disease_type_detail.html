@@ -3,7 +3,12 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ disease.name }}</h2>
-    <a class="btn light" href="{{ url_for('health.disease_types_list') }}">← كل الأمراض</a>
+    <div style="display:flex; gap:8px;">
+      {% if current_user.has_permission('medical_options.manage') %}
+      <a class="btn light" href="{{ url_for('health.link_wizard') }}">🧭 المعالج التفاعلي</a>
+      {% endif %}
+      <a class="btn light" href="{{ url_for('health.disease_types_list') }}">← كل الأمراض</a>
+    </div>
   </div>
   {% if disease.notes %}<p style="color:var(--muted); font-size:13px;">{{ disease.notes }}</p>{% endif %}
   <p class="notice" style="font-size:12.5px;">
@@ -34,6 +39,9 @@
           <label style="display:flex; align-items:center; gap:4px; font-weight:normal; margin:0;">
             <input type="checkbox" name="is_exclusionary" value="1" {{ 'checked' if l.is_exclusionary }} style="width:auto; margin:0;"> استبعادي
           </label>
+          <label style="display:flex; align-items:center; gap:4px; font-weight:normal; margin:0;">
+            <input type="checkbox" name="requires_isolation" value="1" {{ 'checked' if l.requires_isolation }} style="width:auto; margin:0;"> يتطلب عزل فوري
+          </label>
           <button class="btn light" type="submit" style="padding:6px 12px; font-size:12px;">حفظ</button>
         </form>
       </td>
@@ -52,15 +60,16 @@
   {% else %}
   <div class="table-scroll">
   <table>
-    <tr><th>العرض</th><th>الوزن</th><th>إجباري</th><th>استبعادي</th></tr>
+    <tr><th>العرض</th><th>الوزن</th><th>إجباري</th><th>استبعادي</th><th>عزل فوري</th></tr>
     {% for l in links %}
     <tr>
       <td>{{ l.symptom.name }}</td><td>{{ l.weight }}</td>
       <td>{{ 'نعم' if l.is_required else '-' }}</td>
       <td>{{ 'نعم' if l.is_exclusionary else '-' }}</td>
+      <td>{{ 'نعم' if l.requires_isolation else '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">ما فيه أعراض مربوطة بهذا المرض بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">ما فيه أعراض مربوطة بهذا المرض بعد.</td></tr>
     {% endfor %}
   </table>
   </div>
@@ -85,6 +94,9 @@
     </label>
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
       <input type="checkbox" name="is_exclusionary" value="1" style="width:auto; margin:0;"> استبعادي
+    </label>
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+      <input type="checkbox" name="requires_isolation" value="1" style="width:auto; margin:0;"> يتطلب عزل فوري
     </label>
     <button class="btn" type="submit">ربط العرض</button>
   </form>

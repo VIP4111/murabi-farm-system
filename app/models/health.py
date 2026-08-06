@@ -62,6 +62,13 @@ class DiseaseSymptomLink(db.Model):
     is_required = db.Column(db.Boolean, default=False, nullable=False)
     is_exclusionary = db.Column(db.Boolean, default=False, nullable=False)
 
+    # المعالج التفاعلي (بند إضافي 127، تكملة) — علم صريح على مستوى
+    # الرابط نفسه (مرض+عرض)، مختلف عن EMERGENCY_SYMPTOMS بـhealth_service
+    # (قائمة أسماء أعراض عامة تعزل بغض النظر عن المرض). لسا غير مفعَّل
+    # بمسار العزل التلقائي الفعلي — تخزين وعرض بس بهذي المرحلة، نفس
+    # حال is_required/is_exclusionary.
+    requires_isolation = db.Column(db.Boolean, default=False, nullable=False)
+
     __table_args__ = (db.UniqueConstraint("disease_type_id", "symptom_id", name="uq_disease_symptom"),)
 
 

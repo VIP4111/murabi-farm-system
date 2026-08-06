@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .wiz-step{display:none;}
+  .wiz-step.active{display:block;}
+  .wiz-progress{display:flex; gap:6px; margin-bottom:16px;}
+  .wiz-progress span{flex:1; height:5px; border-radius:99px; background:var(--line);}
+  .wiz-progress span.done{background:var(--primary);}
+  .choice-btn{
+    display:block; width:100%; text-align:right; border:1.5px solid var(--line); background:#fff;
+    border-radius:16px; padding:14px 16px; margin-bottom:8px; font-weight:800; font-size:14.5px;
+    cursor:pointer; color:var(--text);
+  }
+  .choice-btn.selected{border-color:var(--primary); background:#f7efe4; color:var(--primary);}
+  .symptom-check{
+    display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); background:#fff;
+    border-radius:14px; padding:11px 14px; margin-bottom:6px; cursor:pointer;
+  }
+  .symptom-check input{width:auto; margin:0;}
+  .symptom-check.selected{border-color:var(--primary); background:#f7efe4;}
+  .wiz-nav{display:flex; justify-content:space-between; gap:10px; margin-top:18px;}
+</style>
+
+<div class="card" style="max-width:520px; margin:0 auto;">
+  <h2>معالج ربط عرض بمرض</h2>
+  <div class="wiz-progress">
+    <span id="prog1"></span><span id="prog2"></span><span id="prog3"></span><span id="prog4"></span>
+  </div>
+
+  <form method="post" id="wizForm">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="disease_id" id="diseaseIdInput" required>
+    <input type="hidden" name="weight" id="weightInput" value="2">
+    <input type="hidden" name="is_required" id="isRequiredInput" value="">
+    <input type="hidden" name="is_exclusionary" id="isExclusionaryInput" value="">
+    <input type="hidden" name="requires_isolation" id="requiresIsolationInput" value="">
+
+    <!-- الخطوة 1: اختيار المرض -->
+    <div class="wiz-step active" data-step="1">
+      <label>وش المرض؟</label>
+      <select id="diseaseSelect" required>
+        <option value="">اختر مرض</option>
+        {% for d in diseases %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
+      </select>
+      <div class="wiz-nav" style="justify-content:flex-end;">
+        <button type="button" class="btn" data-next="2">التالي ←</button>
+      </div>
+    </div>
+
+    <!-- الخطوة 2: اختيار الأعراض -->
+    <div class="wiz-step" data-step="2">
+      <label>وش الأعراض المرتبطة؟ (اختر كل ما ينطبق)</label>
+      <div id="symptomChecks">
+        {% for s in symptoms %}
+        <label class="symptom-check">
+          <input type="checkbox" name="symptom_ids" value="{{ s.id }}">
+          {{ s.name }}{% if s.is_primary %} <span class="badge on" style="font-size:10px;">رئيسي</span>{% endif %}
+        </label>
+        {% endfor %}
+      </div>
+      <div class="wiz-nav">
+        <button type="button" class="btn light" data-prev="1">→ السابق</button>
+        <button type="button" class="btn" data-next="3" id="toStep3Btn">التالي ←</button>
+      </div>
+    </div>
+
+    <!-- الخطوة 3: قوة العرض -->
+    <div class="wiz-step" data-step="3">
+      <label>قد وش قوة دلالة هذي الأعراض على المرض؟</label>
+      <button type="button" class="choice-btn" data-weight="1">عرض عام</button>
+      <button type="button" class="choice-btn" data-weight="2">عرض متوسط</button>
+      <button type="button" class="choice-btn" data-weight="3">عرض قوي ومؤكد</button>
+      <div class="wiz-nav">
+        <button type="button" class="btn light" data-prev="2">→ السابق</button>
+        <button type="button" class="btn" data-next="4">التالي ←</button>
+      </div>
+    </div>
+
+    <!-- الخطوة 4: خيارات الأمان والتشغيل -->
+    <div class="wiz-step" data-step="4">
+      <label>عرض أساسي للتشخيص؟ (لازم يكون موجود عشان يُشتبه بالمرض)</label>
+      <button type="button" class="choice-btn" data-toggle="isRequiredInput" data-val="1">نعم — أساسي</button>
+      <button type="button" class="choice-btn selected" data-toggle="isRequiredInput" data-val="">لا</button>
+
+      <label style="margin-top:16px;">عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)</label>
+      <button type="button" class="choice-btn" data-toggle="isExclusionaryInput" data-val="1">نعم — يلغيه</button>
+      <button type="button" class="choice-btn selected" data-toggle="isExclusionaryInput" data-val="">لا</button>
+
+      <label style="margin-top:16px;">يتطلب عزل الحيوان فوراً؟</label>
+      <button type="button" class="choice-btn" data-toggle="requiresIsolationInput" data-val="1">نعم — عزل فوري</button>
+      <button type="button" class="choice-btn selected" data-toggle="requiresIsolationInput" data-val="">لا</button>
+
+      <div class="wiz-nav">
+        <button type="button" class="btn light" data-prev="3">→ السابق</button>
+        <button class="btn" type="submit">حفظ والانتهاء</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+  var steps = document.querySelectorAll('.wiz-step');
+  var progressBars = [document.getElementById('prog1'), document.getElementById('prog2'), document.getElementById('prog3'), document.getElementById('prog4')];
+
+  function showStep(n){
+    steps.forEach(function(s){ s.classList.toggle('active', s.dataset.step === String(n)); });
+    progressBars.forEach(function(p, i){ p.classList.toggle('done', i < n); });
+  }
+
+  document.querySelectorAll('[data-next]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var current = btn.closest('.wiz-step').dataset.step;
+      if (current === '1' && !document.getElementById('diseaseSelect').value) {
+        alert('اختر مرض أولاً'); return;
+      }
+      if (current === '2' && document.querySelectorAll('#symptomChecks input:checked').length === 0) {
+        alert('اختر عرض واحد على الأقل'); return;
+      }
+      showStep(btn.dataset.next);
+    });
+  });
+  document.querySelectorAll('[data-prev]').forEach(function(btn){
+    btn.addEventListener('click', function(){ showStep(btn.dataset.prev); });
+  });
+
+  document.getElementById('diseaseSelect').addEventListener('change', function(){
+    document.getElementById('diseaseIdInput').value = this.value;
+  });
+
+  document.querySelectorAll('.symptom-check').forEach(function(row){
+    var box = row.querySelector('input');
+    box.addEventListener('change', function(){ row.classList.toggle('selected', box.checked); });
+  });
+
+  document.querySelectorAll('[data-weight]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('[data-weight]').forEach(function(b){ b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      document.getElementById('weightInput').value = btn.dataset.weight;
+    });
+  });
+  document.querySelector('[data-weight="2"]').classList.add('selected');
+
+  document.querySelectorAll('[data-toggle]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var group = document.querySelectorAll('[data-toggle="' + btn.dataset.toggle + '"]');
+      group.forEach(function(b){ b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      document.getElementById(btn.dataset.toggle).value = btn.dataset.val;
+    });
+  });
+
+  showStep(1);
+})();
+</script>
+{% endblock %}

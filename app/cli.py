@@ -2,6 +2,7 @@ import click
 from app.extensions import db
 from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate
 from app.permissions_registry import PERMISSIONS, DEFAULT_ROLES
+from app.disease_library_data import DISEASE_LIBRARY_V2, DISEASE_ALIAS_MAP
 
 # مهام يومية ثابتة افتراضية (بند إضافي 107) — كانت مكتوبة بالكود مباشرة
 # بـdaily_task_service._rule_definitions قبل هذا البند؛ صارت بيانات
@@ -183,4 +184,43 @@ def register_cli(app):
                 db.session.add(DailyTaskTemplate(title=title, notes=notes, sort_order=order))
 
         db.session.commit()
+
+        # 7) مكتبة الأمراض الموسّعة (بند إضافي 127، تكملة) — تدمج بأمراض
+        # موجودة أصلاً حسب DISEASE_ALIAS_MAP، أو تنشئ مرض جديد. بيانات
+        # الدواء/الجرعة تُخزَّن كنص مرجعي بـ`notes` فقط (راجع التوثيق
+        # بأعلى app/disease_library_data.py لسبب عدم إنشاء TreatmentProtocol
+        # تلقائياً). كل خطوة idempotent — إعادة تشغيل seed ما تكرر شي.
+        for entry in DISEASE_LIBRARY_V2:
+            target_name = DISEASE_ALIAS_MAP.get(entry["disease_name"], entry["disease_name"])
+            disease = DiseaseType.query.filter_by(name=target_name).first()
+            med_note = (
+                f"دواء مرجعي: {entry['medication_name']}\n"
+                f"الجرعة المرجعية: {entry['standard_dosage_note']}\n"
+                f"طريقة الإعطاء: {entry['administration_route']}\n"
+                f"فترة السحب: {entry['withdrawal_period']}\n"
+                + "\n".join(f"• {i}" for i in entry["operational_instructions"])
+            )
+            if not disease:
+                disease = DiseaseType(name=target_name, notes=med_note)
+                db.session.add(disease)
+                db.session.flush()
+            elif not disease.notes:
+                disease.notes = med_note
+
+            for sym in entry["symptoms"]:
+                symptom = Symptom.query.filter_by(name=sym["name"]).first()
+                if not symptom:
+                    symptom = Symptom(name=sym["name"], is_primary=False)
+                    db.session.add(symptom)
+                    db.session.flush()
+                link_exists = DiseaseSymptomLink.query.filter_by(
+                    disease_type_id=disease.id, symptom_id=symptom.id,
+                ).first()
+                if not link_exists:
+                    db.session.add(DiseaseSymptomLink(
+                        disease_type_id=disease.id, symptom_id=symptom.id,
+                        weight=min(3, sym["weight"]),
+                    ))
+        db.session.commit()
+
         click.echo("تمت التهيئة بنجاح.")
