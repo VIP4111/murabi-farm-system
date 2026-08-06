@@ -33,6 +33,28 @@
   </p>
   {% endif %}
 
+  {% if ctx.feeding_blend %}
+  <hr>
+  <p><b>🌾 {{ _('خلطة اليوم المقترحة (تُحسب تلقائياً من المخزون الفعلي)') }}</b></p>
+  {% if ctx.feeding_blend.feasible %}
+  <p style="color:var(--muted); font-size:12px;">{{ _('محسوبة لـ') }} {{ ctx.feeding_blend.animals_included }} {{ _('رأس نشط عندهم وزن مسجّل') }}{% if ctx.feeding_blend.animals_skipped %} — {{ ctx.feeding_blend.animals_skipped }} {{ _('رأس بدون وزن مسجّل استُثنوا من الحساب') }}{% endif %}.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>{{ _('المكوّن') }}</th><th>{{ _('الكمية (كجم)') }}</th><th>{{ _('النسبة') }}</th><th></th></tr>
+    {% for b in ctx.feeding_blend.blend %}
+    <tr>
+      <td>{{ b.feed.name }}</td><td>{{ b.quantity_kg }}</td><td>{{ b.percent }}%</td>
+      <td>{% if not b.stock_ok %}<span class="badge off">⚠️ {{ _('المخزون لا يكفي') }}</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <p style="color:var(--muted); font-size:12px;">{{ _('إجمالي التكلفة اليومية التقديرية:') }} {{ ctx.feeding_blend.total_daily_cost }}</p>
+  {% else %}
+  <p class="notice">{{ ctx.feeding_blend.reason }}</p>
+  {% endif %}
+  {% endif %}
+
   {% if ctx.next_action %}
   <p style="color:var(--muted); font-size:13px;">➡️ <b>{{ _('المهمة التالية بالسلسلة:') }}</b> {{ ctx.next_action }}</p>
   {% endif %}

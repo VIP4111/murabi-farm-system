@@ -210,6 +210,48 @@ def record_movement(*, feed: Feed, movement_type: str, quantity: float, barn_id=
     return mv
 
 
+def barn_daily_blend(*, barn_id: int) -> dict:
+    """خلطة علف يومية **مجمَّعة لكل الحظيرة** (بند إضافي 134) — الفرق
+    عن `optimizer()` الموجودة أصلاً: تلك تحسب لرأس واحد يختاره المستخدم
+    يدوياً، هذي تجمع احتياج كل الرؤوس النشطة بالحظيرة (كل رأس بوزنه
+    وحالته الفسيولوجية المستنتجة تلقائياً عبر `infer_physiological_state`)
+    بطلب واحد لـ`optimize_blend` — نفس فلسفة "النظام يقرر" اللي طلبتها،
+    بدون ما تحتاج تفتح الحاسبة لكل رأس لحاله. النعام مستثنى (أهدافه
+    الغذائية مختلفة تماماً عن المجترات، نفس استثناء فلتر "المرضعات")."""
+    from app.models import Animal
+
+    animals = Animal.query.filter_by(barn_id=barn_id, status="active").filter(Animal.species != "ostrich").all()
+    with_weight = [a for a in animals if a.weight]
+    skipped_no_weight = len(animals) - len(with_weight)
+
+    if not with_weight:
+        return {
+            "feasible": False,
+            "reason": "ما فيه رؤوس نشطة بهذي الحظيرة عندها وزن مسجَّل — سجّل وزن الرؤوس أولاً.",
+            "animals_included": 0, "animals_skipped": skipped_no_weight,
+        }
+
+    requirements = [
+        daily_requirement(weight_kg=a.weight, state=infer_physiological_state(a))
+        for a in with_weight
+    ]
+    total_dmi = sum(r["daily_dry_matter_kg"] for r in requirements)
+    target_protein = sum(r["target_protein_percent"] * r["daily_dry_matter_kg"] for r in requirements) / total_dmi
+    target_energy = sum(r["target_energy_kcal_per_kg"] * r["daily_dry_matter_kg"] for r in requirements) / total_dmi
+
+    aggregate_requirement = {
+        "state": "barn_aggregate",
+        "daily_dry_matter_kg": round(total_dmi, 3),
+        "target_protein_percent": round(target_protein, 2),
+        "target_energy_kcal_per_kg": round(target_energy, 1),
+    }
+    usable_feeds = Feed.query.filter_by(status="active").all()
+    result = optimize_blend(requirement=aggregate_requirement, feeds=usable_feeds)
+    result["animals_included"] = len(with_weight)
+    result["animals_skipped"] = skipped_no_weight
+    return result
+
+
 def optimize_blend(*, requirement: dict, feeds: list, max_fraction: float = 0.6) -> dict:
     """موازِن العليقة التلقائي (بند إضافي، 2026-07-24) — يحل "مسألة
     الحمية" (Diet Problem) الكلاسيكية ببرمجة خطية حقيقية

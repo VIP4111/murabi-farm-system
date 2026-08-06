@@ -204,6 +204,16 @@ def task_rich_context(task: Task) -> dict:
                 f"{FarmSettings.get().reweigh_followup_days} يوماً للتأكد من استجابة العلاج."
             ),
         })
+
+    # خلطة العلف المقترحة لليوم (بند إضافي 134) — معاينة قبل الإنجاز
+    # عشان العامل يعرف شنو ويش كمية يجيب فعلياً من المخزن قبل ما يضغط
+    # "تم"، مو مفاجأة بعد الخصم. نفس الحساب اللي يشتغل فعلياً وقت
+    # `complete_task` (`_distribute_barn_feed`) — بس هنا مجرد عرض بدون
+    # أي خصم أو تسجيل حركة.
+    if task.task_type == "feeding_schedule" and task.barn_id:
+        from app.feed import feed_service as feed_svc
+        ctx["feeding_blend"] = feed_svc.barn_daily_blend(barn_id=task.barn_id)
+
     return ctx
 
 
@@ -314,6 +324,9 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
 
     if task.task_type == "barn_physiology_move" and task.animal_id:
         _move_barn_physiology(task)
+
+    if task.task_type == "feeding_schedule" and task.barn_id:
+        _distribute_barn_feed(task)
 
     if task.task_type == "protocol_step":
         _maybe_close_protocol_application(task)
@@ -431,6 +444,44 @@ def _move_barn_physiology(task: Task) -> None:
         return
     task.animal.barn_id = barn.id
     db.session.add(task.animal)
+
+
+def _distribute_barn_feed(task: Task) -> None:
+    """توزيع العلف الفعلي (بند إضافي 134) — يُنفَّذ فقط عند إنجاز مهمة
+    "وجبة علف" (`feeding_schedule`، بند 131) نفسها، نفس نمط
+    `_move_to_pregnant_barn` بالضبط: العامل يضغط "تم" بعد ما يوزّع
+    العلف فعلياً بالحظيرة، وهذي اللحظة بالضبط هي اللي يحسب فيها النظام
+    خلطة اليوم المجمَّعة لكل رؤوس الحظيرة (`feed_service.barn_daily_blend`
+    — نفس موازِن العليقة `optimize_blend` الموجود أصلاً، بس مجمَّع
+    لحظيرة كاملة بدل رأس واحد) ويخصمها فعلياً من المخزون. لو خلطة
+    اليوم مو ممكنة (بدون أوزان مسجَّلة، أو بدون مكوّنات كافية) — المهمة
+    تنجز عادي بدون خصم، وسبب عدم الخصم يُكتب بملاحظة الإنجاز عشان
+    المالك يتنبّه بدون ما يفشل إنجاز المهمة الروتينية."""
+    from app.feed import feed_service as feed_svc
+
+    result = feed_svc.barn_daily_blend(barn_id=task.barn_id)
+    if not result.get("feasible"):
+        reason = result.get("reason", "خلطة اليوم غير ممكنة حالياً.")
+        task.completion_note = f"{task.completion_note or ''}\n⚠️ ما تم خصم علف تلقائياً: {reason}".strip()
+        return
+
+    shortages = []
+    distributed = []
+    for item in result["blend"]:
+        try:
+            feed_svc.record_movement(
+                feed=item["feed"], movement_type="out", quantity=item["quantity_kg"],
+                barn_id=task.barn_id, note=f"توزيع علف تلقائي — مهمة #{task.id}",
+                created_by_id=task.assignee_id,
+            )
+            distributed.append(f"{item['feed'].name} ({item['quantity_kg']} كجم)")
+        except ValueError:
+            shortages.append(item["feed"].name)
+
+    summary = f"✅ خُصم من المخزون: {', '.join(distributed)}." if distributed else ""
+    if shortages:
+        summary += f" ⚠️ مخزون غير كافٍ لهذي المكوّنات (ما انخصمت): {', '.join(shortages)}."
+    task.completion_note = f"{task.completion_note or ''}\n{summary}".strip()
 
 
 def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, voice_note_url=None) -> Task:
