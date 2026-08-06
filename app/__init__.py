@@ -172,6 +172,8 @@ def create_app(config_class=Config):
         "protocol_effectiveness_review": _l("تقييم فعالية العلاج"),
         "isolation_release_check": _l("تأكيد انتهاء العزل"),
         "withdrawal_reminder": _l("تذكير انتهاء فترة سحب الدواء"),
+        "feeding_schedule": _l("وجبة علف مجدولة"),
+        "barn_physiology_move": _l("نقل حظيرة (حالة فسيولوجية)"),
     }
 
     @app.template_filter("ar_task_type")

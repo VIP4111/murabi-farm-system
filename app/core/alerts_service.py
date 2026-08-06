@@ -452,6 +452,10 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     from app.core import feeding_schedule_service
     feeding_schedule_service.generate_feeding_tasks()
 
+    # فرز الحظائر حسب الحالة الفسيولوجية (بند إضافي 133) — نفس الفلسفة.
+    from app.core import barn_physiology_service
+    barn_physiology_service.generate_barn_move_tasks()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()

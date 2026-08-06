@@ -312,6 +312,9 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
     if task.task_type == "move_to_pregnant_barn" and task.animal_id:
         _move_to_pregnant_barn(task)
 
+    if task.task_type == "barn_physiology_move" and task.animal_id:
+        _move_barn_physiology(task)
+
     if task.task_type == "protocol_step":
         _maybe_close_protocol_application(task)
 
@@ -406,6 +409,24 @@ def _move_to_pregnant_barn(task: Task) -> None:
     from app.models import Barn
 
     barn = Barn.query.filter_by(barn_type="حوامل").order_by(Barn.id).first()
+    if not barn:
+        return
+    task.animal.barn_id = barn.id
+    db.session.add(task.animal)
+
+
+def _move_barn_physiology(task: Task) -> None:
+    """نقل فعلي حسب الحالة الفسيولوجية (بند إضافي 133) — نفس نمط
+    `_move_to_pregnant_barn` بالضبط، بس عام لأي نوع حظيرة مشفَّر داخل
+    `source_type` (`barn_physiology_service._source_type`) بدل نوع
+    واحد مثبَّت. يُنفَّذ فقط عند إنجاز المهمة نفسها — بانتظار تقدير
+    الدكتور/العامل، مو نقل صامت وقت التوليد."""
+    from app.models import Barn
+
+    if not task.source_type or ":" not in task.source_type:
+        return
+    target_barn_type = task.source_type.split(":", 1)[1]
+    barn = Barn.query.filter_by(barn_type=target_barn_type).order_by(Barn.id).first()
     if not barn:
         return
     task.animal.barn_id = barn.id
