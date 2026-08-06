@@ -187,25 +187,26 @@ def _delayed_estrus(fs: FarmSettings) -> list[dict]:
 
 
 def _incomplete_animal_data() -> list[dict]:
-    """بيانات ناقصة (بند إضافي 135) — الحفظ يبقى بدون أي شرط (قرارك
-    الصريح: خلني أسجل عادي)، بس أي رأس ناقص حقل مهم (جنس/وزن/غرض، +
-    سعر للشراء/الهدية/الرصيد الافتتاحي بس، مو المولود) يطلع له تنبيه
-    هنا فوراً — نفس منطق `data_completeness_service.missing_fields`
-    بالضبط، مكان واحد بس للفحص."""
+    """بيانات ناقصة (بند إضافي 135، فُصِّلت لكل حقل بند إضافي 138) —
+    الحفظ يبقى بدون أي شرط (قرارك الصريح: خلني أسجل عادي)، بس أي رأس
+    ناقص حقل مهم (جنس/وزن/غرض، + سعر للشراء/الهدية/الرصيد الافتتاحي
+    بس، مو المولود) يطلع له تنبيه مستقل لكل حقل ناقص لحاله (قرارك
+    الصريح: "وزّع هذا التنبيه لعدة تنبيهات... قسمه على حسب المذكور
+    فيه") — بدل تنبيه واحد يجمع كل النواقص بنص واحد طويل. نفس منطق
+    `data_completeness_service.missing_fields` بالضبط، مكان واحد بس
+    للفحص."""
     from app.core import data_completeness_service as dcs
 
     alerts = []
     for a in Animal.query.filter_by(status="active").all():
         missing = dcs.missing_fields(a)
-        if not missing:
-            continue
-        missing_labels = "، ".join(dcs.FIELD_LABELS_AR[f] for f in missing)
-        alerts.append({
-            "category": "بيانات ناقصة", "icon": "📋",
-            "label": f"{a.animal_no} — ناقصها: {missing_labels}",
-            "detail": "أكمّل هذي البيانات من شاشة تعديل الحيوان.",
-            "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
-        })
+        for field in missing:
+            alerts.append({
+                "category": "بيانات ناقصة", "icon": "📋",
+                "label": f"{a.animal_no} — ناقص: {dcs.FIELD_LABELS_AR[field]}",
+                "detail": "أكمّل هذا الحقل من شاشة تعديل الحيوان.",
+                "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
+            })
     return alerts
 
 

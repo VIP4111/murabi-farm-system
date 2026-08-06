@@ -94,3 +94,19 @@ def test_no_alert_for_complete_animal(app):
     a = _complete_purchase(animal_no="C-03")
     alerts = alerts_service.get_alerts()
     assert not any(al["category"] == "بيانات ناقصة" and al["animal_id"] == a.id for al in alerts)
+
+
+def test_incomplete_data_generates_separate_alert_per_missing_field(app):
+    """بند إضافي 138 — طلبك الصريح: "وزّع هذا التنبيه لعدة تنبيهات...
+    قسمه على حسب المذكور فيه" — بدل تنبيه واحد يجمع كل النواقص بنص
+    طويل، تنبيه مستقل لكل حقل ناقص لحاله."""
+    a = make_animal(animal_no="P-05", gender="ذكر", source=AnimalSource.PURCHASE, price=None)
+    db.session.commit()
+
+    alerts = [al for al in alerts_service.get_alerts()
+              if al["category"] == "بيانات ناقصة" and al["animal_id"] == a.id]
+    assert len(alerts) == 3
+    labels = {al["label"] for al in alerts}
+    assert any("الوزن" in l for l in labels)
+    assert any("الغرض" in l for l in labels)
+    assert any("السعر" in l for l in labels)

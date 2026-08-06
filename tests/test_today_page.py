@@ -97,6 +97,19 @@ def test_today_page_shows_full_farm_alerts_for_owner(app, owner, logged_in_clien
     assert "حظيرة بدون مسؤول" in body
 
 
+def test_today_page_alert_has_open_button(app, logged_in_client):
+    """بند إضافي 138 — طلبك الصريح: "كل تنبيه تحط جنبه زر يحواني على
+    المكان المقصود" — نفس زر "فتح" اللي كان بشاشة "التنبيهات" القديمة
+    بالضبط، كان ناقص بـ"صفحة اليوم" بعد الدمج (بند 136)."""
+    barn = Barn(barn_no="TODAY-B5", barn_name="حظيرة بدون مسؤول 2")
+    db.session.add(barn)
+    db.session.commit()
+
+    resp = logged_in_client.get("/today")
+    body = resp.data.decode()
+    assert f'href="/barns/{barn.id}/edit"' in body
+
+
 def test_sidebar_no_longer_links_to_separate_alerts_page(app, logged_in_client):
     resp = logged_in_client.get("/today")
     body = resp.data.decode()

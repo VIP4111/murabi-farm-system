@@ -42,6 +42,8 @@
         <b>[{{ a.category }}] {{ a.label }}</b>
         {% if a.detail %}<small>{{ a.detail }}</small>{% endif %}
       </div>
+      {% if a.animal_id and current_user.has_permission('animals.view') %}<a class="btn light" href="{{ url_for('core.animal_detail', animal_id=a.animal_id) }}">{{ _('فتح') }}</a>
+      {% elif not a.animal_id and a.barn_id and current_user.has_permission('barns.manage') %}<a class="btn light" href="{{ url_for('core.barns_edit', barn_id=a.barn_id) }}">{{ _('فتح') }}</a>{% endif %}
     </div>
     {% else %}
     <div class="empty">{{ _('ولا تنبيه حالياً.') }} 🎉</div>
