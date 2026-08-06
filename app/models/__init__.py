@@ -1,6 +1,6 @@
 from app.models.role import Role, Permission, role_permissions
 from app.models.user import User
-from app.models.barn import Barn
+from app.models.barn import Barn, BarnFeedingSchedule
 from app.models.animal import Animal
 from app.models.animal_options import SpeciesType, Breed, AnimalColor
 from app.models.settings import ServiceToggle
@@ -36,7 +36,7 @@ from app.models.equipment import Equipment, EquipmentMovement
 
 __all__ = [
     "Role", "Permission", "role_permissions",
-    "User", "Barn", "Animal", "SpeciesType", "Breed", "AnimalColor",
+    "User", "Barn", "BarnFeedingSchedule", "Animal", "SpeciesType", "Breed", "AnimalColor",
     "ServiceToggle", "AuditLog", "RateLimitHit",
     "Pharmacy", "PharmacyBatch", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "VaccinationSchedule", "Doctor",
     "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink", "EmergencySymptom",

@@ -20,7 +20,44 @@
     </select>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">توجّه له تلقائياً المهام (بند 27) والتنبيهات ("تنبيهاتي" — بند إضافي) الخاصة بهذي الحظيرة.</p>
     <label>ملاحظات</label><textarea name="notes" rows="2">{{ barn.notes if barn }}</textarea>
+
+    <div class="form-section-title">مواعيد وجبات العلف (بند إضافي 131)</div>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">إعداد مستقل لكل حظيرة — أضف موعد لكل وجبة تبي تعطيها لهذي الحظيرة يومياً. عند وصول الموعد، تنولّد تلقائياً مهمة واحدة (توزيع علف + تنظيف معالف + تغيير ماء) للعامل المسؤول عن الحظيرة أعلاه.</p>
+    <div id="mealTimesRows">
+      {% for s in (barn.feeding_schedules if barn else []) %}
+      <div class="mealTimeRow" style="display:flex; gap:6px; margin-bottom:6px;">
+        <input name="meal_time" type="time" value="{{ s.meal_time.strftime('%H:%M') }}" style="flex:1; margin-bottom:0;">
+        <button type="button" class="btn light removeMealTimeBtn" style="flex:0;">✕</button>
+      </div>
+      {% endfor %}
+    </div>
+    <button type="button" id="addMealTimeBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ إضافة موعد وجبة</button>
+
     <button class="btn" type="submit">حفظ</button>
   </form>
 </div>
+<script>
+(function(){
+  var btn = document.getElementById('addMealTimeBtn');
+  var container = document.getElementById('mealTimesRows');
+  if (!btn || !container) return;
+  function makeRow(){
+    var row = document.createElement('div');
+    row.className = 'mealTimeRow';
+    row.style.cssText = 'display:flex; gap:6px; margin-bottom:6px;';
+    row.innerHTML =
+      '<input name="meal_time" type="time" style="flex:1; margin-bottom:0;">' +
+      '<button type="button" class="btn light removeMealTimeBtn" style="flex:0;">✕</button>';
+    return row;
+  }
+  btn.addEventListener('click', function(){
+    container.appendChild(makeRow());
+  });
+  container.addEventListener('click', function(e){
+    if (e.target.classList.contains('removeMealTimeBtn')) {
+      e.target.closest('.mealTimeRow').remove();
+    }
+  });
+})();
+</script>
 {% endblock %}

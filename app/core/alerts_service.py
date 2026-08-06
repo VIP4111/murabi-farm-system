@@ -448,6 +448,10 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     from app.core import daily_task_service
     daily_task_service.generate_daily_husbandry_tasks()
 
+    # مهام وجبات العلف حسب جدول كل حظيرة (بند إضافي 131) — نفس الفلسفة.
+    from app.core import feeding_schedule_service
+    feeding_schedule_service.generate_feeding_tasks()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()

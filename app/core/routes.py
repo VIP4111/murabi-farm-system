@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, time
 from flask import render_template, request, redirect, url_for, flash, jsonify, abort, send_file, current_app
 from flask_login import login_required, current_user
 from sqlalchemy.exc import IntegrityError
@@ -16,7 +16,7 @@ from app.core import readiness_service
 from app.core import setup_checklist_service
 from app.auth.decorators import require_permission
 from app.extensions import db
-from app.models import Animal, Barn, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
+from app.models import Animal, Barn, BarnFeedingSchedule, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
 from app.models import SpeciesType, Breed, AnimalColor, Task, Report
 from app.models.animal import AnimalSource
 from app.permissions_registry import PERMISSIONS
@@ -1084,6 +1084,20 @@ def barns_list():
     return render_template("barns_list.html", barns=barns)
 
 
+def _save_feeding_schedule(barn_id: int) -> None:
+    """مواعيد وجبات العلف لحظيرة (بند إضافي 131) — استبدال كامل بسيط،
+    نفس فلسفة `_save_dose_rules` بملف `health/routes.py` بالضبط: يمسح كل
+    مواعيد هذي الحظيرة ويعيد إنشاءها من القائمة المُرسَلة، ويتجاهل أي
+    صف فاضي بصمت."""
+    BarnFeedingSchedule.query.filter_by(barn_id=barn_id).delete()
+    times = [t for t in request.form.getlist("meal_time") if t]
+    for order, t in enumerate(sorted(times)):
+        hh, mm = t.split(":")
+        db.session.add(BarnFeedingSchedule(
+            barn_id=barn_id, meal_time=time(int(hh), int(mm)), sort_order=order,
+        ))
+
+
 @core_bp.route("/barns/new", methods=["GET", "POST"])
 @login_required
 @require_permission("barns.manage")
@@ -1105,6 +1119,7 @@ def barns_new():
             db.session.rollback()
             flash(f'رقم الحظيرة "{request.form["barn_no"]}" مستخدم من قبل', "error")
             return redirect(url_for("core.barns_new"))
+        _save_feeding_schedule(barn.id)
         db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.create",
                                  entity_type="Barn", entity_id=barn.id))
         db.session.commit()
@@ -1138,6 +1153,7 @@ def barns_edit(barn_id):
             db.session.rollback()
             flash(f'رقم الحظيرة "{request.form["barn_no"]}" مستخدم من قبل', "error")
             return redirect(url_for("core.barns_edit", barn_id=barn.id))
+        _save_feeding_schedule(barn.id)
         db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.update",
                                  entity_type="Barn", entity_id=barn.id))
         db.session.commit()
