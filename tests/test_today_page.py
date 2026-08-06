@@ -80,3 +80,24 @@ def test_today_page_hides_closed_reports(app, client):
     resp = client.get("/today")
     body = resp.data.decode()
     assert "بلاغ مغلق قديم" not in body
+
+
+def test_today_page_shows_full_farm_alerts_for_owner(app, owner, logged_in_client):
+    """بند إضافي 136 — المالك/الدكتور عادةً ما هم "عامل مسؤول" رسمياً عن
+    أي حظيرة (`_my_barn_ids` ترجع فاضية لهم)، فقبل هذا البند "صفحة
+    اليوم" كانت تطلع فاضية من التنبيهات لهم دايماً رغم وجود تنبيهات
+    حقيقية بالمزرعة — صار الحين يشوفون كل التنبيهات هنا، نفس شاشة
+    "التنبيهات" القديمة بالضبط."""
+    barn = Barn(barn_no="TODAY-B4", barn_name="حظيرة بدون مسؤول")
+    db.session.add(barn)
+    db.session.commit()
+
+    resp = logged_in_client.get("/today")
+    body = resp.data.decode()
+    assert "حظيرة بدون مسؤول" in body
+
+
+def test_sidebar_no_longer_links_to_separate_alerts_page(app, logged_in_client):
+    resp = logged_in_client.get("/today")
+    body = resp.data.decode()
+    assert 'href="/alerts"' not in body

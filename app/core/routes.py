@@ -106,10 +106,17 @@ def alerts_mine():
 @core_bp.route("/today")
 @login_required
 def today():
-    """صفحة اليوم (بند إضافي 122) — تجمع مهامي المفتوحة، تنبيهات حظائري،
+    """صفحة اليوم (بند إضافي 122) — تجمع مهامي المفتوحة، تنبيهاتي،
     وبلاغاتي المفتوحة بشاشة وحدة، بدل ما يتنقّل المستخدم بين 3 شاشات كل
     صباح. لا منطق جديد — نفس استعلامات tasks_list/alerts_mine/reports_list
-    الموجودة أصلاً، مجمَّعة هنا للعرض بس."""
+    الموجودة أصلاً، مجمَّعة هنا للعرض بس.
+
+    تنبيهات (بند إضافي 136): لمن يملك `animals.view` (المالك/الدكتور —
+    عادةً ما هم "عامل مسؤول" رسمياً عن حظيرة معيّنة، فـ`_my_barn_ids`
+    ترجع فاضية لهم) تُعرض كل تنبيهات المزرعة هنا مباشرة — نفس محتوى
+    شاشة "التنبيهات" المنفصلة القديمة بالضبط، اللي صار رابطها بالقائمة
+    الجانبية مكرراً فأُزيل (قرارك الصريح). العامل يبقى يشوف تنبيهات
+    حظائره بس، زي ما كان."""
     my_role_name = current_user.role.name if current_user.role else None
     my_tasks = (Task.query
                 .filter(
@@ -121,8 +128,10 @@ def today():
                 )
                 .order_by(Task.due_date, Task.sort_order).all())
 
-    my_barn_ids = _my_barn_ids(current_user)
-    alerts = alerts_service.get_alerts(barn_ids=my_barn_ids)
+    if current_user.has_permission("animals.view"):
+        alerts = alerts_service.get_alerts()
+    else:
+        alerts = alerts_service.get_alerts(barn_ids=_my_barn_ids(current_user))
 
     my_open_reports = []
     if current_user.has_permission("reports.submit"):
@@ -1416,6 +1425,7 @@ def family_view():
     from app.models import User, Task, Feed, Pharmacy, Equipment, Role
     from app.core import stock_stats_service
     from app.equipment import equipment_service
+    from app.reports.report_service import _to_local_date, _utc_datetime_widened
 
     today = date.today()
 
@@ -1423,13 +1433,18 @@ def family_view():
         user_ids = [u.id for u in User.query.join(Role).filter(
             Role.name == role_name, User.is_active_account.is_(True)).all()]
         assignee_filter = Task.assignee_id.in_(user_ids) if user_ids else False
-        done_today = (Task.query.filter(
+        done_today = []
+        for t in Task.query.filter(
             assignee_filter, Task.status.in_(("done", "failed")),
             db.or_(
-                db.and_(Task.completed_at.isnot(None), db.func.date(Task.completed_at) == today),
-                db.and_(Task.failed_at.isnot(None), db.func.date(Task.failed_at) == today),
+                db.and_(Task.completed_at.isnot(None), _utc_datetime_widened(Task.completed_at, today, today)),
+                db.and_(Task.failed_at.isnot(None), _utc_datetime_widened(Task.failed_at, today, today)),
             ),
-        ).order_by(Task.completed_at.desc()).all())
+        ).order_by(Task.completed_at.desc()).all():
+            when = _to_local_date(t.completed_at) if t.status == "done" and t.completed_at else (
+                _to_local_date(t.failed_at) if t.status == "failed" and t.failed_at else None)
+            if when == today:
+                done_today.append(t)
         open_tasks = (Task.query.filter(
             Task.status.in_(("pending", "in_progress")),
             db.or_(assignee_filter, db.and_(Task.assignee_id.is_(None), Task.target_role == role_name)),
