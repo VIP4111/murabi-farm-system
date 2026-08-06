@@ -12,11 +12,11 @@
       <option value="عزل" {{ 'selected' if barn and barn.barn_type == 'عزل' }}>عزل</option>
       <option value="نفاس" {{ 'selected' if barn and barn.barn_type == 'نفاس' }}>نفاس</option>
       <option value="نمو" {{ 'selected' if barn and barn.barn_type == 'نمو' }}>نمو</option>
-      <option value="حمل متأخر" {{ 'selected' if barn and barn.barn_type == 'حمل متأخر' }}>حمل متأخر</option>
+      <option value="حامل - الشهور الأخيرة" {{ 'selected' if barn and barn.barn_type == 'حامل - الشهور الأخيرة' }}>حامل - الشهور الأخيرة</option>
       <option value="رضاعة" {{ 'selected' if barn and barn.barn_type == 'رضاعة' }}>رضاعة</option>
       <option value="عام" {{ 'selected' if barn and barn.barn_type == 'عام' }}>عام (مختلط — بدون فحص تلقائي)</option>
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "حمل متأخر" أو "رضاعة" (بند إضافي 133) يفعّل فحصاً تلقائياً: أي رأس وصل هذي الحالة فعلياً وما زال بحظيرة ثانية، تتولّد له مهمة مقترحة تنقله هنا. "نمو" و"عام" بدون أي فحص إلزامي.</p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "حامل - الشهور الأخيرة" أو "رضاعة" (بند إضافي 133) يفعّل فحصاً تلقائياً: أي رأس وصل هذي الحالة فعلياً وما زال بحظيرة ثانية، تتولّد له مهمة مقترحة تنقله هنا. "نمو" و"عام" بدون أي فحص إلزامي.</p>
     <label>السعة</label><input name="capacity" type="number" value="{{ barn.capacity if barn }}">
     <label>العامل المسؤول</label>
     <select name="responsible_worker_id">

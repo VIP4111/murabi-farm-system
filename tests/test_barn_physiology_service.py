@@ -1,5 +1,5 @@
 """اختبارات فرز الحظائر حسب الحالة الفسيولوجية (بند إضافي 133) — مهمة
-تُنشأ فقط عندما يوصل الرأس حالة فعلية (حمل متأخر/رضاعة) وحظيرته
+تُنشأ فقط عندما يوصل الرأس حالة فعلية (حامل - الشهور الأخيرة/رضاعة) وحظيرته
 الحالية غير مطابقة، وبس لو فيه حظيرة فعلية بهذا النوع أصلاً. اتجاه
 واحد بس — ما نفحص "رأس بحظيرة غلط" بالعكس."""
 from datetime import date, timedelta
@@ -22,7 +22,7 @@ def _make_late_pregnancy(female, days_from_expected_birth):
 
 def test_late_pregnancy_animal_gets_move_task(app):
     other_barn = make_barn(barn_no="OB-01", barn_type="عادية")
-    target_barn = make_barn(barn_no="PB-01", barn_type="حمل متأخر")
+    target_barn = make_barn(barn_no="PB-01", barn_type="حامل - الشهور الأخيرة")
     female = make_animal(animal_no="LP-01", gender="أنثى", barn_id=other_barn.id)
     _make_late_pregnancy(female, days_from_expected_birth=10)  # within 45-day window
 
@@ -32,7 +32,7 @@ def test_late_pregnancy_animal_gets_move_task(app):
 
 def test_no_task_when_pregnancy_not_yet_late(app):
     other_barn = make_barn(barn_no="OB-02", barn_type="عادية")
-    make_barn(barn_no="PB-02", barn_type="حمل متأخر")
+    make_barn(barn_no="PB-02", barn_type="حامل - الشهور الأخيرة")
     female = make_animal(animal_no="LP-02", gender="أنثى", barn_id=other_barn.id)
     _make_late_pregnancy(female, days_from_expected_birth=140)  # way before window
 
@@ -41,7 +41,7 @@ def test_no_task_when_pregnancy_not_yet_late(app):
 
 
 def test_no_task_when_already_in_correct_barn(app):
-    target_barn = make_barn(barn_no="PB-03", barn_type="حمل متأخر")
+    target_barn = make_barn(barn_no="PB-03", barn_type="حامل - الشهور الأخيرة")
     female = make_animal(animal_no="LP-03", gender="أنثى", barn_id=target_barn.id)
     _make_late_pregnancy(female, days_from_expected_birth=10)
 
@@ -60,7 +60,7 @@ def test_no_task_when_no_matching_barn_exists(app):
 
 def test_abortion_outcome_excludes_from_late_pregnancy_check(app):
     other_barn = make_barn(barn_no="OB-05", barn_type="عادية")
-    make_barn(barn_no="PB-05", barn_type="حمل متأخر")
+    make_barn(barn_no="PB-05", barn_type="حامل - الشهور الأخيرة")
     female = make_animal(animal_no="LP-05", gender="أنثى", barn_id=other_barn.id)
     p = _make_late_pregnancy(female, days_from_expected_birth=10)
     p.outcome = "abortion"
@@ -99,7 +99,7 @@ def test_old_child_does_not_trigger_nursing_task(app):
 
 def test_second_call_same_day_creates_no_duplicate(app):
     other_barn = make_barn(barn_no="OB-08", barn_type="عادية")
-    make_barn(barn_no="PB-08", barn_type="حمل متأخر")
+    make_barn(barn_no="PB-08", barn_type="حامل - الشهور الأخيرة")
     female = make_animal(animal_no="LP-08", gender="أنثى", barn_id=other_barn.id)
     _make_late_pregnancy(female, days_from_expected_birth=10)
 
@@ -111,7 +111,7 @@ def test_second_call_same_day_creates_no_duplicate(app):
 
 def test_completing_move_task_relocates_animal(app, owner):
     other_barn = make_barn(barn_no="OB-09", barn_type="عادية")
-    target_barn = make_barn(barn_no="PB-09", barn_type="حمل متأخر")
+    target_barn = make_barn(barn_no="PB-09", barn_type="حامل - الشهور الأخيرة")
     female = make_animal(animal_no="LP-09", gender="أنثى", barn_id=other_barn.id)
     _make_late_pregnancy(female, days_from_expected_birth=10)
 
