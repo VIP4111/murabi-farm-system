@@ -219,13 +219,30 @@ def test_record_abortion_creates_monitor_tasks_for_barnmates_only(app):
 # ---------- بروتوكول الطوارئ (عمى مفاجئ) ----------
 
 def test_emergency_symptom_isolates_and_returns_differential(app):
+    """بند إضافي 127 المرحلة 4 — قائمة الطوارئ صارت جدولاً ديناميكياً
+    (`EmergencySymptom`) بدل قاموس ثابت بالكود، فلازم نبذر الصف بأنفسنا
+    هنا (نفس البيانات اللي `flask seed` يبذرها بالإنتاج)."""
+    from app.models import Symptom, EmergencySymptom
     make_barn(barn_no="ISO3", barn_type="عزل")
     animal = make_animal(animal_no="EM-01")
+    symptom = Symptom.query.filter_by(name="عمى مفاجئ / عتامة العين").first()
+    if not symptom:
+        symptom = Symptom(name="عمى مفاجئ / عتامة العين", is_primary=True)
+        db.session.add(symptom)
+        db.session.flush()
+    db.session.add(EmergencySymptom(
+        symptom_id=symptom.id, severity="شديدة",
+        differential="اشتباه ليستريا / نقص فيتامين B1 (PEM)",
+        advice="راجع الفحص البيطري الفوري.",
+    ))
+    db.session.commit()
+
     result = health_service.check_emergency_symptoms(
         animal_id=animal.id, symptom_names=["عمى مفاجئ / عتامة العين"], actor_user_id=1,
     )
     assert result is not None
     assert "ليستريا" in " ".join(result["differentials"])
+    assert result["severities"] == ["شديدة"]
 
 
 def test_emergency_symptom_none_for_normal_symptoms(app):

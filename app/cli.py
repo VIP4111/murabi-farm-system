@@ -1,6 +1,6 @@
 import click
 from app.extensions import db
-from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate
+from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom
 from app.permissions_registry import PERMISSIONS, DEFAULT_ROLES
 from app.disease_library_data import DISEASE_LIBRARY_V2, DISEASE_ALIAS_MAP
 
@@ -68,6 +68,31 @@ DISEASE_SYMPTOMS = {
     "الكزاز": [("تيبّس بالعضلات وتشنجات", 3), ("صرير أسنان وصعوبة فتح الفم", 3), ("حساسية زائدة للصوت أو اللمس", 2)],
     "نقص الكالسيوم": [("ضعف عام وعدم قدرة على الوقوف", 3), ("حديث الولادة", 2), ("برودة الأطراف", 2)],
 }
+
+# قائمة أعراض الطوارئ الأولية (بند إضافي 127، المرحلة 4) — قائمة أسماء
+# صريحة معتمَدة، تُبذر مرة وحدة هنا ثم تُدار بالكامل من الواجهة
+# (`/health/emergency-symptoms`) بعدها. كل عرض جديد يشغّل عزلاً
+# تلقائياً فوراً لو دخل بشجرة المساعد التشخيصي.
+DEFAULT_EMERGENCY_SYMPTOMS = [
+    {
+        "symptom": "عمى مفاجئ / عتامة العين",
+        "severity": "شديدة",
+        "differential": "اشتباه ليستريا / نقص فيتامين B1 (PEM) / التهاب ملتحمة معدٍ (Pinkeye)",
+        "advice": "راجع الفحص البيطري الفوري (حرارة، توازن، ردة فعل الحدقة) والسجل العلفي (تغيّر مفاجئ بالعليقة يرفع اشتباه PEM).",
+    },
+    {
+        "symptom": "إسهال مدمى حاد",
+        "severity": "حرجة",
+        "differential": "اشتباه تسمم دموي معوي (Enterotoxemia) / كوكسيديا حادة / سالمونيلا",
+        "advice": "فحص بيطري عاجل + عزل فوري لخطر انتقال العدوى + مراقبة الجفاف الشديد ومحلول إلكتروليت فوري.",
+    },
+    {
+        "symptom": "إجهاض مفاجئ",
+        "severity": "حرجة",
+        "differential": "اشتباه بروسيلا / كلاميديا (إجهاض معدي) / حمى الوادي المتصدع",
+        "advice": "عزل فوري + تعامل آمن مع الجنين والمشيمة (قفازات، حرق أو ردم صحي) + تقييم بيطري لعينة قبل أي تصرّف.",
+    },
+]
 
 
 def register_cli(app):
@@ -221,6 +246,22 @@ def register_cli(app):
                         disease_type_id=disease.id, symptom_id=symptom.id,
                         weight=min(3, sym["weight"]),
                     ))
+        db.session.commit()
+
+        # 8) قائمة أعراض الطوارئ الأولية (بند إضافي 127، المرحلة 4) —
+        # idempotent (يتفادى تكرار نفس العرض)، تعديل/إضافة بعدها من
+        # `/health/emergency-symptoms` مباشرة بدون كود.
+        for entry in DEFAULT_EMERGENCY_SYMPTOMS:
+            symptom = Symptom.query.filter_by(name=entry["symptom"]).first()
+            if not symptom:
+                symptom = Symptom(name=entry["symptom"], is_primary=True)
+                db.session.add(symptom)
+                db.session.flush()
+            if not EmergencySymptom.query.filter_by(symptom_id=symptom.id).first():
+                db.session.add(EmergencySymptom(
+                    symptom_id=symptom.id, severity=entry["severity"],
+                    differential=entry["differential"], advice=entry["advice"],
+                ))
         db.session.commit()
 
         click.echo("تمت التهيئة بنجاح.")

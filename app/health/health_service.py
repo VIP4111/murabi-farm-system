@@ -4,7 +4,7 @@
 """
 from datetime import date, timedelta
 from app.extensions import db
-from app.models import Pharmacy, VetVisit, Disease, Vaccination, AuditLog, Symptom, DiseaseSymptomLink, DiseaseType
+from app.models import Pharmacy, VetVisit, Disease, Vaccination, AuditLog, Symptom, DiseaseSymptomLink, DiseaseType, EmergencySymptom
 
 
 class IncompleteRecordError(Exception):
@@ -376,41 +376,43 @@ def redose_guard_warning(*, animal_id, pharmacy: Pharmacy | None, redose_days: i
     }
 
 
-# بروتوكول الطوارئ والأعراض الحادة (بند إضافي 51) — أي عرض بهذي
-# القائمة، لو دخل ضمن أعراض المساعد التشخيصي، يشغّل تلقائياً عزلاً
-# فورياً + تنبيه تشخيص تفريقي (`check_emergency_symptoms`، تُستدعى من
+# بروتوكول الطوارئ والأعراض الحادة (بند إضافي 51؛ صار جدولاً ديناميكياً
+# بند إضافي 127 المرحلة 4) — أي عرض مسجَّل بجدول `EmergencySymptom`،
+# لو دخل ضمن أعراض المساعد التشخيصي، يشغّل تلقائياً عزلاً فورياً +
+# تنبيه تشخيص تفريقي (`check_emergency_symptoms`، تُستدعى من
 # `diagnose_result`) — بمعزل عن ترتيب الاحتمالات العادي لـ
-# `score_diagnoses`. النص هنا هو نفسه اسم الصف بجدول Symptom (بند
-# `app/cli.py`، `DEFAULT_SYMPTOMS_PRIMARY`) — أي تعديل هنا يحتاج تعديل
-# مطابق هناك.
-EMERGENCY_SYMPTOMS = {
-    "عمى مفاجئ / عتامة العين": {
-        "differential": "اشتباه ليستريا / نقص فيتامين B1 (PEM) / التهاب ملتحمة معدٍ (Pinkeye)",
-        "advice": "راجع الفحص البيطري الفوري (حرارة، توازن، ردة فعل الحدقة) والسجل العلفي (تغيّر مفاجئ بالعليقة يرفع اشتباه PEM).",
-    },
-}
+# `score_diagnoses`. **قائمة أسماء صريحة عمداً** (بند 121 حذّر من عزل
+# مبالغ فيه لو صار تصنيفاً عاماً بدل أسماء محدَّدة) — تُدار الآن من
+# `/health/emergency-symptoms` بدل تعديل كود.
 
 
 def check_emergency_symptoms(*, animal_id, symptom_names: list[str], actor_user_id: int) -> dict | None:
-    """يفحص لو أي عرض مُدخَل بشجرة القرار التشخيصية ضمن `EMERGENCY_
-    SYMPTOMS` — لو فيه، يعزل الرأس فوراً (نفس منطق العزل الجماعي
-    اليدوي، `bulk_service.apply_bulk_isolation`) ويرجّع تفصيل التشخيص
-    التفريقي للعرض بشاشة النتيجة. اتقاء تكرار: لو الرأس أصلاً بحظيرة
-    العزل، ما يُعاد النقل، بس يرجّع نفس التفصيل التفريقي."""
-    matched = [EMERGENCY_SYMPTOMS[n] for n in symptom_names if n in EMERGENCY_SYMPTOMS]
-    if not matched or not animal_id:
+    """يفحص لو أي عرض مُدخَل بشجرة القرار التشخيصية مسجَّل بجدول
+    `EmergencySymptom` — لو فيه، يعزل الرأس فوراً (نفس منطق العزل
+    الجماعي اليدوي، `bulk_service.apply_bulk_isolation`) ويرجّع تفصيل
+    التشخيص التفريقي للعرض بشاشة النتيجة. اتقاء تكرار: لو الرأس أصلاً
+    بحظيرة العزل، ما يُعاد النقل، بس يرجّع نفس التفصيل التفريقي."""
+    if not symptom_names or not animal_id:
+        return None
+    matched = (
+        EmergencySymptom.query.join(Symptom)
+        .filter(Symptom.name.in_(symptom_names))
+        .all()
+    )
+    if not matched:
         return None
 
     from app.core.bulk_service import apply_bulk_isolation
-    reason = " + ".join(m["differential"] for m in matched)
+    reason = " + ".join(m.differential for m in matched)
     results = apply_bulk_isolation(
         animal_ids=[animal_id], reason=f"بروتوكول طوارئ — {reason}",
         note_date=date.today(), actor_user_id=actor_user_id,
     )
     return {
         "isolation_result": results.get(animal_id, "-"),
-        "differentials": [m["differential"] for m in matched],
-        "advice": [m["advice"] for m in matched],
+        "differentials": [m.differential for m in matched],
+        "advice": [m.advice for m in matched],
+        "severities": [m.severity for m in matched],
     }
 
 

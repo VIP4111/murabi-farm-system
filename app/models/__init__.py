@@ -12,7 +12,7 @@ from app.models.usage_route import UsageRoute
 from app.models.drug_catalog import DrugCatalogEntry
 from app.models.vaccination_schedule import VaccinationSchedule
 from app.models.doctor import Doctor
-from app.models.health import VetVisit, Disease, Vaccination, DiseaseType, Symptom, DiseaseSymptomLink
+from app.models.health import VetVisit, Disease, Vaccination, DiseaseType, Symptom, DiseaseSymptomLink, EmergencySymptom
 from app.models.finance import Finance
 from app.models.repro import (
     Mating, Pregnancy, TwinEstrusProgram, TwinEstrusAttempt,
@@ -39,7 +39,7 @@ __all__ = [
     "User", "Barn", "Animal", "SpeciesType", "Breed", "AnimalColor",
     "ServiceToggle", "AuditLog", "RateLimitHit",
     "Pharmacy", "PharmacyBatch", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "VaccinationSchedule", "Doctor",
-    "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink",
+    "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink", "EmergencySymptom",
     "Finance",
     "Mating", "Pregnancy", "TwinEstrusProgram", "TwinEstrusAttempt",
     "ReproDevice", "HormoneInjection", "SonarResult",

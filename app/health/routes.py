@@ -9,7 +9,7 @@ from app.models import (
     Pharmacy, PharmacyBatch, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
     Disease, Vaccination, Animal, AuditLog, Barn,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
-    ProtocolApplication, DiseaseSymptomLink,
+    ProtocolApplication, DiseaseSymptomLink, EmergencySymptom,
 )
 from app.health import health_service
 from app.team import task_service as tsvc
@@ -494,6 +494,64 @@ def disease_symptom_link_delete(link_id):
     db.session.commit()
     flash("تم حذف الرابط", "success")
     return redirect(url_for("health.disease_type_detail", disease_id=disease_id))
+
+
+# ---------- قائمة أعراض الطوارئ الديناميكية (بند إضافي 127، المرحلة 4) ----------
+# قبل هذا البند، `EMERGENCY_SYMPTOMS` كان قاموساً ثابتاً بالكود — أي
+# إضافة أو تعديل يحتاج تعديل كود ونشر جديد. صار جدولاً قابلاً للإدارة
+# من هنا، بنفس صلاحية "الخيارات الطبية" (medical_options.manage).
+
+@health_bp.route("/emergency-symptoms")
+@login_required
+@require_permission("health.view")
+def emergency_symptoms_list():
+    entries = EmergencySymptom.query.join(Symptom).order_by(Symptom.name).all()
+    linked_symptom_ids = {e.symptom_id for e in entries}
+    available_symptoms = Symptom.query.filter(~Symptom.id.in_(linked_symptom_ids)).order_by(Symptom.name).all() \
+        if linked_symptom_ids else Symptom.query.order_by(Symptom.name).all()
+    return render_template(
+        "health/emergency_symptoms_list.html",
+        entries=entries, available_symptoms=available_symptoms,
+        severity_choices=EmergencySymptom.SEVERITY_CHOICES,
+    )
+
+
+@health_bp.route("/emergency-symptoms/new", methods=["POST"])
+@login_required
+@require_permission("medical_options.manage")
+def emergency_symptoms_new():
+    symptom_id = request.form.get("symptom_id", type=int)
+    differential = request.form.get("differential", "").strip()
+    advice = request.form.get("advice", "").strip()
+    if not symptom_id or not differential or not advice:
+        flash("لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية", "error")
+        return redirect(url_for("health.emergency_symptoms_list"))
+    if EmergencySymptom.query.filter_by(symptom_id=symptom_id).first():
+        flash("هذا العرض مسجَّل بقائمة الطوارئ أصلاً", "error")
+        return redirect(url_for("health.emergency_symptoms_list"))
+    severity = request.form.get("severity") or EmergencySymptom.SEVERITY_CHOICES[-1]
+    if severity not in EmergencySymptom.SEVERITY_CHOICES:
+        severity = EmergencySymptom.SEVERITY_CHOICES[-1]
+    entry = EmergencySymptom(symptom_id=symptom_id, severity=severity, differential=differential, advice=advice)
+    db.session.add(entry)
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="emergency_symptom.create",
+                             entity_type="EmergencySymptom"))
+    db.session.commit()
+    flash("تمت إضافة عرض الطوارئ", "success")
+    return redirect(url_for("health.emergency_symptoms_list"))
+
+
+@health_bp.route("/emergency-symptoms/<int:entry_id>/delete", methods=["POST"])
+@login_required
+@require_permission("medical_options.manage")
+def emergency_symptoms_delete(entry_id):
+    entry = EmergencySymptom.query.get_or_404(entry_id)
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="emergency_symptom.delete",
+                             entity_type="EmergencySymptom", entity_id=entry.id))
+    db.session.delete(entry)
+    db.session.commit()
+    flash("تم حذف عرض الطوارئ", "success")
+    return redirect(url_for("health.emergency_symptoms_list"))
 
 
 # ---------- الأطباء ----------

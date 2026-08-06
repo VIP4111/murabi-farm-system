@@ -21,7 +21,9 @@
 
 {% if emergency %}
 <div class="flash warning" style="position:static; margin-bottom:16px;">
-  🚨 <b>بروتوكول طوارئ مفعَّل — {{ animal.animal_no }}</b><br>
+  🚨 <b>بروتوكول طوارئ مفعَّل — {{ animal.animal_no }}</b>
+  {% if emergency.severities %}<span class="badge {{ 'off' if 'حرجة' in emergency.severities else 'on' }}" style="margin-right:8px;">{{ emergency.severities|join('، ') }}</span>{% endif %}
+  <br>
   الحالة: {{ emergency.isolation_result }}<br>
   اشتباه تفريقي: {{ emergency.differentials|join(' / ') }}<br>
   {% for a in emergency.advice %}<span style="font-size:13px;">{{ a }}</span><br>{% endfor %}

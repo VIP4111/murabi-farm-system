@@ -37,6 +37,29 @@ class Symptom(db.Model):
     created_at = db.Column(db.DateTime, default=_now)
 
 
+class EmergencySymptom(db.Model):
+    """قائمة أعراض الطوارئ الديناميكية (بند إضافي 127، المرحلة 4) —
+    كانت `EMERGENCY_SYMPTOMS` ثابتة بالكود (`health_service.py`)، أي
+    إضافة تحتاج تعديل كود ونشر جديد. صارت جدولاً قابلاً للتعديل من
+    الواجهة (`medical_options.manage`، نفس صلاحية بقية "الخيارات
+    الطبية") — **قائمة أسماء صريحة عمداً**، مو تصنيف عام (بند إضافي
+    121 حذّر من عزل مبالغ فيه لو التصنيف صار عاماً بدل أسماء محدَّدة).
+    أي عرض هنا يشغّل العزل التلقائي فوراً لو دخل بشجرة المساعد
+    التشخيصي، بغض النظر عن `severity` (وصفي بس حالياً، ما يفرّق
+    بالسلوك)."""
+    __tablename__ = "emergency_symptoms"
+
+    SEVERITY_CHOICES = ["حرجة", "شديدة"]
+
+    id = db.Column(db.Integer, primary_key=True)
+    symptom_id = db.Column(db.Integer, db.ForeignKey("symptoms.id"), nullable=False, unique=True)
+    symptom = db.relationship("Symptom")
+    severity = db.Column(db.String(16), default="شديدة", nullable=False)
+    differential = db.Column(db.Text, nullable=False)
+    advice = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=_now)
+
+
 class DiseaseSymptomLink(db.Model):
     """ربط مرض بعرض + وزن دلالته (1=محتمل، 2=شائع، 3=دليل قوي) — أساس
     محرك التوصية بالتشخيص (بند إضافي، 2026-07-24): يجمع أوزان الأعراض
