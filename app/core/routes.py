@@ -14,6 +14,7 @@ from app.core import alerts_service
 from app.core import backup_service
 from app.core import readiness_service
 from app.core import setup_checklist_service
+from app.core import isolation_service
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import Animal, Barn, BarnFeedingSchedule, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
@@ -918,6 +919,67 @@ def animal_birth_record_save(animal_id):
     db.session.commit()
     flash("تم حفظ قائمة تحقق الولادة", "success")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="summary"))
+
+
+@core_bp.route("/animals/<int:animal_id>/isolation/enter", methods=["GET", "POST"])
+@login_required
+@require_permission("animals.manage")
+def animal_isolation_enter(animal_id):
+    """دخول عزل يدوي واضح (بند إضافي 148) — لأي حالة استثنائية بمعزل عن
+    خطة العزل التلقائية بعد الولادة."""
+    animal = Animal.query.get_or_404(animal_id)
+    isolation_barns = Barn.query.filter_by(barn_type="عزل").order_by(Barn.barn_name).all()
+    if request.method == "POST":
+        isolation_service.enter_isolation(
+            animal_id=animal.id,
+            reason=request.form.get("reason") or None,
+            note_date=date.fromisoformat(request.form["date"]),
+            actor_user_id=current_user.id,
+            barn_id=int(request.form["barn_id"]) if request.form.get("barn_id") else None,
+        )
+        flash(f"تم نقل {animal.animal_no} للعزل", "success")
+        return redirect(url_for("core.animal_detail", animal_id=animal.id))
+    return render_template(
+        "isolation_enter_form.html", animal=animal, isolation_barns=isolation_barns,
+        today=date.today().isoformat(),
+    )
+
+
+@core_bp.route("/animals/<int:animal_id>/isolation/exit", methods=["GET", "POST"])
+@login_required
+@require_permission("animals.manage")
+def animal_isolation_exit(animal_id):
+    """خروج من العزل (بند إضافي 148) — خروج مبكر يحتاج تأكيد فحص بيطري
+    وتحصين، وإلا تُرفض العملية (`isolation_service.IsolationExitBlocked`)."""
+    from app.models import FarmSettings
+
+    animal = Animal.query.get_or_404(animal_id)
+    target_barns = Barn.query.filter(Barn.barn_type != "عزل").order_by(Barn.barn_name).all()
+    settings = FarmSettings.get()
+    days_in = (date.today() - animal.isolation_started_at).days if animal.isolation_started_at else None
+    is_early = days_in is not None and days_in < settings.isolation_days
+
+    if request.method == "POST":
+        try:
+            isolation_service.exit_isolation(
+                animal_id=animal.id,
+                target_barn_id=int(request.form["barn_id"]),
+                note_date=date.fromisoformat(request.form["date"]),
+                actor_user_id=current_user.id,
+                vet_checked=request.form.get("vet_checked") == "1",
+                vaccinated=request.form.get("vaccinated") == "1",
+                notes=request.form.get("notes") or None,
+            )
+        except isolation_service.IsolationExitBlocked as e:
+            flash(str(e), "error")
+            return redirect(url_for("core.animal_isolation_exit", animal_id=animal.id))
+        flash(f"تم إخراج {animal.animal_no} من العزل", "success")
+        return redirect(url_for("core.animal_detail", animal_id=animal.id))
+    return render_template(
+        "isolation_exit_form.html", animal=animal, target_barns=target_barns,
+        today=date.today().isoformat(), days_in=days_in, is_early=is_early,
+        isolation_days=settings.isolation_days,
+    )
 
 
 @core_bp.route("/animals/<int:animal_id>/milk/new", methods=["POST"])

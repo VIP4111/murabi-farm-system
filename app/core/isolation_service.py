@@ -11,6 +11,94 @@ from app.extensions import db
 from app.team import task_service
 
 
+class IsolationExitBlocked(Exception):
+    """يُرفع لما تُحاول تخرج رأس من العزل قبل انتهاء المدة الأدنى بدون
+    ما تجاوب على الأسئلة الإلزامية (فحص بيطري + تحصين)."""
+
+
+def enter_isolation(*, animal_id: int, reason: str | None, note_date: date,
+                     actor_user_id: int, barn_id: int | None = None) -> "Animal":
+    """دخول عزل يدوي واضح (بند إضافي 148) — طلبك: "احتاج زر واضح عزل".
+    لأي حالة استثنائية (اشتباه مرض، إصابة، إلخ) بمعزل عن خطة العزل
+    التلقائية بعد الولادة. **idempotent على عداد الأيام**: لو الرأس
+    أصلاً بالعزل (isolation_started_at مضبوط)، ما نصفّره — يستمر
+    العد من أول دخول فعلي، حتى لو انتقل بين أكثر من حظيرة عزل."""
+    from app.models import Animal, AuditLog, Barn
+
+    animal = Animal.query.get(animal_id)
+    if not animal:
+        raise ValueError("الرأس غير موجود")
+
+    target = Barn.query.get(barn_id) if barn_id else Barn.query.filter_by(barn_type="عزل").order_by(Barn.id).first()
+    if not target:
+        raise ValueError("ما فيه حظيرة عزل معرَّفة بالنظام")
+
+    old_barn = animal.barn_id
+    animal.barn_id = target.id
+    if animal.isolation_started_at is None:
+        animal.isolation_started_at = note_date
+    db.session.add(animal)
+    db.session.add(AuditLog(
+        actor_user_id=actor_user_id, action="animal.enter_isolation",
+        entity_type="Animal", entity_id=animal.id,
+        details=f"barn {old_barn} -> {target.id} — {reason or ''}",
+    ))
+    if reason:
+        from app.core.animal_service import add_note
+        add_note(animal=animal, note_date=note_date, note=f"دخول عزل — {reason}", created_by_id=actor_user_id)
+    db.session.commit()
+    return animal
+
+
+def exit_isolation(*, animal_id: int, target_barn_id: int, note_date: date, actor_user_id: int,
+                    vet_checked: bool = False, vaccinated: bool = False, notes: str | None = None) -> "Animal":
+    """خروج من العزل (بند إضافي 148) — طلبك: "لو طلعه قبل وقته يعطيني
+    خيارات إلزامية مثل هل تم تحصينه". لو مرّت المدة الأدنى
+    (`FarmSettings.isolation_days`) كامل، يخرج مباشرة بدون شرط. لو
+    قبل وقتها، لازم تؤكد فحص بيطري + تحصين — وإلا تُرفض العملية بدل
+    ما تُنجَز ناقصة صامتة."""
+    from app.models import Animal, AuditLog, Barn, FarmSettings
+
+    animal = Animal.query.get(animal_id)
+    if not animal:
+        raise ValueError("الرأس غير موجود")
+    target = Barn.query.get(target_barn_id)
+    if not target:
+        raise ValueError("الحظيرة الهدف غير موجودة")
+
+    settings = FarmSettings.get()
+    days_in = (note_date - animal.isolation_started_at).days if animal.isolation_started_at else None
+    is_early = days_in is not None and days_in < settings.isolation_days
+
+    if is_early and not (vet_checked and vaccinated):
+        missing = []
+        if not vet_checked:
+            missing.append("فحص بيطري موثّق")
+        if not vaccinated:
+            missing.append("تحصين")
+        raise IsolationExitBlocked(
+            f"خروج مبكر من العزل (باقي {settings.isolation_days - days_in} يوم من المدة الأدنى) — "
+            f"يحتاج تأكيد: {'، '.join(missing)}."
+        )
+
+    old_barn = animal.barn_id
+    animal.barn_id = target.id
+    animal.isolation_started_at = None
+    db.session.add(animal)
+    db.session.add(AuditLog(
+        actor_user_id=actor_user_id, action="animal.exit_isolation",
+        entity_type="Animal", entity_id=animal.id,
+        details=f"barn {old_barn} -> {target.id} — days_in={days_in} early={is_early}",
+    ))
+    note_text = f"خروج من العزل ({'مبكر' if is_early else 'بعد اكتمال المدة'})"
+    if notes:
+        note_text += f" — {notes}"
+    from app.core.animal_service import add_note
+    add_note(animal=animal, note_date=note_date, note=note_text, created_by_id=actor_user_id)
+    db.session.commit()
+    return animal
+
+
 def start_isolation_plan(*, mother, newborn, birth_date_: date):
     """يُشغَّل تلقائياً عند تسجيل ولادة — يعزل الأم والمولود ويولّد مهام
     مقترحة (تحتاج موافقة الدكتور قبل ما توصل للعامل، حسب دورة حياة المهام)."""
@@ -22,6 +110,8 @@ def start_isolation_plan(*, mother, newborn, birth_date_: date):
     if isolation_barn:
         mother.barn_id = isolation_barn.id
         newborn.barn_id = isolation_barn.id
+        mother.isolation_started_at = birth_date_
+        newborn.isolation_started_at = birth_date_
         db.session.add(mother)
         db.session.add(newborn)
         db.session.commit()

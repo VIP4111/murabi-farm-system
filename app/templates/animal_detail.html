@@ -34,6 +34,13 @@
       {% if current_user.has_permission('animals.manage') %}<a class="btn" href="{{ url_for('core.animal_workflow', animal_id=animal.id) }}#exit">إجراءات الخروج</a>{% endif %}
       {% endif %}
       {% if current_user.has_permission('animals.manage') %}<a class="btn light" href="{{ url_for('core.animals_edit', animal_id=animal.id) }}">تعديل البيانات</a>{% endif %}
+      {% if current_user.has_permission('animals.manage') %}
+        {% if animal.isolation_started_at %}
+        <a class="btn danger" href="{{ url_for('core.animal_isolation_exit', animal_id=animal.id) }}">خروج من العزل</a>
+        {% else %}
+        <a class="btn light" href="{{ url_for('core.animal_isolation_enter', animal_id=animal.id) }}">🔒 دخول عزل</a>
+        {% endif %}
+      {% endif %}
     </div>
   </div>
 </div>
