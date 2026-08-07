@@ -246,6 +246,29 @@
   </form>
 </div>
 
+{% elif action == 'purpose' %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.animals_bulk_apply_purpose') }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
+    <label>الغرض الجديد (لكل الرؤوس المحددة)</label>
+    <select name="purpose" required>
+      <option value="تربية">تربية</option>
+      <option value="تسمين">تسمين</option>
+      <option value="بيع">بيع سريع</option>
+    </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "تسمين" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة.</p>
+    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <div class="table-scroll">
+<table>
+      <tr><th>الرقم</th><th>الاسم</th><th>الغرض الحالي</th></tr>
+      {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.purpose or '-' }}</td></tr>{% endfor %}
+    </table>
+</div>
+    <button class="btn" type="submit">تحديد الغرض للكل</button>
+  </form>
+</div>
+
 {% elif action == 'sale' %}
 <div class="card">
   <form method="post" action="{{ url_for('core.animals_bulk_apply_sale') }}" data-offline>

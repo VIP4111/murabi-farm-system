@@ -137,6 +137,31 @@ def apply_bulk_barn_move(*, animal_ids: list[int], barn_id: int, actor_user_id: 
     return results
 
 
+def apply_bulk_purpose(*, animal_ids: list[int], purpose: str, actor_user_id: int) -> dict:
+    """تحديد الغرض (تربية/تسمين/بيع) جماعياً (بند إضافي 141) — قبل هذا
+    البند ما فيه طريقة تحدّد غرض مجموعة رؤوس دفعة وحدة، غير تعديل كل
+    رأس لحاله. "الغرض" هو نفس الحقل اللي يحدد مسار محرك دورة الإنتاج
+    (`cycle_engine.py`) ويربط بحالة "التسمين" التغذوية بموازِن العليقة
+    (`feed_service.PURPOSE_TO_STATE`)."""
+    results = {}
+    for animal_id in animal_ids:
+        animal = Animal.query.get(animal_id)
+        if not animal:
+            results[animal_id] = "غير موجود"
+            continue
+        old_purpose = animal.purpose
+        animal.purpose = purpose
+        db.session.add(animal)
+        db.session.add(AuditLog(
+            actor_user_id=actor_user_id, action="animal.bulk_purpose",
+            entity_type="Animal", entity_id=animal.id,
+            details=f"purpose {old_purpose} -> {purpose}",
+        ))
+        results[animal_id] = "تم التحديد"
+    db.session.commit()
+    return results
+
+
 def apply_bulk_sale(*, animal_ids: list[int], sale_date: date,
                      prices_by_id: dict[int, float], notes: str | None, actor_user_id: int) -> dict:
     results = {}

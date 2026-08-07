@@ -55,6 +55,18 @@ def test_bulk_barn_move_moves_all_and_logs_audit(app):
     assert AuditLog.query.filter_by(action="animal.bulk_barn_move").count() == 2
 
 
+def test_bulk_purpose_sets_all_and_logs_audit(app):
+    """بند إضافي 141 — تحديد الغرض (تربية/تسمين/بيع) جماعياً، أول مرة
+    يصير فيها هذا ممكن بدون تعديل كل رأس لحاله."""
+    from app.models import AuditLog
+    a1 = make_animal(animal_no="PUR-01")
+    a2 = make_animal(animal_no="PUR-02")
+    results = bulk_service.apply_bulk_purpose(animal_ids=[a1.id, a2.id], purpose="تسمين", actor_user_id=1)
+    assert a1.purpose == "تسمين" and a2.purpose == "تسمين"
+    assert len(results) == 2
+    assert AuditLog.query.filter_by(action="animal.bulk_purpose").count() == 2
+
+
 def test_bulk_vaccination_rejects_animal_when_stock_runs_out_mid_batch(app):
     """جرعة (2) مل لكل رأس، مخزون 3 وحدات بس — الرأس الأول ينجح
     (يستهلك 2)، الثاني يُرفض (المتبقي 1 أقل من المطلوب)."""

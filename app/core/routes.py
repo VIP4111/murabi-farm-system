@@ -228,6 +228,7 @@ BULK_ACTIONS = {
     "vaccination": "تحصين جماعي",
     "note": "ملاحظة جماعية",
     "barn_move": "نقل حظيرة جماعي",
+    "purpose": "تحديد الغرض جماعياً (تربية/تسمين/بيع)",
     "sale": "بيع جماعي",
     "mark_dead": "تسجيل نفوق جماعي",
     "disease": "علاج/مرض جماعي",
@@ -372,6 +373,18 @@ def animals_bulk_apply_barn_move():
         animal_ids=animal_ids, barn_id=int(request.form["barn_id"]), actor_user_id=current_user.id,
     )
     flash(f"نقل حظيرة جماعي: تم نقل {len(results)} رأس", "success")
+    return redirect(url_for("core.animals_bulk_home"))
+
+
+@core_bp.route("/animals/bulk/apply/purpose", methods=["POST"])
+@login_required
+@require_permission("animals.manage")
+def animals_bulk_apply_purpose():
+    animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
+    results = bulk_service.apply_bulk_purpose(
+        animal_ids=animal_ids, purpose=request.form["purpose"], actor_user_id=current_user.id,
+    )
+    flash(f"تحديد الغرض جماعياً: تم تحديد {len(results)} رأس", "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
