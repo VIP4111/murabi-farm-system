@@ -94,12 +94,12 @@
       {% for a in animals %}
       <tr>
         {% if can_bulk %}<td><input type="checkbox" class="animalChk" name="animal_ids" value="{{ a.id }}" style="width:auto; margin:0;"></td>{% endif %}
-        <td><a href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
+        <td><a class="btn" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
         <td>{{ a.name or '-' }}</td>
         <td>{{ source_labels.get(a.source.value, a.source.value) }}</td>
         <td>{{ a.barn.barn_name if a.barn else '-' }}</td>
         <td>{{ a.status|ar_status }}</td>
-        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">نعام — بدون دورة</span>{% else %}<a href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
+        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">نعام — بدون دورة</span>{% else %}<a class="btn green" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
         <td>
           <a href="{{ url_for('core.animal_detail', animal_id=a.id) }}" style="text-decoration:none;">
           {% if withdrawal_map.get(a.id) %}
