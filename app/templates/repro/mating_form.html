@@ -2,6 +2,7 @@
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>تقريع جديد</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، تقدر بعدها تتابعه لتأكيد الحمل.</p>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>التاريخ</label><input name="date" type="date" required>
@@ -21,6 +22,7 @@
       {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
     <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر "التكاثر" ← "الحمل" ← "+ تشخيص حمل جديد" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات.</p>
     <button class="btn" type="submit">حفظ</button>
   </form>
 </div>

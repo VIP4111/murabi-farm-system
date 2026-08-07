@@ -2,6 +2,7 @@
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>{{ _('فحص سونار جديد') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('سجّل هنا نتيجة فحص سونار لأنثى — يستخدم لتأكيد/نفي الحمل، تحديد عدد الأجنّة، أو متابعة برنامج شياع توأمي مرتبط.') }}</p>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('تاريخ الفحص') }}</label><input name="exam_date" type="date" required>
@@ -31,6 +32,7 @@
     </select>
     <label>{{ _('موعد إعادة الفحص') }}</label><input name="recheck_date" type="date">
     <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('الخطوة الجاية بالدورة: لو النتيجة "حامل" ولسا ما فيه تشخيص حمل مؤكّد مسجَّل، سجّله من "التكاثر" ← "الحمل" ← "+ تشخيص حمل جديد" عشان تدخل الأنثى متابعة الحمل ورعاية الشهور الأخيرة تلقائياً.') }}</p>
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>

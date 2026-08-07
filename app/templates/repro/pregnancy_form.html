@@ -2,6 +2,7 @@
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>تشخيص حمل جديد</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً.</p>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>التاريخ</label><input name="date" type="date" required>
@@ -18,6 +19,7 @@
     <label>تاريخ السونار</label><input name="sonar_date" type="date">
     <label>عدد الأجنّة</label><input name="embryo_count" type="number">
     <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة "الحمل" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، وتاريخ الولادة المتوقع يُحسب من مدة الحمل المضبوطة بالإعدادات. لو ما تأكّد الحمل، راجع "فحص السونار" لاحقاً لتأكيد إضافي.</p>
     <button class="btn" type="submit">حفظ</button>
   </form>
 </div>
