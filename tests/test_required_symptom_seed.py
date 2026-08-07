@@ -3,7 +3,7 @@
 يزرع عرضاً "إجباري" اجتهادي لـ9 أمراض من الأمراض الأساسية العشرة
 الأكثر اكتمالاً، idempotent عبر `flask seed`."""
 from app.models import DiseaseType, DiseaseSymptomLink
-from app.cli import REQUIRED_SYMPTOM_UPDATES
+from app.cli import REQUIRED_SYMPTOM_UPDATES, REQUIRED_SYMPTOM_UPDATES_V2
 
 
 def test_seed_marks_required_symptoms_on_core_diseases(app):
@@ -40,4 +40,4 @@ def test_seed_is_idempotent_for_required_flags(app):
     runner.invoke(args=["seed"])
     second_count = DiseaseSymptomLink.query.filter_by(is_required=True).count()
 
-    assert first_count == second_count == len(REQUIRED_SYMPTOM_UPDATES)
+    assert first_count == second_count == len(REQUIRED_SYMPTOM_UPDATES) + len(REQUIRED_SYMPTOM_UPDATES_V2)
