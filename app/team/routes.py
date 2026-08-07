@@ -10,7 +10,7 @@ from app.team import report_service as svc
 from app.team import task_service as tsvc
 from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
-from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate
+from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate, ReportType
 
 
 # ---------- واجهة العامل المبسّطة (بند 27) ----------
@@ -229,12 +229,36 @@ def reports_new():
     if barn_ids is not None:
         animals_query = animals_query.filter(Animal.barn_id.in_(barn_ids))
         barns_query = barns_query.filter(Barn.id.in_(barn_ids))
+    ReportType.seed_defaults()
     return render_template(
         "team/report_form.html",
         animals=animals_query.order_by(Animal.animal_no).all(),
         barns=barns_query.order_by(Barn.barn_name).all(),
         scoped=barn_ids is not None,
+        report_types=ReportType.query.order_by(ReportType.name).all(),
     )
+
+
+@team_bp.route("/reports/types/new", methods=["GET", "POST"])
+@login_required
+@require_permission("medical_options.manage")
+def report_types_new():
+    """إضافة "نوع بلاغ" جديد للقائمة (بند إضافي 150) — نفس نمط
+    `usage_routes_new`/`colors_new`/`breeds_new` بالضبط."""
+    if request.method == "POST":
+        name = request.form["name"].strip()
+        if not name:
+            flash("اسم نوع البلاغ مطلوب", "error")
+            return redirect(url_for("team.report_types_new"))
+        if ReportType.query.filter_by(name=name).first():
+            flash(f'"{name}" موجود بالقائمة أصلاً', "error")
+            return redirect(url_for("team.report_types_new"))
+        db.session.add(ReportType(name=name))
+        db.session.commit()
+        flash("تمت إضافة نوع البلاغ", "success")
+        return redirect(url_for("team.reports_new"))
+    return render_template("animal_option_form.html", title="إضافة نوع بلاغ جديد",
+                            back_endpoint="team.reports_new")
 
 
 @team_bp.route("/reports/<int:report_id>")

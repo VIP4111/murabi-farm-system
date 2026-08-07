@@ -9,6 +9,7 @@ from app.models.rate_limit import RateLimitHit
 from app.models.pharmacy import Pharmacy, PharmacyBatch
 from app.models.pharmacy_dose_rule import PharmacyDoseRule
 from app.models.usage_route import UsageRoute
+from app.models.report_type import ReportType
 from app.models.drug_catalog import DrugCatalogEntry
 from app.models.vaccination_schedule import VaccinationSchedule
 from app.models.doctor import Doctor
@@ -38,7 +39,7 @@ __all__ = [
     "Role", "Permission", "role_permissions",
     "User", "Barn", "BarnFeedingSchedule", "Animal", "SpeciesType", "Breed", "AnimalColor",
     "ServiceToggle", "AuditLog", "RateLimitHit",
-    "Pharmacy", "PharmacyBatch", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "VaccinationSchedule", "Doctor",
+    "Pharmacy", "PharmacyBatch", "PharmacyDoseRule", "UsageRoute", "DrugCatalogEntry", "VaccinationSchedule", "Doctor", "ReportType",
     "VetVisit", "Disease", "Vaccination", "DiseaseType", "Symptom", "DiseaseSymptomLink", "EmergencySymptom",
     "Finance",
     "Mating", "Pregnancy", "TwinEstrusProgram", "TwinEstrusAttempt",
