@@ -39,6 +39,7 @@ def test_save_updates_previously_hidden_fields(app, logged_in_client):
         "ca_phosphorus_target_ratio": 2.5,
         "ca_phosphorus_tolerance": 0.75,
         "abortion_barn_monitor_days": 20,
+        "weight_check_interval_days": 25,
     })
     resp = logged_in_client.post("/settings/farm", data=form)
     assert resp.status_code == 302

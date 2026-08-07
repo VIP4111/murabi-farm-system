@@ -1302,7 +1302,7 @@ def farm_settings_save():
         "regular_sale_age_days", "udhiyah_min_age_days", "female_delayed_conception_days",
         "report_stale_hours", "ostrich_incubation_days",
         # بند إضافي 105 — كانت مخزَّنة بدون أي شاشة تعديل.
-        "quarantine_days", "reweigh_followup_days", "antiparasitic_redose_days",
+        "quarantine_days", "reweigh_followup_days", "antiparasitic_redose_days", "weight_check_interval_days",
         "concentrate_increase_window_days", "abortion_barn_monitor_days",
     ):
         setattr(fs, field, int(request.form[field]))

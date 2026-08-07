@@ -484,6 +484,12 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     from app.core import data_completeness_service
     data_completeness_service.generate_completion_tasks()
 
+    # مهام ذكية من مصادر ثانية غير العزل — تطعيمات مستحقة عامة وأوزان
+    # متأخرة (بند إضافي 149) — نفس الفلسفة.
+    from app.core import scheduled_care_service
+    scheduled_care_service.generate_vaccination_due_tasks()
+    scheduled_care_service.generate_overdue_weight_tasks()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
