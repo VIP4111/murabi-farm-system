@@ -42,8 +42,8 @@ def test_pharmacy_new_ignores_category_even_if_posted(app, logged_in_client):
 
 
 def test_pharmacy_form_has_copper_checkbox(app, logged_in_client):
-    """حرِج (بند 51 + بند 62): مربع "يحتوي نحاساً مرتفعاً" لازم يبقى
-    بالفورم — هو الوسيلة الوحيدة لتفعيل حظر النعيمي لأي دواء جديد."""
+    """بند 51 + بند 62: مربع "يحتوي نحاساً مرتفعاً" وسم معلوماتي لازم
+    يبقى بالفورم."""
     resp = logged_in_client.get("/health/pharmacy/new")
     assert resp.status_code == 200
     assert b'name="contains_high_copper"' in resp.data

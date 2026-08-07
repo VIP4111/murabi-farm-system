@@ -94,8 +94,7 @@ class FarmSettings(db.Model):
     antiparasitic_redose_days = db.Column(db.Integer, default=30, nullable=False)
 
     # محرك القواعد الطبية/التغذوية الذكي (بند إضافي 51) — كل الحدود هنا
-    # تحذير + تجاوز بسبب صريح (بقرارك)، ما عدا حظر النحاس (برمجي صريح
-    # بلا تجاوز، بقرارك أيضاً — انظر Animal.BREEDS/Feed.contains_high_copper).
+    # تحذير + تجاوز بسبب صريح (بقرارك).
     concentrate_increase_max_percent_weekly = db.Column(db.Float, default=10.0, nullable=False)
     concentrate_increase_window_days = db.Column(db.Integer, default=7, nullable=False)
     ca_phosphorus_target_ratio = db.Column(db.Float, default=2.0, nullable=False)

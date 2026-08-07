@@ -40,9 +40,7 @@ class Pharmacy(db.Model):
     category = db.Column(db.String(80))
     medicine_class = db.Column(db.String(20))
 
-    # حظر نحاس سلالة النعيمي (بند إضافي 51) — نفس منطق `Feed.
-    # contains_high_copper`، تُطبَّق على مضادات الديدان/المكمّلات
-    # عالية النحاس المسجَّلة كدواء بدل علف.
+    # وسم معلوماتي: هل يحتوي هذا الدواء/المكمّل نحاساً مرتفعاً (بند إضافي 51).
     contains_high_copper = db.Column(db.Boolean, default=False, nullable=False)
 
     expiry_date = db.Column(db.Date)

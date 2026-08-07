@@ -106,29 +106,6 @@ def _deduct_if_used(pharmacy: Pharmacy | None, quantity_used: float | None) -> N
             raise IncompleteRecordError(str(e)) from e
 
 
-def _check_copper_toxicity(animal_id, pharmacy: Pharmacy | None) -> None:
-    """حظر نحاس سلالة النعيمي (بند إضافي 51) — **برمجي صريح بلا خيار
-    تجاوز** (بقرارك)، على عكس بقية حراس هذا الملف. يمنع الحفظ كاملاً
-    لو الدواء مصنَّف `contains_high_copper=True` والرأس سلالته
-    "نعيمي" — النحاس آمن لمعظم السلالات بجرعات عادية لكنه سام تراكمياً
-    للنعيمي تحديداً.
-
-    **قرار متعمَّد (بند إضافي 80، 2026-08-02)**: عُرض تحويل "نعيمي" هنا
-    لحقل قابل للتعديل من الواجهة (زي بقية إعدادات المزرعة) — رُفض
-    صراحة. هذي القاعدة تحديداً تبقى تتطلب تعديل كود عمداً، كحاجز إضافي
-    ضد تفعيل/تعطيل غير مقصود لحظر سلامة صارم. أي توسعة مستقبلية
-    (سلالة ثانية حسّاسة للنحاس) تحتاج جلسة تطوير فعلية، مو تغيير إعداد."""
-    if not pharmacy or not pharmacy.contains_high_copper:
-        return
-    from app.models import Animal
-    animal = Animal.query.get(animal_id)
-    if animal and animal.breed == "نعيمي":
-        raise IncompleteRecordError(
-            f'⛔ حظر صريح: "{pharmacy.name}" يحتوي نحاساً مرتفعاً — ممنوع استخدامه لـ'
-            f'"{animal.animal_no}" (سلالة نعيمي، حساسة تراكمياً للنحاس). اختر بديلاً آمناً.'
-        )
-
-
 def _require_quantity_if_medicine(pharmacy: Pharmacy | None, quantity_used: float | None) -> None:
     if pharmacy and not quantity_used:
         raise IncompleteRecordError(
@@ -150,7 +127,6 @@ def _computed_cost(pharmacy: Pharmacy | None, quantity_used: float | None, manua
 def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
                       pharmacy_id=None, quantity_used=None, cost=0, notes=None) -> VetVisit:
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
-    _check_copper_toxicity(animal_id, pharmacy)
     _require_quantity_if_medicine(pharmacy, quantity_used)
     visit = VetVisit(
         animal_id=animal_id, doctor_id=doctor_id, date=date_, diagnosis=diagnosis,
@@ -172,7 +148,6 @@ def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
 def record_disease(*, actor_user_id, animal_id, disease_name, date_, severity,
                     pharmacy_id=None, quantity_used=None, treatment_cost=0) -> Disease:
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
-    _check_copper_toxicity(animal_id, pharmacy)
     _require_quantity_if_medicine(pharmacy, quantity_used)
     disease = Disease(
         animal_id=animal_id, disease_name=disease_name, date=date_, severity=severity,
@@ -194,7 +169,6 @@ def record_disease(*, actor_user_id, animal_id, disease_name, date_, severity,
 def record_vaccination(*, actor_user_id, animal_id, vaccine_name, date_, next_due_date=None,
                         pharmacy_id=None, quantity_used=None) -> Vaccination:
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
-    _check_copper_toxicity(animal_id, pharmacy)
     _require_quantity_if_medicine(pharmacy, quantity_used)
     vacc = Vaccination(
         animal_id=animal_id, vaccine_name=vaccine_name, date=date_, next_due_date=next_due_date,

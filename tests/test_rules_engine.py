@@ -1,7 +1,11 @@
 """اختبارات محرك القواعد الطبية والتغذوية والعملياتية الذكي (بند إضافي
-51): حظر نحاس النعيمي، رعاية الحمل المتأخر، حظر الزيادة المفاجئة
-للمركزات ونسبة الكالسيوم/الفوسفور، بروتوكول الإجهاض، بروتوكول الطوارئ
-(عمى مفاجئ)، تأخر الشياع، ورعاية المولود الأولية."""
+51): رعاية الحمل المتأخر، حظر الزيادة المفاجئة للمركزات ونسبة
+الكالسيوم/الفوسفور، بروتوكول الإجهاض، بروتوكول الطوارئ (عمى مفاجئ)،
+تأخر الشياع، ورعاية المولود الأولية.
+
+(حظر نحاس سلالة "نعيمي" كان هنا سابقاً — حُذف بطلبك الصريح، الادعاء
+الطبي المحدد لسلالتك تحديداً كان خاطئاً. `Feed.contains_high_copper`
+و`Pharmacy.contains_high_copper` باقيان كوسم معلوماتي بس، بدون حظر.)"""
 from datetime import date, timedelta
 
 import pytest
@@ -16,48 +20,6 @@ from app.health import health_service
 from app.models import FarmSettings, FeedBarnPlan, FeedRation, FeedRationItem, Pregnancy, Task
 from app.models.animal import AnimalSource
 from factories import make_animal, make_barn, make_feed, make_pharmacy
-
-
-# ---------- حظر نحاس سلالة النعيمي ----------
-
-def test_copper_toxicity_blocks_naimi_health_record(app):
-    animal = make_animal(animal_no="CU-01", breed="نعيمي")
-    pharmacy = make_pharmacy(name="مكمّل نحاسي", available_qty=10, contains_high_copper=True)
-    with pytest.raises(health_service.IncompleteRecordError):
-        health_service.record_vaccination(
-            actor_user_id=1, animal_id=animal.id, vaccine_name="جرعة",
-            date_=date.today(), pharmacy_id=pharmacy.id, quantity_used=1,
-        )
-
-
-def test_copper_toxicity_allows_non_naimi_animal(app):
-    animal = make_animal(animal_no="CU-02", breed="عام/غير محدد")
-    pharmacy = make_pharmacy(name="مكمّل نحاسي", available_qty=10, contains_high_copper=True)
-    health_service.record_vaccination(
-        actor_user_id=1, animal_id=animal.id, vaccine_name="جرعة",
-        date_=date.today(), pharmacy_id=pharmacy.id, quantity_used=1,
-    )
-    assert pharmacy.available_qty == 9
-
-
-def test_copper_toxicity_blocks_naimi_feed_movement_with_animal_id(app):
-    barn = make_barn()
-    animal = make_animal(animal_no="CU-03", breed="نعيمي", barn_id=barn.id)
-    feed = make_feed(name="قالب أملاح نحاسي", available_qty=10, contains_high_copper=True)
-    with pytest.raises(ValueError):
-        feed_service.record_movement(
-            feed=feed, movement_type="out", quantity=1, barn_id=barn.id, animal_id=animal.id,
-        )
-
-
-def test_copper_toxicity_allows_barn_level_feed_movement_without_animal_id(app):
-    """قرارك الصريح: الحظر مقصور على سجلات مرتبطة برأس محدد — حركة
-    مستوى الحظيرة بدون animal_id ما تُفحص، حتى لو الحظيرة فيها نعيمي."""
-    barn = make_barn()
-    make_animal(animal_no="CU-04", breed="نعيمي", barn_id=barn.id)
-    feed = make_feed(name="قالب أملاح نحاسي", available_qty=10, contains_high_copper=True)
-    feed_service.record_movement(feed=feed, movement_type="out", quantity=1, barn_id=barn.id)
-    assert feed.available_qty == 9
 
 
 # ---------- رعاية الحمل المتأخر ----------

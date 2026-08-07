@@ -30,8 +30,7 @@ class Feed(db.Model):
     calcium_percent = db.Column(db.Float)
     phosphorus_percent = db.Column(db.Float)
 
-    # حظر نحاس سلالة النعيمي (بند إضافي 51) — قوالب أملاح/إضافات معدنية
-    # عالية النحاس يُمنع استخدامها بسجل مرتبط برأس من سلالة "نعيمي".
+    # وسم معلوماتي: هل يحتوي هذا الصنف نحاساً مرتفعاً (بند إضافي 51).
     contains_high_copper = db.Column(db.Boolean, default=False, nullable=False)
 
     unit = db.Column(db.String(32), default="كجم")

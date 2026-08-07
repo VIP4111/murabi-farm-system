@@ -161,26 +161,6 @@ def recommend_rations(*, requirement: dict, limit: int = 5) -> list[dict]:
     return results[:limit]
 
 
-def _check_copper_toxicity(feed: Feed, animal_id) -> None:
-    """حظر نحاس سلالة النعيمي على مستوى العلف (بند إضافي 51) — نفس
-    منطق `health_service._check_copper_toxicity` بالضبط، لكن مقصور
-    على حركات علف مرتبطة برأس محدد (بقرارك الصريح — حركات مستوى
-    الحظيرة العامة بدون animal_id لا تُفحص).
-
-    **قرار متعمَّد (بند إضافي 80، 2026-08-02)**: "نعيمي" تبقى مطابقة
-    نص ثابتة بالكود عمداً، مو حقل قابل للتعديل من الواجهة — راجع نفس
-    الملاحظة بـ`health_service._check_copper_toxicity` للتفاصيل."""
-    if not feed.contains_high_copper or not animal_id:
-        return
-    from app.models import Animal
-    animal = Animal.query.get(animal_id)
-    if animal and animal.breed == "نعيمي":
-        raise ValueError(
-            f'⛔ حظر صريح: "{feed.name}" يحتوي نحاساً مرتفعاً — ممنوع استخدامه لـ'
-            f'"{animal.animal_no}" (سلالة نعيمي، حساسة تراكمياً للنحاس). اختر بديلاً آمناً.'
-        )
-
-
 def record_movement(*, feed: Feed, movement_type: str, quantity: float, barn_id=None,
                      animal_id=None, note=None, created_by_id=None) -> FeedMovement:
     # ربط إجباري بالحظيرة عند الاستهلاك (بند إضافي، 2026-07-23) — حركة
@@ -190,7 +170,6 @@ def record_movement(*, feed: Feed, movement_type: str, quantity: float, barn_id=
     # حظيرة أصلاً — يدخل المخزون العام قبل التوزيع.
     if movement_type == "out" and not barn_id:
         raise ValueError('حركة الصادر (الاستهلاك) لازم تُربَط بحظيرة — بدونها ما تنحسب التكلفة اليومية صح.')
-    _check_copper_toxicity(feed, animal_id)
 
     before = feed.available_qty or 0
     if movement_type == "in":
