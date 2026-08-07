@@ -2,13 +2,27 @@
 "كيف أسمّن مجموعة حيوانات؟" وما فهمها — بند جديد يغطيها، + تحديث بند
 "howto_bulk_operations" الموجود أصلاً عشان يذكر إجراء "تحديد الغرض
 جماعياً" الجديد بقائمة الإجراءات (نفس ملاحظتك: ما يكفي نضيف بند جديد
-بدون ما نحدّث البند اللي يسرد كل الإجراءات)."""
+بدون ما نحدّث البند اللي يسرد كل الإجراءات). ثم لاحظت بنفسك إني غطّيت
+"تسمين" بس — الإجراء نفسه يطبّق "تربية" و"بيع" بالضبط نفس الطريقة،
+فوسّعت نفس البند يغطي الأغراض الثلاثة بدل ما يبقى مقصوراً على واحد."""
 from app.assistant.knowledge_base import search
 from app.assistant.text_utils import normalize
 
 
-def test_fattening_group_question_matches_new_entry():
+def test_fattening_group_question_matches_purpose_entry():
     results = search(normalize("كيف أسمّن مجموعة حيوانات؟"))
+    assert results
+    assert results[0].code == "howto_bulk_fattening_group"
+
+
+def test_breeding_group_question_matches_same_purpose_entry():
+    results = search(normalize("شنو أسوي عشان أسجّل تربية مجموعة حيوانات؟"))
+    assert results
+    assert results[0].code == "howto_bulk_fattening_group"
+
+
+def test_quick_sale_group_question_matches_same_purpose_entry():
+    results = search(normalize("كيف أحدد بيع سريع مجموعة رؤوس؟"))
     assert results
     assert results[0].code == "howto_bulk_fattening_group"
 
