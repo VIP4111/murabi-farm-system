@@ -16,7 +16,7 @@
       <td>{{ b.capacity or '-' }}</td>
       <td>{{ b.responsible_worker.name if b.responsible_worker else '-' }}</td>
       <td>{{ b.animals|length }}</td>
-      <td>{% if current_user.has_permission('barns.manage') %}<a href="{{ url_for('core.barns_edit', barn_id=b.id) }}">تعديل</a>{% endif %}</td>
+      <td>{% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_edit', barn_id=b.id) }}">تعديل</a>{% endif %}</td>
     </tr>
     {% else %}
     <tr><td colspan="7" style="color:#888;">لا يوجد حظائر مسجّلة بعد.</td></tr>
