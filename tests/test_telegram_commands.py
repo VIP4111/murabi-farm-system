@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from app.extensions import db
 from app.core import telegram_commands_service as svc
-from app.models import Role, User
+from app.models import Role, User, Task, Report
+from app.team import report_service, task_service
 
 
 def _make_role_user(role_name, phone, telegram_chat_id=None):
@@ -102,3 +103,71 @@ def test_duplicate_update_id_handled_once_only(app, owner):
         svc.handle_update(update)
         svc.handle_update(update)  # نفس النبضة، تكرار (إعادة إرسال تيليجرام)
     mock_send.assert_called_once()
+
+
+# ---- المرحلة ب: أوامر تحكم فعلي ----
+
+def test_accept_report_command_by_owner(app, owner):
+    report = report_service.submit_report(reporter=owner, description="بلاغ اختبار قبول")
+    reply = svc._dispatch(f"/قبول {report.id}", owner)
+    assert "تم قبول" in reply
+    db.session.refresh(report)
+    assert report.status == "accepted"
+
+
+def test_accept_report_command_rejects_worker_without_permission(app):
+    worker = _make_role_user("worker", "0599999170", telegram_chat_id="10")
+    report = report_service.submit_report(reporter=worker, description="بلاغ اختبار 2")
+    reply = svc._dispatch(f"/قبول {report.id}", worker)
+    assert "صلاحية" in reply
+    db.session.refresh(report)
+    assert report.status == "new"
+
+
+def test_close_report_command_by_manager(app, owner):
+    report = report_service.submit_report(reporter=owner, description="بلاغ اختبار إغلاق")
+    report_service.accept_report(report, actor=owner)
+    reply = svc._dispatch(f"/إغلاق {report.id}", owner)
+    assert "تم إغلاق" in reply
+    db.session.refresh(report)
+    assert report.status == "closed"
+
+
+def test_close_report_command_rejects_non_manager(app):
+    owner_user = _make_role_user("owner", "0599999171")
+    worker = _make_role_user("worker", "0599999172", telegram_chat_id="11")
+    report = report_service.submit_report(reporter=worker, description="بلاغ اختبار إغلاق 2")
+    report_service.accept_report(report, actor=owner_user)
+    reply = svc._dispatch(f"/إغلاق {report.id}", worker)
+    assert "⚠️" in reply
+    db.session.refresh(report)
+    assert report.status == "accepted"
+
+
+def test_assign_task_command_by_owner(app, owner):
+    worker = _make_role_user("worker", "0599999173", telegram_chat_id="12")
+    reply = svc._dispatch(f"/مهمة {worker.phone} نظّف الحظيرة الشمالية", owner)
+    assert "تم توزيع مهمة" in reply
+    task = Task.query.filter_by(assignee_id=worker.id).first()
+    assert task is not None
+    assert task.title == "نظّف الحظيرة الشمالية"
+
+
+def test_assign_task_command_unknown_phone(app, owner):
+    reply = svc._dispatch("/مهمة 0500000999 مهمة وهمية", owner)
+    assert "لا يوجد عضو" in reply
+
+
+def test_mark_done_completes_most_recent_open_task(app, owner):
+    worker = _make_role_user("worker", "0599999174", telegram_chat_id="13")
+    task_service.assign_task(actor=owner, title="مهمة تجريبية", assignee_id=worker.id)
+    reply = svc._dispatch("تم", worker)
+    assert "تم إنجاز المهمة" in reply
+    task = Task.query.filter_by(assignee_id=worker.id).first()
+    assert task.status == "done"
+
+
+def test_mark_done_with_nothing_open_returns_clear_message(app):
+    worker = _make_role_user("worker", "0599999175", telegram_chat_id="14")
+    reply = svc._dispatch("تم", worker)
+    assert "ما فيه مهمة أو بلاغ" in reply

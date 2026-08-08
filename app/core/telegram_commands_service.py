@@ -1,12 +1,16 @@
-"""أوامر تيليجرام تفاعلية (المرحلة أ من بند إضافي 160) — كل عضو يكتب
-أمر بمحادثة البوت ويرد عليه فوراً بمعلومة جاهزة (مو صفحة كاملة)، حسب
-دوره: أوامر عامة لكل الأعضاء، وأوامر خاصة لصاحب الحلال/الدكتور/العامل.
+"""أوامر تيليجرام تفاعلية — المرحلة أ (قراءة سريعة) + المرحلة ب (تحكم
+فعلي: قبول/إغلاق بلاغ، توزيع مهمة، تأكيد تنفيذ) من بند إضافي 160. كل
+عضو يكتب أمر بمحادثة البوت ويرد عليه فوراً بنتيجة الإجراء، حسب دوره.
 
 مصدر الاستقبال: Webhook حقيقي (`/telegram/webhook`)، لا استطلاع دوري
 (polling) — أرخص وأسرع، ومناسب لأن التطبيق أصلاً سيرفر ويب دائم التشغيل.
 التحقق من هوية المرسل: `telegram_chat_id` المسجَّل بحساب المستخدم، نفس
 آلية الإشعارات الصادرة (بند 157) بالضبط — بدون تسجيل مسبق، البوت يرد
-برسالة توضيحية بس، صفر كسر أو وصول غير مصرَّح لبيانات."""
+برسالة توضيحية بس، صفر كسر أو وصول غير مصرَّح لبيانات.
+
+أوامر المرحلة ب تستخدم دوال `report_service`/`task_service` الموجودة
+أصلاً بالضبط (نفس قواعد الصلاحية والحالة اللي تطبَّق من التطبيق) —
+البوت واجهة جديدة بس، مو مسار موازٍ بقواعد مختلفة."""
 from datetime import date
 
 from app.core import telegram_service
@@ -32,12 +36,18 @@ def handle_update(update: dict) -> None:
         )
         return
 
-    command = text.split()[0].lstrip("/")
-    telegram_service.send_message(chat_id, _dispatch(command, user))
+    telegram_service.send_message(chat_id, _dispatch(text, user))
 
 
-def _dispatch(command: str, user) -> str:
+def _dispatch(text: str, user) -> str:
     role = user.role.name if user.role else None
+
+    if text.strip() == "تم":
+        return _mark_done(user)
+
+    parts = text.split()
+    command = parts[0].lstrip("/")
+    args = parts[1:]
 
     if command == "مهامي":
         return _my_tasks(user)
@@ -63,11 +73,22 @@ def _dispatch(command: str, user) -> str:
             return "هذا الأمر خاص بالعامل فقط."
         return _new_report_link()
 
+    if command == "قبول":
+        return _accept_report_cmd(user, args)
+
+    if command == "إغلاق":
+        return _close_report_cmd(user, args)
+
+    if command == "مهمة":
+        return _assign_task_cmd(user, args)
+
     return (
-        "الأمر غير معروف. الأوامر المتاحة: /مهامي"
+        "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم"
         + {
-            "owner": "، /تنبيهات، /بلاغات، /تقرير_اليوم",
-            "doctor": "، /بلاغاتي، /طوارئ",
+            "owner": "، /تنبيهات، /بلاغات، /تقرير_اليوم، /قبول رقم_البلاغ،"
+                     " /إغلاق رقم_البلاغ، /مهمة جوال_العضو نص_المهمة",
+            "doctor": "، /بلاغاتي، /طوارئ، /قبول رقم_البلاغ، /إغلاق رقم_البلاغ،"
+                      " /مهمة جوال_العضو نص_المهمة",
             "worker": "، /بلاغي_الجديد",
         }.get(role, "")
     )
@@ -175,3 +196,87 @@ def _new_report_link() -> str:
     if not base:
         return "افتح التطبيق ← البلاغات ← بلاغ جديد."
     return f"📋 رفع بلاغ جديد:\n{base}/team/reports/new"
+
+
+def _get_report_by_id(report_id_text):
+    from app.models import Report
+    if not report_id_text.isdigit():
+        return None
+    return Report.query.get(int(report_id_text))
+
+
+def _accept_report_cmd(user, args) -> str:
+    if not user.has_permission("reports.manage"):
+        return "هذا الأمر يحتاج صلاحية إدارة البلاغات."
+    if not args:
+        return "الصيغة: /قبول رقم_البلاغ"
+    report = _get_report_by_id(args[0])
+    if not report:
+        return f"لا يوجد بلاغ برقم {args[0]}."
+    from app.team import report_service as svc
+    try:
+        svc.accept_report(report, actor=user)
+        return f"✅ تم قبول البلاغ #{report.id}."
+    except (svc.ReportPermissionError, svc.ReportStateError) as e:
+        return f"⚠️ {e}"
+
+
+def _close_report_cmd(user, args) -> str:
+    if not args:
+        return "الصيغة: /إغلاق رقم_البلاغ"
+    report = _get_report_by_id(args[0])
+    if not report:
+        return f"لا يوجد بلاغ برقم {args[0]}."
+    from app.team import report_service as svc
+    try:
+        svc.close_report(report, actor=user)
+        return f"✅ تم إغلاق البلاغ #{report.id}."
+    except (svc.ReportPermissionError, svc.ReportStateError) as e:
+        return f"⚠️ {e}"
+
+
+def _assign_task_cmd(user, args) -> str:
+    if not user.has_permission("tasks.assign_any"):
+        return "هذا الأمر يحتاج صلاحية توزيع المهام."
+    if len(args) < 2:
+        return "الصيغة: /مهمة جوال_العضو نص_المهمة"
+    phone, title = args[0], " ".join(args[1:])
+    from app.models import User
+    target = User.query.filter_by(phone=phone).first()
+    if not target or not target.is_active_account:
+        return f"لا يوجد عضو فعّال بجوال {phone}."
+    from app.team import task_service as svc
+    svc.assign_task(actor=user, title=title, assignee_id=target.id)
+    return f"✅ تم توزيع مهمة على {target.name}:\n{title}"
+
+
+def _mark_done(user) -> str:
+    from app.models import Task, Report
+    task = (
+        Task.query.filter_by(assignee_id=user.id)
+        .filter(Task.status.in_(["pending", "in_progress"]))
+        .order_by(Task.id.desc())
+        .first()
+    )
+    if task:
+        from app.team import task_service as tsvc
+        try:
+            tsvc.complete_task(task, actor=user, note="تم الإنجاز عبر تيليجرام")
+            return f"✅ تم إنجاز المهمة: {task.title}"
+        except (tsvc.TaskStateError, tsvc.TaskPermissionError) as e:
+            return f"⚠️ {e}"
+
+    report = (
+        Report.query.filter_by(executor_id=user.id, status="accepted")
+        .order_by(Report.id.desc())
+        .first()
+    )
+    if report:
+        from app.team import report_service as rsvc
+        try:
+            rsvc.executor_mark_done(report, actor=user, note="تم الإنجاز عبر تيليجرام")
+            return f"✅ تم تسجيل تنفيذ البلاغ #{report.id}."
+        except (rsvc.ReportStateError, rsvc.ReportPermissionError) as e:
+            return f"⚠️ {e}"
+
+    return "ما فيه مهمة أو بلاغ مفتوح عليك حالياً."
