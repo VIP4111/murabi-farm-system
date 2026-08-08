@@ -16,12 +16,39 @@ Bot API مجاني 100% بلا حد أقصى رسائل.
 بدون التوكن، أو لعضو بدون Chat ID مسجَّل، الإرسال يتجاهَل بصمت —
 صفر كسر بالنظام لو ما فعّلت الميزة بعد.
 """
+import hashlib
 import os
 import requests
 
 
 def _bot_token() -> str | None:
     return os.environ.get("TELEGRAM_BOT_TOKEN")
+
+
+def webhook_secret() -> str | None:
+    """بصمة مشتقة من التوكن نفسه (بند إضافي 160) — تُستخدم للتحقق من إن
+    كل نبضة واردة لـ`/telegram/webhook` جاية من تيليجرام فعلاً، بدون
+    الحاجة لمتغير بيئة إضافي يُضبط يدوياً بلوحة Render."""
+    token = _bot_token()
+    if not token:
+        return None
+    return hashlib.sha256(token.encode()).hexdigest()[:32]
+
+
+def set_webhook(url: str) -> bool:
+    token = _bot_token()
+    secret = webhook_secret()
+    if not token or not secret:
+        return False
+    try:
+        resp = requests.post(
+            f"https://api.telegram.org/bot{token}/setWebhook",
+            json={"url": url, "secret_token": secret},
+            timeout=5,
+        )
+        return resp.ok
+    except requests.RequestException:
+        return False
 
 
 def send_message(chat_id: str | None, text: str) -> bool:

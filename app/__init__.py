@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request, abort
 from flask_login import current_user
 from flask_babel import lazy_gettext as _l
 from app.config import Config
@@ -250,6 +250,34 @@ def create_app(config_class=Config):
         # (بدون تسجيل دخول — نفس سلوك static/ من الأساس، الحماية الوحيدة
         # كانت وما زالت اسم ملف عشوائي UUID غير قابل للتخمين).
         return send_from_directory(app.config["UPLOAD_DIR"], subpath)
+
+    @app.route("/telegram/webhook", methods=["POST"])
+    @csrf.exempt
+    def telegram_webhook():
+        # المرحلة أ من بند إضافي 160: أوامر تيليجرام تفاعلية — تيليجرام
+        # يبعث نبضة POST هنا لكل رسالة يوصل البوت. `secret_token` (مشتق
+        # من التوكن نفسه، بدون متغير بيئة إضافي) يتأكد إن النبضة من
+        # تيليجرام فعلاً، مو من أي طرف ثالث يعرف الرابط.
+        from app.core import telegram_service
+        expected = telegram_service.webhook_secret()
+        got = request.headers.get("X-Telegram-Bot-Api-Secret-Token")
+        if not expected or got != expected:
+            abort(403)
+        from app.core import telegram_commands_service
+        try:
+            telegram_commands_service.handle_update(request.get_json(silent=True) or {})
+        except Exception as e:
+            app.logger.warning("telegram_webhook failed: %s", e)
+        return {"ok": True}
+
+    if not app.config.get("TESTING"):
+        external_url = os.environ.get("RENDER_EXTERNAL_URL")
+        if external_url:
+            try:
+                from app.core import telegram_service
+                telegram_service.set_webhook(external_url.rstrip("/") + "/telegram/webhook")
+            except Exception as e:
+                app.logger.warning("telegram set_webhook failed: %s", e)
 
     @app.route("/sw.js")
     def service_worker():
