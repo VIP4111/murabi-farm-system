@@ -30,6 +30,11 @@
     <label>تحصين الأم بعد الولادة (يوم)</label><input name="postpartum_vaccination_days" type="number" value="{{ fs.postpartum_vaccination_days }}">
     <label>أقل عمر للتقريع الأول (يوم)</label><input name="min_breeding_age_days" type="number" value="{{ fs.min_breeding_age_days }}">
     <label>أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)</label><input name="min_rest_after_birth_days" type="number" value="{{ fs.min_rest_after_birth_days }}">
+    <h3 style="font-size:14px; margin-top:16px;">عتبات أعمار محرك دورة الإنتاج (بند إضافي 153)</h3>
+    <label>أقصى عمر يُصنَّف "مولود" بالدورة (يوم)</label><input name="newborn_route_max_age_days" type="number" value="{{ fs.newborn_route_max_age_days }}">
+    <label>عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)</label><input name="male_fertility_exam_alt_age_days" type="number" value="{{ fs.male_fertility_exam_alt_age_days }}">
+    <label>أقل عمر لمرحلة الفطام (يوم)</label><input name="weaning_min_age_days" type="number" value="{{ fs.weaning_min_age_days }}">
+    <label>عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)</label><input name="weaning_alt_age_days" type="number" value="{{ fs.weaning_alt_age_days }}">
     <h3 style="font-size:14px; margin-top:16px;">البيع الذكي (بند 19)</h3>
     <label>هامش الربح المستهدف (%)</label><input name="target_profit_margin_percent" type="number" step="0.1" value="{{ fs.target_profit_margin_percent }}">
     <label>سن البيع العادي للذكور (يوم)</label><input name="regular_sale_age_days" type="number" value="{{ fs.regular_sale_age_days }}">

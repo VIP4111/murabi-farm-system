@@ -112,12 +112,14 @@ def _has_health_evidence(animal: Animal) -> bool:
 
 
 def determine_route(animal: Animal) -> str:
+    from app.models import FarmSettings
+
     if animal.status != "active":
         return "closed_exit"
 
     is_young_or_born_here = animal.source == AnimalSource.BIRTH or animal.mother_id is not None
     age = _age_days(animal)
-    if is_young_or_born_here and (age is None or age < 120):
+    if is_young_or_born_here and (age is None or age < FarmSettings.get().newborn_route_max_age_days):
         return "newborn"
 
     if animal.purpose == "تسمين":
@@ -174,6 +176,9 @@ def _gate_quarantine(animal, wf):
 
 
 def _gate_breeding_prep(animal, wf):
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+
     missing = []
     if animal.weight is None:
         missing.append("وزن مسجّل")
@@ -184,11 +189,11 @@ def _gate_breeding_prep(animal, wf):
     if wf.route == "male_breeder":
         from app.models import VetVisit
         has_exam = VetVisit.query.filter_by(animal_id=animal.id).count() > 0
-        if not has_exam and not (age is not None and age >= 180):
-            missing.append("فحص خصوبة/زيارة بيطرية أو عمر 180 يوم فأكثر")
+        if not has_exam and not (age is not None and age >= fs.male_fertility_exam_alt_age_days):
+            missing.append(f"فحص خصوبة/زيارة بيطرية أو عمر {fs.male_fertility_exam_alt_age_days} يوم فأكثر")
     else:
-        if not _has_confirmed_mating(animal) and not (age is not None and age >= 240):
-            missing.append("تقريع مسجّل (عادي أو ضمن برنامج) أو عمر 240 يوم فأكثر")
+        if not _has_confirmed_mating(animal) and not (age is not None and age >= fs.min_breeding_age_days):
+            missing.append(f"تقريع مسجّل (عادي أو ضمن برنامج) أو عمر {fs.min_breeding_age_days} يوم فأكثر")
     return (not missing, missing)
 
 
@@ -255,6 +260,9 @@ def _gate_birth_care(animal, wf):
 
 
 def _gate_lactation_weaning(animal, wf):
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+
     missing = []
     age = _age_days(animal)
     if wf.route == "fattening":
@@ -263,10 +271,10 @@ def _gate_lactation_weaning(animal, wf):
         if not wf.target_sale_date:
             missing.append("تاريخ بيع مستهدف")
     else:
-        if age is None or age < 60:
-            missing.append("عمر 60 يوم فأكثر")
-        if not wf.weaning_date and not (age is not None and age >= 90):
-            missing.append("تاريخ فطام أو عمر 90 يوم فأكثر")
+        if age is None or age < fs.weaning_min_age_days:
+            missing.append(f"عمر {fs.weaning_min_age_days} يوم فأكثر")
+        if not wf.weaning_date and not (age is not None and age >= fs.weaning_alt_age_days):
+            missing.append(f"تاريخ فطام أو عمر {fs.weaning_alt_age_days} يوم فأكثر")
     return (not missing, missing)
 
 

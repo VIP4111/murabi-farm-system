@@ -1303,6 +1303,8 @@ def farm_settings_save():
         "report_stale_hours", "ostrich_incubation_days",
         # بند إضافي 105 — كانت مخزَّنة بدون أي شاشة تعديل.
         "quarantine_days", "reweigh_followup_days", "antiparasitic_redose_days", "weight_check_interval_days",
+        "newborn_route_max_age_days", "male_fertility_exam_alt_age_days",
+        "weaning_min_age_days", "weaning_alt_age_days",
         "concentrate_increase_window_days", "abortion_barn_monitor_days",
     ):
         setattr(fs, field, int(request.form[field]))

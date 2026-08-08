@@ -40,6 +40,10 @@ def test_save_updates_previously_hidden_fields(app, logged_in_client):
         "ca_phosphorus_tolerance": 0.75,
         "abortion_barn_monitor_days": 20,
         "weight_check_interval_days": 25,
+        "newborn_route_max_age_days": 100,
+        "male_fertility_exam_alt_age_days": 150,
+        "weaning_min_age_days": 45,
+        "weaning_alt_age_days": 75,
     })
     resp = logged_in_client.post("/settings/farm", data=form)
     assert resp.status_code == 302

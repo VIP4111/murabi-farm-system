@@ -51,6 +51,17 @@ class FarmSettings(db.Model):
     min_breeding_age_days = db.Column(db.Integer, default=240, nullable=False)
     min_rest_after_birth_days = db.Column(db.Integer, default=60, nullable=False)
 
+    # عتبات أعمار محرك دورة الإنتاج (بند إضافي 153) — كانت مكتوبة أرقاماً
+    # ثابتة بالكود مباشرة (`app/core/cycle_engine.py`) قبل هذا البند، بلا
+    # أي شاشة تعديل. قرارك الصريح: البوابات نفسها (أي دليل مطلوب) تبقى
+    # منطقاً بالكود، بس **الأرقام** تصير قابلة للتعديل من هنا. القيم
+    # الافتراضية هي نفس الأرقام اللي كانت مكتوبة بالكود سابقاً — صفر
+    # تغيير سلوك فعلي عند الترقية، بس صارت قابلة للتعديل الآن.
+    newborn_route_max_age_days = db.Column(db.Integer, default=120, nullable=False)
+    male_fertility_exam_alt_age_days = db.Column(db.Integer, default=180, nullable=False)
+    weaning_min_age_days = db.Column(db.Integer, default=60, nullable=False)
+    weaning_alt_age_days = db.Column(db.Integer, default=90, nullable=False)
+
     # قائمة تهيئة النظام بالصفحة الرئيسية (بند إضافي، 2026-07-27) — تختفي
     # نهائياً بعد ما صاحب الحلال يضغط "تجاهل" بنفسه، بغض النظر هل خلّص
     # كل البنود أو لا (طلب صريح: "مرة وحدة بس، عندي أزرار تتكفل بهالموضوع").
