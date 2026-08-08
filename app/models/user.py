@@ -23,6 +23,11 @@ class User(UserMixin, db.Model):
     # لغة واجهة هذا المستخدم تحديداً (مهم لواجهة العامل متعددة اللغات)
     language = db.Column(db.String(8), default="ar", nullable=False)
 
+    # الوضع الليلي/النهاري لهذا المستخدم تحديداً (بند إضافي 158) — نفس
+    # فلسفة `language` بالضبط: تفضيل شخصي محفوظ لكل حساب، يبدّله كل
+    # مستخدم لنفسه من قائمة الإعدادات الجانبية بدون صلاحية خاصة.
+    theme = db.Column(db.String(8), default="light", nullable=False)
+
     is_active_account = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DateTime, default=_now)
 

@@ -39,6 +39,19 @@ def set_language():
     return redirect(request.referrer or url_for("core.home"))
 
 
+@core_bp.route("/settings/theme", methods=["POST"])
+@login_required
+def set_theme():
+    """تبديل الوضع الليلي/النهاري الشخصي (بند إضافي 158) — نفس فلسفة
+    `set_language` بالضبط: أي مستخدم يبدّل تفضيله هو بس، بدون صلاحية
+    خاصة، ويُحفَظ بحسابه فيرجع معه بأي جهاز يسجّل دخول منه."""
+    theme = request.form.get("theme")
+    if theme in ("light", "dark"):
+        current_user.theme = theme
+        db.session.commit()
+    return redirect(request.referrer or url_for("core.home"))
+
+
 @core_bp.route("/")
 @login_required
 def home():

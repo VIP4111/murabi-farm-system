@@ -48,6 +48,13 @@ def create_app(config_class=Config):
         lang = str(get_locale())
         return {"html_lang": lang, "html_dir": "rtl" if lang in RTL_LANGUAGES else "ltr"}
 
+    @app.context_processor
+    def inject_theme():
+        # الوضع الليلي/النهاري الشخصي (بند إضافي 158) — تفضيل محفوظ
+        # بحساب المستخدم، نفس فلسفة اللغة أعلاه بالضبط.
+        theme = current_user.theme if current_user.is_authenticated else "light"
+        return {"html_theme": theme}
+
     from app.models import User
 
     @login_manager.user_loader

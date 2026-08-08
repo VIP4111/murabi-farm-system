@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ html_lang }}" dir="{{ html_dir }}">
+<html lang="{{ html_lang }}" dir="{{ html_dir }}" data-theme="{{ html_theme }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -348,6 +348,58 @@
       font-size:26px; text-decoration:none; box-shadow:0 10px 26px rgba(192,57,43,.45);
     }
     .emergency-fab:active{box-shadow:0 4px 12px rgba(192,57,43,.4); transform:translateY(1px);}
+
+    /* -------- الوضع الليلي (بند إضافي 158) -------- */
+    /* المتغيرات الأساسية أول شي — أي مكوّن يستخدم var(--xxx) يتغيّر
+       تلقائياً بدون قاعدة إضافية. بعدها تغطية الخلفيات المكتوبة صريحة
+       (#fff/#fbf8f1...) بمكوّنات موجودة أصلاً بالموقع — نفس القيم
+       الوظيفية، بس بألوان تناسب الخلفية الغامقة. */
+    :root[data-theme="dark"]{
+      --bg:#1b1712;
+      --card:#26211a;
+      --primary:#c9a06b;
+      --primary2:#dab98a;
+      --green:#3ecb75;
+      --blue:#2a3a45;
+      --text:#f0e9df;
+      --muted:#a89a87;
+      --danger:#e6685a;
+      --warning:#e0a940;
+      --line:#3a332a;
+      --shadow:0 12px 30px rgba(0,0,0,.4);
+    }
+    :root[data-theme="dark"] .top{background:linear-gradient(180deg,#211c16,#1b1712);}
+    :root[data-theme="dark"] .logo{color:#1b1712;}
+    :root[data-theme="dark"] .icon-btn{background:#2c2620; color:var(--primary);}
+    :root[data-theme="dark"] .side-menu,
+    :root[data-theme="dark"] .side-menu-head{background:#211c16;}
+    :root[data-theme="dark"] .drawer-link{background:#2c2620; color:var(--text); box-shadow:none;}
+    :root[data-theme="dark"] .drawer-link.active{background:#3a2f1f;}
+    :root[data-theme="dark"] .drawer-icon{background:#1b1712;}
+    :root[data-theme="dark"] .x{background:#2c2620;}
+    :root[data-theme="dark"] .quick a{background:#2c2620; box-shadow:none;}
+    :root[data-theme="dark"] td{background:#211c16;}
+    :root[data-theme="dark"] table.compact-table thead th{background:#211c16;}
+    :root[data-theme="dark"] table.compact-table tbody tr:hover td{background:#2c2620;}
+    :root[data-theme="dark"] table.compact-table td a{background:#2c2620; color:var(--text);}
+    :root[data-theme="dark"] .btn.light{background:#2c2620;}
+    :root[data-theme="dark"] .badge{background:#2c2620;}
+    :root[data-theme="dark"] .badge.on{background:#173a24; color:#5fd88a; border-color:#2a5c3e;}
+    :root[data-theme="dark"] .badge.off{background:#3a231e; color:#f0a999; border-color:#5c3a30;}
+    :root[data-theme="dark"] input, :root[data-theme="dark"] select, :root[data-theme="dark"] textarea{
+      background:#211c16; color:var(--text);
+    }
+    :root[data-theme="dark"] label{color:var(--muted);}
+    :root[data-theme="dark"] .notice{background:#3a2f14; border-color:#5c4a1f; color:#e0c98a;}
+    :root[data-theme="dark"] .empty{background:#211c16;}
+    :root[data-theme="dark"] .workflow-stage{background:#211c16;}
+    :root[data-theme="dark"] .workflow-stage.done{background:#17251c; border-color:#2a5c3e;}
+    :root[data-theme="dark"] .gate-row{background:#211c16;}
+    :root[data-theme="dark"] .gate-row.fail{background:#3a231e; border-color:#5c3a30;}
+    :root[data-theme="dark"] .stat{background:rgba(255,255,255,.04);}
+    :root[data-theme="dark"] .tab-btn{background:#2c2620;}
+    :root[data-theme="dark"] .timeline-row{background:#211c16;}
+    :root[data-theme="dark"] .flash{color:#1b1712;}
   </style>
   <script>
     function showTab(name){
@@ -491,6 +543,19 @@
         <a class="drawer-link" href="{{ url_for('core.settings_home') }}"><span class="drawer-icon">⚙️</span><span class="drawer-text"><b>الإعدادات</b></span></a>
       </div>
       {% endif %}
+
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('المظهر') }}</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          {% for code, label in [('light','☀️ ' + _('نهاري')), ('dark','🌙 ' + _('ليلي'))] %}
+          <form method="post" action="{{ url_for('core.set_theme') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="theme" value="{{ code }}">
+            <button type="submit" class="badge {{ 'on' if current_user.theme == code else '' }}" style="cursor:pointer; border:1px solid var(--line);">{{ label }}</button>
+          </form>
+          {% endfor %}
+        </div>
+      </div>
 
       <div class="drawer-group">
         <div class="drawer-group-title">{{ _('اللغة') }}</div>
