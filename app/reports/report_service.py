@@ -400,7 +400,45 @@ def purchase_request_report(start: date, end: date) -> dict:
         .filter(FeedMovement.movement_type == "out", func.date(FeedMovement.created_at).between(start, end))
         .group_by(FeedMovement.feed_id).all()
     )
+    # اقتراح الأرخص لتغطية النقص (بند إضافي 156) — طلبك الصريح: لو عندك
+    # أكثر من صنف علف بديل ببعض (نفس "التصنيف" ونفس "الوحدة")، النظام
+    # يجمع نقص كل الأصناف البديلة ببعض ويقترح تغطيته من الأرخص سعراً
+    # بينهم بدل ما يقترح شراء كل صنف لحاله بغض النظر عن السعر. الأصناف
+    # اللي ما تشارك تصنيفاً مع صنف ثانٍ، أو تصنيفها فاضي، أو ما فيها
+    # سعر وحدة مسجَّل تبقى تُعامَل فردياً زي قبل — صفر تغيير سلوك لهم.
+    feeds_by_category: dict[str, list] = {}
     for feed in Feed.query.filter_by(status="active").all():
+        if feed.category:
+            feeds_by_category.setdefault(feed.category, []).append(feed)
+
+    substitutable_feed_ids: set[int] = set()
+
+    for category, group in feeds_by_category.items():
+        priced = [f for f in group if f.unit_price]
+        if len(group) < 2 or len(priced) < 1:
+            continue
+        units = {f.unit or "-" for f in group}
+        if len(units) > 1:
+            continue  # وحدات مختلفة — ما نقدر نجمعها بأمان
+        total_consumed = sum(feed_consumed.get(f.id, 0.0) for f in group)
+        total_current = sum(f.available_qty or 0 for f in group)
+        total_min_stock = sum(f.min_stock_qty or 0 for f in group)
+        projected_30d = (total_consumed / days) * 30
+        total_shortfall = max(0.0, projected_30d + total_min_stock - total_current)
+        if total_shortfall <= 0:
+            continue
+        cheapest = min(priced, key=lambda f: f.unit_price)
+        others = [f.name for f in group if f.id != cheapest.id]
+        rows.append([
+            "علف", f'{cheapest.name} — الأرخص لتغطية نقص تصنيف "{category}" (بديل عن: {", ".join(others)})',
+            f"{total_consumed:g}", f"{projected_30d:.1f}", f"{total_current:g}",
+            f"{total_shortfall:.1f}", cheapest.unit or "-",
+        ])
+        substitutable_feed_ids.update(f.id for f in group)
+
+    for feed in Feed.query.filter_by(status="active").all():
+        if feed.id in substitutable_feed_ids:
+            continue
         consumed = feed_consumed.get(feed.id, 0.0)
         projected_30d = (consumed / days) * 30
         current = feed.available_qty or 0
