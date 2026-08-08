@@ -51,16 +51,44 @@
 
   var mediaRecorder = null, chunks = [], recording = false, stream = null;
 
+  // اختيار نوع تسجيل مدعوم فعلياً بهذا المتصفح (بند إضافي 152) — قبل
+  // هذا البند كان الكود يفترض 'audio/webm' دائماً، بينما Safari
+  // (آيفون/آيباد) ما يدعم webm إطلاقاً وينتج ترميزاً مختلفاً (mp4/aac)
+  // فعلياً — عدم تطابق النوع المُعلَن مع المحتوى الفعلي كان يسبب خطأ
+  // تشغيل صامت بعنصر <audio>. نفحص أول نوع مدعوم فعلياً من قائمة
+  // مرتّبة (الأفضل جودة/توافقاً أولاً) بدل افتراض ثابت.
+  var MIME_CANDIDATES = [
+    {mime: 'audio/webm', ext: 'webm'},
+    {mime: 'audio/mp4', ext: 'm4a'},
+    {mime: 'audio/aac', ext: 'aac'},
+    {mime: 'audio/mpeg', ext: 'mp3'},
+    {mime: 'audio/ogg', ext: 'ogg'},
+  ];
+  function pickSupportedMime(){
+    if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return null;
+    for (var i = 0; i < MIME_CANDIDATES.length; i++) {
+      if (MediaRecorder.isTypeSupported(MIME_CANDIDATES[i].mime)) return MIME_CANDIDATES[i];
+    }
+    return null;
+  }
+
   btn.addEventListener('click', function(){
     if (!recording) {
       navigator.mediaDevices.getUserMedia({audio: true}).then(function(s){
         stream = s;
         chunks = [];
-        mediaRecorder = new MediaRecorder(stream);
+        var picked = pickSupportedMime();
+        mediaRecorder = picked ? new MediaRecorder(stream, {mimeType: picked.mime}) : new MediaRecorder(stream);
         mediaRecorder.ondataavailable = function(e){ if (e.data.size > 0) chunks.push(e.data); };
         mediaRecorder.onstop = function(){
-          var blob = new Blob(chunks, {type: 'audio/webm'});
-          var file = new File([blob], 'voice-note.webm', {type: 'audio/webm'});
+          // نقرأ النوع الفعلي اللي المتصفح استخدمه فعلاً (`mediaRecorder.mimeType`)
+          // بدل الاعتماد على `picked` فقط — بعض المتصفحات تعدّل صيغة الـcodec
+          // بالتفصيل (مثلاً "audio/webm;codecs=opus") فنحتاج النوع الحقيقي.
+          var actualMime = (mediaRecorder.mimeType || (picked && picked.mime) || 'audio/webm').split(';')[0];
+          var match = MIME_CANDIDATES.filter(function(c){ return c.mime === actualMime; })[0];
+          var ext = match ? match.ext : 'webm';
+          var blob = new Blob(chunks, {type: actualMime});
+          var file = new File([blob], 'voice-note.' + ext, {type: actualMime});
           var dt = new DataTransfer();
           dt.items.add(file);
           fileInput.files = dt.files;
