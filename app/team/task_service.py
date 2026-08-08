@@ -72,6 +72,14 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.assign",
                              entity_type="Task", entity_id=task.id))
     db.session.commit()
+
+    # إشعار فوري مجاني عبر تيليجرام (بند إضافي 157) — يتجاهل بصمت لو
+    # العامل ما سجّل Chat ID أو البوت غير مفعَّل (صفر كسر بالتوزيع نفسه).
+    if task.assignee_id:
+        from app.core import telegram_service
+        telegram_service.notify_user(
+            task.assignee, f"📋 مهمة جديدة: {task.title}" + (f"\nالموعد: {task.due_date}" if task.due_date else ""),
+        )
     return task
 
 

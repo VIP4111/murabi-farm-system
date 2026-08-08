@@ -367,3 +367,17 @@ def register_cli(app):
         db.session.commit()
 
         click.echo("تمت التهيئة بنجاح.")
+
+    @app.cli.command("telegram-updates")
+    def telegram_updates():
+        """يطبع اسم و Chat ID كل شخص راسل بوت تيليجرام مؤخراً (بند
+        إضافي 157) — تشغّله من Shell بلوحة Render بعد ما تضيف متغير
+        `TELEGRAM_BOT_TOKEN` وكل عضو فريق يراسل البوت مرة وحدة، عشان
+        تنسخ Chat ID كل واحد وتحطه بشاشة "تعديل عضو الفريق"."""
+        from app.core.telegram_service import fetch_recent_chats
+        chats = fetch_recent_chats()
+        if not chats:
+            click.echo("ما فيه رسائل وصلت للبوت بعد (أو التوكن غير مضبوط) — تأكد كل عضو راسل البوت أول، ثم أعد المحاولة.")
+            return
+        for c in chats:
+            click.echo(f"{c['name']}: {c['chat_id']}")

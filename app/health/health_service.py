@@ -382,6 +382,19 @@ def check_emergency_symptoms(*, animal_id, symptom_names: list[str], actor_user_
         animal_ids=[animal_id], reason=f"بروتوكول طوارئ — {reason}",
         note_date=date.today(), actor_user_id=actor_user_id,
     )
+
+    # إشعار فوري مجاني عبر تيليجرام لكل دكتور/مالك مسجَّل (بند إضافي
+    # 157) — حالة طوارئ فعلية لازم تصل لحظياً، ما تنتظر فتح التطبيق.
+    from app.core import telegram_service
+    from app.models import Animal, User
+    animal = Animal.query.get(animal_id)
+    animal_no = animal.animal_no if animal else animal_id
+    for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
+        if user.has_permission("health.manage"):
+            telegram_service.notify_user(
+                user, f"🚨 حالة طوارئ — الرأس {animal_no}\n{reason}",
+            )
+
     return {
         "isolation_result": results.get(animal_id, "-"),
         "differentials": [m.differential for m in matched],

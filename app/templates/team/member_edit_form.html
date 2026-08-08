@@ -18,6 +18,10 @@
       <option value="hi" {{ 'selected' if member.language == 'hi' }}>हिन्दी</option>
     </select>
 
+    <label>معرّف محادثة تيليجرام (اختياري — لإشعارات فورية مجانية)</label>
+    <input name="telegram_chat_id" value="{{ member.telegram_chat_id or '' }}" placeholder="مثال: 123456789">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">راسل بوت المزرعة على تيليجرام مرة وحدة، وشغّل أمر "flask telegram-updates" من لوحة Render عشان تلقط الرقم.</p>
+
     <label>كلمة مرور جديدة (اختياري)</label>
     <input name="new_password" type="password" placeholder="اتركها فاضية إذا ما تبي تغييرها">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تعبئة هذا الحقل تغيّر كلمة المرور فوراً — بدون حاجة لمعرفة القديمة.</p>

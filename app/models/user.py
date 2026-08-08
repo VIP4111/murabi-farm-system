@@ -33,6 +33,12 @@ class User(UserMixin, db.Model):
     failed_login_attempts = db.Column(db.Integer, default=0, nullable=False)
     locked_until = db.Column(db.DateTime, nullable=True)
 
+    # معرّف محادثة تيليجرام لإشعارات فورية مجانية (بند إضافي 157) —
+    # يحصّله المستخدم بنفسه بمراسلة بوت المزرعة على تيليجرام، ويُدخَل
+    # هنا من شاشة تعديل عضو الفريق. فاضي = بدون إشعارات لهذا المستخدم
+    # (صفر كسر — كل الإرسال يتجاهل المستخدمين بدون معرّف بصمت).
+    telegram_chat_id = db.Column(db.String(40), nullable=True)
+
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)
 
