@@ -125,6 +125,12 @@ class FarmSettings(db.Model):
     # مزدوجاً، مو الحارس الوحيد).
     last_daily_tasks_auto_run = db.Column(db.Date, nullable=True)
 
+    # تقرير يومي تلقائي بالبريد الإلكتروني (بند إضافي 160، المرحلة ج)
+    # — نفس فلسفة last_daily_tasks_auto_run أعلاه بالضبط: حارس يمنع
+    # تكرار الإرسال أكثر من مرة باليوم، يُستخدم من نفس الـCron الداخلي
+    # ونفس نقطة التدارك عند أول طلب باليوم.
+    last_daily_email_report_sent = db.Column(db.Date, nullable=True)
+
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
 
     @classmethod

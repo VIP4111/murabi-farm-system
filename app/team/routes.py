@@ -97,6 +97,7 @@ def members_edit(user_id):
         user.role_id = int(request.form["role_id"])
         user.language = request.form.get("language") or "ar"
         user.telegram_chat_id = request.form.get("telegram_chat_id", "").strip() or None
+        user.email = request.form.get("email", "").strip() or None
         new_password = request.form.get("new_password", "").strip()
         if new_password:
             user.set_password(new_password)

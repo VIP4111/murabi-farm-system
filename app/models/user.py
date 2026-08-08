@@ -44,6 +44,11 @@ class User(UserMixin, db.Model):
     # (صفر كسر — كل الإرسال يتجاهل المستخدمين بدون معرّف بصمت).
     telegram_chat_id = db.Column(db.String(40), nullable=True)
 
+    # بريد إلكتروني لاستقبال التقرير اليومي التلقائي (بند إضافي 160،
+    # المرحلة ج) — نفس فلسفة telegram_chat_id بالضبط: اختياري تماماً،
+    # فاضي = بدون تقارير بريد لهذا المستخدم، صفر كسر بالنظام.
+    email = db.Column(db.String(120), nullable=True)
+
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)
 

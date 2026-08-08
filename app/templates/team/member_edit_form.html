@@ -22,6 +22,10 @@
     <input name="telegram_chat_id" value="{{ member.telegram_chat_id or '' }}" placeholder="مثال: 123456789">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">راسل بوت المزرعة على تيليجرام مرة وحدة، وشغّل أمر "flask telegram-updates" من لوحة Render عشان تلقط الرقم.</p>
 
+    <label>البريد الإلكتروني (اختياري — للتقرير اليومي التلقائي)</label>
+    <input name="email" type="email" value="{{ member.email or '' }}" placeholder="example@gmail.com">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">لو مسجَّل بريد وهذا الحساب يدير البلاغات، يوصله تقرير يومي تلقائي بحالة المزرعة.</p>
+
     <label>كلمة مرور جديدة (اختياري)</label>
     <input name="new_password" type="password" placeholder="اتركها فاضية إذا ما تبي تغييرها">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تعبئة هذا الحقل تغيّر كلمة المرور فوراً — بدون حاجة لمعرفة القديمة.</p>

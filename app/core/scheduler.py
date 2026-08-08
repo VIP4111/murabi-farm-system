@@ -38,6 +38,15 @@ def _generate_if_needed_today():
     settings.last_daily_tasks_auto_run = today
     db.session.commit()
 
+    # تقرير يومي بالبريد الإلكتروني (بند إضافي 160، المرحلة ج) — نفس
+    # الحارس والفلسفة تماماً، بس حارسه الخاص (last_daily_email_report_sent)
+    # عشان فشل/تعطيل البريد ما يوقف توليد مهام الرعاية اليومية أبداً.
+    from app.core import daily_email_report_service
+    try:
+        daily_email_report_service.generate_daily_email_report_if_needed()
+    except Exception:
+        pass
+
 
 def _run_daily_tasks_job(app):
     with app.app_context():
