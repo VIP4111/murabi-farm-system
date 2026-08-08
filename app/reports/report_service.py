@@ -254,6 +254,49 @@ def sales_report(start: date, end: date) -> dict:
     }
 
 
+def purchases_report(start: date, end: date) -> dict:
+    """تقرير المشتريات (بند إضافي 154) — طلبك الصريح: نفس بنية تقرير
+    المبيعات بالضبط (قائمة عمليات + إجماليات + تصنيف + تصدير)، بس
+    لعمليات الشراء/المصروف، مع رابط الفاتورة/الملف المرفق (`invoice_file_url`
+    بند 75) داخل نفس التقرير — قبل هذا البند كانت هذي البيانات موجودة
+    بس مدمجة جوا "تقرير المبيعات والمالية" بدون تفصيل عملياتي مستقل."""
+    cost_rows = (
+        Finance.query.filter(
+            Finance.operation_type.in_(("purchase", "expense")),
+            Finance.date.between(start, end), Finance.is_cancelled.is_(False),
+        ).order_by(Finance.date.desc()).all()
+    )
+
+    costs_count, costs_total = _finance_agg(("purchase", "expense"), start, end)
+    purchase_count, purchase_total = _finance_agg(("purchase",), start, end)
+    expense_count, expense_total = _finance_agg(("expense",), start, end)
+
+    category_totals: dict[str, float] = {}
+    for r in cost_rows:
+        cat = r.category or "غير مصنّف"
+        category_totals[cat] = category_totals.get(cat, 0) + r.amount
+
+    rows = [
+        [str(r.date), r.item or "-", r.related_animal.animal_no if r.related_animal else "-",
+         f"{r.amount:,.2f}", r.invoice_file_url or "-"]
+        for r in cost_rows
+    ]
+
+    kpis = [
+        ("عدد عمليات الشراء/المصروف", costs_count),
+        ("إجمالي المشتريات+المصروفات", f"{costs_total:,.2f}"),
+        ("عدد عمليات الشراء", purchase_count),
+        ("إجمالي الشراء", f"{purchase_total:,.2f}"),
+        ("عدد المصروفات", expense_count),
+        ("إجمالي المصروفات", f"{expense_total:,.2f}"),
+    ]
+    return {
+        "kpis": kpis,
+        "table": {"columns": ["التاريخ", "البند", "الحيوان", "المبلغ", "الفاتورة المرفقة"], "rows": rows},
+        "category_breakdown": sorted(category_totals.items(), key=lambda x: -x[1]),
+    }
+
+
 def _activity_row(dt, category, title, animal_no, details):
     return [str(dt), category, title, animal_no or "-", details or "-"]
 
@@ -404,6 +447,7 @@ REPORTS = {
     "mortality": ("تقرير النفوق", mortality_report),
     "births": ("تقرير الولادات والإنتاج", births_report),
     "sales": ("تقرير المبيعات والمالية", sales_report),
+    "purchases": ("تقرير المشتريات", purchases_report),
     "activity": ("تقرير إنجاز اليوم", activity_report),
     "purchase_request": ("تقرير طلب الشراء", purchase_request_report),
 }

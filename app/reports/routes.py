@@ -42,6 +42,13 @@ def sales():
     return _render("sales")
 
 
+@reports_bp.route("/purchases")
+@login_required
+@require_permission("analytics.view")
+def purchases():
+    return _render("purchases")
+
+
 @reports_bp.route("/activity")
 @login_required
 @require_permission("analytics.view")
