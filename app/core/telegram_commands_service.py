@@ -13,6 +13,10 @@ from app.core import telegram_service
 
 
 def handle_update(update: dict) -> None:
+    from app.models.telegram_update import already_processed
+    if already_processed(update.get("update_id")):
+        return
+
     message = update.get("message") or {}
     chat = message.get("chat") or {}
     chat_id = chat.get("id")

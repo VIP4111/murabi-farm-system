@@ -92,3 +92,13 @@ def test_worker_only_command_allowed_for_worker(app):
 def test_unknown_command_lists_available_commands(app, owner):
     reply = svc._dispatch("شي_غير_موجود", owner)
     assert "غير معروف" in reply
+
+
+def test_duplicate_update_id_handled_once_only(app, owner):
+    owner.telegram_chat_id = "77"
+    db.session.commit()
+    update = {"update_id": 555, "message": {"chat": {"id": 77}, "text": "/مهامي"}}
+    with patch("app.core.telegram_service.send_message") as mock_send:
+        svc.handle_update(update)
+        svc.handle_update(update)  # نفس النبضة، تكرار (إعادة إرسال تيليجرام)
+    mock_send.assert_called_once()
