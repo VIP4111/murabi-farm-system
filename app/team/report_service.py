@@ -5,12 +5,10 @@
 صلاحية `reports.manage` العامة — لأن بعض الانتقالات (الإغلاق تحديداً) حصرية
 لنفس الشخص اللي استلم البلاغ (manager_id)، مو لأي حامل صلاحية.
 """
-import os
-import uuid
 from datetime import datetime, timezone
-from flask import current_app
 from app.extensions import db
 from app.models import Report, AuditLog
+from app.core.cloud_storage_service import save_upload
 
 
 def _now():
@@ -23,28 +21,12 @@ MAX_AUDIO_BYTES = 8 * 1024 * 1024  # 8MB — كافي لملاحظة صوتية 
 
 def save_voice_note(file_storage) -> str | None:
     """
-    حفظ ملاحظة صوتية مرفوعة من نموذج البلاغ (بند 28) — تخزين محلي بسيط
-    (`app/static/uploads/audio/`) نفس فلسفة المشروع الحالية (لا سحابة
-    منفصلة بعد). ترجع None بصمت لأي إدخال غير صالح (بدون ملف، امتداد
-    غير مدعوم، حجم صفر أو أكبر من الحد) بدل ما ترفع استثناء — تسجيل
+    حفظ ملاحظة صوتية مرفوعة من نموذج البلاغ (بند 28) — سحابياً
+    (Cloudinary، بند إضافي 151) لو مضبوط، وإلا محلياً كما كان. تسجيل
     الملاحظة الصوتية اختياري أصلاً، فشلها ما يوقف رفع البلاغ نفسه.
     """
-    if not file_storage or not file_storage.filename:
-        return None
-    ext = file_storage.filename.rsplit(".", 1)[-1].lower() if "." in file_storage.filename else ""
-    if ext not in ALLOWED_AUDIO_EXTENSIONS:
-        return None
-    file_storage.stream.seek(0, os.SEEK_END)
-    size = file_storage.stream.tell()
-    file_storage.stream.seek(0)
-    if size == 0 or size > MAX_AUDIO_BYTES:
-        return None
-
-    upload_dir = os.path.join(current_app.config["UPLOAD_DIR"], "audio")
-    os.makedirs(upload_dir, exist_ok=True)
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    file_storage.save(os.path.join(upload_dir, filename))
-    return f"/uploads/audio/{filename}"
+    return save_upload(file_storage, subfolder="audio",
+                        allowed_extensions=ALLOWED_AUDIO_EXTENSIONS, max_bytes=MAX_AUDIO_BYTES)
 
 
 ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
@@ -54,26 +36,10 @@ MAX_IMAGE_BYTES = 8 * 1024 * 1024  # 8MB — نفس حد الملاحظة الص
 def save_evidence_image(file_storage) -> str | None:
     """
     حفظ صورة دليل مرفوعة من نموذج البلاغ عن طريق الكاميرا أو معرض الصور
-    (بدل رابط نصي كان يتطلب من المستخدم رفع الصورة لمكان خارجي بنفسه أولاً).
-    نفس فلسفة `save_voice_note` بالضبط: تخزين محلي بسيط، ترجع None بصمت
-    لأي إدخال غير صالح بدل رفع استثناء، لأن الصورة اختيارية أصلاً.
+    — سحابياً (Cloudinary، بند إضافي 151) لو مضبوط، وإلا محلياً كما كان.
     """
-    if not file_storage or not file_storage.filename:
-        return None
-    ext = file_storage.filename.rsplit(".", 1)[-1].lower() if "." in file_storage.filename else ""
-    if ext not in ALLOWED_IMAGE_EXTENSIONS:
-        return None
-    file_storage.stream.seek(0, os.SEEK_END)
-    size = file_storage.stream.tell()
-    file_storage.stream.seek(0)
-    if size == 0 or size > MAX_IMAGE_BYTES:
-        return None
-
-    upload_dir = os.path.join(current_app.config["UPLOAD_DIR"], "images")
-    os.makedirs(upload_dir, exist_ok=True)
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    file_storage.save(os.path.join(upload_dir, filename))
-    return f"/uploads/images/{filename}"
+    return save_upload(file_storage, subfolder="images",
+                        allowed_extensions=ALLOWED_IMAGE_EXTENSIONS, max_bytes=MAX_IMAGE_BYTES)
 
 
 class ReportPermissionError(Exception):

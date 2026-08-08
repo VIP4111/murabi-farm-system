@@ -5,39 +5,21 @@
 ما تصدر فاتورة لنفسها). رقم الفاتورة يُبنى مرة وحدة عند أول إصدار
 ويثبت بعدها — إعادة التنزيل ما تولّد رقم جديد.
 """
-import os
-import uuid
 from datetime import datetime, timezone
-
-from flask import current_app
 
 from app.extensions import db
 from app.models import Finance
+from app.core.cloud_storage_service import save_upload
 
 ALLOWED_INVOICE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "pdf"}
 MAX_INVOICE_BYTES = 8 * 1024 * 1024
 
 
 def save_invoice_file(file_storage) -> str | None:
-    """حفظ فاتورة مورّد مرفوعة (صورة أو PDF) — نفس فلسفة save_evidence_image
-    بالضبط: تخزين محلي بسيط، ترجع None بصمت لأي إدخال غير صالح، لأن
-    إرفاق الفاتورة اختياري أصلاً."""
-    if not file_storage or not file_storage.filename:
-        return None
-    ext = file_storage.filename.rsplit(".", 1)[-1].lower() if "." in file_storage.filename else ""
-    if ext not in ALLOWED_INVOICE_EXTENSIONS:
-        return None
-    file_storage.stream.seek(0, os.SEEK_END)
-    size = file_storage.stream.tell()
-    file_storage.stream.seek(0)
-    if size == 0 or size > MAX_INVOICE_BYTES:
-        return None
-
-    upload_dir = os.path.join(current_app.config["UPLOAD_DIR"], "invoices")
-    os.makedirs(upload_dir, exist_ok=True)
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    file_storage.save(os.path.join(upload_dir, filename))
-    return f"/uploads/invoices/{filename}"
+    """حفظ فاتورة مورّد مرفوعة (صورة أو PDF) — سحابياً (Cloudinary، بند
+    إضافي 151) لو مضبوط، وإلا محلياً كما كان. إرفاق الفاتورة اختياري أصلاً."""
+    return save_upload(file_storage, subfolder="invoices",
+                        allowed_extensions=ALLOWED_INVOICE_EXTENSIONS, max_bytes=MAX_INVOICE_BYTES)
 
 
 def _generate_invoice_number() -> str:
