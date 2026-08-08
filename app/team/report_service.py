@@ -63,6 +63,17 @@ def submit_report(*, reporter, description, report_type=None, animal_id=None, ba
     db.session.add(AuditLog(actor_user_id=reporter.id, action="report.submit",
                              entity_type="Report", entity_id=report.id))
     db.session.commit()
+
+    # إشعار فوري مجاني عبر تيليجرام لكل من يملك صلاحية إدارة البلاغات
+    # (بند إضافي 157) — بلاغ جديد يحتاج يصل لحظياً، مو بس عند فتح التطبيق.
+    from app.core import telegram_service
+    from app.models import User
+    for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
+        if user.id != reporter.id and user.has_permission("reports.manage"):
+            telegram_service.notify_user(
+                user, f"📋 بلاغ جديد من {reporter.name}\n{description}",
+            )
+
     return report
 
 
@@ -148,6 +159,14 @@ def transfer_report(report: Report, *, actor, executor, note: str) -> Report:
                              entity_type="Report", entity_id=report.id,
                              details=f"to={executor.id}: {note}"))
     db.session.commit()
+
+    # إشعار فوري مجاني عبر تيليجرام للمنفّذ المحوَّل له البلاغ (بند إضافي
+    # 157) — صار البلاغ "موجَّه له" شخصياً، يحتاج يعرف فوراً.
+    from app.core import telegram_service
+    telegram_service.notify_user(
+        executor, f"📋 بلاغ محوَّل لك للتنفيذ\n{note}",
+    )
+
     return report
 
 
