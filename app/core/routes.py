@@ -60,6 +60,14 @@ def send_test_email_report():
     الجدولة اليومية التلقائية."""
     if not current_user.has_permission("reports.manage"):
         abort(403)
+    import os
+    from app.models import User
+    eligible = User.query.filter(User.email.isnot(None), User.is_active_account.is_(True)).all()
+    current_app.logger.warning(
+        "DEBUG send_test_email_report: RESEND_API_KEY_set=%s EMAIL_FROM_ADDRESS=%r eligible_count=%d eligible=%s",
+        bool(os.environ.get("RESEND_API_KEY")), os.environ.get("EMAIL_FROM_ADDRESS"),
+        len(eligible), [(u.id, u.email, u.has_permission("reports.manage")) for u in eligible],
+    )
     from app.core.daily_email_report_service import send_daily_report_now
     sent = send_daily_report_now()
     if sent:
