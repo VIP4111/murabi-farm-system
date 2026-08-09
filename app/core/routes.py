@@ -56,24 +56,16 @@ def set_theme():
 @login_required
 def send_test_email_report():
     """زر "أرسل تقرير تجريبي الآن" (بند إضافي 160، المرحلة ج) — يسمح
-    لمن يدير البلاغات يتأكد إن إعداد SMTP يشتغل فعلياً بدون انتظار
+    لمن يدير البلاغات يتأكد إن إعداد Resend يشتغل فعلياً بدون انتظار
     الجدولة اليومية التلقائية."""
     if not current_user.has_permission("reports.manage"):
         abort(403)
-    import os
-    from app.models import User
-    eligible = User.query.filter(User.email.isnot(None), User.is_active_account.is_(True)).all()
-    current_app.logger.warning(
-        "DEBUG send_test_email_report: RESEND_API_KEY_set=%s EMAIL_FROM_ADDRESS=%r eligible_count=%d eligible=%s",
-        bool(os.environ.get("RESEND_API_KEY")), os.environ.get("EMAIL_FROM_ADDRESS"),
-        len(eligible), [(u.id, u.email, u.has_permission("reports.manage")) for u in eligible],
-    )
     from app.core.daily_email_report_service import send_daily_report_now
     sent = send_daily_report_now()
     if sent:
         flash(f"تم إرسال التقرير فعلياً لعدد {sent} من المستخدمين.", "success")
     else:
-        flash("ما نجح أي إرسال — تأكد إن بريدك مسجَّل وإن متغيرات SMTP مضبوطة صحيح.", "error")
+        flash("ما نجح أي إرسال — تأكد إن بريدك مسجَّل وإن متغيرات Resend مضبوطة صحيح.", "error")
     return redirect(request.referrer or url_for("core.home"))
 
 
