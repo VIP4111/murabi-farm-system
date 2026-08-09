@@ -176,6 +176,8 @@ def record_movement(*, feed: Feed, movement_type: str, quantity: float, barn_id=
         feed.add_stock(quantity)
     else:
         feed.deduct_stock(quantity)
+        from app.core.stock_alert_service import check_feed_stock
+        check_feed_stock(feed)
     after = feed.available_qty or 0
 
     mv = FeedMovement(

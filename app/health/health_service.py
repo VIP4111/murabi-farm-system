@@ -104,6 +104,8 @@ def _deduct_if_used(pharmacy: Pharmacy | None, quantity_used: float | None) -> N
             # بنفس آلية `except IncompleteRecordError` الموجودة بكل الشاشات
             # بدون أي تعديل عليها.
             raise IncompleteRecordError(str(e)) from e
+        from app.core.stock_alert_service import check_pharmacy_stock
+        check_pharmacy_stock(pharmacy)
 
 
 def _require_quantity_if_medicine(pharmacy: Pharmacy | None, quantity_used: float | None) -> None:
