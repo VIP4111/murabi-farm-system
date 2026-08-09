@@ -1,22 +1,26 @@
 """تقارير دورية عبر البريد الإلكتروني (بند إضافي 160، المرحلة ج) —
-عبر HTTPS API (Brevo، مجاني حتى 300 إيميل/يوم بدون بطاقة) بدل SMTP
+عبر HTTPS API (Resend، مجاني حتى 100 إيميل/يوم بدون بطاقة) بدل SMTP
 التقليدي، نفس فلسفة `telegram_service.py` بالضبط: صفر متغيرات بيئة
 = صفر إرسال، بدون أي كسر بالنظام.
 
 **السبب التقني لاستخدام API بدل SMTP مباشر** (بند إضافي 160.3): أول
 تجربة حقيقية على Render كشفت إن منافذ SMTP الصادرة (587/25/465)
-محظورة على الخطة المجانية — الاتصال يعلّق بدون أي رد (لا نجاح ولا
-فشل سريع)، لدرجة إنه يتجاوز حتى مهلة gunicorn الداخلية ويطيح
-بالعملية كلها. طلبات HTTPS العادية (نفس النوع اللي يستخدمه تيليجرام
-بالفعل بنجاح) ما فيها هذي المشكلة.
+محظورة على الخطة المجانية — الاتصال يعلّق بدون أي رد، لدرجة إنه
+يتجاوز حتى مهلة gunicorn الداخلية ويطيح بالعملية كلها. طلبات HTTPS
+العادية (نفس النوع اللي يستخدمه تيليجرام بالفعل بنجاح) ما فيها هذي
+المشكلة.
+
+**بند إضافي 160.4**: تبديل ثاني من Brevo لـResend (توثيق حساب Brevo
+احتاج تحقق SMS ما وصل صاحب النظام) — نفس البنية بالضبط، بس مزوّد
+مختلف، لأن Resend يكفي بريد فقط للتسجيل بدون SMS.
 
 **الإعداد المطلوب منك مرة وحدة** (اختياري تماماً):
-1. أنشئ حساب مجاني على brevo.com.
-2. أكّد بريدك كـ"مُرسل" (Sender) من إعدادات Brevo.
-3. جيب مفتاح API من إعدادات Brevo (SMTP & API ← API Keys).
-4. حط 3 متغيرات بيئة بلوحة Render: `BREVO_API_KEY`،
-   `EMAIL_FROM_ADDRESS` (نفس البريد المؤكَّد كمُرسل)، و `EMAIL_FROM_NAME`
-   (اختياري، افتراضياً "مراح بو علي").
+1. أنشئ حساب مجاني على resend.com (بريد فقط، بدون توثيق جوال).
+2. جيب مفتاح API من لوحة Resend.
+3. حط متغيرين بيئة بلوحة Render: `RESEND_API_KEY` و`EMAIL_FROM_ADDRESS`
+   (للتجربة: `onboarding@resend.dev` بريد Resend الافتراضي، يعمل بدون
+   توثيق دومين — لاحقاً لو وثّقت دومينك الخاص تقدر تستخدم بريد باسم
+   مزرعتك).
 
 بدون هذا الإعداد، لا يصير أي شي — التقرير التلقائي يتجاهَل نفسه بصمت.
 """
@@ -25,7 +29,7 @@ import requests
 
 
 def _config() -> dict | None:
-    api_key = os.environ.get("BREVO_API_KEY")
+    api_key = os.environ.get("RESEND_API_KEY")
     from_addr = os.environ.get("EMAIL_FROM_ADDRESS")
     if not api_key or not from_addr:
         return None
@@ -38,20 +42,20 @@ def _config() -> dict | None:
 
 def send_email(to_email: str | None, subject: str, body: str) -> bool:
     """يرجّع True لو نجح الإرسال فعلياً، False لأي سبب (بدون إعداد
-    Brevo، بدون بريد للمستقبل، أو خطأ اتصال/مصادقة) — بصمت دائماً، نفس
+    Resend، بدون بريد للمستقبل، أو خطأ اتصال/مصادقة) — بصمت دائماً، نفس
     فلسفة `telegram_service.send_message`."""
     cfg = _config()
     if not cfg or not to_email:
         return False
     try:
         resp = requests.post(
-            "https://api.brevo.com/v3/smtp/email",
-            headers={"api-key": cfg["api_key"], "Content-Type": "application/json"},
+            "https://api.resend.com/emails",
+            headers={"Authorization": f"Bearer {cfg['api_key']}", "Content-Type": "application/json"},
             json={
-                "sender": {"email": cfg["from_addr"], "name": cfg["from_name"]},
-                "to": [{"email": to_email}],
+                "from": f"{cfg['from_name']} <{cfg['from_addr']}>",
+                "to": [to_email],
                 "subject": subject,
-                "textContent": body,
+                "text": body,
             },
             timeout=10,
         )

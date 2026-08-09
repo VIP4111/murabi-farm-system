@@ -11,33 +11,33 @@ from app.core.daily_email_report_service import (
 from app.models import FarmSettings
 
 
-def test_send_email_noop_without_brevo_config(app, monkeypatch):
-    monkeypatch.delenv("BREVO_API_KEY", raising=False)
+def test_send_email_noop_without_resend_config(app, monkeypatch):
+    monkeypatch.delenv("RESEND_API_KEY", raising=False)
     monkeypatch.delenv("EMAIL_FROM_ADDRESS", raising=False)
     assert email_service.send_email("a@b.com", "subj", "body") is False
 
 
 def test_send_email_noop_without_recipient(app, monkeypatch):
-    monkeypatch.setenv("BREVO_API_KEY", "key123")
+    monkeypatch.setenv("RESEND_API_KEY", "key123")
     monkeypatch.setenv("EMAIL_FROM_ADDRESS", "from@example.com")
     assert email_service.send_email(None, "subj", "body") is False
 
 
 def test_send_email_success_with_mocked_http(app, monkeypatch):
-    monkeypatch.setenv("BREVO_API_KEY", "key123")
+    monkeypatch.setenv("RESEND_API_KEY", "key123")
     monkeypatch.setenv("EMAIL_FROM_ADDRESS", "from@example.com")
     with patch("requests.post") as mock_post:
         mock_post.return_value.ok = True
         result = email_service.send_email("owner@example.com", "subj", "body")
     assert result is True
     mock_post.assert_called_once()
-    assert mock_post.call_args.kwargs["headers"]["api-key"] == "key123"
-    assert mock_post.call_args.kwargs["json"]["to"] == [{"email": "owner@example.com"}]
+    assert mock_post.call_args.kwargs["headers"]["Authorization"] == "Bearer key123"
+    assert mock_post.call_args.kwargs["json"]["to"] == ["owner@example.com"]
 
 
 def test_send_email_handles_request_error(app, monkeypatch):
     import requests
-    monkeypatch.setenv("BREVO_API_KEY", "key123")
+    monkeypatch.setenv("RESEND_API_KEY", "key123")
     monkeypatch.setenv("EMAIL_FROM_ADDRESS", "from@example.com")
     with patch("requests.post", side_effect=requests.RequestException("boom")):
         assert email_service.send_email("owner@example.com", "subj", "body") is False
