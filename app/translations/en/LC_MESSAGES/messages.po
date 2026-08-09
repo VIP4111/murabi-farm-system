@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:16+0300\n"
+"POT-Creation-Date: 2026-08-10 02:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -275,7 +275,8 @@ msgstr "Problem"
 msgid "صيانة"
 msgstr "Maintenance"
 
-#: app/__init__.py:205 app/templates/finance/form.html:38
+#: app/__init__.py:205 app/health/health_service.py:82
+#: app/templates/finance/form.html:38
 msgid "أخرى"
 msgstr "Other"
 
@@ -306,6 +307,98 @@ msgstr "Add your first medicine to the pharmacy"
 #: app/core/setup_checklist_service.py:18
 msgid "أضف أول صنف علف"
 msgstr "Add your first feed item"
+
+#: app/health/health_service.py:25
+msgid "حقن عضل (IM)"
+msgstr "Intramuscular injection (IM)"
+
+#: app/health/health_service.py:26
+msgid "بعضلات الرقبة الجانبية أو الفخذ الخلفي عند البالغين، بعيداً عن العمود الفقري والأعصاب الكبيرة. دوّر مكان الحقن بين الجانبين لتفادي تندّب متكرر بنفس المكان. إبرة أقصر وأدق للحملان الصغيرة."
+msgstr "In the side neck muscles or hind thigh for adults, away from the spine and major nerves. Rotate the injection site between sides to avoid repeated scarring in the same spot. Use a shorter, finer needle for small lambs."
+
+#: app/health/health_service.py:29
+msgid "حقن وريدي (IV)"
+msgstr "Intravenous injection (IV)"
+
+#: app/health/health_service.py:30
+msgid "عادة بالوريد الوداجي بالرقبة — يحتاج خبرة ودقة عالية، الأصعب والأخطر بين طرق الحقن. يُترك للدكتور أو الممرض المدرَّب تحديداً، مو العامل الميداني بدون إشراف."
+msgstr "Usually via the jugular vein in the neck — requires high skill and precision, the hardest and riskiest injection method. Left specifically to the doctor or a trained nurse, not a field worker without supervision."
+
+#: app/health/health_service.py:33
+msgid "حقن تحت الجلد (SC)"
+msgstr "Subcutaneous injection (SC)"
+
+#: app/health/health_service.py:34
+msgid "الطريقة الأكثر أماناً وشيوعاً بالإدخال الميداني اليومي. ارفع الجلد بأصابعك لتشكيل \"خيمة\" (عادة برقبة الحيوان أو خلف الكتف)، أدخل الإبرة بزاوية مائلة (تقريباً 30-45 درجة) بقاعدة الخيمة الجلدية بعيداً عن العضل تحتها، وتأكد إنك تحت الجلد فعلاً (سهولة الحقن بدون مقاومة) قبل الضغط."
+msgstr "The safest and most common method for everyday field use. Pinch the skin with your fingers to form a \"tent\" (usually on the animal's neck or behind the shoulder), insert the needle at an angle (roughly 30-45 degrees) at the base of the skin tent away from the muscle beneath it, and confirm you're truly under the skin (easy injection with no resistance) before pressing."
+
+#: app/health/health_service.py:37
+msgid "فموي"
+msgstr "Oral"
+
+#: app/health/health_service.py:38
+msgid "يُعطى مباشرة بالفم بمحقنة فموية بدون إبرة، بحذر من دخول السائل للرئة (اختناق) — ثبّت رأس الحيوان بزاوية معتدلة، مو مائلة للخلف بشدة، وأعطِ الجرعة ببطء."
+msgstr "Given directly by mouth with a needleless oral syringe, taking care the liquid doesn't enter the lungs (choking) — hold the animal's head at a moderate angle, not tilted sharply back, and give the dose slowly."
+
+#: app/health/health_service.py:41
+msgid "موضعي"
+msgstr "Topical"
+
+#: app/health/health_service.py:42
+msgid "يُوضَع مباشرة على سطح الجلد بالمكان المحدَّد (عادة خط الظهر) حسب تعليمات ملصق المنتج — تجنّب الجلد المجروح أو الملتهب."
+msgstr "Applied directly to the skin surface at the specified location (usually along the backline) per the product label instructions — avoid injured or inflamed skin."
+
+#: app/health/health_service.py:45
+msgid "رذاذ/استنشاق"
+msgstr "Spray/inhalation"
+
+#: app/health/health_service.py:46
+msgid "يُستخدم عادة لعلاجات تنفسية جماعية بمساحة محدودة التهوية مؤقتاً، حسب تعليمات جهاز الرذاذ المستخدم — تأكد من تهوية المكان بعد انتهاء المدة الموصى بها."
+msgstr "Usually used for group respiratory treatments in a temporarily limited-ventilation space, per the instructions of the spray device used — ensure the space is ventilated after the recommended duration ends."
+
+#: app/health/health_service.py:62
+msgid "لقاح/تحصين"
+msgstr "Vaccine/immunization"
+
+#: app/health/health_service.py:63
+msgid "يُعطى وقائياً قبل التعرّض للمرض لبناء مناعة الجسم ضده — ما يُستخدم لعلاج مرض قائم فعلاً. يحتاج عادة جرعة تنشيطية بعد مدة معيّنة (مدة الحماية) لاستمرار الوقاية."
+msgstr "Given preventively before disease exposure to build the body's immunity against it — not used to treat an already-existing disease. Usually needs a booster dose after a set period (the protection duration) to maintain prevention."
+
+#: app/health/health_service.py:66
+msgid "مضاد حيوي"
+msgstr "Antibiotic"
+
+#: app/health/health_service.py:67
+msgid "يُستخدم لعلاج عدوى بكتيرية قائمة فعلاً، بعد تشخيص الدكتور — له عادة فترة سحب قبل بيع/حلب الحيوان. ما يُجدي مع الفيروسات."
+msgstr "Used to treat an already-existing bacterial infection, following the doctor's diagnosis — usually has a withdrawal period before selling/milking the animal. Ineffective against viruses."
+
+#: app/health/health_service.py:70
+msgid "مضاد طفيليات/ديدان"
+msgstr "Antiparasitic/dewormer"
+
+#: app/health/health_service.py:71
+msgid "يُعطى دورياً حسب برنامج المزرعة لمكافحة الطفيليات الداخلية/الخارجية — التكرار المتقارب جداً بدون داعٍ قد يقلل فعاليته لاحقاً (نفس حارس منع التكرار خلال 30 يوماً بالنظام)."
+msgstr "Given periodically per the farm's program to control internal/external parasites — repeating it too closely together without reason can reduce its effectiveness later (the same 30-day repeat-prevention guard in the system)."
+
+#: app/health/health_service.py:74
+msgid "فيتامينات ومكمّلات"
+msgstr "Vitamins and supplements"
+
+#: app/health/health_service.py:75
+msgid "يدعم التغذية العامة أو يسدّ نقصاً غذائياً محدداً (مثل السيلينيوم) — مو علاجاً لمرض قائم، ومعظمها بدون فترة سحب."
+msgstr "Supports general nutrition or fills a specific nutritional deficiency (like selenium) — not a treatment for an existing disease, and most have no withdrawal period."
+
+#: app/health/health_service.py:78
+msgid "مطهرات وعلاجات موضعية"
+msgstr "Disinfectants and topical treatments"
+
+#: app/health/health_service.py:79
+msgid "يُستخدم على سطح الجلد/الجرح مباشرة (تطهير، تندّب، طفيليات خارجية موضعية) — عادة أقل امتصاصاً جهازياً من الحقن/الفموي."
+msgstr "Used directly on the skin/wound surface (disinfecting, scarring, local external parasites) — usually less systemic absorption than injections/oral."
+
+#: app/health/health_service.py:83
+msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
+msgstr "A general category for what doesn't fall under the other categories — check the reference dosage note written on the medicine itself."
 
 #: app/team/routes.py:35 app/templates/worker_home.html:59
 msgid "فحص / حالة صحية"
@@ -531,7 +624,7 @@ msgstr "Vaccination calendar"
 msgid "المساعد التشخيصي"
 msgstr "Diagnostic assistant"
 
-#: app/templates/base.html:489
+#: app/templates/base.html:489 app/templates/health/injection_guide.html:5
 msgid "دليل الحقن الميداني"
 msgstr "Field injection guide"
 
@@ -2099,6 +2192,19 @@ msgstr "Example: refer for immediate veterinary examination..."
 msgid "إضافة للقائمة"
 msgstr "Add to list"
 
+#: app/templates/health/injection_guide.html:6
+#: app/templates/health/pharmacy_shortages.html:6
+msgid "رجوع للصيدلية"
+msgstr "Back to Pharmacy"
+
+#: app/templates/health/injection_guide.html:9
+msgid "إرشاد ميداني عام لطرق الحقن الأساسية — مو بروتوكولاً طبياً دقيقاً لحالة أو دواء معيّن."
+msgstr "General field guidance for the basic injection methods — not a precise medical protocol for a specific case or medicine."
+
+#: app/templates/health/injection_guide.html:10
+msgid "راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
+msgstr "Always check with the treating doctor for specifics about an animal's condition or a particular medicine's dose (each medicine's reference dosage note is entered by the doctor themselves on the Pharmacy screen)."
+
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
 msgid "نواقص الصيدلية"
@@ -2143,10 +2249,6 @@ msgstr "Expired"
 #: app/templates/health/pharmacy_list.html:33
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "No medicines recorded yet."
-
-#: app/templates/health/pharmacy_shortages.html:6
-msgid "رجوع للصيدلية"
-msgstr "Back to Pharmacy"
 
 #: app/templates/health/pharmacy_shortages.html:8
 msgid "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها \"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:16+0300\n"
+"POT-Creation-Date: 2026-08-10 02:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -274,7 +274,8 @@ msgstr ""
 msgid "صيانة"
 msgstr ""
 
-#: app/__init__.py:205 app/templates/finance/form.html:38
+#: app/__init__.py:205 app/health/health_service.py:82
+#: app/templates/finance/form.html:38
 msgid "أخرى"
 msgstr ""
 
@@ -304,6 +305,130 @@ msgstr ""
 
 #: app/core/setup_checklist_service.py:18
 msgid "أضف أول صنف علف"
+msgstr ""
+
+#: app/health/health_service.py:25
+msgid "حقن عضل (IM)"
+msgstr ""
+
+#: app/health/health_service.py:26
+msgid ""
+"بعضلات الرقبة الجانبية أو الفخذ الخلفي عند البالغين، بعيداً عن العمود "
+"الفقري والأعصاب الكبيرة. دوّر مكان الحقن بين الجانبين لتفادي تندّب متكرر "
+"بنفس المكان. إبرة أقصر وأدق للحملان الصغيرة."
+msgstr ""
+
+#: app/health/health_service.py:29
+msgid "حقن وريدي (IV)"
+msgstr ""
+
+#: app/health/health_service.py:30
+msgid ""
+"عادة بالوريد الوداجي بالرقبة — يحتاج خبرة ودقة عالية، الأصعب والأخطر بين "
+"طرق الحقن. يُترك للدكتور أو الممرض المدرَّب تحديداً، مو العامل الميداني "
+"بدون إشراف."
+msgstr ""
+
+#: app/health/health_service.py:33
+msgid "حقن تحت الجلد (SC)"
+msgstr ""
+
+#: app/health/health_service.py:34
+msgid ""
+"الطريقة الأكثر أماناً وشيوعاً بالإدخال الميداني اليومي. ارفع الجلد "
+"بأصابعك لتشكيل \"خيمة\" (عادة برقبة الحيوان أو خلف الكتف)، أدخل الإبرة "
+"بزاوية مائلة (تقريباً 30-45 درجة) بقاعدة الخيمة الجلدية بعيداً عن العضل "
+"تحتها، وتأكد إنك تحت الجلد فعلاً (سهولة الحقن بدون مقاومة) قبل الضغط."
+msgstr ""
+
+#: app/health/health_service.py:37
+msgid "فموي"
+msgstr ""
+
+#: app/health/health_service.py:38
+msgid ""
+"يُعطى مباشرة بالفم بمحقنة فموية بدون إبرة، بحذر من دخول السائل للرئة "
+"(اختناق) — ثبّت رأس الحيوان بزاوية معتدلة، مو مائلة للخلف بشدة، وأعطِ "
+"الجرعة ببطء."
+msgstr ""
+
+#: app/health/health_service.py:41
+msgid "موضعي"
+msgstr ""
+
+#: app/health/health_service.py:42
+msgid ""
+"يُوضَع مباشرة على سطح الجلد بالمكان المحدَّد (عادة خط الظهر) حسب تعليمات "
+"ملصق المنتج — تجنّب الجلد المجروح أو الملتهب."
+msgstr ""
+
+#: app/health/health_service.py:45
+msgid "رذاذ/استنشاق"
+msgstr ""
+
+#: app/health/health_service.py:46
+msgid ""
+"يُستخدم عادة لعلاجات تنفسية جماعية بمساحة محدودة التهوية مؤقتاً، حسب "
+"تعليمات جهاز الرذاذ المستخدم — تأكد من تهوية المكان بعد انتهاء المدة "
+"الموصى بها."
+msgstr ""
+
+#: app/health/health_service.py:62
+msgid "لقاح/تحصين"
+msgstr ""
+
+#: app/health/health_service.py:63
+msgid ""
+"يُعطى وقائياً قبل التعرّض للمرض لبناء مناعة الجسم ضده — ما يُستخدم لعلاج "
+"مرض قائم فعلاً. يحتاج عادة جرعة تنشيطية بعد مدة معيّنة (مدة الحماية) "
+"لاستمرار الوقاية."
+msgstr ""
+
+#: app/health/health_service.py:66
+msgid "مضاد حيوي"
+msgstr ""
+
+#: app/health/health_service.py:67
+msgid ""
+"يُستخدم لعلاج عدوى بكتيرية قائمة فعلاً، بعد تشخيص الدكتور — له عادة فترة "
+"سحب قبل بيع/حلب الحيوان. ما يُجدي مع الفيروسات."
+msgstr ""
+
+#: app/health/health_service.py:70
+msgid "مضاد طفيليات/ديدان"
+msgstr ""
+
+#: app/health/health_service.py:71
+msgid ""
+"يُعطى دورياً حسب برنامج المزرعة لمكافحة الطفيليات الداخلية/الخارجية — "
+"التكرار المتقارب جداً بدون داعٍ قد يقلل فعاليته لاحقاً (نفس حارس منع "
+"التكرار خلال 30 يوماً بالنظام)."
+msgstr ""
+
+#: app/health/health_service.py:74
+msgid "فيتامينات ومكمّلات"
+msgstr ""
+
+#: app/health/health_service.py:75
+msgid ""
+"يدعم التغذية العامة أو يسدّ نقصاً غذائياً محدداً (مثل السيلينيوم) — مو "
+"علاجاً لمرض قائم، ومعظمها بدون فترة سحب."
+msgstr ""
+
+#: app/health/health_service.py:78
+msgid "مطهرات وعلاجات موضعية"
+msgstr ""
+
+#: app/health/health_service.py:79
+msgid ""
+"يُستخدم على سطح الجلد/الجرح مباشرة (تطهير، تندّب، طفيليات خارجية موضعية) "
+"— عادة أقل امتصاصاً جهازياً من الحقن/الفموي."
+msgstr ""
+
+#: app/health/health_service.py:83
+msgid ""
+"فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية "
+"المكتوبة على الدواء نفسه."
 msgstr ""
 
 #: app/team/routes.py:35 app/templates/worker_home.html:59
@@ -539,7 +664,7 @@ msgstr ""
 msgid "المساعد التشخيصي"
 msgstr ""
 
-#: app/templates/base.html:489
+#: app/templates/base.html:489 app/templates/health/injection_guide.html:5
 msgid "دليل الحقن الميداني"
 msgstr ""
 
@@ -2157,6 +2282,23 @@ msgstr ""
 msgid "إضافة للقائمة"
 msgstr ""
 
+#: app/templates/health/injection_guide.html:6
+#: app/templates/health/pharmacy_shortages.html:6
+msgid "رجوع للصيدلية"
+msgstr ""
+
+#: app/templates/health/injection_guide.html:9
+msgid ""
+"إرشاد ميداني عام لطرق الحقن الأساسية — مو بروتوكولاً طبياً دقيقاً لحالة "
+"أو دواء معيّن."
+msgstr ""
+
+#: app/templates/health/injection_guide.html:10
+msgid ""
+"راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه"
+" (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
+msgstr ""
+
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
 msgid "نواقص الصيدلية"
@@ -2200,10 +2342,6 @@ msgstr ""
 
 #: app/templates/health/pharmacy_list.html:33
 msgid "لا يوجد أدوية مسجّلة بعد."
-msgstr ""
-
-#: app/templates/health/pharmacy_shortages.html:6
-msgid "رجوع للصيدلية"
 msgstr ""
 
 #: app/templates/health/pharmacy_shortages.html:8
