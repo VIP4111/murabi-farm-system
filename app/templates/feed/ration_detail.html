@@ -4,22 +4,22 @@
   <h2>{{ ration.name }}</h2>
   <div class="table-scroll">
 <table>
-    <tr><td>الغرض</td><td>{{ ration.purpose or '-' }}</td></tr>
+    <tr><td>{{ _('الغرض') }}</td><td>{{ ration.purpose or '-' }}</td></tr>
     {% if profile %}
-    <tr><td>بروتين خام موزون</td><td>{{ profile.protein_percent }}%</td></tr>
-    <tr><td>طاقة ممثلة موزونة</td><td>{{ profile.energy_kcal_per_kg }} كيلوكالوري/كجم</td></tr>
-    <tr><td>تكلفة الكيلو</td><td>{{ profile.cost_per_kg }}</td></tr>
+    <tr><td>{{ _('بروتين خام موزون') }}</td><td>{{ profile.protein_percent }}%</td></tr>
+    <tr><td>{{ _('طاقة ممثلة موزونة') }}</td><td>{{ profile.energy_kcal_per_kg }} {{ _('كيلوكالوري/كجم') }}</td></tr>
+    <tr><td>{{ _('تكلفة الكيلو') }}</td><td>{{ profile.cost_per_kg }}</td></tr>
     {% endif %}
-    <tr><td>ملاحظات</td><td>{{ ration.notes or '-' }}</td></tr>
+    <tr><td>{{ _('ملاحظات') }}</td><td>{{ ration.notes or '-' }}</td></tr>
   </table>
 </div>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">المكوّنات</h3>
+  <h3 style="font-size:15px;">{{ _('المكوّنات') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>المكوّن</th><th>النسبة</th><th>بروتين%</th><th>طاقة</th><th>السعر/وحدة</th></tr>
+    <tr><th>{{ _('المكوّن') }}</th><th>{{ _('النسبة') }}</th><th>{{ _('بروتين%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('السعر/وحدة') }}</th></tr>
     {% for item in ration.items %}
     <tr>
       <td>{{ item.feed.name }}</td>
@@ -29,7 +29,7 @@
       <td>{{ item.feed.unit_price or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه مكوّنات.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه مكوّنات.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

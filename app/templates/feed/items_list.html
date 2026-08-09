@@ -2,34 +2,34 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>مكوّنات العلف</h2>
-    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.items_new') }}">+ مكوّن جديد</a>{% endif %}
+    <h2>{{ _('مكوّنات العلف') }}</h2>
+    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.items_new') }}">+ {{ _('مكوّن جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>الاسم</th><th>الفئة</th><th>فئة العلف</th><th>بروتين%</th><th>طاقة (ك.كالوري/كجم)</th><th>المتوفر</th><th>السعر/وحدة</th><th>نفاد متوقع</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('فئة العلف') }}</th><th>{{ _('بروتين%') }}</th><th>{{ _('طاقة (ك.كالوري/كجم)') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th>{{ _('نفاد متوقع') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
-      <td>{{ i.name }}{% if i.contains_high_copper %} <span class="badge off" title="يحتوي نحاساً مرتفعاً">⚠️Cu</span>{% endif %}</td>
+      <td>{{ i.name }}{% if i.contains_high_copper %} <span class="badge off" title="{{ _('يحتوي نحاساً مرتفعاً') }}">⚠️Cu</span>{% endif %}</td>
       <td>{{ i.category or '-' }}</td>
       <td>{{ feed_class_labels.get(i.feed_class, '-') if i.feed_class else '-' }}</td>
       <td>{{ i.protein_percent or '-' }}</td>
       <td>{{ i.energy_kcal_per_kg or '-' }}</td>
       <td>
         {{ i.available_qty }} {{ i.unit }}
-        {% if i.min_stock_qty and i.available_qty <= i.min_stock_qty %}<span class="badge off">منخفض</span>{% endif %}
+        {% if i.min_stock_qty and i.available_qty <= i.min_stock_qty %}<span class="badge off">{{ _('منخفض') }}</span>{% endif %}
       </td>
       <td>{{ i.unit_price or '-' }}</td>
-      <td>{% if stockout.get(i.id) %}~{{ stockout[i.id] }} يوم{% else %}-{% endif %}</td>
+      <td>{% if stockout.get(i.id) %}~{{ stockout[i.id] }} {{ _('يوم') }}{% else %}-{% endif %}</td>
       <td>
         {% if current_user.has_permission('feed.manage') %}
-        <a href="{{ url_for('feed.items_edit', item_id=i.id) }}">تعديل</a>
-        · <a href="{{ url_for('warehouses.item_breakdown', kind='feed', item_id=i.id) }}">🏬 المستودعات</a>
+        <a href="{{ url_for('feed.items_edit', item_id=i.id) }}">{{ _('تعديل') }}</a>
+        · <a href="{{ url_for('warehouses.item_breakdown', kind='feed', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
         {% endif %}
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="9" style="color:#888;">لا يوجد مكوّنات علف مسجّلة بعد.</td></tr>
+    <tr><td colspan="9" style="color:#888;">{{ _('لا يوجد مكوّنات علف مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

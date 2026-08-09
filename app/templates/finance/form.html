@@ -1,58 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>عملية مالية جديدة</h2>
+  <h2>{{ _('عملية مالية جديدة') }}</h2>
   <form method="post" enctype="multipart/form-data" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>التاريخ</label><input name="date" type="date" required>
-    <label>النوع</label>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
+    <label>{{ _('النوع') }}</label>
     <select name="operation_type" id="operationTypeSelect" required>
-      <option value="sale">بيع</option>
-      <option value="purchase">شراء</option>
-      <option value="expense">مصروف</option>
-      <option value="debt_in">دعم خارجي (دين على الحلال)</option>
-      <option value="debt_repayment">سداد دين</option>
+      <option value="sale">{{ _('بيع') }}</option>
+      <option value="purchase">{{ _('شراء') }}</option>
+      <option value="expense">{{ _('مصروف') }}</option>
+      <option value="debt_in">{{ _('دعم خارجي (دين على الحلال)') }}</option>
+      <option value="debt_repayment">{{ _('سداد دين') }}</option>
     </select>
     <div id="debtInHint">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
-      "دعم خارجي" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين
-      عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم
-      الجهة بحقل "البند" عشان تقدر تتابع الدين لكل جهة.
+      {{ _('"دعم خارجي" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل "البند" عشان تقدر تتابع الدين لكل جهة.') }}
     </p>
     </div>
-    <label>التصنيف</label><input name="category" placeholder="أعلاف / أدوية / رواتب ...">
+    <label>{{ _('التصنيف') }}</label><input name="category" placeholder="{{ _('أعلاف / أدوية / رواتب ...') }}">
     <div id="indirectExpenseGroup">
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
       <input type="checkbox" name="is_indirect" value="1" style="width:auto; margin:0;">
-      مصروف غير مباشر (إيجار/صيانة/رواتب — يخص القطيع كله مو حيوان محدد)
+      {{ _('مصروف غير مباشر (إيجار/صيانة/رواتب — يخص القطيع كله مو حيوان محدد)') }}
     </label>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
-      يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر
-      بتقرير "تكلفة الرأس الشهرية/السنوية" وكنصيب فردي بصفحة تفاصيل كل
-      رأس.
+      {{ _('يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير "تكلفة الرأس الشهرية/السنوية" وكنصيب فردي بصفحة تفاصيل كل رأس.') }}
     </p>
     </div>
-    <label>البند</label><input name="item">
-    <label>الوصف</label><textarea name="description" rows="2"></textarea>
-    <label>المبلغ</label><input name="amount" type="number" step="0.01" required>
-    <label>طريقة الدفع</label>
+    <label>{{ _('البند') }}</label><input name="item">
+    <label>{{ _('الوصف') }}</label><textarea name="description" rows="2"></textarea>
+    <label>{{ _('المبلغ') }}</label><input name="amount" type="number" step="0.01" required>
+    <label>{{ _('طريقة الدفع') }}</label>
     <select name="payment_method">
-      <option value="cash">نقدي</option>
-      <option value="transfer">تحويل بنكي</option>
-      <option value="other">أخرى</option>
+      <option value="cash">{{ _('نقدي') }}</option>
+      <option value="transfer">{{ _('تحويل بنكي') }}</option>
+      <option value="other">{{ _('أخرى') }}</option>
     </select>
-    <label>مرتبطة بحيوان (اختياري)</label>
+    <label>{{ _('مرتبطة بحيوان (اختياري)') }}</label>
     <select name="related_animal_id">
-      <option value="">بدون ربط</option>
+      <option value="">{{ _('بدون ربط') }}</option>
       {% for a in animals %}<option value="{{ a.id }}">{{ a.animal_no }}</option>{% endfor %}
     </select>
-    <label>إرفاق فاتورة (إن وجدت)</label>
+    <label>{{ _('إرفاق فاتورة (إن وجدت)') }}</label>
     <input type="file" name="invoice_file" accept="image/*,application/pdf">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
-      لو عندك فاتورة ورقية أو PDF من المورّد لهذي العملية، ارفعها هنا —
-      اختياري تماماً.
+      {{ _('لو عندك فاتورة ورقية أو PDF من المورّد لهذي العملية، ارفعها هنا — اختياري تماماً.') }}
     </p>
-    <button class="btn" type="submit">حفظ</button>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 <script>

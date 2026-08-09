@@ -2,40 +2,39 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>معدل التحويل الغذائي (FCR)</h2>
-    <a class="btn light" href="{{ url_for('feed.calculator') }}">← رجوع لحاسبة العلف</a>
+    <h2>{{ _('معدل التحويل الغذائي (FCR)') }}</h2>
+    <a class="btn light" href="{{ url_for('feed.calculator') }}">← {{ _('رجوع لحاسبة العلف') }}</a>
   </div>
   <p style="color:var(--muted); font-size:13px;">
-    FCR = كجم علف مستهلك ÷ كجم زيادة وزن لكل رؤوس الحظيرة النشطة مجتمعة — رقم أقل يعني كفاءة تحويل أعلى.
-    يعتمد على انتظام تسجيل الوزن وحركات العلف الفعلية بالفترة المحددة.
+    {{ _('FCR = كجم علف مستهلك ÷ كجم زيادة وزن لكل رؤوس الحظيرة النشطة مجتمعة — رقم أقل يعني كفاءة تحويل أعلى. يعتمد على انتظام تسجيل الوزن وحركات العلف الفعلية بالفترة المحددة.') }}
   </p>
 </div>
 
 <div class="card">
   <form method="post">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>الحظيرة</label>
+    <label>{{ _('الحظيرة') }}</label>
     <select name="barn_id" required>
       {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if barn_id == b.id }}>{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <label>من تاريخ</label><input name="start_date" type="date" required value="{{ start_date.isoformat() if start_date else '' }}">
-    <label>إلى تاريخ</label><input name="end_date" type="date" required value="{{ end_date.isoformat() if end_date else today }}">
-    <button class="btn" type="submit">احسب</button>
+    <label>{{ _('من تاريخ') }}</label><input name="start_date" type="date" required value="{{ start_date.isoformat() if start_date else '' }}">
+    <label>{{ _('إلى تاريخ') }}</label><input name="end_date" type="date" required value="{{ end_date.isoformat() if end_date else today }}">
+    <button class="btn" type="submit">{{ _('احسب') }}</button>
   </form>
 </div>
 
 {% if result %}
 <div class="card">
   <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
-    <div class="stat"><b>{{ result.total_feed_kg }}</b><span>إجمالي العلف المستهلك (كجم)</span></div>
-    <div class="stat"><b>{{ result.total_weight_gain_kg }}</b><span>إجمالي زيادة الوزن (كجم)</span></div>
-    <div class="stat"><b>{{ result.fcr if result.fcr is not none else '-' }}</b><span>معدل التحويل الغذائي FCR</span></div>
-    <div class="stat"><b>{{ result.cost_per_kg_gained if result.cost_per_kg_gained is not none else '-' }}</b><span>تكلفة العلف لكل كجم زيادة</span></div>
+    <div class="stat"><b>{{ result.total_feed_kg }}</b><span>{{ _('إجمالي العلف المستهلك (كجم)') }}</span></div>
+    <div class="stat"><b>{{ result.total_weight_gain_kg }}</b><span>{{ _('إجمالي زيادة الوزن (كجم)') }}</span></div>
+    <div class="stat"><b>{{ result.fcr if result.fcr is not none else '-' }}</b><span>{{ _('معدل التحويل الغذائي FCR') }}</span></div>
+    <div class="stat"><b>{{ result.cost_per_kg_gained if result.cost_per_kg_gained is not none else '-' }}</b><span>{{ _('تكلفة العلف لكل كجم زيادة') }}</span></div>
   </div>
   <p style="color:var(--muted); font-size:12px; margin-top:10px;">
-    {{ result.animals_with_data }} من {{ result.animals_total }} رأس بالحظيرة عندهم وزنان مسجَّلان بالفترة (بداية ونهاية) — الباقي استُبعد من حساب الزيادة.
+    {{ _('%(with_data)s من %(total)s رأس بالحظيرة عندهم وزنان مسجَّلان بالفترة (بداية ونهاية) — الباقي استُبعد من حساب الزيادة.', with_data=result.animals_with_data, total=result.animals_total) }}
     {% if result.fcr is none %}
-    <br>⚠️ ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة المحددة.
+    <br>⚠️ {{ _('ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة المحددة.') }}
     {% endif %}
   </p>
 </div>

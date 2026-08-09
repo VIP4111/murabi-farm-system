@@ -2,22 +2,22 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>خطط تغذية الحظائر</h2>
-    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.barn_plans_new') }}">+ خطة جديدة</a>{% endif %}
+    <h2>{{ _('خطط تغذية الحظائر') }}</h2>
+    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.barn_plans_new') }}">+ {{ _('خطة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>الحظيرة</th><th>الوصفة</th><th>كمية/رأس/يوم</th><th>من</th><th>إلى</th></tr>
+    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('الوصفة') }}</th><th>{{ _('كمية/رأس/يوم') }}</th><th>{{ _('من') }}</th><th>{{ _('إلى') }}</th></tr>
     {% for p in plans %}
     <tr>
       <td>{{ p.barn.barn_name }}</td>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=p.ration_id) }}">{{ p.ration.name }}</a></td>
-      <td>{{ p.daily_qty_per_animal_kg }} كجم</td>
+      <td>{{ p.daily_qty_per_animal_kg }} {{ _('كجم') }}</td>
       <td>{{ p.start_date }}</td>
       <td>{{ p.end_date or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد خطط تغذية مسجّلة بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد خطط تغذية مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

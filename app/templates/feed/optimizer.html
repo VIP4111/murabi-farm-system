@@ -2,38 +2,37 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>موازِن العليقة التلقائي</h2>
-    <a class="btn light" href="{{ url_for('feed.calculator') }}">← رجوع لحاسبة العلف</a>
+    <h2>{{ _('موازِن العليقة التلقائي') }}</h2>
+    <a class="btn light" href="{{ url_for('feed.calculator') }}">← {{ _('رجوع لحاسبة العلف') }}</a>
   </div>
   <p style="font-size:12px; color:#888;">
-    يبني خلطة جديدة من الصفر من كل مكوّنات العلف الخام النشطة (برمجة خطية حقيقية، مو ترتيب وصفات جاهزة)
-    بأقل تكلفة تحقق احتياج البروتين والطاقة — تقدير مبسّط، راجع طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً.
+    {{ _('يبني خلطة جديدة من الصفر من كل مكوّنات العلف الخام النشطة (برمجة خطية حقيقية، مو ترتيب وصفات جاهزة) بأقل تكلفة تحقق احتياج البروتين والطاقة — تقدير مبسّط، راجع طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً.') }}
   </p>
   <form method="post">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>اختر حيوان (يستخدم وزنه الفعلي)</label>
+    <label>{{ _('اختر حيوان (يستخدم وزنه الفعلي)') }}</label>
     <select name="animal_id">
-      <option value="">- أدخل وزن يدوي بدل ما تختار -</option>
-      {% for a in animals %}<option value="{{ a.id }}" {{ 'selected' if selected_animal and selected_animal.id == a.id }}>{{ a.animal_no }} ({{ a.weight or '?' }} كجم)</option>{% endfor %}
+      <option value="">{{ _('- أدخل وزن يدوي بدل ما تختار -') }}</option>
+      {% for a in animals %}<option value="{{ a.id }}" {{ 'selected' if selected_animal and selected_animal.id == a.id }}>{{ a.animal_no }} ({{ a.weight or '?' }} {{ _('كجم') }})</option>{% endfor %}
     </select>
-    <label>أو وزن يدوي (كجم)</label><input name="weight" type="number" step="0.1">
-    <label>الحالة الفسيولوجية (اتركه فاضي ليخمّنه النظام من دورة الإنتاج)</label>
+    <label>{{ _('أو وزن يدوي (كجم)') }}</label><input name="weight" type="number" step="0.1">
+    <label>{{ _('الحالة الفسيولوجية (اتركه فاضي ليخمّنه النظام من دورة الإنتاج)') }}</label>
     <select name="state">
-      <option value="">تخمين تلقائي</option>
+      <option value="">{{ _('تخمين تلقائي') }}</option>
       {% for s in states %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
     </select>
-    <button class="btn" type="submit">وازِن الخلطة</button>
+    <button class="btn" type="submit">{{ _('وازِن الخلطة') }}</button>
   </form>
 </div>
 
 {% if requirement %}
 <div class="card">
-  <h3 style="font-size:15px;">الاحتياج المستهدف</h3>
+  <h3 style="font-size:15px;">{{ _('الاحتياج المستهدف') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><td>احتياج المادة الجافة اليومي</td><td>{{ requirement.daily_dry_matter_kg }} كجم</td></tr>
-    <tr><td>هدف بروتين خام</td><td>{{ requirement.target_protein_percent }}%</td></tr>
-    <tr><td>هدف طاقة ممثلة</td><td>{{ requirement.target_energy_kcal_per_kg }} كيلوكالوري/كجم</td></tr>
+    <tr><td>{{ _('احتياج المادة الجافة اليومي') }}</td><td>{{ requirement.daily_dry_matter_kg }} {{ _('كجم') }}</td></tr>
+    <tr><td>{{ _('هدف بروتين خام') }}</td><td>{{ requirement.target_protein_percent }}%</td></tr>
+    <tr><td>{{ _('هدف طاقة ممثلة') }}</td><td>{{ requirement.target_energy_kcal_per_kg }} {{ _('كيلوكالوري/كجم') }}</td></tr>
   </table>
 </div>
 </div>
@@ -44,24 +43,24 @@
   {% if not result.feasible %}
   <div class="notice">⚠️ {{ result.reason }}</div>
   {% else %}
-  <h3 style="font-size:15px;">الخلطة المقترحة (الأرخص تكلفة)</h3>
+  <h3 style="font-size:15px;">{{ _('الخلطة المقترحة (الأرخص تكلفة)') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>المكوّن</th><th>الكمية (كجم/رأس/يوم)</th><th>النسبة</th><th>التكلفة</th><th>المخزون كافٍ؟</th></tr>
+    <tr><th>{{ _('المكوّن') }}</th><th>{{ _('الكمية (كجم/رأس/يوم)') }}</th><th>{{ _('النسبة') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
     {% for b in result.blend %}
     <tr>
       <td>{{ b.feed.name }}</td>
       <td>{{ b.quantity_kg }}</td>
       <td>{{ b.percent }}%</td>
       <td>{{ b.cost }}</td>
-      <td>{% if b.stock_ok %}<span class="badge on">كافٍ</span>{% else %}<span class="badge off">ناقص</span>{% endif %}</td>
+      <td>{% if b.stock_ok %}<span class="badge on">{{ _('كافٍ') }}</span>{% else %}<span class="badge off">{{ _('ناقص') }}</span>{% endif %}</td>
     </tr>
     {% endfor %}
   </table>
 </div>
-  <div class="stat" style="background:var(--primary); color:#fff; margin-top:10px;"><b>{{ result.total_daily_cost }}</b><span style="color:rgba(255,255,255,.8);">إجمالي التكلفة اليومية للرأس</span></div>
+  <div class="stat" style="background:var(--primary); color:#fff; margin-top:10px;"><b>{{ result.total_daily_cost }}</b><span style="color:rgba(255,255,255,.8);">{{ _('إجمالي التكلفة اليومية للرأس') }}</span></div>
   {% if not result.all_stock_ok %}
-  <div class="notice" style="margin-top:10px;">⚠️ مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع <a href="{{ url_for('feed.items_list') }}">مكوّنات العلف</a>.</div>
+  <div class="notice" style="margin-top:10px;">⚠️ {{ _('مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع') }} <a href="{{ url_for('feed.items_list') }}">{{ _('مكوّنات العلف') }}</a>.</div>
   {% endif %}
   {% endif %}
 </div>

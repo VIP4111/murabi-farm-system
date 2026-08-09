@@ -3,15 +3,15 @@
 <div class="card">
   <div class="stat" style="max-width:220px;">
     <b style="color:#a32d2d;">{{ "%.2f"|format(total) }}</b>
-    <span>إجمالي تكاليف الصحة والعلاج</span>
+    <span>{{ _('إجمالي تكاليف الصحة والعلاج') }}</span>
   </div>
 </div>
 
 <div class="card">
-  <h2>تكاليف الزيارات البيطرية</h2>
+  <h2>{{ _('تكاليف الزيارات البيطرية') }}</h2>
   <div class="table-scroll" style="margin-top:10px;">
   <table>
-    <tr><th>التاريخ</th><th>الحيوان</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('الطبيب') }}</th><th>{{ _('التشخيص') }}</th><th>{{ _('التكلفة') }}</th></tr>
     {% for v in visits %}
     <tr>
       <td>{{ v.date }}</td>
@@ -21,17 +21,17 @@
       <td>{{ "%.2f"|format(v.cost or 0) }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد زيارات مسجّلة بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد زيارات مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
 </div>
 
 <div class="card">
-  <h2>تكاليف علاج الأمراض</h2>
+  <h2>{{ _('تكاليف علاج الأمراض') }}</h2>
   <div class="table-scroll" style="margin-top:10px;">
   <table>
-    <tr><th>التاريخ</th><th>الحيوان</th><th>المرض</th><th>الحالة</th><th>التكلفة</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('التكلفة') }}</th></tr>
     {% for d in diseases %}
     <tr>
       <td>{{ d.date }}</td>
@@ -41,7 +41,7 @@
       <td>{{ "%.2f"|format(d.treatment_cost or 0) }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد أمراض مسجّلة بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد أمراض مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
   </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 01:38+0300\n"
+"POT-Creation-Date: 2026-08-10 01:57+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,11 +270,11 @@ msgstr ""
 msgid "مشكلة"
 msgstr ""
 
-#: app/__init__.py:204
+#: app/__init__.py:204 app/templates/feed/ration_form.html:15
 msgid "صيانة"
 msgstr ""
 
-#: app/__init__.py:205
+#: app/__init__.py:205 app/templates/finance/form.html:38
 msgid "أخرى"
 msgstr ""
 
@@ -552,15 +552,15 @@ msgstr ""
 msgid "حاسبة العلف"
 msgstr ""
 
-#: app/templates/base.html:498
+#: app/templates/base.html:498 app/templates/feed/fcr_report.html:5
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr ""
 
-#: app/templates/base.html:499
+#: app/templates/base.html:499 app/templates/feed/optimizer.html:5
 msgid "موازِن العليقة التلقائي"
 msgstr ""
 
-#: app/templates/base.html:500
+#: app/templates/base.html:500 app/templates/feed/items_list.html:27
 msgid "المستودعات"
 msgstr ""
 
@@ -599,7 +599,7 @@ msgid "أعضاء الفريق"
 msgstr ""
 
 #: app/templates/base.html:527 app/templates/base.html:528
-#: app/templates/home.html:88
+#: app/templates/finance/list.html:24 app/templates/home.html:88
 msgid "المالية"
 msgstr ""
 
@@ -847,6 +847,879 @@ msgstr ""
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr ""
 
+#: app/templates/feed/barn_plan_form.html:4
+msgid "خطة تغذية جديدة"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:7
+#: app/templates/feed/barn_plans_list.html:10
+#: app/templates/feed/fcr_report.html:16
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_form.html:24
+#: app/templates/team/worker_report_form.html:47
+msgid "الحظيرة"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:11
+#: app/templates/feed/barn_plans_list.html:10
+#: app/templates/feed/calculator.html:50
+msgid "الوصفة"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:15
+msgid "الكمية اليومية لكل رأس (كجم)"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:16
+msgid "تاريخ البداية"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:17
+msgid "تاريخ النهاية (اختياري)"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:18
+#: app/templates/feed/item_form.html:33
+#: app/templates/feed/ration_detail.html:13
+#: app/templates/feed/ration_form.html:30
+#: app/templates/health/vet_visit_form.html:33
+#: app/templates/repro/sonar_form.html:34
+msgid "ملاحظات"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:19
+msgid "سبب التجاوز (لو ظهر تحذير زيادة مفاجئة بالمركزات)"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:20
+#: app/templates/feed/ration_form.html:32
+msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب"
+msgstr ""
+
+#: app/templates/feed/barn_plan_form.html:21
+#: app/templates/feed/item_form.html:34
+#: app/templates/feed/movement_form.html:28
+#: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
+#: app/templates/health/disease_form.html:45
+#: app/templates/health/vaccination_form.html:29
+#: app/templates/health/vet_visit_form.html:34
+#: app/templates/repro/sonar_form.html:36
+msgid "حفظ"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:5
+msgid "خطط تغذية الحظائر"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:6
+msgid "خطة جديدة"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:10
+msgid "كمية/رأس/يوم"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:10
+msgid "من"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:10
+msgid "إلى"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:15
+#: app/templates/feed/calculator.html:21 app/templates/feed/calculator.html:39
+#: app/templates/feed/optimizer.html:16 app/templates/feed/optimizer.html:33
+msgid "كجم"
+msgstr ""
+
+#: app/templates/feed/barn_plans_list.html:20
+msgid "لا يوجد خطط تغذية مسجّلة بعد."
+msgstr ""
+
+#: app/templates/feed/calculator.html:5
+msgid "حاسبة الاحتياج اليومي"
+msgstr ""
+
+#: app/templates/feed/calculator.html:7
+#: app/templates/feed/ration_detail.html:19
+msgid "المكوّنات"
+msgstr ""
+
+#: app/templates/feed/calculator.html:8
+msgid "الوصفات"
+msgstr ""
+
+#: app/templates/feed/calculator.html:9
+msgid "خطط الحظائر"
+msgstr ""
+
+#: app/templates/feed/calculator.html:10
+msgid "حركة المخزون"
+msgstr ""
+
+#: app/templates/feed/calculator.html:14
+msgid ""
+"الأرقام هنا تقدير مبسّط للمجترات الصغيرة (مو توصية بيطرية معتمدة) — راجع "
+"طبيبك قبل ما تعتمد عليها بقرارات شراء فعلية."
+msgstr ""
+
+#: app/templates/feed/calculator.html:18 app/templates/feed/optimizer.html:13
+msgid "اختر حيوان (يستخدم وزنه الفعلي)"
+msgstr ""
+
+#: app/templates/feed/calculator.html:20 app/templates/feed/optimizer.html:15
+msgid "- أدخل وزن يدوي بدل ما تختار -"
+msgstr ""
+
+#: app/templates/feed/calculator.html:23 app/templates/feed/optimizer.html:18
+msgid "أو وزن يدوي (كجم)"
+msgstr ""
+
+#: app/templates/feed/calculator.html:24 app/templates/feed/optimizer.html:19
+msgid "الحالة الفسيولوجية (اتركه فاضي ليخمّنه النظام من دورة الإنتاج)"
+msgstr ""
+
+#: app/templates/feed/calculator.html:26 app/templates/feed/optimizer.html:21
+msgid "تخمين تلقائي"
+msgstr ""
+
+#: app/templates/feed/calculator.html:29 app/templates/feed/fcr_report.html:22
+msgid "احسب"
+msgstr ""
+
+#: app/templates/feed/calculator.html:35 app/templates/repro/sonar_form.html:19
+msgid "النتيجة"
+msgstr ""
+
+#: app/templates/feed/calculator.html:38
+msgid "الحالة المستخدمة"
+msgstr ""
+
+#: app/templates/feed/calculator.html:39 app/templates/feed/optimizer.html:33
+msgid "احتياج المادة الجافة اليومي"
+msgstr ""
+
+#: app/templates/feed/calculator.html:40 app/templates/feed/optimizer.html:34
+msgid "هدف بروتين خام"
+msgstr ""
+
+#: app/templates/feed/calculator.html:41 app/templates/feed/optimizer.html:35
+msgid "هدف طاقة ممثلة"
+msgstr ""
+
+#: app/templates/feed/calculator.html:41 app/templates/feed/optimizer.html:35
+#: app/templates/feed/ration_detail.html:10
+msgid "كيلوكالوري/كجم"
+msgstr ""
+
+#: app/templates/feed/calculator.html:47
+msgid "أقرب الوصفات (مرتّبة: تطابق ثم أرخص تكلفة)"
+msgstr ""
+
+#: app/templates/feed/calculator.html:50
+msgid "تطابق"
+msgstr ""
+
+#: app/templates/feed/calculator.html:50 app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/rations_list.html:10
+msgid "بروتين%"
+msgstr ""
+
+#: app/templates/feed/calculator.html:50
+#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/rations_list.html:10
+msgid "طاقة"
+msgstr ""
+
+#: app/templates/feed/calculator.html:50
+msgid "تكلفة/رأس/يوم"
+msgstr ""
+
+#: app/templates/feed/calculator.html:50 app/templates/feed/optimizer.html:49
+msgid "المخزون كافٍ؟"
+msgstr ""
+
+#: app/templates/feed/calculator.html:58 app/templates/feed/optimizer.html:56
+msgid "كافٍ"
+msgstr ""
+
+#: app/templates/feed/calculator.html:58 app/templates/feed/optimizer.html:56
+msgid "ناقص"
+msgstr ""
+
+#: app/templates/feed/calculator.html:61
+msgid "ما فيه وصفات مسجّلة بعد."
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:6 app/templates/feed/optimizer.html:6
+msgid "رجوع لحاسبة العلف"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:9
+msgid ""
+"FCR = كجم علف مستهلك ÷ كجم زيادة وزن لكل رؤوس الحظيرة النشطة مجتمعة — رقم"
+" أقل يعني كفاءة تحويل أعلى. يعتمد على انتظام تسجيل الوزن وحركات العلف "
+"الفعلية بالفترة المحددة."
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:20
+msgid "من تاريخ"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:21
+msgid "إلى تاريخ"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:29
+msgid "إجمالي العلف المستهلك (كجم)"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:30
+msgid "إجمالي زيادة الوزن (كجم)"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:31
+msgid "معدل التحويل الغذائي FCR"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:32
+msgid "تكلفة العلف لكل كجم زيادة"
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:35
+#, python-format
+msgid ""
+"%(with_data)s من %(total)s رأس بالحظيرة عندهم وزنان مسجَّلان بالفترة "
+"(بداية ونهاية) — الباقي استُبعد من حساب الزيادة."
+msgstr ""
+
+#: app/templates/feed/fcr_report.html:37
+msgid ""
+"ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة "
+"المحددة."
+msgstr ""
+
+#: app/templates/feed/item_form.html:4
+msgid "تعديل مكوّن علف"
+msgstr ""
+
+#: app/templates/feed/item_form.html:4
+msgid "مكوّن علف جديد"
+msgstr ""
+
+#: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_form.html:7
+#: app/templates/feed/rations_list.html:10
+msgid "الاسم"
+msgstr ""
+
+#: app/templates/feed/item_form.html:7
+msgid "مثال: برسيم دريس"
+msgstr ""
+
+#: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
+msgid "الفئة"
+msgstr ""
+
+#: app/templates/feed/item_form.html:14
+msgid "فئة العلف (لحارس منع الزيادة المفاجئة للمركزات)"
+msgstr ""
+
+#: app/templates/feed/item_form.html:21
+msgid ""
+"قائمة ثابتة منفصلة عن \"الفئة\" النصية أعلاه — تحديد \"مركّز\" هنا هو "
+"اللي يدخل بحساب حارس الزيادة الأسبوعية (بند إضافي 51)."
+msgstr ""
+
+#: app/templates/feed/item_form.html:22
+msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافات معدنية)"
+msgstr ""
+
+#: app/templates/feed/item_form.html:23
+msgid ""
+"يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند "
+"إضافي 51) — بلا خيار تجاوز."
+msgstr ""
+
+#: app/templates/feed/item_form.html:24
+msgid "بروتين خام % (من ملصق الكيس)"
+msgstr ""
+
+#: app/templates/feed/item_form.html:25
+msgid "طاقة ممثلة (كيلوكالوري/كجم)"
+msgstr ""
+
+#: app/templates/feed/item_form.html:26
+msgid "ألياف %"
+msgstr ""
+
+#: app/templates/feed/item_form.html:27
+msgid "كالسيوم %"
+msgstr ""
+
+#: app/templates/feed/item_form.html:28
+msgid "فسفور %"
+msgstr ""
+
+#: app/templates/feed/item_form.html:29
+msgid "الوحدة"
+msgstr ""
+
+#: app/templates/feed/item_form.html:30
+msgid "سعر الوحدة"
+msgstr ""
+
+#: app/templates/feed/item_form.html:31
+msgid "الكمية المتوفرة"
+msgstr ""
+
+#: app/templates/feed/item_form.html:32
+msgid "الحد الأدنى للتنبيه"
+msgstr ""
+
+#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
+msgid "مكوّنات العلف"
+msgstr ""
+
+#: app/templates/feed/items_list.html:6
+msgid "مكوّن جديد"
+msgstr ""
+
+#: app/templates/feed/items_list.html:10
+msgid "فئة العلف"
+msgstr ""
+
+#: app/templates/feed/items_list.html:10
+msgid "طاقة (ك.كالوري/كجم)"
+msgstr ""
+
+#: app/templates/feed/items_list.html:10
+msgid "المتوفر"
+msgstr ""
+
+#: app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_detail.html:22
+msgid "السعر/وحدة"
+msgstr ""
+
+#: app/templates/feed/items_list.html:10
+msgid "نفاد متوقع"
+msgstr ""
+
+#: app/templates/feed/items_list.html:13
+msgid "يحتوي نحاساً مرتفعاً"
+msgstr ""
+
+#: app/templates/feed/items_list.html:20
+msgid "منخفض"
+msgstr ""
+
+#: app/templates/feed/items_list.html:23
+#: app/templates/health/disease_form.html:37
+#: app/templates/health/vaccination_form.html:22
+#: app/templates/health/vet_visit_form.html:25
+msgid "يوم"
+msgstr ""
+
+#: app/templates/feed/items_list.html:26
+msgid "تعديل"
+msgstr ""
+
+#: app/templates/feed/items_list.html:32
+msgid "لا يوجد مكوّنات علف مسجّلة بعد."
+msgstr ""
+
+#: app/templates/feed/movement_form.html:4
+msgid "حركة مخزون علف جديدة"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:7
+#: app/templates/feed/movements_list.html:10
+#: app/templates/feed/optimizer.html:49
+#: app/templates/feed/ration_detail.html:22
+#: app/templates/team/task_detail.html:43
+msgid "المكوّن"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:11
+#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
+#: app/templates/finance/list.html:32 app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/reports_list.html:85
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+msgid "النوع"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:13
+msgid "وارد (شراء/تعبئة)"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:14
+msgid "صادر (توزيع فعلي)"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:16
+#: app/templates/feed/movements_list.html:10
+msgid "الكمية"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:17
+msgid "الحظيرة (إلزامي لحركة \"صادر\" — عشان تنحسب التكلفة اليومية للحظيرة صح)"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:19
+msgid "بدون حظيرة (وارد فقط)"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:22
+msgid "الحيوان (اختياري)"
+msgstr ""
+
+#: app/templates/feed/movement_form.html:27
+msgid "ملاحظة"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:5
+msgid "حركة مخزون العلف"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:6
+msgid "حركة جديدة"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/health/disease_form.html:18
+#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vet_visit_form.html:12
+msgid "التاريخ"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:10
+msgid "قبل"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:10
+msgid "بعد"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:10
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:147
+msgid "الحظيرة/الحيوان"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:15
+msgid "وارد"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:15
+msgid "صادر"
+msgstr ""
+
+#: app/templates/feed/movements_list.html:22
+msgid "لا يوجد حركات مسجّلة بعد."
+msgstr ""
+
+#: app/templates/feed/optimizer.html:9
+msgid ""
+"يبني خلطة جديدة من الصفر من كل مكوّنات العلف الخام النشطة (برمجة خطية "
+"حقيقية، مو ترتيب وصفات جاهزة) بأقل تكلفة تحقق احتياج البروتين والطاقة — "
+"تقدير مبسّط، راجع طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً."
+msgstr ""
+
+#: app/templates/feed/optimizer.html:24
+msgid "وازِن الخلطة"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:30
+msgid "الاحتياج المستهدف"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:46
+msgid "الخلطة المقترحة (الأرخص تكلفة)"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:49
+msgid "الكمية (كجم/رأس/يوم)"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:49
+#: app/templates/feed/ration_detail.html:22
+#: app/templates/team/task_detail.html:43
+msgid "النسبة"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:49
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34
+#: app/templates/health/vet_visit_form.html:29
+msgid "التكلفة"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:61
+msgid "إجمالي التكلفة اليومية للرأس"
+msgstr ""
+
+#: app/templates/feed/optimizer.html:63
+msgid "مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع"
+msgstr ""
+
+#: app/templates/feed/ration_detail.html:7
+#: app/templates/feed/ration_form.html:8
+#: app/templates/feed/rations_list.html:10
+msgid "الغرض"
+msgstr ""
+
+#: app/templates/feed/ration_detail.html:9
+msgid "بروتين خام موزون"
+msgstr ""
+
+#: app/templates/feed/ration_detail.html:10
+msgid "طاقة ممثلة موزونة"
+msgstr ""
+
+#: app/templates/feed/ration_detail.html:11
+msgid "تكلفة الكيلو"
+msgstr ""
+
+#: app/templates/feed/ration_detail.html:32
+msgid "ما فيه مكوّنات."
+msgstr ""
+
+#: app/templates/feed/ration_form.html:4
+msgid "وصفة علف جديدة"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:7
+msgid "مثال: علائق نفاس"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:11
+msgid "نمو"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:12
+msgid "نفاس"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:13
+msgid "حمل متأخر"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:14
+msgid "تسمين"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:18
+msgid "المكوّنات (النسب من إجمالي وزن الوصفة)"
+msgstr ""
+
+#: app/templates/feed/ration_form.html:28
+msgid "اترك أي صف فاضي لو ما تحتاجه. مجموع النسب المفروض يقارب 100%."
+msgstr ""
+
+#: app/templates/feed/ration_form.html:31
+msgid "سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)"
+msgstr ""
+
+#: app/templates/feed/rations_list.html:5
+msgid "وصفات العلف"
+msgstr ""
+
+#: app/templates/feed/rations_list.html:6
+msgid "وصفة جديدة"
+msgstr ""
+
+#: app/templates/feed/rations_list.html:10
+msgid "تكلفة/كجم"
+msgstr ""
+
+#: app/templates/feed/rations_list.html:20
+msgid "لا يوجد وصفات مسجّلة بعد."
+msgstr ""
+
+#: app/templates/finance/form.html:4
+msgid "عملية مالية جديدة"
+msgstr ""
+
+#: app/templates/finance/form.html:10 app/templates/finance/list.html:36
+msgid "بيع"
+msgstr ""
+
+#: app/templates/finance/form.html:11 app/templates/finance/list.html:36
+msgid "شراء"
+msgstr ""
+
+#: app/templates/finance/form.html:12 app/templates/finance/list.html:36
+msgid "مصروف"
+msgstr ""
+
+#: app/templates/finance/form.html:13
+msgid "دعم خارجي (دين على الحلال)"
+msgstr ""
+
+#: app/templates/finance/form.html:14 app/templates/finance/list.html:36
+msgid "سداد دين"
+msgstr ""
+
+#: app/templates/finance/form.html:18
+msgid ""
+"\"دعم خارجي\" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) "
+"— مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل "
+"\"البند\" عشان تقدر تتابع الدين لكل جهة."
+msgstr ""
+
+#: app/templates/finance/form.html:21
+msgid "التصنيف"
+msgstr ""
+
+#: app/templates/finance/form.html:21
+msgid "أعلاف / أدوية / رواتب ..."
+msgstr ""
+
+#: app/templates/finance/form.html:25
+msgid "مصروف غير مباشر (إيجار/صيانة/رواتب — يخص القطيع كله مو حيوان محدد)"
+msgstr ""
+
+#: app/templates/finance/form.html:28
+msgid ""
+"يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير "
+"\"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
+msgstr ""
+
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+msgid "البند"
+msgstr ""
+
+#: app/templates/finance/form.html:32 app/templates/team/report_detail.html:25
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/reports_list.html:85
+msgid "الوصف"
+msgstr ""
+
+#: app/templates/finance/form.html:33 app/templates/finance/list.html:32
+msgid "المبلغ"
+msgstr ""
+
+#: app/templates/finance/form.html:34
+msgid "طريقة الدفع"
+msgstr ""
+
+#: app/templates/finance/form.html:36
+msgid "نقدي"
+msgstr ""
+
+#: app/templates/finance/form.html:37
+msgid "تحويل بنكي"
+msgstr ""
+
+#: app/templates/finance/form.html:40
+msgid "مرتبطة بحيوان (اختياري)"
+msgstr ""
+
+#: app/templates/finance/form.html:42
+#: app/templates/health/vaccination_form.html:21
+msgid "بدون ربط"
+msgstr ""
+
+#: app/templates/finance/form.html:45
+msgid "إرفاق فاتورة (إن وجدت)"
+msgstr ""
+
+#: app/templates/finance/form.html:48
+msgid ""
+"لو عندك فاتورة ورقية أو PDF من المورّد لهذي العملية، ارفعها هنا — اختياري"
+" تماماً."
+msgstr ""
+
+#: app/templates/finance/health_view.html:6
+msgid "إجمالي تكاليف الصحة والعلاج"
+msgstr ""
+
+#: app/templates/finance/health_view.html:11
+msgid "تكاليف الزيارات البيطرية"
+msgstr ""
+
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34
+#: app/templates/health/disease_form.html:19
+#: app/templates/health/vaccination_form.html:13
+#: app/templates/health/vet_visit_form.html:13
+#: app/templates/team/report_detail.html:13
+msgid "الحيوان"
+msgstr ""
+
+#: app/templates/finance/health_view.html:14
+#: app/templates/health/vet_visit_form.html:17
+#: app/templates/repro/sonar_form.html:28
+msgid "الطبيب"
+msgstr ""
+
+#: app/templates/finance/health_view.html:14
+#: app/templates/health/vet_visit_form.html:21
+msgid "التشخيص"
+msgstr ""
+
+#: app/templates/finance/health_view.html:24
+msgid "لا يوجد زيارات مسجّلة بعد."
+msgstr ""
+
+#: app/templates/finance/health_view.html:31
+msgid "تكاليف علاج الأمراض"
+msgstr ""
+
+#: app/templates/finance/health_view.html:34
+msgid "المرض"
+msgstr ""
+
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+msgid "الحالة"
+msgstr ""
+
+#: app/templates/finance/health_view.html:44
+msgid "لا يوجد أمراض مسجّلة بعد."
+msgstr ""
+
+#: app/templates/finance/list.html:6
+msgid "إجمالي الداخل (بيع)"
+msgstr ""
+
+#: app/templates/finance/list.html:7
+msgid "إجمالي الخارج (شراء+مصروف)"
+msgstr ""
+
+#: app/templates/finance/list.html:13
+msgid "الديون (منفصلة عن الداخل/الخارج التشغيلي)"
+msgstr ""
+
+#: app/templates/finance/list.html:15
+msgid "دعم خارجي مستلم"
+msgstr ""
+
+#: app/templates/finance/list.html:16
+msgid "مُسدَّد"
+msgstr ""
+
+#: app/templates/finance/list.html:17
+msgid "المتبقي عليك"
+msgstr ""
+
+#: app/templates/finance/list.html:26
+msgid "تقرير تكلفة الرأس الشهرية"
+msgstr ""
+
+#: app/templates/finance/list.html:27
+msgid "عملية جديدة"
+msgstr ""
+
+#: app/templates/finance/list.html:32
+msgid "الفاتورة"
+msgstr ""
+
+#: app/templates/finance/list.html:36
+msgid "دعم خارجي (دين)"
+msgstr ""
+
+#: app/templates/finance/list.html:39
+msgid "ملغاة"
+msgstr ""
+
+#: app/templates/finance/list.html:39
+msgid "سارية"
+msgstr ""
+
+#: app/templates/finance/list.html:42
+msgid "بدون فاتورة"
+msgstr ""
+
+#: app/templates/finance/list.html:44
+msgid "إصدار"
+msgstr ""
+
+#: app/templates/finance/list.html:47
+msgid "عرض"
+msgstr ""
+
+#: app/templates/finance/list.html:52
+msgid "تأكيد الإلغاء؟"
+msgstr ""
+
+#: app/templates/finance/list.html:55 app/templates/team/report_detail.html:56
+msgid "إلغاء"
+msgstr ""
+
+#: app/templates/finance/list.html:61
+msgid "لا يوجد عمليات مالية بعد."
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:5
+msgid "تكلفة الرأس الشهرية"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:6
+msgid "رجوع للمالية"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:9
+msgid ""
+"التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة "
+"على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس "
+"بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي "
+"وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير "
+"مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع "
+"بالتساوي على القطيع."
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:15
+#, python-format
+msgid "إجمالي آخر %(n)s شهر (سنوي تقريبي)"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:17
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "إجمالي التكلفة"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:18
+msgid "عدد الرؤوس الحالي"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:19
+msgid "تكلفة الرأس التقديرية"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "الشهر"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "عدد الرؤوس"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "تكلفة الرأس"
+msgstr ""
+
+#: app/templates/finance/monthly_cost_report.html:36
+msgid "لا يوجد بيانات."
+msgstr ""
+
 #: app/templates/health/_medicine_widget.html:47
 msgid "طريقة الاستخدام:"
 msgstr ""
@@ -891,19 +1764,6 @@ msgid ""
 "المهمة تلقائياً."
 msgstr ""
 
-#: app/templates/health/disease_form.html:18
-#: app/templates/health/vaccination_form.html:12
-#: app/templates/health/vet_visit_form.html:12
-msgid "التاريخ"
-msgstr ""
-
-#: app/templates/health/disease_form.html:19
-#: app/templates/health/vaccination_form.html:13
-#: app/templates/health/vet_visit_form.html:13
-#: app/templates/team/report_detail.html:13
-msgid "الحيوان"
-msgstr ""
-
 #: app/templates/health/disease_form.html:23
 msgid "اسم المرض"
 msgstr ""
@@ -944,12 +1804,6 @@ msgstr ""
 msgid "سحب:"
 msgstr ""
 
-#: app/templates/health/disease_form.html:37
-#: app/templates/health/vaccination_form.html:22
-#: app/templates/health/vet_visit_form.html:25
-msgid "يوم"
-msgstr ""
-
 #: app/templates/health/disease_form.html:39
 #: app/templates/health/vaccination_form.html:24
 #: app/templates/health/vet_visit_form.html:27
@@ -978,13 +1832,6 @@ msgstr ""
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr ""
 
-#: app/templates/health/disease_form.html:45
-#: app/templates/health/vaccination_form.html:29
-#: app/templates/health/vet_visit_form.html:34
-#: app/templates/repro/sonar_form.html:36
-msgid "حفظ"
-msgstr ""
-
 #: app/templates/health/vaccination_form.html:5
 msgid "تسجيل تطعيم"
 msgstr ""
@@ -1001,30 +1848,8 @@ msgstr ""
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr ""
 
-#: app/templates/health/vaccination_form.html:21
-msgid "بدون ربط"
-msgstr ""
-
 #: app/templates/health/vet_visit_form.html:5
 msgid "تسجيل زيارة بيطرية"
-msgstr ""
-
-#: app/templates/health/vet_visit_form.html:17
-#: app/templates/repro/sonar_form.html:28
-msgid "الطبيب"
-msgstr ""
-
-#: app/templates/health/vet_visit_form.html:21
-msgid "التشخيص"
-msgstr ""
-
-#: app/templates/health/vet_visit_form.html:29
-msgid "التكلفة"
-msgstr ""
-
-#: app/templates/health/vet_visit_form.html:33
-#: app/templates/repro/sonar_form.html:34
-msgid "ملاحظات"
 msgstr ""
 
 #: app/templates/repro/sonar_form.html:4
@@ -1051,10 +1876,6 @@ msgstr ""
 
 #: app/templates/repro/sonar_form.html:18
 msgid "عمر الحمل (بالأيام)"
-msgstr ""
-
-#: app/templates/repro/sonar_form.html:19
-msgid "النتيجة"
 msgstr ""
 
 #: app/templates/repro/sonar_form.html:22
@@ -1199,16 +2020,6 @@ msgstr ""
 msgid "بلاغ"
 msgstr ""
 
-#: app/templates/team/report_detail.html:11
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/reports_list.html:85
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-msgid "النوع"
-msgstr ""
-
 #: app/templates/team/report_detail.html:12
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1223,21 +2034,6 @@ msgstr ""
 
 #: app/templates/team/report_detail.html:17
 msgid "حلال (ضأن/ماعز)"
-msgstr ""
-
-#: app/templates/team/report_detail.html:24
-#: app/templates/team/report_form.html:24
-#: app/templates/team/worker_report_form.html:47
-msgid "الحظيرة"
-msgstr ""
-
-#: app/templates/team/report_detail.html:25
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/reports_list.html:85
-msgid "الوصف"
 msgstr ""
 
 #: app/templates/team/report_detail.html:26
@@ -1298,10 +2094,6 @@ msgstr ""
 
 #: app/templates/team/report_detail.html:55
 msgid "سبب الإلغاء (إلزامي)"
-msgstr ""
-
-#: app/templates/team/report_detail.html:56
-msgid "إلغاء"
 msgstr ""
 
 #: app/templates/team/report_detail.html:66
@@ -1438,15 +2230,6 @@ msgstr ""
 msgid "صندوق الوارد (بلاغات جديدة)"
 msgstr ""
 
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-msgid "الحالة"
-msgstr ""
-
 #: app/templates/team/reports_list.html:28
 msgid "صندوق الوارد فاضي."
 msgstr ""
@@ -1553,15 +2336,7 @@ msgid "رأس بدون وزن مسجّل استُثنوا من الحساب"
 msgstr ""
 
 #: app/templates/team/task_detail.html:43
-msgid "المكوّن"
-msgstr ""
-
-#: app/templates/team/task_detail.html:43
 msgid "الكمية (كجم)"
-msgstr ""
-
-#: app/templates/team/task_detail.html:43
-msgid "النسبة"
 msgstr ""
 
 #: app/templates/team/task_detail.html:47
@@ -1690,11 +2465,6 @@ msgstr ""
 #: app/templates/team/tasks_list.html:169
 #: app/templates/team/tasks_list.html:187
 msgid "العنوان"
-msgstr ""
-
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-#: app/templates/team/tasks_list.html:147
-msgid "الحظيرة/الحيوان"
 msgstr ""
 
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105

@@ -2,26 +2,21 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>تكلفة الرأس الشهرية</h2>
-    <a class="btn light" href="{{ url_for('finance.finance_list') }}">← رجوع للمالية</a>
+    <h2>{{ _('تكلفة الرأس الشهرية') }}</h2>
+    <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
   </div>
   <div class="notice">
-    التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)،
-    مقسومة على عدد الرؤوس النشطة <strong>الحالي</strong> — النظام ما عنده
-    تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد
-    الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة
-    (إيجار/صيانة/رواتب — علّمتها "مصروف غير مباشر" عند الإدخال) تدخل
-    هنا تلقائياً ضمن "المصروف" — نفس التوزيع بالتساوي على القطيع.
+    {{ _('التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها "مصروف غير مباشر" عند الإدخال) تدخل هنا تلقائياً ضمن "المصروف" — نفس التوزيع بالتساوي على القطيع.') }}
   </div>
 </div>
 
 {% if annual %}
 <div class="card" style="background:var(--primary); color:#fff;">
-  <h3 style="color:#fff; margin-top:0;">إجمالي آخر {{ annual.months_count }} شهر (سنوي تقريبي)</h3>
+  <h3 style="color:#fff; margin-top:0;">{{ _('إجمالي آخر %(n)s شهر (سنوي تقريبي)', n=annual.months_count) }}</h3>
   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; text-align:center;">
-    <div><b style="font-size:20px;">{{ "%.2f"|format(annual.total_cost) }}</b><div style="opacity:.8; font-size:12px;">إجمالي التكلفة</div></div>
-    <div><b style="font-size:20px;">{{ annual.head_count }}</b><div style="opacity:.8; font-size:12px;">عدد الرؤوس الحالي</div></div>
-    <div><b style="font-size:20px;">{{ "%.2f"|format(annual.cost_per_head) if annual.cost_per_head is not none else '-' }}</b><div style="opacity:.8; font-size:12px;">تكلفة الرأس التقديرية</div></div>
+    <div><b style="font-size:20px;">{{ "%.2f"|format(annual.total_cost) }}</b><div style="opacity:.8; font-size:12px;">{{ _('إجمالي التكلفة') }}</div></div>
+    <div><b style="font-size:20px;">{{ annual.head_count }}</b><div style="opacity:.8; font-size:12px;">{{ _('عدد الرؤوس الحالي') }}</div></div>
+    <div><b style="font-size:20px;">{{ "%.2f"|format(annual.cost_per_head) if annual.cost_per_head is not none else '-' }}</b><div style="opacity:.8; font-size:12px;">{{ _('تكلفة الرأس التقديرية') }}</div></div>
   </div>
 </div>
 {% endif %}
@@ -29,7 +24,7 @@
 <div class="card">
   <div class="table-scroll">
 <table>
-    <tr><th>الشهر</th><th>إجمالي التكلفة</th><th>عدد الرؤوس</th><th>تكلفة الرأس</th></tr>
+    <tr><th>{{ _('الشهر') }}</th><th>{{ _('إجمالي التكلفة') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('تكلفة الرأس') }}</th></tr>
     {% for r in rows %}
     <tr>
       <td>{{ r.month_name }} {{ r.year }}</td>
@@ -38,7 +33,7 @@
       <td>{{ "%.2f"|format(r.cost_per_head) if r.cost_per_head is not none else '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">لا يوجد بيانات.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد بيانات.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

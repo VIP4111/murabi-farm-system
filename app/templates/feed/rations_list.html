@@ -2,12 +2,12 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>وصفات العلف</h2>
-    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.rations_new') }}">+ وصفة جديدة</a>{% endif %}
+    <h2>{{ _('وصفات العلف') }}</h2>
+    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.rations_new') }}">+ {{ _('وصفة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>الاسم</th><th>الغرض</th><th>بروتين%</th><th>طاقة</th><th>تكلفة/كجم</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الغرض') }}</th><th>{{ _('بروتين%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/كجم') }}</th></tr>
     {% for r in rations %}
     <tr>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=r.id) }}">{{ r.name }}</a></td>
@@ -17,7 +17,7 @@
       <td>{{ profiles[r.id].cost_per_kg if r.id in profiles else '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد وصفات مسجّلة بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد وصفات مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
