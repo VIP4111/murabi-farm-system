@@ -2,16 +2,16 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>❗ نواقص الصيدلية</h2>
-    <a class="btn light" href="{{ url_for('health.pharmacy_list') }}">← رجوع للصيدلية</a>
+    <h2>❗ {{ _('نواقص الصيدلية') }}</h2>
+    <a class="btn light" href="{{ url_for('health.pharmacy_list') }}">← {{ _('رجوع للصيدلية') }}</a>
   </div>
-  <p style="color:var(--muted); font-size:13px;">كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "قائمة المشتريات المطلوبة"، تُحدَّث تلقائياً كل ما تغيّر المخزون.</p>
+  <p style="color:var(--muted); font-size:13px;">{{ _('كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "قائمة المشتريات المطلوبة"، تُحدَّث تلقائياً كل ما تغيّر المخزون.') }}</p>
 </div>
 
 <div class="card">
   <div class="table-scroll">
 <table>
-    <tr><th>الاسم</th><th>الفئة</th><th>المتوفر</th><th>الحد الأدنى</th><th>بدائل بنفس الفئة</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('الحد الأدنى') }}</th><th>{{ _('بدائل بنفس الفئة') }}</th></tr>
     {% for i in items %}
     <tr>
       <td>{{ i.name }}</td>
@@ -24,7 +24,7 @@
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد نواقص حالياً 🎉</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد نواقص حالياً') }} 🎉</td></tr>
     {% endfor %}
   </table>
 </div>

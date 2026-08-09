@@ -2,12 +2,12 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>الزيارات البيطرية</h2>
-    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vet_visits_new') }}">+ زيارة جديدة</a>{% endif %}
+    <h2>{{ _('الزيارات البيطرية') }}</h2>
+    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vet_visits_new') }}">+ {{ _('زيارة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>التاريخ</th><th>الحيوان</th><th>الطبيب</th><th>التشخيص</th><th>التكلفة</th><th>فترة السحب حتى</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('الطبيب') }}</th><th>{{ _('التشخيص') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('فترة السحب حتى') }}</th></tr>
     {% for v in visits %}
     <tr>
       <td>{{ v.date }}</td><td>{{ v.animal.animal_no }}</td><td>{{ v.doctor.name }}</td>
@@ -15,7 +15,7 @@
       <td>{% if v.withdrawal_until %}<span class="badge off">{{ v.withdrawal_until }}</span>{% else %}-{% endif %}</td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد زيارات مسجّلة بعد.</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد زيارات مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

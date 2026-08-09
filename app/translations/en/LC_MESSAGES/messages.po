@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 01:57+0300\n"
+"POT-Creation-Date: 2026-08-10 02:08+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -504,19 +504,22 @@ msgstr "Ostriches (eggs/hatching)"
 msgid "الصحة"
 msgstr "Health"
 
-#: app/templates/base.html:481 app/templates/home.html:63
+#: app/templates/base.html:481 app/templates/health/pharmacy_list.html:5
+#: app/templates/home.html:63
 msgid "الصيدلية"
 msgstr "Pharmacy"
 
-#: app/templates/base.html:482
+#: app/templates/base.html:482 app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr "Vet Visits"
 
-#: app/templates/base.html:483 app/templates/home.html:62
+#: app/templates/base.html:483 app/templates/health/diseases_list.html:6
+#: app/templates/home.html:62
 msgid "الأمراض"
 msgstr "Diseases"
 
-#: app/templates/base.html:484 app/templates/home.html:61
+#: app/templates/base.html:484 app/templates/health/vaccinations_list.html:5
+#: app/templates/home.html:61
 msgid "التطعيمات"
 msgstr "Vaccinations"
 
@@ -553,6 +556,7 @@ msgid "موازِن العليقة التلقائي"
 msgstr "Automatic ration balancer"
 
 #: app/templates/base.html:500 app/templates/feed/items_list.html:27
+#: app/templates/health/pharmacy_list.html:28
 msgid "المستودعات"
 msgstr "Warehouses"
 
@@ -1028,6 +1032,7 @@ msgid "كافٍ"
 msgstr "Sufficient"
 
 #: app/templates/feed/calculator.html:58 app/templates/feed/optimizer.html:56
+#: app/templates/health/pharmacy_list.html:16
 msgid "ناقص"
 msgstr "Short"
 
@@ -1087,6 +1092,8 @@ msgstr "New feed item"
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
 #: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_shortages.html:14
 msgid "الاسم"
 msgstr "Name"
 
@@ -1095,6 +1102,8 @@ msgid "مثال: برسيم دريس"
 msgstr "Example: alfalfa hay"
 
 #: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_shortages.html:14
 msgid "الفئة"
 msgstr "Category"
 
@@ -1139,6 +1148,7 @@ msgid "الوحدة"
 msgstr "Unit"
 
 #: app/templates/feed/item_form.html:30
+#: app/templates/health/pharmacy_list.html:13
 msgid "سعر الوحدة"
 msgstr "Unit price"
 
@@ -1167,6 +1177,7 @@ msgid "طاقة (ك.كالوري/كجم)"
 msgstr "Energy (kcal/kg)"
 
 #: app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_shortages.html:14
 msgid "المتوفر"
 msgstr "Available"
 
@@ -1180,6 +1191,7 @@ msgid "نفاد متوقع"
 msgstr "Expected stockout"
 
 #: app/templates/feed/items_list.html:13
+#: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "Contains high copper"
 
@@ -1195,6 +1207,7 @@ msgid "يوم"
 msgstr "day"
 
 #: app/templates/feed/items_list.html:26
+#: app/templates/health/pharmacy_list.html:27
 msgid "تعديل"
 msgstr "Edit"
 
@@ -1236,6 +1249,7 @@ msgstr "Outgoing (actual distribution)"
 
 #: app/templates/feed/movement_form.html:16
 #: app/templates/feed/movements_list.html:10
+#: app/templates/health/pharmacy_list.html:13
 msgid "الكمية"
 msgstr "Quantity"
 
@@ -1267,8 +1281,11 @@ msgstr "New movement"
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
 #: app/templates/health/disease_form.html:18
+#: app/templates/health/diseases_list.html:14
 #: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vaccinations_list.html:10
 #: app/templates/health/vet_visit_form.html:12
+#: app/templates/health/vet_visits_list.html:10
 msgid "التاريخ"
 msgstr "Date"
 
@@ -1328,6 +1345,7 @@ msgstr "Percentage"
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/vet_visit_form.html:29
+#: app/templates/health/vet_visits_list.html:10
 msgid "التكلفة"
 msgstr "Cost"
 
@@ -1514,24 +1532,30 @@ msgstr "Veterinary visit costs"
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/disease_form.html:19
+#: app/templates/health/diseases_list.html:14
 #: app/templates/health/vaccination_form.html:13
+#: app/templates/health/vaccinations_list.html:10
 #: app/templates/health/vet_visit_form.html:13
+#: app/templates/health/vet_visits_list.html:10
 #: app/templates/team/report_detail.html:13
 msgid "الحيوان"
 msgstr "Animal"
 
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:17
+#: app/templates/health/vet_visits_list.html:10
 #: app/templates/repro/sonar_form.html:28
 msgid "الطبيب"
 msgstr "Doctor"
 
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:21
+#: app/templates/health/vet_visits_list.html:10
 msgid "التشخيص"
 msgstr "Diagnosis"
 
 #: app/templates/finance/health_view.html:24
+#: app/templates/health/vet_visits_list.html:18
 msgid "لا يوجد زيارات مسجّلة بعد."
 msgstr "No visits recorded yet."
 
@@ -1540,10 +1564,13 @@ msgid "تكاليف علاج الأمراض"
 msgstr "Disease treatment costs"
 
 #: app/templates/finance/health_view.html:34
+#: app/templates/health/diseases_list.html:14
 msgid "المرض"
 msgstr "Disease"
 
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/pharmacy_list.html:13
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1726,6 +1753,7 @@ msgid "اختر من القائمة أو اكتب اسماً جديداً"
 msgstr "Choose from the list or type a new name"
 
 #: app/templates/health/disease_form.html:28
+#: app/templates/health/diseases_list.html:14
 msgid "الشدة"
 msgstr "Severity"
 
@@ -1785,6 +1813,100 @@ msgstr "Override reason (if the repeat-antiparasitic-dose warning appeared)"
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "Only fill this if the screen returned a warning — write the medical reason for repeating."
 
+#: app/templates/health/diseases_list.html:8
+msgid "قائمة الأمراض الشائعة"
+msgstr "Common diseases list"
+
+#: app/templates/health/diseases_list.html:9
+msgid "حالة جديدة"
+msgstr "New case"
+
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vet_visits_list.html:10
+msgid "فترة السحب حتى"
+msgstr "Withdrawal period until"
+
+#: app/templates/health/diseases_list.html:22
+msgid "تأكيد إغلاق السجل المرضي؟"
+msgstr "Confirm closing this disease record?"
+
+#: app/templates/health/diseases_list.html:24
+msgid "ملاحظة التعافي (إلزامي)"
+msgstr "Recovery note (required)"
+
+#: app/templates/health/diseases_list.html:25
+msgid "إغلاق"
+msgstr "Close"
+
+#: app/templates/health/diseases_list.html:33
+msgid "لا يوجد حالات مسجّلة بعد."
+msgstr "No cases recorded yet."
+
+#: app/templates/health/pharmacy_list.html:7
+#: app/templates/health/pharmacy_shortages.html:5
+msgid "نواقص الصيدلية"
+msgstr "Pharmacy shortages"
+
+#: app/templates/health/pharmacy_list.html:8
+msgid "دواء جديد"
+msgstr "New medicine"
+
+#: app/templates/health/pharmacy_list.html:13
+msgid "فئة الدواء"
+msgstr "Medicine class"
+
+#: app/templates/health/pharmacy_list.html:13
+msgid "تاريخ الانتهاء"
+msgstr "Expiry date"
+
+#: app/templates/health/pharmacy_list.html:13
+msgid "فترة السحب (يوم)"
+msgstr "Withdrawal period (days)"
+
+#: app/templates/health/pharmacy_list.html:13
+msgid "طريقة الاستخدام"
+msgstr "Usage method"
+
+#: app/templates/health/pharmacy_list.html:16
+msgid "وصل للحد الأدنى أو أقل"
+msgstr "At or below the minimum threshold"
+
+#: app/templates/health/pharmacy_list.html:18
+msgid "بدون فئة دواء — لازم لتفعيل حارس منع تكرار جرعة الطفيليات"
+msgstr "No medicine class — required to enable the anti-parasitic-dose-repeat guard"
+
+#: app/templates/health/pharmacy_list.html:21
+msgid "منتهي الصلاحية"
+msgstr "Expired"
+
+#: app/templates/health/pharmacy_list.html:21
+msgid "منتهي"
+msgstr "Expired"
+
+#: app/templates/health/pharmacy_list.html:33
+msgid "لا يوجد أدوية مسجّلة بعد."
+msgstr "No medicines recorded yet."
+
+#: app/templates/health/pharmacy_shortages.html:6
+msgid "رجوع للصيدلية"
+msgstr "Back to Pharmacy"
+
+#: app/templates/health/pharmacy_shortages.html:8
+msgid "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها \"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
+msgstr "Every active medicine whose stock has reached its set minimum or lower — this screen is itself the \"required purchases list\", updated automatically whenever stock changes."
+
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "الحد الأدنى"
+msgstr "Minimum"
+
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "بدائل بنفس الفئة"
+msgstr "Alternatives in the same category"
+
+#: app/templates/health/pharmacy_shortages.html:27
+msgid "لا يوجد نواقص حالياً"
+msgstr "No shortages right now"
+
 #: app/templates/health/vaccination_form.html:5
 msgid "تسجيل تطعيم"
 msgstr "Record Vaccination"
@@ -1801,9 +1923,29 @@ msgstr "Next date (optional)"
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr "Medicine used from pharmacy (optional)"
 
+#: app/templates/health/vaccinations_list.html:6
+msgid "تطعيم جديد"
+msgstr "New vaccination"
+
+#: app/templates/health/vaccinations_list.html:10
+msgid "اللقاح"
+msgstr "Vaccine"
+
+#: app/templates/health/vaccinations_list.html:10
+msgid "الموعد القادم"
+msgstr "Next due date"
+
+#: app/templates/health/vaccinations_list.html:14
+msgid "لا يوجد تطعيمات مسجّلة بعد."
+msgstr "No vaccinations recorded yet."
+
 #: app/templates/health/vet_visit_form.html:5
 msgid "تسجيل زيارة بيطرية"
 msgstr "Record Vet Visit"
+
+#: app/templates/health/vet_visits_list.html:6
+msgid "زيارة جديدة"
+msgstr "New visit"
 
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"

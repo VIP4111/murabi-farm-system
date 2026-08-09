@@ -2,35 +2,35 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>الصيدلية</h2>
+    <h2>{{ _('الصيدلية') }}</h2>
     <div style="display:flex; gap:8px;">
-      <a class="btn light" href="{{ url_for('health.pharmacy_shortages') }}">❗ نواقص الصيدلية</a>
-      {% if current_user.has_permission('pharmacy.manage') %}<a class="btn" href="{{ url_for('health.pharmacy_new') }}">+ دواء جديد</a>{% endif %}
+      <a class="btn light" href="{{ url_for('health.pharmacy_shortages') }}">❗ {{ _('نواقص الصيدلية') }}</a>
+      {% if current_user.has_permission('pharmacy.manage') %}<a class="btn" href="{{ url_for('health.pharmacy_new') }}">+ {{ _('دواء جديد') }}</a>{% endif %}
     </div>
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>الاسم</th><th>الفئة</th><th>فئة الدواء</th><th>الكمية</th><th>سعر الوحدة</th><th>تاريخ الانتهاء</th><th>فترة السحب (يوم)</th><th>طريقة الاستخدام</th><th>الحالة</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('فئة الدواء') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('سعر الوحدة') }}</th><th>{{ _('تاريخ الانتهاء') }}</th><th>{{ _('فترة السحب (يوم)') }}</th><th>{{ _('طريقة الاستخدام') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
-      <td>{{ i.name }}{% if (i.available_qty or 0) <= (i.min_stock_qty or 0) %} <span class="badge off" title="وصل للحد الأدنى أو أقل">❗ ناقص</span>{% endif %}{% if i.contains_high_copper %} <span class="badge off" title="يحتوي نحاساً مرتفعاً">⚠️Cu</span>{% endif %}</td>
+      <td>{{ i.name }}{% if (i.available_qty or 0) <= (i.min_stock_qty or 0) %} <span class="badge off" title="{{ _('وصل للحد الأدنى أو أقل') }}">❗ {{ _('ناقص') }}</span>{% endif %}{% if i.contains_high_copper %} <span class="badge off" title="{{ _('يحتوي نحاساً مرتفعاً') }}">⚠️Cu</span>{% endif %}</td>
       <td>{{ i.category or '-' }}</td>
-      <td>{{ medicine_class_labels.get(i.medicine_class, '-') if i.medicine_class else '-' }}{% if not i.medicine_class %} <span class="badge off" title="بدون فئة دواء — لازم لتفعيل حارس منع تكرار جرعة الطفيليات">⚠️</span>{% endif %}</td>
+      <td>{{ medicine_class_labels.get(i.medicine_class, '-') if i.medicine_class else '-' }}{% if not i.medicine_class %} <span class="badge off" title="{{ _('بدون فئة دواء — لازم لتفعيل حارس منع تكرار جرعة الطفيليات') }}">⚠️</span>{% endif %}</td>
       <td>{{ i.available_qty }} {{ i.unit or '' }}</td>
       <td>{{ i.unit_price if i.unit_price is not none else '-' }}</td>
-      <td>{{ i.expiry_date if i.expiry_date else '-' }}{% if i.expiry_date and i.expiry_date <= today %} <span class="badge off" title="منتهي الصلاحية">⛔ منتهي</span>{% endif %}</td>
+      <td>{{ i.expiry_date if i.expiry_date else '-' }}{% if i.expiry_date and i.expiry_date <= today %} <span class="badge off" title="{{ _('منتهي الصلاحية') }}">⛔ {{ _('منتهي') }}</span>{% endif %}</td>
       <td>{{ i.withdrawal_days }}</td>
       <td>{{ i.usage_method or '-' }}{% if i.standard_dosage_note %} <span title="{{ i.standard_dosage_note }}">ℹ️</span>{% endif %}</td>
       <td>{{ i.status|ar_status }}</td>
       <td>
         {% if current_user.has_permission('pharmacy.manage') %}
-        <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">تعديل</a>
-        · <a href="{{ url_for('warehouses.item_breakdown', kind='pharmacy', item_id=i.id) }}">🏬 المستودعات</a>
+        <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">{{ _('تعديل') }}</a>
+        · <a href="{{ url_for('warehouses.item_breakdown', kind='pharmacy', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
         {% endif %}
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="10" style="color:#888;">لا يوجد أدوية مسجّلة بعد.</td></tr>
+    <tr><td colspan="10" style="color:#888;">{{ _('لا يوجد أدوية مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
