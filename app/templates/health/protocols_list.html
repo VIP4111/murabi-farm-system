@@ -2,19 +2,17 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>قوالب بروتوكول العلاج</h2>
+    <h2>{{ _('قوالب بروتوكول العلاج') }}</h2>
     {% if current_user.has_permission('medical_options.manage') %}
-    <a class="btn" href="{{ url_for('health.protocols_new') }}">+ بروتوكول جديد</a>
+    <a class="btn" href="{{ url_for('health.protocols_new') }}">+ {{ _('بروتوكول جديد') }}</a>
     {% endif %}
   </div>
   <p style="color:var(--muted); font-size:13px;">
-    كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس معيّن يولّد مهمة "علاج مخطَّط" واحدة
-    لكل خطوة — الخصم من الصيدلية وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند
-    "تأكيد التنفيذ" الفعلي لكل خطوة، بنفس آلية بند 50.
+    {{ _('كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس معيّن يولّد مهمة "علاج مخطَّط" واحدة لكل خطوة — الخصم من الصيدلية وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند "تأكيد التنفيذ" الفعلي لكل خطوة، بنفس آلية بند 50.') }}
   </p>
   <div class="table-scroll">
 <table>
-    <tr><th>الاسم</th><th>المرض المرتبط</th><th>عدد الخطوات</th><th>الحالة</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('المرض المرتبط') }}</th><th>{{ _('عدد الخطوات') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
     {% for p in protocols %}
     <tr>
       <td>{{ p.name }}</td>
@@ -23,11 +21,11 @@
       <td><span class="badge {{ 'on' if p.status == 'active' else 'off' }}">{{ p.status|ar_status }}</span></td>
       <td>
         {% if current_user.has_permission('health.manage') %}
-        <a class="btn light" style="padding:6px 12px; font-size:12px;" href="{{ url_for('health.protocols_apply', protocol_id=p.id, animal_id=prefill_animal_id) }}">تطبيق على رأس ←</a>
+        <a class="btn light" style="padding:6px 12px; font-size:12px;" href="{{ url_for('health.protocols_apply', protocol_id=p.id, animal_id=prefill_animal_id) }}">{{ _('تطبيق على رأس') }} ←</a>
         {% endif %}
       </td>
     </tr>
-    {% else %}<tr><td colspan="5" style="color:#888;">لا يوجد بروتوكولات مسجَّلة بعد.</td></tr>{% endfor %}
+    {% else %}<tr><td colspan="5" style="color:#888;">{{ _('لا يوجد بروتوكولات مسجَّلة بعد.') }}</td></tr>{% endfor %}
   </table>
 </div>
 </div>

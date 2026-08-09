@@ -2,44 +2,44 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>المساعد التشخيصي</h2>
-    <a class="btn light" href="{{ url_for('health.diseases_list') }}">← رجوع لسجل الأمراض</a>
+    <h2>{{ _('المساعد التشخيصي') }}</h2>
+    <a class="btn light" href="{{ url_for('health.diseases_list') }}">← {{ _('رجوع لسجل الأمراض') }}</a>
   </div>
   <div class="notice">
-    ⚠️ <b>هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً.</b>
-    السجل المرضي يبقى "مفتوحاً" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً.
+    ⚠️ <b>{{ _('هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً.') }}</b>
+    {{ _('السجل المرضي يبقى "مفتوحاً" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً.') }}
   </div>
 </div>
 
 <div class="card">
   <form method="get">
-    <label>الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)</label>
+    <label>{{ _('الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)') }}</label>
     <select name="animal_id">
       <option value="">-</option>
       {% for a in animals %}<option value="{{ a.id }}" {{ 'selected' if animal_id == a.id }}>{{ a.animal_no }}{{ ' — ' + a.name if a.name }}</option>{% endfor %}
     </select>
-    {% if selected_animal_age %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">عمر الرأس: {{ selected_animal_age }}</p>{% endif %}
+    {% if selected_animal_age %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('عمر الرأس:') }} {{ selected_animal_age }}</p>{% endif %}
 
-    <label>درجة الحرارة (اختياري، °C)</label>
-    <input type="number" step="0.1" name="temperature" value="{{ temperature if temperature is not none else '' }}" placeholder="مثال: 39.5">
+    <label>{{ _('درجة الحرارة (اختياري، °C)') }}</label>
+    <input type="number" step="0.1" name="temperature" value="{{ temperature if temperature is not none else '' }}" placeholder="{{ _('مثال: 39.5') }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">
-      عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً.
+      {{ _('عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً.') }}
     </p>
 
-    <label>العرض الرئيسي</label>
+    <label>{{ _('العرض الرئيسي') }}</label>
     <select name="primary" required>
-      <option value="">اختر عرضاً رئيسياً...</option>
+      <option value="">{{ _('اختر عرضاً رئيسياً...') }}</option>
       {% for s in primary_symptoms %}<option value="{{ s.id }}" {{ 'selected' if selected_primary_id == s.id }}>{{ s.name }}</option>{% endfor %}
     </select>
-    <button class="btn" type="submit">التالي — عرض الأسئلة المتابعة</button>
+    <button class="btn" type="submit">{{ _('التالي — عرض الأسئلة المتابعة') }}</button>
   </form>
 </div>
 
 {% if selected_primary_id %}
 <div class="card">
-  <h3 style="font-size:15px;">أعراض مصاحبة (اختر كل ما ينطبق)</h3>
+  <h3 style="font-size:15px;">{{ _('أعراض مصاحبة (اختر كل ما ينطبق)') }}</h3>
   {% if not secondary_symptoms %}
-  <p style="color:var(--muted); font-size:13px;">ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية.</p>
+  <p style="color:var(--muted); font-size:13px;">{{ _('ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية.') }}</p>
   {% endif %}
   <form method="post" action="{{ url_for('health.diagnose_result') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -52,9 +52,9 @@
       {{ s.name }}
     </label>
     {% endfor %}
-    <label>أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)</label>
-    <textarea name="free_text_symptoms" rows="2" placeholder="مثال: يمتنع عن الأكل منذ يومين..."></textarea>
-    <button class="btn" type="submit">احسب الاحتمالات</button>
+    <label>{{ _('أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)') }}</label>
+    <textarea name="free_text_symptoms" rows="2" placeholder="{{ _('مثال: يمتنع عن الأكل منذ يومين...') }}"></textarea>
+    <button class="btn" type="submit">{{ _('احسب الاحتمالات') }}</button>
   </form>
 </div>
 {% endif %}

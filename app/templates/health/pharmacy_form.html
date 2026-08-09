@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:420px;">
-  <h2>{{ 'تعديل دواء' if item else 'دواء جديد' }}</h2>
+  <h2>{{ _('تعديل دواء') if item else _('دواء جديد') }}</h2>
   {% if item %}
-  <p><a class="btn light" href="{{ url_for('health.pharmacy_purchase', pharmacy_id=item.id) }}">📦 تسجيل عملية شراء (دفعة بتاريخها الخاص)</a></p>
+  <p><a class="btn light" href="{{ url_for('health.pharmacy_purchase', pharmacy_id=item.id) }}">📦 {{ _('تسجيل عملية شراء (دفعة بتاريخها الخاص)') }}</a></p>
   {% endif %}
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <div class="form-section-title">بيانات الدواء الأساسية</div>
-    <label>فئة الدواء</label>
+    <div class="form-section-title">{{ _('بيانات الدواء الأساسية') }}</div>
+    <label>{{ _('فئة الدواء') }}</label>
     <select name="medicine_class" id="medicineClassSelect">
       <option value="">-</option>
       {% for code in medicine_classes %}
       <option value="{{ code }}" {{ 'selected' if item and item.medicine_class == code }}>{{ medicine_class_labels[code] }}</option>
       {% endfor %}
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "مضاد طفيليات/ديدان" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية "اسم الدواء" والحقول الشرطية تحت.</p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تحديد "مضاد طفيليات/ديدان" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية "اسم الدواء" والحقول الشرطية تحت.') }}</p>
 
-    <label>الاسم</label>
+    <label>{{ _('الاسم') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="name" id="drugNameSelect" required style="flex:1;">
-        <option value="">اختر اسم دواء</option>
+        <option value="">{{ _('اختر اسم دواء') }}</option>
         {% for e in drug_catalog %}
         <option value="{{ e.name }}" data-class="{{ e.medicine_class or '' }}" {{ 'selected' if item and item.name == e.name }}>{{ e.name }}</option>
         {% endfor %}
@@ -29,12 +29,12 @@
         <option value="{{ item.name }}" selected>{{ item.name }}</option>
         {% endif %}
       </select>
-      <a class="btn light" id="drugCatalogAddBtn" href="{{ url_for('health.drug_catalog_new') }}" title="إضافة اسم دواء جديد" target="_blank">➕</a>
-      <button type="button" class="btn light" id="drugGuideBtn" title="دليل الدواء">ℹ️</button>
+      <a class="btn light" id="drugCatalogAddBtn" href="{{ url_for('health.drug_catalog_new') }}" title="{{ _('إضافة اسم دواء جديد') }}" target="_blank">➕</a>
+      <button type="button" class="btn light" id="drugGuideBtn" title="{{ _('دليل الدواء') }}">ℹ️</button>
     </div>
     <p id="drugGuideBox" class="notice" style="display:none; margin:6px 0 10px;"></p>
 
-    <label>طريقة الاستخدام (اختياري)</label>
+    <label>{{ _('طريقة الاستخدام (اختياري)') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="usage_method" style="flex:1;">
         <option value="">-</option>
@@ -42,73 +42,73 @@
         <option value="{{ r.name }}" {{ 'selected' if item and item.usage_method == r.name }}>{{ r.name }}</option>
         {% endfor %}
       </select>
-      <a class="btn light" href="{{ url_for('health.usage_routes_new') }}" title="إضافة طريقة استخدام جديدة" target="_blank">➕</a>
+      <a class="btn light" href="{{ url_for('health.usage_routes_new') }}" title="{{ _('إضافة طريقة استخدام جديدة') }}" target="_blank">➕</a>
     </div>
-    <label>ملاحظة الجرعة المرجعية (اختياري)</label>
-    <textarea name="standard_dosage_note" rows="2" placeholder="مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة">{{ item.standard_dosage_note if item else '' }}</textarea>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً.</p>
+    <label>{{ _('ملاحظة الجرعة المرجعية (اختياري)') }}</label>
+    <textarea name="standard_dosage_note" rows="2" placeholder="{{ _('مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة') }}">{{ item.standard_dosage_note if item else '' }}</textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً.') }}</p>
 
-    <div class="form-section-title">الصلاحية والتخزين</div>
-    <label>تاريخ انتهاء الصلاحية (اختياري)</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
+    <div class="form-section-title">{{ _('الصلاحية والتخزين') }}</div>
+    <label>{{ _('تاريخ انتهاء الصلاحية (اختياري)') }}</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
     <p id="expiryBadge" style="font-size:12px; margin:-6px 0 10px; font-weight:bold;"></p>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.</p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.') }}</p>
 
-    <label>ظروف التخزين (اختياري)</label>
+    <label>{{ _('ظروف التخزين (اختياري)') }}</label>
     <select name="storage_condition">
       <option value="">-</option>
       {% for code in storage_conditions %}
       <option value="{{ code }}" {{ 'selected' if item and item.storage_condition == code }}>{{ storage_condition_labels[code] }}</option>
       {% endfor %}
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي.</p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي.') }}</p>
 
     <div id="withdrawalGroup" style="display:none;">
-      <label>فترة السحب (بالأيام)</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها.</p>
+      <label>{{ _('فترة السحب (بالأيام)') }}</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها.') }}</p>
     </div>
 
     <div id="vaccineGroup" style="display:none;">
-      <label>مدة الحماية بالأيام (للقاحات — اختياري)</label>
+      <label>{{ _('مدة الحماية بالأيام (للقاحات — اختياري)') }}</label>
       <input name="protection_days" type="number" value="{{ item.protection_days if item and item.protection_days is not none else '' }}">
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تُستخدم فقط لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً.</p>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تُستخدم فقط لجدولة "الموعد القادم" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً.') }}</p>
 
-      <label>الجرعة الافتراضية للرأس بالمل (اختياري)</label>
+      <label>{{ _('الجرعة الافتراضية للرأس بالمل (اختياري)') }}</label>
       <input name="default_dose_ml" type="number" step="0.01" value="{{ item.default_dose_ml if item and item.default_dose_ml is not none else '' }}">
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول "الجرعة حسب العمر" تحت.</p>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول "الجرعة حسب العمر" تحت.') }}</p>
 
-      <label>الجرعة حسب العمر (اختياري)</label>
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد.</p>
+      <label>{{ _('الجرعة حسب العمر (اختياري)') }}</label>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد.') }}</p>
       <div id="doseRulesRows">
         {% for r in (dose_rules or []) %}
         <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
-          <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" value="{{ r.age_from_days }}" style="flex:1; margin-bottom:0;">
-          <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" value="{{ r.age_to_days }}" style="flex:1; margin-bottom:0;">
-          <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" value="{{ r.dose_ml }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_age_from" type="number" placeholder="{{ _('من عمر (يوم)') }}" value="{{ r.age_from_days }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_age_to" type="number" placeholder="{{ _('إلى عمر (يوم)') }}" value="{{ r.age_to_days }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_ml" type="number" step="0.01" placeholder="{{ _('الجرعة (مل)') }}" value="{{ r.dose_ml }}" style="flex:1; margin-bottom:0;">
         </div>
         {% endfor %}
         <div class="doseRuleRow" style="display:flex; gap:6px; margin-bottom:6px;">
-          <input name="dose_age_from" type="number" placeholder="من عمر (يوم)" style="flex:1; margin-bottom:0;">
-          <input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" style="flex:1; margin-bottom:0;">
-          <input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" style="flex:1; margin-bottom:0;">
+          <input name="dose_age_from" type="number" placeholder="{{ _('من عمر (يوم)') }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_age_to" type="number" placeholder="{{ _('إلى عمر (يوم)') }}" style="flex:1; margin-bottom:0;">
+          <input name="dose_ml" type="number" step="0.01" placeholder="{{ _('الجرعة (مل)') }}" style="flex:1; margin-bottom:0;">
         </div>
       </div>
-      <button type="button" id="addDoseRowBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ إضافة عمر آخر</button>
+      <button type="button" id="addDoseRowBtn" class="btn light" style="font-size:12px; margin-bottom:12px;">+ {{ _('إضافة عمر آخر') }}</button>
     </div>
 
-    <div class="form-section-title">المخزون والسعر</div>
-    <label>الكمية المتوفرة</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
-    <label>الوحدة</label><input name="unit" placeholder="مل / حبة / علبة" value="{{ item.unit if item else '' }}">
-    <label>الحد الأدنى للتنبيه (بند إضافي، 2026-07-24)</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة "نواقص الصيدلية" — نفس قائمة المشتريات المطلوبة.</p>
-    <label>سعر الوحدة (اختياري)</label><input name="unit_price" type="number" step="0.01" placeholder="مثال: 2.5" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق.</p>
+    <div class="form-section-title">{{ _('المخزون والسعر') }}</div>
+    <label>{{ _('الكمية المتوفرة') }}</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
+    <label>{{ _('الوحدة') }}</label><input name="unit" placeholder="{{ _('مل / حبة / علبة') }}" value="{{ item.unit if item else '' }}">
+    <label>{{ _('الحد الأدنى للتنبيه') }}</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة "نواقص الصيدلية" — نفس قائمة المشتريات المطلوبة.') }}</p>
+    <label>{{ _('سعر الوحدة (اختياري)') }}</label><input name="unit_price" type="number" step="0.01" placeholder="{{ _('مثال: 2.5') }}" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق.') }}</p>
 
-    <div class="form-section-title">أمان إضافي وملاحظات</div>
-    <label style="font-size:13px;"><input type="checkbox" name="contains_high_copper" value="1" {{ 'checked' if item and item.contains_high_copper }} style="width:auto; margin-left:6px;"> يحتوي نحاساً مرتفعاً</label>
-    <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته "نعيمي" (بند إضافي 51) — بلا خيار تجاوز.</p>
+    <div class="form-section-title">{{ _('أمان إضافي وملاحظات') }}</div>
+    <label style="font-size:13px;"><input type="checkbox" name="contains_high_copper" value="1" {{ 'checked' if item and item.contains_high_copper }} style="width:auto; margin-left:6px;"> {{ _('يحتوي نحاساً مرتفعاً') }}</label>
+    <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">{{ _('يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته "نعيمي" (بند إضافي 51) — بلا خيار تجاوز.') }}</p>
 
-    <label>ملاحظات</label><input name="notes" value="{{ item.notes if item else '' }}">
-    <button class="btn" type="submit">حفظ</button>
+    <label>{{ _('ملاحظات') }}</label><input name="notes" value="{{ item.notes if item else '' }}">
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 <script>
@@ -116,14 +116,17 @@
   var btn = document.getElementById('addDoseRowBtn');
   var container = document.getElementById('doseRulesRows');
   if (!btn || !container) return;
+  var AGE_FROM = {{ _('من عمر (يوم)')|tojson }};
+  var AGE_TO = {{ _('إلى عمر (يوم)')|tojson }};
+  var DOSE_ML = {{ _('الجرعة (مل)')|tojson }};
   btn.addEventListener('click', function(){
     var row = document.createElement('div');
     row.className = 'doseRuleRow';
     row.style.cssText = 'display:flex; gap:6px; margin-bottom:6px;';
     row.innerHTML =
-      '<input name="dose_age_from" type="number" placeholder="من عمر (يوم)" style="flex:1; margin-bottom:0;">' +
-      '<input name="dose_age_to" type="number" placeholder="إلى عمر (يوم)" style="flex:1; margin-bottom:0;">' +
-      '<input name="dose_ml" type="number" step="0.01" placeholder="الجرعة (مل)" style="flex:1; margin-bottom:0;">';
+      '<input name="dose_age_from" type="number" placeholder="' + AGE_FROM + '" style="flex:1; margin-bottom:0;">' +
+      '<input name="dose_age_to" type="number" placeholder="' + AGE_TO + '" style="flex:1; margin-bottom:0;">' +
+      '<input name="dose_ml" type="number" step="0.01" placeholder="' + DOSE_ML + '" style="flex:1; margin-bottom:0;">';
     container.appendChild(row);
   });
 })();
@@ -133,17 +136,21 @@
   var input = document.getElementById('expiryDateInput');
   var badge = document.getElementById('expiryBadge');
   if (!input || !badge) return;
+  var EXPIRED_SINCE = {{ _('منتهي الصلاحية منذ')|tojson }};
+  var EXPIRES_IN = {{ _('ينتهي خلال')|tojson }};
+  var REMAINING = {{ _('متبقي')|tojson }};
+  var DAY = {{ _('يوم')|tojson }};
   function update(){
     if (!input.value) { badge.textContent = ''; return; }
     var today = new Date(); today.setHours(0,0,0,0);
     var expiry = new Date(input.value + 'T00:00:00');
     var daysLeft = Math.round((expiry - today) / 86400000);
     if (daysLeft < 0) {
-      badge.textContent = '🔴 منتهي الصلاحية منذ ' + Math.abs(daysLeft) + ' يوم';
+      badge.textContent = '🔴 ' + EXPIRED_SINCE + ' ' + Math.abs(daysLeft) + ' ' + DAY;
     } else if (daysLeft <= 30) {
-      badge.textContent = '🟡 ينتهي خلال ' + daysLeft + ' يوم';
+      badge.textContent = '🟡 ' + EXPIRES_IN + ' ' + daysLeft + ' ' + DAY;
     } else {
-      badge.textContent = '🟢 متبقي ' + daysLeft + ' يوم';
+      badge.textContent = '🟢 ' + REMAINING + ' ' + daysLeft + ' ' + DAY;
     }
   }
   input.addEventListener('change', update);
@@ -155,6 +162,7 @@
   // دليل فئات الدواء (بند إضافي 62) — نفس نمط دليل الحقن الميداني: نص
   // ثابت كتبه إنسان، يُعرض بس حسب الفئة المختارة، صفر تشخيص/توصية لدواء بعينه.
   var MEDICINE_CLASS_GUIDE = {{ (medicine_class_guide or {}) | tojson }};
+  var CHOOSE_CLASS_MSG = {{ _('اختر فئة الدواء أولاً لعرض دليلها.')|tojson }};
   var classSelect = document.getElementById('medicineClassSelect');
   var nameSelect = document.getElementById('drugNameSelect');
   var addBtn = document.getElementById('drugCatalogAddBtn');
@@ -210,7 +218,7 @@
       var guide = MEDICINE_CLASS_GUIDE[classSelect.value];
       if (!guide) {
         guideBox.style.display = 'block';
-        guideBox.textContent = 'اختر فئة الدواء أولاً لعرض دليلها.';
+        guideBox.textContent = CHOOSE_CLASS_MSG;
         return;
       }
       guideBox.style.display = guideBox.style.display === 'block' ? 'none' : 'block';

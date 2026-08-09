@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:25+0300\n"
+"POT-Creation-Date: 2026-08-10 02:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -617,10 +617,11 @@ msgid "التطعيمات"
 msgstr "टीकाकरण"
 
 #: app/templates/base.html:485
+#: app/templates/health/vaccination_schedule_list.html:5
 msgid "تقويم التحصينات"
 msgstr "टीकाकरण कैलेंडर"
 
-#: app/templates/base.html:487
+#: app/templates/base.html:487 app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr "निदान सहायक"
 
@@ -752,6 +753,7 @@ msgstr "छोड़ें, मुझे जरूरत नहीं"
 msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr "यह बस एक त्वरित गाइड है — हर चरण खुद पूरा होते ही चेक हो जाता है, और आपको यहां वापस आए बिना नीचे वही त्वरित बटन इस्तेमाल कर सकते हैं।"
 
+#: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
 msgid "إضافة"
@@ -936,6 +938,9 @@ msgstr "नई आहार योजना"
 #: app/templates/feed/barn_plan_form.html:7
 #: app/templates/feed/barn_plans_list.html:10
 #: app/templates/feed/fcr_report.html:16
+#: app/templates/health/vaccination_schedule_form.html:7
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:47
@@ -965,6 +970,8 @@ msgstr "समाप्ति तिथि (वैकल्पिक)"
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/health/disease_types_list.html:23
+#: app/templates/health/pharmacy_form.html:110
+#: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -987,6 +994,7 @@ msgstr "केवल तभी भरें जब स्क्रीन ने 
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
 #: app/templates/health/doctor_form.html:10
+#: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1193,8 +1201,12 @@ msgstr "नया चारा घटक"
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:10
+#: app/templates/health/drug_catalog_form.html:7
+#: app/templates/health/pharmacy_form.html:21
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/protocol_form.html:7
+#: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr "नाम"
@@ -1222,6 +1234,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr "उच्च तांबा युक्त (नमक ब्लॉक/खनिज पूरक)"
 
 #: app/templates/feed/item_form.html:23
+#: app/templates/health/pharmacy_form.html:108
 msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
 msgstr "\"नईमी\" नस्ल के किसी भी पशु के लिए इसके उपयोग पर स्पष्ट प्रोग्रामेटिक रोक सक्रिय करता है (आइटम 51) — कोई अधिलेखन विकल्प नहीं।"
 
@@ -1246,19 +1259,23 @@ msgid "فسفور %"
 msgstr "फास्फोरस %"
 
 #: app/templates/feed/item_form.html:29
+#: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr "इकाई"
 
 #: app/templates/feed/item_form.html:30
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "इकाई मूल्य"
 
 #: app/templates/feed/item_form.html:31
+#: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr "उपलब्ध मात्रा"
 
 #: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr "न्यूनतम स्टॉक चेतावनी सीमा"
 
@@ -1293,6 +1310,7 @@ msgid "نفاد متوقع"
 msgstr "अनुमानित समाप्ति"
 
 #: app/templates/feed/items_list.html:13
+#: app/templates/health/pharmacy_form.html:107
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "उच्च तांबा युक्त"
@@ -1303,6 +1321,9 @@ msgstr "कम"
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
+#: app/templates/health/pharmacy_form.html:142
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:21
 #: app/templates/health/vaccination_form.html:22
 #: app/templates/health/vet_visit_form.html:25
 msgid "يوم"
@@ -1354,6 +1375,8 @@ msgstr "जावक (वास्तविक वितरण)"
 #: app/templates/feed/movement_form.html:16
 #: app/templates/feed/movements_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
 msgid "الكمية"
 msgstr "मात्रा"
 
@@ -1676,6 +1699,8 @@ msgstr "रोग"
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocols_list.html:15
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1730,6 +1755,7 @@ msgid "دعم خارجي (دين)"
 msgstr "बाहरी सहायता (ऋण)"
 
 #: app/templates/finance/list.html:39
+#: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "रद्द"
 
@@ -1753,7 +1779,11 @@ msgstr "देखें"
 msgid "تأكيد الإلغاء؟"
 msgstr "रद्द करने की पुष्टि करें?"
 
-#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/finance/list.html:55
+#: app/templates/health/drug_catalog_form.html:17
+#: app/templates/health/symptom_form.html:15
+#: app/templates/health/vaccination_schedule_form.html:31
+#: app/templates/health/vaccination_schedule_list.html:36
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "रद्द करें"
@@ -1840,6 +1870,153 @@ msgstr ") — विकल्पों के लिए फार्मेसी
 msgid "التكلفة المتوقعة:"
 msgstr "अपेक्षित लागत:"
 
+#: app/templates/health/diagnose_result.html:5
+msgid "احتمالات التشخيص"
+msgstr "निदान संभावनाएं"
+
+#: app/templates/health/diagnose_result.html:6
+msgid "تعديل الأعراض"
+msgstr "लक्षण संपादित करें"
+
+#: app/templates/health/diagnose_result.html:9
+msgid "ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار النهائي للدكتور المعالج دائماً."
+msgstr "दर्ज लक्षणों को सामान्य रोग संदर्भ से मिलाकर संभावनाओं की रैंकिंग — अंतिम निर्णय हमेशा इलाज करने वाले डॉक्टर का होता है।"
+
+#: app/templates/health/diagnose_result.html:10
+msgid "الأعراض المُدخَلة:"
+msgstr "दर्ज लक्षण:"
+
+#: app/templates/health/diagnose_result.html:11
+msgid "ملاحظة حرة:"
+msgstr "स्वतंत्र टिप्पणी:"
+
+#: app/templates/health/diagnose_result.html:12
+#: app/templates/health/diagnose_start.html:21
+msgid "عمر الرأس:"
+msgstr "पशु की आयु:"
+
+#: app/templates/health/diagnose_result.html:13
+msgid "درجة الحرارة:"
+msgstr "तापमान:"
+
+#: app/templates/health/diagnose_result.html:17
+msgid "الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور."
+msgstr "तापमान अनुमानित सामान्य सीमा से अधिक है — एक प्रासंगिक कारक जो सूजन/संक्रामक मामलों की संभावना बढ़ाता है, लेकिन अंतिम निर्णय डॉक्टर का ही रहता है।"
+
+#: app/templates/health/diagnose_result.html:24
+msgid "بروتوكول طوارئ مفعَّل"
+msgstr "आपातकालीन प्रोटोकॉल सक्रिय"
+
+#: app/templates/health/diagnose_result.html:27
+#: app/templates/team/_report_widgets.html:21
+#: app/templates/team/task_detail.html:9
+msgid "الحالة:"
+msgstr "स्थिति:"
+
+#: app/templates/health/diagnose_result.html:28
+msgid "اشتباه تفريقي:"
+msgstr "विभेदक संदेह:"
+
+#: app/templates/health/diagnose_result.html:35
+msgid "ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم المناسب."
+msgstr "संदर्भ में कोई रोग दर्ज लक्षणों से मेल नहीं खाता — उपयुक्त नाम से मामले को मैन्युअल रूप से दर्ज करें।"
+
+#: app/templates/health/diagnose_result.html:36
+msgid "تسجيل حالة مرضية يدوياً"
+msgstr "रोग का मामला मैन्युअल रूप से दर्ज करें"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الاحتمال"
+msgstr "संभावना"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "درجة توافق الأعراض"
+msgstr "लक्षण मिलान डिग्री"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الأعراض المطابقة"
+msgstr "मिलान लक्षण"
+
+#: app/templates/health/diagnose_result.html:45
+msgid "حرارة مرتفعة رفعت الاحتمال"
+msgstr "उच्च तापमान ने संभावना बढ़ाई"
+
+#: app/templates/health/diagnose_result.html:45
+msgid "سياق"
+msgstr "प्रसंग"
+
+#: app/templates/health/diagnose_result.html:50
+msgid "ناقص عرض إجباري:"
+msgstr "अनिवार्य लक्षण गायब है:"
+
+#: app/templates/health/diagnose_result.html:57
+msgid "استخدم هذا الاحتمال"
+msgstr "इस संभावना का उपयोग करें"
+
+#: app/templates/health/diagnose_result.html:63
+msgid "طبّق بروتوكول"
+msgstr "प्रोटोकॉल लागू करें"
+
+#: app/templates/health/diagnose_start.html:6
+msgid "رجوع لسجل الأمراض"
+msgstr "रोग रिकॉर्ड पर वापस जाएं"
+
+#: app/templates/health/diagnose_start.html:9
+msgid "هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً."
+msgstr "यह सामान्य रोग संदर्भ से लक्षणों के मिलान पर आधारित एक संभावना-रैंकिंग सहायक है — यह पुष्टित प्रयोगशाला निदान नहीं है।"
+
+#: app/templates/health/diagnose_start.html:10
+msgid "السجل المرضي يبقى \"مفتوحاً\" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً."
+msgstr "रोग रिकॉर्ड तब तक \"खुला\" रहता है जब तक डॉक्टर वास्तव में इसकी समीक्षा नहीं करता और वास्तविक स्वास्थ्य लाभ का दस्तावेजीकरण नहीं करता, ठीक किसी मैन्युअल रूप से दर्ज मामले की तरह।"
+
+#: app/templates/health/diagnose_start.html:16
+msgid "الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)"
+msgstr "पशु (वैकल्पिक, बाद में निदान जोड़ने में मदद करता है)"
+
+#: app/templates/health/diagnose_start.html:23
+msgid "درجة الحرارة (اختياري، °C)"
+msgstr "तापमान (वैकल्पिक, °C)"
+
+#: app/templates/health/diagnose_start.html:24
+msgid "مثال: 39.5"
+msgstr "उदाहरण: 39.5"
+
+#: app/templates/health/diagnose_start.html:26
+msgid "عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً."
+msgstr "परिणाम स्क्रीन पर केवल मार्गदर्शक जानकारी (छोटे जुगाली करने वाले पशुओं की अनुमानित सामान्य सीमा 38.5-40°) — फिलहाल संभावना रैंकिंग गणना में शामिल नहीं।"
+
+#: app/templates/health/diagnose_start.html:29
+msgid "العرض الرئيسي"
+msgstr "प्राथमिक लक्षण"
+
+#: app/templates/health/diagnose_start.html:31
+msgid "اختر عرضاً رئيسياً..."
+msgstr "प्राथमिक लक्षण चुनें..."
+
+#: app/templates/health/diagnose_start.html:34
+msgid "التالي — عرض الأسئلة المتابعة"
+msgstr "अगला — अनुवर्ती प्रश्न दिखाएं"
+
+#: app/templates/health/diagnose_start.html:40
+msgid "أعراض مصاحبة (اختر كل ما ينطبق)"
+msgstr "साथ के लक्षण (जो लागू हों वे सभी चुनें)"
+
+#: app/templates/health/diagnose_start.html:42
+msgid "ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية."
+msgstr "वर्तमान संदर्भ में इस लक्षण से जुड़े कोई अनुवर्ती लक्षण नहीं हैं — केवल प्राथमिक लक्षण से संभावनाएं गणना करें, या बाद में चिकित्सा सेटिंग्स स्क्रीन से नए लक्षण जोड़ें।"
+
+#: app/templates/health/diagnose_start.html:55
+msgid "أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)"
+msgstr "अतिरिक्त मुक्त-पाठ लक्षण (वैकल्पिक — टिप्पणी के रूप में दर्ज, रैंकिंग गणना में शामिल नहीं)"
+
+#: app/templates/health/diagnose_start.html:56
+msgid "مثال: يمتنع عن الأكل منذ يومين..."
+msgstr "उदाहरण: दो दिनों से खाना नहीं खा रहा..."
+
+#: app/templates/health/diagnose_start.html:57
+msgid "احسب الاحتمالات"
+msgstr "संभावनाएं गणना करें"
+
 #: app/templates/health/disease_form.html:6
 msgid "تسجيل حالة مرضية"
 msgstr "बीमारी का मामला दर्ज करें"
@@ -1920,6 +2097,100 @@ msgstr "ओवरराइड कारण (यदि परजीवी-रो�
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "इसे केवल तभी भरें जब स्क्रीन ने चेतावनी दी हो — दोहराव का चिकित्सीय कारण लिखें।"
 
+#: app/templates/health/disease_link_wizard.html:25
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr "लक्षण-रोग लिंकिंग विज़ार्ड"
+
+#: app/templates/health/disease_link_wizard.html:40
+msgid "وش المرض؟"
+msgstr "कौन सा रोग?"
+
+#: app/templates/health/disease_link_wizard.html:42
+msgid "اختر مرض"
+msgstr "रोग चुनें"
+
+#: app/templates/health/disease_link_wizard.html:46
+#: app/templates/health/disease_link_wizard.html:63
+#: app/templates/health/disease_link_wizard.html:75
+msgid "التالي"
+msgstr "अगला"
+
+#: app/templates/health/disease_link_wizard.html:52
+msgid "وش الأعراض المرتبطة؟ (اختر كل ما ينطبق)"
+msgstr "कौन से लक्षण जुड़े हैं? (जो लागू हों वे सभी चुनें)"
+
+#: app/templates/health/disease_link_wizard.html:57
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr "प्राथमिक"
+
+#: app/templates/health/disease_link_wizard.html:62
+#: app/templates/health/disease_link_wizard.html:74
+#: app/templates/health/disease_link_wizard.html:94
+msgid "السابق"
+msgstr "पिछला"
+
+#: app/templates/health/disease_link_wizard.html:69
+msgid "قد وش قوة دلالة هذي الأعراض على المرض؟"
+msgstr "ये लक्षण रोग को कितनी दृढ़ता से इंगित करते हैं?"
+
+#: app/templates/health/disease_link_wizard.html:70
+msgid "عرض عام"
+msgstr "सामान्य लक्षण"
+
+#: app/templates/health/disease_link_wizard.html:71
+msgid "عرض متوسط"
+msgstr "मध्यम लक्षण"
+
+#: app/templates/health/disease_link_wizard.html:72
+msgid "عرض قوي ومؤكد"
+msgstr "मजबूत, पुष्टित लक्षण"
+
+#: app/templates/health/disease_link_wizard.html:81
+msgid "عرض أساسي للتشخيص؟ (لازم يكون موجود عشان يُشتبه بالمرض)"
+msgstr "निदान के लिए आवश्यक लक्षण? (रोग का संदेह होने के लिए इसका मौजूद होना ज़रूरी है)"
+
+#: app/templates/health/disease_link_wizard.html:82
+msgid "نعم — أساسي"
+msgstr "हाँ — आवश्यक"
+
+#: app/templates/health/disease_link_wizard.html:83
+#: app/templates/health/disease_link_wizard.html:87
+#: app/templates/health/disease_link_wizard.html:91
+msgid "لا"
+msgstr "नहीं"
+
+#: app/templates/health/disease_link_wizard.html:85
+msgid "عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)"
+msgstr "क्या यह लक्षण रोग को खारिज करता है? (यदि मौजूद हो, तो रोग को संभावनाओं से बाहर करता है)"
+
+#: app/templates/health/disease_link_wizard.html:86
+msgid "نعم — يلغيه"
+msgstr "हाँ — खारिज करता है"
+
+#: app/templates/health/disease_link_wizard.html:89
+msgid "يتطلب عزل الحيوان فوراً؟"
+msgstr "पशु का तत्काल अलगाव आवश्यक है?"
+
+#: app/templates/health/disease_link_wizard.html:90
+msgid "نعم — عزل فوري"
+msgstr "हाँ — तत्काल अलगाव"
+
+#: app/templates/health/disease_link_wizard.html:95
+msgid "حفظ والانتهاء"
+msgstr "सहेजें और समाप्त करें"
+
+#: app/templates/health/disease_link_wizard.html:105
+msgid "اختر مرض أولاً"
+msgstr "पहले रोग चुनें"
+
+#: app/templates/health/disease_link_wizard.html:106
+msgid "اختر عرض واحد على الأقل"
+msgstr "कम से कम एक लक्षण चुनें"
+
 #: app/templates/health/disease_type_detail.html:8
 msgid "المعالج التفاعلي"
 msgstr "इंटरैक्टिव विज़ार्ड"
@@ -1963,12 +2234,6 @@ msgstr "अनिवार्य"
 #: app/templates/health/disease_type_detail.html:92
 msgid "استبعادي"
 msgstr "बहिष्करणीय"
-
-#: app/templates/health/disease_type_detail.html:27
-#: app/templates/health/disease_type_detail.html:83
-#: app/templates/health/symptoms_list.html:23
-msgid "رئيسي"
-msgstr "प्राथमिक"
 
 #: app/templates/health/disease_type_detail.html:39
 #: app/templates/health/disease_type_detail.html:95
@@ -2037,16 +2302,14 @@ msgid "إضافة مرض للقائمة"
 msgstr "सूची में रोग जोड़ें"
 
 #: app/templates/health/disease_type_form.html:8
+#: app/templates/health/pharmacy_purchase_form.html:21
+#: app/templates/health/vaccination_schedule_form.html:27
 msgid "ملاحظات (اختياري)"
 msgstr "टिप्पणियां (वैकल्पिक)"
 
 #: app/templates/health/disease_types_list.html:5
 msgid "الأمراض الشائعة (قائمة الاقتراحات)"
 msgstr "सामान्य रोग (सुझाव सूची)"
-
-#: app/templates/health/disease_types_list.html:8
-msgid "معالج ربط عرض بمرض"
-msgstr "लक्षण-रोग लिंकिंग विज़ार्ड"
 
 #: app/templates/health/disease_types_list.html:9
 #: app/templates/health/emergency_symptoms_list.html:4
@@ -2131,6 +2394,15 @@ msgstr "डॉक्टर"
 msgid "لا يوجد أطباء مسجّلين بعد."
 msgstr "अभी तक कोई डॉक्टर पंजीकृत नहीं है।"
 
+#: app/templates/health/drug_catalog_form.html:4
+#: app/templates/health/pharmacy_form.html:32
+msgid "إضافة اسم دواء جديد"
+msgstr "नई दवा का नाम जोड़ें"
+
+#: app/templates/health/drug_catalog_form.html:9
+msgid "فئة الدواء (اختياري)"
+msgstr "दवा वर्ग (वैकल्पिक)"
+
 #: app/templates/health/emergency_symptoms_list.html:6
 msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
 msgstr "यहां का कोई भी लक्षण, यदि निदान सहायक के लक्षणों में शामिल हो, पशु को तुरंत और स्वचालित रूप से अलग कर देता है और परिणाम स्क्रीन पर तत्काल विभेदक निदान दिखाता है — सामान्य संभावना क्रम से अलग। जानबूझकर स्पष्ट नामों की सूची — हम व्यापक श्रेणी (जैसे \"तंत्रिका संबंधी लक्षण\") का उपयोग नहीं करते ताकि छोटे मामलों के लिए अत्यधिक अलगाव से बचा जा सके।"
@@ -2205,20 +2477,186 @@ msgstr "बुनियादी इंजेक्शन विधियों 
 msgid "راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
 msgstr "पशु की स्थिति या किसी विशेष दवा की खुराक के बारे में विशिष्ट जानकारी के लिए हमेशा उपचार करने वाले डॉक्टर से सलाह लें (प्रत्येक दवा की संदर्भ खुराक टिप्पणी डॉक्टर द्वारा स्वयं फार्मेसी स्क्रीन पर दर्ज की जाती है)।"
 
+#: app/templates/health/pharmacy_form.html:4
+msgid "تعديل دواء"
+msgstr "दवा संपादित करें"
+
+#: app/templates/health/pharmacy_form.html:4
+#: app/templates/health/pharmacy_list.html:8
+msgid "دواء جديد"
+msgstr "नई दवा"
+
+#: app/templates/health/pharmacy_form.html:6
+msgid "تسجيل عملية شراء (دفعة بتاريخها الخاص)"
+msgstr "खरीद दर्ज करें (अपनी तारीख वाला एक बैच)"
+
+#: app/templates/health/pharmacy_form.html:11
+msgid "بيانات الدواء الأساسية"
+msgstr "बुनियादी दवा डेटा"
+
+#: app/templates/health/pharmacy_form.html:12
+#: app/templates/health/pharmacy_list.html:13
+msgid "فئة الدواء"
+msgstr "दवा वर्ग"
+
+#: app/templates/health/pharmacy_form.html:19
+msgid "تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول الشرطية تحت."
+msgstr "यहां विशेष रूप से \"परजीवी-रोधी/कृमिनाशक\" चुनना ही 30-दिन खुराक-दोहराव रक्षक को सक्रिय करता है — यह \"दवा का नाम\" फ़िल्टर करने और नीचे दिए गए सशर्त फ़ील्ड का आधार भी है।"
+
+#: app/templates/health/pharmacy_form.html:24
+msgid "اختر اسم دواء"
+msgstr "दवा का नाम चुनें"
+
+#: app/templates/health/pharmacy_form.html:33
+msgid "دليل الدواء"
+msgstr "दवा गाइड"
+
+#: app/templates/health/pharmacy_form.html:37
+msgid "طريقة الاستخدام (اختياري)"
+msgstr "उपयोग विधि (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:45
+msgid "إضافة طريقة استخدام جديدة"
+msgstr "नई उपयोग विधि जोड़ें"
+
+#: app/templates/health/pharmacy_form.html:47
+msgid "ملاحظة الجرعة المرجعية (اختياري)"
+msgstr "संदर्भ खुराक टिप्पणी (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:48
+msgid "مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة"
+msgstr "उदाहरण: 50 किग्रा जीवित वजन के लिए 5 मिली — निर्माता के पत्रक के अनुसार"
+
+#: app/templates/health/pharmacy_form.html:49
+msgid "مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
+msgstr "आपके द्वारा एक बार लिखा गया वर्णनात्मक संदर्भ — फिर यह प्रविष्टि तेज करने के लिए सूचियों में दिखता है, और सिस्टम कभी स्वतः किसी खुराक की गणना या सुझाव नहीं देता।"
+
+#: app/templates/health/pharmacy_form.html:51
+msgid "الصلاحية والتخزين"
+msgstr "समाप्ति और भंडारण"
+
+#: app/templates/health/pharmacy_form.html:52
+msgid "تاريخ انتهاء الصلاحية (اختياري)"
+msgstr "समाप्ति तिथि (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:54
+msgid "تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن \"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء."
+msgstr "पैकेज पर छपी दवा की अपनी समाप्ति तिथि — नीचे दी गई \"निकासी अवधि\" से पूरी तरह अलग, जो पशु को दवा देने के बाद बेचने/दूध निकालने पर रोक की अवधि है।"
+
+#: app/templates/health/pharmacy_form.html:56
+msgid "ظروف التخزين (اختياري)"
+msgstr "भंडारण स्थितियां (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:63
+msgid "وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي."
+msgstr "केवल वर्णनात्मक — कर्मचारी को बताता है कि दवा वास्तव में कहां रखनी है, कोई स्वचालित चेतावनी सक्रिय नहीं करता।"
+
+#: app/templates/health/pharmacy_form.html:66
+msgid "فترة السحب (بالأيام)"
+msgstr "निकासी अवधि (दिनों में)"
+
+#: app/templates/health/pharmacy_form.html:67
+msgid "عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
+msgstr "किसी भी पशु को यह दवा देने के बाद उसे बेचने या दूध का उपयोग करने से पहले प्रतीक्षा करने के दिनों की संख्या — सिस्टम इसे स्वतः गणना करता है और इस दौरान बिक्री रोकता है।"
+
+#: app/templates/health/pharmacy_form.html:71
+msgid "مدة الحماية بالأيام (للقاحات — اختياري)"
+msgstr "सुरक्षा अवधि दिनों में (टीकों के लिए — वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:73
+msgid "تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
+msgstr "केवल समूह टीकाकरण स्क्रीन पर \"अगली नियत तारीख\" स्वतः निर्धारित करने के लिए उपयोग (टीकाकरण तिथि + यह अवधि) — इसके बिना अगली तारीख मैन्युअल रूप से दर्ज होती है।"
+
+#: app/templates/health/pharmacy_form.html:75
+msgid "الجرعة الافتراضية للرأس بالمل (اختياري)"
+msgstr "प्रति पशु डिफ़ॉल्ट खुराक मिली में (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:77
+msgid "رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
+msgstr "आपके द्वारा दर्ज एक निश्चित संख्या — समूह टीकाकरण स्क्रीन पर बैकअप मान के रूप में तभी दिखती है जब पशु की आयु नीचे \"आयु के अनुसार खुराक\" तालिका में किसी सीमा से मेल न खाए।"
+
+#: app/templates/health/pharmacy_form.html:79
+msgid "الجرعة حسب العمر (اختياري)"
+msgstr "आयु के अनुसार खुराक (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:80
+msgid "أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد."
+msgstr "आप स्वयं एक बार प्रत्येक आयु सीमा के लिए खुराक लिखते हैं — फिर सिस्टम बस समूह टीकाकरण स्क्रीन पर प्रत्येक पशु की आयु मिलाता है और यहां दर्ज आपकी खुराक दिखाता है, कभी कोई नई संख्या गणना या आविष्कार नहीं करता।"
+
+#: app/templates/health/pharmacy_form.html:84
+#: app/templates/health/pharmacy_form.html:90
+#: app/templates/health/pharmacy_form.html:119
+msgid "من عمر (يوم)"
+msgstr "आयु से (दिन)"
+
+#: app/templates/health/pharmacy_form.html:85
+#: app/templates/health/pharmacy_form.html:91
+#: app/templates/health/pharmacy_form.html:120
+msgid "إلى عمر (يوم)"
+msgstr "आयु तक (दिन)"
+
+#: app/templates/health/pharmacy_form.html:86
+#: app/templates/health/pharmacy_form.html:92
+#: app/templates/health/pharmacy_form.html:121
+msgid "الجرعة (مل)"
+msgstr "खुराक (मिली)"
+
+#: app/templates/health/pharmacy_form.html:95
+msgid "إضافة عمر آخر"
+msgstr "एक और आयु सीमा जोड़ें"
+
+#: app/templates/health/pharmacy_form.html:98
+msgid "المخزون والسعر"
+msgstr "स्टॉक और मूल्य"
+
+#: app/templates/health/pharmacy_form.html:100
+msgid "مل / حبة / علبة"
+msgstr "मिली / गोली / बॉक्स"
+
+#: app/templates/health/pharmacy_form.html:102
+msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
+msgstr "जिस भी दवा का स्टॉक इस सीमा या उससे कम हो जाए वह स्वतः \"फार्मेसी की कमी\" सूची में दिखती है — वही आवश्यक खरीद सूची।"
+
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr "इकाई मूल्य (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_form.html:103
+msgid "مثال: 2.5"
+msgstr "उदाहरण: 2.5"
+
+#: app/templates/health/pharmacy_form.html:104
+msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
+msgstr "यात्रा/रोग/टीकाकरण स्क्रीन पर उपचार लागत स्वतः गणना करने का आधार (उपयोग की गई मात्रा × यह मूल्य) — इसके बिना लागत पहले की तरह मैन्युअल रूप से दर्ज होती है।"
+
+#: app/templates/health/pharmacy_form.html:106
+msgid "أمان إضافي وملاحظات"
+msgstr "अतिरिक्त सुरक्षा और टिप्पणियां"
+
+#: app/templates/health/pharmacy_form.html:139
+msgid "منتهي الصلاحية منذ"
+msgstr "इससे समाप्त"
+
+#: app/templates/health/pharmacy_form.html:140
+msgid "ينتهي خلال"
+msgstr "इसके भीतर समाप्त होगी"
+
+#: app/templates/health/pharmacy_form.html:141
+msgid "متبقي"
+msgstr "शेष"
+
+#: app/templates/health/pharmacy_form.html:165
+msgid "اختر فئة الدواء أولاً لعرض دليلها."
+msgstr "इसका गाइड देखने के लिए पहले दवा वर्ग चुनें।"
+
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
 msgid "نواقص الصيدلية"
 msgstr "फार्मेसी की कमी"
 
-#: app/templates/health/pharmacy_list.html:8
-msgid "دواء جديد"
-msgstr "नई दवा"
-
 #: app/templates/health/pharmacy_list.html:13
-msgid "فئة الدواء"
-msgstr "दवा वर्ग"
-
-#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "تاريخ الانتهاء"
 msgstr "समाप्ति तिथि"
 
@@ -2250,6 +2688,48 @@ msgstr "समाप्त"
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "अभी तक कोई दवा दर्ज नहीं है।"
 
+#: app/templates/health/pharmacy_purchase_form.html:4
+msgid "تسجيل عملية شراء"
+msgstr "खरीद दर्ज करें"
+
+#: app/templates/health/pharmacy_purchase_form.html:5
+#: app/templates/team/task_detail.html:31
+msgid "المخزون الحالي:"
+msgstr "वर्तमान स्टॉक:"
+
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "تاريخ الشراء"
+msgstr "खरीद तिथि"
+
+#: app/templates/health/pharmacy_purchase_form.html:12
+msgid "الكمية المشتراة"
+msgstr "खरीदी गई मात्रा"
+
+#: app/templates/health/pharmacy_purchase_form.html:15
+msgid "تاريخ انتهاء هذي الدفعة (اختياري)"
+msgstr "इस बैच की समाप्ति तिथि (वैकल्पिक)"
+
+#: app/templates/health/pharmacy_purchase_form.html:24
+msgid "تسجيل الشراء"
+msgstr "खरीद दर्ज करें"
+
+#: app/templates/health/pharmacy_purchase_form.html:29
+msgid "سجل عمليات الشراء لهذا الدواء"
+msgstr "इस दवा का खरीद इतिहास"
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "الكمية الأصلية"
+msgstr "मूल मात्रा"
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "المتبقي منها"
+msgstr "उसमें से शेष"
+
+#: app/templates/health/pharmacy_purchase_form.html:42
+msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد."
+msgstr "अभी तक इस दवा के लिए कोई खरीद दर्ज नहीं है।"
+
 #: app/templates/health/pharmacy_shortages.html:8
 msgid "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها \"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
 msgstr "हर सक्रिय दवा जिसका स्टॉक निर्धारित न्यूनतम पर या उससे नीचे पहुंच गया है — यह स्क्रीन स्वयं \"आवश्यक खरीद सूची\" है, स्टॉक बदलने पर स्वतः अपडेट होती है।"
@@ -2265,6 +2745,103 @@ msgstr "उसी श्रेणी में विकल्प"
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
 msgstr "फिलहाल कोई कमी नहीं है"
+
+#: app/templates/health/protocol_apply_form.html:4
+msgid "تطبيق بروتوكول:"
+msgstr "प्रोटोकॉल लागू करें:"
+
+#: app/templates/health/protocol_apply_form.html:7
+msgid "الخطوة"
+msgstr "चरण"
+
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:24
+msgid "الدواء"
+msgstr "दवा"
+
+#: app/templates/health/protocol_apply_form.html:15
+msgid "الرأس"
+msgstr "पशु"
+
+#: app/templates/health/protocol_apply_form.html:20
+msgid "تاريخ بداية التطبيق"
+msgstr "आरंभ तिथि"
+
+#: app/templates/health/protocol_apply_form.html:23
+msgid "تولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة، مستحقة بتاريخ (بداية التطبيق + يوم الخطوة) — تنتظر مراجعة الدكتور ثم \"تأكيد التنفيذ\" الفعلي (اللي يخصم من الصيدلية ويطبّق فترة السحب تلقائياً)."
+msgstr "प्रत्येक चरण के लिए एक \"नियोजित उपचार\" कार्य बनाता है, जो (आरंभ तिथि + चरण दिन) पर देय है — डॉक्टर की समीक्षा फिर वास्तविक \"क्रियान्वयन पुष्टि\" (जो फार्मेसी से घटाता है और स्वतः निकासी अवधि लागू करता है) की प्रतीक्षा करता है।"
+
+#: app/templates/health/protocol_apply_form.html:25
+msgid "تطبيق البروتوكول"
+msgstr "प्रोटोकॉल लागू करें"
+
+#: app/templates/health/protocol_form.html:4
+msgid "بروتوكول علاج جديد"
+msgstr "नया उपचार प्रोटोकॉल"
+
+#: app/templates/health/protocol_form.html:7
+msgid "مثال: بروتوكول التهاب الرئة"
+msgstr "उदाहरण: निमोनिया प्रोटोकॉल"
+
+#: app/templates/health/protocol_form.html:8
+msgid "الوصف (اختياري)"
+msgstr "विवरण (वैकल्पिक)"
+
+#: app/templates/health/protocol_form.html:9
+msgid "المرض المرتبط (اختياري)"
+msgstr "जुड़ा रोग (वैकल्पिक)"
+
+#: app/templates/health/protocol_form.html:15
+msgid "لو مُحدَّد، زر \"طبّق هذا البروتوكول\" يظهر تلقائياً بنتيجة المساعد التشخيصي عند مطابقة هذا المرض."
+msgstr "यदि निर्दिष्ट हो, तो जब यह रोग मेल खाए तो निदान सहायक के परिणाम में \"यह प्रोटोकॉल लागू करें\" बटन स्वतः दिखता है।"
+
+#: app/templates/health/protocol_form.html:18
+msgid "الخطوات (دواء محدد من الصيدلية لكل خطوة)"
+msgstr "चरण (हर चरण के लिए फार्मेसी से एक विशिष्ट दवा)"
+
+#: app/templates/health/protocol_form.html:21
+msgid "يوم الاستحقاق من بداية التطبيق"
+msgstr "आरंभ से देय दिन"
+
+#: app/templates/health/protocol_form.html:22
+msgid "عنوان الخطوة"
+msgstr "चरण शीर्षक"
+
+#: app/templates/health/protocol_form.html:33
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم عنوان + دواء + كمية عشان تُحفظ الخطوة."
+msgstr "जिस पंक्ति की ज़रूरत न हो उसे खाली छोड़ें — चरण सहेजने के लिए शीर्षक + दवा + मात्रा आवश्यक है।"
+
+#: app/templates/health/protocol_form.html:35
+msgid "حفظ البروتوكول"
+msgstr "प्रोटोकॉल सहेजें"
+
+#: app/templates/health/protocols_list.html:5
+msgid "قوالب بروتوكول العلاج"
+msgstr "उपचार प्रोटोकॉल टेम्पलेट"
+
+#: app/templates/health/protocols_list.html:7
+msgid "بروتوكول جديد"
+msgstr "नया प्रोटोकॉल"
+
+#: app/templates/health/protocols_list.html:11
+msgid "كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس معيّن يولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة — الخصم من الصيدلية وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند \"تأكيد التنفيذ\" الفعلي لكل خطوة، بنفس آلية بند 50."
+msgstr "हर प्रोटोकॉल = निर्धारित उपचार चरणों की एक श्रृंखला (दिन × दवा × मात्रा)। इसे किसी विशेष पशु पर लागू करने से हर चरण के लिए एक \"नियोजित उपचार\" कार्य बनता है — फार्मेसी कटौती और निकासी अवधि (प्रोटोकॉल की सभी दवाओं में स्वतः सबसे लंबी) प्रत्येक चरण की वास्तविक \"क्रियान्वयन पुष्टि\" पर ही होती है, आइटम 50 की समान प्रणाली का उपयोग करते हुए।"
+
+#: app/templates/health/protocols_list.html:15
+msgid "المرض المرتبط"
+msgstr "जुड़ा रोग"
+
+#: app/templates/health/protocols_list.html:15
+msgid "عدد الخطوات"
+msgstr "चरणों की संख्या"
+
+#: app/templates/health/protocols_list.html:24
+msgid "تطبيق على رأس"
+msgstr "पशु पर लागू करें"
+
+#: app/templates/health/protocols_list.html:28
+msgid "لا يوجد بروتوكولات مسجَّلة بعد."
+msgstr "अभी तक कोई प्रोटोकॉल दर्ज नहीं है।"
 
 #: app/templates/health/symptom_form.html:4
 msgid "إضافة عرض جديد"
@@ -2314,13 +2891,109 @@ msgstr "अगली तारीख़ (वैकल्पिक)"
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr "फार्मेसी से उपयोग की गई दवा (वैकल्पिक)"
 
-#: app/templates/health/vaccinations_list.html:6
-msgid "تطعيم جديد"
-msgstr "नया टीकाकरण"
+#: app/templates/health/vaccination_schedule_form.html:4
+#: app/templates/health/vaccination_schedule_list.html:6
+msgid "جدولة تحصين جديد"
+msgstr "नया टीकाकरण शेड्यूल"
 
+#: app/templates/health/vaccination_schedule_form.html:9
+msgid "اختر حظيرة"
+msgstr "बाड़ा चुनें"
+
+#: app/templates/health/vaccination_schedule_form.html:16
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/health/vaccinations_list.html:10
 msgid "اللقاح"
 msgstr "टीका"
+
+#: app/templates/health/vaccination_schedule_form.html:18
+msgid "اختر لقاح من الصيدلية"
+msgstr "फार्मेसी से टीका चुनें"
+
+#: app/templates/health/vaccination_schedule_form.html:24
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
+msgid "التاريخ المخطَّط"
+msgstr "नियोजित तिथि"
+
+#: app/templates/health/vaccination_schedule_form.html:30
+msgid "جدولة"
+msgstr "शेड्यूल करें"
+
+#: app/templates/health/vaccination_schedule_form.html:39
+msgid "عدد الرؤوس الحالي بهذي الحظيرة:"
+msgstr "इस बाड़े में वर्तमान पशु संख्या:"
+
+#: app/templates/health/vaccination_schedule_list.html:8
+msgid "جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة."
+msgstr "पूरे बाड़े के लिए भविष्य का टीकाकरण शेड्यूल करें — पशु संख्या प्रदर्शन के समय बाड़े की वास्तविक संख्या से लाइव गणना होती है, शेड्यूल के समय की निश्चित संख्या नहीं।"
+
+#: app/templates/health/vaccination_schedule_list.html:10
+msgid "القادمة"
+msgstr "आगामी"
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "عدد الرؤوس الآن"
+msgstr "अभी पशु संख्या"
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "إجراءات"
+msgstr "कार्रवाइयां"
+
+#: app/templates/health/vaccination_schedule_list.html:21
+#, python-format
+msgid "متأخر %(n)s يوم"
+msgstr "%(n)s दिन देरी से"
+
+#: app/templates/health/vaccination_schedule_list.html:22
+msgid "اليوم"
+msgstr "आज"
+
+#: app/templates/health/vaccination_schedule_list.html:23
+#, python-format
+msgid "بعد %(n)s يوم"
+msgstr "%(n)s दिनों में"
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "افتح قائمة الحظيرة لبدء التحصين الجماعي"
+msgstr "समूह टीकाकरण शुरू करने के लिए बाड़े की सूची खोलें"
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "ابدأ التحصين"
+msgstr "टीकाकरण शुरू करें"
+
+#: app/templates/health/vaccination_schedule_list.html:30
+msgid "تعليم هذي الجدولة كمكتملة؟"
+msgstr "इस शेड्यूल को पूर्ण के रूप में चिह्नित करें?"
+
+#: app/templates/health/vaccination_schedule_list.html:32
+msgid "تم"
+msgstr "पूर्ण"
+
+#: app/templates/health/vaccination_schedule_list.html:34
+msgid "إلغاء هذي الجدولة؟"
+msgstr "यह शेड्यूल रद्द करें?"
+
+#: app/templates/health/vaccination_schedule_list.html:42
+msgid "لا يوجد تحصينات مجدولة حالياً."
+msgstr "फिलहाल कोई टीकाकरण शेड्यूल नहीं है।"
+
+#: app/templates/health/vaccination_schedule_list.html:47
+msgid "سابقة (آخر 30)"
+msgstr "पिछला (अंतिम 30)"
+
+#: app/templates/health/vaccination_schedule_list.html:56
+msgid "مكتملة"
+msgstr "पूर्ण"
+
+#: app/templates/health/vaccination_schedule_list.html:59
+msgid "لا يوجد سجل سابق."
+msgstr "कोई पिछला रिकॉर्ड नहीं है।"
+
+#: app/templates/health/vaccinations_list.html:6
+msgid "تطعيم جديد"
+msgstr "नया टीकाकरण"
 
 #: app/templates/health/vaccinations_list.html:10
 msgid "الموعد القادم"
@@ -2436,11 +3109,6 @@ msgstr "उम्र:"
 #: app/templates/team/task_detail.html:15
 msgid "الحظيرة:"
 msgstr "बाड़ा:"
-
-#: app/templates/team/_report_widgets.html:21
-#: app/templates/team/task_detail.html:9
-msgid "الحالة:"
-msgstr "स्थिति:"
 
 #: app/templates/team/_report_widgets.html:22
 msgid "صورة الحيوان"
@@ -2780,10 +3448,6 @@ msgstr "प्रति पशु खुराक:"
 #: app/templates/team/task_detail.html:30
 msgid "الجرعة الإجمالية للدفعة:"
 msgstr "बैच के लिए कुल खुराक:"
-
-#: app/templates/team/task_detail.html:31
-msgid "المخزون الحالي:"
-msgstr "वर्तमान स्टॉक:"
 
 #: app/templates/team/task_detail.html:31
 msgid "المتبقي المتوقع بعد التنفيذ:"

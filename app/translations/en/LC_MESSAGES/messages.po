@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:25+0300\n"
+"POT-Creation-Date: 2026-08-10 02:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -617,10 +617,11 @@ msgid "التطعيمات"
 msgstr "Vaccinations"
 
 #: app/templates/base.html:485
+#: app/templates/health/vaccination_schedule_list.html:5
 msgid "تقويم التحصينات"
 msgstr "Vaccination calendar"
 
-#: app/templates/base.html:487
+#: app/templates/base.html:487 app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr "Diagnostic assistant"
 
@@ -752,6 +753,7 @@ msgstr "Dismiss, I don't need it"
 msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr "Just a quick guide — each item checks itself off once you do it, and you can use the same quick actions below without coming back here."
 
+#: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
 msgid "إضافة"
@@ -936,6 +938,9 @@ msgstr "New feeding plan"
 #: app/templates/feed/barn_plan_form.html:7
 #: app/templates/feed/barn_plans_list.html:10
 #: app/templates/feed/fcr_report.html:16
+#: app/templates/health/vaccination_schedule_form.html:7
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:47
@@ -965,6 +970,8 @@ msgstr "End date (optional)"
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/health/disease_types_list.html:23
+#: app/templates/health/pharmacy_form.html:110
+#: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -987,6 +994,7 @@ msgstr "Fill this only if the screen returned a warning — state the reason"
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
 #: app/templates/health/doctor_form.html:10
+#: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1193,8 +1201,12 @@ msgstr "New feed item"
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:10
+#: app/templates/health/drug_catalog_form.html:7
+#: app/templates/health/pharmacy_form.html:21
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/protocol_form.html:7
+#: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr "Name"
@@ -1222,6 +1234,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr "Contains high copper (salt blocks/mineral supplements)"
 
 #: app/templates/feed/item_form.html:23
+#: app/templates/health/pharmacy_form.html:108
 msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
 msgstr "Enables an explicit programmatic block on its use for any Naeemi-breed animal (item 51) — no override option."
 
@@ -1246,19 +1259,23 @@ msgid "فسفور %"
 msgstr "Phosphorus %"
 
 #: app/templates/feed/item_form.html:29
+#: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr "Unit"
 
 #: app/templates/feed/item_form.html:30
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "Unit price"
 
 #: app/templates/feed/item_form.html:31
+#: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr "Available quantity"
 
 #: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr "Minimum stock alert threshold"
 
@@ -1293,6 +1310,7 @@ msgid "نفاد متوقع"
 msgstr "Expected stockout"
 
 #: app/templates/feed/items_list.html:13
+#: app/templates/health/pharmacy_form.html:107
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "Contains high copper"
@@ -1303,6 +1321,9 @@ msgstr "Low"
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
+#: app/templates/health/pharmacy_form.html:142
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:21
 #: app/templates/health/vaccination_form.html:22
 #: app/templates/health/vet_visit_form.html:25
 msgid "يوم"
@@ -1354,6 +1375,8 @@ msgstr "Outgoing (actual distribution)"
 #: app/templates/feed/movement_form.html:16
 #: app/templates/feed/movements_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
 msgid "الكمية"
 msgstr "Quantity"
 
@@ -1676,6 +1699,8 @@ msgstr "Disease"
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocols_list.html:15
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1730,6 +1755,7 @@ msgid "دعم خارجي (دين)"
 msgstr "External support (debt)"
 
 #: app/templates/finance/list.html:39
+#: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "Cancelled"
 
@@ -1753,7 +1779,11 @@ msgstr "View"
 msgid "تأكيد الإلغاء؟"
 msgstr "Confirm cancellation?"
 
-#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/finance/list.html:55
+#: app/templates/health/drug_catalog_form.html:17
+#: app/templates/health/symptom_form.html:15
+#: app/templates/health/vaccination_schedule_form.html:31
+#: app/templates/health/vaccination_schedule_list.html:36
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "Cancel"
@@ -1840,6 +1870,153 @@ msgstr ") — check pharmacy shortages for alternatives"
 msgid "التكلفة المتوقعة:"
 msgstr "Expected cost:"
 
+#: app/templates/health/diagnose_result.html:5
+msgid "احتمالات التشخيص"
+msgstr "Diagnosis probabilities"
+
+#: app/templates/health/diagnose_result.html:6
+msgid "تعديل الأعراض"
+msgstr "Edit symptoms"
+
+#: app/templates/health/diagnose_result.html:9
+msgid "ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار النهائي للدكتور المعالج دائماً."
+msgstr "Ranking of probabilities by matching entered symptoms against a common-diseases reference — the final decision always belongs to the treating doctor."
+
+#: app/templates/health/diagnose_result.html:10
+msgid "الأعراض المُدخَلة:"
+msgstr "Entered symptoms:"
+
+#: app/templates/health/diagnose_result.html:11
+msgid "ملاحظة حرة:"
+msgstr "Free note:"
+
+#: app/templates/health/diagnose_result.html:12
+#: app/templates/health/diagnose_start.html:21
+msgid "عمر الرأس:"
+msgstr "Animal age:"
+
+#: app/templates/health/diagnose_result.html:13
+msgid "درجة الحرارة:"
+msgstr "Temperature:"
+
+#: app/templates/health/diagnose_result.html:17
+msgid "الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور."
+msgstr "Temperature is above the approximate normal range — a contextual factor that raises the likelihood of inflammatory/infectious cases, but the final decision remains the doctor's."
+
+#: app/templates/health/diagnose_result.html:24
+msgid "بروتوكول طوارئ مفعَّل"
+msgstr "Emergency protocol activated"
+
+#: app/templates/health/diagnose_result.html:27
+#: app/templates/team/_report_widgets.html:21
+#: app/templates/team/task_detail.html:9
+msgid "الحالة:"
+msgstr "Status:"
+
+#: app/templates/health/diagnose_result.html:28
+msgid "اشتباه تفريقي:"
+msgstr "Differential suspicion:"
+
+#: app/templates/health/diagnose_result.html:35
+msgid "ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم المناسب."
+msgstr "No disease in the reference matches the entered symptoms — record the case manually with the appropriate name."
+
+#: app/templates/health/diagnose_result.html:36
+msgid "تسجيل حالة مرضية يدوياً"
+msgstr "Record a disease case manually"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الاحتمال"
+msgstr "Probability"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "درجة توافق الأعراض"
+msgstr "Symptom match degree"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الأعراض المطابقة"
+msgstr "Matched symptoms"
+
+#: app/templates/health/diagnose_result.html:45
+msgid "حرارة مرتفعة رفعت الاحتمال"
+msgstr "Elevated temperature raised the probability"
+
+#: app/templates/health/diagnose_result.html:45
+msgid "سياق"
+msgstr "Context"
+
+#: app/templates/health/diagnose_result.html:50
+msgid "ناقص عرض إجباري:"
+msgstr "Missing a required symptom:"
+
+#: app/templates/health/diagnose_result.html:57
+msgid "استخدم هذا الاحتمال"
+msgstr "Use this probability"
+
+#: app/templates/health/diagnose_result.html:63
+msgid "طبّق بروتوكول"
+msgstr "Apply protocol"
+
+#: app/templates/health/diagnose_start.html:6
+msgid "رجوع لسجل الأمراض"
+msgstr "Back to disease record"
+
+#: app/templates/health/diagnose_start.html:9
+msgid "هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً."
+msgstr "This is a probability-ranking assistant based on matching symptoms against a common-diseases reference — not a confirmed lab diagnosis."
+
+#: app/templates/health/diagnose_start.html:10
+msgid "السجل المرضي يبقى \"مفتوحاً\" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً."
+msgstr "The disease record stays \"open\" until the doctor actually reviews it and documents genuine recovery, just like any manually recorded case."
+
+#: app/templates/health/diagnose_start.html:16
+msgid "الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)"
+msgstr "Animal (optional, helps link the diagnosis later)"
+
+#: app/templates/health/diagnose_start.html:23
+msgid "درجة الحرارة (اختياري، °C)"
+msgstr "Temperature (optional, °C)"
+
+#: app/templates/health/diagnose_start.html:24
+msgid "مثال: 39.5"
+msgstr "Example: 39.5"
+
+#: app/templates/health/diagnose_start.html:26
+msgid "عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً."
+msgstr "Shown as guidance only on the result screen (the approximate normal range for small ruminants is 38.5-40°) — not currently factored into the probability ranking calculation."
+
+#: app/templates/health/diagnose_start.html:29
+msgid "العرض الرئيسي"
+msgstr "Primary symptom"
+
+#: app/templates/health/diagnose_start.html:31
+msgid "اختر عرضاً رئيسياً..."
+msgstr "Choose a primary symptom..."
+
+#: app/templates/health/diagnose_start.html:34
+msgid "التالي — عرض الأسئلة المتابعة"
+msgstr "Next — show follow-up questions"
+
+#: app/templates/health/diagnose_start.html:40
+msgid "أعراض مصاحبة (اختر كل ما ينطبق)"
+msgstr "Accompanying symptoms (select all that apply)"
+
+#: app/templates/health/diagnose_start.html:42
+msgid "ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية."
+msgstr "No follow-up symptoms are linked to this symptom in the current reference — calculate probabilities with just the primary symptom, or add new symptoms later from the medical settings screen."
+
+#: app/templates/health/diagnose_start.html:55
+msgid "أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)"
+msgstr "Additional free-text symptoms (optional — recorded as a note, not factored into the ranking)"
+
+#: app/templates/health/diagnose_start.html:56
+msgid "مثال: يمتنع عن الأكل منذ يومين..."
+msgstr "Example: has refused food for two days..."
+
+#: app/templates/health/diagnose_start.html:57
+msgid "احسب الاحتمالات"
+msgstr "Calculate probabilities"
+
 #: app/templates/health/disease_form.html:6
 msgid "تسجيل حالة مرضية"
 msgstr "Record Disease Case"
@@ -1920,6 +2097,100 @@ msgstr "Override reason (if the repeat-antiparasitic-dose warning appeared)"
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "Only fill this if the screen returned a warning — write the medical reason for repeating."
 
+#: app/templates/health/disease_link_wizard.html:25
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr "Symptom-to-disease linking wizard"
+
+#: app/templates/health/disease_link_wizard.html:40
+msgid "وش المرض؟"
+msgstr "Which disease?"
+
+#: app/templates/health/disease_link_wizard.html:42
+msgid "اختر مرض"
+msgstr "Choose a disease"
+
+#: app/templates/health/disease_link_wizard.html:46
+#: app/templates/health/disease_link_wizard.html:63
+#: app/templates/health/disease_link_wizard.html:75
+msgid "التالي"
+msgstr "Next"
+
+#: app/templates/health/disease_link_wizard.html:52
+msgid "وش الأعراض المرتبطة؟ (اختر كل ما ينطبق)"
+msgstr "Which symptoms are linked? (select all that apply)"
+
+#: app/templates/health/disease_link_wizard.html:57
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr "Primary"
+
+#: app/templates/health/disease_link_wizard.html:62
+#: app/templates/health/disease_link_wizard.html:74
+#: app/templates/health/disease_link_wizard.html:94
+msgid "السابق"
+msgstr "Previous"
+
+#: app/templates/health/disease_link_wizard.html:69
+msgid "قد وش قوة دلالة هذي الأعراض على المرض؟"
+msgstr "How strongly do these symptoms indicate the disease?"
+
+#: app/templates/health/disease_link_wizard.html:70
+msgid "عرض عام"
+msgstr "General symptom"
+
+#: app/templates/health/disease_link_wizard.html:71
+msgid "عرض متوسط"
+msgstr "Moderate symptom"
+
+#: app/templates/health/disease_link_wizard.html:72
+msgid "عرض قوي ومؤكد"
+msgstr "Strong, confirmed symptom"
+
+#: app/templates/health/disease_link_wizard.html:81
+msgid "عرض أساسي للتشخيص؟ (لازم يكون موجود عشان يُشتبه بالمرض)"
+msgstr "Essential symptom for diagnosis? (must be present for the disease to be suspected)"
+
+#: app/templates/health/disease_link_wizard.html:82
+msgid "نعم — أساسي"
+msgstr "Yes — essential"
+
+#: app/templates/health/disease_link_wizard.html:83
+#: app/templates/health/disease_link_wizard.html:87
+#: app/templates/health/disease_link_wizard.html:91
+msgid "لا"
+msgstr "No"
+
+#: app/templates/health/disease_link_wizard.html:85
+msgid "عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)"
+msgstr "Does this symptom rule out the disease? (if present, excludes the disease from the probabilities)"
+
+#: app/templates/health/disease_link_wizard.html:86
+msgid "نعم — يلغيه"
+msgstr "Yes — rules it out"
+
+#: app/templates/health/disease_link_wizard.html:89
+msgid "يتطلب عزل الحيوان فوراً؟"
+msgstr "Requires immediate isolation of the animal?"
+
+#: app/templates/health/disease_link_wizard.html:90
+msgid "نعم — عزل فوري"
+msgstr "Yes — immediate isolation"
+
+#: app/templates/health/disease_link_wizard.html:95
+msgid "حفظ والانتهاء"
+msgstr "Save and finish"
+
+#: app/templates/health/disease_link_wizard.html:105
+msgid "اختر مرض أولاً"
+msgstr "Choose a disease first"
+
+#: app/templates/health/disease_link_wizard.html:106
+msgid "اختر عرض واحد على الأقل"
+msgstr "Choose at least one symptom"
+
 #: app/templates/health/disease_type_detail.html:8
 msgid "المعالج التفاعلي"
 msgstr "Interactive wizard"
@@ -1963,12 +2234,6 @@ msgstr "Required"
 #: app/templates/health/disease_type_detail.html:92
 msgid "استبعادي"
 msgstr "Exclusionary"
-
-#: app/templates/health/disease_type_detail.html:27
-#: app/templates/health/disease_type_detail.html:83
-#: app/templates/health/symptoms_list.html:23
-msgid "رئيسي"
-msgstr "Primary"
 
 #: app/templates/health/disease_type_detail.html:39
 #: app/templates/health/disease_type_detail.html:95
@@ -2037,16 +2302,14 @@ msgid "إضافة مرض للقائمة"
 msgstr "Add disease to the list"
 
 #: app/templates/health/disease_type_form.html:8
+#: app/templates/health/pharmacy_purchase_form.html:21
+#: app/templates/health/vaccination_schedule_form.html:27
 msgid "ملاحظات (اختياري)"
 msgstr "Notes (optional)"
 
 #: app/templates/health/disease_types_list.html:5
 msgid "الأمراض الشائعة (قائمة الاقتراحات)"
 msgstr "Common diseases (suggestions list)"
-
-#: app/templates/health/disease_types_list.html:8
-msgid "معالج ربط عرض بمرض"
-msgstr "Symptom-to-disease linking wizard"
 
 #: app/templates/health/disease_types_list.html:9
 #: app/templates/health/emergency_symptoms_list.html:4
@@ -2131,6 +2394,15 @@ msgstr "Doctors"
 msgid "لا يوجد أطباء مسجّلين بعد."
 msgstr "No doctors registered yet."
 
+#: app/templates/health/drug_catalog_form.html:4
+#: app/templates/health/pharmacy_form.html:32
+msgid "إضافة اسم دواء جديد"
+msgstr "Add a new medicine name"
+
+#: app/templates/health/drug_catalog_form.html:9
+msgid "فئة الدواء (اختياري)"
+msgstr "Medicine class (optional)"
+
 #: app/templates/health/emergency_symptoms_list.html:6
 msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
 msgstr "Any symptom here, if entered among the diagnostic assistant's symptoms, immediately and automatically isolates the animal and shows an urgent differential diagnosis on the result screen — independent of the normal probability ranking. A deliberately explicit name list — we don't use a broad category (like \"neurological symptoms\") to avoid over-isolating for minor cases."
@@ -2205,20 +2477,186 @@ msgstr "General field guidance for the basic injection methods — not a precise
 msgid "راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
 msgstr "Always check with the treating doctor for specifics about an animal's condition or a particular medicine's dose (each medicine's reference dosage note is entered by the doctor themselves on the Pharmacy screen)."
 
+#: app/templates/health/pharmacy_form.html:4
+msgid "تعديل دواء"
+msgstr "Edit medicine"
+
+#: app/templates/health/pharmacy_form.html:4
+#: app/templates/health/pharmacy_list.html:8
+msgid "دواء جديد"
+msgstr "New medicine"
+
+#: app/templates/health/pharmacy_form.html:6
+msgid "تسجيل عملية شراء (دفعة بتاريخها الخاص)"
+msgstr "Record a purchase (a batch with its own date)"
+
+#: app/templates/health/pharmacy_form.html:11
+msgid "بيانات الدواء الأساسية"
+msgstr "Basic medicine data"
+
+#: app/templates/health/pharmacy_form.html:12
+#: app/templates/health/pharmacy_list.html:13
+msgid "فئة الدواء"
+msgstr "Medicine class"
+
+#: app/templates/health/pharmacy_form.html:19
+msgid "تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول الشرطية تحت."
+msgstr "Selecting \"Antiparasitic/dewormer\" here specifically is what enables the 30-day dose-repeat guard — it's also the basis for filtering \"Medicine name\" and the conditional fields below."
+
+#: app/templates/health/pharmacy_form.html:24
+msgid "اختر اسم دواء"
+msgstr "Choose a medicine name"
+
+#: app/templates/health/pharmacy_form.html:33
+msgid "دليل الدواء"
+msgstr "Medicine guide"
+
+#: app/templates/health/pharmacy_form.html:37
+msgid "طريقة الاستخدام (اختياري)"
+msgstr "Usage method (optional)"
+
+#: app/templates/health/pharmacy_form.html:45
+msgid "إضافة طريقة استخدام جديدة"
+msgstr "Add a new usage method"
+
+#: app/templates/health/pharmacy_form.html:47
+msgid "ملاحظة الجرعة المرجعية (اختياري)"
+msgstr "Reference dosage note (optional)"
+
+#: app/templates/health/pharmacy_form.html:48
+msgid "مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة"
+msgstr "Example: 5 ml per 50 kg live weight — per the manufacturer's leaflet"
+
+#: app/templates/health/pharmacy_form.html:49
+msgid "مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
+msgstr "A descriptive reference you write once — it then appears in lists to speed up entry, and the system never calculates or suggests any dose automatically."
+
+#: app/templates/health/pharmacy_form.html:51
+msgid "الصلاحية والتخزين"
+msgstr "Expiry and storage"
+
+#: app/templates/health/pharmacy_form.html:52
+msgid "تاريخ انتهاء الصلاحية (اختياري)"
+msgstr "Expiry date (optional)"
+
+#: app/templates/health/pharmacy_form.html:54
+msgid "تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن \"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء."
+msgstr "The medicine's own expiry date printed on the box — entirely different from the \"withdrawal period\" below, which is the duration preventing selling/milking the animal after it's given the medicine."
+
+#: app/templates/health/pharmacy_form.html:56
+msgid "ظروف التخزين (اختياري)"
+msgstr "Storage conditions (optional)"
+
+#: app/templates/health/pharmacy_form.html:63
+msgid "وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي."
+msgstr "Descriptive only — tells the worker where to actually store the medicine, doesn't trigger any automatic alert."
+
+#: app/templates/health/pharmacy_form.html:66
+msgid "فترة السحب (بالأيام)"
+msgstr "Withdrawal period (days)"
+
+#: app/templates/health/pharmacy_form.html:67
+msgid "عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
+msgstr "The number of days you must wait after giving this medicine to any animal before you can sell it or use its milk — the system calculates this automatically and blocks selling during it."
+
+#: app/templates/health/pharmacy_form.html:71
+msgid "مدة الحماية بالأيام (للقاحات — اختياري)"
+msgstr "Protection duration in days (for vaccines — optional)"
+
+#: app/templates/health/pharmacy_form.html:73
+msgid "تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
+msgstr "Used only to automatically schedule the \"next due date\" on the group vaccination screen (vaccination date + this duration) — without it, the next due date stays manually entered."
+
+#: app/templates/health/pharmacy_form.html:75
+msgid "الجرعة الافتراضية للرأس بالمل (اختياري)"
+msgstr "Default dose per head in ml (optional)"
+
+#: app/templates/health/pharmacy_form.html:77
+msgid "رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
+msgstr "A fixed number you enter — appears as a fallback value on the group vaccination screen only if the animal's age doesn't match any range in the \"dose by age\" table below."
+
+#: app/templates/health/pharmacy_form.html:79
+msgid "الجرعة حسب العمر (اختياري)"
+msgstr "Dose by age (optional)"
+
+#: app/templates/health/pharmacy_form.html:80
+msgid "أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد."
+msgstr "You write the dose for each age range yourself once — the system then just matches each animal's age on the group vaccination screen and shows the dose you recorded here, never calculating or inventing any new number."
+
+#: app/templates/health/pharmacy_form.html:84
+#: app/templates/health/pharmacy_form.html:90
+#: app/templates/health/pharmacy_form.html:119
+msgid "من عمر (يوم)"
+msgstr "From age (days)"
+
+#: app/templates/health/pharmacy_form.html:85
+#: app/templates/health/pharmacy_form.html:91
+#: app/templates/health/pharmacy_form.html:120
+msgid "إلى عمر (يوم)"
+msgstr "To age (days)"
+
+#: app/templates/health/pharmacy_form.html:86
+#: app/templates/health/pharmacy_form.html:92
+#: app/templates/health/pharmacy_form.html:121
+msgid "الجرعة (مل)"
+msgstr "Dose (ml)"
+
+#: app/templates/health/pharmacy_form.html:95
+msgid "إضافة عمر آخر"
+msgstr "Add another age range"
+
+#: app/templates/health/pharmacy_form.html:98
+msgid "المخزون والسعر"
+msgstr "Stock and price"
+
+#: app/templates/health/pharmacy_form.html:100
+msgid "مل / حبة / علبة"
+msgstr "ml / tablet / box"
+
+#: app/templates/health/pharmacy_form.html:102
+msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
+msgstr "Any medicine whose stock reaches this threshold or lower automatically appears in the \"Pharmacy shortages\" list — the same required purchases list."
+
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr "Unit price (optional)"
+
+#: app/templates/health/pharmacy_form.html:103
+msgid "مثال: 2.5"
+msgstr "Example: 2.5"
+
+#: app/templates/health/pharmacy_form.html:104
+msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
+msgstr "The basis for automatically calculating treatment cost (quantity used × this price) on the visit/disease/vaccination screens — without it, cost stays manually entered as before."
+
+#: app/templates/health/pharmacy_form.html:106
+msgid "أمان إضافي وملاحظات"
+msgstr "Additional safety and notes"
+
+#: app/templates/health/pharmacy_form.html:139
+msgid "منتهي الصلاحية منذ"
+msgstr "Expired since"
+
+#: app/templates/health/pharmacy_form.html:140
+msgid "ينتهي خلال"
+msgstr "Expires within"
+
+#: app/templates/health/pharmacy_form.html:141
+msgid "متبقي"
+msgstr "Remaining"
+
+#: app/templates/health/pharmacy_form.html:165
+msgid "اختر فئة الدواء أولاً لعرض دليلها."
+msgstr "Choose a medicine class first to view its guide."
+
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
 msgid "نواقص الصيدلية"
 msgstr "Pharmacy shortages"
 
-#: app/templates/health/pharmacy_list.html:8
-msgid "دواء جديد"
-msgstr "New medicine"
-
 #: app/templates/health/pharmacy_list.html:13
-msgid "فئة الدواء"
-msgstr "Medicine class"
-
-#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "تاريخ الانتهاء"
 msgstr "Expiry date"
 
@@ -2250,6 +2688,48 @@ msgstr "Expired"
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "No medicines recorded yet."
 
+#: app/templates/health/pharmacy_purchase_form.html:4
+msgid "تسجيل عملية شراء"
+msgstr "Record a purchase"
+
+#: app/templates/health/pharmacy_purchase_form.html:5
+#: app/templates/team/task_detail.html:31
+msgid "المخزون الحالي:"
+msgstr "Current stock:"
+
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "تاريخ الشراء"
+msgstr "Purchase date"
+
+#: app/templates/health/pharmacy_purchase_form.html:12
+msgid "الكمية المشتراة"
+msgstr "Quantity purchased"
+
+#: app/templates/health/pharmacy_purchase_form.html:15
+msgid "تاريخ انتهاء هذي الدفعة (اختياري)"
+msgstr "This batch's expiry date (optional)"
+
+#: app/templates/health/pharmacy_purchase_form.html:24
+msgid "تسجيل الشراء"
+msgstr "Record purchase"
+
+#: app/templates/health/pharmacy_purchase_form.html:29
+msgid "سجل عمليات الشراء لهذا الدواء"
+msgstr "Purchase history for this medicine"
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "الكمية الأصلية"
+msgstr "Original quantity"
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "المتبقي منها"
+msgstr "Remaining of it"
+
+#: app/templates/health/pharmacy_purchase_form.html:42
+msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد."
+msgstr "No purchases recorded for this medicine yet."
+
 #: app/templates/health/pharmacy_shortages.html:8
 msgid "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها \"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
 msgstr "Every active medicine whose stock has reached its set minimum or lower — this screen is itself the \"required purchases list\", updated automatically whenever stock changes."
@@ -2265,6 +2745,103 @@ msgstr "Alternatives in the same category"
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
 msgstr "No shortages right now"
+
+#: app/templates/health/protocol_apply_form.html:4
+msgid "تطبيق بروتوكول:"
+msgstr "Apply protocol:"
+
+#: app/templates/health/protocol_apply_form.html:7
+msgid "الخطوة"
+msgstr "Step"
+
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:24
+msgid "الدواء"
+msgstr "Medicine"
+
+#: app/templates/health/protocol_apply_form.html:15
+msgid "الرأس"
+msgstr "Animal"
+
+#: app/templates/health/protocol_apply_form.html:20
+msgid "تاريخ بداية التطبيق"
+msgstr "Application start date"
+
+#: app/templates/health/protocol_apply_form.html:23
+msgid "تولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة، مستحقة بتاريخ (بداية التطبيق + يوم الخطوة) — تنتظر مراجعة الدكتور ثم \"تأكيد التنفيذ\" الفعلي (اللي يخصم من الصيدلية ويطبّق فترة السحب تلقائياً)."
+msgstr "Generates one \"planned treatment\" task per step, due on (start date + step day) — awaiting the doctor's review then actual \"execution confirmation\" (which deducts from the pharmacy and applies the withdrawal period automatically)."
+
+#: app/templates/health/protocol_apply_form.html:25
+msgid "تطبيق البروتوكول"
+msgstr "Apply protocol"
+
+#: app/templates/health/protocol_form.html:4
+msgid "بروتوكول علاج جديد"
+msgstr "New treatment protocol"
+
+#: app/templates/health/protocol_form.html:7
+msgid "مثال: بروتوكول التهاب الرئة"
+msgstr "Example: pneumonia protocol"
+
+#: app/templates/health/protocol_form.html:8
+msgid "الوصف (اختياري)"
+msgstr "Description (optional)"
+
+#: app/templates/health/protocol_form.html:9
+msgid "المرض المرتبط (اختياري)"
+msgstr "Linked disease (optional)"
+
+#: app/templates/health/protocol_form.html:15
+msgid "لو مُحدَّد، زر \"طبّق هذا البروتوكول\" يظهر تلقائياً بنتيجة المساعد التشخيصي عند مطابقة هذا المرض."
+msgstr "If specified, the \"apply this protocol\" button automatically appears in the diagnostic assistant's result when this disease matches."
+
+#: app/templates/health/protocol_form.html:18
+msgid "الخطوات (دواء محدد من الصيدلية لكل خطوة)"
+msgstr "Steps (a specific medicine from the pharmacy for each step)"
+
+#: app/templates/health/protocol_form.html:21
+msgid "يوم الاستحقاق من بداية التطبيق"
+msgstr "Due day from the start of application"
+
+#: app/templates/health/protocol_form.html:22
+msgid "عنوان الخطوة"
+msgstr "Step title"
+
+#: app/templates/health/protocol_form.html:33
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم عنوان + دواء + كمية عشان تُحفظ الخطوة."
+msgstr "Leave any row blank if you don't need it — a title + medicine + quantity are required for the step to be saved."
+
+#: app/templates/health/protocol_form.html:35
+msgid "حفظ البروتوكول"
+msgstr "Save protocol"
+
+#: app/templates/health/protocols_list.html:5
+msgid "قوالب بروتوكول العلاج"
+msgstr "Treatment protocol templates"
+
+#: app/templates/health/protocols_list.html:7
+msgid "بروتوكول جديد"
+msgstr "New protocol"
+
+#: app/templates/health/protocols_list.html:11
+msgid "كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس معيّن يولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة — الخصم من الصيدلية وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند \"تأكيد التنفيذ\" الفعلي لكل خطوة، بنفس آلية بند 50."
+msgstr "Each protocol = a series of scheduled treatment steps (day × medicine × quantity). Applying it to a specific animal generates one \"planned treatment\" task per step — the pharmacy deduction and withdrawal period (automatically the longest across all the protocol's medicines) happen only upon the actual \"execution confirmation\" of each step, using the same mechanism as item 50."
+
+#: app/templates/health/protocols_list.html:15
+msgid "المرض المرتبط"
+msgstr "Linked disease"
+
+#: app/templates/health/protocols_list.html:15
+msgid "عدد الخطوات"
+msgstr "Number of steps"
+
+#: app/templates/health/protocols_list.html:24
+msgid "تطبيق على رأس"
+msgstr "Apply to an animal"
+
+#: app/templates/health/protocols_list.html:28
+msgid "لا يوجد بروتوكولات مسجَّلة بعد."
+msgstr "No protocols recorded yet."
 
 #: app/templates/health/symptom_form.html:4
 msgid "إضافة عرض جديد"
@@ -2314,13 +2891,109 @@ msgstr "Next date (optional)"
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr "Medicine used from pharmacy (optional)"
 
-#: app/templates/health/vaccinations_list.html:6
-msgid "تطعيم جديد"
-msgstr "New vaccination"
+#: app/templates/health/vaccination_schedule_form.html:4
+#: app/templates/health/vaccination_schedule_list.html:6
+msgid "جدولة تحصين جديد"
+msgstr "New vaccination schedule"
 
+#: app/templates/health/vaccination_schedule_form.html:9
+msgid "اختر حظيرة"
+msgstr "Choose a barn"
+
+#: app/templates/health/vaccination_schedule_form.html:16
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/health/vaccinations_list.html:10
 msgid "اللقاح"
 msgstr "Vaccine"
+
+#: app/templates/health/vaccination_schedule_form.html:18
+msgid "اختر لقاح من الصيدلية"
+msgstr "Choose a vaccine from the pharmacy"
+
+#: app/templates/health/vaccination_schedule_form.html:24
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
+msgid "التاريخ المخطَّط"
+msgstr "Planned date"
+
+#: app/templates/health/vaccination_schedule_form.html:30
+msgid "جدولة"
+msgstr "Schedule"
+
+#: app/templates/health/vaccination_schedule_form.html:39
+msgid "عدد الرؤوس الحالي بهذي الحظيرة:"
+msgstr "Current head count in this barn:"
+
+#: app/templates/health/vaccination_schedule_list.html:8
+msgid "جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة."
+msgstr "Schedule a future vaccination for an entire barn — the head count is calculated live from the barn's actual count at display time, not a fixed number from when it was scheduled."
+
+#: app/templates/health/vaccination_schedule_list.html:10
+msgid "القادمة"
+msgstr "Upcoming"
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "عدد الرؤوس الآن"
+msgstr "Head count now"
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "إجراءات"
+msgstr "Actions"
+
+#: app/templates/health/vaccination_schedule_list.html:21
+#, python-format
+msgid "متأخر %(n)s يوم"
+msgstr "Overdue by %(n)s days"
+
+#: app/templates/health/vaccination_schedule_list.html:22
+msgid "اليوم"
+msgstr "Today"
+
+#: app/templates/health/vaccination_schedule_list.html:23
+#, python-format
+msgid "بعد %(n)s يوم"
+msgstr "In %(n)s days"
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "افتح قائمة الحظيرة لبدء التحصين الجماعي"
+msgstr "Open the barn's animal list to start group vaccination"
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "ابدأ التحصين"
+msgstr "Start vaccination"
+
+#: app/templates/health/vaccination_schedule_list.html:30
+msgid "تعليم هذي الجدولة كمكتملة؟"
+msgstr "Mark this schedule as completed?"
+
+#: app/templates/health/vaccination_schedule_list.html:32
+msgid "تم"
+msgstr "Done"
+
+#: app/templates/health/vaccination_schedule_list.html:34
+msgid "إلغاء هذي الجدولة؟"
+msgstr "Cancel this schedule?"
+
+#: app/templates/health/vaccination_schedule_list.html:42
+msgid "لا يوجد تحصينات مجدولة حالياً."
+msgstr "No vaccinations scheduled currently."
+
+#: app/templates/health/vaccination_schedule_list.html:47
+msgid "سابقة (آخر 30)"
+msgstr "Past (last 30)"
+
+#: app/templates/health/vaccination_schedule_list.html:56
+msgid "مكتملة"
+msgstr "Completed"
+
+#: app/templates/health/vaccination_schedule_list.html:59
+msgid "لا يوجد سجل سابق."
+msgstr "No past record."
+
+#: app/templates/health/vaccinations_list.html:6
+msgid "تطعيم جديد"
+msgstr "New vaccination"
 
 #: app/templates/health/vaccinations_list.html:10
 msgid "الموعد القادم"
@@ -2436,11 +3109,6 @@ msgstr "Age:"
 #: app/templates/team/task_detail.html:15
 msgid "الحظيرة:"
 msgstr "Barn:"
-
-#: app/templates/team/_report_widgets.html:21
-#: app/templates/team/task_detail.html:9
-msgid "الحالة:"
-msgstr "Status:"
 
 #: app/templates/team/_report_widgets.html:22
 msgid "صورة الحيوان"
@@ -2780,10 +3448,6 @@ msgstr "Dose per head:"
 #: app/templates/team/task_detail.html:30
 msgid "الجرعة الإجمالية للدفعة:"
 msgstr "Total dose for the batch:"
-
-#: app/templates/team/task_detail.html:31
-msgid "المخزون الحالي:"
-msgstr "Current stock:"
 
 #: app/templates/team/task_detail.html:31
 msgid "المتبقي المتوقع بعد التنفيذ:"

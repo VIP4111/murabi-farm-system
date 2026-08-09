@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:25+0300\n"
+"POT-Creation-Date: 2026-08-10 02:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -657,10 +657,11 @@ msgid "التطعيمات"
 msgstr ""
 
 #: app/templates/base.html:485
+#: app/templates/health/vaccination_schedule_list.html:5
 msgid "تقويم التحصينات"
 msgstr ""
 
-#: app/templates/base.html:487
+#: app/templates/base.html:487 app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr ""
 
@@ -794,6 +795,7 @@ msgid ""
 "الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr ""
 
+#: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
 msgid "إضافة"
@@ -984,6 +986,9 @@ msgstr ""
 #: app/templates/feed/barn_plan_form.html:7
 #: app/templates/feed/barn_plans_list.html:10
 #: app/templates/feed/fcr_report.html:16
+#: app/templates/health/vaccination_schedule_form.html:7
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:47
@@ -1013,6 +1018,8 @@ msgstr ""
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/health/disease_types_list.html:23
+#: app/templates/health/pharmacy_form.html:110
+#: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -1035,6 +1042,7 @@ msgstr ""
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
 #: app/templates/health/doctor_form.html:10
+#: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1250,8 +1258,12 @@ msgstr ""
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:10
+#: app/templates/health/drug_catalog_form.html:7
+#: app/templates/health/pharmacy_form.html:21
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/protocol_form.html:7
+#: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr ""
@@ -1281,6 +1293,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr ""
 
 #: app/templates/feed/item_form.html:23
+#: app/templates/health/pharmacy_form.html:108
 msgid ""
 "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند "
 "إضافي 51) — بلا خيار تجاوز."
@@ -1307,19 +1320,23 @@ msgid "فسفور %"
 msgstr ""
 
 #: app/templates/feed/item_form.html:29
+#: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr ""
 
 #: app/templates/feed/item_form.html:30
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr ""
 
 #: app/templates/feed/item_form.html:31
+#: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr ""
 
 #: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr ""
 
@@ -1354,6 +1371,7 @@ msgid "نفاد متوقع"
 msgstr ""
 
 #: app/templates/feed/items_list.html:13
+#: app/templates/health/pharmacy_form.html:107
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr ""
@@ -1364,6 +1382,9 @@ msgstr ""
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
+#: app/templates/health/pharmacy_form.html:142
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:21
 #: app/templates/health/vaccination_form.html:22
 #: app/templates/health/vet_visit_form.html:25
 msgid "يوم"
@@ -1415,6 +1436,8 @@ msgstr ""
 #: app/templates/feed/movement_form.html:16
 #: app/templates/feed/movements_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
 msgid "الكمية"
 msgstr ""
 
@@ -1747,6 +1770,8 @@ msgstr ""
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocols_list.html:15
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1801,6 +1826,7 @@ msgid "دعم خارجي (دين)"
 msgstr ""
 
 #: app/templates/finance/list.html:39
+#: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr ""
 
@@ -1824,7 +1850,11 @@ msgstr ""
 msgid "تأكيد الإلغاء؟"
 msgstr ""
 
-#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/finance/list.html:55
+#: app/templates/health/drug_catalog_form.html:17
+#: app/templates/health/symptom_form.html:15
+#: app/templates/health/vaccination_schedule_form.html:31
+#: app/templates/health/vaccination_schedule_list.html:36
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr ""
@@ -1917,6 +1947,169 @@ msgstr ""
 msgid "التكلفة المتوقعة:"
 msgstr ""
 
+#: app/templates/health/diagnose_result.html:5
+msgid "احتمالات التشخيص"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:6
+msgid "تعديل الأعراض"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:9
+msgid ""
+"ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار "
+"النهائي للدكتور المعالج دائماً."
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:10
+msgid "الأعراض المُدخَلة:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:11
+msgid "ملاحظة حرة:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:12
+#: app/templates/health/diagnose_start.html:21
+msgid "عمر الرأس:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:13
+msgid "درجة الحرارة:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:17
+msgid ""
+"الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية "
+"الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور."
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:24
+msgid "بروتوكول طوارئ مفعَّل"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:27
+#: app/templates/team/_report_widgets.html:21
+#: app/templates/team/task_detail.html:9
+msgid "الحالة:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:28
+msgid "اشتباه تفريقي:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:35
+msgid ""
+"ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم"
+" المناسب."
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:36
+msgid "تسجيل حالة مرضية يدوياً"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الاحتمال"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:40
+msgid "درجة توافق الأعراض"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الأعراض المطابقة"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:45
+msgid "حرارة مرتفعة رفعت الاحتمال"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:45
+msgid "سياق"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:50
+msgid "ناقص عرض إجباري:"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:57
+msgid "استخدم هذا الاحتمال"
+msgstr ""
+
+#: app/templates/health/diagnose_result.html:63
+msgid "طبّق بروتوكول"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:6
+msgid "رجوع لسجل الأمراض"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:9
+msgid ""
+"هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو "
+"تشخيصاً مخبرياً مؤكَّداً."
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:10
+msgid ""
+"السجل المرضي يبقى \"مفتوحاً\" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي "
+"حقيقي، نفس أي حالة تُسجَّل يدوياً."
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:16
+msgid "الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:23
+msgid "درجة الحرارة (اختياري، °C)"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:24
+msgid "مثال: 39.5"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:26
+msgid ""
+"عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة "
+"38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً."
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:29
+msgid "العرض الرئيسي"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:31
+msgid "اختر عرضاً رئيسياً..."
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:34
+msgid "التالي — عرض الأسئلة المتابعة"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:40
+msgid "أعراض مصاحبة (اختر كل ما ينطبق)"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:42
+msgid ""
+"ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات "
+"بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية."
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:55
+msgid ""
+"أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب "
+"الترتيب)"
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:56
+msgid "مثال: يمتنع عن الأكل منذ يومين..."
+msgstr ""
+
+#: app/templates/health/diagnose_start.html:57
+msgid "احسب الاحتمالات"
+msgstr ""
+
 #: app/templates/health/disease_form.html:6
 msgid "تسجيل حالة مرضية"
 msgstr ""
@@ -1999,6 +2192,100 @@ msgstr ""
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr ""
 
+#: app/templates/health/disease_link_wizard.html:25
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:40
+msgid "وش المرض؟"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:42
+msgid "اختر مرض"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:46
+#: app/templates/health/disease_link_wizard.html:63
+#: app/templates/health/disease_link_wizard.html:75
+msgid "التالي"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:52
+msgid "وش الأعراض المرتبطة؟ (اختر كل ما ينطبق)"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:57
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:62
+#: app/templates/health/disease_link_wizard.html:74
+#: app/templates/health/disease_link_wizard.html:94
+msgid "السابق"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:69
+msgid "قد وش قوة دلالة هذي الأعراض على المرض؟"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:70
+msgid "عرض عام"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:71
+msgid "عرض متوسط"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:72
+msgid "عرض قوي ومؤكد"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:81
+msgid "عرض أساسي للتشخيص؟ (لازم يكون موجود عشان يُشتبه بالمرض)"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:82
+msgid "نعم — أساسي"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:83
+#: app/templates/health/disease_link_wizard.html:87
+#: app/templates/health/disease_link_wizard.html:91
+msgid "لا"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:85
+msgid "عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:86
+msgid "نعم — يلغيه"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:89
+msgid "يتطلب عزل الحيوان فوراً؟"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:90
+msgid "نعم — عزل فوري"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:95
+msgid "حفظ والانتهاء"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:105
+msgid "اختر مرض أولاً"
+msgstr ""
+
+#: app/templates/health/disease_link_wizard.html:106
+msgid "اختر عرض واحد على الأقل"
+msgstr ""
+
 #: app/templates/health/disease_type_detail.html:8
 msgid "المعالج التفاعلي"
 msgstr ""
@@ -2045,12 +2332,6 @@ msgstr ""
 #: app/templates/health/disease_type_detail.html:59
 #: app/templates/health/disease_type_detail.html:92
 msgid "استبعادي"
-msgstr ""
-
-#: app/templates/health/disease_type_detail.html:27
-#: app/templates/health/disease_type_detail.html:83
-#: app/templates/health/symptoms_list.html:23
-msgid "رئيسي"
 msgstr ""
 
 #: app/templates/health/disease_type_detail.html:39
@@ -2120,15 +2401,13 @@ msgid "إضافة مرض للقائمة"
 msgstr ""
 
 #: app/templates/health/disease_type_form.html:8
+#: app/templates/health/pharmacy_purchase_form.html:21
+#: app/templates/health/vaccination_schedule_form.html:27
 msgid "ملاحظات (اختياري)"
 msgstr ""
 
 #: app/templates/health/disease_types_list.html:5
 msgid "الأمراض الشائعة (قائمة الاقتراحات)"
-msgstr ""
-
-#: app/templates/health/disease_types_list.html:8
-msgid "معالج ربط عرض بمرض"
 msgstr ""
 
 #: app/templates/health/disease_types_list.html:9
@@ -2217,6 +2496,15 @@ msgstr ""
 msgid "لا يوجد أطباء مسجّلين بعد."
 msgstr ""
 
+#: app/templates/health/drug_catalog_form.html:4
+#: app/templates/health/pharmacy_form.html:32
+msgid "إضافة اسم دواء جديد"
+msgstr ""
+
+#: app/templates/health/drug_catalog_form.html:9
+msgid "فئة الدواء (اختياري)"
+msgstr ""
+
 #: app/templates/health/emergency_symptoms_list.html:6
 msgid ""
 "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً "
@@ -2299,20 +2587,207 @@ msgid ""
 " (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
 msgstr ""
 
+#: app/templates/health/pharmacy_form.html:4
+msgid "تعديل دواء"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:4
+#: app/templates/health/pharmacy_list.html:8
+msgid "دواء جديد"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:6
+msgid "تسجيل عملية شراء (دفعة بتاريخها الخاص)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:11
+msgid "بيانات الدواء الأساسية"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:12
+#: app/templates/health/pharmacy_list.html:13
+msgid "فئة الدواء"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:19
+msgid ""
+"تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار "
+"الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول "
+"الشرطية تحت."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:24
+msgid "اختر اسم دواء"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:33
+msgid "دليل الدواء"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:37
+msgid "طريقة الاستخدام (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:45
+msgid "إضافة طريقة استخدام جديدة"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:47
+msgid "ملاحظة الجرعة المرجعية (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:48
+msgid "مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:49
+msgid ""
+"مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، "
+"والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:51
+msgid "الصلاحية والتخزين"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:52
+msgid "تاريخ انتهاء الصلاحية (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:54
+msgid ""
+"تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "
+"\"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له "
+"الدواء."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:56
+msgid "ظروف التخزين (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:63
+msgid "وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:66
+msgid "فترة السحب (بالأيام)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:67
+msgid ""
+"عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر "
+"تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:71
+msgid "مدة الحماية بالأيام (للقاحات — اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:73
+msgid ""
+"تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي "
+"(تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:75
+msgid "الجرعة الافتراضية للرأس بالمل (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:77
+msgid ""
+"رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر "
+"الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:79
+msgid "الجرعة حسب العمر (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:80
+msgid ""
+"أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر "
+"كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا "
+"يخترع أي رقم جديد."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:84
+#: app/templates/health/pharmacy_form.html:90
+#: app/templates/health/pharmacy_form.html:119
+msgid "من عمر (يوم)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:85
+#: app/templates/health/pharmacy_form.html:91
+#: app/templates/health/pharmacy_form.html:120
+msgid "إلى عمر (يوم)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:86
+#: app/templates/health/pharmacy_form.html:92
+#: app/templates/health/pharmacy_form.html:121
+msgid "الجرعة (مل)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:95
+msgid "إضافة عمر آخر"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:98
+msgid "المخزون والسعر"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:100
+msgid "مل / حبة / علبة"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:102
+msgid ""
+"أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص "
+"الصيدلية\" — نفس قائمة المشتريات المطلوبة."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:103
+msgid "مثال: 2.5"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:104
+msgid ""
+"أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات "
+"الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:106
+msgid "أمان إضافي وملاحظات"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:139
+msgid "منتهي الصلاحية منذ"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:140
+msgid "ينتهي خلال"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:141
+msgid "متبقي"
+msgstr ""
+
+#: app/templates/health/pharmacy_form.html:165
+msgid "اختر فئة الدواء أولاً لعرض دليلها."
+msgstr ""
+
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
 msgid "نواقص الصيدلية"
 msgstr ""
 
-#: app/templates/health/pharmacy_list.html:8
-msgid "دواء جديد"
-msgstr ""
-
 #: app/templates/health/pharmacy_list.html:13
-msgid "فئة الدواء"
-msgstr ""
-
-#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "تاريخ الانتهاء"
 msgstr ""
 
@@ -2344,6 +2819,48 @@ msgstr ""
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr ""
 
+#: app/templates/health/pharmacy_purchase_form.html:4
+msgid "تسجيل عملية شراء"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:5
+#: app/templates/team/task_detail.html:31
+msgid "المخزون الحالي:"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "تاريخ الشراء"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:12
+msgid "الكمية المشتراة"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:15
+msgid "تاريخ انتهاء هذي الدفعة (اختياري)"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:24
+msgid "تسجيل الشراء"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:29
+msgid "سجل عمليات الشراء لهذا الدواء"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "الكمية الأصلية"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "المتبقي منها"
+msgstr ""
+
+#: app/templates/health/pharmacy_purchase_form.html:42
+msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد."
+msgstr ""
+
 #: app/templates/health/pharmacy_shortages.html:8
 msgid ""
 "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "
@@ -2360,6 +2877,112 @@ msgstr ""
 
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:4
+msgid "تطبيق بروتوكول:"
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:7
+msgid "الخطوة"
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:24
+msgid "الدواء"
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:15
+msgid "الرأس"
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:20
+msgid "تاريخ بداية التطبيق"
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:23
+msgid ""
+"تولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة، مستحقة بتاريخ (بداية التطبيق +"
+" يوم الخطوة) — تنتظر مراجعة الدكتور ثم \"تأكيد التنفيذ\" الفعلي (اللي "
+"يخصم من الصيدلية ويطبّق فترة السحب تلقائياً)."
+msgstr ""
+
+#: app/templates/health/protocol_apply_form.html:25
+msgid "تطبيق البروتوكول"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:4
+msgid "بروتوكول علاج جديد"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:7
+msgid "مثال: بروتوكول التهاب الرئة"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:8
+msgid "الوصف (اختياري)"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:9
+msgid "المرض المرتبط (اختياري)"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:15
+msgid ""
+"لو مُحدَّد، زر \"طبّق هذا البروتوكول\" يظهر تلقائياً بنتيجة المساعد "
+"التشخيصي عند مطابقة هذا المرض."
+msgstr ""
+
+#: app/templates/health/protocol_form.html:18
+msgid "الخطوات (دواء محدد من الصيدلية لكل خطوة)"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:21
+msgid "يوم الاستحقاق من بداية التطبيق"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:22
+msgid "عنوان الخطوة"
+msgstr ""
+
+#: app/templates/health/protocol_form.html:33
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم عنوان + دواء + كمية عشان تُحفظ الخطوة."
+msgstr ""
+
+#: app/templates/health/protocol_form.html:35
+msgid "حفظ البروتوكول"
+msgstr ""
+
+#: app/templates/health/protocols_list.html:5
+msgid "قوالب بروتوكول العلاج"
+msgstr ""
+
+#: app/templates/health/protocols_list.html:7
+msgid "بروتوكول جديد"
+msgstr ""
+
+#: app/templates/health/protocols_list.html:11
+msgid ""
+"كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس"
+" معيّن يولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة — الخصم من الصيدلية "
+"وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند "
+"\"تأكيد التنفيذ\" الفعلي لكل خطوة، بنفس آلية بند 50."
+msgstr ""
+
+#: app/templates/health/protocols_list.html:15
+msgid "المرض المرتبط"
+msgstr ""
+
+#: app/templates/health/protocols_list.html:15
+msgid "عدد الخطوات"
+msgstr ""
+
+#: app/templates/health/protocols_list.html:24
+msgid "تطبيق على رأس"
+msgstr ""
+
+#: app/templates/health/protocols_list.html:28
+msgid "لا يوجد بروتوكولات مسجَّلة بعد."
 msgstr ""
 
 #: app/templates/health/symptom_form.html:4
@@ -2415,12 +3038,110 @@ msgstr ""
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr ""
 
-#: app/templates/health/vaccinations_list.html:6
-msgid "تطعيم جديد"
+#: app/templates/health/vaccination_schedule_form.html:4
+#: app/templates/health/vaccination_schedule_list.html:6
+msgid "جدولة تحصين جديد"
 msgstr ""
 
+#: app/templates/health/vaccination_schedule_form.html:9
+msgid "اختر حظيرة"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_form.html:16
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/health/vaccinations_list.html:10
 msgid "اللقاح"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_form.html:18
+msgid "اختر لقاح من الصيدلية"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_form.html:24
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
+msgid "التاريخ المخطَّط"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_form.html:30
+msgid "جدولة"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_form.html:39
+msgid "عدد الرؤوس الحالي بهذي الحظيرة:"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:8
+msgid ""
+"جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة "
+"الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة."
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:10
+msgid "القادمة"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "عدد الرؤوس الآن"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "إجراءات"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:21
+#, python-format
+msgid "متأخر %(n)s يوم"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:22
+msgid "اليوم"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:23
+#, python-format
+msgid "بعد %(n)s يوم"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "افتح قائمة الحظيرة لبدء التحصين الجماعي"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "ابدأ التحصين"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:30
+msgid "تعليم هذي الجدولة كمكتملة؟"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:32
+msgid "تم"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:34
+msgid "إلغاء هذي الجدولة؟"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:42
+msgid "لا يوجد تحصينات مجدولة حالياً."
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:47
+msgid "سابقة (آخر 30)"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:56
+msgid "مكتملة"
+msgstr ""
+
+#: app/templates/health/vaccination_schedule_list.html:59
+msgid "لا يوجد سجل سابق."
+msgstr ""
+
+#: app/templates/health/vaccinations_list.html:6
+msgid "تطعيم جديد"
 msgstr ""
 
 #: app/templates/health/vaccinations_list.html:10
@@ -2541,11 +3262,6 @@ msgstr ""
 #: app/templates/team/_report_widgets.html:21
 #: app/templates/team/task_detail.html:15
 msgid "الحظيرة:"
-msgstr ""
-
-#: app/templates/team/_report_widgets.html:21
-#: app/templates/team/task_detail.html:9
-msgid "الحالة:"
 msgstr ""
 
 #: app/templates/team/_report_widgets.html:22
@@ -2887,10 +3603,6 @@ msgstr ""
 
 #: app/templates/team/task_detail.html:30
 msgid "الجرعة الإجمالية للدفعة:"
-msgstr ""
-
-#: app/templates/team/task_detail.html:31
-msgid "المخزون الحالي:"
 msgstr ""
 
 #: app/templates/team/task_detail.html:31

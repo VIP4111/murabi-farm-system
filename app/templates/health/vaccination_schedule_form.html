@@ -1,34 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:420px;">
-  <h2>جدولة تحصين جديد</h2>
+  <h2>{{ _('جدولة تحصين جديد') }}</h2>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>الحظيرة</label>
+    <label>{{ _('الحظيرة') }}</label>
     <select name="barn_id" id="barnSelect" required>
-      <option value="">اختر حظيرة</option>
+      <option value="">{{ _('اختر حظيرة') }}</option>
       {% for b in barns %}
       <option value="{{ b.id }}">{{ b.barn_name }}</option>
       {% endfor %}
     </select>
     <p id="headCountHint" style="color:var(--muted); font-size:12px; margin:-6px 0 10px;"></p>
 
-    <label>اللقاح</label>
+    <label>{{ _('اللقاح') }}</label>
     <select name="pharmacy_id" required>
-      <option value="">اختر لقاح من الصيدلية</option>
+      <option value="">{{ _('اختر لقاح من الصيدلية') }}</option>
       {% for v in vaccines %}
       <option value="{{ v.id }}">{{ v.name }}</option>
       {% endfor %}
     </select>
 
-    <label>التاريخ المخطَّط</label>
+    <label>{{ _('التاريخ المخطَّط') }}</label>
     <input name="planned_date" type="date" required value="{{ today }}">
 
-    <label>ملاحظات (اختياري)</label>
+    <label>{{ _('ملاحظات (اختياري)') }}</label>
     <input name="notes">
 
-    <button class="btn" type="submit">جدولة</button>
-    <a class="btn light" href="{{ url_for('health.vaccination_schedule_list') }}">إلغاء</a>
+    <button class="btn" type="submit">{{ _('جدولة') }}</button>
+    <a class="btn light" href="{{ url_for('health.vaccination_schedule_list') }}">{{ _('إلغاء') }}</a>
   </form>
 </div>
 <script>
@@ -36,10 +36,11 @@
   var barnSelect = document.getElementById('barnSelect');
   var hint = document.getElementById('headCountHint');
   var BARN_COUNTS = {{ barn_head_counts | tojson }};
+  var HEAD_COUNT_LABEL = {{ _('عدد الرؤوس الحالي بهذي الحظيرة:')|tojson }};
   if (!barnSelect || !hint) return;
   function update(){
     var count = BARN_COUNTS[barnSelect.value];
-    hint.textContent = count === undefined ? '' : ('عدد الرؤوس الحالي بهذي الحظيرة: ' + count);
+    hint.textContent = count === undefined ? '' : (HEAD_COUNT_LABEL + ' ' + count);
   }
   barnSelect.addEventListener('change', update);
   update();

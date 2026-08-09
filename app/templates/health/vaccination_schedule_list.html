@@ -2,15 +2,15 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>تقويم التحصينات</h2>
-    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vaccination_schedule_new') }}">+ جدولة تحصين جديد</a>{% endif %}
+    <h2>{{ _('تقويم التحصينات') }}</h2>
+    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vaccination_schedule_new') }}">+ {{ _('جدولة تحصين جديد') }}</a>{% endif %}
   </div>
-  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة.</p>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">{{ _('جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة.') }}</p>
 
-  <h3 style="font-size:14px;">القادمة</h3>
+  <h3 style="font-size:14px;">{{ _('القادمة') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>الحظيرة</th><th>اللقاح</th><th>التاريخ المخطَّط</th><th>عدد الرؤوس الآن</th><th>ملاحظات</th><th>إجراءات</th></tr>
+    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('التاريخ المخطَّط') }}</th><th>{{ _('عدد الرؤوس الآن') }}</th><th>{{ _('ملاحظات') }}</th><th>{{ _('إجراءات') }}</th></tr>
     {% for s in upcoming %}
     <tr>
       <td>{{ s.barn.barn_name }}</td>
@@ -18,45 +18,45 @@
       <td>
         {{ s.planned_date }}
         {% set days_left = (s.planned_date - today).days %}
-        {% if days_left < 0 %}<span style="color:#8b1e16;"> (متأخر {{ -days_left }} يوم)</span>
-        {% elif days_left == 0 %}<span style="color:#8b6d1e;"> (اليوم)</span>
-        {% else %}<span style="color:var(--muted);"> (بعد {{ days_left }} يوم)</span>{% endif %}
+        {% if days_left < 0 %}<span style="color:#8b1e16;"> ({{ _('متأخر %(n)s يوم', n=-days_left) }})</span>
+        {% elif days_left == 0 %}<span style="color:#8b6d1e;"> ({{ _('اليوم') }})</span>
+        {% else %}<span style="color:var(--muted);"> ({{ _('بعد %(n)s يوم', n=days_left) }})</span>{% endif %}
       </td>
       <td>{{ s.live_head_count() }}</td>
       <td>{{ s.notes or '-' }}</td>
       <td>
         {% if current_user.has_permission('health.manage') %}
-        <a class="btn light" href="{{ url_for('core.animals_list', barn_id=s.barn_id) }}" title="افتح قائمة الحظيرة لبدء التحصين الجماعي">ابدأ التحصين</a>
-        <form method="post" action="{{ url_for('health.vaccination_schedule_complete', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('تعليم هذي الجدولة كمكتملة؟');">
+        <a class="btn light" href="{{ url_for('core.animals_list', barn_id=s.barn_id) }}" title="{{ _('افتح قائمة الحظيرة لبدء التحصين الجماعي') }}">{{ _('ابدأ التحصين') }}</a>
+        <form method="post" action="{{ url_for('health.vaccination_schedule_complete', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('{{ _('تعليم هذي الجدولة كمكتملة؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit" class="btn light">تم</button>
+          <button type="submit" class="btn light">{{ _('تم') }}</button>
         </form>
-        <form method="post" action="{{ url_for('health.vaccination_schedule_cancel', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('إلغاء هذي الجدولة؟');">
+        <form method="post" action="{{ url_for('health.vaccination_schedule_cancel', schedule_id=s.id) }}" style="display:inline;" onsubmit="return confirm('{{ _('إلغاء هذي الجدولة؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit" class="btn light">إلغاء</button>
+          <button type="submit" class="btn light">{{ _('إلغاء') }}</button>
         </form>
         {% endif %}
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد تحصينات مجدولة حالياً.</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد تحصينات مجدولة حالياً.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
 
-  <h3 style="font-size:14px; margin-top:20px;">سابقة (آخر 30)</h3>
+  <h3 style="font-size:14px; margin-top:20px;">{{ _('سابقة (آخر 30)') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>الحظيرة</th><th>اللقاح</th><th>التاريخ المخطَّط</th><th>الحالة</th></tr>
+    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('التاريخ المخطَّط') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for s in past %}
     <tr>
       <td>{{ s.barn.barn_name }}</td>
       <td>{{ s.pharmacy.name }}</td>
       <td>{{ s.planned_date }}</td>
-      <td>{{ 'مكتملة ✅' if s.status == 'completed' else 'ملغاة ❌' }}</td>
+      <td>{{ (_('مكتملة') + ' ✅') if s.status == 'completed' else (_('ملغاة') + ' ❌') }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">لا يوجد سجل سابق.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد سجل سابق.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

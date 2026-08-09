@@ -1,35 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:420px;">
-  <h2>تسجيل عملية شراء — {{ item.name }}</h2>
-  <p style="color:var(--muted); font-size:12px;">المخزون الحالي: {{ item.available_qty|default(0, true) }} {{ item.unit or '' }}</p>
+  <h2>{{ _('تسجيل عملية شراء') }} — {{ item.name }}</h2>
+  <p style="color:var(--muted); font-size:12px;">{{ _('المخزون الحالي:') }} {{ item.available_qty|default(0, true) }} {{ item.unit or '' }}</p>
   <form method="post" data-offline>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <label>تاريخ الشراء</label>
+    <label>{{ _('تاريخ الشراء') }}</label>
     <input type="date" name="purchase_date" required value="{{ today }}">
 
-    <label>الكمية المشتراة</label>
+    <label>{{ _('الكمية المشتراة') }}</label>
     <input type="number" name="quantity" step="any" min="0.01" required>
 
-    <label>تاريخ انتهاء هذي الدفعة (اختياري)</label>
+    <label>{{ _('تاريخ انتهاء هذي الدفعة (اختياري)') }}</label>
     <input type="date" name="expiry_date">
 
-    <label>سعر الوحدة (اختياري)</label>
+    <label>{{ _('سعر الوحدة (اختياري)') }}</label>
     <input type="number" name="unit_price" step="any" min="0">
 
-    <label>ملاحظات (اختياري)</label>
+    <label>{{ _('ملاحظات (اختياري)') }}</label>
     <textarea name="notes" rows="2"></textarea>
 
-    <button class="btn" type="submit">تسجيل الشراء</button>
+    <button class="btn" type="submit">{{ _('تسجيل الشراء') }}</button>
   </form>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">سجل عمليات الشراء لهذا الدواء</h3>
+  <h3 style="font-size:15px;">{{ _('سجل عمليات الشراء لهذا الدواء') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>تاريخ الشراء</th><th>الكمية الأصلية</th><th>المتبقي منها</th><th>تاريخ الانتهاء</th><th>سعر الوحدة</th></tr>
+    <tr><th>{{ _('تاريخ الشراء') }}</th><th>{{ _('الكمية الأصلية') }}</th><th>{{ _('المتبقي منها') }}</th><th>{{ _('تاريخ الانتهاء') }}</th><th>{{ _('سعر الوحدة') }}</th></tr>
     {% for b in batches %}
     <tr>
       <td>{{ b.purchase_date }}</td>
@@ -39,7 +39,7 @@
       <td>{{ b.unit_price or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

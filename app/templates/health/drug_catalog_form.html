@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:420px;">
-  <h2>إضافة اسم دواء جديد</h2>
+  <h2>{{ _('إضافة اسم دواء جديد') }}</h2>
   <form method="post">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>الاسم</label>
+    <label>{{ _('الاسم') }}</label>
     <input name="name" required autofocus>
-    <label>فئة الدواء (اختياري)</label>
+    <label>{{ _('فئة الدواء (اختياري)') }}</label>
     <select name="medicine_class">
       <option value="">-</option>
       {% for code in medicine_classes %}
       <option value="{{ code }}" {{ 'selected' if preselected_class == code }}>{{ medicine_class_labels[code] }}</option>
       {% endfor %}
     </select>
-    <button class="btn" type="submit">إضافة</button>
-    <a class="btn light" href="{{ url_for('health.pharmacy_new') }}">إلغاء</a>
+    <button class="btn" type="submit">{{ _('إضافة') }}</button>
+    <a class="btn light" href="{{ url_for('health.pharmacy_new') }}">{{ _('إلغاء') }}</a>
   </form>
 </div>
 {% endblock %}

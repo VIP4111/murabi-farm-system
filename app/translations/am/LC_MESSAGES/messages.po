@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:25+0300\n"
+"POT-Creation-Date: 2026-08-10 02:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -617,10 +617,11 @@ msgid "التطعيمات"
 msgstr "ክትባቶች"
 
 #: app/templates/base.html:485
+#: app/templates/health/vaccination_schedule_list.html:5
 msgid "تقويم التحصينات"
 msgstr "የክትባት ቀን መቁጠሪያ"
 
-#: app/templates/base.html:487
+#: app/templates/base.html:487 app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr "የምርመራ ረዳት"
 
@@ -752,6 +753,7 @@ msgstr "አልፍ፣ አላስፈልገኝም"
 msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr "ይህ ፈጣን መመሪያ ብቻ ነው — እያንዳንዱ ንጥል ስትሠራው በራሱ ይረጋገጣል፣ እና ወደዚህ ሳትመለስ ከታች ያሉትን ተመሳሳይ ፈጣን አዝራሮች መጠቀም ትችላለህ።"
 
+#: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
 msgid "إضافة"
@@ -936,6 +938,9 @@ msgstr "አዲስ የመኖ እቅድ"
 #: app/templates/feed/barn_plan_form.html:7
 #: app/templates/feed/barn_plans_list.html:10
 #: app/templates/feed/fcr_report.html:16
+#: app/templates/health/vaccination_schedule_form.html:7
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:47
@@ -965,6 +970,8 @@ msgstr "የመጨረሻ ቀን (አማራጭ)"
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/health/disease_types_list.html:23
+#: app/templates/health/pharmacy_form.html:110
+#: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -987,6 +994,7 @@ msgstr "ማስጠንቀቂያ ከታየ ብቻ ይሙሉ — ምክንያቱን 
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
 #: app/templates/health/doctor_form.html:10
+#: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1193,8 +1201,12 @@ msgstr "አዲስ የመኖ ንጥረ ነገር"
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:10
+#: app/templates/health/drug_catalog_form.html:7
+#: app/templates/health/pharmacy_form.html:21
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/protocol_form.html:7
+#: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr "ስም"
@@ -1222,6 +1234,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr "ከፍተኛ መዳብ ይዟል (የጨው ብሎኮች/ማዕድን ተጨማሪዎች)"
 
 #: app/templates/feed/item_form.html:23
+#: app/templates/health/pharmacy_form.html:108
 msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
 msgstr "ለ\"ነዒሚ\" ዝርያ ለሆነ ማንኛውም እንስሳ አጠቃቀሙ ላይ ግልጽ የፕሮግራም እገዳ ያንቀሳቅሳል (ንጥል 51) — የመተላለፍ አማራጭ የለም።"
 
@@ -1246,19 +1259,23 @@ msgid "فسفور %"
 msgstr "ፎስፎረስ %"
 
 #: app/templates/feed/item_form.html:29
+#: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr "አሃድ"
 
 #: app/templates/feed/item_form.html:30
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "የአሃድ ዋጋ"
 
 #: app/templates/feed/item_form.html:31
+#: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr "ያለ መጠን"
 
 #: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr "ዝቅተኛ የማስጠንቀቂያ ገደብ"
 
@@ -1293,6 +1310,7 @@ msgid "نفاد متوقع"
 msgstr "የሚጠበቅ ማለቅ"
 
 #: app/templates/feed/items_list.html:13
+#: app/templates/health/pharmacy_form.html:107
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "ከፍተኛ መዳብ ይዟል"
@@ -1303,6 +1321,9 @@ msgstr "ዝቅተኛ"
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
+#: app/templates/health/pharmacy_form.html:142
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:21
 #: app/templates/health/vaccination_form.html:22
 #: app/templates/health/vet_visit_form.html:25
 msgid "يوم"
@@ -1354,6 +1375,8 @@ msgstr "ወጪ (ትክክለኛ ስርጭት)"
 #: app/templates/feed/movement_form.html:16
 #: app/templates/feed/movements_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
 msgid "الكمية"
 msgstr "መጠን"
 
@@ -1676,6 +1699,8 @@ msgstr "በሽታ"
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocols_list.html:15
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1730,6 +1755,7 @@ msgid "دعم خارجي (دين)"
 msgstr "የውጭ ድጋፍ (ዕዳ)"
 
 #: app/templates/finance/list.html:39
+#: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "የተሰረዘ"
 
@@ -1753,7 +1779,11 @@ msgstr "ይመልከቱ"
 msgid "تأكيد الإلغاء؟"
 msgstr "መሰረዙን ያረጋግጡ?"
 
-#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/finance/list.html:55
+#: app/templates/health/drug_catalog_form.html:17
+#: app/templates/health/symptom_form.html:15
+#: app/templates/health/vaccination_schedule_form.html:31
+#: app/templates/health/vaccination_schedule_list.html:36
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "ሰርዝ"
@@ -1840,6 +1870,153 @@ msgstr ") — ለአማራጮች የፋርማሲ እጥረቶችን ይመልከ
 msgid "التكلفة المتوقعة:"
 msgstr "የሚጠበቅ ወጪ:"
 
+#: app/templates/health/diagnose_result.html:5
+msgid "احتمالات التشخيص"
+msgstr "የምርመራ ዕድሎች"
+
+#: app/templates/health/diagnose_result.html:6
+msgid "تعديل الأعراض"
+msgstr "ምልክቶችን አርትዕ"
+
+#: app/templates/health/diagnose_result.html:9
+msgid "ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار النهائي للدكتور المعالج دائماً."
+msgstr "የገቡ ምልክቶችን ከተለመዱ በሽታዎች ማጣቀሻ ጋር በማዛመድ የዕድሎች ደረጃ አሰጣጥ — የመጨረሻው ውሳኔ ሁልጊዜ ለሚያክመው ዶክተር ነው።"
+
+#: app/templates/health/diagnose_result.html:10
+msgid "الأعراض المُدخَلة:"
+msgstr "የገቡ ምልክቶች:"
+
+#: app/templates/health/diagnose_result.html:11
+msgid "ملاحظة حرة:"
+msgstr "ነፃ ማስታወሻ:"
+
+#: app/templates/health/diagnose_result.html:12
+#: app/templates/health/diagnose_start.html:21
+msgid "عمر الرأس:"
+msgstr "የእንስሳ ዕድሜ:"
+
+#: app/templates/health/diagnose_result.html:13
+msgid "درجة الحرارة:"
+msgstr "የሙቀት መጠን:"
+
+#: app/templates/health/diagnose_result.html:17
+msgid "الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور."
+msgstr "የሙቀት መጠን ከግምታዊ መደበኛ ክልል በላይ ነው — የእብጠት/ተላላፊ ጉዳዮችን ዕድል የሚጨምር ተያያዥ ምክንያት፣ ግን የመጨረሻው ውሳኔ የዶክተር ነው።"
+
+#: app/templates/health/diagnose_result.html:24
+msgid "بروتوكول طوارئ مفعَّل"
+msgstr "የአደጋ ጊዜ ፕሮቶኮል ነቅቷል"
+
+#: app/templates/health/diagnose_result.html:27
+#: app/templates/team/_report_widgets.html:21
+#: app/templates/team/task_detail.html:9
+msgid "الحالة:"
+msgstr "ሁኔታ:"
+
+#: app/templates/health/diagnose_result.html:28
+msgid "اشتباه تفريقي:"
+msgstr "ንፅፅር ጥርጣሬ:"
+
+#: app/templates/health/diagnose_result.html:35
+msgid "ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم المناسب."
+msgstr "በማጣቀሻው ውስጥ ካሉ ምልክቶች ጋር የሚዛመድ በሽታ የለም — ጉዳዩን በተገቢው ስም በእጅ ይመዝግቡ።"
+
+#: app/templates/health/diagnose_result.html:36
+msgid "تسجيل حالة مرضية يدوياً"
+msgstr "የበሽታ ጉዳይን በእጅ ይመዝግቡ"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الاحتمال"
+msgstr "ዕድል"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "درجة توافق الأعراض"
+msgstr "የምልክት ተዛማጅነት ደረጃ"
+
+#: app/templates/health/diagnose_result.html:40
+msgid "الأعراض المطابقة"
+msgstr "ተዛማጅ ምልክቶች"
+
+#: app/templates/health/diagnose_result.html:45
+msgid "حرارة مرتفعة رفعت الاحتمال"
+msgstr "ከፍተኛ ሙቀት ዕድሉን ጨምሯል"
+
+#: app/templates/health/diagnose_result.html:45
+msgid "سياق"
+msgstr "አውድ"
+
+#: app/templates/health/diagnose_result.html:50
+msgid "ناقص عرض إجباري:"
+msgstr "አስፈላጊ ምልክት ይጎድላል:"
+
+#: app/templates/health/diagnose_result.html:57
+msgid "استخدم هذا الاحتمال"
+msgstr "ይህን ዕድል ይጠቀሙ"
+
+#: app/templates/health/diagnose_result.html:63
+msgid "طبّق بروتوكول"
+msgstr "ፕሮቶኮል ተግብር"
+
+#: app/templates/health/diagnose_start.html:6
+msgid "رجوع لسجل الأمراض"
+msgstr "ወደ በሽታ መዝገብ ተመለስ"
+
+#: app/templates/health/diagnose_start.html:9
+msgid "هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً."
+msgstr "ይህ ምልክቶችን ከተለመዱ በሽታዎች ማጣቀሻ ጋር በማዛመድ ላይ የተመሠረተ የዕድል ደረጃ ረዳት ነው — የተረጋገጠ የላቦራቶሪ ምርመራ አይደለም።"
+
+#: app/templates/health/diagnose_start.html:10
+msgid "السجل المرضي يبقى \"مفتوحاً\" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً."
+msgstr "የበሽታ መዝገቡ ዶክተር በትክክል እስኪገመግመው እና ትክክለኛ ማገገምን እስኪያረጋግጥ ድረስ \"ክፍት\" ሆኖ ይቆያል፣ በእጅ እንደተመዘገበ ማንኛውም ጉዳይ ተመሳሳይ።"
+
+#: app/templates/health/diagnose_start.html:16
+msgid "الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)"
+msgstr "እንስሳ (አማራጭ፣ በኋላ ምርመራን ለማገናኘት ይረዳል)"
+
+#: app/templates/health/diagnose_start.html:23
+msgid "درجة الحرارة (اختياري، °C)"
+msgstr "የሙቀት መጠን (አማራጭ፣ °C)"
+
+#: app/templates/health/diagnose_start.html:24
+msgid "مثال: 39.5"
+msgstr "ምሳሌ: 39.5"
+
+#: app/templates/health/diagnose_start.html:26
+msgid "عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً."
+msgstr "በውጤት ገጽ ላይ ለመመሪያ ብቻ ይታያል (ለትንንሽ አኝኪ እንስሳት ግምታዊ መደበኛ ክልል 38.5-40°) — በአሁኑ ጊዜ የዕድል ደረጃ ስሌት ውስጥ አይካተትም።"
+
+#: app/templates/health/diagnose_start.html:29
+msgid "العرض الرئيسي"
+msgstr "ዋና ምልክት"
+
+#: app/templates/health/diagnose_start.html:31
+msgid "اختر عرضاً رئيسياً..."
+msgstr "ዋና ምልክት ይምረጡ..."
+
+#: app/templates/health/diagnose_start.html:34
+msgid "التالي — عرض الأسئلة المتابعة"
+msgstr "ቀጣይ — የክትትል ጥያቄዎችን አሳይ"
+
+#: app/templates/health/diagnose_start.html:40
+msgid "أعراض مصاحبة (اختر كل ما ينطبق)"
+msgstr "ተጓዳኝ ምልክቶች (የሚመለከቱትን ሁሉ ይምረጡ)"
+
+#: app/templates/health/diagnose_start.html:42
+msgid "ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية."
+msgstr "በአሁኑ ማጣቀሻ ውስጥ ከዚህ ምልክት ጋር የተያያዙ የክትትል ምልክቶች የሉም — በዋና ምልክቱ ብቻ ዕድሎችን ያሰሉ፣ ወይም በኋላ ከሕክምና ቅንብሮች ገጽ አዲስ ምልክቶች ያክሉ።"
+
+#: app/templates/health/diagnose_start.html:55
+msgid "أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)"
+msgstr "ተጨማሪ ነፃ-ጽሑፍ ምልክቶች (አማራጭ — እንደ ማስታወሻ ይመዘገባል፣ በደረጃ አሰጣጥ ስሌት ውስጥ አይካተትም)"
+
+#: app/templates/health/diagnose_start.html:56
+msgid "مثال: يمتنع عن الأكل منذ يومين..."
+msgstr "ምሳሌ: ላለፉት ሁለት ቀናት መብላት እምቢ ብሏል..."
+
+#: app/templates/health/diagnose_start.html:57
+msgid "احسب الاحتمالات"
+msgstr "ዕድሎችን አስላ"
+
 #: app/templates/health/disease_form.html:6
 msgid "تسجيل حالة مرضية"
 msgstr "የበሽታ ሁኔታ መዝግብ"
@@ -1920,6 +2097,100 @@ msgstr "የመተላለፍ ምክንያት (የተባይ ማጥፊያ መጠን 
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "ማያ ገጹ ማስጠንቀቂያ ከሰጠ ብቻ ይሙሉ — ለድግግሞሹ የሕክምና ምክንያት ይጻፉ።"
 
+#: app/templates/health/disease_link_wizard.html:25
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr "ምልክት-ወደ-በሽታ አገናኝ አዋቂ"
+
+#: app/templates/health/disease_link_wizard.html:40
+msgid "وش المرض؟"
+msgstr "የትኛው በሽታ?"
+
+#: app/templates/health/disease_link_wizard.html:42
+msgid "اختر مرض"
+msgstr "በሽታ ይምረጡ"
+
+#: app/templates/health/disease_link_wizard.html:46
+#: app/templates/health/disease_link_wizard.html:63
+#: app/templates/health/disease_link_wizard.html:75
+msgid "التالي"
+msgstr "ቀጣይ"
+
+#: app/templates/health/disease_link_wizard.html:52
+msgid "وش الأعراض المرتبطة؟ (اختر كل ما ينطبق)"
+msgstr "የትኞቹ ምልክቶች ተያይዘዋል? (የሚመለከቱትን ሁሉ ይምረጡ)"
+
+#: app/templates/health/disease_link_wizard.html:57
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr "ዋና"
+
+#: app/templates/health/disease_link_wizard.html:62
+#: app/templates/health/disease_link_wizard.html:74
+#: app/templates/health/disease_link_wizard.html:94
+msgid "السابق"
+msgstr "የቀድሞ"
+
+#: app/templates/health/disease_link_wizard.html:69
+msgid "قد وش قوة دلالة هذي الأعراض على المرض؟"
+msgstr "እነዚህ ምልክቶች በሽታውን ምን ያህል በጥብቅ ያመለክታሉ?"
+
+#: app/templates/health/disease_link_wizard.html:70
+msgid "عرض عام"
+msgstr "አጠቃላይ ምልክት"
+
+#: app/templates/health/disease_link_wizard.html:71
+msgid "عرض متوسط"
+msgstr "መካከለኛ ምልክት"
+
+#: app/templates/health/disease_link_wizard.html:72
+msgid "عرض قوي ومؤكد"
+msgstr "ጠንካራ፣ የተረጋገጠ ምልክት"
+
+#: app/templates/health/disease_link_wizard.html:81
+msgid "عرض أساسي للتشخيص؟ (لازم يكون موجود عشان يُشتبه بالمرض)"
+msgstr "ለምርመራ አስፈላጊ ምልክት? (በሽታው እንዲጠረጠር መኖር አለበት)"
+
+#: app/templates/health/disease_link_wizard.html:82
+msgid "نعم — أساسي"
+msgstr "አዎ — አስፈላጊ"
+
+#: app/templates/health/disease_link_wizard.html:83
+#: app/templates/health/disease_link_wizard.html:87
+#: app/templates/health/disease_link_wizard.html:91
+msgid "لا"
+msgstr "አይ"
+
+#: app/templates/health/disease_link_wizard.html:85
+msgid "عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)"
+msgstr "ይህ ምልክት በሽታውን ያስወግዳል? (ካለ፣ በሽታውን ከዕድሎች ያገልላል)"
+
+#: app/templates/health/disease_link_wizard.html:86
+msgid "نعم — يلغيه"
+msgstr "አዎ — ያስወግደዋል"
+
+#: app/templates/health/disease_link_wizard.html:89
+msgid "يتطلب عزل الحيوان فوراً؟"
+msgstr "የእንስሳውን ወዲያውኑ መገለል ይፈልጋል?"
+
+#: app/templates/health/disease_link_wizard.html:90
+msgid "نعم — عزل فوري"
+msgstr "አዎ — ወዲያውኑ መገለል"
+
+#: app/templates/health/disease_link_wizard.html:95
+msgid "حفظ والانتهاء"
+msgstr "አስቀምጥ እና ጨርስ"
+
+#: app/templates/health/disease_link_wizard.html:105
+msgid "اختر مرض أولاً"
+msgstr "መጀመሪያ በሽታ ይምረጡ"
+
+#: app/templates/health/disease_link_wizard.html:106
+msgid "اختر عرض واحد على الأقل"
+msgstr "ቢያንስ አንድ ምልክት ይምረጡ"
+
 #: app/templates/health/disease_type_detail.html:8
 msgid "المعالج التفاعلي"
 msgstr "በይነተገናኝ አዋቂ"
@@ -1963,12 +2234,6 @@ msgstr "አስፈላጊ"
 #: app/templates/health/disease_type_detail.html:92
 msgid "استبعادي"
 msgstr "አግላይ"
-
-#: app/templates/health/disease_type_detail.html:27
-#: app/templates/health/disease_type_detail.html:83
-#: app/templates/health/symptoms_list.html:23
-msgid "رئيسي"
-msgstr "ዋና"
 
 #: app/templates/health/disease_type_detail.html:39
 #: app/templates/health/disease_type_detail.html:95
@@ -2037,16 +2302,14 @@ msgid "إضافة مرض للقائمة"
 msgstr "ወደ ዝርዝሩ በሽታ ያክሉ"
 
 #: app/templates/health/disease_type_form.html:8
+#: app/templates/health/pharmacy_purchase_form.html:21
+#: app/templates/health/vaccination_schedule_form.html:27
 msgid "ملاحظات (اختياري)"
 msgstr "ማስታወሻዎች (አማራጭ)"
 
 #: app/templates/health/disease_types_list.html:5
 msgid "الأمراض الشائعة (قائمة الاقتراحات)"
 msgstr "የተለመዱ በሽታዎች (የአስተያየት ዝርዝር)"
-
-#: app/templates/health/disease_types_list.html:8
-msgid "معالج ربط عرض بمرض"
-msgstr "ምልክት-ወደ-በሽታ አገናኝ አዋቂ"
 
 #: app/templates/health/disease_types_list.html:9
 #: app/templates/health/emergency_symptoms_list.html:4
@@ -2131,6 +2394,15 @@ msgstr "ዶክተሮች"
 msgid "لا يوجد أطباء مسجّلين بعد."
 msgstr "እስካሁን የተመዘገበ ዶክተር የለም።"
 
+#: app/templates/health/drug_catalog_form.html:4
+#: app/templates/health/pharmacy_form.html:32
+msgid "إضافة اسم دواء جديد"
+msgstr "አዲስ የመድሃኒት ስም ያክሉ"
+
+#: app/templates/health/drug_catalog_form.html:9
+msgid "فئة الدواء (اختياري)"
+msgstr "የመድሃኒት ክፍል (አማራጭ)"
+
 #: app/templates/health/emergency_symptoms_list.html:6
 msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
 msgstr "እዚህ ያለ ማንኛውም ምልክት፣ በምርመራ ረዳት ምልክቶች ውስጥ ከገባ፣ እንስሳውን ወዲያውኑ በራስ-ሰር ይለያል እና በውጤት ገጽ ላይ አስቸኳይ ንፅፅር ምርመራ ያሳያል — ከመደበኛው የዕድል ደረጃ አሰጣጥ ተለይቶ። ሆን ተብሎ ግልጽ የስም ዝርዝር — ለትንንሽ ጉዳዮች ከልክ ያለፈ መገለልን ለማስወገድ ሰፊ ምድብ (እንደ \"የነርቭ ምልክቶች\") አንጠቀምም።"
@@ -2205,20 +2477,186 @@ msgstr "ለመሠረታዊ የመርፌ ዘዴዎች አጠቃላይ የሜዳ �
 msgid "راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
 msgstr "ስለ እንስሳው ሁኔታ ወይም ስለ አንድ የተወሰነ መድሃኒት መጠን ልዩ ዝርዝሮች ሁልጊዜ የሚያክመውን ዶክተር ያማክሩ (የእያንዳንዱ መድሃኒት የማጣቀሻ መጠን ማስታወሻ በዶክተሩ ራሱ በፋርማሲ ገጽ ላይ ይገባል)።"
 
+#: app/templates/health/pharmacy_form.html:4
+msgid "تعديل دواء"
+msgstr "መድሃኒት አርትዕ"
+
+#: app/templates/health/pharmacy_form.html:4
+#: app/templates/health/pharmacy_list.html:8
+msgid "دواء جديد"
+msgstr "አዲስ መድሃኒት"
+
+#: app/templates/health/pharmacy_form.html:6
+msgid "تسجيل عملية شراء (دفعة بتاريخها الخاص)"
+msgstr "ግዢ ይመዝግቡ (የራሱ ቀን ያለው ስብስብ)"
+
+#: app/templates/health/pharmacy_form.html:11
+msgid "بيانات الدواء الأساسية"
+msgstr "መሠረታዊ የመድሃኒት መረጃ"
+
+#: app/templates/health/pharmacy_form.html:12
+#: app/templates/health/pharmacy_list.html:13
+msgid "فئة الدواء"
+msgstr "የመድሃኒት ክፍል"
+
+#: app/templates/health/pharmacy_form.html:19
+msgid "تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول الشرطية تحت."
+msgstr "እዚህ በተለይ \"የተውሳክ/ትል መድሃኒት\" መምረጥ ብቻ የ30 ቀን መጠን-መደጋገም መከላከያን ያንቃል — ደግሞም ከታች ላሉት \"የመድሃኒት ስም\" ማጣሪያ እና ሁኔታዊ መስኮች መሠረት ነው።"
+
+#: app/templates/health/pharmacy_form.html:24
+msgid "اختر اسم دواء"
+msgstr "የመድሃኒት ስም ይምረጡ"
+
+#: app/templates/health/pharmacy_form.html:33
+msgid "دليل الدواء"
+msgstr "የመድሃኒት መመሪያ"
+
+#: app/templates/health/pharmacy_form.html:37
+msgid "طريقة الاستخدام (اختياري)"
+msgstr "የአጠቃቀም ዘዴ (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:45
+msgid "إضافة طريقة استخدام جديدة"
+msgstr "አዲስ የአጠቃቀም ዘዴ ያክሉ"
+
+#: app/templates/health/pharmacy_form.html:47
+msgid "ملاحظة الجرعة المرجعية (اختياري)"
+msgstr "የማጣቀሻ መጠን ማስታወሻ (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:48
+msgid "مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة"
+msgstr "ምሳሌ: ለ50 ኪግ ሕያው ክብደት 5 ሚሊ — በአምራች ወረቀት መሠረት"
+
+#: app/templates/health/pharmacy_form.html:49
+msgid "مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
+msgstr "እርስዎ አንድ ጊዜ የሚጽፉት መግለጫ ማጣቀሻ — ከዚያ በኋላ ግቤትን ለማፋጠን በዝርዝሮች ውስጥ ይታያል፣ ስርዓቱ በራስ-ሰር ምንም መጠን አያሰላም ወይም አይጠቁምም።"
+
+#: app/templates/health/pharmacy_form.html:51
+msgid "الصلاحية والتخزين"
+msgstr "የማብቂያ ጊዜ እና ማከማቻ"
+
+#: app/templates/health/pharmacy_form.html:52
+msgid "تاريخ انتهاء الصلاحية (اختياري)"
+msgstr "የማብቂያ ቀን (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:54
+msgid "تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن \"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء."
+msgstr "በሳጥኑ ላይ የታተመው የመድሃኒቱ ራሱ የማብቂያ ቀን — ከታች ካለው \"የመውጫ ጊዜ\" ፈጽሞ የተለየ፣ ይህም እንስሳው መድሃኒት ከተሰጠው በኋላ የመሸጥ/የማለብ ክልከላ ጊዜ ነው።"
+
+#: app/templates/health/pharmacy_form.html:56
+msgid "ظروف التخزين (اختياري)"
+msgstr "የማከማቻ ሁኔታዎች (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:63
+msgid "وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي."
+msgstr "መግለጫ ብቻ — ሠራተኛው መድሃኒቱን የት እንደሚያከማች ይነግረዋል፣ ምንም ራስ-ሰር ማንቂያ አያንቃም።"
+
+#: app/templates/health/pharmacy_form.html:66
+msgid "فترة السحب (بالأيام)"
+msgstr "የመውጫ ጊዜ (በቀናት)"
+
+#: app/templates/health/pharmacy_form.html:67
+msgid "عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
+msgstr "ይህን መድሃኒት ለማንኛውም እንስሳ ከሰጡ በኋላ ከመሸጥዎ ወይም ወተቱን ከመጠቀምዎ በፊት መጠበቅ ያለብዎት የቀናት ብዛት — ስርዓቱ በራስ-ሰር ያሰላል እና በዚህ ጊዜ ውስጥ ሽያጭን ይከለክላል።"
+
+#: app/templates/health/pharmacy_form.html:71
+msgid "مدة الحماية بالأيام (للقاحات — اختياري)"
+msgstr "የመከላከያ ጊዜ በቀናት (ለክትባቶች — አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:73
+msgid "تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
+msgstr "በቡድን ክትባት ገጽ ላይ \"የሚቀጥለው ቀጠሮ\" በራስ-ሰር ለማስያዝ ብቻ ጥቅም ላይ ይውላል (የክትባት ቀን + ይህ ጊዜ) — ያለ እሱ የሚቀጥለው ቀጠሮ በእጅ ይገባል።"
+
+#: app/templates/health/pharmacy_form.html:75
+msgid "الجرعة الافتراضية للرأس بالمل (اختياري)"
+msgstr "ለእያንዳንዱ እንስሳ ነባሪ መጠን በሚሊ (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:77
+msgid "رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
+msgstr "እርስዎ የሚያስገቡት ቋሚ ቁጥር — በቡድን ክትባት ገጽ ላይ የእንስሳው ዕድሜ ከታች ካለው \"በዕድሜ መሠረት መጠን\" ሠንጠረዥ ጋር ካልተዛመደ ብቻ እንደ መጠባበቂያ ዋጋ ይታያል።"
+
+#: app/templates/health/pharmacy_form.html:79
+msgid "الجرعة حسب العمر (اختياري)"
+msgstr "በዕድሜ መሠረት መጠን (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:80
+msgid "أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد."
+msgstr "እርስዎ ራስዎ አንድ ጊዜ ለእያንዳንዱ የዕድሜ ክልል መጠን ይጽፋሉ — ስርዓቱ ከዚያ በኋላ በቡድን ክትባት ገጽ ላይ የእያንዳንዱን እንስሳ ዕድሜ ብቻ ያዛምዳል እና እዚህ የተመዘገበውን መጠንዎን ያሳያል፣ ምንም አዲስ ቁጥር አያሰላም ወይም አይፈጥርም።"
+
+#: app/templates/health/pharmacy_form.html:84
+#: app/templates/health/pharmacy_form.html:90
+#: app/templates/health/pharmacy_form.html:119
+msgid "من عمر (يوم)"
+msgstr "ከዕድሜ (ቀናት)"
+
+#: app/templates/health/pharmacy_form.html:85
+#: app/templates/health/pharmacy_form.html:91
+#: app/templates/health/pharmacy_form.html:120
+msgid "إلى عمر (يوم)"
+msgstr "እስከ ዕድሜ (ቀናት)"
+
+#: app/templates/health/pharmacy_form.html:86
+#: app/templates/health/pharmacy_form.html:92
+#: app/templates/health/pharmacy_form.html:121
+msgid "الجرعة (مل)"
+msgstr "መጠን (ሚሊ)"
+
+#: app/templates/health/pharmacy_form.html:95
+msgid "إضافة عمر آخر"
+msgstr "ሌላ የዕድሜ ክልል ያክሉ"
+
+#: app/templates/health/pharmacy_form.html:98
+msgid "المخزون والسعر"
+msgstr "ክምችት እና ዋጋ"
+
+#: app/templates/health/pharmacy_form.html:100
+msgid "مل / حبة / علبة"
+msgstr "ሚሊ / ኪኒን / ሳጥን"
+
+#: app/templates/health/pharmacy_form.html:102
+msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
+msgstr "ክምችቱ ወደዚህ ገደብ ወይም ከዚያ በታች የደረሰ ማንኛውም መድሃኒት በራስ-ሰር በ\"የፋርማሲ እጥረቶች\" ዝርዝር ውስጥ ይታያል — ተመሳሳይ የሚያስፈልግ ግዢ ዝርዝር።"
+
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr "የአሃድ ዋጋ (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:103
+msgid "مثال: 2.5"
+msgstr "ምሳሌ: 2.5"
+
+#: app/templates/health/pharmacy_form.html:104
+msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
+msgstr "በጉብኝት/በሽታ/ክትባት ገጾች ላይ የሕክምና ወጪን በራስ-ሰር ለማስላት መሠረት (የተጠቀሙት መጠን × ይህ ዋጋ) — ያለ እሱ ወጪው እንደበፊቱ በእጅ ይገባል።"
+
+#: app/templates/health/pharmacy_form.html:106
+msgid "أمان إضافي وملاحظات"
+msgstr "ተጨማሪ ደህንነት እና ማስታወሻዎች"
+
+#: app/templates/health/pharmacy_form.html:139
+msgid "منتهي الصلاحية منذ"
+msgstr "ካለፈ ጀምሮ"
+
+#: app/templates/health/pharmacy_form.html:140
+msgid "ينتهي خلال"
+msgstr "በዚህ ጊዜ ውስጥ ያበቃል"
+
+#: app/templates/health/pharmacy_form.html:141
+msgid "متبقي"
+msgstr "የቀረ"
+
+#: app/templates/health/pharmacy_form.html:165
+msgid "اختر فئة الدواء أولاً لعرض دليلها."
+msgstr "መመሪያውን ለማየት መጀመሪያ የመድሃኒት ክፍል ይምረጡ።"
+
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
 msgid "نواقص الصيدلية"
 msgstr "የፋርማሲ እጥረቶች"
 
-#: app/templates/health/pharmacy_list.html:8
-msgid "دواء جديد"
-msgstr "አዲስ መድሃኒት"
-
 #: app/templates/health/pharmacy_list.html:13
-msgid "فئة الدواء"
-msgstr "የመድሃኒት ክፍል"
-
-#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_purchase_form.html:32
 msgid "تاريخ الانتهاء"
 msgstr "የማብቂያ ቀን"
 
@@ -2250,6 +2688,48 @@ msgstr "ያለፈበት"
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ መድሃኒት የለም።"
 
+#: app/templates/health/pharmacy_purchase_form.html:4
+msgid "تسجيل عملية شراء"
+msgstr "ግዢ ይመዝግቡ"
+
+#: app/templates/health/pharmacy_purchase_form.html:5
+#: app/templates/team/task_detail.html:31
+msgid "المخزون الحالي:"
+msgstr "አሁን ያለ ክምችት:"
+
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "تاريخ الشراء"
+msgstr "የግዢ ቀን"
+
+#: app/templates/health/pharmacy_purchase_form.html:12
+msgid "الكمية المشتراة"
+msgstr "የተገዛ መጠን"
+
+#: app/templates/health/pharmacy_purchase_form.html:15
+msgid "تاريخ انتهاء هذي الدفعة (اختياري)"
+msgstr "የዚህ ስብስብ የማብቂያ ቀን (አማራጭ)"
+
+#: app/templates/health/pharmacy_purchase_form.html:24
+msgid "تسجيل الشراء"
+msgstr "ግዢ ይመዝግቡ"
+
+#: app/templates/health/pharmacy_purchase_form.html:29
+msgid "سجل عمليات الشراء لهذا الدواء"
+msgstr "ለዚህ መድሃኒት የግዢ ታሪክ"
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "الكمية الأصلية"
+msgstr "የመጀመሪያ መጠን"
+
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "المتبقي منها"
+msgstr "ከዚያ የቀረ"
+
+#: app/templates/health/pharmacy_purchase_form.html:42
+msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد."
+msgstr "እስካሁን ለዚህ መድሃኒት የተመዘገበ ግዢ የለም።"
+
 #: app/templates/health/pharmacy_shortages.html:8
 msgid "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها \"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
 msgstr "ክምችቱ ወደተወሰነለት ዝቅተኛ ገደብ ወይም ከዚያ በታች የደረሰ እያንዳንዱ ንቁ መድሃኒት — ይህ ገጽ ራሱ \"የሚያስፈልግ ግዢ ዝርዝር\" ነው፣ ክምችት በተለወጠ ቁጥር በራስ-ሰር ይዘምናል።"
@@ -2265,6 +2745,103 @@ msgstr "በተመሳሳይ ምድብ ውስጥ ያሉ አማራጮች"
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
 msgstr "አሁን ምንም እጥረት የለም"
+
+#: app/templates/health/protocol_apply_form.html:4
+msgid "تطبيق بروتوكول:"
+msgstr "ፕሮቶኮል ተግብር:"
+
+#: app/templates/health/protocol_apply_form.html:7
+msgid "الخطوة"
+msgstr "ደረጃ"
+
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:24
+msgid "الدواء"
+msgstr "መድሃኒት"
+
+#: app/templates/health/protocol_apply_form.html:15
+msgid "الرأس"
+msgstr "እንስሳ"
+
+#: app/templates/health/protocol_apply_form.html:20
+msgid "تاريخ بداية التطبيق"
+msgstr "የመተግበሪያ መጀመሪያ ቀን"
+
+#: app/templates/health/protocol_apply_form.html:23
+msgid "تولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة، مستحقة بتاريخ (بداية التطبيق + يوم الخطوة) — تنتظر مراجعة الدكتور ثم \"تأكيد التنفيذ\" الفعلي (اللي يخصم من الصيدلية ويطبّق فترة السحب تلقائياً)."
+msgstr "ለእያንዳንዱ ደረጃ አንድ \"የታቀደ ሕክምና\" ተግባር ይፈጥራል፣ በ(መጀመሪያ ቀን + የደረጃ ቀን) የሚያስፈልግ — የዶክተር ግምገማ ከዚያም ትክክለኛ \"የማስፈጸም ማረጋገጫ\" (ከፋርማሲ የሚቀንስ እና በራስ-ሰር የመውጫ ጊዜን የሚተገብር) ይጠብቃል።"
+
+#: app/templates/health/protocol_apply_form.html:25
+msgid "تطبيق البروتوكول"
+msgstr "ፕሮቶኮል ተግብር"
+
+#: app/templates/health/protocol_form.html:4
+msgid "بروتوكول علاج جديد"
+msgstr "አዲስ የሕክምና ፕሮቶኮል"
+
+#: app/templates/health/protocol_form.html:7
+msgid "مثال: بروتوكول التهاب الرئة"
+msgstr "ምሳሌ: የሳምባ ምች ፕሮቶኮል"
+
+#: app/templates/health/protocol_form.html:8
+msgid "الوصف (اختياري)"
+msgstr "መግለጫ (አማራጭ)"
+
+#: app/templates/health/protocol_form.html:9
+msgid "المرض المرتبط (اختياري)"
+msgstr "የተያያዘ በሽታ (አማራጭ)"
+
+#: app/templates/health/protocol_form.html:15
+msgid "لو مُحدَّد، زر \"طبّق هذا البروتوكول\" يظهر تلقائياً بنتيجة المساعد التشخيصي عند مطابقة هذا المرض."
+msgstr "ከተመረጠ፣ ይህ በሽታ ሲዛመድ \"ይህን ፕሮቶኮል ተግብር\" ቁልፍ በምርመራ ረዳት ውጤት ውስጥ በራስ-ሰር ይታያል።"
+
+#: app/templates/health/protocol_form.html:18
+msgid "الخطوات (دواء محدد من الصيدلية لكل خطوة)"
+msgstr "ደረጃዎች (ለእያንዳንዱ ደረጃ ከፋርማሲ የተወሰነ መድሃኒት)"
+
+#: app/templates/health/protocol_form.html:21
+msgid "يوم الاستحقاق من بداية التطبيق"
+msgstr "ከመተግበሪያው መጀመሪያ የሚያስፈልግ ቀን"
+
+#: app/templates/health/protocol_form.html:22
+msgid "عنوان الخطوة"
+msgstr "የደረጃ ርዕስ"
+
+#: app/templates/health/protocol_form.html:33
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم عنوان + دواء + كمية عشان تُحفظ الخطوة."
+msgstr "የማያስፈልግ ረድፍ ባዶ ይተውት — ደረጃው እንዲቀመጥ ርዕስ + መድሃኒት + መጠን ያስፈልጋል።"
+
+#: app/templates/health/protocol_form.html:35
+msgid "حفظ البروتوكول"
+msgstr "ፕሮቶኮሉን አስቀምጥ"
+
+#: app/templates/health/protocols_list.html:5
+msgid "قوالب بروتوكول العلاج"
+msgstr "የሕክምና ፕሮቶኮል ቅንብሮች"
+
+#: app/templates/health/protocols_list.html:7
+msgid "بروتوكول جديد"
+msgstr "አዲስ ፕሮቶኮል"
+
+#: app/templates/health/protocols_list.html:11
+msgid "كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس معيّن يولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة — الخصم من الصيدلية وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند \"تأكيد التنفيذ\" الفعلي لكل خطوة، بنفس آلية بند 50."
+msgstr "እያንዳንዱ ፕሮቶኮል = የታቀዱ የሕክምና ደረጃዎች ተከታታይ (ቀን × መድሃኒት × መጠን)። በተወሰነ እንስሳ ላይ መተግበር ለእያንዳንዱ ደረጃ አንድ \"የታቀደ ሕክምና\" ተግባር ይፈጥራል — የፋርማሲ ቅናሽ እና የመውጫ ጊዜ (በራስ-ሰር ከሁሉም የፕሮቶኮሉ መድሃኒቶች መካከል ረጅሙ) የሚከሰተው ለእያንዳንዱ ደረጃ ትክክለኛ \"የማስፈጸም ማረጋገጫ\" ሲኖር ብቻ ነው፣ ተመሳሳይ የንጥል 50 ስርዓት በመጠቀም።"
+
+#: app/templates/health/protocols_list.html:15
+msgid "المرض المرتبط"
+msgstr "የተያያዘ በሽታ"
+
+#: app/templates/health/protocols_list.html:15
+msgid "عدد الخطوات"
+msgstr "የደረጃዎች ብዛት"
+
+#: app/templates/health/protocols_list.html:24
+msgid "تطبيق على رأس"
+msgstr "በእንስሳ ላይ ተግብር"
+
+#: app/templates/health/protocols_list.html:28
+msgid "لا يوجد بروتوكولات مسجَّلة بعد."
+msgstr "እስካሁን የተመዘገበ ፕሮቶኮል የለም።"
 
 #: app/templates/health/symptom_form.html:4
 msgid "إضافة عرض جديد"
@@ -2314,13 +2891,109 @@ msgstr "ቀጣይ ቀጠሮ (አማራጭ)"
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr "ከመድሃኒት ቤት የተጠቀመ መድሃኒት (አማራጭ)"
 
-#: app/templates/health/vaccinations_list.html:6
-msgid "تطعيم جديد"
-msgstr "አዲስ ክትባት"
+#: app/templates/health/vaccination_schedule_form.html:4
+#: app/templates/health/vaccination_schedule_list.html:6
+msgid "جدولة تحصين جديد"
+msgstr "አዲስ የክትባት መርሃ ግብር"
 
+#: app/templates/health/vaccination_schedule_form.html:9
+msgid "اختر حظيرة"
+msgstr "በረት ይምረጡ"
+
+#: app/templates/health/vaccination_schedule_form.html:16
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
 #: app/templates/health/vaccinations_list.html:10
 msgid "اللقاح"
 msgstr "ክትባት"
+
+#: app/templates/health/vaccination_schedule_form.html:18
+msgid "اختر لقاح من الصيدلية"
+msgstr "ከፋርማሲ ክትባት ይምረጡ"
+
+#: app/templates/health/vaccination_schedule_form.html:24
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
+msgid "التاريخ المخطَّط"
+msgstr "የታቀደ ቀን"
+
+#: app/templates/health/vaccination_schedule_form.html:30
+msgid "جدولة"
+msgstr "መርሃ ግብር"
+
+#: app/templates/health/vaccination_schedule_form.html:39
+msgid "عدد الرؤوس الحالي بهذي الحظيرة:"
+msgstr "በዚህ በረት ውስጥ ያለው የአሁኑ የእንስሳት ብዛት:"
+
+#: app/templates/health/vaccination_schedule_list.html:8
+msgid "جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة."
+msgstr "ለሙሉ በረት የወደፊት ክትባት ያስይዙ — የእንስሳት ብዛት በማሳያ ጊዜ ከበረቱ ትክክለኛ ቁጥር በቀጥታ ይሰላል፣ በመርሃ ግብር ጊዜ ቋሚ ቁጥር አይደለም።"
+
+#: app/templates/health/vaccination_schedule_list.html:10
+msgid "القادمة"
+msgstr "መጪ"
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "عدد الرؤوس الآن"
+msgstr "አሁን የእንስሳት ብዛት"
+
+#: app/templates/health/vaccination_schedule_list.html:13
+msgid "إجراءات"
+msgstr "እርምጃዎች"
+
+#: app/templates/health/vaccination_schedule_list.html:21
+#, python-format
+msgid "متأخر %(n)s يوم"
+msgstr "በ%(n)s ቀናት ዘግይቷል"
+
+#: app/templates/health/vaccination_schedule_list.html:22
+msgid "اليوم"
+msgstr "ዛሬ"
+
+#: app/templates/health/vaccination_schedule_list.html:23
+#, python-format
+msgid "بعد %(n)s يوم"
+msgstr "በ%(n)s ቀናት ውስጥ"
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "افتح قائمة الحظيرة لبدء التحصين الجماعي"
+msgstr "የቡድን ክትባት ለመጀመር የበረቱን ዝርዝር ይክፈቱ"
+
+#: app/templates/health/vaccination_schedule_list.html:29
+msgid "ابدأ التحصين"
+msgstr "ክትባት ጀምር"
+
+#: app/templates/health/vaccination_schedule_list.html:30
+msgid "تعليم هذي الجدولة كمكتملة؟"
+msgstr "ይህን መርሃ ግብር እንደተጠናቀቀ ምልክት ማድረግ?"
+
+#: app/templates/health/vaccination_schedule_list.html:32
+msgid "تم"
+msgstr "ተጠናቋል"
+
+#: app/templates/health/vaccination_schedule_list.html:34
+msgid "إلغاء هذي الجدولة؟"
+msgstr "ይህን መርሃ ግብር መሰረዝ?"
+
+#: app/templates/health/vaccination_schedule_list.html:42
+msgid "لا يوجد تحصينات مجدولة حالياً."
+msgstr "በአሁኑ ጊዜ የታቀደ ክትባት የለም።"
+
+#: app/templates/health/vaccination_schedule_list.html:47
+msgid "سابقة (آخر 30)"
+msgstr "ያለፉ (የመጨረሻ 30)"
+
+#: app/templates/health/vaccination_schedule_list.html:56
+msgid "مكتملة"
+msgstr "ተጠናቋል"
+
+#: app/templates/health/vaccination_schedule_list.html:59
+msgid "لا يوجد سجل سابق."
+msgstr "ያለፈ መዝገብ የለም።"
+
+#: app/templates/health/vaccinations_list.html:6
+msgid "تطعيم جديد"
+msgstr "አዲስ ክትባት"
 
 #: app/templates/health/vaccinations_list.html:10
 msgid "الموعد القادم"
@@ -2436,11 +3109,6 @@ msgstr "ዕድሜ:"
 #: app/templates/team/task_detail.html:15
 msgid "الحظيرة:"
 msgstr "በረት:"
-
-#: app/templates/team/_report_widgets.html:21
-#: app/templates/team/task_detail.html:9
-msgid "الحالة:"
-msgstr "ሁኔታ:"
 
 #: app/templates/team/_report_widgets.html:22
 msgid "صورة الحيوان"
@@ -2780,10 +3448,6 @@ msgstr "የአንድ እንስሳ መጠን:"
 #: app/templates/team/task_detail.html:30
 msgid "الجرعة الإجمالية للدفعة:"
 msgstr "ለጭነቱ አጠቃላይ መጠን:"
-
-#: app/templates/team/task_detail.html:31
-msgid "المخزون الحالي:"
-msgstr "አሁን ያለ ክምችት:"
 
 #: app/templates/team/task_detail.html:31
 msgid "المتبقي المتوقع بعد التنفيذ:"
