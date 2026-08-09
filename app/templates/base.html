@@ -559,10 +559,10 @@
 
       {% if current_user.has_permission('reports.manage') %}
       <div class="drawer-group">
-        <div class="drawer-group-title">التقرير اليومي بالبريد</div>
+        <div class="drawer-group-title">{{ _('التقرير اليومي بالبريد') }}</div>
         <form method="post" action="{{ url_for('core.send_test_email_report') }}">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit" class="btn light" style="cursor:pointer;">📧 أرسل تقرير تجريبي الآن</button>
+          <button type="submit" class="btn light" style="cursor:pointer;">📧 {{ _('أرسل تقرير تجريبي الآن') }}</button>
         </form>
       </div>
       {% endif %}
