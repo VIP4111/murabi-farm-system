@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <h2>قائمة أعراض الطوارئ</h2>
+  <h2>{{ _('قائمة أعراض الطوارئ') }}</h2>
   <p style="color:var(--muted); font-size:13px;">
-    أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً
-    فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب
-    الاحتمالات العادي. **قائمة أسماء صريحة عمداً** — ما نستخدم تصنيفاً
-    عاماً (زي "أعراض عصبية") تجنّباً لعزل مبالغ فيه لحالات بسيطة.
+    {{ _('أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي "أعراض عصبية") تجنّباً لعزل مبالغ فيه لحالات بسيطة.') }}
   </p>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">الأعراض المسجَّلة ({{ entries|length }})</h3>
+  <h3 style="font-size:15px;">{{ _('الأعراض المسجَّلة (%(n)s)', n=entries|length) }}</h3>
   <div class="table-scroll">
   <table>
-    <tr><th>العرض</th><th>الخطورة</th><th>التشخيص التفريقي</th><th>التوصية</th><th></th></tr>
+    <tr><th>{{ _('العرض') }}</th><th>{{ _('الخطورة') }}</th><th>{{ _('التشخيص التفريقي') }}</th><th>{{ _('التوصية') }}</th><th></th></tr>
     {% for e in entries %}
     <tr>
       <td>{{ e.symptom.name }}</td>
@@ -23,15 +20,15 @@
       <td style="font-size:12.5px;">{{ e.advice }}</td>
       <td>
         {% if current_user.has_permission('medical_options.manage') %}
-        <form method="post" action="{{ url_for('health.emergency_symptoms_delete', entry_id=e.id) }}" onsubmit="return confirm('حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها.');">
+        <form method="post" action="{{ url_for('health.emergency_symptoms_delete', entry_id=e.id) }}" onsubmit="return confirm('{{ _('حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها.') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="btn danger" type="submit" style="padding:6px 12px; font-size:12px;">حذف</button>
+          <button class="btn danger" type="submit" style="padding:6px 12px; font-size:12px;">{{ _('حذف') }}</button>
         </form>
         {% endif %}
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه أعراض طوارئ مسجَّلة بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه أعراض طوارئ مسجَّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
@@ -39,28 +36,28 @@
 
 {% if current_user.has_permission('medical_options.manage') %}
 <div class="card">
-  <h3 style="font-size:15px;">إضافة عرض طوارئ جديد</h3>
+  <h3 style="font-size:15px;">{{ _('إضافة عرض طوارئ جديد') }}</h3>
   <form method="post" action="{{ url_for('health.emergency_symptoms_new') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>العرض</label>
+    <label>{{ _('العرض') }}</label>
     <select name="symptom_id" required>
-      <option value="">اختر عرض</option>
+      <option value="">{{ _('اختر عرض') }}</option>
       {% for s in available_symptoms %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">ما لقيت العرض؟ <a href="{{ url_for('health.symptoms_new') }}">أضفه أولاً من هنا</a> بعدين ارجع.</p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('ما لقيت العرض؟') }} <a href="{{ url_for('health.symptoms_new') }}">{{ _('أضفه أولاً من هنا') }}</a> {{ _('بعدين ارجع.') }}</p>
 
-    <label>درجة الخطورة</label>
+    <label>{{ _('درجة الخطورة') }}</label>
     <select name="severity">
       {% for choice in severity_choices %}<option value="{{ choice }}" {{ 'selected' if choice == 'شديدة' }}>{{ choice }}</option>{% endfor %}
     </select>
 
-    <label>التشخيص التفريقي (يظهر بشاشة النتيجة)</label>
-    <textarea name="differential" rows="2" required placeholder="مثال: اشتباه ليستريا / نقص فيتامين B1 / التهاب ملتحمة معدٍ"></textarea>
+    <label>{{ _('التشخيص التفريقي (يظهر بشاشة النتيجة)') }}</label>
+    <textarea name="differential" rows="2" required placeholder="{{ _('مثال: اشتباه ليستريا / نقص فيتامين B1 / التهاب ملتحمة معدٍ') }}"></textarea>
 
-    <label>التوصية الفورية</label>
-    <textarea name="advice" rows="2" required placeholder="مثال: راجع الفحص البيطري الفوري..."></textarea>
+    <label>{{ _('التوصية الفورية') }}</label>
+    <textarea name="advice" rows="2" required placeholder="{{ _('مثال: راجع الفحص البيطري الفوري...') }}"></textarea>
 
-    <button class="btn" type="submit">إضافة للقائمة</button>
+    <button class="btn" type="submit">{{ _('إضافة للقائمة') }}</button>
   </form>
 </div>
 {% endif %}

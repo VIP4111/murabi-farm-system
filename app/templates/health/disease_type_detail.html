@@ -5,71 +5,67 @@
     <h2>{{ disease.name }}</h2>
     <div style="display:flex; gap:8px;">
       {% if current_user.has_permission('medical_options.manage') %}
-      <a class="btn light" href="{{ url_for('health.link_wizard') }}">🧭 المعالج التفاعلي</a>
+      <a class="btn light" href="{{ url_for('health.link_wizard') }}">🧭 {{ _('المعالج التفاعلي') }}</a>
       {% endif %}
-      <a class="btn light" href="{{ url_for('health.disease_types_list') }}">← كل الأمراض</a>
+      <a class="btn light" href="{{ url_for('health.disease_types_list') }}">← {{ _('كل الأمراض') }}</a>
     </div>
   </div>
   {% if disease.notes %}<p style="color:var(--muted); font-size:13px;">{{ disease.notes }}</p>{% endif %}
   <p class="notice" style="font-size:12.5px;">
-    ⚠️ هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات
-    التشخيص فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1
-    (محتمل/مصاحب) إلى 3 (دليل قوي مميّز). "إجباري" و"استبعادي" مخزَّنان
-    من الآن، وتأثيرهما الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة
-    من تطوير المحرك.
+    ⚠️ {{ _('هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات التشخيص فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1 (محتمل/مصاحب) إلى 3 (دليل قوي مميّز). "إجباري" و"استبعادي" مخزَّنان من الآن، وتأثيرهما الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة من تطوير المحرك.') }}
   </p>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">الأعراض المرتبطة ({{ links|length }})</h3>
+  <h3 style="font-size:15px;">{{ _('الأعراض المرتبطة (%(n)s)', n=links|length) }}</h3>
   {% if current_user.has_permission('medical_options.manage') %}
   <div class="table-scroll">
   <table>
-    <tr><th>العرض</th><th>الوزن (1-3)</th><th>إجباري</th><th>استبعادي</th><th></th></tr>
+    <tr><th>{{ _('العرض') }}</th><th>{{ _('الوزن (1-3)') }}</th><th>{{ _('إجباري') }}</th><th>{{ _('استبعادي') }}</th><th></th></tr>
     {% for l in links %}
     <tr>
-      <td>{{ l.symptom.name }}{% if l.symptom.is_primary %} <span class="badge on" style="font-size:10px;">رئيسي</span>{% endif %}</td>
+      <td>{{ l.symptom.name }}{% if l.symptom.is_primary %} <span class="badge on" style="font-size:10px;">{{ _('رئيسي') }}</span>{% endif %}</td>
       <td colspan="4">
         <form method="post" action="{{ url_for('health.disease_symptom_link_update', link_id=l.id) }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input type="number" name="weight" min="1" max="3" value="{{ l.weight }}" style="width:64px; margin-bottom:0;">
           <label style="display:flex; align-items:center; gap:4px; font-weight:normal; margin:0;">
-            <input type="checkbox" name="is_required" value="1" {{ 'checked' if l.is_required }} style="width:auto; margin:0;"> إجباري
+            <input type="checkbox" name="is_required" value="1" {{ 'checked' if l.is_required }} style="width:auto; margin:0;"> {{ _('إجباري') }}
           </label>
           <label style="display:flex; align-items:center; gap:4px; font-weight:normal; margin:0;">
-            <input type="checkbox" name="is_exclusionary" value="1" {{ 'checked' if l.is_exclusionary }} style="width:auto; margin:0;"> استبعادي
+            <input type="checkbox" name="is_exclusionary" value="1" {{ 'checked' if l.is_exclusionary }} style="width:auto; margin:0;"> {{ _('استبعادي') }}
           </label>
           <label style="display:flex; align-items:center; gap:4px; font-weight:normal; margin:0;">
-            <input type="checkbox" name="requires_isolation" value="1" {{ 'checked' if l.requires_isolation }} style="width:auto; margin:0;"> يتطلب عزل فوري
+            <input type="checkbox" name="requires_isolation" value="1" {{ 'checked' if l.requires_isolation }} style="width:auto; margin:0;"> {{ _('يتطلب عزل فوري') }}
           </label>
-          <button class="btn light" type="submit" style="padding:6px 12px; font-size:12px;">حفظ</button>
+          <button class="btn light" type="submit" style="padding:6px 12px; font-size:12px;">{{ _('حفظ') }}</button>
         </form>
       </td>
       <td>
-        <form method="post" action="{{ url_for('health.disease_symptom_link_delete', link_id=l.id) }}" onsubmit="return confirm('حذف الرابط بين هذا المرض وهذا العرض؟');">
+        <form method="post" action="{{ url_for('health.disease_symptom_link_delete', link_id=l.id) }}" onsubmit="return confirm('{{ _('حذف الرابط بين هذا المرض وهذا العرض؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="btn danger" type="submit" style="padding:6px 12px; font-size:12px;">حذف</button>
+          <button class="btn danger" type="submit" style="padding:6px 12px; font-size:12px;">{{ _('حذف') }}</button>
         </form>
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه أعراض مربوطة بهذا المرض بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه أعراض مربوطة بهذا المرض بعد.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
   {% else %}
   <div class="table-scroll">
   <table>
-    <tr><th>العرض</th><th>الوزن</th><th>إجباري</th><th>استبعادي</th><th>عزل فوري</th></tr>
+    <tr><th>{{ _('العرض') }}</th><th>{{ _('الوزن') }}</th><th>{{ _('إجباري') }}</th><th>{{ _('استبعادي') }}</th><th>{{ _('عزل فوري') }}</th></tr>
     {% for l in links %}
     <tr>
       <td>{{ l.symptom.name }}</td><td>{{ l.weight }}</td>
-      <td>{{ 'نعم' if l.is_required else '-' }}</td>
-      <td>{{ 'نعم' if l.is_exclusionary else '-' }}</td>
-      <td>{{ 'نعم' if l.requires_isolation else '-' }}</td>
+      <td>{{ _('نعم') if l.is_required else '-' }}</td>
+      <td>{{ _('نعم') if l.is_exclusionary else '-' }}</td>
+      <td>{{ _('نعم') if l.requires_isolation else '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه أعراض مربوطة بهذا المرض بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه أعراض مربوطة بهذا المرض بعد.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
@@ -78,27 +74,27 @@
 
 {% if current_user.has_permission('medical_options.manage') %}
 <div class="card">
-  <h3 style="font-size:15px;">ربط عرض جديد</h3>
+  <h3 style="font-size:15px;">{{ _('ربط عرض جديد') }}</h3>
   <form method="post" action="{{ url_for('health.disease_symptom_link_new', disease_id=disease.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>العرض</label>
+    <label>{{ _('العرض') }}</label>
     <select name="symptom_id" required>
-      <option value="">اختر عرض</option>
-      {% for s in available_symptoms %}<option value="{{ s.id }}">{{ s.name }}{% if s.is_primary %} (رئيسي){% endif %}</option>{% endfor %}
+      <option value="">{{ _('اختر عرض') }}</option>
+      {% for s in available_symptoms %}<option value="{{ s.id }}">{{ s.name }}{% if s.is_primary %} ({{ _('رئيسي') }}){% endif %}</option>{% endfor %}
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">ما لقيت العرض اللي تبيه؟ <a href="{{ url_for('health.symptoms_new') }}">أضفه أولاً من هنا</a> بعدين ارجع.</p>
-    <label>الوزن (1-3)</label>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('ما لقيت العرض اللي تبيه؟') }} <a href="{{ url_for('health.symptoms_new') }}">{{ _('أضفه أولاً من هنا') }}</a> {{ _('بعدين ارجع.') }}</p>
+    <label>{{ _('الوزن (1-3)') }}</label>
     <input type="number" name="weight" min="1" max="3" value="2">
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
-      <input type="checkbox" name="is_required" value="1" style="width:auto; margin:0;"> إجباري
+      <input type="checkbox" name="is_required" value="1" style="width:auto; margin:0;"> {{ _('إجباري') }}
     </label>
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
-      <input type="checkbox" name="is_exclusionary" value="1" style="width:auto; margin:0;"> استبعادي
+      <input type="checkbox" name="is_exclusionary" value="1" style="width:auto; margin:0;"> {{ _('استبعادي') }}
     </label>
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
-      <input type="checkbox" name="requires_isolation" value="1" style="width:auto; margin:0;"> يتطلب عزل فوري
+      <input type="checkbox" name="requires_isolation" value="1" style="width:auto; margin:0;"> {{ _('يتطلب عزل فوري') }}
     </label>
-    <button class="btn" type="submit">ربط العرض</button>
+    <button class="btn" type="submit">{{ _('ربط العرض') }}</button>
   </form>
 </div>
 {% endif %}

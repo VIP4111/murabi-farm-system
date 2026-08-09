@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:08+0300\n"
+"POT-Creation-Date: 2026-08-10 02:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -659,7 +659,8 @@ msgstr "छोड़ें, मुझे जरूरत नहीं"
 msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr "यह बस एक त्वरित गाइड है — हर चरण खुद पूरा होते ही चेक हो जाता है, और आपको यहां वापस आए बिना नीचे वही त्वरित बटन इस्तेमाल कर सकते हैं।"
 
-#: app/templates/home.html:21 app/templates/team/report_form.html:16
+#: app/templates/health/symptom_form.html:14 app/templates/home.html:21
+#: app/templates/team/report_form.html:16
 msgid "إضافة"
 msgstr "जोड़ें"
 
@@ -870,6 +871,7 @@ msgstr "समाप्ति तिथि (वैकल्पिक)"
 #: app/templates/feed/item_form.html:33
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
+#: app/templates/health/disease_types_list.html:23
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -889,6 +891,9 @@ msgstr "केवल तभी भरें जब स्क्रीन ने 
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
+#: app/templates/health/disease_type_detail.html:41
+#: app/templates/health/disease_type_form.html:9
+#: app/templates/health/doctor_form.html:10
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1092,8 +1097,12 @@ msgstr "नया चारा घटक"
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
 #: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
+#: app/templates/health/disease_types_list.html:23
+#: app/templates/health/doctor_form.html:7
+#: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr "नाम"
 
@@ -1229,7 +1238,9 @@ msgstr "घटक"
 
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32 app/templates/team/report_detail.html:11
+#: app/templates/finance/list.html:32
+#: app/templates/health/symptoms_list.html:19
+#: app/templates/team/report_detail.html:11
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1570,6 +1581,7 @@ msgstr "रोग"
 
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
 #: app/templates/health/diseases_list.html:14
+#: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1648,7 +1660,8 @@ msgstr "देखें"
 msgid "تأكيد الإلغاء؟"
 msgstr "रद्द करने की पुष्टि करें?"
 
-#: app/templates/finance/list.html:55 app/templates/team/report_detail.html:56
+#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "रद्द करें"
 
@@ -1745,6 +1758,7 @@ msgid "تعبئة تلقائية من مهمة علاج مخطَّط — راج�
 msgstr "एक नियोजित उपचार कार्य से स्वतः भरा गया — सहेजने से पहले समीक्षा करें। यहाँ सहेजने से कार्य स्वतः पूरा हो जाता है।"
 
 #: app/templates/health/disease_form.html:23
+#: app/templates/health/disease_type_form.html:7
 msgid "اسم المرض"
 msgstr "बीमारी का नाम"
 
@@ -1813,7 +1827,166 @@ msgstr "ओवरराइड कारण (यदि परजीवी-रो�
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "इसे केवल तभी भरें जब स्क्रीन ने चेतावनी दी हो — दोहराव का चिकित्सीय कारण लिखें।"
 
+#: app/templates/health/disease_type_detail.html:8
+msgid "المعالج التفاعلي"
+msgstr "इंटरैक्टिव विज़ार्ड"
+
+#: app/templates/health/disease_type_detail.html:10
+msgid "كل الأمراض"
+msgstr "सभी रोग"
+
+#: app/templates/health/disease_type_detail.html:15
+msgid "هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات التشخيص فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1 (محتمل/مصاحب) إلى 3 (دليل قوي مميّز). \"إجباري\" و\"استبعادي\" مخزَّنان من الآن، وتأثيرهما الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة من تطوير المحرك."
+msgstr "ये लक्षण और भार केवल निदान संभावनाओं को क्रमबद्ध करने में सहायता के लिए पैटर्न-मिलान संदर्भ हैं — अंतिम निर्णय हमेशा डॉक्टर के पास रहता है। भार 1 (संभावित/सहवर्ती) से 3 (मजबूत विशिष्ट प्रमाण) तक। \"अनिवार्य\" और \"बहिष्करणीय\" अभी से संग्रहीत हैं, और संभावना गणना पर उनका वास्तविक प्रभाव इंजन विकास के भविष्य के चरण में सक्रिय होगा।"
+
+#: app/templates/health/disease_type_detail.html:20
+#, python-format
+msgid "الأعراض المرتبطة (%(n)s)"
+msgstr "जुड़े लक्षण (%(n)s)"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:80
+#: app/templates/health/emergency_symptoms_list.html:14
+#: app/templates/health/emergency_symptoms_list.html:42
+msgid "العرض"
+msgstr "लक्षण"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:86
+msgid "الوزن (1-3)"
+msgstr "भार (1-3)"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:33
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:89
+msgid "إجباري"
+msgstr "अनिवार्य"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:36
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:92
+msgid "استبعادي"
+msgstr "बहिष्करणीय"
+
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr "प्राथमिक"
+
+#: app/templates/health/disease_type_detail.html:39
+#: app/templates/health/disease_type_detail.html:95
+msgid "يتطلب عزل فوري"
+msgstr "तत्काल अलगाव आवश्यक"
+
+#: app/templates/health/disease_type_detail.html:45
+msgid "حذف الرابط بين هذا المرض وهذا العرض؟"
+msgstr "इस रोग और इस लक्षण के बीच का लिंक हटाएं?"
+
+#: app/templates/health/disease_type_detail.html:47
+#: app/templates/health/emergency_symptoms_list.html:25
+#: app/templates/team/_suggested_tasks_rows.html:25
+#: app/templates/team/task_detail.html:80
+msgid "حذف"
+msgstr "हटाएं"
+
+#: app/templates/health/disease_type_detail.html:52
+#: app/templates/health/disease_type_detail.html:68
+msgid "ما فيه أعراض مربوطة بهذا المرض بعد."
+msgstr "अभी तक इस रोग से कोई लक्षण जुड़ा नहीं है।"
+
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "भार"
+
+#: app/templates/health/disease_type_detail.html:59
+msgid "عزل فوري"
+msgstr "तत्काल अलगाव"
+
+#: app/templates/health/disease_type_detail.html:63
+#: app/templates/health/disease_type_detail.html:64
+#: app/templates/health/disease_type_detail.html:65
+msgid "نعم"
+msgstr "हाँ"
+
+#: app/templates/health/disease_type_detail.html:77
+msgid "ربط عرض جديد"
+msgstr "नया लक्षण जोड़ें"
+
+#: app/templates/health/disease_type_detail.html:82
+#: app/templates/health/emergency_symptoms_list.html:44
+msgid "اختر عرض"
+msgstr "लक्षण चुनें"
+
+#: app/templates/health/disease_type_detail.html:85
+msgid "ما لقيت العرض اللي تبيه؟"
+msgstr "आपको चाहिए वह लक्षण नहीं मिला?"
+
+#: app/templates/health/disease_type_detail.html:85
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "أضفه أولاً من هنا"
+msgstr "पहले यहां से जोड़ें"
+
+#: app/templates/health/disease_type_detail.html:85
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "بعدين ارجع."
+msgstr "फिर वापस आएं।"
+
+#: app/templates/health/disease_type_detail.html:97
+msgid "ربط العرض"
+msgstr "लक्षण जोड़ें"
+
+#: app/templates/health/disease_type_form.html:4
+msgid "إضافة مرض للقائمة"
+msgstr "सूची में रोग जोड़ें"
+
+#: app/templates/health/disease_type_form.html:8
+msgid "ملاحظات (اختياري)"
+msgstr "टिप्पणियां (वैकल्पिक)"
+
+#: app/templates/health/disease_types_list.html:5
+msgid "الأمراض الشائعة (قائمة الاقتراحات)"
+msgstr "सामान्य रोग (सुझाव सूची)"
+
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr "लक्षण-रोग लिंकिंग विज़ार्ड"
+
+#: app/templates/health/disease_types_list.html:9
+#: app/templates/health/emergency_symptoms_list.html:4
+msgid "قائمة أعراض الطوارئ"
+msgstr "आपातकालीन लक्षण सूची"
+
+#: app/templates/health/disease_types_list.html:10
+msgid "إضافة مرض"
+msgstr "रोग जोड़ें"
+
+#: app/templates/health/disease_types_list.html:15
+msgid "مرجع اقتراحات فقط لتسريع تسجيل \"اسم المرض\" بشاشة الأمراض — أي اسم غير موجود هنا يُكتب يدوياً عادي بدون أي قيد. لإدارة الأعراض المرتبطة بكل مرض (شجرة المساعد التشخيصي)، افتح المرض من الجدول تحت، أو راجع"
+msgstr "रोग स्क्रीन पर \"रोग का नाम\" दर्ज करने में तेजी लाने के लिए केवल एक सुझाव संदर्भ — यहां न होने वाला कोई भी नाम बिना किसी प्रतिबंध के मैन्युअल रूप से लिखा जा सकता है। हर रोग से जुड़े लक्षणों (निदान सहायक वृक्ष) को प्रबंधित करने के लिए, नीचे दी गई तालिका से रोग खोलें, या देखें"
+
+#: app/templates/health/disease_types_list.html:16
+msgid "قائمة الأعراض"
+msgstr "लक्षण सूची"
+
+#: app/templates/health/disease_types_list.html:16
+msgid "نفسها."
+msgstr "स्वयं।"
+
+#: app/templates/health/disease_types_list.html:27
+msgid "إدارة الأعراض"
+msgstr "लक्षण प्रबंधित करें"
+
+#: app/templates/health/disease_types_list.html:30
+#: app/templates/health/symptoms_list.html:26
+msgid "القائمة فاضية."
+msgstr "सूची खाली है।"
+
 #: app/templates/health/diseases_list.html:8
+#: app/templates/health/symptoms_list.html:12
 msgid "قائمة الأمراض الشائعة"
 msgstr "सामान्य रोगों की सूची"
 
@@ -1841,6 +2014,90 @@ msgstr "बंद करें"
 #: app/templates/health/diseases_list.html:33
 msgid "لا يوجد حالات مسجّلة بعد."
 msgstr "अभी तक कोई मामला दर्ज नहीं है।"
+
+#: app/templates/health/doctor_form.html:4
+#: app/templates/health/doctors_list.html:6
+msgid "طبيب جديد"
+msgstr "नया डॉक्टर"
+
+#: app/templates/health/doctor_form.html:8
+#: app/templates/health/doctors_list.html:10
+msgid "الجوال"
+msgstr "मोबाइल"
+
+#: app/templates/health/doctor_form.html:9
+#: app/templates/health/doctors_list.html:10
+msgid "التخصص"
+msgstr "विशेषज्ञता"
+
+#: app/templates/health/doctors_list.html:5
+msgid "الأطباء"
+msgstr "डॉक्टर"
+
+#: app/templates/health/doctors_list.html:14
+msgid "لا يوجد أطباء مسجّلين بعد."
+msgstr "अभी तक कोई डॉक्टर पंजीकृत नहीं है।"
+
+#: app/templates/health/emergency_symptoms_list.html:6
+msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
+msgstr "यहां का कोई भी लक्षण, यदि निदान सहायक के लक्षणों में शामिल हो, पशु को तुरंत और स्वचालित रूप से अलग कर देता है और परिणाम स्क्रीन पर तत्काल विभेदक निदान दिखाता है — सामान्य संभावना क्रम से अलग। जानबूझकर स्पष्ट नामों की सूची — हम व्यापक श्रेणी (जैसे \"तंत्रिका संबंधी लक्षण\") का उपयोग नहीं करते ताकि छोटे मामलों के लिए अत्यधिक अलगाव से बचा जा सके।"
+
+#: app/templates/health/emergency_symptoms_list.html:11
+#, python-format
+msgid "الأعراض المسجَّلة (%(n)s)"
+msgstr "दर्ज लक्षण (%(n)s)"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "الخطورة"
+msgstr "गंभीरता"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "التشخيص التفريقي"
+msgstr "विभेदक निदान"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "التوصية"
+msgstr "सिफारिश"
+
+#: app/templates/health/emergency_symptoms_list.html:23
+msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
+msgstr "इस लक्षण को आपातकालीन सूची से हटाएं? इसका स्वचालित अलगाव उसके बाद रुक जाएगा।"
+
+#: app/templates/health/emergency_symptoms_list.html:31
+msgid "ما فيه أعراض طوارئ مسجَّلة بعد."
+msgstr "अभी तक कोई आपातकालीन लक्षण दर्ज नहीं है।"
+
+#: app/templates/health/emergency_symptoms_list.html:39
+msgid "إضافة عرض طوارئ جديد"
+msgstr "नया आपातकालीन लक्षण जोड़ें"
+
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "ما لقيت العرض؟"
+msgstr "लक्षण नहीं मिला?"
+
+#: app/templates/health/emergency_symptoms_list.html:49
+msgid "درجة الخطورة"
+msgstr "गंभीरता स्तर"
+
+#: app/templates/health/emergency_symptoms_list.html:54
+msgid "التشخيص التفريقي (يظهر بشاشة النتيجة)"
+msgstr "विभेदक निदान (परिणाम स्क्रीन पर दिखता है)"
+
+#: app/templates/health/emergency_symptoms_list.html:55
+msgid "مثال: اشتباه ليستريا / نقص فيتامين B1 / التهاب ملتحمة معدٍ"
+msgstr "उदाहरण: लिस्टेरिया संदेह / विटामिन B1 की कमी / संक्रामक नेत्रश्लेष्मलाशोथ"
+
+#: app/templates/health/emergency_symptoms_list.html:57
+msgid "التوصية الفورية"
+msgstr "तत्काल सिफारिश"
+
+#: app/templates/health/emergency_symptoms_list.html:58
+msgid "مثال: راجع الفحص البيطري الفوري..."
+msgstr "उदाहरण: तत्काल पशु चिकित्सा जांच कराएं..."
+
+#: app/templates/health/emergency_symptoms_list.html:60
+msgid "إضافة للقائمة"
+msgstr "सूची में जोड़ें"
 
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
@@ -1906,6 +2163,38 @@ msgstr "उसी श्रेणी में विकल्प"
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
 msgstr "फिलहाल कोई कमी नहीं है"
+
+#: app/templates/health/symptom_form.html:4
+msgid "إضافة عرض جديد"
+msgstr "नया लक्षण जोड़ें"
+
+#: app/templates/health/symptom_form.html:7
+msgid "اسم العرض"
+msgstr "लक्षण का नाम"
+
+#: app/templates/health/symptom_form.html:11
+msgid "عرض رئيسي (تبدأ منه شجرة التشخيص، مثل \"حرارة\"/\"إسهال\")"
+msgstr "प्राथमिक लक्षण (निदान वृक्ष यहां से शुरू होता है, जैसे \"बुखार\"/\"दस्त\")"
+
+#: app/templates/health/symptom_form.html:13
+msgid "لو تركته بدون تحديد، يبقى \"عرض متابعة\" — يظهر بس كسؤال ثانوي بعد اختيار عرض رئيسي مرتبط."
+msgstr "यदि अचयनित छोड़ा जाए, तो यह \"अनुवर्ती लक्षण\" रहता है — किसी जुड़े प्राथमिक लक्षण के चुने जाने के बाद ही द्वितीयक प्रश्न के रूप में दिखता है।"
+
+#: app/templates/health/symptoms_list.html:5
+msgid "الأعراض (شجرة التشخيص)"
+msgstr "लक्षण (निदान वृक्ष)"
+
+#: app/templates/health/symptoms_list.html:7
+msgid "إضافة عرض"
+msgstr "लक्षण जोड़ें"
+
+#: app/templates/health/symptoms_list.html:11
+msgid "قائمة كل الأعراض المستخدمة بالمساعد التشخيصي (`/health/diagnose`) — الأعراض \"الرئيسية\" تبدأ منها الشجرة، والباقي أسئلة متابعة تظهر حسب الأمراض المرتبطة بها. لربط عرض بمرض معيّن ووزنه، افتح صفحة المرض من"
+msgstr "निदान सहायक (`/health/diagnose`) में उपयोग किए जाने वाले सभी लक्षणों की सूची — \"प्राथमिक\" लक्षण वे हैं जहां से वृक्ष शुरू होता है, बाकी अनुवर्ती प्रश्न हैं जो जुड़े रोगों के आधार पर दिखते हैं। किसी लक्षण को किसी विशिष्ट रोग से जोड़ने और भार देने के लिए, रोग का पृष्ठ यहां से खोलें"
+
+#: app/templates/health/symptoms_list.html:23
+msgid "متابعة"
+msgstr "अनुवर्ती"
 
 #: app/templates/health/vaccination_form.html:5
 msgid "تسجيل تطعيم"
@@ -2096,11 +2385,6 @@ msgstr "एक दिन के लिए स्थगित करें"
 #: app/templates/team/report_detail.html:51
 msgid "تأجيل"
 msgstr "स्थगित करें"
-
-#: app/templates/team/_suggested_tasks_rows.html:25
-#: app/templates/team/task_detail.html:80
-msgid "حذف"
-msgstr "हटाएं"
 
 #: app/templates/team/_suggested_tasks_rows.html:30
 msgid "لا يوجد مهام مقترحة حالياً."

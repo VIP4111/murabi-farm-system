@@ -2,16 +2,16 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>الأطباء</h2>
-    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.doctors_new') }}">+ طبيب جديد</a>{% endif %}
+    <h2>{{ _('الأطباء') }}</h2>
+    {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.doctors_new') }}">+ {{ _('طبيب جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>الاسم</th><th>الجوال</th><th>التخصص</th><th>الحالة</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('التخصص') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for d in doctors %}
     <tr><td>{{ d.name }}</td><td>{{ d.phone or '-' }}</td><td>{{ d.specialty or '-' }}</td><td>{{ d.status|ar_status }}</td></tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">لا يوجد أطباء مسجّلين بعد.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد أطباء مسجّلين بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

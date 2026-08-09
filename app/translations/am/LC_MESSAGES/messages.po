@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:08+0300\n"
+"POT-Creation-Date: 2026-08-10 02:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -659,7 +659,8 @@ msgstr "አልፍ፣ አላስፈልገኝም"
 msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr "ይህ ፈጣን መመሪያ ብቻ ነው — እያንዳንዱ ንጥል ስትሠራው በራሱ ይረጋገጣል፣ እና ወደዚህ ሳትመለስ ከታች ያሉትን ተመሳሳይ ፈጣን አዝራሮች መጠቀም ትችላለህ።"
 
-#: app/templates/home.html:21 app/templates/team/report_form.html:16
+#: app/templates/health/symptom_form.html:14 app/templates/home.html:21
+#: app/templates/team/report_form.html:16
 msgid "إضافة"
 msgstr "ጨምር"
 
@@ -870,6 +871,7 @@ msgstr "የመጨረሻ ቀን (አማራጭ)"
 #: app/templates/feed/item_form.html:33
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
+#: app/templates/health/disease_types_list.html:23
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -889,6 +891,9 @@ msgstr "ማስጠንቀቂያ ከታየ ብቻ ይሙሉ — ምክንያቱን 
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
+#: app/templates/health/disease_type_detail.html:41
+#: app/templates/health/disease_type_form.html:9
+#: app/templates/health/doctor_form.html:10
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1092,8 +1097,12 @@ msgstr "አዲስ የመኖ ንጥረ ነገር"
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
 #: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
+#: app/templates/health/disease_types_list.html:23
+#: app/templates/health/doctor_form.html:7
+#: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr "ስም"
 
@@ -1229,7 +1238,9 @@ msgstr "ክፍል"
 
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32 app/templates/team/report_detail.html:11
+#: app/templates/finance/list.html:32
+#: app/templates/health/symptoms_list.html:19
+#: app/templates/team/report_detail.html:11
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1570,6 +1581,7 @@ msgstr "በሽታ"
 
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
 #: app/templates/health/diseases_list.html:14
+#: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1648,7 +1660,8 @@ msgstr "ይመልከቱ"
 msgid "تأكيد الإلغاء؟"
 msgstr "መሰረዙን ያረጋግጡ?"
 
-#: app/templates/finance/list.html:55 app/templates/team/report_detail.html:56
+#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "ሰርዝ"
 
@@ -1745,6 +1758,7 @@ msgid "تعبئة تلقائية من مهمة علاج مخطَّط — راج�
 msgstr "ከታቀደ የሕክምና ተግባር በራስ-ሰር ተሞልቷል — ከማስቀመጥዎ በፊት ይገምግሙ። እዚህ ማስቀመጥ ተግባሩን በራስ-ሰር ያጠናቅቃል።"
 
 #: app/templates/health/disease_form.html:23
+#: app/templates/health/disease_type_form.html:7
 msgid "اسم المرض"
 msgstr "የበሽታ ስም"
 
@@ -1813,7 +1827,166 @@ msgstr "የመተላለፍ ምክንያት (የተባይ ማጥፊያ መጠን 
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "ማያ ገጹ ማስጠንቀቂያ ከሰጠ ብቻ ይሙሉ — ለድግግሞሹ የሕክምና ምክንያት ይጻፉ።"
 
+#: app/templates/health/disease_type_detail.html:8
+msgid "المعالج التفاعلي"
+msgstr "በይነተገናኝ አዋቂ"
+
+#: app/templates/health/disease_type_detail.html:10
+msgid "كل الأمراض"
+msgstr "ሁሉም በሽታዎች"
+
+#: app/templates/health/disease_type_detail.html:15
+msgid "هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات التشخيص فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1 (محتمل/مصاحب) إلى 3 (دليل قوي مميّز). \"إجباري\" و\"استبعادي\" مخزَّنان من الآن، وتأثيرهما الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة من تطوير المحرك."
+msgstr "እነዚህ ምልክቶች እና ክብደቶች የምርመራ ዕድሎችን ለማደራጀት የሚረዱ የስርዓት ንፅፅር ማጣቀሻ ብቻ ናቸው — የመጨረሻው ውሳኔ ሁልጊዜ ለዶክተር ይቀራል። ክብደት ከ1 (ሊሆን የሚችል/ተያያዥ) እስከ 3 (ጠንካራ ልዩ ማስረጃ)። \"አስፈላጊ\" እና \"አግላይ\" ከአሁን ጀምሮ ተከማችተዋል፣ በዕድል ስሌት ላይ ትክክለኛ ተጽዕኖአቸው በሚቀጥለው የሞተር ልማት ደረጃ ይነቃል።"
+
+#: app/templates/health/disease_type_detail.html:20
+#, python-format
+msgid "الأعراض المرتبطة (%(n)s)"
+msgstr "የተያያዙ ምልክቶች (%(n)s)"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:80
+#: app/templates/health/emergency_symptoms_list.html:14
+#: app/templates/health/emergency_symptoms_list.html:42
+msgid "العرض"
+msgstr "ምልክት"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:86
+msgid "الوزن (1-3)"
+msgstr "ክብደት (1-3)"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:33
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:89
+msgid "إجباري"
+msgstr "አስፈላጊ"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:36
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:92
+msgid "استبعادي"
+msgstr "አግላይ"
+
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr "ዋና"
+
+#: app/templates/health/disease_type_detail.html:39
+#: app/templates/health/disease_type_detail.html:95
+msgid "يتطلب عزل فوري"
+msgstr "ወዲያውኑ መገለል ይፈልጋል"
+
+#: app/templates/health/disease_type_detail.html:45
+msgid "حذف الرابط بين هذا المرض وهذا العرض؟"
+msgstr "በዚህ በሽታ እና በዚህ ምልክት መካከል ያለውን ግንኙነት ማጥፋት?"
+
+#: app/templates/health/disease_type_detail.html:47
+#: app/templates/health/emergency_symptoms_list.html:25
+#: app/templates/team/_suggested_tasks_rows.html:25
+#: app/templates/team/task_detail.html:80
+msgid "حذف"
+msgstr "ሰርዝ"
+
+#: app/templates/health/disease_type_detail.html:52
+#: app/templates/health/disease_type_detail.html:68
+msgid "ما فيه أعراض مربوطة بهذا المرض بعد."
+msgstr "እስካሁን ከዚህ በሽታ ጋር የተያያዘ ምልክት የለም።"
+
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "ክብደት"
+
+#: app/templates/health/disease_type_detail.html:59
+msgid "عزل فوري"
+msgstr "ወዲያውኑ መገለል"
+
+#: app/templates/health/disease_type_detail.html:63
+#: app/templates/health/disease_type_detail.html:64
+#: app/templates/health/disease_type_detail.html:65
+msgid "نعم"
+msgstr "አዎ"
+
+#: app/templates/health/disease_type_detail.html:77
+msgid "ربط عرض جديد"
+msgstr "አዲስ ምልክት አገናኝ"
+
+#: app/templates/health/disease_type_detail.html:82
+#: app/templates/health/emergency_symptoms_list.html:44
+msgid "اختر عرض"
+msgstr "ምልክት ይምረጡ"
+
+#: app/templates/health/disease_type_detail.html:85
+msgid "ما لقيت العرض اللي تبيه؟"
+msgstr "የሚፈልጉትን ምልክት አላገኙም?"
+
+#: app/templates/health/disease_type_detail.html:85
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "أضفه أولاً من هنا"
+msgstr "መጀመሪያ ከዚህ ያክሉት"
+
+#: app/templates/health/disease_type_detail.html:85
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "بعدين ارجع."
+msgstr "ከዚያ ተመለሱ።"
+
+#: app/templates/health/disease_type_detail.html:97
+msgid "ربط العرض"
+msgstr "ምልክት አገናኝ"
+
+#: app/templates/health/disease_type_form.html:4
+msgid "إضافة مرض للقائمة"
+msgstr "ወደ ዝርዝሩ በሽታ ያክሉ"
+
+#: app/templates/health/disease_type_form.html:8
+msgid "ملاحظات (اختياري)"
+msgstr "ማስታወሻዎች (አማራጭ)"
+
+#: app/templates/health/disease_types_list.html:5
+msgid "الأمراض الشائعة (قائمة الاقتراحات)"
+msgstr "የተለመዱ በሽታዎች (የአስተያየት ዝርዝር)"
+
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr "ምልክት-ወደ-በሽታ አገናኝ አዋቂ"
+
+#: app/templates/health/disease_types_list.html:9
+#: app/templates/health/emergency_symptoms_list.html:4
+msgid "قائمة أعراض الطوارئ"
+msgstr "የአደጋ ጊዜ ምልክቶች ዝርዝር"
+
+#: app/templates/health/disease_types_list.html:10
+msgid "إضافة مرض"
+msgstr "በሽታ ያክሉ"
+
+#: app/templates/health/disease_types_list.html:15
+msgid "مرجع اقتراحات فقط لتسريع تسجيل \"اسم المرض\" بشاشة الأمراض — أي اسم غير موجود هنا يُكتب يدوياً عادي بدون أي قيد. لإدارة الأعراض المرتبطة بكل مرض (شجرة المساعد التشخيصي)، افتح المرض من الجدول تحت، أو راجع"
+msgstr "በበሽታዎች ገጽ ላይ \"የበሽታ ስም\" መመዝገብን ለማፋጠን የአስተያየት ማጣቀሻ ብቻ — እዚህ የሌለ ማንኛውም ስም ያለ ገደብ በእጅ ሊጻፍ ይችላል። ከእያንዳንዱ በሽታ ጋር የተያያዙ ምልክቶችን (የምርመራ ረዳት ዛፍ) ለማስተዳደር፣ በሽታውን ከታች ካለው ሠንጠረዥ ይክፈቱ፣ ወይም ይመልከቱ"
+
+#: app/templates/health/disease_types_list.html:16
+msgid "قائمة الأعراض"
+msgstr "የምልክቶች ዝርዝር"
+
+#: app/templates/health/disease_types_list.html:16
+msgid "نفسها."
+msgstr "ራሱ።"
+
+#: app/templates/health/disease_types_list.html:27
+msgid "إدارة الأعراض"
+msgstr "ምልክቶችን ያስተዳድሩ"
+
+#: app/templates/health/disease_types_list.html:30
+#: app/templates/health/symptoms_list.html:26
+msgid "القائمة فاضية."
+msgstr "ዝርዝሩ ባዶ ነው።"
+
 #: app/templates/health/diseases_list.html:8
+#: app/templates/health/symptoms_list.html:12
 msgid "قائمة الأمراض الشائعة"
 msgstr "የተለመዱ በሽታዎች ዝርዝር"
 
@@ -1841,6 +2014,90 @@ msgstr "ዝጋ"
 #: app/templates/health/diseases_list.html:33
 msgid "لا يوجد حالات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ ጉዳይ የለም።"
+
+#: app/templates/health/doctor_form.html:4
+#: app/templates/health/doctors_list.html:6
+msgid "طبيب جديد"
+msgstr "አዲስ ዶክተር"
+
+#: app/templates/health/doctor_form.html:8
+#: app/templates/health/doctors_list.html:10
+msgid "الجوال"
+msgstr "ስልክ"
+
+#: app/templates/health/doctor_form.html:9
+#: app/templates/health/doctors_list.html:10
+msgid "التخصص"
+msgstr "ስፔሻሊቲ"
+
+#: app/templates/health/doctors_list.html:5
+msgid "الأطباء"
+msgstr "ዶክተሮች"
+
+#: app/templates/health/doctors_list.html:14
+msgid "لا يوجد أطباء مسجّلين بعد."
+msgstr "እስካሁን የተመዘገበ ዶክተር የለም።"
+
+#: app/templates/health/emergency_symptoms_list.html:6
+msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
+msgstr "እዚህ ያለ ማንኛውም ምልክት፣ በምርመራ ረዳት ምልክቶች ውስጥ ከገባ፣ እንስሳውን ወዲያውኑ በራስ-ሰር ይለያል እና በውጤት ገጽ ላይ አስቸኳይ ንፅፅር ምርመራ ያሳያል — ከመደበኛው የዕድል ደረጃ አሰጣጥ ተለይቶ። ሆን ተብሎ ግልጽ የስም ዝርዝር — ለትንንሽ ጉዳዮች ከልክ ያለፈ መገለልን ለማስወገድ ሰፊ ምድብ (እንደ \"የነርቭ ምልክቶች\") አንጠቀምም።"
+
+#: app/templates/health/emergency_symptoms_list.html:11
+#, python-format
+msgid "الأعراض المسجَّلة (%(n)s)"
+msgstr "የተመዘገቡ ምልክቶች (%(n)s)"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "الخطورة"
+msgstr "ክብደት"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "التشخيص التفريقي"
+msgstr "ንፅፅር ምርመራ"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "التوصية"
+msgstr "ምክር"
+
+#: app/templates/health/emergency_symptoms_list.html:23
+msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
+msgstr "ይህን ምልክት ከአደጋ ጊዜ ዝርዝር ማጥፋት? ራስ-ሰር መገለሉ ከዚያ በኋላ ይቆማል።"
+
+#: app/templates/health/emergency_symptoms_list.html:31
+msgid "ما فيه أعراض طوارئ مسجَّلة بعد."
+msgstr "እስካሁን የተመዘገበ የአደጋ ጊዜ ምልክት የለም።"
+
+#: app/templates/health/emergency_symptoms_list.html:39
+msgid "إضافة عرض طوارئ جديد"
+msgstr "አዲስ የአደጋ ጊዜ ምልክት ያክሉ"
+
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "ما لقيت العرض؟"
+msgstr "ምልክቱን አላገኙም?"
+
+#: app/templates/health/emergency_symptoms_list.html:49
+msgid "درجة الخطورة"
+msgstr "የክብደት ደረጃ"
+
+#: app/templates/health/emergency_symptoms_list.html:54
+msgid "التشخيص التفريقي (يظهر بشاشة النتيجة)"
+msgstr "ንፅፅር ምርመራ (በውጤት ገጽ ላይ ይታያል)"
+
+#: app/templates/health/emergency_symptoms_list.html:55
+msgid "مثال: اشتباه ليستريا / نقص فيتامين B1 / التهاب ملتحمة معدٍ"
+msgstr "ምሳሌ: የሊስቴሪያ ጥርጣሬ / የቫይታሚን B1 እጥረት / ተላላፊ ኮንጃንክቲቫይትስ"
+
+#: app/templates/health/emergency_symptoms_list.html:57
+msgid "التوصية الفورية"
+msgstr "አስቸኳይ ምክር"
+
+#: app/templates/health/emergency_symptoms_list.html:58
+msgid "مثال: راجع الفحص البيطري الفوري..."
+msgstr "ምሳሌ: ወዲያውኑ የእንስሳት ምርመራ ያድርጉ..."
+
+#: app/templates/health/emergency_symptoms_list.html:60
+msgid "إضافة للقائمة"
+msgstr "ወደ ዝርዝሩ ያክሉ"
 
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
@@ -1906,6 +2163,38 @@ msgstr "በተመሳሳይ ምድብ ውስጥ ያሉ አማራጮች"
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
 msgstr "አሁን ምንም እጥረት የለም"
+
+#: app/templates/health/symptom_form.html:4
+msgid "إضافة عرض جديد"
+msgstr "አዲስ ምልክት ያክሉ"
+
+#: app/templates/health/symptom_form.html:7
+msgid "اسم العرض"
+msgstr "የምልክት ስም"
+
+#: app/templates/health/symptom_form.html:11
+msgid "عرض رئيسي (تبدأ منه شجرة التشخيص، مثل \"حرارة\"/\"إسهال\")"
+msgstr "ዋና ምልክት (የምርመራ ዛፍ ከዚህ ይጀምራል፣ እንደ \"ትኩሳት\"/\"ተቅማጥ\")"
+
+#: app/templates/health/symptom_form.html:13
+msgid "لو تركته بدون تحديد، يبقى \"عرض متابعة\" — يظهر بس كسؤال ثانوي بعد اختيار عرض رئيسي مرتبط."
+msgstr "ካልተመረጠ፣ \"ክትትል ምልክት\" ሆኖ ይቆያል — የተያያዘ ዋና ምልክት ከተመረጠ በኋላ ብቻ እንደ ሁለተኛ ጥያቄ ይታያል።"
+
+#: app/templates/health/symptoms_list.html:5
+msgid "الأعراض (شجرة التشخيص)"
+msgstr "ምልክቶች (የምርመራ ዛፍ)"
+
+#: app/templates/health/symptoms_list.html:7
+msgid "إضافة عرض"
+msgstr "ምልክት ያክሉ"
+
+#: app/templates/health/symptoms_list.html:11
+msgid "قائمة كل الأعراض المستخدمة بالمساعد التشخيصي (`/health/diagnose`) — الأعراض \"الرئيسية\" تبدأ منها الشجرة، والباقي أسئلة متابعة تظهر حسب الأمراض المرتبطة بها. لربط عرض بمرض معيّن ووزنه، افتح صفحة المرض من"
+msgstr "በምርመራ ረዳት (`/health/diagnose`) ውስጥ ጥቅም ላይ የዋሉ ሁሉም ምልክቶች ዝርዝር — \"ዋና\" ምልክቶች ዛፉ የሚጀምርባቸው ናቸው፣ የቀሩት ደግሞ በተያያዙ በሽታዎች ላይ በመመስረት የሚታዩ የክትትል ጥያቄዎች ናቸው። ምልክትን ከተወሰነ በሽታ ጋር ለማገናኘት እና ክብደት ለመስጠት፣ የበሽታውን ገጽ ከዚህ ይክፈቱ"
+
+#: app/templates/health/symptoms_list.html:23
+msgid "متابعة"
+msgstr "ክትትል"
 
 #: app/templates/health/vaccination_form.html:5
 msgid "تسجيل تطعيم"
@@ -2096,11 +2385,6 @@ msgstr "በአንድ ቀን አዘግይ"
 #: app/templates/team/report_detail.html:51
 msgid "تأجيل"
 msgstr "አዘግይ"
-
-#: app/templates/team/_suggested_tasks_rows.html:25
-#: app/templates/team/task_detail.html:80
-msgid "حذف"
-msgstr "ሰርዝ"
 
 #: app/templates/team/_suggested_tasks_rows.html:30
 msgid "لا يوجد مهام مقترحة حالياً."

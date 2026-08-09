@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:08+0300\n"
+"POT-Creation-Date: 2026-08-10 02:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -659,7 +659,8 @@ msgstr "Dismiss, I don't need it"
 msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
 msgstr "Just a quick guide — each item checks itself off once you do it, and you can use the same quick actions below without coming back here."
 
-#: app/templates/home.html:21 app/templates/team/report_form.html:16
+#: app/templates/health/symptom_form.html:14 app/templates/home.html:21
+#: app/templates/team/report_form.html:16
 msgid "إضافة"
 msgstr "Add"
 
@@ -870,6 +871,7 @@ msgstr "End date (optional)"
 #: app/templates/feed/item_form.html:33
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
+#: app/templates/health/disease_types_list.html:23
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
@@ -889,6 +891,9 @@ msgstr "Fill this only if the screen returned a warning — state the reason"
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
+#: app/templates/health/disease_type_detail.html:41
+#: app/templates/health/disease_type_form.html:9
+#: app/templates/health/doctor_form.html:10
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
@@ -1092,8 +1097,12 @@ msgstr "New feed item"
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
 #: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
+#: app/templates/health/disease_types_list.html:23
+#: app/templates/health/doctor_form.html:7
+#: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/symptoms_list.html:19
 msgid "الاسم"
 msgstr "Name"
 
@@ -1229,7 +1238,9 @@ msgstr "Component"
 
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32 app/templates/team/report_detail.html:11
+#: app/templates/finance/list.html:32
+#: app/templates/health/symptoms_list.html:19
+#: app/templates/team/report_detail.html:11
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1570,6 +1581,7 @@ msgstr "Disease"
 
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
 #: app/templates/health/diseases_list.html:14
+#: app/templates/health/doctors_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1648,7 +1660,8 @@ msgstr "View"
 msgid "تأكيد الإلغاء؟"
 msgstr "Confirm cancellation?"
 
-#: app/templates/finance/list.html:55 app/templates/team/report_detail.html:56
+#: app/templates/finance/list.html:55 app/templates/health/symptom_form.html:15
+#: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "Cancel"
 
@@ -1745,6 +1758,7 @@ msgid "تعبئة تلقائية من مهمة علاج مخطَّط — راج�
 msgstr "Auto-filled from a planned treatment task — review before saving. Saving here automatically completes the task."
 
 #: app/templates/health/disease_form.html:23
+#: app/templates/health/disease_type_form.html:7
 msgid "اسم المرض"
 msgstr "Disease Name"
 
@@ -1813,7 +1827,166 @@ msgstr "Override reason (if the repeat-antiparasitic-dose warning appeared)"
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
 msgstr "Only fill this if the screen returned a warning — write the medical reason for repeating."
 
+#: app/templates/health/disease_type_detail.html:8
+msgid "المعالج التفاعلي"
+msgstr "Interactive wizard"
+
+#: app/templates/health/disease_type_detail.html:10
+msgid "كل الأمراض"
+msgstr "All diseases"
+
+#: app/templates/health/disease_type_detail.html:15
+msgid "هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات التشخيص فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1 (محتمل/مصاحب) إلى 3 (دليل قوي مميّز). \"إجباري\" و\"استبعادي\" مخزَّنان من الآن، وتأثيرهما الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة من تطوير المحرك."
+msgstr "These symptoms and weights are a pattern-matching reference to help rank diagnosis likelihoods only — the final decision always remains with the doctor. Weight from 1 (possible/associated) to 3 (strong distinguishing evidence). \"Required\" and \"Exclusionary\" are stored from now on; their actual effect on the probability calculation will be enabled in a future engine phase."
+
+#: app/templates/health/disease_type_detail.html:20
+#, python-format
+msgid "الأعراض المرتبطة (%(n)s)"
+msgstr "Linked symptoms (%(n)s)"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:80
+#: app/templates/health/emergency_symptoms_list.html:14
+#: app/templates/health/emergency_symptoms_list.html:42
+msgid "العرض"
+msgstr "Symptom"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:86
+msgid "الوزن (1-3)"
+msgstr "Weight (1-3)"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:33
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:89
+msgid "إجباري"
+msgstr "Required"
+
+#: app/templates/health/disease_type_detail.html:24
+#: app/templates/health/disease_type_detail.html:36
+#: app/templates/health/disease_type_detail.html:59
+#: app/templates/health/disease_type_detail.html:92
+msgid "استبعادي"
+msgstr "Exclusionary"
+
+#: app/templates/health/disease_type_detail.html:27
+#: app/templates/health/disease_type_detail.html:83
+#: app/templates/health/symptoms_list.html:23
+msgid "رئيسي"
+msgstr "Primary"
+
+#: app/templates/health/disease_type_detail.html:39
+#: app/templates/health/disease_type_detail.html:95
+msgid "يتطلب عزل فوري"
+msgstr "Requires immediate isolation"
+
+#: app/templates/health/disease_type_detail.html:45
+msgid "حذف الرابط بين هذا المرض وهذا العرض؟"
+msgstr "Delete the link between this disease and this symptom?"
+
+#: app/templates/health/disease_type_detail.html:47
+#: app/templates/health/emergency_symptoms_list.html:25
+#: app/templates/team/_suggested_tasks_rows.html:25
+#: app/templates/team/task_detail.html:80
+msgid "حذف"
+msgstr "Delete"
+
+#: app/templates/health/disease_type_detail.html:52
+#: app/templates/health/disease_type_detail.html:68
+msgid "ما فيه أعراض مربوطة بهذا المرض بعد."
+msgstr "No symptoms linked to this disease yet."
+
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "Weight"
+
+#: app/templates/health/disease_type_detail.html:59
+msgid "عزل فوري"
+msgstr "Immediate isolation"
+
+#: app/templates/health/disease_type_detail.html:63
+#: app/templates/health/disease_type_detail.html:64
+#: app/templates/health/disease_type_detail.html:65
+msgid "نعم"
+msgstr "Yes"
+
+#: app/templates/health/disease_type_detail.html:77
+msgid "ربط عرض جديد"
+msgstr "Link a new symptom"
+
+#: app/templates/health/disease_type_detail.html:82
+#: app/templates/health/emergency_symptoms_list.html:44
+msgid "اختر عرض"
+msgstr "Choose a symptom"
+
+#: app/templates/health/disease_type_detail.html:85
+msgid "ما لقيت العرض اللي تبيه؟"
+msgstr "Can't find the symptom you need?"
+
+#: app/templates/health/disease_type_detail.html:85
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "أضفه أولاً من هنا"
+msgstr "Add it here first"
+
+#: app/templates/health/disease_type_detail.html:85
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "بعدين ارجع."
+msgstr "then come back."
+
+#: app/templates/health/disease_type_detail.html:97
+msgid "ربط العرض"
+msgstr "Link symptom"
+
+#: app/templates/health/disease_type_form.html:4
+msgid "إضافة مرض للقائمة"
+msgstr "Add disease to the list"
+
+#: app/templates/health/disease_type_form.html:8
+msgid "ملاحظات (اختياري)"
+msgstr "Notes (optional)"
+
+#: app/templates/health/disease_types_list.html:5
+msgid "الأمراض الشائعة (قائمة الاقتراحات)"
+msgstr "Common diseases (suggestions list)"
+
+#: app/templates/health/disease_types_list.html:8
+msgid "معالج ربط عرض بمرض"
+msgstr "Symptom-to-disease linking wizard"
+
+#: app/templates/health/disease_types_list.html:9
+#: app/templates/health/emergency_symptoms_list.html:4
+msgid "قائمة أعراض الطوارئ"
+msgstr "Emergency symptoms list"
+
+#: app/templates/health/disease_types_list.html:10
+msgid "إضافة مرض"
+msgstr "Add disease"
+
+#: app/templates/health/disease_types_list.html:15
+msgid "مرجع اقتراحات فقط لتسريع تسجيل \"اسم المرض\" بشاشة الأمراض — أي اسم غير موجود هنا يُكتب يدوياً عادي بدون أي قيد. لإدارة الأعراض المرتبطة بكل مرض (شجرة المساعد التشخيصي)، افتح المرض من الجدول تحت، أو راجع"
+msgstr "A suggestions reference only, to speed up entering the \"disease name\" on the diseases screen — any name not here can simply be typed manually without restriction. To manage the symptoms linked to each disease (the diagnostic assistant tree), open the disease from the table below, or check"
+
+#: app/templates/health/disease_types_list.html:16
+msgid "قائمة الأعراض"
+msgstr "The symptoms list"
+
+#: app/templates/health/disease_types_list.html:16
+msgid "نفسها."
+msgstr "itself."
+
+#: app/templates/health/disease_types_list.html:27
+msgid "إدارة الأعراض"
+msgstr "Manage symptoms"
+
+#: app/templates/health/disease_types_list.html:30
+#: app/templates/health/symptoms_list.html:26
+msgid "القائمة فاضية."
+msgstr "The list is empty."
+
 #: app/templates/health/diseases_list.html:8
+#: app/templates/health/symptoms_list.html:12
 msgid "قائمة الأمراض الشائعة"
 msgstr "Common diseases list"
 
@@ -1841,6 +2014,90 @@ msgstr "Close"
 #: app/templates/health/diseases_list.html:33
 msgid "لا يوجد حالات مسجّلة بعد."
 msgstr "No cases recorded yet."
+
+#: app/templates/health/doctor_form.html:4
+#: app/templates/health/doctors_list.html:6
+msgid "طبيب جديد"
+msgstr "New doctor"
+
+#: app/templates/health/doctor_form.html:8
+#: app/templates/health/doctors_list.html:10
+msgid "الجوال"
+msgstr "Phone"
+
+#: app/templates/health/doctor_form.html:9
+#: app/templates/health/doctors_list.html:10
+msgid "التخصص"
+msgstr "Specialty"
+
+#: app/templates/health/doctors_list.html:5
+msgid "الأطباء"
+msgstr "Doctors"
+
+#: app/templates/health/doctors_list.html:14
+msgid "لا يوجد أطباء مسجّلين بعد."
+msgstr "No doctors registered yet."
+
+#: app/templates/health/emergency_symptoms_list.html:6
+msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
+msgstr "Any symptom here, if entered among the diagnostic assistant's symptoms, immediately and automatically isolates the animal and shows an urgent differential diagnosis on the result screen — independent of the normal probability ranking. A deliberately explicit name list — we don't use a broad category (like \"neurological symptoms\") to avoid over-isolating for minor cases."
+
+#: app/templates/health/emergency_symptoms_list.html:11
+#, python-format
+msgid "الأعراض المسجَّلة (%(n)s)"
+msgstr "Registered symptoms (%(n)s)"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "الخطورة"
+msgstr "Severity"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "التشخيص التفريقي"
+msgstr "Differential diagnosis"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+msgid "التوصية"
+msgstr "Recommendation"
+
+#: app/templates/health/emergency_symptoms_list.html:23
+msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
+msgstr "Delete this symptom from the emergency list? Its automatic isolation will stop afterward."
+
+#: app/templates/health/emergency_symptoms_list.html:31
+msgid "ما فيه أعراض طوارئ مسجَّلة بعد."
+msgstr "No emergency symptoms recorded yet."
+
+#: app/templates/health/emergency_symptoms_list.html:39
+msgid "إضافة عرض طوارئ جديد"
+msgstr "Add a new emergency symptom"
+
+#: app/templates/health/emergency_symptoms_list.html:47
+msgid "ما لقيت العرض؟"
+msgstr "Can't find the symptom?"
+
+#: app/templates/health/emergency_symptoms_list.html:49
+msgid "درجة الخطورة"
+msgstr "Severity level"
+
+#: app/templates/health/emergency_symptoms_list.html:54
+msgid "التشخيص التفريقي (يظهر بشاشة النتيجة)"
+msgstr "Differential diagnosis (shown on the result screen)"
+
+#: app/templates/health/emergency_symptoms_list.html:55
+msgid "مثال: اشتباه ليستريا / نقص فيتامين B1 / التهاب ملتحمة معدٍ"
+msgstr "Example: suspected listeriosis / vitamin B1 deficiency / infectious conjunctivitis"
+
+#: app/templates/health/emergency_symptoms_list.html:57
+msgid "التوصية الفورية"
+msgstr "Immediate recommendation"
+
+#: app/templates/health/emergency_symptoms_list.html:58
+msgid "مثال: راجع الفحص البيطري الفوري..."
+msgstr "Example: refer for immediate veterinary examination..."
+
+#: app/templates/health/emergency_symptoms_list.html:60
+msgid "إضافة للقائمة"
+msgstr "Add to list"
 
 #: app/templates/health/pharmacy_list.html:7
 #: app/templates/health/pharmacy_shortages.html:5
@@ -1906,6 +2163,38 @@ msgstr "Alternatives in the same category"
 #: app/templates/health/pharmacy_shortages.html:27
 msgid "لا يوجد نواقص حالياً"
 msgstr "No shortages right now"
+
+#: app/templates/health/symptom_form.html:4
+msgid "إضافة عرض جديد"
+msgstr "Add new symptom"
+
+#: app/templates/health/symptom_form.html:7
+msgid "اسم العرض"
+msgstr "Symptom name"
+
+#: app/templates/health/symptom_form.html:11
+msgid "عرض رئيسي (تبدأ منه شجرة التشخيص، مثل \"حرارة\"/\"إسهال\")"
+msgstr "Primary symptom (the diagnosis tree starts from it, e.g. \"Fever\"/\"Diarrhea\")"
+
+#: app/templates/health/symptom_form.html:13
+msgid "لو تركته بدون تحديد، يبقى \"عرض متابعة\" — يظهر بس كسؤال ثانوي بعد اختيار عرض رئيسي مرتبط."
+msgstr "If left unchecked, it stays a \"follow-up symptom\" — appearing only as a secondary question after a linked primary symptom is chosen."
+
+#: app/templates/health/symptoms_list.html:5
+msgid "الأعراض (شجرة التشخيص)"
+msgstr "Symptoms (diagnosis tree)"
+
+#: app/templates/health/symptoms_list.html:7
+msgid "إضافة عرض"
+msgstr "Add symptom"
+
+#: app/templates/health/symptoms_list.html:11
+msgid "قائمة كل الأعراض المستخدمة بالمساعد التشخيصي (`/health/diagnose`) — الأعراض \"الرئيسية\" تبدأ منها الشجرة، والباقي أسئلة متابعة تظهر حسب الأمراض المرتبطة بها. لربط عرض بمرض معيّن ووزنه، افتح صفحة المرض من"
+msgstr "A list of all symptoms used by the diagnostic assistant (`/health/diagnose`) — \"primary\" symptoms are where the tree starts, and the rest are follow-up questions that appear based on their linked diseases. To link a symptom to a specific disease and weight it, open the disease's page from"
+
+#: app/templates/health/symptoms_list.html:23
+msgid "متابعة"
+msgstr "Follow-up"
 
 #: app/templates/health/vaccination_form.html:5
 msgid "تسجيل تطعيم"
@@ -2096,11 +2385,6 @@ msgstr "Postpone by one day"
 #: app/templates/team/report_detail.html:51
 msgid "تأجيل"
 msgstr "Postpone"
-
-#: app/templates/team/_suggested_tasks_rows.html:25
-#: app/templates/team/task_detail.html:80
-msgid "حذف"
-msgstr "Delete"
 
 #: app/templates/team/_suggested_tasks_rows.html:30
 msgid "لا يوجد مهام مقترحة حالياً."
