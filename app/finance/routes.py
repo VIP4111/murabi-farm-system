@@ -71,6 +71,28 @@ def finance_new():
         )
         db.session.add(row)
         db.session.commit()
+
+        # كشف الشذوذ المالي (بند إضافي 161) — إشعار فوري لصاحب الحلال
+        # لو المبلغ شاذ مقارنة بتاريخ نفس الفئة.
+        from app.core.finance_anomaly_service import detect_anomaly
+        anomaly = detect_anomaly(row)
+        if anomaly:
+            flash(
+                f"⚠️ تنبيه: هذا المبلغ ({anomaly['amount']:.0f}) {anomaly['direction']} "
+                f"بنسبة {abs(anomaly['deviation_pct'])}% من متوسط عمليات \"{row.category}\" "
+                f"السابقة ({anomaly['average']:.0f}).", "error",
+            )
+            from app.core import telegram_service
+            from app.models import User
+            op_labels = {"sale": "بيع", "purchase": "شراء", "expense": "مصروف"}
+            for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
+                if user.has_permission("finance.full.manage"):
+                    telegram_service.notify_user(
+                        user,
+                        f"⚠️ عملية {op_labels.get(row.operation_type, row.operation_type)} غير معتادة\n"
+                        f"{row.category} — {anomaly['amount']:.0f} ({anomaly['direction']} بـ{abs(anomaly['deviation_pct'])}% عن المعتاد {anomaly['average']:.0f})",
+                    )
+
         flash("تمت إضافة العملية المالية", "success")
         return redirect(url_for("finance.finance_list"))
 
