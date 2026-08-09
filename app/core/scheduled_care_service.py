@@ -59,6 +59,10 @@ def generate_vaccination_due_tasks(*, now: datetime | None = None) -> list:
         )
         created.append(task)
 
+    if created:
+        from app.core.scheduled_care_notify_service import notify_new_care_tasks
+        notify_new_care_tasks(created)
+
     return created
 
 
@@ -100,5 +104,9 @@ def generate_overdue_weight_tasks(*, now: datetime | None = None) -> list:
             notes=f"آخر وزن مسجَّل بتاريخ {reference_date or '-'} — تجاوز فترة المتابعة الدورية ({settings.weight_check_interval_days} يوم).",
         )
         created.append(task)
+
+    if created:
+        from app.core.scheduled_care_notify_service import notify_new_care_tasks
+        notify_new_care_tasks(created)
 
     return created
