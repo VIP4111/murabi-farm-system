@@ -1,29 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>خروج من العزل — {{ animal.animal_no }}</h2>
+  <h2>{{ _('خروج من العزل') }} — {{ animal.animal_no }}</h2>
   {% if days_in is not none %}
   <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">
-    بالعزل من {{ days_in }} يوم (المدة الأدنى المعتادة {{ isolation_days }} يوم).
-    {% if is_early %}<b style="color:var(--danger, #c0392b);">خروج مبكر — لازم تؤكد فحص بيطري وتحصين قبل ما يسمح النظام بالخروج.</b>
-    {% else %}المدة الأدنى اكتملت — تقدر تخرجه مباشرة بدون شروط إضافية.{% endif %}
+    {{ _('بالعزل من %(n)s يوم (المدة الأدنى المعتادة %(min)s يوم).', n=days_in, min=isolation_days) }}
+    {% if is_early %}<b style="color:var(--danger, #c0392b);">{{ _('خروج مبكر — لازم تؤكد فحص بيطري وتحصين قبل ما يسمح النظام بالخروج.') }}</b>
+    {% else %}{{ _('المدة الأدنى اكتملت — تقدر تخرجه مباشرة بدون شروط إضافية.') }}{% endif %}
   </p>
   {% else %}
-  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">ما فيه تاريخ دخول عزل مسجَّل لهذا الرأس — الخروج يتم مباشرة بدون شروط.</p>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('ما فيه تاريخ دخول عزل مسجَّل لهذا الرأس — الخروج يتم مباشرة بدون شروط.') }}</p>
   {% endif %}
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>التاريخ</label><input name="date" type="date" value="{{ today }}" required>
-    <label>الحظيرة الهدف (تقدر تختار أي حظيرة غير عزل، أو حظيرة عزل ثانية لو محتاج تنقله بس بدون إخراجه فعلياً — استخدم "نقل حظيرة" العادي لهذي الحالة)</label>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" value="{{ today }}" required>
+    <label>{{ _('الحظيرة الهدف (تقدر تختار أي حظيرة غير عزل، أو حظيرة عزل ثانية لو محتاج تنقله بس بدون إخراجه فعلياً — استخدم "نقل حظيرة" العادي لهذي الحالة)') }}</label>
     <select name="barn_id" required>
       {% for b in target_barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
     {% if is_early %}
-    <label><input name="vet_checked" type="checkbox" value="1" style="width:auto; display:inline-block;"> تم فحص بيطري موثّق؟</label>
-    <label><input name="vaccinated" type="checkbox" value="1" style="width:auto; display:inline-block;"> تم التحصين؟</label>
+    <label><input name="vet_checked" type="checkbox" value="1" style="width:auto; display:inline-block;"> {{ _('تم فحص بيطري موثّق؟') }}</label>
+    <label><input name="vaccinated" type="checkbox" value="1" style="width:auto; display:inline-block;"> {{ _('تم التحصين؟') }}</label>
     {% endif %}
-    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
-    <button class="btn" type="submit">تأكيد الخروج من العزل</button>
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">{{ _('تأكيد الخروج من العزل') }}</button>
   </form>
 </div>
 {% endblock %}

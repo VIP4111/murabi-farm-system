@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>دخول عزل — {{ animal.animal_no }}</h2>
-  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا.</p>
+  <h2>{{ _('دخول عزل') }} — {{ animal.animal_no }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا.') }}</p>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>التاريخ</label><input name="date" type="date" value="{{ today }}" required>
-    <label>حظيرة العزل</label>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" value="{{ today }}" required>
+    <label>{{ _('حظيرة العزل') }}</label>
     <select name="barn_id" required>
       {% for b in isolation_barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <label>سبب العزل</label><textarea name="reason" rows="2" placeholder="مثال: اشتباه مرض معدٍ، إصابة، حجر رأس وافد جديد..."></textarea>
-    <button class="btn" type="submit">تأكيد دخول العزل</button>
+    <label>{{ _('سبب العزل') }}</label><textarea name="reason" rows="2" placeholder="{{ _('مثال: اشتباه مرض معدٍ، إصابة، حجر رأس وافد جديد...') }}"></textarea>
+    <button class="btn" type="submit">{{ _('تأكيد دخول العزل') }}</button>
   </form>
 </div>
 {% endblock %}

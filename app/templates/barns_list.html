@@ -2,12 +2,12 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>الحظائر</h2>
-    {% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_new') }}">+ حظيرة جديدة</a>{% endif %}
+    <h2>{{ _('الحظائر') }}</h2>
+    {% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_new') }}">+ {{ _('حظيرة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>الرقم</th><th>الاسم</th><th>النوع</th><th>السعة</th><th>المسؤول</th><th>عدد الحيوانات</th><th></th></tr>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('السعة') }}</th><th>{{ _('المسؤول') }}</th><th>{{ _('عدد الحيوانات') }}</th><th></th></tr>
     {% for b in barns %}
     <tr>
       <td>{{ b.barn_no }}</td>
@@ -16,10 +16,10 @@
       <td>{{ b.capacity or '-' }}</td>
       <td>{{ b.responsible_worker.name if b.responsible_worker else '-' }}</td>
       <td>{{ b.animals|length }}</td>
-      <td>{% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_edit', barn_id=b.id) }}">تعديل</a>{% endif %}</td>
+      <td>{% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_edit', barn_id=b.id) }}">{{ _('تعديل') }}</a>{% endif %}</td>
     </tr>
     {% else %}
-    <tr><td colspan="7" style="color:#888;">لا يوجد حظائر مسجّلة بعد.</td></tr>
+    <tr><td colspan="7" style="color:#888;">{{ _('لا يوجد حظائر مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

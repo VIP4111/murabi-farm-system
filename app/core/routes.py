@@ -1,5 +1,6 @@
 from datetime import date, time
 from flask import render_template, request, redirect, url_for, flash, jsonify, abort, send_file, current_app
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 from sqlalchemy.exc import IntegrityError
 
@@ -663,9 +664,9 @@ def species_types_new():
         db.session.commit()
         flash("تمت إضافة الفصيلة", "success")
         return redirect(url_for("core.animals_new"))
-    return render_template("animal_option_form.html", title="إضافة فصيلة جديدة",
+    return render_template("animal_option_form.html", title=_("إضافة فصيلة جديدة"),
                             back_endpoint="core.animals_new",
-                            warning="فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص.")
+                            warning=_("فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."))
 
 
 @core_bp.route("/animals/breeds/new", methods=["GET", "POST"])
@@ -684,7 +685,7 @@ def breeds_new():
         db.session.commit()
         flash("تمت إضافة السلالة", "success")
         return redirect(url_for("core.animals_new"))
-    return render_template("animal_option_form.html", title="إضافة سلالة جديدة",
+    return render_template("animal_option_form.html", title=_("إضافة سلالة جديدة"),
                             back_endpoint="core.animals_new")
 
 
@@ -704,7 +705,7 @@ def colors_new():
         db.session.commit()
         flash("تمت إضافة اللون", "success")
         return redirect(url_for("core.animals_new"))
-    return render_template("animal_option_form.html", title="إضافة لون جديد",
+    return render_template("animal_option_form.html", title=_("إضافة لون جديد"),
                             back_endpoint="core.animals_new")
 
 

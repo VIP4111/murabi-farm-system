@@ -1,42 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← الإعدادات</a>
-  <h2 style="margin-top:12px;">سجل التدقيق</h2>
-  <p style="color:var(--muted); font-size:13px;">آخر {{ rows|length }} حدث حسّاس بالنظام (حذف، اعتماد صلاحيات، إغلاق بلاغ...) — الأحدث أولاً.</p>
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">{{ _('سجل التدقيق') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('آخر %(n)s حدث حسّاس بالنظام (حذف، اعتماد صلاحيات، إغلاق بلاغ...) — الأحدث أولاً.', n=rows|length) }}</p>
 </div>
 
 <div class="card">
   <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
-    <div><label style="margin:0 0 4px;">من</label><input name="start" type="date" value="{{ start }}" style="margin:0;"></div>
-    <div><label style="margin:0 0 4px;">إلى</label><input name="end" type="date" value="{{ end }}" style="margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('من') }}</label><input name="start" type="date" value="{{ start }}" style="margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('إلى') }}</label><input name="end" type="date" value="{{ end }}" style="margin:0;"></div>
     <div>
-      <label style="margin:0 0 4px;">المستخدم</label>
+      <label style="margin:0 0 4px;">{{ _('المستخدم') }}</label>
       <select name="actor_user_id" style="margin:0;">
-        <option value="">الكل</option>
+        <option value="">{{ _('الكل') }}</option>
         {% for u in users %}
         <option value="{{ u.id }}" {{ 'selected' if actor_user_id == u.id }}>{{ u.name }}</option>
         {% endfor %}
       </select>
     </div>
     <div>
-      <label style="margin:0 0 4px;">نوع الإجراء</label>
+      <label style="margin:0 0 4px;">{{ _('نوع الإجراء') }}</label>
       <select name="action" style="margin:0;">
-        <option value="">الكل</option>
+        <option value="">{{ _('الكل') }}</option>
         {% for a in actions %}
         <option value="{{ a }}" {{ 'selected' if action == a }}>{{ a }}</option>
         {% endfor %}
       </select>
     </div>
-    <button class="btn" type="submit" style="padding:10px 16px;">فلترة</button>
-    <a class="btn light" href="{{ url_for('core.audit_log_list') }}" style="padding:10px 16px;">مسح الفلترة</a>
+    <button class="btn" type="submit" style="padding:10px 16px;">{{ _('فلترة') }}</button>
+    <a class="btn light" href="{{ url_for('core.audit_log_list') }}" style="padding:10px 16px;">{{ _('مسح الفلترة') }}</a>
   </form>
 </div>
 
 <div class="card">
   <div class="table-scroll">
 <table>
-    <tr><th>الوقت</th><th>مين</th><th>الإجراء</th><th>على</th><th>تفاصيل</th></tr>
+    <tr><th>{{ _('الوقت') }}</th><th>{{ _('مين') }}</th><th>{{ _('الإجراء') }}</th><th>{{ _('على') }}</th><th>{{ _('تفاصيل') }}</th></tr>
     {% for row in rows %}
     <tr>
       <td>{{ row.created_at.strftime('%Y-%m-%d %H:%M') if row.created_at else '-' }}</td>
@@ -46,7 +46,7 @@
       <td style="max-width:280px; overflow-wrap:anywhere;">{{ row.details or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">ما فيه أي حدث مسجّل بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه أي حدث مسجّل بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
