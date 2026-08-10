@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 22:58+0300\n"
+"POT-Creation-Date: 2026-08-10 23:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,7 +105,9 @@ msgstr ""
 msgid "مؤكّدة"
 msgstr ""
 
-#: app/__init__.py:144 app/templates/repro/attempt_form.html:18
+#: app/__init__.py:144 app/templates/ostrich/eggs_list.html:17
+#: app/templates/ostrich/eggs_list.html:35
+#: app/templates/repro/attempt_form.html:18
 msgid "فشلت"
 msgstr ""
 
@@ -289,6 +291,7 @@ msgstr ""
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:400
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
+#: app/templates/ostrich/eggs_list.html:14
 msgid "الكل"
 msgstr ""
 
@@ -705,6 +708,9 @@ msgid "تاريخ الولادة"
 msgstr ""
 
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:81
+#: app/templates/ostrich/egg_form.html:10
+#: app/templates/ostrich/egg_hatch_form.html:7
+#: app/templates/ostrich/eggs_list.html:23
 msgid "الأم"
 msgstr ""
 
@@ -1180,6 +1186,9 @@ msgstr ""
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/isolation_exit_form.html:25
+#: app/templates/ostrich/egg_form.html:24
+#: app/templates/ostrich/incubator_form.html:10
+#: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
@@ -1267,6 +1276,7 @@ msgstr ""
 #: app/templates/animal_detail.html:121 app/templates/animal_detail.html:122
 #: app/templates/animal_detail.html:123 app/templates/animal_detail.html:145
 #: app/templates/animal_detail.html:155 app/templates/animal_detail.html:156
+#: app/templates/ostrich/egg_form.html:17
 msgid "غير محدد"
 msgstr ""
 
@@ -1351,6 +1361,8 @@ msgstr ""
 #: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
+#: app/templates/ostrich/egg_form.html:25
+#: app/templates/ostrich/incubator_form.html:11
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
@@ -1432,6 +1444,8 @@ msgstr ""
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
 #: app/templates/team/daily_templates.html:18
@@ -1484,6 +1498,7 @@ msgstr ""
 #: app/templates/animal_detail.html:244 app/templates/animal_form.html:65
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:66
+#: app/templates/ostrich/egg_hatch_form.html:27
 msgid "أنثى"
 msgstr ""
 
@@ -1707,7 +1722,7 @@ msgstr ""
 msgid "تعديل بيانات الحيوان"
 msgstr ""
 
-#: app/templates/animal_form.html:4
+#: app/templates/animal_form.html:4 app/templates/ostrich/egg_form.html:6
 msgid "تسجيل حيوان جديد"
 msgstr ""
 
@@ -1734,6 +1749,7 @@ msgid "الرقم واللون مع بعض هوية الرأس الميداني�
 msgstr ""
 
 #: app/templates/animal_form.html:28
+#: app/templates/ostrich/incubator_form.html:8
 msgid "الاسم (اختياري)"
 msgstr ""
 
@@ -1782,6 +1798,7 @@ msgstr ""
 #: app/templates/animal_form.html:64
 #: app/templates/animals_bulk_purchase.html:43
 #: app/templates/animals_bulk_purchase.html:65
+#: app/templates/ostrich/egg_hatch_form.html:26
 msgid "ذكر"
 msgstr ""
 
@@ -1800,6 +1817,7 @@ msgid "الغرض (يحدّد مسار دورة الإنتاج لاحقاً)"
 msgstr ""
 
 #: app/templates/animal_form.html:81
+#: app/templates/ostrich/egg_hatch_form.html:25
 msgid "غير محدد بعد"
 msgstr ""
 
@@ -1895,6 +1913,7 @@ msgstr ""
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
+#: app/templates/ostrich/incubators_list.html:13
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
@@ -2396,6 +2415,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/barn_form.html:20 app/templates/barns_list.html:10
+#: app/templates/ostrich/incubators_list.html:13
 msgid "السعة"
 msgstr ""
 
@@ -5184,6 +5204,185 @@ msgstr ""
 
 #: app/templates/health/vet_visits_list.html:6
 msgid "زيارة جديدة"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:4
+msgid "تسجيل بيضة نعام"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:6
+msgid "ما فيه أنثى نعام مسجّلة حالياً — سجّل أنثى نعام أول من"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:6
+msgid "اختر الفصيلة \"نعام\""
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:14
+#: app/templates/ostrich/egg_hatch_form.html:8
+#: app/templates/ostrich/eggs_list.html:23
+msgid "تاريخ البيض"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:15
+#: app/templates/ostrich/eggs_list.html:23
+msgid "الجودة"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:18
+msgid "ممتاز"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:19
+msgid "جيد"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:20
+msgid "متوسط"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:21
+msgid "مرفوض"
+msgstr ""
+
+#: app/templates/ostrich/egg_form.html:23
+msgid "الوزن (جرام، اختياري)"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:4
+#: app/templates/ostrich/eggs_list.html:51
+msgid "تسجيل نتيجة الفقس"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:9
+#: app/templates/ostrich/eggs_list.html:23
+msgid "الحاضنة"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:10
+#: app/templates/ostrich/eggs_list.html:23
+msgid "بداية الحضانة"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:11
+#: app/templates/ostrich/eggs_list.html:23
+msgid "الفقس المتوقع"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:17
+msgid "فقست بنجاح"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:21
+msgid "تاريخ الفقس الفعلي"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:22
+msgid "رقم الفرخ الجديد"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:22
+msgid "مثال: OST-2026-001"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:23
+msgid "الجنس (لو معروف، غالباً غير معروف عند الفقس)"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:29
+msgid "الوزن عند الفقس (كجم، اختياري)"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:30
+msgid "تسجيل الفقس وإضافة الفرخ"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:35
+msgid "فشل الفقس"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:39
+msgid "سبب الفشل"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:39
+msgid "مثال: بيضة غير مخصّبة"
+msgstr ""
+
+#: app/templates/ostrich/egg_hatch_form.html:40
+msgid "تسجيل الفشل"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:5
+msgid "سجل النعام — البيض والتفقيس"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:7
+#: app/templates/ostrich/incubators_list.html:5
+msgid "الحاضنات"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:8
+msgid "تسجيل بيضة"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:15
+msgid "قيد الحضانة/الانتظار"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:16
+#: app/templates/ostrich/eggs_list.html:34
+msgid "فقست"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:33
+msgid "بانتظار"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:44
+msgid "اختر حاضنة"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:48
+msgid "إدخال حاضنة"
+msgstr ""
+
+#: app/templates/ostrich/eggs_list.html:57
+msgid "لا يوجد بيض مسجّل بهذا الفلتر."
+msgstr ""
+
+#: app/templates/ostrich/incubator_form.html:4
+#: app/templates/ostrich/incubators_list.html:8
+msgid "حاضنة جديدة"
+msgstr ""
+
+#: app/templates/ostrich/incubator_form.html:7
+#: app/templates/ostrich/incubators_list.html:13
+msgid "الرمز"
+msgstr ""
+
+#: app/templates/ostrich/incubator_form.html:7
+msgid "مثال: INC-01"
+msgstr ""
+
+#: app/templates/ostrich/incubator_form.html:9
+msgid "السعة (عدد البيض)"
+msgstr ""
+
+#: app/templates/ostrich/incubators_list.html:7
+msgid "سجل البيض"
+msgstr ""
+
+#: app/templates/ostrich/incubators_list.html:19
+msgid "نشطة"
+msgstr ""
+
+#: app/templates/ostrich/incubators_list.html:19
+msgid "غير نشطة"
+msgstr ""
+
+#: app/templates/ostrich/incubators_list.html:23
+msgid "لا يوجد حاضنات مسجّلة بعد."
 msgstr ""
 
 #: app/templates/reports/_filter.html:11

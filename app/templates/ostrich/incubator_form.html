@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>حاضنة جديدة</h2>
+  <h2>{{ _('حاضنة جديدة') }}</h2>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>الرمز</label><input name="code" required placeholder="مثال: INC-01">
-    <label>الاسم (اختياري)</label><input name="name">
-    <label>السعة (عدد البيض)</label><input name="capacity" type="number">
-    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
-    <button class="btn" type="submit">حفظ</button>
+    <label>{{ _('الرمز') }}</label><input name="code" required placeholder="{{ _('مثال: INC-01') }}">
+    <label>{{ _('الاسم (اختياري)') }}</label><input name="name">
+    <label>{{ _('السعة (عدد البيض)') }}</label><input name="capacity" type="number">
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 {% endblock %}

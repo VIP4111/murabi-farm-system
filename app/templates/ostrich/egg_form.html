@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>تسجيل بيضة نعام</h2>
+  <h2>{{ _('تسجيل بيضة نعام') }}</h2>
   {% if not mothers %}
-  <div class="notice">ما فيه أنثى نعام مسجّلة حالياً — سجّل أنثى نعام أول من <a href="{{ url_for('core.animals_new') }}">تسجيل حيوان جديد</a> (اختر الفصيلة "نعام").</div>
+  <div class="notice">{{ _('ما فيه أنثى نعام مسجّلة حالياً — سجّل أنثى نعام أول من') }} <a href="{{ url_for('core.animals_new') }}">{{ _('تسجيل حيوان جديد') }}</a> ({{ _('اختر الفصيلة "نعام"') }}).</div>
   {% endif %}
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>الأم</label>
+    <label>{{ _('الأم') }}</label>
     <select name="mother_id" required>
       {% for m in mothers %}<option value="{{ m.id }}">{{ m.animal_no }}{{ ' — ' + m.name if m.name }}</option>{% endfor %}
     </select>
-    <label>تاريخ البيض</label><input name="lay_date" type="date" required value="{{ today }}">
-    <label>الجودة</label>
+    <label>{{ _('تاريخ البيض') }}</label><input name="lay_date" type="date" required value="{{ today }}">
+    <label>{{ _('الجودة') }}</label>
     <select name="quality">
-      <option value="">غير محدد</option>
-      <option value="ممتاز">ممتاز</option>
-      <option value="جيد">جيد</option>
-      <option value="متوسط">متوسط</option>
-      <option value="مرفوض">مرفوض</option>
+      <option value="">{{ _('غير محدد') }}</option>
+      <option value="ممتاز">{{ _('ممتاز') }}</option>
+      <option value="جيد">{{ _('جيد') }}</option>
+      <option value="متوسط">{{ _('متوسط') }}</option>
+      <option value="مرفوض">{{ _('مرفوض') }}</option>
     </select>
-    <label>الوزن (جرام، اختياري)</label><input name="weight_grams" type="number" step="0.1">
-    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
-    <button class="btn" type="submit">حفظ</button>
+    <label>{{ _('الوزن (جرام، اختياري)') }}</label><input name="weight_grams" type="number" step="0.1">
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 {% endblock %}

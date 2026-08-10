@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 22:58+0300\n"
+"POT-Creation-Date: 2026-08-10 23:06+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -106,7 +106,9 @@ msgstr "Not eligible"
 msgid "مؤكّدة"
 msgstr "Confirmed"
 
-#: app/__init__.py:144 app/templates/repro/attempt_form.html:18
+#: app/__init__.py:144 app/templates/ostrich/eggs_list.html:17
+#: app/templates/ostrich/eggs_list.html:35
+#: app/templates/repro/attempt_form.html:18
 msgid "فشلت"
 msgstr "Failed"
 
@@ -282,9 +284,7 @@ msgstr "Other"
 
 #: app/auth/routes.py:45
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد 15 دقيقة."
-msgstr ""
-"This account is temporarily locked due to repeated failed login attempts "
-"— try again in 15 minutes."
+msgstr "This account is temporarily locked due to repeated failed login attempts — try again in 15 minutes."
 
 #: app/auth/routes.py:74
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
@@ -292,6 +292,7 @@ msgstr "Incorrect phone number or password"
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:400
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
+#: app/templates/ostrich/eggs_list.html:14
 msgid "الكل"
 msgstr "All"
 
@@ -388,13 +389,8 @@ msgid "إضافة فصيلة جديدة"
 msgstr "Add new species"
 
 #: app/core/routes.py:670
-msgid ""
-"فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل"
-" بأمان مثل النعام لين يُبنى لها نظام مخصّص."
-msgstr ""
-"A new species doesn't automatically enter the production cycle engine "
-"(mating/pregnancy/weaning) — it's handled safely like ostriches until a "
-"dedicated system is built for it."
+msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
+msgstr "A new species doesn't automatically enter the production cycle engine (mating/pregnancy/weaning) — it's handled safely like ostriches until a dedicated system is built for it."
 
 #: app/core/routes.py:689 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
@@ -429,165 +425,92 @@ msgid "حقن عضل (IM)"
 msgstr "Intramuscular injection (IM)"
 
 #: app/health/health_service.py:26
-msgid ""
-"بعضلات الرقبة الجانبية أو الفخذ الخلفي عند البالغين، بعيداً عن العمود "
-"الفقري والأعصاب الكبيرة. دوّر مكان الحقن بين الجانبين لتفادي تندّب متكرر "
-"بنفس المكان. إبرة أقصر وأدق للحملان الصغيرة."
-msgstr ""
-"In the side neck muscles or hind thigh for adults, away from the spine "
-"and major nerves. Rotate the injection site between sides to avoid "
-"repeated scarring in the same spot. Use a shorter, finer needle for small"
-" lambs."
+msgid "بعضلات الرقبة الجانبية أو الفخذ الخلفي عند البالغين، بعيداً عن العمود الفقري والأعصاب الكبيرة. دوّر مكان الحقن بين الجانبين لتفادي تندّب متكرر بنفس المكان. إبرة أقصر وأدق للحملان الصغيرة."
+msgstr "In the side neck muscles or hind thigh for adults, away from the spine and major nerves. Rotate the injection site between sides to avoid repeated scarring in the same spot. Use a shorter, finer needle for small lambs."
 
 #: app/health/health_service.py:29
 msgid "حقن وريدي (IV)"
 msgstr "Intravenous injection (IV)"
 
 #: app/health/health_service.py:30
-msgid ""
-"عادة بالوريد الوداجي بالرقبة — يحتاج خبرة ودقة عالية، الأصعب والأخطر بين "
-"طرق الحقن. يُترك للدكتور أو الممرض المدرَّب تحديداً، مو العامل الميداني "
-"بدون إشراف."
-msgstr ""
-"Usually via the jugular vein in the neck — requires high skill and "
-"precision, the hardest and riskiest injection method. Left specifically "
-"to the doctor or a trained nurse, not a field worker without supervision."
+msgid "عادة بالوريد الوداجي بالرقبة — يحتاج خبرة ودقة عالية، الأصعب والأخطر بين طرق الحقن. يُترك للدكتور أو الممرض المدرَّب تحديداً، مو العامل الميداني بدون إشراف."
+msgstr "Usually via the jugular vein in the neck — requires high skill and precision, the hardest and riskiest injection method. Left specifically to the doctor or a trained nurse, not a field worker without supervision."
 
 #: app/health/health_service.py:33
 msgid "حقن تحت الجلد (SC)"
 msgstr "Subcutaneous injection (SC)"
 
 #: app/health/health_service.py:34
-msgid ""
-"الطريقة الأكثر أماناً وشيوعاً بالإدخال الميداني اليومي. ارفع الجلد "
-"بأصابعك لتشكيل \"خيمة\" (عادة برقبة الحيوان أو خلف الكتف)، أدخل الإبرة "
-"بزاوية مائلة (تقريباً 30-45 درجة) بقاعدة الخيمة الجلدية بعيداً عن العضل "
-"تحتها، وتأكد إنك تحت الجلد فعلاً (سهولة الحقن بدون مقاومة) قبل الضغط."
-msgstr ""
-"The safest and most common method for everyday field use. Pinch the skin "
-"with your fingers to form a \"tent\" (usually on the animal's neck or "
-"behind the shoulder), insert the needle at an angle (roughly 30-45 "
-"degrees) at the base of the skin tent away from the muscle beneath it, "
-"and confirm you're truly under the skin (easy injection with no "
-"resistance) before pressing."
+msgid "الطريقة الأكثر أماناً وشيوعاً بالإدخال الميداني اليومي. ارفع الجلد بأصابعك لتشكيل \"خيمة\" (عادة برقبة الحيوان أو خلف الكتف)، أدخل الإبرة بزاوية مائلة (تقريباً 30-45 درجة) بقاعدة الخيمة الجلدية بعيداً عن العضل تحتها، وتأكد إنك تحت الجلد فعلاً (سهولة الحقن بدون مقاومة) قبل الضغط."
+msgstr "The safest and most common method for everyday field use. Pinch the skin with your fingers to form a \"tent\" (usually on the animal's neck or behind the shoulder), insert the needle at an angle (roughly 30-45 degrees) at the base of the skin tent away from the muscle beneath it, and confirm you're truly under the skin (easy injection with no resistance) before pressing."
 
 #: app/health/health_service.py:37
 msgid "فموي"
 msgstr "Oral"
 
 #: app/health/health_service.py:38
-msgid ""
-"يُعطى مباشرة بالفم بمحقنة فموية بدون إبرة، بحذر من دخول السائل للرئة "
-"(اختناق) — ثبّت رأس الحيوان بزاوية معتدلة، مو مائلة للخلف بشدة، وأعطِ "
-"الجرعة ببطء."
-msgstr ""
-"Given directly by mouth with a needleless oral syringe, taking care the "
-"liquid doesn't enter the lungs (choking) — hold the animal's head at a "
-"moderate angle, not tilted sharply back, and give the dose slowly."
+msgid "يُعطى مباشرة بالفم بمحقنة فموية بدون إبرة، بحذر من دخول السائل للرئة (اختناق) — ثبّت رأس الحيوان بزاوية معتدلة، مو مائلة للخلف بشدة، وأعطِ الجرعة ببطء."
+msgstr "Given directly by mouth with a needleless oral syringe, taking care the liquid doesn't enter the lungs (choking) — hold the animal's head at a moderate angle, not tilted sharply back, and give the dose slowly."
 
 #: app/health/health_service.py:41
 msgid "موضعي"
 msgstr "Topical"
 
 #: app/health/health_service.py:42
-msgid ""
-"يُوضَع مباشرة على سطح الجلد بالمكان المحدَّد (عادة خط الظهر) حسب تعليمات "
-"ملصق المنتج — تجنّب الجلد المجروح أو الملتهب."
-msgstr ""
-"Applied directly to the skin surface at the specified location (usually "
-"along the backline) per the product label instructions — avoid injured or"
-" inflamed skin."
+msgid "يُوضَع مباشرة على سطح الجلد بالمكان المحدَّد (عادة خط الظهر) حسب تعليمات ملصق المنتج — تجنّب الجلد المجروح أو الملتهب."
+msgstr "Applied directly to the skin surface at the specified location (usually along the backline) per the product label instructions — avoid injured or inflamed skin."
 
 #: app/health/health_service.py:45
 msgid "رذاذ/استنشاق"
 msgstr "Spray/inhalation"
 
 #: app/health/health_service.py:46
-msgid ""
-"يُستخدم عادة لعلاجات تنفسية جماعية بمساحة محدودة التهوية مؤقتاً، حسب "
-"تعليمات جهاز الرذاذ المستخدم — تأكد من تهوية المكان بعد انتهاء المدة "
-"الموصى بها."
-msgstr ""
-"Usually used for group respiratory treatments in a temporarily limited-"
-"ventilation space, per the instructions of the spray device used — ensure"
-" the space is ventilated after the recommended duration ends."
+msgid "يُستخدم عادة لعلاجات تنفسية جماعية بمساحة محدودة التهوية مؤقتاً، حسب تعليمات جهاز الرذاذ المستخدم — تأكد من تهوية المكان بعد انتهاء المدة الموصى بها."
+msgstr "Usually used for group respiratory treatments in a temporarily limited-ventilation space, per the instructions of the spray device used — ensure the space is ventilated after the recommended duration ends."
 
 #: app/health/health_service.py:62
 msgid "لقاح/تحصين"
 msgstr "Vaccine/immunization"
 
 #: app/health/health_service.py:63
-msgid ""
-"يُعطى وقائياً قبل التعرّض للمرض لبناء مناعة الجسم ضده — ما يُستخدم لعلاج "
-"مرض قائم فعلاً. يحتاج عادة جرعة تنشيطية بعد مدة معيّنة (مدة الحماية) "
-"لاستمرار الوقاية."
-msgstr ""
-"Given preventively before disease exposure to build the body's immunity "
-"against it — not used to treat an already-existing disease. Usually needs"
-" a booster dose after a set period (the protection duration) to maintain "
-"prevention."
+msgid "يُعطى وقائياً قبل التعرّض للمرض لبناء مناعة الجسم ضده — ما يُستخدم لعلاج مرض قائم فعلاً. يحتاج عادة جرعة تنشيطية بعد مدة معيّنة (مدة الحماية) لاستمرار الوقاية."
+msgstr "Given preventively before disease exposure to build the body's immunity against it — not used to treat an already-existing disease. Usually needs a booster dose after a set period (the protection duration) to maintain prevention."
 
 #: app/health/health_service.py:66
 msgid "مضاد حيوي"
 msgstr "Antibiotic"
 
 #: app/health/health_service.py:67
-msgid ""
-"يُستخدم لعلاج عدوى بكتيرية قائمة فعلاً، بعد تشخيص الدكتور — له عادة فترة "
-"سحب قبل بيع/حلب الحيوان. ما يُجدي مع الفيروسات."
-msgstr ""
-"Used to treat an already-existing bacterial infection, following the "
-"doctor's diagnosis — usually has a withdrawal period before "
-"selling/milking the animal. Ineffective against viruses."
+msgid "يُستخدم لعلاج عدوى بكتيرية قائمة فعلاً، بعد تشخيص الدكتور — له عادة فترة سحب قبل بيع/حلب الحيوان. ما يُجدي مع الفيروسات."
+msgstr "Used to treat an already-existing bacterial infection, following the doctor's diagnosis — usually has a withdrawal period before selling/milking the animal. Ineffective against viruses."
 
 #: app/health/health_service.py:70
 msgid "مضاد طفيليات/ديدان"
 msgstr "Antiparasitic/dewormer"
 
 #: app/health/health_service.py:71
-msgid ""
-"يُعطى دورياً حسب برنامج المزرعة لمكافحة الطفيليات الداخلية/الخارجية — "
-"التكرار المتقارب جداً بدون داعٍ قد يقلل فعاليته لاحقاً (نفس حارس منع "
-"التكرار خلال 30 يوماً بالنظام)."
-msgstr ""
-"Given periodically per the farm's program to control internal/external "
-"parasites — repeating it too closely together without reason can reduce "
-"its effectiveness later (the same 30-day repeat-prevention guard in the "
-"system)."
+msgid "يُعطى دورياً حسب برنامج المزرعة لمكافحة الطفيليات الداخلية/الخارجية — التكرار المتقارب جداً بدون داعٍ قد يقلل فعاليته لاحقاً (نفس حارس منع التكرار خلال 30 يوماً بالنظام)."
+msgstr "Given periodically per the farm's program to control internal/external parasites — repeating it too closely together without reason can reduce its effectiveness later (the same 30-day repeat-prevention guard in the system)."
 
 #: app/health/health_service.py:74
 msgid "فيتامينات ومكمّلات"
 msgstr "Vitamins and supplements"
 
 #: app/health/health_service.py:75
-msgid ""
-"يدعم التغذية العامة أو يسدّ نقصاً غذائياً محدداً (مثل السيلينيوم) — مو "
-"علاجاً لمرض قائم، ومعظمها بدون فترة سحب."
-msgstr ""
-"Supports general nutrition or fills a specific nutritional deficiency "
-"(like selenium) — not a treatment for an existing disease, and most have "
-"no withdrawal period."
+msgid "يدعم التغذية العامة أو يسدّ نقصاً غذائياً محدداً (مثل السيلينيوم) — مو علاجاً لمرض قائم، ومعظمها بدون فترة سحب."
+msgstr "Supports general nutrition or fills a specific nutritional deficiency (like selenium) — not a treatment for an existing disease, and most have no withdrawal period."
 
 #: app/health/health_service.py:78
 msgid "مطهرات وعلاجات موضعية"
 msgstr "Disinfectants and topical treatments"
 
 #: app/health/health_service.py:79
-msgid ""
-"يُستخدم على سطح الجلد/الجرح مباشرة (تطهير، تندّب، طفيليات خارجية موضعية) "
-"— عادة أقل امتصاصاً جهازياً من الحقن/الفموي."
-msgstr ""
-"Used directly on the skin/wound surface (disinfecting, scarring, local "
-"external parasites) — usually less systemic absorption than "
-"injections/oral."
+msgid "يُستخدم على سطح الجلد/الجرح مباشرة (تطهير، تندّب، طفيليات خارجية موضعية) — عادة أقل امتصاصاً جهازياً من الحقن/الفموي."
+msgstr "Used directly on the skin/wound surface (disinfecting, scarring, local external parasites) — usually less systemic absorption than injections/oral."
 
 #: app/health/health_service.py:83
-msgid ""
-"فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية "
-"المكتوبة على الدواء نفسه."
-msgstr ""
-"A general category for what doesn't fall under the other categories — "
-"check the reference dosage note written on the medicine itself."
+msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
+msgstr "A general category for what doesn't fall under the other categories — check the reference dosage note written on the medicine itself."
 
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
@@ -752,6 +675,9 @@ msgid "تاريخ الولادة"
 msgstr "Birth date"
 
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:81
+#: app/templates/ostrich/egg_form.html:10
+#: app/templates/ostrich/egg_hatch_form.html:7
+#: app/templates/ostrich/eggs_list.html:23
 msgid "الأم"
 msgstr "Mother"
 
@@ -998,13 +924,8 @@ msgid "سبب آخر"
 msgstr "Other reason"
 
 #: app/templates/_offline_widgets.html:7
-msgid ""
-"غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً "
-"وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
-msgstr ""
-"No internet connection right now — any data you enter on this page is "
-"saved locally and uploaded automatically once the connection returns, "
-"without you needing to do anything."
+msgid "غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
+msgstr "No internet connection right now — any data you enter on this page is saved locally and uploaded automatically once the connection returns, without you needing to do anything."
 
 #: app/templates/_offline_widgets.html:10
 msgid "بانتظار الرفع بجهازك"
@@ -1015,18 +936,12 @@ msgid "إدخالات رُفضت عند المزامنة — تحتاج مراج
 msgstr "Entries rejected during sync — need your review"
 
 #: app/templates/_offline_widgets.html:24
-msgid ""
-"ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما "
-"يرجع الاتصال."
-msgstr ""
-"No internet right now — the data has been saved locally and will be "
-"uploaded automatically once the connection returns."
+msgid "ما فيه إنترنت الآن — تم حفظ البيانات محلياً وراح تُرفع تلقائياً أول ما يرجع الاتصال."
+msgstr "No internet right now — the data has been saved locally and will be uploaded automatically once the connection returns."
 
 #: app/templates/_offline_widgets.html:25
 msgid "رُفضت من السيرفر عند المزامنة، راجعها وأعد الإدخال يدوياً أو أعد المحاولة."
-msgstr ""
-"Rejected by the server during sync — review it and re-enter manually, or "
-"retry."
+msgstr "Rejected by the server during sync — review it and re-enter manually, or retry."
 
 #: app/templates/_offline_widgets.html:26
 msgid "إعادة المحاولة"
@@ -1063,24 +978,11 @@ msgstr "barn"
 
 #: app/templates/alerts_list.html:11
 msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
-msgstr ""
-"You're not responsible for any barn yet — ask the farm owner to assign "
-"you one."
+msgstr "You're not responsible for any barn yet — ask the farm owner to assign you one."
 
 #: app/templates/alerts_list.html:15
-msgid ""
-"عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
-"تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
-"حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر "
-"بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم "
-"التحصينات). النافذة الزمنية من"
-msgstr ""
-"A live view derived directly from system data — vaccinations due, "
-"withdrawal periods ending soon, upcoming expected births, breeding-device"
-" reminders, long-open diseases, out-of-order animals, pending reports, "
-"animals ready for sale now, barns with no responsible worker, and "
-"expected stock shortages for upcoming scheduled vaccinations (vaccination"
-" calendar). The time window comes from"
+msgid "عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، حيوانات بترتيب غير منتظم، بلاغات منتظرة، حيوانات جاهزة للبيع الآن، حظائر بدون عامل مسؤول، ونقص مخزون متوقّع لتحصينات مجدولة قريبة (تقويم التحصينات). النافذة الزمنية من"
+msgstr "A live view derived directly from system data — vaccinations due, withdrawal periods ending soon, upcoming expected births, breeding-device reminders, long-open diseases, out-of-order animals, pending reports, animals ready for sale now, barns with no responsible worker, and expected stock shortages for upcoming scheduled vaccinations (vaccination calendar). The time window comes from"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
 #: app/templates/home.html:107
@@ -1242,6 +1144,9 @@ msgstr "Milk"
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/isolation_exit_form.html:25
+#: app/templates/ostrich/egg_form.html:24
+#: app/templates/ostrich/incubator_form.html:10
+#: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
@@ -1329,6 +1234,7 @@ msgstr "Cord treated"
 #: app/templates/animal_detail.html:121 app/templates/animal_detail.html:122
 #: app/templates/animal_detail.html:123 app/templates/animal_detail.html:145
 #: app/templates/animal_detail.html:155 app/templates/animal_detail.html:156
+#: app/templates/ostrich/egg_form.html:17
 msgid "غير محدد"
 msgstr "Not specified"
 
@@ -1413,6 +1319,8 @@ msgstr "Udder damaged"
 #: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
+#: app/templates/ostrich/egg_form.html:25
+#: app/templates/ostrich/incubator_form.html:11
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
@@ -1494,6 +1402,8 @@ msgstr "Severity"
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
 #: app/templates/team/daily_templates.html:18
@@ -1546,6 +1456,7 @@ msgstr "Other party"
 #: app/templates/animal_detail.html:244 app/templates/animal_form.html:65
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:66
+#: app/templates/ostrich/egg_hatch_form.html:27
 msgid "أنثى"
 msgstr "Female"
 
@@ -1713,44 +1624,19 @@ msgstr "Feed cost estimate (%(n)s days)"
 
 #: app/templates/animal_detail.html:396
 msgid "نصيبه من المصاريف غير المباشرة (إيجار/صيانة/رواتب — موزَّعة على القطيع)"
-msgstr ""
-"Its share of indirect expenses (rent/maintenance/salaries — distributed "
-"across the herd)"
+msgstr "Its share of indirect expenses (rent/maintenance/salaries — distributed across the herd)"
 
 #: app/templates/animal_detail.html:397
 msgid "الإجمالي التقديري منذ الدخول"
 msgstr "Estimated total since entry"
 
 #: app/templates/animal_detail.html:400
-msgid ""
-"⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة، أو ما فيه خطة تغذية فعّالة "
-"لحظيرته حالياً."
-msgstr ""
-"⚠️ Feed estimate = 0 — the animal has no barn, or its barn has no active "
-"feeding plan currently."
+msgid "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة، أو ما فيه خطة تغذية فعّالة لحظيرته حالياً."
+msgstr "⚠️ Feed estimate = 0 — the animal has no barn, or its barn has no active feeding plan currently."
 
 #: app/templates/animal_detail.html:403
-msgid ""
-"ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن "
-"الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ "
-"التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) "
-"يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة "
-"(نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم "
-"المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) "
-"التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما "
-"الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
-msgstr ""
-"ℹ️ Honest caveats about this report: (1) The feed estimate is approximate"
-" — it assumes the animal spent its entire duration in the same barn under"
-" its current plan (the system doesn't track barn-transfer history). (2) "
-"The indirect-expense share (rent/maintenance/salaries) is calculated from"
-" the current active head count, not the actual count at each past period "
-"(the same limitation as the \"monthly animal cost\" report in item 18) — "
-"and also depends on the expense being tagged \"indirect\" at entry time, "
-"otherwise it isn't counted here. (3) Medical costs are calculated "
-"automatically from (quantity × pharmacy unit price) when both are "
-"recorded, otherwise they fall back to the manual value the doctor entered"
-" at the time."
+msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
+msgstr "ℹ️ Honest caveats about this report: (1) The feed estimate is approximate — it assumes the animal spent its entire duration in the same barn under its current plan (the system doesn't track barn-transfer history). (2) The indirect-expense share (rent/maintenance/salaries) is calculated from the current active head count, not the actual count at each past period (the same limitation as the \"monthly animal cost\" report in item 18) — and also depends on the expense being tagged \"indirect\" at entry time, otherwise it isn't counted here. (3) Medical costs are calculated automatically from (quantity × pharmacy unit price) when both are recorded, otherwise they fall back to the manual value the doctor entered at the time."
 
 #: app/templates/animal_detail.html:407
 msgid "الحركات المالية المرتبطة"
@@ -1784,7 +1670,7 @@ msgstr "No financial transactions linked to this animal."
 msgid "تعديل بيانات الحيوان"
 msgstr "Edit animal data"
 
-#: app/templates/animal_form.html:4
+#: app/templates/animal_form.html:4 app/templates/ostrich/egg_form.html:6
 msgid "تسجيل حيوان جديد"
 msgstr "Register new animal"
 
@@ -1797,12 +1683,8 @@ msgid "مثال: BR-2026-001"
 msgstr "Example: BR-2026-001"
 
 #: app/templates/animal_form.html:15
-msgid ""
-"إلزامي — إلا لو المصدر \"ولادة بالمزرعة\" بدون رقعة جاهزة بعد، وقتها "
-"يُولَّد رقم مؤقت تلقائياً."
-msgstr ""
-"Required — unless the source is \"born on farm\" without a tag ready yet,"
-" in which case a temporary number is auto-generated."
+msgid "إلزامي — إلا لو المصدر \"ولادة بالمزرعة\" بدون رقعة جاهزة بعد، وقتها يُولَّد رقم مؤقت تلقائياً."
+msgstr "Required — unless the source is \"born on farm\" without a tag ready yet, in which case a temporary number is auto-generated."
 
 #: app/templates/animal_form.html:21
 msgid "اختر اللون..."
@@ -1810,11 +1692,10 @@ msgstr "Choose color..."
 
 #: app/templates/animal_form.html:26
 msgid "الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين."
-msgstr ""
-"The number and color together are the animal's field identity — you must "
-"choose both."
+msgstr "The number and color together are the animal's field identity — you must choose both."
 
 #: app/templates/animal_form.html:28
+#: app/templates/ostrich/incubator_form.html:8
 msgid "الاسم (اختياري)"
 msgstr "Name (optional)"
 
@@ -1824,12 +1705,8 @@ msgid "الفصيلة"
 msgstr "Species"
 
 #: app/templates/animal_form.html:38
-msgid ""
-"أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج "
-"(تقريع/حمل/فطام) تلقائياً."
-msgstr ""
-"Any species that isn't a ruminant (ostrich or a new species) doesn't "
-"automatically enter the production cycle (mating/pregnancy/weaning)."
+msgid "أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً."
+msgstr "Any species that isn't a ruminant (ostrich or a new species) doesn't automatically enter the production cycle (mating/pregnancy/weaning)."
 
 #: app/templates/animal_form.html:40
 msgid "السلالة"
@@ -1849,13 +1726,8 @@ msgid "هدية/دعم عيني"
 msgstr "Gift/in-kind support"
 
 #: app/templates/animal_form.html:51
-msgid ""
-"المصدر لا يتغيّر بعد الإنشاء (مرتبط بحركة مالية وحدث دورة إنتاج تسجّلا "
-"أصلاً) — لو أُدخل غلط، الأصح أرشفة هذا الرأس وإضافة رأس جديد صحيح."
-msgstr ""
-"The source cannot change after creation (tied to a financial transaction "
-"and a production-cycle event already recorded) — if entered wrong, the "
-"correct fix is to archive this animal and add a new correct one."
+msgid "المصدر لا يتغيّر بعد الإنشاء (مرتبط بحركة مالية وحدث دورة إنتاج تسجّلا أصلاً) — لو أُدخل غلط، الأصح أرشفة هذا الرأس وإضافة رأس جديد صحيح."
+msgstr "The source cannot change after creation (tied to a financial transaction and a production-cycle event already recorded) — if entered wrong, the correct fix is to archive this animal and add a new correct one."
 
 #: app/templates/animal_form.html:57
 msgid "هدية / دعم عيني"
@@ -1868,6 +1740,7 @@ msgstr "Opening balance (already in the herd)"
 #: app/templates/animal_form.html:64
 #: app/templates/animals_bulk_purchase.html:43
 #: app/templates/animals_bulk_purchase.html:65
+#: app/templates/ostrich/egg_hatch_form.html:26
 msgid "ذكر"
 msgstr "Male"
 
@@ -1876,19 +1749,15 @@ msgid "هل هي حامل؟"
 msgstr "Is she pregnant?"
 
 #: app/templates/animal_form.html:75
-msgid ""
-"لو \"نعم\": تُسجَّل كحمل غير مؤكَّد بعد (بانتظار تأكيد الطبيب)، وتتولّد "
-"مهمة تنقلها فعلياً لحظيرة الحوامل بعد انتهاء فترة العزل."
-msgstr ""
-"If \"yes\": recorded as an unconfirmed pregnancy (awaiting the doctor's "
-"confirmation), and a task is generated to actually move her to the "
-"pregnant-animals barn after the isolation period ends."
+msgid "لو \"نعم\": تُسجَّل كحمل غير مؤكَّد بعد (بانتظار تأكيد الطبيب)، وتتولّد مهمة تنقلها فعلياً لحظيرة الحوامل بعد انتهاء فترة العزل."
+msgstr "If \"yes\": recorded as an unconfirmed pregnancy (awaiting the doctor's confirmation), and a task is generated to actually move her to the pregnant-animals barn after the isolation period ends."
 
 #: app/templates/animal_form.html:79
 msgid "الغرض (يحدّد مسار دورة الإنتاج لاحقاً)"
 msgstr "Purpose (determines the production-cycle path later)"
 
 #: app/templates/animal_form.html:81
+#: app/templates/ostrich/egg_hatch_form.html:25
 msgid "غير محدد بعد"
 msgstr "Not determined yet"
 
@@ -1910,12 +1779,8 @@ msgid "اختر الحظيرة..."
 msgstr "Choose barn..."
 
 #: app/templates/animal_form.html:92
-msgid ""
-"اختيار حظيرة العزل لرأس مشترى جديد يولّد له تلقائياً مهام رش وقائي وتحصين"
-" مبدئي إلزامية."
-msgstr ""
-"Selecting the isolation barn for a newly purchased animal automatically "
-"generates mandatory preventive spraying and initial vaccination tasks."
+msgid "اختيار حظيرة العزل لرأس مشترى جديد يولّد له تلقائياً مهام رش وقائي وتحصين مبدئي إلزامية."
+msgstr "Selecting the isolation barn for a newly purchased animal automatically generates mandatory preventive spraying and initial vaccination tasks."
 
 #: app/templates/animal_form.html:96
 msgid "الأم (مطلوب فقط لو المصدر \"ولادة\")"
@@ -1955,9 +1820,7 @@ msgstr "Image link (optional)"
 
 #: app/templates/animal_form.html:142
 msgid "اختياري لو ولادة بدون رقعة جاهزة بعد — يُولَّد رقم مؤقت تلقائياً."
-msgstr ""
-"Optional if birth without a tag ready yet — a temporary number is auto-"
-"generated."
+msgstr "Optional if birth without a tag ready yet — a temporary number is auto-generated."
 
 #: app/templates/animal_form.html:143
 msgid "إلزامي — إلا لو المصدر \"ولادة بالمزرعة\" بدون رقعة جاهزة بعد."
@@ -1988,6 +1851,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
+#: app/templates/ostrich/incubators_list.html:13
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
@@ -2165,12 +2029,8 @@ msgid "إصدار فاتورة"
 msgstr "Issue invoice"
 
 #: app/templates/animal_workflow.html:111
-msgid ""
-"استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل "
-"للتدقيق)."
-msgstr ""
-"Undo the sale? The animal returns to active status and the financial "
-"transaction is cancelled (it stays in the record for auditing)."
+msgid "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق)."
+msgstr "Undo the sale? The animal returns to active status and the financial transaction is cancelled (it stays in the record for auditing)."
 
 #: app/templates/animal_workflow.html:113
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
@@ -2210,15 +2070,8 @@ msgid "إلغاء ← رجوع للإجراء الجماعي"
 msgstr "Cancel ← back to bulk action"
 
 #: app/templates/animals_bulk_purchase.html:8
-msgid ""
-"إضافة عدة رؤوس مشتراة دفعة واحدة — كل صف يمر بنفس نقطة الدخول الموحّدة "
-"لإنشاء الحيوانات، فيسجَّل له تلقائياً حركة مالية \"شراء\" وحدث دورة "
-"إنتاج، تماماً كأنه أُضيف من شاشة \"+ حيوان جديد\" فرداً فرداً."
-msgstr ""
-"Add several purchased animals at once — each row goes through the same "
-"unified animal-creation entry point, so it automatically gets a "
-"\"purchase\" financial transaction and a production-cycle event, exactly "
-"as if it were added individually from the \"+ New animal\" screen."
+msgid "إضافة عدة رؤوس مشتراة دفعة واحدة — كل صف يمر بنفس نقطة الدخول الموحّدة لإنشاء الحيوانات، فيسجَّل له تلقائياً حركة مالية \"شراء\" وحدث دورة إنتاج، تماماً كأنه أُضيف من شاشة \"+ حيوان جديد\" فرداً فرداً."
+msgstr "Add several purchased animals at once — each row goes through the same unified animal-creation entry point, so it automatically gets a \"purchase\" financial transaction and a production-cycle event, exactly as if it were added individually from the \"+ New animal\" screen."
 
 #: app/templates/animals_bulk_purchase.html:16
 msgid "تاريخ الشراء (لكل الدفعة)"
@@ -2295,27 +2148,19 @@ msgstr "Males: all active animals with male gender."
 
 #: app/templates/animals_list.html:42
 msgid "قريب الولادة: حمل مؤكد وتاريخ الولادة المتوقع خلال 30 يوم القادمة."
-msgstr ""
-"Near birth: confirmed pregnancy with expected birth date within the next "
-"30 days."
+msgstr "Near birth: confirmed pregnancy with expected birth date within the next 30 days."
 
 #: app/templates/animals_list.html:43
 msgid "المقرعات: عندها تقريع مسجّل خلال آخر دورة حمل (بغض النظر عن تأكيد الحمل)."
-msgstr ""
-"Mated: has a recorded mating within the last gestation cycle (regardless "
-"of pregnancy confirmation)."
+msgstr "Mated: has a recorded mating within the last gestation cycle (regardless of pregnancy confirmation)."
 
 #: app/templates/animals_list.html:44
 msgid "دافع: أنثى بعمر سنة فأكثر وعندها ولادة واحدة على الأقل خلال آخر 400 يوم."
-msgstr ""
-"Productive: a female aged one year or more with at least one birth in the"
-" last 400 days."
+msgstr "Productive: a female aged one year or more with at least one birth in the last 400 days."
 
 #: app/templates/animals_list.html:45
 msgid "غير دافع: أنثى بعمر سنة فأكثر بدون أي ولادة خلال آخر 400 يوم."
-msgstr ""
-"Unproductive: a female aged one year or more with no births in the last "
-"400 days."
+msgstr "Unproductive: a female aged one year or more with no births in the last 400 days."
 
 #: app/templates/animals_list.html:46
 msgid "المرضعات: عندها مولود عمره أقل من 90 يوم."
@@ -2330,27 +2175,16 @@ msgid "النفوق: كل الرؤوس بحالة نافق."
 msgstr "Deceased: all animals with deceased status."
 
 #: app/templates/animals_list.html:49
-msgid ""
-"جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، "
-"عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات)."
-msgstr ""
-"Ready to mate: has reached the minimum mating age, not pregnant, no "
-"currently active mating, has passed the rest period after the last birth,"
-" and no open diseases (values from settings)."
+msgid "جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات)."
+msgstr "Ready to mate: has reached the minimum mating age, not pregnant, no currently active mating, has passed the rest period after the last birth, and no open diseases (values from settings)."
 
 #: app/templates/animals_list.html:50
-msgid ""
-"النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — "
-"راجع سجل البيض والتفقيس من القائمة الجانبية."
-msgstr ""
-"Ostriches: all active animals of the ostrich species (no ruminant "
-"production cycle) — check the egg and hatching records from the sidebar."
+msgid "النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — راجع سجل البيض والتفقيس من القائمة الجانبية."
+msgstr "Ostriches: all active animals of the ostrich species (no ruminant production cycle) — check the egg and hatching records from the sidebar."
 
 #: app/templates/animals_list.html:52
 msgid "هذا تعريف اجتهادي قابل للتعديل — كلّمني لو عندك تعريف مختلف."
-msgstr ""
-"This is a working definition subject to change — let me know if you have "
-"a different definition."
+msgstr "This is a working definition subject to change — let me know if you have a different definition."
 
 #: app/templates/animals_list.html:64
 msgid "محدّد"
@@ -2374,9 +2208,7 @@ msgstr "Ostrich — no cycle"
 
 #: app/templates/animals_list.html:107
 msgid "ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس"
-msgstr ""
-"Selling/slaughter forbidden — lifted automatically — click for animal "
-"details"
+msgstr "Selling/slaughter forbidden — lifted automatically — click for animal details"
 
 #: app/templates/animals_list.html:107
 msgid "حتى"
@@ -2409,12 +2241,8 @@ msgstr "Audit log"
 
 #: app/templates/audit_log.html:6
 #, python-format
-msgid ""
-"آخر %(n)s حدث حسّاس بالنظام (حذف، اعتماد صلاحيات، إغلاق بلاغ...) — الأحدث"
-" أولاً."
-msgstr ""
-"The last %(n)s sensitive events in the system (deletion, permission "
-"grants, closing a report...) — newest first."
+msgid "آخر %(n)s حدث حسّاس بالنظام (حذف، اعتماد صلاحيات، إغلاق بلاغ...) — الأحدث أولاً."
+msgstr "The last %(n)s sensitive events in the system (deletion, permission grants, closing a report...) — newest first."
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
@@ -2507,17 +2335,11 @@ msgid "عام (مختلط — بدون فحص تلقائي)"
 msgstr "General (mixed — no automatic check)"
 
 #: app/templates/barn_form.html:19
-msgid ""
-"تحديد \"حامل - الشهور الأخيرة\" أو \"رضاعة\" (بند إضافي 133) يفعّل فحصاً "
-"تلقائياً: أي رأس وصل هذي الحالة فعلياً وما زال بحظيرة ثانية، تتولّد له "
-"مهمة مقترحة تنقله هنا. \"نمو\" و\"عام\" بدون أي فحص إلزامي."
-msgstr ""
-"Selecting \"Pregnant - final months\" or \"Nursing\" (item 133) enables "
-"an automatic check: any animal that has actually reached this state and "
-"is still in another barn gets a suggested task to move it here. "
-"\"Growth\" and \"General\" have no mandatory check."
+msgid "تحديد \"حامل - الشهور الأخيرة\" أو \"رضاعة\" (بند إضافي 133) يفعّل فحصاً تلقائياً: أي رأس وصل هذي الحالة فعلياً وما زال بحظيرة ثانية، تتولّد له مهمة مقترحة تنقله هنا. \"نمو\" و\"عام\" بدون أي فحص إلزامي."
+msgstr "Selecting \"Pregnant - final months\" or \"Nursing\" (item 133) enables an automatic check: any animal that has actually reached this state and is still in another barn gets a suggested task to move it here. \"Growth\" and \"General\" have no mandatory check."
 
 #: app/templates/barn_form.html:20 app/templates/barns_list.html:10
+#: app/templates/ostrich/incubators_list.html:13
 msgid "السعة"
 msgstr "Capacity"
 
@@ -2526,27 +2348,16 @@ msgid "العامل المسؤول"
 msgstr "Responsible worker"
 
 #: app/templates/barn_form.html:26
-msgid ""
-"توجّه له تلقائياً المهام (بند 27) والتنبيهات (\"تنبيهاتي\" — بند إضافي) "
-"الخاصة بهذي الحظيرة."
-msgstr ""
-"Tasks (item 27) and alerts (\"My Alerts\" — additional item) for this "
-"barn are automatically directed to them."
+msgid "توجّه له تلقائياً المهام (بند 27) والتنبيهات (\"تنبيهاتي\" — بند إضافي) الخاصة بهذي الحظيرة."
+msgstr "Tasks (item 27) and alerts (\"My Alerts\" — additional item) for this barn are automatically directed to them."
 
 #: app/templates/barn_form.html:29
 msgid "مواعيد وجبات العلف"
 msgstr "Feed meal times"
 
 #: app/templates/barn_form.html:30
-msgid ""
-"إعداد مستقل لكل حظيرة — أضف موعد لكل وجبة تبي تعطيها لهذي الحظيرة يومياً."
-" عند وصول الموعد، تنولّد تلقائياً مهمة واحدة (توزيع علف + تنظيف معالف + "
-"تغيير ماء) للعامل المسؤول عن الحظيرة أعلاه."
-msgstr ""
-"An independent setting per barn — add a time for each meal you want to "
-"give this barn daily. When the time arrives, one task (feed distribution "
-"+ trough cleaning + water change) is automatically generated for the "
-"barn's responsible worker above."
+msgid "إعداد مستقل لكل حظيرة — أضف موعد لكل وجبة تبي تعطيها لهذي الحظيرة يومياً. عند وصول الموعد، تنولّد تلقائياً مهمة واحدة (توزيع علف + تنظيف معالف + تغيير ماء) للعامل المسؤول عن الحظيرة أعلاه."
+msgstr "An independent setting per barn — add a time for each meal you want to give this barn daily. When the time arrives, one task (feed distribution + trough cleaning + water change) is automatically generated for the barn's responsible worker above."
 
 #: app/templates/barn_form.html:39
 msgid "إضافة موعد وجبة"
@@ -2790,13 +2601,8 @@ msgid "إضافة لقاح جديد للصيدلية"
 msgstr "Add a new vaccine to the pharmacy"
 
 #: app/templates/bulk_action_form.html:53
-msgid ""
-"اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة \"لقاح\" — الموعد القادم "
-"ينجدول تلقائياً من مدة الحماية المسجَّلة عليه."
-msgstr ""
-"The vaccine must already be registered in the pharmacy under the "
-"\"vaccine\" category — the next due date is auto-scheduled from its "
-"recorded protection period."
+msgid "اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة \"لقاح\" — الموعد القادم ينجدول تلقائياً من مدة الحماية المسجَّلة عليه."
+msgstr "The vaccine must already be registered in the pharmacy under the \"vaccine\" category — the next due date is auto-scheduled from its recorded protection period."
 
 #: app/templates/bulk_action_form.html:55
 #: app/templates/bulk_action_form.html:72
@@ -2824,13 +2630,8 @@ msgid "الرؤوس المحددة"
 msgstr "Selected animals"
 
 #: app/templates/bulk_action_form.html:76
-msgid ""
-"أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول "
-"\"الجرعة حسب العمر\" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً."
-msgstr ""
-"Check the box for every animal actually vaccinated — the dose is auto-"
-"filled from the \"dose by age\" table recorded on the vaccine (if any), "
-"and you can edit it manually."
+msgid "أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول \"الجرعة حسب العمر\" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً."
+msgstr "Check the box for every animal actually vaccinated — the dose is auto-filled from the \"dose by age\" table recorded on the vaccine (if any), and you can edit it manually."
 
 #: app/templates/bulk_action_form.html:81
 msgid "تحصين اللقاح الأول"
@@ -2851,26 +2652,13 @@ msgstr "Record vaccination for all"
 
 #: app/templates/bulk_action_form.html:125
 #, python-format
-msgid ""
-"🟢 المخزون كافٍ — الاحتياج %(needed)s %(unit)s من أصل %(available)s "
-"%(unit2)s متوفرة."
-msgstr ""
-"🟢 Stock is sufficient — need is %(needed)s %(unit)s out of %(available)s "
-"%(unit2)s available."
+msgid "🟢 المخزون كافٍ — الاحتياج %(needed)s %(unit)s من أصل %(available)s %(unit2)s متوفرة."
+msgstr "🟢 Stock is sufficient — need is %(needed)s %(unit)s out of %(available)s %(unit2)s available."
 
 #: app/templates/bulk_action_form.html:126
 #, python-format
-msgid ""
-"🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s "
-"%(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك "
-"تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً "
-"برسالة واضحة عند الحفظ (مو تحصيناً وهمياً)."
-msgstr ""
-"🔴 Stock is not enough — need is %(needed)s %(unit)s and only "
-"%(available)s %(unit2)s available (enough for roughly %(coverable)s of "
-"the %(checked)s selected) — uncheck some animals, or update stock with "
-"the button below; the rest will be rejected automatically with a clear "
-"message on save (not a fake vaccination)."
+msgid "🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s %(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً)."
+msgstr "🔴 Stock is not enough — need is %(needed)s %(unit)s and only %(available)s %(unit2)s available (enough for roughly %(coverable)s of the %(checked)s selected) — uncheck some animals, or update stock with the button below; the rest will be rejected automatically with a clear message on save (not a fake vaccination)."
 
 #: app/templates/bulk_action_form.html:219
 msgid "ملاحظة عامة (تُضاف لكل الرؤوس)"
@@ -2902,13 +2690,8 @@ msgid "الغرض الجديد (لكل الرؤوس المحددة)"
 msgstr "New purpose (for all selected animals)"
 
 #: app/templates/bulk_action_form.html:263
-msgid ""
-"تحديد \"تسمين\" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف "
-"التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة."
-msgstr ""
-"Selecting \"fattening\" here sets the feeding target (higher "
-"protein/energy) for the automatic feed-mix calculation — check 'meal "
-"times' on the barn screen."
+msgid "تحديد \"تسمين\" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة."
+msgstr "Selecting \"fattening\" here sets the feeding target (higher protein/energy) for the automatic feed-mix calculation — check 'meal times' on the barn screen."
 
 #: app/templates/bulk_action_form.html:267
 msgid "الغرض الحالي"
@@ -2931,15 +2714,8 @@ msgid "سعر البيع"
 msgstr "Sale price"
 
 #: app/templates/bulk_action_form.html:294
-msgid ""
-"اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة —"
-" لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة "
-"منفصلة."
-msgstr ""
-"Leave the price field empty for any animal you want to skip. The sale is "
-"protected by the cycle-completion gate — if a particular animal is "
-"rejected, the rest sell normally and you'll see the rejection reason in a"
-" separate message."
+msgid "اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة."
+msgstr "Leave the price field empty for any animal you want to skip. The sale is protected by the cycle-completion gate — if a particular animal is rejected, the rest sell normally and you'll see the rejection reason in a separate message."
 
 #: app/templates/bulk_action_form.html:295
 msgid "بيع الكل"
@@ -2955,9 +2731,7 @@ msgstr "Reason (optional, recorded for all animals)"
 
 #: app/templates/bulk_action_form.html:312
 msgid "تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل."
-msgstr ""
-"Death is recorded without the cycle-completion condition — it's a real "
-"fact, not a business decision."
+msgstr "Death is recorded without the cycle-completion condition — it's a real fact, not a business decision."
 
 #: app/templates/bulk_action_form.html:313
 #, python-format
@@ -3016,9 +2790,7 @@ msgstr "Quantity used per animal"
 
 #: app/templates/bulk_action_form.html:338
 msgid "* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة."
-msgstr ""
-"* Required if you selected a medicine above — the cost is calculated "
-"automatically from the unit price."
+msgstr "* Required if you selected a medicine above — the cost is calculated automatically from the unit price."
 
 #: app/templates/bulk_action_form.html:346
 msgid "تسجيل الحالة للكل"
@@ -3030,9 +2802,7 @@ msgstr "Isolation reason (optional, recorded as a note on each animal)"
 
 #: app/templates/bulk_action_form.html:363
 msgid "ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل)."
-msgstr ""
-"All are automatically moved to the isolation barn defined in the system "
-"(barn_type = isolation)."
+msgstr "All are automatically moved to the isolation barn defined in the system (barn_type = isolation)."
 
 #: app/templates/bulk_action_form.html:364
 msgid "عزل الكل"
@@ -3069,16 +2839,8 @@ msgid "حفظ نتائج الكل"
 msgstr "Save results for all"
 
 #: app/templates/bulk_action_form.html:406
-msgid ""
-"⚠️ هذا الإجراء ما يسجّل ولا يخصم أي شيء الآن (بند إضافي 50) — بس يولّد "
-"مهمة \"علاج مخطَّط\" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم \"تأكيد "
-"التنفيذ\" الفعلي لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية)."
-msgstr ""
-"⚠️ This action does not record or deduct anything right now — it only "
-"generates a suggested \"planned treatment\" task for each animal, "
-"awaiting the doctor's review, then actual \"execution confirmation\" for "
-"each animal individually (that's where the real pharmacy deduction "
-"happens)."
+msgid "⚠️ هذا الإجراء ما يسجّل ولا يخصم أي شيء الآن (بند إضافي 50) — بس يولّد مهمة \"علاج مخطَّط\" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم \"تأكيد التنفيذ\" الفعلي لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية)."
+msgstr "⚠️ This action does not record or deduct anything right now — it only generates a suggested \"planned treatment\" task for each animal, awaiting the doctor's review, then actual \"execution confirmation\" for each animal individually (that's where the real pharmacy deduction happens)."
 
 #: app/templates/bulk_action_form.html:411
 msgid "الدواء المخطَّط"
@@ -3225,12 +2987,8 @@ msgid "تجاهل، ما أحتاجها"
 msgstr "Dismiss, I don't need it"
 
 #: app/templates/home.html:17
-msgid ""
-"هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس "
-"الأزرار السريعة تحت بدون ما ترجع لهنا."
-msgstr ""
-"Just a quick guide — each item checks itself off once you do it, and you "
-"can use the same quick actions below without coming back here."
+msgid "هذي بس دليل سريع — كل بند يتحقق لحاله أول ما تسويه، وتقدر تستخدم نفس الأزرار السريعة تحت بدون ما ترجع لهنا."
+msgstr "Just a quick guide — each item checks itself off once you do it, and you can use the same quick actions below without coming back here."
 
 #: app/templates/home.html:32 app/templates/worker_home.html:36
 msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
@@ -3261,13 +3019,8 @@ msgid "النظام"
 msgstr "System"
 
 #: app/templates/isolation_enter_form.html:5
-msgid ""
-"ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي "
-"حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
-msgstr ""
-"Moves the animal to an isolation barn and starts the isolation day "
-"counter (if not already in isolation). For any exceptional case "
-"(suspected disease, injury, etc.) — record the reason here."
+msgid "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
+msgstr "Moves the animal to an isolation barn and starts the isolation day counter (if not already in isolation). For any exceptional case (suspected disease, injury, etc.) — record the reason here."
 
 #: app/templates/isolation_enter_form.html:9
 msgid "حظيرة العزل"
@@ -3279,9 +3032,7 @@ msgstr "Isolation reason"
 
 #: app/templates/isolation_enter_form.html:13
 msgid "مثال: اشتباه مرض معدٍ، إصابة، حجر رأس وافد جديد..."
-msgstr ""
-"Example: suspected contagious disease, injury, quarantining a newly "
-"arrived animal..."
+msgstr "Example: suspected contagious disease, injury, quarantining a newly arrived animal..."
 
 #: app/templates/isolation_enter_form.html:14
 msgid "تأكيد دخول العزل"
@@ -3294,30 +3045,19 @@ msgstr "In isolation for %(n)s days (the usual minimum duration is %(min)s days)
 
 #: app/templates/isolation_exit_form.html:8
 msgid "خروج مبكر — لازم تؤكد فحص بيطري وتحصين قبل ما يسمح النظام بالخروج."
-msgstr ""
-"Early exit — you must confirm a veterinary check and vaccination before "
-"the system allows exit."
+msgstr "Early exit — you must confirm a veterinary check and vaccination before the system allows exit."
 
 #: app/templates/isolation_exit_form.html:9
 msgid "المدة الأدنى اكتملت — تقدر تخرجه مباشرة بدون شروط إضافية."
-msgstr ""
-"The minimum duration is complete — you can exit it directly with no "
-"additional conditions."
+msgstr "The minimum duration is complete — you can exit it directly with no additional conditions."
 
 #: app/templates/isolation_exit_form.html:12
 msgid "ما فيه تاريخ دخول عزل مسجَّل لهذا الرأس — الخروج يتم مباشرة بدون شروط."
-msgstr ""
-"No isolation entry date is recorded for this animal — exit happens "
-"directly with no conditions."
+msgstr "No isolation entry date is recorded for this animal — exit happens directly with no conditions."
 
 #: app/templates/isolation_exit_form.html:17
-msgid ""
-"الحظيرة الهدف (تقدر تختار أي حظيرة غير عزل، أو حظيرة عزل ثانية لو محتاج "
-"تنقله بس بدون إخراجه فعلياً — استخدم \"نقل حظيرة\" العادي لهذي الحالة)"
-msgstr ""
-"Target barn (you can choose any non-isolation barn, or another isolation "
-"barn if you just need to move it without actually exiting it — use the "
-"regular \"move barn\" for this case)"
+msgid "الحظيرة الهدف (تقدر تختار أي حظيرة غير عزل، أو حظيرة عزل ثانية لو محتاج تنقله بس بدون إخراجه فعلياً — استخدم \"نقل حظيرة\" العادي لهذي الحالة)"
+msgstr "Target barn (you can choose any non-isolation barn, or another isolation barn if you just need to move it without actually exiting it — use the regular \"move barn\" for this case)"
 
 #: app/templates/isolation_exit_form.html:22
 msgid "تم فحص بيطري موثّق؟"
@@ -3348,20 +3088,12 @@ msgid "دخول"
 msgstr "Login"
 
 #: app/templates/login.html:26
-msgid ""
-"وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع "
-"يستخدمه فريقك فعلياً."
-msgstr ""
-"Test mode enabled — login without a password. Turn it off from Settings "
-"if your team is actually using this site."
+msgid "وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع يستخدمه فريقك فعلياً."
+msgstr "Test mode enabled — login without a password. Turn it off from Settings if your team is actually using this site."
 
 #: app/templates/today.html:7
-msgid ""
-"مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما "
-"تتنقّل بين شاشات."
-msgstr ""
-"Your open tasks, barn alerts, and open reports — all here instead of "
-"switching between screens."
+msgid "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما تتنقّل بين شاشات."
+msgstr "Your open tasks, barn alerts, and open reports — all here instead of switching between screens."
 
 #: app/templates/today.html:12
 msgid "مهامي المفتوحة"
@@ -3436,12 +3168,8 @@ msgid "مسح المحادثة"
 msgstr "Clear conversation"
 
 #: app/templates/assistant/chat.html:35
-msgid ""
-"اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد "
-"تشغيلي عن المزرعة."
-msgstr ""
-"Ask me about the herd's status, pregnancy, incubators, feed, alerts, or "
-"any operational guidance about the farm."
+msgid "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة."
+msgstr "Ask me about the herd's status, pregnancy, incubators, feed, alerts, or any operational guidance about the farm."
 
 #: app/templates/assistant/chat.html:48
 msgid "كم عدد الحيوانات؟"
@@ -3554,13 +3282,8 @@ msgid "حركة المخزون"
 msgstr "Stock movements"
 
 #: app/templates/feed/calculator.html:14
-msgid ""
-"الأرقام هنا تقدير مبسّط للمجترات الصغيرة (مو توصية بيطرية معتمدة) — راجع "
-"طبيبك قبل ما تعتمد عليها بقرارات شراء فعلية."
-msgstr ""
-"These numbers are a simplified estimate for small ruminants (not a "
-"certified veterinary recommendation) — check with your vet before relying"
-" on them for actual purchasing decisions."
+msgid "الأرقام هنا تقدير مبسّط للمجترات الصغيرة (مو توصية بيطرية معتمدة) — راجع طبيبك قبل ما تعتمد عليها بقرارات شراء فعلية."
+msgstr "These numbers are a simplified estimate for small ruminants (not a certified veterinary recommendation) — check with your vet before relying on them for actual purchasing decisions."
 
 #: app/templates/feed/calculator.html:18 app/templates/feed/optimizer.html:13
 msgid "اختر حيوان (يستخدم وزنه الفعلي)"
@@ -3576,9 +3299,7 @@ msgstr "Or manual weight (kg)"
 
 #: app/templates/feed/calculator.html:24 app/templates/feed/optimizer.html:19
 msgid "الحالة الفسيولوجية (اتركه فاضي ليخمّنه النظام من دورة الإنتاج)"
-msgstr ""
-"Physiological state (leave blank to let the system infer it from the "
-"production cycle)"
+msgstr "Physiological state (leave blank to let the system infer it from the production cycle)"
 
 #: app/templates/feed/calculator.html:26 app/templates/feed/optimizer.html:21
 msgid "تخمين تلقائي"
@@ -3655,15 +3376,8 @@ msgid "رجوع لحاسبة العلف"
 msgstr "Back to feed calculator"
 
 #: app/templates/feed/fcr_report.html:9
-msgid ""
-"FCR = كجم علف مستهلك ÷ كجم زيادة وزن لكل رؤوس الحظيرة النشطة مجتمعة — رقم"
-" أقل يعني كفاءة تحويل أعلى. يعتمد على انتظام تسجيل الوزن وحركات العلف "
-"الفعلية بالفترة المحددة."
-msgstr ""
-"FCR = kg feed consumed ÷ kg weight gain for all active animals in the "
-"barn combined — a lower number means higher conversion efficiency. "
-"Depends on consistent weight logging and actual feed movements within the"
-" chosen period."
+msgid "FCR = كجم علف مستهلك ÷ كجم زيادة وزن لكل رؤوس الحظيرة النشطة مجتمعة — رقم أقل يعني كفاءة تحويل أعلى. يعتمد على انتظام تسجيل الوزن وحركات العلف الفعلية بالفترة المحددة."
+msgstr "FCR = kg feed consumed ÷ kg weight gain for all active animals in the barn combined — a lower number means higher conversion efficiency. Depends on consistent weight logging and actual feed movements within the chosen period."
 
 #: app/templates/feed/fcr_report.html:20
 msgid "من تاريخ"
@@ -3691,21 +3405,12 @@ msgstr "Feed cost per kg gained"
 
 #: app/templates/feed/fcr_report.html:35
 #, python-format
-msgid ""
-"%(with_data)s من %(total)s رأس بالحظيرة عندهم وزنان مسجَّلان بالفترة "
-"(بداية ونهاية) — الباقي استُبعد من حساب الزيادة."
-msgstr ""
-"%(with_data)s of %(total)s animals in the barn have two recorded weights "
-"within the period (start and end) — the rest were excluded from the gain "
-"calculation."
+msgid "%(with_data)s من %(total)s رأس بالحظيرة عندهم وزنان مسجَّلان بالفترة (بداية ونهاية) — الباقي استُبعد من حساب الزيادة."
+msgstr "%(with_data)s of %(total)s animals in the barn have two recorded weights within the period (start and end) — the rest were excluded from the gain calculation."
 
 #: app/templates/feed/fcr_report.html:37
-msgid ""
-"ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة "
-"المحددة."
-msgstr ""
-"Couldn't calculate FCR — needs at least one animal with two weights "
-"recorded in the selected period."
+msgid "ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة المحددة."
+msgstr "Couldn't calculate FCR — needs at least one animal with two weights recorded in the selected period."
 
 #: app/templates/feed/item_form.html:4
 msgid "تعديل مكوّن علف"
@@ -3724,13 +3429,8 @@ msgid "فئة العلف (لحارس منع الزيادة المفاجئة لل
 msgstr "Feed class (for the sudden-concentrate-increase guard)"
 
 #: app/templates/feed/item_form.html:21
-msgid ""
-"قائمة ثابتة منفصلة عن \"الفئة\" النصية أعلاه — تحديد \"مركّز\" هنا هو "
-"اللي يدخل بحساب حارس الزيادة الأسبوعية (بند إضافي 51)."
-msgstr ""
-"A fixed list separate from the free-text \"Category\" above — selecting "
-"\"Concentrate\" here is what feeds the weekly-increase guard calculation "
-"(item 51)."
+msgid "قائمة ثابتة منفصلة عن \"الفئة\" النصية أعلاه — تحديد \"مركّز\" هنا هو اللي يدخل بحساب حارس الزيادة الأسبوعية (بند إضافي 51)."
+msgstr "A fixed list separate from the free-text \"Category\" above — selecting \"Concentrate\" here is what feeds the weekly-increase guard calculation (item 51)."
 
 #: app/templates/feed/item_form.html:22
 msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافات معدنية)"
@@ -3738,12 +3438,8 @@ msgstr "Contains high copper (salt blocks/mineral supplements)"
 
 #: app/templates/feed/item_form.html:23
 #: app/templates/health/pharmacy_form.html:108
-msgid ""
-"يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند "
-"إضافي 51) — بلا خيار تجاوز."
-msgstr ""
-"Enables an explicit programmatic block on its use for any Naeemi-breed "
-"animal (item 51) — no override option."
+msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
+msgstr "Enables an explicit programmatic block on its use for any Naeemi-breed animal (item 51) — no override option."
 
 #: app/templates/feed/item_form.html:24
 msgid "بروتين خام % (من ملصق الكيس)"
@@ -3865,9 +3561,7 @@ msgstr "Quantity"
 
 #: app/templates/feed/movement_form.html:17
 msgid "الحظيرة (إلزامي لحركة \"صادر\" — عشان تنحسب التكلفة اليومية للحظيرة صح)"
-msgstr ""
-"Barn (required for \"Outgoing\" movements — so the barn's daily cost is "
-"calculated correctly)"
+msgstr "Barn (required for \"Outgoing\" movements — so the barn's daily cost is calculated correctly)"
 
 #: app/templates/feed/movement_form.html:19
 msgid "بدون حظيرة (وارد فقط)"
@@ -3913,16 +3607,8 @@ msgid "لا يوجد حركات مسجّلة بعد."
 msgstr "No movements recorded yet."
 
 #: app/templates/feed/optimizer.html:9
-msgid ""
-"يبني خلطة جديدة من الصفر من كل مكوّنات العلف الخام النشطة (برمجة خطية "
-"حقيقية، مو ترتيب وصفات جاهزة) بأقل تكلفة تحقق احتياج البروتين والطاقة — "
-"تقدير مبسّط، راجع طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً."
-msgstr ""
-"Builds a brand-new blend from scratch out of all active raw feed items "
-"(real linear programming, not ranking ready-made rations) at the lowest "
-"cost that meets the protein and energy requirement — a simplified "
-"estimate, check with a vet/nutrition specialist before adopting any blend"
-" in practice."
+msgid "يبني خلطة جديدة من الصفر من كل مكوّنات العلف الخام النشطة (برمجة خطية حقيقية، مو ترتيب وصفات جاهزة) بأقل تكلفة تحقق احتياج البروتين والطاقة — تقدير مبسّط، راجع طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً."
+msgstr "Builds a brand-new blend from scratch out of all active raw feed items (real linear programming, not ranking ready-made rations) at the lowest cost that meets the protein and energy requirement — a simplified estimate, check with a vet/nutrition specialist before adopting any blend in practice."
 
 #: app/templates/feed/optimizer.html:24
 msgid "وازِن الخلطة"
@@ -3988,9 +3674,7 @@ msgstr "Ingredients (percentages of the ration's total weight)"
 
 #: app/templates/feed/ration_form.html:28
 msgid "اترك أي صف فاضي لو ما تحتاجه. مجموع النسب المفروض يقارب 100%."
-msgstr ""
-"Leave any row blank if you don't need it. The percentages should add up "
-"to roughly 100%."
+msgstr "Leave any row blank if you don't need it. The percentages should add up to roughly 100%."
 
 #: app/templates/feed/ration_form.html:31
 msgid "سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)"
@@ -4021,15 +3705,8 @@ msgid "دعم خارجي (دين على الحلال)"
 msgstr "External support (debt owed by the farm)"
 
 #: app/templates/finance/form.html:18
-msgid ""
-"\"دعم خارجي\" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) "
-"— مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل "
-"\"البند\" عشان تقدر تتابع الدين لكل جهة."
-msgstr ""
-"\"External support\" = an amount you received from an outside party that "
-"you must repay later (a debt owed by you) — not real farm income, and it "
-"isn't counted in the total inflow. Write the party's name in the \"Item\""
-" field so you can track debt per party."
+msgid "\"دعم خارجي\" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل \"البند\" عشان تقدر تتابع الدين لكل جهة."
+msgstr "\"External support\" = an amount you received from an outside party that you must repay later (a debt owed by you) — not real farm income, and it isn't counted in the total inflow. Write the party's name in the \"Item\" field so you can track debt per party."
 
 #: app/templates/finance/form.html:21 app/templates/reports/purchases.html:22
 #: app/templates/reports/sales.html:22
@@ -4042,18 +3719,11 @@ msgstr "Feed / medicine / salaries ..."
 
 #: app/templates/finance/form.html:25
 msgid "مصروف غير مباشر (إيجار/صيانة/رواتب — يخص القطيع كله مو حيوان محدد)"
-msgstr ""
-"Indirect expense (rent/maintenance/salaries — applies to the whole herd, "
-"not a specific animal)"
+msgstr "Indirect expense (rent/maintenance/salaries — applies to the whole herd, not a specific animal)"
 
 #: app/templates/finance/form.html:28
-msgid ""
-"يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير "
-"\"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
-msgstr ""
-"Automatically split evenly across the current number of active animals — "
-"appears in the \"Monthly/Annual Cost per Head\" report and as an "
-"individual share on each animal's detail page."
+msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
+msgstr "Automatically split evenly across the current number of active animals — appears in the \"Monthly/Annual Cost per Head\" report and as an individual share on each animal's detail page."
 
 #: app/templates/finance/form.html:34
 msgid "طريقة الدفع"
@@ -4081,12 +3751,8 @@ msgid "إرفاق فاتورة (إن وجدت)"
 msgstr "Attach invoice (if available)"
 
 #: app/templates/finance/form.html:48
-msgid ""
-"لو عندك فاتورة ورقية أو PDF من المورّد لهذي العملية، ارفعها هنا — اختياري"
-" تماماً."
-msgstr ""
-"If you have a paper or PDF invoice from the supplier for this "
-"transaction, upload it here — entirely optional."
+msgid "لو عندك فاتورة ورقية أو PDF من المورّد لهذي العملية، ارفعها هنا — اختياري تماماً."
+msgstr "If you have a paper or PDF invoice from the supplier for this transaction, upload it here — entirely optional."
 
 #: app/templates/finance/health_view.html:6
 msgid "إجمالي تكاليف الصحة والعلاج"
@@ -4187,21 +3853,8 @@ msgid "رجوع للمالية"
 msgstr "Back to Finance"
 
 #: app/templates/finance/monthly_cost_report.html:9
-msgid ""
-"التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة "
-"على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس "
-"بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي "
-"وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير "
-"مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع "
-"بالتساوي على القطيع."
-msgstr ""
-"Cost = purchases + expenses per month (excluding debts and sales), "
-"divided by the current number of active animals — the system doesn't yet "
-"track head-count history, so past months use the current count as an "
-"approximation, not the actual count at the time. Indirect expenses "
-"(rent/maintenance/salaries — marked \"indirect expense\" on entry) are "
-"automatically included here under \"Expense\", split evenly across the "
-"herd the same way."
+msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
+msgstr "Cost = purchases + expenses per month (excluding debts and sales), divided by the current number of active animals — the system doesn't yet track head-count history, so past months use the current count as an approximation, not the actual count at the time. Indirect expenses (rent/maintenance/salaries — marked \"indirect expense\" on entry) are automatically included here under \"Expense\", split evenly across the herd the same way."
 
 #: app/templates/finance/monthly_cost_report.html:15
 #, python-format
@@ -4278,13 +3931,8 @@ msgid "تعديل الأعراض"
 msgstr "Edit symptoms"
 
 #: app/templates/health/diagnose_result.html:9
-msgid ""
-"ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار "
-"النهائي للدكتور المعالج دائماً."
-msgstr ""
-"Ranking of probabilities by matching entered symptoms against a common-"
-"diseases reference — the final decision always belongs to the treating "
-"doctor."
+msgid "ترتيب احتمالات بمطابقة الأعراض المُدخَلة مع مرجع أمراض شائعة — القرار النهائي للدكتور المعالج دائماً."
+msgstr "Ranking of probabilities by matching entered symptoms against a common-diseases reference — the final decision always belongs to the treating doctor."
 
 #: app/templates/health/diagnose_result.html:10
 msgid "الأعراض المُدخَلة:"
@@ -4304,13 +3952,8 @@ msgid "درجة الحرارة:"
 msgstr "Temperature:"
 
 #: app/templates/health/diagnose_result.html:17
-msgid ""
-"الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية "
-"الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور."
-msgstr ""
-"Temperature is above the approximate normal range — a contextual factor "
-"that raises the likelihood of inflammatory/infectious cases, but the "
-"final decision remains the doctor's."
+msgid "الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور."
+msgstr "Temperature is above the approximate normal range — a contextual factor that raises the likelihood of inflammatory/infectious cases, but the final decision remains the doctor's."
 
 #: app/templates/health/diagnose_result.html:24
 msgid "بروتوكول طوارئ مفعَّل"
@@ -4327,12 +3970,8 @@ msgid "اشتباه تفريقي:"
 msgstr "Differential suspicion:"
 
 #: app/templates/health/diagnose_result.html:35
-msgid ""
-"ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم"
-" المناسب."
-msgstr ""
-"No disease in the reference matches the entered symptoms — record the "
-"case manually with the appropriate name."
+msgid "ما فيه أي مرض بالمرجع يطابق الأعراض المُدخَلة — سجّل الحالة يدوياً بالاسم المناسب."
+msgstr "No disease in the reference matches the entered symptoms — record the case manually with the appropriate name."
 
 #: app/templates/health/diagnose_result.html:36
 msgid "تسجيل حالة مرضية يدوياً"
@@ -4375,20 +4014,12 @@ msgid "رجوع لسجل الأمراض"
 msgstr "Back to disease record"
 
 #: app/templates/health/diagnose_start.html:9
-msgid ""
-"هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو "
-"تشخيصاً مخبرياً مؤكَّداً."
-msgstr ""
-"This is a probability-ranking assistant based on matching symptoms "
-"against a common-diseases reference — not a confirmed lab diagnosis."
+msgid "هذا مساعد ترتيب احتمالات بناءً على مطابقة أعراض مع مرجع أمراض شائعة — مو تشخيصاً مخبرياً مؤكَّداً."
+msgstr "This is a probability-ranking assistant based on matching symptoms against a common-diseases reference — not a confirmed lab diagnosis."
 
 #: app/templates/health/diagnose_start.html:10
-msgid ""
-"السجل المرضي يبقى \"مفتوحاً\" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي "
-"حقيقي، نفس أي حالة تُسجَّل يدوياً."
-msgstr ""
-"The disease record stays \"open\" until the doctor actually reviews it "
-"and documents genuine recovery, just like any manually recorded case."
+msgid "السجل المرضي يبقى \"مفتوحاً\" لين ما يراجعه الدكتور فعلياً ويوثّق تعافي حقيقي، نفس أي حالة تُسجَّل يدوياً."
+msgstr "The disease record stays \"open\" until the doctor actually reviews it and documents genuine recovery, just like any manually recorded case."
 
 #: app/templates/health/diagnose_start.html:16
 msgid "الحيوان (اختياري، يساعد بربط التشخيص لاحقاً)"
@@ -4403,13 +4034,8 @@ msgid "مثال: 39.5"
 msgstr "Example: 39.5"
 
 #: app/templates/health/diagnose_start.html:26
-msgid ""
-"عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة "
-"38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً."
-msgstr ""
-"Shown as guidance only on the result screen (the approximate normal range"
-" for small ruminants is 38.5-40°) — not currently factored into the "
-"probability ranking calculation."
+msgid "عرض توجيهي بس بشاشة النتيجة (النطاق الطبيعي التقريبي للمجترات الصغيرة 38.5-40°) — ما يدخل بحساب ترتيب الاحتمالات حالياً."
+msgstr "Shown as guidance only on the result screen (the approximate normal range for small ruminants is 38.5-40°) — not currently factored into the probability ranking calculation."
 
 #: app/templates/health/diagnose_start.html:29
 msgid "العرض الرئيسي"
@@ -4428,21 +4054,12 @@ msgid "أعراض مصاحبة (اختر كل ما ينطبق)"
 msgstr "Accompanying symptoms (select all that apply)"
 
 #: app/templates/health/diagnose_start.html:42
-msgid ""
-"ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات "
-"بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية."
-msgstr ""
-"No follow-up symptoms are linked to this symptom in the current reference"
-" — calculate probabilities with just the primary symptom, or add new "
-"symptoms later from the medical settings screen."
+msgid "ما فيه أعراض متابعة مرتبطة بهذا العرض بالمرجع الحالي — احسب الاحتمالات بالعرض الرئيسي بس، أو زِد أعراضاً جديدة لاحقاً من شاشة الإعدادات الطبية."
+msgstr "No follow-up symptoms are linked to this symptom in the current reference — calculate probabilities with just the primary symptom, or add new symptoms later from the medical settings screen."
 
 #: app/templates/health/diagnose_start.html:55
-msgid ""
-"أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب "
-"الترتيب)"
-msgstr ""
-"Additional free-text symptoms (optional — recorded as a note, not "
-"factored into the ranking)"
+msgid "أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)"
+msgstr "Additional free-text symptoms (optional — recorded as a note, not factored into the ranking)"
 
 #: app/templates/health/diagnose_start.html:56
 msgid "مثال: يمتنع عن الأكل منذ يومين..."
@@ -4459,12 +4076,8 @@ msgstr "Record Disease Case"
 #: app/templates/health/disease_form.html:13
 #: app/templates/health/vaccination_form.html:7
 #: app/templates/health/vet_visit_form.html:7
-msgid ""
-"تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز "
-"المهمة تلقائياً."
-msgstr ""
-"Auto-filled from a planned treatment task — review before saving. Saving "
-"here automatically completes the task."
+msgid "تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة تلقائياً."
+msgstr "Auto-filled from a planned treatment task — review before saving. Saving here automatically completes the task."
 
 #: app/templates/health/disease_form.html:34
 #: app/templates/health/vet_visit_form.html:22
@@ -4503,9 +4116,7 @@ msgstr "Override reason (if the repeat-antiparasitic-dose warning appeared)"
 #: app/templates/health/vaccination_form.html:28
 #: app/templates/health/vet_visit_form.html:32
 msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
-msgstr ""
-"Only fill this if the screen returned a warning — write the medical "
-"reason for repeating."
+msgstr "Only fill this if the screen returned a warning — write the medical reason for repeating."
 
 #: app/templates/health/disease_link_wizard.html:25
 #: app/templates/health/disease_types_list.html:8
@@ -4561,9 +4172,7 @@ msgstr "Strong, confirmed symptom"
 
 #: app/templates/health/disease_link_wizard.html:81
 msgid "عرض أساسي للتشخيص؟ (لازم يكون موجود عشان يُشتبه بالمرض)"
-msgstr ""
-"Essential symptom for diagnosis? (must be present for the disease to be "
-"suspected)"
+msgstr "Essential symptom for diagnosis? (must be present for the disease to be suspected)"
 
 #: app/templates/health/disease_link_wizard.html:82
 msgid "نعم — أساسي"
@@ -4571,9 +4180,7 @@ msgstr "Yes — essential"
 
 #: app/templates/health/disease_link_wizard.html:85
 msgid "عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)"
-msgstr ""
-"Does this symptom rule out the disease? (if present, excludes the disease"
-" from the probabilities)"
+msgstr "Does this symptom rule out the disease? (if present, excludes the disease from the probabilities)"
 
 #: app/templates/health/disease_link_wizard.html:86
 msgid "نعم — يلغيه"
@@ -4608,18 +4215,8 @@ msgid "كل الأمراض"
 msgstr "All diseases"
 
 #: app/templates/health/disease_type_detail.html:15
-msgid ""
-"هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات التشخيص "
-"فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1 (محتمل/مصاحب) إلى 3 "
-"(دليل قوي مميّز). \"إجباري\" و\"استبعادي\" مخزَّنان من الآن، وتأثيرهما "
-"الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة من تطوير المحرك."
-msgstr ""
-"These symptoms and weights are a pattern-matching reference to help rank "
-"diagnosis likelihoods only — the final decision always remains with the "
-"doctor. Weight from 1 (possible/associated) to 3 (strong distinguishing "
-"evidence). \"Required\" and \"Exclusionary\" are stored from now on; "
-"their actual effect on the probability calculation will be enabled in a "
-"future engine phase."
+msgid "هذي الأعراض والأوزان مرجع مطابقة أنماط للمساعدة بترتيب احتمالات التشخيص فقط — القرار النهائي يبقى للدكتور دائماً. الوزن من 1 (محتمل/مصاحب) إلى 3 (دليل قوي مميّز). \"إجباري\" و\"استبعادي\" مخزَّنان من الآن، وتأثيرهما الفعلي على حساب الاحتمالات يُفعَّل بمرحلة قادمة من تطوير المحرك."
+msgstr "These symptoms and weights are a pattern-matching reference to help rank diagnosis likelihoods only — the final decision always remains with the doctor. Weight from 1 (possible/associated) to 3 (strong distinguishing evidence). \"Required\" and \"Exclusionary\" are stored from now on; their actual effect on the probability calculation will be enabled in a future engine phase."
 
 #: app/templates/health/disease_type_detail.html:20
 #, python-format
@@ -4730,16 +4327,8 @@ msgid "إضافة مرض"
 msgstr "Add disease"
 
 #: app/templates/health/disease_types_list.html:15
-msgid ""
-"مرجع اقتراحات فقط لتسريع تسجيل \"اسم المرض\" بشاشة الأمراض — أي اسم غير "
-"موجود هنا يُكتب يدوياً عادي بدون أي قيد. لإدارة الأعراض المرتبطة بكل مرض "
-"(شجرة المساعد التشخيصي)، افتح المرض من الجدول تحت، أو راجع"
-msgstr ""
-"A suggestions reference only, to speed up entering the \"disease name\" "
-"on the diseases screen — any name not here can simply be typed manually "
-"without restriction. To manage the symptoms linked to each disease (the "
-"diagnostic assistant tree), open the disease from the table below, or "
-"check"
+msgid "مرجع اقتراحات فقط لتسريع تسجيل \"اسم المرض\" بشاشة الأمراض — أي اسم غير موجود هنا يُكتب يدوياً عادي بدون أي قيد. لإدارة الأعراض المرتبطة بكل مرض (شجرة المساعد التشخيصي)، افتح المرض من الجدول تحت، أو راجع"
+msgstr "A suggestions reference only, to speed up entering the \"disease name\" on the diseases screen — any name not here can simply be typed manually without restriction. To manage the symptoms linked to each disease (the diagnostic assistant tree), open the disease from the table below, or check"
 
 #: app/templates/health/disease_types_list.html:16
 msgid "قائمة الأعراض"
@@ -4822,18 +4411,8 @@ msgid "فئة الدواء (اختياري)"
 msgstr "Medicine class (optional)"
 
 #: app/templates/health/emergency_symptoms_list.html:6
-msgid ""
-"أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً "
-"ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات "
-"العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض "
-"عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
-msgstr ""
-"Any symptom here, if entered among the diagnostic assistant's symptoms, "
-"immediately and automatically isolates the animal and shows an urgent "
-"differential diagnosis on the result screen — independent of the normal "
-"probability ranking. A deliberately explicit name list — we don't use a "
-"broad category (like \"neurological symptoms\") to avoid over-isolating "
-"for minor cases."
+msgid "أي عرض هنا، لو دخل ضمن أعراض المساعد التشخيصي، يعزل الرأس تلقائياً فوراً ويعرض تشخيصاً تفريقياً عاجلاً بشاشة النتيجة — بمعزل عن ترتيب الاحتمالات العادي. قائمة أسماء صريحة عمداً — ما نستخدم تصنيفاً عاماً (زي \"أعراض عصبية\") تجنّباً لعزل مبالغ فيه لحالات بسيطة."
+msgstr "Any symptom here, if entered among the diagnostic assistant's symptoms, immediately and automatically isolates the animal and shows an urgent differential diagnosis on the result screen — independent of the normal probability ranking. A deliberately explicit name list — we don't use a broad category (like \"neurological symptoms\") to avoid over-isolating for minor cases."
 
 #: app/templates/health/emergency_symptoms_list.html:11
 #, python-format
@@ -4854,9 +4433,7 @@ msgstr "Recommendation"
 
 #: app/templates/health/emergency_symptoms_list.html:23
 msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
-msgstr ""
-"Delete this symptom from the emergency list? Its automatic isolation will"
-" stop afterward."
+msgstr "Delete this symptom from the emergency list? Its automatic isolation will stop afterward."
 
 #: app/templates/health/emergency_symptoms_list.html:31
 msgid "ما فيه أعراض طوارئ مسجَّلة بعد."
@@ -4880,9 +4457,7 @@ msgstr "Differential diagnosis (shown on the result screen)"
 
 #: app/templates/health/emergency_symptoms_list.html:55
 msgid "مثال: اشتباه ليستريا / نقص فيتامين B1 / التهاب ملتحمة معدٍ"
-msgstr ""
-"Example: suspected listeriosis / vitamin B1 deficiency / infectious "
-"conjunctivitis"
+msgstr "Example: suspected listeriosis / vitamin B1 deficiency / infectious conjunctivitis"
 
 #: app/templates/health/emergency_symptoms_list.html:57
 msgid "التوصية الفورية"
@@ -4902,21 +4477,12 @@ msgid "رجوع للصيدلية"
 msgstr "Back to Pharmacy"
 
 #: app/templates/health/injection_guide.html:9
-msgid ""
-"إرشاد ميداني عام لطرق الحقن الأساسية — مو بروتوكولاً طبياً دقيقاً لحالة "
-"أو دواء معيّن."
-msgstr ""
-"General field guidance for the basic injection methods — not a precise "
-"medical protocol for a specific case or medicine."
+msgid "إرشاد ميداني عام لطرق الحقن الأساسية — مو بروتوكولاً طبياً دقيقاً لحالة أو دواء معيّن."
+msgstr "General field guidance for the basic injection methods — not a precise medical protocol for a specific case or medicine."
 
 #: app/templates/health/injection_guide.html:10
-msgid ""
-"راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه"
-" (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
-msgstr ""
-"Always check with the treating doctor for specifics about an animal's "
-"condition or a particular medicine's dose (each medicine's reference "
-"dosage note is entered by the doctor themselves on the Pharmacy screen)."
+msgid "راجع الدكتور المعالج دائماً لتفاصيل خاصة بحالة الحيوان أو جرعة دواء بعينه (ملاحظة الجرعة المرجعية لكل دواء تُدخَل من الدكتور نفسه بصفحة الصيدلية)."
+msgstr "Always check with the treating doctor for specifics about an animal's condition or a particular medicine's dose (each medicine's reference dosage note is entered by the doctor themselves on the Pharmacy screen)."
 
 #: app/templates/health/pharmacy_form.html:4
 msgid "تعديل دواء"
@@ -4941,14 +4507,8 @@ msgid "فئة الدواء"
 msgstr "Medicine class"
 
 #: app/templates/health/pharmacy_form.html:19
-msgid ""
-"تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار "
-"الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول "
-"الشرطية تحت."
-msgstr ""
-"Selecting \"Antiparasitic/dewormer\" here specifically is what enables "
-"the 30-day dose-repeat guard — it's also the basis for filtering "
-"\"Medicine name\" and the conditional fields below."
+msgid "تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول الشرطية تحت."
+msgstr "Selecting \"Antiparasitic/dewormer\" here specifically is what enables the 30-day dose-repeat guard — it's also the basis for filtering \"Medicine name\" and the conditional fields below."
 
 #: app/templates/health/pharmacy_form.html:24
 msgid "اختر اسم دواء"
@@ -4975,13 +4535,8 @@ msgid "مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الش�
 msgstr "Example: 5 ml per 50 kg live weight — per the manufacturer's leaflet"
 
 #: app/templates/health/pharmacy_form.html:49
-msgid ""
-"مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، "
-"والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
-msgstr ""
-"A descriptive reference you write once — it then appears in lists to "
-"speed up entry, and the system never calculates or suggests any dose "
-"automatically."
+msgid "مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
+msgstr "A descriptive reference you write once — it then appears in lists to speed up entry, and the system never calculates or suggests any dose automatically."
 
 #: app/templates/health/pharmacy_form.html:51
 msgid "الصلاحية والتخزين"
@@ -4992,14 +4547,8 @@ msgid "تاريخ انتهاء الصلاحية (اختياري)"
 msgstr "Expiry date (optional)"
 
 #: app/templates/health/pharmacy_form.html:54
-msgid ""
-"تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "
-"\"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له "
-"الدواء."
-msgstr ""
-"The medicine's own expiry date printed on the box — entirely different "
-"from the \"withdrawal period\" below, which is the duration preventing "
-"selling/milking the animal after it's given the medicine."
+msgid "تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن \"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء."
+msgstr "The medicine's own expiry date printed on the box — entirely different from the \"withdrawal period\" below, which is the duration preventing selling/milking the animal after it's given the medicine."
 
 #: app/templates/health/pharmacy_form.html:56
 msgid "ظروف التخزين (اختياري)"
@@ -5007,63 +4556,39 @@ msgstr "Storage conditions (optional)"
 
 #: app/templates/health/pharmacy_form.html:63
 msgid "وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي."
-msgstr ""
-"Descriptive only — tells the worker where to actually store the medicine,"
-" doesn't trigger any automatic alert."
+msgstr "Descriptive only — tells the worker where to actually store the medicine, doesn't trigger any automatic alert."
 
 #: app/templates/health/pharmacy_form.html:66
 msgid "فترة السحب (بالأيام)"
 msgstr "Withdrawal period (days)"
 
 #: app/templates/health/pharmacy_form.html:67
-msgid ""
-"عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر "
-"تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
-msgstr ""
-"The number of days you must wait after giving this medicine to any animal"
-" before you can sell it or use its milk — the system calculates this "
-"automatically and blocks selling during it."
+msgid "عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
+msgstr "The number of days you must wait after giving this medicine to any animal before you can sell it or use its milk — the system calculates this automatically and blocks selling during it."
 
 #: app/templates/health/pharmacy_form.html:71
 msgid "مدة الحماية بالأيام (للقاحات — اختياري)"
 msgstr "Protection duration in days (for vaccines — optional)"
 
 #: app/templates/health/pharmacy_form.html:73
-msgid ""
-"تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي "
-"(تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
-msgstr ""
-"Used only to automatically schedule the \"next due date\" on the group "
-"vaccination screen (vaccination date + this duration) — without it, the "
-"next due date stays manually entered."
+msgid "تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
+msgstr "Used only to automatically schedule the \"next due date\" on the group vaccination screen (vaccination date + this duration) — without it, the next due date stays manually entered."
 
 #: app/templates/health/pharmacy_form.html:75
 msgid "الجرعة الافتراضية للرأس بالمل (اختياري)"
 msgstr "Default dose per head in ml (optional)"
 
 #: app/templates/health/pharmacy_form.html:77
-msgid ""
-"رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر "
-"الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
-msgstr ""
-"A fixed number you enter — appears as a fallback value on the group "
-"vaccination screen only if the animal's age doesn't match any range in "
-"the \"dose by age\" table below."
+msgid "رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
+msgstr "A fixed number you enter — appears as a fallback value on the group vaccination screen only if the animal's age doesn't match any range in the \"dose by age\" table below."
 
 #: app/templates/health/pharmacy_form.html:79
 msgid "الجرعة حسب العمر (اختياري)"
 msgstr "Dose by age (optional)"
 
 #: app/templates/health/pharmacy_form.html:80
-msgid ""
-"أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر "
-"كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا "
-"يخترع أي رقم جديد."
-msgstr ""
-"You write the dose for each age range yourself once — the system then "
-"just matches each animal's age on the group vaccination screen and shows "
-"the dose you recorded here, never calculating or inventing any new "
-"number."
+msgid "أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد."
+msgstr "You write the dose for each age range yourself once — the system then just matches each animal's age on the group vaccination screen and shows the dose you recorded here, never calculating or inventing any new number."
 
 #: app/templates/health/pharmacy_form.html:84
 #: app/templates/health/pharmacy_form.html:90
@@ -5096,13 +4621,8 @@ msgid "مل / حبة / علبة"
 msgstr "ml / tablet / box"
 
 #: app/templates/health/pharmacy_form.html:102
-msgid ""
-"أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص "
-"الصيدلية\" — نفس قائمة المشتريات المطلوبة."
-msgstr ""
-"Any medicine whose stock reaches this threshold or lower automatically "
-"appears in the \"Pharmacy shortages\" list — the same required purchases "
-"list."
+msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
+msgstr "Any medicine whose stock reaches this threshold or lower automatically appears in the \"Pharmacy shortages\" list — the same required purchases list."
 
 #: app/templates/health/pharmacy_form.html:103
 #: app/templates/health/pharmacy_purchase_form.html:18
@@ -5114,13 +4634,8 @@ msgid "مثال: 2.5"
 msgstr "Example: 2.5"
 
 #: app/templates/health/pharmacy_form.html:104
-msgid ""
-"أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات "
-"الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
-msgstr ""
-"The basis for automatically calculating treatment cost (quantity used × "
-"this price) on the visit/disease/vaccination screens — without it, cost "
-"stays manually entered as before."
+msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
+msgstr "The basis for automatically calculating treatment cost (quantity used × this price) on the visit/disease/vaccination screens — without it, cost stays manually entered as before."
 
 #: app/templates/health/pharmacy_form.html:106
 msgid "أمان إضافي وملاحظات"
@@ -5166,9 +4681,7 @@ msgstr "At or below the minimum threshold"
 
 #: app/templates/health/pharmacy_list.html:18
 msgid "بدون فئة دواء — لازم لتفعيل حارس منع تكرار جرعة الطفيليات"
-msgstr ""
-"No medicine class — required to enable the anti-parasitic-dose-repeat "
-"guard"
+msgstr "No medicine class — required to enable the anti-parasitic-dose-repeat guard"
 
 #: app/templates/health/pharmacy_list.html:21
 msgid "منتهي الصلاحية"
@@ -5220,13 +4733,8 @@ msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء ب
 msgstr "No purchases recorded for this medicine yet."
 
 #: app/templates/health/pharmacy_shortages.html:8
-msgid ""
-"كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "
-"\"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
-msgstr ""
-"Every active medicine whose stock has reached its set minimum or lower — "
-"this screen is itself the \"required purchases list\", updated "
-"automatically whenever stock changes."
+msgid "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها \"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
+msgstr "Every active medicine whose stock has reached its set minimum or lower — this screen is itself the \"required purchases list\", updated automatically whenever stock changes."
 
 #: app/templates/health/pharmacy_shortages.html:14
 msgid "الحد الأدنى"
@@ -5262,15 +4770,8 @@ msgid "تاريخ بداية التطبيق"
 msgstr "Application start date"
 
 #: app/templates/health/protocol_apply_form.html:23
-msgid ""
-"تولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة، مستحقة بتاريخ (بداية التطبيق +"
-" يوم الخطوة) — تنتظر مراجعة الدكتور ثم \"تأكيد التنفيذ\" الفعلي (اللي "
-"يخصم من الصيدلية ويطبّق فترة السحب تلقائياً)."
-msgstr ""
-"Generates one \"planned treatment\" task per step, due on (start date + "
-"step day) — awaiting the doctor's review then actual \"execution "
-"confirmation\" (which deducts from the pharmacy and applies the "
-"withdrawal period automatically)."
+msgid "تولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة، مستحقة بتاريخ (بداية التطبيق + يوم الخطوة) — تنتظر مراجعة الدكتور ثم \"تأكيد التنفيذ\" الفعلي (اللي يخصم من الصيدلية ويطبّق فترة السحب تلقائياً)."
+msgstr "Generates one \"planned treatment\" task per step, due on (start date + step day) — awaiting the doctor's review then actual \"execution confirmation\" (which deducts from the pharmacy and applies the withdrawal period automatically)."
 
 #: app/templates/health/protocol_apply_form.html:25
 msgid "تطبيق البروتوكول"
@@ -5293,12 +4794,8 @@ msgid "المرض المرتبط (اختياري)"
 msgstr "Linked disease (optional)"
 
 #: app/templates/health/protocol_form.html:15
-msgid ""
-"لو مُحدَّد، زر \"طبّق هذا البروتوكول\" يظهر تلقائياً بنتيجة المساعد "
-"التشخيصي عند مطابقة هذا المرض."
-msgstr ""
-"If specified, the \"apply this protocol\" button automatically appears in"
-" the diagnostic assistant's result when this disease matches."
+msgid "لو مُحدَّد، زر \"طبّق هذا البروتوكول\" يظهر تلقائياً بنتيجة المساعد التشخيصي عند مطابقة هذا المرض."
+msgstr "If specified, the \"apply this protocol\" button automatically appears in the diagnostic assistant's result when this disease matches."
 
 #: app/templates/health/protocol_form.html:18
 msgid "الخطوات (دواء محدد من الصيدلية لكل خطوة)"
@@ -5314,9 +4811,7 @@ msgstr "Step title"
 
 #: app/templates/health/protocol_form.html:33
 msgid "اترك أي صف فاضي لو ما تحتاجه — لازم عنوان + دواء + كمية عشان تُحفظ الخطوة."
-msgstr ""
-"Leave any row blank if you don't need it — a title + medicine + quantity "
-"are required for the step to be saved."
+msgstr "Leave any row blank if you don't need it — a title + medicine + quantity are required for the step to be saved."
 
 #: app/templates/health/protocol_form.html:35
 msgid "حفظ البروتوكول"
@@ -5331,18 +4826,8 @@ msgid "بروتوكول جديد"
 msgstr "New protocol"
 
 #: app/templates/health/protocols_list.html:11
-msgid ""
-"كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس"
-" معيّن يولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة — الخصم من الصيدلية "
-"وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند "
-"\"تأكيد التنفيذ\" الفعلي لكل خطوة، بنفس آلية بند 50."
-msgstr ""
-"Each protocol = a series of scheduled treatment steps (day × medicine × "
-"quantity). Applying it to a specific animal generates one \"planned "
-"treatment\" task per step — the pharmacy deduction and withdrawal period "
-"(automatically the longest across all the protocol's medicines) happen "
-"only upon the actual \"execution confirmation\" of each step, using the "
-"same mechanism as item 50."
+msgid "كل بروتوكول = سلسلة خطوات علاج مجدولة (يوم × دواء × كمية). تطبيقه على رأس معيّن يولّد مهمة \"علاج مخطَّط\" واحدة لكل خطوة — الخصم من الصيدلية وفترة السحب (الأطول بين كل أدوية البروتوكول تلقائياً) يصيران فقط عند \"تأكيد التنفيذ\" الفعلي لكل خطوة، بنفس آلية بند 50."
+msgstr "Each protocol = a series of scheduled treatment steps (day × medicine × quantity). Applying it to a specific animal generates one \"planned treatment\" task per step — the pharmacy deduction and withdrawal period (automatically the longest across all the protocol's medicines) happen only upon the actual \"execution confirmation\" of each step, using the same mechanism as item 50."
 
 #: app/templates/health/protocols_list.html:15
 msgid "المرض المرتبط"
@@ -5370,17 +4855,11 @@ msgstr "Symptom name"
 
 #: app/templates/health/symptom_form.html:11
 msgid "عرض رئيسي (تبدأ منه شجرة التشخيص، مثل \"حرارة\"/\"إسهال\")"
-msgstr ""
-"Primary symptom (the diagnosis tree starts from it, e.g. "
-"\"Fever\"/\"Diarrhea\")"
+msgstr "Primary symptom (the diagnosis tree starts from it, e.g. \"Fever\"/\"Diarrhea\")"
 
 #: app/templates/health/symptom_form.html:13
-msgid ""
-"لو تركته بدون تحديد، يبقى \"عرض متابعة\" — يظهر بس كسؤال ثانوي بعد اختيار"
-" عرض رئيسي مرتبط."
-msgstr ""
-"If left unchecked, it stays a \"follow-up symptom\" — appearing only as a"
-" secondary question after a linked primary symptom is chosen."
+msgid "لو تركته بدون تحديد، يبقى \"عرض متابعة\" — يظهر بس كسؤال ثانوي بعد اختيار عرض رئيسي مرتبط."
+msgstr "If left unchecked, it stays a \"follow-up symptom\" — appearing only as a secondary question after a linked primary symptom is chosen."
 
 #: app/templates/health/symptoms_list.html:5
 msgid "الأعراض (شجرة التشخيص)"
@@ -5391,16 +4870,8 @@ msgid "إضافة عرض"
 msgstr "Add symptom"
 
 #: app/templates/health/symptoms_list.html:11
-msgid ""
-"قائمة كل الأعراض المستخدمة بالمساعد التشخيصي (`/health/diagnose`) — "
-"الأعراض \"الرئيسية\" تبدأ منها الشجرة، والباقي أسئلة متابعة تظهر حسب "
-"الأمراض المرتبطة بها. لربط عرض بمرض معيّن ووزنه، افتح صفحة المرض من"
-msgstr ""
-"A list of all symptoms used by the diagnostic assistant "
-"(`/health/diagnose`) — \"primary\" symptoms are where the tree starts, "
-"and the rest are follow-up questions that appear based on their linked "
-"diseases. To link a symptom to a specific disease and weight it, open the"
-" disease's page from"
+msgid "قائمة كل الأعراض المستخدمة بالمساعد التشخيصي (`/health/diagnose`) — الأعراض \"الرئيسية\" تبدأ منها الشجرة، والباقي أسئلة متابعة تظهر حسب الأمراض المرتبطة بها. لربط عرض بمرض معيّن ووزنه، افتح صفحة المرض من"
+msgstr "A list of all symptoms used by the diagnostic assistant (`/health/diagnose`) — \"primary\" symptoms are where the tree starts, and the rest are follow-up questions that appear based on their linked diseases. To link a symptom to a specific disease and weight it, open the disease's page from"
 
 #: app/templates/health/symptoms_list.html:23
 msgid "متابعة"
@@ -5446,13 +4917,8 @@ msgid "عدد الرؤوس الحالي بهذي الحظيرة:"
 msgstr "Current head count in this barn:"
 
 #: app/templates/health/vaccination_schedule_list.html:8
-msgid ""
-"جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة "
-"الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة."
-msgstr ""
-"Schedule a future vaccination for an entire barn — the head count is "
-"calculated live from the barn's actual count at display time, not a fixed"
-" number from when it was scheduled."
+msgid "جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة."
+msgstr "Schedule a future vaccination for an entire barn — the head count is calculated live from the barn's actual count at display time, not a fixed number from when it was scheduled."
 
 #: app/templates/health/vaccination_schedule_list.html:10
 msgid "القادمة"
@@ -5528,6 +4994,185 @@ msgstr "Record Vet Visit"
 msgid "زيارة جديدة"
 msgstr "New visit"
 
+#: app/templates/ostrich/egg_form.html:4
+msgid "تسجيل بيضة نعام"
+msgstr "Register ostrich egg"
+
+#: app/templates/ostrich/egg_form.html:6
+msgid "ما فيه أنثى نعام مسجّلة حالياً — سجّل أنثى نعام أول من"
+msgstr "No ostrich female registered currently — register an ostrich female first from"
+
+#: app/templates/ostrich/egg_form.html:6
+msgid "اختر الفصيلة \"نعام\""
+msgstr "choose the \"ostrich\" species"
+
+#: app/templates/ostrich/egg_form.html:14
+#: app/templates/ostrich/egg_hatch_form.html:8
+#: app/templates/ostrich/eggs_list.html:23
+msgid "تاريخ البيض"
+msgstr "Lay date"
+
+#: app/templates/ostrich/egg_form.html:15
+#: app/templates/ostrich/eggs_list.html:23
+msgid "الجودة"
+msgstr "Quality"
+
+#: app/templates/ostrich/egg_form.html:18
+msgid "ممتاز"
+msgstr "Excellent"
+
+#: app/templates/ostrich/egg_form.html:19
+msgid "جيد"
+msgstr "Good"
+
+#: app/templates/ostrich/egg_form.html:20
+msgid "متوسط"
+msgstr "Average"
+
+#: app/templates/ostrich/egg_form.html:21
+msgid "مرفوض"
+msgstr "Rejected"
+
+#: app/templates/ostrich/egg_form.html:23
+msgid "الوزن (جرام، اختياري)"
+msgstr "Weight (grams, optional)"
+
+#: app/templates/ostrich/egg_hatch_form.html:4
+#: app/templates/ostrich/eggs_list.html:51
+msgid "تسجيل نتيجة الفقس"
+msgstr "Record hatch result"
+
+#: app/templates/ostrich/egg_hatch_form.html:9
+#: app/templates/ostrich/eggs_list.html:23
+msgid "الحاضنة"
+msgstr "Incubator"
+
+#: app/templates/ostrich/egg_hatch_form.html:10
+#: app/templates/ostrich/eggs_list.html:23
+msgid "بداية الحضانة"
+msgstr "Incubation start"
+
+#: app/templates/ostrich/egg_hatch_form.html:11
+#: app/templates/ostrich/eggs_list.html:23
+msgid "الفقس المتوقع"
+msgstr "Expected hatch"
+
+#: app/templates/ostrich/egg_hatch_form.html:17
+msgid "فقست بنجاح"
+msgstr "Hatched successfully"
+
+#: app/templates/ostrich/egg_hatch_form.html:21
+msgid "تاريخ الفقس الفعلي"
+msgstr "Actual hatch date"
+
+#: app/templates/ostrich/egg_hatch_form.html:22
+msgid "رقم الفرخ الجديد"
+msgstr "New chick number"
+
+#: app/templates/ostrich/egg_hatch_form.html:22
+msgid "مثال: OST-2026-001"
+msgstr "Example: OST-2026-001"
+
+#: app/templates/ostrich/egg_hatch_form.html:23
+msgid "الجنس (لو معروف، غالباً غير معروف عند الفقس)"
+msgstr "Gender (if known, usually unknown at hatching)"
+
+#: app/templates/ostrich/egg_hatch_form.html:29
+msgid "الوزن عند الفقس (كجم، اختياري)"
+msgstr "Weight at hatching (kg, optional)"
+
+#: app/templates/ostrich/egg_hatch_form.html:30
+msgid "تسجيل الفقس وإضافة الفرخ"
+msgstr "Record hatching and add chick"
+
+#: app/templates/ostrich/egg_hatch_form.html:35
+msgid "فشل الفقس"
+msgstr "Hatch failed"
+
+#: app/templates/ostrich/egg_hatch_form.html:39
+msgid "سبب الفشل"
+msgstr "Failure reason"
+
+#: app/templates/ostrich/egg_hatch_form.html:39
+msgid "مثال: بيضة غير مخصّبة"
+msgstr "Example: unfertilized egg"
+
+#: app/templates/ostrich/egg_hatch_form.html:40
+msgid "تسجيل الفشل"
+msgstr "Record failure"
+
+#: app/templates/ostrich/eggs_list.html:5
+msgid "سجل النعام — البيض والتفقيس"
+msgstr "Ostrich record — eggs and hatching"
+
+#: app/templates/ostrich/eggs_list.html:7
+#: app/templates/ostrich/incubators_list.html:5
+msgid "الحاضنات"
+msgstr "Incubators"
+
+#: app/templates/ostrich/eggs_list.html:8
+msgid "تسجيل بيضة"
+msgstr "Register egg"
+
+#: app/templates/ostrich/eggs_list.html:15
+msgid "قيد الحضانة/الانتظار"
+msgstr "Incubating/pending"
+
+#: app/templates/ostrich/eggs_list.html:16
+#: app/templates/ostrich/eggs_list.html:34
+msgid "فقست"
+msgstr "Hatched"
+
+#: app/templates/ostrich/eggs_list.html:33
+msgid "بانتظار"
+msgstr "Waiting"
+
+#: app/templates/ostrich/eggs_list.html:44
+msgid "اختر حاضنة"
+msgstr "Choose incubator"
+
+#: app/templates/ostrich/eggs_list.html:48
+msgid "إدخال حاضنة"
+msgstr "Place in incubator"
+
+#: app/templates/ostrich/eggs_list.html:57
+msgid "لا يوجد بيض مسجّل بهذا الفلتر."
+msgstr "No eggs registered under this filter."
+
+#: app/templates/ostrich/incubator_form.html:4
+#: app/templates/ostrich/incubators_list.html:8
+msgid "حاضنة جديدة"
+msgstr "New incubator"
+
+#: app/templates/ostrich/incubator_form.html:7
+#: app/templates/ostrich/incubators_list.html:13
+msgid "الرمز"
+msgstr "Code"
+
+#: app/templates/ostrich/incubator_form.html:7
+msgid "مثال: INC-01"
+msgstr "Example: INC-01"
+
+#: app/templates/ostrich/incubator_form.html:9
+msgid "السعة (عدد البيض)"
+msgstr "Capacity (number of eggs)"
+
+#: app/templates/ostrich/incubators_list.html:7
+msgid "سجل البيض"
+msgstr "Egg record"
+
+#: app/templates/ostrich/incubators_list.html:19
+msgid "نشطة"
+msgstr "Active"
+
+#: app/templates/ostrich/incubators_list.html:19
+msgid "غير نشطة"
+msgstr "Inactive"
+
+#: app/templates/ostrich/incubators_list.html:23
+msgid "لا يوجد حاضنات مسجّلة بعد."
+msgstr "No incubators registered yet."
+
 #: app/templates/reports/_filter.html:11
 msgid "تصدير Excel"
 msgstr "Export Excel"
@@ -5593,20 +5238,12 @@ msgid "الأصناف اللي تحتاج شراء بناءً على الاست�
 msgstr "Items needing purchase based on actual consumption in the selected period"
 
 #: app/templates/reports/purchase_request.html:19
-msgid ""
-"الاحتياج المتوقع = معدل الاستهلاك اليومي بالفترة × 30 يوم. أصناف مخزونها "
-"كافٍ ما تظهر هنا عمداً."
-msgstr ""
-"Projected need = daily consumption rate in the period × 30 days. Items "
-"with sufficient stock deliberately don't appear here."
+msgid "الاحتياج المتوقع = معدل الاستهلاك اليومي بالفترة × 30 يوم. أصناف مخزونها كافٍ ما تظهر هنا عمداً."
+msgstr "Projected need = daily consumption rate in the period × 30 days. Items with sufficient stock deliberately don't appear here."
 
 #: app/templates/reports/purchase_request.html:26
-msgid ""
-"ما فيه أصناف تحتاج شراء حالياً — المخزون كافٍ لكل شي حسب الاستهلاك الفعلي"
-" بهذي الفترة."
-msgstr ""
-"No items currently need purchasing — stock is sufficient for everything "
-"based on actual consumption in this period."
+msgid "ما فيه أصناف تحتاج شراء حالياً — المخزون كافٍ لكل شي حسب الاستهلاك الفعلي بهذي الفترة."
+msgstr "No items currently need purchasing — stock is sufficient for everything based on actual consumption in this period."
 
 #: app/templates/reports/purchases.html:19
 msgid "توزيع المشتريات/المصروفات حسب التصنيف"
@@ -5746,13 +5383,8 @@ msgid "تقريع جديد"
 msgstr "New mating"
 
 #: app/templates/repro/mating_form.html:5
-msgid ""
-"سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، "
-"تقدر بعدها تتابعه لتأكيد الحمل."
-msgstr ""
-"Record a mating (breeding) attempt for a female with a male here — it "
-"creates a mating record linked to the female, which you can later follow "
-"up to confirm pregnancy."
+msgid "سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، تقدر بعدها تتابعه لتأكيد الحمل."
+msgstr "Record a mating (breeding) attempt for a female with a male here — it creates a mating record linked to the female, which you can later follow up to confirm pregnancy."
 
 #: app/templates/repro/mating_form.html:9
 #: app/templates/repro/matings_list.html:10
@@ -5777,17 +5409,8 @@ msgid "الحظيرة (اختياري)"
 msgstr "Barn (optional)"
 
 #: app/templates/repro/mating_form.html:25
-msgid ""
-"الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية"
-" عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص "
-"يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة "
-"الحمل المضبوطة بالإعدادات."
-msgstr ""
-"Next step in the cycle: after saving the mating, follow up on the female "
-"after a sufficient period via \"Reproduction\" ← \"Pregnancy\" ← \"+ New "
-"pregnancy diagnosis\" to confirm pregnancy (manual exam or sonar) — if "
-"confirmed, the expected birth date is calculated automatically from the "
-"gestation duration set in settings."
+msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
+msgstr "Next step in the cycle: after saving the mating, follow up on the female after a sufficient period via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy diagnosis\" to confirm pregnancy (manual exam or sonar) — if confirmed, the expected birth date is calculated automatically from the gestation duration set in settings."
 
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/program_detail.html:13
@@ -5830,12 +5453,8 @@ msgstr "Abortion"
 
 #: app/templates/repro/pregnancies_list.html:23
 #, python-format
-msgid ""
-"تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة "
-"الحظيرة. متأكد؟"
-msgstr ""
-"Record an abortion for %(no)s — this will isolate her immediately and "
-"generate sample-collection and barn-monitoring tasks. Are you sure?"
+msgid "تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟"
+msgstr "Record an abortion for %(no)s — this will isolate her immediately and generate sample-collection and barn-monitoring tasks. Are you sure?"
 
 #: app/templates/repro/pregnancies_list.html:27
 #: app/templates/team/report_detail.html:76
@@ -5856,13 +5475,8 @@ msgid "تشخيص حمل جديد"
 msgstr "New pregnancy diagnosis"
 
 #: app/templates/repro/pregnancy_form.html:5
-msgid ""
-"سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد "
-"الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
-msgstr ""
-"Record a pregnancy confirmation result (manual exam or sonar) here after "
-"a prior mating — confirming pregnancy here automatically opens pregnancy "
-"follow-up and late-term care."
+msgid "سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
+msgstr "Record a pregnancy confirmation result (manual exam or sonar) here after a prior mating — confirming pregnancy here automatically opens pregnancy follow-up and late-term care."
 
 #: app/templates/repro/pregnancy_form.html:13
 msgid "التقريع المرتبط (اختياري)"
@@ -5873,18 +5487,8 @@ msgid "مؤكّد؟"
 msgstr "Confirmed?"
 
 #: app/templates/repro/pregnancy_form.html:22
-msgid ""
-"الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة "
-"\"الحمل\" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، "
-"وتاريخ الولادة المتوقع يُحسب من مدة الحمل المضبوطة بالإعدادات. لو ما "
-"تأكّد الحمل، راجع \"فحص السونار\" لاحقاً لتأكيد إضافي."
-msgstr ""
-"Next step in the cycle: if you confirm the pregnancy, the female "
-"automatically enters \"Pregnancy\" follow-up — in the last trimester "
-"she's automatically moved to the late-pregnancy care barn, and the "
-"expected birth date is calculated from the gestation duration set in "
-"settings. If the pregnancy isn't confirmed, check \"Sonar exam\" later "
-"for additional confirmation."
+msgid "الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة \"الحمل\" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، وتاريخ الولادة المتوقع يُحسب من مدة الحمل المضبوطة بالإعدادات. لو ما تأكّد الحمل، راجع \"فحص السونار\" لاحقاً لتأكيد إضافي."
+msgstr "Next step in the cycle: if you confirm the pregnancy, the female automatically enters \"Pregnancy\" follow-up — in the last trimester she's automatically moved to the late-pregnancy care barn, and the expected birth date is calculated from the gestation duration set in settings. If the pregnancy isn't confirmed, check \"Sonar exam\" later for additional confirmation."
 
 #: app/templates/repro/program_detail.html:6
 #, python-format
@@ -6016,18 +5620,8 @@ msgid "برنامج تزامن تناسلي جديد (للتوأمة)"
 msgstr "New reproductive synchronization program (for twinning)"
 
 #: app/templates/repro/program_form.html:6
-msgid ""
-"برنامج متقدّم يُستخدم لما تبي تزوّد فرص التوأمة عند نعجة معينة، عن طريق "
-"جهاز مهبلي (إسفنجة) يُدخل ويُزال بمواعيد محددة، مع حقن هرمونية، لضبط وقت "
-"استعدادها للتلقيح (يُسمّى طبياً \"الشياع\"). لو تبي تسجّل تقريعاً عادياً "
-"بدون هذا التزامن، استخدم شاشة \"التقريع\" العادية بدل هذي."
-msgstr ""
-"An advanced program used when you want to increase the chances of "
-"twinning in a specific ewe, via a vaginal device (sponge) inserted and "
-"removed at set times, along with hormone injections, to control the "
-"timing of her readiness for breeding (medically called \"estrus\"). If "
-"you want to record a regular mating without this synchronization, use the"
-" regular \"Mating\" screen instead."
+msgid "برنامج متقدّم يُستخدم لما تبي تزوّد فرص التوأمة عند نعجة معينة، عن طريق جهاز مهبلي (إسفنجة) يُدخل ويُزال بمواعيد محددة، مع حقن هرمونية، لضبط وقت استعدادها للتلقيح (يُسمّى طبياً \"الشياع\"). لو تبي تسجّل تقريعاً عادياً بدون هذا التزامن، استخدم شاشة \"التقريع\" العادية بدل هذي."
+msgstr "An advanced program used when you want to increase the chances of twinning in a specific ewe, via a vaginal device (sponge) inserted and removed at set times, along with hormone injections, to control the timing of her readiness for breeding (medically called \"estrus\"). If you want to record a regular mating without this synchronization, use the regular \"Mating\" screen instead."
 
 #: app/templates/repro/program_form.html:14
 msgid "الفحل (لو مسجّل بالنظام، اختياري)"
@@ -6042,24 +5636,16 @@ msgid "موعد إدخال الجهاز المهبلي (مخطط)"
 msgstr "Vaginal device insertion date (planned)"
 
 #: app/templates/repro/program_form.html:23
-msgid ""
-"اليوم اللي تخطط تدخل فيه الإسفنجة/الجهاز المهبلي للنعجة — الخطوة الأولى "
-"بالتزامن."
-msgstr ""
-"The day you plan to insert the sponge/vaginal device into the ewe — the "
-"first step of synchronization."
+msgid "اليوم اللي تخطط تدخل فيه الإسفنجة/الجهاز المهبلي للنعجة — الخطوة الأولى بالتزامن."
+msgstr "The day you plan to insert the sponge/vaginal device into the ewe — the first step of synchronization."
 
 #: app/templates/repro/program_form.html:24
 msgid "موعد إزالة الجهاز المهبلي (مخطط)"
 msgstr "Vaginal device removal date (planned)"
 
 #: app/templates/repro/program_form.html:25
-msgid ""
-"اليوم اللي تخطط تشيل فيه نفس الجهاز — عادة بعد أسبوع إلى أسبوعين من "
-"الإدخال."
-msgstr ""
-"The day you plan to remove the same device — usually one to two weeks "
-"after insertion."
+msgid "اليوم اللي تخطط تشيل فيه نفس الجهاز — عادة بعد أسبوع إلى أسبوعين من الإدخال."
+msgstr "The day you plan to remove the same device — usually one to two weeks after insertion."
 
 #: app/templates/repro/program_form.html:27
 msgid "بداية الفترة المتوقعة لاستعداد النعجة (الشياع)"
@@ -6070,12 +5656,8 @@ msgid "نهاية الفترة المتوقعة لاستعداد النعجة (�
 msgstr "End of the expected estrus window"
 
 #: app/templates/repro/program_form.html:29
-msgid ""
-"الفترة المتوقعة اللي تكون فيها النعجة جاهزة للتلقيح بعد إزالة الجهاز — "
-"عادة يوم إلى ثلاثة أيام بعدها."
-msgstr ""
-"The expected period during which the ewe is ready for breeding after "
-"device removal — usually one to three days after."
+msgid "الفترة المتوقعة اللي تكون فيها النعجة جاهزة للتلقيح بعد إزالة الجهاز — عادة يوم إلى ثلاثة أيام بعدها."
+msgstr "The expected period during which the ewe is ready for breeding after device removal — usually one to three days after."
 
 #: app/templates/repro/program_form.html:31
 msgid "بداية نافذة التقريع الفعلي"
@@ -6086,25 +5668,12 @@ msgid "نهاية نافذة التقريع الفعلي"
 msgstr "End of actual mating window"
 
 #: app/templates/repro/program_form.html:33
-msgid ""
-"الفترة اللي تسوّي فيها التقريع الفعلي (بالفحل أو بالتلقيح الصناعي) بعد "
-"ظهور علامات الاستعداد."
-msgstr ""
-"The period during which you carry out the actual mating (with a male or "
-"artificial insemination) after signs of readiness appear."
+msgid "الفترة اللي تسوّي فيها التقريع الفعلي (بالفحل أو بالتلقيح الصناعي) بعد ظهور علامات الاستعداد."
+msgstr "The period during which you carry out the actual mating (with a male or artificial insemination) after signs of readiness appear."
 
 #: app/templates/repro/program_form.html:36
-msgid ""
-"الدورة الكاملة اللي راح يمشي فيها هذا البرنامج: إدخال الإسفنجة ← إزالتها "
-"بموعدها ← ظهور علامات الاستعداد (الشياع) بالفترة المتوقعة ← تقريع فعلي "
-"بنافذة التقريع ← بعدها تابع تأكيد الحمل من \"التكاثر\" ← \"الحمل\" ← \"+ "
-"تشخيص حمل جديد\" زي أي تقريع عادي."
-msgstr ""
-"The full cycle this program goes through: insert the sponge ← remove it "
-"on schedule ← readiness signs (estrus) appear in the expected window ← "
-"actual mating in the mating window ← then follow up on pregnancy "
-"confirmation via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy "
-"diagnosis\" like any regular mating."
+msgid "الدورة الكاملة اللي راح يمشي فيها هذا البرنامج: إدخال الإسفنجة ← إزالتها بموعدها ← ظهور علامات الاستعداد (الشياع) بالفترة المتوقعة ← تقريع فعلي بنافذة التقريع ← بعدها تابع تأكيد الحمل من \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" زي أي تقريع عادي."
+msgstr "The full cycle this program goes through: insert the sponge ← remove it on schedule ← readiness signs (estrus) appear in the expected window ← actual mating in the mating window ← then follow up on pregnancy confirmation via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy diagnosis\" like any regular mating."
 
 #: app/templates/repro/programs_list.html:6
 msgid "برنامج جديد"
@@ -6123,13 +5692,8 @@ msgid "فحص سونار جديد"
 msgstr "New Sonar Exam"
 
 #: app/templates/repro/sonar_form.html:5
-msgid ""
-"سجّل هنا نتيجة فحص سونار لأنثى — يستخدم لتأكيد/نفي الحمل، تحديد عدد "
-"الأجنّة، أو متابعة برنامج شياع توأمي مرتبط."
-msgstr ""
-"Record a sonar exam result for a female here — used to confirm/rule out "
-"pregnancy, determine fetus count, or follow up a linked twin-estrus "
-"program."
+msgid "سجّل هنا نتيجة فحص سونار لأنثى — يستخدم لتأكيد/نفي الحمل، تحديد عدد الأجنّة، أو متابعة برنامج شياع توأمي مرتبط."
+msgstr "Record a sonar exam result for a female here — used to confirm/rule out pregnancy, determine fetus count, or follow up a linked twin-estrus program."
 
 #: app/templates/repro/sonar_form.html:8
 msgid "تاريخ الفحص"
@@ -6156,15 +5720,8 @@ msgid "موعد إعادة الفحص"
 msgstr "Recheck date"
 
 #: app/templates/repro/sonar_form.html:35
-msgid ""
-"الخطوة الجاية بالدورة: لو النتيجة \"حامل\" ولسا ما فيه تشخيص حمل مؤكّد "
-"مسجَّل، سجّله من \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" عشان تدخل"
-" الأنثى متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
-msgstr ""
-"Next step in the cycle: if the result is \"Pregnant\" and no confirmed "
-"pregnancy diagnosis is recorded yet, record one from \"Reproduction\" → "
-"\"Pregnancy\" → \"+ New pregnancy diagnosis\" so the female automatically"
-" enters pregnancy follow-up and late-pregnancy care."
+msgid "الخطوة الجاية بالدورة: لو النتيجة \"حامل\" ولسا ما فيه تشخيص حمل مؤكّد مسجَّل، سجّله من \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" عشان تدخل الأنثى متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
+msgstr "Next step in the cycle: if the result is \"Pregnant\" and no confirmed pregnancy diagnosis is recorded yet, record one from \"Reproduction\" → \"Pregnancy\" → \"+ New pregnancy diagnosis\" so the female automatically enters pregnancy follow-up and late-pregnancy care."
 
 #: app/templates/repro/sonar_list.html:21
 msgid "لا يوجد فحوصات سونار مسجّلة بعد."
@@ -6267,13 +5824,8 @@ msgid "الدور المستهدف (اختياري)"
 msgstr "Target role (optional)"
 
 #: app/templates/team/_task_assign_fields.html:19
-msgid ""
-"يحدّد مين المهمة موجَّهة له بشكل عام — يقدر يبقى بدون شخص معيّن بعد، "
-"ويظهر بفلترة الدور بشاشة المهام."
-msgstr ""
-"Determines who the task is generally directed at — it can stay without a "
-"specific person for now, and appears in role filtering on the tasks "
-"screen."
+msgid "يحدّد مين المهمة موجَّهة له بشكل عام — يقدر يبقى بدون شخص معيّن بعد، ويظهر بفلترة الدور بشاشة المهام."
+msgstr "Determines who the task is generally directed at — it can stay without a specific person for now, and appears in role filtering on the tasks screen."
 
 #: app/templates/team/_task_assign_fields.html:21
 msgid "المكلَّف (اختياري لو حددت حظيرة)"
@@ -6281,9 +5833,7 @@ msgstr "Assignee (optional if you set a barn)"
 
 #: app/templates/team/_task_assign_fields.html:26
 msgid "الحظيرة (اختياري — يعيّن العامل المسؤول تلقائياً لو ما حددت مكلَّف)"
-msgstr ""
-"Barn (optional — automatically assigns the responsible worker if you "
-"didn't set an assignee)"
+msgstr "Barn (optional — automatically assigns the responsible worker if you didn't set an assignee)"
 
 #: app/templates/team/_task_assign_fields.html:36
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
@@ -6305,12 +5855,8 @@ msgid "غير معيّنة"
 msgstr "Unassigned"
 
 #: app/templates/team/_task_assign_fields.html:42
-msgid ""
-"لو حدّدت مهمة سابقة، هذي المهمة تبقى مقفلة على العامل لين المهمة السابقة "
-"تصير \"منجزة\"."
-msgstr ""
-"If you set a prior task, this task stays locked for the worker until the "
-"prior task becomes \"done\"."
+msgid "لو حدّدت مهمة سابقة، هذي المهمة تبقى مقفلة على العامل لين المهمة السابقة تصير \"منجزة\"."
+msgstr "If you set a prior task, this task stays locked for the worker until the prior task becomes \"done\"."
 
 #: app/templates/team/_task_assign_fields.html:43
 msgid "يتطلب إرفاق صورة عند الإنجاز"
@@ -6326,13 +5872,8 @@ msgid "مهام العامل التلقائية"
 msgstr "Automatic worker tasks"
 
 #: app/templates/team/daily_templates.html:5
-msgid ""
-"هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد"
-" الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها."
-msgstr ""
-"These tasks are generated automatically every day and go directly to the "
-"worker (without waiting for the doctor's approval). Add a new task, or "
-"stop an existing one with the button next to it."
+msgid "هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها."
+msgstr "These tasks are generated automatically every day and go directly to the worker (without waiting for the doctor's approval). Add a new task, or stop an existing one with the button next to it."
 
 #: app/templates/team/daily_templates.html:8
 msgid "عنوان المهمة"
@@ -6393,24 +5934,16 @@ msgid "مثال: 123456789"
 msgstr "Example: 123456789"
 
 #: app/templates/team/member_edit_form.html:23
-msgid ""
-"راسل بوت المزرعة على تيليجرام مرة وحدة، وشغّل أمر \"flask telegram-"
-"updates\" من لوحة Render عشان تلقط الرقم."
-msgstr ""
-"Message the farm's Telegram bot once, and run the \"flask telegram-"
-"updates\" command from the Render dashboard to grab the number."
+msgid "راسل بوت المزرعة على تيليجرام مرة وحدة، وشغّل أمر \"flask telegram-updates\" من لوحة Render عشان تلقط الرقم."
+msgstr "Message the farm's Telegram bot once, and run the \"flask telegram-updates\" command from the Render dashboard to grab the number."
 
 #: app/templates/team/member_edit_form.html:25
 msgid "البريد الإلكتروني (اختياري — للتقرير اليومي التلقائي)"
 msgstr "Email (optional — for the daily automatic report)"
 
 #: app/templates/team/member_edit_form.html:27
-msgid ""
-"لو مسجَّل بريد وهذا الحساب يدير البلاغات، يوصله تقرير يومي تلقائي بحالة "
-"المزرعة."
-msgstr ""
-"If an email is registered and this account manages reports, they'll "
-"receive a daily automatic report on the farm's status."
+msgid "لو مسجَّل بريد وهذا الحساب يدير البلاغات، يوصله تقرير يومي تلقائي بحالة المزرعة."
+msgstr "If an email is registered and this account manages reports, they'll receive a daily automatic report on the farm's status."
 
 #: app/templates/team/member_edit_form.html:29
 msgid "كلمة مرور جديدة (اختياري)"
@@ -6422,9 +5955,7 @@ msgstr "Leave blank if you don't want to change it"
 
 #: app/templates/team/member_edit_form.html:31
 msgid "تعبئة هذا الحقل تغيّر كلمة المرور فوراً — بدون حاجة لمعرفة القديمة."
-msgstr ""
-"Filling this field changes the password immediately — no need to know the"
-" old one."
+msgstr "Filling this field changes the password immediately — no need to know the old one."
 
 #: app/templates/team/member_form.html:4
 msgid "عضو فريق جديد"
@@ -6596,9 +6127,7 @@ msgstr "Submit a new report"
 #: app/templates/team/report_form.html:6
 #: app/templates/team/worker_report_form.html:37
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ."
-msgstr ""
-"You must select at least the animal or the barn — so the report doesn't "
-"lose its tracking."
+msgstr "You must select at least the animal or the barn — so the report doesn't lose its tracking."
 
 #: app/templates/team/report_form.html:7
 msgid "القوائم أدناه مقصورة على حظائرك المسؤول عنها."
@@ -6632,12 +6161,8 @@ msgid "صورة (اختياري)"
 msgstr "Photo (optional)"
 
 #: app/templates/team/report_form.html:33
-msgid ""
-"اضغط هنا وتقدر تختار \"الكاميرا\" لتصوير مباشر أو \"معرض الصور\" لصورة "
-"محفوظة عندك."
-msgstr ""
-"Tap here and you can choose \"Camera\" to shoot directly, or \"Gallery\" "
-"for a saved photo."
+msgid "اضغط هنا وتقدر تختار \"الكاميرا\" لتصوير مباشر أو \"معرض الصور\" لصورة محفوظة عندك."
+msgstr "Tap here and you can choose \"Camera\" to shoot directly, or \"Gallery\" for a saved photo."
 
 #: app/templates/team/report_form.html:34
 msgid "رفع البلاغ"
@@ -6798,12 +6323,8 @@ msgid "تعذّر التنفيذ"
 msgstr "Couldn't execute"
 
 #: app/templates/team/task_detail.html:110
-msgid ""
-"لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور "
-"مباشرة."
-msgstr ""
-"If you couldn't complete the task, record the reason here instead of "
-"leaving it silent — it goes straight to the doctor."
+msgid "لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة."
+msgstr "If you couldn't complete the task, record the reason here instead of leaving it silent — it goes straight to the doctor."
 
 #: app/templates/team/task_detail.html:113
 #: app/templates/team/task_detail.html:131
@@ -6875,25 +6396,16 @@ msgid "مهام مقترحة بانتظار الاعتماد"
 msgstr "Suggested tasks awaiting approval"
 
 #: app/templates/team/tasks_list.html:97
-msgid ""
-"مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — "
-"تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
-msgstr ""
-"Tasks auto-generated by the system's engines (vaccination/breeding/daily "
-"care...) — need your approval before they actually reach the assignee."
+msgid "مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً."
+msgstr "Tasks auto-generated by the system's engines (vaccination/breeding/daily care...) — need your approval before they actually reach the assignee."
 
 #: app/templates/team/tasks_list.html:143
 msgid "جدول المهام المعتمدة"
 msgstr "Approved tasks table"
 
 #: app/templates/team/tasks_list.html:144
-msgid ""
-"كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) "
-"عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
-msgstr ""
-"All tasks that have actually been approved (automatic after approval, or "
-"manually assigned) across the whole farm — waiting for the assignee to "
-"execute and mark \"done\"."
+msgid "كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها \"تم الإنجاز\"."
+msgstr "All tasks that have actually been approved (automatic after approval, or manually assigned) across the whole farm — waiting for the assignee to execute and mark \"done\"."
 
 #: app/templates/team/tasks_list.html:147
 #: app/templates/team/tasks_list.html:169
