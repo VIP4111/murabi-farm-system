@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:56+0300\n"
+"POT-Creation-Date: 2026-08-10 03:12+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -400,6 +400,316 @@ msgstr "सीधे त्वचा/घाव की सतह पर उपय
 msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
 msgstr "अन्य श्रेणियों के अंतर्गत न आने वाली चीज़ों के लिए एक सामान्य श्रेणी — दवा पर लिखी गई संदर्भ खुराक टिप्पणी देखें।"
 
+#: app/reports/report_service.py:27
+#: app/templates/health/vaccination_schedule_list.html:22
+msgid "اليوم"
+msgstr "आज"
+
+#: app/reports/report_service.py:27
+msgid "آخر 7 أيام"
+msgstr "पिछले 7 दिन"
+
+#: app/reports/report_service.py:27
+msgid "الشهر الحالي"
+msgstr "वर्तमान माह"
+
+#: app/reports/report_service.py:27 app/templates/reports/_filter.html:19
+msgid "نطاق مخصص"
+msgstr "कस्टम सीमा"
+
+#: app/reports/report_service.py:110
+msgid "الرؤوس النشطة حالياً"
+msgstr "वर्तमान में सक्रिय पशु"
+
+#: app/reports/report_service.py:111
+msgid "رؤوس جديدة بالفترة"
+msgstr "अवधि में नए पशु"
+
+#: app/reports/report_service.py:112 app/reports/report_service.py:202
+msgid "ولادات بالفترة"
+msgstr "अवधि में जन्म"
+
+#: app/reports/report_service.py:113
+msgid "حالات نفوق بالفترة"
+msgstr "अवधि में मृत्यु के मामले"
+
+#: app/reports/report_service.py:114
+msgid "معدل النفوق التقريبي"
+msgstr "अनुमानित मृत्यु दर"
+
+#: app/reports/report_service.py:115
+msgid "مبيعات بالفترة"
+msgstr "अवधि में बिक्री"
+
+#: app/reports/report_service.py:116
+msgid "مصروفات+مشتريات بالفترة"
+msgstr "अवधि में व्यय+खरीद"
+
+#: app/reports/report_service.py:117
+msgid "صافي الفترة"
+msgstr "अवधि का शुद्ध"
+
+#: app/reports/report_service.py:118
+msgid "تحصينات بالفترة"
+msgstr "अवधि में टीकाकरण"
+
+#: app/reports/report_service.py:119
+msgid "أمراض مفتوحة حالياً"
+msgstr "वर्तमान में खुले रोग"
+
+#: app/reports/report_service.py:124
+msgid "المؤشر"
+msgstr "संकेतक"
+
+#: app/reports/report_service.py:124
+msgid "القيمة"
+msgstr "मूल्य"
+
+#: app/reports/report_service.py:165
+msgid "إجمالي حالات النفوق"
+msgstr "कुल मृत्यु मामले"
+
+#: app/reports/report_service.py:166 app/reports/report_service.py:211
+msgid "الرقم"
+msgstr "क्रमांक"
+
+#: app/reports/report_service.py:166 app/reports/report_service.py:211
+msgid "الجنس"
+msgstr "लिंग"
+
+#: app/reports/report_service.py:166 app/reports/report_service.py:253
+#: app/reports/report_service.py:296 app/reports/report_service.py:378
+#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/health/disease_form.html:18
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vaccinations_list.html:10
+#: app/templates/health/vet_visit_form.html:12
+#: app/templates/health/vet_visits_list.html:10
+msgid "التاريخ"
+msgstr "तारीख़"
+
+#: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
+#: app/templates/team/tasks_list.html:187
+msgid "السبب"
+msgstr "कारण"
+
+#: app/reports/report_service.py:166
+msgid "العمر (يوم)"
+msgstr "आयु (दिन)"
+
+#: app/reports/report_service.py:203
+msgid "ذكور / إناث"
+msgstr "नर / मादा"
+
+#: app/reports/report_service.py:204
+msgid "متوسط حجم البطن"
+msgstr "औसत ब्यांत आकार"
+
+#: app/reports/report_service.py:205
+msgid "تقريعات بالفترة"
+msgstr "अवधि में संगमन"
+
+#: app/reports/report_service.py:206
+msgid "حمل مؤكد بالفترة"
+msgstr "अवधि में पुष्टित गर्भावस्था"
+
+#: app/reports/report_service.py:207
+msgid "نسبة نجاح التقريع→حمل"
+msgstr "संगमन→गर्भावस्था सफलता दर"
+
+#: app/reports/report_service.py:211
+msgid "تاريخ الولادة"
+msgstr "जन्म तिथि"
+
+#: app/reports/report_service.py:211
+msgid "الأم"
+msgstr "मां"
+
+#: app/reports/report_service.py:211
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "भार"
+
+#: app/reports/report_service.py:244
+msgid "عدد عمليات البيع"
+msgstr "बिक्री लेनदेन की संख्या"
+
+#: app/reports/report_service.py:245
+msgid "إجمالي المبيعات"
+msgstr "कुल बिक्री"
+
+#: app/reports/report_service.py:246 app/reports/report_service.py:288
+msgid "إجمالي المشتريات+المصروفات"
+msgstr "कुल खरीद+व्यय"
+
+#: app/reports/report_service.py:247
+msgid "الصافي"
+msgstr "शुद्ध"
+
+#: app/reports/report_service.py:248
+msgid "دعم خارجي مستلم (دين)"
+msgstr "प्राप्त बाहरी सहायता (ऋण)"
+
+#: app/reports/report_service.py:249 app/templates/finance/form.html:14
+#: app/templates/finance/list.html:36
+msgid "سداد دين"
+msgstr "ऋण चुकौती"
+
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+msgid "البند"
+msgstr "मद"
+
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/reports/report_service.py:378 app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34
+#: app/templates/health/disease_form.html:19
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vaccination_form.html:13
+#: app/templates/health/vaccinations_list.html:10
+#: app/templates/health/vet_visit_form.html:13
+#: app/templates/health/vet_visits_list.html:10
+#: app/templates/team/report_detail.html:13
+msgid "الحيوان"
+msgstr "जानवर"
+
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/templates/finance/form.html:33 app/templates/finance/list.html:32
+msgid "المبلغ"
+msgstr "राशि"
+
+#: app/reports/report_service.py:287
+msgid "عدد عمليات الشراء/المصروف"
+msgstr "खरीद/व्यय लेनदेन की संख्या"
+
+#: app/reports/report_service.py:289
+msgid "عدد عمليات الشراء"
+msgstr "खरीद लेनदेन की संख्या"
+
+#: app/reports/report_service.py:290
+msgid "إجمالي الشراء"
+msgstr "कुल खरीद"
+
+#: app/reports/report_service.py:291
+msgid "عدد المصروفات"
+msgstr "व्यय की संख्या"
+
+#: app/reports/report_service.py:292
+msgid "إجمالي المصروفات"
+msgstr "कुल व्यय"
+
+#: app/reports/report_service.py:296
+msgid "الفاتورة المرفقة"
+msgstr "संलग्न चालान"
+
+#: app/reports/report_service.py:374
+msgid "لا يوجد نشاط بهذي الفترة"
+msgstr "इस अवधि में कोई गतिविधि नहीं"
+
+#: app/reports/report_service.py:378 app/templates/feed/item_form.html:8
+#: app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "الفئة"
+msgstr "श्रेणी"
+
+#: app/reports/report_service.py:378
+#: app/templates/team/_task_assign_fields.html:4
+#: app/templates/team/daily_templates.html:18
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+#: app/templates/team/tasks_list.html:187
+msgid "العنوان"
+msgstr "शीर्षक"
+
+#: app/reports/report_service.py:378
+msgid "التفاصيل"
+msgstr "विवरण"
+
+#: app/reports/report_service.py:470
+msgid "عدد الرؤوس النشطة"
+msgstr "सक्रिय पशुओं की संख्या"
+
+#: app/reports/report_service.py:471
+msgid "عدد الأصناف المطلوب شراؤها"
+msgstr "खरीद की आवश्यकता वाली वस्तुओं की संख्या"
+
+#: app/reports/report_service.py:472
+msgid "فترة قياس الاستهلاك (أيام)"
+msgstr "खपत मापन अवधि (दिन)"
+
+#: app/reports/report_service.py:477 app/templates/feed/movement_form.html:11
+#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
+#: app/templates/finance/list.html:32
+#: app/templates/health/symptoms_list.html:19
+#: app/templates/team/_task_assign_fields.html:5
+#: app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/reports_list.html:85
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+msgid "النوع"
+msgstr "प्रकार"
+
+#: app/reports/report_service.py:477
+msgid "الصنف"
+msgstr "वस्तु"
+
+#: app/reports/report_service.py:477
+msgid "المستهلك بالفترة"
+msgstr "अवधि में खपत"
+
+#: app/reports/report_service.py:477
+msgid "الاحتياج المتوقع (30 يوم)"
+msgstr "अनुमानित आवश्यकता (30 दिन)"
+
+#: app/reports/report_service.py:478
+msgid "المخزون الحالي"
+msgstr "वर्तमान स्टॉक"
+
+#: app/reports/report_service.py:478
+msgid "الكمية المقترح شراؤها"
+msgstr "सुझाई गई खरीद मात्रा"
+
+#: app/reports/report_service.py:478 app/templates/feed/item_form.html:29
+#: app/templates/health/pharmacy_form.html:100
+msgid "الوحدة"
+msgstr "इकाई"
+
+#: app/reports/report_service.py:485
+msgid "التقرير الشامل"
+msgstr "व्यापक रिपोर्ट"
+
+#: app/reports/report_service.py:486
+msgid "تقرير النفوق"
+msgstr "मृत्यु रिपोर्ट"
+
+#: app/reports/report_service.py:487
+msgid "تقرير الولادات والإنتاج"
+msgstr "जन्म और उत्पादन रिपोर्ट"
+
+#: app/reports/report_service.py:488
+msgid "تقرير المبيعات والمالية"
+msgstr "बिक्री और वित्त रिपोर्ट"
+
+#: app/reports/report_service.py:489
+msgid "تقرير المشتريات"
+msgstr "खरीद रिपोर्ट"
+
+#: app/reports/report_service.py:490
+msgid "تقرير إنجاز اليوم"
+msgstr "दैनिक गतिविधि रिपोर्ट"
+
+#: app/reports/report_service.py:491
+msgid "تقرير طلب الشراء"
+msgstr "खरीद अनुरोध रिपोर्ट"
+
 #: app/team/routes.py:35 app/templates/worker_home.html:59
 msgid "فحص / حالة صحية"
 msgstr "जांच / स्वास्थ्य स्थिति"
@@ -698,6 +1008,10 @@ msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
 #: app/templates/base.html:535 app/templates/home.html:93
+#: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
+#: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
+#: app/templates/reports/purchase_request.html:4
+#: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
@@ -1018,10 +1332,12 @@ msgid "كمية/رأس/يوم"
 msgstr "मात्रा/पशु/दिन"
 
 #: app/templates/feed/barn_plans_list.html:10
+#: app/templates/reports/_filter.html:17
 msgid "من"
 msgstr "से"
 
 #: app/templates/feed/barn_plans_list.html:10
+#: app/templates/reports/_filter.html:18
 msgid "إلى"
 msgstr "तक"
 
@@ -1222,12 +1538,6 @@ msgstr "नाम"
 msgid "مثال: برسيم دريس"
 msgstr "उदाहरण: अल्फाल्फा घास"
 
-#: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/pharmacy_shortages.html:14
-msgid "الفئة"
-msgstr "श्रेणी"
-
 #: app/templates/feed/item_form.html:14
 msgid "فئة العلف (لحارس منع الزيادة المفاجئة للمركزات)"
 msgstr "चारा वर्ग (अचानक सांद्रण वृद्धि रक्षक के लिए)"
@@ -1264,11 +1574,6 @@ msgstr "कैल्शियम %"
 #: app/templates/feed/item_form.html:28
 msgid "فسفور %"
 msgstr "फास्फोरस %"
-
-#: app/templates/feed/item_form.html:29
-#: app/templates/health/pharmacy_form.html:100
-msgid "الوحدة"
-msgstr "इकाई"
 
 #: app/templates/feed/item_form.html:30
 #: app/templates/health/pharmacy_list.html:13
@@ -1358,21 +1663,6 @@ msgstr "नई चारा स्टॉक गतिविधि"
 msgid "المكوّن"
 msgstr "घटक"
 
-#: app/templates/feed/movement_form.html:11
-#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32
-#: app/templates/health/symptoms_list.html:19
-#: app/templates/team/_task_assign_fields.html:5
-#: app/templates/team/report_detail.html:11
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/reports_list.html:85
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-msgid "النوع"
-msgstr "प्रकार"
-
 #: app/templates/feed/movement_form.html:13
 msgid "وارد (شراء/تعبئة)"
 msgstr "आवक (खरीद/भरना)"
@@ -1413,18 +1703,6 @@ msgstr "चारा स्टॉक गतिविधियां"
 #: app/templates/feed/movements_list.html:6
 msgid "حركة جديدة"
 msgstr "नई गतिविधि"
-
-#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
-#: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
-#: app/templates/health/disease_form.html:18
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:12
-#: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:12
-#: app/templates/health/vet_visits_list.html:10
-msgid "التاريخ"
-msgstr "तारीख़"
 
 #: app/templates/feed/movements_list.html:10
 msgid "قبل"
@@ -1588,15 +1866,12 @@ msgstr "व्यय"
 msgid "دعم خارجي (دين على الحلال)"
 msgstr "बाहरी सहायता (फार्म पर बकाया ऋण)"
 
-#: app/templates/finance/form.html:14 app/templates/finance/list.html:36
-msgid "سداد دين"
-msgstr "ऋण चुकौती"
-
 #: app/templates/finance/form.html:18
 msgid "\"دعم خارجي\" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل \"البند\" عشان تقدر تتابع الدين لكل جهة."
 msgstr "\"बाहरी सहायता\" = किसी बाहरी पक्ष से प्राप्त राशि जिसे आपको बाद में चुकाना है (आप पर ऋण) — यह फार्म की वास्तविक आय नहीं है, और कुल आवक में गिनी नहीं जाती। हर पक्ष के ऋण को ट्रैक करने के लिए \"आइटम\" फ़ील्ड में उस पक्ष का नाम लिखें।"
 
-#: app/templates/finance/form.html:21
+#: app/templates/finance/form.html:21 app/templates/reports/purchases.html:22
+#: app/templates/reports/sales.html:22
 msgid "التصنيف"
 msgstr "वर्गीकरण"
 
@@ -1612,10 +1887,6 @@ msgstr "अप्रत्यक्ष व्यय (किराया/रख�
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "वर्तमान सक्रिय पशुओं की संख्या पर स्वचालित रूप से समान रूप से विभाजित — \"मासिक/वार्षिक प्रति पशु लागत\" रिपोर्ट में और प्रत्येक पशु के विवरण पृष्ठ पर व्यक्तिगत हिस्से के रूप में दिखाई देता है।"
 
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
-msgid "البند"
-msgstr "मद"
-
 #: app/templates/finance/form.html:32 app/templates/team/report_detail.html:25
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1624,10 +1895,6 @@ msgstr "मद"
 #: app/templates/team/reports_list.html:85
 msgid "الوصف"
 msgstr "विवरण"
-
-#: app/templates/finance/form.html:33 app/templates/finance/list.html:32
-msgid "المبلغ"
-msgstr "राशि"
 
 #: app/templates/finance/form.html:34
 msgid "طريقة الدفع"
@@ -1665,18 +1932,6 @@ msgstr "कुल स्वास्थ्य और उपचार लाग�
 #: app/templates/finance/health_view.html:11
 msgid "تكاليف الزيارات البيطرية"
 msgstr "पशु चिकित्सा यात्रा लागत"
-
-#: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34
-#: app/templates/health/disease_form.html:19
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:13
-#: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:13
-#: app/templates/health/vet_visits_list.html:10
-#: app/templates/team/report_detail.html:13
-msgid "الحيوان"
-msgstr "जानवर"
 
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:17
@@ -1783,7 +2038,7 @@ msgstr "बिना चालान"
 msgid "إصدار"
 msgstr "जारी करें"
 
-#: app/templates/finance/list.html:47
+#: app/templates/finance/list.html:47 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "देखें"
 
@@ -2268,10 +2523,6 @@ msgstr "हटाएं"
 #: app/templates/health/disease_type_detail.html:68
 msgid "ما فيه أعراض مربوطة بهذا المرض بعد."
 msgstr "अभी तक इस रोग से कोई लक्षण जुड़ा नहीं है।"
-
-#: app/templates/health/disease_type_detail.html:59
-msgid "الوزن"
-msgstr "भार"
 
 #: app/templates/health/disease_type_detail.html:59
 msgid "عزل فوري"
@@ -2961,10 +3212,6 @@ msgstr "कार्रवाइयां"
 msgid "متأخر %(n)s يوم"
 msgstr "%(n)s दिन देरी से"
 
-#: app/templates/health/vaccination_schedule_list.html:22
-msgid "اليوم"
-msgstr "आज"
-
 #: app/templates/health/vaccination_schedule_list.html:23
 #, python-format
 msgid "بعد %(n)s يوم"
@@ -3025,6 +3272,106 @@ msgstr "पशु चिकित्सक यात्रा दर्ज क�
 #: app/templates/health/vet_visits_list.html:6
 msgid "زيارة جديدة"
 msgstr "नई यात्रा"
+
+#: app/templates/reports/_filter.html:11
+msgid "تصدير Excel"
+msgstr "Excel निर्यात करें"
+
+#: app/templates/reports/_filter.html:12
+msgid "تصدير PDF"
+msgstr "PDF निर्यात करें"
+
+#: app/templates/reports/_filter.html:21
+msgid "الفترة الحالية:"
+msgstr "वर्तमान अवधि:"
+
+#: app/templates/reports/activity.html:18
+msgid "كل ما تم إنجازه أو تسجيله بهذي الفترة"
+msgstr "इस अवधि में पूर्ण या दर्ज किया गया सब कुछ"
+
+#: app/templates/reports/activity.html:25
+msgid "ما فيه نشاط مسجَّل بهذي الفترة."
+msgstr "इस अवधि में कोई गतिविधि दर्ज नहीं है।"
+
+#: app/templates/reports/births.html:18
+msgid "تفاصيل الولادات"
+msgstr "जन्म विवरण"
+
+#: app/templates/reports/births.html:25
+msgid "لا يوجد ولادات بهذي الفترة."
+msgstr "इस अवधि में कोई जन्म नहीं है।"
+
+#: app/templates/reports/mortality.html:19
+msgid "التوزيع حسب السبب"
+msgstr "कारण के अनुसार वितरण"
+
+#: app/templates/reports/mortality.html:22
+msgid "العدد"
+msgstr "संख्या"
+
+#: app/templates/reports/mortality.html:33
+msgid "التوزيع الزمني"
+msgstr "समय वितरण"
+
+#: app/templates/reports/mortality.html:36
+msgid "الفترة"
+msgstr "अवधि"
+
+#: app/templates/reports/mortality.html:36
+msgid "عدد الحالات"
+msgstr "मामलों की संख्या"
+
+#: app/templates/reports/mortality.html:46
+msgid "تفاصيل حالات النفوق"
+msgstr "मृत्यु मामलों का विवरण"
+
+#: app/templates/reports/mortality.html:53
+msgid "لا يوجد حالات نفوق بهذي الفترة."
+msgstr "इस अवधि में कोई मृत्यु मामला नहीं है।"
+
+#: app/templates/reports/overview.html:18
+msgid "جدول المؤشرات"
+msgstr "संकेतक तालिका"
+
+#: app/templates/reports/purchase_request.html:18
+msgid "الأصناف اللي تحتاج شراء بناءً على الاستهلاك الفعلي بالفترة المختارة"
+msgstr "चयनित अवधि में वास्तविक खपत के आधार पर खरीद की आवश्यकता वाली वस्तुएं"
+
+#: app/templates/reports/purchase_request.html:19
+msgid "الاحتياج المتوقع = معدل الاستهلاك اليومي بالفترة × 30 يوم. أصناف مخزونها كافٍ ما تظهر هنا عمداً."
+msgstr "अनुमानित आवश्यकता = अवधि में दैनिक खपत दर × 30 दिन। पर्याप्त स्टॉक वाली वस्तुएं जानबूझकर यहां नहीं दिखतीं।"
+
+#: app/templates/reports/purchase_request.html:26
+msgid "ما فيه أصناف تحتاج شراء حالياً — المخزون كافٍ لكل شي حسب الاستهلاك الفعلي بهذي الفترة."
+msgstr "फिलहाल किसी वस्तु को खरीद की आवश्यकता नहीं है — इस अवधि की वास्तविक खपत के अनुसार हर चीज़ के लिए स्टॉक पर्याप्त है।"
+
+#: app/templates/reports/purchases.html:19
+msgid "توزيع المشتريات/المصروفات حسب التصنيف"
+msgstr "श्रेणी के अनुसार खरीद/व्यय वितरण"
+
+#: app/templates/reports/purchases.html:22 app/templates/reports/sales.html:22
+msgid "الإجمالي"
+msgstr "कुल"
+
+#: app/templates/reports/purchases.html:32
+msgid "عمليات الشراء والمصروفات"
+msgstr "खरीद और व्यय लेनदेन"
+
+#: app/templates/reports/purchases.html:51
+msgid "لا يوجد عمليات شراء/مصروف بهذي الفترة."
+msgstr "इस अवधि में कोई खरीद/व्यय लेनदेन नहीं है।"
+
+#: app/templates/reports/sales.html:19
+msgid "توزيع المصروفات/المشتريات حسب التصنيف"
+msgstr "श्रेणी के अनुसार व्यय/खरीद वितरण"
+
+#: app/templates/reports/sales.html:32
+msgid "عمليات البيع"
+msgstr "बिक्री लेनदेन"
+
+#: app/templates/reports/sales.html:39
+msgid "لا يوجد عمليات بيع بهذي الفترة."
+msgstr "इस अवधि में कोई बिक्री लेनदेन नहीं है।"
 
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"
@@ -3174,15 +3521,6 @@ msgstr "स्थगित करें"
 #: app/templates/team/_suggested_tasks_rows.html:30
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr "अभी कोई सुझाया गया कार्य नहीं।"
-
-#: app/templates/team/_task_assign_fields.html:4
-#: app/templates/team/daily_templates.html:18
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-#: app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-#: app/templates/team/tasks_list.html:187
-msgid "العنوان"
-msgstr "शीर्षक"
 
 #: app/templates/team/_task_assign_fields.html:12
 msgid "الدور المستهدف (اختياري)"
@@ -3820,10 +4158,6 @@ msgstr "कोई नहीं।"
 #: app/templates/team/tasks_list.html:184
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr "मालिक समीक्षा बॉक्स (डॉक्टर द्वारा हटाए गए कार्य)"
-
-#: app/templates/team/tasks_list.html:187
-msgid "السبب"
-msgstr "कारण"
 
 #: app/templates/team/tasks_list.html:196
 msgid "استرجاع"

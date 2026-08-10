@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:56+0300\n"
+"POT-Creation-Date: 2026-08-10 03:12+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -400,6 +400,316 @@ msgstr "በቀጥታ በቆዳ/ቁስል ላይ ጥቅም ላይ ይውላል (�
 msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
 msgstr "ከሌሎች ምድቦች ስር ላልሆነው አጠቃላይ ምድብ — በመድሃኒቱ ላይ የተጻፈውን የማጣቀሻ መጠን ማስታወሻ ይመልከቱ።"
 
+#: app/reports/report_service.py:27
+#: app/templates/health/vaccination_schedule_list.html:22
+msgid "اليوم"
+msgstr "ዛሬ"
+
+#: app/reports/report_service.py:27
+msgid "آخر 7 أيام"
+msgstr "የመጨረሻዎቹ 7 ቀናት"
+
+#: app/reports/report_service.py:27
+msgid "الشهر الحالي"
+msgstr "የአሁኑ ወር"
+
+#: app/reports/report_service.py:27 app/templates/reports/_filter.html:19
+msgid "نطاق مخصص"
+msgstr "ብጁ ክልል"
+
+#: app/reports/report_service.py:110
+msgid "الرؤوس النشطة حالياً"
+msgstr "በአሁኑ ጊዜ ንቁ እንስሳት"
+
+#: app/reports/report_service.py:111
+msgid "رؤوس جديدة بالفترة"
+msgstr "በጊዜው ውስጥ አዲስ እንስሳት"
+
+#: app/reports/report_service.py:112 app/reports/report_service.py:202
+msgid "ولادات بالفترة"
+msgstr "በጊዜው ውስጥ ልደቶች"
+
+#: app/reports/report_service.py:113
+msgid "حالات نفوق بالفترة"
+msgstr "በጊዜው ውስጥ የሞት ጉዳዮች"
+
+#: app/reports/report_service.py:114
+msgid "معدل النفوق التقريبي"
+msgstr "ግምታዊ የሞት መጠን"
+
+#: app/reports/report_service.py:115
+msgid "مبيعات بالفترة"
+msgstr "በጊዜው ውስጥ ሽያጮች"
+
+#: app/reports/report_service.py:116
+msgid "مصروفات+مشتريات بالفترة"
+msgstr "በጊዜው ውስጥ ወጪ+ግዢ"
+
+#: app/reports/report_service.py:117
+msgid "صافي الفترة"
+msgstr "የጊዜው ተጣራ"
+
+#: app/reports/report_service.py:118
+msgid "تحصينات بالفترة"
+msgstr "በጊዜው ውስጥ ክትባቶች"
+
+#: app/reports/report_service.py:119
+msgid "أمراض مفتوحة حالياً"
+msgstr "በአሁኑ ጊዜ ክፍት በሽታዎች"
+
+#: app/reports/report_service.py:124
+msgid "المؤشر"
+msgstr "ጠቋሚ"
+
+#: app/reports/report_service.py:124
+msgid "القيمة"
+msgstr "ዋጋ"
+
+#: app/reports/report_service.py:165
+msgid "إجمالي حالات النفوق"
+msgstr "ጠቅላላ የሞት ጉዳዮች"
+
+#: app/reports/report_service.py:166 app/reports/report_service.py:211
+msgid "الرقم"
+msgstr "ቁጥር"
+
+#: app/reports/report_service.py:166 app/reports/report_service.py:211
+msgid "الجنس"
+msgstr "ጾታ"
+
+#: app/reports/report_service.py:166 app/reports/report_service.py:253
+#: app/reports/report_service.py:296 app/reports/report_service.py:378
+#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/health/disease_form.html:18
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vaccinations_list.html:10
+#: app/templates/health/vet_visit_form.html:12
+#: app/templates/health/vet_visits_list.html:10
+msgid "التاريخ"
+msgstr "ቀን"
+
+#: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
+#: app/templates/team/tasks_list.html:187
+msgid "السبب"
+msgstr "ምክንያት"
+
+#: app/reports/report_service.py:166
+msgid "العمر (يوم)"
+msgstr "ዕድሜ (ቀናት)"
+
+#: app/reports/report_service.py:203
+msgid "ذكور / إناث"
+msgstr "ወንድ / ሴት"
+
+#: app/reports/report_service.py:204
+msgid "متوسط حجم البطن"
+msgstr "አማካይ የወሊድ መጠን"
+
+#: app/reports/report_service.py:205
+msgid "تقريعات بالفترة"
+msgstr "በጊዜው ውስጥ ማዳቀሎች"
+
+#: app/reports/report_service.py:206
+msgid "حمل مؤكد بالفترة"
+msgstr "በጊዜው ውስጥ የተረጋገጠ እርግዝና"
+
+#: app/reports/report_service.py:207
+msgid "نسبة نجاح التقريع→حمل"
+msgstr "የማዳቀል→እርግዝና ስኬት መጠን"
+
+#: app/reports/report_service.py:211
+msgid "تاريخ الولادة"
+msgstr "የልደት ቀን"
+
+#: app/reports/report_service.py:211
+msgid "الأم"
+msgstr "እናት"
+
+#: app/reports/report_service.py:211
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "ክብደት"
+
+#: app/reports/report_service.py:244
+msgid "عدد عمليات البيع"
+msgstr "የሽያጭ ግብይቶች ብዛት"
+
+#: app/reports/report_service.py:245
+msgid "إجمالي المبيعات"
+msgstr "ጠቅላላ ሽያጮች"
+
+#: app/reports/report_service.py:246 app/reports/report_service.py:288
+msgid "إجمالي المشتريات+المصروفات"
+msgstr "ጠቅላላ ግዢ+ወጪ"
+
+#: app/reports/report_service.py:247
+msgid "الصافي"
+msgstr "ተጣራ"
+
+#: app/reports/report_service.py:248
+msgid "دعم خارجي مستلم (دين)"
+msgstr "የተቀበለ የውጭ ድጋፍ (ዕዳ)"
+
+#: app/reports/report_service.py:249 app/templates/finance/form.html:14
+#: app/templates/finance/list.html:36
+msgid "سداد دين"
+msgstr "የዕዳ ክፍያ"
+
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+msgid "البند"
+msgstr "ንጥል"
+
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/reports/report_service.py:378 app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34
+#: app/templates/health/disease_form.html:19
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vaccination_form.html:13
+#: app/templates/health/vaccinations_list.html:10
+#: app/templates/health/vet_visit_form.html:13
+#: app/templates/health/vet_visits_list.html:10
+#: app/templates/team/report_detail.html:13
+msgid "الحيوان"
+msgstr "እንስሳ"
+
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/templates/finance/form.html:33 app/templates/finance/list.html:32
+msgid "المبلغ"
+msgstr "መጠን"
+
+#: app/reports/report_service.py:287
+msgid "عدد عمليات الشراء/المصروف"
+msgstr "የግዢ/ወጪ ግብይቶች ብዛት"
+
+#: app/reports/report_service.py:289
+msgid "عدد عمليات الشراء"
+msgstr "የግዢ ግብይቶች ብዛት"
+
+#: app/reports/report_service.py:290
+msgid "إجمالي الشراء"
+msgstr "ጠቅላላ ግዢ"
+
+#: app/reports/report_service.py:291
+msgid "عدد المصروفات"
+msgstr "የወጪዎች ብዛት"
+
+#: app/reports/report_service.py:292
+msgid "إجمالي المصروفات"
+msgstr "ጠቅላላ ወጪ"
+
+#: app/reports/report_service.py:296
+msgid "الفاتورة المرفقة"
+msgstr "የተያያዘ ደረሰኝ"
+
+#: app/reports/report_service.py:374
+msgid "لا يوجد نشاط بهذي الفترة"
+msgstr "በዚህ ጊዜ ውስጥ ምንም እንቅስቃሴ የለም"
+
+#: app/reports/report_service.py:378 app/templates/feed/item_form.html:8
+#: app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "الفئة"
+msgstr "ምድብ"
+
+#: app/reports/report_service.py:378
+#: app/templates/team/_task_assign_fields.html:4
+#: app/templates/team/daily_templates.html:18
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+#: app/templates/team/tasks_list.html:187
+msgid "العنوان"
+msgstr "ርዕስ"
+
+#: app/reports/report_service.py:378
+msgid "التفاصيل"
+msgstr "ዝርዝሮች"
+
+#: app/reports/report_service.py:470
+msgid "عدد الرؤوس النشطة"
+msgstr "የንቁ እንስሳት ብዛት"
+
+#: app/reports/report_service.py:471
+msgid "عدد الأصناف المطلوب شراؤها"
+msgstr "መገዛት ያለባቸው ንጥሎች ብዛት"
+
+#: app/reports/report_service.py:472
+msgid "فترة قياس الاستهلاك (أيام)"
+msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
+
+#: app/reports/report_service.py:477 app/templates/feed/movement_form.html:11
+#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
+#: app/templates/finance/list.html:32
+#: app/templates/health/symptoms_list.html:19
+#: app/templates/team/_task_assign_fields.html:5
+#: app/templates/team/report_detail.html:11
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/reports_list.html:85
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+msgid "النوع"
+msgstr "ዓይነት"
+
+#: app/reports/report_service.py:477
+msgid "الصنف"
+msgstr "ንጥል"
+
+#: app/reports/report_service.py:477
+msgid "المستهلك بالفترة"
+msgstr "በጊዜው ውስጥ የተበላ"
+
+#: app/reports/report_service.py:477
+msgid "الاحتياج المتوقع (30 يوم)"
+msgstr "የሚጠበቅ ፍላጎት (30 ቀናት)"
+
+#: app/reports/report_service.py:478
+msgid "المخزون الحالي"
+msgstr "የአሁኑ ክምችት"
+
+#: app/reports/report_service.py:478
+msgid "الكمية المقترح شراؤها"
+msgstr "የቀረበ የግዢ መጠን"
+
+#: app/reports/report_service.py:478 app/templates/feed/item_form.html:29
+#: app/templates/health/pharmacy_form.html:100
+msgid "الوحدة"
+msgstr "አሃድ"
+
+#: app/reports/report_service.py:485
+msgid "التقرير الشامل"
+msgstr "አጠቃላይ ሪፖርት"
+
+#: app/reports/report_service.py:486
+msgid "تقرير النفوق"
+msgstr "የሞት ሪፖርት"
+
+#: app/reports/report_service.py:487
+msgid "تقرير الولادات والإنتاج"
+msgstr "የልደት እና ምርት ሪፖርት"
+
+#: app/reports/report_service.py:488
+msgid "تقرير المبيعات والمالية"
+msgstr "የሽያጭ እና ፋይናንስ ሪፖርት"
+
+#: app/reports/report_service.py:489
+msgid "تقرير المشتريات"
+msgstr "የግዢ ሪፖርት"
+
+#: app/reports/report_service.py:490
+msgid "تقرير إنجاز اليوم"
+msgstr "ዕለታዊ እንቅስቃሴ ሪፖርት"
+
+#: app/reports/report_service.py:491
+msgid "تقرير طلب الشراء"
+msgstr "የግዢ ጥያቄ ሪፖርት"
+
 #: app/team/routes.py:35 app/templates/worker_home.html:59
 msgid "فحص / حالة صحية"
 msgstr "ምርመራ / የጤና ሁኔታ"
@@ -698,6 +1008,10 @@ msgid "مالية الصحة"
 msgstr "የጤና ፋይናንስ"
 
 #: app/templates/base.html:535 app/templates/home.html:93
+#: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
+#: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
+#: app/templates/reports/purchase_request.html:4
+#: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
 msgid "التقارير"
 msgstr "ሪፖርቶች"
 
@@ -1018,10 +1332,12 @@ msgid "كمية/رأس/يوم"
 msgstr "መጠን/እንስሳ/ቀን"
 
 #: app/templates/feed/barn_plans_list.html:10
+#: app/templates/reports/_filter.html:17
 msgid "من"
 msgstr "ከ"
 
 #: app/templates/feed/barn_plans_list.html:10
+#: app/templates/reports/_filter.html:18
 msgid "إلى"
 msgstr "እስከ"
 
@@ -1222,12 +1538,6 @@ msgstr "ስም"
 msgid "مثال: برسيم دريس"
 msgstr "ምሳሌ: ደረቅ አልፋልፋ"
 
-#: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/pharmacy_shortages.html:14
-msgid "الفئة"
-msgstr "ምድብ"
-
 #: app/templates/feed/item_form.html:14
 msgid "فئة العلف (لحارس منع الزيادة المفاجئة للمركزات)"
 msgstr "የመኖ ክፍል (ድንገተኛ ጭማሪ መከላከያ)"
@@ -1264,11 +1574,6 @@ msgstr "ካልሲየም %"
 #: app/templates/feed/item_form.html:28
 msgid "فسفور %"
 msgstr "ፎስፎረስ %"
-
-#: app/templates/feed/item_form.html:29
-#: app/templates/health/pharmacy_form.html:100
-msgid "الوحدة"
-msgstr "አሃድ"
 
 #: app/templates/feed/item_form.html:30
 #: app/templates/health/pharmacy_list.html:13
@@ -1358,21 +1663,6 @@ msgstr "አዲስ የመኖ ክምችት እንቅስቃሴ"
 msgid "المكوّن"
 msgstr "ክፍል"
 
-#: app/templates/feed/movement_form.html:11
-#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32
-#: app/templates/health/symptoms_list.html:19
-#: app/templates/team/_task_assign_fields.html:5
-#: app/templates/team/report_detail.html:11
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/reports_list.html:85
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-msgid "النوع"
-msgstr "ዓይነት"
-
 #: app/templates/feed/movement_form.html:13
 msgid "وارد (شراء/تعبئة)"
 msgstr "ገቢ (ግዢ/ሙላት)"
@@ -1413,18 +1703,6 @@ msgstr "የመኖ ክምችት እንቅስቃሴዎች"
 #: app/templates/feed/movements_list.html:6
 msgid "حركة جديدة"
 msgstr "አዲስ እንቅስቃሴ"
-
-#: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
-#: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
-#: app/templates/health/disease_form.html:18
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:12
-#: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:12
-#: app/templates/health/vet_visits_list.html:10
-msgid "التاريخ"
-msgstr "ቀን"
 
 #: app/templates/feed/movements_list.html:10
 msgid "قبل"
@@ -1588,15 +1866,12 @@ msgstr "ወጪ"
 msgid "دعم خارجي (دين على الحلال)"
 msgstr "የውጭ ድጋፍ (በእርሻው ላይ ያለ ዕዳ)"
 
-#: app/templates/finance/form.html:14 app/templates/finance/list.html:36
-msgid "سداد دين"
-msgstr "የዕዳ ክፍያ"
-
 #: app/templates/finance/form.html:18
 msgid "\"دعم خارجي\" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل \"البند\" عشان تقدر تتابع الدين لكل جهة."
 msgstr "\"የውጭ ድጋፍ\" = ከውጭ ወገን የተቀበሉት እና በኋላ መመለስ ያለብዎት መጠን (በእርስዎ ላይ ያለ ዕዳ) — ትክክለኛ የእርሻ ገቢ አይደለም፣ በጠቅላላ ገቢ ውስጥም አይቆጠርም። ለእያንዳንዱ ወገን ዕዳ ለመከታተል በ\"ንጥል\" መስክ ውስጥ የወገኑን ስም ይጻፉ።"
 
-#: app/templates/finance/form.html:21
+#: app/templates/finance/form.html:21 app/templates/reports/purchases.html:22
+#: app/templates/reports/sales.html:22
 msgid "التصنيف"
 msgstr "ምድብ"
 
@@ -1612,10 +1887,6 @@ msgstr "ቀጥተኛ ያልሆነ ወጪ (ኪራይ/ጥገና/ደመወዝ — �
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "በአሁኑ ንቁ የእንስሳት ብዛት ላይ በራስ-ሰር በእኩል ይከፋፈላል — በ\"ወርሃዊ/ዓመታዊ የእንስሳ ዋጋ\" ሪፖርት ውስጥ እና በእያንዳንዱ እንስሳ ዝርዝር ገጽ ላይ እንደ ግለሰብ ድርሻ ይታያል።"
 
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
-msgid "البند"
-msgstr "ንጥል"
-
 #: app/templates/finance/form.html:32 app/templates/team/report_detail.html:25
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1624,10 +1895,6 @@ msgstr "ንጥል"
 #: app/templates/team/reports_list.html:85
 msgid "الوصف"
 msgstr "መግለጫ"
-
-#: app/templates/finance/form.html:33 app/templates/finance/list.html:32
-msgid "المبلغ"
-msgstr "መጠን"
 
 #: app/templates/finance/form.html:34
 msgid "طريقة الدفع"
@@ -1665,18 +1932,6 @@ msgstr "ጠቅላላ የጤና እና ህክምና ወጪ"
 #: app/templates/finance/health_view.html:11
 msgid "تكاليف الزيارات البيطرية"
 msgstr "የእንስሳት ህክምና ጉብኝት ወጪ"
-
-#: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34
-#: app/templates/health/disease_form.html:19
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:13
-#: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:13
-#: app/templates/health/vet_visits_list.html:10
-#: app/templates/team/report_detail.html:13
-msgid "الحيوان"
-msgstr "እንስሳ"
 
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:17
@@ -1783,7 +2038,7 @@ msgstr "ያለ ደረሰኝ"
 msgid "إصدار"
 msgstr "አውጣ"
 
-#: app/templates/finance/list.html:47
+#: app/templates/finance/list.html:47 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "ይመልከቱ"
 
@@ -2268,10 +2523,6 @@ msgstr "ሰርዝ"
 #: app/templates/health/disease_type_detail.html:68
 msgid "ما فيه أعراض مربوطة بهذا المرض بعد."
 msgstr "እስካሁን ከዚህ በሽታ ጋር የተያያዘ ምልክት የለም።"
-
-#: app/templates/health/disease_type_detail.html:59
-msgid "الوزن"
-msgstr "ክብደት"
 
 #: app/templates/health/disease_type_detail.html:59
 msgid "عزل فوري"
@@ -2961,10 +3212,6 @@ msgstr "እርምጃዎች"
 msgid "متأخر %(n)s يوم"
 msgstr "በ%(n)s ቀናት ዘግይቷል"
 
-#: app/templates/health/vaccination_schedule_list.html:22
-msgid "اليوم"
-msgstr "ዛሬ"
-
 #: app/templates/health/vaccination_schedule_list.html:23
 #, python-format
 msgid "بعد %(n)s يوم"
@@ -3025,6 +3272,106 @@ msgstr "የእንስሳት ሐኪም ጉብኝት መዝግብ"
 #: app/templates/health/vet_visits_list.html:6
 msgid "زيارة جديدة"
 msgstr "አዲስ ጉብኝት"
+
+#: app/templates/reports/_filter.html:11
+msgid "تصدير Excel"
+msgstr "Excel ላክ"
+
+#: app/templates/reports/_filter.html:12
+msgid "تصدير PDF"
+msgstr "PDF ላክ"
+
+#: app/templates/reports/_filter.html:21
+msgid "الفترة الحالية:"
+msgstr "የአሁኑ ጊዜ:"
+
+#: app/templates/reports/activity.html:18
+msgid "كل ما تم إنجازه أو تسجيله بهذي الفترة"
+msgstr "በዚህ ጊዜ ውስጥ የተጠናቀቀ ወይም የተመዘገበ ሁሉም ነገር"
+
+#: app/templates/reports/activity.html:25
+msgid "ما فيه نشاط مسجَّل بهذي الفترة."
+msgstr "በዚህ ጊዜ ውስጥ የተመዘገበ እንቅስቃሴ የለም።"
+
+#: app/templates/reports/births.html:18
+msgid "تفاصيل الولادات"
+msgstr "የልደት ዝርዝሮች"
+
+#: app/templates/reports/births.html:25
+msgid "لا يوجد ولادات بهذي الفترة."
+msgstr "በዚህ ጊዜ ውስጥ ልደት የለም።"
+
+#: app/templates/reports/mortality.html:19
+msgid "التوزيع حسب السبب"
+msgstr "በምክንያት የተከፋፈለ"
+
+#: app/templates/reports/mortality.html:22
+msgid "العدد"
+msgstr "ብዛት"
+
+#: app/templates/reports/mortality.html:33
+msgid "التوزيع الزمني"
+msgstr "የጊዜ ስርጭት"
+
+#: app/templates/reports/mortality.html:36
+msgid "الفترة"
+msgstr "ጊዜ"
+
+#: app/templates/reports/mortality.html:36
+msgid "عدد الحالات"
+msgstr "የጉዳዮች ብዛት"
+
+#: app/templates/reports/mortality.html:46
+msgid "تفاصيل حالات النفوق"
+msgstr "የሞት ጉዳዮች ዝርዝሮች"
+
+#: app/templates/reports/mortality.html:53
+msgid "لا يوجد حالات نفوق بهذي الفترة."
+msgstr "በዚህ ጊዜ ውስጥ የሞት ጉዳይ የለም።"
+
+#: app/templates/reports/overview.html:18
+msgid "جدول المؤشرات"
+msgstr "የጠቋሚዎች ሠንጠረዥ"
+
+#: app/templates/reports/purchase_request.html:18
+msgid "الأصناف اللي تحتاج شراء بناءً على الاستهلاك الفعلي بالفترة المختارة"
+msgstr "በተመረጠው ጊዜ ውስጥ በትክክለኛ ፍጆታ ላይ በመመስረት መገዛት የሚያስፈልጋቸው ንጥሎች"
+
+#: app/templates/reports/purchase_request.html:19
+msgid "الاحتياج المتوقع = معدل الاستهلاك اليومي بالفترة × 30 يوم. أصناف مخزونها كافٍ ما تظهر هنا عمداً."
+msgstr "የሚጠበቅ ፍላጎት = በጊዜው ውስጥ ያለው ዕለታዊ የፍጆታ መጠን × 30 ቀናት። በቂ ክምችት ያላቸው ንጥሎች ሆን ተብሎ እዚህ አይታዩም።"
+
+#: app/templates/reports/purchase_request.html:26
+msgid "ما فيه أصناف تحتاج شراء حالياً — المخزون كافٍ لكل شي حسب الاستهلاك الفعلي بهذي الفترة."
+msgstr "በአሁኑ ጊዜ መገዛት የሚያስፈልገው ንጥል የለም — በዚህ ጊዜ ውስጥ ባለው ትክክለኛ ፍጆታ መሠረት ክምችት ለሁሉም ነገር በቂ ነው።"
+
+#: app/templates/reports/purchases.html:19
+msgid "توزيع المشتريات/المصروفات حسب التصنيف"
+msgstr "በምድብ የተከፋፈለ ግዢ/ወጪ"
+
+#: app/templates/reports/purchases.html:22 app/templates/reports/sales.html:22
+msgid "الإجمالي"
+msgstr "ጠቅላላ"
+
+#: app/templates/reports/purchases.html:32
+msgid "عمليات الشراء والمصروفات"
+msgstr "የግዢ እና ወጪ ግብይቶች"
+
+#: app/templates/reports/purchases.html:51
+msgid "لا يوجد عمليات شراء/مصروف بهذي الفترة."
+msgstr "በዚህ ጊዜ ውስጥ የግዢ/ወጪ ግብይት የለም።"
+
+#: app/templates/reports/sales.html:19
+msgid "توزيع المصروفات/المشتريات حسب التصنيف"
+msgstr "በምድብ የተከፋፈለ ወጪ/ግዢ"
+
+#: app/templates/reports/sales.html:32
+msgid "عمليات البيع"
+msgstr "የሽያጭ ግብይቶች"
+
+#: app/templates/reports/sales.html:39
+msgid "لا يوجد عمليات بيع بهذي الفترة."
+msgstr "በዚህ ጊዜ ውስጥ የሽያጭ ግብይት የለም።"
 
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"
@@ -3174,15 +3521,6 @@ msgstr "አዘግይ"
 #: app/templates/team/_suggested_tasks_rows.html:30
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr "አሁን የተጠቆሙ ተግባራት የሉም።"
-
-#: app/templates/team/_task_assign_fields.html:4
-#: app/templates/team/daily_templates.html:18
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-#: app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-#: app/templates/team/tasks_list.html:187
-msgid "العنوان"
-msgstr "ርዕስ"
 
 #: app/templates/team/_task_assign_fields.html:12
 msgid "الدور المستهدف (اختياري)"
@@ -3820,10 +4158,6 @@ msgstr "የለም።"
 #: app/templates/team/tasks_list.html:184
 msgid "صندوق مراجعة المالك (مهام محذوفة من الدكتور)"
 msgstr "የባለቤት ግምገማ ሳጥን (በዶክተሩ የተሰረዙ ተግባራት)"
-
-#: app/templates/team/tasks_list.html:187
-msgid "السبب"
-msgstr "ምክንያት"
 
 #: app/templates/team/tasks_list.html:196
 msgid "استرجاع"

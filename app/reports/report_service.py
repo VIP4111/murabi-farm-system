@@ -14,6 +14,7 @@
 from datetime import date, timedelta, timezone
 from calendar import monthrange
 from sqlalchemy import func
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 from app.models import (
     Animal, Finance, CycleEvent, AuditLog, Vaccination, Disease,
@@ -23,7 +24,7 @@ from app.models import (
 from app.models.animal import AnimalSource
 
 RANGE_LABELS = {
-    "today": "اليوم", "7days": "آخر 7 أيام", "month": "الشهر الحالي", "custom": "نطاق مخصص",
+    "today": _l("اليوم"), "7days": _l("آخر 7 أيام"), "month": _l("الشهر الحالي"), "custom": _l("نطاق مخصص"),
 }
 
 
@@ -106,22 +107,22 @@ def overview_report(start: date, end: date) -> dict:
     mortality_rate = round(deaths_count / denom * 100, 1) if denom else None
 
     kpis = [
-        ("الرؤوس النشطة حالياً", active_count),
-        ("رؤوس جديدة بالفترة", new_entries),
-        ("ولادات بالفترة", births_count),
-        ("حالات نفوق بالفترة", deaths_count),
-        ("معدل النفوق التقريبي", f"{mortality_rate}%" if mortality_rate is not None else "-"),
-        ("مبيعات بالفترة", f"{sales_count} ({sales_total:,.0f})"),
-        ("مصروفات+مشتريات بالفترة", f"{costs_count} ({costs_total:,.0f})"),
-        ("صافي الفترة", f"{sales_total - costs_total:,.0f}"),
-        ("تحصينات بالفترة", vaccinations_count),
-        ("أمراض مفتوحة حالياً", open_diseases_count),
+        (_l("الرؤوس النشطة حالياً"), active_count),
+        (_l("رؤوس جديدة بالفترة"), new_entries),
+        (_l("ولادات بالفترة"), births_count),
+        (_l("حالات نفوق بالفترة"), deaths_count),
+        (_l("معدل النفوق التقريبي"), f"{mortality_rate}%" if mortality_rate is not None else "-"),
+        (_l("مبيعات بالفترة"), f"{sales_count} ({sales_total:,.0f})"),
+        (_l("مصروفات+مشتريات بالفترة"), f"{costs_count} ({costs_total:,.0f})"),
+        (_l("صافي الفترة"), f"{sales_total - costs_total:,.0f}"),
+        (_l("تحصينات بالفترة"), vaccinations_count),
+        (_l("أمراض مفتوحة حالياً"), open_diseases_count),
     ]
     return {
         "kpis": kpis,
         "table": {
-            "columns": ["المؤشر", "القيمة"],
-            "rows": [[label, str(value)] for label, value in kpis],
+            "columns": [_l("المؤشر"), _l("القيمة")],
+            "rows": [[str(label), str(value)] for label, value in kpis],
         },
     }
 
@@ -161,8 +162,8 @@ def mortality_report(start: date, end: date) -> dict:
         time_counts[bucket] = time_counts.get(bucket, 0) + 1
 
     return {
-        "kpis": [("إجمالي حالات النفوق", len(rows))],
-        "table": {"columns": ["الرقم", "الجنس", "التاريخ", "السبب", "العمر (يوم)"], "rows": rows},
+        "kpis": [(_l("إجمالي حالات النفوق"), len(rows))],
+        "table": {"columns": [_l("الرقم"), _l("الجنس"), _l("التاريخ"), _l("السبب"), _l("العمر (يوم)")], "rows": rows},
         "reason_breakdown": sorted(reason_counts.items(), key=lambda x: -x[1]),
         "time_distribution": sorted(time_counts.items()),
     }
@@ -198,16 +199,16 @@ def births_report(start: date, end: date) -> dict:
     success_rate = round(confirmed_count / matings_count * 100, 1) if matings_count else None
 
     kpis = [
-        ("ولادات بالفترة", len(rows)),
-        ("ذكور / إناث", f"{gender_counts['ذكر']} / {gender_counts['أنثى']}"),
-        ("متوسط حجم البطن", avg_litter_size if avg_litter_size is not None else "-"),
-        ("تقريعات بالفترة", matings_count),
-        ("حمل مؤكد بالفترة", confirmed_count),
-        ("نسبة نجاح التقريع→حمل", f"{success_rate}%" if success_rate is not None else "-"),
+        (_l("ولادات بالفترة"), len(rows)),
+        (_l("ذكور / إناث"), f"{gender_counts['ذكر']} / {gender_counts['أنثى']}"),
+        (_l("متوسط حجم البطن"), avg_litter_size if avg_litter_size is not None else "-"),
+        (_l("تقريعات بالفترة"), matings_count),
+        (_l("حمل مؤكد بالفترة"), confirmed_count),
+        (_l("نسبة نجاح التقريع→حمل"), f"{success_rate}%" if success_rate is not None else "-"),
     ]
     return {
         "kpis": kpis,
-        "table": {"columns": ["الرقم", "الجنس", "تاريخ الولادة", "الأم", "الوزن"], "rows": rows},
+        "table": {"columns": [_l("الرقم"), _l("الجنس"), _l("تاريخ الولادة"), _l("الأم"), _l("الوزن")], "rows": rows},
     }
 
 
@@ -240,16 +241,16 @@ def sales_report(start: date, end: date) -> dict:
     ]
 
     kpis = [
-        ("عدد عمليات البيع", sales_count),
-        ("إجمالي المبيعات", f"{sales_total:,.2f}"),
-        ("إجمالي المشتريات+المصروفات", f"{costs_total:,.2f}"),
-        ("الصافي", f"{sales_total - costs_total:,.2f}"),
-        ("دعم خارجي مستلم (دين)", f"{debt_in_total:,.2f}"),
-        ("سداد دين", f"{debt_repaid_total:,.2f}"),
+        (_l("عدد عمليات البيع"), sales_count),
+        (_l("إجمالي المبيعات"), f"{sales_total:,.2f}"),
+        (_l("إجمالي المشتريات+المصروفات"), f"{costs_total:,.2f}"),
+        (_l("الصافي"), f"{sales_total - costs_total:,.2f}"),
+        (_l("دعم خارجي مستلم (دين)"), f"{debt_in_total:,.2f}"),
+        (_l("سداد دين"), f"{debt_repaid_total:,.2f}"),
     ]
     return {
         "kpis": kpis,
-        "table": {"columns": ["التاريخ", "البند", "الحيوان", "المبلغ"], "rows": rows},
+        "table": {"columns": [_l("التاريخ"), _l("البند"), _l("الحيوان"), _l("المبلغ")], "rows": rows},
         "category_breakdown": sorted(category_totals.items(), key=lambda x: -x[1]),
     }
 
@@ -283,16 +284,16 @@ def purchases_report(start: date, end: date) -> dict:
     ]
 
     kpis = [
-        ("عدد عمليات الشراء/المصروف", costs_count),
-        ("إجمالي المشتريات+المصروفات", f"{costs_total:,.2f}"),
-        ("عدد عمليات الشراء", purchase_count),
-        ("إجمالي الشراء", f"{purchase_total:,.2f}"),
-        ("عدد المصروفات", expense_count),
-        ("إجمالي المصروفات", f"{expense_total:,.2f}"),
+        (_l("عدد عمليات الشراء/المصروف"), costs_count),
+        (_l("إجمالي المشتريات+المصروفات"), f"{costs_total:,.2f}"),
+        (_l("عدد عمليات الشراء"), purchase_count),
+        (_l("إجمالي الشراء"), f"{purchase_total:,.2f}"),
+        (_l("عدد المصروفات"), expense_count),
+        (_l("إجمالي المصروفات"), f"{expense_total:,.2f}"),
     ]
     return {
         "kpis": kpis,
-        "table": {"columns": ["التاريخ", "البند", "الحيوان", "المبلغ", "الفاتورة المرفقة"], "rows": rows},
+        "table": {"columns": [_l("التاريخ"), _l("البند"), _l("الحيوان"), _l("المبلغ"), _l("الفاتورة المرفقة")], "rows": rows},
         "category_breakdown": sorted(category_totals.items(), key=lambda x: -x[1]),
     }
 
@@ -370,11 +371,11 @@ def activity_report(start: date, end: date) -> dict:
         by_category[row[1]] = by_category.get(row[1], 0) + 1
 
     kpis = [(cat, count) for cat, count in sorted(by_category.items(), key=lambda x: -x[1])]
-    kpis = kpis or [("لا يوجد نشاط بهذي الفترة", 0)]
+    kpis = kpis or [(_l("لا يوجد نشاط بهذي الفترة"), 0)]
 
     return {
         "kpis": kpis,
-        "table": {"columns": ["التاريخ", "الفئة", "العنوان", "الحيوان", "التفاصيل"], "rows": rows},
+        "table": {"columns": [_l("التاريخ"), _l("الفئة"), _l("العنوان"), _l("الحيوان"), _l("التفاصيل")], "rows": rows},
     }
 
 
@@ -466,26 +467,26 @@ def purchase_request_report(start: date, end: date) -> dict:
 
     active_animals = Animal.query.filter_by(status="active").count()
     kpis = [
-        ("عدد الرؤوس النشطة", active_animals),
-        ("عدد الأصناف المطلوب شراؤها", len(rows)),
-        ("فترة قياس الاستهلاك (أيام)", days),
+        (_l("عدد الرؤوس النشطة"), active_animals),
+        (_l("عدد الأصناف المطلوب شراؤها"), len(rows)),
+        (_l("فترة قياس الاستهلاك (أيام)"), days),
     ]
     return {
         "kpis": kpis,
         "table": {
-            "columns": ["النوع", "الصنف", "المستهلك بالفترة", "الاحتياج المتوقع (30 يوم)",
-                        "المخزون الحالي", "الكمية المقترح شراؤها", "الوحدة"],
+            "columns": [_l("النوع"), _l("الصنف"), _l("المستهلك بالفترة"), _l("الاحتياج المتوقع (30 يوم)"),
+                        _l("المخزون الحالي"), _l("الكمية المقترح شراؤها"), _l("الوحدة")],
             "rows": rows,
         },
     }
 
 
 REPORTS = {
-    "overview": ("التقرير الشامل", overview_report),
-    "mortality": ("تقرير النفوق", mortality_report),
-    "births": ("تقرير الولادات والإنتاج", births_report),
-    "sales": ("تقرير المبيعات والمالية", sales_report),
-    "purchases": ("تقرير المشتريات", purchases_report),
-    "activity": ("تقرير إنجاز اليوم", activity_report),
-    "purchase_request": ("تقرير طلب الشراء", purchase_request_report),
+    "overview": (_l("التقرير الشامل"), overview_report),
+    "mortality": (_l("تقرير النفوق"), mortality_report),
+    "births": (_l("تقرير الولادات والإنتاج"), births_report),
+    "sales": (_l("تقرير المبيعات والمالية"), sales_report),
+    "purchases": (_l("تقرير المشتريات"), purchases_report),
+    "activity": (_l("تقرير إنجاز اليوم"), activity_report),
+    "purchase_request": (_l("تقرير طلب الشراء"), purchase_request_report),
 }

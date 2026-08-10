@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <h2>التقارير</h2>
+  <h2>{{ _('التقارير') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ label }}</p>
 </div>
 
@@ -15,7 +15,7 @@
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">جدول المؤشرات</h3>
+  <h3 style="font-size:15px;">{{ _('جدول المؤشرات') }}</h3>
   <div class="table-scroll">
 <table>
     <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>

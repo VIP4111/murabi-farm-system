@@ -37,9 +37,13 @@ def build_excel(title: str, columns: list[str], rows: list[list]) -> io.BytesIO:
     ws = wb.active
     ws.title = (title or "تقرير")[:31]
     ws.sheet_view.rightToLeft = True
+    # تحويل صريح لـstr() هنا (بند إضافي 165) — عناوين الأعمدة صارت
+    # نصوص مترجمة (Flask-Babel LazyString)، وopenpyxl ما يقدر يكتبها
+    # مباشرة بالخلية (يرفض أي نوع غير str/رقم/تاريخ صراحة).
+    columns = [str(c) for c in columns]
     ws.append(columns)
     for row in rows:
-        ws.append(row)
+        ws.append([str(cell) if cell is not None else "" for cell in row])
     for i, col in enumerate(columns, start=1):
         ws.column_dimensions[get_column_letter(i)].width = max(14, len(str(col)) + 6)
     buf = io.BytesIO()

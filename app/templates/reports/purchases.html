@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <h2>التقارير</h2>
+  <h2>{{ _('التقارير') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ label }}</p>
 </div>
 
@@ -16,10 +16,10 @@
 
 {% if data.category_breakdown %}
 <div class="card">
-  <h3 style="font-size:15px;">توزيع المشتريات/المصروفات حسب التصنيف</h3>
+  <h3 style="font-size:15px;">{{ _('توزيع المشتريات/المصروفات حسب التصنيف') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>التصنيف</th><th>الإجمالي</th></tr>
+    <tr><th>{{ _('التصنيف') }}</th><th>{{ _('الإجمالي') }}</th></tr>
     {% for cat, total in data.category_breakdown %}
     <tr><td>{{ cat }}</td><td>{{ "%.2f"|format(total) }}</td></tr>
     {% endfor %}
@@ -29,26 +29,26 @@
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">عمليات الشراء والمصروفات</h3>
+  <h3 style="font-size:15px;">{{ _('عمليات الشراء والمصروفات') }}</h3>
   <div class="table-scroll">
 <table>
     <tr>
       {% for col in data.table.columns %}
-      {% if col == 'الفاتورة المرفقة' %}<th></th>{% else %}<th>{{ col }}</th>{% endif %}
+      {% if loop.last %}<th></th>{% else %}<th>{{ col }}</th>{% endif %}
       {% endfor %}
     </tr>
     {% for row in data.table.rows %}
     <tr>
       {% for cell in row %}
       {% if loop.last %}
-      <td>{% if cell != '-' %}<a class="btn light" href="{{ cell }}" target="_blank">📎 عرض</a>{% else %}-{% endif %}</td>
+      <td>{% if cell != '-' %}<a class="btn light" href="{{ cell }}" target="_blank">📎 {{ _('عرض') }}</a>{% else %}-{% endif %}</td>
       {% else %}
       <td>{{ cell }}</td>
       {% endif %}
       {% endfor %}
     </tr>
     {% else %}
-    <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">لا يوجد عمليات شراء/مصروف بهذي الفترة.</td></tr>
+    <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">{{ _('لا يوجد عمليات شراء/مصروف بهذي الفترة.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <h2>التقارير</h2>
+  <h2>{{ _('التقارير') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ label }}</p>
 </div>
 
@@ -16,10 +16,10 @@
 
 {% if data.reason_breakdown %}
 <div class="card">
-  <h3 style="font-size:15px;">التوزيع حسب السبب</h3>
+  <h3 style="font-size:15px;">{{ _('التوزيع حسب السبب') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>السبب</th><th>العدد</th></tr>
+    <tr><th>{{ _('السبب') }}</th><th>{{ _('العدد') }}</th></tr>
     {% for reason, count in data.reason_breakdown %}
     <tr><td>{{ reason }}</td><td>{{ count }}</td></tr>
     {% endfor %}
@@ -30,10 +30,10 @@
 
 {% if data.time_distribution %}
 <div class="card">
-  <h3 style="font-size:15px;">التوزيع الزمني</h3>
+  <h3 style="font-size:15px;">{{ _('التوزيع الزمني') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>الفترة</th><th>عدد الحالات</th></tr>
+    <tr><th>{{ _('الفترة') }}</th><th>{{ _('عدد الحالات') }}</th></tr>
     {% for bucket, count in data.time_distribution %}
     <tr><td>{{ bucket }}</td><td>{{ count }}</td></tr>
     {% endfor %}
@@ -43,14 +43,14 @@
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">تفاصيل حالات النفوق</h3>
+  <h3 style="font-size:15px;">{{ _('تفاصيل حالات النفوق') }}</h3>
   <div class="table-scroll">
 <table>
     <tr>{% for col in data.table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
     {% for row in data.table.rows %}
     <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
     {% else %}
-    <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">لا يوجد حالات نفوق بهذي الفترة.</td></tr>
+    <tr><td colspan="{{ data.table.columns|length }}" style="color:#888;">{{ _('لا يوجد حالات نفوق بهذي الفترة.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

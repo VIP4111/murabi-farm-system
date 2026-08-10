@@ -33,7 +33,13 @@ def create_app(config_class=Config):
         # المؤقت (زر اللغة بصفحة الدخول نفسها) لو موجود — بدونه عربي
         # افتراضياً، لأن العامل غير الناطق بالعربي يحتاج يقرأ حقول
         # الدخول نفسها بلغته قبل ما يوصل لأي شاشة بعد الدخول.
-        from flask import session
+        from flask import session, has_request_context
+        # حارس سياق الطلب (بند إضافي 165) — بعض دوال الخدمة (تقارير)
+        # تستدعي نصوصاً مترجَمة بشكل كسول (`_l()`) من اختبارات وحدة بلا
+        # طلب HTTP فعلي، فـ`current_user` ما يكون متاحاً — نرجع عربي
+        # افتراضياً بدل ما ننهار، نفس سلوك "بدون تسجيل دخول" أصلاً.
+        if not has_request_context():
+            return "ar"
         if current_user.is_authenticated and current_user.language in app.config["SUPPORTED_LANGUAGES"]:
             return current_user.language
         if session.get("lang") in app.config["SUPPORTED_LANGUAGES"]:
