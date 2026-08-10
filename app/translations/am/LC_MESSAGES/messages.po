@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:13+0300\n"
+"POT-Creation-Date: 2026-08-10 23:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -620,6 +620,7 @@ msgstr "ጾታ"
 #: app/templates/bulk_action_form.html:218
 #: app/templates/bulk_action_form.html:325
 #: app/templates/bulk_action_form.html:355
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
@@ -764,8 +765,8 @@ msgstr "የተያያዘ ደረሰኝ"
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "በዚህ ጊዜ ውስጥ ምንም እንቅስቃሴ የለም"
 
-#: app/reports/report_service.py:378 app/templates/feed/item_form.html:8
-#: app/templates/feed/items_list.html:10
+#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:10
+#: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
 msgid "الفئة"
@@ -799,6 +800,7 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 
 #: app/reports/report_service.py:477 app/templates/animal_detail.html:410
 #: app/templates/barn_form.html:9 app/templates/barns_list.html:10
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
 #: app/templates/finance/list.html:32
@@ -835,7 +837,8 @@ msgstr "የአሁኑ ክምችት"
 msgid "الكمية المقترح شراؤها"
 msgstr "የቀረበ የግዢ መጠን"
 
-#: app/reports/report_service.py:478 app/templates/feed/item_form.html:29
+#: app/reports/report_service.py:478 app/templates/equipment/item_form.html:9
+#: app/templates/feed/item_form.html:29
 #: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr "አሃድ"
@@ -1314,7 +1317,8 @@ msgstr "ጡት ተጎድቷል"
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
-#: app/templates/barn_form.html:41 app/templates/feed/barn_plan_form.html:21
+#: app/templates/barn_form.html:41 app/templates/equipment/item_form.html:14
+#: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:34
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
@@ -1848,8 +1852,11 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/bulk_action_form.html:342
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
-#: app/templates/bulk_action_form.html:427 app/templates/feed/item_form.html:7
-#: app/templates/feed/items_list.html:10 app/templates/feed/ration_form.html:7
+#: app/templates/bulk_action_form.html:427
+#: app/templates/equipment/item_form.html:7
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
@@ -1869,6 +1876,7 @@ msgid "الاسم"
 msgstr "ስም"
 
 #: app/templates/animal_option_form.html:10
+#: app/templates/equipment/item_form.html:14
 #: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
@@ -2386,7 +2394,8 @@ msgstr "ኃላፊ"
 msgid "عدد الحيوانات"
 msgstr "የእንስሳት ብዛት"
 
-#: app/templates/barns_list.html:19 app/templates/feed/items_list.html:26
+#: app/templates/barns_list.html:19 app/templates/equipment/items_list.html:22
+#: app/templates/feed/items_list.html:26
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2491,7 +2500,7 @@ msgstr "መጋዘኖች"
 msgid "المعدات"
 msgstr "መሣሪያዎች"
 
-#: app/templates/base.html:507
+#: app/templates/base.html:507 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "የመሣሪያ መጋዘን"
 
@@ -2578,6 +2587,7 @@ msgid "التاريخ (لكل الرؤوس)"
 msgstr "ቀን (ለሁሉም እንስሳት)"
 
 #: app/templates/bulk_action_form.html:19
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:27
 msgid "ملاحظة"
 msgstr "ማስታወሻ"
@@ -3320,6 +3330,7 @@ msgid "تاريخ الوصول"
 msgstr "የመድረሻ ቀን"
 
 #: app/templates/batches/batch_form.html:17
+#: app/templates/equipment/item_form.html:13
 #: app/templates/health/disease_type_form.html:8
 #: app/templates/health/pharmacy_purchase_form.html:21
 #: app/templates/health/vaccination_schedule_form.html:27
@@ -3371,6 +3382,159 @@ msgstr "የእንስሳት ብዛት"
 #: app/templates/batches/batches_list.html:24
 msgid "لا يوجد دفعات مسجَّلة بعد."
 msgstr "እስካሁን የተመዘገበ ጭነት የለም።"
+
+#: app/templates/equipment/item_form.html:4
+msgid "تعديل صنف"
+msgstr "ዕቃ አርትዕ"
+
+#: app/templates/equipment/item_form.html:4
+msgid "صنف معدات جديد"
+msgstr "አዲስ የመሳሪያ ዕቃ"
+
+#: app/templates/equipment/item_form.html:8
+msgid "الفئة (اختياري)"
+msgstr "ምድብ (አማራጭ)"
+
+#: app/templates/equipment/item_form.html:8
+msgid "مثال: أدوات يدوية، أجهزة، قطع غيار"
+msgstr "ምሳሌ: የእጅ መሳሪያዎች፣ መሳሪያዎች፣ መለዋወጫዎች"
+
+#: app/templates/equipment/item_form.html:10
+msgid "الكمية المتوفرة حالياً"
+msgstr "በአሁኑ ጊዜ ያለ መጠን"
+
+#: app/templates/equipment/item_form.html:11
+#: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
+msgid "الحد الأدنى للتنبيه"
+msgstr "ዝቅተኛ የማስጠንቀቂያ ገደብ"
+
+#: app/templates/equipment/item_form.html:12
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr "የአሃድ ዋጋ (አማራጭ)"
+
+#: app/templates/equipment/item_movement.html:4
+msgid "حركة مخزون"
+msgstr "የክምችት እንቅስቃሴ"
+
+#: app/templates/equipment/item_movement.html:5
+msgid "المتوفر حالياً:"
+msgstr "በአሁኑ ጊዜ ያለ:"
+
+#: app/templates/equipment/item_movement.html:8
+msgid "نوع الحركة"
+msgstr "የእንቅስቃሴ ዓይነት"
+
+#: app/templates/equipment/item_movement.html:10
+msgid "وارد (شراء)"
+msgstr "ገቢ (ግዢ)"
+
+#: app/templates/equipment/item_movement.html:11
+msgid "صادر (صرف/استهلاك)"
+msgstr "ወጪ (ማውጣት/መጠቀም)"
+
+#: app/templates/equipment/item_movement.html:13
+#: app/templates/equipment/item_movement.html:33
+#: app/templates/feed/movement_form.html:16
+#: app/templates/feed/movements_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
+msgid "الكمية"
+msgstr "መጠን"
+
+#: app/templates/equipment/item_movement.html:14
+msgid "لو صادر — مين استلمها؟ (اختياري — عبّه بس لو استعارة ترجع، مو صرف نهائي)"
+msgstr "ወጪ ከሆነ — ማን ተቀበለ? (አማራጭ — የሚመለስ ብድር ከሆነ ብቻ ይሙሉ፣ የመጨረሻ ወጪ አይደለም)"
+
+#: app/templates/equipment/item_movement.html:16
+msgid "صرف نهائي (بدون استعارة)"
+msgstr "የመጨረሻ ወጪ (ያለ ብድር)"
+
+#: app/templates/equipment/item_movement.html:19
+#: app/templates/repro/mating_form.html:19
+msgid "الحظيرة (اختياري)"
+msgstr "በረት (አማራጭ)"
+
+#: app/templates/equipment/item_movement.html:24
+#: app/templates/repro/pregnancies_list.html:27
+#: app/templates/team/report_detail.html:76
+#: app/templates/team/task_detail.html:98
+msgid "ملاحظة (اختياري)"
+msgstr "ማስታወሻ (አማራጭ)"
+
+#: app/templates/equipment/item_movement.html:25
+msgid "تسجيل الحركة"
+msgstr "እንቅስቃሴ መዝግብ"
+
+#: app/templates/equipment/item_movement.html:30
+msgid "آخر الحركات"
+msgstr "የቅርብ ጊዜ እንቅስቃሴዎች"
+
+#: app/templates/equipment/item_movement.html:33
+msgid "الرصيد بعدها"
+msgstr "ቀሪ ሂሳብ በኋላ"
+
+#: app/templates/equipment/item_movement.html:33
+msgid "الاستعارة"
+msgstr "ብድር"
+
+#: app/templates/equipment/item_movement.html:37
+#: app/templates/feed/movements_list.html:15
+msgid "وارد"
+msgstr "ገቢ"
+
+#: app/templates/equipment/item_movement.html:37
+#: app/templates/feed/movements_list.html:15
+msgid "صادر"
+msgstr "ወጪ"
+
+#: app/templates/equipment/item_movement.html:43
+msgid "رجعت"
+msgstr "ተመልሷል"
+
+#: app/templates/equipment/item_movement.html:45
+msgid "عند:"
+msgstr "ከ:"
+
+#: app/templates/equipment/item_movement.html:48
+msgid "تسجيل استرجاع"
+msgstr "መመለስ መዝግብ"
+
+#: app/templates/equipment/item_movement.html:58
+msgid "ما فيه حركات مسجَّلة بعد."
+msgstr "እስካሁን የተመዘገበ እንቅስቃሴ የለም።"
+
+#: app/templates/equipment/items_list.html:6
+msgid "صنف جديد"
+msgstr "አዲስ ዕቃ"
+
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "المتوفر"
+msgstr "ያለ"
+
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_detail.html:22
+msgid "السعر/وحدة"
+msgstr "ዋጋ/አሃድ"
+
+#: app/templates/equipment/items_list.html:17
+#: app/templates/feed/items_list.html:20
+msgid "منخفض"
+msgstr "ዝቅተኛ"
+
+#: app/templates/equipment/items_list.html:23
+msgid "حركة (شراء/صرف)"
+msgstr "እንቅስቃሴ (ግዢ/ወጪ)"
+
+#: app/templates/equipment/items_list.html:28
+msgid "لا يوجد أصناف معدات مسجّلة بعد."
+msgstr "እስካሁን የተመዘገበ የመሳሪያ ዕቃ የለም።"
 
 #: app/templates/feed/barn_plan_form.html:4
 msgid "خطة تغذية جديدة"
@@ -3637,11 +3801,6 @@ msgstr "የአሃድ ዋጋ"
 msgid "الكمية المتوفرة"
 msgstr "ያለ መጠን"
 
-#: app/templates/feed/item_form.html:32
-#: app/templates/health/pharmacy_form.html:101
-msgid "الحد الأدنى للتنبيه"
-msgstr "ዝቅተኛ የማስጠንቀቂያ ገደብ"
-
 #: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
 msgid "مكوّنات العلف"
 msgstr "የመኖ ንጥረ ነገሮች"
@@ -3659,16 +3818,6 @@ msgid "طاقة (ك.كالوري/كجم)"
 msgstr "ኃይል (ካሎሪ/ኪግ)"
 
 #: app/templates/feed/items_list.html:10
-#: app/templates/health/pharmacy_shortages.html:14
-msgid "المتوفر"
-msgstr "ያለ"
-
-#: app/templates/feed/items_list.html:10
-#: app/templates/feed/ration_detail.html:22
-msgid "السعر/وحدة"
-msgstr "ዋጋ/አሃድ"
-
-#: app/templates/feed/items_list.html:10
 msgid "نفاد متوقع"
 msgstr "የሚጠበቅ ማለቅ"
 
@@ -3677,10 +3826,6 @@ msgstr "የሚጠበቅ ማለቅ"
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "ከፍተኛ መዳብ ይዟል"
-
-#: app/templates/feed/items_list.html:20
-msgid "منخفض"
-msgstr "ዝቅተኛ"
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
@@ -3716,14 +3861,6 @@ msgstr "ገቢ (ግዢ/ሙላት)"
 msgid "صادر (توزيع فعلي)"
 msgstr "ወጪ (ትክክለኛ ስርጭት)"
 
-#: app/templates/feed/movement_form.html:16
-#: app/templates/feed/movements_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/protocol_apply_form.html:7
-#: app/templates/health/protocol_form.html:27
-msgid "الكمية"
-msgstr "መጠን"
-
 #: app/templates/feed/movement_form.html:17
 msgid "الحظيرة (إلزامي لحركة \"صادر\" — عشان تنحسب التكلفة اليومية للحظيرة صح)"
 msgstr "በረት (ለ\"ወጪ\" እንቅስቃሴ አስፈላጊ — የበረቱ ዕለታዊ ወጪ በትክክል እንዲሰላ)"
@@ -3758,14 +3895,6 @@ msgstr "በኋላ"
 #: app/templates/team/tasks_list.html:147
 msgid "الحظيرة/الحيوان"
 msgstr "በረት/እንስሳ"
-
-#: app/templates/feed/movements_list.html:15
-msgid "وارد"
-msgstr "ገቢ"
-
-#: app/templates/feed/movements_list.html:15
-msgid "صادر"
-msgstr "ወጪ"
 
 #: app/templates/feed/movements_list.html:22
 msgid "لا يوجد حركات مسجّلة بعد."
@@ -4779,11 +4908,6 @@ msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظه�
 msgstr "ክምችቱ ወደዚህ ገደብ ወይም ከዚያ በታች የደረሰ ማንኛውም መድሃኒት በራስ-ሰር በ\"የፋርማሲ እጥረቶች\" ዝርዝር ውስጥ ይታያል — ተመሳሳይ የሚያስፈልግ ግዢ ዝርዝር።"
 
 #: app/templates/health/pharmacy_form.html:103
-#: app/templates/health/pharmacy_purchase_form.html:18
-msgid "سعر الوحدة (اختياري)"
-msgstr "የአሃድ ዋጋ (አማራጭ)"
-
-#: app/templates/health/pharmacy_form.html:103
 msgid "مثال: 2.5"
 msgstr "ምሳሌ: 2.5"
 
@@ -5554,10 +5678,6 @@ msgstr "የወንድ መግለጫ (ውጫዊ/ያልተመዘገበ ከሆነ)"
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "ምሳሌ: ከአል-ራሺድ እርሻ የተዋሰ ወንድ"
 
-#: app/templates/repro/mating_form.html:19
-msgid "الحظيرة (اختياري)"
-msgstr "በረት (አማራጭ)"
-
 #: app/templates/repro/mating_form.html:25
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "በዑደቱ ውስጥ ቀጣይ ደረጃ: ማዳቀሉን ካስቀመጡ በኋላ፣ ለበቂ ጊዜ በኋላ በ\"መራባት\" ← \"እርግዝና\" ← \"+ አዲስ የእርግዝና ምርመራ\" በኩል ሴቷን ይከታተሉ እርግዝናውን ለማረጋገጥ (በእጅ ምርመራ ወይም ሶናር) — ከተረጋገጠ፣ የሚጠበቀው የልደት ቀን ከቅንብሮች በተቀመጠው የእርግዝና ጊዜ በራስ-ሰር ይሰላል።"
@@ -5605,12 +5725,6 @@ msgstr "ፅንስ ማስወረድ"
 #, python-format
 msgid "تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟"
 msgstr "ለ%(no)s ፅንስ ማስወረድ መዝግብ — ወዲያውኑ ያገልላታል እና የናሙና ስብስብ እና የበረት ክትትል ተግባራትን ይፈጥራል። እርግጠኛ ነዎት?"
-
-#: app/templates/repro/pregnancies_list.html:27
-#: app/templates/team/report_detail.html:76
-#: app/templates/team/task_detail.html:98
-msgid "ملاحظة (اختياري)"
-msgstr "ማስታወሻ (አማራጭ)"
 
 #: app/templates/repro/pregnancies_list.html:28
 msgid "تسجيل إجهاض"

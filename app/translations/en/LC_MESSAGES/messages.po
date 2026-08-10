@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:13+0300\n"
+"POT-Creation-Date: 2026-08-10 23:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -620,6 +620,7 @@ msgstr "Gender"
 #: app/templates/bulk_action_form.html:218
 #: app/templates/bulk_action_form.html:325
 #: app/templates/bulk_action_form.html:355
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
@@ -764,8 +765,8 @@ msgstr "Attached invoice"
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "No activity in this period"
 
-#: app/reports/report_service.py:378 app/templates/feed/item_form.html:8
-#: app/templates/feed/items_list.html:10
+#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:10
+#: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
 msgid "الفئة"
@@ -799,6 +800,7 @@ msgstr "Consumption measurement period (days)"
 
 #: app/reports/report_service.py:477 app/templates/animal_detail.html:410
 #: app/templates/barn_form.html:9 app/templates/barns_list.html:10
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
 #: app/templates/finance/list.html:32
@@ -835,7 +837,8 @@ msgstr "Current stock"
 msgid "الكمية المقترح شراؤها"
 msgstr "Suggested purchase quantity"
 
-#: app/reports/report_service.py:478 app/templates/feed/item_form.html:29
+#: app/reports/report_service.py:478 app/templates/equipment/item_form.html:9
+#: app/templates/feed/item_form.html:29
 #: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr "Unit"
@@ -1314,7 +1317,8 @@ msgstr "Udder damaged"
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
-#: app/templates/barn_form.html:41 app/templates/feed/barn_plan_form.html:21
+#: app/templates/barn_form.html:41 app/templates/equipment/item_form.html:14
+#: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:34
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
@@ -1848,8 +1852,11 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/bulk_action_form.html:342
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
-#: app/templates/bulk_action_form.html:427 app/templates/feed/item_form.html:7
-#: app/templates/feed/items_list.html:10 app/templates/feed/ration_form.html:7
+#: app/templates/bulk_action_form.html:427
+#: app/templates/equipment/item_form.html:7
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
@@ -1869,6 +1876,7 @@ msgid "الاسم"
 msgstr "Name"
 
 #: app/templates/animal_option_form.html:10
+#: app/templates/equipment/item_form.html:14
 #: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
@@ -2386,7 +2394,8 @@ msgstr "Responsible"
 msgid "عدد الحيوانات"
 msgstr "Number of animals"
 
-#: app/templates/barns_list.html:19 app/templates/feed/items_list.html:26
+#: app/templates/barns_list.html:19 app/templates/equipment/items_list.html:22
+#: app/templates/feed/items_list.html:26
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2491,7 +2500,7 @@ msgstr "Warehouses"
 msgid "المعدات"
 msgstr "Equipment"
 
-#: app/templates/base.html:507
+#: app/templates/base.html:507 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "Equipment warehouse"
 
@@ -2578,6 +2587,7 @@ msgid "التاريخ (لكل الرؤوس)"
 msgstr "Date (for all animals)"
 
 #: app/templates/bulk_action_form.html:19
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:27
 msgid "ملاحظة"
 msgstr "Note"
@@ -3320,6 +3330,7 @@ msgid "تاريخ الوصول"
 msgstr "Arrival date"
 
 #: app/templates/batches/batch_form.html:17
+#: app/templates/equipment/item_form.html:13
 #: app/templates/health/disease_type_form.html:8
 #: app/templates/health/pharmacy_purchase_form.html:21
 #: app/templates/health/vaccination_schedule_form.html:27
@@ -3371,6 +3382,159 @@ msgstr "Head count"
 #: app/templates/batches/batches_list.html:24
 msgid "لا يوجد دفعات مسجَّلة بعد."
 msgstr "No batches registered yet."
+
+#: app/templates/equipment/item_form.html:4
+msgid "تعديل صنف"
+msgstr "Edit item"
+
+#: app/templates/equipment/item_form.html:4
+msgid "صنف معدات جديد"
+msgstr "New equipment item"
+
+#: app/templates/equipment/item_form.html:8
+msgid "الفئة (اختياري)"
+msgstr "Category (optional)"
+
+#: app/templates/equipment/item_form.html:8
+msgid "مثال: أدوات يدوية، أجهزة، قطع غيار"
+msgstr "Example: hand tools, devices, spare parts"
+
+#: app/templates/equipment/item_form.html:10
+msgid "الكمية المتوفرة حالياً"
+msgstr "Currently available quantity"
+
+#: app/templates/equipment/item_form.html:11
+#: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
+msgid "الحد الأدنى للتنبيه"
+msgstr "Minimum stock alert threshold"
+
+#: app/templates/equipment/item_form.html:12
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr "Unit price (optional)"
+
+#: app/templates/equipment/item_movement.html:4
+msgid "حركة مخزون"
+msgstr "Stock movement"
+
+#: app/templates/equipment/item_movement.html:5
+msgid "المتوفر حالياً:"
+msgstr "Currently available:"
+
+#: app/templates/equipment/item_movement.html:8
+msgid "نوع الحركة"
+msgstr "Movement type"
+
+#: app/templates/equipment/item_movement.html:10
+msgid "وارد (شراء)"
+msgstr "In (purchase)"
+
+#: app/templates/equipment/item_movement.html:11
+msgid "صادر (صرف/استهلاك)"
+msgstr "Out (issue/consumption)"
+
+#: app/templates/equipment/item_movement.html:13
+#: app/templates/equipment/item_movement.html:33
+#: app/templates/feed/movement_form.html:16
+#: app/templates/feed/movements_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
+msgid "الكمية"
+msgstr "Quantity"
+
+#: app/templates/equipment/item_movement.html:14
+msgid "لو صادر — مين استلمها؟ (اختياري — عبّه بس لو استعارة ترجع، مو صرف نهائي)"
+msgstr "If outgoing — who received it? (optional — fill only if it's a returnable loan, not a final issue)"
+
+#: app/templates/equipment/item_movement.html:16
+msgid "صرف نهائي (بدون استعارة)"
+msgstr "Final issue (no loan)"
+
+#: app/templates/equipment/item_movement.html:19
+#: app/templates/repro/mating_form.html:19
+msgid "الحظيرة (اختياري)"
+msgstr "Barn (optional)"
+
+#: app/templates/equipment/item_movement.html:24
+#: app/templates/repro/pregnancies_list.html:27
+#: app/templates/team/report_detail.html:76
+#: app/templates/team/task_detail.html:98
+msgid "ملاحظة (اختياري)"
+msgstr "Note (optional)"
+
+#: app/templates/equipment/item_movement.html:25
+msgid "تسجيل الحركة"
+msgstr "Record movement"
+
+#: app/templates/equipment/item_movement.html:30
+msgid "آخر الحركات"
+msgstr "Recent movements"
+
+#: app/templates/equipment/item_movement.html:33
+msgid "الرصيد بعدها"
+msgstr "Balance after"
+
+#: app/templates/equipment/item_movement.html:33
+msgid "الاستعارة"
+msgstr "Loan"
+
+#: app/templates/equipment/item_movement.html:37
+#: app/templates/feed/movements_list.html:15
+msgid "وارد"
+msgstr "Incoming"
+
+#: app/templates/equipment/item_movement.html:37
+#: app/templates/feed/movements_list.html:15
+msgid "صادر"
+msgstr "Outgoing"
+
+#: app/templates/equipment/item_movement.html:43
+msgid "رجعت"
+msgstr "Returned"
+
+#: app/templates/equipment/item_movement.html:45
+msgid "عند:"
+msgstr "With:"
+
+#: app/templates/equipment/item_movement.html:48
+msgid "تسجيل استرجاع"
+msgstr "Record return"
+
+#: app/templates/equipment/item_movement.html:58
+msgid "ما فيه حركات مسجَّلة بعد."
+msgstr "No movements recorded yet."
+
+#: app/templates/equipment/items_list.html:6
+msgid "صنف جديد"
+msgstr "New item"
+
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "المتوفر"
+msgstr "Available"
+
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_detail.html:22
+msgid "السعر/وحدة"
+msgstr "Price/unit"
+
+#: app/templates/equipment/items_list.html:17
+#: app/templates/feed/items_list.html:20
+msgid "منخفض"
+msgstr "Low"
+
+#: app/templates/equipment/items_list.html:23
+msgid "حركة (شراء/صرف)"
+msgstr "Movement (purchase/issue)"
+
+#: app/templates/equipment/items_list.html:28
+msgid "لا يوجد أصناف معدات مسجّلة بعد."
+msgstr "No equipment items registered yet."
 
 #: app/templates/feed/barn_plan_form.html:4
 msgid "خطة تغذية جديدة"
@@ -3637,11 +3801,6 @@ msgstr "Unit price"
 msgid "الكمية المتوفرة"
 msgstr "Available quantity"
 
-#: app/templates/feed/item_form.html:32
-#: app/templates/health/pharmacy_form.html:101
-msgid "الحد الأدنى للتنبيه"
-msgstr "Minimum stock alert threshold"
-
 #: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
 msgid "مكوّنات العلف"
 msgstr "Feed items"
@@ -3659,16 +3818,6 @@ msgid "طاقة (ك.كالوري/كجم)"
 msgstr "Energy (kcal/kg)"
 
 #: app/templates/feed/items_list.html:10
-#: app/templates/health/pharmacy_shortages.html:14
-msgid "المتوفر"
-msgstr "Available"
-
-#: app/templates/feed/items_list.html:10
-#: app/templates/feed/ration_detail.html:22
-msgid "السعر/وحدة"
-msgstr "Price/unit"
-
-#: app/templates/feed/items_list.html:10
 msgid "نفاد متوقع"
 msgstr "Expected stockout"
 
@@ -3677,10 +3826,6 @@ msgstr "Expected stockout"
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "Contains high copper"
-
-#: app/templates/feed/items_list.html:20
-msgid "منخفض"
-msgstr "Low"
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
@@ -3716,14 +3861,6 @@ msgstr "Incoming (purchase/restock)"
 msgid "صادر (توزيع فعلي)"
 msgstr "Outgoing (actual distribution)"
 
-#: app/templates/feed/movement_form.html:16
-#: app/templates/feed/movements_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/protocol_apply_form.html:7
-#: app/templates/health/protocol_form.html:27
-msgid "الكمية"
-msgstr "Quantity"
-
 #: app/templates/feed/movement_form.html:17
 msgid "الحظيرة (إلزامي لحركة \"صادر\" — عشان تنحسب التكلفة اليومية للحظيرة صح)"
 msgstr "Barn (required for \"Outgoing\" movements — so the barn's daily cost is calculated correctly)"
@@ -3758,14 +3895,6 @@ msgstr "After"
 #: app/templates/team/tasks_list.html:147
 msgid "الحظيرة/الحيوان"
 msgstr "Barn/animal"
-
-#: app/templates/feed/movements_list.html:15
-msgid "وارد"
-msgstr "Incoming"
-
-#: app/templates/feed/movements_list.html:15
-msgid "صادر"
-msgstr "Outgoing"
 
 #: app/templates/feed/movements_list.html:22
 msgid "لا يوجد حركات مسجّلة بعد."
@@ -4779,11 +4908,6 @@ msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظه�
 msgstr "Any medicine whose stock reaches this threshold or lower automatically appears in the \"Pharmacy shortages\" list — the same required purchases list."
 
 #: app/templates/health/pharmacy_form.html:103
-#: app/templates/health/pharmacy_purchase_form.html:18
-msgid "سعر الوحدة (اختياري)"
-msgstr "Unit price (optional)"
-
-#: app/templates/health/pharmacy_form.html:103
 msgid "مثال: 2.5"
 msgstr "Example: 2.5"
 
@@ -5554,10 +5678,6 @@ msgstr "Male description (if external/not registered)"
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "Example: a male borrowed from Al-Rashid farm"
 
-#: app/templates/repro/mating_form.html:19
-msgid "الحظيرة (اختياري)"
-msgstr "Barn (optional)"
-
 #: app/templates/repro/mating_form.html:25
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "Next step in the cycle: after saving the mating, follow up on the female after a sufficient period via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy diagnosis\" to confirm pregnancy (manual exam or sonar) — if confirmed, the expected birth date is calculated automatically from the gestation duration set in settings."
@@ -5605,12 +5725,6 @@ msgstr "Abortion"
 #, python-format
 msgid "تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟"
 msgstr "Record an abortion for %(no)s — this will isolate her immediately and generate sample-collection and barn-monitoring tasks. Are you sure?"
-
-#: app/templates/repro/pregnancies_list.html:27
-#: app/templates/team/report_detail.html:76
-#: app/templates/team/task_detail.html:98
-msgid "ملاحظة (اختياري)"
-msgstr "Note (optional)"
 
 #: app/templates/repro/pregnancies_list.html:28
 msgid "تسجيل إجهاض"

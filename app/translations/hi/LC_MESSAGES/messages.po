@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:13+0300\n"
+"POT-Creation-Date: 2026-08-10 23:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -620,6 +620,7 @@ msgstr "लिंग"
 #: app/templates/bulk_action_form.html:218
 #: app/templates/bulk_action_form.html:325
 #: app/templates/bulk_action_form.html:355
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
@@ -764,8 +765,8 @@ msgstr "संलग्न चालान"
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "इस अवधि में कोई गतिविधि नहीं"
 
-#: app/reports/report_service.py:378 app/templates/feed/item_form.html:8
-#: app/templates/feed/items_list.html:10
+#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:10
+#: app/templates/feed/item_form.html:8 app/templates/feed/items_list.html:10
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
 msgid "الفئة"
@@ -799,6 +800,7 @@ msgstr "खपत मापन अवधि (दिन)"
 
 #: app/reports/report_service.py:477 app/templates/animal_detail.html:410
 #: app/templates/barn_form.html:9 app/templates/barns_list.html:10
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
 #: app/templates/finance/list.html:32
@@ -835,7 +837,8 @@ msgstr "वर्तमान स्टॉक"
 msgid "الكمية المقترح شراؤها"
 msgstr "सुझाई गई खरीद मात्रा"
 
-#: app/reports/report_service.py:478 app/templates/feed/item_form.html:29
+#: app/reports/report_service.py:478 app/templates/equipment/item_form.html:9
+#: app/templates/feed/item_form.html:29
 #: app/templates/health/pharmacy_form.html:100
 msgid "الوحدة"
 msgstr "इकाई"
@@ -1314,7 +1317,8 @@ msgstr "थन क्षतिग्रस्त"
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
-#: app/templates/barn_form.html:41 app/templates/feed/barn_plan_form.html:21
+#: app/templates/barn_form.html:41 app/templates/equipment/item_form.html:14
+#: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:34
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
@@ -1848,8 +1852,11 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/bulk_action_form.html:342
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
-#: app/templates/bulk_action_form.html:427 app/templates/feed/item_form.html:7
-#: app/templates/feed/items_list.html:10 app/templates/feed/ration_form.html:7
+#: app/templates/bulk_action_form.html:427
+#: app/templates/equipment/item_form.html:7
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
@@ -1869,6 +1876,7 @@ msgid "الاسم"
 msgstr "नाम"
 
 #: app/templates/animal_option_form.html:10
+#: app/templates/equipment/item_form.html:14
 #: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14 app/templates/home.html:21
 #: app/templates/team/report_form.html:16
@@ -2386,7 +2394,8 @@ msgstr "जिम्मेदार"
 msgid "عدد الحيوانات"
 msgstr "पशुओं की संख्या"
 
-#: app/templates/barns_list.html:19 app/templates/feed/items_list.html:26
+#: app/templates/barns_list.html:19 app/templates/equipment/items_list.html:22
+#: app/templates/feed/items_list.html:26
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2491,7 +2500,7 @@ msgstr "गोदाम"
 msgid "المعدات"
 msgstr "उपकरण"
 
-#: app/templates/base.html:507
+#: app/templates/base.html:507 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
@@ -2578,6 +2587,7 @@ msgid "التاريخ (لكل الرؤوس)"
 msgstr "तिथि (सभी पशुओं के लिए)"
 
 #: app/templates/bulk_action_form.html:19
+#: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:27
 msgid "ملاحظة"
 msgstr "टिप्पणी"
@@ -3320,6 +3330,7 @@ msgid "تاريخ الوصول"
 msgstr "आगमन तिथि"
 
 #: app/templates/batches/batch_form.html:17
+#: app/templates/equipment/item_form.html:13
 #: app/templates/health/disease_type_form.html:8
 #: app/templates/health/pharmacy_purchase_form.html:21
 #: app/templates/health/vaccination_schedule_form.html:27
@@ -3371,6 +3382,159 @@ msgstr "पशु संख्या"
 #: app/templates/batches/batches_list.html:24
 msgid "لا يوجد دفعات مسجَّلة بعد."
 msgstr "अभी तक कोई खेप दर्ज नहीं है।"
+
+#: app/templates/equipment/item_form.html:4
+msgid "تعديل صنف"
+msgstr "वस्तु संपादित करें"
+
+#: app/templates/equipment/item_form.html:4
+msgid "صنف معدات جديد"
+msgstr "नई उपकरण वस्तु"
+
+#: app/templates/equipment/item_form.html:8
+msgid "الفئة (اختياري)"
+msgstr "श्रेणी (वैकल्पिक)"
+
+#: app/templates/equipment/item_form.html:8
+msgid "مثال: أدوات يدوية، أجهزة، قطع غيار"
+msgstr "उदाहरण: हाथ के औजार, उपकरण, कल-पुर्जे"
+
+#: app/templates/equipment/item_form.html:10
+msgid "الكمية المتوفرة حالياً"
+msgstr "वर्तमान उपलब्ध मात्रा"
+
+#: app/templates/equipment/item_form.html:11
+#: app/templates/feed/item_form.html:32
+#: app/templates/health/pharmacy_form.html:101
+msgid "الحد الأدنى للتنبيه"
+msgstr "न्यूनतम स्टॉक चेतावनी सीमा"
+
+#: app/templates/equipment/item_form.html:12
+#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_purchase_form.html:18
+msgid "سعر الوحدة (اختياري)"
+msgstr "इकाई मूल्य (वैकल्पिक)"
+
+#: app/templates/equipment/item_movement.html:4
+msgid "حركة مخزون"
+msgstr "स्टॉक गतिविधि"
+
+#: app/templates/equipment/item_movement.html:5
+msgid "المتوفر حالياً:"
+msgstr "वर्तमान उपलब्ध:"
+
+#: app/templates/equipment/item_movement.html:8
+msgid "نوع الحركة"
+msgstr "गतिविधि प्रकार"
+
+#: app/templates/equipment/item_movement.html:10
+msgid "وارد (شراء)"
+msgstr "आगम (खरीद)"
+
+#: app/templates/equipment/item_movement.html:11
+msgid "صادر (صرف/استهلاك)"
+msgstr "निर्गम (जारी/उपभोग)"
+
+#: app/templates/equipment/item_movement.html:13
+#: app/templates/equipment/item_movement.html:33
+#: app/templates/feed/movement_form.html:16
+#: app/templates/feed/movements_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocol_apply_form.html:7
+#: app/templates/health/protocol_form.html:27
+msgid "الكمية"
+msgstr "मात्रा"
+
+#: app/templates/equipment/item_movement.html:14
+msgid "لو صادر — مين استلمها؟ (اختياري — عبّه بس لو استعارة ترجع، مو صرف نهائي)"
+msgstr "यदि निर्गत — किसने प्राप्त किया? (वैकल्पिक — केवल तभी भरें जब यह वापसी योग्य उधार हो, अंतिम निर्गम नहीं)"
+
+#: app/templates/equipment/item_movement.html:16
+msgid "صرف نهائي (بدون استعارة)"
+msgstr "अंतिम निर्गम (बिना उधार)"
+
+#: app/templates/equipment/item_movement.html:19
+#: app/templates/repro/mating_form.html:19
+msgid "الحظيرة (اختياري)"
+msgstr "बाड़ा (वैकल्पिक)"
+
+#: app/templates/equipment/item_movement.html:24
+#: app/templates/repro/pregnancies_list.html:27
+#: app/templates/team/report_detail.html:76
+#: app/templates/team/task_detail.html:98
+msgid "ملاحظة (اختياري)"
+msgstr "टिप्पणी (वैकल्पिक)"
+
+#: app/templates/equipment/item_movement.html:25
+msgid "تسجيل الحركة"
+msgstr "गतिविधि दर्ज करें"
+
+#: app/templates/equipment/item_movement.html:30
+msgid "آخر الحركات"
+msgstr "हाल की गतिविधियां"
+
+#: app/templates/equipment/item_movement.html:33
+msgid "الرصيد بعدها"
+msgstr "बाद का शेष"
+
+#: app/templates/equipment/item_movement.html:33
+msgid "الاستعارة"
+msgstr "उधार"
+
+#: app/templates/equipment/item_movement.html:37
+#: app/templates/feed/movements_list.html:15
+msgid "وارد"
+msgstr "आवक"
+
+#: app/templates/equipment/item_movement.html:37
+#: app/templates/feed/movements_list.html:15
+msgid "صادر"
+msgstr "जावक"
+
+#: app/templates/equipment/item_movement.html:43
+msgid "رجعت"
+msgstr "वापस आया"
+
+#: app/templates/equipment/item_movement.html:45
+msgid "عند:"
+msgstr "पास:"
+
+#: app/templates/equipment/item_movement.html:48
+msgid "تسجيل استرجاع"
+msgstr "वापसी दर्ज करें"
+
+#: app/templates/equipment/item_movement.html:58
+msgid "ما فيه حركات مسجَّلة بعد."
+msgstr "अभी तक कोई गतिविधि दर्ज नहीं है।"
+
+#: app/templates/equipment/items_list.html:6
+msgid "صنف جديد"
+msgstr "नई वस्तु"
+
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/items_list.html:10
+#: app/templates/health/pharmacy_shortages.html:14
+msgid "المتوفر"
+msgstr "उपलब्ध"
+
+#: app/templates/equipment/items_list.html:10
+#: app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_detail.html:22
+msgid "السعر/وحدة"
+msgstr "मूल्य/इकाई"
+
+#: app/templates/equipment/items_list.html:17
+#: app/templates/feed/items_list.html:20
+msgid "منخفض"
+msgstr "कम"
+
+#: app/templates/equipment/items_list.html:23
+msgid "حركة (شراء/صرف)"
+msgstr "गतिविधि (खरीद/निर्गम)"
+
+#: app/templates/equipment/items_list.html:28
+msgid "لا يوجد أصناف معدات مسجّلة بعد."
+msgstr "अभी तक कोई उपकरण वस्तु दर्ज नहीं है।"
 
 #: app/templates/feed/barn_plan_form.html:4
 msgid "خطة تغذية جديدة"
@@ -3637,11 +3801,6 @@ msgstr "इकाई मूल्य"
 msgid "الكمية المتوفرة"
 msgstr "उपलब्ध मात्रा"
 
-#: app/templates/feed/item_form.html:32
-#: app/templates/health/pharmacy_form.html:101
-msgid "الحد الأدنى للتنبيه"
-msgstr "न्यूनतम स्टॉक चेतावनी सीमा"
-
 #: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
 msgid "مكوّنات العلف"
 msgstr "चारा घटक"
@@ -3659,16 +3818,6 @@ msgid "طاقة (ك.كالوري/كجم)"
 msgstr "ऊर्जा (कैलोरी/किग्रा)"
 
 #: app/templates/feed/items_list.html:10
-#: app/templates/health/pharmacy_shortages.html:14
-msgid "المتوفر"
-msgstr "उपलब्ध"
-
-#: app/templates/feed/items_list.html:10
-#: app/templates/feed/ration_detail.html:22
-msgid "السعر/وحدة"
-msgstr "मूल्य/इकाई"
-
-#: app/templates/feed/items_list.html:10
 msgid "نفاد متوقع"
 msgstr "अनुमानित समाप्ति"
 
@@ -3677,10 +3826,6 @@ msgstr "अनुमानित समाप्ति"
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "उच्च तांबा युक्त"
-
-#: app/templates/feed/items_list.html:20
-msgid "منخفض"
-msgstr "कम"
 
 #: app/templates/feed/items_list.html:23
 #: app/templates/health/disease_form.html:37
@@ -3716,14 +3861,6 @@ msgstr "आवक (खरीद/भरना)"
 msgid "صادر (توزيع فعلي)"
 msgstr "जावक (वास्तविक वितरण)"
 
-#: app/templates/feed/movement_form.html:16
-#: app/templates/feed/movements_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/protocol_apply_form.html:7
-#: app/templates/health/protocol_form.html:27
-msgid "الكمية"
-msgstr "मात्रा"
-
 #: app/templates/feed/movement_form.html:17
 msgid "الحظيرة (إلزامي لحركة \"صادر\" — عشان تنحسب التكلفة اليومية للحظيرة صح)"
 msgstr "बाड़ा (\"जावक\" गतिविधि के लिए अनिवार्य — ताकि बाड़े की दैनिक लागत सही गणना हो)"
@@ -3758,14 +3895,6 @@ msgstr "बाद में"
 #: app/templates/team/tasks_list.html:147
 msgid "الحظيرة/الحيوان"
 msgstr "बाड़ा/पशु"
-
-#: app/templates/feed/movements_list.html:15
-msgid "وارد"
-msgstr "आवक"
-
-#: app/templates/feed/movements_list.html:15
-msgid "صادر"
-msgstr "जावक"
 
 #: app/templates/feed/movements_list.html:22
 msgid "لا يوجد حركات مسجّلة بعد."
@@ -4779,11 +4908,6 @@ msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظه�
 msgstr "जिस भी दवा का स्टॉक इस सीमा या उससे कम हो जाए वह स्वतः \"फार्मेसी की कमी\" सूची में दिखती है — वही आवश्यक खरीद सूची।"
 
 #: app/templates/health/pharmacy_form.html:103
-#: app/templates/health/pharmacy_purchase_form.html:18
-msgid "سعر الوحدة (اختياري)"
-msgstr "इकाई मूल्य (वैकल्पिक)"
-
-#: app/templates/health/pharmacy_form.html:103
 msgid "مثال: 2.5"
 msgstr "उदाहरण: 2.5"
 
@@ -5554,10 +5678,6 @@ msgstr "नर का विवरण (यदि बाहरी/अपंजी
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "उदाहरण: अल-रशीद फार्म से उधार लिया गया नर"
 
-#: app/templates/repro/mating_form.html:19
-msgid "الحظيرة (اختياري)"
-msgstr "बाड़ा (वैकल्पिक)"
-
 #: app/templates/repro/mating_form.html:25
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "चक्र में अगला कदम: संगमन सहेजने के बाद, पर्याप्त अवधि के बाद \"प्रजनन\" ← \"गर्भावस्था\" ← \"+ नया गर्भावस्था निदान\" के माध्यम से गर्भावस्था की पुष्टि के लिए मादा को फॉलो करें (मैनुअल जांच या सोनार) — यदि पुष्टि हो जाए, तो अपेक्षित जन्म तिथि सेटिंग्स में निर्धारित गर्भावस्था अवधि से स्वतः गणना होती है।"
@@ -5605,12 +5725,6 @@ msgstr "गर्भपात"
 #, python-format
 msgid "تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟"
 msgstr "%(no)s के लिए गर्भपात दर्ज करें — इससे वह तुरंत अलग हो जाएगी और नमूना संग्रह व बाड़ा निगरानी कार्य बनेंगे। क्या आप निश्चित हैं?"
-
-#: app/templates/repro/pregnancies_list.html:27
-#: app/templates/team/report_detail.html:76
-#: app/templates/team/task_detail.html:98
-msgid "ملاحظة (اختياري)"
-msgstr "टिप्पणी (वैकल्पिक)"
 
 #: app/templates/repro/pregnancies_list.html:28
 msgid "تسجيل إجهاض"
