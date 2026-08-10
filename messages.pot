@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:17+0300\n"
+"POT-Creation-Date: 2026-08-10 23:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -545,6 +545,18 @@ msgid ""
 "المكتوبة على الدواء نفسه."
 msgstr ""
 
+#: app/models/warehouse.py:24
+msgid "علف"
+msgstr ""
+
+#: app/models/warehouse.py:24
+msgid "صيدلية"
+msgstr ""
+
+#: app/models/warehouse.py:24
+msgid "مختلط"
+msgstr ""
+
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
 msgid "اليوم"
@@ -847,6 +859,8 @@ msgstr ""
 #: app/templates/team/reports_list.html:64
 #: app/templates/team/reports_list.html:85
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/warehouses/warehouse_form.html:8
+#: app/templates/warehouses/warehouses_list.html:13
 msgid "النوع"
 msgstr ""
 
@@ -1382,6 +1396,7 @@ msgstr ""
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr ""
 
@@ -1934,6 +1949,8 @@ msgstr ""
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/warehouses/warehouse_form.html:7
+#: app/templates/warehouses/warehouses_list.html:13
 msgid "الاسم"
 msgstr ""
 
@@ -2338,11 +2355,13 @@ msgstr ""
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
+#: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr ""
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
+#: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr ""
 
@@ -2573,6 +2592,7 @@ msgstr ""
 
 #: app/templates/base.html:500 app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:28
+#: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr ""
 
@@ -3555,6 +3575,8 @@ msgstr ""
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:27
+#: app/templates/warehouses/item_breakdown.html:8
+#: app/templates/warehouses/item_breakdown.html:32
 msgid "الكمية"
 msgstr ""
 
@@ -6601,6 +6623,7 @@ msgid "تعليمات التنفيذ (إلزامي)"
 msgstr ""
 
 #: app/templates/team/report_detail.html:93
+#: app/templates/warehouses/item_breakdown.html:34
 msgid "تحويل"
 msgstr ""
 
@@ -6997,5 +7020,77 @@ msgstr ""
 
 #: app/templates/team/worker_report_form.html:57
 msgid "إرسال البلاغ"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:4
+msgid "توزيع المستودعات"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:5
+msgid "الإجمالي الحالي:"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:8
+msgid "المستودع"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:11
+#: app/templates/warehouses/item_breakdown.html:26
+#: app/templates/warehouses/item_breakdown.html:30
+msgid "افتراضي"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:13
+msgid ""
+"الإجمالي انخفض تحت المُوزَّع فعلياً بمستودعات مسمّاة — راجع حركات هذا "
+"الصنف"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:13
+msgid "غير متّسق"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:21
+msgid "تحويل بين مستودعين"
+msgstr ""
+
+#: app/templates/warehouses/item_breakdown.html:37
+msgid ""
+"التحويل لا يغيّر الإجمالي الحالي إطلاقاً — مجرد نقل مكان تخزين داخل "
+"المزرعة."
+msgstr ""
+
+#: app/templates/warehouses/warehouse_form.html:4
+#: app/templates/warehouses/warehouses_list.html:6
+msgid "مستودع جديد"
+msgstr ""
+
+#: app/templates/warehouses/warehouse_form.html:7
+msgid "مثال: صيدلية فرعية — حظيرة 3"
+msgstr ""
+
+#: app/templates/warehouses/warehouse_form.html:12
+msgid "ملاحظة الموقع (اختياري)"
+msgstr ""
+
+#: app/templates/warehouses/warehouse_form.html:13
+msgid "مثال: بجانب حظيرة 3"
+msgstr ""
+
+#: app/templates/warehouses/warehouses_list.html:9
+msgid ""
+"طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً "
+"موزَّع (مستودع رئيسي، صيدلية فرعية، حظيرة تغذية مباشرة...). للتحويل أو "
+"معاينة توزيع صنف معيّن، افتح صفحته من قائمة الأعلاف أو الصيدلية."
+msgstr ""
+
+#: app/templates/warehouses/warehouses_list.html:13
+msgid "ملاحظة الموقع"
+msgstr ""
+
+#: app/templates/warehouses/warehouses_list.html:16
+msgid ""
+"لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي "
+"الافتراضي."
 msgstr ""
 

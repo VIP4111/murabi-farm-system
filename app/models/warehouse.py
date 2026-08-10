@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 
 
@@ -20,7 +21,7 @@ class Warehouse(db.Model):
     __tablename__ = "warehouses"
 
     WAREHOUSE_TYPES = ["feed", "pharmacy", "mixed"]
-    WAREHOUSE_TYPE_LABELS_AR = {"feed": "علف", "pharmacy": "صيدلية", "mixed": "مختلط"}
+    WAREHOUSE_TYPE_LABELS_AR = {"feed": _l("علف"), "pharmacy": _l("صيدلية"), "mixed": _l("مختلط")}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(160), nullable=False)

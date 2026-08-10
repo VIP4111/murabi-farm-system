@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:17+0300\n"
+"POT-Creation-Date: 2026-08-10 23:22+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -512,6 +512,18 @@ msgstr "በቀጥታ በቆዳ/ቁስል ላይ ጥቅም ላይ ይውላል (�
 msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
 msgstr "ከሌሎች ምድቦች ስር ላልሆነው አጠቃላይ ምድብ — በመድሃኒቱ ላይ የተጻፈውን የማጣቀሻ መጠን ማስታወሻ ይመልከቱ።"
 
+#: app/models/warehouse.py:24
+msgid "علف"
+msgstr "መኖ"
+
+#: app/models/warehouse.py:24
+msgid "صيدلية"
+msgstr "ፋርማሲ"
+
+#: app/models/warehouse.py:24
+msgid "مختلط"
+msgstr "የተደባለቀ"
+
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
 msgid "اليوم"
@@ -814,6 +826,8 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 #: app/templates/team/reports_list.html:64
 #: app/templates/team/reports_list.html:85
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/warehouses/warehouse_form.html:8
+#: app/templates/warehouses/warehouses_list.html:13
 msgid "النوع"
 msgstr "ዓይነት"
 
@@ -1340,6 +1354,7 @@ msgstr "ጡት ተጎድቷል"
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "አስቀምጥ"
 
@@ -1872,6 +1887,8 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/warehouses/warehouse_form.html:7
+#: app/templates/warehouses/warehouses_list.html:13
 msgid "الاسم"
 msgstr "ስም"
 
@@ -2265,11 +2282,13 @@ msgstr "በስርዓቱ ውስጥ የመጨረሻዎቹ %(n)s ስሱ ክንው�
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
+#: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "ከ"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
+#: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "እስከ"
 
@@ -2492,6 +2511,7 @@ msgstr "ራስ-ሰር የመኖ ማመጣጠኛ"
 
 #: app/templates/base.html:500 app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:28
+#: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr "መጋዘኖች"
 
@@ -3442,6 +3462,8 @@ msgstr "ወጪ (ማውጣት/መጠቀም)"
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:27
+#: app/templates/warehouses/item_breakdown.html:8
+#: app/templates/warehouses/item_breakdown.html:32
 msgid "الكمية"
 msgstr "መጠን"
 
@@ -6338,6 +6360,7 @@ msgid "تعليمات التنفيذ (إلزامي)"
 msgstr "የአፈጻጸም መመሪያ (ግዴታ)"
 
 #: app/templates/team/report_detail.html:93
+#: app/templates/warehouses/item_breakdown.html:34
 msgid "تحويل"
 msgstr "አስተላልፍ"
 
@@ -6727,6 +6750,69 @@ msgstr "ያስተዋልከውን እዚህ ጻፍ..."
 #: app/templates/team/worker_report_form.html:57
 msgid "إرسال البلاغ"
 msgstr "ሪፖርት ላክ"
+
+#: app/templates/warehouses/item_breakdown.html:4
+msgid "توزيع المستودعات"
+msgstr "የመጋዘን ስርጭት"
+
+#: app/templates/warehouses/item_breakdown.html:5
+msgid "الإجمالي الحالي:"
+msgstr "የአሁኑ ጠቅላላ:"
+
+#: app/templates/warehouses/item_breakdown.html:8
+msgid "المستودع"
+msgstr "መጋዘን"
+
+#: app/templates/warehouses/item_breakdown.html:11
+#: app/templates/warehouses/item_breakdown.html:26
+#: app/templates/warehouses/item_breakdown.html:30
+msgid "افتراضي"
+msgstr "ነባሪ"
+
+#: app/templates/warehouses/item_breakdown.html:13
+msgid "الإجمالي انخفض تحت المُوزَّع فعلياً بمستودعات مسمّاة — راجع حركات هذا الصنف"
+msgstr "ጠቅላላው በተሰየሙ መጋዘኖች ውስጥ ካለው ትክክለኛ ስርጭት በታች ወርዷል — የዚህን ዕቃ እንቅስቃሴዎች ይመልከቱ"
+
+#: app/templates/warehouses/item_breakdown.html:13
+msgid "غير متّسق"
+msgstr "ወጥነት የሌለው"
+
+#: app/templates/warehouses/item_breakdown.html:21
+msgid "تحويل بين مستودعين"
+msgstr "በሁለት መጋዘኖች መካከል ማዛወር"
+
+#: app/templates/warehouses/item_breakdown.html:37
+msgid "التحويل لا يغيّر الإجمالي الحالي إطلاقاً — مجرد نقل مكان تخزين داخل المزرعة."
+msgstr "ማዛወር የአሁኑን ጠቅላላ በፍጹም አይለውጥም — በእርሻው ውስጥ የማከማቻ ቦታን ማንቀሳቀስ ብቻ ነው።"
+
+#: app/templates/warehouses/warehouse_form.html:4
+#: app/templates/warehouses/warehouses_list.html:6
+msgid "مستودع جديد"
+msgstr "አዲስ መጋዘን"
+
+#: app/templates/warehouses/warehouse_form.html:7
+msgid "مثال: صيدلية فرعية — حظيرة 3"
+msgstr "ምሳሌ: ንዑስ ፋርማሲ — በረት 3"
+
+#: app/templates/warehouses/warehouse_form.html:12
+msgid "ملاحظة الموقع (اختياري)"
+msgstr "የአካባቢ ማስታወሻ (አማራጭ)"
+
+#: app/templates/warehouses/warehouse_form.html:13
+msgid "مثال: بجانب حظيرة 3"
+msgstr "ምሳሌ: ከበረት 3 አጠገብ"
+
+#: app/templates/warehouses/warehouses_list.html:9
+msgid "طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً موزَّع (مستودع رئيسي، صيدلية فرعية، حظيرة تغذية مباشرة...). للتحويل أو معاينة توزيع صنف معيّن، افتح صفحته من قائمة الأعلاف أو الصيدلية."
+msgstr "በአሁኑ የመኖ/ፋርማሲ ጠቅላላ ላይ ተጨማሪ ንብርብር — ክምችቱ በትክክል የት እንደተከፋፈለ ያሳያል (ዋና መጋዘን፣ ንዑስ ፋርማሲ፣ ቀጥተኛ-መመገቢያ በረት...)። የተወሰነ ዕቃ ለማዛወር ወይም ስርጭቱን ለማየት፣ ገጹን ከመኖ ወይም ፋርማሲ ዝርዝር ይክፈቱ።"
+
+#: app/templates/warehouses/warehouses_list.html:13
+msgid "ملاحظة الموقع"
+msgstr "የአካባቢ ማስታወሻ"
+
+#: app/templates/warehouses/warehouses_list.html:16
+msgid "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي."
+msgstr "እስካሁን ተጨማሪ የተሰየመ መጋዘን የለም — ሁሉም ክምችት በነባሪ ዋና መጋዘን ውስጥ ነው።"
 
 #~ msgid "التكاثر"
 #~ msgstr "መራባት"

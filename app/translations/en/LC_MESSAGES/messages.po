@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:17+0300\n"
+"POT-Creation-Date: 2026-08-10 23:22+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -512,6 +512,18 @@ msgstr "Used directly on the skin/wound surface (disinfecting, scarring, local e
 msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
 msgstr "A general category for what doesn't fall under the other categories — check the reference dosage note written on the medicine itself."
 
+#: app/models/warehouse.py:24
+msgid "علف"
+msgstr "Feed"
+
+#: app/models/warehouse.py:24
+msgid "صيدلية"
+msgstr "Pharmacy"
+
+#: app/models/warehouse.py:24
+msgid "مختلط"
+msgstr "Mixed"
+
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
 msgid "اليوم"
@@ -814,6 +826,8 @@ msgstr "Consumption measurement period (days)"
 #: app/templates/team/reports_list.html:64
 #: app/templates/team/reports_list.html:85
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/warehouses/warehouse_form.html:8
+#: app/templates/warehouses/warehouses_list.html:13
 msgid "النوع"
 msgstr "Type"
 
@@ -1340,6 +1354,7 @@ msgstr "Udder damaged"
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "Save"
 
@@ -1872,6 +1887,8 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/warehouses/warehouse_form.html:7
+#: app/templates/warehouses/warehouses_list.html:13
 msgid "الاسم"
 msgstr "Name"
 
@@ -2265,11 +2282,13 @@ msgstr "The last %(n)s sensitive events in the system (deletion, permission gran
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
+#: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "From"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
+#: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "To"
 
@@ -2492,6 +2511,7 @@ msgstr "Automatic ration balancer"
 
 #: app/templates/base.html:500 app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:28
+#: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr "Warehouses"
 
@@ -3442,6 +3462,8 @@ msgstr "Out (issue/consumption)"
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:27
+#: app/templates/warehouses/item_breakdown.html:8
+#: app/templates/warehouses/item_breakdown.html:32
 msgid "الكمية"
 msgstr "Quantity"
 
@@ -6338,6 +6360,7 @@ msgid "تعليمات التنفيذ (إلزامي)"
 msgstr "Execution instructions (required)"
 
 #: app/templates/team/report_detail.html:93
+#: app/templates/warehouses/item_breakdown.html:34
 msgid "تحويل"
 msgstr "Transfer"
 
@@ -6727,6 +6750,69 @@ msgstr "Write what you noticed here..."
 #: app/templates/team/worker_report_form.html:57
 msgid "إرسال البلاغ"
 msgstr "Submit Report"
+
+#: app/templates/warehouses/item_breakdown.html:4
+msgid "توزيع المستودعات"
+msgstr "Warehouse distribution"
+
+#: app/templates/warehouses/item_breakdown.html:5
+msgid "الإجمالي الحالي:"
+msgstr "Current total:"
+
+#: app/templates/warehouses/item_breakdown.html:8
+msgid "المستودع"
+msgstr "Warehouse"
+
+#: app/templates/warehouses/item_breakdown.html:11
+#: app/templates/warehouses/item_breakdown.html:26
+#: app/templates/warehouses/item_breakdown.html:30
+msgid "افتراضي"
+msgstr "Default"
+
+#: app/templates/warehouses/item_breakdown.html:13
+msgid "الإجمالي انخفض تحت المُوزَّع فعلياً بمستودعات مسمّاة — راجع حركات هذا الصنف"
+msgstr "The total dropped below what's actually distributed across named warehouses — review this item's movements"
+
+#: app/templates/warehouses/item_breakdown.html:13
+msgid "غير متّسق"
+msgstr "Inconsistent"
+
+#: app/templates/warehouses/item_breakdown.html:21
+msgid "تحويل بين مستودعين"
+msgstr "Transfer between two warehouses"
+
+#: app/templates/warehouses/item_breakdown.html:37
+msgid "التحويل لا يغيّر الإجمالي الحالي إطلاقاً — مجرد نقل مكان تخزين داخل المزرعة."
+msgstr "The transfer never changes the current total — it's just moving the storage location within the farm."
+
+#: app/templates/warehouses/warehouse_form.html:4
+#: app/templates/warehouses/warehouses_list.html:6
+msgid "مستودع جديد"
+msgstr "New warehouse"
+
+#: app/templates/warehouses/warehouse_form.html:7
+msgid "مثال: صيدلية فرعية — حظيرة 3"
+msgstr "Example: sub-pharmacy — barn 3"
+
+#: app/templates/warehouses/warehouse_form.html:12
+msgid "ملاحظة الموقع (اختياري)"
+msgstr "Location note (optional)"
+
+#: app/templates/warehouses/warehouse_form.html:13
+msgid "مثال: بجانب حظيرة 3"
+msgstr "Example: next to barn 3"
+
+#: app/templates/warehouses/warehouses_list.html:9
+msgid "طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً موزَّع (مستودع رئيسي، صيدلية فرعية، حظيرة تغذية مباشرة...). للتحويل أو معاينة توزيع صنف معيّن، افتح صفحته من قائمة الأعلاف أو الصيدلية."
+msgstr "An additional layer on top of the current feed/pharmacy total — shows where stock is actually distributed (main warehouse, sub-pharmacy, direct-feeding barn...). To transfer or view a specific item's distribution, open its page from the feed or pharmacy list."
+
+#: app/templates/warehouses/warehouses_list.html:13
+msgid "ملاحظة الموقع"
+msgstr "Location note"
+
+#: app/templates/warehouses/warehouses_list.html:16
+msgid "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي."
+msgstr "No additional named warehouses yet — all stock is in the default main warehouse."
 
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
