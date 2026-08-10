@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 02:40+0300\n"
+"POT-Creation-Date: 2026-08-10 02:56+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:116
+#: app/__init__.py:116 app/templates/team/members_list.html:17
 msgid "نشط"
 msgstr "Active"
 
@@ -684,7 +684,7 @@ msgstr "Tasks"
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:522
+#: app/templates/base.html:522 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
@@ -725,7 +725,9 @@ msgstr "Daily email report"
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:571
+#: app/templates/base.html:571 app/templates/team/member_edit_form.html:13
+#: app/templates/team/member_form.html:14
+#: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
@@ -803,7 +805,7 @@ msgstr "Login"
 msgid "رقم الجوال"
 msgstr "Phone Number"
 
-#: app/templates/login.html:18
+#: app/templates/login.html:18 app/templates/team/member_form.html:9
 msgid "كلمة المرور"
 msgstr "Password"
 
@@ -998,6 +1000,8 @@ msgstr "Fill this only if the screen returned a warning — state the reason"
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/repro/sonar_form.html:36
+#: app/templates/team/member_edit_form.html:33
+#: app/templates/team/member_form.html:21
 msgid "حفظ"
 msgstr "Save"
 
@@ -1208,6 +1212,9 @@ msgstr "New feed item"
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
+#: app/templates/team/member_edit_form.html:7
+#: app/templates/team/member_form.html:7
+#: app/templates/team/members_list.html:10
 msgid "الاسم"
 msgstr "Name"
 
@@ -1331,6 +1338,7 @@ msgstr "day"
 
 #: app/templates/feed/items_list.html:26
 #: app/templates/health/pharmacy_list.html:27
+#: app/templates/team/members_list.html:19
 msgid "تعديل"
 msgstr "Edit"
 
@@ -1354,6 +1362,7 @@ msgstr "Component"
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
 #: app/templates/finance/list.html:32
 #: app/templates/health/symptoms_list.html:19
+#: app/templates/team/_task_assign_fields.html:5
 #: app/templates/team/report_detail.html:11
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -1389,6 +1398,7 @@ msgid "بدون حظيرة (وارد فقط)"
 msgstr "No barn (incoming only)"
 
 #: app/templates/feed/movement_form.html:22
+#: app/templates/team/_task_assign_fields.html:31
 msgid "الحيوان (اختياري)"
 msgstr "Animal (optional)"
 
@@ -1701,6 +1711,8 @@ msgstr "Disease"
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/team/daily_templates.html:18
+#: app/templates/team/members_list.html:10
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -1784,6 +1796,7 @@ msgstr "Confirm cancellation?"
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
 #: app/templates/health/vaccination_schedule_list.html:36
+#: app/templates/team/member_edit_form.html:34
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "Cancel"
@@ -2304,6 +2317,7 @@ msgstr "Add disease to the list"
 #: app/templates/health/disease_type_form.html:8
 #: app/templates/health/pharmacy_purchase_form.html:21
 #: app/templates/health/vaccination_schedule_form.html:27
+#: app/templates/team/daily_templates.html:9
 msgid "ملاحظات (اختياري)"
 msgstr "Notes (optional)"
 
@@ -2378,6 +2392,7 @@ msgstr "New doctor"
 
 #: app/templates/health/doctor_form.html:8
 #: app/templates/health/doctors_list.html:10
+#: app/templates/team/members_list.html:10
 msgid "الجوال"
 msgstr "Phone"
 
@@ -3160,6 +3175,179 @@ msgstr "Postpone"
 msgid "لا يوجد مهام مقترحة حالياً."
 msgstr "No suggested tasks right now."
 
+#: app/templates/team/_task_assign_fields.html:4
+#: app/templates/team/daily_templates.html:18
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+#: app/templates/team/tasks_list.html:187
+msgid "العنوان"
+msgstr "Title"
+
+#: app/templates/team/_task_assign_fields.html:12
+msgid "الدور المستهدف (اختياري)"
+msgstr "Target role (optional)"
+
+#: app/templates/team/_task_assign_fields.html:19
+msgid "يحدّد مين المهمة موجَّهة له بشكل عام — يقدر يبقى بدون شخص معيّن بعد، ويظهر بفلترة الدور بشاشة المهام."
+msgstr "Determines who the task is generally directed at — it can stay without a specific person for now, and appears in role filtering on the tasks screen."
+
+#: app/templates/team/_task_assign_fields.html:21
+msgid "المكلَّف (اختياري لو حددت حظيرة)"
+msgstr "Assignee (optional if you set a barn)"
+
+#: app/templates/team/_task_assign_fields.html:26
+msgid "الحظيرة (اختياري — يعيّن العامل المسؤول تلقائياً لو ما حددت مكلَّف)"
+msgstr "Barn (optional — automatically assigns the responsible worker if you didn't set an assignee)"
+
+#: app/templates/team/_task_assign_fields.html:36
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
+#: app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+msgid "الموعد"
+msgstr "Due date"
+
+#: app/templates/team/_task_assign_fields.html:37
+msgid "مهمة سابقة (اختياري — تسلسل المهام)"
+msgstr "Prior task (optional — task sequencing)"
+
+#: app/templates/team/_task_assign_fields.html:39
+msgid "بدون تسلسل — تُبدأ فوراً"
+msgstr "No sequencing — starts immediately"
+
+#: app/templates/team/_task_assign_fields.html:40
+msgid "غير معيّنة"
+msgstr "Unassigned"
+
+#: app/templates/team/_task_assign_fields.html:42
+msgid "لو حدّدت مهمة سابقة، هذي المهمة تبقى مقفلة على العامل لين المهمة السابقة تصير \"منجزة\"."
+msgstr "If you set a prior task, this task stays locked for the worker until the prior task becomes \"done\"."
+
+#: app/templates/team/_task_assign_fields.html:43
+msgid "يتطلب إرفاق صورة عند الإنجاز"
+msgstr "Requires attaching a photo upon completion"
+
+#: app/templates/team/_task_assign_fields.html:44
+msgid "التفاصيل / ملاحظات"
+msgstr "Details / notes"
+
+#: app/templates/team/daily_templates.html:4
+#: app/templates/team/tasks_list.html:9
+msgid "مهام العامل التلقائية"
+msgstr "Automatic worker tasks"
+
+#: app/templates/team/daily_templates.html:5
+msgid "هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها."
+msgstr "These tasks are generated automatically every day and go directly to the worker (without waiting for the doctor's approval). Add a new task, or stop an existing one with the button next to it."
+
+#: app/templates/team/daily_templates.html:8
+msgid "عنوان المهمة"
+msgstr "Task title"
+
+#: app/templates/team/daily_templates.html:8
+msgid "مثال: تنظيف مظلات الحظيرة B"
+msgstr "Example: clean barn B's shades"
+
+#: app/templates/team/daily_templates.html:10
+msgid "إضافة مهمة يومية"
+msgstr "Add daily task"
+
+#: app/templates/team/daily_templates.html:15
+msgid "القائمة الحالية"
+msgstr "Current list"
+
+#: app/templates/team/daily_templates.html:18
+msgid "الملاحظات"
+msgstr "Notes"
+
+#: app/templates/team/daily_templates.html:23
+msgid "فعّالة"
+msgstr "Active"
+
+#: app/templates/team/daily_templates.html:23
+msgid "موقوفة"
+msgstr "Stopped"
+
+#: app/templates/team/daily_templates.html:27
+msgid "إيقاف"
+msgstr "Stop"
+
+#: app/templates/team/daily_templates.html:27
+#: app/templates/team/members_list.html:23
+msgid "تفعيل"
+msgstr "Activate"
+
+#: app/templates/team/daily_templates.html:32
+msgid "ما فيه مهام يومية مضافة بعد."
+msgstr "No daily tasks added yet."
+
+#: app/templates/team/member_edit_form.html:4
+msgid "تعديل بيانات العضو"
+msgstr "Edit member details"
+
+#: app/templates/team/member_edit_form.html:8
+#: app/templates/team/member_form.html:8
+msgid "رقم الجوال (لتسجيل الدخول)"
+msgstr "Phone number (for login)"
+
+#: app/templates/team/member_edit_form.html:9
+#: app/templates/team/member_form.html:10
+#: app/templates/team/members_list.html:10
+msgid "الدور"
+msgstr "Role"
+
+#: app/templates/team/member_edit_form.html:21
+msgid "معرّف محادثة تيليجرام (اختياري — لإشعارات فورية مجانية)"
+msgstr "Telegram chat ID (optional — for free instant notifications)"
+
+#: app/templates/team/member_edit_form.html:22
+msgid "مثال: 123456789"
+msgstr "Example: 123456789"
+
+#: app/templates/team/member_edit_form.html:23
+msgid "راسل بوت المزرعة على تيليجرام مرة وحدة، وشغّل أمر \"flask telegram-updates\" من لوحة Render عشان تلقط الرقم."
+msgstr "Message the farm's Telegram bot once, and run the \"flask telegram-updates\" command from the Render dashboard to grab the number."
+
+#: app/templates/team/member_edit_form.html:25
+msgid "البريد الإلكتروني (اختياري — للتقرير اليومي التلقائي)"
+msgstr "Email (optional — for the daily automatic report)"
+
+#: app/templates/team/member_edit_form.html:27
+msgid "لو مسجَّل بريد وهذا الحساب يدير البلاغات، يوصله تقرير يومي تلقائي بحالة المزرعة."
+msgstr "If an email is registered and this account manages reports, they'll receive a daily automatic report on the farm's status."
+
+#: app/templates/team/member_edit_form.html:29
+msgid "كلمة مرور جديدة (اختياري)"
+msgstr "New password (optional)"
+
+#: app/templates/team/member_edit_form.html:30
+msgid "اتركها فاضية إذا ما تبي تغييرها"
+msgstr "Leave blank if you don't want to change it"
+
+#: app/templates/team/member_edit_form.html:31
+msgid "تعبئة هذا الحقل تغيّر كلمة المرور فوراً — بدون حاجة لمعرفة القديمة."
+msgstr "Filling this field changes the password immediately — no need to know the old one."
+
+#: app/templates/team/member_form.html:4
+msgid "عضو فريق جديد"
+msgstr "New team member"
+
+#: app/templates/team/members_list.html:6
+msgid "عضو جديد"
+msgstr "New member"
+
+#: app/templates/team/members_list.html:17
+msgid "معطّل"
+msgstr "Disabled"
+
+#: app/templates/team/members_list.html:23
+msgid "تعطيل"
+msgstr "Disable"
+
+#: app/templates/team/members_list.html:29
+msgid "لا يوجد أعضاء بعد."
+msgstr "No members yet."
+
 #: app/templates/team/report_detail.html:6
 msgid "بلاغ"
 msgstr "Report"
@@ -3572,21 +3760,17 @@ msgstr "Note:"
 msgid "عرض صورة الدليل"
 msgstr "View evidence photo"
 
-#: app/templates/team/tasks_list.html:8
-msgid "توزيع مهمة"
-msgstr "Assign task"
-
-#: app/templates/team/tasks_list.html:9
-msgid "مهام العامل التلقائية"
-msgstr "Automatic worker tasks"
-
-#: app/templates/team/tasks_list.html:18
+#: app/templates/team/task_form.html:4 app/templates/team/tasks_list.html:18
 msgid "توزيع مهمة جديدة"
 msgstr "Assign a new task"
 
-#: app/templates/team/tasks_list.html:22
+#: app/templates/team/task_form.html:8 app/templates/team/tasks_list.html:22
 msgid "توزيع"
 msgstr "Assign"
+
+#: app/templates/team/tasks_list.html:8
+msgid "توزيع مهمة"
+msgstr "Assign task"
 
 #: app/templates/team/tasks_list.html:24
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
@@ -3595,19 +3779,6 @@ msgstr "If there's an input error, the full page opens for you to fix it."
 #: app/templates/team/tasks_list.html:56
 msgid "مهامي"
 msgstr "My tasks"
-
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-#: app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-#: app/templates/team/tasks_list.html:187
-msgid "العنوان"
-msgstr "Title"
-
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
-#: app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-msgid "الموعد"
-msgstr "Due date"
 
 #: app/templates/team/tasks_list.html:96
 msgid "مهام مقترحة بانتظار الاعتماد"
