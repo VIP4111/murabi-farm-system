@@ -2,14 +2,14 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <h2>{{ 'الإجراء الجماعي' if bulk_mode else 'سجل الحيوانات' }}</h2>
+    <h2>{{ _('الإجراء الجماعي') if bulk_mode else _('سجل الحيوانات') }}</h2>
     <div style="display:flex; gap:8px;">
       {% if bulk_mode %}
-      <a class="btn light" href="{{ url_for('batches.batches_list') }}">🏥 متابعة الحجر الصحي</a>
+      <a class="btn light" href="{{ url_for('batches.batches_list') }}">🏥 {{ _('متابعة الحجر الصحي') }}</a>
       {% else %}
-      <a class="btn light" href="{{ url_for('core.smart_sale_report') }}">البيع الذكي وتفادي الخسارة</a>
+      <a class="btn light" href="{{ url_for('core.smart_sale_report') }}">{{ _('البيع الذكي وتفادي الخسارة') }}</a>
       {% if current_user.has_permission('animals.manage') %}
-      <a class="btn" href="{{ url_for('core.animals_new') }}">+ حيوان جديد</a>
+      <a class="btn" href="{{ url_for('core.animals_new') }}">+ {{ _('حيوان جديد') }}</a>
       {% endif %}
       {% endif %}
     </div>
@@ -17,7 +17,7 @@
 </div>
 
 <div class="tabs">
-  {% for key, (label, _) in filters.items() %}
+  {% for key, (label, _f) in filters.items() %}
   <a class="tab-btn {{ 'active' if key == active_filter }}" href="{{ url_for('core.animals_list', filter=key, barn_id=active_barn_id) }}">{{ label }} ({{ counts[key] }})</a>
   {% endfor %}
 </div>
@@ -25,31 +25,31 @@
 <div class="card" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
   <form method="get" style="display:flex; align-items:center; gap:8px; margin:0;">
     <input type="hidden" name="filter" value="{{ active_filter }}">
-    <label style="margin:0; white-space:nowrap;">فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)</label>
+    <label style="margin:0; white-space:nowrap;">{{ _('فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)') }}</label>
     <select name="barn_id" onchange="this.form.submit()" style="width:auto; margin:0;">
-      <option value="">كل الحظائر</option>
+      <option value="">{{ _('كل الحظائر') }}</option>
       {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if active_barn_id == b.id }}>{{ b.barn_name }}</option>{% endfor %}
     </select>
   </form>
-  {% if active_barn_id %}<a class="btn light" href="{{ url_for('core.animals_list', filter=active_filter) }}" style="padding:6px 12px; font-size:13px;">إلغاء فلترة الحظيرة ✕</a>{% endif %}
+  {% if active_barn_id %}<a class="btn light" href="{{ url_for('core.animals_list', filter=active_filter) }}" style="padding:6px 12px; font-size:13px;">{{ _('إلغاء فلترة الحظيرة') }} ✕</a>{% endif %}
 </div>
 
 {% if active_filter != 'all' %}
 <div class="notice">
   {% set defs = {
-    'lambs': 'البهم: عمرها أقل من 6 أشهر (يحتاج تاريخ ولادة مسجّل).',
-    'males': 'الذكور: كل الرؤوس النشطة بجنس ذكر.',
-    'near_birth': 'قريب الولادة: حمل مؤكد وتاريخ الولادة المتوقع خلال 30 يوم القادمة.',
-    'mated': 'المقرعات: عندها تقريع مسجّل خلال آخر دورة حمل (بغض النظر عن تأكيد الحمل).',
-    'productive': 'دافع: أنثى بعمر سنة فأكثر وعندها ولادة واحدة على الأقل خلال آخر 400 يوم.',
-    'unproductive': 'غير دافع: أنثى بعمر سنة فأكثر بدون أي ولادة خلال آخر 400 يوم.',
-    'nursing': 'المرضعات: عندها مولود عمره أقل من 90 يوم.',
-    'fattening': 'التسمين: الغرض المسجّل للحيوان = تسمين.',
-    'dead': 'النفوق: كل الرؤوس بحالة نافق.',
-    'ready_to_mate': 'جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات).',
-    'ostrich': 'النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — راجع سجل البيض والتفقيس من القائمة الجانبية.',
+    'lambs': _('البهم: عمرها أقل من 6 أشهر (يحتاج تاريخ ولادة مسجّل).'),
+    'males': _('الذكور: كل الرؤوس النشطة بجنس ذكر.'),
+    'near_birth': _('قريب الولادة: حمل مؤكد وتاريخ الولادة المتوقع خلال 30 يوم القادمة.'),
+    'mated': _('المقرعات: عندها تقريع مسجّل خلال آخر دورة حمل (بغض النظر عن تأكيد الحمل).'),
+    'productive': _('دافع: أنثى بعمر سنة فأكثر وعندها ولادة واحدة على الأقل خلال آخر 400 يوم.'),
+    'unproductive': _('غير دافع: أنثى بعمر سنة فأكثر بدون أي ولادة خلال آخر 400 يوم.'),
+    'nursing': _('المرضعات: عندها مولود عمره أقل من 90 يوم.'),
+    'fattening': _('التسمين: الغرض المسجّل للحيوان = تسمين.'),
+    'dead': _('النفوق: كل الرؤوس بحالة نافق.'),
+    'ready_to_mate': _('جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات).'),
+    'ostrich': _('النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — راجع سجل البيض والتفقيس من القائمة الجانبية.'),
   } %}
-  {{ defs.get(active_filter, '') }} هذا تعريف اجتهادي قابل للتعديل — كلّمني لو عندك تعريف مختلف.
+  {{ defs.get(active_filter, '') }} {{ _('هذا تعريف اجتهادي قابل للتعديل — كلّمني لو عندك تعريف مختلف.') }}
 </div>
 {% endif %}
 
@@ -61,37 +61,37 @@
   {% endif %}
     {% if can_bulk %}
     <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px; padding:10px; background:var(--bg); border-radius:14px;">
-      <span style="font-size:13px; color:var(--muted);"><span id="selCount">0</span> محدّد</span>
+      <span style="font-size:13px; color:var(--muted);"><span id="selCount">0</span> {{ _('محدّد') }}</span>
       <select name="bulk_action" style="width:auto; margin:0;">
         {% if current_user.has_permission('animals.manage') %}
-        <option value="weight">وزن جماعي</option>
-        <option value="note">ملاحظة جماعية</option>
-        <option value="barn_move">نقل حظيرة جماعي</option>
-        <option value="purpose">تحديد الغرض جماعياً (تربية/تسمين/بيع)</option>
-        <option value="sale">بيع جماعي</option>
-        <option value="mark_dead">تسجيل نفوق جماعي</option>
-        <option value="new_batch">استقبال دفعة جديدة</option>
+        <option value="weight">{{ _('وزن جماعي') }}</option>
+        <option value="note">{{ _('ملاحظة جماعية') }}</option>
+        <option value="barn_move">{{ _('نقل حظيرة جماعي') }}</option>
+        <option value="purpose">{{ _('تحديد الغرض جماعياً (تربية/تسمين/بيع)') }}</option>
+        <option value="sale">{{ _('بيع جماعي') }}</option>
+        <option value="mark_dead">{{ _('تسجيل نفوق جماعي') }}</option>
+        <option value="new_batch">{{ _('استقبال دفعة جديدة') }}</option>
         {% endif %}
         {% if current_user.has_permission('health.manage') %}
-        <option value="vaccination">تحصين جماعي</option>
-        <option value="disease">علاج/مرض جماعي</option>
-        <option value="isolation">عزل جماعي</option>
-        <option value="treatment_plan">خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)</option>
+        <option value="vaccination">{{ _('تحصين جماعي') }}</option>
+        <option value="disease">{{ _('علاج/مرض جماعي') }}</option>
+        <option value="isolation">{{ _('عزل جماعي') }}</option>
+        <option value="treatment_plan">{{ _('خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)') }}</option>
         {% endif %}
         {% if current_user.has_permission('repro.manage') %}
-        <option value="sonar">فحص سونار جماعي</option>
+        <option value="sonar">{{ _('فحص سونار جماعي') }}</option>
         {% endif %}
       </select>
-      <button class="btn" type="submit">متابعة الإجراء الجماعي</button>
+      <button class="btn" type="submit">{{ _('متابعة الإجراء الجماعي') }}</button>
     </div>
     {% endif %}
     <div class="table-scroll">
 <table>
       <tr>
         {% if can_bulk %}<th><input type="checkbox" id="selectAll" style="width:auto; margin:0;"></th>{% endif %}
-        <th>الرقم</th><th>الاسم</th><th>المصدر</th><th>الحظيرة</th><th>الحالة</th><th>المرحلة</th><th>فترة سحب</th>
+        <th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('المصدر') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المرحلة') }}</th><th>{{ _('فترة سحب') }}</th>
       </tr>
-      {% set source_labels = {'birth': 'مولود بالمزرعة', 'purchase': 'شراء', 'gift': 'هدية/دعم', 'opening_balance': 'رصيد افتتاحي'} %}
+      {% set source_labels = {'birth': _('مولود بالمزرعة'), 'purchase': _('شراء'), 'gift': _('هدية/دعم'), 'opening_balance': _('رصيد افتتاحي')} %}
       {% for a in animals %}
       <tr>
         {% if can_bulk %}<td><input type="checkbox" class="animalChk" name="animal_ids" value="{{ a.id }}" style="width:auto; margin:0;"></td>{% endif %}
@@ -100,17 +100,17 @@
         <td>{{ source_labels.get(a.source.value, a.source.value) }}</td>
         <td>{{ a.barn.barn_name if a.barn else '-' }}</td>
         <td>{{ a.status|ar_status }}</td>
-        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">نعام — بدون دورة</span>{% else %}<a class="btn green" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
+        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">{{ _('نعام — بدون دورة') }}</span>{% else %}<a class="btn green" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
         <td>
           <a href="{{ url_for('core.animal_detail', animal_id=a.id) }}" style="text-decoration:none;">
           {% if withdrawal_map.get(a.id) %}
-          <span class="badge off" title="ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس">حتى {{ withdrawal_map[a.id] }} (باقي {{ (withdrawal_map[a.id] - today).days }} يوم)</span>
-          {% else %}<span class="badge on" title="اضغط لتفاصيل الرأس">آمن</span>{% endif %}
+          <span class="badge off" title="{{ _('ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس') }}">{{ _('حتى') }} {{ withdrawal_map[a.id] }} ({{ _('باقي %(n)s يوم', n=(withdrawal_map[a.id] - today).days) }})</span>
+          {% else %}<span class="badge on" title="{{ _('اضغط لتفاصيل الرأس') }}">{{ _('آمن') }}</span>{% endif %}
           </a>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="8" style="color:#888;">{{ 'لا يوجد حيوانات ضمن هذا الفلتر حالياً.' if active_filter != 'all' else 'لا يوجد حيوانات مسجّلة بعد.' }}</td></tr>
+      <tr><td colspan="8" style="color:#888;">{{ _('لا يوجد حيوانات ضمن هذا الفلتر حالياً.') if active_filter != 'all' else _('لا يوجد حيوانات مسجّلة بعد.') }}</td></tr>
       {% endfor %}
     </table>
 </div>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 03:24+0300\n"
+"POT-Creation-Date: 2026-08-10 03:31+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -288,6 +288,55 @@ msgstr "बार-बार असफल लॉगिन प्रयासो�
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "फ़ोन नंबर या पासवर्ड गलत है"
 
+#: app/core/animal_filters_service.py:181 app/team/routes.py:400
+#: app/templates/audit_log.html:16 app/templates/audit_log.html:25
+msgid "الكل"
+msgstr "सभी"
+
+#: app/core/animal_filters_service.py:182
+msgid "البهم"
+msgstr "मेमने"
+
+#: app/core/animal_filters_service.py:183
+msgid "الذكور"
+msgstr "नर"
+
+#: app/core/animal_filters_service.py:184
+msgid "قريب الولادة"
+msgstr "प्रसव निकट"
+
+#: app/core/animal_filters_service.py:185
+msgid "المقرعات"
+msgstr "संगमित"
+
+#: app/core/animal_filters_service.py:186
+msgid "دافع"
+msgstr "उत्पादक"
+
+#: app/core/animal_filters_service.py:187
+msgid "غير دافع"
+msgstr "अनुत्पादक"
+
+#: app/core/animal_filters_service.py:188
+msgid "المرضعات"
+msgstr "स्तनपान कराने वाली"
+
+#: app/core/animal_filters_service.py:189
+msgid "التسمين"
+msgstr "मोटा करना"
+
+#: app/core/animal_filters_service.py:190
+msgid "النفوق"
+msgstr "मृत"
+
+#: app/core/animal_filters_service.py:191
+msgid "جاهزة للتقريع"
+msgstr "संगमन के लिए तैयार"
+
+#: app/core/animal_filters_service.py:192
+msgid "النعام"
+msgstr "शुतुरमुर्ग"
+
 #: app/core/routes.py:667
 msgid "إضافة فصيلة جديدة"
 msgstr "नई प्रजाति जोड़ें"
@@ -486,7 +535,8 @@ msgid "إجمالي حالات النفوق"
 msgstr "कुल मृत्यु मामले"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
-#: app/templates/barn_form.html:7 app/templates/barns_list.html:10
+#: app/templates/animals_list.html:92 app/templates/barn_form.html:7
+#: app/templates/barns_list.html:10
 msgid "الرقم"
 msgstr "क्रमांक"
 
@@ -742,11 +792,6 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:400 app/templates/audit_log.html:16
-#: app/templates/audit_log.html:25
-msgid "الكل"
-msgstr "सभी"
-
 #: app/team/routes.py:401
 msgid "العامل"
 msgstr "कर्मचारी"
@@ -868,9 +913,10 @@ msgstr "खोलें"
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "अभी कोई सूचना नहीं।"
 
-#: app/templates/animal_option_form.html:8 app/templates/barn_form.html:8
-#: app/templates/barns_list.html:10 app/templates/feed/item_form.html:7
-#: app/templates/feed/items_list.html:10 app/templates/feed/ration_form.html:7
+#: app/templates/animal_option_form.html:8 app/templates/animals_list.html:92
+#: app/templates/barn_form.html:8 app/templates/barns_list.html:10
+#: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
+#: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
@@ -904,6 +950,234 @@ msgstr "जोड़ें"
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "रद्द करें"
+
+#: app/templates/animals_list.html:5 app/templates/base.html:466
+msgid "الإجراء الجماعي"
+msgstr "थोक कार्रवाई"
+
+#: app/templates/animals_list.html:5
+msgid "سجل الحيوانات"
+msgstr "पशु रजिस्ट्री"
+
+#: app/templates/animals_list.html:8
+msgid "متابعة الحجر الصحي"
+msgstr "संगरोध अनुवर्ती"
+
+#: app/templates/animals_list.html:10
+msgid "البيع الذكي وتفادي الخسارة"
+msgstr "स्मार्ट बिक्री और हानि से बचाव"
+
+#: app/templates/animals_list.html:12 app/templates/home.html:51
+msgid "حيوان جديد"
+msgstr "नया जानवर"
+
+#: app/templates/animals_list.html:28
+msgid "فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)"
+msgstr "बाड़े द्वारा फ़िल्टर करें (पूरे बाड़े पर सामूहिक कार्रवाई के लिए)"
+
+#: app/templates/animals_list.html:30
+msgid "كل الحظائر"
+msgstr "सभी बाड़े"
+
+#: app/templates/animals_list.html:34
+msgid "إلغاء فلترة الحظيرة"
+msgstr "बाड़ा फ़िल्टर साफ़ करें"
+
+#: app/templates/animals_list.html:40
+msgid "البهم: عمرها أقل من 6 أشهر (يحتاج تاريخ ولادة مسجّل)."
+msgstr "मेमने: 6 महीने से कम आयु (दर्ज जन्म तिथि आवश्यक)।"
+
+#: app/templates/animals_list.html:41
+msgid "الذكور: كل الرؤوس النشطة بجنس ذكر."
+msgstr "नर: सभी सक्रिय पशु नर लिंग के साथ।"
+
+#: app/templates/animals_list.html:42
+msgid "قريب الولادة: حمل مؤكد وتاريخ الولادة المتوقع خلال 30 يوم القادمة."
+msgstr "प्रसव निकट: पुष्टित गर्भावस्था और अगले 30 दिनों में अनुमानित जन्म तिथि।"
+
+#: app/templates/animals_list.html:43
+msgid "المقرعات: عندها تقريع مسجّل خلال آخر دورة حمل (بغض النظر عن تأكيد الحمل)."
+msgstr "संगमित: पिछले गर्भावस्था चक्र में दर्ज संगमन (गर्भावस्था पुष्टि की परवाह किए बिना)।"
+
+#: app/templates/animals_list.html:44
+msgid "دافع: أنثى بعمر سنة فأكثر وعندها ولادة واحدة على الأقل خلال آخر 400 يوم."
+msgstr "उत्पादक: एक वर्ष या उससे अधिक उम्र की मादा जिसने पिछले 400 दिनों में कम से कम एक बार जन्म दिया हो।"
+
+#: app/templates/animals_list.html:45
+msgid "غير دافع: أنثى بعمر سنة فأكثر بدون أي ولادة خلال آخر 400 يوم."
+msgstr "अनुत्पादक: एक वर्ष या उससे अधिक उम्र की मादा जिसने पिछले 400 दिनों में जन्म नहीं दिया।"
+
+#: app/templates/animals_list.html:46
+msgid "المرضعات: عندها مولود عمره أقل من 90 يوم."
+msgstr "स्तनपान कराने वाली: 90 दिन से कम उम्र की संतान है।"
+
+#: app/templates/animals_list.html:47
+msgid "التسمين: الغرض المسجّل للحيوان = تسمين."
+msgstr "मोटा करना: पशु का दर्ज उद्देश्य = मोटा करना।"
+
+#: app/templates/animals_list.html:48
+msgid "النفوق: كل الرؤوس بحالة نافق."
+msgstr "मृत: मृत स्थिति वाले सभी पशु।"
+
+#: app/templates/animals_list.html:49
+msgid "جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات)."
+msgstr "संगमन के लिए तैयार: न्यूनतम संगमन आयु तक पहुंच गई, गर्भवती नहीं, वर्तमान में कोई सक्रिय संगमन नहीं, अंतिम जन्म के बाद आराम अवधि बीत गई, और कोई खुला रोग नहीं (मान सेटिंग्स से)।"
+
+#: app/templates/animals_list.html:50
+msgid "النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — راجع سجل البيض والتفقيس من القائمة الجانبية."
+msgstr "शुतुरमुर्ग: शुतुरमुर्ग प्रजाति के सभी सक्रिय पशु (जुगाली करने वाला उत्पादन चक्र नहीं) — साइडबार से अंडे और अंडे सेने के रिकॉर्ड देखें।"
+
+#: app/templates/animals_list.html:52
+msgid "هذا تعريف اجتهادي قابل للتعديل — كلّمني لو عندك تعريف مختلف."
+msgstr "यह एक कार्यशील परिभाषा है जो बदल सकती है — यदि आपकी अलग परिभाषा है तो मुझे बताएं।"
+
+#: app/templates/animals_list.html:64
+msgid "محدّد"
+msgstr "चयनित"
+
+#: app/templates/animals_list.html:67
+msgid "وزن جماعي"
+msgstr "सामूहिक वजन"
+
+#: app/templates/animals_list.html:68
+msgid "ملاحظة جماعية"
+msgstr "सामूहिक टिप्पणी"
+
+#: app/templates/animals_list.html:69
+msgid "نقل حظيرة جماعي"
+msgstr "सामूहिक बाड़ा स्थानांतरण"
+
+#: app/templates/animals_list.html:70
+msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
+msgstr "सामूहिक उद्देश्य निर्धारण (प्रजनन/मोटा करना/बिक्री)"
+
+#: app/templates/animals_list.html:71
+msgid "بيع جماعي"
+msgstr "सामूहिक बिक्री"
+
+#: app/templates/animals_list.html:72
+msgid "تسجيل نفوق جماعي"
+msgstr "सामूहिक मृत्यु दर्ज करना"
+
+#: app/templates/animals_list.html:73
+msgid "استقبال دفعة جديدة"
+msgstr "नई खेप प्राप्त करें"
+
+#: app/templates/animals_list.html:76
+msgid "تحصين جماعي"
+msgstr "सामूहिक टीकाकरण"
+
+#: app/templates/animals_list.html:77
+msgid "علاج/مرض جماعي"
+msgstr "सामूहिक उपचार/रोग"
+
+#: app/templates/animals_list.html:78
+msgid "عزل جماعي"
+msgstr "सामूहिक अलगाव"
+
+#: app/templates/animals_list.html:79
+msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
+msgstr "नियोजित उपचार योजना (क्रियान्वयन पुष्टि की प्रतीक्षा में)"
+
+#: app/templates/animals_list.html:82
+msgid "فحص سونار جماعي"
+msgstr "सामूहिक सोनार जांच"
+
+#: app/templates/animals_list.html:85
+msgid "متابعة الإجراء الجماعي"
+msgstr "सामूहिक कार्रवाई जारी रखें"
+
+#: app/templates/animals_list.html:92
+msgid "المصدر"
+msgstr "स्रोत"
+
+#: app/templates/animals_list.html:92 app/templates/feed/barn_plan_form.html:7
+#: app/templates/feed/barn_plans_list.html:10
+#: app/templates/feed/fcr_report.html:16
+#: app/templates/health/vaccination_schedule_form.html:7
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_form.html:24
+#: app/templates/team/worker_report_form.html:47
+msgid "الحظيرة"
+msgstr "बाड़ा"
+
+#: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
+#: app/templates/finance/list.html:32
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/doctors_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocols_list.html:15
+#: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/team/daily_templates.html:18
+#: app/templates/team/members_list.html:10
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+msgid "الحالة"
+msgstr "स्थिति"
+
+#: app/templates/animals_list.html:92
+msgid "المرحلة"
+msgstr "चरण"
+
+#: app/templates/animals_list.html:92
+msgid "فترة سحب"
+msgstr "निकासी अवधि"
+
+#: app/templates/animals_list.html:94
+msgid "مولود بالمزرعة"
+msgstr "फार्म पर जन्मा"
+
+#: app/templates/animals_list.html:94 app/templates/finance/form.html:11
+#: app/templates/finance/list.html:36
+msgid "شراء"
+msgstr "खरीद"
+
+#: app/templates/animals_list.html:94
+msgid "هدية/دعم"
+msgstr "उपहार/सहायता"
+
+#: app/templates/animals_list.html:94
+msgid "رصيد افتتاحي"
+msgstr "प्रारंभिक शेष"
+
+#: app/templates/animals_list.html:103
+msgid "نعام — بدون دورة"
+msgstr "शुतुरमुर्ग — बिना चक्र"
+
+#: app/templates/animals_list.html:107
+msgid "ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس"
+msgstr "बिक्री/वध निषिद्ध — स्वतः हटता है — पशु विवरण के लिए क्लिक करें"
+
+#: app/templates/animals_list.html:107
+msgid "حتى"
+msgstr "तक"
+
+#: app/templates/animals_list.html:107
+#, python-format
+msgid "باقي %(n)s يوم"
+msgstr "%(n)s दिन शेष"
+
+#: app/templates/animals_list.html:108
+msgid "اضغط لتفاصيل الرأس"
+msgstr "पशु विवरण के लिए क्लिक करें"
+
+#: app/templates/animals_list.html:108
+msgid "آمن"
+msgstr "सुरक्षित"
+
+#: app/templates/animals_list.html:113
+msgid "لا يوجد حيوانات ضمن هذا الفلتر حالياً."
+msgstr "इस फ़िल्टर में फिलहाल कोई पशु नहीं है।"
+
+#: app/templates/animals_list.html:113
+msgid "لا يوجد حيوانات مسجّلة بعد."
+msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
 #: app/templates/audit_log.html:5
 msgid "سجل التدقيق"
@@ -1113,10 +1387,6 @@ msgstr "पशुधन"
 msgid "الحيوانات"
 msgstr "जानवर"
 
-#: app/templates/base.html:466
-msgid "الإجراء الجماعي"
-msgstr "थोक कार्रवाई"
-
 #: app/templates/base.html:469 app/templates/home.html:72
 msgid "التقريع"
 msgstr "प्रजनन"
@@ -1314,10 +1584,6 @@ msgstr "त्वरित कार्रवाइयाँ"
 #: app/templates/home.html:43
 msgid "الأكثر استخدامًا"
 msgstr "सबसे ज्यादा उपयोग होने वाले"
-
-#: app/templates/home.html:51
-msgid "حيوان جديد"
-msgstr "नया जानवर"
 
 #: app/templates/home.html:60
 msgid "البيطرة"
@@ -1539,18 +1805,6 @@ msgstr "सहायक से संपर्क नहीं हो सका�
 #: app/templates/feed/barn_plan_form.html:4
 msgid "خطة تغذية جديدة"
 msgstr "नई आहार योजना"
-
-#: app/templates/feed/barn_plan_form.html:7
-#: app/templates/feed/barn_plans_list.html:10
-#: app/templates/feed/fcr_report.html:16
-#: app/templates/health/vaccination_schedule_form.html:7
-#: app/templates/health/vaccination_schedule_list.html:13
-#: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/team/report_detail.html:24
-#: app/templates/team/report_form.html:24
-#: app/templates/team/worker_report_form.html:47
-msgid "الحظيرة"
-msgstr "बाड़ा"
 
 #: app/templates/feed/barn_plan_form.html:11
 #: app/templates/feed/barn_plans_list.html:10
@@ -2071,10 +2325,6 @@ msgstr "नया वित्तीय लेनदेन"
 msgid "بيع"
 msgstr "बिक्री"
 
-#: app/templates/finance/form.html:11 app/templates/finance/list.html:36
-msgid "شراء"
-msgstr "खरीद"
-
 #: app/templates/finance/form.html:12 app/templates/finance/list.html:36
 msgid "مصروف"
 msgstr "व्यय"
@@ -2176,23 +2426,6 @@ msgstr "रोग उपचार लागत"
 #: app/templates/health/diseases_list.html:14
 msgid "المرض"
 msgstr "रोग"
-
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/doctors_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/protocols_list.html:15
-#: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/team/daily_templates.html:18
-#: app/templates/team/members_list.html:10
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-msgid "الحالة"
-msgstr "स्थिति"
 
 #: app/templates/finance/health_view.html:44
 msgid "لا يوجد أمراض مسجّلة بعد."

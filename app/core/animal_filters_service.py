@@ -26,6 +26,7 @@
 `app/ostrich/`.
 """
 from datetime import date, timedelta
+from flask_babel import lazy_gettext as _l
 from app.models import Animal, Mating, Pregnancy, Disease, FarmSettings
 
 LAMB_MAX_AGE_DAYS = 180
@@ -177,18 +178,18 @@ def _ready_to_mate():
 
 
 FILTERS = {
-    "all": ("الكل", lambda: _active_query().order_by(Animal.animal_no).all()),
-    "lambs": ("البهم", _lambs),
-    "males": ("الذكور", _males),
-    "near_birth": ("قريب الولادة", _near_birth),
-    "mated": ("المقرعات", _mated),
-    "productive": ("دافع", lambda: _productive_split()[0]),
-    "unproductive": ("غير دافع", lambda: _productive_split()[1]),
-    "nursing": ("المرضعات", _nursing),
-    "fattening": ("التسمين", _fattening),
-    "dead": ("النفوق", _dead),
-    "ready_to_mate": ("جاهزة للتقريع", _ready_to_mate),
-    "ostrich": ("النعام", _ostriches),
+    "all": (_l("الكل"), lambda: _active_query().order_by(Animal.animal_no).all()),
+    "lambs": (_l("البهم"), _lambs),
+    "males": (_l("الذكور"), _males),
+    "near_birth": (_l("قريب الولادة"), _near_birth),
+    "mated": (_l("المقرعات"), _mated),
+    "productive": (_l("دافع"), lambda: _productive_split()[0]),
+    "unproductive": (_l("غير دافع"), lambda: _productive_split()[1]),
+    "nursing": (_l("المرضعات"), _nursing),
+    "fattening": (_l("التسمين"), _fattening),
+    "dead": (_l("النفوق"), _dead),
+    "ready_to_mate": (_l("جاهزة للتقريع"), _ready_to_mate),
+    "ostrich": (_l("النعام"), _ostriches),
 }
 
 
