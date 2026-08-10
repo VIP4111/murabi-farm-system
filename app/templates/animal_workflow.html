@@ -2,23 +2,23 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <h2>دورة الإنتاج — {{ animal.animal_no }}</h2>
+    <h2>{{ _('دورة الإنتاج') }} — {{ animal.animal_no }}</h2>
     <div style="display:flex; gap:8px; align-items:center;">
-      <a class="btn light" href="{{ url_for('core.animal_detail', animal_id=animal.id) }}">◀ صفحة تفاصيل الرأس</a>
+      <a class="btn light" href="{{ url_for('core.animal_detail', animal_id=animal.id) }}">◀ {{ _('صفحة تفاصيل الرأس') }}</a>
       <span class="badge {{ 'on' if wf.status == 'active' else 'off' }}">{{ wf.status|ar_status }}</span>
     </div>
   </div>
   <div class="table-scroll">
 <table>
-    <tr><td>المسار</td><td>{{ route_label }}</td></tr>
-    <tr><td>المرحلة الحالية</td><td><strong>{{ wf.stage_name }}</strong> (رقم {{ wf.current_stage }} من 10)</td></tr>
-    <tr><td>قرار المصير</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
-    {% if wf.out_of_order_count %}<tr><td>أحداث بترتيب غير منتظم</td><td>{{ wf.out_of_order_count }}</td></tr>{% endif %}
+    <tr><td>{{ _('المسار') }}</td><td>{{ route_label }}</td></tr>
+    <tr><td>{{ _('المرحلة الحالية') }}</td><td><strong>{{ wf.stage_name }}</strong> ({{ _('رقم %(n)s من 10', n=wf.current_stage) }})</td></tr>
+    <tr><td>{{ _('قرار المصير') }}</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
+    {% if wf.out_of_order_count %}<tr><td>{{ _('أحداث بترتيب غير منتظم') }}</td><td>{{ wf.out_of_order_count }}</td></tr>{% endif %}
   </table>
 </div>
 
   {% if missing_items %}
-  <h3 style="margin-top:18px; font-size:15px;">متطلبات ناقصة للانتقال</h3>
+  <h3 style="margin-top:18px; font-size:15px;">{{ _('متطلبات ناقصة للانتقال') }}</h3>
   <div class="gate-list">
     {% for item, action in missing_items_with_actions %}
     <div class="gate-row fail" style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -29,16 +29,16 @@
   </div>
   {% endif %}
 
-  <h3 style="margin-top:18px; font-size:15px;">خط سير المراحل</h3>
+  <h3 style="margin-top:18px; font-size:15px;">{{ _('خط سير المراحل') }}</h3>
   <div class="workflow-map">
     {% for idx, code, name in stages %}
     {% if idx in active_stages %}
     <div class="workflow-stage {{ 'active' if idx == wf.current_stage else ('done' if idx < wf.current_stage else '') }}">
-      <span style="font-size:11px; color:var(--muted);">مرحلة {{ idx }}</span>
+      <span style="font-size:11px; color:var(--muted);">{{ _('مرحلة %(n)s', n=idx) }}</span>
       <b>{{ name }}</b>
-      {% if idx < wf.current_stage %}<small>✅ مكتملة</small>
-      {% elif idx == wf.current_stage %}<small style="color:var(--primary); font-weight:800;">◀ الحالية</small>
-      {% else %}<small>لاحقة</small>{% endif %}
+      {% if idx < wf.current_stage %}<small>✅ {{ _('مكتملة') }}</small>
+      {% elif idx == wf.current_stage %}<small style="color:var(--primary); font-weight:800;">◀ {{ _('الحالية') }}</small>
+      {% else %}<small>{{ _('لاحقة') }}</small>{% endif %}
     </div>
     {% endif %}
     {% endfor %}
@@ -47,45 +47,45 @@
 
 {% if current_user.has_permission('animals.manage') %}
 <div class="card">
-  <h3 style="font-size:15px;">بيانات تخطيط السوق (تدعم بوابة مرحلة "تخطيط السوق")</h3>
+  <h3 style="font-size:15px;">{{ _('بيانات تخطيط السوق (تدعم بوابة مرحلة "تخطيط السوق")') }}</h3>
   <form method="post" action="{{ url_for('core.animal_workflow_plan', animal_id=animal.id) }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>تاريخ بيع مستهدف</label><input name="target_sale_date" type="date" value="{{ wf.target_sale_date or '' }}">
-    <label>قيمة تقديرية</label><input name="estimated_value" type="number" step="0.01" value="{{ wf.estimated_value or '' }}">
-    <label>هامش ربح مستهدف (%)</label><input name="target_profit_margin" type="number" step="0.01" value="{{ wf.target_profit_margin or '' }}">
-    <label>تاريخ فطام (لو ينطبق)</label><input name="weaning_date" type="date" value="{{ wf.weaning_date or '' }}">
-    <button class="btn" type="submit">حفظ</button>
+    <label>{{ _('تاريخ بيع مستهدف') }}</label><input name="target_sale_date" type="date" value="{{ wf.target_sale_date or '' }}">
+    <label>{{ _('قيمة تقديرية') }}</label><input name="estimated_value" type="number" step="0.01" value="{{ wf.estimated_value or '' }}">
+    <label>{{ _('هامش ربح مستهدف (%%)') }}</label><input name="target_profit_margin" type="number" step="0.01" value="{{ wf.target_profit_margin or '' }}">
+    <label>{{ _('تاريخ فطام (لو ينطبق)') }}</label><input name="weaning_date" type="date" value="{{ wf.weaning_date or '' }}">
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 
 {% if animal.status == 'active' %}
 <div class="card" id="exit">
-  <h3 style="font-size:15px;">قرار الخروج</h3>
+  <h3 style="font-size:15px;">{{ _('قرار الخروج') }}</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">
     <form method="post" action="{{ url_for('core.animal_sell', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <label>بيع — السعر</label><input name="sale_price" type="number" step="0.01" required>
-      <label>تاريخ البيع</label><input name="sale_date" type="date">
-      <label>اسم المشتري (اختياري — يظهر بالفاتورة)</label><input name="buyer_name">
-      <label>جوال المشتري (اختياري)</label><input name="buyer_phone">
-      <label>ملاحظات</label><input name="notes">
+      <label>{{ _('بيع — السعر') }}</label><input name="sale_price" type="number" step="0.01" required>
+      <label>{{ _('تاريخ البيع') }}</label><input name="sale_date" type="date">
+      <label>{{ _('اسم المشتري (اختياري — يظهر بالفاتورة)') }}</label><input name="buyer_name">
+      <label>{{ _('جوال المشتري (اختياري)') }}</label><input name="buyer_phone">
+      <label>{{ _('ملاحظات') }}</label><input name="notes">
       <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
         <input name="no_invoice" type="checkbox" value="1" style="width:auto; display:inline-block;">
-        لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)
+        {{ _('لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)') }}
       </label>
-      <button class="btn" type="submit">تسجيل البيع</button>
+      <button class="btn" type="submit">{{ _('تسجيل البيع') }}</button>
     </form>
     <form method="post" action="{{ url_for('core.animal_mark_dead', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <label>نفوق — السبب</label><input name="reason">
-      <label>تاريخ النفوق</label><input name="death_date" type="date">
-      <button class="btn danger" type="submit">تسجيل النفوق</button>
+      <label>{{ _('نفوق — السبب') }}</label><input name="reason">
+      <label>{{ _('تاريخ النفوق') }}</label><input name="death_date" type="date">
+      <button class="btn danger" type="submit">{{ _('تسجيل النفوق') }}</button>
     </form>
-    <form method="post" action="{{ url_for('core.animal_archive', animal_id=animal.id) }}" style="flex:1; min-width:220px;" onsubmit="return confirm('تأكيد الأرشفة؟');" data-offline>
+    <form method="post" action="{{ url_for('core.animal_archive', animal_id=animal.id) }}" style="flex:1; min-width:220px;" onsubmit="return confirm('{{ _('تأكيد الأرشفة؟') }}');" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <label>أرشفة — السبب</label><input name="reason">
-      <label><input name="force" type="checkbox" style="width:auto; display:inline-block;"> تجاوز وجود عمليات مالية مرتبطة</label>
-      <button class="btn" type="submit">أرشفة</button>
+      <label>{{ _('أرشفة — السبب') }}</label><input name="reason">
+      <label><input name="force" type="checkbox" style="width:auto; display:inline-block;"> {{ _('تجاوز وجود عمليات مالية مرتبطة') }}</label>
+      <button class="btn" type="submit">{{ _('أرشفة') }}</button>
     </form>
   </div>
 </div>
@@ -93,25 +93,25 @@
 
 {% if animal.status == 'sold' and sale_finance %}
 <div class="card" id="sale-invoice">
-  <h3 style="font-size:15px;">بيانات البيع</h3>
+  <h3 style="font-size:15px;">{{ _('بيانات البيع') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><td>السعر</td><td>{{ sale_finance.amount }}</td></tr>
-    <tr><td>تاريخ البيع</td><td>{{ sale_finance.date }}</td></tr>
-    {% if sale_finance.buyer_name %}<tr><td>المشتري</td><td>{{ sale_finance.buyer_name }}{% if sale_finance.buyer_phone %} — {{ sale_finance.buyer_phone }}{% endif %}</td></tr>{% endif %}
-    {% if sale_finance.invoice_number %}<tr><td>رقم الفاتورة</td><td>{{ sale_finance.invoice_number }}</td></tr>{% endif %}
+    <tr><td>{{ _('السعر') }}</td><td>{{ sale_finance.amount }}</td></tr>
+    <tr><td>{{ _('تاريخ البيع') }}</td><td>{{ sale_finance.date }}</td></tr>
+    {% if sale_finance.buyer_name %}<tr><td>{{ _('المشتري') }}</td><td>{{ sale_finance.buyer_name }}{% if sale_finance.buyer_phone %} — {{ sale_finance.buyer_phone }}{% endif %}</td></tr>{% endif %}
+    {% if sale_finance.invoice_number %}<tr><td>{{ _('رقم الفاتورة') }}</td><td>{{ sale_finance.invoice_number }}</td></tr>{% endif %}
   </table>
 </div>
   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
     {% if sale_finance.no_invoice %}
-    <span class="badge off" style="align-self:center;">لا توجد فاتورة لهذا البيع</span>
+    <span class="badge off" style="align-self:center;">{{ _('لا توجد فاتورة لهذا البيع') }}</span>
     {% else %}
-    <a class="btn" href="{{ url_for('core.animal_sale_invoice', animal_id=animal.id) }}">🧾 {{ 'تنزيل الفاتورة' if sale_finance.invoice_number else 'إصدار فاتورة' }}</a>
+    <a class="btn" href="{{ url_for('core.animal_sale_invoice', animal_id=animal.id) }}">🧾 {{ _('تنزيل الفاتورة') if sale_finance.invoice_number else _('إصدار فاتورة') }}</a>
     {% endif %}
-    <form method="post" action="{{ url_for('finance.finance_cancel', row_id=sale_finance.id) }}" onsubmit="return confirm('استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق).');">
+    <form method="post" action="{{ url_for('finance.finance_cancel', row_id=sale_finance.id) }}" onsubmit="return confirm('{{ _('استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق).') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <input type="hidden" name="reason" value="استرجاع بيع من صفحة دورة الإنتاج">
-      <button class="btn light" type="submit">↩️ استرجاع البيع</button>
+      <input type="hidden" name="reason" value="{{ _('استرجاع بيع من صفحة دورة الإنتاج') }}">
+      <button class="btn light" type="submit">↩️ {{ _('استرجاع البيع') }}</button>
     </form>
   </div>
 </div>
@@ -119,10 +119,10 @@
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">سجل أحداث الدورة</h3>
+  <h3 style="font-size:15px;">{{ _('سجل أحداث الدورة') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>التاريخ</th><th>الحدث</th><th>المرحلة</th><th>الحالة</th><th>المتطلب التالي</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحدث') }}</th><th>{{ _('المرحلة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المتطلب التالي') }}</th></tr>
     {% for e in events %}
     <tr>
       <td>{{ e.event_date }}</td>
@@ -132,7 +132,7 @@
       <td>{{ e.next_required_fix or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">لا يوجد أحداث مسجّلة بعد.</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد أحداث مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

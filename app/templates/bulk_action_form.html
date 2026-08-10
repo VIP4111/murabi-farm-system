@@ -3,9 +3,9 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ action_label }}</h2>
-    <a class="btn light" href="{{ url_for('core.animals_bulk_home') }}">إلغاء ← رجوع للإجراء الجماعي</a>
+    <a class="btn light" href="{{ url_for('core.animals_bulk_home') }}">{{ _('إلغاء ← رجوع للإجراء الجماعي') }}</a>
   </div>
-  <p style="color:var(--muted); font-size:13px;">هذا الإجراء رح يُطبَّق على {{ animals|length }} رأس محدّدة أدناه.</p>
+  <p style="color:var(--muted); font-size:13px;">{{ _('هذا الإجراء رح يُطبَّق على %(n)s رأس محدّدة أدناه.', n=animals|length) }}</p>
 </div>
 
 {% if action == 'weight' %}
@@ -13,10 +13,10 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_weight') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>التاريخ (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('التاريخ (لكل الرؤوس)') }}</label><input name="date" type="date" required value="{{ today }}">
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>الوزن (كجم)</th><th>ملاحظة</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('ملاحظة') }}</th></tr>
       {% for a in animals %}
       <tr>
         <td>{{ a.animal_no }}</td>
@@ -27,8 +27,8 @@
       {% endfor %}
     </table>
 </div>
-    <p style="color:var(--muted); font-size:12px;">اترك حقل الوزن فاضي لأي رأس تبي تتخطاه.</p>
-    <button class="btn" type="submit">حفظ الأوزان</button>
+    <p style="color:var(--muted); font-size:12px;">{{ _('اترك حقل الوزن فاضي لأي رأس تبي تتخطاه.') }}</p>
+    <button class="btn" type="submit">{{ _('حفظ الأوزان') }}</button>
   </form>
 </div>
 
@@ -37,49 +37,49 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_vaccination') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">
 
     <div id="vaccineSlot1">
-      <label>اللقاح الأول</label>
+      <label>{{ _('اللقاح الأول') }}</label>
       <div style="display:flex; gap:6px; align-items:center;">
         <select name="vaccine_1_pharmacy_id" class="vaccineSelect" data-slot="1" required style="flex:1;">
-          <option value="">اختر لقاح من الصيدلية</option>
+          <option value="">{{ _('اختر لقاح من الصيدلية') }}</option>
           {% for v in vaccines %}
-          <option value="{{ v.id }}">{{ v.name }}{% if v.protection_days %} (حماية {{ v.protection_days }} يوم){% endif %}</option>
+          <option value="{{ v.id }}">{{ v.name }}{% if v.protection_days %} ({{ _('حماية %(n)s يوم', n=v.protection_days) }}){% endif %}</option>
           {% endfor %}
         </select>
-        <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="إضافة لقاح جديد للصيدلية" target="_blank">➕</a>
+        <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="{{ _('إضافة لقاح جديد للصيدلية') }}" target="_blank">➕</a>
       </div>
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة "لقاح" — الموعد القادم ينجدول تلقائياً من مدة الحماية المسجَّلة عليه.</p>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة "لقاح" — الموعد القادم ينجدول تلقائياً من مدة الحماية المسجَّلة عليه.') }}</p>
       <p id="stockIndicator1" class="notice" style="display:none; font-size:12px; margin:-6px 0 10px;"></p>
-      <a id="restockLink1" class="btn light" href="#" title="فتح صفحة الدواء لتحديث المخزون" target="_blank" style="display:none; font-size:12px; margin:-4px 0 10px;">+ تحديث مخزون هذا اللقاح</a>
+      <a id="restockLink1" class="btn light" href="#" title="{{ _('فتح صفحة الدواء لتحديث المخزون') }}" target="_blank" style="display:none; font-size:12px; margin:-4px 0 10px;">+ {{ _('تحديث مخزون هذا اللقاح') }}</a>
     </div>
 
-    <button type="button" id="addSecondVaccineBtn" class="btn light" style="font-size:12px; margin-bottom:10px;">+ إضافة تحصين ثاني</button>
+    <button type="button" id="addSecondVaccineBtn" class="btn light" style="font-size:12px; margin-bottom:10px;">+ {{ _('إضافة تحصين ثاني') }}</button>
 
     <div id="vaccineSlot2" style="display:none;">
-      <label>اللقاح الثاني</label>
+      <label>{{ _('اللقاح الثاني') }}</label>
       <div style="display:flex; gap:6px; align-items:center;">
         <select name="vaccine_2_pharmacy_id" class="vaccineSelect" data-slot="2" style="flex:1;">
-          <option value="">اختر لقاح من الصيدلية</option>
+          <option value="">{{ _('اختر لقاح من الصيدلية') }}</option>
           {% for v in vaccines %}
-          <option value="{{ v.id }}">{{ v.name }}{% if v.protection_days %} (حماية {{ v.protection_days }} يوم){% endif %}</option>
+          <option value="{{ v.id }}">{{ v.name }}{% if v.protection_days %} ({{ _('حماية %(n)s يوم', n=v.protection_days) }}){% endif %}</option>
           {% endfor %}
         </select>
-        <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="إضافة لقاح جديد للصيدلية" target="_blank">➕</a>
+        <a class="btn light" href="{{ url_for('health.pharmacy_new') }}" title="{{ _('إضافة لقاح جديد للصيدلية') }}" target="_blank">➕</a>
       </div>
       <p id="stockIndicator2" class="notice" style="display:none; font-size:12px; margin:-6px 0 10px;"></p>
-      <a id="restockLink2" class="btn light" href="#" title="فتح صفحة الدواء لتحديث المخزون" target="_blank" style="display:none; font-size:12px; margin:-4px 0 10px;">+ تحديث مخزون هذا اللقاح</a>
+      <a id="restockLink2" class="btn light" href="#" title="{{ _('فتح صفحة الدواء لتحديث المخزون') }}" target="_blank" style="display:none; font-size:12px; margin:-4px 0 10px;">+ {{ _('تحديث مخزون هذا اللقاح') }}</a>
     </div>
 
-    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
-    <p style="color:var(--muted); font-size:12px; margin:-4px 0 8px;">أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول "الجرعة حسب العمر" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً.</p>
+    <h3 style="font-size:14px; margin-top:14px;">{{ _('الرؤوس المحددة') }}</h3>
+    <p style="color:var(--muted); font-size:12px; margin:-4px 0 8px;">{{ _('أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول "الجرعة حسب العمر" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً.') }}</p>
     <div class="table-scroll">
 <table>
       <tr>
-        <th>الرقم</th><th>الاسم</th><th>العمر (يوم)</th>
-        <th class="vaccineCol" data-slot="1">تحصين اللقاح الأول</th>
-        <th class="vaccineCol" data-slot="2" style="display:none;">تحصين اللقاح الثاني</th>
+        <th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('العمر (يوم)') }}</th>
+        <th class="vaccineCol" data-slot="1">{{ _('تحصين اللقاح الأول') }}</th>
+        <th class="vaccineCol" data-slot="2" style="display:none;">{{ _('تحصين اللقاح الثاني') }}</th>
       </tr>
       {% for a in animals %}
       <tr class="animalRow" data-age-days="{{ a.age_days if a.age_days is not none else '' }}">
@@ -89,20 +89,20 @@
         <td class="vaccineCol" data-slot="1">
           <div style="display:flex; gap:4px; align-items:center;">
             <input type="checkbox" name="vaccinated_1_{{ a.id }}" value="1" style="width:auto;">
-            <input type="number" step="0.01" name="dose_1_{{ a.id }}" class="doseInput" data-slot="1" placeholder="مل" style="width:70px; margin-bottom:0;">
+            <input type="number" step="0.01" name="dose_1_{{ a.id }}" class="doseInput" data-slot="1" placeholder="{{ _('مل') }}" style="width:70px; margin-bottom:0;">
           </div>
         </td>
         <td class="vaccineCol" data-slot="2" style="display:none;">
           <div style="display:flex; gap:4px; align-items:center;">
             <input type="checkbox" name="vaccinated_2_{{ a.id }}" value="1" style="width:auto;">
-            <input type="number" step="0.01" name="dose_2_{{ a.id }}" class="doseInput" data-slot="2" placeholder="مل" style="width:70px; margin-bottom:0;">
+            <input type="number" step="0.01" name="dose_2_{{ a.id }}" class="doseInput" data-slot="2" placeholder="{{ _('مل') }}" style="width:70px; margin-bottom:0;">
           </div>
         </td>
       </tr>
       {% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit" style="margin-top:10px;">تسجيل التحصين للكل</button>
+    <button class="btn" type="submit" style="margin-top:10px;">{{ _('تسجيل التحصين للكل') }}</button>
   </form>
 </div>
 <script>
@@ -122,6 +122,8 @@
   // أخضر/أحمر. السيرفر يبقى الحاسم الفعلي لخصم/رفض المخزون
   // (Pharmacy.deduct_stock) — هذا تحذير مسبق بس قبل الإرسال.
   var slotStock = {}; // {slot: {available_qty, unit}}
+  var MSG_ENOUGH = {{ _('🟢 المخزون كافٍ — الاحتياج %(needed)s %(unit)s من أصل %(available)s %(unit2)s متوفرة.')|tojson }};
+  var MSG_NOT_ENOUGH = {{ _('🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s %(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً).')|tojson }};
 
   function recomputeStockIndicator(slot){
     var box = document.getElementById('stockIndicator' + slot);
@@ -144,16 +146,17 @@
     box.style.display = 'block';
     if (totalNeeded <= stock.available_qty) {
       box.style.cssText = 'display:block; background:#f0f9f0; border-color:#c8e6c9; color:#1e6b1e; font-size:12px; margin:-6px 0 10px;';
-      box.textContent = '🟢 المخزون كافٍ — الاحتياج ' + totalNeeded.toFixed(2) + ' ' + (stock.unit || '') +
-        ' من أصل ' + stock.available_qty + ' ' + (stock.unit || '') + ' متوفرة.';
+      box.textContent = MSG_ENOUGH
+        .replace('%(needed)s', totalNeeded.toFixed(2)).replace('%(unit)s', stock.unit || '')
+        .replace('%(available)s', stock.available_qty).replace('%(unit2)s', stock.unit || '');
     } else {
       var avgDose = headsWithDose > 0 ? (totalNeeded / headsWithDose) : 0;
       var coverableHeads = avgDose > 0 ? Math.floor(stock.available_qty / avgDose) : 0;
       box.style.cssText = 'display:block; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16; font-size:12px; margin:-6px 0 10px;';
-      box.textContent = '🔴 المخزون ما يكفي — الاحتياج ' + totalNeeded.toFixed(2) + ' ' + (stock.unit || '') +
-        ' والمتوفر ' + stock.available_qty + ' ' + (stock.unit || '') +
-        ' (يكفي تقريباً لـ' + coverableHeads + ' رأس من أصل ' + headsChecked +
-        ') — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً).';
+      box.textContent = MSG_NOT_ENOUGH
+        .replace('%(needed)s', totalNeeded.toFixed(2)).replace('%(unit)s', stock.unit || '')
+        .replace('%(available)s', stock.available_qty).replace('%(unit2)s', stock.unit || '')
+        .replace('%(coverable)s', coverableHeads).replace('%(checked)s', headsChecked);
     }
   }
 
@@ -212,17 +215,17 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_note') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>التاريخ</label><input name="date" type="date" value="{{ today }}">
-    <label>ملاحظة عامة (تُضاف لكل الرؤوس)</label><textarea name="general_note" required></textarea>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" value="{{ today }}">
+    <label>{{ _('ملاحظة عامة (تُضاف لكل الرؤوس)') }}</label><textarea name="general_note" required></textarea>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>ملاحظة إضافية لهذا الرأس (اختياري)</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('ملاحظة إضافية لهذا الرأس (اختياري)') }}</th></tr>
       {% for a in animals %}
       <tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td><input name="note_{{ a.id }}"></td></tr>
       {% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit">حفظ الملاحظات</button>
+    <button class="btn" type="submit">{{ _('حفظ الملاحظات') }}</button>
   </form>
 </div>
 
@@ -231,18 +234,18 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_barn_move') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>الحظيرة الجديدة</label>
+    <label>{{ _('الحظيرة الجديدة') }}</label>
     <select name="barn_id" required>
       {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <h3 style="font-size:14px; margin-top:14px;">{{ _('الرؤوس المحددة') }}</h3>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>الحظيرة الحالية</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('الحظيرة الحالية') }}</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.barn.barn_name if a.barn else '-' }}</td></tr>{% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit">نقل الكل للحظيرة الجديدة</button>
+    <button class="btn" type="submit">{{ _('نقل الكل للحظيرة الجديدة') }}</button>
   </form>
 </div>
 
@@ -251,21 +254,21 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_purpose') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>الغرض الجديد (لكل الرؤوس المحددة)</label>
+    <label>{{ _('الغرض الجديد (لكل الرؤوس المحددة)') }}</label>
     <select name="purpose" required>
-      <option value="تربية">تربية</option>
-      <option value="تسمين">تسمين</option>
-      <option value="بيع">بيع سريع</option>
+      <option value="تربية">{{ _('تربية') }}</option>
+      <option value="تسمين">{{ _('تسمين') }}</option>
+      <option value="بيع">{{ _('بيع سريع') }}</option>
     </select>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">تحديد "تسمين" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة.</p>
-    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تحديد "تسمين" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع \'مواعيد وجبات العلف\' بشاشة الحظيرة.') }}</p>
+    <h3 style="font-size:14px; margin-top:14px;">{{ _('الرؤوس المحددة') }}</h3>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>الغرض الحالي</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('الغرض الحالي') }}</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.purpose or '-' }}</td></tr>{% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit">تحديد الغرض للكل</button>
+    <button class="btn" type="submit">{{ _('تحديد الغرض للكل') }}</button>
   </form>
 </div>
 
@@ -274,11 +277,11 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_sale') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>تاريخ البيع (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
-    <label>ملاحظة عامة (اختياري، مثلاً اسم المشتري)</label><input name="notes">
+    <label>{{ _('تاريخ البيع (لكل الرؤوس)') }}</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('ملاحظة عامة (اختياري، مثلاً اسم المشتري)') }}</label><input name="notes">
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>سعر البيع</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('سعر البيع') }}</th></tr>
       {% for a in animals %}
       <tr>
         <td>{{ a.animal_no }}</td>
@@ -288,8 +291,8 @@
       {% endfor %}
     </table>
 </div>
-    <p style="color:var(--muted); font-size:12px;">اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة.</p>
-    <button class="btn" type="submit">بيع الكل</button>
+    <p style="color:var(--muted); font-size:12px;">{{ _('اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة.') }}</p>
+    <button class="btn" type="submit">{{ _('بيع الكل') }}</button>
   </form>
 </div>
 
@@ -298,16 +301,16 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_mark_dead') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>تاريخ النفوق (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
-    <label>السبب (اختياري، يُسجَّل لكل الرؤوس)</label><textarea name="reason"></textarea>
+    <label>{{ _('تاريخ النفوق (لكل الرؤوس)') }}</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('السبب (اختياري، يُسجَّل لكل الرؤوس)') }}</label><textarea name="reason"></textarea>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
     </table>
 </div>
-    <p style="color:var(--muted); font-size:12px;">تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل.</p>
-    <button class="btn danger" type="submit" onclick="return confirm('تأكيد تسجيل نفوق {{ animals|length }} رأس؟')">تسجيل النفوق للكل</button>
+    <p style="color:var(--muted); font-size:12px;">{{ _('تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل.') }}</p>
+    <button class="btn danger" type="submit" onclick="return confirm('{{ _('تأكيد تسجيل نفوق %(n)s رأس؟', n=animals|length) }}')">{{ _('تسجيل النفوق للكل') }}</button>
   </form>
 </div>
 
@@ -316,31 +319,31 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_disease') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>اسم المرض</label>
-    <input name="disease_name" required list="diseaseTypesList" placeholder="اختر من القائمة أو اكتب اسماً جديداً">
+    <label>{{ _('اسم المرض') }}</label>
+    <input name="disease_name" required list="diseaseTypesList" placeholder="{{ _('اختر من القائمة أو اكتب اسماً جديداً') }}">
     <datalist id="diseaseTypesList">{% for t in disease_types %}<option value="{{ t.name }}">{% endfor %}</datalist>
-    <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
-    <label>الشدة</label>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('الشدة') }}</label>
     <select name="severity">
-      <option value="light">بسيطة</option>
-      <option value="medium">متوسطة</option>
-      <option value="severe">شديدة</option>
+      <option value="light">{{ _('بسيطة') }}</option>
+      <option value="medium">{{ _('متوسطة') }}</option>
+      <option value="severe">{{ _('شديدة') }}</option>
     </select>
-    <label>الدواء من الصيدلية (اختياري)</label>
+    <label>{{ _('الدواء من الصيدلية (اختياري)') }}</label>
     <select name="pharmacy_id">
-      <option value="">بدون دواء</option>
-      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }}{{ ' — ' + m.usage_method if m.usage_method }} (سحب: {{ m.withdrawal_days }} يوم)</option>{% endfor %}
+      <option value="">{{ _('بدون دواء') }}</option>
+      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }}{{ ' — ' + m.usage_method if m.usage_method }} ({{ _('سحب: %(n)s يوم', n=m.withdrawal_days) }})</option>{% endfor %}
     </select>
-    <label>الكمية المستخدمة لكل رأس</label><input name="quantity_used_per_head" type="number" step="0.01">
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة.</p>
-    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة</h3>
+    <label>{{ _('الكمية المستخدمة لكل رأس') }}</label><input name="quantity_used_per_head" type="number" step="0.01">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة.') }}</p>
+    <h3 style="font-size:14px; margin-top:14px;">{{ _('الرؤوس المحددة') }}</h3>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit">تسجيل الحالة للكل</button>
+    <button class="btn" type="submit">{{ _('تسجيل الحالة للكل') }}</button>
   </form>
 </div>
 
@@ -349,16 +352,16 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_isolation') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>التاريخ</label><input name="date" type="date" required value="{{ today }}">
-    <label>سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)</label><textarea name="reason"></textarea>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)') }}</label><textarea name="reason"></textarea>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>الحظيرة الحالية</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('الحظيرة الحالية') }}</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td><td>{{ a.barn.barn_name if a.barn else '-' }}</td></tr>{% endfor %}
     </table>
 </div>
-    <p style="color:var(--muted); font-size:12px;">ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل).</p>
-    <button class="btn" type="submit">عزل الكل</button>
+    <p style="color:var(--muted); font-size:12px;">{{ _('ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل).') }}</p>
+    <button class="btn" type="submit">{{ _('عزل الكل') }}</button>
   </form>
 </div>
 
@@ -367,15 +370,15 @@
   <form method="post" action="{{ url_for('core.animals_bulk_apply_sonar') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>تاريخ الفحص (لكل الرؤوس)</label><input name="date" type="date" required value="{{ today }}">
-    <label>الطبيب (اختياري)</label>
+    <label>{{ _('تاريخ الفحص (لكل الرؤوس)') }}</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('الطبيب (اختياري)') }}</label>
     <select name="doctor_id">
-      <option value="">بدون تحديد</option>
+      <option value="">{{ _('بدون تحديد') }}</option>
       {% for d in doctors %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
     </select>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th><th>النتيجة</th><th>عدد الأجنة</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنة') }}</th></tr>
       {% for a in animals %}
       <tr>
         <td>{{ a.animal_no }}</td>
@@ -383,9 +386,9 @@
         <td>
           <select name="result_{{ a.id }}">
             <option value="">—</option>
-            <option value="حامل">حامل</option>
-            <option value="غير حامل">غير حامل</option>
-            <option value="غير واضح">غير واضح</option>
+            <option value="حامل">{{ _('حامل') }}</option>
+            <option value="غير حامل">{{ _('غير حامل') }}</option>
+            <option value="غير واضح">{{ _('غير واضح') }}</option>
           </select>
         </td>
         <td><input name="embryo_{{ a.id }}" type="number" min="0" step="1"></td>
@@ -393,41 +396,39 @@
       {% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit">حفظ نتائج الكل</button>
+    <button class="btn" type="submit">{{ _('حفظ نتائج الكل') }}</button>
   </form>
 </div>
 
 {% elif action == 'treatment_plan' %}
 <div class="card">
   <p style="color:var(--muted); font-size:13px;">
-    ⚠️ هذا الإجراء <b>ما يسجّل ولا يخصم أي شيء الآن</b> (بند إضافي 50) — بس يولّد مهمة
-    "علاج مخطَّط" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم "تأكيد التنفيذ" الفعلي
-    لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية).
+    {{ _('⚠️ هذا الإجراء ما يسجّل ولا يخصم أي شيء الآن (بند إضافي 50) — بس يولّد مهمة "علاج مخطَّط" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم "تأكيد التنفيذ" الفعلي لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية).') }}
   </p>
   <form method="post" action="{{ url_for('core.animals_bulk_apply_treatment_plan') }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% for a in animals %}<input type="hidden" name="animal_ids" value="{{ a.id }}">{% endfor %}
-    <label>الدواء المخطَّط</label>
+    <label>{{ _('الدواء المخطَّط') }}</label>
     <select name="pharmacy_id" required>
-      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }} (سحب: {{ m.withdrawal_days }} يوم)</option>{% endfor %}
+      {% for m in pharmacies %}<option value="{{ m.id }}">{{ m.name }} ({{ _('سحب: %(n)s يوم', n=m.withdrawal_days) }})</option>{% endfor %}
     </select>
-    <label>الجرعة لكل رأس</label><input name="quantity_per_head" type="number" step="0.01" required>
-    <label>نوع التسجيل عند التنفيذ</label>
+    <label>{{ _('الجرعة لكل رأس') }}</label><input name="quantity_per_head" type="number" step="0.01" required>
+    <label>{{ _('نوع التسجيل عند التنفيذ') }}</label>
     <select name="treatment_kind" required>
-      <option value="vet_visit">زيارة بيطرية</option>
-      <option value="disease">علاج/مرض</option>
-      <option value="vaccination">تطعيم</option>
+      <option value="vet_visit">{{ _('زيارة بيطرية') }}</option>
+      <option value="disease">{{ _('علاج/مرض') }}</option>
+      <option value="vaccination">{{ _('تطعيم') }}</option>
     </select>
-    <label>سبب المهمة/الدافع</label><textarea name="reason" placeholder="مثال: فحص دوري كشف انتشار طفيليات بالحظيرة"></textarea>
-    <label>الموعد المستهدف للتنفيذ</label><input name="due_date" type="date" value="{{ today }}">
-    <h3 style="font-size:14px; margin-top:14px;">الرؤوس المحددة ({{ animals|length }})</h3>
+    <label>{{ _('سبب المهمة/الدافع') }}</label><textarea name="reason" placeholder="{{ _('مثال: فحص دوري كشف انتشار طفيليات بالحظيرة') }}"></textarea>
+    <label>{{ _('الموعد المستهدف للتنفيذ') }}</label><input name="due_date" type="date" value="{{ today }}">
+    <h3 style="font-size:14px; margin-top:14px;">{{ _('الرؤوس المحددة (%(n)s)', n=animals|length) }}</h3>
     <div class="table-scroll">
 <table>
-      <tr><th>الرقم</th><th>الاسم</th></tr>
+      <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th></tr>
       {% for a in animals %}<tr><td>{{ a.animal_no }}</td><td>{{ a.name or '-' }}</td></tr>{% endfor %}
     </table>
 </div>
-    <button class="btn" type="submit">إنشاء خطة العلاج (مقترحة)</button>
+    <button class="btn" type="submit">{{ _('إنشاء خطة العلاج (مقترحة)') }}</button>
   </form>
 </div>
 {% endif %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 03:31+0300\n"
+"POT-Creation-Date: 2026-08-10 03:55+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -337,19 +337,63 @@ msgstr "ለማዳቀል ዝግጁ"
 msgid "النعام"
 msgstr "ሰጎኖች"
 
-#: app/core/routes.py:667
+#: app/core/routes.py:260 app/templates/animals_list.html:67
+msgid "وزن جماعي"
+msgstr "የቡድን ክብደት"
+
+#: app/core/routes.py:261 app/templates/animals_list.html:76
+msgid "تحصين جماعي"
+msgstr "የቡድን ክትባት"
+
+#: app/core/routes.py:262 app/templates/animals_list.html:68
+msgid "ملاحظة جماعية"
+msgstr "የቡድን ማስታወሻ"
+
+#: app/core/routes.py:263 app/templates/animals_list.html:69
+msgid "نقل حظيرة جماعي"
+msgstr "የቡድን በረት ማዛወር"
+
+#: app/core/routes.py:264 app/templates/animals_list.html:70
+msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
+msgstr "የቡድን ዓላማ መወሰን (ማራባት/ማድለብ/ሽያጭ)"
+
+#: app/core/routes.py:265 app/templates/animals_list.html:71
+msgid "بيع جماعي"
+msgstr "የቡድን ሽያጭ"
+
+#: app/core/routes.py:266 app/templates/animals_list.html:72
+msgid "تسجيل نفوق جماعي"
+msgstr "የቡድን ሞት መመዝገብ"
+
+#: app/core/routes.py:267 app/templates/animals_list.html:77
+msgid "علاج/مرض جماعي"
+msgstr "የቡድን ሕክምና/በሽታ"
+
+#: app/core/routes.py:268 app/templates/animals_list.html:78
+msgid "عزل جماعي"
+msgstr "የቡድን መገለል"
+
+#: app/core/routes.py:269 app/templates/animals_list.html:82
+msgid "فحص سونار جماعي"
+msgstr "የቡድን ሶናር ምርመራ"
+
+#: app/core/routes.py:270 app/templates/animals_list.html:79
+msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
+msgstr "የታቀደ የሕክምና ዕቅድ (የማስፈጸም ማረጋገጫ በመጠበቅ ላይ)"
+
+#: app/core/routes.py:668 app/templates/animal_form.html:35
 msgid "إضافة فصيلة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
-#: app/core/routes.py:669
+#: app/core/routes.py:670
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "አዲስ ዝርያ በራስ-ሰር ወደ ምርት ዑደት ሞተር (ማዳቀል/እርግዝና/ጡት ማስጣት) አይገባም — ለእሱ ልዩ ስርዓት እስኪገነባ ድረስ እንደ ሰጎን በደህንነት ይያዛል።"
 
-#: app/core/routes.py:688
+#: app/core/routes.py:689 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
-#: app/core/routes.py:708
+#: app/core/routes.py:709 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr "አዲስ ቀለም ያክሉ"
 
@@ -535,17 +579,35 @@ msgid "إجمالي حالات النفوق"
 msgstr "ጠቅላላ የሞት ጉዳዮች"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
+#: app/templates/animal_form.html:8 app/templates/animal_form.html:13
 #: app/templates/animals_list.html:92 app/templates/barn_form.html:7
-#: app/templates/barns_list.html:10
+#: app/templates/barns_list.html:10 app/templates/bulk_action_form.html:19
+#: app/templates/bulk_action_form.html:80
+#: app/templates/bulk_action_form.html:222
+#: app/templates/bulk_action_form.html:244
+#: app/templates/bulk_action_form.html:267
+#: app/templates/bulk_action_form.html:284
+#: app/templates/bulk_action_form.html:308
+#: app/templates/bulk_action_form.html:342
+#: app/templates/bulk_action_form.html:359
+#: app/templates/bulk_action_form.html:381
+#: app/templates/bulk_action_form.html:427
 msgid "الرقم"
 msgstr "ቁጥር"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
+#: app/templates/animal_form.html:62
+#: app/templates/animals_bulk_purchase.html:37
 msgid "الجنس"
 msgstr "ጾታ"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:253
 #: app/reports/report_service.py:296 app/reports/report_service.py:378
+#: app/templates/animal_workflow.html:125
+#: app/templates/bulk_action_form.html:40
+#: app/templates/bulk_action_form.html:218
+#: app/templates/bulk_action_form.html:325
+#: app/templates/bulk_action_form.html:355
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
@@ -565,7 +627,7 @@ msgstr "ቀን"
 msgid "السبب"
 msgstr "ምክንያት"
 
-#: app/reports/report_service.py:166
+#: app/reports/report_service.py:166 app/templates/bulk_action_form.html:80
 msgid "العمر (يوم)"
 msgstr "ዕድሜ (ቀናት)"
 
@@ -589,7 +651,7 @@ msgstr "በጊዜው ውስጥ የተረጋገጠ እርግዝና"
 msgid "نسبة نجاح التقريع→حمل"
 msgstr "የማዳቀል→እርግዝና ስኬት መጠን"
 
-#: app/reports/report_service.py:211
+#: app/reports/report_service.py:211 app/templates/animal_form.html:108
 msgid "تاريخ الولادة"
 msgstr "የልደት ቀን"
 
@@ -913,10 +975,254 @@ msgstr "ክፈት"
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "አሁን ምንም ማንቂያ የለም — ሁሉም ነገር ደህና ነው።"
 
+#: app/templates/animal_form.html:4
+msgid "تعديل بيانات الحيوان"
+msgstr "የእንስሳ መረጃ አርትዕ"
+
+#: app/templates/animal_form.html:4
+msgid "تسجيل حيوان جديد"
+msgstr "አዲስ እንስሳ መዝግብ"
+
+#: app/templates/animal_form.html:10
+msgid "رقم مؤقت (TEMP) — لسا ما استبدلته برقم/رقعة دائمة."
+msgstr "ጊዜያዊ ቁጥር (TEMP) — እስካሁን በቋሚ ቁጥር/መለያ አልተተካም።"
+
+#: app/templates/animal_form.html:14
+msgid "مثال: BR-2026-001"
+msgstr "ምሳሌ: BR-2026-001"
+
+#: app/templates/animal_form.html:15
+msgid "إلزامي — إلا لو المصدر \"ولادة بالمزرعة\" بدون رقعة جاهزة بعد، وقتها يُولَّد رقم مؤقت تلقائياً."
+msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ በስተቀር መለያ ገና ካልተዘጋጀ፣ ያኔ ጊዜያዊ ቁጥር በራስ-ሰር ይፈጠራል።"
+
+#: app/templates/animal_form.html:18
+msgid "اللون"
+msgstr "ቀለም"
+
+#: app/templates/animal_form.html:21
+msgid "اختر اللون..."
+msgstr "ቀለም ይምረጡ..."
+
+#: app/templates/animal_form.html:26
+msgid "الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين."
+msgstr "ቁጥር እና ቀለም አብረው የእንስሳውን የመስክ ማንነት ይመሠርታሉ — ሁለቱንም መምረጥ አለብዎት።"
+
+#: app/templates/animal_form.html:28
+msgid "الاسم (اختياري)"
+msgstr "ስም (አማራጭ)"
+
+#: app/templates/animal_form.html:30
+#: app/templates/animals_bulk_purchase.html:20
+msgid "الفصيلة"
+msgstr "ዝርያ"
+
+#: app/templates/animal_form.html:38
+msgid "أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً."
+msgstr "አኝኪ ያልሆነ ማንኛውም ዝርያ (ሰጎን ወይም አዲስ ዝርያ) ወደ ምርት ዑደት (ማዳቀል/እርግዝና/ጡት ማስጣል) በራስ-ሰር አይገባም።"
+
+#: app/templates/animal_form.html:40
+msgid "السلالة"
+msgstr "ዝርያ (ንዑስ)"
+
+#: app/templates/animal_form.html:49 app/templates/animal_form.html:53
+#: app/templates/animals_list.html:92
+msgid "المصدر"
+msgstr "ምንጭ"
+
+#: app/templates/animal_form.html:50 app/templates/animal_form.html:55
+#: app/templates/animals_list.html:94 app/templates/finance/form.html:11
+#: app/templates/finance/list.html:36
+msgid "شراء"
+msgstr "ግዢ"
+
+#: app/templates/animal_form.html:50 app/templates/animal_form.html:56
+msgid "ولادة بالمزرعة"
+msgstr "በእርሻው የተወለደ"
+
+#: app/templates/animal_form.html:50
+msgid "هدية/دعم عيني"
+msgstr "ስጦታ/የዓይነት ድጋፍ"
+
+#: app/templates/animal_form.html:50 app/templates/animals_list.html:94
+msgid "رصيد افتتاحي"
+msgstr "የመክፈቻ ቀሪ ሂሳብ"
+
+#: app/templates/animal_form.html:51
+msgid "المصدر لا يتغيّر بعد الإنشاء (مرتبط بحركة مالية وحدث دورة إنتاج تسجّلا أصلاً) — لو أُدخل غلط، الأصح أرشفة هذا الرأس وإضافة رأس جديد صحيح."
+msgstr "ምንጭ ከተፈጠረ በኋላ አይቀየርም (አስቀድሞ ከተመዘገበ የገንዘብ ግብይት እና የምርት-ዑደት ክስተት ጋር የተያያዘ) — በስህተት ከገባ፣ ትክክለኛው መንገድ ይህን እንስሳ ማህደር ማድረግ እና አዲስ ትክክለኛ እንስሳ መጨመር ነው።"
+
+#: app/templates/animal_form.html:57
+msgid "هدية / دعم عيني"
+msgstr "ስጦታ / የዓይነት ድጋፍ"
+
+#: app/templates/animal_form.html:58
+msgid "رصيد افتتاحي (موجود أصلاً بالقطيع)"
+msgstr "የመክፈቻ ቀሪ ሂሳብ (አስቀድሞ በመንጋው ውስጥ ያለ)"
+
+#: app/templates/animal_form.html:64
+#: app/templates/animals_bulk_purchase.html:43
+#: app/templates/animals_bulk_purchase.html:65
+msgid "ذكر"
+msgstr "ወንድ"
+
+#: app/templates/animal_form.html:65
+#: app/templates/animals_bulk_purchase.html:44
+#: app/templates/animals_bulk_purchase.html:66
+msgid "أنثى"
+msgstr "ሴት"
+
+#: app/templates/animal_form.html:70
+msgid "هل هي حامل؟"
+msgstr "ነፍሰ ጡር ናት?"
+
+#: app/templates/animal_form.html:72
+#: app/templates/health/disease_link_wizard.html:83
+#: app/templates/health/disease_link_wizard.html:87
+#: app/templates/health/disease_link_wizard.html:91
+msgid "لا"
+msgstr "አይ"
+
+#: app/templates/animal_form.html:73
+#: app/templates/health/disease_type_detail.html:63
+#: app/templates/health/disease_type_detail.html:64
+#: app/templates/health/disease_type_detail.html:65
+msgid "نعم"
+msgstr "አዎ"
+
+#: app/templates/animal_form.html:75
+msgid "لو \"نعم\": تُسجَّل كحمل غير مؤكَّد بعد (بانتظار تأكيد الطبيب)، وتتولّد مهمة تنقلها فعلياً لحظيرة الحوامل بعد انتهاء فترة العزل."
+msgstr "\"አዎ\" ከሆነ: ገና ያልተረጋገጠ እርግዝና ተብሎ ይመዘገባል (የሐኪም ማረጋገጫ በመጠበቅ ላይ)፣ እና የለይቶ ማቆያ ጊዜ ካለቀ በኋላ ወደ ነፍሰ ጡር በረት በትክክል የሚያዛውራት ተግባር ይፈጠራል።"
+
+#: app/templates/animal_form.html:79
+msgid "الغرض (يحدّد مسار دورة الإنتاج لاحقاً)"
+msgstr "ዓላማ (በኋላ የምርት-ዑደት መንገድን ይወስናል)"
+
+#: app/templates/animal_form.html:81
+msgid "غير محدد بعد"
+msgstr "እስካሁን ያልተወሰነ"
+
+#: app/templates/animal_form.html:82 app/templates/bulk_action_form.html:259
+msgid "تربية"
+msgstr "እርባታ"
+
+#: app/templates/animal_form.html:83 app/templates/bulk_action_form.html:260
+#: app/templates/feed/ration_form.html:14
+msgid "تسمين"
+msgstr "ማድለብ"
+
+#: app/templates/animal_form.html:84 app/templates/bulk_action_form.html:261
+msgid "بيع سريع"
+msgstr "ፈጣን ሽያጭ"
+
+#: app/templates/animal_form.html:87 app/templates/animals_list.html:92
+#: app/templates/feed/barn_plan_form.html:7
+#: app/templates/feed/barn_plans_list.html:10
+#: app/templates/feed/fcr_report.html:16
+#: app/templates/health/vaccination_schedule_form.html:7
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/team/report_detail.html:24
+#: app/templates/team/report_form.html:24
+#: app/templates/team/worker_report_form.html:47
+msgid "الحظيرة"
+msgstr "በረት"
+
+#: app/templates/animal_form.html:89
+msgid "اختر الحظيرة..."
+msgstr "በረት ይምረጡ..."
+
+#: app/templates/animal_form.html:92
+msgid "اختيار حظيرة العزل لرأس مشترى جديد يولّد له تلقائياً مهام رش وقائي وتحصين مبدئي إلزامية."
+msgstr "ለአዲስ የተገዛ እንስሳ የለይቶ ማቆያ በረት መምረጥ በራስ-ሰር አስገዳጅ የመከላከያ ርጭት እና የመጀመሪያ ክትባት ተግባራትን ይፈጥራል።"
+
+#: app/templates/animal_form.html:96
+msgid "الأم (مطلوب فقط لو المصدر \"ولادة\")"
+msgstr "እናት (ምንጩ \"ልደት\" ከሆነ ብቻ ያስፈልጋል)"
+
+#: app/templates/animal_form.html:102
+msgid "الأب (اختياري، لو معروف ومسجّل بالنظام)"
+msgstr "አባት (አማራጭ፣ የሚታወቅ እና በሲስተም ውስጥ የተመዘገበ ከሆነ)"
+
+#: app/templates/animal_form.html:112
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:32
+msgid "تاريخ الشراء"
+msgstr "የግዢ ቀን"
+
+#: app/templates/animal_form.html:113
+msgid "إرفاق فاتورة الشراء (إن وجدت)"
+msgstr "የግዢ ደረሰኝ ያያይዙ (ካለ)"
+
+#: app/templates/animal_form.html:118
+msgid "تاريخ الدخول"
+msgstr "የመግቢያ ቀን"
+
+#: app/templates/animal_form.html:121
+msgid "تاريخ الولادة (لو المصدر ولادة)"
+msgstr "የልደት ቀን (ምንጩ ልደት ከሆነ)"
+
+#: app/templates/animal_form.html:122
+msgid "تاريخ الشراء (لو المصدر شراء)"
+msgstr "የግዢ ቀን (ምንጩ ግዢ ከሆነ)"
+
+#: app/templates/animal_form.html:123
+msgid "تاريخ الدخول (لو المصدر هدية أو رصيد افتتاحي)"
+msgstr "የመግቢያ ቀን (ምንጩ ስጦታ ወይም የመክፈቻ ቀሪ ሂሳብ ከሆነ)"
+
+#: app/templates/animal_form.html:126
+#: app/templates/animals_bulk_purchase.html:37
+#: app/templates/bulk_action_form.html:19
+msgid "الوزن (كجم)"
+msgstr "ክብደት (ኪ.ግ)"
+
+#: app/templates/animal_form.html:127
+msgid "السعر / القيمة التقديرية"
+msgstr "ዋጋ / የተገመተ ዋጋ"
+
+#: app/templates/animal_form.html:128
+msgid "رابط الصورة (اختياري)"
+msgstr "የምስል አገናኝ (አማራጭ)"
+
+#: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
+#: app/templates/barn_form.html:41 app/templates/feed/barn_plan_form.html:21
+#: app/templates/feed/item_form.html:34
+#: app/templates/feed/movement_form.html:28
+#: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
+#: app/templates/health/disease_form.html:45
+#: app/templates/health/disease_type_detail.html:41
+#: app/templates/health/disease_type_form.html:9
+#: app/templates/health/doctor_form.html:10
+#: app/templates/health/pharmacy_form.html:111
+#: app/templates/health/vaccination_form.html:29
+#: app/templates/health/vet_visit_form.html:34
+#: app/templates/repro/sonar_form.html:36
+#: app/templates/team/member_edit_form.html:33
+#: app/templates/team/member_form.html:21
+msgid "حفظ"
+msgstr "አስቀምጥ"
+
+#: app/templates/animal_form.html:142
+msgid "اختياري لو ولادة بدون رقعة جاهزة بعد — يُولَّد رقم مؤقت تلقائياً."
+msgstr "ልደት ከሆነ እና መለያ ገና ካልተዘጋጀ አማራጭ ነው — ጊዜያዊ ቁጥር በራስ-ሰር ይፈጠራል።"
+
+#: app/templates/animal_form.html:143
+msgid "إلزامي — إلا لو المصدر \"ولادة بالمزرعة\" بدون رقعة جاهزة بعد."
+msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ በስተቀር መለያ ገና ካልተዘጋጀ።"
+
 #: app/templates/animal_option_form.html:8 app/templates/animals_list.html:92
 #: app/templates/barn_form.html:8 app/templates/barns_list.html:10
-#: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
-#: app/templates/feed/ration_form.html:7
+#: app/templates/bulk_action_form.html:19
+#: app/templates/bulk_action_form.html:80
+#: app/templates/bulk_action_form.html:222
+#: app/templates/bulk_action_form.html:244
+#: app/templates/bulk_action_form.html:267
+#: app/templates/bulk_action_form.html:284
+#: app/templates/bulk_action_form.html:308
+#: app/templates/bulk_action_form.html:342
+#: app/templates/bulk_action_form.html:359
+#: app/templates/bulk_action_form.html:381
+#: app/templates/bulk_action_form.html:427 app/templates/feed/item_form.html:7
+#: app/templates/feed/items_list.html:10 app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
@@ -941,7 +1247,8 @@ msgstr "ስም"
 msgid "إضافة"
 msgstr "ጨምር"
 
-#: app/templates/animal_option_form.html:11 app/templates/finance/list.html:55
+#: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
+#: app/templates/finance/list.html:55
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -950,6 +1257,285 @@ msgstr "ጨምር"
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "ሰርዝ"
+
+#: app/templates/animal_workflow.html:5
+msgid "دورة الإنتاج"
+msgstr "የምርት ዑደት"
+
+#: app/templates/animal_workflow.html:7
+msgid "صفحة تفاصيل الرأس"
+msgstr "የእንስሳ ዝርዝር ገጽ"
+
+#: app/templates/animal_workflow.html:13
+msgid "المسار"
+msgstr "መንገድ"
+
+#: app/templates/animal_workflow.html:14
+msgid "المرحلة الحالية"
+msgstr "የአሁኑ ደረጃ"
+
+#: app/templates/animal_workflow.html:14
+#, python-format
+msgid "رقم %(n)s من 10"
+msgstr "ቁጥር %(n)s ከ10"
+
+#: app/templates/animal_workflow.html:15
+msgid "قرار المصير"
+msgstr "የዕጣ ፈንታ ውሳኔ"
+
+#: app/templates/animal_workflow.html:16
+msgid "أحداث بترتيب غير منتظم"
+msgstr "ያልተስተካከለ ቅደም ተከተል ያላቸው ክስተቶች"
+
+#: app/templates/animal_workflow.html:21
+msgid "متطلبات ناقصة للانتقال"
+msgstr "ለመሸጋገር የጎደሉ መስፈርቶች"
+
+#: app/templates/animal_workflow.html:32
+msgid "خط سير المراحل"
+msgstr "የደረጃ የጊዜ መስመር"
+
+#: app/templates/animal_workflow.html:37
+#, python-format
+msgid "مرحلة %(n)s"
+msgstr "ደረጃ %(n)s"
+
+#: app/templates/animal_workflow.html:39
+#: app/templates/health/vaccination_schedule_list.html:56
+msgid "مكتملة"
+msgstr "ተጠናቋል"
+
+#: app/templates/animal_workflow.html:40
+msgid "الحالية"
+msgstr "የአሁኑ"
+
+#: app/templates/animal_workflow.html:41
+msgid "لاحقة"
+msgstr "ቀጣይ"
+
+#: app/templates/animal_workflow.html:50
+msgid "بيانات تخطيط السوق (تدعم بوابة مرحلة \"تخطيط السوق\")"
+msgstr "የገበያ ዕቅድ መረጃ (\"የገበያ ዕቅድ\" የደረጃ በርን ይደግፋል)"
+
+#: app/templates/animal_workflow.html:53
+msgid "تاريخ بيع مستهدف"
+msgstr "የታለመ የሽያጭ ቀን"
+
+#: app/templates/animal_workflow.html:54
+msgid "قيمة تقديرية"
+msgstr "የተገመተ ዋጋ"
+
+#: app/templates/animal_workflow.html:55
+#, python-format
+msgid "هامش ربح مستهدف (%%)"
+msgstr "የታለመ የትርፍ ህዳግ (%%)"
+
+#: app/templates/animal_workflow.html:56
+msgid "تاريخ فطام (لو ينطبق)"
+msgstr "የጡት ማስጣል ቀን (የሚመለከት ከሆነ)"
+
+#: app/templates/animal_workflow.html:63
+msgid "قرار الخروج"
+msgstr "የመውጫ ውሳኔ"
+
+#: app/templates/animal_workflow.html:67
+msgid "بيع — السعر"
+msgstr "ሽያጭ — ዋጋ"
+
+#: app/templates/animal_workflow.html:68 app/templates/animal_workflow.html:100
+msgid "تاريخ البيع"
+msgstr "የሽያጭ ቀን"
+
+#: app/templates/animal_workflow.html:69
+msgid "اسم المشتري (اختياري — يظهر بالفاتورة)"
+msgstr "የገዢ ስም (አማራጭ — በደረሰኝ ላይ ይታያል)"
+
+#: app/templates/animal_workflow.html:70
+msgid "جوال المشتري (اختياري)"
+msgstr "የገዢ ስልክ (አማራጭ)"
+
+#: app/templates/animal_workflow.html:71 app/templates/barn_form.html:27
+#: app/templates/feed/barn_plan_form.html:18
+#: app/templates/feed/item_form.html:33
+#: app/templates/feed/ration_detail.html:13
+#: app/templates/feed/ration_form.html:30
+#: app/templates/health/disease_types_list.html:23
+#: app/templates/health/pharmacy_form.html:110
+#: app/templates/health/vaccination_schedule_list.html:13
+#: app/templates/health/vet_visit_form.html:33
+#: app/templates/isolation_exit_form.html:25
+#: app/templates/repro/sonar_form.html:34
+msgid "ملاحظات"
+msgstr "ማስታወሻዎች"
+
+#: app/templates/animal_workflow.html:74
+msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
+msgstr "ለዚህ ሽያጭ ደረሰኝ የለም (መደበኛ ያልሆነ የጥሬ ገንዘብ ሽያጭ)"
+
+#: app/templates/animal_workflow.html:76
+msgid "تسجيل البيع"
+msgstr "ሽያጭ መዝግብ"
+
+#: app/templates/animal_workflow.html:80
+msgid "نفوق — السبب"
+msgstr "ሞት — ምክንያት"
+
+#: app/templates/animal_workflow.html:81
+msgid "تاريخ النفوق"
+msgstr "የሞት ቀን"
+
+#: app/templates/animal_workflow.html:82
+msgid "تسجيل النفوق"
+msgstr "ሞት መዝግብ"
+
+#: app/templates/animal_workflow.html:84
+msgid "تأكيد الأرشفة؟"
+msgstr "ወደ ማህደር መውሰድን ያረጋግጡ?"
+
+#: app/templates/animal_workflow.html:86
+msgid "أرشفة — السبب"
+msgstr "ማህደር — ምክንያት"
+
+#: app/templates/animal_workflow.html:87
+msgid "تجاوز وجود عمليات مالية مرتبطة"
+msgstr "የተያያዙ የገንዘብ ግብይቶችን ችላ ይበሉ"
+
+#: app/templates/animal_workflow.html:88
+msgid "أرشفة"
+msgstr "ማህደር"
+
+#: app/templates/animal_workflow.html:96
+msgid "بيانات البيع"
+msgstr "የሽያጭ መረጃ"
+
+#: app/templates/animal_workflow.html:99
+msgid "السعر"
+msgstr "ዋጋ"
+
+#: app/templates/animal_workflow.html:101
+msgid "المشتري"
+msgstr "ገዢ"
+
+#: app/templates/animal_workflow.html:102
+msgid "رقم الفاتورة"
+msgstr "የደረሰኝ ቁጥር"
+
+#: app/templates/animal_workflow.html:107
+msgid "لا توجد فاتورة لهذا البيع"
+msgstr "ለዚህ ሽያጭ ደረሰኝ የለም"
+
+#: app/templates/animal_workflow.html:109
+msgid "تنزيل الفاتورة"
+msgstr "ደረሰኝ አውርድ"
+
+#: app/templates/animal_workflow.html:109
+msgid "إصدار فاتورة"
+msgstr "ደረሰኝ ስጥ"
+
+#: app/templates/animal_workflow.html:111
+msgid "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق)."
+msgstr "ሽያጭን መልስ? እንስሳው ወደ ንቁ ሁኔታ ይመለሳል እና የገንዘብ ግብይቱ ይሰረዛል (ለኦዲት በመዝገብ ውስጥ ይቀራል)።"
+
+#: app/templates/animal_workflow.html:113
+msgid "استرجاع بيع من صفحة دورة الإنتاج"
+msgstr "ከምርት ዑደት ገጽ የሽያጭ መመለስ"
+
+#: app/templates/animal_workflow.html:114
+msgid "استرجاع البيع"
+msgstr "ሽያጭ መልስ"
+
+#: app/templates/animal_workflow.html:122
+msgid "سجل أحداث الدورة"
+msgstr "የዑደት ክስተት መዝገብ"
+
+#: app/templates/animal_workflow.html:125
+msgid "الحدث"
+msgstr "ክስተት"
+
+#: app/templates/animal_workflow.html:125 app/templates/animals_list.html:92
+msgid "المرحلة"
+msgstr "ደረጃ"
+
+#: app/templates/animal_workflow.html:125 app/templates/animals_list.html:92
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/doctors_list.html:10
+#: app/templates/health/pharmacy_list.html:13
+#: app/templates/health/protocols_list.html:15
+#: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/team/daily_templates.html:18
+#: app/templates/team/members_list.html:10
+#: app/templates/team/reports_list.html:26
+#: app/templates/team/reports_list.html:38
+#: app/templates/team/reports_list.html:51
+#: app/templates/team/reports_list.html:64
+#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:147
+#: app/templates/team/tasks_list.html:169
+msgid "الحالة"
+msgstr "ሁኔታ"
+
+#: app/templates/animal_workflow.html:125
+msgid "المتطلب التالي"
+msgstr "ቀጣይ መስፈርት"
+
+#: app/templates/animal_workflow.html:135
+msgid "لا يوجد أحداث مسجّلة بعد."
+msgstr "እስካሁን የተመዘገበ ክስተት የለም።"
+
+#: app/templates/animals_bulk_purchase.html:5
+msgid "شراء دفعة جديدة"
+msgstr "አዲስ ጭነት ግዛ"
+
+#: app/templates/animals_bulk_purchase.html:6
+#: app/templates/bulk_action_form.html:6
+msgid "إلغاء ← رجوع للإجراء الجماعي"
+msgstr "ሰርዝ ← ወደ የቡድን እርምጃ ተመለስ"
+
+#: app/templates/animals_bulk_purchase.html:8
+msgid "إضافة عدة رؤوس مشتراة دفعة واحدة — كل صف يمر بنفس نقطة الدخول الموحّدة لإنشاء الحيوانات، فيسجَّل له تلقائياً حركة مالية \"شراء\" وحدث دورة إنتاج، تماماً كأنه أُضيف من شاشة \"+ حيوان جديد\" فرداً فرداً."
+msgstr "በአንድ ጊዜ የተገዙ በርካታ እንስሳትን ጨምር — እያንዳንዱ ረድፍ ተመሳሳይ የተዋሃደ የእንስሳት መፍጠሪያ መግቢያ ነጥብ ውስጥ ያልፋል፣ ስለዚህ በራስ-ሰር \"ግዢ\" የገንዘብ ግብይት እና የምርት-ዑደት ክስተት ያገኛል፣ ልክ ከ\"+ አዲስ እንስሳ\" ማያ ገጽ በተናጠል እንደተጨመረ።"
+
+#: app/templates/animals_bulk_purchase.html:16
+msgid "تاريخ الشراء (لكل الدفعة)"
+msgstr "የግዢ ቀን (ለጠቅላላው ጭነት)"
+
+#: app/templates/animals_bulk_purchase.html:22
+#: app/templates/team/report_detail.html:17
+msgid "حلال (ضأن/ماعز)"
+msgstr "እንስሳት (በግ/ፍየል)"
+
+#: app/templates/animals_bulk_purchase.html:23
+#: app/templates/team/report_detail.html:17
+msgid "نعام"
+msgstr "ሰጎን"
+
+#: app/templates/animals_bulk_purchase.html:27
+msgid "الحظيرة (لكل الدفعة)"
+msgstr "በረት (ለጠቅላላው ጭነት)"
+
+#: app/templates/animals_bulk_purchase.html:29
+msgid "بدون حظيرة"
+msgstr "ያለ በረት"
+
+#: app/templates/animals_bulk_purchase.html:37
+msgid "رقم الحيوان"
+msgstr "የእንስሳ ቁጥር"
+
+#: app/templates/animals_bulk_purchase.html:37
+msgid "سعر الشراء"
+msgstr "የግዢ ዋጋ"
+
+#: app/templates/animals_bulk_purchase.html:54
+msgid "إضافة صف"
+msgstr "ረድፍ ጨምር"
+
+#: app/templates/animals_bulk_purchase.html:55
+msgid "اترك رقم الحيوان فاضي لأي صف تبي تتجاهله."
+msgstr "ችላ ማለት ለሚፈልጉት ማንኛውም ረድፍ የእንስሳ ቁጥርን ባዶ ይተዉት።"
+
+#: app/templates/animals_bulk_purchase.html:56
+msgid "حفظ الدفعة كاملة"
+msgstr "ሙሉውን ጭነት አስቀምጥ"
 
 #: app/templates/animals_list.html:5 app/templates/base.html:466
 msgid "الإجراء الجماعي"
@@ -1035,95 +1621,13 @@ msgstr "ይህ ሊለወጥ የሚችል የሥራ ትርጉም ነው — የ�
 msgid "محدّد"
 msgstr "የተመረጠ"
 
-#: app/templates/animals_list.html:67
-msgid "وزن جماعي"
-msgstr "የቡድን ክብደት"
-
-#: app/templates/animals_list.html:68
-msgid "ملاحظة جماعية"
-msgstr "የቡድን ማስታወሻ"
-
-#: app/templates/animals_list.html:69
-msgid "نقل حظيرة جماعي"
-msgstr "የቡድን በረት ማዛወር"
-
-#: app/templates/animals_list.html:70
-msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
-msgstr "የቡድን ዓላማ መወሰን (ማራባት/ማድለብ/ሽያጭ)"
-
-#: app/templates/animals_list.html:71
-msgid "بيع جماعي"
-msgstr "የቡድን ሽያጭ"
-
-#: app/templates/animals_list.html:72
-msgid "تسجيل نفوق جماعي"
-msgstr "የቡድን ሞት መመዝገብ"
-
 #: app/templates/animals_list.html:73
 msgid "استقبال دفعة جديدة"
 msgstr "አዲስ ጭነት ተቀበል"
 
-#: app/templates/animals_list.html:76
-msgid "تحصين جماعي"
-msgstr "የቡድን ክትባት"
-
-#: app/templates/animals_list.html:77
-msgid "علاج/مرض جماعي"
-msgstr "የቡድን ሕክምና/በሽታ"
-
-#: app/templates/animals_list.html:78
-msgid "عزل جماعي"
-msgstr "የቡድን መገለል"
-
-#: app/templates/animals_list.html:79
-msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
-msgstr "የታቀደ የሕክምና ዕቅድ (የማስፈጸም ማረጋገጫ በመጠበቅ ላይ)"
-
-#: app/templates/animals_list.html:82
-msgid "فحص سونار جماعي"
-msgstr "የቡድን ሶናር ምርመራ"
-
 #: app/templates/animals_list.html:85
 msgid "متابعة الإجراء الجماعي"
 msgstr "የቡድን እርምጃን ቀጥል"
-
-#: app/templates/animals_list.html:92
-msgid "المصدر"
-msgstr "ምንጭ"
-
-#: app/templates/animals_list.html:92 app/templates/feed/barn_plan_form.html:7
-#: app/templates/feed/barn_plans_list.html:10
-#: app/templates/feed/fcr_report.html:16
-#: app/templates/health/vaccination_schedule_form.html:7
-#: app/templates/health/vaccination_schedule_list.html:13
-#: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/team/report_detail.html:24
-#: app/templates/team/report_form.html:24
-#: app/templates/team/worker_report_form.html:47
-msgid "الحظيرة"
-msgstr "በረት"
-
-#: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:32
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/doctors_list.html:10
-#: app/templates/health/pharmacy_list.html:13
-#: app/templates/health/protocols_list.html:15
-#: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/team/daily_templates.html:18
-#: app/templates/team/members_list.html:10
-#: app/templates/team/reports_list.html:26
-#: app/templates/team/reports_list.html:38
-#: app/templates/team/reports_list.html:51
-#: app/templates/team/reports_list.html:64
-#: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:147
-#: app/templates/team/tasks_list.html:169
-msgid "الحالة"
-msgstr "ሁኔታ"
-
-#: app/templates/animals_list.html:92
-msgid "المرحلة"
-msgstr "ደረጃ"
 
 #: app/templates/animals_list.html:92
 msgid "فترة سحب"
@@ -1133,18 +1637,9 @@ msgstr "የመውጫ ጊዜ"
 msgid "مولود بالمزرعة"
 msgstr "በእርሻው የተወለደ"
 
-#: app/templates/animals_list.html:94 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:36
-msgid "شراء"
-msgstr "ግዢ"
-
 #: app/templates/animals_list.html:94
 msgid "هدية/دعم"
 msgstr "ስጦታ/ድጋፍ"
-
-#: app/templates/animals_list.html:94
-msgid "رصيد افتتاحي"
-msgstr "የመክፈቻ ቀሪ ሂሳብ"
 
 #: app/templates/animals_list.html:103
 msgid "نعام — بدون دورة"
@@ -1294,19 +1789,6 @@ msgstr "ኃላፊ ሠራተኛ"
 msgid "توجّه له تلقائياً المهام (بند 27) والتنبيهات (\"تنبيهاتي\" — بند إضافي) الخاصة بهذي الحظيرة."
 msgstr "ለዚህ በረት ተግባራት (ንጥል 27) እና ማንቂያዎች (\"ማንቂያዎቼ\" — ተጨማሪ ንጥል) በራስ-ሰር ወደ እነሱ ይመራሉ።"
 
-#: app/templates/barn_form.html:27 app/templates/feed/barn_plan_form.html:18
-#: app/templates/feed/item_form.html:33
-#: app/templates/feed/ration_detail.html:13
-#: app/templates/feed/ration_form.html:30
-#: app/templates/health/disease_types_list.html:23
-#: app/templates/health/pharmacy_form.html:110
-#: app/templates/health/vaccination_schedule_list.html:13
-#: app/templates/health/vet_visit_form.html:33
-#: app/templates/isolation_exit_form.html:25
-#: app/templates/repro/sonar_form.html:34
-msgid "ملاحظات"
-msgstr "ማስታወሻዎች"
-
 #: app/templates/barn_form.html:29
 msgid "مواعيد وجبات العلف"
 msgstr "የመኖ ምግብ ሰዓቶች"
@@ -1318,23 +1800,6 @@ msgstr "ለእያንዳንዱ በረት ገለልተኛ ቅንብር — በየ�
 #: app/templates/barn_form.html:39
 msgid "إضافة موعد وجبة"
 msgstr "የምግብ ሰዓት ያክሉ"
-
-#: app/templates/barn_form.html:41 app/templates/feed/barn_plan_form.html:21
-#: app/templates/feed/item_form.html:34
-#: app/templates/feed/movement_form.html:28
-#: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
-#: app/templates/health/disease_form.html:45
-#: app/templates/health/disease_type_detail.html:41
-#: app/templates/health/disease_type_form.html:9
-#: app/templates/health/doctor_form.html:10
-#: app/templates/health/pharmacy_form.html:111
-#: app/templates/health/vaccination_form.html:29
-#: app/templates/health/vet_visit_form.html:34
-#: app/templates/repro/sonar_form.html:36
-#: app/templates/team/member_edit_form.html:33
-#: app/templates/team/member_form.html:21
-msgid "حفظ"
-msgstr "አስቀምጥ"
 
 #: app/templates/barns_list.html:5 app/templates/base.html:467
 msgid "الحظائر"
@@ -1411,7 +1876,8 @@ msgstr "ሰጎን (እንቁላል/ማቀፊያ)"
 msgid "الصحة"
 msgstr "ጤና"
 
-#: app/templates/base.html:481 app/templates/health/pharmacy_list.html:5
+#: app/templates/base.html:481 app/templates/family_view.html:128
+#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
 #: app/templates/home.html:63
 msgid "الصيدلية"
 msgstr "መድሃኒት ቤት"
@@ -1468,7 +1934,8 @@ msgstr "ራስ-ሰር የመኖ ማመጣጠኛ"
 msgid "المستودعات"
 msgstr "መጋዘኖች"
 
-#: app/templates/base.html:506
+#: app/templates/base.html:506 app/templates/family_view.html:129
+#: app/templates/family_view.html:162
 msgid "المعدات"
 msgstr "መሣሪያዎች"
 
@@ -1488,7 +1955,8 @@ msgstr "የአየር ንብረት እና የሙቀት ጭንቀት ራዳር"
 msgid "الفريق"
 msgstr "ቡድን"
 
-#: app/templates/base.html:520 app/templates/home.html:46
+#: app/templates/base.html:520 app/templates/family_view.html:67
+#: app/templates/family_view.html:74 app/templates/home.html:46
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "ተግባራት"
@@ -1552,6 +2020,434 @@ msgstr "ቋንቋ"
 #: app/templates/base.html:584
 msgid "خروج"
 msgstr "ውጣ"
+
+#: app/templates/bulk_action_form.html:8
+#, python-format
+msgid "هذا الإجراء رح يُطبَّق على %(n)s رأس محدّدة أدناه."
+msgstr "ይህ እርምጃ ከዚህ በታች በተመረጡት %(n)s እንስሳት ላይ ይተገበራል።"
+
+#: app/templates/bulk_action_form.html:16
+msgid "التاريخ (لكل الرؤوس)"
+msgstr "ቀን (ለሁሉም እንስሳት)"
+
+#: app/templates/bulk_action_form.html:19
+#: app/templates/feed/movement_form.html:27
+msgid "ملاحظة"
+msgstr "ማስታወሻ"
+
+#: app/templates/bulk_action_form.html:30
+msgid "اترك حقل الوزن فاضي لأي رأس تبي تتخطاه."
+msgstr "መዝለል ለሚፈልጉት ማንኛውም እንስሳ የክብደት መስክን ባዶ ይተዉት።"
+
+#: app/templates/bulk_action_form.html:31
+msgid "حفظ الأوزان"
+msgstr "ክብደቶችን አስቀምጥ"
+
+#: app/templates/bulk_action_form.html:43
+msgid "اللقاح الأول"
+msgstr "የመጀመሪያ ክትባት"
+
+#: app/templates/bulk_action_form.html:46
+#: app/templates/bulk_action_form.html:64
+#: app/templates/health/vaccination_schedule_form.html:18
+msgid "اختر لقاح من الصيدلية"
+msgstr "ከፋርማሲ ክትባት ይምረጡ"
+
+#: app/templates/bulk_action_form.html:48
+#: app/templates/bulk_action_form.html:66
+#, python-format
+msgid "حماية %(n)s يوم"
+msgstr "%(n)s ቀናት ጥበቃ"
+
+#: app/templates/bulk_action_form.html:51
+#: app/templates/bulk_action_form.html:69
+msgid "إضافة لقاح جديد للصيدلية"
+msgstr "አዲስ ክትባት ወደ ፋርማሲ ጨምር"
+
+#: app/templates/bulk_action_form.html:53
+msgid "اللقاح لازم يكون مسجَّل مسبقاً بالصيدلية بفئة \"لقاح\" — الموعد القادم ينجدول تلقائياً من مدة الحماية المسجَّلة عليه."
+msgstr "ክትባቱ አስቀድሞ በፋርማሲ \"ክትባት\" ምድብ ውስጥ መመዝገብ አለበት — ቀጣዩ ቀጠሮ ከተመዘገበው የጥበቃ ጊዜ በራስ-ሰር ይታቀዳል።"
+
+#: app/templates/bulk_action_form.html:55
+#: app/templates/bulk_action_form.html:72
+msgid "فتح صفحة الدواء لتحديث المخزون"
+msgstr "ክምችትን ለማዘመን የመድሃኒት ገጽ ክፈት"
+
+#: app/templates/bulk_action_form.html:55
+#: app/templates/bulk_action_form.html:72
+msgid "تحديث مخزون هذا اللقاح"
+msgstr "የዚህን ክትባት ክምችት አዘምን"
+
+#: app/templates/bulk_action_form.html:58
+msgid "إضافة تحصين ثاني"
+msgstr "ሁለተኛ ክትባት ጨምር"
+
+#: app/templates/bulk_action_form.html:61
+msgid "اللقاح الثاني"
+msgstr "ሁለተኛ ክትባት"
+
+#: app/templates/bulk_action_form.html:75
+#: app/templates/bulk_action_form.html:241
+#: app/templates/bulk_action_form.html:264
+#: app/templates/bulk_action_form.html:339
+msgid "الرؤوس المحددة"
+msgstr "የተመረጡ እንስሳት"
+
+#: app/templates/bulk_action_form.html:76
+msgid "أشّر على مربع كل رأس تم تحصينه فعلياً — الجرعة تُملأ تلقائياً من جدول \"الجرعة حسب العمر\" المسجَّل على اللقاح (لو موجود) وتقدر تعدّلها يدوياً."
+msgstr "በትክክል የተከተቡትን እያንዳንዱን እንስሳ ሳጥን ምልክት አድርግ — መጠኑ በክትባቱ ላይ ከተመዘገበው \"በዕድሜ መጠን\" ሠንጠረዥ (ካለ) በራስ-ሰር ይሞላል፣ በእጅ ማስተካከልም ይችላሉ።"
+
+#: app/templates/bulk_action_form.html:81
+msgid "تحصين اللقاح الأول"
+msgstr "የመጀመሪያ ክትባት ክትባት"
+
+#: app/templates/bulk_action_form.html:82
+msgid "تحصين اللقاح الثاني"
+msgstr "ሁለተኛ ክትባት ክትባት"
+
+#: app/templates/bulk_action_form.html:92
+#: app/templates/bulk_action_form.html:98
+msgid "مل"
+msgstr "ሚሊ"
+
+#: app/templates/bulk_action_form.html:105
+msgid "تسجيل التحصين للكل"
+msgstr "ለሁሉም ክትባት መዝግብ"
+
+#: app/templates/bulk_action_form.html:125
+#, python-format
+msgid "🟢 المخزون كافٍ — الاحتياج %(needed)s %(unit)s من أصل %(available)s %(unit2)s متوفرة."
+msgstr "🟢 ክምችት በቂ ነው — ፍላጎት %(needed)s %(unit)s ከ%(available)s %(unit2)s ካለው።"
+
+#: app/templates/bulk_action_form.html:126
+#, python-format
+msgid "🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s %(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً)."
+msgstr "🔴 ክምችት በቂ አይደለም — ፍላጎት %(needed)s %(unit)s ነው እና %(available)s %(unit2)s ብቻ አለ (በግምት ከ%(checked)s ውስጥ ለ%(coverable)s እንስሳት ይበቃል) — አንዳንድ እንስሳትን ምልክት አንሳ፣ ወይም ከታች ባለው ቁልፍ ክምችቱን አዘምን፣ የቀሩት ደግሞ ሲቀመጡ በግልጽ መልእክት በራስ-ሰር ውድቅ ይሆናሉ (ሐሰተኛ ክትባት አይደለም)።"
+
+#: app/templates/bulk_action_form.html:219
+msgid "ملاحظة عامة (تُضاف لكل الرؤوس)"
+msgstr "አጠቃላይ ማስታወሻ (ለሁሉም እንስሳት ይጨመራል)"
+
+#: app/templates/bulk_action_form.html:222
+msgid "ملاحظة إضافية لهذا الرأس (اختياري)"
+msgstr "ለዚህ እንስሳ ተጨማሪ ማስታወሻ (አማራጭ)"
+
+#: app/templates/bulk_action_form.html:228
+msgid "حفظ الملاحظات"
+msgstr "ማስታወሻዎችን አስቀምጥ"
+
+#: app/templates/bulk_action_form.html:237
+msgid "الحظيرة الجديدة"
+msgstr "አዲስ በረት"
+
+#: app/templates/bulk_action_form.html:244
+#: app/templates/bulk_action_form.html:359
+msgid "الحظيرة الحالية"
+msgstr "የአሁኑ በረት"
+
+#: app/templates/bulk_action_form.html:248
+msgid "نقل الكل للحظيرة الجديدة"
+msgstr "ሁሉንም ወደ አዲሱ በረት አዛውር"
+
+#: app/templates/bulk_action_form.html:257
+msgid "الغرض الجديد (لكل الرؤوس المحددة)"
+msgstr "አዲስ ዓላማ (ለሁሉም የተመረጡ እንስሳት)"
+
+#: app/templates/bulk_action_form.html:263
+msgid "تحديد \"تسمين\" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة."
+msgstr "እዚህ \"ማድለብ\" መምረጥ ለራስ-ሰር የመኖ ድብልቅ ስሌት የመመገቢያ ግብ (ከፍተኛ ፕሮቲን/ኃይል) ይወስናል — በበረት ማያ ገጽ ላይ 'የመመገቢያ ጊዜያት' ይመልከቱ።"
+
+#: app/templates/bulk_action_form.html:267
+msgid "الغرض الحالي"
+msgstr "የአሁኑ ዓላማ"
+
+#: app/templates/bulk_action_form.html:271
+msgid "تحديد الغرض للكل"
+msgstr "ለሁሉም ዓላማ ወስን"
+
+#: app/templates/bulk_action_form.html:280
+msgid "تاريخ البيع (لكل الرؤوس)"
+msgstr "የሽያጭ ቀን (ለሁሉም እንስሳት)"
+
+#: app/templates/bulk_action_form.html:281
+msgid "ملاحظة عامة (اختياري، مثلاً اسم المشتري)"
+msgstr "አጠቃላይ ማስታወሻ (አማራጭ፣ ለምሳሌ የገዢ ስም)"
+
+#: app/templates/bulk_action_form.html:284
+msgid "سعر البيع"
+msgstr "የሽያጭ ዋጋ"
+
+#: app/templates/bulk_action_form.html:294
+msgid "اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة."
+msgstr "መዝለል ለሚፈልጉት ማንኛውም እንስሳ የዋጋ መስክን ባዶ ይተዉት። ሽያጭ በዑደት-ማጠናቀቅ በር የተጠበቀ ነው — የተወሰነ እንስሳ ውድቅ ከሆነ፣ የቀሩት በመደበኛነት ይሸጣሉ እና የውድቅ ምክንያቱን በተለየ መልእክት ያያሉ።"
+
+#: app/templates/bulk_action_form.html:295
+msgid "بيع الكل"
+msgstr "ሁሉንም ሽጥ"
+
+#: app/templates/bulk_action_form.html:304
+msgid "تاريخ النفوق (لكل الرؤوس)"
+msgstr "የሞት ቀን (ለሁሉም እንስሳት)"
+
+#: app/templates/bulk_action_form.html:305
+msgid "السبب (اختياري، يُسجَّل لكل الرؤوس)"
+msgstr "ምክንያት (አማራጭ፣ ለሁሉም እንስሳት ይመዘገባል)"
+
+#: app/templates/bulk_action_form.html:312
+msgid "تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل."
+msgstr "ሞት ያለ ዑደት-ማጠናቀቅ ሁኔታ ይመዘገባል — ይህ እውነተኛ እውነታ ነው፣ የንግድ ውሳኔ አይደለም።"
+
+#: app/templates/bulk_action_form.html:313
+#, python-format
+msgid "تأكيد تسجيل نفوق %(n)s رأس؟"
+msgstr "የ%(n)s እንስሳት ሞት መመዝገብን ያረጋግጡ?"
+
+#: app/templates/bulk_action_form.html:313
+msgid "تسجيل النفوق للكل"
+msgstr "ለሁሉም ሞት መዝግብ"
+
+#: app/templates/bulk_action_form.html:322
+#: app/templates/health/disease_form.html:23
+#: app/templates/health/disease_type_form.html:7
+msgid "اسم المرض"
+msgstr "የበሽታ ስም"
+
+#: app/templates/bulk_action_form.html:323
+#: app/templates/health/disease_form.html:24
+msgid "اختر من القائمة أو اكتب اسماً جديداً"
+msgstr "ከዝርዝሩ ምረጥ ወይም አዲስ ስም ጻፍ"
+
+#: app/templates/bulk_action_form.html:326
+#: app/templates/health/disease_form.html:28
+#: app/templates/health/diseases_list.html:14
+msgid "الشدة"
+msgstr "ክብደት"
+
+#: app/templates/bulk_action_form.html:328
+#: app/templates/health/disease_form.html:30
+msgid "بسيطة"
+msgstr "ቀላል"
+
+#: app/templates/bulk_action_form.html:329
+#: app/templates/health/disease_form.html:31
+msgid "متوسطة"
+msgstr "መካከለኛ"
+
+#: app/templates/bulk_action_form.html:330
+#: app/templates/health/disease_form.html:32
+msgid "شديدة"
+msgstr "ከባድ"
+
+#: app/templates/bulk_action_form.html:332
+msgid "الدواء من الصيدلية (اختياري)"
+msgstr "ከፋርማሲ መድሃኒት (አማራጭ)"
+
+#: app/templates/bulk_action_form.html:334
+#: app/templates/health/disease_form.html:36
+#: app/templates/health/vet_visit_form.html:24
+msgid "بدون دواء"
+msgstr "መድሃኒት የለም"
+
+#: app/templates/bulk_action_form.html:335
+#: app/templates/bulk_action_form.html:413
+#, python-format
+msgid "سحب: %(n)s يوم"
+msgstr "መውጫ: %(n)s ቀናት"
+
+#: app/templates/bulk_action_form.html:337
+msgid "الكمية المستخدمة لكل رأس"
+msgstr "በእንስሳ የተጠቀመ መጠን"
+
+#: app/templates/bulk_action_form.html:338
+msgid "* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة."
+msgstr "* ከላይ መድሃኒት ከመረጡ ግዴታ ነው — ወጪው ከክፍል ዋጋ በራስ-ሰር ይሰላል።"
+
+#: app/templates/bulk_action_form.html:346
+msgid "تسجيل الحالة للكل"
+msgstr "ለሁሉም ጉዳይ መዝግብ"
+
+#: app/templates/bulk_action_form.html:356
+msgid "سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)"
+msgstr "የለይቶ ማቆያ ምክንያት (አማራጭ፣ በእያንዳንዱ እንስሳ ላይ እንደ ማስታወሻ ይመዘገባል)"
+
+#: app/templates/bulk_action_form.html:363
+msgid "ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل)."
+msgstr "ሁሉም በራስ-ሰር በሲስተም ውስጥ ወደተገለጸው የለይቶ ማቆያ በረት ይዛወራሉ (barn_type = isolation)።"
+
+#: app/templates/bulk_action_form.html:364
+msgid "عزل الكل"
+msgstr "ሁሉንም ለይ"
+
+#: app/templates/bulk_action_form.html:373
+msgid "تاريخ الفحص (لكل الرؤوس)"
+msgstr "የምርመራ ቀን (ለሁሉም እንስሳት)"
+
+#: app/templates/bulk_action_form.html:374
+msgid "الطبيب (اختياري)"
+msgstr "ሐኪም (አማራጭ)"
+
+#: app/templates/bulk_action_form.html:376
+msgid "بدون تحديد"
+msgstr "ያልተገለጸ"
+
+#: app/templates/bulk_action_form.html:381
+#: app/templates/feed/calculator.html:35 app/templates/repro/sonar_form.html:19
+msgid "النتيجة"
+msgstr "ውጤት"
+
+#: app/templates/bulk_action_form.html:381
+msgid "عدد الأجنة"
+msgstr "የፅንሶች ብዛት"
+
+#: app/templates/bulk_action_form.html:389
+#: app/templates/repro/sonar_form.html:22
+msgid "حامل"
+msgstr "እርጉዝ"
+
+#: app/templates/bulk_action_form.html:390
+#: app/templates/repro/sonar_form.html:23
+msgid "غير حامل"
+msgstr "እርጉዝ ያልሆነ"
+
+#: app/templates/bulk_action_form.html:391
+msgid "غير واضح"
+msgstr "ግልጽ ያልሆነ"
+
+#: app/templates/bulk_action_form.html:399
+msgid "حفظ نتائج الكل"
+msgstr "የሁሉንም ውጤቶች አስቀምጥ"
+
+#: app/templates/bulk_action_form.html:406
+msgid "⚠️ هذا الإجراء ما يسجّل ولا يخصم أي شيء الآن (بند إضافي 50) — بس يولّد مهمة \"علاج مخطَّط\" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم \"تأكيد التنفيذ\" الفعلي لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية)."
+msgstr "⚠️ ይህ እርምጃ አሁን ምንም ነገር አይመዘግብም ወይም አይቀንስም — ለእያንዳንዱ እንስሳ የተጠቆመ \"የታቀደ ሕክምና\" ተግባር ብቻ ይፈጥራል፣ የሐኪም ግምገማ በመጠበቅ ላይ፣ ከዚያም ለእያንዳንዱ እንስሳ ለብቻ እውነተኛ \"የማስፈጸም ማረጋገጫ\" (እውነተኛው የፋርማሲ ቅናሽ የሚሆነው እዚያ ነው)።"
+
+#: app/templates/bulk_action_form.html:411
+msgid "الدواء المخطَّط"
+msgstr "የታቀደ መድሃኒት"
+
+#: app/templates/bulk_action_form.html:415
+msgid "الجرعة لكل رأس"
+msgstr "በእንስሳ መጠን"
+
+#: app/templates/bulk_action_form.html:416
+msgid "نوع التسجيل عند التنفيذ"
+msgstr "በአፈጻጸም ጊዜ የሚመዘገብ ዓይነት"
+
+#: app/templates/bulk_action_form.html:418
+msgid "زيارة بيطرية"
+msgstr "የእንስሳት ሐኪም ጉብኝት"
+
+#: app/templates/bulk_action_form.html:419
+msgid "علاج/مرض"
+msgstr "ሕክምና/በሽታ"
+
+#: app/templates/bulk_action_form.html:420
+msgid "تطعيم"
+msgstr "ክትባት"
+
+#: app/templates/bulk_action_form.html:422
+msgid "سبب المهمة/الدافع"
+msgstr "የተግባር ምክንያት/መንስኤ"
+
+#: app/templates/bulk_action_form.html:422
+msgid "مثال: فحص دوري كشف انتشار طفيليات بالحظيرة"
+msgstr "ምሳሌ: መደበኛ ምርመራ በበረት ውስጥ የጥገኛ ተውሳክ መስፋፋት አገኘ"
+
+#: app/templates/bulk_action_form.html:423
+msgid "الموعد المستهدف للتنفيذ"
+msgstr "የታለመ የማስፈጸሚያ ቀን"
+
+#: app/templates/bulk_action_form.html:424
+#, python-format
+msgid "الرؤوس المحددة (%(n)s)"
+msgstr "የተመረጡ እንስሳት (%(n)s)"
+
+#: app/templates/bulk_action_form.html:431
+msgid "إنشاء خطة العلاج (مقترحة)"
+msgstr "የሕክምና ዕቅድ ፍጠር (የተጠቆመ)"
+
+#: app/templates/family_view.html:6 app/templates/family_view.html:65
+msgid "متابعة المزرعة"
+msgstr "የእርሻ ክትትል"
+
+#: app/templates/family_view.html:68 app/templates/family_view.html:126
+msgid "المخزون"
+msgstr "ክምችት"
+
+#: app/templates/family_view.html:73 app/templates/family_view.html:82
+#: app/templates/family_view.html:125 app/templates/family_view.html:133
+#: app/templates/family_view.html:147 app/templates/family_view.html:161
+msgid "رجوع"
+msgstr "ተመለስ"
+
+#: app/templates/family_view.html:89
+msgid "قفل المهمة"
+msgstr "ተግባር ተቆልፏል"
+
+#: app/templates/family_view.html:89
+msgid "ما قدر"
+msgstr "አልቻለም"
+
+#: app/templates/family_view.html:93
+msgid "السبب:"
+msgstr "ምክንያት:"
+
+#: app/templates/family_view.html:99
+msgid "باقي"
+msgstr "ቀሪ"
+
+#: app/templates/family_view.html:102 app/templates/team/task_detail.html:9
+#: app/templates/team/worker_report_form.html:18
+msgid "الموعد:"
+msgstr "ቀጠሮ:"
+
+#: app/templates/family_view.html:106
+#: app/templates/team/_suggested_tasks_rows.html:21
+#: app/templates/team/report_detail.html:51
+msgid "تأجيل"
+msgstr "አዘግይ"
+
+#: app/templates/family_view.html:118
+msgid "ما فيه مهام حالياً."
+msgstr "በአሁኑ ጊዜ ተግባራት የሉም።"
+
+#: app/templates/family_view.html:127 app/templates/family_view.html:134
+msgid "الأعلاف"
+msgstr "መኖ"
+
+#: app/templates/family_view.html:138 app/templates/family_view.html:152
+#: app/templates/family_view.html:166
+msgid "المتبقي:"
+msgstr "ቀሪ:"
+
+#: app/templates/family_view.html:139 app/templates/family_view.html:153
+msgid "المستهلك اليوم:"
+msgstr "ዛሬ የተጠቀመ:"
+
+#: app/templates/family_view.html:139 app/templates/family_view.html:153
+#: app/templates/family_view.html:167
+msgid "بالشهر:"
+msgstr "በዚህ ወር:"
+
+#: app/templates/family_view.html:142
+msgid "ما فيه أصناف علف مسجَّلة."
+msgstr "የተመዘገበ የመኖ ዕቃ የለም።"
+
+#: app/templates/family_view.html:156
+msgid "ما فيه أدوية مسجَّلة."
+msgstr "የተመዘገበ መድሃኒት የለም።"
+
+#: app/templates/family_view.html:167
+msgid "المصروف اليوم:"
+msgstr "ዛሬ የወጣ:"
+
+#: app/templates/family_view.html:170
+msgid "مستعارة حالياً:"
+msgstr "በአሁኑ ጊዜ የተዋሰ:"
+
+#: app/templates/family_view.html:178
+msgid "ما فيه أصناف معدات مسجَّلة."
+msgstr "የተመዘገበ የመሳሪያ ዕቃ የለም።"
 
 #: app/templates/home.html:4
 msgid "مرحباً،"
@@ -1904,10 +2800,6 @@ msgstr "ራስ-ሰር ግምት"
 msgid "احسب"
 msgstr "ማስያ"
 
-#: app/templates/feed/calculator.html:35 app/templates/repro/sonar_form.html:19
-msgid "النتيجة"
-msgstr "ውጤት"
-
 #: app/templates/feed/calculator.html:38
 msgid "الحالة المستخدمة"
 msgstr "የተጠቀመው ሁኔታ"
@@ -2171,10 +3063,6 @@ msgstr "ያለ በረት (ገቢ ብቻ)"
 msgid "الحيوان (اختياري)"
 msgstr "እንስሳ (አማራጭ)"
 
-#: app/templates/feed/movement_form.html:27
-msgid "ملاحظة"
-msgstr "ማስታወሻ"
-
 #: app/templates/feed/movements_list.html:5
 msgid "حركة مخزون العلف"
 msgstr "የመኖ ክምችት እንቅስቃሴዎች"
@@ -2284,10 +3172,6 @@ msgstr "ምሳሌ: ድህረ ወሊድ ራሽን"
 #: app/templates/feed/ration_form.html:13
 msgid "حمل متأخر"
 msgstr "ዘግይቶ እርግዝና"
-
-#: app/templates/feed/ration_form.html:14
-msgid "تسمين"
-msgstr "ማድለብ"
 
 #: app/templates/feed/ration_form.html:18
 msgid "المكوّنات (النسب من إجمالي وزن الوصفة)"
@@ -2735,41 +3619,10 @@ msgstr "የበሽታ ሁኔታ መዝግብ"
 msgid "تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة تلقائياً."
 msgstr "ከታቀደ የሕክምና ተግባር በራስ-ሰር ተሞልቷል — ከማስቀመጥዎ በፊት ይገምግሙ። እዚህ ማስቀመጥ ተግባሩን በራስ-ሰር ያጠናቅቃል።"
 
-#: app/templates/health/disease_form.html:23
-#: app/templates/health/disease_type_form.html:7
-msgid "اسم المرض"
-msgstr "የበሽታ ስም"
-
-#: app/templates/health/disease_form.html:24
-msgid "اختر من القائمة أو اكتب اسماً جديداً"
-msgstr "ከዝርዝሩ ምረጥ ወይም አዲስ ስም ጻፍ"
-
-#: app/templates/health/disease_form.html:28
-#: app/templates/health/diseases_list.html:14
-msgid "الشدة"
-msgstr "ክብደት"
-
-#: app/templates/health/disease_form.html:30
-msgid "بسيطة"
-msgstr "ቀላል"
-
-#: app/templates/health/disease_form.html:31
-msgid "متوسطة"
-msgstr "መካከለኛ"
-
-#: app/templates/health/disease_form.html:32
-msgid "شديدة"
-msgstr "ከባድ"
-
 #: app/templates/health/disease_form.html:34
 #: app/templates/health/vet_visit_form.html:22
 msgid "الدواء المستخدم (اختياري)"
 msgstr "ጥቅም ላይ የዋለ መድሃኒት (አማራጭ)"
-
-#: app/templates/health/disease_form.html:36
-#: app/templates/health/vet_visit_form.html:24
-msgid "بدون دواء"
-msgstr "መድሃኒት የለም"
 
 #: app/templates/health/disease_form.html:37
 #: app/templates/health/vaccination_form.html:22
@@ -2864,12 +3717,6 @@ msgstr "ለምርመራ አስፈላጊ ምልክት? (በሽታው እንዲጠ
 #: app/templates/health/disease_link_wizard.html:82
 msgid "نعم — أساسي"
 msgstr "አዎ — አስፈላጊ"
-
-#: app/templates/health/disease_link_wizard.html:83
-#: app/templates/health/disease_link_wizard.html:87
-#: app/templates/health/disease_link_wizard.html:91
-msgid "لا"
-msgstr "አይ"
 
 #: app/templates/health/disease_link_wizard.html:85
 msgid "عرض يلغي هذا المرض؟ (لو موجود، يستبعد المرض من الاحتمالات)"
@@ -2967,12 +3814,6 @@ msgstr "እስካሁን ከዚህ በሽታ ጋር የተያያዘ ምልክት 
 #: app/templates/health/disease_type_detail.html:59
 msgid "عزل فوري"
 msgstr "ወዲያውኑ መገለል"
-
-#: app/templates/health/disease_type_detail.html:63
-#: app/templates/health/disease_type_detail.html:64
-#: app/templates/health/disease_type_detail.html:65
-msgid "نعم"
-msgstr "አዎ"
 
 #: app/templates/health/disease_type_detail.html:77
 msgid "ربط عرض جديد"
@@ -3403,11 +4244,6 @@ msgstr "ግዢ ይመዝግቡ"
 msgid "المخزون الحالي:"
 msgstr "አሁን ያለ ክምችት:"
 
-#: app/templates/health/pharmacy_purchase_form.html:9
-#: app/templates/health/pharmacy_purchase_form.html:32
-msgid "تاريخ الشراء"
-msgstr "የግዢ ቀን"
-
 #: app/templates/health/pharmacy_purchase_form.html:12
 msgid "الكمية المشتراة"
 msgstr "የተገዛ መጠን"
@@ -3613,10 +4449,6 @@ msgstr "በረት ይምረጡ"
 msgid "اللقاح"
 msgstr "ክትባት"
 
-#: app/templates/health/vaccination_schedule_form.html:18
-msgid "اختر لقاح من الصيدلية"
-msgstr "ከፋርማሲ ክትባት ይምረጡ"
-
 #: app/templates/health/vaccination_schedule_form.html:24
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:50
@@ -3684,10 +4516,6 @@ msgstr "በአሁኑ ጊዜ የታቀደ ክትባት የለም።"
 #: app/templates/health/vaccination_schedule_list.html:47
 msgid "سابقة (آخر 30)"
 msgstr "ያለፉ (የመጨረሻ 30)"
-
-#: app/templates/health/vaccination_schedule_list.html:56
-msgid "مكتملة"
-msgstr "ተጠናቋል"
 
 #: app/templates/health/vaccination_schedule_list.html:59
 msgid "لا يوجد سجل سابق."
@@ -3837,14 +4665,6 @@ msgstr "የተያያዘ የመንታ ግልፈት ፕሮግራም (አማራጭ)
 msgid "عمر الحمل (بالأيام)"
 msgstr "የእርግዝና ዕድሜ (በቀናት)"
 
-#: app/templates/repro/sonar_form.html:22
-msgid "حامل"
-msgstr "እርጉዝ"
-
-#: app/templates/repro/sonar_form.html:23
-msgid "غير حامل"
-msgstr "እርጉዝ ያልሆነ"
-
 #: app/templates/repro/sonar_form.html:24
 msgid "غير مؤكد"
 msgstr "ያልተረጋገጠ"
@@ -3952,11 +4772,6 @@ msgstr "አጽድቅ እና ላክ"
 #: app/templates/team/_suggested_tasks_rows.html:21
 msgid "تأجيل ليوم واحد"
 msgstr "በአንድ ቀን አዘግይ"
-
-#: app/templates/team/_suggested_tasks_rows.html:21
-#: app/templates/team/report_detail.html:51
-msgid "تأجيل"
-msgstr "አዘግይ"
 
 #: app/templates/team/_suggested_tasks_rows.html:30
 msgid "لا يوجد مهام مقترحة حالياً."
@@ -4137,14 +4952,6 @@ msgstr "ሪፖርት"
 #: app/templates/team/reports_list.html:85
 msgid "رفعه"
 msgstr "ያስገባው"
-
-#: app/templates/team/report_detail.html:17
-msgid "نعام"
-msgstr "ሰጎን"
-
-#: app/templates/team/report_detail.html:17
-msgid "حلال (ضأن/ماعز)"
-msgstr "እንስሳት (በግ/ፍየል)"
 
 #: app/templates/team/report_detail.html:26
 msgid "صورة مرفقة"
@@ -4377,11 +5184,6 @@ msgstr "የተሰረዙ ሪፖርቶች የሉም።"
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"
 msgstr "ወደ ተግባራት ተመለስ"
-
-#: app/templates/team/task_detail.html:9
-#: app/templates/team/worker_report_form.html:18
-msgid "الموعد:"
-msgstr "ቀጠሮ:"
 
 #: app/templates/team/task_detail.html:13
 msgid "تفصيل المهمة"

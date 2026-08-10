@@ -1,6 +1,7 @@
 from datetime import date, time
 from flask import render_template, request, redirect, url_for, flash, jsonify, abort, send_file, current_app
 from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _l
 from flask_login import login_required, current_user
 from sqlalchemy.exc import IntegrityError
 
@@ -256,17 +257,17 @@ def animal_repro_flags_save(animal_id):
 
 
 BULK_ACTIONS = {
-    "weight": "وزن جماعي",
-    "vaccination": "تحصين جماعي",
-    "note": "ملاحظة جماعية",
-    "barn_move": "نقل حظيرة جماعي",
-    "purpose": "تحديد الغرض جماعياً (تربية/تسمين/بيع)",
-    "sale": "بيع جماعي",
-    "mark_dead": "تسجيل نفوق جماعي",
-    "disease": "علاج/مرض جماعي",
-    "isolation": "عزل جماعي",
-    "sonar": "فحص سونار جماعي",
-    "treatment_plan": "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)",
+    "weight": _l("وزن جماعي"),
+    "vaccination": _l("تحصين جماعي"),
+    "note": _l("ملاحظة جماعية"),
+    "barn_move": _l("نقل حظيرة جماعي"),
+    "purpose": _l("تحديد الغرض جماعياً (تربية/تسمين/بيع)"),
+    "sale": _l("بيع جماعي"),
+    "mark_dead": _l("تسجيل نفوق جماعي"),
+    "disease": _l("علاج/مرض جماعي"),
+    "isolation": _l("عزل جماعي"),
+    "sonar": _l("فحص سونار جماعي"),
+    "treatment_plan": _l("خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"),
 }
 
 
