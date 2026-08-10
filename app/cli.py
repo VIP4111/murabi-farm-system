@@ -1,6 +1,6 @@
 import click
 from app.extensions import db
-from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom
+from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom, ChecklistItem
 from app.permissions_registry import PERMISSIONS, DEFAULT_ROLES
 from app.disease_library_data import DISEASE_LIBRARY_V2, DISEASE_ALIAS_MAP
 
@@ -164,6 +164,69 @@ DEFAULT_EMERGENCY_SYMPTOMS = [
         "differential": "اشتباه بروسيلا / كلاميديا (إجهاض معدي) / حمى الوادي المتصدع",
         "advice": "عزل فوري + تعامل آمن مع الجنين والمشيمة (قفازات، حرق أو ردم صحي) + تقييم بيطري لعينة قبل أي تصرّف.",
     },
+]
+
+
+# دليل المربي المبتدئ ومحرك التوجيه اليومي/الأسبوعي (بند إضافي 168) —
+# بيانات ابتدائية idempotent (نفس نمط DEFAULT_EMERGENCY_SYMPTOMS فوق)،
+# قابلة للتوسيع لاحقاً من لوحة إدارة بدون كود. `code` فريد وثابت —
+# استخدمه لتحديث بند موجود، لا تغيّره أبداً بعد النشر (يكسر تتبّع
+# إنجاز المستخدمين له).
+DEFAULT_CHECKLIST_ITEMS = [
+    # عام — يظهر دائماً، لمرة وحدة (مسار الترحيب)
+    {"code": "onb_animals_list", "stage": "general", "frequency": "once", "role": "all",
+     "title": "سجّل حيوانك الأول (أو استورد قطيعك الحالي)",
+     "description": "من 'سجل الحيوانات' ← '+ حيوان جديد'، أو 'شراء دفعة جديدة' لو عندك عدة رؤوس دفعة وحدة.",
+     "link_endpoint": "core.animals_list", "sort_order": 1},
+    {"code": "onb_barns", "stage": "general", "frequency": "once", "role": "owner",
+     "title": "جهّز حظائرك — خصوصاً حظيرة عزل واحدة على الأقل",
+     "description": "العزل التلقائي بعد الولادة والحيوان الوافد الجديد يحتاجان حظيرة بنوع 'عزل' موجودة فعلاً.",
+     "link_endpoint": "core.barns_list", "sort_order": 2},
+    {"code": "onb_team", "stage": "general", "frequency": "once", "role": "owner",
+     "title": "أضف فريقك (دكتور/عمال) بحساباتهم",
+     "description": "كل عضو فريق يحتاج حساب مستقل بمسمى وظيفي مناسب — يقدر يسجّل ملاحظاته ومهامه بنفسه.",
+     "link_endpoint": "team.members_list", "sort_order": 3},
+    {"code": "onb_assistant", "stage": "general", "frequency": "once", "role": "beginner",
+     "title": "جرّب المساعد الذكي لأي سؤال تشغيلي عام",
+     "description": "يجاوب على أسئلة عامة (تحصينات، عزل...) لكنه مساعد قرار مو طبيب — القرار الطبي النهائي يبقى للطبيب دائماً.",
+     "link_endpoint": "assistant.chat", "sort_order": 4},
+    {"code": "onb_vet_relationship", "stage": "general", "frequency": "once", "role": "beginner",
+     "title": "تأكد إن عندك طبيب بيطري تقدر توصله وقت الحاجة",
+     "description": "النظام ينظّم بياناتك ويذكّرك بالمواعيد — لكنه ما يشخّص ولا يعالج. أضف بيانات طبيبك بشاشة 'الأطباء'.",
+     "sort_order": 5},
+
+    # يومي عام — للجميع، يظهر كل يوم
+    {"code": "daily_water_feed", "stage": "general", "frequency": "daily", "role": "worker",
+     "title": "تأكد من نظافة الماء وتوفر العلف بكل الحظائر", "sort_order": 10},
+    {"code": "daily_visual_check", "stage": "general", "frequency": "daily", "role": "worker",
+     "title": "فحص بصري سريع للقطيع: شهية، حركة، تنفس، عرج", "sort_order": 11},
+
+    # تجهيز — عام لكل مزرعة
+    {"code": "prep_isolation_ready", "stage": "prep", "frequency": "weekly", "role": "owner",
+     "title": "تأكد إن حظيرة العزل جاهزة ونظيفة", "sort_order": 20},
+
+    # شياع — لو فيه رؤوس جاهزة للتقريع
+    {"code": "estrus_ready_to_mate", "stage": "estrus", "frequency": "weekly", "role": "doctor",
+     "title": "راجع قائمة 'جاهزة للتقريع' وخطّط لعملية التقريع",
+     "link_endpoint": "core.animals_list", "sort_order": 30},
+
+    # حمل
+    {"code": "pregnancy_feed_check", "stage": "pregnancy", "frequency": "weekly", "role": "worker",
+     "title": "تأكد من تطبيق خطة علف الحوامل بالشهور الأخيرة", "sort_order": 40},
+    {"code": "pregnancy_sonar_followup", "stage": "pregnancy", "frequency": "weekly", "role": "doctor",
+     "title": "راجع الحمول غير المؤكَّدة وحدّد موعد فحص سونار",
+     "link_endpoint": "repro.pregnancies_list", "sort_order": 41},
+
+    # ولادة — عزل نشط حالياً
+    {"code": "birth_isolation_checks", "stage": "birth", "frequency": "daily", "role": "worker",
+     "title": "أنجز مهام فحص العزل اليومي للمواليد الجدد",
+     "link_endpoint": "team.tasks_list", "sort_order": 50},
+    {"code": "birth_doctor_review", "stage": "birth", "frequency": "daily", "role": "doctor",
+     "title": "راجع فحص الطبيب الإلزامي خلال أول 48 ساعة لكل مولود جديد", "sort_order": 51},
+
+    # تسمين
+    {"code": "fattening_weight_track", "stage": "fattening", "frequency": "weekly", "role": "worker",
+     "title": "زن رؤوس التسمين بانتظام لمتابعة معدل الزيادة", "sort_order": 60},
 ]
 
 
@@ -364,6 +427,24 @@ def register_cli(app):
                     symptom_id=symptom.id, severity=entry["severity"],
                     differential=entry["differential"], advice=entry["advice"],
                 ))
+        db.session.commit()
+
+        # 9) دليل المربي المبتدئ ومحرك التوجيه اليومي (بند إضافي 168) —
+        # idempotent عبر `code` الفريد؛ يحدّث النصوص لو تغيّرت بالكود
+        # بدون ما يكرّر الصف ولا يفقد سجلات إنجاز المستخدمين المرتبطة.
+        for entry in DEFAULT_CHECKLIST_ITEMS:
+            item = ChecklistItem.query.filter_by(code=entry["code"]).first()
+            if not item:
+                item = ChecklistItem(code=entry["code"])
+                db.session.add(item)
+            item.stage = entry["stage"]
+            item.frequency = entry["frequency"]
+            item.target_role = entry["role"]
+            item.title = entry["title"]
+            item.description = entry.get("description")
+            item.link_endpoint = entry.get("link_endpoint")
+            item.sort_order = entry["sort_order"]
+            item.is_active = True
         db.session.commit()
 
         click.echo("تمت التهيئة بنجاح.")

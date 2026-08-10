@@ -81,6 +81,7 @@ def create_app(config_class=Config):
     from app.batches import batches_bp
     from app.warehouses import warehouses_bp
     from app.equipment import equipment_bp
+    from app.onboarding import onboarding_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(core_bp)
     app.register_blueprint(health_bp)
@@ -95,6 +96,7 @@ def create_app(config_class=Config):
     app.register_blueprint(batches_bp)
     app.register_blueprint(warehouses_bp)
     app.register_blueprint(equipment_bp)
+    app.register_blueprint(onboarding_bp)
 
     from app.cli import register_cli
     register_cli(app)

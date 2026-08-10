@@ -85,9 +85,15 @@ def home():
     العامة — العامل ميداني، يحتاج أقل احتكاك ممكن، مو لوحة تحكم عامة
     فيها أقسام فاضية حسب صلاحياته المحدودة.
     """
+    from app.core import checklist_service
+    daily_checklist = checklist_service.daily_checklist_for(current_user)
+
     if current_user.role.name == "worker":
         my_alerts_count = len(alerts_service.get_alerts(barn_ids=_my_barn_ids(current_user)))
-        return render_template("worker_home.html", user=current_user, my_alerts_count=my_alerts_count)
+        return render_template(
+            "worker_home.html", user=current_user, my_alerts_count=my_alerts_count,
+            daily_checklist=daily_checklist,
+        )
 
     setup_checklist_items = None
     if current_user.role.name == "owner" and not FarmSettings.get().setup_checklist_dismissed:
@@ -96,6 +102,7 @@ def home():
     return render_template(
         "home.html", user=current_user,
         setup_checklist_items=setup_checklist_items,
+        daily_checklist=daily_checklist,
     )
 
 

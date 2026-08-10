@@ -29,6 +29,31 @@
   </div>
 </div>
 
+{% if not user.onboarding_completed_at %}
+<div class="card" style="background:var(--primary); color:#fff;">
+  <h3 style="margin:0; color:#fff; font-size:16px;">👋 {{ _('أول مرة تستخدم النظام؟') }}</h3>
+  <p style="margin:8px 0 12px; color:rgba(255,255,255,.85); font-size:13px;">{{ _('جولة سريعة (دقيقتين) تعرّفك على دليلك اليومي.') }}</p>
+  <a class="btn light" href="{{ url_for('onboarding.welcome') }}">{{ _('ابدأ الجولة') }} ←</a>
+</div>
+{% endif %}
+
+{% if daily_checklist %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3 style="margin:0; font-size:15px;">📌 {{ _('دليلك اليوم') }}</h3>
+    <a class="btn light" href="{{ url_for('onboarding.checklist') }}" style="font-size:12px; padding:4px 10px;">{{ _('عرض الكل') }} ←</a>
+  </div>
+  {% for row in daily_checklist[:4] %}
+  <form method="post" action="{{ url_for('onboarding.toggle', item_id=row.item.id) }}" style="display:flex; align-items:center; gap:8px; padding:6px 0; border-top:1px solid var(--line);">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="next" value="{{ request.path }}">
+    <button type="submit" class="btn light" style="padding:2px 8px; font-size:14px;">{{ '✅' if row.done else '⬜' }}</button>
+    <span style="{{ 'text-decoration:line-through; color:var(--muted);' if row.done }}">{{ row.item.title }}</span>
+  </form>
+  {% endfor %}
+</div>
+{% endif %}
+
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
     <div>

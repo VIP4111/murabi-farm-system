@@ -49,6 +49,13 @@ class User(UserMixin, db.Model):
     # فاضي = بدون تقارير بريد لهذا المستخدم، صفر كسر بالنظام.
     email = db.Column(db.String(120), nullable=True)
 
+    # دليل المربي المبتدئ ومحرك التوجيه اليومي (بند إضافي 168) — وسم
+    # مستقل عن الدور الوظيفي (role_id): مالك أو عامل ممكن يكون مبتدئاً
+    # فعلياً بغض النظر عن صلاحياته. يُضبط باختيار المستخدم نفسه بمسار
+    # الترحيب أول دخول، أو يعدّله لاحقاً من إعدادات حسابه.
+    is_beginner = db.Column(db.Boolean, default=False, nullable=False)
+    onboarding_completed_at = db.Column(db.DateTime, nullable=True)
+
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)
 

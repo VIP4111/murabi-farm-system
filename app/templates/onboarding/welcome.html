@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ _('أهلاً بك') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>👋 {{ _('أهلاً بك بمراح بو علي') }}</h2>
+  <p style="color:var(--muted); font-size:14px;">{{ _('قبل ما تبدأ، جاوب على سؤال وحد يساعدنا نخصّص لك دليلك اليومي.') }}</p>
+</div>
+
+<form method="post" action="{{ url_for('onboarding.welcome') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="card">
+    <h3 style="font-size:15px;">{{ _('هل أنت مربي جديد بدون خبرة سابقة؟') }}</h3>
+    <p style="color:var(--muted); font-size:13px; margin:-4px 0 12px;">{{ _('لو "نعم"، راح نضيف لدليلك اليومي خطوات أساسية إضافية مخصّصة للمبتدئين.') }}</p>
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+      <input type="radio" name="is_beginner" value="1" style="width:auto;" checked> {{ _('نعم، أول مرة أربي') }}
+    </label>
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal; margin-top:8px;">
+      <input type="radio" name="is_beginner" value="0" style="width:auto;"> {{ _('لا، عندي خبرة') }}
+    </label>
+  </div>
+
+  {% if steps %}
+  <div class="card">
+    <h3 style="font-size:15px;">{{ _('نبذة سريعة عن التطبيق') }}</h3>
+    {% for s in steps %}
+    <div style="padding:8px 0; border-top:1px solid var(--line);">
+      <b>{{ s.title }}</b>
+      {% if s.description %}<p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ s.description }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="card">
+    <p style="color:var(--muted); font-size:12px; margin-top:-4px;">{{ _('تنبيه صادق: هذا التطبيق نظام إدارة وتتبّع يساعدك تنظّم شغلك وما تنسى موعداً — مو بديل عن طبيب بيطري ولا عن تعلّم أساسيات تربية القطيع. راجع طبيبك دائماً للقرارات الطبية.') }}</p>
+    <button class="btn" type="submit" style="width:100%;">{{ _('ابدأ استخدام التطبيق') }}</button>
+  </div>
+</form>
+{% endblock %}
