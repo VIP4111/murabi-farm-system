@@ -3,40 +3,40 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>برنامج #{{ p.id }} — {{ p.ewe.animal_no }}</h2>
+    <h2>{{ _('برنامج #%(id)s — %(no)s', id=p.id, no=p.ewe.animal_no) }}</h2>
     {{ status_badge(p.status|status_badge_state, p.status|ar_status) }}
   </div>
   <div class="table-scroll">
   <table>
-    <tr><td>البروتوكول</td><td>{{ p.protocol_name or '-' }}</td></tr>
-    <tr><td>الطبيب المشرف</td><td>{{ p.supervising_doctor.name if p.supervising_doctor else '-' }}</td></tr>
-    <tr><td>الفحل</td><td>{{ p.ram.animal_no if p.ram else (p.ram_note or '-') }}</td></tr>
-    <tr><td>بداية البرنامج</td><td>{{ p.start_date }}</td></tr>
-    <tr><td>نافذة الشياع المتوقعة</td><td>{{ p.expected_estrus_start or '-' }} → {{ p.expected_estrus_end or '-' }}</td></tr>
-    <tr><td>نافذة التقريع</td><td>{{ p.mating_window_start or '-' }} → {{ p.mating_window_end or '-' }}</td></tr>
-    <tr><td>ملاحظات</td><td>{{ p.notes or '-' }}</td></tr>
+    <tr><td>{{ _('البروتوكول') }}</td><td>{{ p.protocol_name or '-' }}</td></tr>
+    <tr><td>{{ _('الطبيب المشرف') }}</td><td>{{ p.supervising_doctor.name if p.supervising_doctor else '-' }}</td></tr>
+    <tr><td>{{ _('الفحل') }}</td><td>{{ p.ram.animal_no if p.ram else (p.ram_note or '-') }}</td></tr>
+    <tr><td>{{ _('بداية البرنامج') }}</td><td>{{ p.start_date }}</td></tr>
+    <tr><td>{{ _('نافذة الشياع المتوقعة') }}</td><td>{{ p.expected_estrus_start or '-' }} → {{ p.expected_estrus_end or '-' }}</td></tr>
+    <tr><td>{{ _('نافذة التقريع') }}</td><td>{{ p.mating_window_start or '-' }} → {{ p.mating_window_end or '-' }}</td></tr>
+    <tr><td>{{ _('ملاحظات') }}</td><td>{{ p.notes or '-' }}</td></tr>
   </table>
   </div>
   {% if current_user.has_permission('repro.manage') and p.status == 'active' %}
   <form method="post" action="{{ url_for('repro.program_set_status', program_id=p.id) }}" style="display:flex; gap:8px; align-items:center; margin-top:10px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <select name="status" style="width:auto; margin-bottom:0;">
-      <option value="completed">إنهاء البرنامج (مكتمل)</option>
-      <option value="cancelled">إلغاء البرنامج</option>
+      <option value="completed">{{ _('إنهاء البرنامج (مكتمل)') }}</option>
+      <option value="cancelled">{{ _('إلغاء البرنامج') }}</option>
     </select>
-    <button class="btn" type="submit">تحديث الحالة</button>
+    <button class="btn" type="submit">{{ _('تحديث الحالة') }}</button>
   </form>
   {% endif %}
 </div>
 
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>الأجهزة (إسفنجة / جهاز هرموني)</h2>
-    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_device_new', program_id=p.id) }}">+ جهاز جديد</a>{% endif %}
+    <h2>{{ _('الأجهزة (إسفنجة / جهاز هرموني)') }}</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_device_new', program_id=p.id) }}">+ {{ _('جهاز جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
   <table>
-    <tr><th>النوع</th><th>الاسم التجاري</th><th>الإدخال</th><th>الإزالة المخطّطة</th><th>الإزالة الفعلية</th><th>فقدان مبكر</th></tr>
+    <tr><th>{{ _('النوع') }}</th><th>{{ _('الاسم التجاري') }}</th><th>{{ _('الإدخال') }}</th><th>{{ _('الإزالة المخطّطة') }}</th><th>{{ _('الإزالة الفعلية') }}</th><th>{{ _('فقدان مبكر') }}</th></tr>
     {% for d in p.devices %}
     <tr>
       <td>{{ d.device_type }}</td><td>{{ d.trade_name or '-' }}</td>
@@ -46,14 +46,14 @@
         {% if current_user.has_permission('repro.manage') and not d.actual_remove_at %}
         <form method="post" action="{{ url_for('repro.program_device_remove', program_id=p.id, device_id=d.id) }}" style="display:inline;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">تسجيل الإزالة اليوم</button>
+          <button class="btn" type="submit" style="padding:4px 10px; font-size:12px;">{{ _('تسجيل الإزالة اليوم') }}</button>
         </form>
         {% endif %}
       </td>
-      <td>{% if d.early_loss %}{{ status_badge('overdue', 'نعم') }}{% else %}-{% endif %}</td>
+      <td>{% if d.early_loss %}{{ status_badge('overdue', _('نعم')) }}{% else %}-{% endif %}</td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد أجهزة مسجّلة.</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد أجهزة مسجّلة.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
@@ -61,12 +61,12 @@
 
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>الحقن الهرمونية</h2>
-    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_injection_new', program_id=p.id) }}">+ حقنة جديدة</a>{% endif %}
+    <h2>{{ _('الحقن الهرمونية') }}</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_injection_new', program_id=p.id) }}">+ {{ _('حقنة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
   <table>
-    <tr><th>الهرمون</th><th>الجرعة</th><th>الطريق</th><th>مخطّط</th><th>فعلي</th><th>مين أعطاها</th></tr>
+    <tr><th>{{ _('الهرمون') }}</th><th>{{ _('الجرعة') }}</th><th>{{ _('الطريق') }}</th><th>{{ _('مخطّط') }}</th><th>{{ _('فعلي') }}</th><th>{{ _('مين أعطاها') }}</th></tr>
     {% for h in p.hormone_injections %}
     <tr>
       <td>{{ h.hormone_name }}</td>
@@ -77,7 +77,7 @@
       <td>{{ h.given_by or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد حقن مسجّلة.</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد حقن مسجّلة.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
@@ -85,12 +85,12 @@
 
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>محاولات التقريع</h2>
-    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_attempt_new', program_id=p.id) }}">+ محاولة جديدة</a>{% endif %}
+    <h2>{{ _('محاولات التقريع') }}</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.program_attempt_new', program_id=p.id) }}">+ {{ _('محاولة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
   <table>
-    <tr><th>التاريخ</th><th>الفحل</th><th>الحالة</th><th>لاحظها</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الفحل') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('لاحظها') }}</th></tr>
     {% for a in p.attempts %}
     <tr>
       <td>{{ a.mating_date }}</td>
@@ -99,7 +99,7 @@
       <td>{{ a.observed_by or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">لا يوجد محاولات مسجّلة.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد محاولات مسجّلة.') }}</td></tr>
     {% endfor %}
   </table>
   </div>
@@ -107,20 +107,20 @@
 
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>فحوصات السونار</h2>
-    <a class="btn" href="{{ url_for('repro.sonar_new') }}">+ فحص جديد</a>
+    <h2>{{ _('فحوصات السونار') }}</h2>
+    <a class="btn" href="{{ url_for('repro.sonar_new') }}">+ {{ _('فحص جديد') }}</a>
   </div>
   <div class="table-scroll">
   <table>
-    <tr><th>التاريخ</th><th>النتيجة</th><th>عدد الأجنّة</th><th>نبض</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنّة') }}</th><th>{{ _('نبض') }}</th></tr>
     {% for s in p.sonar_results %}
     <tr>
       <td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td>
       <td>{{ s.embryo_count or '-' }}</td>
-      <td>{% if s.heartbeat %}{{ status_badge('active', 'نعم') }}{% else %}-{% endif %}</td>
+      <td>{% if s.heartbeat %}{{ status_badge('active', _('نعم')) }}{% else %}-{% endif %}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">لا يوجد فحوصات مرتبطة بهذا البرنامج بعد.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد فحوصات مرتبطة بهذا البرنامج بعد.') }}</td></tr>
     {% endfor %}
   </table>
   </div>

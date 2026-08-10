@@ -2,12 +2,12 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>برامج الشياع التوأمي</h2>
-    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.programs_new') }}">+ برنامج جديد</a>{% endif %}
+    <h2>{{ _('برامج الشياع التوأمي') }}</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.programs_new') }}">+ {{ _('برنامج جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>#</th><th>الأنثى</th><th>البروتوكول</th><th>بداية</th><th>الطبيب المشرف</th><th>الحالة</th></tr>
+    <tr><th>#</th><th>{{ _('الأنثى') }}</th><th>{{ _('البروتوكول') }}</th><th>{{ _('بداية') }}</th><th>{{ _('الطبيب المشرف') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in rows %}
     <tr>
       <td><a href="{{ url_for('repro.program_detail', program_id=r.id) }}">{{ r.id }}</a></td>
@@ -18,7 +18,7 @@
       <td>{{ r.status|ar_status }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد برامج شياع توأمي مسجّلة بعد.</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد برامج شياع توأمي مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 03:59+0300\n"
+"POT-Creation-Date: 2026-08-10 22:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,7 +89,7 @@ msgstr ""
 msgid "ملغى"
 msgstr ""
 
-#: app/__init__.py:140
+#: app/__init__.py:140 app/templates/repro/attempt_form.html:16
 msgid "قيد الانتظار"
 msgstr ""
 
@@ -101,11 +101,11 @@ msgstr ""
 msgid "غير مؤهّلة"
 msgstr ""
 
-#: app/__init__.py:143
+#: app/__init__.py:143 app/templates/repro/attempt_form.html:17
 msgid "مؤكّدة"
 msgstr ""
 
-#: app/__init__.py:144
+#: app/__init__.py:144 app/templates/repro/attempt_form.html:18
 msgid "فشلت"
 msgstr ""
 
@@ -660,6 +660,13 @@ msgstr ""
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
+#: app/templates/repro/mating_form.html:8
+#: app/templates/repro/matings_list.html:10
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/pregnancy_form.html:8
+#: app/templates/repro/program_detail.html:93
+#: app/templates/repro/program_detail.html:115
+#: app/templates/repro/sonar_list.html:10
 msgid "التاريخ"
 msgstr ""
 
@@ -822,6 +829,7 @@ msgstr ""
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
 #: app/templates/finance/list.html:32
 #: app/templates/health/symptoms_list.html:19
+#: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
 #: app/templates/team/report_detail.html:11
 #: app/templates/team/reports_list.html:26
@@ -1172,6 +1180,13 @@ msgstr ""
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/isolation_exit_form.html:25
+#: app/templates/repro/attempt_form.html:21
+#: app/templates/repro/device_form.html:12
+#: app/templates/repro/injection_form.html:14
+#: app/templates/repro/mating_form.html:24
+#: app/templates/repro/pregnancy_form.html:21
+#: app/templates/repro/program_detail.html:17
+#: app/templates/repro/program_form.html:35
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
 msgstr ""
@@ -1217,6 +1232,7 @@ msgstr ""
 #: app/templates/health/vaccination_schedule_form.html:7
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/repro/matings_list.html:10
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:47
@@ -1262,6 +1278,10 @@ msgstr ""
 #: app/templates/health/disease_type_detail.html:63
 #: app/templates/health/disease_type_detail.html:64
 #: app/templates/health/disease_type_detail.html:65
+#: app/templates/repro/pregnancies_list.html:15
+#: app/templates/repro/program_detail.html:53
+#: app/templates/repro/program_detail.html:120
+#: app/templates/repro/sonar_list.html:17
 msgid "نعم"
 msgstr ""
 
@@ -1273,6 +1293,7 @@ msgstr ""
 #: app/templates/health/disease_link_wizard.html:83
 #: app/templates/health/disease_link_wizard.html:87
 #: app/templates/health/disease_link_wizard.html:91
+#: app/templates/repro/pregnancies_list.html:15
 msgid "لا"
 msgstr ""
 
@@ -1330,6 +1351,12 @@ msgstr ""
 #: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
+#: app/templates/repro/attempt_form.html:22
+#: app/templates/repro/device_form.html:13
+#: app/templates/repro/injection_form.html:15
+#: app/templates/repro/mating_form.html:26
+#: app/templates/repro/pregnancy_form.html:23
+#: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
@@ -1405,6 +1432,8 @@ msgstr ""
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:50
+#: app/templates/repro/program_detail.html:93
+#: app/templates/repro/programs_list.html:10
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/members_list.html:10
 #: app/templates/team/reports_list.html:26
@@ -1437,7 +1466,7 @@ msgid "لا يوجد تحصينات مسجّلة."
 msgstr ""
 
 #: app/templates/animal_detail.html:237 app/templates/base.html:469
-#: app/templates/home.html:72
+#: app/templates/home.html:72 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr ""
 
@@ -1467,7 +1496,7 @@ msgid "لا يوجد تقريع مسجّل."
 msgstr ""
 
 #: app/templates/animal_detail.html:252 app/templates/base.html:470
-#: app/templates/home.html:73
+#: app/templates/home.html:73 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr ""
 
@@ -1489,11 +1518,17 @@ msgid "لا يوجد تشخيص حمل مسجّل."
 msgstr ""
 
 #: app/templates/animal_detail.html:263
+#: app/templates/repro/program_detail.html:110
+#: app/templates/repro/sonar_list.html:5
 msgid "فحوصات السونار"
 msgstr ""
 
 #: app/templates/animal_detail.html:266 app/templates/bulk_action_form.html:381
-#: app/templates/feed/calculator.html:35 app/templates/repro/sonar_form.html:19
+#: app/templates/feed/calculator.html:35
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/program_detail.html:115
+#: app/templates/repro/sonar_form.html:19
+#: app/templates/repro/sonar_list.html:10
 msgid "النتيجة"
 msgstr ""
 
@@ -1502,10 +1537,11 @@ msgid "لا يوجد فحوصات سونار مسجّلة."
 msgstr ""
 
 #: app/templates/animal_detail.html:275
+#: app/templates/repro/programs_list.html:5
 msgid "برامج الشياع التوأمي"
 msgstr ""
 
-#: app/templates/animal_detail.html:278
+#: app/templates/animal_detail.html:278 app/templates/repro/sonar_list.html:10
 msgid "البرنامج"
 msgstr ""
 
@@ -5254,6 +5290,450 @@ msgstr ""
 msgid "لا يوجد عمليات بيع بهذي الفترة."
 msgstr ""
 
+#: app/templates/repro/attempt_form.html:4
+msgid "محاولة تقريع جديدة"
+msgstr ""
+
+#: app/templates/repro/attempt_form.html:4
+#: app/templates/repro/device_form.html:4
+#: app/templates/repro/injection_form.html:4
+#, python-format
+msgid "برنامج #%(id)s (%(no)s)"
+msgstr ""
+
+#: app/templates/repro/attempt_form.html:7
+msgid "تاريخ التقريع"
+msgstr ""
+
+#: app/templates/repro/attempt_form.html:8
+#: app/templates/repro/mating_form.html:13
+msgid "الفحل (لو مسجّل بالنظام)"
+msgstr ""
+
+#: app/templates/repro/attempt_form.html:13
+msgid "وصف الفحل (لو خارجي)"
+msgstr ""
+
+#: app/templates/repro/attempt_form.html:14
+msgid "حالة التأكيد"
+msgstr ""
+
+#: app/templates/repro/attempt_form.html:20
+#: app/templates/repro/program_detail.html:93
+msgid "لاحظها"
+msgstr ""
+
+#: app/templates/repro/device_form.html:4
+msgid "جهاز تكاثر جديد"
+msgstr ""
+
+#: app/templates/repro/device_form.html:7
+msgid "نوع الجهاز"
+msgstr ""
+
+#: app/templates/repro/device_form.html:7
+msgid "مثال: إسفنجة CIDR"
+msgstr ""
+
+#: app/templates/repro/device_form.html:8
+#: app/templates/repro/program_detail.html:39
+msgid "الاسم التجاري"
+msgstr ""
+
+#: app/templates/repro/device_form.html:9
+msgid "تاريخ الإدخال"
+msgstr ""
+
+#: app/templates/repro/device_form.html:10
+msgid "أدخله"
+msgstr ""
+
+#: app/templates/repro/device_form.html:11
+msgid "موعد الإزالة المخطّط"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:4
+msgid "حقنة هرمونية جديدة"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:7
+msgid "اسم الهرمون"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:8
+#: app/templates/repro/program_detail.html:69
+msgid "الجرعة"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:9
+msgid "وحدة الجرعة"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:9
+msgid "مل / وحدة دولية"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:10
+msgid "طريق الإعطاء"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:10
+msgid "عضل / تحت الجلد"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:11
+msgid "الموعد المخطّط"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:12
+msgid "الموعد الفعلي"
+msgstr ""
+
+#: app/templates/repro/injection_form.html:13
+#: app/templates/repro/program_detail.html:69
+msgid "مين أعطاها"
+msgstr ""
+
+#: app/templates/repro/mating_form.html:4
+#: app/templates/repro/matings_list.html:6
+msgid "تقريع جديد"
+msgstr ""
+
+#: app/templates/repro/mating_form.html:5
+msgid ""
+"سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، "
+"تقدر بعدها تتابعه لتأكيد الحمل."
+msgstr ""
+
+#: app/templates/repro/mating_form.html:9
+#: app/templates/repro/matings_list.html:10
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/pregnancy_form.html:9
+#: app/templates/repro/program_form.html:10
+#: app/templates/repro/programs_list.html:10
+#: app/templates/repro/sonar_form.html:9 app/templates/repro/sonar_list.html:10
+msgid "الأنثى"
+msgstr ""
+
+#: app/templates/repro/mating_form.html:18
+msgid "وصف الفحل (لو خارجي/غير مسجّل)"
+msgstr ""
+
+#: app/templates/repro/mating_form.html:18
+msgid "مثال: فحل مستعار من مزرعة الرشيد"
+msgstr ""
+
+#: app/templates/repro/mating_form.html:19
+msgid "الحظيرة (اختياري)"
+msgstr ""
+
+#: app/templates/repro/mating_form.html:25
+msgid ""
+"الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية"
+" عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص "
+"يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة "
+"الحمل المضبوطة بالإعدادات."
+msgstr ""
+
+#: app/templates/repro/matings_list.html:10
+#: app/templates/repro/program_detail.html:13
+#: app/templates/repro/program_detail.html:93
+msgid "الفحل"
+msgstr ""
+
+#: app/templates/repro/matings_list.html:19
+msgid "لا يوجد عمليات تقريع مسجّلة بعد."
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:6
+msgid "تشخيص جديد"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:10
+msgid "مؤكّد"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/pregnancy_form.html:19
+msgid "تاريخ السونار"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/pregnancy_form.html:20
+#: app/templates/repro/program_detail.html:115
+#: app/templates/repro/sonar_form.html:26
+#: app/templates/repro/sonar_list.html:10
+msgid "عدد الأجنّة"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:10
+msgid "الولادة المتوقعة"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:19
+msgid "إجهاض"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:23
+#, python-format
+msgid ""
+"تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة "
+"الحظيرة. متأكد؟"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:27
+#: app/templates/team/report_detail.html:76
+#: app/templates/team/task_detail.html:98
+msgid "ملاحظة (اختياري)"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:28
+msgid "تسجيل إجهاض"
+msgstr ""
+
+#: app/templates/repro/pregnancies_list.html:34
+msgid "لا يوجد تشخيصات حمل مسجّلة بعد."
+msgstr ""
+
+#: app/templates/repro/pregnancy_form.html:4
+msgid "تشخيص حمل جديد"
+msgstr ""
+
+#: app/templates/repro/pregnancy_form.html:5
+msgid ""
+"سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد "
+"الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
+msgstr ""
+
+#: app/templates/repro/pregnancy_form.html:13
+msgid "التقريع المرتبط (اختياري)"
+msgstr ""
+
+#: app/templates/repro/pregnancy_form.html:18
+msgid "مؤكّد؟"
+msgstr ""
+
+#: app/templates/repro/pregnancy_form.html:22
+msgid ""
+"الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة "
+"\"الحمل\" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، "
+"وتاريخ الولادة المتوقع يُحسب من مدة الحمل المضبوطة بالإعدادات. لو ما "
+"تأكّد الحمل، راجع \"فحص السونار\" لاحقاً لتأكيد إضافي."
+msgstr ""
+
+#: app/templates/repro/program_detail.html:6
+#, python-format
+msgid "برنامج #%(id)s — %(no)s"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:11
+#: app/templates/repro/programs_list.html:10
+msgid "البروتوكول"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:12
+#: app/templates/repro/programs_list.html:10
+msgid "الطبيب المشرف"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:14
+msgid "بداية البرنامج"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:15
+msgid "نافذة الشياع المتوقعة"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:16
+msgid "نافذة التقريع"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:24
+msgid "إنهاء البرنامج (مكتمل)"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:25
+msgid "إلغاء البرنامج"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:27
+msgid "تحديث الحالة"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:34
+msgid "الأجهزة (إسفنجة / جهاز هرموني)"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:35
+msgid "جهاز جديد"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:39
+msgid "الإدخال"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:39
+msgid "الإزالة المخطّطة"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:39
+msgid "الإزالة الفعلية"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:39
+msgid "فقدان مبكر"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:49
+msgid "تسجيل الإزالة اليوم"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:56
+msgid "لا يوجد أجهزة مسجّلة."
+msgstr ""
+
+#: app/templates/repro/program_detail.html:64
+msgid "الحقن الهرمونية"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:65
+msgid "حقنة جديدة"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:69
+msgid "الهرمون"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:69
+msgid "الطريق"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:69
+msgid "مخطّط"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:69
+msgid "فعلي"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:80
+msgid "لا يوجد حقن مسجّلة."
+msgstr ""
+
+#: app/templates/repro/program_detail.html:88
+msgid "محاولات التقريع"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:89
+msgid "محاولة جديدة"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:102
+msgid "لا يوجد محاولات مسجّلة."
+msgstr ""
+
+#: app/templates/repro/program_detail.html:111
+#: app/templates/repro/sonar_list.html:6
+msgid "فحص جديد"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:115
+#: app/templates/repro/sonar_list.html:10
+msgid "نبض"
+msgstr ""
+
+#: app/templates/repro/program_detail.html:123
+msgid "لا يوجد فحوصات مرتبطة بهذا البرنامج بعد."
+msgstr ""
+
+#: app/templates/repro/program_form.html:4
+msgid "برنامج تزامن تناسلي جديد (للتوأمة)"
+msgstr ""
+
+#: app/templates/repro/program_form.html:6
+msgid ""
+"برنامج متقدّم يُستخدم لما تبي تزوّد فرص التوأمة عند نعجة معينة، عن طريق "
+"جهاز مهبلي (إسفنجة) يُدخل ويُزال بمواعيد محددة، مع حقن هرمونية، لضبط وقت "
+"استعدادها للتلقيح (يُسمّى طبياً \"الشياع\"). لو تبي تسجّل تقريعاً عادياً "
+"بدون هذا التزامن، استخدم شاشة \"التقريع\" العادية بدل هذي."
+msgstr ""
+
+#: app/templates/repro/program_form.html:14
+msgid "الفحل (لو مسجّل بالنظام، اختياري)"
+msgstr ""
+
+#: app/templates/repro/program_form.html:20
+msgid "تاريخ بداية البرنامج"
+msgstr ""
+
+#: app/templates/repro/program_form.html:22
+msgid "موعد إدخال الجهاز المهبلي (مخطط)"
+msgstr ""
+
+#: app/templates/repro/program_form.html:23
+msgid ""
+"اليوم اللي تخطط تدخل فيه الإسفنجة/الجهاز المهبلي للنعجة — الخطوة الأولى "
+"بالتزامن."
+msgstr ""
+
+#: app/templates/repro/program_form.html:24
+msgid "موعد إزالة الجهاز المهبلي (مخطط)"
+msgstr ""
+
+#: app/templates/repro/program_form.html:25
+msgid ""
+"اليوم اللي تخطط تشيل فيه نفس الجهاز — عادة بعد أسبوع إلى أسبوعين من "
+"الإدخال."
+msgstr ""
+
+#: app/templates/repro/program_form.html:27
+msgid "بداية الفترة المتوقعة لاستعداد النعجة (الشياع)"
+msgstr ""
+
+#: app/templates/repro/program_form.html:28
+msgid "نهاية الفترة المتوقعة لاستعداد النعجة (الشياع)"
+msgstr ""
+
+#: app/templates/repro/program_form.html:29
+msgid ""
+"الفترة المتوقعة اللي تكون فيها النعجة جاهزة للتلقيح بعد إزالة الجهاز — "
+"عادة يوم إلى ثلاثة أيام بعدها."
+msgstr ""
+
+#: app/templates/repro/program_form.html:31
+msgid "بداية نافذة التقريع الفعلي"
+msgstr ""
+
+#: app/templates/repro/program_form.html:32
+msgid "نهاية نافذة التقريع الفعلي"
+msgstr ""
+
+#: app/templates/repro/program_form.html:33
+msgid ""
+"الفترة اللي تسوّي فيها التقريع الفعلي (بالفحل أو بالتلقيح الصناعي) بعد "
+"ظهور علامات الاستعداد."
+msgstr ""
+
+#: app/templates/repro/program_form.html:36
+msgid ""
+"الدورة الكاملة اللي راح يمشي فيها هذا البرنامج: إدخال الإسفنجة ← إزالتها "
+"بموعدها ← ظهور علامات الاستعداد (الشياع) بالفترة المتوقعة ← تقريع فعلي "
+"بنافذة التقريع ← بعدها تابع تأكيد الحمل من \"التكاثر\" ← \"الحمل\" ← \"+ "
+"تشخيص حمل جديد\" زي أي تقريع عادي."
+msgstr ""
+
+#: app/templates/repro/programs_list.html:6
+msgid "برنامج جديد"
+msgstr ""
+
+#: app/templates/repro/programs_list.html:10
+msgid "بداية"
+msgstr ""
+
+#: app/templates/repro/programs_list.html:21
+msgid "لا يوجد برامج شياع توأمي مسجّلة بعد."
+msgstr ""
+
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"
 msgstr ""
@@ -5268,10 +5748,6 @@ msgstr ""
 msgid "تاريخ الفحص"
 msgstr ""
 
-#: app/templates/repro/sonar_form.html:9
-msgid "الأنثى"
-msgstr ""
-
 #: app/templates/repro/sonar_form.html:13
 msgid "برنامج الشياع التوأمي المرتبط (اختياري)"
 msgstr ""
@@ -5282,10 +5758,6 @@ msgstr ""
 
 #: app/templates/repro/sonar_form.html:24
 msgid "غير مؤكد"
-msgstr ""
-
-#: app/templates/repro/sonar_form.html:26
-msgid "عدد الأجنّة"
 msgstr ""
 
 #: app/templates/repro/sonar_form.html:27
@@ -5301,6 +5773,10 @@ msgid ""
 "الخطوة الجاية بالدورة: لو النتيجة \"حامل\" ولسا ما فيه تشخيص حمل مؤكّد "
 "مسجَّل، سجّله من \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" عشان تدخل"
 " الأنثى متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
+msgstr ""
+
+#: app/templates/repro/sonar_list.html:21
+msgid "لا يوجد فحوصات سونار مسجّلة بعد."
 msgstr ""
 
 #: app/templates/team/_my_tasks_rows.html:13
@@ -5641,11 +6117,6 @@ msgstr ""
 
 #: app/templates/team/report_detail.html:73
 msgid "نفّذها بنفسك"
-msgstr ""
-
-#: app/templates/team/report_detail.html:76
-#: app/templates/team/task_detail.html:98
-msgid "ملاحظة (اختياري)"
 msgstr ""
 
 #: app/templates/team/report_detail.html:77

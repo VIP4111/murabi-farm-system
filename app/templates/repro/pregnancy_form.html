@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>تشخيص حمل جديد</h2>
-  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً.</p>
+  <h2>{{ _('تشخيص حمل جديد') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً.') }}</p>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>التاريخ</label><input name="date" type="date" required>
-    <label>الأنثى</label>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
+    <label>{{ _('الأنثى') }}</label>
     <select name="female_id" required>
       {% for f in females %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
     </select>
-    <label>التقريع المرتبط (اختياري)</label>
+    <label>{{ _('التقريع المرتبط (اختياري)') }}</label>
     <select name="mating_id">
       <option value="">-</option>
       {% for m in matings %}<option value="{{ m.id }}">{{ m.female.animal_no }} — {{ m.date }}</option>{% endfor %}
     </select>
-    <label><input name="confirmed" type="checkbox" style="width:auto; display:inline-block;"> مؤكّد؟</label>
-    <label>تاريخ السونار</label><input name="sonar_date" type="date">
-    <label>عدد الأجنّة</label><input name="embryo_count" type="number">
-    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة "الحمل" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، وتاريخ الولادة المتوقع يُحسب من مدة الحمل المضبوطة بالإعدادات. لو ما تأكّد الحمل، راجع "فحص السونار" لاحقاً لتأكيد إضافي.</p>
-    <button class="btn" type="submit">حفظ</button>
+    <label><input name="confirmed" type="checkbox" style="width:auto; display:inline-block;"> {{ _('مؤكّد؟') }}</label>
+    <label>{{ _('تاريخ السونار') }}</label><input name="sonar_date" type="date">
+    <label>{{ _('عدد الأجنّة') }}</label><input name="embryo_count" type="number">
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة "الحمل" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، وتاريخ الولادة المتوقع يُحسب من مدة الحمل المضبوطة بالإعدادات. لو ما تأكّد الحمل، راجع "فحص السونار" لاحقاً لتأكيد إضافي.') }}</p>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 {% endblock %}

@@ -1,29 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>تقريع جديد</h2>
-  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، تقدر بعدها تتابعه لتأكيد الحمل.</p>
+  <h2>{{ _('تقريع جديد') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، تقدر بعدها تتابعه لتأكيد الحمل.') }}</p>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>التاريخ</label><input name="date" type="date" required>
-    <label>الأنثى</label>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
+    <label>{{ _('الأنثى') }}</label>
     <select name="female_id" required>
       {% for f in females %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
     </select>
-    <label>الفحل (لو مسجّل بالنظام)</label>
+    <label>{{ _('الفحل (لو مسجّل بالنظام)') }}</label>
     <select name="male_id">
       <option value="">-</option>
       {% for m in males %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
     </select>
-    <label>وصف الفحل (لو خارجي/غير مسجّل)</label><input name="male_note" placeholder="مثال: فحل مستعار من مزرعة الرشيد">
-    <label>الحظيرة (اختياري)</label>
+    <label>{{ _('وصف الفحل (لو خارجي/غير مسجّل)') }}</label><input name="male_note" placeholder="{{ _('مثال: فحل مستعار من مزرعة الرشيد') }}">
+    <label>{{ _('الحظيرة (اختياري)') }}</label>
     <select name="barn_id">
       <option value="">-</option>
       {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <label>ملاحظات</label><textarea name="notes" rows="2"></textarea>
-    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر "التكاثر" ← "الحمل" ← "+ تشخيص حمل جديد" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات.</p>
-    <button class="btn" type="submit">حفظ</button>
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر "التكاثر" ← "الحمل" ← "+ تشخيص حمل جديد" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات.') }}</p>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
 {% endblock %}

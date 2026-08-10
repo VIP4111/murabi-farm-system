@@ -2,23 +2,23 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>فحوصات السونار</h2>
-    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.sonar_new') }}">+ فحص جديد</a>{% endif %}
+    <h2>{{ _('فحوصات السونار') }}</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.sonar_new') }}">+ {{ _('فحص جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>التاريخ</th><th>الأنثى</th><th>النتيجة</th><th>عدد الأجنّة</th><th>نبض</th><th>البرنامج</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الأنثى') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنّة') }}</th><th>{{ _('نبض') }}</th><th>{{ _('البرنامج') }}</th></tr>
     {% for r in rows %}
     <tr>
       <td>{{ r.exam_date }}</td>
       <td>{{ r.ewe.animal_no }}</td>
       <td>{{ r.result or '-' }}</td>
       <td>{{ r.embryo_count or '-' }}</td>
-      <td>{% if r.heartbeat %}<span class="badge on">نعم</span>{% else %}<span class="badge off">-</span>{% endif %}</td>
+      <td>{% if r.heartbeat %}<span class="badge on">{{ _('نعم') }}</span>{% else %}<span class="badge off">-</span>{% endif %}</td>
       <td>{% if r.program %}<a href="{{ url_for('repro.program_detail', program_id=r.program_id) }}">#{{ r.program_id }}</a>{% else %}-{% endif %}</td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">لا يوجد فحوصات سونار مسجّلة بعد.</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد فحوصات سونار مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

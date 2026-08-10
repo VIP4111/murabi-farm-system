@@ -2,12 +2,12 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>التقريع</h2>
-    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.matings_new') }}">+ تقريع جديد</a>{% endif %}
+    <h2>{{ _('التقريع') }}</h2>
+    {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.matings_new') }}">+ {{ _('تقريع جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>التاريخ</th><th>الأنثى</th><th>الفحل</th><th>الحظيرة</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الأنثى') }}</th><th>{{ _('الفحل') }}</th><th>{{ _('الحظيرة') }}</th></tr>
     {% for r in rows %}
     <tr>
       <td>{{ r.date }}</td>
@@ -16,7 +16,7 @@
       <td>{{ r.barn.barn_name if r.barn else '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">لا يوجد عمليات تقريع مسجّلة بعد.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد عمليات تقريع مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
