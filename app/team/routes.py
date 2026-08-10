@@ -794,6 +794,9 @@ def worker_quick_report(category):
         if scope_error:
             flash(scope_error, "error")
             return redirect(url_for("team.worker_quick_report", category=category))
+        symptom_code = request.form.get("symptom_code") or None
+        from app.health import health_service
+        symptom_guide = health_service.field_symptom_guide_for(symptom_code)
         svc.submit_report(
             reporter=current_user,
             description=request.form["description"],
@@ -802,6 +805,7 @@ def worker_quick_report(category):
             barn_id=request.form.get("barn_id") or None,
             evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
             evidence_audio_url=svc.save_voice_note(request.files.get("voice_note")),
+            urgent=bool(symptom_guide and symptom_guide["urgent"]),
         )
         flash("تم رفع البلاغ — راح يوصل للدكتور", "success")
         return redirect(url_for("core.home"))
@@ -821,12 +825,21 @@ def worker_quick_report(category):
                             Task.task_type.in_(cfg["task_types"]))
                     .order_by(Task.due_date).all())
 
+    # بطاقات الأعراض المصوَّرة (بند إضافي — دليل ميداني سريع) تظهر بس
+    # بفئتي "الصحة" و"الطارئة" — بقية الفئات (تغذية، عزل، نعام) ما لها
+    # علاقة بأعراض صحية فتبقى بالنموذج الحر بدون بطاقات.
+    symptom_cards = None
+    if category in ("health", "emergency"):
+        from app.health.health_service import FIELD_SYMPTOM_GUIDE
+        symptom_cards = FIELD_SYMPTOM_GUIDE
+
     return render_template(
         "team/worker_report_form.html",
         category=category, cfg=cfg, my_tasks=my_tasks,
         animals=animals_query.order_by(Animal.animal_no).all(),
         barns=barns_query.order_by(Barn.barn_name).all(),
         scoped=barn_ids is not None,
+        symptom_cards=symptom_cards,
     )
 
 

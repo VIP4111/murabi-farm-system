@@ -32,12 +32,31 @@
 </div>
 {% endif %}
 
+{% if symptom_cards %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('وش لاحظت؟ (اختياري — يساعدك تكتب البلاغ وتعرف وش تسوي أول شي)') }}</h3>
+  <div id="symptomCards" style="display:flex; gap:10px; flex-wrap:wrap;">
+    {% for code, s in symptom_cards.items() %}
+    <button type="button" class="symptomCardBtn" data-code="{{ code }}"
+            data-title="{{ s.title }}" data-firstaid="{{ s.first_aid }}"
+            style="flex:1 1 130px; min-width:130px; padding:14px 8px; border-radius:14px; border:2px solid var(--line); background:var(--card); cursor:pointer; text-align:center;">
+      <div style="font-size:28px;">{{ s.icon }}</div>
+      <div style="font-size:12.5px; font-weight:700; margin-top:6px;">{{ s.title }}</div>
+      {% if s.urgent %}<div style="font-size:10.5px; color:var(--danger, #c0392b); margin-top:2px;">⚠️ {{ _('عاجل') }}</div>{% endif %}
+    </button>
+    {% endfor %}
+  </div>
+  <div id="firstAidBox" class="notice" style="display:none; margin-top:12px; white-space:pre-line; font-size:13px;"></div>
+</div>
+{% endif %}
+
 <div class="card">
   <h3 style="font-size:15px;">{{ _('بلاغ جديد بهذا التصنيف') if my_tasks else _('تسجيل بلاغ') }}</h3>
   <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.') }}</p>
   <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
   <form method="post" enctype="multipart/form-data" data-offline id="workerReportForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="symptom_code" id="symptomCodeInput" value="">
     <label>{{ _('الحيوان المرتبط') }}</label>
     <select name="animal_id" id="animalSelect">
       <option value="">-</option>
@@ -58,6 +77,29 @@
   </form>
 </div>
 <script>
+(function(){
+  var cards = document.querySelectorAll('.symptomCardBtn');
+  var firstAidBox = document.getElementById('firstAidBox');
+  var symptomCodeInput = document.getElementById('symptomCodeInput');
+  var description = document.querySelector('textarea[name="description"]');
+  cards.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      cards.forEach(function(b){ b.style.borderColor = 'var(--line)'; b.style.background = 'var(--card)'; });
+      btn.style.borderColor = 'var(--primary)';
+      btn.style.background = 'var(--bg)';
+      symptomCodeInput.value = btn.getAttribute('data-code');
+      if (firstAidBox) {
+        firstAidBox.style.display = 'block';
+        firstAidBox.textContent = btn.getAttribute('data-firstaid');
+      }
+      if (description && !description.value) {
+        description.value = btn.getAttribute('data-title') + ' — ';
+        description.focus();
+        description.setSelectionRange(description.value.length, description.value.length);
+      }
+    });
+  });
+})();
 (function(){
   var form = document.getElementById('workerReportForm');
   var errorBox = document.getElementById('animalOrBarnError');
