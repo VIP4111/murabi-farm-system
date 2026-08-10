@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:06+0300\n"
+"POT-Creation-Date: 2026-08-10 23:13+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -584,7 +584,8 @@ msgstr "कुल मृत्यु मामले"
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
 #: app/templates/animal_form.html:8 app/templates/animal_form.html:13
 #: app/templates/animals_list.html:92 app/templates/barn_form.html:7
-#: app/templates/barns_list.html:10 app/templates/bulk_action_form.html:19
+#: app/templates/barns_list.html:10 app/templates/batches/batch_detail.html:55
+#: app/templates/bulk_action_form.html:19
 #: app/templates/bulk_action_form.html:80
 #: app/templates/bulk_action_form.html:222
 #: app/templates/bulk_action_form.html:244
@@ -1010,12 +1011,17 @@ msgstr "फार्म पर जन्मा"
 
 #: app/templates/animal_detail.html:4 app/templates/animal_detail.html:411
 #: app/templates/animal_form.html:50 app/templates/animal_form.html:55
-#: app/templates/animals_list.html:94 app/templates/finance/form.html:11
+#: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
+#: app/templates/batches/batch_form.html:3
+#: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
 #: app/templates/finance/list.html:36
 msgid "شراء"
 msgstr "खरीद"
 
 #: app/templates/animal_detail.html:4 app/templates/animals_list.html:94
+#: app/templates/batches/batch_detail.html:4
+#: app/templates/batches/batch_form.html:3
+#: app/templates/batches/batches_list.html:4
 msgid "هدية/دعم"
 msgstr "उपहार/सहायता"
 
@@ -1456,6 +1462,7 @@ msgstr "दूसरा पक्ष"
 #: app/templates/animal_detail.html:244 app/templates/animal_form.html:65
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:66
+#: app/templates/batches/batch_form.html:26
 #: app/templates/ostrich/egg_hatch_form.html:27
 msgid "أنثى"
 msgstr "मादा"
@@ -1545,6 +1552,7 @@ msgstr "नया वजन दर्ज करें"
 #: app/templates/animal_detail.html:314 app/templates/animal_detail.html:324
 #: app/templates/animal_form.html:126
 #: app/templates/animals_bulk_purchase.html:37
+#: app/templates/batches/batch_form.html:33
 #: app/templates/bulk_action_form.html:19
 msgid "الوزن (كجم)"
 msgstr "वजन (किग्रा)"
@@ -1713,7 +1721,8 @@ msgid "السلالة"
 msgstr "नस्ल"
 
 #: app/templates/animal_form.html:49 app/templates/animal_form.html:53
-#: app/templates/animals_list.html:92
+#: app/templates/animals_list.html:92 app/templates/batches/batch_form.html:11
+#: app/templates/batches/batches_list.html:14
 msgid "المصدر"
 msgstr "स्रोत"
 
@@ -1740,6 +1749,7 @@ msgstr "प्रारंभिक शेष (पहले से झुंड 
 #: app/templates/animal_form.html:64
 #: app/templates/animals_bulk_purchase.html:43
 #: app/templates/animals_bulk_purchase.html:65
+#: app/templates/batches/batch_form.html:27
 #: app/templates/ostrich/egg_hatch_form.html:26
 msgid "ذكر"
 msgstr "नर"
@@ -2049,6 +2059,7 @@ msgid "الحدث"
 msgstr "घटना"
 
 #: app/templates/animal_workflow.html:125 app/templates/animals_list.html:92
+#: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "चरण"
 
@@ -2286,7 +2297,7 @@ msgstr "कार्रवाई"
 msgid "على"
 msgstr "पर"
 
-#: app/templates/audit_log.html:39
+#: app/templates/audit_log.html:39 app/templates/batches/batches_list.html:22
 msgid "تفاصيل"
 msgstr "विवरण"
 
@@ -2676,6 +2687,7 @@ msgstr "टिप्पणियां सहेजें"
 msgid "الحظيرة الجديدة"
 msgstr "नया बाड़ा"
 
+#: app/templates/batches/batch_detail.html:55
 #: app/templates/bulk_action_form.html:244
 #: app/templates/bulk_action_form.html:359
 msgid "الحظيرة الحالية"
@@ -3206,6 +3218,159 @@ msgstr "एक त्रुटि हुई:"
 #: app/templates/assistant/chat.html:117
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr "सहायक से संपर्क नहीं हो सका। दोबारा प्रयास करें।"
+
+#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batches_list.html:3
+msgid "حجر صحي وأوليات"
+msgstr "संगरोध और प्रारंभिक देखभाल"
+
+#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batches_list.html:3
+msgid "ترقيم وفحص سلامة"
+msgstr "टैगिंग और सुरक्षा जांच"
+
+#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batches_list.html:3
+msgid "موزَّعة (مكتملة)"
+msgstr "वितरित (पूर्ण)"
+
+#: app/templates/batches/batch_detail.html:8
+msgid "دفعة"
+msgstr "खेप"
+
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "وصلت %(date)s"
+msgstr "%(date)s को पहुंची"
+
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "%(n)s رأس"
+msgstr "%(n)s पशु"
+
+#: app/templates/batches/batch_detail.html:21
+msgid "تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)"
+msgstr "टैगिंग/जांच चरण में सामूहिक बढ़त (रोके गए पशु स्वतः बाहर रहते हैं)"
+
+#: app/templates/batches/batch_detail.html:26
+msgid "توزيع الدفعة على الحظائر الدائمة"
+msgstr "खेप को स्थायी बाड़ों में वितरित करें"
+
+#: app/templates/batches/batch_detail.html:29
+#: app/templates/health/protocol_apply_form.html:15
+msgid "الرأس"
+msgstr "पशु"
+
+#: app/templates/batches/batch_detail.html:29
+msgid "حظيرة دائمة"
+msgstr "स्थायी बाड़ा"
+
+#: app/templates/batches/batch_detail.html:45
+msgid "توزيع الدفعة"
+msgstr "खेप वितरित करें"
+
+#: app/templates/batches/batch_detail.html:52
+#: app/templates/batches/batch_form.html:20
+msgid "رؤوس الدفعة"
+msgstr "खेप के पशु"
+
+#: app/templates/batches/batch_detail.html:55
+msgid "الاستبعاد الفردي"
+msgstr "व्यक्तिगत रोक"
+
+#: app/templates/batches/batch_detail.html:62
+msgid "مستبعدة:"
+msgstr "रोका गया:"
+
+#: app/templates/batches/batch_detail.html:70
+msgid "تحرير الاستبعاد"
+msgstr "रोक हटाएं"
+
+#: app/templates/batches/batch_detail.html:75
+msgid "سبب الاستبعاد"
+msgstr "रोक का कारण"
+
+#: app/templates/batches/batch_detail.html:76
+msgid "استبعاد/عزل فردي"
+msgstr "व्यक्तिगत रोक/अलगाव"
+
+#: app/templates/batches/batch_detail.html:85
+msgid "حظيرة -"
+msgstr "बाड़ा -"
+
+#: app/templates/batches/batch_detail.html:89
+msgid "لو فاتتها التقدّم الجماعي، ينفّذ لها إجراء المرحلة الحالية بمفردها"
+msgstr "यदि यह सामूहिक बढ़त से छूट गया, तो यह अकेले उसके लिए वर्तमान चरण की कार्रवाई करता है"
+
+#: app/templates/batches/batch_detail.html:89
+msgid "إلحاق بمرحلة الدفعة"
+msgstr "खेप के चरण में शामिल करें"
+
+#: app/templates/batches/batch_form.html:5
+msgid "دفعة استقبال جديدة"
+msgstr "नई प्राप्ति खेप"
+
+#: app/templates/batches/batch_form.html:7
+msgid "تسجيل الدفعة = المرحلة 1 (حجر صحي وأوليات) مباشرة: كل رأس تُسجَّل وتُعزل بحظيرة الحجر تلقائياً، وتتولّد لها مهمتا \"رش وقائي\" و\"تحصين مبدئي\"."
+msgstr "खेप दर्ज करना = सीधे चरण 1 (संगरोध और प्रारंभिक देखभाल): प्रत्येक पशु दर्ज होता है और स्वतः संगरोध बाड़े में अलग होता है, और उसके लिए \"निवारक छिड़काव\" और \"प्रारंभिक टीकाकरण\" कार्य बनते हैं।"
+
+#: app/templates/batches/batch_form.html:15
+#: app/templates/batches/batches_list.html:14
+msgid "تاريخ الوصول"
+msgstr "आगमन तिथि"
+
+#: app/templates/batches/batch_form.html:17
+#: app/templates/health/disease_type_form.html:8
+#: app/templates/health/pharmacy_purchase_form.html:21
+#: app/templates/health/vaccination_schedule_form.html:27
+#: app/templates/team/daily_templates.html:9
+msgid "ملاحظات (اختياري)"
+msgstr "टिप्पणियां (वैकल्पिक)"
+
+#: app/templates/batches/batch_form.html:23
+msgid "رقم (اختياري)"
+msgstr "संख्या (वैकल्पिक)"
+
+#: app/templates/batches/batch_form.html:25
+msgid "الجنس -"
+msgstr "लिंग -"
+
+#: app/templates/batches/batch_form.html:30
+msgid "السلالة -"
+msgstr "नस्ल -"
+
+#: app/templates/batches/batch_form.html:34
+msgid "السعر (لو شراء)"
+msgstr "मूल्य (यदि खरीद है)"
+
+#: app/templates/batches/batch_form.html:37
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" على الأقل عشان يُحتسب الصف."
+msgstr "जिस पंक्ति की आवश्यकता न हो उसे खाली छोड़ें — पंक्ति गिनने के लिए कम से कम \"लिंग\" आवश्यक है।"
+
+#: app/templates/batches/batch_form.html:39
+msgid "تسجيل الدفعة وعزلها"
+msgstr "खेप दर्ज करें और अलग करें"
+
+#: app/templates/batches/batches_list.html:7
+msgid "دفعات استقبال قطيع جديد"
+msgstr "नई झुंड प्राप्ति खेपें"
+
+#: app/templates/batches/batches_list.html:9
+msgid "دفعة جديدة"
+msgstr "नई खेप"
+
+#: app/templates/batches/batches_list.html:14
+msgid "رقم الدفعة"
+msgstr "खेप संख्या"
+
+#: app/templates/batches/batches_list.html:14
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "عدد الرؤوس"
+msgstr "पशु संख्या"
+
+#: app/templates/batches/batches_list.html:24
+msgid "لا يوجد دفعات مسجَّلة بعد."
+msgstr "अभी तक कोई खेप दर्ज नहीं है।"
 
 #: app/templates/feed/barn_plan_form.html:4
 msgid "خطة تغذية جديدة"
@@ -3879,10 +4044,6 @@ msgid "الشهر"
 msgstr "महीना"
 
 #: app/templates/finance/monthly_cost_report.html:27
-msgid "عدد الرؤوس"
-msgstr "पशु संख्या"
-
-#: app/templates/finance/monthly_cost_report.html:27
 msgid "تكلفة الرأس"
 msgstr "प्रति पशु लागत"
 
@@ -4305,13 +4466,6 @@ msgstr "लक्षण जोड़ें"
 #: app/templates/health/disease_type_form.html:4
 msgid "إضافة مرض للقائمة"
 msgstr "सूची में रोग जोड़ें"
-
-#: app/templates/health/disease_type_form.html:8
-#: app/templates/health/pharmacy_purchase_form.html:21
-#: app/templates/health/vaccination_schedule_form.html:27
-#: app/templates/team/daily_templates.html:9
-msgid "ملاحظات (اختياري)"
-msgstr "टिप्पणियां (वैकल्पिक)"
 
 #: app/templates/health/disease_types_list.html:5
 msgid "الأمراض الشائعة (قائمة الاقتراحات)"
@@ -4760,10 +4914,6 @@ msgstr "चरण"
 #: app/templates/health/protocol_form.html:24
 msgid "الدواء"
 msgstr "दवा"
-
-#: app/templates/health/protocol_apply_form.html:15
-msgid "الرأس"
-msgstr "पशु"
 
 #: app/templates/health/protocol_apply_form.html:20
 msgid "تاريخ بداية التطبيق"

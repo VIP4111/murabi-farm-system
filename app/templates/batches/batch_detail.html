@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-{% set stage_labels = {1: 'حجر صحي وأوليات', 2: 'ترقيم وفحص سلامة', 3: 'موزَّعة (مكتملة)'} %}
-{% set source_labels = {'purchase': 'شراء', 'gift': 'هدية/دعم'} %}
+{% set stage_labels = {1: _('حجر صحي وأوليات'), 2: _('ترقيم وفحص سلامة'), 3: _('موزَّعة (مكتملة)')} %}
+{% set source_labels = {'purchase': _('شراء'), 'gift': _('هدية/دعم')} %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
     <div>
-      <h2>دفعة {{ batch.batch_no }}</h2>
+      <h2>{{ _('دفعة') }} {{ batch.batch_no }}</h2>
       <div style="color:var(--muted); font-size:13px;">
-        {{ source_labels.get(batch.source, batch.source) }} · وصلت {{ batch.arrival_date }} · {{ batch.animals|length }} رأس
+        {{ source_labels.get(batch.source, batch.source) }} · {{ _('وصلت %(date)s', date=batch.arrival_date) }} · {{ _('%(n)s رأس', n=batch.animals|length) }}
       </div>
     </div>
     <span class="badge {{ 'on' if batch.stage == STAGE_DISTRIBUTED }}">{{ stage_labels.get(batch.stage, batch.stage) }}</span>
@@ -18,15 +18,15 @@
     {% if batch.stage == STAGE_QUARANTINE %}
     <form method="post" action="{{ url_for('batches.batch_advance', batch_id=batch.id) }}" style="margin-top:10px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button class="btn" type="submit">🏷️ تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)</button>
+      <button class="btn" type="submit">🏷️ {{ _('تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)') }}</button>
     </form>
     {% elif batch.stage == STAGE_TAGGING %}
     <form method="post" action="{{ url_for('batches.batch_distribute', batch_id=batch.id) }}" style="margin-top:14px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <h3 style="font-size:14px;">توزيع الدفعة على الحظائر الدائمة</h3>
+      <h3 style="font-size:14px;">{{ _('توزيع الدفعة على الحظائر الدائمة') }}</h3>
       <div class="table-scroll">
 <table>
-        <tr><th>الرأس</th><th>حظيرة دائمة</th></tr>
+        <tr><th>{{ _('الرأس') }}</th><th>{{ _('حظيرة دائمة') }}</th></tr>
         {% for a in batch.animals %}
         {% if not a.batch_hold_reason and a.status == 'active' %}
         <tr>
@@ -42,24 +42,24 @@
         {% endfor %}
       </table>
 </div>
-      <button class="btn" type="submit" style="margin-top:8px;">🌾 توزيع الدفعة</button>
+      <button class="btn" type="submit" style="margin-top:8px;">🌾 {{ _('توزيع الدفعة') }}</button>
     </form>
     {% endif %}
   {% endif %}
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">رؤوس الدفعة</h3>
+  <h3 style="font-size:15px;">{{ _('رؤوس الدفعة') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>الرقم</th><th>الحظيرة الحالية</th><th>الاستبعاد الفردي</th><th></th></tr>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الحظيرة الحالية') }}</th><th>{{ _('الاستبعاد الفردي') }}</th><th></th></tr>
     {% for a in batch.animals %}
     <tr>
       <td><a href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
       <td>{{ a.barn.barn_name if a.barn else '-' }}</td>
       <td>
         {% if a.batch_hold_reason %}
-        <span class="badge off" title="{{ a.batch_hold_reason }}">⛔ مستبعدة: {{ a.batch_hold_reason }}</span>
+        <span class="badge off" title="{{ a.batch_hold_reason }}">⛔ {{ _('مستبعدة:') }} {{ a.batch_hold_reason }}</span>
         {% else %}<span style="color:var(--muted);">-</span>{% endif %}
       </td>
       <td>
@@ -67,13 +67,13 @@
           {% if a.batch_hold_reason %}
           <form method="post" action="{{ url_for('batches.animal_release', animal_id=a.id) }}" style="display:inline;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn light" style="padding:4px 10px; font-size:12px;" type="submit">تحرير الاستبعاد</button>
+            <button class="btn light" style="padding:4px 10px; font-size:12px;" type="submit">{{ _('تحرير الاستبعاد') }}</button>
           </form>
           {% else %}
           <form method="post" action="{{ url_for('batches.animal_hold', animal_id=a.id) }}" style="display:flex; gap:4px; align-items:center;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input name="reason" placeholder="سبب الاستبعاد" required style="width:140px; padding:4px;">
-            <button class="btn light" style="padding:4px 10px; font-size:12px;" type="submit">استبعاد/عزل فردي</button>
+            <input name="reason" placeholder="{{ _('سبب الاستبعاد') }}" required style="width:140px; padding:4px;">
+            <button class="btn light" style="padding:4px 10px; font-size:12px;" type="submit">{{ _('استبعاد/عزل فردي') }}</button>
           </form>
           {% endif %}
         {% endif %}
@@ -82,11 +82,11 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           {% if batch.stage == STAGE_DISTRIBUTED %}
           <select name="barn_id" style="padding:4px;">
-            <option value="">حظيرة -</option>
+            <option value="">{{ _('حظيرة -') }}</option>
             {% for barn in permanent_barns %}<option value="{{ barn.id }}">{{ barn.barn_name }}</option>{% endfor %}
           </select>
           {% endif %}
-          <button class="btn" style="padding:4px 10px; font-size:12px;" type="submit" title="لو فاتتها التقدّم الجماعي، ينفّذ لها إجراء المرحلة الحالية بمفردها">إلحاق بمرحلة الدفعة</button>
+          <button class="btn" style="padding:4px 10px; font-size:12px;" type="submit" title="{{ _('لو فاتتها التقدّم الجماعي، ينفّذ لها إجراء المرحلة الحالية بمفردها') }}">{{ _('إلحاق بمرحلة الدفعة') }}</button>
         </form>
         {% endif %}
       </td>

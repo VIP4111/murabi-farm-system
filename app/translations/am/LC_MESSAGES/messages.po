@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:06+0300\n"
+"POT-Creation-Date: 2026-08-10 23:13+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -584,7 +584,8 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
 #: app/templates/animal_form.html:8 app/templates/animal_form.html:13
 #: app/templates/animals_list.html:92 app/templates/barn_form.html:7
-#: app/templates/barns_list.html:10 app/templates/bulk_action_form.html:19
+#: app/templates/barns_list.html:10 app/templates/batches/batch_detail.html:55
+#: app/templates/bulk_action_form.html:19
 #: app/templates/bulk_action_form.html:80
 #: app/templates/bulk_action_form.html:222
 #: app/templates/bulk_action_form.html:244
@@ -1010,12 +1011,17 @@ msgstr "በእርሻው የተወለደ"
 
 #: app/templates/animal_detail.html:4 app/templates/animal_detail.html:411
 #: app/templates/animal_form.html:50 app/templates/animal_form.html:55
-#: app/templates/animals_list.html:94 app/templates/finance/form.html:11
+#: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
+#: app/templates/batches/batch_form.html:3
+#: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
 #: app/templates/finance/list.html:36
 msgid "شراء"
 msgstr "ግዢ"
 
 #: app/templates/animal_detail.html:4 app/templates/animals_list.html:94
+#: app/templates/batches/batch_detail.html:4
+#: app/templates/batches/batch_form.html:3
+#: app/templates/batches/batches_list.html:4
 msgid "هدية/دعم"
 msgstr "ስጦታ/ድጋፍ"
 
@@ -1456,6 +1462,7 @@ msgstr "ሌላኛው ወገን"
 #: app/templates/animal_detail.html:244 app/templates/animal_form.html:65
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:66
+#: app/templates/batches/batch_form.html:26
 #: app/templates/ostrich/egg_hatch_form.html:27
 msgid "أنثى"
 msgstr "ሴት"
@@ -1545,6 +1552,7 @@ msgstr "አዲስ ክብደት መዝግብ"
 #: app/templates/animal_detail.html:314 app/templates/animal_detail.html:324
 #: app/templates/animal_form.html:126
 #: app/templates/animals_bulk_purchase.html:37
+#: app/templates/batches/batch_form.html:33
 #: app/templates/bulk_action_form.html:19
 msgid "الوزن (كجم)"
 msgstr "ክብደት (ኪ.ግ)"
@@ -1713,7 +1721,8 @@ msgid "السلالة"
 msgstr "ዝርያ (ንዑስ)"
 
 #: app/templates/animal_form.html:49 app/templates/animal_form.html:53
-#: app/templates/animals_list.html:92
+#: app/templates/animals_list.html:92 app/templates/batches/batch_form.html:11
+#: app/templates/batches/batches_list.html:14
 msgid "المصدر"
 msgstr "ምንጭ"
 
@@ -1740,6 +1749,7 @@ msgstr "የመክፈቻ ቀሪ ሂሳብ (አስቀድሞ በመንጋው ውስ
 #: app/templates/animal_form.html:64
 #: app/templates/animals_bulk_purchase.html:43
 #: app/templates/animals_bulk_purchase.html:65
+#: app/templates/batches/batch_form.html:27
 #: app/templates/ostrich/egg_hatch_form.html:26
 msgid "ذكر"
 msgstr "ወንድ"
@@ -2049,6 +2059,7 @@ msgid "الحدث"
 msgstr "ክስተት"
 
 #: app/templates/animal_workflow.html:125 app/templates/animals_list.html:92
+#: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "ደረጃ"
 
@@ -2286,7 +2297,7 @@ msgstr "ድርጊት"
 msgid "على"
 msgstr "በ"
 
-#: app/templates/audit_log.html:39
+#: app/templates/audit_log.html:39 app/templates/batches/batches_list.html:22
 msgid "تفاصيل"
 msgstr "ዝርዝሮች"
 
@@ -2676,6 +2687,7 @@ msgstr "ማስታወሻዎችን አስቀምጥ"
 msgid "الحظيرة الجديدة"
 msgstr "አዲስ በረት"
 
+#: app/templates/batches/batch_detail.html:55
 #: app/templates/bulk_action_form.html:244
 #: app/templates/bulk_action_form.html:359
 msgid "الحظيرة الحالية"
@@ -3206,6 +3218,159 @@ msgstr "ስህተት ተከስቷል:"
 #: app/templates/assistant/chat.html:117
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr "ከረዳቱ ጋር መገናኘት አልተቻለም። እንደገና ይሞክሩ።"
+
+#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batches_list.html:3
+msgid "حجر صحي وأوليات"
+msgstr "የለይቶ ማቆያ እና የመጀመሪያ እንክብካቤ"
+
+#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batches_list.html:3
+msgid "ترقيم وفحص سلامة"
+msgstr "መለያ መስጠት እና የደህንነት ምርመራ"
+
+#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batches_list.html:3
+msgid "موزَّعة (مكتملة)"
+msgstr "ተከፋፍሏል (ተጠናቅቋል)"
+
+#: app/templates/batches/batch_detail.html:8
+msgid "دفعة"
+msgstr "ጭነት"
+
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "وصلت %(date)s"
+msgstr "%(date)s ደርሷል"
+
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "%(n)s رأس"
+msgstr "%(n)s እንስሳት"
+
+#: app/templates/batches/batch_detail.html:21
+msgid "تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)"
+msgstr "ወደ መለያ/ምርመራ ደረጃ በቡድን ግስጋሴ (የተያዙ እንስሳት በራስ-ሰር ይገለላሉ)"
+
+#: app/templates/batches/batch_detail.html:26
+msgid "توزيع الدفعة على الحظائر الدائمة"
+msgstr "ጭነቱን ወደ ቋሚ በረቶች አከፋፍል"
+
+#: app/templates/batches/batch_detail.html:29
+#: app/templates/health/protocol_apply_form.html:15
+msgid "الرأس"
+msgstr "እንስሳ"
+
+#: app/templates/batches/batch_detail.html:29
+msgid "حظيرة دائمة"
+msgstr "ቋሚ በረት"
+
+#: app/templates/batches/batch_detail.html:45
+msgid "توزيع الدفعة"
+msgstr "ጭነት አከፋፍል"
+
+#: app/templates/batches/batch_detail.html:52
+#: app/templates/batches/batch_form.html:20
+msgid "رؤوس الدفعة"
+msgstr "የጭነቱ እንስሳት"
+
+#: app/templates/batches/batch_detail.html:55
+msgid "الاستبعاد الفردي"
+msgstr "የግለሰብ ማቆያ"
+
+#: app/templates/batches/batch_detail.html:62
+msgid "مستبعدة:"
+msgstr "ተይዟል:"
+
+#: app/templates/batches/batch_detail.html:70
+msgid "تحرير الاستبعاد"
+msgstr "ማቆያ ልቀቅ"
+
+#: app/templates/batches/batch_detail.html:75
+msgid "سبب الاستبعاد"
+msgstr "የማቆያ ምክንያት"
+
+#: app/templates/batches/batch_detail.html:76
+msgid "استبعاد/عزل فردي"
+msgstr "የግለሰብ ማቆያ/መገለል"
+
+#: app/templates/batches/batch_detail.html:85
+msgid "حظيرة -"
+msgstr "በረት -"
+
+#: app/templates/batches/batch_detail.html:89
+msgid "لو فاتتها التقدّم الجماعي، ينفّذ لها إجراء المرحلة الحالية بمفردها"
+msgstr "የቡድን ግስጋሴውን ካመለጠ፣ ይህ ለብቻው የአሁኑን ደረጃ እርምጃ ይፈጽምለታል"
+
+#: app/templates/batches/batch_detail.html:89
+msgid "إلحاق بمرحلة الدفعة"
+msgstr "ከጭነቱ ደረጃ ጋር አጣምር"
+
+#: app/templates/batches/batch_form.html:5
+msgid "دفعة استقبال جديدة"
+msgstr "አዲስ መቀበያ ጭነት"
+
+#: app/templates/batches/batch_form.html:7
+msgid "تسجيل الدفعة = المرحلة 1 (حجر صحي وأوليات) مباشرة: كل رأس تُسجَّل وتُعزل بحظيرة الحجر تلقائياً، وتتولّد لها مهمتا \"رش وقائي\" و\"تحصين مبدئي\"."
+msgstr "ጭነት መመዝገብ = በቀጥታ ደረጃ 1 (የለይቶ ማቆያ እና የመጀመሪያ እንክብካቤ): እያንዳንዱ እንስሳ ይመዘገባል እና በራስ-ሰር በለይቶ ማቆያ በረት ውስጥ ይገለላል፣ እና ለእሱ \"የመከላከያ ርጭት\" እና \"የመጀመሪያ ክትባት\" ተግባራት ይፈጠራሉ።"
+
+#: app/templates/batches/batch_form.html:15
+#: app/templates/batches/batches_list.html:14
+msgid "تاريخ الوصول"
+msgstr "የመድረሻ ቀን"
+
+#: app/templates/batches/batch_form.html:17
+#: app/templates/health/disease_type_form.html:8
+#: app/templates/health/pharmacy_purchase_form.html:21
+#: app/templates/health/vaccination_schedule_form.html:27
+#: app/templates/team/daily_templates.html:9
+msgid "ملاحظات (اختياري)"
+msgstr "ማስታወሻዎች (አማራጭ)"
+
+#: app/templates/batches/batch_form.html:23
+msgid "رقم (اختياري)"
+msgstr "ቁጥር (አማራጭ)"
+
+#: app/templates/batches/batch_form.html:25
+msgid "الجنس -"
+msgstr "ጾታ -"
+
+#: app/templates/batches/batch_form.html:30
+msgid "السلالة -"
+msgstr "ዝርያ -"
+
+#: app/templates/batches/batch_form.html:34
+msgid "السعر (لو شراء)"
+msgstr "ዋጋ (ግዢ ከሆነ)"
+
+#: app/templates/batches/batch_form.html:37
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" على الأقل عشان يُحتسب الصف."
+msgstr "የማያስፈልግዎትን ማንኛውንም ረድፍ ባዶ ይተዉት — ረድፉ እንዲቆጠር ቢያንስ \"ጾታ\" ያስፈልጋል።"
+
+#: app/templates/batches/batch_form.html:39
+msgid "تسجيل الدفعة وعزلها"
+msgstr "ጭነት መዝግብ እና ገለል"
+
+#: app/templates/batches/batches_list.html:7
+msgid "دفعات استقبال قطيع جديد"
+msgstr "አዲስ መንጋ መቀበያ ጭነቶች"
+
+#: app/templates/batches/batches_list.html:9
+msgid "دفعة جديدة"
+msgstr "አዲስ ጭነት"
+
+#: app/templates/batches/batches_list.html:14
+msgid "رقم الدفعة"
+msgstr "የጭነት ቁጥር"
+
+#: app/templates/batches/batches_list.html:14
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "عدد الرؤوس"
+msgstr "የእንስሳት ብዛት"
+
+#: app/templates/batches/batches_list.html:24
+msgid "لا يوجد دفعات مسجَّلة بعد."
+msgstr "እስካሁን የተመዘገበ ጭነት የለም።"
 
 #: app/templates/feed/barn_plan_form.html:4
 msgid "خطة تغذية جديدة"
@@ -3879,10 +4044,6 @@ msgid "الشهر"
 msgstr "ወር"
 
 #: app/templates/finance/monthly_cost_report.html:27
-msgid "عدد الرؤوس"
-msgstr "የእንስሳት ብዛት"
-
-#: app/templates/finance/monthly_cost_report.html:27
 msgid "تكلفة الرأس"
 msgstr "የእንስሳ ዋጋ"
 
@@ -4305,13 +4466,6 @@ msgstr "ምልክት አገናኝ"
 #: app/templates/health/disease_type_form.html:4
 msgid "إضافة مرض للقائمة"
 msgstr "ወደ ዝርዝሩ በሽታ ያክሉ"
-
-#: app/templates/health/disease_type_form.html:8
-#: app/templates/health/pharmacy_purchase_form.html:21
-#: app/templates/health/vaccination_schedule_form.html:27
-#: app/templates/team/daily_templates.html:9
-msgid "ملاحظات (اختياري)"
-msgstr "ማስታወሻዎች (አማራጭ)"
 
 #: app/templates/health/disease_types_list.html:5
 msgid "الأمراض الشائعة (قائمة الاقتراحات)"
@@ -4760,10 +4914,6 @@ msgstr "ደረጃ"
 #: app/templates/health/protocol_form.html:24
 msgid "الدواء"
 msgstr "መድሃኒት"
-
-#: app/templates/health/protocol_apply_form.html:15
-msgid "الرأس"
-msgstr "እንስሳ"
 
 #: app/templates/health/protocol_apply_form.html:20
 msgid "تاريخ بداية التطبيق"
