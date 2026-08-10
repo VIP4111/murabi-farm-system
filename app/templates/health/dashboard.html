@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% from "_macros.html" import status_badge %}
+{% block title %}{{ _('مركز الطبيب') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>🩺 {{ _('مركز الطبيب') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('سجل متابعة الحالات، التحصينات المستحقة قريباً، وموسوعة مرجعية سريعة — كل شي بصفحة وحدة بدل التنقّل بين شاشات متفرّقة.') }}</p>
+</div>
+
+<div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+  <div class="stat"><b>{{ active_cases|length }}</b><span>{{ _('حالات مرضية نشطة الآن') }}</span></div>
+  <div class="stat"><b>{{ upcoming_vaccinations|length }}</b><span>{{ _('تحصينات مستحقة خلال 7 أيام') }}</span></div>
+</div>
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3 style="font-size:15px; margin:0;">{{ _('الحالات المرضية النشطة') }}</h3>
+    <a class="btn light" href="{{ url_for('health.diseases_list') }}" style="font-size:12px; padding:4px 10px;">{{ _('السجل الكامل') }} ←</a>
+  </div>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('منذ') }}</th></tr>
+    {% for d in active_cases %}
+    <tr>
+      <td>{{ d.date }}</td>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=d.animal_id) }}">{{ d.animal.animal_no }}</a></td>
+      <td>{{ d.disease_name }}</td>
+      <td>{{ d.severity or '-' }}</td>
+      <td>{{ _('%(n)s يوم', n=(today - d.date).days) }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد حالات مرضية نشطة حالياً.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+
+{% if recent_closed %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('آخر الحالات المغلقة') }}</h3>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('تاريخ الإغلاق') }}</th><th>{{ _('ملاحظة التعافي') }}</th></tr>
+    {% for d in recent_closed %}
+    <tr>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=d.animal_id) }}">{{ d.animal.animal_no }}</a></td>
+      <td>{{ d.disease_name }}</td>
+      <td>{{ d.closed_at.strftime('%Y-%m-%d') if d.closed_at else '-' }}</td>
+      <td style="font-size:12.5px; color:var(--muted);">{{ d.recovery_note or '-' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endif %}
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3 style="font-size:15px; margin:0;">{{ _('التحصينات المستحقة خلال 7 أيام') }}</h3>
+    <a class="btn light" href="{{ url_for('health.vaccination_schedule_list') }}" style="font-size:12px; padding:4px 10px;">{{ _('تقويم التحصينات الكامل') }} ←</a>
+  </div>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الحيوان') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('تاريخ الاستحقاق') }}</th></tr>
+    {% for v in upcoming_vaccinations %}
+    <tr>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=v.animal_id) }}">{{ v.animal.animal_no }}</a></td>
+      <td>{{ v.vaccine_name }}</td>
+      <td>{% if v.next_due_date < today %}<span class="badge off">{{ v.next_due_date }}</span>{% else %}{{ v.next_due_date }}{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="3" style="color:#888;">{{ _('لا يوجد تحصينات مستحقة خلال الأسبوع القادم.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">📚 {{ _('الموسوعة المرجعية السريعة') }}</h3>
+  <p style="color:var(--muted); font-size:12px; margin:-4px 0 10px;">{{ _('كل الروابط هنا مراجع عامة استرشادية — القرار الطبي النهائي لحالة أي رأس يبقى تقديرك أنت.') }}</p>
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <a class="btn light" href="{{ url_for('health.disease_types_list') }}">🦠 {{ _('قائمة الأمراض الشائعة') }}</a>
+    <a class="btn light" href="{{ url_for('health.injection_guide') }}">📋 {{ _('دليل الحقن الميداني') }}</a>
+    <a class="btn light" href="{{ url_for('health.protocols_list') }}">📑 {{ _('بروتوكولات العلاج') }}</a>
+    <a class="btn light" href="{{ url_for('health.emergency_symptoms_list') }}">🚨 {{ _('قائمة أعراض الطوارئ') }}</a>
+    {% if current_user.has_permission('health.manage') %}
+    <a class="btn light" href="{{ url_for('health.diagnose_start') }}">🩺 {{ _('المساعد التشخيصي') }}</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

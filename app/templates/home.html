@@ -62,6 +62,18 @@
 </div>
 {% endif %}
 
+{% if user.role.name == 'doctor' %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+    <div>
+      <h3 style="margin:0;">🩺 {{ _('مركز الطبيب') }}</h3>
+      <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('سجل الحالات، التحصينات القادمة، والموسوعة المرجعية بصفحة وحدة') }}</p>
+    </div>
+    <a class="btn" href="{{ url_for('health.dashboard') }}">{{ _('فتح') }} ←</a>
+  </div>
+</div>
+{% endif %}
+
 <div class="card">
   <h3 style="margin-bottom:14px;">{{ _('إجراءات سريعة') }}</h3>
 

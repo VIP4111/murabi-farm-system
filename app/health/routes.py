@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 
@@ -16,6 +16,43 @@ from app.team import task_service as tsvc
 from app.core import protocol_service
 
 PROTOCOL_STEP_SLOTS = range(8)
+
+
+# ---------- مركز الطبيب (بند إضافي 169) ----------
+
+@health_bp.route("/dashboard")
+@login_required
+@require_permission("health.view")
+def dashboard():
+    """مركز إدارة الطبيب — بديل عن التنقّل اليدوي بين 8 روابط متفرّقة
+    بالقائمة الجانبية (صيدلية/زيارات/أمراض/تحصينات/تقويم/تشخيص/دليل
+    حقن/بروتوكولات). يجمع بصفحة وحدة: (1) سجل متابعة الحالات المرضية
+    النشطة والمغلقة حديثاً، (2) التحصينات المستحقة خلال أسبوع، (3)
+    موسوعة مرجعية سريعة (روابط لكل الأدلة العامة الموجودة أصلاً بالنظام
+    — أمراض شائعة، حقن، بروتوكولات، تشخيص، أعراض طوارئ) — بدون تكرار
+    أي منطق موجود، مجرد واجهة تجميع."""
+    today = date.today()
+    active_cases = (
+        Disease.query.filter_by(status="active")
+        .order_by(Disease.date.desc()).all()
+    )
+    recent_closed = (
+        Disease.query.filter_by(status="closed")
+        .order_by(Disease.closed_at.desc()).limit(8).all()
+    )
+    upcoming_vaccinations = (
+        Vaccination.query.filter(
+            Vaccination.next_due_date.isnot(None),
+            Vaccination.next_due_date <= today + timedelta(days=7),
+        )
+        .join(Animal).filter(Animal.status == "active")
+        .order_by(Vaccination.next_due_date).limit(15).all()
+    )
+    return render_template(
+        "health/dashboard.html",
+        active_cases=active_cases, recent_closed=recent_closed,
+        upcoming_vaccinations=upcoming_vaccinations, today=today,
+    )
 
 
 def _complete_originating_task(task_id):
