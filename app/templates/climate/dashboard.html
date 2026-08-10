@@ -39,7 +39,7 @@
   <div style="overflow-x:auto;">
     <div class="table-scroll">
 <table>
-      <thead><tr><th>{{ _('التاريخ') }}</th><th>{{ _('أعلى حرارة (°م)') }}</th><th>{{ _('الرطوبة عند الذروة (%)') }}</th><th>THI</th><th>{{ _('مستوى الإجهاد') }}</th></tr></thead>
+      <thead><tr><th>{{ _('التاريخ') }}</th><th>{{ _('أعلى حرارة (°م)') }}</th><th>{{ _('الرطوبة عند الذروة (%%)') }}</th><th>THI</th><th>{{ _('مستوى الإجهاد') }}</th></tr></thead>
       <tbody>
         {% for r in forecast.readings %}
         <tr style="{% if r.stress_level == 'emergency' %}background:#fde2e1;{% elif r.stress_level == 'severe' %}background:#fde9d0;{% elif r.stress_level == 'moderate' %}background:#fff6d5;{% endif %}">

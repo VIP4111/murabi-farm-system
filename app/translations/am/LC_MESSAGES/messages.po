@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:27+0300\n"
+"POT-Creation-Date: 2026-08-10 23:51+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -321,6 +321,7 @@ msgid "البهم"
 msgstr "ግልገል በጎች"
 
 #: app/core/animal_filters_service.py:183
+#: app/templates/smart_sale_report.html:9
 msgid "الذكور"
 msgstr "ወንዶች"
 
@@ -359,6 +360,151 @@ msgstr "ለማዳቀል ዝግጁ"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "ሰጎኖች"
+
+#: app/core/readiness_service.py:21
+msgid "كلمة مرور المالك الافتراضية"
+msgstr "የባለቤት ነባሪ የይለፍ ቃል"
+
+#: app/core/readiness_service.py:22
+msgid "لسا ما غيّرتها من القيمة الافتراضية — أول شي تسويه قبل أي استخدام فعلي."
+msgstr "እስካሁን ከነባሪ ዋጋ አልቀየሩትም — ማንኛውም ትክክለኛ አጠቃቀም ከመጀመሩ በፊት የመጀመሪያው ነገር።"
+
+#: app/core/readiness_service.py:25
+msgid "كلمة مرور المالك"
+msgstr "የባለቤት የይለፍ ቃል"
+
+#: app/core/readiness_service.py:25
+msgid "تم تغييرها عن الافتراضي."
+msgstr "ከነባሪው ተቀይሯል።"
+
+#: app/core/readiness_service.py:29
+msgid "SECRET_KEY الافتراضي"
+msgstr "ነባሪ SECRET_KEY"
+
+#: app/core/readiness_service.py:30
+msgid "لسا القيمة الافتراضية بملف .env — لازم تغييرها قبل أي نشر فعلي (تؤثر على أمان جلسات الدخول)."
+msgstr "አሁንም በ.env ፋይል ውስጥ ነባሪ ዋጋ — ማንኛውም ትክክለኛ ማሰማራት ከመድረሱ በፊት መቀየር አለበት (የመግቢያ ክፍለ ጊዜ ደህንነትን ይነካል)።"
+
+#: app/core/readiness_service.py:33
+msgid "تم تخصيصه."
+msgstr "ተበጅቷል።"
+
+#: app/core/readiness_service.py:37 app/core/readiness_service.py:41
+msgid "أمان كوكي الجلسة"
+msgstr "የክፍለ ጊዜ ኩኪ ደህንነት"
+
+#: app/core/readiness_service.py:38
+msgid "SESSION_COOKIE_SECURE غير مفعّل — طبيعي محلياً/بالمعاينة، لكن لازم يكون مفعّل تلقائياً على Render (بند 87)."
+msgstr "SESSION_COOKIE_SECURE ተሰናክሏል — በአካባቢ/በቅድመ-እይታ ውስጥ የተለመደ ነው፣ ግን በ Render ላይ በራስ-ሰር መንቃት አለበት (ንጥል 87)።"
+
+#: app/core/readiness_service.py:41
+msgid "مفعّل — كوكي الدخول ما تُرسَل إلا عبر HTTPS."
+msgstr "ነቅቷል — የመግቢያ ኩኪ የሚላከው በHTTPS ብቻ ነው።"
+
+#: app/core/readiness_service.py:45
+msgid "قاعدة البيانات SQLite"
+msgstr "SQLite የውሂብ ጎታ"
+
+#: app/core/readiness_service.py:46
+msgid "مناسبة للتطوير حالياً — راجع خطة الترقية لـPostgreSQL بـROADMAP.md قبل الإنتاج الفعلي (تغيير DATABASE_URL بس)."
+msgstr "በአሁኑ ጊዜ ለልማት ተስማሚ — ትክክለኛ ምርት ከመድረሱ በፊት በROADMAP.md ውስጥ ያለውን የPostgreSQL ማሻሻያ ዕቅድ ይመልከቱ (DATABASE_URLን ብቻ ይቀይሩ)።"
+
+#: app/core/readiness_service.py:49
+msgid "قاعدة البيانات"
+msgstr "የውሂብ ጎታ"
+
+#: app/core/readiness_service.py:49
+msgid "PostgreSQL أو ما يعادلها."
+msgstr "PostgreSQL ወይም ተመጣጣኝ።"
+
+#: app/core/readiness_service.py:54 app/core/readiness_service.py:58
+#: app/templates/isolation_enter_form.html:9
+msgid "حظيرة العزل"
+msgstr "የመገለያ በረት"
+
+#: app/core/readiness_service.py:55
+msgid "ما فيه حظيرة بنوع \"عزل\" بعد — خطة العزل التلقائي بعد الولادة (بند 4) تحتاجها لتنقل الأم والمولود تلقائياً."
+msgstr "እስካሁን \"የለይቶ ማቆያ\" ዓይነት በረት የለም — ከወሊድ በኋላ ራስ-ሰር የለይቶ ማቆያ ዕቅድ (ንጥል 4) እናትን እና ልጅን በራስ-ሰር ለማዛወር ያስፈልገዋል።"
+
+#: app/core/readiness_service.py:58
+#, python-format
+msgid "موجودة (%(name)s)."
+msgstr "አለ (%(name)s)።"
+
+#: app/core/readiness_service.py:62
+msgid "حيوانات بدون حظيرة"
+msgstr "ያለ በረት እንስሳት"
+
+#: app/core/readiness_service.py:62
+#, python-format
+msgid "%(n)s رأس نشط بدون حظيرة معيّنة."
+msgstr "%(n)s ንቁ እንስሳት ያለተመደበ በረት።"
+
+#: app/core/readiness_service.py:64
+msgid "تعيين الحظائر"
+msgstr "የበረት ምደባ"
+
+#: app/core/readiness_service.py:64
+msgid "كل الرؤوس النشطة لها حظيرة."
+msgstr "ሁሉም ንቁ እንስሳት በረት አላቸው።"
+
+#: app/core/readiness_service.py:69
+msgid "تاريخ ميلاد ناقص"
+msgstr "የጎደለ የልደት ቀን"
+
+#: app/core/readiness_service.py:70
+#, python-format
+msgid "%(n)s رأس نشط بدون تاريخ ميلاد — يأثّر على فلاتر البهم/قريب الولادة/العمر (بند 8)."
+msgstr "%(n)s ንቁ እንስሳት ያለ የልደት ቀን — በግልገል በጎች/ወሊድ ተቃርቧል/ዕድሜ ማጣሪያዎች ላይ ተጽዕኖ ያሳድራል (ንጥል 8)።"
+
+#: app/core/readiness_service.py:73
+msgid "تاريخ الميلاد"
+msgstr "የልደት ቀን"
+
+#: app/core/readiness_service.py:73
+msgid "مكتمل لكل الرؤوس النشطة."
+msgstr "ለሁሉም ንቁ እንስሳት የተሟላ።"
+
+#: app/core/readiness_service.py:78 app/core/readiness_service.py:82
+msgid "فريق العمل"
+msgstr "ቡድን"
+
+#: app/core/readiness_service.py:79
+msgid "ما فيه إلا حساب المالك — أضف حسابات الفريق الفعلي (دكتور/عمال) قبل التشغيل اليومي."
+msgstr "የባለቤቱ መለያ ብቻ አለ — ከዕለታዊ ሥራ በፊት ትክክለኛ የቡድን መለያዎችን (ሐኪም/ሠራተኞች) ይጨምሩ።"
+
+#: app/core/readiness_service.py:82
+#, python-format
+msgid "%(n)s حساب نشط."
+msgstr "%(n)s ንቁ መለያዎች።"
+
+#: app/core/readiness_service.py:85 app/core/readiness_service.py:87
+#: app/templates/base.html:481 app/templates/family_view.html:128
+#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
+#: app/templates/home.html:63
+msgid "الصيدلية"
+msgstr "መድሃኒት ቤት"
+
+#: app/core/readiness_service.py:85
+msgid "ما فيه أي دواء مسجّل بعد."
+msgstr "እስካሁን የተመዘገበ መድሃኒት የለም።"
+
+#: app/core/readiness_service.py:87
+msgid "فيها أدوية مسجّلة."
+msgstr "የተመዘገቡ መድሃኒቶች አሉት።"
+
+#: app/core/readiness_service.py:91 app/core/readiness_service.py:94
+#: app/templates/settings.html:107 app/templates/settings_backup.html:5
+msgid "النسخ الاحتياطي"
+msgstr "መጠባበቂያ"
+
+#: app/core/readiness_service.py:91
+msgid "فيه نسخة احتياطية واحدة على الأقل (بند 34)."
+msgstr "ቢያንስ አንድ መጠባበቂያ አለ (ንጥል 34)።"
+
+#: app/core/readiness_service.py:95
+msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
+msgstr "እስካሁን መጠባበቂያ አልወሰዱም — በቅንብሮች ማያ ገጽ ላይ \"መጠባበቂያ\" ይመልከቱ (ንጥል 34)።"
 
 #: app/core/routes.py:260 app/templates/animals_list.html:67
 msgid "وزن جماعي"
@@ -439,6 +585,103 @@ msgstr "የመጀመሪያውን መድሃኒት ወደ ፋርማሲ ያክሉ"
 #: app/core/setup_checklist_service.py:18
 msgid "أضف أول صنف علف"
 msgstr "የመጀመሪያውን መኖ ንጥል ያክሉ"
+
+#: app/core/smart_sale_service.py:100
+#, python-format
+msgid "التكلفة الحدية الحالية للكيلو (%(marginal)s) صارت أعلى بوضوح من متوسط تكلفة الكيلو التاريخي (%(historical)s) — استمرار التسمين قد ما يستاهل التكلفة (مؤشر داخلي، راجعه قبل القرار)."
+msgstr "የአሁኑ የኪሎ ህዳግ ወጪ (%(marginal)s) ካለፈው አማካይ የኪሎ ወጪ (%(historical)s) በግልጽ ከፍ ብሏል — ማድለብን መቀጠል ወጪውን ላይመጥን ይችላል (የውስጥ አመልካች፣ ከመወሰኑ በፊት ይገምግሙ)።"
+
+#: app/core/smart_sale_service.py:118
+msgid "خلال 7 أيام"
+msgstr "በ7 ቀናት ውስጥ"
+
+#: app/core/smart_sale_service.py:120
+msgid "خلال 14 يوم"
+msgstr "በ14 ቀናት ውስጥ"
+
+#: app/core/smart_sale_service.py:122
+msgid "خلال 30 يوم"
+msgstr "በ30 ቀናት ውስጥ"
+
+#: app/core/smart_sale_service.py:124
+msgid "خلال 60 يوم"
+msgstr "በ60 ቀናት ውስጥ"
+
+#: app/core/smart_sale_service.py:125
+msgid "احتفاظ حالياً"
+msgstr "ለጊዜው ያቆዩ"
+
+#: app/core/smart_sale_service.py:130
+msgid "بيع الآن"
+msgstr "አሁን ሽጥ"
+
+#: app/core/smart_sale_service.py:132
+msgid "بيع قريب"
+msgstr "በቅርቡ ሽጥ"
+
+#: app/core/smart_sale_service.py:134
+msgid "مراقبة"
+msgstr "ክትትል"
+
+#: app/core/smart_sale_service.py:135
+msgid "احتفاظ"
+msgstr "ያቆዩ"
+
+#: app/core/smart_sale_service.py:145
+#, python-format
+msgid "تجاوز سن جاهزية الأضاحي (%(min)s يوم) — عمره %(age)s يوم"
+msgstr "የመስዋዕት ዝግጁነት ዕድሜን አልፏል (%(min)s ቀናት) — ዕድሜው %(age)s ቀናት"
+
+#: app/core/smart_sale_service.py:148
+#, python-format
+msgid "تجاوز سن البيع العادي (%(min)s يوم) — عمره %(age)s يوم"
+msgstr "የመደበኛ ሽያጭ ዕድሜን አልፏል (%(min)s ቀናት) — ዕድሜው %(age)s ቀናት"
+
+#: app/core/smart_sale_service.py:151
+#, python-format
+msgid "لسا ما وصل سن البيع العادي (عمره %(age)s من %(min)s يوم)"
+msgstr "እስካሁን የመደበኛ ሽያጭ ዕድሜ አልደረሰም (ዕድሜው %(age)s ከ%(min)s ቀናት)"
+
+#: app/core/smart_sale_service.py:156
+msgid "الوزن متوقف أو يتراجع — يستهلك علف بدون عائد يستاهل الانتظار"
+msgstr "ክብደት ቆሟል ወይም እየቀነሰ ነው — ለመጠበቅ የሚያስከፍል ጥቅም ሳይኖረው መኖ እየተጠቀመ ነው"
+
+#: app/core/smart_sale_service.py:158
+msgid "الوزن يتحسن — يستاهل الانتظار شوي قبل البيع"
+msgstr "ክብደት እየተሻሻለ ነው — ከመሸጡ በፊት ትንሽ መጠበቅ ተገቢ ነው"
+
+#: app/core/smart_sale_service.py:163
+#, python-format
+msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع"
+msgstr "የአሁኑ የትርፍ ህዳግ %(margin)s%% ≥ ግቡ %(target)s%% — ለመሸጥ ጥሩ ጊዜ"
+
+#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:139
+#: app/templates/animal_detail.html:155
+msgid "ترفض إرضاع مولودها"
+msgstr "ልጇን ማጥባት ትከለክላለች"
+
+#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:140
+#: app/templates/animal_detail.html:156
+msgid "الضرع/الدرة تالفة"
+msgstr "ጡት ተጎድቷል"
+
+#: app/core/smart_sale_service.py:209
+#, python-format
+msgid "تأخر حملها أكثر من %(n)s يوم بدون تقريع/حمل جديد"
+msgstr "ያለ አዲስ ማዳቀል/እርግዝና ከ%(n)s ቀናት በላይ የዘገየ እርግዝና"
+
+#: app/core/smart_sale_service.py:222
+msgid "الوزن يتراجع — يحتاج متابعة"
+msgstr "ክብደት እየቀነሰ ነው — ክትትል ያስፈልጋል"
+
+#: app/core/smart_sale_service.py:226
+#, python-format
+msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%%"
+msgstr "የአሁኑ የትርፍ ህዳግ %(margin)s%% ≥ ግቡ %(target)s%%"
+
+#: app/core/smart_sale_service.py:228
+msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
+msgstr "የሽያጭ ምልክቶች የሉም — አምራች ሴት፣ ማቆየት ይመረጣል"
 
 #: app/health/health_service.py:25
 msgid "حقن عضل (IM)"
@@ -628,6 +871,7 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "ቁጥር"
 
@@ -635,6 +879,7 @@ msgstr "ቁጥር"
 #: app/templates/animal_detail.html:78 app/templates/animal_detail.html:293
 #: app/templates/animal_form.html:62
 #: app/templates/animals_bulk_purchase.html:37
+#: app/templates/smart_sale_report.html:17
 msgid "الجنس"
 msgstr "ጾታ"
 
@@ -671,11 +916,12 @@ msgstr "ጾታ"
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
 msgid "التاريخ"
 msgstr "ቀን"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
+#: app/templates/smart_sale_report.html:17
 #: app/templates/team/tasks_list.html:187
 msgid "السبب"
 msgstr "ምክንያት"
@@ -748,6 +994,7 @@ msgstr "የዕዳ ክፍያ"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+#: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "ንጥል"
 
@@ -1003,7 +1250,7 @@ msgstr "ማንቂያዎቼ"
 msgid "التنبيهات"
 msgstr "ማንቂያዎች"
 
-#: app/templates/alerts_list.html:6
+#: app/templates/alerts_list.html:6 app/templates/settings_readiness.html:26
 msgid "تنبيه"
 msgstr "ማንቂያ"
 
@@ -1024,7 +1271,8 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "በቀጥታ ከሲስተም ውሂብ የተገኘ የቀጥታ እይታ — የደረሱ ክትባቶች፣ ሊያልቁ የተቃረቡ የመታቀብ ወቅቶች፣ ቅርብ ጊዜ የሚጠበቁ ልደቶች፣ የመራቢያ መሳሪያ ቀጠሮዎች፣ ለረጅም ጊዜ ክፍት የሆኑ በሽታዎች፣ ቅደም ተከተላቸው ያልተስተካከሉ እንስሳት፣ በመጠባበቅ ላይ ያሉ ሪፖርቶች፣ አሁን ለሽያጭ ዝግጁ የሆኑ እንስሳት፣ ኃላፊ ሠራተኛ የሌላቸው በረቶች፣ እና ለተያዙ ክትባቶች የሚጠበቅ የክምችት እጥረት (የክትባት ቀን መቁጠሪያ)። የጊዜ መስኮቱ ከ"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:107
+#: app/templates/home.html:107 app/templates/settings_backup.html:4
+#: app/templates/settings_readiness.html:6
 msgid "الإعدادات"
 msgstr "ቅንብሮች"
 
@@ -1341,14 +1589,6 @@ msgstr "ብልህ ሽያጭ ሪፖርት"
 msgid "بغض النظر عن باقي العوامل."
 msgstr "ከሌሎች ምክንያቶች ጋር ሳይገናኝ።"
 
-#: app/templates/animal_detail.html:139 app/templates/animal_detail.html:155
-msgid "ترفض إرضاع مولودها"
-msgstr "ልጇን ማጥባት ትከለክላለች"
-
-#: app/templates/animal_detail.html:140 app/templates/animal_detail.html:156
-msgid "الضرع/الدرة تالفة"
-msgstr "ጡት ተጎድቷል"
-
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
@@ -1453,6 +1693,7 @@ msgstr "ክብደት"
 #: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
+#: app/templates/settings_readiness.html:21
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/members_list.html:10
 #: app/templates/team/reports_list.html:26
@@ -1905,7 +2146,7 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
-#: app/templates/ostrich/incubators_list.html:13
+#: app/templates/ostrich/incubators_list.html:13 app/templates/settings.html:86
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
@@ -2176,7 +2417,7 @@ msgstr "የእንስሳት መዝገብ"
 msgid "متابعة الحجر الصحي"
 msgstr "የለይቶ ማቆያ ክትትል"
 
-#: app/templates/animals_list.html:10
+#: app/templates/animals_list.html:10 app/templates/smart_sale_report.html:5
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "ብልህ ሽያጭ እና ኪሳራ ማስወገድ"
 
@@ -2293,7 +2534,7 @@ msgstr "በዚህ ማጣሪያ ውስጥ በአሁኑ ጊዜ እንስሳት የ
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
-#: app/templates/audit_log.html:5
+#: app/templates/audit_log.html:5 app/templates/settings.html:109
 msgid "سجل التدقيق"
 msgstr "የኦዲት መዝገብ"
 
@@ -2490,12 +2731,6 @@ msgstr "ሰጎን (እንቁላል/ማቀፊያ)"
 #: app/templates/base.html:480 app/templates/home.html:58
 msgid "الصحة"
 msgstr "ጤና"
-
-#: app/templates/base.html:481 app/templates/family_view.html:128
-#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
-#: app/templates/home.html:63
-msgid "الصيدلية"
-msgstr "መድሃኒት ቤት"
 
 #: app/templates/base.html:484 app/templates/health/vaccinations_list.html:5
 #: app/templates/home.html:61
@@ -3086,10 +3321,6 @@ msgstr "ስርዓት"
 msgid "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
 msgstr "እንስሳውን ወደ መገለያ በረት ያዛውራል እና የመገለያ ቀናት ቆጠራን ይጀምራል (ቀድሞ በመገለል ካልነበረ)። ማንኛውም ልዩ ሁኔታ (የበሽታ ጥርጣሬ፣ ጉዳት፣ ወዘተ) — ምክንያቱን እዚህ ይመዝግቡ።"
 
-#: app/templates/isolation_enter_form.html:9
-msgid "حظيرة العزل"
-msgstr "የመገለያ በረት"
-
 #: app/templates/isolation_enter_form.html:13
 msgid "سبب العزل"
 msgstr "የመገለል ምክንያት"
@@ -3154,6 +3385,385 @@ msgstr "ግባ"
 #: app/templates/login.html:26
 msgid "وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع يستخدمه فريقك فعلياً."
 msgstr "የሙከራ ሁነታ ነቅቷል — ያለ የይለፍ ቃል መግባት። ቡድንህ ይህን ጣቢያ በትክክል የሚጠቀም ከሆነ ከቅንብሮች አጥፋው።"
+
+#: app/templates/role_edit.html:4
+msgid "صلاحيات:"
+msgstr "ፈቃዶች:"
+
+#: app/templates/role_edit.html:7 app/templates/role_form.html:7
+msgid "الاسم الظاهر بالواجهة"
+msgstr "በበይነገጹ ላይ የሚታይ ስም"
+
+#: app/templates/role_edit.html:8
+msgid "الصلاحيات"
+msgstr "ፈቃዶች"
+
+#: app/templates/role_edit.html:17
+msgid "حفظ الصلاحيات"
+msgstr "ፈቃዶችን አስቀምጥ"
+
+#: app/templates/role_form.html:4
+msgid "مسمّى وظيفي جديد"
+msgstr "አዲስ የሥራ ማዕረግ"
+
+#: app/templates/role_form.html:7
+msgid "مثال: ممرض"
+msgstr "ምሳሌ: ነርስ"
+
+#: app/templates/role_form.html:8
+msgid "الاسم الداخلي (إنجليزي، بدون مسافات)"
+msgstr "የውስጥ ስም (እንግሊዝኛ፣ ያለ ክፍተት)"
+
+#: app/templates/role_form.html:8
+msgid "مثال: nurse"
+msgstr "ምሳሌ: nurse"
+
+#: app/templates/role_form.html:9
+msgid "حفظ ثم تحديد الصلاحيات"
+msgstr "አስቀምጥ ከዚያ ፈቃዶችን ወስን"
+
+#: app/templates/settings.html:4
+msgid "بيانات المزرعة"
+msgstr "የእርሻ መረጃ"
+
+#: app/templates/settings.html:5
+msgid "تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية."
+msgstr "በሽያጭ ደረሰኝ ራስጌ ላይ ይታያል (ንጥል 75) — ሁሉም አማራጭ ናቸው።"
+
+#: app/templates/settings.html:8
+msgid "اسم المزرعة"
+msgstr "የእርሻ ስም"
+
+#: app/templates/settings.html:9
+msgid "جوال المزرعة"
+msgstr "የእርሻ ስልክ"
+
+#: app/templates/settings.html:10
+msgid "عنوان المزرعة"
+msgstr "የእርሻ አድራሻ"
+
+#: app/templates/settings.html:11
+msgid "حفظ بيانات المزرعة"
+msgstr "የእርሻ መረጃ አስቀምጥ"
+
+#: app/templates/settings.html:16
+msgid "الإعدادات الزمنية"
+msgstr "የጊዜ ቅንብሮች"
+
+#: app/templates/settings.html:17
+msgid "تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...)."
+msgstr "በሲስተሙ ውስጥ ያሉ ሁሉንም ቀናት እና ራስ-ሰር ተግባራት ይቆጣጠራል (ለይቶ ማቆያ፣ ክትባት፣ ጡት ማስጣል፣ ማንቂያዎች...)።"
+
+#: app/templates/settings.html:20
+msgid "مدة الحمل (يوم)"
+msgstr "የእርግዝና ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:21
+msgid "مدة الإسفنجة (يوم)"
+msgstr "የስፖንጅ ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:22
+msgid "دخول الفحل بعد إزالة الإسفنجة (يوم)"
+msgstr "ስፖንጁ ከተወገደ በኋላ የወንድ መግቢያ (ቀናት)"
+
+#: app/templates/settings.html:23
+msgid "تغيير علف الحامل قبل الولادة (يوم)"
+msgstr "ከወሊድ በፊት የነፍሰ ጡር መኖ ለውጥ (ቀናት)"
+
+#: app/templates/settings.html:24
+msgid "علف الأم بعد الولادة (يوم)"
+msgstr "ከወሊድ በኋላ የእናት መኖ (ቀናት)"
+
+#: app/templates/settings.html:25
+msgid "بيع الذكر بعد الولادة (يوم)"
+msgstr "ከወሊድ በኋላ የወንድ ሽያጭ (ቀናት)"
+
+#: app/templates/settings.html:26
+msgid "التنبيه قبل الموعد (يوم)"
+msgstr "ከቀጠሮው በፊት ማንቂያ (ቀናት)"
+
+#: app/templates/settings.html:27
+msgid "تكرار التحصينات الدورية (يوم)"
+msgstr "የመደበኛ ክትባት ድግግሞሽ (ቀናት)"
+
+#: app/templates/settings.html:28
+msgid "مدة عزل المولود والأم (يوم)"
+msgstr "የልጅ እና እናት የለይቶ ማቆያ ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:29
+msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
+msgstr "ከወሊድ በኋላ አስገዳጅ የሐኪም ምርመራ (ሰዓታት)"
+
+#: app/templates/settings.html:30
+msgid "تحصين الأم بعد الولادة (يوم)"
+msgstr "ከወሊድ በኋላ የእናት ክትባት (ቀናት)"
+
+#: app/templates/settings.html:31
+msgid "أقل عمر للتقريع الأول (يوم)"
+msgstr "ለመጀመሪያ ማዳቀል ዝቅተኛ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:32
+msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
+msgstr "ዳግም ከመዳቀሉ በፊት ከወሊድ በኋላ ዝቅተኛ የዕረፍት ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:33
+msgid "عتبات أعمار محرك دورة الإنتاج (بند إضافي 153)"
+msgstr "የምርት ዑደት ሞተር የዕድሜ ወሰኖች (ንጥል 153)"
+
+#: app/templates/settings.html:34
+msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
+msgstr "በዑደት ውስጥ \"አዲስ የተወለደ\" ተብሎ የሚመደብ ከፍተኛ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:35
+msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
+msgstr "ለወንዶች የመራባት ምርመራን ለመዝለል አማራጭ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:36
+msgid "أقل عمر لمرحلة الفطام (يوم)"
+msgstr "ለጡት ማስጣል ደረጃ ዝቅተኛ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:37
+msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
+msgstr "የጡት ማስጣል ቀን መመዝገብን ለመዝለል አማራጭ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:38
+msgid "البيع الذكي (بند 19)"
+msgstr "ብልህ ሽያጭ (ንጥል 19)"
+
+#: app/templates/settings.html:39
+#, python-format
+msgid "هامش الربح المستهدف (%%)"
+msgstr "የታለመ የትርፍ ህዳግ (%%)"
+
+#: app/templates/settings.html:40
+msgid "سن البيع العادي للذكور (يوم)"
+msgstr "ለወንዶች የመደበኛ ሽያጭ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:41
+msgid "أقل سن لبيع الأضاحي (يوم)"
+msgstr "ለመስዋዕት ሽያጭ ዝቅተኛ ዕድሜ (ቀናት)"
+
+#: app/templates/settings.html:42
+msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
+msgstr "ከሽያጭ ምክር በፊት ለሴት ተቀባይነት ያለው ከፍተኛ የእርግዝና መዘግየት (ቀናት)"
+
+#: app/templates/settings.html:43
+msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
+msgstr "ከማንቂያ በፊት ለአዲስ ሪፖርት ከፍተኛ መጠበቂያ (ሰዓታት)"
+
+#: app/templates/settings.html:44
+msgid "مدة حضانة بيض النعام (يوم)"
+msgstr "የሰጎን እንቁላል የመፈልፈያ ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:45
+msgid "الصحة والتغذية (بند إضافي 105 — كانت مخفية بدون شاشة تعديل)"
+msgstr "ጤና እና አመጋገብ (ንጥል 105 — ያለ አርትዖት ማያ ገጽ ተደብቆ ነበር)"
+
+#: app/templates/settings.html:46
+msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
+msgstr "ከመቀላቀል በፊት የአዲስ እንስሳ ማገድ (ቀናት)"
+
+#: app/templates/settings.html:47
+msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
+msgstr "ከሕክምና በኋላ ዳግም ክብደት ማስታወሻ (ቀናት)"
+
+#: app/templates/settings.html:48
+msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
+msgstr "\"የዘገየ ክብደት\" ማንቂያ በፊት በሁለት ክብደቶች መካከል ከፍተኛ ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:49
+msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
+msgstr "በሁለት ፀረ-ጥገኛ መጠኖች መካከል ዝቅተኛ የጊዜ ልዩነት (ቀናት)"
+
+#: app/templates/settings.html:50
+#, python-format
+msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
+msgstr "ለተከማቹ ምግቦች ከፍተኛ ሳምንታዊ ጭማሪ (%%)"
+
+#: app/templates/settings.html:51
+msgid "نافذة قياس زيادة المركّزات (يوم)"
+msgstr "የተከማቹ ምግቦች ጭማሪ መለኪያ መስኮት (ቀናት)"
+
+#: app/templates/settings.html:52
+msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
+msgstr "የታለመ የካልሲየም/ፎስፈረስ ጥምርታ"
+
+#: app/templates/settings.html:53
+msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
+msgstr "የካልሲየም/ፎስፈረስ ጥምርታ የመቻቻል ህዳግ"
+
+#: app/templates/settings.html:54
+msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
+msgstr "ከውርጃ በኋላ የበረት ክትትል (ቀናት)"
+
+#: app/templates/settings.html:55
+msgid "حفظ الإعدادات"
+msgstr "ቅንብሮችን አስቀምጥ"
+
+#: app/templates/settings.html:60
+msgid "الخدمات"
+msgstr "አገልግሎቶች"
+
+#: app/templates/settings.html:61
+msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
+msgstr "የሚያስፈልግዎትን ብቻ ያንቁ — የቆመ አገልግሎት ከሁሉም ማያ ገጾች ሙሉ በሙሉ ይጠፋል።"
+
+#: app/templates/settings.html:69
+msgid "مفعّل"
+msgstr "ነቅቷል"
+
+#: app/templates/settings.html:69
+msgid "غير مفعّل"
+msgstr "አልነቃም"
+
+#: app/templates/settings.html:72 app/templates/team/members_list.html:23
+msgid "تعطيل"
+msgstr "አቦዝን"
+
+#: app/templates/settings.html:72 app/templates/team/daily_templates.html:27
+#: app/templates/team/members_list.html:23
+msgid "تفعيل"
+msgstr "አንቃ"
+
+#: app/templates/settings.html:81
+msgid "المسميات الوظيفية"
+msgstr "የሥራ ማዕረጎች"
+
+#: app/templates/settings.html:82
+msgid "مسمّى جديد"
+msgstr "አዲስ ማዕረግ"
+
+#: app/templates/settings.html:86
+msgid "عدد الصلاحيات"
+msgstr "የፈቃዶች ብዛት"
+
+#: app/templates/settings.html:86
+msgid "نوع"
+msgstr "ዓይነት"
+
+#: app/templates/settings.html:91
+msgid "جاهز افتراضياً"
+msgstr "አብሮገነብ ነባሪ"
+
+#: app/templates/settings.html:91
+msgid "مضاف من المالك"
+msgstr "በባለቤት የተጨመረ"
+
+#: app/templates/settings.html:94
+msgid "تعديل الصلاحيات"
+msgstr "ፈቃዶችን አርትዕ"
+
+#: app/templates/settings.html:104
+msgid "النظام والصيانة"
+msgstr "ሲስተም እና ጥገና"
+
+#: app/templates/settings.html:106 app/templates/settings_readiness.html:7
+msgid "فحص الجاهزية قبل النشر"
+msgstr "ከማሰማራት በፊት የዝግጁነት ምርመራ"
+
+#: app/templates/settings.html:112
+msgid "شاشة متابعة مبسّطة"
+msgstr "ቀላል የክትትል ማያ ገጽ"
+
+#: app/templates/settings_backup.html:9
+msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
+msgstr "⚠️ ከዚህ ቁልፍ የሚደረግ መጠባበቂያ በዚህ አካባቢ አይደገፍም — የአሁኑ የውሂብ ጎታ የአካባቢ SQLite ፋይል አይደለም (ምናልባት በምርት ውስጥ PostgreSQL)። ትክክለኛ የምርት የውሂብ ጎታ መጠባበቂያ የውሂብ ጎታ-ደረጃ መሳሪያዎችን ይፈልጋል (pg_dump፣ WAL archiving፣ ወይም የተያዘ ማስተናገጃ አቅራቢ ቅጽበታዊ ገጽ እይታዎች) — ይህ በራሱ መተግበሪያ ውስጥ ካለው ማንኛውም ቁልፍ ወሰን ውጭ ነው።"
+
+#: app/templates/settings_backup.html:13
+msgid "نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد instance/backups/. مناسب لبيئة SQLite الحالية (تطوير/مزرعة واحدة صغيرة) — راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً."
+msgstr "የአሁኑ የውሂብ ጎታ ፋይል ሙሉ ቅጂ፣ በአካባቢ instance/backups/ አቃፊ ውስጥ ይቀመጣል። ለአሁኑ SQLite አካባቢ ተስማሚ (ልማት/ነጠላ ትንሽ እርሻ) — በኋላ ወደ PostgreSQL ምርት ከተዛወሩ ከላይ ያለውን ማስጠንቀቂያ ይመልከቱ።"
+
+#: app/templates/settings_backup.html:17
+msgid "إنشاء نسخة احتياطية الآن"
+msgstr "አሁን መጠባበቂያ ፍጠር"
+
+#: app/templates/settings_backup.html:23
+#, python-format
+msgid "النسخ المحفوظة (%(n)s)"
+msgstr "የተቀመጡ መጠባበቂያዎች (%(n)s)"
+
+#: app/templates/settings_backup.html:26
+msgid "الملف"
+msgstr "ፋይል"
+
+#: app/templates/settings_backup.html:26
+msgid "الحجم"
+msgstr "መጠን"
+
+#: app/templates/settings_backup.html:32
+msgid "تنزيل"
+msgstr "አውርድ"
+
+#: app/templates/settings_backup.html:35
+msgid "ما فيه أي نسخة احتياطية بعد."
+msgstr "እስካሁን መጠባበቂያ የለም።"
+
+#: app/templates/settings_readiness.html:8
+msgid "قائمة تحقق آلية لنقاط شائعة تُنسى قبل تشغيل النظام على قطيع حقيقي — عرض فقط، بدون أي تعديل تلقائي على بياناتك."
+msgstr "ትክክለኛ መንጋ ላይ ሲስተሙን ከማስኬድ በፊት ብዙ ጊዜ የሚረሱ የተለመዱ ነጥቦች ራስ-ሰር ዝርዝር — ማሳያ ብቻ፣ በውሂብዎ ላይ ምንም ራስ-ሰር ለውጥ የለም።"
+
+#: app/templates/settings_readiness.html:10
+#, python-format
+msgid "%(n)s نقطة حرجة تحتاج معالجة فورية قبل أي استخدام فعلي."
+msgstr "%(n)s ወሳኝ ነጥቦች ማንኛውም ትክክለኛ አጠቃቀም ከመድረሱ በፊት አፋጣኝ ትኩረት ያስፈልጋቸዋል።"
+
+#: app/templates/settings_readiness.html:12
+#, python-format
+msgid "%(n)s نقطة تستاهل انتباهك — مو حرجة، لكن يفضّل معالجتها."
+msgstr "%(n)s ነጥቦች ትኩረትዎን ይፈልጋሉ — ወሳኝ አይደሉም፣ ግን መስተካከል ይመረጣል።"
+
+#: app/templates/settings_readiness.html:14
+msgid "كل الفحوصات سليمة."
+msgstr "ሁሉም ምርመራዎች ትክክል ናቸው።"
+
+#: app/templates/settings_readiness.html:21
+msgid "التفصيل"
+msgstr "ዝርዝር"
+
+#: app/templates/settings_readiness.html:25
+msgid "حرج"
+msgstr "ወሳኝ"
+
+#: app/templates/settings_readiness.html:27
+msgid "سليم"
+msgstr "ትክክል"
+
+#: app/templates/smart_sale_report.html:6
+msgid "رجوع لسجل الحيوانات"
+msgstr "ወደ የእንስሳት መዝገብ ተመለስ"
+
+#: app/templates/smart_sale_report.html:9
+msgid "الأهم عمرهم — بيع عادي بعمر 6 أشهر، وبيع الأضاحي يحتاج عمر أعلى من 6 أشهر (سن الجذعة الشرعي)، والوزن الثانوي (لو متوقف/يتراجع، يستهلك علف بدون فايدة)."
+msgstr "ዕድሜ ከሁሉም በላይ አስፈላጊ ነው — በ6 ወር ዕድሜ መደበኛ ሽያጭ፣ የመስዋዕት ሽያጭ ደግሞ ከ6 ወር በላይ ዕድሜ ይፈልጋል (ሸሪዓዊ የጃዛህ ዕድሜ)፣ ክብደት ሁለተኛ ደረጃ ነው (ከቆመ/ከቀነሰ፣ ያለ ጥቅም መኖ ይጠቀማል)።"
+
+#: app/templates/smart_sale_report.html:10
+msgid "الإناث"
+msgstr "ሴቶች"
+
+#: app/templates/smart_sale_report.html:10
+msgid "أي علامة من الأربع (تأخر حمل، ما حملت إطلاقاً، ترفض الرضاعة، الضرع تالف) = توصية بيع فورية بغض النظر عن باقي العوامل. القيم (الأعمار، هامش الربح، مدة التأخر) كلها قابلة للتعديل من"
+msgstr "ከአራቱ ምልክቶች አንዱ (የዘገየ እርግዝና፣ በጭራሽ ያልፀነሰች፣ ጡት ማጥባትን መከልከል፣ የተጎዳ ጡት) = ሌሎች ምክንያቶች ምንም ይሁኑ ወዲያውኑ የሽያጭ ምክር። ዋጋዎቹ (ዕድሜዎች፣ የትርፍ ህዳግ፣ የመዘግየት ጊዜ) ሁሉም ሊስተካከሉ የሚችሉ ናቸው ከ"
+
+#: app/templates/smart_sale_report.html:10
+msgid "شاشة الإعدادات"
+msgstr "የቅንብሮች ማያ ገጽ"
+
+#: app/templates/smart_sale_report.html:17
+msgid "الدرجة"
+msgstr "ነጥብ"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+#: app/templates/smart_sale_report.html:17
+msgid "التوصية"
+msgstr "ምክር"
+
+#: app/templates/smart_sale_report.html:17
+msgid "النافذة المقترحة"
+msgstr "የተጠቆመ መስኮት"
+
+#: app/templates/smart_sale_report.html:30
+msgid "لا يوجد حيوانات نشطة لتقييمها."
+msgstr "ለመገምገም ንቁ እንስሳት የሉም።"
 
 #: app/templates/today.html:7
 msgid "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما تتنقّل بين شاشات."
@@ -3458,8 +4068,9 @@ msgid "أعلى حرارة (°م)"
 msgstr "ከፍተኛ ሙቀት (°ሴ)"
 
 #: app/templates/climate/dashboard.html:42
-msgid "الرطوبة عند الذروة (%)"
-msgstr "በከፍተኛ ደረጃ እርጥበት (%)"
+#, python-format
+msgid "الرطوبة عند الذروة (%%)"
+msgstr "በከፍተኛ ደረጃ እርጥበት (%%)"
 
 #: app/templates/climate/dashboard.html:42
 msgid "مستوى الإجهاد"
@@ -4866,10 +5477,6 @@ msgstr "ክብደት"
 #: app/templates/health/emergency_symptoms_list.html:14
 msgid "التشخيص التفريقي"
 msgstr "ንፅፅር ምርመራ"
-
-#: app/templates/health/emergency_symptoms_list.html:14
-msgid "التوصية"
-msgstr "ምክር"
 
 #: app/templates/health/emergency_symptoms_list.html:23
 msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
@@ -6328,11 +6935,6 @@ msgstr "ቆሟል"
 msgid "إيقاف"
 msgstr "አቁም"
 
-#: app/templates/team/daily_templates.html:27
-#: app/templates/team/members_list.html:23
-msgid "تفعيل"
-msgstr "አንቃ"
-
 #: app/templates/team/daily_templates.html:32
 msgid "ما فيه مهام يومية مضافة بعد."
 msgstr "እስካሁን የተጨመረ ዕለታዊ ተግባር የለም።"
@@ -6389,10 +6991,6 @@ msgstr "አዲስ አባል"
 #: app/templates/team/members_list.html:17
 msgid "معطّل"
 msgstr "ቦዝኗል"
-
-#: app/templates/team/members_list.html:23
-msgid "تعطيل"
-msgstr "አቦዝን"
 
 #: app/templates/team/members_list.html:29
 msgid "لا يوجد أعضاء بعد."

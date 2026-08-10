@@ -1,44 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← الإعدادات</a>
-  <h2 style="margin-top:12px;">النسخ الاحتياطي</h2>
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">{{ _('النسخ الاحتياطي') }}</h2>
 
   {% if not supported %}
   <div class="notice">
-    ⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات
-    الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي
-    حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (<code>pg_dump</code>،
-    WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر
-    بالتطبيق نفسه.
+    {{ _('⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه.') }}
   </div>
   {% else %}
   <p style="color:var(--muted); font-size:13px;">
-    نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد
-    <code>instance/backups/</code>. مناسب لبيئة SQLite الحالية (تطوير/مزرعة
-    واحدة صغيرة) — راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً.
+    {{ _('نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد instance/backups/. مناسب لبيئة SQLite الحالية (تطوير/مزرعة واحدة صغيرة) — راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً.') }}
   </p>
   <form method="post" action="{{ url_for('core.backup_create') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button class="btn" type="submit">📦 إنشاء نسخة احتياطية الآن</button>
+    <button class="btn" type="submit">📦 {{ _('إنشاء نسخة احتياطية الآن') }}</button>
   </form>
   {% endif %}
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">النسخ المحفوظة ({{ backups|length }})</h3>
+  <h3 style="font-size:15px;">{{ _('النسخ المحفوظة (%(n)s)', n=backups|length) }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>الملف</th><th>الحجم</th><th>التاريخ</th><th></th></tr>
+    <tr><th>{{ _('الملف') }}</th><th>{{ _('الحجم') }}</th><th>{{ _('التاريخ') }}</th><th></th></tr>
     {% for b in backups %}
     <tr>
       <td>{{ b.filename }}</td>
       <td>{{ b.size_kb }} KB</td>
       <td>{{ b.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-      <td><a class="btn light" href="{{ url_for('core.backup_download', filename=b.filename) }}" style="padding:4px 10px; font-size:12px;">تنزيل</a></td>
+      <td><a class="btn light" href="{{ url_for('core.backup_download', filename=b.filename) }}" style="padding:4px 10px; font-size:12px;">{{ _('تنزيل') }}</a></td>
     </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">ما فيه أي نسخة احتياطية بعد.</td></tr>
+    <tr><td colspan="4" style="color:#888;">{{ _('ما فيه أي نسخة احتياطية بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

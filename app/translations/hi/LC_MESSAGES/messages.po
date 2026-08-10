@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:27+0300\n"
+"POT-Creation-Date: 2026-08-10 23:51+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -321,6 +321,7 @@ msgid "البهم"
 msgstr "मेमने"
 
 #: app/core/animal_filters_service.py:183
+#: app/templates/smart_sale_report.html:9
 msgid "الذكور"
 msgstr "नर"
 
@@ -359,6 +360,151 @@ msgstr "संगमन के लिए तैयार"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "शुतुरमुर्ग"
+
+#: app/core/readiness_service.py:21
+msgid "كلمة مرور المالك الافتراضية"
+msgstr "मालिक का डिफ़ॉल्ट पासवर्ड"
+
+#: app/core/readiness_service.py:22
+msgid "لسا ما غيّرتها من القيمة الافتراضية — أول شي تسويه قبل أي استخدام فعلي."
+msgstr "आपने इसे अभी तक डिफ़ॉल्ट मान से नहीं बदला — किसी भी वास्तविक उपयोग से पहले सबसे पहला काम।"
+
+#: app/core/readiness_service.py:25
+msgid "كلمة مرور المالك"
+msgstr "मालिक का पासवर्ड"
+
+#: app/core/readiness_service.py:25
+msgid "تم تغييرها عن الافتراضي."
+msgstr "डिफ़ॉल्ट से बदला गया।"
+
+#: app/core/readiness_service.py:29
+msgid "SECRET_KEY الافتراضي"
+msgstr "डिफ़ॉल्ट SECRET_KEY"
+
+#: app/core/readiness_service.py:30
+msgid "لسا القيمة الافتراضية بملف .env — لازم تغييرها قبل أي نشر فعلي (تؤثر على أمان جلسات الدخول)."
+msgstr "अभी भी .env फ़ाइल में डिफ़ॉल्ट मान — किसी भी वास्तविक तैनाती से पहले बदलना आवश्यक (लॉगिन सत्र सुरक्षा को प्रभावित करता है)।"
+
+#: app/core/readiness_service.py:33
+msgid "تم تخصيصه."
+msgstr "अनुकूलित किया गया।"
+
+#: app/core/readiness_service.py:37 app/core/readiness_service.py:41
+msgid "أمان كوكي الجلسة"
+msgstr "सत्र कुकी सुरक्षा"
+
+#: app/core/readiness_service.py:38
+msgid "SESSION_COOKIE_SECURE غير مفعّل — طبيعي محلياً/بالمعاينة، لكن لازم يكون مفعّل تلقائياً على Render (بند 87)."
+msgstr "SESSION_COOKIE_SECURE अक्षम है — स्थानीय/पूर्वावलोकन में सामान्य, लेकिन Render पर स्वतः सक्षम होना चाहिए (मद 87)।"
+
+#: app/core/readiness_service.py:41
+msgid "مفعّل — كوكي الدخول ما تُرسَل إلا عبر HTTPS."
+msgstr "सक्षम — लॉगिन कुकी केवल HTTPS के माध्यम से भेजी जाती है।"
+
+#: app/core/readiness_service.py:45
+msgid "قاعدة البيانات SQLite"
+msgstr "SQLite डेटाबेस"
+
+#: app/core/readiness_service.py:46
+msgid "مناسبة للتطوير حالياً — راجع خطة الترقية لـPostgreSQL بـROADMAP.md قبل الإنتاج الفعلي (تغيير DATABASE_URL بس)."
+msgstr "वर्तमान में विकास के लिए उपयुक्त — वास्तविक उत्पादन से पहले ROADMAP.md में PostgreSQL अपग्रेड योजना देखें (केवल DATABASE_URL बदलें)।"
+
+#: app/core/readiness_service.py:49
+msgid "قاعدة البيانات"
+msgstr "डेटाबेस"
+
+#: app/core/readiness_service.py:49
+msgid "PostgreSQL أو ما يعادلها."
+msgstr "PostgreSQL या समकक्ष।"
+
+#: app/core/readiness_service.py:54 app/core/readiness_service.py:58
+#: app/templates/isolation_enter_form.html:9
+msgid "حظيرة العزل"
+msgstr "अलगाव बाड़ा"
+
+#: app/core/readiness_service.py:55
+msgid "ما فيه حظيرة بنوع \"عزل\" بعد — خطة العزل التلقائي بعد الولادة (بند 4) تحتاجها لتنقل الأم والمولود تلقائياً."
+msgstr "अभी तक \"संगरोध\" प्रकार का कोई बाड़ा नहीं है — जन्म के बाद स्वचालित संगरोध योजना (मद 4) को माँ और संतान को स्वतः स्थानांतरित करने के लिए इसकी आवश्यकता है।"
+
+#: app/core/readiness_service.py:58
+#, python-format
+msgid "موجودة (%(name)s)."
+msgstr "मौजूद है (%(name)s)।"
+
+#: app/core/readiness_service.py:62
+msgid "حيوانات بدون حظيرة"
+msgstr "बाड़े के बिना पशु"
+
+#: app/core/readiness_service.py:62
+#, python-format
+msgid "%(n)s رأس نشط بدون حظيرة معيّنة."
+msgstr "%(n)s सक्रिय पशु बिना निर्दिष्ट बाड़े के।"
+
+#: app/core/readiness_service.py:64
+msgid "تعيين الحظائر"
+msgstr "बाड़ा निर्धारण"
+
+#: app/core/readiness_service.py:64
+msgid "كل الرؤوس النشطة لها حظيرة."
+msgstr "सभी सक्रिय पशुओं का एक बाड़ा है।"
+
+#: app/core/readiness_service.py:69
+msgid "تاريخ ميلاد ناقص"
+msgstr "जन्म तिथि गायब"
+
+#: app/core/readiness_service.py:70
+#, python-format
+msgid "%(n)s رأس نشط بدون تاريخ ميلاد — يأثّر على فلاتر البهم/قريب الولادة/العمر (بند 8)."
+msgstr "%(n)s सक्रिय पशु बिना जन्म तिथि के — मेमने/प्रसव-निकट/आयु फ़िल्टर को प्रभावित करता है (मद 8)।"
+
+#: app/core/readiness_service.py:73
+msgid "تاريخ الميلاد"
+msgstr "जन्म तिथि"
+
+#: app/core/readiness_service.py:73
+msgid "مكتمل لكل الرؤوس النشطة."
+msgstr "सभी सक्रिय पशुओं के लिए पूर्ण।"
+
+#: app/core/readiness_service.py:78 app/core/readiness_service.py:82
+msgid "فريق العمل"
+msgstr "टीम"
+
+#: app/core/readiness_service.py:79
+msgid "ما فيه إلا حساب المالك — أضف حسابات الفريق الفعلي (دكتور/عمال) قبل التشغيل اليومي."
+msgstr "केवल मालिक का खाता है — दैनिक संचालन से पहले वास्तविक टीम खाते (डॉक्टर/कर्मचारी) जोड़ें।"
+
+#: app/core/readiness_service.py:82
+#, python-format
+msgid "%(n)s حساب نشط."
+msgstr "%(n)s सक्रिय खाते।"
+
+#: app/core/readiness_service.py:85 app/core/readiness_service.py:87
+#: app/templates/base.html:481 app/templates/family_view.html:128
+#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
+#: app/templates/home.html:63
+msgid "الصيدلية"
+msgstr "फार्मेसी"
+
+#: app/core/readiness_service.py:85
+msgid "ما فيه أي دواء مسجّل بعد."
+msgstr "अभी तक कोई दवा दर्ज नहीं है।"
+
+#: app/core/readiness_service.py:87
+msgid "فيها أدوية مسجّلة."
+msgstr "इसमें दर्ज दवाएं हैं।"
+
+#: app/core/readiness_service.py:91 app/core/readiness_service.py:94
+#: app/templates/settings.html:107 app/templates/settings_backup.html:5
+msgid "النسخ الاحتياطي"
+msgstr "बैकअप"
+
+#: app/core/readiness_service.py:91
+msgid "فيه نسخة احتياطية واحدة على الأقل (بند 34)."
+msgstr "कम से कम एक बैकअप मौजूद है (मद 34)।"
+
+#: app/core/readiness_service.py:95
+msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
+msgstr "अभी तक कोई बैकअप नहीं लिया गया — सेटिंग्स स्क्रीन में \"बैकअप\" देखें (मद 34)।"
 
 #: app/core/routes.py:260 app/templates/animals_list.html:67
 msgid "وزن جماعي"
@@ -439,6 +585,103 @@ msgstr "फार्मेसी में पहली दवा जोड़�
 #: app/core/setup_checklist_service.py:18
 msgid "أضف أول صنف علف"
 msgstr "अपना पहला चारा आइटम जोड़ें"
+
+#: app/core/smart_sale_service.py:100
+#, python-format
+msgid "التكلفة الحدية الحالية للكيلو (%(marginal)s) صارت أعلى بوضوح من متوسط تكلفة الكيلو التاريخي (%(historical)s) — استمرار التسمين قد ما يستاهل التكلفة (مؤشر داخلي، راجعه قبل القرار)."
+msgstr "वर्तमान सीमांत लागत प्रति किलो (%(marginal)s) ऐतिहासिक औसत लागत प्रति किलो (%(historical)s) से स्पष्ट रूप से अधिक हो गई है — मोटा करना जारी रखना लागत के लायक नहीं हो सकता (आंतरिक संकेतक, निर्णय से पहले समीक्षा करें)।"
+
+#: app/core/smart_sale_service.py:118
+msgid "خلال 7 أيام"
+msgstr "7 दिनों के भीतर"
+
+#: app/core/smart_sale_service.py:120
+msgid "خلال 14 يوم"
+msgstr "14 दिनों के भीतर"
+
+#: app/core/smart_sale_service.py:122
+msgid "خلال 30 يوم"
+msgstr "30 दिनों के भीतर"
+
+#: app/core/smart_sale_service.py:124
+msgid "خلال 60 يوم"
+msgstr "60 दिनों के भीतर"
+
+#: app/core/smart_sale_service.py:125
+msgid "احتفاظ حالياً"
+msgstr "फिलहाल रखें"
+
+#: app/core/smart_sale_service.py:130
+msgid "بيع الآن"
+msgstr "अभी बेचें"
+
+#: app/core/smart_sale_service.py:132
+msgid "بيع قريب"
+msgstr "जल्द बेचें"
+
+#: app/core/smart_sale_service.py:134
+msgid "مراقبة"
+msgstr "निगरानी"
+
+#: app/core/smart_sale_service.py:135
+msgid "احتفاظ"
+msgstr "रखें"
+
+#: app/core/smart_sale_service.py:145
+#, python-format
+msgid "تجاوز سن جاهزية الأضاحي (%(min)s يوم) — عمره %(age)s يوم"
+msgstr "बलि तत्परता आयु पार कर चुका (%(min)s दिन) — उम्र %(age)s दिन"
+
+#: app/core/smart_sale_service.py:148
+#, python-format
+msgid "تجاوز سن البيع العادي (%(min)s يوم) — عمره %(age)s يوم"
+msgstr "नियमित बिक्री आयु पार कर चुका (%(min)s दिन) — उम्र %(age)s दिन"
+
+#: app/core/smart_sale_service.py:151
+#, python-format
+msgid "لسا ما وصل سن البيع العادي (عمره %(age)s من %(min)s يوم)"
+msgstr "अभी नियमित बिक्री आयु तक नहीं पहुंचा (उम्र %(age)s में से %(min)s दिन)"
+
+#: app/core/smart_sale_service.py:156
+msgid "الوزن متوقف أو يتراجع — يستهلك علف بدون عائد يستاهل الانتظار"
+msgstr "वजन रुका हुआ या घट रहा है — प्रतीक्षा के लायक लाभ के बिना चारा खा रहा है"
+
+#: app/core/smart_sale_service.py:158
+msgid "الوزن يتحسن — يستاهل الانتظار شوي قبل البيع"
+msgstr "वजन बेहतर हो रहा है — बिक्री से पहले थोड़ा इंतज़ार करने लायक"
+
+#: app/core/smart_sale_service.py:163
+#, python-format
+msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع"
+msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ लक्ष्य %(target)s%% — बेचने का अच्छा समय"
+
+#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:139
+#: app/templates/animal_detail.html:155
+msgid "ترفض إرضاع مولودها"
+msgstr "अपनी संतान को दूध पिलाने से इनकार करती है"
+
+#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:140
+#: app/templates/animal_detail.html:156
+msgid "الضرع/الدرة تالفة"
+msgstr "थन क्षतिग्रस्त"
+
+#: app/core/smart_sale_service.py:209
+#, python-format
+msgid "تأخر حملها أكثر من %(n)s يوم بدون تقريع/حمل جديد"
+msgstr "%(n)s दिनों से अधिक गर्भधारण में देरी बिना नए संगमन/गर्भावस्था के"
+
+#: app/core/smart_sale_service.py:222
+msgid "الوزن يتراجع — يحتاج متابعة"
+msgstr "वजन घट रहा है — अनुवर्ती की आवश्यकता है"
+
+#: app/core/smart_sale_service.py:226
+#, python-format
+msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%%"
+msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ लक्ष्य %(target)s%%"
+
+#: app/core/smart_sale_service.py:228
+msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
+msgstr "कोई बिक्री संकेत नहीं — उत्पादक मादा, रखना बेहतर"
 
 #: app/health/health_service.py:25
 msgid "حقن عضل (IM)"
@@ -628,6 +871,7 @@ msgstr "कुल मृत्यु मामले"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "क्रमांक"
 
@@ -635,6 +879,7 @@ msgstr "क्रमांक"
 #: app/templates/animal_detail.html:78 app/templates/animal_detail.html:293
 #: app/templates/animal_form.html:62
 #: app/templates/animals_bulk_purchase.html:37
+#: app/templates/smart_sale_report.html:17
 msgid "الجنس"
 msgstr "लिंग"
 
@@ -671,11 +916,12 @@ msgstr "लिंग"
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
 msgid "التاريخ"
 msgstr "तारीख़"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
+#: app/templates/smart_sale_report.html:17
 #: app/templates/team/tasks_list.html:187
 msgid "السبب"
 msgstr "कारण"
@@ -748,6 +994,7 @@ msgstr "ऋण चुकौती"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+#: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "मद"
 
@@ -1003,7 +1250,7 @@ msgstr "मेरी सूचनाएं"
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
-#: app/templates/alerts_list.html:6
+#: app/templates/alerts_list.html:6 app/templates/settings_readiness.html:26
 msgid "تنبيه"
 msgstr "सूचना"
 
@@ -1024,7 +1271,8 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "सिस्टम डेटा से सीधे बना लाइव व्यू — देय टीकाकरण, समाप्त होने वाली प्रतीक्षा अवधि, आगामी अपेक्षित प्रसव, प्रजनन उपकरण अनुस्मारक, लंबे समय से खुली बीमारियाँ, अनियमित क्रम वाले पशु, लंबित रिपोर्टें, अभी बिक्री के लिए तैयार पशु, बिना ज़िम्मेदार कर्मचारी के बाड़े, और आगामी निर्धारित टीकाकरण के लिए अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से आती है"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:107
+#: app/templates/home.html:107 app/templates/settings_backup.html:4
+#: app/templates/settings_readiness.html:6
 msgid "الإعدادات"
 msgstr "सेटिंग्स"
 
@@ -1341,14 +1589,6 @@ msgstr "स्मार्ट बिक्री रिपोर्ट में
 msgid "بغض النظر عن باقي العوامل."
 msgstr "अन्य कारकों की परवाह किए बिना।"
 
-#: app/templates/animal_detail.html:139 app/templates/animal_detail.html:155
-msgid "ترفض إرضاع مولودها"
-msgstr "अपनी संतान को दूध पिलाने से इनकार करती है"
-
-#: app/templates/animal_detail.html:140 app/templates/animal_detail.html:156
-msgid "الضرع/الدرة تالفة"
-msgstr "थन क्षतिग्रस्त"
-
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
@@ -1453,6 +1693,7 @@ msgstr "गंभीरता"
 #: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
+#: app/templates/settings_readiness.html:21
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/members_list.html:10
 #: app/templates/team/reports_list.html:26
@@ -1905,7 +2146,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
-#: app/templates/ostrich/incubators_list.html:13
+#: app/templates/ostrich/incubators_list.html:13 app/templates/settings.html:86
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
@@ -2176,7 +2417,7 @@ msgstr "पशु रजिस्ट्री"
 msgid "متابعة الحجر الصحي"
 msgstr "संगरोध अनुवर्ती"
 
-#: app/templates/animals_list.html:10
+#: app/templates/animals_list.html:10 app/templates/smart_sale_report.html:5
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "स्मार्ट बिक्री और हानि से बचाव"
 
@@ -2293,7 +2534,7 @@ msgstr "इस फ़िल्टर में फिलहाल कोई प�
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5
+#: app/templates/audit_log.html:5 app/templates/settings.html:109
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -2490,12 +2731,6 @@ msgstr "शुतुरमुर्ग (अंडे/हैचिंग)"
 #: app/templates/base.html:480 app/templates/home.html:58
 msgid "الصحة"
 msgstr "स्वास्थ्य"
-
-#: app/templates/base.html:481 app/templates/family_view.html:128
-#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
-#: app/templates/home.html:63
-msgid "الصيدلية"
-msgstr "फार्मेसी"
 
 #: app/templates/base.html:484 app/templates/health/vaccinations_list.html:5
 #: app/templates/home.html:61
@@ -3086,10 +3321,6 @@ msgstr "सिस्टम"
 msgid "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
 msgstr "पशु को अलगाव बाड़े में स्थानांतरित करता है और अलगाव दिनों की गिनती शुरू करता है (यदि पहले से अलगाव में नहीं है)। किसी भी असाधारण मामले (रोग संदेह, चोट, आदि) के लिए — यहां कारण दर्ज करें।"
 
-#: app/templates/isolation_enter_form.html:9
-msgid "حظيرة العزل"
-msgstr "अलगाव बाड़ा"
-
 #: app/templates/isolation_enter_form.html:13
 msgid "سبب العزل"
 msgstr "अलगाव का कारण"
@@ -3154,6 +3385,385 @@ msgstr "लॉग इन"
 #: app/templates/login.html:26
 msgid "وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع يستخدمه فريقك فعلياً."
 msgstr "टेस्ट मोड चालू है — बिना पासवर्ड लॉगिन। अगर आपकी टीम इस साइट का वास्तव में उपयोग कर रही है तो इसे सेटिंग्स से बंद करें।"
+
+#: app/templates/role_edit.html:4
+msgid "صلاحيات:"
+msgstr "अनुमतियां:"
+
+#: app/templates/role_edit.html:7 app/templates/role_form.html:7
+msgid "الاسم الظاهر بالواجهة"
+msgstr "इंटरफ़ेस में प्रदर्शित नाम"
+
+#: app/templates/role_edit.html:8
+msgid "الصلاحيات"
+msgstr "अनुमतियां"
+
+#: app/templates/role_edit.html:17
+msgid "حفظ الصلاحيات"
+msgstr "अनुमतियां सहेजें"
+
+#: app/templates/role_form.html:4
+msgid "مسمّى وظيفي جديد"
+msgstr "नया पद"
+
+#: app/templates/role_form.html:7
+msgid "مثال: ممرض"
+msgstr "उदाहरण: नर्स"
+
+#: app/templates/role_form.html:8
+msgid "الاسم الداخلي (إنجليزي، بدون مسافات)"
+msgstr "आंतरिक नाम (अंग्रेज़ी, बिना स्पेस)"
+
+#: app/templates/role_form.html:8
+msgid "مثال: nurse"
+msgstr "उदाहरण: nurse"
+
+#: app/templates/role_form.html:9
+msgid "حفظ ثم تحديد الصلاحيات"
+msgstr "सहेजें फिर अनुमतियां निर्धारित करें"
+
+#: app/templates/settings.html:4
+msgid "بيانات المزرعة"
+msgstr "फार्म डेटा"
+
+#: app/templates/settings.html:5
+msgid "تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية."
+msgstr "बिक्री चालान के शीर्षलेख में दिखता है (मद 75) — सभी वैकल्पिक।"
+
+#: app/templates/settings.html:8
+msgid "اسم المزرعة"
+msgstr "फार्म का नाम"
+
+#: app/templates/settings.html:9
+msgid "جوال المزرعة"
+msgstr "फार्म का फोन"
+
+#: app/templates/settings.html:10
+msgid "عنوان المزرعة"
+msgstr "फार्म का पता"
+
+#: app/templates/settings.html:11
+msgid "حفظ بيانات المزرعة"
+msgstr "फार्म डेटा सहेजें"
+
+#: app/templates/settings.html:16
+msgid "الإعدادات الزمنية"
+msgstr "समय सेटिंग्स"
+
+#: app/templates/settings.html:17
+msgid "تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...)."
+msgstr "सिस्टम में सभी तिथियों और स्वचालित कार्यों को नियंत्रित करता है (अलगाव, टीकाकरण, दूध छुड़ाना, अलर्ट...)।"
+
+#: app/templates/settings.html:20
+msgid "مدة الحمل (يوم)"
+msgstr "गर्भधारण अवधि (दिन)"
+
+#: app/templates/settings.html:21
+msgid "مدة الإسفنجة (يوم)"
+msgstr "स्पंज अवधि (दिन)"
+
+#: app/templates/settings.html:22
+msgid "دخول الفحل بعد إزالة الإسفنجة (يوم)"
+msgstr "स्पंज हटाने के बाद नर का प्रवेश (दिन)"
+
+#: app/templates/settings.html:23
+msgid "تغيير علف الحامل قبل الولادة (يوم)"
+msgstr "प्रसव से पहले गर्भवती चारा परिवर्तन (दिन)"
+
+#: app/templates/settings.html:24
+msgid "علف الأم بعد الولادة (يوم)"
+msgstr "प्रसव के बाद माँ का चारा (दिन)"
+
+#: app/templates/settings.html:25
+msgid "بيع الذكر بعد الولادة (يوم)"
+msgstr "जन्म के बाद नर की बिक्री (दिन)"
+
+#: app/templates/settings.html:26
+msgid "التنبيه قبل الموعد (يوم)"
+msgstr "नियत तिथि से पहले अलर्ट (दिन)"
+
+#: app/templates/settings.html:27
+msgid "تكرار التحصينات الدورية (يوم)"
+msgstr "नियमित टीकाकरण दोहराव (दिन)"
+
+#: app/templates/settings.html:28
+msgid "مدة عزل المولود والأم (يوم)"
+msgstr "संतान और माँ की अलगाव अवधि (दिन)"
+
+#: app/templates/settings.html:29
+msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
+msgstr "जन्म के बाद अनिवार्य डॉक्टर जांच (घंटे)"
+
+#: app/templates/settings.html:30
+msgid "تحصين الأم بعد الولادة (يوم)"
+msgstr "जन्म के बाद माँ का टीकाकरण (दिन)"
+
+#: app/templates/settings.html:31
+msgid "أقل عمر للتقريع الأول (يوم)"
+msgstr "पहले संगमन के लिए न्यूनतम आयु (दिन)"
+
+#: app/templates/settings.html:32
+msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
+msgstr "पुनः संगमन से पहले जन्म के बाद न्यूनतम आराम अवधि (दिन)"
+
+#: app/templates/settings.html:33
+msgid "عتبات أعمار محرك دورة الإنتاج (بند إضافي 153)"
+msgstr "उत्पादन चक्र इंजन आयु सीमाएं (मद 153)"
+
+#: app/templates/settings.html:34
+msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
+msgstr "चक्र में \"नवजात\" वर्गीकृत अधिकतम आयु (दिन)"
+
+#: app/templates/settings.html:35
+msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
+msgstr "नर के लिए प्रजनन क्षमता जांच छोड़ने की वैकल्पिक आयु (दिन)"
+
+#: app/templates/settings.html:36
+msgid "أقل عمر لمرحلة الفطام (يوم)"
+msgstr "दूध छुड़ाने के चरण के लिए न्यूनतम आयु (दिन)"
+
+#: app/templates/settings.html:37
+msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
+msgstr "दूध छुड़ाने की तिथि दर्ज करना छोड़ने की वैकल्पिक आयु (दिन)"
+
+#: app/templates/settings.html:38
+msgid "البيع الذكي (بند 19)"
+msgstr "स्मार्ट बिक्री (मद 19)"
+
+#: app/templates/settings.html:39
+#, python-format
+msgid "هامش الربح المستهدف (%%)"
+msgstr "लक्षित लाभ मार्जिन (%%)"
+
+#: app/templates/settings.html:40
+msgid "سن البيع العادي للذكور (يوم)"
+msgstr "नर के लिए नियमित बिक्री आयु (दिन)"
+
+#: app/templates/settings.html:41
+msgid "أقل سن لبيع الأضاحي (يوم)"
+msgstr "बलि बिक्री के लिए न्यूनतम आयु (दिन)"
+
+#: app/templates/settings.html:42
+msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
+msgstr "बिक्री सिफारिश से पहले मादा के लिए स्वीकार्य अधिकतम गर्भधारण देरी (दिन)"
+
+#: app/templates/settings.html:43
+msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
+msgstr "अलर्ट से पहले नई रिपोर्ट के लिए अधिकतम प्रतीक्षा (घंटे)"
+
+#: app/templates/settings.html:44
+msgid "مدة حضانة بيض النعام (يوم)"
+msgstr "शुतुरमुर्ग अंडा इनक्यूबेशन अवधि (दिन)"
+
+#: app/templates/settings.html:45
+msgid "الصحة والتغذية (بند إضافي 105 — كانت مخفية بدون شاشة تعديل)"
+msgstr "स्वास्थ्य और पोषण (मद 105 — बिना संपादन स्क्रीन के छिपा हुआ था)"
+
+#: app/templates/settings.html:46
+msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
+msgstr "मिश्रण से पहले नए पशु का संगरोध (दिन)"
+
+#: app/templates/settings.html:47
+msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
+msgstr "उपचार के बाद पुनः वजन अनुस्मारक (दिन)"
+
+#: app/templates/settings.html:48
+msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
+msgstr "\"विलंबित वजन\" अलर्ट से पहले दो वजन के बीच अधिकतम अवधि (दिन)"
+
+#: app/templates/settings.html:49
+msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
+msgstr "दो कृमिनाशक खुराक के बीच न्यूनतम अंतराल (दिन)"
+
+#: app/templates/settings.html:50
+#, python-format
+msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
+msgstr "सांद्रण के लिए अधिकतम साप्ताहिक वृद्धि (%%)"
+
+#: app/templates/settings.html:51
+msgid "نافذة قياس زيادة المركّزات (يوم)"
+msgstr "सांद्रण वृद्धि माप विंडो (दिन)"
+
+#: app/templates/settings.html:52
+msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
+msgstr "लक्षित कैल्शियम/फॉस्फोरस अनुपात"
+
+#: app/templates/settings.html:53
+msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
+msgstr "कैल्शियम/फॉस्फोरस अनुपात सहनशीलता मार्जिन"
+
+#: app/templates/settings.html:54
+msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
+msgstr "गर्भपात के बाद बाड़ा निगरानी (दिन)"
+
+#: app/templates/settings.html:55
+msgid "حفظ الإعدادات"
+msgstr "सेटिंग्स सहेजें"
+
+#: app/templates/settings.html:60
+msgid "الخدمات"
+msgstr "सेवाएं"
+
+#: app/templates/settings.html:61
+msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
+msgstr "केवल जो आवश्यक हो उसे सक्षम करें — निष्क्रिय सेवा सभी स्क्रीन से पूरी तरह गायब हो जाती है।"
+
+#: app/templates/settings.html:69
+msgid "مفعّل"
+msgstr "सक्षम"
+
+#: app/templates/settings.html:69
+msgid "غير مفعّل"
+msgstr "अक्षम"
+
+#: app/templates/settings.html:72 app/templates/team/members_list.html:23
+msgid "تعطيل"
+msgstr "निष्क्रिय करें"
+
+#: app/templates/settings.html:72 app/templates/team/daily_templates.html:27
+#: app/templates/team/members_list.html:23
+msgid "تفعيل"
+msgstr "सक्रिय करें"
+
+#: app/templates/settings.html:81
+msgid "المسميات الوظيفية"
+msgstr "पद"
+
+#: app/templates/settings.html:82
+msgid "مسمّى جديد"
+msgstr "नया पद"
+
+#: app/templates/settings.html:86
+msgid "عدد الصلاحيات"
+msgstr "अनुमतियों की संख्या"
+
+#: app/templates/settings.html:86
+msgid "نوع"
+msgstr "प्रकार"
+
+#: app/templates/settings.html:91
+msgid "جاهز افتراضياً"
+msgstr "अंतर्निहित डिफ़ॉल्ट"
+
+#: app/templates/settings.html:91
+msgid "مضاف من المالك"
+msgstr "मालिक द्वारा जोड़ा गया"
+
+#: app/templates/settings.html:94
+msgid "تعديل الصلاحيات"
+msgstr "अनुमतियां संपादित करें"
+
+#: app/templates/settings.html:104
+msgid "النظام والصيانة"
+msgstr "सिस्टम और रखरखाव"
+
+#: app/templates/settings.html:106 app/templates/settings_readiness.html:7
+msgid "فحص الجاهزية قبل النشر"
+msgstr "तैनाती से पहले तत्परता जांच"
+
+#: app/templates/settings.html:112
+msgid "شاشة متابعة مبسّطة"
+msgstr "सरलीकृत अनुवर्ती स्क्रीन"
+
+#: app/templates/settings_backup.html:9
+msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
+msgstr "⚠️ इस बटन से बैकअप इस वातावरण में समर्थित नहीं है — वर्तमान डेटाबेस स्थानीय SQLite फ़ाइल नहीं है (संभवतः उत्पादन में PostgreSQL)। उत्पादन डेटाबेस के लिए वास्तविक बैकअप को डेटाबेस-स्तर उपकरणों की आवश्यकता होती है (pg_dump, WAL archiving, या प्रबंधित होस्टिंग प्रदाता स्नैपशॉट) — यह ऐप में किसी भी बटन के दायरे से बाहर है।"
+
+#: app/templates/settings_backup.html:13
+msgid "نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد instance/backups/. مناسب لبيئة SQLite الحالية (تطوير/مزرعة واحدة صغيرة) — راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً."
+msgstr "वर्तमान डेटाबेस फ़ाइल की एक पूर्ण प्रति, instance/backups/ फ़ोल्डर में स्थानीय रूप से सहेजी जाती है। वर्तमान SQLite वातावरण (विकास/एकल छोटा फार्म) के लिए उपयुक्त — यदि बाद में PostgreSQL उत्पादन में जाते हैं तो ऊपर की चेतावनी देखें।"
+
+#: app/templates/settings_backup.html:17
+msgid "إنشاء نسخة احتياطية الآن"
+msgstr "अभी बैकअप बनाएं"
+
+#: app/templates/settings_backup.html:23
+#, python-format
+msgid "النسخ المحفوظة (%(n)s)"
+msgstr "सहेजे गए बैकअप (%(n)s)"
+
+#: app/templates/settings_backup.html:26
+msgid "الملف"
+msgstr "फ़ाइल"
+
+#: app/templates/settings_backup.html:26
+msgid "الحجم"
+msgstr "आकार"
+
+#: app/templates/settings_backup.html:32
+msgid "تنزيل"
+msgstr "डाउनलोड"
+
+#: app/templates/settings_backup.html:35
+msgid "ما فيه أي نسخة احتياطية بعد."
+msgstr "अभी तक कोई बैकअप नहीं है।"
+
+#: app/templates/settings_readiness.html:8
+msgid "قائمة تحقق آلية لنقاط شائعة تُنسى قبل تشغيل النظام على قطيع حقيقي — عرض فقط، بدون أي تعديل تلقائي على بياناتك."
+msgstr "वास्तविक झुंड पर सिस्टम चलाने से पहले भूली जाने वाली सामान्य बातों की एक स्वचालित जांच सूची — केवल प्रदर्शन, आपके डेटा में कोई स्वचालित परिवर्तन नहीं।"
+
+#: app/templates/settings_readiness.html:10
+#, python-format
+msgid "%(n)s نقطة حرجة تحتاج معالجة فورية قبل أي استخدام فعلي."
+msgstr "%(n)s गंभीर बिंदुओं को किसी भी वास्तविक उपयोग से पहले तत्काल ध्यान देने की आवश्यकता है।"
+
+#: app/templates/settings_readiness.html:12
+#, python-format
+msgid "%(n)s نقطة تستاهل انتباهك — مو حرجة، لكن يفضّل معالجتها."
+msgstr "%(n)s बिंदु आपका ध्यान चाहते हैं — गंभीर नहीं, लेकिन संबोधित करना बेहतर है।"
+
+#: app/templates/settings_readiness.html:14
+msgid "كل الفحوصات سليمة."
+msgstr "सभी जांचें सही हैं।"
+
+#: app/templates/settings_readiness.html:21
+msgid "التفصيل"
+msgstr "विवरण"
+
+#: app/templates/settings_readiness.html:25
+msgid "حرج"
+msgstr "गंभीर"
+
+#: app/templates/settings_readiness.html:27
+msgid "سليم"
+msgstr "ठीक"
+
+#: app/templates/smart_sale_report.html:6
+msgid "رجوع لسجل الحيوانات"
+msgstr "पशु रजिस्ट्री पर वापस जाएं"
+
+#: app/templates/smart_sale_report.html:9
+msgid "الأهم عمرهم — بيع عادي بعمر 6 أشهر، وبيع الأضاحي يحتاج عمر أعلى من 6 أشهر (سن الجذعة الشرعي)، والوزن الثانوي (لو متوقف/يتراجع، يستهلك علف بدون فايدة)."
+msgstr "उम्र सबसे महत्वपूर्ण है — 6 महीने की उम्र में नियमित बिक्री, और बलि बिक्री के लिए 6 महीने से अधिक उम्र चाहिए (शरई जज़ा आयु), वजन गौण है (यदि रुका/घट रहा हो, तो बिना लाभ के चारा खाता है)।"
+
+#: app/templates/smart_sale_report.html:10
+msgid "الإناث"
+msgstr "मादाएं"
+
+#: app/templates/smart_sale_report.html:10
+msgid "أي علامة من الأربع (تأخر حمل، ما حملت إطلاقاً، ترفض الرضاعة، الضرع تالف) = توصية بيع فورية بغض النظر عن باقي العوامل. القيم (الأعمار، هامش الربح، مدة التأخر) كلها قابلة للتعديل من"
+msgstr "चार संकेतों में से कोई एक (गर्भधारण में देरी, कभी गर्भवती नहीं हुई, दूध पिलाने से इनकार, क्षतिग्रस्त थन) = अन्य कारकों की परवाह किए बिना तत्काल बिक्री सिफारिश। मान (आयु, लाभ मार्जिन, देरी अवधि) सभी समायोज्य हैं"
+
+#: app/templates/smart_sale_report.html:10
+msgid "شاشة الإعدادات"
+msgstr "सेटिंग्स स्क्रीन से"
+
+#: app/templates/smart_sale_report.html:17
+msgid "الدرجة"
+msgstr "स्कोर"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+#: app/templates/smart_sale_report.html:17
+msgid "التوصية"
+msgstr "सिफारिश"
+
+#: app/templates/smart_sale_report.html:17
+msgid "النافذة المقترحة"
+msgstr "सुझाई गई विंडो"
+
+#: app/templates/smart_sale_report.html:30
+msgid "لا يوجد حيوانات نشطة لتقييمها."
+msgstr "मूल्यांकन के लिए कोई सक्रिय पशु नहीं है।"
 
 #: app/templates/today.html:7
 msgid "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما تتنقّل بين شاشات."
@@ -3458,8 +4068,9 @@ msgid "أعلى حرارة (°م)"
 msgstr "अधिकतम तापमान (°से)"
 
 #: app/templates/climate/dashboard.html:42
-msgid "الرطوبة عند الذروة (%)"
-msgstr "चरम पर आर्द्रता (%)"
+#, python-format
+msgid "الرطوبة عند الذروة (%%)"
+msgstr "चरम पर आर्द्रता (%%)"
 
 #: app/templates/climate/dashboard.html:42
 msgid "مستوى الإجهاد"
@@ -4866,10 +5477,6 @@ msgstr "गंभीरता"
 #: app/templates/health/emergency_symptoms_list.html:14
 msgid "التشخيص التفريقي"
 msgstr "विभेदक निदान"
-
-#: app/templates/health/emergency_symptoms_list.html:14
-msgid "التوصية"
-msgstr "सिफारिश"
 
 #: app/templates/health/emergency_symptoms_list.html:23
 msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
@@ -6328,11 +6935,6 @@ msgstr "रुका हुआ"
 msgid "إيقاف"
 msgstr "रोकें"
 
-#: app/templates/team/daily_templates.html:27
-#: app/templates/team/members_list.html:23
-msgid "تفعيل"
-msgstr "सक्रिय करें"
-
 #: app/templates/team/daily_templates.html:32
 msgid "ما فيه مهام يومية مضافة بعد."
 msgstr "अभी तक कोई दैनिक कार्य नहीं जोड़ा गया है।"
@@ -6389,10 +6991,6 @@ msgstr "नया सदस्य"
 #: app/templates/team/members_list.html:17
 msgid "معطّل"
 msgstr "निष्क्रिय"
-
-#: app/templates/team/members_list.html:23
-msgid "تعطيل"
-msgstr "निष्क्रिय करें"
 
 #: app/templates/team/members_list.html:29
 msgid "لا يوجد أعضاء بعد."

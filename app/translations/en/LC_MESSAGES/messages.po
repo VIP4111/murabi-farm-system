@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:27+0300\n"
+"POT-Creation-Date: 2026-08-10 23:51+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -321,6 +321,7 @@ msgid "البهم"
 msgstr "Lambs"
 
 #: app/core/animal_filters_service.py:183
+#: app/templates/smart_sale_report.html:9
 msgid "الذكور"
 msgstr "Males"
 
@@ -359,6 +360,151 @@ msgstr "Ready to mate"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "Ostriches"
+
+#: app/core/readiness_service.py:21
+msgid "كلمة مرور المالك الافتراضية"
+msgstr "Owner's default password"
+
+#: app/core/readiness_service.py:22
+msgid "لسا ما غيّرتها من القيمة الافتراضية — أول شي تسويه قبل أي استخدام فعلي."
+msgstr "You haven't changed it from the default value yet — the first thing to do before any real use."
+
+#: app/core/readiness_service.py:25
+msgid "كلمة مرور المالك"
+msgstr "Owner's password"
+
+#: app/core/readiness_service.py:25
+msgid "تم تغييرها عن الافتراضي."
+msgstr "Changed from default."
+
+#: app/core/readiness_service.py:29
+msgid "SECRET_KEY الافتراضي"
+msgstr "Default SECRET_KEY"
+
+#: app/core/readiness_service.py:30
+msgid "لسا القيمة الافتراضية بملف .env — لازم تغييرها قبل أي نشر فعلي (تؤثر على أمان جلسات الدخول)."
+msgstr "Still the default value in the .env file — must change it before any real deployment (affects login session security)."
+
+#: app/core/readiness_service.py:33
+msgid "تم تخصيصه."
+msgstr "Customized."
+
+#: app/core/readiness_service.py:37 app/core/readiness_service.py:41
+msgid "أمان كوكي الجلسة"
+msgstr "Session cookie security"
+
+#: app/core/readiness_service.py:38
+msgid "SESSION_COOKIE_SECURE غير مفعّل — طبيعي محلياً/بالمعاينة، لكن لازم يكون مفعّل تلقائياً على Render (بند 87)."
+msgstr "SESSION_COOKIE_SECURE is disabled — normal locally/in preview, but must be automatically enabled on Render (item 87)."
+
+#: app/core/readiness_service.py:41
+msgid "مفعّل — كوكي الدخول ما تُرسَل إلا عبر HTTPS."
+msgstr "Enabled — the login cookie is only sent over HTTPS."
+
+#: app/core/readiness_service.py:45
+msgid "قاعدة البيانات SQLite"
+msgstr "SQLite database"
+
+#: app/core/readiness_service.py:46
+msgid "مناسبة للتطوير حالياً — راجع خطة الترقية لـPostgreSQL بـROADMAP.md قبل الإنتاج الفعلي (تغيير DATABASE_URL بس)."
+msgstr "Suitable for development currently — check the PostgreSQL upgrade plan in ROADMAP.md before real production (just change DATABASE_URL)."
+
+#: app/core/readiness_service.py:49
+msgid "قاعدة البيانات"
+msgstr "Database"
+
+#: app/core/readiness_service.py:49
+msgid "PostgreSQL أو ما يعادلها."
+msgstr "PostgreSQL or equivalent."
+
+#: app/core/readiness_service.py:54 app/core/readiness_service.py:58
+#: app/templates/isolation_enter_form.html:9
+msgid "حظيرة العزل"
+msgstr "Isolation barn"
+
+#: app/core/readiness_service.py:55
+msgid "ما فيه حظيرة بنوع \"عزل\" بعد — خطة العزل التلقائي بعد الولادة (بند 4) تحتاجها لتنقل الأم والمولود تلقائياً."
+msgstr "No barn of type \"isolation\" yet — the automatic post-birth isolation plan (item 4) needs it to automatically move the mother and offspring."
+
+#: app/core/readiness_service.py:58
+#, python-format
+msgid "موجودة (%(name)s)."
+msgstr "Exists (%(name)s)."
+
+#: app/core/readiness_service.py:62
+msgid "حيوانات بدون حظيرة"
+msgstr "Animals without a barn"
+
+#: app/core/readiness_service.py:62
+#, python-format
+msgid "%(n)s رأس نشط بدون حظيرة معيّنة."
+msgstr "%(n)s active animals without an assigned barn."
+
+#: app/core/readiness_service.py:64
+msgid "تعيين الحظائر"
+msgstr "Barn assignment"
+
+#: app/core/readiness_service.py:64
+msgid "كل الرؤوس النشطة لها حظيرة."
+msgstr "All active animals have a barn."
+
+#: app/core/readiness_service.py:69
+msgid "تاريخ ميلاد ناقص"
+msgstr "Missing birth date"
+
+#: app/core/readiness_service.py:70
+#, python-format
+msgid "%(n)s رأس نشط بدون تاريخ ميلاد — يأثّر على فلاتر البهم/قريب الولادة/العمر (بند 8)."
+msgstr "%(n)s active animals without a birth date — affects lambs/near-birth/age filters (item 8)."
+
+#: app/core/readiness_service.py:73
+msgid "تاريخ الميلاد"
+msgstr "Birth date"
+
+#: app/core/readiness_service.py:73
+msgid "مكتمل لكل الرؤوس النشطة."
+msgstr "Complete for all active animals."
+
+#: app/core/readiness_service.py:78 app/core/readiness_service.py:82
+msgid "فريق العمل"
+msgstr "Team"
+
+#: app/core/readiness_service.py:79
+msgid "ما فيه إلا حساب المالك — أضف حسابات الفريق الفعلي (دكتور/عمال) قبل التشغيل اليومي."
+msgstr "Only the owner's account exists — add real team accounts (doctor/workers) before daily operation."
+
+#: app/core/readiness_service.py:82
+#, python-format
+msgid "%(n)s حساب نشط."
+msgstr "%(n)s active accounts."
+
+#: app/core/readiness_service.py:85 app/core/readiness_service.py:87
+#: app/templates/base.html:481 app/templates/family_view.html:128
+#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
+#: app/templates/home.html:63
+msgid "الصيدلية"
+msgstr "Pharmacy"
+
+#: app/core/readiness_service.py:85
+msgid "ما فيه أي دواء مسجّل بعد."
+msgstr "No medicine registered yet."
+
+#: app/core/readiness_service.py:87
+msgid "فيها أدوية مسجّلة."
+msgstr "Has registered medicines."
+
+#: app/core/readiness_service.py:91 app/core/readiness_service.py:94
+#: app/templates/settings.html:107 app/templates/settings_backup.html:5
+msgid "النسخ الاحتياطي"
+msgstr "Backup"
+
+#: app/core/readiness_service.py:91
+msgid "فيه نسخة احتياطية واحدة على الأقل (بند 34)."
+msgstr "At least one backup exists (item 34)."
+
+#: app/core/readiness_service.py:95
+msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
+msgstr "No backup taken yet — check \"Backup\" in the settings screen (item 34)."
 
 #: app/core/routes.py:260 app/templates/animals_list.html:67
 msgid "وزن جماعي"
@@ -439,6 +585,103 @@ msgstr "Add your first medicine to the pharmacy"
 #: app/core/setup_checklist_service.py:18
 msgid "أضف أول صنف علف"
 msgstr "Add your first feed item"
+
+#: app/core/smart_sale_service.py:100
+#, python-format
+msgid "التكلفة الحدية الحالية للكيلو (%(marginal)s) صارت أعلى بوضوح من متوسط تكلفة الكيلو التاريخي (%(historical)s) — استمرار التسمين قد ما يستاهل التكلفة (مؤشر داخلي، راجعه قبل القرار)."
+msgstr "The current marginal cost per kg (%(marginal)s) has become clearly higher than the historical average cost per kg (%(historical)s) — continuing to fatten may not be worth the cost (internal indicator, review before deciding)."
+
+#: app/core/smart_sale_service.py:118
+msgid "خلال 7 أيام"
+msgstr "Within 7 days"
+
+#: app/core/smart_sale_service.py:120
+msgid "خلال 14 يوم"
+msgstr "Within 14 days"
+
+#: app/core/smart_sale_service.py:122
+msgid "خلال 30 يوم"
+msgstr "Within 30 days"
+
+#: app/core/smart_sale_service.py:124
+msgid "خلال 60 يوم"
+msgstr "Within 60 days"
+
+#: app/core/smart_sale_service.py:125
+msgid "احتفاظ حالياً"
+msgstr "Keep for now"
+
+#: app/core/smart_sale_service.py:130
+msgid "بيع الآن"
+msgstr "Sell now"
+
+#: app/core/smart_sale_service.py:132
+msgid "بيع قريب"
+msgstr "Sell soon"
+
+#: app/core/smart_sale_service.py:134
+msgid "مراقبة"
+msgstr "Monitor"
+
+#: app/core/smart_sale_service.py:135
+msgid "احتفاظ"
+msgstr "Keep"
+
+#: app/core/smart_sale_service.py:145
+#, python-format
+msgid "تجاوز سن جاهزية الأضاحي (%(min)s يوم) — عمره %(age)s يوم"
+msgstr "Past the sacrifice-readiness age (%(min)s days) — it's %(age)s days old"
+
+#: app/core/smart_sale_service.py:148
+#, python-format
+msgid "تجاوز سن البيع العادي (%(min)s يوم) — عمره %(age)s يوم"
+msgstr "Past the regular sale age (%(min)s days) — it's %(age)s days old"
+
+#: app/core/smart_sale_service.py:151
+#, python-format
+msgid "لسا ما وصل سن البيع العادي (عمره %(age)s من %(min)s يوم)"
+msgstr "Hasn't reached the regular sale age yet (%(age)s of %(min)s days old)"
+
+#: app/core/smart_sale_service.py:156
+msgid "الوزن متوقف أو يتراجع — يستهلك علف بدون عائد يستاهل الانتظار"
+msgstr "Weight is stalled or dropping — consuming feed without a return worth waiting for"
+
+#: app/core/smart_sale_service.py:158
+msgid "الوزن يتحسن — يستاهل الانتظار شوي قبل البيع"
+msgstr "Weight is improving — worth waiting a bit before selling"
+
+#: app/core/smart_sale_service.py:163
+#, python-format
+msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع"
+msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%% — good time to sell"
+
+#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:139
+#: app/templates/animal_detail.html:155
+msgid "ترفض إرضاع مولودها"
+msgstr "Refuses to nurse her offspring"
+
+#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:140
+#: app/templates/animal_detail.html:156
+msgid "الضرع/الدرة تالفة"
+msgstr "Udder damaged"
+
+#: app/core/smart_sale_service.py:209
+#, python-format
+msgid "تأخر حملها أكثر من %(n)s يوم بدون تقريع/حمل جديد"
+msgstr "Delayed conception by more than %(n)s days without new mating/pregnancy"
+
+#: app/core/smart_sale_service.py:222
+msgid "الوزن يتراجع — يحتاج متابعة"
+msgstr "Weight is dropping — needs follow-up"
+
+#: app/core/smart_sale_service.py:226
+#, python-format
+msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%%"
+msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%%"
+
+#: app/core/smart_sale_service.py:228
+msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
+msgstr "No sale flags — a productive female, best kept"
 
 #: app/health/health_service.py:25
 msgid "حقن عضل (IM)"
@@ -628,6 +871,7 @@ msgstr "Total mortality cases"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "Number"
 
@@ -635,6 +879,7 @@ msgstr "Number"
 #: app/templates/animal_detail.html:78 app/templates/animal_detail.html:293
 #: app/templates/animal_form.html:62
 #: app/templates/animals_bulk_purchase.html:37
+#: app/templates/smart_sale_report.html:17
 msgid "الجنس"
 msgstr "Gender"
 
@@ -671,11 +916,12 @@ msgstr "Gender"
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
 msgid "التاريخ"
 msgstr "Date"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
+#: app/templates/smart_sale_report.html:17
 #: app/templates/team/tasks_list.html:187
 msgid "السبب"
 msgstr "Reason"
@@ -748,6 +994,7 @@ msgstr "Debt repayment"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+#: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "Item"
 
@@ -1003,7 +1250,7 @@ msgstr "My Alerts"
 msgid "التنبيهات"
 msgstr "Alerts"
 
-#: app/templates/alerts_list.html:6
+#: app/templates/alerts_list.html:6 app/templates/settings_readiness.html:26
 msgid "تنبيه"
 msgstr "Alert"
 
@@ -1024,7 +1271,8 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "A live view derived directly from system data — vaccinations due, withdrawal periods ending soon, upcoming expected births, breeding-device reminders, long-open diseases, out-of-order animals, pending reports, animals ready for sale now, barns with no responsible worker, and expected stock shortages for upcoming scheduled vaccinations (vaccination calendar). The time window comes from"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:107
+#: app/templates/home.html:107 app/templates/settings_backup.html:4
+#: app/templates/settings_readiness.html:6
 msgid "الإعدادات"
 msgstr "Settings"
 
@@ -1341,14 +1589,6 @@ msgstr "smart sale"
 msgid "بغض النظر عن باقي العوامل."
 msgstr "regardless of the other factors."
 
-#: app/templates/animal_detail.html:139 app/templates/animal_detail.html:155
-msgid "ترفض إرضاع مولودها"
-msgstr "Refuses to nurse her offspring"
-
-#: app/templates/animal_detail.html:140 app/templates/animal_detail.html:156
-msgid "الضرع/الدرة تالفة"
-msgstr "Udder damaged"
-
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
@@ -1453,6 +1693,7 @@ msgstr "Severity"
 #: app/templates/ostrich/incubators_list.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
+#: app/templates/settings_readiness.html:21
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/members_list.html:10
 #: app/templates/team/reports_list.html:26
@@ -1905,7 +2146,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
-#: app/templates/ostrich/incubators_list.html:13
+#: app/templates/ostrich/incubators_list.html:13 app/templates/settings.html:86
 #: app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
@@ -2176,7 +2417,7 @@ msgstr "Animal registry"
 msgid "متابعة الحجر الصحي"
 msgstr "Quarantine follow-up"
 
-#: app/templates/animals_list.html:10
+#: app/templates/animals_list.html:10 app/templates/smart_sale_report.html:5
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "Smart sale and loss avoidance"
 
@@ -2293,7 +2534,7 @@ msgstr "No animals within this filter currently."
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "No animals recorded yet."
 
-#: app/templates/audit_log.html:5
+#: app/templates/audit_log.html:5 app/templates/settings.html:109
 msgid "سجل التدقيق"
 msgstr "Audit log"
 
@@ -2490,12 +2731,6 @@ msgstr "Ostriches (eggs/hatching)"
 #: app/templates/base.html:480 app/templates/home.html:58
 msgid "الصحة"
 msgstr "Health"
-
-#: app/templates/base.html:481 app/templates/family_view.html:128
-#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
-#: app/templates/home.html:63
-msgid "الصيدلية"
-msgstr "Pharmacy"
 
 #: app/templates/base.html:484 app/templates/health/vaccinations_list.html:5
 #: app/templates/home.html:61
@@ -3086,10 +3321,6 @@ msgstr "System"
 msgid "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
 msgstr "Moves the animal to an isolation barn and starts the isolation day counter (if not already in isolation). For any exceptional case (suspected disease, injury, etc.) — record the reason here."
 
-#: app/templates/isolation_enter_form.html:9
-msgid "حظيرة العزل"
-msgstr "Isolation barn"
-
 #: app/templates/isolation_enter_form.html:13
 msgid "سبب العزل"
 msgstr "Isolation reason"
@@ -3154,6 +3385,385 @@ msgstr "Login"
 #: app/templates/login.html:26
 msgid "وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع يستخدمه فريقك فعلياً."
 msgstr "Test mode enabled — login without a password. Turn it off from Settings if your team is actually using this site."
+
+#: app/templates/role_edit.html:4
+msgid "صلاحيات:"
+msgstr "Permissions:"
+
+#: app/templates/role_edit.html:7 app/templates/role_form.html:7
+msgid "الاسم الظاهر بالواجهة"
+msgstr "Display name in the interface"
+
+#: app/templates/role_edit.html:8
+msgid "الصلاحيات"
+msgstr "Permissions"
+
+#: app/templates/role_edit.html:17
+msgid "حفظ الصلاحيات"
+msgstr "Save permissions"
+
+#: app/templates/role_form.html:4
+msgid "مسمّى وظيفي جديد"
+msgstr "New job title"
+
+#: app/templates/role_form.html:7
+msgid "مثال: ممرض"
+msgstr "Example: nurse"
+
+#: app/templates/role_form.html:8
+msgid "الاسم الداخلي (إنجليزي، بدون مسافات)"
+msgstr "Internal name (English, no spaces)"
+
+#: app/templates/role_form.html:8
+msgid "مثال: nurse"
+msgstr "Example: nurse"
+
+#: app/templates/role_form.html:9
+msgid "حفظ ثم تحديد الصلاحيات"
+msgstr "Save then set permissions"
+
+#: app/templates/settings.html:4
+msgid "بيانات المزرعة"
+msgstr "Farm data"
+
+#: app/templates/settings.html:5
+msgid "تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية."
+msgstr "Appears in the sale invoice header (item 75) — all optional."
+
+#: app/templates/settings.html:8
+msgid "اسم المزرعة"
+msgstr "Farm name"
+
+#: app/templates/settings.html:9
+msgid "جوال المزرعة"
+msgstr "Farm phone"
+
+#: app/templates/settings.html:10
+msgid "عنوان المزرعة"
+msgstr "Farm address"
+
+#: app/templates/settings.html:11
+msgid "حفظ بيانات المزرعة"
+msgstr "Save farm data"
+
+#: app/templates/settings.html:16
+msgid "الإعدادات الزمنية"
+msgstr "Time settings"
+
+#: app/templates/settings.html:17
+msgid "تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...)."
+msgstr "Controls all dates and automatic tasks in the system (isolation, vaccination, weaning, alerts...)."
+
+#: app/templates/settings.html:20
+msgid "مدة الحمل (يوم)"
+msgstr "Gestation duration (days)"
+
+#: app/templates/settings.html:21
+msgid "مدة الإسفنجة (يوم)"
+msgstr "Sponge duration (days)"
+
+#: app/templates/settings.html:22
+msgid "دخول الفحل بعد إزالة الإسفنجة (يوم)"
+msgstr "Ram entry after sponge removal (days)"
+
+#: app/templates/settings.html:23
+msgid "تغيير علف الحامل قبل الولادة (يوم)"
+msgstr "Pregnant feed change before birth (days)"
+
+#: app/templates/settings.html:24
+msgid "علف الأم بعد الولادة (يوم)"
+msgstr "Mother's feed after birth (days)"
+
+#: app/templates/settings.html:25
+msgid "بيع الذكر بعد الولادة (يوم)"
+msgstr "Male sale after birth (days)"
+
+#: app/templates/settings.html:26
+msgid "التنبيه قبل الموعد (يوم)"
+msgstr "Alert before due date (days)"
+
+#: app/templates/settings.html:27
+msgid "تكرار التحصينات الدورية (يوم)"
+msgstr "Periodic vaccination repeat (days)"
+
+#: app/templates/settings.html:28
+msgid "مدة عزل المولود والأم (يوم)"
+msgstr "Offspring and mother isolation duration (days)"
+
+#: app/templates/settings.html:29
+msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
+msgstr "Mandatory doctor check after birth (hours)"
+
+#: app/templates/settings.html:30
+msgid "تحصين الأم بعد الولادة (يوم)"
+msgstr "Mother's vaccination after birth (days)"
+
+#: app/templates/settings.html:31
+msgid "أقل عمر للتقريع الأول (يوم)"
+msgstr "Minimum age for first mating (days)"
+
+#: app/templates/settings.html:32
+msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
+msgstr "Minimum rest period after birth before remating (days)"
+
+#: app/templates/settings.html:33
+msgid "عتبات أعمار محرك دورة الإنتاج (بند إضافي 153)"
+msgstr "Production cycle engine age thresholds (item 153)"
+
+#: app/templates/settings.html:34
+msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
+msgstr "Maximum age classified as \"newborn\" in the cycle (days)"
+
+#: app/templates/settings.html:35
+msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
+msgstr "Alternative age to skip fertility exam for males (days)"
+
+#: app/templates/settings.html:36
+msgid "أقل عمر لمرحلة الفطام (يوم)"
+msgstr "Minimum age for weaning stage (days)"
+
+#: app/templates/settings.html:37
+msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
+msgstr "Alternative age to skip recording weaning date (days)"
+
+#: app/templates/settings.html:38
+msgid "البيع الذكي (بند 19)"
+msgstr "Smart sale (item 19)"
+
+#: app/templates/settings.html:39
+#, python-format
+msgid "هامش الربح المستهدف (%%)"
+msgstr "Target profit margin (%%)"
+
+#: app/templates/settings.html:40
+msgid "سن البيع العادي للذكور (يوم)"
+msgstr "Regular sale age for males (days)"
+
+#: app/templates/settings.html:41
+msgid "أقل سن لبيع الأضاحي (يوم)"
+msgstr "Minimum age for sacrifice sale (days)"
+
+#: app/templates/settings.html:42
+msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
+msgstr "Maximum acceptable pregnancy delay for a female before sale recommendation (days)"
+
+#: app/templates/settings.html:43
+msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
+msgstr "Maximum wait for a new report before alert (hours)"
+
+#: app/templates/settings.html:44
+msgid "مدة حضانة بيض النعام (يوم)"
+msgstr "Ostrich egg incubation duration (days)"
+
+#: app/templates/settings.html:45
+msgid "الصحة والتغذية (بند إضافي 105 — كانت مخفية بدون شاشة تعديل)"
+msgstr "Health and nutrition (item 105 — was hidden without an edit screen)"
+
+#: app/templates/settings.html:46
+msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
+msgstr "New animal quarantine before mixing (days)"
+
+#: app/templates/settings.html:47
+msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
+msgstr "Reweigh reminder after treatment (days)"
+
+#: app/templates/settings.html:48
+msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
+msgstr "Maximum period between two weighings before \"overdue weight\" alert (days)"
+
+#: app/templates/settings.html:49
+msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
+msgstr "Minimum interval between two antiparasitic doses (days)"
+
+#: app/templates/settings.html:50
+#, python-format
+msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
+msgstr "Maximum weekly concentrate increase (%%)"
+
+#: app/templates/settings.html:51
+msgid "نافذة قياس زيادة المركّزات (يوم)"
+msgstr "Concentrate increase measurement window (days)"
+
+#: app/templates/settings.html:52
+msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
+msgstr "Target calcium/phosphorus ratio"
+
+#: app/templates/settings.html:53
+msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
+msgstr "Calcium/phosphorus ratio tolerance margin"
+
+#: app/templates/settings.html:54
+msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
+msgstr "Barn monitoring after abortion (days)"
+
+#: app/templates/settings.html:55
+msgid "حفظ الإعدادات"
+msgstr "Save settings"
+
+#: app/templates/settings.html:60
+msgid "الخدمات"
+msgstr "Services"
+
+#: app/templates/settings.html:61
+msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
+msgstr "Enable only what you need — a disabled service disappears completely from all screens."
+
+#: app/templates/settings.html:69
+msgid "مفعّل"
+msgstr "Enabled"
+
+#: app/templates/settings.html:69
+msgid "غير مفعّل"
+msgstr "Disabled"
+
+#: app/templates/settings.html:72 app/templates/team/members_list.html:23
+msgid "تعطيل"
+msgstr "Disable"
+
+#: app/templates/settings.html:72 app/templates/team/daily_templates.html:27
+#: app/templates/team/members_list.html:23
+msgid "تفعيل"
+msgstr "Activate"
+
+#: app/templates/settings.html:81
+msgid "المسميات الوظيفية"
+msgstr "Job titles"
+
+#: app/templates/settings.html:82
+msgid "مسمّى جديد"
+msgstr "New title"
+
+#: app/templates/settings.html:86
+msgid "عدد الصلاحيات"
+msgstr "Number of permissions"
+
+#: app/templates/settings.html:86
+msgid "نوع"
+msgstr "Type"
+
+#: app/templates/settings.html:91
+msgid "جاهز افتراضياً"
+msgstr "Built-in default"
+
+#: app/templates/settings.html:91
+msgid "مضاف من المالك"
+msgstr "Added by owner"
+
+#: app/templates/settings.html:94
+msgid "تعديل الصلاحيات"
+msgstr "Edit permissions"
+
+#: app/templates/settings.html:104
+msgid "النظام والصيانة"
+msgstr "System and maintenance"
+
+#: app/templates/settings.html:106 app/templates/settings_readiness.html:7
+msgid "فحص الجاهزية قبل النشر"
+msgstr "Pre-deployment readiness check"
+
+#: app/templates/settings.html:112
+msgid "شاشة متابعة مبسّطة"
+msgstr "Simplified follow-up screen"
+
+#: app/templates/settings_backup.html:9
+msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
+msgstr "⚠️ Backup from this button isn't supported in this environment — the current database isn't a local SQLite file (likely PostgreSQL in production). A real production database backup needs database-level tools (pg_dump, WAL archiving, or managed hosting provider snapshots) — outside the scope of any button in the app itself."
+
+#: app/templates/settings_backup.html:13
+msgid "نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد instance/backups/. مناسب لبيئة SQLite الحالية (تطوير/مزرعة واحدة صغيرة) — راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً."
+msgstr "A full copy of the current database file, saved locally in the instance/backups/ folder. Suitable for the current SQLite environment (development/single small farm) — check the notice above if you later move to PostgreSQL production."
+
+#: app/templates/settings_backup.html:17
+msgid "إنشاء نسخة احتياطية الآن"
+msgstr "Create a backup now"
+
+#: app/templates/settings_backup.html:23
+#, python-format
+msgid "النسخ المحفوظة (%(n)s)"
+msgstr "Saved backups (%(n)s)"
+
+#: app/templates/settings_backup.html:26
+msgid "الملف"
+msgstr "File"
+
+#: app/templates/settings_backup.html:26
+msgid "الحجم"
+msgstr "Size"
+
+#: app/templates/settings_backup.html:32
+msgid "تنزيل"
+msgstr "Download"
+
+#: app/templates/settings_backup.html:35
+msgid "ما فيه أي نسخة احتياطية بعد."
+msgstr "No backup yet."
+
+#: app/templates/settings_readiness.html:8
+msgid "قائمة تحقق آلية لنقاط شائعة تُنسى قبل تشغيل النظام على قطيع حقيقي — عرض فقط، بدون أي تعديل تلقائي على بياناتك."
+msgstr "An automatic checklist for common points forgotten before running the system on a real herd — display only, no automatic changes to your data."
+
+#: app/templates/settings_readiness.html:10
+#, python-format
+msgid "%(n)s نقطة حرجة تحتاج معالجة فورية قبل أي استخدام فعلي."
+msgstr "%(n)s critical points need immediate attention before any real use."
+
+#: app/templates/settings_readiness.html:12
+#, python-format
+msgid "%(n)s نقطة تستاهل انتباهك — مو حرجة، لكن يفضّل معالجتها."
+msgstr "%(n)s points deserve your attention — not critical, but better addressed."
+
+#: app/templates/settings_readiness.html:14
+msgid "كل الفحوصات سليمة."
+msgstr "All checks pass."
+
+#: app/templates/settings_readiness.html:21
+msgid "التفصيل"
+msgstr "Detail"
+
+#: app/templates/settings_readiness.html:25
+msgid "حرج"
+msgstr "Critical"
+
+#: app/templates/settings_readiness.html:27
+msgid "سليم"
+msgstr "OK"
+
+#: app/templates/smart_sale_report.html:6
+msgid "رجوع لسجل الحيوانات"
+msgstr "Back to animal registry"
+
+#: app/templates/smart_sale_report.html:9
+msgid "الأهم عمرهم — بيع عادي بعمر 6 أشهر، وبيع الأضاحي يحتاج عمر أعلى من 6 أشهر (سن الجذعة الشرعي)، والوزن الثانوي (لو متوقف/يتراجع، يستهلك علف بدون فايدة)."
+msgstr "Age matters most — regular sale at 6 months, and sacrifice sale needs an age above 6 months (the sharia-required jaza'ah age), with weight as secondary (if stalled/dropping, it consumes feed without benefit)."
+
+#: app/templates/smart_sale_report.html:10
+msgid "الإناث"
+msgstr "Females"
+
+#: app/templates/smart_sale_report.html:10
+msgid "أي علامة من الأربع (تأخر حمل، ما حملت إطلاقاً، ترفض الرضاعة، الضرع تالف) = توصية بيع فورية بغض النظر عن باقي العوامل. القيم (الأعمار، هامش الربح، مدة التأخر) كلها قابلة للتعديل من"
+msgstr "Any one of the four flags (delayed conception, never conceived, refuses nursing, damaged udder) = immediate sale recommendation regardless of other factors. The values (ages, profit margin, delay duration) are all adjustable from"
+
+#: app/templates/smart_sale_report.html:10
+msgid "شاشة الإعدادات"
+msgstr "the settings screen"
+
+#: app/templates/smart_sale_report.html:17
+msgid "الدرجة"
+msgstr "Score"
+
+#: app/templates/health/emergency_symptoms_list.html:14
+#: app/templates/smart_sale_report.html:17
+msgid "التوصية"
+msgstr "Recommendation"
+
+#: app/templates/smart_sale_report.html:17
+msgid "النافذة المقترحة"
+msgstr "Suggested window"
+
+#: app/templates/smart_sale_report.html:30
+msgid "لا يوجد حيوانات نشطة لتقييمها."
+msgstr "No active animals to evaluate."
 
 #: app/templates/today.html:7
 msgid "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما تتنقّل بين شاشات."
@@ -3458,8 +4068,9 @@ msgid "أعلى حرارة (°م)"
 msgstr "Max temperature (°C)"
 
 #: app/templates/climate/dashboard.html:42
-msgid "الرطوبة عند الذروة (%)"
-msgstr "Humidity at peak (%)"
+#, python-format
+msgid "الرطوبة عند الذروة (%%)"
+msgstr "Humidity at peak (%%)"
 
 #: app/templates/climate/dashboard.html:42
 msgid "مستوى الإجهاد"
@@ -4866,10 +5477,6 @@ msgstr "Severity"
 #: app/templates/health/emergency_symptoms_list.html:14
 msgid "التشخيص التفريقي"
 msgstr "Differential diagnosis"
-
-#: app/templates/health/emergency_symptoms_list.html:14
-msgid "التوصية"
-msgstr "Recommendation"
 
 #: app/templates/health/emergency_symptoms_list.html:23
 msgid "حذف هذا العرض من قائمة الطوارئ؟ العزل التلقائي له يتوقف بعدها."
@@ -6328,11 +6935,6 @@ msgstr "Stopped"
 msgid "إيقاف"
 msgstr "Stop"
 
-#: app/templates/team/daily_templates.html:27
-#: app/templates/team/members_list.html:23
-msgid "تفعيل"
-msgstr "Activate"
-
 #: app/templates/team/daily_templates.html:32
 msgid "ما فيه مهام يومية مضافة بعد."
 msgstr "No daily tasks added yet."
@@ -6389,10 +6991,6 @@ msgstr "New member"
 #: app/templates/team/members_list.html:17
 msgid "معطّل"
 msgstr "Disabled"
-
-#: app/templates/team/members_list.html:23
-msgid "تعطيل"
-msgstr "Disable"
 
 #: app/templates/team/members_list.html:29
 msgid "لا يوجد أعضاء بعد."

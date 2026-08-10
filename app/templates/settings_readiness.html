@@ -3,28 +3,28 @@
 {% set criticals = checks|selectattr('level', 'equalto', 'critical')|list %}
 {% set warnings = checks|selectattr('level', 'equalto', 'warning')|list %}
 <div class="card">
-  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← الإعدادات</a>
-  <h2 style="margin-top:12px;">فحص الجاهزية قبل النشر</h2>
-  <p style="color:var(--muted); font-size:13px;">قائمة تحقق آلية لنقاط شائعة تُنسى قبل تشغيل النظام على قطيع حقيقي — عرض فقط، بدون أي تعديل تلقائي على بياناتك.</p>
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">{{ _('فحص الجاهزية قبل النشر') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('قائمة تحقق آلية لنقاط شائعة تُنسى قبل تشغيل النظام على قطيع حقيقي — عرض فقط، بدون أي تعديل تلقائي على بياناتك.') }}</p>
   {% if criticals %}
-  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">🚨 {{ criticals|length }} نقطة حرجة تحتاج معالجة فورية قبل أي استخدام فعلي.</div>
+  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">🚨 {{ _('%(n)s نقطة حرجة تحتاج معالجة فورية قبل أي استخدام فعلي.', n=criticals|length) }}</div>
   {% elif warnings %}
-  <div class="notice">⚠️ {{ warnings|length }} نقطة تستاهل انتباهك — مو حرجة، لكن يفضّل معالجتها.</div>
+  <div class="notice">⚠️ {{ _('%(n)s نقطة تستاهل انتباهك — مو حرجة، لكن يفضّل معالجتها.', n=warnings|length) }}</div>
   {% else %}
-  <div class="notice" style="background:#f2fbf5; border-color:#b7e4c7; color:#146c3a;">✅ كل الفحوصات سليمة.</div>
+  <div class="notice" style="background:#f2fbf5; border-color:#b7e4c7; color:#146c3a;">✅ {{ _('كل الفحوصات سليمة.') }}</div>
   {% endif %}
 </div>
 
 <div class="card">
   <div class="table-scroll">
 <table>
-    <tr><th>الحالة</th><th>البند</th><th>التفصيل</th></tr>
+    <tr><th>{{ _('الحالة') }}</th><th>{{ _('البند') }}</th><th>{{ _('التفصيل') }}</th></tr>
     {% for c in checks %}
     <tr>
       <td>
-        {% if c.level == 'critical' %}<span class="badge off">🚨 حرج</span>
-        {% elif c.level == 'warning' %}<span class="badge" style="background:#fff4d7; color:#6c4b00; border-color:#f1d88b;">⚠️ تنبيه</span>
-        {% else %}<span class="badge on">✅ سليم</span>{% endif %}
+        {% if c.level == 'critical' %}<span class="badge off">🚨 {{ _('حرج') }}</span>
+        {% elif c.level == 'warning' %}<span class="badge" style="background:#fff4d7; color:#6c4b00; border-color:#f1d88b;">⚠️ {{ _('تنبيه') }}</span>
+        {% else %}<span class="badge on">✅ {{ _('سليم') }}</span>{% endif %}
       </td>
       <td><b>{{ c.label }}</b></td>
       <td style="color:var(--muted); font-size:13px;">{{ c.detail }}</td>

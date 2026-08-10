@@ -22,6 +22,7 @@
 كلها من FarmSettings — قابلة للتعديل من شاشة الإعدادات بدون كود.
 """
 from datetime import date, timedelta
+from flask_babel import gettext as _
 from app.models import Animal, AnimalWeight, VetVisit, Disease, Mating, FarmSettings
 
 
@@ -95,10 +96,9 @@ def marginal_feeding_signal(animal: Animal) -> dict | None:
     return {
         "marginal_cost_per_kg": round(marginal_cost_per_kg, 2),
         "historical_cost_per_kg": round(historical_cost_per_kg, 2),
-        "reason": (
-            f"التكلفة الحدية الحالية للكيلو ({round(marginal_cost_per_kg, 2)}) صارت أعلى بوضوح "
-            f"من متوسط تكلفة الكيلو التاريخي ({round(historical_cost_per_kg, 2)}) — استمرار التسمين "
-            "قد ما يستاهل التكلفة (مؤشر داخلي، راجعه قبل القرار)."
+        "reason": _(
+            "التكلفة الحدية الحالية للكيلو (%(marginal)s) صارت أعلى بوضوح من متوسط تكلفة الكيلو التاريخي (%(historical)s) — استمرار التسمين قد ما يستاهل التكلفة (مؤشر داخلي، راجعه قبل القرار).",
+            marginal=round(marginal_cost_per_kg, 2), historical=round(historical_cost_per_kg, 2),
         ),
     }
 
@@ -115,24 +115,24 @@ def _profit_margin_percent(animal: Animal) -> float | None:
 
 def _window_for_score(score: int) -> str:
     if score >= 80:
-        return "خلال 7 أيام"
+        return _("خلال 7 أيام")
     if score >= 60:
-        return "خلال 14 يوم"
+        return _("خلال 14 يوم")
     if score >= 40:
-        return "خلال 30 يوم"
+        return _("خلال 30 يوم")
     if score >= 20:
-        return "خلال 60 يوم"
-    return "احتفاظ حالياً"
+        return _("خلال 60 يوم")
+    return _("احتفاظ حالياً")
 
 
 def _label_for_score(score: int) -> str:
     if score >= 80:
-        return "بيع الآن"
+        return _("بيع الآن")
     if score >= 60:
-        return "بيع قريب"
+        return _("بيع قريب")
     if score >= 40:
-        return "مراقبة"
-    return "احتفاظ"
+        return _("مراقبة")
+    return _("احتفاظ")
 
 
 def _evaluate_male(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
@@ -142,25 +142,25 @@ def _evaluate_male(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
     if age is not None:
         if age >= fs.udhiyah_min_age_days:
             score += 50
-            reasons.append(f"تجاوز سن جاهزية الأضاحي ({fs.udhiyah_min_age_days} يوم) — عمره {age} يوم")
+            reasons.append(_("تجاوز سن جاهزية الأضاحي (%(min)s يوم) — عمره %(age)s يوم", min=fs.udhiyah_min_age_days, age=age))
         elif age >= fs.regular_sale_age_days:
             score += 40
-            reasons.append(f"تجاوز سن البيع العادي ({fs.regular_sale_age_days} يوم) — عمره {age} يوم")
+            reasons.append(_("تجاوز سن البيع العادي (%(min)s يوم) — عمره %(age)s يوم", min=fs.regular_sale_age_days, age=age))
         else:
             score += round(30 * age / fs.regular_sale_age_days)
-            reasons.append(f"لسا ما وصل سن البيع العادي (عمره {age} من {fs.regular_sale_age_days} يوم)")
+            reasons.append(_("لسا ما وصل سن البيع العادي (عمره %(age)s من %(min)s يوم)", age=age, min=fs.regular_sale_age_days))
 
     trend = _weight_trend(animal)
     if trend in ("flat", "down"):
         score += 30
-        reasons.append("الوزن متوقف أو يتراجع — يستهلك علف بدون عائد يستاهل الانتظار")
+        reasons.append(_("الوزن متوقف أو يتراجع — يستهلك علف بدون عائد يستاهل الانتظار"))
     elif trend == "up":
-        reasons.append("الوزن يتحسن — يستاهل الانتظار شوي قبل البيع")
+        reasons.append(_("الوزن يتحسن — يستاهل الانتظار شوي قبل البيع"))
 
     margin = _profit_margin_percent(animal)
     if margin is not None and margin >= fs.target_profit_margin_percent:
         score += 25
-        reasons.append(f"هامش الربح الحالي {margin:.0f}% ≥ الهدف {fs.target_profit_margin_percent:.0f}% — وقت جيد للبيع")
+        reasons.append(_("هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع", margin=f"{margin:.0f}", target=f"{fs.target_profit_margin_percent:.0f}"))
 
     signal = marginal_feeding_signal(animal)
     if signal:
@@ -202,11 +202,11 @@ def _is_reproductively_delayed(animal: Animal, fs: FarmSettings) -> bool:
 def _evaluate_female(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
     flags = []
     if animal.refuses_nursing:
-        flags.append("ترفض إرضاع مولودها")
+        flags.append(_("ترفض إرضاع مولودها"))
     if animal.udder_damaged:
-        flags.append("الضرع/الدرة تالفة")
+        flags.append(_("الضرع/الدرة تالفة"))
     if _is_reproductively_delayed(animal, fs):
-        flags.append(f"تأخر حملها أكثر من {fs.female_delayed_conception_days} يوم بدون تقريع/حمل جديد")
+        flags.append(_("تأخر حملها أكثر من %(n)s يوم بدون تقريع/حمل جديد", n=fs.female_delayed_conception_days))
 
     if flags:
         score = min(90 + (len(flags) - 1) * 3, 100)
@@ -219,13 +219,13 @@ def _evaluate_female(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
     trend = _weight_trend(animal)
     if trend == "down":
         score += 15
-        reasons.append("الوزن يتراجع — يحتاج متابعة")
+        reasons.append(_("الوزن يتراجع — يحتاج متابعة"))
     margin = _profit_margin_percent(animal)
     if margin is not None and margin >= fs.target_profit_margin_percent:
         score += 15
-        reasons.append(f"هامش الربح الحالي {margin:.0f}% ≥ الهدف {fs.target_profit_margin_percent:.0f}%")
+        reasons.append(_("هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%%", margin=f"{margin:.0f}", target=f"{fs.target_profit_margin_percent:.0f}"))
     if not reasons:
-        reasons.append("بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ")
+        reasons.append(_("بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"))
     return score, reasons
 
 
