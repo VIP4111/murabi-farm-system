@@ -2,30 +2,27 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <h2>☀️ رادار المناخ والإجهاد الحراري</h2>
+    <h2>☀️ {{ _('رادار المناخ والإجهاد الحراري') }}</h2>
     <div style="display:flex; gap:8px;">
       {% if current_user.has_permission('climate.manage') %}
-      <a class="btn light" href="{{ url_for('climate.settings') }}">⚙️ إعدادات الموقع والحدود</a>
+      <a class="btn light" href="{{ url_for('climate.settings') }}">⚙️ {{ _('إعدادات الموقع والحدود') }}</a>
       {% endif %}
       <form method="post" action="{{ url_for('climate.refresh') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button class="btn light" type="submit">🔄 تحديث الآن</button>
+        <button class="btn light" type="submit">🔄 {{ _('تحديث الآن') }}</button>
       </form>
     </div>
   </div>
   <p style="color:var(--muted); font-size:13px;">
-    مؤشر THI (حرارة-رطوبة) محسوب من توقعات Open-Meteo لموقع المزرعة الواحد — تقريب عام
-    (معادلة مبنية أساساً على الأبقار الحلوب، أقرب مرجع عام متوفر) وليس بروتوكولاً دقيقاً
-    خاصاً بالأغنام/الماعز. عند إجهاد متوسط فأعلى تتولّد مهام تفقّد مقترحة تلقائياً لكل حظيرة
-    (بانتظار مراجعة الدكتور).
+    {{ _('مؤشر THI (حرارة-رطوبة) محسوب من توقعات Open-Meteo لموقع المزرعة الواحد — تقريب عام (معادلة مبنية أساساً على الأبقار الحلوب، أقرب مرجع عام متوفر) وليس بروتوكولاً دقيقاً خاصاً بالأغنام/الماعز. عند إجهاد متوسط فأعلى تتولّد مهام تفقّد مقترحة تلقائياً لكل حظيرة (بانتظار مراجعة الدكتور).') }}
   </p>
 </div>
 
 {% if not forecast.configured %}
 <div class="card">
-  <p>⚠️ موقع المزرعة غير مضبوط بعد — رادار المناخ معطّل لين تحدّد الإحداثيات.</p>
+  <p>⚠️ {{ _('موقع المزرعة غير مضبوط بعد — رادار المناخ معطّل لين تحدّد الإحداثيات.') }}</p>
   {% if current_user.has_permission('climate.manage') %}
-  <a class="btn" href="{{ url_for('climate.settings') }}">اضبط الموقع الآن</a>
+  <a class="btn" href="{{ url_for('climate.settings') }}">{{ _('اضبط الموقع الآن') }}</a>
   {% endif %}
 </div>
 {% else %}
@@ -33,16 +30,16 @@
 {% if forecast.error %}
 <div class="card"><p>⚠️ {{ forecast.error }}</p></div>
 {% elif forecast.stale %}
-<div class="card"><p>⚠️ آخر تحديث للطقس قديم — البيانات المعروضة قد لا تكون دقيقة.</p></div>
+<div class="card"><p>⚠️ {{ _('آخر تحديث للطقس قديم — البيانات المعروضة قد لا تكون دقيقة.') }}</p></div>
 {% endif %}
 
 <div class="card">
-  <h3>توقّع 7 أيام</h3>
+  <h3>{{ _('توقّع 7 أيام') }}</h3>
   {% if forecast.readings %}
   <div style="overflow-x:auto;">
     <div class="table-scroll">
 <table>
-      <thead><tr><th>التاريخ</th><th>أعلى حرارة (°م)</th><th>الرطوبة عند الذروة (%)</th><th>THI</th><th>مستوى الإجهاد</th></tr></thead>
+      <thead><tr><th>{{ _('التاريخ') }}</th><th>{{ _('أعلى حرارة (°م)') }}</th><th>{{ _('الرطوبة عند الذروة (%)') }}</th><th>THI</th><th>{{ _('مستوى الإجهاد') }}</th></tr></thead>
       <tbody>
         {% for r in forecast.readings %}
         <tr style="{% if r.stress_level == 'emergency' %}background:#fde2e1;{% elif r.stress_level == 'severe' %}background:#fde9d0;{% elif r.stress_level == 'moderate' %}background:#fff6d5;{% endif %}">
@@ -58,21 +55,21 @@
 </div>
   </div>
   {% else %}
-  <p style="color:var(--muted);">لا توجد بيانات طقس محفوظة بعد.</p>
+  <p style="color:var(--muted);">{{ _('لا توجد بيانات طقس محفوظة بعد.') }}</p>
   {% endif %}
 </div>
 
 <div class="card">
-  <h3>🌾 مؤشر انخفاض الاستهلاك بالحر (توصية فقط)</h3>
+  <h3>🌾 {{ _('مؤشر انخفاض الاستهلاك بالحر (توصية فقط)') }}</h3>
   {% if heat_signals %}
   {% for s in heat_signals %}
   <div style="border-inline-start:3px solid var(--danger, #c0392b); padding-inline-start:10px; margin-bottom:12px;">
-    <b>{{ s.barn.barn_name }}</b> — انخفاض {{ s.drop_pct }}% (THI ذروة {{ s.peak_thi }})
+    <b>{{ s.barn.barn_name }}</b> — {{ _('انخفاض %(pct)s%% (THI ذروة %(thi)s)', pct=s.drop_pct, thi=s.peak_thi) }}
     <br><span style="color:var(--muted); font-size:13px;">{{ s.recommendation }}</span>
   </div>
   {% endfor %}
   {% else %}
-  <p style="color:var(--muted); font-size:13px;">ما فيه انخفاض استهلاك ملحوظ مرتبط بالحر حالياً بأي حظيرة.</p>
+  <p style="color:var(--muted); font-size:13px;">{{ _('ما فيه انخفاض استهلاك ملحوظ مرتبط بالحر حالياً بأي حظيرة.') }}</p>
   {% endif %}
 </div>
 

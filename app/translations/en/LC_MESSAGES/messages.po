@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:22+0300\n"
+"POT-Creation-Date: 2026-08-10 23:27+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -289,6 +289,26 @@ msgstr "This account is temporarily locked due to repeated failed login attempts
 #: app/auth/routes.py:74
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "Incorrect phone number or password"
+
+#: app/climate/climate_service.py:27
+msgid "طبيعي"
+msgstr "Normal"
+
+#: app/climate/climate_service.py:28
+msgid "إجهاد خفيف"
+msgstr "Mild stress"
+
+#: app/climate/climate_service.py:29
+msgid "إجهاد متوسط"
+msgstr "Moderate stress"
+
+#: app/climate/climate_service.py:30
+msgid "إجهاد شديد"
+msgstr "Severe stress"
+
+#: app/climate/climate_service.py:31
+msgid "إجهاد طارئ"
+msgstr "Emergency stress"
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:400
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
@@ -632,6 +652,7 @@ msgstr "Gender"
 #: app/templates/bulk_action_form.html:218
 #: app/templates/bulk_action_form.html:325
 #: app/templates/bulk_action_form.html:355
+#: app/templates/climate/dashboard.html:42
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
@@ -1331,7 +1352,8 @@ msgstr "Udder damaged"
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
-#: app/templates/barn_form.html:41 app/templates/equipment/item_form.html:14
+#: app/templates/barn_form.html:41 app/templates/climate/settings.html:33
+#: app/templates/equipment/item_form.html:14
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:34
 #: app/templates/feed/movement_form.html:28
@@ -2528,7 +2550,7 @@ msgstr "Equipment warehouse"
 msgid "المناخ"
 msgstr "Climate"
 
-#: app/templates/base.html:514
+#: app/templates/base.html:514 app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "Climate & heat stress radar"
 
@@ -3402,6 +3424,119 @@ msgstr "Head count"
 #: app/templates/batches/batches_list.html:24
 msgid "لا يوجد دفعات مسجَّلة بعد."
 msgstr "No batches registered yet."
+
+#: app/templates/climate/dashboard.html:8
+msgid "إعدادات الموقع والحدود"
+msgstr "Location and threshold settings"
+
+#: app/templates/climate/dashboard.html:12
+msgid "تحديث الآن"
+msgstr "Refresh now"
+
+#: app/templates/climate/dashboard.html:17
+msgid "مؤشر THI (حرارة-رطوبة) محسوب من توقعات Open-Meteo لموقع المزرعة الواحد — تقريب عام (معادلة مبنية أساساً على الأبقار الحلوب، أقرب مرجع عام متوفر) وليس بروتوكولاً دقيقاً خاصاً بالأغنام/الماعز. عند إجهاد متوسط فأعلى تتولّد مهام تفقّد مقترحة تلقائياً لكل حظيرة (بانتظار مراجعة الدكتور)."
+msgstr "The THI (temperature-humidity) index is calculated from Open-Meteo forecasts for the farm's single location — a general approximation (an equation built mainly for dairy cattle, the closest general reference available) and not a precise protocol specific to sheep/goats. At moderate stress or above, suggested check tasks are automatically generated for each barn (awaiting doctor review)."
+
+#: app/templates/climate/dashboard.html:23
+msgid "موقع المزرعة غير مضبوط بعد — رادار المناخ معطّل لين تحدّد الإحداثيات."
+msgstr "The farm location isn't set yet — the climate radar is disabled until you set the coordinates."
+
+#: app/templates/climate/dashboard.html:25
+msgid "اضبط الموقع الآن"
+msgstr "Set the location now"
+
+#: app/templates/climate/dashboard.html:33
+msgid "آخر تحديث للطقس قديم — البيانات المعروضة قد لا تكون دقيقة."
+msgstr "The last weather update is stale — the displayed data may not be accurate."
+
+#: app/templates/climate/dashboard.html:37
+msgid "توقّع 7 أيام"
+msgstr "7-day forecast"
+
+#: app/templates/climate/dashboard.html:42
+msgid "أعلى حرارة (°م)"
+msgstr "Max temperature (°C)"
+
+#: app/templates/climate/dashboard.html:42
+msgid "الرطوبة عند الذروة (%)"
+msgstr "Humidity at peak (%)"
+
+#: app/templates/climate/dashboard.html:42
+msgid "مستوى الإجهاد"
+msgstr "Stress level"
+
+#: app/templates/climate/dashboard.html:58
+msgid "لا توجد بيانات طقس محفوظة بعد."
+msgstr "No saved weather data yet."
+
+#: app/templates/climate/dashboard.html:63
+msgid "مؤشر انخفاض الاستهلاك بالحر (توصية فقط)"
+msgstr "Heat-related consumption-drop indicator (recommendation only)"
+
+#: app/templates/climate/dashboard.html:67
+#, python-format
+msgid "انخفاض %(pct)s%% (THI ذروة %(thi)s)"
+msgstr "%(pct)s%% drop (peak THI %(thi)s)"
+
+#: app/templates/climate/dashboard.html:72
+msgid "ما فيه انخفاض استهلاك ملحوظ مرتبط بالحر حالياً بأي حظيرة."
+msgstr "There's currently no notable heat-related consumption drop in any barn."
+
+#: app/templates/climate/settings.html:5
+msgid "إعدادات رادار المناخ"
+msgstr "Climate radar settings"
+
+#: app/templates/climate/settings.html:6
+msgid "رجوع للرادار"
+msgstr "Back to radar"
+
+#: app/templates/climate/settings.html:9
+msgid "موقع واحد يمثّل المزرعة كلها (لا يوجد موقع منفصل لكل حظيرة). الإحداثيات تُستخدم لجلب توقعات الطقس من Open-Meteo — خدمة مجانية بدون مفتاح."
+msgstr "A single location represents the whole farm (no separate location per barn). The coordinates are used to fetch weather forecasts from Open-Meteo — a free, keyless service."
+
+#: app/templates/climate/settings.html:16
+msgid "خط العرض (Latitude)"
+msgstr "Latitude"
+
+#: app/templates/climate/settings.html:17
+msgid "مثال: 24.7136"
+msgstr "Example: 24.7136"
+
+#: app/templates/climate/settings.html:18
+msgid "خط الطول (Longitude)"
+msgstr "Longitude"
+
+#: app/templates/climate/settings.html:19
+msgid "مثال: 46.6753"
+msgstr "Example: 46.6753"
+
+#: app/templates/climate/settings.html:20
+msgid "تقدر تنسخهم من خرائط قوقل: اضغط مطولاً على موقع المزرعة، الرقمان اللي يظهران هما خط العرض والطول بالترتيب."
+msgstr "You can copy them from Google Maps: long-press on the farm's location, the two numbers shown are the latitude and longitude in order."
+
+#: app/templates/climate/settings.html:23
+msgid "حدود مؤشر THI"
+msgstr "THI index thresholds"
+
+#: app/templates/climate/settings.html:23
+msgid "قيم عامة شائعة (أساسها أبقار حلوب، أقرب مرجع عام متوفر)، قابلة للتعديل حسب خبرتك بقطيعك:"
+msgstr "Common general values (based on dairy cattle, the closest general reference available), adjustable based on your experience with your herd:"
+
+#: app/templates/climate/settings.html:24
+msgid "بداية الإجهاد الخفيف"
+msgstr "Mild stress onset"
+
+#: app/templates/climate/settings.html:26
+msgid "بداية الإجهاد المتوسط (يبدأ توليد قوائم التفقّد)"
+msgstr "Moderate stress onset (starts generating check lists)"
+
+#: app/templates/climate/settings.html:28
+msgid "بداية الإجهاد الشديد"
+msgstr "Severe stress onset"
+
+#: app/templates/climate/settings.html:30
+msgid "بداية الإجهاد الطارئ"
+msgstr "Emergency stress onset"
 
 #: app/templates/equipment/item_form.html:4
 msgid "تعديل صنف"

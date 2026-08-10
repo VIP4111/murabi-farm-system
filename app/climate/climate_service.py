@@ -12,6 +12,7 @@
 from datetime import date, datetime, timedelta, timezone
 
 import requests
+from flask_babel import lazy_gettext as _l
 
 from app.extensions import db
 from app.models import Barn, FarmSettings, Task, WeatherReading
@@ -23,11 +24,11 @@ STALE_AFTER_HOURS = 3
 REQUEST_TIMEOUT_SECONDS = 10
 
 STRESS_LABELS_AR = {
-    "normal": "طبيعي",
-    "mild": "إجهاد خفيف",
-    "moderate": "إجهاد متوسط",
-    "severe": "إجهاد شديد",
-    "emergency": "إجهاد طارئ",
+    "normal": _l("طبيعي"),
+    "mild": _l("إجهاد خفيف"),
+    "moderate": _l("إجهاد متوسط"),
+    "severe": _l("إجهاد شديد"),
+    "emergency": _l("إجهاد طارئ"),
 }
 
 # مستويات تستدعي قائمة تفقد ميدانية فورية بالحظائر (طلبك الصريح: تعديل

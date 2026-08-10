@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-10 23:22+0300\n"
+"POT-Creation-Date: 2026-08-10 23:27+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -289,6 +289,26 @@ msgstr "बार-बार असफल लॉगिन प्रयासो�
 #: app/auth/routes.py:74
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "फ़ोन नंबर या पासवर्ड गलत है"
+
+#: app/climate/climate_service.py:27
+msgid "طبيعي"
+msgstr "सामान्य"
+
+#: app/climate/climate_service.py:28
+msgid "إجهاد خفيف"
+msgstr "हल्का तनाव"
+
+#: app/climate/climate_service.py:29
+msgid "إجهاد متوسط"
+msgstr "मध्यम तनाव"
+
+#: app/climate/climate_service.py:30
+msgid "إجهاد شديد"
+msgstr "गंभीर तनाव"
+
+#: app/climate/climate_service.py:31
+msgid "إجهاد طارئ"
+msgstr "आपातकालीन तनाव"
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:400
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
@@ -632,6 +652,7 @@ msgstr "लिंग"
 #: app/templates/bulk_action_form.html:218
 #: app/templates/bulk_action_form.html:325
 #: app/templates/bulk_action_form.html:355
+#: app/templates/climate/dashboard.html:42
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
@@ -1331,7 +1352,8 @@ msgstr "थन क्षतिग्रस्त"
 #: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
-#: app/templates/barn_form.html:41 app/templates/equipment/item_form.html:14
+#: app/templates/barn_form.html:41 app/templates/climate/settings.html:33
+#: app/templates/equipment/item_form.html:14
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:34
 #: app/templates/feed/movement_form.html:28
@@ -2528,7 +2550,7 @@ msgstr "उपकरण गोदाम"
 msgid "المناخ"
 msgstr "जलवायु"
 
-#: app/templates/base.html:514
+#: app/templates/base.html:514 app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "जलवायु और गर्मी तनाव रडार"
 
@@ -3402,6 +3424,119 @@ msgstr "पशु संख्या"
 #: app/templates/batches/batches_list.html:24
 msgid "لا يوجد دفعات مسجَّلة بعد."
 msgstr "अभी तक कोई खेप दर्ज नहीं है।"
+
+#: app/templates/climate/dashboard.html:8
+msgid "إعدادات الموقع والحدود"
+msgstr "स्थान और सीमा सेटिंग्स"
+
+#: app/templates/climate/dashboard.html:12
+msgid "تحديث الآن"
+msgstr "अभी अपडेट करें"
+
+#: app/templates/climate/dashboard.html:17
+msgid "مؤشر THI (حرارة-رطوبة) محسوب من توقعات Open-Meteo لموقع المزرعة الواحد — تقريب عام (معادلة مبنية أساساً على الأبقار الحلوب، أقرب مرجع عام متوفر) وليس بروتوكولاً دقيقاً خاصاً بالأغنام/الماعز. عند إجهاد متوسط فأعلى تتولّد مهام تفقّد مقترحة تلقائياً لكل حظيرة (بانتظار مراجعة الدكتور)."
+msgstr "THI (तापमान-आर्द्रता) सूचकांक फार्म के एकल स्थान के लिए Open-Meteo पूर्वानुमानों से गणना किया जाता है — एक सामान्य अनुमान (मुख्यतः डेयरी मवेशियों के लिए बना समीकरण, उपलब्ध निकटतम सामान्य संदर्भ) और भेड़/बकरी के लिए सटीक प्रोटोकॉल नहीं है। मध्यम तनाव या उससे अधिक पर, प्रत्येक बाड़े के लिए सुझाए गए जांच कार्य स्वतः बनते हैं (डॉक्टर की समीक्षा की प्रतीक्षा में)।"
+
+#: app/templates/climate/dashboard.html:23
+msgid "موقع المزرعة غير مضبوط بعد — رادار المناخ معطّل لين تحدّد الإحداثيات."
+msgstr "फार्म का स्थान अभी सेट नहीं है — जब तक आप निर्देशांक सेट नहीं करते, जलवायु रडार अक्षम है।"
+
+#: app/templates/climate/dashboard.html:25
+msgid "اضبط الموقع الآن"
+msgstr "अभी स्थान सेट करें"
+
+#: app/templates/climate/dashboard.html:33
+msgid "آخر تحديث للطقس قديم — البيانات المعروضة قد لا تكون دقيقة."
+msgstr "अंतिम मौसम अपडेट पुराना है — प्रदर्शित डेटा सटीक नहीं हो सकता।"
+
+#: app/templates/climate/dashboard.html:37
+msgid "توقّع 7 أيام"
+msgstr "7-दिन का पूर्वानुमान"
+
+#: app/templates/climate/dashboard.html:42
+msgid "أعلى حرارة (°م)"
+msgstr "अधिकतम तापमान (°से)"
+
+#: app/templates/climate/dashboard.html:42
+msgid "الرطوبة عند الذروة (%)"
+msgstr "चरम पर आर्द्रता (%)"
+
+#: app/templates/climate/dashboard.html:42
+msgid "مستوى الإجهاد"
+msgstr "तनाव स्तर"
+
+#: app/templates/climate/dashboard.html:58
+msgid "لا توجد بيانات طقس محفوظة بعد."
+msgstr "अभी तक कोई सहेजा गया मौसम डेटा नहीं है।"
+
+#: app/templates/climate/dashboard.html:63
+msgid "مؤشر انخفاض الاستهلاك بالحر (توصية فقط)"
+msgstr "गर्मी-संबंधित उपभोग-गिरावट संकेतक (केवल सिफारिश)"
+
+#: app/templates/climate/dashboard.html:67
+#, python-format
+msgid "انخفاض %(pct)s%% (THI ذروة %(thi)s)"
+msgstr "%(pct)s%% गिरावट (चरम THI %(thi)s)"
+
+#: app/templates/climate/dashboard.html:72
+msgid "ما فيه انخفاض استهلاك ملحوظ مرتبط بالحر حالياً بأي حظيرة."
+msgstr "फिलहाल किसी भी बाड़े में गर्मी से जुड़ी उल्लेखनीय उपभोग गिरावट नहीं है।"
+
+#: app/templates/climate/settings.html:5
+msgid "إعدادات رادار المناخ"
+msgstr "जलवायु रडार सेटिंग्स"
+
+#: app/templates/climate/settings.html:6
+msgid "رجوع للرادار"
+msgstr "रडार पर वापस जाएं"
+
+#: app/templates/climate/settings.html:9
+msgid "موقع واحد يمثّل المزرعة كلها (لا يوجد موقع منفصل لكل حظيرة). الإحداثيات تُستخدم لجلب توقعات الطقس من Open-Meteo — خدمة مجانية بدون مفتاح."
+msgstr "एक ही स्थान पूरे फार्म का प्रतिनिधित्व करता है (प्रत्येक बाड़े के लिए अलग स्थान नहीं है)। निर्देशांक Open-Meteo से मौसम पूर्वानुमान प्राप्त करने के लिए उपयोग होते हैं — एक मुफ्त, बिना-कुंजी सेवा।"
+
+#: app/templates/climate/settings.html:16
+msgid "خط العرض (Latitude)"
+msgstr "अक्षांश (Latitude)"
+
+#: app/templates/climate/settings.html:17
+msgid "مثال: 24.7136"
+msgstr "उदाहरण: 24.7136"
+
+#: app/templates/climate/settings.html:18
+msgid "خط الطول (Longitude)"
+msgstr "देशांतर (Longitude)"
+
+#: app/templates/climate/settings.html:19
+msgid "مثال: 46.6753"
+msgstr "उदाहरण: 46.6753"
+
+#: app/templates/climate/settings.html:20
+msgid "تقدر تنسخهم من خرائط قوقل: اضغط مطولاً على موقع المزرعة، الرقمان اللي يظهران هما خط العرض والطول بالترتيب."
+msgstr "आप उन्हें गूगल मैप्स से कॉपी कर सकते हैं: फार्म के स्थान पर देर तक दबाएं, दिखने वाले दो नंबर क्रमशः अक्षांश और देशांतर होते हैं।"
+
+#: app/templates/climate/settings.html:23
+msgid "حدود مؤشر THI"
+msgstr "THI सूचकांक सीमाएं"
+
+#: app/templates/climate/settings.html:23
+msgid "قيم عامة شائعة (أساسها أبقار حلوب، أقرب مرجع عام متوفر)، قابلة للتعديل حسب خبرتك بقطيعك:"
+msgstr "सामान्य प्रचलित मान (डेयरी मवेशियों पर आधारित, उपलब्ध निकटतम सामान्य संदर्भ), अपने झुंड के अनुभव के आधार पर समायोज्य:"
+
+#: app/templates/climate/settings.html:24
+msgid "بداية الإجهاد الخفيف"
+msgstr "हल्के तनाव की शुरुआत"
+
+#: app/templates/climate/settings.html:26
+msgid "بداية الإجهاد المتوسط (يبدأ توليد قوائم التفقّد)"
+msgstr "मध्यम तनाव की शुरुआत (जांच सूचियां बनना शुरू होता है)"
+
+#: app/templates/climate/settings.html:28
+msgid "بداية الإجهاد الشديد"
+msgstr "गंभीर तनाव की शुरुआत"
+
+#: app/templates/climate/settings.html:30
+msgid "بداية الإجهاد الطارئ"
+msgstr "आपातकालीन तनाव की शुरुआत"
 
 #: app/templates/equipment/item_form.html:4
 msgid "تعديل صنف"
