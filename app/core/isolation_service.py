@@ -144,15 +144,24 @@ def start_isolation_plan(*, mother, newborn, birth_date_: date):
         source_type="IsolationPlan", source_id=newborn.id,
     )
     task_service.create_suggested_task(
-        title=f"تجريع سيلينيوم للمولود {newborn.animal_no}",
+        title=f"تجريع فيتامين هـ + سيلينيوم وقائي للمولود {newborn.animal_no}",
         task_type="selenium_dose", barn_id=barn_id, animal_id=newborn.id,
         due_date=birth_date_,
+        notes="وقاية من مرض العضلة البيضاء (White Muscle Disease) — الجرعة الدقيقة حسب توصية الطبيب.",
         source_type="IsolationPlan", source_id=newborn.id,
     )
     task_service.create_suggested_task(
-        title=f"تأكد رضاعة/لبأ المولود {newborn.animal_no}",
+        title=f"تأكد رضاعة/لبأ المولود {newborn.animal_no} خلال {settings.colostrum_window_hours} ساعة",
         task_type="colostrum_check", barn_id=barn_id, animal_id=newborn.id,
         due_date=birth_date_,
+        notes=f"السرسوب (اللبأ) خلال أول {settings.colostrum_window_hours} ساعة من الولادة ضروري لمناعة المولود المبكرة.",
+        source_type="IsolationPlan", source_id=newborn.id,
+    )
+    task_service.create_suggested_task(
+        title=f"جرعة معوية/تجشؤ وقائية للمولود {newborn.animal_no}",
+        task_type="newborn_gut_dose", barn_id=barn_id, animal_id=newborn.id,
+        due_date=birth_date_,
+        notes="حسب توصية الطبيب — يشمل عادة مساعدة على التجشؤ وجرعة وقائية معوية أولى.",
         source_type="IsolationPlan", source_id=newborn.id,
     )
 
@@ -184,6 +193,31 @@ def start_isolation_plan(*, mother, newborn, birth_date_: date):
         source_type="IsolationPlan", source_id=mother.id,
         notes=f"يبقى على علف النفاس {settings.postpartum_feed_days} يوم بعد الولادة حسب الإعدادات.",
     )
+
+    # بروتوكول الأم بعد الولادة (بند إضافي 188)
+    task_service.create_suggested_task(
+        title=f"تأكد نزول المشيمة كاملة — الأم {mother.animal_no} خلال {settings.placenta_check_hours} ساعة",
+        task_type="placenta_check", barn_id=barn_id, animal_id=mother.id,
+        due_date=birth_date_,
+        notes="احتباس المشيمة أكثر من الفترة الطبيعية يحتاج تدخّل بيطري — لا تنتظر لو تجاوزت المدة.",
+        source_type="IsolationPlan", source_id=mother.id,
+    )
+    task_service.create_suggested_task(
+        title=f"مقوّيات وسوائل دافئة فور الولادة — الأم {mother.animal_no}",
+        task_type="postpartum_tonic", barn_id=barn_id, animal_id=mother.id,
+        due_date=birth_date_,
+        notes="ماء دافئ + محلول مقوٍّ (حسب توصية الطبيب) يساعد تعافي الأم من إجهاد الولادة ويحفّز إدرار اللبأ.",
+        source_type="IsolationPlan", source_id=mother.id,
+    )
+    for day_offset in range(1, settings.postpartum_mother_followup_days + 1):
+        due = birth_date_ + timedelta(days=day_offset)
+        task_service.create_suggested_task(
+            title=f"متابعة نفاس يومية — الأم {mother.animal_no} (يوم {day_offset})",
+            task_type="postpartum_mother_check", barn_id=barn_id, animal_id=mother.id,
+            due_date=due,
+            notes="راقب الشهية، الإفرازات، وسلامة الرضاعة — أي خمول أو إفراز كريه = استدعاء طبيب.",
+            source_type="PostpartumMotherPlan", source_id=mother.id * 1000 + day_offset,
+        )
 
 
 def record_abortion(*, pregnancy, outcome_date, notes: str | None, actor_user_id: int) -> dict:

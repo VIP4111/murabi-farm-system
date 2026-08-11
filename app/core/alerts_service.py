@@ -494,6 +494,10 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     from app.core import asset_maintenance_service
     asset_maintenance_service.generate_maintenance_due_tasks()
 
+    # رادار كشف تكرار الحالات المرضية بالحظيرة (بند إضافي 188) — نفس الفلسفة.
+    from app.core import outbreak_service
+    outbreak_service.detect_barn_clusters()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()

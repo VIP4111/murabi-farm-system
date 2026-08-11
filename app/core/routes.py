@@ -1406,6 +1406,8 @@ def farm_settings_save():
         "newborn_route_max_age_days", "male_fertility_exam_alt_age_days",
         "weaning_min_age_days", "weaning_alt_age_days",
         "concentrate_increase_window_days", "abortion_barn_monitor_days",
+        # بند إضافي 188 — بروتوكول حديث الولادة وأمه.
+        "colostrum_window_hours", "placenta_check_hours", "postpartum_mother_followup_days",
     ):
         setattr(fs, field, int(request.form[field]))
     fs.target_profit_margin_percent = float(request.form["target_profit_margin_percent"])

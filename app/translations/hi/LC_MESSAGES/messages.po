@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 16:37+0300\n"
+"POT-Creation-Date: 2026-08-11 17:01+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -532,7 +532,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:123 app/templates/settings_backup.html:5
+#: app/templates/settings.html:127 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -2403,8 +2403,8 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
-#: app/templates/ostrich/incubators_list.html:13 app/templates/settings.html:98
-#: app/templates/team/member_edit_form.html:7
+#: app/templates/ostrich/incubators_list.html:13
+#: app/templates/settings.html:102 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/warehouses/warehouse_form.html:7
@@ -2791,7 +2791,7 @@ msgstr "इस फ़िल्टर में फिलहाल कोई प�
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:125
+#: app/templates/audit_log.html:5 app/templates/settings.html:129
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -3978,84 +3978,100 @@ msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "गर्भपात के बाद बाड़ा निगरानी (दिन)"
 
 #: app/templates/settings.html:67
+msgid "بروتوكول حديث الولادة وأمه (بند إضافي 188)"
+msgstr "नवजात और माँ का प्रसवोत्तर प्रोटोकॉल"
+
+#: app/templates/settings.html:68
+msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
+msgstr "कोलोस्ट्रम पिलाने की पुष्टि विंडो (घंटे)"
+
+#: app/templates/settings.html:69
+msgid "نافذة متابعة نزول المشيمة (ساعة)"
+msgstr "अपरा निकलने की निगरानी विंडो (घंटे)"
+
+#: app/templates/settings.html:70
+msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
+msgstr "माँ की दैनिक प्रसवोत्तर निगरानी अवधि (दिन)"
+
+#: app/templates/settings.html:71
 msgid "حفظ الإعدادات"
 msgstr "सेटिंग्स सहेजें"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:76
 msgid "الخدمات"
 msgstr "सेवाएं"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:77
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "केवल जो आवश्यक हो उसे सक्षम करें — निष्क्रिय सेवा सभी स्क्रीन से पूरी तरह गायब हो जाती है।"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:85
 msgid "مفعّل"
 msgstr "सक्षम"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:85
 msgid "غير مفعّل"
 msgstr "अक्षम"
 
-#: app/templates/settings.html:84 app/templates/team/members_list.html:23
+#: app/templates/settings.html:88 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
-#: app/templates/settings.html:84 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:88 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "सक्रिय करें"
 
-#: app/templates/settings.html:93
+#: app/templates/settings.html:97
 msgid "المسميات الوظيفية"
 msgstr "पद"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:98
 msgid "مسمّى جديد"
 msgstr "नया पद"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:102
 msgid "عدد الصلاحيات"
 msgstr "अनुमतियों की संख्या"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:102
 msgid "نوع"
 msgstr "प्रकार"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:107
 msgid "جاهز افتراضياً"
 msgstr "अंतर्निहित डिफ़ॉल्ट"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:107
 msgid "مضاف من المالك"
 msgstr "मालिक द्वारा जोड़ा गया"
 
-#: app/templates/settings.html:106
+#: app/templates/settings.html:110
 msgid "تعديل الصلاحيات"
 msgstr "अनुमतियां संपादित करें"
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:120
 msgid "النظام والصيانة"
 msgstr "सिस्टम और रखरखाव"
 
-#: app/templates/settings.html:118 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:122 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "तैनाती से पहले तत्परता जांच"
 
-#: app/templates/settings.html:119 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:123 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:121
+#: app/templates/settings.html:125
 #: app/templates/settings_simulation_data.html:5
 msgid "تنظيف بيانات المحاكاة"
 msgstr "सिमुलेशन डेटा साफ़ करें"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:132
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:130
+#: app/templates/settings.html:134
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 16:37+0300\n"
+"POT-Creation-Date: 2026-08-11 17:01+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -532,7 +532,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "የተመዘገቡ መድሃኒቶች አሉት።"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:123 app/templates/settings_backup.html:5
+#: app/templates/settings.html:127 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "መጠባበቂያ"
 
@@ -2403,8 +2403,8 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
-#: app/templates/ostrich/incubators_list.html:13 app/templates/settings.html:98
-#: app/templates/team/member_edit_form.html:7
+#: app/templates/ostrich/incubators_list.html:13
+#: app/templates/settings.html:102 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/warehouses/warehouse_form.html:7
@@ -2791,7 +2791,7 @@ msgstr "በዚህ ማጣሪያ ውስጥ በአሁኑ ጊዜ እንስሳት የ
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:125
+#: app/templates/audit_log.html:5 app/templates/settings.html:129
 msgid "سجل التدقيق"
 msgstr "የኦዲት መዝገብ"
 
@@ -3978,84 +3978,100 @@ msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "ከውርጃ በኋላ የበረት ክትትል (ቀናት)"
 
 #: app/templates/settings.html:67
+msgid "بروتوكول حديث الولادة وأمه (بند إضافي 188)"
+msgstr "የአራስ እና የእናት ድህረ-ወሊድ ፕሮቶኮል"
+
+#: app/templates/settings.html:68
+msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
+msgstr "የኮሎስትረም ማጥባት ማረጋገጫ መስኮት (ሰዓታት)"
+
+#: app/templates/settings.html:69
+msgid "نافذة متابعة نزول المشيمة (ساعة)"
+msgstr "የእንግዴ ልጅ መውጣት ክትትል መስኮት (ሰዓታት)"
+
+#: app/templates/settings.html:70
+msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
+msgstr "የእናት ዕለታዊ ድህረ-ወሊድ ክትትል ጊዜ (ቀናት)"
+
+#: app/templates/settings.html:71
 msgid "حفظ الإعدادات"
 msgstr "ቅንብሮችን አስቀምጥ"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:76
 msgid "الخدمات"
 msgstr "አገልግሎቶች"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:77
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "የሚያስፈልግዎትን ብቻ ያንቁ — የቆመ አገልግሎት ከሁሉም ማያ ገጾች ሙሉ በሙሉ ይጠፋል።"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:85
 msgid "مفعّل"
 msgstr "ነቅቷል"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:85
 msgid "غير مفعّل"
 msgstr "አልነቃም"
 
-#: app/templates/settings.html:84 app/templates/team/members_list.html:23
+#: app/templates/settings.html:88 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "አቦዝን"
 
-#: app/templates/settings.html:84 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:88 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "አንቃ"
 
-#: app/templates/settings.html:93
+#: app/templates/settings.html:97
 msgid "المسميات الوظيفية"
 msgstr "የሥራ ማዕረጎች"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:98
 msgid "مسمّى جديد"
 msgstr "አዲስ ማዕረግ"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:102
 msgid "عدد الصلاحيات"
 msgstr "የፈቃዶች ብዛት"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:102
 msgid "نوع"
 msgstr "ዓይነት"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:107
 msgid "جاهز افتراضياً"
 msgstr "አብሮገነብ ነባሪ"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:107
 msgid "مضاف من المالك"
 msgstr "በባለቤት የተጨመረ"
 
-#: app/templates/settings.html:106
+#: app/templates/settings.html:110
 msgid "تعديل الصلاحيات"
 msgstr "ፈቃዶችን አርትዕ"
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:120
 msgid "النظام والصيانة"
 msgstr "ሲስተም እና ጥገና"
 
-#: app/templates/settings.html:118 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:122 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "ከማሰማራት በፊት የዝግጁነት ምርመራ"
 
-#: app/templates/settings.html:119 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:123 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "የውሂብ ትክክለኛነት ምርመራ"
 
-#: app/templates/settings.html:121
+#: app/templates/settings.html:125
 #: app/templates/settings_simulation_data.html:5
 msgid "تنظيف بيانات المحاكاة"
 msgstr "የማስመሰያ ውሂብ አጽዳ"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:132
 msgid "شاشة متابعة مبسّطة"
 msgstr "ቀላል የክትትል ማያ ገጽ"
 
-#: app/templates/settings.html:130
+#: app/templates/settings.html:134
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 

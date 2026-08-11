@@ -64,6 +64,10 @@
     <label>{{ _('نسبة الكالسيوم/الفوسفور المستهدفة') }}</label><input name="ca_phosphorus_target_ratio" type="number" step="0.1" value="{{ fs.ca_phosphorus_target_ratio }}">
     <label>{{ _('هامش تسامح نسبة الكالسيوم/الفوسفور') }}</label><input name="ca_phosphorus_tolerance" type="number" step="0.1" value="{{ fs.ca_phosphorus_tolerance }}">
     <label>{{ _('مراقبة الحظيرة بعد إجهاض (يوم)') }}</label><input name="abortion_barn_monitor_days" type="number" value="{{ fs.abortion_barn_monitor_days }}">
+    <h3 style="font-size:14px; margin-top:16px;">{{ _('بروتوكول حديث الولادة وأمه (بند إضافي 188)') }}</h3>
+    <label>{{ _('نافذة تأكيد رضاعة اللبأ (ساعة)') }}</label><input name="colostrum_window_hours" type="number" value="{{ fs.colostrum_window_hours }}">
+    <label>{{ _('نافذة متابعة نزول المشيمة (ساعة)') }}</label><input name="placenta_check_hours" type="number" value="{{ fs.placenta_check_hours }}">
+    <label>{{ _('مدة متابعة الأم اليومية بعد الولادة (يوم)') }}</label><input name="postpartum_mother_followup_days" type="number" value="{{ fs.postpartum_mother_followup_days }}">
     <button class="btn" type="submit">{{ _('حفظ الإعدادات') }}</button>
   </form>
 </div>

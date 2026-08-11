@@ -46,6 +46,13 @@ class FarmSettings(db.Model):
     doctor_check_hours = db.Column(db.Integer, default=48, nullable=False)
     postpartum_vaccination_days = db.Column(db.Integer, default=45, nullable=False)
 
+    # بروتوكول رعاية حديث الولادة وأمه (بند إضافي 188) — قيم شائعة
+    # بأدلة رعاية المجترات الصغيرة، قابلة للتعديل من الإعدادات بدون
+    # كود، نفس فلسفة كل عتبة زمنية أخرى بالمشروع.
+    colostrum_window_hours = db.Column(db.Integer, default=4, nullable=False)
+    placenta_check_hours = db.Column(db.Integer, default=6, nullable=False)
+    postpartum_mother_followup_days = db.Column(db.Integer, default=5, nullable=False)
+
     # فترة حجر الحيوان الوافد (شراء/هدية) قبل ما يدخل مرحلة الحجر والفحص —
     # قيمة اجتهادية مننا، مو من وثيقة المستخدم، لذا موثّقة هنا بشكل منفصل.
     quarantine_days = db.Column(db.Integer, default=21, nullable=False)
