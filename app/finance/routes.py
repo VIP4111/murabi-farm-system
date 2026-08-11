@@ -40,6 +40,59 @@ def finance_list():
     )
 
 
+@finance_bp.route("/export")
+@login_required
+@require_permission("finance.full.manage")
+def finance_export():
+    """تصدير كل السجلات المالية Excel بضغطة زر واحدة (بند إضافي 179) —
+    نفس محرك التصدير العام الموجود أصلاً بوحدة التقارير التحليلية
+    (`export_service.build_excel`)، بدون بناء آلية موازية."""
+    from flask import Response
+    from app.reports import export_service as ex
+    rows = Finance.query.order_by(Finance.date.desc()).all()
+    columns = ["التاريخ", "النوع", "الفئة", "الصنف", "الوصف", "المبلغ", "طريقة الدفع", "الرأس المرتبط", "ملغاة"]
+    table_rows = [
+        [
+            str(r.date), r.operation_type, r.category or "-", r.item or "-", r.description or "-",
+            r.amount, r.payment_method or "-",
+            r.related_animal.animal_no if r.related_animal else "-",
+            "نعم" if r.is_cancelled else "لا",
+        ]
+        for r in rows
+    ]
+    buf = ex.build_excel("السجل المالي الكامل", columns, table_rows)
+    return Response(
+        buf.read(),
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=finance_export.xlsx"},
+    )
+
+
+@finance_bp.route("/break-even-report/export")
+@login_required
+@require_permission("finance.full.manage")
+def break_even_export():
+    from flask import Response
+    from app.reports import export_service as ex
+    from app.core.animal_profile_service import break_even_summary
+    rows = break_even_summary()
+    columns = ["رقم الرأس", "سعر التعادل", "القيمة التقديرية", "الهامش"]
+    table_rows = [
+        [
+            r["animal"].animal_no, r["break_even_price"],
+            r["estimated_value"] if r["estimated_value"] is not None else "-",
+            r["margin"] if r["margin"] is not None else "-",
+        ]
+        for r in rows
+    ]
+    buf = ex.build_excel("التحليل المالي ونقطة التعادل", columns, table_rows)
+    return Response(
+        buf.read(),
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=break_even_report.xlsx"},
+    )
+
+
 @finance_bp.route("/monthly-cost-report")
 @login_required
 @require_permission("finance.full.manage")

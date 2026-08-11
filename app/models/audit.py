@@ -20,4 +20,4 @@ class AuditLog(db.Model):
     entity_type = db.Column(db.String(64))              # مثال: "Task"
     entity_id = db.Column(db.Integer)
     details = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=_now)
+    created_at = db.Column(db.DateTime, default=_now, index=True)

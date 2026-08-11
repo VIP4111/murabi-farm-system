@@ -12,7 +12,7 @@ class Finance(db.Model):
     __tablename__ = "finance"
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
+    date = db.Column(db.Date, nullable=False, index=True)
     operation_type = db.Column(db.String(32), nullable=False)  # sale/purchase/expense
     category = db.Column(db.String(80))
     item = db.Column(db.String(160))
@@ -20,7 +20,7 @@ class Finance(db.Model):
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String(32))
 
-    related_animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True)
+    related_animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True, index=True)
     related_animal = db.relationship("Animal")
 
     # مصروف غير مباشر (بند إضافي، 2026-07-23) — إيجار/صيانة/رواتب...

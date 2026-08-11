@@ -104,6 +104,7 @@
   <h2>{{ _('النظام والصيانة') }}</h2>
   <div style="display:flex; gap:10px; flex-wrap:wrap;">
     <a class="btn light" href="{{ url_for('core.readiness_check') }}">✅ {{ _('فحص الجاهزية قبل النشر') }}</a>
+    <a class="btn light" href="{{ url_for('core.data_integrity_check') }}">🔍 {{ _('فحص سلامة البيانات') }}</a>
     <a class="btn light" href="{{ url_for('core.backup_list') }}">📦 {{ _('النسخ الاحتياطي') }}</a>
     {% if current_user.has_permission('audit.view') %}
     <a class="btn light" href="{{ url_for('core.audit_log_list') }}">🧾 {{ _('سجل التدقيق') }}</a>

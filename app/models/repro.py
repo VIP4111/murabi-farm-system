@@ -11,11 +11,11 @@ class Mating(db.Model):
     __tablename__ = "matings"
 
     id = db.Column(db.Integer, primary_key=True)
-    female_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    female_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     female = db.relationship("Animal", foreign_keys=[female_id])
     date = db.Column(db.Date, nullable=False)
 
-    male_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True)
+    male_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True, index=True)
     male = db.relationship("Animal", foreign_keys=[male_id])
     male_note = db.Column(db.String(160))  # لو الفحل خارجي/غير مسجّل بالنظام
 

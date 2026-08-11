@@ -22,7 +22,7 @@ class Task(db.Model):
     status = db.Column(db.String(32), default="pending", nullable=False)
     # suggested / pending / in_progress / done / postponed / deleted_pending_review / cancelled
 
-    assignee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    assignee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True, index=True)
     assignee = db.relationship("User", foreign_keys=[assignee_id])
 
     # الدور المستهدف (بند إضافي 68، 2026-07-28) — منفصل عمداً عن
@@ -35,10 +35,10 @@ class Task(db.Model):
 
     barn_id = db.Column(db.Integer, db.ForeignKey("barns.id"), nullable=True)
     barn = db.relationship("Barn")
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True)
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True, index=True)
     animal = db.relationship("Animal")
 
-    due_date = db.Column(db.Date)
+    due_date = db.Column(db.Date, index=True)
     requires_photo = db.Column(db.Boolean, default=False, nullable=False)
 
     # ترتيب عرض ثانوي (بند إضافي 67، 2026-07-28) — لما أكثر من مهمة

@@ -102,7 +102,7 @@ class VetVisit(db.Model):
     date = db.Column(db.Date, nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey("doctors.id"), nullable=False)
     doctor = db.relationship("Doctor")
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     animal = db.relationship("Animal")
 
     diagnosis = db.Column(db.String(255))
@@ -124,7 +124,7 @@ class Disease(db.Model):
     __tablename__ = "diseases"
 
     id = db.Column(db.Integer, primary_key=True)
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     animal = db.relationship("Animal")
 
     disease_name = db.Column(db.String(160), nullable=False)
@@ -155,7 +155,7 @@ class Vaccination(db.Model):
     __tablename__ = "vaccinations"
 
     id = db.Column(db.Integer, primary_key=True)
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     animal = db.relationship("Animal")
 
     vaccine_name = db.Column(db.String(160), nullable=False)

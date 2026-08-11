@@ -1547,6 +1547,14 @@ def readiness_check():
     return render_template("settings_readiness.html", checks=readiness_service.run_checks())
 
 
+@core_bp.route("/settings/data-integrity")
+@login_required
+@require_permission("settings.manage")
+def data_integrity_check():
+    from app.core import data_integrity_service
+    return render_template("settings_data_integrity.html", issues=data_integrity_service.run_full_audit())
+
+
 # ---------- شاشة متابعة مبسّطة (بند إضافي 106) ----------
 
 FAMILY_VIEW_ROLES = [

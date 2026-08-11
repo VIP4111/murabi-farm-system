@@ -235,7 +235,7 @@ def break_even_summary() -> list[dict]:
     since_cache: dict = {}
     rows = []
     for animal in animals:
-        finance_rows = Finance.query.filter_by(animal_id=animal.id, is_cancelled=False).all()
+        finance_rows = Finance.query.filter_by(related_animal_id=animal.id, is_cancelled=False).all()
         purchase_cost = round(sum(f.amount for f in finance_rows if f.operation_type == "purchase"), 2)
         vet_visits = VetVisit.query.filter_by(animal_id=animal.id).all()
         diseases = Disease.query.filter_by(animal_id=animal.id).all()

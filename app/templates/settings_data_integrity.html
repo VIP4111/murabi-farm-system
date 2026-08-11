@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">{{ _('فحص سلامة البيانات') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('فحص حي لسجلات يتيمة، تواريخ ولادة غير منطقية، وحركات مالية بلا فئات — عرض فقط، بدون أي تعديل تلقائي على بياناتك. الإصلاح يبقى قرارك من شاشة السجل نفسه.') }}</p>
+  {% if issues %}
+  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('%(n)s مشكلة تحتاج مراجعتك.', n=issues|length) }}</div>
+  {% else %}
+  <div class="notice" style="background:#f2fbf5; border-color:#b7e4c7; color:#146c3a;">✅ {{ _('ما فيه أي مشكلة سلامة بيانات مكتشَفة حالياً.') }}</div>
+  {% endif %}
+</div>
+
+{% if issues %}
+<div class="card">
+  {% for i in issues %}
+  <div style="padding:10px 0; border-top:1px solid var(--line);">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+      <b>{{ i.label }}</b>
+      {% if i.link_endpoint %}<a class="btn light" href="{{ url_for(i.link_endpoint) }}" style="padding:4px 10px; font-size:12px;">{{ _('مراجعة السجل') }} ←</a>{% endif %}
+    </div>
+    <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ i.detail }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

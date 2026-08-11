@@ -37,6 +37,32 @@ def matings_list():
     return render_template("repro/matings_list.html", rows=rows)
 
 
+@repro_bp.route("/matings/export")
+@login_required
+@require_permission("repro.view")
+def matings_export():
+    """تصدير سجل التقريع (البيانات الوراثية الأساسية) Excel بضغطة زر
+    واحدة (بند إضافي 179)."""
+    from flask import Response
+    from app.reports import export_service as ex
+    rows = Mating.query.order_by(Mating.date.desc()).all()
+    columns = ["التاريخ", "الأنثى", "الفحل", "ملاحظة الفحل الخارجي", "الحظيرة"]
+    table_rows = [
+        [
+            str(r.date), r.female.animal_no if r.female else "-",
+            r.male.animal_no if r.male else "-", r.male_note or "-",
+            r.barn.barn_name if r.barn else "-",
+        ]
+        for r in rows
+    ]
+    buf = ex.build_excel("سجل التقريع", columns, table_rows)
+    return Response(
+        buf.read(),
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=matings_export.xlsx"},
+    )
+
+
 @repro_bp.route("/matings/new", methods=["GET", "POST"])
 @login_required
 @require_permission("repro.manage")

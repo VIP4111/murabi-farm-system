@@ -3,7 +3,10 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('التحليل المالي ونقطة التعادل') }}</h2>
-    <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('finance.break_even_export') }}">📥 {{ _('تصدير Excel') }}</a>
+      <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
+    </div>
   </div>
   <div class="notice">
     {{ _('"سعر التعادل" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. "الهامش" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة "بيانات تخطيط السوق" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق.') }}

@@ -38,9 +38,12 @@ class Animal(db.Model):
     breed = db.Column(db.String(40), default="عام/غير محدد")
 
     source = db.Column(db.Enum(AnimalSource), nullable=False)
-    mother_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True)
+    # مفهرَسان (بند إضافي 177) — محرك الوقاية من القرابة الوراثية
+    # (lineage_service) يستعلمهما مباشرة لكل تقريع جديد، وحجم القطيع
+    # يكبر مع الوقت.
+    mother_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True, index=True)
     mother = db.relationship("Animal", remote_side=[id], foreign_keys=[mother_id])
-    father_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True)
+    father_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True, index=True)
     father = db.relationship("Animal", remote_side=[id], foreign_keys=[father_id])
 
     gender = db.Column(db.String(16))
