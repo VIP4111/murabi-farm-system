@@ -51,6 +51,20 @@ def monthly_cost_report():
     return render_template("finance/monthly_cost_report.html", rows=rows, months=months, annual=annual)
 
 
+@finance_bp.route("/break-even-report")
+@login_required
+@require_permission("finance.full.manage")
+def break_even_report():
+    from app.core.animal_profile_service import break_even_summary
+    rows = break_even_summary()
+    at_risk_count = sum(1 for r in rows if r["at_risk"])
+    missing_estimate_count = sum(1 for r in rows if r["estimated_value"] is None)
+    return render_template(
+        "finance/break_even_report.html", rows=rows,
+        at_risk_count=at_risk_count, missing_estimate_count=missing_estimate_count,
+    )
+
+
 @finance_bp.route("/new", methods=["GET", "POST"])
 @login_required
 @require_permission("finance.full.manage")

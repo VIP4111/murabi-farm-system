@@ -3,25 +3,41 @@
 <div class="card" style="max-width:460px;">
   <h2>{{ _('تقريع جديد') }}</h2>
   <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، تقدر بعدها تتابعه لتأكيد الحمل.') }}</p>
+
+  {% if relation_warning %}
+  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">
+    <b>⚠️ {{ _('تحذير قرابة وراثية —') }} {{ relation_warning.label }}</b>
+    <p style="margin:6px 0;">{{ _('نوع العلاقة:') }} {{ relation_warning.relation_type }}</p>
+    <p style="margin:6px 0;">{{ _('معامل القرابة التقريبي: %(pct)s%% — أعلى من الطبيعي بمقدار كبير، يزيد احتمال ظهور صفات وراثية متنحية ضارة، ضعف مناعة، وتشوّهات خلقية بالمواليد الناتجة.', pct=relation_warning.coefficient_percent) }}</p>
+    <p style="margin:6px 0; font-size:12.5px; color:var(--muted);">{{ _('هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد.') }}</p>
+  </div>
+  {% endif %}
+
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ form_data.date if form_data }}">
     <label>{{ _('الأنثى') }}</label>
     <select name="female_id" required>
-      {% for f in females %}<option value="{{ f.id }}">{{ f.animal_no }}</option>{% endfor %}
+      {% for f in females %}<option value="{{ f.id }}" {{ 'selected' if form_data and form_data.female_id|string == f.id|string }}>{{ f.animal_no }}</option>{% endfor %}
     </select>
     <label>{{ _('الفحل (لو مسجّل بالنظام)') }}</label>
     <select name="male_id">
       <option value="">-</option>
-      {% for m in males %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
+      {% for m in males %}<option value="{{ m.id }}" {{ 'selected' if form_data and form_data.male_id|string == m.id|string }}>{{ m.animal_no }}</option>{% endfor %}
     </select>
-    <label>{{ _('وصف الفحل (لو خارجي/غير مسجّل)') }}</label><input name="male_note" placeholder="{{ _('مثال: فحل مستعار من مزرعة الرشيد') }}">
+    <label>{{ _('وصف الفحل (لو خارجي/غير مسجّل)') }}</label><input name="male_note" placeholder="{{ _('مثال: فحل مستعار من مزرعة الرشيد') }}" value="{{ form_data.male_note if form_data }}">
     <label>{{ _('الحظيرة (اختياري)') }}</label>
     <select name="barn_id">
       <option value="">-</option>
-      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+      {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if form_data and form_data.barn_id|string == b.id|string }}>{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2">{{ form_data.notes if form_data }}</textarea>
+    {% if relation_warning %}
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal; background:#fff5f2; padding:10px; border-radius:10px;">
+      <input type="checkbox" name="confirm_relation" value="1" style="width:auto;" required>
+      {{ _('أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي).') }}
+    </label>
+    {% endif %}
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر "التكاثر" ← "الحمل" ← "+ تشخيص حمل جديد" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات.') }}</p>
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 03:40+0300\n"
+"POT-Creation-Date: 2026-08-11 04:03+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -360,6 +360,42 @@ msgstr "Ready to mate"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "Ostriches"
+
+#: app/core/lineage_service.py:19
+msgid "علاقة درجة أولى"
+msgstr "First-degree relation"
+
+#: app/core/lineage_service.py:20
+msgid "علاقة درجة ثانية"
+msgstr "Second-degree relation"
+
+#: app/core/lineage_service.py:63
+msgid "أب/ابنة أو أم/ابنة"
+msgstr "Father/daughter or mother/daughter"
+
+#: app/core/lineage_service.py:65
+msgid "أم/ابن أو أب/ابن"
+msgstr "Mother/son or father/son"
+
+#: app/core/lineage_service.py:72
+msgid "إخوة أشقاء كاملين (نفس الأب والأم)"
+msgstr "Full siblings (same father and mother)"
+
+#: app/core/lineage_service.py:74
+msgid "إخوة من طرف واحد (نفس الأب أو نفس الأم)"
+msgstr "Half siblings (same father or same mother)"
+
+#: app/core/lineage_service.py:80
+msgid "جد/حفيدة"
+msgstr "Grandfather/granddaughter"
+
+#: app/core/lineage_service.py:82
+msgid "جدة/حفيد"
+msgstr "Grandmother/grandson"
+
+#: app/core/lineage_service.py:90
+msgid "عم/عمة أو خال/خالة"
+msgstr "Uncle/aunt relation"
 
 #: app/core/readiness_service.py:21
 msgid "كلمة مرور المالك الافتراضية"
@@ -1027,6 +1063,7 @@ msgstr "Total mortality cases"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/finance/break_even_report.html:21
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "Number"
@@ -1057,7 +1094,7 @@ msgstr "Gender"
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:33
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1067,7 +1104,7 @@ msgstr "Gender"
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:8
+#: app/templates/repro/mating_form.html:18
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
@@ -1145,12 +1182,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "External support received (debt)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "سداد دين"
 msgstr "Debt repayment"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:33
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "Item"
@@ -1173,7 +1210,7 @@ msgstr "Animal"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:416 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 msgid "المبلغ"
 msgstr "Amount"
 
@@ -1243,7 +1280,7 @@ msgstr "Consumption measurement period (days)"
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:33 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1461,7 +1498,7 @@ msgstr "Born on farm"
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "شراء"
 msgstr "Purchase"
 
@@ -1603,7 +1640,7 @@ msgstr "Milk"
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
-#: app/templates/repro/mating_form.html:24
+#: app/templates/repro/mating_form.html:34
 #: app/templates/repro/pregnancy_form.html:21
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
@@ -1785,7 +1822,7 @@ msgstr "regardless of the other factors."
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
-#: app/templates/repro/mating_form.html:26
+#: app/templates/repro/mating_form.html:42
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
@@ -1862,7 +1899,7 @@ msgstr "Severity"
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2122,12 +2159,12 @@ msgid "الوصف"
 msgstr "Description"
 
 #: app/templates/animal_detail.html:417 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "بيع"
 msgstr "Sale"
 
 #: app/templates/animal_detail.html:417 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "مصروف"
 msgstr "Expense"
 
@@ -2344,7 +2381,7 @@ msgid "إضافة"
 msgstr "Add"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:55
+#: app/templates/finance/list.html:56
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -4485,7 +4522,7 @@ msgid "صرف نهائي (بدون استعارة)"
 msgstr "Final issue (no loan)"
 
 #: app/templates/equipment/item_movement.html:19
-#: app/templates/repro/mating_form.html:19
+#: app/templates/repro/mating_form.html:29
 msgid "الحظيرة (اختياري)"
 msgstr "Barn (optional)"
 
@@ -5021,6 +5058,48 @@ msgstr "Cost/kg"
 msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "No rations recorded yet."
 
+#: app/templates/finance/break_even_report.html:5
+#: app/templates/finance/list.html:27
+msgid "التحليل المالي ونقطة التعادل"
+msgstr "Financial analysis and break-even"
+
+#: app/templates/finance/break_even_report.html:6
+#: app/templates/finance/monthly_cost_report.html:6
+msgid "رجوع للمالية"
+msgstr "Back to Finance"
+
+#: app/templates/finance/break_even_report.html:9
+msgid "\"سعر التعادل\" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. \"الهامش\" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة \"بيانات تخطيط السوق\" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق."
+msgstr "\"Break-even price\" = all estimated costs for this animal since entry (purchase + treatment + feed + its share of indirect expenses) — the lowest sale price that actually covers your cost; selling below it is a net loss. \"Margin\" is only calculated if you have a recorded estimated value for this animal (the \"market planning data\" screen on the production cycle page) — the system doesn't invent a market price."
+
+#: app/templates/finance/break_even_report.html:14
+msgid "رؤوس بهامش سالب (خطر خسارة)"
+msgstr "Animals with negative margin (loss risk)"
+
+#: app/templates/finance/break_even_report.html:15
+msgid "رؤوس بدون قيمة تقديرية مسجَّلة"
+msgstr "Animals without a recorded estimated value"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "سعر التعادل"
+msgstr "Break-even price"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "القيمة التقديرية"
+msgstr "Estimated value"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "الهامش"
+msgstr "Margin"
+
+#: app/templates/finance/break_even_report.html:28
+msgid "أضف قيمة تقديرية"
+msgstr "Add an estimated value"
+
+#: app/templates/finance/break_even_report.html:37
+msgid "لا يوجد رؤوس نشطة لتحليلها."
+msgstr "No active animals to analyze."
+
 #: app/templates/finance/form.html:4
 msgid "عملية مالية جديدة"
 msgstr "New financial transaction"
@@ -5128,54 +5207,50 @@ msgstr "Remaining owed"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "Monthly cost-per-head report"
 
-#: app/templates/finance/list.html:27
+#: app/templates/finance/list.html:28
 msgid "عملية جديدة"
 msgstr "New transaction"
 
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 msgid "الفاتورة"
 msgstr "Invoice"
 
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "دعم خارجي (دين)"
 msgstr "External support (debt)"
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "Cancelled"
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "سارية"
 msgstr "Active"
 
-#: app/templates/finance/list.html:42
+#: app/templates/finance/list.html:43
 msgid "بدون فاتورة"
 msgstr "No invoice"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:45
 msgid "إصدار"
 msgstr "Issue"
 
-#: app/templates/finance/list.html:47 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:48 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "View"
 
-#: app/templates/finance/list.html:52
+#: app/templates/finance/list.html:53
 msgid "تأكيد الإلغاء؟"
 msgstr "Confirm cancellation?"
 
-#: app/templates/finance/list.html:61
+#: app/templates/finance/list.html:62
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "No financial transactions yet."
 
 #: app/templates/finance/monthly_cost_report.html:5
 msgid "تكلفة الرأس الشهرية"
 msgstr "Monthly cost per head"
-
-#: app/templates/finance/monthly_cost_report.html:6
-msgid "رجوع للمالية"
-msgstr "Back to Finance"
 
 #: app/templates/finance/monthly_cost_report.html:9
 msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
@@ -6787,7 +6862,7 @@ msgid "تاريخ التقريع"
 msgstr "Mating date"
 
 #: app/templates/repro/attempt_form.html:8
-#: app/templates/repro/mating_form.html:13
+#: app/templates/repro/mating_form.html:23
 msgid "الفحل (لو مسجّل بالنظام)"
 msgstr "Male (if registered in the system)"
 
@@ -6885,6 +6960,23 @@ msgid "سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل �
 msgstr "Record a mating (breeding) attempt for a female with a male here — it creates a mating record linked to the female, which you can later follow up to confirm pregnancy."
 
 #: app/templates/repro/mating_form.html:9
+msgid "تحذير قرابة وراثية —"
+msgstr "Genetic relatedness warning —"
+
+#: app/templates/repro/mating_form.html:10
+msgid "نوع العلاقة:"
+msgstr "Relation type:"
+
+#: app/templates/repro/mating_form.html:11
+#, python-format
+msgid "معامل القرابة التقريبي: %(pct)s%% — أعلى من الطبيعي بمقدار كبير، يزيد احتمال ظهور صفات وراثية متنحية ضارة، ضعف مناعة، وتشوّهات خلقية بالمواليد الناتجة."
+msgstr "Approximate coefficient of relationship: %(pct)s%% — significantly higher than normal, increasing the risk of harmful recessive traits, weakened immunity, and birth defects in the resulting offspring."
+
+#: app/templates/repro/mating_form.html:12
+msgid "هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد."
+msgstr "This is a statistical warning based only on the pedigree recorded in the system, not a lab genetic test — consult your vet if unsure."
+
+#: app/templates/repro/mating_form.html:19
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
@@ -6894,15 +6986,19 @@ msgstr "Record a mating (breeding) attempt for a female with a male here — it 
 msgid "الأنثى"
 msgstr "Female"
 
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:28
 msgid "وصف الفحل (لو خارجي/غير مسجّل)"
 msgstr "Male description (if external/not registered)"
 
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:28
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "Example: a male borrowed from Al-Rashid farm"
 
-#: app/templates/repro/mating_form.html:25
+#: app/templates/repro/mating_form.html:38
+msgid "أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي)."
+msgstr "I confirm I have reviewed the genetic relatedness warning above and decided to proceed anyway (my responsibility)."
+
+#: app/templates/repro/mating_form.html:41
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "Next step in the cycle: after saving the mating, follow up on the female after a sufficient period via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy diagnosis\" to confirm pregnancy (manual exam or sonar) — if confirmed, the expected birth date is calculated automatically from the gestation duration set in settings."
 

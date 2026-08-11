@@ -42,17 +42,35 @@ def matings_list():
 @require_permission("repro.manage")
 def matings_new():
     if request.method == "POST":
+        female_id = int(request.form["female_id"])
+        male_id = int(request.form["male_id"]) if request.form.get("male_id") else None
+
+        # محرك الوقاية من القرابة الوراثية (بند إضافي 175) — لو فيه
+        # علاقة قرابة درجة أولى/ثانية موثّقة بالأنساب، ما نحفظ مباشرة؛
+        # نعيد عرض النموذج بتحذير حرج ونطلب تأكيداً صريحاً قبل أي حفظ.
+        from app.core import lineage_service
+        relation = lineage_service.relationship_warning(female_id, male_id) if male_id else None
+        if relation and request.form.get("confirm_relation") != "1":
+            flash("⚠️ تحذير قرابة وراثية — راجع التفاصيل تحت قبل ما تأكد", "error")
+            return render_template(
+                "repro/mating_form.html",
+                females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
+                relation_warning=relation,
+                form_data=request.form,
+            )
+
         row = Mating(
-            female_id=int(request.form["female_id"]),
+            female_id=female_id,
             date=date.fromisoformat(request.form["date"]),
-            male_id=request.form.get("male_id") or None,
+            male_id=male_id,
             male_note=request.form.get("male_note"),
             barn_id=request.form.get("barn_id") or None,
             notes=request.form.get("notes"),
         )
         db.session.add(row)
         db.session.flush()
-        _log("mating.create", "Mating", row.id)
+        _log("mating.create", "Mating", row.id,
+             details="تم التأكيد رغم تحذير قرابة وراثية" if relation else "")
         db.session.commit()
 
         from app.core.cycle_engine import record_cycle_event

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('التحليل المالي ونقطة التعادل') }}</h2>
+    <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
+  </div>
+  <div class="notice">
+    {{ _('"سعر التعادل" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. "الهامش" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة "بيانات تخطيط السوق" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق.') }}
+  </div>
+</div>
+
+<div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+  <div class="stat" style="{{ 'background:var(--danger, #c0392b); color:#fff;' if at_risk_count }}"><b>{{ at_risk_count }}</b><span>{{ _('رؤوس بهامش سالب (خطر خسارة)') }}</span></div>
+  <div class="stat"><b>{{ missing_estimate_count }}</b><span>{{ _('رؤوس بدون قيمة تقديرية مسجَّلة') }}</span></div>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('سعر التعادل') }}</th><th>{{ _('القيمة التقديرية') }}</th><th>{{ _('الهامش') }}</th></tr>
+    {% for r in rows %}
+    <tr style="{{ 'background:#fff5f2;' if r.at_risk }}">
+      <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id, tab='finance') }}">{{ r.animal.animal_no }}</a></td>
+      <td>{{ "%.2f"|format(r.break_even_price) }}</td>
+      <td>
+        {% if r.estimated_value is not none %}{{ "%.2f"|format(r.estimated_value) }}
+        {% else %}<a href="{{ url_for('core.animal_workflow', animal_id=r.animal.id) }}" style="font-size:12px;">{{ _('أضف قيمة تقديرية') }}</a>{% endif %}
+      </td>
+      <td>
+        {% if r.margin is not none %}
+        <span class="badge {{ 'off' if r.at_risk else 'on' }}">{{ "%.2f"|format(r.margin) }}</span>
+        {% else %}-{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد رؤوس نشطة لتحليلها.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 03:40+0300\n"
+"POT-Creation-Date: 2026-08-11 04:03+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -360,6 +360,42 @@ msgstr "संगमन के लिए तैयार"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "शुतुरमुर्ग"
+
+#: app/core/lineage_service.py:19
+msgid "علاقة درجة أولى"
+msgstr "प्रथम-श्रेणी संबंध"
+
+#: app/core/lineage_service.py:20
+msgid "علاقة درجة ثانية"
+msgstr "द्वितीय-श्रेणी संबंध"
+
+#: app/core/lineage_service.py:63
+msgid "أب/ابنة أو أم/ابنة"
+msgstr "पिता/बेटी या माँ/बेटी"
+
+#: app/core/lineage_service.py:65
+msgid "أم/ابن أو أب/ابن"
+msgstr "माँ/बेटा या पिता/बेटा"
+
+#: app/core/lineage_service.py:72
+msgid "إخوة أشقاء كاملين (نفس الأب والأم)"
+msgstr "सगे भाई-बहन (एक ही पिता और माँ)"
+
+#: app/core/lineage_service.py:74
+msgid "إخوة من طرف واحد (نفس الأب أو نفس الأم)"
+msgstr "सौतेले भाई-बहन (एक ही पिता या एक ही माँ)"
+
+#: app/core/lineage_service.py:80
+msgid "جد/حفيدة"
+msgstr "दादा/पोती"
+
+#: app/core/lineage_service.py:82
+msgid "جدة/حفيد"
+msgstr "दादी/पोता"
+
+#: app/core/lineage_service.py:90
+msgid "عم/عمة أو خال/خالة"
+msgstr "चाचा/मामा संबंध"
 
 #: app/core/readiness_service.py:21
 msgid "كلمة مرور المالك الافتراضية"
@@ -1027,6 +1063,7 @@ msgstr "कुल मृत्यु मामले"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/finance/break_even_report.html:21
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "क्रमांक"
@@ -1057,7 +1094,7 @@ msgstr "लिंग"
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:33
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1067,7 +1104,7 @@ msgstr "लिंग"
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:8
+#: app/templates/repro/mating_form.html:18
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
@@ -1145,12 +1182,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "प्राप्त बाहरी सहायता (ऋण)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "سداد دين"
 msgstr "ऋण चुकौती"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:33
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "मद"
@@ -1173,7 +1210,7 @@ msgstr "जानवर"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:416 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 msgid "المبلغ"
 msgstr "राशि"
 
@@ -1243,7 +1280,7 @@ msgstr "खपत मापन अवधि (दिन)"
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:33 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1461,7 +1498,7 @@ msgstr "फार्म पर जन्मा"
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "شراء"
 msgstr "खरीद"
 
@@ -1603,7 +1640,7 @@ msgstr "दूध"
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
-#: app/templates/repro/mating_form.html:24
+#: app/templates/repro/mating_form.html:34
 #: app/templates/repro/pregnancy_form.html:21
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
@@ -1785,7 +1822,7 @@ msgstr "अन्य कारकों की परवाह किए बि�
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
-#: app/templates/repro/mating_form.html:26
+#: app/templates/repro/mating_form.html:42
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
@@ -1862,7 +1899,7 @@ msgstr "गंभीरता"
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2122,12 +2159,12 @@ msgid "الوصف"
 msgstr "विवरण"
 
 #: app/templates/animal_detail.html:417 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "بيع"
 msgstr "बिक्री"
 
 #: app/templates/animal_detail.html:417 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "مصروف"
 msgstr "व्यय"
 
@@ -2344,7 +2381,7 @@ msgid "إضافة"
 msgstr "जोड़ें"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:55
+#: app/templates/finance/list.html:56
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -4485,7 +4522,7 @@ msgid "صرف نهائي (بدون استعارة)"
 msgstr "अंतिम निर्गम (बिना उधार)"
 
 #: app/templates/equipment/item_movement.html:19
-#: app/templates/repro/mating_form.html:19
+#: app/templates/repro/mating_form.html:29
 msgid "الحظيرة (اختياري)"
 msgstr "बाड़ा (वैकल्पिक)"
 
@@ -5021,6 +5058,48 @@ msgstr "लागत/किग्रा"
 msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "अभी तक कोई राशन दर्ज नहीं है।"
 
+#: app/templates/finance/break_even_report.html:5
+#: app/templates/finance/list.html:27
+msgid "التحليل المالي ونقطة التعادل"
+msgstr "वित्तीय विश्लेषण और ब्रेक-ईवन"
+
+#: app/templates/finance/break_even_report.html:6
+#: app/templates/finance/monthly_cost_report.html:6
+msgid "رجوع للمالية"
+msgstr "वित्त पर वापस जाएं"
+
+#: app/templates/finance/break_even_report.html:9
+msgid "\"سعر التعادل\" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. \"الهامش\" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة \"بيانات تخطيط السوق\" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق."
+msgstr "\"ब्रेक-ईवन मूल्य\" = इस पशु के प्रवेश के बाद से सभी अनुमानित लागतें (खरीद + उपचार + चारा + अप्रत्यक्ष खर्चों में इसका हिस्सा) — सबसे कम बिक्री मूल्य जो वास्तव में आपकी लागत को कवर करता है; इससे कम बेचना शुद्ध घाटा है। \"मार्जिन\" केवल तभी गणना होता है जब आपके पास इस पशु के लिए दर्ज अनुमानित मूल्य हो (उत्पादन चक्र पृष्ठ पर \"बाजार योजना डेटा\" स्क्रीन) — सिस्टम बाजार मूल्य नहीं गढ़ता।"
+
+#: app/templates/finance/break_even_report.html:14
+msgid "رؤوس بهامش سالب (خطر خسارة)"
+msgstr "नकारात्मक मार्जिन वाले पशु (हानि जोखिम)"
+
+#: app/templates/finance/break_even_report.html:15
+msgid "رؤوس بدون قيمة تقديرية مسجَّلة"
+msgstr "बिना दर्ज अनुमानित मूल्य वाले पशु"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "سعر التعادل"
+msgstr "ब्रेक-ईवन मूल्य"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "القيمة التقديرية"
+msgstr "अनुमानित मूल्य"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "الهامش"
+msgstr "मार्जिन"
+
+#: app/templates/finance/break_even_report.html:28
+msgid "أضف قيمة تقديرية"
+msgstr "अनुमानित मूल्य जोड़ें"
+
+#: app/templates/finance/break_even_report.html:37
+msgid "لا يوجد رؤوس نشطة لتحليلها."
+msgstr "विश्लेषण के लिए कोई सक्रिय पशु नहीं है।"
+
 #: app/templates/finance/form.html:4
 msgid "عملية مالية جديدة"
 msgstr "नया वित्तीय लेनदेन"
@@ -5128,54 +5207,50 @@ msgstr "आप पर शेष"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "मासिक प्रति पशु लागत रिपोर्ट"
 
-#: app/templates/finance/list.html:27
+#: app/templates/finance/list.html:28
 msgid "عملية جديدة"
 msgstr "नया लेनदेन"
 
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 msgid "الفاتورة"
 msgstr "चालान"
 
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "دعم خارجي (دين)"
 msgstr "बाहरी सहायता (ऋण)"
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "रद्द"
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "سارية"
 msgstr "सक्रिय"
 
-#: app/templates/finance/list.html:42
+#: app/templates/finance/list.html:43
 msgid "بدون فاتورة"
 msgstr "बिना चालान"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:45
 msgid "إصدار"
 msgstr "जारी करें"
 
-#: app/templates/finance/list.html:47 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:48 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "देखें"
 
-#: app/templates/finance/list.html:52
+#: app/templates/finance/list.html:53
 msgid "تأكيد الإلغاء؟"
 msgstr "रद्द करने की पुष्टि करें?"
 
-#: app/templates/finance/list.html:61
+#: app/templates/finance/list.html:62
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "अभी तक कोई वित्तीय लेनदेन नहीं है।"
 
 #: app/templates/finance/monthly_cost_report.html:5
 msgid "تكلفة الرأس الشهرية"
 msgstr "मासिक प्रति पशु लागत"
-
-#: app/templates/finance/monthly_cost_report.html:6
-msgid "رجوع للمالية"
-msgstr "वित्त पर वापस जाएं"
 
 #: app/templates/finance/monthly_cost_report.html:9
 msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
@@ -6787,7 +6862,7 @@ msgid "تاريخ التقريع"
 msgstr "संगमन तिथि"
 
 #: app/templates/repro/attempt_form.html:8
-#: app/templates/repro/mating_form.html:13
+#: app/templates/repro/mating_form.html:23
 msgid "الفحل (لو مسجّل بالنظام)"
 msgstr "नर (यदि सिस्टम में दर्ज हो)"
 
@@ -6885,6 +6960,23 @@ msgid "سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل �
 msgstr "यहां मादा को नर के साथ संगमन (प्रजनन) प्रयास दर्ज करें — यह मादा से जुड़ा एक संगमन रिकॉर्ड बनाता है, जिसे आप बाद में गर्भावस्था की पुष्टि के लिए फॉलो कर सकते हैं।"
 
 #: app/templates/repro/mating_form.html:9
+msgid "تحذير قرابة وراثية —"
+msgstr "आनुवंशिक संबंध चेतावनी —"
+
+#: app/templates/repro/mating_form.html:10
+msgid "نوع العلاقة:"
+msgstr "संबंध का प्रकार:"
+
+#: app/templates/repro/mating_form.html:11
+#, python-format
+msgid "معامل القرابة التقريبي: %(pct)s%% — أعلى من الطبيعي بمقدار كبير، يزيد احتمال ظهور صفات وراثية متنحية ضارة، ضعف مناعة، وتشوّهات خلقية بالمواليد الناتجة."
+msgstr "अनुमानित संबंध गुणांक: %(pct)s%% — सामान्य से काफी अधिक, हानिकारक अप्रभावी लक्षणों, कमजोर प्रतिरक्षा, और परिणामी संतान में जन्मजात दोषों के जोखिम को बढ़ाता है।"
+
+#: app/templates/repro/mating_form.html:12
+msgid "هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد."
+msgstr "यह केवल सिस्टम में दर्ज वंशावली पर आधारित एक सांख्यिकीय चेतावनी है, प्रयोगशाला आनुवंशिक परीक्षण नहीं — यदि अनिश्चित हों तो अपने डॉक्टर से सलाह लें।"
+
+#: app/templates/repro/mating_form.html:19
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
@@ -6894,15 +6986,19 @@ msgstr "यहां मादा को नर के साथ संगमन
 msgid "الأنثى"
 msgstr "मादा"
 
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:28
 msgid "وصف الفحل (لو خارجي/غير مسجّل)"
 msgstr "नर का विवरण (यदि बाहरी/अपंजीकृत हो)"
 
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:28
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "उदाहरण: अल-रशीद फार्म से उधार लिया गया नर"
 
-#: app/templates/repro/mating_form.html:25
+#: app/templates/repro/mating_form.html:38
+msgid "أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي)."
+msgstr "मैं पुष्टि करता हूं कि मैंने ऊपर दी गई आनुवंशिक संबंध चेतावनी की समीक्षा की है और फिर भी आगे बढ़ने का निर्णय लिया है (मेरी जिम्मेदारी)।"
+
+#: app/templates/repro/mating_form.html:41
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "चक्र में अगला कदम: संगमन सहेजने के बाद, पर्याप्त अवधि के बाद \"प्रजनन\" ← \"गर्भावस्था\" ← \"+ नया गर्भावस्था निदान\" के माध्यम से गर्भावस्था की पुष्टि के लिए मादा को फॉलो करें (मैनुअल जांच या सोनार) — यदि पुष्टि हो जाए, तो अपेक्षित जन्म तिथि सेटिंग्स में निर्धारित गर्भावस्था अवधि से स्वतः गणना होती है।"
 

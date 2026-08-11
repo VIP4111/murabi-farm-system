@@ -221,3 +221,61 @@ def get_profile(animal: Animal) -> dict:
         "indirect_cost_share": indirect_cost_share,
         "total_cost_estimate": total_cost_estimate,
     }
+
+
+def break_even_summary() -> list[dict]:
+    """محرك التحليل المالي ونقطة التعادل (بند إضافي 176) — لكل رأس
+    نشط: التكلفة الإجمالية المقدَّرة منذ الدخول (= سعر البيع الأدنى
+    لتحقيق التعادل، نفس رقم `total_cost_estimate` بتقرير الرأس الفردي)
+    مقابل القيمة التقديرية المسجَّلة (لو موجودة بـ`ProductionWorkflow.
+    estimated_value` من شاشة "بيانات تخطيط السوق"). لو ما فيه قيمة
+    تقديرية مسجَّلة، الهامش ما يُحسب (ما نخترع سعر سوق غير موجود)."""
+    animals = Animal.query.filter_by(status="active").all()
+    active_head_count = len(animals)
+    since_cache: dict = {}
+    rows = []
+    for animal in animals:
+        finance_rows = Finance.query.filter_by(animal_id=animal.id, is_cancelled=False).all()
+        purchase_cost = round(sum(f.amount for f in finance_rows if f.operation_type == "purchase"), 2)
+        vet_visits = VetVisit.query.filter_by(animal_id=animal.id).all()
+        diseases = Disease.query.filter_by(animal_id=animal.id).all()
+        vaccinations = Vaccination.query.filter_by(animal_id=animal.id).all()
+        direct_medical_cost = round(
+            sum(v.cost or 0 for v in vet_visits) + sum(d.treatment_cost or 0 for d in diseases)
+            + sum(vc.cost or 0 for vc in vaccinations), 2,
+        )
+        feed_cost_estimate = _feed_cost_estimate(animal)
+
+        since = animal.entry_date or animal.birth_date or animal.purchase_date or (
+            animal.created_at.date() if animal.created_at else date.today())
+        if since not in since_cache:
+            since_cache[since] = sum(
+                f.amount for f in Finance.query.filter(
+                    Finance.operation_type == "expense", Finance.is_indirect.is_(True),
+                    Finance.is_cancelled.is_(False), Finance.date >= since,
+                ).all()
+            )
+        indirect_cost_share = round(since_cache[since] / active_head_count, 2) if active_head_count else 0
+
+        break_even_price = round(
+            purchase_cost + direct_medical_cost + feed_cost_estimate["total"] + indirect_cost_share, 2
+        )
+        wf = animal.workflow
+        estimated_value = wf.estimated_value if wf and wf.estimated_value else None
+        margin = round(estimated_value - break_even_price, 2) if estimated_value is not None else None
+        rows.append({
+            "animal": animal,
+            "break_even_price": break_even_price,
+            "estimated_value": estimated_value,
+            "margin": margin,
+            "at_risk": margin is not None and margin < 0,
+        })
+
+    # الرؤوس المهدَّدة بخسارة (هامش سالب) أول القائمة، ثم اللي ما فيها
+    # قيمة تقديرية أصلاً (يحتاج المالك يعبّيها)، ثم الباقي مرتّبة تنازلياً
+    # حسب أعلى تكلفة تعادل (الأعلى تكلفة تستاهل مراجعة أقرب).
+    rows.sort(key=lambda r: (
+        0 if r["at_risk"] else (1 if r["estimated_value"] is None else 2),
+        -r["break_even_price"],
+    ))
+    return rows

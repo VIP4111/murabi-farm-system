@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 03:40+0300\n"
+"POT-Creation-Date: 2026-08-11 04:03+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -360,6 +360,42 @@ msgstr "ለማዳቀል ዝግጁ"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "ሰጎኖች"
+
+#: app/core/lineage_service.py:19
+msgid "علاقة درجة أولى"
+msgstr "የመጀመሪያ-ደረጃ ዝምድና"
+
+#: app/core/lineage_service.py:20
+msgid "علاقة درجة ثانية"
+msgstr "የሁለተኛ-ደረጃ ዝምድና"
+
+#: app/core/lineage_service.py:63
+msgid "أب/ابنة أو أم/ابنة"
+msgstr "አባት/ሴት ልጅ ወይም እናት/ሴት ልጅ"
+
+#: app/core/lineage_service.py:65
+msgid "أم/ابن أو أب/ابن"
+msgstr "እናት/ወንድ ልጅ ወይም አባት/ወንድ ልጅ"
+
+#: app/core/lineage_service.py:72
+msgid "إخوة أشقاء كاملين (نفس الأب والأم)"
+msgstr "ሙሉ ወንድማማች (ተመሳሳይ አባት እና እናት)"
+
+#: app/core/lineage_service.py:74
+msgid "إخوة من طرف واحد (نفس الأب أو نفس الأم)"
+msgstr "ግማሽ ወንድማማች (ተመሳሳይ አባት ወይም ተመሳሳይ እናት)"
+
+#: app/core/lineage_service.py:80
+msgid "جد/حفيدة"
+msgstr "አያት/የልጅ ልጅ (ሴት)"
+
+#: app/core/lineage_service.py:82
+msgid "جدة/حفيد"
+msgstr "አያት (ሴት)/የልጅ ልጅ (ወንድ)"
+
+#: app/core/lineage_service.py:90
+msgid "عم/عمة أو خال/خالة"
+msgstr "አጎት/አክስት ዝምድና"
 
 #: app/core/readiness_service.py:21
 msgid "كلمة مرور المالك الافتراضية"
@@ -1027,6 +1063,7 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/finance/break_even_report.html:21
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "ቁጥር"
@@ -1057,7 +1094,7 @@ msgstr "ጾታ"
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:32
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:33
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1067,7 +1104,7 @@ msgstr "ጾታ"
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:8
+#: app/templates/repro/mating_form.html:18
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
@@ -1145,12 +1182,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "የተቀበለ የውጭ ድጋፍ (ዕዳ)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "سداد دين"
 msgstr "የዕዳ ክፍያ"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:32
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:33
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "ንጥል"
@@ -1173,7 +1210,7 @@ msgstr "እንስሳ"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:416 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 msgid "المبلغ"
 msgstr "መጠን"
 
@@ -1243,7 +1280,7 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:33 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1461,7 +1498,7 @@ msgstr "በእርሻው የተወለደ"
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "شراء"
 msgstr "ግዢ"
 
@@ -1603,7 +1640,7 @@ msgstr "ወተት"
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
-#: app/templates/repro/mating_form.html:24
+#: app/templates/repro/mating_form.html:34
 #: app/templates/repro/pregnancy_form.html:21
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
@@ -1785,7 +1822,7 @@ msgstr "ከሌሎች ምክንያቶች ጋር ሳይገናኝ።"
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
-#: app/templates/repro/mating_form.html:26
+#: app/templates/repro/mating_form.html:42
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
@@ -1862,7 +1899,7 @@ msgstr "ክብደት"
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2122,12 +2159,12 @@ msgid "الوصف"
 msgstr "መግለጫ"
 
 #: app/templates/animal_detail.html:417 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "بيع"
 msgstr "ሽያጭ"
 
 #: app/templates/animal_detail.html:417 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "مصروف"
 msgstr "ወጪ"
 
@@ -2344,7 +2381,7 @@ msgid "إضافة"
 msgstr "ጨምር"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:55
+#: app/templates/finance/list.html:56
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -4485,7 +4522,7 @@ msgid "صرف نهائي (بدون استعارة)"
 msgstr "የመጨረሻ ወጪ (ያለ ብድር)"
 
 #: app/templates/equipment/item_movement.html:19
-#: app/templates/repro/mating_form.html:19
+#: app/templates/repro/mating_form.html:29
 msgid "الحظيرة (اختياري)"
 msgstr "በረት (አማራጭ)"
 
@@ -5021,6 +5058,48 @@ msgstr "ዋጋ/ኪግ"
 msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ ራሽን የለም።"
 
+#: app/templates/finance/break_even_report.html:5
+#: app/templates/finance/list.html:27
+msgid "التحليل المالي ونقطة التعادل"
+msgstr "የገንዘብ ትንተና እና ዕኩልነት ነጥብ"
+
+#: app/templates/finance/break_even_report.html:6
+#: app/templates/finance/monthly_cost_report.html:6
+msgid "رجوع للمالية"
+msgstr "ወደ ገንዘብ ተመለስ"
+
+#: app/templates/finance/break_even_report.html:9
+msgid "\"سعر التعادل\" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. \"الهامش\" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة \"بيانات تخطيط السوق\" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق."
+msgstr "\"የዕኩልነት ዋጋ\" = ይህ እንስሳ ከገባበት ጊዜ ጀምሮ ያሉ ሁሉም የተገመቱ ወጪዎች (ግዢ + ሕክምና + መኖ + በተዘዋዋሪ ወጪዎች ውስጥ ያለው ድርሻ) — ወጪዎን በትክክል የሚሸፍን ዝቅተኛው የሽያጭ ዋጋ፤ ከዚህ በታች መሸጥ ጥሬ ኪሳራ ነው። \"ህዳግ\" የሚሰላው ለዚህ እንስሳ የተመዘገበ የተገመተ ዋጋ ካለዎት ብቻ ነው (በምርት ዑደት ገጽ ላይ ያለው \"የገበያ ዕቅድ መረጃ\" ማያ ገጽ) — ሲስተሙ የገበያ ዋጋ አይፈጥርም።"
+
+#: app/templates/finance/break_even_report.html:14
+msgid "رؤوس بهامش سالب (خطر خسارة)"
+msgstr "አሉታዊ ህዳግ ያላቸው እንስሳት (የኪሳራ አደጋ)"
+
+#: app/templates/finance/break_even_report.html:15
+msgid "رؤوس بدون قيمة تقديرية مسجَّلة"
+msgstr "የተመዘገበ የተገመተ ዋጋ የሌላቸው እንስሳት"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "سعر التعادل"
+msgstr "የዕኩልነት ዋጋ"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "القيمة التقديرية"
+msgstr "የተገመተ ዋጋ"
+
+#: app/templates/finance/break_even_report.html:21
+msgid "الهامش"
+msgstr "ህዳግ"
+
+#: app/templates/finance/break_even_report.html:28
+msgid "أضف قيمة تقديرية"
+msgstr "የተገመተ ዋጋ ጨምር"
+
+#: app/templates/finance/break_even_report.html:37
+msgid "لا يوجد رؤوس نشطة لتحليلها."
+msgstr "ለመተንተን ንቁ እንስሳት የሉም።"
+
 #: app/templates/finance/form.html:4
 msgid "عملية مالية جديدة"
 msgstr "አዲስ የገንዘብ ግብይት"
@@ -5128,54 +5207,50 @@ msgstr "በእርስዎ ላይ የቀረው"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "ወርሃዊ የእንስሳ ዋጋ ሪፖርት"
 
-#: app/templates/finance/list.html:27
+#: app/templates/finance/list.html:28
 msgid "عملية جديدة"
 msgstr "አዲስ ግብይት"
 
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:33
 msgid "الفاتورة"
 msgstr "ደረሰኝ"
 
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "دعم خارجي (دين)"
 msgstr "የውጭ ድጋፍ (ዕዳ)"
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "የተሰረዘ"
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "سارية"
 msgstr "ንቁ"
 
-#: app/templates/finance/list.html:42
+#: app/templates/finance/list.html:43
 msgid "بدون فاتورة"
 msgstr "ያለ ደረሰኝ"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:45
 msgid "إصدار"
 msgstr "አውጣ"
 
-#: app/templates/finance/list.html:47 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:48 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "ይመልከቱ"
 
-#: app/templates/finance/list.html:52
+#: app/templates/finance/list.html:53
 msgid "تأكيد الإلغاء؟"
 msgstr "መሰረዙን ያረጋግጡ?"
 
-#: app/templates/finance/list.html:61
+#: app/templates/finance/list.html:62
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "እስካሁን የገንዘብ ግብይት የለም።"
 
 #: app/templates/finance/monthly_cost_report.html:5
 msgid "تكلفة الرأس الشهرية"
 msgstr "ወርሃዊ የእንስሳ ዋጋ"
-
-#: app/templates/finance/monthly_cost_report.html:6
-msgid "رجوع للمالية"
-msgstr "ወደ ገንዘብ ተመለስ"
 
 #: app/templates/finance/monthly_cost_report.html:9
 msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
@@ -6787,7 +6862,7 @@ msgid "تاريخ التقريع"
 msgstr "የማዳቀል ቀን"
 
 #: app/templates/repro/attempt_form.html:8
-#: app/templates/repro/mating_form.html:13
+#: app/templates/repro/mating_form.html:23
 msgid "الفحل (لو مسجّل بالنظام)"
 msgstr "ወንድ (በሲስተም ውስጥ ከተመዘገበ)"
 
@@ -6885,6 +6960,23 @@ msgid "سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل �
 msgstr "እዚህ ሴትን ከወንድ ጋር የማዳቀል ሙከራ መዝግብ — ከሴቷ ጋር የተያያዘ የማዳቀል መዝገብ ይፈጥራል፣ በኋላ ለእርግዝና ማረጋገጫ መከታተል ይችላሉ።"
 
 #: app/templates/repro/mating_form.html:9
+msgid "تحذير قرابة وراثية —"
+msgstr "የዘር ግንድ ዝምድና ማስጠንቀቂያ —"
+
+#: app/templates/repro/mating_form.html:10
+msgid "نوع العلاقة:"
+msgstr "የዝምድና ዓይነት:"
+
+#: app/templates/repro/mating_form.html:11
+#, python-format
+msgid "معامل القرابة التقريبي: %(pct)s%% — أعلى من الطبيعي بمقدار كبير، يزيد احتمال ظهور صفات وراثية متنحية ضارة، ضعف مناعة، وتشوّهات خلقية بالمواليد الناتجة."
+msgstr "የግምታዊ ዝምድና ቅንጅት: %(pct)s%% — ከመደበኛው በጣም ከፍ ያለ፣ ጎጂ የተደጋገሙ የዘር ባህሪያት፣ ደካማ የበሽታ መከላከያ፣ እና በተወለዱት ልጆች ላይ የትውልድ ጉድለቶች የመታየት እድልን ይጨምራል።"
+
+#: app/templates/repro/mating_form.html:12
+msgid "هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد."
+msgstr "ይህ በሲስተሙ ውስጥ በተመዘገበው የዘር ግንድ ላይ ብቻ የተመሠረተ ስታቲስቲካዊ ማስጠንቀቂያ ነው፣ የላብራቶሪ የዘር ምርመራ አይደለም — እርግጠኛ ካልሆኑ ሐኪምዎን ያማክሩ።"
+
+#: app/templates/repro/mating_form.html:19
 #: app/templates/repro/matings_list.html:10
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
@@ -6894,15 +6986,19 @@ msgstr "እዚህ ሴትን ከወንድ ጋር የማዳቀል ሙከራ መዝ
 msgid "الأنثى"
 msgstr "ሴት"
 
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:28
 msgid "وصف الفحل (لو خارجي/غير مسجّل)"
 msgstr "የወንድ መግለጫ (ውጫዊ/ያልተመዘገበ ከሆነ)"
 
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:28
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "ምሳሌ: ከአል-ራሺድ እርሻ የተዋሰ ወንድ"
 
-#: app/templates/repro/mating_form.html:25
+#: app/templates/repro/mating_form.html:38
+msgid "أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي)."
+msgstr "ከላይ ያለውን የዘር ግንድ ዝምድና ማስጠንቀቂያ እንደተመለከትኩ እና ቢሆንም ለመቀጠል እንደወሰንኩ አረጋግጣለሁ (የእኔ ኃላፊነት)።"
+
+#: app/templates/repro/mating_form.html:41
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "በዑደቱ ውስጥ ቀጣይ ደረጃ: ማዳቀሉን ካስቀመጡ በኋላ፣ ለበቂ ጊዜ በኋላ በ\"መራባት\" ← \"እርግዝና\" ← \"+ አዲስ የእርግዝና ምርመራ\" በኩል ሴቷን ይከታተሉ እርግዝናውን ለማረጋገጥ (በእጅ ምርመራ ወይም ሶናር) — ከተረጋገጠ፣ የሚጠበቀው የልደት ቀን ከቅንብሮች በተቀመጠው የእርግዝና ጊዜ በራስ-ሰር ይሰላል።"
 

@@ -24,6 +24,7 @@
     <h2 style="margin:0;">{{ _('المالية') }}</h2>
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
       <a class="btn light" href="{{ url_for('finance.monthly_cost_report') }}">{{ _('تقرير تكلفة الرأس الشهرية') }}</a>
+      <a class="btn light" href="{{ url_for('finance.break_even_report') }}">{{ _('التحليل المالي ونقطة التعادل') }}</a>
       <a class="btn" href="{{ url_for('finance.finance_new') }}">+ {{ _('عملية جديدة') }}</a>
     </div>
   </div>
