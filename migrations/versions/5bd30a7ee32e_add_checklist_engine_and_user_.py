@@ -45,7 +45,7 @@ def upgrade():
     sa.UniqueConstraint('user_id', 'checklist_item_id', 'period_key', name='uq_checklist_completion')
     )
     with op.batch_alter_table('users', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('is_beginner', sa.Boolean(), nullable=False))
+        batch_op.add_column(sa.Column('is_beginner', sa.Boolean(), nullable=False, server_default=sa.false()))
         batch_op.add_column(sa.Column('onboarding_completed_at', sa.DateTime(), nullable=True))
 
     # ### end Alembic commands ###

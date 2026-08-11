@@ -22,7 +22,7 @@ def upgrade():
         batch_op.add_column(sa.Column('rationale', sa.Text(), nullable=True))
 
     with op.batch_alter_table('doctors', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('is_external', sa.Boolean(), nullable=False))
+        batch_op.add_column(sa.Column('is_external', sa.Boolean(), nullable=False, server_default=sa.false()))
         batch_op.add_column(sa.Column('clinic_name', sa.String(length=160), nullable=True))
         batch_op.add_column(sa.Column('area', sa.String(length=160), nullable=True))
         batch_op.add_column(sa.Column('notes', sa.Text(), nullable=True))
