@@ -613,5 +613,18 @@
         and not (request.endpoint == 'team.worker_quick_report' and request.view_args.get('category') == 'emergency') %}
   <a class="emergency-fab" href="{{ url_for('team.worker_quick_report', category='emergency') }}" title="{{ _('حالة طارئة') }}">🚨</a>
   {% endif %}
+  <script>
+  // لوحة مفاتيح أرقام تلقائية بالجوال لكل حقول الأرقام (بند إضافي
+  // 187) — تعديل عام واحد بدل لمس كل قالب فيه <input type="number">
+  // بالمشروع. decimal لو step فيه فاصلة (وزن/سعر...)، numeric لو
+  // عدد صحيح (كمية/عمر...).
+  (function(){
+    document.querySelectorAll('input[type="number"]').forEach(function(el){
+      if (el.hasAttribute('inputmode')) return;
+      var step = el.getAttribute('step');
+      el.setAttribute('inputmode', (step && step.indexOf('.') !== -1) ? 'decimal' : 'numeric');
+    });
+  })();
+  </script>
 </body>
 </html>

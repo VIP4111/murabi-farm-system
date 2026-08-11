@@ -975,13 +975,17 @@ def animal_detail(animal_id):
 @require_permission("animals.manage")
 def animal_weight_new(animal_id):
     animal = Animal.query.get_or_404(animal_id)
-    add_weight_record(
-        animal=animal,
-        record_date=date.fromisoformat(request.form["date"]),
-        weight=float(request.form["weight"]),
-        notes=request.form.get("notes") or None,
-        recorded_by_id=current_user.id,
-    )
+    try:
+        add_weight_record(
+            animal=animal,
+            record_date=date.fromisoformat(request.form["date"]),
+            weight=float(request.form["weight"]),
+            notes=request.form.get("notes") or None,
+            recorded_by_id=current_user.id,
+        )
+    except ValueError as e:
+        flash(str(e), "error")
+        return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="weights"))
     cycle_engine.evaluate(animal)
     db.session.commit()
     flash("تم تسجيل الوزن", "success")

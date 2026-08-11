@@ -125,6 +125,15 @@ def create_animal(
             raise ValueError("الأم غير موجودة")
         animal_no = generate_temp_animal_no(mother)
 
+    # فحوصات سلامة إدخال (بند إضافي 187) — تمنع خطأ كتابة واضح قبل ما
+    # يوصل قاعدة البيانات أصلاً (وزن/سعر غير منطقي، تاريخ بالمستقبل).
+    from app.core import validation_service
+    validation_service.validate_weight(weight, species=species)
+    validation_service.validate_price(price, field_label="السعر")
+    validation_service.validate_not_future_date(birth_date, field_label="تاريخ الولادة")
+    validation_service.validate_not_future_date(purchase_date, field_label="تاريخ الشراء")
+    validation_service.validate_not_future_date(entry_date, field_label="تاريخ الدخول")
+
     animal = Animal(
         animal_no=animal_no,
         source=source,
@@ -216,6 +225,10 @@ def add_weight_record(*, animal: Animal, record_date: date, weight: float,
     ما فيه قيود سابقة)، يُنسخ لحقل `Animal.weight` الحالي — نفس الحقل اللي
     تعتمد عليه بوابات محرك الدورة وحاسبة العلف، عشان تستمر تشتغل بدون أي
     تعديل عليها."""
+    from app.core import validation_service
+    validation_service.validate_weight(weight, species=animal.species)
+    validation_service.validate_not_future_date(record_date, field_label="تاريخ الوزن")
+
     record = AnimalWeight(
         animal_id=animal.id, date=record_date, weight=weight,
         notes=notes, recorded_by_id=recorded_by_id,

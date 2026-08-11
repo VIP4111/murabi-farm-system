@@ -43,10 +43,14 @@ def apply_bulk_weight(*, animal_ids: list[int], record_date: date,
         if not animal:
             results[animal_id] = "غير موجود"
             continue
-        add_weight_record(
-            animal=animal, record_date=record_date, weight=weight,
-            notes=notes_by_id.get(animal_id) or None, recorded_by_id=actor_user_id,
-        )
+        try:
+            add_weight_record(
+                animal=animal, record_date=record_date, weight=weight,
+                notes=notes_by_id.get(animal_id) or None, recorded_by_id=actor_user_id,
+            )
+        except ValueError as e:
+            results[animal_id] = f"مرفوض — {e}"
+            continue
         cycle_engine.evaluate(animal)
         db.session.commit()
         results[animal_id] = f"تم — {weight} كجم"

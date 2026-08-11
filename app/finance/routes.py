@@ -124,13 +124,25 @@ def break_even_report():
 def finance_new():
     if request.method == "POST":
         from app.finance.finance_service import save_invoice_file
+        entry_date = date.fromisoformat(request.form["date"])
+        amount = float(request.form["amount"])
+
+        # فحوصات سلامة إدخال (بند إضافي 187) — قبل أي حفظ فعلي.
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(amount, field_label="المبلغ")
+            validation_service.validate_not_future_date(entry_date, field_label="تاريخ الحركة")
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("finance.finance_new"))
+
         row = Finance(
-            date=date.fromisoformat(request.form["date"]),
+            date=entry_date,
             operation_type=request.form["operation_type"],
             category=request.form.get("category"),
             item=request.form.get("item"),
             description=request.form.get("description"),
-            amount=float(request.form["amount"]),
+            amount=amount,
             payment_method=request.form.get("payment_method"),
             related_animal_id=request.form.get("related_animal_id") or None,
             is_indirect=bool(request.form.get("is_indirect")),

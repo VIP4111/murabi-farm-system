@@ -314,14 +314,35 @@
   {% if current_user.has_permission('animals.manage') %}
   <div class="card">
     <h3 style="font-size:15px;">{{ _('تسجيل وزن جديد') }}</h3>
-    <form method="post" action="{{ url_for('core.animal_weight_new', animal_id=animal.id) }}" data-offline>
+    <form method="post" action="{{ url_for('core.animal_weight_new', animal_id=animal.id) }}" data-offline id="weightForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">
-      <label>{{ _('الوزن (كجم)') }}</label><input name="weight" type="number" step="0.01" required>
+      <label>{{ _('الوزن (كجم)') }}</label><input name="weight" id="weightInput" type="number" step="0.01" required>
       <label>{{ _('ملاحظات') }}</label><input name="notes">
       <button class="btn" type="submit">{{ _('حفظ') }}</button>
     </form>
   </div>
+  <script>
+  (function(){
+    var form = document.getElementById('weightForm');
+    var input = document.getElementById('weightInput');
+    var previousWeight = {{ (animal.weight or 0)|tojson }};
+    var threshold = 40; // {{ _('نسبة التغيّر القصوى المقبولة بدون تأكيد (%%)') }}
+    var confirmText = {{ _('الوزن الجديد يختلف بنسبة __PCT__%% عن آخر وزن مسجَّل (__PREV__ كجم) — تأكيد فعلاً هذا الرقم؟')|tojson }};
+    if (form) {
+      form.addEventListener('submit', function(e){
+        var newWeight = parseFloat(input.value);
+        if (previousWeight > 0 && newWeight > 0) {
+          var pct = Math.abs(newWeight - previousWeight) / previousWeight * 100;
+          if (pct >= threshold) {
+            var msg = confirmText.replace('__PCT__', pct.toFixed(0)).replace('__PREV__', previousWeight);
+            if (!confirm(msg)) { e.preventDefault(); e.stopImmediatePropagation(); }
+          }
+        }
+      });
+    }
+  })();
+  </script>
   {% endif %}
   <div class="card">
     <h3 style="font-size:15px;">{{ _('سجل الأوزان') }}</h3>
