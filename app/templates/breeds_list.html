@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('دليل السلالات وملاحظات الرعاية المحلية') }}</h2>
+    {% if current_user.has_permission('animals.manage') %}<a class="btn light" href="{{ url_for('core.breeds_new') }}">+ {{ _('سلالة جديدة') }}</a>{% endif %}
+  </div>
+  <p style="color:var(--muted); font-size:13px;">{{ _('النظام ما يقترح أي معلومة سلالة أو مناخ جاهزة هنا — هذي ملاحظاتك أنت أو طبيبك، مبنية على خبرة فعلية بمنطقتك ومناخك، تظهر تلقائياً بصفحة أي رأس من نفس السلالة.') }}</p>
+  {% for b in breeds %}
+  <div style="padding:10px 0; border-top:1px solid var(--line);">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <b>{{ b.name }}</b>
+      {% if current_user.has_permission('animals.manage') %}<a class="btn light" href="{{ url_for('core.breed_edit', breed_id=b.id) }}" style="padding:4px 10px; font-size:12px;">{{ _('تعديل الملاحظات') }}</a>{% endif %}
+    </div>
+    {% if b.care_notes %}<p style="color:var(--muted); font-size:13px; margin:6px 0 0;">{{ b.care_notes }}</p>{% else %}<p style="color:#888; font-size:12px; margin:6px 0 0;">{{ _('ما فيه ملاحظات مسجّلة بعد.') }}</p>{% endif %}
+  </div>
+  {% else %}
+  <p style="color:#888;">{{ _('ما فيه سلالات مسجّلة بعد.') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

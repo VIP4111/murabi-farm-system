@@ -7,6 +7,21 @@
   <h2 style="margin-top:12px;">{{ cfg.icon }} {{ cfg.label }}</h2>
 </div>
 
+{% if doctors %}
+<div class="card" style="background:var(--danger, #c0392b); color:#fff;">
+  <h3 style="margin:0; color:#fff; font-size:15px;">📞 {{ _('اتصل بالطبيب الآن') }}</h3>
+  <p style="margin:6px 0 10px; color:rgba(255,255,255,.85); font-size:12.5px;">{{ _('حالة طوارئ فعلية تحتاج اتصال هاتفي مباشر بالتوازي مع رفع البلاغ تحت — لا تنتظر.') }}</p>
+  {% for d in doctors %}
+  <a href="tel:{{ d.phone }}" style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid rgba(255,255,255,.25); color:#fff; text-decoration:none;">
+    <span><b>{{ d.name }}</b>{% if d.specialty %} — {{ d.specialty }}{% endif %}</span>
+    <span>📞 {{ d.phone or '-' }}</span>
+  </a>
+  {% else %}
+  <p style="color:rgba(255,255,255,.85); font-size:12.5px;">{{ _('ما فيه أطباء مسجّلين بعد — أضفهم من دليل الأطباء.') }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+
 {% if my_tasks %}
 <div class="card">
   <h3 style="font-size:15px;">{{ _('مهامك المفتوحة بهذا التصنيف') }}</h3>

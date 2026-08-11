@@ -610,6 +610,10 @@ def doctors_new():
             name=request.form["name"],
             phone=request.form.get("phone"),
             specialty=request.form.get("specialty"),
+            is_external=request.form.get("is_external") == "1",
+            clinic_name=request.form.get("clinic_name"),
+            area=request.form.get("area"),
+            notes=request.form.get("notes"),
         )
         db.session.add(doctor)
         db.session.commit()
@@ -734,6 +738,19 @@ def diseases_new():
         prefill_pharmacy_id=request.args.get("pharmacy_id", type=int),
         prefill_quantity_used=request.args.get("quantity_used", type=float),
     )
+
+
+@health_bp.route("/body-condition-guide")
+@login_required
+@require_permission("health.view")
+def body_condition_guide():
+    """دليل تقييم حالة الجسم (BCS، بند إضافي 173) — مقياس 1-5 القياسي
+    عالمياً لتقييم الأغنام/الماعز باللمس اليدوي فوق العمود الفقري
+    والأضلاع (نفس مبدأ INJECTION_GUIDE: مرجع عام موثّق، مو قياساً
+    آلياً). **رسوم توضيحية مبسّطة (SVG)، مو صوراً فوتوغرافية حقيقية**
+    — التطبيق ما يقدر يولّد صوراً بيطرية موثوقة، فالبديل الأمين رسم
+    تخطيطي يوضح الفكرة بدل ادّعاء واقعية غير موجودة."""
+    return render_template("health/body_condition_guide.html", scale=health_service.BODY_CONDITION_SCALE)
 
 
 @health_bp.route("/injection-guide")

@@ -24,9 +24,18 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <input type="hidden" name="next" value="{{ url_for('onboarding.checklist') }}">
     <button type="submit" class="btn light" style="padding:2px 8px; font-size:14px; flex:0 0 auto;">{{ '✅' if row.done else '⬜' }}</button>
-    <div>
-      <div style="{{ 'text-decoration:line-through; color:var(--muted);' if row.done }}">{{ row.item.title }}</div>
+    <div style="flex:1;">
+      <div style="{{ 'text-decoration:line-through; color:var(--muted);' if row.done }}">
+        {{ row.item.title }}
+        {% if row.neglected %}<span class="badge off" style="font-size:10px;" title="{{ _('تجاهلته %(n)s فترة متتالية', n=row.miss_streak) }}">⚠️ {{ _('متكرر التجاهل') }}</span>{% endif %}
+      </div>
       {% if row.item.description %}<small style="color:var(--muted); font-size:12px;">{{ row.item.description }}</small>{% endif %}
+      {% if row.item.rationale %}
+      <details style="margin-top:4px;">
+        <summary style="cursor:pointer; font-size:11.5px; color:var(--primary);">{{ _('ليش؟') }}</summary>
+        <p style="color:var(--muted); font-size:12px; margin:4px 0 0;">{{ row.item.rationale }}</p>
+      </details>
+      {% endif %}
     </div>
   </form>
   {% endfor %}

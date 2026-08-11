@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <a class="btn light" href="{{ url_for('core.breeds_list') }}" style="font-size:12px; padding:6px 12px;">← {{ _('دليل السلالات') }}</a>
+  <h2 style="margin-top:12px;">{{ breed.name }}</h2>
+  <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('ملاحظات رعاية خاصة بهذي السلالة (مناخك، تحمّلها للحر، احتياجها الغذائي...)') }}</label>
+    <textarea name="care_notes" rows="6" placeholder="{{ _('مثال: هذي السلالة تتحمل الحر أفضل من غيرها بمنطقتنا، لكن تحتاج علف بروتين أعلى بالصيف.') }}">{{ breed.care_notes or '' }}</textarea>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
+  </form>
+</div>
+{% endblock %}

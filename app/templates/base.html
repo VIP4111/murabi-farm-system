@@ -488,6 +488,8 @@
         <a class="drawer-link" href="{{ url_for('health.diagnose_start') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('المساعد التشخيصي') }}</b></span></a>
         {% endif %}
         <a class="drawer-link" href="{{ url_for('health.injection_guide') }}"><span class="drawer-icon">📋</span><span class="drawer-text"><b>{{ _('دليل الحقن الميداني') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.body_condition_guide') }}"><span class="drawer-icon">📏</span><span class="drawer-text"><b>{{ _('دليل تقييم حالة الجسم') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.doctors_list') }}"><span class="drawer-icon">📞</span><span class="drawer-text"><b>{{ _('دليل الأطباء') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('health.protocols_list') }}"><span class="drawer-icon">📑</span><span class="drawer-text"><b>{{ _('بروتوكولات العلاج') }}</b></span></a>
       </div>
       {% endif %}

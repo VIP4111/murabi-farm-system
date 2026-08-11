@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 02:26+0300\n"
+"POT-Creation-Date: 2026-08-11 03:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:612
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:614
 #: app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -562,7 +562,7 @@ msgstr "A new species doesn't automatically enter the production cycle engine (m
 msgid "إضافة سلالة جديدة"
 msgstr "Add new breed"
 
-#: app/core/routes.py:716 app/templates/animal_form.html:24
+#: app/core/routes.py:740 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr "Add new color"
 
@@ -655,13 +655,13 @@ msgstr "Weight is improving — worth waiting a bit before selling"
 msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع"
 msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%% — good time to sell"
 
-#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:139
-#: app/templates/animal_detail.html:155
+#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:145
+#: app/templates/animal_detail.html:161
 msgid "ترفض إرضاع مولودها"
 msgstr "Refuses to nurse her offspring"
 
-#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:140
-#: app/templates/animal_detail.html:156
+#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:146
+#: app/templates/animal_detail.html:162
 msgid "الضرع/الدرة تالفة"
 msgstr "Udder damaged"
 
@@ -891,6 +891,46 @@ msgstr ""
 "• Note the time the episode started and how long it lasted if you can — very important information for the vet.\n"
 "• Call the vet immediately by phone too, alongside filing this report — this situation doesn't wait."
 
+#: app/health/health_service.py:189
+msgid "هزيل جداً"
+msgstr "Very thin"
+
+#: app/health/health_service.py:190
+msgid "العمود الفقري بارز وحاد جداً تحت اليد، الأضلاع واضحة بوضوح بدون أي غطاء لحمي، ما فيه أي دهن محسوس فوق أو حول الفقرات. حالة طارئة تغذوية — راجع الطبيب."
+msgstr "The spine is very sharp and prominent under the hand, ribs are clearly visible with no flesh cover, no palpable fat over or around the vertebrae. A nutritional emergency — consult the vet."
+
+#: app/health/health_service.py:193
+msgid "هزيل"
+msgstr "Thin"
+
+#: app/health/health_service.py:194
+msgid "الفقرات القطنية محسوسة بوضوح لكن حوافها أقل حدة من الدرجة 1، الأضلاع تُحس بسهولة عند الضغط الخفيف. يحتاج تحسين خطة تغذية."
+msgstr "Lumbar vertebrae are clearly palpable but less sharp-edged than score 1, ribs are easily felt with light pressure. Needs an improved feeding plan."
+
+#: app/health/health_service.py:197
+msgid "معتدل (مثالي)"
+msgstr "Moderate (ideal)"
+
+#: app/health/health_service.py:198
+msgid "الفقرات محسوسة بضغط متوسط باليد لكن ناعمة الحواف، الأضلاع تُحس بضغط لكن ما تُرى بالعين. الوضع المستهدف لمعظم مراحل الإنتاج."
+msgstr "Vertebrae are palpable with moderate hand pressure but smooth-edged, ribs can be felt with pressure but not seen. The target condition for most production stages."
+
+#: app/health/health_service.py:201
+msgid "ممتلئ"
+msgstr "Fleshy"
+
+#: app/health/health_service.py:202
+msgid "صعب تحسّس الفقرات إلا بضغط واضح، طبقة دهن ملحوظة فوق الأضلاع والقطنية. مقبول للحوامل بالثلث الأخير، مراقبة لباقي الحالات."
+msgstr "Vertebrae are hard to feel except with firm pressure, a noticeable fat layer over the ribs and loin. Acceptable for late-term pregnant females, monitor otherwise."
+
+#: app/health/health_service.py:205
+msgid "سمين جداً"
+msgstr "Very fat"
+
+#: app/health/health_service.py:206
+msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
+msgstr "Neither vertebrae nor ribs can be felt at all under a thick fat layer, the back looks flat or rounded. A risk for birthing and movement — needs a feeding adjustment."
+
 #: app/models/warehouse.py:24
 msgid "علف"
 msgstr "Feed"
@@ -992,7 +1032,7 @@ msgid "الرقم"
 msgstr "Number"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
-#: app/templates/animal_detail.html:78 app/templates/animal_detail.html:293
+#: app/templates/animal_detail.html:78 app/templates/animal_detail.html:299
 #: app/templates/animal_form.html:62
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/smart_sale_report.html:17
@@ -1001,13 +1041,13 @@ msgstr "Gender"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:253
 #: app/reports/report_service.py:296 app/reports/report_service.py:378
-#: app/templates/animal_detail.html:195 app/templates/animal_detail.html:209
-#: app/templates/animal_detail.html:226 app/templates/animal_detail.html:240
-#: app/templates/animal_detail.html:255 app/templates/animal_detail.html:266
-#: app/templates/animal_detail.html:293 app/templates/animal_detail.html:313
-#: app/templates/animal_detail.html:324 app/templates/animal_detail.html:339
-#: app/templates/animal_detail.html:355 app/templates/animal_detail.html:370
-#: app/templates/animal_detail.html:380 app/templates/animal_detail.html:410
+#: app/templates/animal_detail.html:201 app/templates/animal_detail.html:215
+#: app/templates/animal_detail.html:232 app/templates/animal_detail.html:246
+#: app/templates/animal_detail.html:261 app/templates/animal_detail.html:272
+#: app/templates/animal_detail.html:299 app/templates/animal_detail.html:319
+#: app/templates/animal_detail.html:330 app/templates/animal_detail.html:345
+#: app/templates/animal_detail.html:361 app/templates/animal_detail.html:376
+#: app/templates/animal_detail.html:386 app/templates/animal_detail.html:416
 #: app/templates/animal_workflow.html:125
 #: app/templates/bulk_action_form.html:40
 #: app/templates/bulk_action_form.html:218
@@ -1132,7 +1172,7 @@ msgid "الحيوان"
 msgstr "Animal"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/animal_detail.html:410 app/templates/finance/form.html:33
+#: app/templates/animal_detail.html:416 app/templates/finance/form.html:33
 #: app/templates/finance/list.html:32
 msgid "المبلغ"
 msgstr "Amount"
@@ -1198,12 +1238,12 @@ msgstr "Number of items needing purchase"
 msgid "فترة قياس الاستهلاك (أيام)"
 msgstr "Consumption measurement period (days)"
 
-#: app/reports/report_service.py:477 app/templates/animal_detail.html:410
+#: app/reports/report_service.py:477 app/templates/animal_detail.html:416
 #: app/templates/barn_form.html:9 app/templates/barns_list.html:10
 #: app/templates/equipment/item_movement.html:33
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:32 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1416,7 +1456,7 @@ msgstr "Animal details"
 msgid "مولود بالمزرعة"
 msgstr "Born on farm"
 
-#: app/templates/animal_detail.html:4 app/templates/animal_detail.html:411
+#: app/templates/animal_detail.html:4 app/templates/animal_detail.html:417
 #: app/templates/animal_form.html:50 app/templates/animal_form.html:55
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
@@ -1519,13 +1559,13 @@ msgstr "Timeline"
 msgid "سجل بيطري"
 msgstr "Vet record"
 
-#: app/templates/animal_detail.html:63 app/templates/animal_detail.html:206
+#: app/templates/animal_detail.html:63 app/templates/animal_detail.html:212
 #: app/templates/base.html:484 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:100
 msgid "الأمراض"
 msgstr "Diseases"
 
-#: app/templates/animal_detail.html:64 app/templates/animal_detail.html:223
+#: app/templates/animal_detail.html:64 app/templates/animal_detail.html:229
 msgid "التحصينات"
 msgstr "Vaccinations"
 
@@ -1533,7 +1573,7 @@ msgstr "Vaccinations"
 msgid "التكاثر"
 msgstr "Reproduction"
 
-#: app/templates/animal_detail.html:66 app/templates/animal_detail.html:290
+#: app/templates/animal_detail.html:66 app/templates/animal_detail.html:296
 msgid "الولادات"
 msgstr "Births"
 
@@ -1545,9 +1585,9 @@ msgstr "Weights"
 msgid "الحليب"
 msgstr "Milk"
 
-#: app/templates/animal_detail.html:69 app/templates/animal_detail.html:315
-#: app/templates/animal_detail.html:324 app/templates/animal_detail.html:346
-#: app/templates/animal_detail.html:355 app/templates/animal_workflow.html:71
+#: app/templates/animal_detail.html:69 app/templates/animal_detail.html:321
+#: app/templates/animal_detail.html:330 app/templates/animal_detail.html:352
+#: app/templates/animal_detail.html:361 app/templates/animal_workflow.html:71
 #: app/templates/barn_form.html:27 app/templates/feed/barn_plan_form.html:18
 #: app/templates/feed/item_form.html:33
 #: app/templates/feed/ration_detail.html:13
@@ -1571,8 +1611,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:70 app/templates/base.html:528
-#: app/templates/base.html:529 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:70 app/templates/base.html:530
+#: app/templates/base.html:531 app/templates/finance/list.html:24
 #: app/templates/home.html:126
 msgid "المالية"
 msgstr "Finance"
@@ -1615,7 +1655,7 @@ msgstr "Farm entry date"
 #: app/templates/repro/matings_list.html:10
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
-#: app/templates/team/worker_report_form.html:66
+#: app/templates/team/worker_report_form.html:81
 msgid "الحظيرة"
 msgstr "Barn"
 
@@ -1623,38 +1663,51 @@ msgstr "Barn"
 msgid "السعر"
 msgstr "Price"
 
-#: app/templates/animal_detail.html:95
+#: app/templates/animal_detail.html:92
+#, python-format
+msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
+msgstr "Care note for the %(breed)s breed:"
+
+#: app/templates/animal_detail.html:93 app/templates/barns_list.html:19
+#: app/templates/equipment/items_list.html:22
+#: app/templates/feed/items_list.html:26
+#: app/templates/health/pharmacy_list.html:27
+#: app/templates/team/members_list.html:19
+msgid "تعديل"
+msgstr "Edit"
+
+#: app/templates/animal_detail.html:101
 msgid "قائمة تحقق الولادة"
 msgstr "Birth checklist"
 
-#: app/templates/animal_detail.html:100 app/templates/animal_detail.html:120
+#: app/templates/animal_detail.html:106 app/templates/animal_detail.html:126
 msgid "تنفّس طبيعي"
 msgstr "Normal breathing"
 
-#: app/templates/animal_detail.html:101 app/templates/animal_detail.html:121
+#: app/templates/animal_detail.html:107 app/templates/animal_detail.html:127
 msgid "وقف على قوائمه"
 msgstr "Stood on its legs"
 
-#: app/templates/animal_detail.html:102 app/templates/animal_detail.html:122
+#: app/templates/animal_detail.html:108 app/templates/animal_detail.html:128
 msgid "رضع اللبأ"
 msgstr "Received colostrum"
 
-#: app/templates/animal_detail.html:103 app/templates/animal_detail.html:123
+#: app/templates/animal_detail.html:109 app/templates/animal_detail.html:129
 msgid "تعقيم السرة"
 msgstr "Cord treated"
 
-#: app/templates/animal_detail.html:108 app/templates/animal_detail.html:120
-#: app/templates/animal_detail.html:121 app/templates/animal_detail.html:122
-#: app/templates/animal_detail.html:123 app/templates/animal_detail.html:145
-#: app/templates/animal_detail.html:155 app/templates/animal_detail.html:156
+#: app/templates/animal_detail.html:114 app/templates/animal_detail.html:126
+#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:128
+#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:151
+#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:162
 #: app/templates/ostrich/egg_form.html:17
 msgid "غير محدد"
 msgstr "Not specified"
 
-#: app/templates/animal_detail.html:109 app/templates/animal_detail.html:120
-#: app/templates/animal_detail.html:121 app/templates/animal_detail.html:122
-#: app/templates/animal_detail.html:123 app/templates/animal_detail.html:146
-#: app/templates/animal_detail.html:155 app/templates/animal_detail.html:156
+#: app/templates/animal_detail.html:115 app/templates/animal_detail.html:126
+#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:128
+#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:152
+#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:162
 #: app/templates/animal_form.html:73
 #: app/templates/health/disease_type_detail.html:63
 #: app/templates/health/disease_type_detail.html:64
@@ -1666,10 +1719,10 @@ msgstr "Not specified"
 msgid "نعم"
 msgstr "Yes"
 
-#: app/templates/animal_detail.html:110 app/templates/animal_detail.html:120
-#: app/templates/animal_detail.html:121 app/templates/animal_detail.html:122
-#: app/templates/animal_detail.html:123 app/templates/animal_detail.html:147
-#: app/templates/animal_detail.html:155 app/templates/animal_detail.html:156
+#: app/templates/animal_detail.html:116 app/templates/animal_detail.html:126
+#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:128
+#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:153
+#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:162
 #: app/templates/animal_form.html:72
 #: app/templates/health/disease_link_wizard.html:83
 #: app/templates/health/disease_link_wizard.html:87
@@ -1678,42 +1731,43 @@ msgstr "Yes"
 msgid "لا"
 msgstr "No"
 
-#: app/templates/animal_detail.html:113
+#: app/templates/animal_detail.html:119
 msgid "عيوب خلقية (اتركه فاضي لو ما فيه)"
 msgstr "Birth defects (leave empty if none)"
 
-#: app/templates/animal_detail.html:115
+#: app/templates/animal_detail.html:121
 msgid "حفظ قائمة التحقق"
 msgstr "Save checklist"
 
-#: app/templates/animal_detail.html:124
+#: app/templates/animal_detail.html:130
 msgid "عيوب خلقية"
 msgstr "Birth defects"
 
-#: app/templates/animal_detail.html:124
+#: app/templates/animal_detail.html:130
 msgid "لا يوجد"
 msgstr "None"
 
-#: app/templates/animal_detail.html:133
+#: app/templates/animal_detail.html:139
 msgid "علامات بيع (محرك البيع الذكي — بند 19)"
 msgstr "Sale flags (smart sale engine — item 19)"
 
-#: app/templates/animal_detail.html:134
+#: app/templates/animal_detail.html:140
 msgid "أي علامة \"نعم\" هنا تعني توصية بيع فورية بتقرير"
 msgstr "Any \"yes\" flag here means an immediate sale recommendation in the"
 
-#: app/templates/animal_detail.html:134
+#: app/templates/animal_detail.html:140
 msgid "البيع الذكي"
 msgstr "smart sale"
 
-#: app/templates/animal_detail.html:134
+#: app/templates/animal_detail.html:140
 msgid "بغض النظر عن باقي العوامل."
 msgstr "regardless of the other factors."
 
-#: app/templates/animal_detail.html:150 app/templates/animal_detail.html:316
-#: app/templates/animal_detail.html:347 app/templates/animal_detail.html:372
+#: app/templates/animal_detail.html:156 app/templates/animal_detail.html:322
+#: app/templates/animal_detail.html:353 app/templates/animal_detail.html:378
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:57
-#: app/templates/barn_form.html:41 app/templates/climate/settings.html:33
+#: app/templates/barn_form.html:41 app/templates/breed_edit_form.html:10
+#: app/templates/climate/settings.html:33
 #: app/templates/equipment/item_form.html:14
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:34
@@ -1722,7 +1776,7 @@ msgstr "regardless of the other factors."
 #: app/templates/health/disease_form.html:45
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
-#: app/templates/health/doctor_form.html:10
+#: app/templates/health/doctor_form.html:17
 #: app/templates/health/pharmacy_form.html:111
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
@@ -1741,29 +1795,29 @@ msgstr "regardless of the other factors."
 msgid "حفظ"
 msgstr "Save"
 
-#: app/templates/animal_detail.html:166
+#: app/templates/animal_detail.html:172
 msgid "كل السجلات مرتبة بالتاريخ"
 msgstr "All records ordered by date"
 
-#: app/templates/animal_detail.html:178
+#: app/templates/animal_detail.html:184
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "No records linked to this animal yet."
 
-#: app/templates/animal_detail.html:187 app/templates/base.html:491
+#: app/templates/animal_detail.html:193 app/templates/base.html:493
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr "Treatment protocols"
 
-#: app/templates/animal_detail.html:188
+#: app/templates/animal_detail.html:194
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr "Apply a ready-made treatment protocol to this animal"
 
-#: app/templates/animal_detail.html:192 app/templates/base.html:483
+#: app/templates/animal_detail.html:198 app/templates/base.html:483
 #: app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr "Vet Visits"
 
-#: app/templates/animal_detail.html:195
+#: app/templates/animal_detail.html:201
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:17
 #: app/templates/health/vet_visits_list.html:10
@@ -1771,14 +1825,14 @@ msgstr "Vet Visits"
 msgid "الطبيب"
 msgstr "Doctor"
 
-#: app/templates/animal_detail.html:195
+#: app/templates/animal_detail.html:201
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:21
 #: app/templates/health/vet_visits_list.html:10
 msgid "التشخيص"
 msgstr "Diagnosis"
 
-#: app/templates/animal_detail.html:195 app/templates/feed/optimizer.html:49
+#: app/templates/animal_detail.html:201 app/templates/feed/optimizer.html:49
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/vet_visit_form.html:29
@@ -1786,11 +1840,11 @@ msgstr "Diagnosis"
 msgid "التكلفة"
 msgstr "Cost"
 
-#: app/templates/animal_detail.html:198
+#: app/templates/animal_detail.html:204
 msgid "لا يوجد زيارات مسجّلة."
 msgstr "No visits recorded."
 
-#: app/templates/animal_detail.html:209
+#: app/templates/animal_detail.html:215
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/dashboard.html:43
@@ -1798,19 +1852,19 @@ msgstr "No visits recorded."
 msgid "المرض"
 msgstr "Disease"
 
-#: app/templates/animal_detail.html:209 app/templates/bulk_action_form.html:326
+#: app/templates/animal_detail.html:215 app/templates/bulk_action_form.html:326
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:28
 #: app/templates/health/diseases_list.html:14
 msgid "الشدة"
 msgstr "Severity"
 
-#: app/templates/animal_detail.html:209 app/templates/animal_detail.html:255
-#: app/templates/animal_detail.html:278 app/templates/animal_workflow.html:125
+#: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
+#: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
 #: app/templates/finance/list.html:32
 #: app/templates/health/diseases_list.html:14
-#: app/templates/health/doctors_list.html:10
+#: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:50
@@ -1830,11 +1884,11 @@ msgstr "Severity"
 msgid "الحالة"
 msgstr "Status"
 
-#: app/templates/animal_detail.html:215
+#: app/templates/animal_detail.html:221
 msgid "لا يوجد أمراض مسجّلة."
 msgstr "No diseases recorded."
 
-#: app/templates/animal_detail.html:226 app/templates/health/dashboard.html:64
+#: app/templates/animal_detail.html:232 app/templates/health/dashboard.html:64
 #: app/templates/health/vaccination_schedule_form.html:16
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:50
@@ -1842,31 +1896,31 @@ msgstr "No diseases recorded."
 msgid "اللقاح"
 msgstr "Vaccine"
 
-#: app/templates/animal_detail.html:226
+#: app/templates/animal_detail.html:232
 msgid "الجرعة القادمة"
 msgstr "Next dose"
 
-#: app/templates/animal_detail.html:229
+#: app/templates/animal_detail.html:235
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "No vaccinations recorded."
 
-#: app/templates/animal_detail.html:237 app/templates/base.html:469
+#: app/templates/animal_detail.html:243 app/templates/base.html:469
 #: app/templates/home.html:110 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "Mating"
 
-#: app/templates/animal_detail.html:240
+#: app/templates/animal_detail.html:246
 #: app/templates/team/member_edit_form.html:9
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
 msgid "الدور"
 msgstr "Role"
 
-#: app/templates/animal_detail.html:240
+#: app/templates/animal_detail.html:246
 msgid "الطرف الآخر"
 msgstr "Other party"
 
-#: app/templates/animal_detail.html:244 app/templates/animal_form.html:65
+#: app/templates/animal_detail.html:250 app/templates/animal_form.html:65
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:66
 #: app/templates/batches/batch_form.html:26
@@ -1874,43 +1928,43 @@ msgstr "Other party"
 msgid "أنثى"
 msgstr "Female"
 
-#: app/templates/animal_detail.html:244
+#: app/templates/animal_detail.html:250
 msgid "فحل"
 msgstr "Male"
 
-#: app/templates/animal_detail.html:247
+#: app/templates/animal_detail.html:253
 msgid "لا يوجد تقريع مسجّل."
 msgstr "No mating recorded."
 
-#: app/templates/animal_detail.html:252 app/templates/base.html:470
+#: app/templates/animal_detail.html:258 app/templates/base.html:470
 #: app/templates/home.html:111 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "Pregnancy diagnosis"
 
-#: app/templates/animal_detail.html:255 app/templates/animal_detail.html:266
+#: app/templates/animal_detail.html:261 app/templates/animal_detail.html:272
 #: app/templates/bulk_action_form.html:381
 msgid "عدد الأجنة"
 msgstr "Number of embryos"
 
-#: app/templates/animal_detail.html:257
+#: app/templates/animal_detail.html:263
 msgid "مؤكد"
 msgstr "Confirmed"
 
-#: app/templates/animal_detail.html:257
+#: app/templates/animal_detail.html:263
 msgid "قيد الفحص"
 msgstr "Under examination"
 
-#: app/templates/animal_detail.html:258
+#: app/templates/animal_detail.html:264
 msgid "لا يوجد تشخيص حمل مسجّل."
 msgstr "No pregnancy diagnosis recorded."
 
-#: app/templates/animal_detail.html:263
+#: app/templates/animal_detail.html:269
 #: app/templates/repro/program_detail.html:110
 #: app/templates/repro/sonar_list.html:5
 msgid "فحوصات السونار"
 msgstr "Sonar exams"
 
-#: app/templates/animal_detail.html:266 app/templates/bulk_action_form.html:381
+#: app/templates/animal_detail.html:272 app/templates/bulk_action_form.html:381
 #: app/templates/feed/calculator.html:35
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/program_detail.html:115
@@ -1919,44 +1973,44 @@ msgstr "Sonar exams"
 msgid "النتيجة"
 msgstr "Result"
 
-#: app/templates/animal_detail.html:269
+#: app/templates/animal_detail.html:275
 msgid "لا يوجد فحوصات سونار مسجّلة."
 msgstr "No sonar exams recorded."
 
-#: app/templates/animal_detail.html:275
+#: app/templates/animal_detail.html:281
 #: app/templates/repro/programs_list.html:5
 msgid "برامج الشياع التوأمي"
 msgstr "Twin estrus programs"
 
-#: app/templates/animal_detail.html:278 app/templates/repro/sonar_list.html:10
+#: app/templates/animal_detail.html:284 app/templates/repro/sonar_list.html:10
 msgid "البرنامج"
 msgstr "Program"
 
-#: app/templates/animal_detail.html:278
+#: app/templates/animal_detail.html:284
 msgid "البدء"
 msgstr "Start"
 
-#: app/templates/animal_detail.html:280
+#: app/templates/animal_detail.html:286
 msgid "برنامج #"
 msgstr "Program #"
 
-#: app/templates/animal_detail.html:293
+#: app/templates/animal_detail.html:299
 msgid "رقم المولود"
 msgstr "Offspring number"
 
-#: app/templates/animal_detail.html:293
+#: app/templates/animal_detail.html:299
 msgid "الوزن عند الولادة"
 msgstr "Weight at birth"
 
-#: app/templates/animal_detail.html:301
+#: app/templates/animal_detail.html:307
 msgid "لا يوجد ولادات مسجّلة لهذا الحيوان."
 msgstr "No births recorded for this animal."
 
-#: app/templates/animal_detail.html:310
+#: app/templates/animal_detail.html:316
 msgid "تسجيل وزن جديد"
 msgstr "Record new weight"
 
-#: app/templates/animal_detail.html:314 app/templates/animal_detail.html:324
+#: app/templates/animal_detail.html:320 app/templates/animal_detail.html:330
 #: app/templates/animal_form.html:126
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/batches/batch_form.html:33
@@ -1964,100 +2018,100 @@ msgstr "Record new weight"
 msgid "الوزن (كجم)"
 msgstr "Weight (kg)"
 
-#: app/templates/animal_detail.html:321
+#: app/templates/animal_detail.html:327
 msgid "سجل الأوزان"
 msgstr "Weight log"
 
-#: app/templates/animal_detail.html:327
+#: app/templates/animal_detail.html:333
 msgid "لا يوجد أوزان مسجّلة بعد."
 msgstr "No weights recorded yet."
 
-#: app/templates/animal_detail.html:336
+#: app/templates/animal_detail.html:342
 msgid "تسجيل حلبة جديدة"
 msgstr "Record new milking"
 
-#: app/templates/animal_detail.html:340 app/templates/animal_detail.html:355
+#: app/templates/animal_detail.html:346 app/templates/animal_detail.html:361
 msgid "الجلسة"
 msgstr "Session"
 
-#: app/templates/animal_detail.html:342
+#: app/templates/animal_detail.html:348
 msgid "صباح"
 msgstr "Morning"
 
-#: app/templates/animal_detail.html:343
+#: app/templates/animal_detail.html:349
 msgid "مساء"
 msgstr "Evening"
 
-#: app/templates/animal_detail.html:345 app/templates/animal_detail.html:355
+#: app/templates/animal_detail.html:351 app/templates/animal_detail.html:361
 msgid "الكمية (لتر)"
 msgstr "Quantity (liters)"
 
-#: app/templates/animal_detail.html:352
+#: app/templates/animal_detail.html:358
 msgid "سجل الحليب"
 msgstr "Milk log"
 
-#: app/templates/animal_detail.html:358
+#: app/templates/animal_detail.html:364
 msgid "لا يوجد حليب مسجّل بعد."
 msgstr "No milk recorded yet."
 
-#: app/templates/animal_detail.html:367
+#: app/templates/animal_detail.html:373
 msgid "إضافة ملاحظة"
 msgstr "Add note"
 
-#: app/templates/animal_detail.html:371 app/templates/animal_detail.html:380
+#: app/templates/animal_detail.html:377 app/templates/animal_detail.html:386
 msgid "الملاحظة"
 msgstr "Note"
 
-#: app/templates/animal_detail.html:377
+#: app/templates/animal_detail.html:383
 msgid "الملاحظات المسجّلة"
 msgstr "Recorded notes"
 
-#: app/templates/animal_detail.html:380
+#: app/templates/animal_detail.html:386
 msgid "بواسطة"
 msgstr "By"
 
-#: app/templates/animal_detail.html:383
+#: app/templates/animal_detail.html:389
 msgid "لا يوجد ملاحظات بعد."
 msgstr "No notes yet."
 
-#: app/templates/animal_detail.html:391
+#: app/templates/animal_detail.html:397
 msgid "تقرير تكلفة الرأس الفردي"
 msgstr "Individual animal cost report"
 
-#: app/templates/animal_detail.html:393
+#: app/templates/animal_detail.html:399
 msgid "تكلفة الشراء"
 msgstr "Purchase cost"
 
-#: app/templates/animal_detail.html:394
+#: app/templates/animal_detail.html:400
 msgid "تكاليف طبية مباشرة (زيارات + أمراض + تحصينات)"
 msgstr "Direct medical costs (visits + diseases + vaccinations)"
 
-#: app/templates/animal_detail.html:395
+#: app/templates/animal_detail.html:401
 #, python-format
 msgid "تقدير تكلفة العلف (%(n)s يوم)"
 msgstr "Feed cost estimate (%(n)s days)"
 
-#: app/templates/animal_detail.html:396
+#: app/templates/animal_detail.html:402
 msgid "نصيبه من المصاريف غير المباشرة (إيجار/صيانة/رواتب — موزَّعة على القطيع)"
 msgstr "Its share of indirect expenses (rent/maintenance/salaries — distributed across the herd)"
 
-#: app/templates/animal_detail.html:397
+#: app/templates/animal_detail.html:403
 msgid "الإجمالي التقديري منذ الدخول"
 msgstr "Estimated total since entry"
 
-#: app/templates/animal_detail.html:400
+#: app/templates/animal_detail.html:406
 msgid "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة، أو ما فيه خطة تغذية فعّالة لحظيرته حالياً."
 msgstr "⚠️ Feed estimate = 0 — the animal has no barn, or its barn has no active feeding plan currently."
 
-#: app/templates/animal_detail.html:403
+#: app/templates/animal_detail.html:409
 msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
 msgstr "ℹ️ Honest caveats about this report: (1) The feed estimate is approximate — it assumes the animal spent its entire duration in the same barn under its current plan (the system doesn't track barn-transfer history). (2) The indirect-expense share (rent/maintenance/salaries) is calculated from the current active head count, not the actual count at each past period (the same limitation as the \"monthly animal cost\" report in item 18) — and also depends on the expense being tagged \"indirect\" at entry time, otherwise it isn't counted here. (3) Medical costs are calculated automatically from (quantity × pharmacy unit price) when both are recorded, otherwise they fall back to the manual value the doctor entered at the time."
 
-#: app/templates/animal_detail.html:407
+#: app/templates/animal_detail.html:413
 msgid "الحركات المالية المرتبطة"
 msgstr "Linked financial transactions"
 
-#: app/templates/animal_detail.html:410 app/templates/finance/form.html:32
+#: app/templates/animal_detail.html:416 app/templates/finance/form.html:32
 #: app/templates/team/report_detail.html:25
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -2067,17 +2121,17 @@ msgstr "Linked financial transactions"
 msgid "الوصف"
 msgstr "Description"
 
-#: app/templates/animal_detail.html:411 app/templates/finance/form.html:10
+#: app/templates/animal_detail.html:417 app/templates/finance/form.html:10
 #: app/templates/finance/list.html:36
 msgid "بيع"
 msgstr "Sale"
 
-#: app/templates/animal_detail.html:411 app/templates/finance/form.html:12
+#: app/templates/animal_detail.html:417 app/templates/finance/form.html:12
 #: app/templates/finance/list.html:36
 msgid "مصروف"
 msgstr "Expense"
 
-#: app/templates/animal_detail.html:414
+#: app/templates/animal_detail.html:420
 msgid "لا يوجد حركات مالية مرتبطة بهذا الحيوان."
 msgstr "No financial transactions linked to this animal."
 
@@ -2264,7 +2318,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/feed/rations_list.html:10
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
-#: app/templates/health/doctors_list.html:10
+#: app/templates/health/doctors_list.html:11
 #: app/templates/health/drug_catalog_form.html:7
 #: app/templates/health/pharmacy_form.html:21
 #: app/templates/health/pharmacy_list.html:13
@@ -2802,13 +2856,6 @@ msgstr "Responsible"
 msgid "عدد الحيوانات"
 msgstr "Number of animals"
 
-#: app/templates/barns_list.html:19 app/templates/equipment/items_list.html:22
-#: app/templates/feed/items_list.html:26
-#: app/templates/health/pharmacy_list.html:27
-#: app/templates/team/members_list.html:19
-msgid "تعديل"
-msgstr "Edit"
-
 #: app/templates/barns_list.html:22
 msgid "لا يوجد حظائر مسجّلة بعد."
 msgstr "No barns recorded yet."
@@ -2874,7 +2921,7 @@ msgstr "Vaccinations"
 msgid "تقويم التحصينات"
 msgstr "Vaccination calendar"
 
-#: app/templates/base.html:488 app/templates/health/dashboard.html:87
+#: app/templates/base.html:488 app/templates/health/dashboard.html:89
 #: app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr "Diagnostic assistant"
@@ -2884,69 +2931,78 @@ msgstr "Diagnostic assistant"
 msgid "دليل الحقن الميداني"
 msgstr "Field injection guide"
 
-#: app/templates/base.html:497 app/templates/home.html:123
+#: app/templates/base.html:491 app/templates/health/body_condition_guide.html:2
+msgid "دليل تقييم حالة الجسم"
+msgstr "Body condition guide"
+
+#: app/templates/base.html:492 app/templates/health/dashboard.html:86
+#: app/templates/health/doctors_list.html:5
+msgid "دليل الأطباء"
+msgstr "Vet directory"
+
+#: app/templates/base.html:499 app/templates/home.html:123
 msgid "العلف"
 msgstr "Feed"
 
-#: app/templates/base.html:498
+#: app/templates/base.html:500
 msgid "حاسبة العلف"
 msgstr "Feed Calculator"
 
-#: app/templates/base.html:499 app/templates/feed/fcr_report.html:5
+#: app/templates/base.html:501 app/templates/feed/fcr_report.html:5
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "Feed conversion ratio (FCR)"
 
-#: app/templates/base.html:500 app/templates/feed/optimizer.html:5
+#: app/templates/base.html:502 app/templates/feed/optimizer.html:5
 msgid "موازِن العليقة التلقائي"
 msgstr "Automatic ration balancer"
 
-#: app/templates/base.html:501 app/templates/feed/items_list.html:27
+#: app/templates/base.html:503 app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr "Warehouses"
 
-#: app/templates/base.html:507 app/templates/family_view.html:129
+#: app/templates/base.html:509 app/templates/family_view.html:129
 #: app/templates/family_view.html:162
 msgid "المعدات"
 msgstr "Equipment"
 
-#: app/templates/base.html:508 app/templates/equipment/items_list.html:5
+#: app/templates/base.html:510 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "Equipment warehouse"
 
-#: app/templates/base.html:514
+#: app/templates/base.html:516
 msgid "المناخ"
 msgstr "Climate"
 
-#: app/templates/base.html:515 app/templates/climate/dashboard.html:5
+#: app/templates/base.html:517 app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "Climate & heat stress radar"
 
-#: app/templates/base.html:520
+#: app/templates/base.html:522
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:521 app/templates/family_view.html:67
+#: app/templates/base.html:523 app/templates/family_view.html:67
 #: app/templates/family_view.html:74 app/templates/home.html:84
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:522 app/templates/home.html:83
+#: app/templates/base.html:524 app/templates/home.html:83
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:523 app/templates/team/members_list.html:5
+#: app/templates/base.html:525 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:530 app/templates/home.html:128
+#: app/templates/base.html:532 app/templates/home.html:128
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:536 app/templates/home.html:131
+#: app/templates/base.html:538 app/templates/home.html:131
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -2954,39 +3010,75 @@ msgstr "Health finance"
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:537
+#: app/templates/base.html:539
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:549
+#: app/templates/base.html:551
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:551
+#: app/templates/base.html:553
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:551
+#: app/templates/base.html:553
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:563
+#: app/templates/base.html:565
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:566
+#: app/templates/base.html:568
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:572 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:574 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:585
+#: app/templates/base.html:587
 msgid "خروج"
 msgstr "Logout"
+
+#: app/templates/breed_edit_form.html:4
+msgid "دليل السلالات"
+msgstr "Breed guide"
+
+#: app/templates/breed_edit_form.html:8
+msgid "ملاحظات رعاية خاصة بهذي السلالة (مناخك، تحمّلها للحر، احتياجها الغذائي...)"
+msgstr "Care notes specific to this breed (your climate, its heat tolerance, its nutritional needs...)"
+
+#: app/templates/breed_edit_form.html:9
+msgid "مثال: هذي السلالة تتحمل الحر أفضل من غيرها بمنطقتنا، لكن تحتاج علف بروتين أعلى بالصيف."
+msgstr "Example: this breed tolerates heat better than others in our area, but needs higher-protein feed in summer."
+
+#: app/templates/breeds_list.html:5
+msgid "دليل السلالات وملاحظات الرعاية المحلية"
+msgstr "Breed guide and local care notes"
+
+#: app/templates/breeds_list.html:6
+msgid "سلالة جديدة"
+msgstr "New breed"
+
+#: app/templates/breeds_list.html:8
+msgid "النظام ما يقترح أي معلومة سلالة أو مناخ جاهزة هنا — هذي ملاحظاتك أنت أو طبيبك، مبنية على خبرة فعلية بمنطقتك ومناخك، تظهر تلقائياً بصفحة أي رأس من نفس السلالة."
+msgstr "The system doesn't suggest any ready-made breed or climate information here — these are your own or your vet's notes, based on real experience with your area and climate, and they appear automatically on any animal's page of the same breed."
+
+#: app/templates/breeds_list.html:13
+msgid "تعديل الملاحظات"
+msgstr "Edit notes"
+
+#: app/templates/breeds_list.html:15
+msgid "ما فيه ملاحظات مسجّلة بعد."
+msgstr "No notes recorded yet."
+
+#: app/templates/breeds_list.html:18
+msgid "ما فيه سلالات مسجّلة بعد."
+msgstr "No breeds recorded yet."
 
 #: app/templates/bulk_action_form.html:8
 #, python-format
@@ -3351,7 +3443,7 @@ msgid "باقي"
 msgstr "Remaining"
 
 #: app/templates/family_view.html:102 app/templates/team/task_detail.html:9
-#: app/templates/team/worker_report_form.html:18
+#: app/templates/team/worker_report_form.html:33
 msgid "الموعد:"
 msgstr "Due:"
 
@@ -3827,6 +3919,10 @@ msgstr "Pre-deployment readiness check"
 #: app/templates/settings.html:112
 msgid "شاشة متابعة مبسّطة"
 msgstr "Simplified follow-up screen"
+
+#: app/templates/settings.html:114
+msgid "دليل السلالات وملاحظات الرعاية"
+msgstr "Breed guide and care notes"
 
 #: app/templates/settings_backup.html:9
 msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
@@ -5147,6 +5243,15 @@ msgstr ") — check pharmacy shortages for alternatives"
 msgid "التكلفة المتوقعة:"
 msgstr "Expected cost:"
 
+#: app/templates/health/body_condition_guide.html:5
+#: app/templates/health/dashboard.html:87
+msgid "دليل تقييم حالة الجسم (BCS)"
+msgstr "Body Condition Score guide (BCS)"
+
+#: app/templates/health/body_condition_guide.html:6
+msgid "مقياس 1-5 القياسي بتقييم الأغنام/الماعز باللمس اليدوي فوق الفقرات القطنية والأضلاع — أدق من النظر بالعين وحده. الرسوم تخطيطية توضيحية بسيطة، مو صوراً فوتوغرافية حقيقية."
+msgstr "The standard 1-5 scale for assessing sheep/goats by hand-palpating the lumbar vertebrae and ribs — more accurate than sight alone. The diagrams are simple illustrative schematics, not real photographs."
+
 #: app/templates/health/dashboard.html:7
 msgid "سجل متابعة الحالات، التحصينات المستحقة قريباً، وموسوعة مرجعية سريعة — كل شي بصفحة وحدة بدل التنقّل بين شاشات متفرّقة."
 msgstr "Case follow-up log, soon-due vaccinations, and a quick reference encyclopedia — all on one page instead of navigating between scattered screens."
@@ -5672,21 +5777,57 @@ msgid "طبيب جديد"
 msgstr "New doctor"
 
 #: app/templates/health/doctor_form.html:8
-#: app/templates/health/doctors_list.html:10
+#: app/templates/health/doctors_list.html:11
 #: app/templates/team/members_list.html:10
 msgid "الجوال"
 msgstr "Phone"
 
 #: app/templates/health/doctor_form.html:9
-#: app/templates/health/doctors_list.html:10
+#: app/templates/health/doctors_list.html:11
 msgid "التخصص"
 msgstr "Specialty"
 
-#: app/templates/health/doctors_list.html:5
-msgid "الأطباء"
-msgstr "Doctors"
+#: app/templates/health/doctor_form.html:12
+msgid "طبيب/عيادة خارجية (مرجع طوارئ فقط، بدون حساب دخول)"
+msgstr "External vet/clinic (emergency reference only, no login account)"
 
-#: app/templates/health/doctors_list.html:14
+#: app/templates/health/doctor_form.html:14
+msgid "اسم العيادة/المستشفى البيطري (لو خارجي)"
+msgstr "Clinic/veterinary hospital name (if external)"
+
+#: app/templates/health/doctor_form.html:15
+msgid "المنطقة/الموقع"
+msgstr "Area/location"
+
+#: app/templates/health/doctor_form.html:15
+msgid "مثال: الرياض — حي النرجس"
+msgstr "Example: Riyadh — Al Narjis district"
+
+#: app/templates/health/doctor_form.html:16
+msgid "ملاحظات (ساعات العمل، تخصصات إضافية...)"
+msgstr "Notes (working hours, additional specialties...)"
+
+#: app/templates/health/doctors_list.html:8
+msgid "يشمل أطباء الفريق الداخلي وأطباء/عيادات خارجية مرجعية للطوارئ — اضغط على الجوال للاتصال مباشرة."
+msgstr "Includes internal team vets and external reference vets/clinics for emergencies — tap the phone number to call directly."
+
+#: app/templates/health/doctors_list.html:11
+msgid "العيادة"
+msgstr "Clinic"
+
+#: app/templates/health/doctors_list.html:11
+msgid "المنطقة"
+msgstr "Area"
+
+#: app/templates/health/doctors_list.html:19
+msgid "خارجي"
+msgstr "External"
+
+#: app/templates/health/doctors_list.html:19
+msgid "فريق داخلي"
+msgstr "Internal team"
+
+#: app/templates/health/doctors_list.html:23
 msgid "لا يوجد أطباء مسجّلين بعد."
 msgstr "No doctors registered yet."
 
@@ -6297,6 +6438,19 @@ msgstr "Birth"
 #: app/templates/onboarding/checklist.html:16
 msgid "لا يوجد بنود دليل مناسبة لك حالياً."
 msgstr "No guide items suitable for you right now."
+
+#: app/templates/onboarding/checklist.html:30
+#, python-format
+msgid "تجاهلته %(n)s فترة متتالية"
+msgstr "Ignored for %(n)s consecutive periods"
+
+#: app/templates/onboarding/checklist.html:30
+msgid "متكرر التجاهل"
+msgstr "Repeatedly ignored"
+
+#: app/templates/onboarding/checklist.html:35
+msgid "ليش؟"
+msgstr "Why?"
 
 #: app/templates/onboarding/welcome.html:2
 msgid "أهلاً بك"
@@ -7071,23 +7225,23 @@ msgid "متأخرة"
 msgstr "Overdue"
 
 #: app/templates/team/_my_tasks_rows.html:20
-#: app/templates/team/worker_report_form.html:21
+#: app/templates/team/worker_report_form.html:36
 msgid "بانتظار:"
 msgstr "Waiting on:"
 
 #: app/templates/team/_my_tasks_rows.html:20
-#: app/templates/team/worker_report_form.html:21
+#: app/templates/team/worker_report_form.html:36
 msgid "مقفلة"
 msgstr "Locked"
 
 #: app/templates/team/_my_tasks_rows.html:24
 #: app/templates/team/task_detail.html:87
-#: app/templates/team/worker_report_form.html:25
+#: app/templates/team/worker_report_form.html:40
 msgid "بدء"
 msgstr "Start"
 
 #: app/templates/team/_my_tasks_rows.html:27
-#: app/templates/team/worker_report_form.html:28
+#: app/templates/team/worker_report_form.html:43
 msgid "إنجاز / تعذّر ←"
 msgstr "Complete / Fail ←"
 
@@ -7451,7 +7605,7 @@ msgid "رفع بلاغ جديد"
 msgstr "Submit a new report"
 
 #: app/templates/team/report_form.html:6
-#: app/templates/team/worker_report_form.html:55
+#: app/templates/team/worker_report_form.html:70
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ."
 msgstr "You must select at least the animal or the barn — so the report doesn't lose its tracking."
 
@@ -7460,7 +7614,7 @@ msgid "القوائم أدناه مقصورة على حظائرك المسؤول
 msgstr "The lists below are limited to the barns you're responsible for."
 
 #: app/templates/team/report_form.html:8
-#: app/templates/team/worker_report_form.html:56
+#: app/templates/team/worker_report_form.html:71
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال."
 msgstr "You must select at least the animal or the barn before submitting."
 
@@ -7473,7 +7627,7 @@ msgid "إضافة نوع بلاغ جديد"
 msgstr "Add a new report type"
 
 #: app/templates/team/report_form.html:18
-#: app/templates/team/worker_report_form.html:60
+#: app/templates/team/worker_report_form.html:75
 msgid "الحيوان المرتبط"
 msgstr "Related animal"
 
@@ -7482,7 +7636,7 @@ msgid "وصف البلاغ"
 msgstr "Report description"
 
 #: app/templates/team/report_form.html:31
-#: app/templates/team/worker_report_form.html:74
+#: app/templates/team/worker_report_form.html:89
 msgid "صورة (اختياري)"
 msgstr "Photo (optional)"
 
@@ -7767,34 +7921,46 @@ msgid "فاضي."
 msgstr "Empty."
 
 #: app/templates/team/worker_report_form.html:12
+msgid "اتصل بالطبيب الآن"
+msgstr "Call the vet now"
+
+#: app/templates/team/worker_report_form.html:13
+msgid "حالة طوارئ فعلية تحتاج اتصال هاتفي مباشر بالتوازي مع رفع البلاغ تحت — لا تنتظر."
+msgstr "A real emergency needs a direct phone call alongside filing the report below — don't wait."
+
+#: app/templates/team/worker_report_form.html:20
+msgid "ما فيه أطباء مسجّلين بعد — أضفهم من دليل الأطباء."
+msgstr "No vets registered yet — add them from the vet directory."
+
+#: app/templates/team/worker_report_form.html:27
 msgid "مهامك المفتوحة بهذا التصنيف"
 msgstr "Your open tasks in this category"
 
-#: app/templates/team/worker_report_form.html:37
+#: app/templates/team/worker_report_form.html:52
 msgid "وش لاحظت؟ (اختياري — يساعدك تكتب البلاغ وتعرف وش تسوي أول شي)"
 msgstr "What did you notice? (optional — helps you write the report and know what to do first)"
 
-#: app/templates/team/worker_report_form.html:45
+#: app/templates/team/worker_report_form.html:60
 msgid "عاجل"
 msgstr "Urgent"
 
-#: app/templates/team/worker_report_form.html:54
+#: app/templates/team/worker_report_form.html:69
 msgid "بلاغ جديد بهذا التصنيف"
 msgstr "New report in this category"
 
-#: app/templates/team/worker_report_form.html:54
+#: app/templates/team/worker_report_form.html:69
 msgid "تسجيل بلاغ"
 msgstr "Submit a Report"
 
-#: app/templates/team/worker_report_form.html:71
+#: app/templates/team/worker_report_form.html:86
 msgid "الملاحظة / التفاصيل"
 msgstr "Note / Details"
 
-#: app/templates/team/worker_report_form.html:72
+#: app/templates/team/worker_report_form.html:87
 msgid "اكتب وش لاحظت هنا..."
 msgstr "Write what you noticed here..."
 
-#: app/templates/team/worker_report_form.html:76
+#: app/templates/team/worker_report_form.html:91
 msgid "إرسال البلاغ"
 msgstr "Submit Report"
 
@@ -7875,4 +8041,7 @@ msgstr "No additional named warehouses yet — all stock is in the default main 
 
 #~ msgid "اكتب نوع البلاغ الجديد هنا"
 #~ msgstr "Type the new report type here"
+
+#~ msgid "الأطباء"
+#~ msgstr "Doctors"
 

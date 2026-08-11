@@ -83,6 +83,8 @@
     <a class="btn light" href="{{ url_for('health.injection_guide') }}">📋 {{ _('دليل الحقن الميداني') }}</a>
     <a class="btn light" href="{{ url_for('health.protocols_list') }}">📑 {{ _('بروتوكولات العلاج') }}</a>
     <a class="btn light" href="{{ url_for('health.emergency_symptoms_list') }}">🚨 {{ _('قائمة أعراض الطوارئ') }}</a>
+    <a class="btn light" href="{{ url_for('health.doctors_list') }}">📞 {{ _('دليل الأطباء') }}</a>
+    <a class="btn light" href="{{ url_for('health.body_condition_guide') }}">📏 {{ _('دليل تقييم حالة الجسم (BCS)') }}</a>
     {% if current_user.has_permission('health.manage') %}
     <a class="btn light" href="{{ url_for('health.diagnose_start') }}">🩺 {{ _('المساعد التشخيصي') }}</a>
     {% endif %}

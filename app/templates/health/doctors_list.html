@@ -2,16 +2,25 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ _('الأطباء') }}</h2>
+    <h2>{{ _('دليل الأطباء') }}</h2>
     {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.doctors_new') }}">+ {{ _('طبيب جديد') }}</a>{% endif %}
   </div>
+  <p style="color:var(--muted); font-size:13px;">{{ _('يشمل أطباء الفريق الداخلي وأطباء/عيادات خارجية مرجعية للطوارئ — اضغط على الجوال للاتصال مباشرة.') }}</p>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('التخصص') }}</th><th>{{ _('الحالة') }}</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('التخصص') }}</th><th>{{ _('العيادة') }}</th><th>{{ _('المنطقة') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for d in doctors %}
-    <tr><td>{{ d.name }}</td><td>{{ d.phone or '-' }}</td><td>{{ d.specialty or '-' }}</td><td>{{ d.status|ar_status }}</td></tr>
+    <tr>
+      <td>{{ d.name }}</td>
+      <td>{% if d.phone %}<a href="tel:{{ d.phone }}">📞 {{ d.phone }}</a>{% else %}-{% endif %}</td>
+      <td>{{ d.specialty or '-' }}</td>
+      <td>{{ d.clinic_name or '-' }}</td>
+      <td>{{ d.area or '-' }}</td>
+      <td>{{ _('خارجي') if d.is_external else _('فريق داخلي') }}</td>
+      <td>{{ d.status|ar_status }}</td>
+    </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد أطباء مسجّلين بعد.') }}</td></tr>
+    <tr><td colspan="7" style="color:#888;">{{ _('لا يوجد أطباء مسجّلين بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

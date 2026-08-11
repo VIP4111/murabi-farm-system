@@ -697,6 +697,30 @@ def breeds_new():
                             back_endpoint="core.animals_new")
 
 
+@core_bp.route("/breeds")
+@login_required
+@require_permission("animals.view")
+def breeds_list():
+    """دليل السلالات وملاحظات رعايتها المحلية (بند إضافي 174) — النظام
+    ما يعرض أي معلومة سلالة/مناخ جاهزة هنا، هذي ملاحظات المستخدم نفسه
+    (أو طبيبه) المبنية على خبرته الفعلية بمنطقته."""
+    breeds = Breed.query.order_by(Breed.name).all()
+    return render_template("breeds_list.html", breeds=breeds)
+
+
+@core_bp.route("/breeds/<int:breed_id>/edit", methods=["GET", "POST"])
+@login_required
+@require_permission("animals.manage")
+def breed_edit(breed_id):
+    breed = Breed.query.get_or_404(breed_id)
+    if request.method == "POST":
+        breed.care_notes = request.form.get("care_notes", "").strip() or None
+        db.session.commit()
+        flash("تم حفظ ملاحظات السلالة", "success")
+        return redirect(url_for("core.breeds_list"))
+    return render_template("breed_edit_form.html", breed=breed)
+
+
 @core_bp.route("/animals/colors/new", methods=["GET", "POST"])
 @login_required
 @require_permission("animals.manage")
@@ -906,11 +930,13 @@ def animal_detail(animal_id):
     # المجترات فقط (تقريع/حمل/فطام)، فما ننشئ له صف ProductionWorkflow.
     wf = cycle_engine.get_or_create_workflow(animal) if animal.species == "sheep_goat" else None
     withdrawal_until = animal_under_withdrawal(animal.id)
+    breed_row = Breed.query.filter_by(name=animal.breed).first() if animal.breed else None
     return render_template(
         "animal_detail.html", wf=wf,
         withdrawal_until=withdrawal_until,
         withdrawal_days_left=(withdrawal_until - date.today()).days if withdrawal_until else None,
         today=date.today().isoformat(),
+        breed_care_notes=breed_row.care_notes if breed_row else None,
         **profile,
     )
 

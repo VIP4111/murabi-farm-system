@@ -833,6 +833,14 @@ def worker_quick_report(category):
         from app.health.health_service import FIELD_SYMPTOM_GUIDE
         symptom_cards = FIELD_SYMPTOM_GUIDE
 
+    # دليل التواصل البيطري (بند إضافي 171) — يظهر بس بفئة "طارئة"،
+    # وعمداً بدون شرط صلاحية `health.view` (العامل بالأصل ما يملكها):
+    # حالة طوارئ فعلية تحتاج رقم الطبيب فوراً، ما تنتظر صلاحية إدارية.
+    doctors = None
+    if category == "emergency":
+        from app.models import Doctor
+        doctors = Doctor.query.filter_by(status="active").order_by(Doctor.name).all()
+
     return render_template(
         "team/worker_report_form.html",
         category=category, cfg=cfg, my_tasks=my_tasks,
@@ -840,6 +848,7 @@ def worker_quick_report(category):
         barns=barns_query.order_by(Barn.barn_name).all(),
         scoped=barn_ids is not None,
         symptom_cards=symptom_cards,
+        doctors=doctors,
     )
 
 

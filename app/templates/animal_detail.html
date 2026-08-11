@@ -87,6 +87,12 @@
       <tr><td>{{ _('السعر') }}</td><td>{{ animal.price or '-' }}</td></tr>
     </table>
 </div>
+    {% if breed_care_notes %}
+    <div class="notice" style="margin-top:10px;">
+      🌍 <b>{{ _('ملاحظة رعاية خاصة بسلالة %(breed)s:', breed=animal.breed) }}</b> {{ breed_care_notes }}
+      <a href="{{ url_for('core.breeds_list') }}" style="font-size:12px;">({{ _('تعديل') }})</a>
+    </div>
+    {% endif %}
   </div>
 
   {% if animal.mother_id %}

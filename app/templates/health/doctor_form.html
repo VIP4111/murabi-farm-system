@@ -5,8 +5,15 @@
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('الاسم') }}</label><input name="name" required>
-    <label>{{ _('الجوال') }}</label><input name="phone">
+    <label>{{ _('الجوال') }}</label><input name="phone" type="tel">
     <label>{{ _('التخصص') }}</label><input name="specialty">
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal; margin-top:10px;">
+      <input type="checkbox" name="is_external" value="1" style="width:auto;">
+      {{ _('طبيب/عيادة خارجية (مرجع طوارئ فقط، بدون حساب دخول)') }}
+    </label>
+    <label>{{ _('اسم العيادة/المستشفى البيطري (لو خارجي)') }}</label><input name="clinic_name">
+    <label>{{ _('المنطقة/الموقع') }}</label><input name="area" placeholder="{{ _('مثال: الرياض — حي النرجس') }}">
+    <label>{{ _('ملاحظات (ساعات العمل، تخصصات إضافية...)') }}</label><textarea name="notes" rows="2"></textarea>
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>

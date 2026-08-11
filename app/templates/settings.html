@@ -111,6 +111,7 @@
     {% if current_user.has_permission('analytics.view') %}
     <a class="btn light" href="{{ url_for('core.family_view') }}" target="_blank">👋 {{ _('شاشة متابعة مبسّطة') }}</a>
     {% endif %}
+    <a class="btn light" href="{{ url_for('core.breeds_list') }}">🐑 {{ _('دليل السلالات وملاحظات الرعاية') }}</a>
   </div>
 </div>
 {% endblock %}

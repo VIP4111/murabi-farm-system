@@ -41,6 +41,12 @@ class Breed(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    # ملاحظات رعاية خاصة بالسلالة (بند إضافي 174) — يكتبها صاحب
+    # الحلال أو الطبيب بأنفسهم بناءً على خبرتهم الفعلية بهذي السلالة
+    # بمنطقتهم/مناخهم — النظام عمداً **ما يخترع** أي معلومة سلالة/مناخ
+    # محدَّدة (دقة زائفة خطرة)؛ هذا حقل فاضي بالبداية دائماً، قيمته من
+    # معرفة المستخدم الحقيقية فقط.
+    care_notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
 
     @classmethod

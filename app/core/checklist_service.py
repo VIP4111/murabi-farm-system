@@ -51,10 +51,52 @@ def _period_key(frequency: str, today: date) -> str:
     return "once"
 
 
+NEGLECT_LOOKBACK_PERIODS = 4
+NEGLECT_THRESHOLD = 2
+
+
+def _prior_period_keys(frequency: str, today: date, lookback: int) -> list[str]:
+    """آخر `lookback` فترة *قبل* الفترة الحالية (ما يشملها) — تُستخدم
+    لحساب سجل التجاهل، مو لعرض بند الفترة الحالية نفسه."""
+    if frequency == "daily":
+        return [(today - timedelta(days=i)).isoformat() for i in range(1, lookback + 1)]
+    if frequency == "weekly":
+        current_start = today - timedelta(days=today.weekday())
+        return [(current_start - timedelta(weeks=i)).isoformat() for i in range(1, lookback + 1)]
+    return []
+
+
+def _miss_streak(user, item: "ChecklistItem", today: date) -> int:
+    """عدد الفترات المتتالية الأخيرة (بدءاً من أقرب فترة سابقة) اللي ما
+    أنجز فيها المستخدم هذا البند — يتوقف العدّ أول فترة مُنجَزة. بند
+    "once" دائماً 0 (ما ينطبق عليه مفهوم التكرار)."""
+    keys = _prior_period_keys(item.frequency, today, NEGLECT_LOOKBACK_PERIODS)
+    if not keys:
+        return 0
+    done_keys = {
+        c.period_key for c in ChecklistCompletion.query.filter(
+            ChecklistCompletion.user_id == user.id,
+            ChecklistCompletion.checklist_item_id == item.id,
+            ChecklistCompletion.period_key.in_(keys),
+        ).all()
+    }
+    streak = 0
+    for key in keys:
+        if key in done_keys:
+            break
+        streak += 1
+    return streak
+
+
 def daily_checklist_for(user, today: date | None = None) -> list[dict]:
     """يرجّع قائمة عناصر الدليل المناسبة لهذا المستخدم الآن: تطابق
     مرحلة نشطة + (دوره الوظيفي أو "all") + (لو "beginner" فقط لمن فعّل
-    وسم المبتدئ)، مع حالة الإنجاز الحالية لكل عنصر."""
+    وسم المبتدئ)، مع حالة الإنجاز الحالية لكل عنصر.
+
+    **الأولوية التكيّفية (بند إضافي 172)**: أي بند يومي/أسبوعي تجاهله
+    المستخدم `NEGLECT_THRESHOLD` فترة متتالية فأكثر يُعلَّم `neglected`
+    ويُرفَع لأعلى القائمة (بدل ترتيب المرحلة/sort_order الثابت) — تكثيف
+    فعلي للأولوية داخل الواجهة نفسها، مو مجرد عدّاد صامت."""
     today = today or date.today()
     stages = active_stages()
     role_name = user.role.name if user.role else None
@@ -79,7 +121,13 @@ def daily_checklist_for(user, today: date | None = None) -> list[dict]:
         done = ChecklistCompletion.query.filter_by(
             user_id=user.id, checklist_item_id=item.id, period_key=period_key,
         ).first() is not None
-        result.append({"item": item, "period_key": period_key, "done": done})
+        miss_streak = 0 if done else _miss_streak(user, item, today)
+        result.append({
+            "item": item, "period_key": period_key, "done": done,
+            "miss_streak": miss_streak, "neglected": miss_streak >= NEGLECT_THRESHOLD,
+        })
+
+    result.sort(key=lambda r: (r["done"], -r["miss_streak"]))
     return result
 
 

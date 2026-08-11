@@ -31,6 +31,11 @@ class ChecklistItem(db.Model):
     target_role = db.Column(db.String(16), default="all", nullable=False)
     title = db.Column(db.String(220), nullable=False)
     description = db.Column(db.Text)
+    # الشرح التثقيفي ("ليش؟") — منفصل عمداً عن `description` (وش تسوي
+    # بالضبط) — يشرح المنطق البيولوجي/التشغيلي وراء البند، يظهر بس
+    # لمن يفتحه (طيّة قابلة للطي بالواجهة) عشان ما يثقل القائمة اليومية
+    # لمن أصلاً يعرف السبب (بند إضافي 170).
+    rationale = db.Column(db.Text)
     link_endpoint = db.Column(db.String(100))
     sort_order = db.Column(db.Integer, default=0, nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)

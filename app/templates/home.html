@@ -25,7 +25,7 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <input type="hidden" name="next" value="{{ request.path }}">
     <button type="submit" class="btn light" style="padding:2px 8px; font-size:14px;">{{ '✅' if row.done else '⬜' }}</button>
-    <span style="{{ 'text-decoration:line-through; color:var(--muted);' if row.done }}">{{ row.item.title }}</span>
+    <span style="{{ 'text-decoration:line-through; color:var(--muted);' if row.done }}">{{ row.item.title }}{% if row.neglected %} ⚠️{% endif %}</span>
   </form>
   {% endfor %}
 </div>
