@@ -112,6 +112,13 @@ def _handle_ostrich(user) -> str:
     return line1 + "\n" + line2
 
 
+def _handle_feed_location(user) -> str:
+    return (
+        "مخزون العلف تلقاه بشاشة \"الأعلاف\" من القائمة الرئيسية (/feed/items)، "
+        "أو من شاشة \"متابعة مبسّطة\" ← المخزون ← الأعلاف لو تبي عرض مبسّط بخط كبير."
+    )
+
+
 def _handle_feed_cost(user) -> str:
     s = context_service.feed_cost_summary()
     if not s["has_active_plans"]:
@@ -188,6 +195,8 @@ INTENTS: list[Intent] = [
            _handle_near_birth, permission="animals.view"),
     Intent("pregnant", [["حوامل", "حامل", "حمل مؤكد"]], _handle_pregnant, permission="animals.view"),
     Intent("ostrich", [["حاضنة", "حاضنات", "تفقيس", "بيض النعام", "النعام"]], _handle_ostrich, permission="repro.view"),
+    Intent("feed_location", [["علف", "اعلاف", "أعلاف"], ["وين", "أين", "فين", "مكان", "لقى", "اجد", "أجد"]],
+           _handle_feed_location, permission="feed.view"),
     Intent("feed_cost", [["علف", "اعلاف", "أعلاف"], ["تكلفة", "مصروف", "كم"]], _handle_feed_cost, permission="feed.view"),
     Intent("alerts", [["تنبيه", "تنبيهات", "انذار", "إنذار"]], _handle_alerts, permission="animals.view"),
     Intent("tasks", [["مهامي", "مهمتي", "مهام اليوم", "مهامي اليوم"]], _handle_tasks, permission="tasks.view_own"),
