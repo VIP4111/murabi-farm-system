@@ -1555,6 +1555,33 @@ def data_integrity_check():
     return render_template("settings_data_integrity.html", issues=data_integrity_service.run_full_audit())
 
 
+@core_bp.route("/settings/simulation-data", methods=["GET", "POST"])
+@login_required
+@require_permission("settings.manage")
+def simulation_data_purge():
+    """تنظيف بيانات المحاكاة (بند إضافي 181) — مقصورة على المالك (نفس
+    منطق تجاهل قائمة التجهيز) لأنه إجراء حذف حقيقي، وإن كان مستهدفاً
+    لبيانات المحاكاة فقط. تأكيد مزدوج: كتابة عبارة صريحة + checkbox،
+    نفس مستوى حذر عمليات الحذف الحرجة الثانية بالنظام."""
+    if current_user.role.name != "owner":
+        abort(403)
+    from app.core import simulation_purge_service as svc
+    result = None
+    if request.method == "POST":
+        if request.form.get("confirm_phrase") != "حذف بيانات المحاكاة" or request.form.get("confirm_check") != "1":
+            flash("لازم تكتب العبارة بالضبط وتؤشّر على التأكيد.", "error")
+        else:
+            result = svc.purge_simulation_data()
+            db.session.add(AuditLog(
+                actor_user_id=current_user.id, action="simulation_data.purge",
+                entity_type="Animal", details=str(result),
+            ))
+            db.session.commit()
+            flash("تم حذف بيانات المحاكاة.", "success")
+    preview = svc.preview_simulation_data()
+    return render_template("settings_simulation_data.html", preview=preview, result=result)
+
+
 # ---------- شاشة متابعة مبسّطة (بند إضافي 106) ----------
 
 FAMILY_VIEW_ROLES = [

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 04:48+0300\n"
+"POT-Creation-Date: 2026-08-11 05:56+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -530,7 +530,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "የተመዘገቡ መድሃኒቶች አሉት።"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:108 app/templates/settings_backup.html:5
+#: app/templates/settings.html:111 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "መጠባበቂያ"
 
@@ -1471,6 +1471,7 @@ msgstr "በቀጥታ ከሲስተም ውሂብ የተገኘ የቀጥታ እይ�
 #: app/templates/home.html:145 app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
+#: app/templates/settings_simulation_data.html:4
 msgid "الإعدادات"
 msgstr "ቅንብሮች"
 
@@ -2752,7 +2753,7 @@ msgstr "በዚህ ማጣሪያ ውስጥ በአሁኑ ጊዜ እንስሳት የ
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:110
+#: app/templates/audit_log.html:5 app/templates/settings.html:113
 msgid "سجل التدقيق"
 msgstr "የኦዲት መዝገብ"
 
@@ -3958,11 +3959,16 @@ msgstr "ከማሰማራት በፊት የዝግጁነት ምርመራ"
 msgid "فحص سلامة البيانات"
 msgstr "የውሂብ ትክክለኛነት ምርመራ"
 
-#: app/templates/settings.html:113
+#: app/templates/settings.html:109
+#: app/templates/settings_simulation_data.html:5
+msgid "تنظيف بيانات المحاكاة"
+msgstr "የማስመሰያ ውሂብ አጽዳ"
+
+#: app/templates/settings.html:116
 msgid "شاشة متابعة مبسّطة"
 msgstr "ቀላል የክትትል ማያ ገጽ"
 
-#: app/templates/settings.html:115
+#: app/templates/settings.html:118
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 
@@ -4045,6 +4051,79 @@ msgstr "ወሳኝ"
 #: app/templates/settings_readiness.html:27
 msgid "سليم"
 msgstr "ትክክል"
+
+#: app/templates/settings_simulation_data.html:7
+msgid "هذي الأداة تحذف حصراً السجلات اللي ولّدها أمر \"المحاكاة التشغيلية\" (flask simulate-farm-month) — يُعرف بدقة عبر رقم حيوان يبدأ بـ SIM- ومهام مصدرها FarmSimulation. صفر لمس لأي بيانات حقيقية بمزرعتك."
+msgstr "ይህ መሳሪያ በ\"የስራ ማስመሰያ\" ትዕዛዝ (flask simulate-farm-month) የተፈጠሩ መዝገቦችን ብቻ ይሰርዛል — በSIM- የሚጀምር የእንስሳት ቁጥር እና ምንጫቸው FarmSimulation የሆኑ ተግባራት በትክክል ይታወቃሉ። በእርሻዎ ላይ ላለ ማንኛውም ትክክለኛ ውሂብ ዜሮ ንክኪ።"
+
+#: app/templates/settings_simulation_data.html:12
+msgid "حيوان محاكاة"
+msgstr "የማስመሰያ እንስሳት"
+
+#: app/templates/settings_simulation_data.html:13
+msgid "حركة مالية"
+msgstr "የገንዘብ ግብይቶች"
+
+#: app/templates/settings_simulation_data.html:14
+msgid "تقريع"
+msgstr "ማዳቀል"
+
+#: app/templates/settings_simulation_data.html:15
+msgid "حالة مرضية"
+msgstr "የበሽታ ጉዳዮች"
+
+#: app/templates/settings_simulation_data.html:16
+msgid "مهمة محاكاة"
+msgstr "የማስመሰያ ተግባራት"
+
+#: app/templates/settings_simulation_data.html:21
+msgid "تم الحذف"
+msgstr "ተሰርዟል"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "حيوانات:"
+msgstr "እንስሳት:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "حركات مالية:"
+msgstr "የገንዘብ ግብይቶች:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "تقريع:"
+msgstr "ማዳቀል:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "أمراض:"
+msgstr "በሽታዎች:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "مهام:"
+msgstr "ተግባራት:"
+
+#: app/templates/settings_simulation_data.html:26
+msgid "تأكيد الحذف"
+msgstr "ስረዛን አረጋግጥ"
+
+#: app/templates/settings_simulation_data.html:29
+msgid "اكتب العبارة التالية بالضبط للتأكيد:"
+msgstr "ለማረጋገጥ የሚከተለውን ሐረግ በትክክል ይተይቡ:"
+
+#: app/templates/settings_simulation_data.html:29
+#: app/templates/settings_simulation_data.html:30
+msgid "حذف بيانات المحاكاة"
+msgstr "የማስመሰያ ውሂብ ሰርዝ"
+
+#: app/templates/settings_simulation_data.html:33
+msgid "أؤكد إني أبي أحذف بيانات المحاكاة أعلاه نهائياً — لا رجعة."
+msgstr "ከላይ ያለውን የማስመሰያ ውሂብ በቋሚነት መሰረዝ እንደምፈልግ አረጋግጣለሁ — መመለስ የለም።"
+
+#: app/templates/settings_simulation_data.html:35
+msgid "حذف بيانات المحاكاة نهائياً"
+msgstr "የማስመሰያ ውሂብን በቋሚነት ሰርዝ"
+
+#: app/templates/settings_simulation_data.html:40
+msgid "ما فيه بيانات محاكاة حالياً."
+msgstr "በአሁኑ ጊዜ የማስመሰያ ውሂብ የለም።"
 
 #: app/templates/smart_sale_report.html:6
 msgid "رجوع لسجل الحيوانات"

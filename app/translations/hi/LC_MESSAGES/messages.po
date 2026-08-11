@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 04:48+0300\n"
+"POT-Creation-Date: 2026-08-11 05:56+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -530,7 +530,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:108 app/templates/settings_backup.html:5
+#: app/templates/settings.html:111 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -1471,6 +1471,7 @@ msgstr "सिस्टम डेटा से सीधे बना लाइ�
 #: app/templates/home.html:145 app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
+#: app/templates/settings_simulation_data.html:4
 msgid "الإعدادات"
 msgstr "सेटिंग्स"
 
@@ -2752,7 +2753,7 @@ msgstr "इस फ़िल्टर में फिलहाल कोई प�
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:110
+#: app/templates/audit_log.html:5 app/templates/settings.html:113
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -3958,11 +3959,16 @@ msgstr "तैनाती से पहले तत्परता जां�
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:113
+#: app/templates/settings.html:109
+#: app/templates/settings_simulation_data.html:5
+msgid "تنظيف بيانات المحاكاة"
+msgstr "सिमुलेशन डेटा साफ़ करें"
+
+#: app/templates/settings.html:116
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:115
+#: app/templates/settings.html:118
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
@@ -4045,6 +4051,79 @@ msgstr "गंभीर"
 #: app/templates/settings_readiness.html:27
 msgid "سليم"
 msgstr "ठीक"
+
+#: app/templates/settings_simulation_data.html:7
+msgid "هذي الأداة تحذف حصراً السجلات اللي ولّدها أمر \"المحاكاة التشغيلية\" (flask simulate-farm-month) — يُعرف بدقة عبر رقم حيوان يبدأ بـ SIM- ومهام مصدرها FarmSimulation. صفر لمس لأي بيانات حقيقية بمزرعتك."
+msgstr "यह उपकरण केवल \"परिचालन सिमुलेशन\" कमांड (flask simulate-farm-month) द्वारा उत्पन्न रिकॉर्ड को हटाता है — SIM- से शुरू होने वाले पशु नंबर और FarmSimulation स्रोत वाले कार्यों द्वारा सटीक रूप से पहचाना जाता है। आपके फार्म के किसी भी वास्तविक डेटा को छुआ नहीं जाता।"
+
+#: app/templates/settings_simulation_data.html:12
+msgid "حيوان محاكاة"
+msgstr "सिमुलेशन पशु"
+
+#: app/templates/settings_simulation_data.html:13
+msgid "حركة مالية"
+msgstr "वित्तीय लेनदेन"
+
+#: app/templates/settings_simulation_data.html:14
+msgid "تقريع"
+msgstr "संगमन"
+
+#: app/templates/settings_simulation_data.html:15
+msgid "حالة مرضية"
+msgstr "रोग के मामले"
+
+#: app/templates/settings_simulation_data.html:16
+msgid "مهمة محاكاة"
+msgstr "सिमुलेशन कार्य"
+
+#: app/templates/settings_simulation_data.html:21
+msgid "تم الحذف"
+msgstr "हटाया गया"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "حيوانات:"
+msgstr "पशु:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "حركات مالية:"
+msgstr "वित्तीय लेनदेन:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "تقريع:"
+msgstr "संगमन:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "أمراض:"
+msgstr "रोग:"
+
+#: app/templates/settings_simulation_data.html:22
+msgid "مهام:"
+msgstr "कार्य:"
+
+#: app/templates/settings_simulation_data.html:26
+msgid "تأكيد الحذف"
+msgstr "हटाने की पुष्टि करें"
+
+#: app/templates/settings_simulation_data.html:29
+msgid "اكتب العبارة التالية بالضبط للتأكيد:"
+msgstr "पुष्टि के लिए निम्न वाक्यांश बिल्कुल टाइप करें:"
+
+#: app/templates/settings_simulation_data.html:29
+#: app/templates/settings_simulation_data.html:30
+msgid "حذف بيانات المحاكاة"
+msgstr "सिमुलेशन डेटा हटाएं"
+
+#: app/templates/settings_simulation_data.html:33
+msgid "أؤكد إني أبي أحذف بيانات المحاكاة أعلاه نهائياً — لا رجعة."
+msgstr "मैं पुष्टि करता हूं कि मैं ऊपर के सिमुलेशन डेटा को स्थायी रूप से हटाना चाहता हूं — कोई पूर्ववत नहीं।"
+
+#: app/templates/settings_simulation_data.html:35
+msgid "حذف بيانات المحاكاة نهائياً"
+msgstr "सिमुलेशन डेटा स्थायी रूप से हटाएं"
+
+#: app/templates/settings_simulation_data.html:40
+msgid "ما فيه بيانات محاكاة حالياً."
+msgstr "फिलहाल कोई सिमुलेशन डेटा नहीं है।"
 
 #: app/templates/smart_sale_report.html:6
 msgid "رجوع لسجل الحيوانات"

@@ -657,3 +657,23 @@ def register_cli(app):
                 "(نفس سلوك بقية النظام: صفر إعداد = صفر إرسال بصمت). "
                 "المحتوى أعلاه هو نفسه اللي كان بيُرسَل."
             )
+
+    @app.cli.command("purge-simulation-data")
+    @click.option("--yes", is_flag=True, help="تنفيذ الحذف فعلياً (بدونه: عرض فقط بدون حذف).")
+    def purge_simulation_data(yes):
+        """يحذف كل بيانات المحاكاة اللي ولّدها `flask simulate-farm-month`
+        تحديداً (بند إضافي 181) — يعتمد على بادئة `animal_no` (SIM-) و
+        `Task.source_type` (FarmSimulation)، صفر لمس لأي بيانات حقيقية.
+        بدون `--yes` يعرض العدد بس، ما يحذف شي — أمان مزدوج."""
+        from app.core import simulation_purge_service as svc
+        preview = svc.preview_simulation_data()
+        click.echo(
+            f"بيانات محاكاة موجودة: {preview['animals']} حيوان، "
+            f"{preview['finance_rows']} حركة مالية، {preview['matings']} تقريع، "
+            f"{preview['diseases']} حالة مرضية، {preview['tasks']} مهمة."
+        )
+        if not yes:
+            click.echo("عرض فقط — أضف `--yes` عشان تحذف فعلياً.")
+            return
+        counts = svc.purge_simulation_data()
+        click.echo(f"تم الحذف: {counts}")

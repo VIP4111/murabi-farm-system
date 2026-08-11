@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">{{ _('تنظيف بيانات المحاكاة') }}</h2>
+  <div class="notice">
+    {{ _('هذي الأداة تحذف حصراً السجلات اللي ولّدها أمر "المحاكاة التشغيلية" (flask simulate-farm-month) — يُعرف بدقة عبر رقم حيوان يبدأ بـ SIM- ومهام مصدرها FarmSimulation. صفر لمس لأي بيانات حقيقية بمزرعتك.') }}
+  </div>
+</div>
+
+<div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+  <div class="stat"><b>{{ preview.animals }}</b><span>{{ _('حيوان محاكاة') }}</span></div>
+  <div class="stat"><b>{{ preview.finance_rows }}</b><span>{{ _('حركة مالية') }}</span></div>
+  <div class="stat"><b>{{ preview.matings }}</b><span>{{ _('تقريع') }}</span></div>
+  <div class="stat"><b>{{ preview.diseases }}</b><span>{{ _('حالة مرضية') }}</span></div>
+  <div class="stat" style="grid-column:1/-1;"><b>{{ preview.tasks }}</b><span>{{ _('مهمة محاكاة') }}</span></div>
+</div>
+
+{% if result %}
+<div class="card" style="background:#f2fbf5; border-color:#b7e4c7;">
+  <h3 style="font-size:15px;">✅ {{ _('تم الحذف') }}</h3>
+  <p>{{ _('حيوانات:') }} {{ result.animals }} — {{ _('حركات مالية:') }} {{ result.finance_rows }} — {{ _('تقريع:') }} {{ result.matings }} — {{ _('أمراض:') }} {{ result.diseases }} — {{ _('مهام:') }} {{ result.tasks }}</p>
+</div>
+{% elif preview.animals or preview.tasks %}
+<div class="card" style="max-width:480px;">
+  <h3 style="font-size:15px; color:var(--danger, #c0392b);">⚠️ {{ _('تأكيد الحذف') }}</h3>
+  <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('اكتب العبارة التالية بالضبط للتأكيد:') }} <code>{{ _('حذف بيانات المحاكاة') }}</code></label>
+    <input name="confirm_phrase" required placeholder="{{ _('حذف بيانات المحاكاة') }}">
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+      <input type="checkbox" name="confirm_check" value="1" style="width:auto;" required>
+      {{ _('أؤكد إني أبي أحذف بيانات المحاكاة أعلاه نهائياً — لا رجعة.') }}
+    </label>
+    <button class="btn danger" type="submit">{{ _('حذف بيانات المحاكاة نهائياً') }}</button>
+  </form>
+</div>
+{% else %}
+<div class="card">
+  <p style="color:#888;">{{ _('ما فيه بيانات محاكاة حالياً.') }}</p>
+</div>
+{% endif %}
+{% endblock %}

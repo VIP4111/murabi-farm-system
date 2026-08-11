@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 04:48+0300\n"
+"POT-Creation-Date: 2026-08-11 05:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -541,7 +541,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr ""
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:108 app/templates/settings_backup.html:5
+#: app/templates/settings.html:111 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr ""
 
@@ -1520,6 +1520,7 @@ msgstr ""
 #: app/templates/home.html:145 app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
+#: app/templates/settings_simulation_data.html:4
 msgid "الإعدادات"
 msgstr ""
 
@@ -2830,7 +2831,7 @@ msgstr ""
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr ""
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:110
+#: app/templates/audit_log.html:5 app/templates/settings.html:113
 msgid "سجل التدقيق"
 msgstr ""
 
@@ -4081,11 +4082,16 @@ msgstr ""
 msgid "فحص سلامة البيانات"
 msgstr ""
 
-#: app/templates/settings.html:113
+#: app/templates/settings.html:109
+#: app/templates/settings_simulation_data.html:5
+msgid "تنظيف بيانات المحاكاة"
+msgstr ""
+
+#: app/templates/settings.html:116
 msgid "شاشة متابعة مبسّطة"
 msgstr ""
 
-#: app/templates/settings.html:115
+#: app/templates/settings.html:118
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr ""
 
@@ -4180,6 +4186,82 @@ msgstr ""
 
 #: app/templates/settings_readiness.html:27
 msgid "سليم"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:7
+msgid ""
+"هذي الأداة تحذف حصراً السجلات اللي ولّدها أمر \"المحاكاة التشغيلية\" "
+"(flask simulate-farm-month) — يُعرف بدقة عبر رقم حيوان يبدأ بـ SIM- ومهام"
+" مصدرها FarmSimulation. صفر لمس لأي بيانات حقيقية بمزرعتك."
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:12
+msgid "حيوان محاكاة"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:13
+msgid "حركة مالية"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:14
+msgid "تقريع"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:15
+msgid "حالة مرضية"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:16
+msgid "مهمة محاكاة"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:21
+msgid "تم الحذف"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:22
+msgid "حيوانات:"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:22
+msgid "حركات مالية:"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:22
+msgid "تقريع:"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:22
+msgid "أمراض:"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:22
+msgid "مهام:"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:26
+msgid "تأكيد الحذف"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:29
+msgid "اكتب العبارة التالية بالضبط للتأكيد:"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:29
+#: app/templates/settings_simulation_data.html:30
+msgid "حذف بيانات المحاكاة"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:33
+msgid "أؤكد إني أبي أحذف بيانات المحاكاة أعلاه نهائياً — لا رجعة."
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:35
+msgid "حذف بيانات المحاكاة نهائياً"
+msgstr ""
+
+#: app/templates/settings_simulation_data.html:40
+msgid "ما فيه بيانات محاكاة حالياً."
 msgstr ""
 
 #: app/templates/smart_sale_report.html:6
