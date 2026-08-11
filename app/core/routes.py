@@ -1399,7 +1399,15 @@ def settings_home():
     roles = Role.query.order_by(Role.id).all()
     fs = FarmSettings.get()
     fs.ensure_catalog_token()
-    return render_template("settings.html", services=services, roles=roles, fs=fs)
+    indicators_table = None
+    if current_user.has_permission("analytics.view"):
+        from app.reports import report_service as report_svc
+        start, end, _range_key = report_svc.parse_date_range({})
+        indicators_table = report_svc.overview_report(start, end)["table"]
+    return render_template(
+        "settings.html", services=services, roles=roles, fs=fs,
+        indicators_table=indicators_table,
+    )
 
 
 @core_bp.route("/settings/farm", methods=["POST"])

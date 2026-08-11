@@ -134,4 +134,19 @@
     <a class="btn light" href="{{ url_for('core.breeds_list') }}">🐑 {{ _('دليل السلالات وملاحظات الرعاية') }}</a>
   </div>
 </div>
+
+{% if indicators_table %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('جدول المؤشرات') }}</h3>
+  <p style="color:var(--muted); font-size:13px;">{{ _('من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير.') }}</p>
+  <div class="table-scroll">
+  <table>
+    <tr>{% for col in indicators_table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
+    {% for row in indicators_table.rows %}
+    <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

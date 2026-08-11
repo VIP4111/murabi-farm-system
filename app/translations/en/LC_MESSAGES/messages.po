@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 21:53+0300\n"
+"POT-Creation-Date: 2026-08-12 01:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -4502,6 +4502,14 @@ msgstr "Simplified follow-up screen"
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "Breed guide and care notes"
 
+#: app/templates/reports/overview.html:18 app/templates/settings.html:140
+msgid "جدول المؤشرات"
+msgstr "Indicators table"
+
+#: app/templates/settings.html:141
+msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
+msgstr "From the start of the current month to today — same engine as the reports screen."
+
 #: app/templates/settings_backup.html:9
 msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
 msgstr "⚠️ Backup from this button isn't supported in this environment — the current database isn't a local SQLite file (likely PostgreSQL in production). A real production database backup needs database-level tools (pg_dump, WAL archiving, or managed hosting provider snapshots) — outside the scope of any button in the app itself."
@@ -7738,10 +7746,6 @@ msgstr "Mortality case details"
 #: app/templates/reports/mortality.html:53
 msgid "لا يوجد حالات نفوق بهذي الفترة."
 msgstr "No mortality cases in this period."
-
-#: app/templates/reports/overview.html:18
-msgid "جدول المؤشرات"
-msgstr "Indicators table"
 
 #: app/templates/reports/purchase_request.html:18
 msgid "الأصناف اللي تحتاج شراء بناءً على الاستهلاك الفعلي بالفترة المختارة"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 21:53+0300\n"
+"POT-Creation-Date: 2026-08-12 01:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4502,6 +4502,14 @@ msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
+#: app/templates/reports/overview.html:18 app/templates/settings.html:140
+msgid "جدول المؤشرات"
+msgstr "संकेतक तालिका"
+
+#: app/templates/settings.html:141
+msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
+msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
+
 #: app/templates/settings_backup.html:9
 msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
 msgstr "⚠️ इस बटन से बैकअप इस वातावरण में समर्थित नहीं है — वर्तमान डेटाबेस स्थानीय SQLite फ़ाइल नहीं है (संभवतः उत्पादन में PostgreSQL)। उत्पादन डेटाबेस के लिए वास्तविक बैकअप को डेटाबेस-स्तर उपकरणों की आवश्यकता होती है (pg_dump, WAL archiving, या प्रबंधित होस्टिंग प्रदाता स्नैपशॉट) — यह ऐप में किसी भी बटन के दायरे से बाहर है।"
@@ -7738,10 +7746,6 @@ msgstr "मृत्यु मामलों का विवरण"
 #: app/templates/reports/mortality.html:53
 msgid "لا يوجد حالات نفوق بهذي الفترة."
 msgstr "इस अवधि में कोई मृत्यु मामला नहीं है।"
-
-#: app/templates/reports/overview.html:18
-msgid "جدول المؤشرات"
-msgstr "संकेतक तालिका"
 
 #: app/templates/reports/purchase_request.html:18
 msgid "الأصناف اللي تحتاج شراء بناءً على الاستهلاك الفعلي بالفترة المختارة"

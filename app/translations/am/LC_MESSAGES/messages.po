@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 21:53+0300\n"
+"POT-Creation-Date: 2026-08-12 01:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -4502,6 +4502,14 @@ msgstr "ቀላል የክትትል ማያ ገጽ"
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 
+#: app/templates/reports/overview.html:18 app/templates/settings.html:140
+msgid "جدول المؤشرات"
+msgstr "የጠቋሚዎች ሠንጠረዥ"
+
+#: app/templates/settings.html:141
+msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
+msgstr "ከአሁኑ ወር መጀመሪያ እስከ ዛሬ — ልክ እንደ ሪፖርቶች ገፅ ተመሳሳይ ሞተር።"
+
 #: app/templates/settings_backup.html:9
 msgid "⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق نفسه."
 msgstr "⚠️ ከዚህ ቁልፍ የሚደረግ መጠባበቂያ በዚህ አካባቢ አይደገፍም — የአሁኑ የውሂብ ጎታ የአካባቢ SQLite ፋይል አይደለም (ምናልባት በምርት ውስጥ PostgreSQL)። ትክክለኛ የምርት የውሂብ ጎታ መጠባበቂያ የውሂብ ጎታ-ደረጃ መሳሪያዎችን ይፈልጋል (pg_dump፣ WAL archiving፣ ወይም የተያዘ ማስተናገጃ አቅራቢ ቅጽበታዊ ገጽ እይታዎች) — ይህ በራሱ መተግበሪያ ውስጥ ካለው ማንኛውም ቁልፍ ወሰን ውጭ ነው።"
@@ -7738,10 +7746,6 @@ msgstr "የሞት ጉዳዮች ዝርዝሮች"
 #: app/templates/reports/mortality.html:53
 msgid "لا يوجد حالات نفوق بهذي الفترة."
 msgstr "በዚህ ጊዜ ውስጥ የሞት ጉዳይ የለም።"
-
-#: app/templates/reports/overview.html:18
-msgid "جدول المؤشرات"
-msgstr "የጠቋሚዎች ሠንጠረዥ"
 
 #: app/templates/reports/purchase_request.html:18
 msgid "الأصناف اللي تحتاج شراء بناءً على الاستهلاك الفعلي بالفترة المختارة"
