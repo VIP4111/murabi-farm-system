@@ -54,9 +54,39 @@
   .empty{color:var(--muted); text-align:center; padding:20px;}
   [data-view]{display:none;}
   [data-view].active{display:block;}
+  .alert-box{margin-top:8px;}
+  .alert-box summary{
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:18px; font-weight:700;
+    padding:6px 16px; border-radius:999px; border:2px solid; list-style:none;
+  }
+  .alert-box summary::-webkit-details-marker{display:none;}
+  .alert-red summary{border-color:var(--bad); color:var(--bad);}
+  .alert-yellow summary{border-color:var(--warn); color:var(--warn);}
+  .alert-green summary{border-color:var(--ok); color:var(--ok);}
+  .alert-detail{margin-top:8px; padding:10px 14px; border-radius:10px; background:var(--bg); font-size:17px;}
 </style>
 </head>
 <body>
+
+{% macro stock_alert(alert, unit) %}
+{% if alert %}
+<details class="alert-box alert-{{ alert.level }}">
+  <summary>
+    {% if alert.level == 'red' %}🔴{% elif alert.level == 'yellow' %}🟡{% else %}🟢{% endif %}
+    {{ _('تنبيه المخزون') }}
+  </summary>
+  <div class="alert-detail">
+    {% if alert.level == 'red' %}
+      {{ _('المخزون منخفض — يحتاج شراء تقريباً %(qty)s %(unit)s لتغطية شهر كامل بالمعدل الحالي.', qty=alert.buy_qty, unit=unit or '') }}
+    {% elif alert.until_date %}
+      {{ _('الكمية الحالية تكفي إلى تاريخ: %(date)s', date=alert.until_date) }}
+    {% else %}
+      {{ _('ما فيه استهلاك مسجَّل بعد لهذا الصنف.') }}
+    {% endif %}
+  </div>
+</details>
+{% endif %}
+{% endmacro %}
 
 <button class="mode-toggle" id="modeToggle">🌙</button>
 
@@ -137,6 +167,7 @@
     <div class="stock-name">{{ row.item.name }}</div>
     <div class="stock-row">{{ _('المتبقي:') }} {{ row.item.available_qty|round(1) if row.item.available_qty else 0 }} {{ row.item.unit or '' }}</div>
     <div class="stock-row">{{ _('المستهلك اليوم:') }} {{ row.stats.consumed_day|round(1) }} — {{ _('بالشهر:') }} {{ row.stats.consumed_month|round(1) }}</div>
+    {{ stock_alert(row.alert, row.item.unit) }}
   </div>
   {% else %}
   <p class="empty">{{ _('ما فيه أصناف علف مسجَّلة.') }}</p>
@@ -151,6 +182,7 @@
     <div class="stock-name">{{ row.item.name }}</div>
     <div class="stock-row">{{ _('المتبقي:') }} {{ row.item.available_qty|round(1) if row.item.available_qty else 0 }} {{ row.item.unit or '' }}</div>
     <div class="stock-row">{{ _('المستهلك اليوم:') }} {{ row.stats.consumed_day|round(1) }} — {{ _('بالشهر:') }} {{ row.stats.consumed_month|round(1) }}</div>
+    {{ stock_alert(row.alert, row.item.unit) }}
   </div>
   {% else %}
   <p class="empty">{{ _('ما فيه أدوية مسجَّلة.') }}</p>
@@ -165,6 +197,7 @@
     <div class="stock-name">{{ row.item.name }}</div>
     <div class="stock-row">{{ _('المتبقي:') }} {{ row.item.available_qty|round(1) if row.item.available_qty else 0 }} {{ row.item.unit or '' }}</div>
     <div class="stock-row">{{ _('المصروف اليوم:') }} {{ row.stats.consumed_day|round(1) }} — {{ _('بالشهر:') }} {{ row.stats.consumed_month|round(1) }}</div>
+    {{ stock_alert(row.alert, row.item.unit) }}
     {% if row.borrows %}
     <div class="stock-row" style="color:var(--warn); font-weight:700;">
       ⏳ {{ _('مستعارة حالياً:') }}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-12 01:26+0300\n"
+"POT-Creation-Date: 2026-08-12 01:49+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -920,8 +920,8 @@ msgid "%(n)s حساب نشط."
 msgstr "%(n)s active accounts."
 
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
-#: app/templates/base.html:482 app/templates/family_view.html:128
-#: app/templates/family_view.html:148 app/templates/health/pharmacy_list.html:5
+#: app/templates/base.html:482 app/templates/family_view.html:158
+#: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
 #: app/templates/home.html:101
 msgid "الصيدلية"
 msgstr "Pharmacy"
@@ -2822,7 +2822,7 @@ msgstr "Name"
 msgid "إضافة"
 msgstr "Add"
 
-#: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
+#: app/templates/animal_option_form.html:11 app/templates/family_view.html:140
 #: app/templates/finance/list.html:59
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
@@ -3437,8 +3437,8 @@ msgstr "Automatic ration balancer"
 msgid "المستودعات"
 msgstr "Warehouses"
 
-#: app/templates/base.html:509 app/templates/family_view.html:129
-#: app/templates/family_view.html:162
+#: app/templates/base.html:509 app/templates/family_view.html:159
+#: app/templates/family_view.html:194
 msgid "المعدات"
 msgstr "Equipment"
 
@@ -3458,8 +3458,8 @@ msgstr "Climate & heat stress radar"
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:523 app/templates/family_view.html:67
-#: app/templates/family_view.html:74 app/templates/home.html:84
+#: app/templates/base.html:523 app/templates/family_view.html:97
+#: app/templates/family_view.html:104 app/templates/home.html:84
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
@@ -3908,86 +3908,104 @@ msgstr "Contact for price"
 msgid "ما فيه رؤوس جاهزة للبيع حالياً."
 msgstr "No animals ready for sale currently."
 
-#: app/templates/family_view.html:6 app/templates/family_view.html:65
+#: app/templates/family_view.html:6 app/templates/family_view.html:95
 msgid "متابعة المزرعة"
 msgstr "Farm follow-up"
 
-#: app/templates/family_view.html:68 app/templates/family_view.html:126
+#: app/templates/family_view.html:76
+msgid "تنبيه المخزون"
+msgstr "Stock alert"
+
+#: app/templates/family_view.html:80
+#, python-format
+msgid "المخزون منخفض — يحتاج شراء تقريباً %(qty)s %(unit)s لتغطية شهر كامل بالمعدل الحالي."
+msgstr "Stock is low — needs roughly %(qty)s %(unit)s to cover a full month at the current rate."
+
+#: app/templates/family_view.html:82
+#, python-format
+msgid "الكمية الحالية تكفي إلى تاريخ: %(date)s"
+msgstr "Current quantity lasts until: %(date)s"
+
+#: app/templates/family_view.html:84
+msgid "ما فيه استهلاك مسجَّل بعد لهذا الصنف."
+msgstr "No consumption recorded yet for this item."
+
+#: app/templates/family_view.html:98 app/templates/family_view.html:156
 msgid "المخزون"
 msgstr "Inventory"
 
-#: app/templates/family_view.html:73 app/templates/family_view.html:82
-#: app/templates/family_view.html:125 app/templates/family_view.html:133
-#: app/templates/family_view.html:147 app/templates/family_view.html:161
+#: app/templates/family_view.html:103 app/templates/family_view.html:112
+#: app/templates/family_view.html:155 app/templates/family_view.html:163
+#: app/templates/family_view.html:178 app/templates/family_view.html:193
 msgid "رجوع"
 msgstr "Back"
 
-#: app/templates/family_view.html:89
+#: app/templates/family_view.html:119
 msgid "قفل المهمة"
 msgstr "Task locked"
 
-#: app/templates/family_view.html:89
+#: app/templates/family_view.html:119
 msgid "ما قدر"
 msgstr "Couldn't do it"
 
-#: app/templates/family_view.html:93
+#: app/templates/family_view.html:123
 msgid "السبب:"
 msgstr "Reason:"
 
-#: app/templates/family_view.html:99
+#: app/templates/family_view.html:129
 msgid "باقي"
 msgstr "Remaining"
 
-#: app/templates/family_view.html:102 app/templates/team/task_detail.html:9
+#: app/templates/family_view.html:132 app/templates/team/task_detail.html:9
 #: app/templates/team/worker_report_form.html:33
 msgid "الموعد:"
 msgstr "Due:"
 
-#: app/templates/family_view.html:106
+#: app/templates/family_view.html:136
 #: app/templates/team/_suggested_tasks_rows.html:21
 #: app/templates/team/report_detail.html:51
 msgid "تأجيل"
 msgstr "Postpone"
 
-#: app/templates/family_view.html:118
+#: app/templates/family_view.html:148
 msgid "ما فيه مهام حالياً."
 msgstr "No tasks currently."
 
-#: app/templates/family_view.html:127 app/templates/family_view.html:134
+#: app/templates/family_view.html:157 app/templates/family_view.html:164
 msgid "الأعلاف"
 msgstr "Feed"
 
-#: app/templates/family_view.html:138 app/templates/family_view.html:152
-#: app/templates/family_view.html:166
+#: app/templates/family_view.html:168 app/templates/family_view.html:183
+#: app/templates/family_view.html:198
 msgid "المتبقي:"
 msgstr "Remaining:"
 
-#: app/templates/family_view.html:139 app/templates/family_view.html:153
+#: app/templates/family_view.html:169 app/templates/family_view.html:184
 msgid "المستهلك اليوم:"
 msgstr "Consumed today:"
 
-#: app/templates/family_view.html:139 app/templates/family_view.html:153
-#: app/templates/family_view.html:167
+#: app/templates/family_view.html:169 app/templates/family_view.html:184
+#: app/templates/family_view.html:199
 msgid "بالشهر:"
 msgstr "This month:"
 
-#: app/templates/family_view.html:142
+#: app/templates/family_view.html:173
 msgid "ما فيه أصناف علف مسجَّلة."
 msgstr "No feed items registered."
 
-#: app/templates/family_view.html:156
+#: app/templates/family_view.html:188
 msgid "ما فيه أدوية مسجَّلة."
 msgstr "No medicines registered."
 
-#: app/templates/family_view.html:167
+#: app/templates/family_view.html:199
 msgid "المصروف اليوم:"
 msgstr "Spent today:"
 
-#: app/templates/family_view.html:170
+#: app/templates/family_view.html:203
 msgid "مستعارة حالياً:"
 msgstr "Currently borrowed:"
 
-#: app/templates/family_view.html:178
+#: app/templates/family_view.html:211
 msgid "ما فيه أصناف معدات مسجَّلة."
 msgstr "No equipment items registered."
 

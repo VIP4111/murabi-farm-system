@@ -1694,17 +1694,20 @@ def family_view():
         done_today, open_tasks = _tasks_for_role(role_name)
         tasks_by_role[role_name] = {"label": role_label, "done_today": done_today, "open_tasks": open_tasks}
 
+    def _with_alert(item, stats):
+        return {"item": item, "stats": stats, "alert": stock_stats_service.stock_alert_level(item, stats)}
+
     feed_items = [
-        {"item": f, "stats": stock_stats_service.feed_consumption_stats(f)}
+        _with_alert(f, stock_stats_service.feed_consumption_stats(f))
         for f in Feed.query.filter_by(status="active").order_by(Feed.name).all()
     ]
     pharmacy_items = [
-        {"item": p, "stats": stock_stats_service.pharmacy_consumption_stats(p)}
+        _with_alert(p, stock_stats_service.pharmacy_consumption_stats(p))
         for p in Pharmacy.query.filter_by(status="active").order_by(Pharmacy.name).all()
     ]
     equipment_items = [
-        {"item": e, "stats": equipment_service.consumption_stats(e),
-         "borrows": equipment_service.outstanding_borrows(e)}
+        dict(_with_alert(e, equipment_service.consumption_stats(e)),
+             borrows=equipment_service.outstanding_borrows(e))
         for e in Equipment.query.filter_by(status="active").order_by(Equipment.name).all()
     ]
 
