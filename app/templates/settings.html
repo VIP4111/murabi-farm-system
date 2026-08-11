@@ -8,7 +8,19 @@
     <label>{{ _('اسم المزرعة') }}</label><input name="farm_name" value="{{ fs.farm_name or '' }}">
     <label>{{ _('جوال المزرعة') }}</label><input name="farm_phone" value="{{ fs.farm_phone or '' }}">
     <label>{{ _('عنوان المزرعة') }}</label><input name="farm_address" value="{{ fs.farm_address or '' }}">
+    <label>{{ _('الرقم الضريبي (اختياري)') }}</label><input name="vat_number" value="{{ fs.vat_number or '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('لو عبّيته، فواتير البيع تضيف تلقائياً رمز QR مبسّط بأسلوب "فاتورة" (المرحلة الأولى بس — راجع محاسبك قبل اعتمادها فاتورة ضريبية رسمية).') }}</p>
     <button class="btn" type="submit">{{ _('حفظ بيانات المزرعة') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>{{ _('كتالوج المبيعات العام') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('رابط عام (بدون تسجيل دخول) يعرض الرؤوس الجاهزة للبيع فقط — شاركه مع المشترين المحتملين.') }}</p>
+  <input type="text" readonly value="{{ url_for('core.sales_catalog', token=fs.sales_catalog_token, _external=True) }}" onclick="this.select();" style="font-size:12px;">
+  <form method="post" action="{{ url_for('core.regenerate_catalog_token') }}" onsubmit="return confirm('{{ _('توليد رابط جديد يلغي الرابط الحالي فوراً — متأكد؟') }}');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn light" type="submit" style="font-size:12px; padding:6px 12px;">{{ _('توليد رابط جديد') }}</button>
   </form>
 </div>
 

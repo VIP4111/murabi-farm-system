@@ -22,6 +22,17 @@ class FarmSettings(db.Model):
     farm_phone = db.Column(db.String(30), nullable=True)
     farm_address = db.Column(db.String(255), nullable=True)
 
+    # الرقم الضريبي (بند إضافي 184) — اختياري تماماً، فاضي = صاحب
+    # الحلال غير مسجَّل بضريبة القيمة المضافة، فما يظهر أي رمز QR
+    # بالفاتورة. تعبئته لا تعني تفعيل حساب ضريبة تلقائي (راجع
+    # app/core/zatca_service.py لتفاصيل الحدود القانونية).
+    vat_number = db.Column(db.String(30), nullable=True)
+
+    # رمز مشاركة كتالوج المبيعات العام (بند إضافي 185) — يُولَّد مرة
+    # واحدة تلقائياً، صاحب الحلال يقدر يعيد توليده من الإعدادات لو
+    # حبّ يلغي الرابط القديم (مثلاً بعد ما شاركه بمكان غلط).
+    sales_catalog_token = db.Column(db.String(40), nullable=True)
+
     gestation_days = db.Column(db.Integer, default=150, nullable=False)
     sponge_duration_days = db.Column(db.Integer, default=14, nullable=False)
     ram_entry_after_sponge_days = db.Column(db.Integer, default=1, nullable=False)
@@ -141,3 +152,11 @@ class FarmSettings(db.Model):
             db.session.add(settings)
             db.session.commit()
         return settings
+
+    def ensure_catalog_token(self) -> str:
+        """يولّد رمز مشاركة كتالوج المبيعات أول مرة فقط لو ما كان موجوداً."""
+        if not self.sales_catalog_token:
+            import secrets
+            self.sales_catalog_token = secrets.token_urlsafe(24)
+            db.session.commit()
+        return self.sales_catalog_token

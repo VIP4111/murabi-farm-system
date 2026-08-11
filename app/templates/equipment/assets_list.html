@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% set category_labels = {'shade': _('مظلة'), 'generator': _('مولّد'), 'waterer': _('سقاية آلية'), 'pump': _('مضخة مياه'), 'other': _('أخرى')} %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('الأصول والصيانة الدورية') }}</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('equipment.utilities_list') }}">💧 {{ _('استهلاك الطاقة والماء') }}</a>
+      {% if current_user.has_permission('equipment.manage') %}<a class="btn" href="{{ url_for('equipment.assets_new') }}">+ {{ _('أصل جديد') }}</a>{% endif %}
+    </div>
+  </div>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('آخر صيانة') }}</th><th>{{ _('الصيانة القادمة') }}</th><th></th></tr>
+    {% for a in assets %}
+    <tr style="{{ 'background:#fff5f2;' if a.is_due }}">
+      <td>{{ a.name }}</td>
+      <td>{{ category_labels.get(a.category, a.category) }}</td>
+      <td>{{ a.barn.barn_name if a.barn else '-' }}</td>
+      <td>{{ a.last_maintenance_date or '-' }}</td>
+      <td>{% if a.next_due %}{{ a.next_due }}{% if a.is_due %} <span class="badge off">⚠️ {{ _('مستحقة') }}</span>{% endif %}{% else %}{{ _('بدون جدولة') }}{% endif %}</td>
+      <td><a class="btn light" href="{{ url_for('equipment.asset_maintenance', asset_id=a.id) }}" style="padding:4px 10px; font-size:12px;">{{ _('سجل الصيانة') }}</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">{{ _('ما فيه أصول مسجّلة بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

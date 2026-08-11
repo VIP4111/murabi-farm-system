@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('equipment.assets_list') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الأصول') }}</a>
+  <h2 style="margin-top:12px;">{{ _('سجل صيانة:') }} {{ asset.name }}</h2>
+</div>
+
+{% if current_user.has_permission('equipment.manage') %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('تسجيل صيانة جديدة') }}</h3>
+  <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">
+    <label>{{ _('التكلفة (اختياري)') }}</label><input name="cost" type="number" step="0.01">
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('ملاحظات') }}</th><th>{{ _('بواسطة') }}</th></tr>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.date }}</td>
+      <td>{{ log.cost or '-' }}</td>
+      <td>{{ log.notes or '-' }}</td>
+      <td>{{ log.performed_by.name if log.performed_by else '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد صيانة مسجّلة بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

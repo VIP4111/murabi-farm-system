@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% set type_labels = {'water': _('ماء'), 'electricity': _('كهرباء')} %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>💧 {{ _('استهلاك الطاقة والماء') }}</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('equipment.assets_list') }}">← {{ _('الأصول') }}</a>
+      {% if current_user.has_permission('equipment.manage') %}<a class="btn" href="{{ url_for('equipment.utilities_new') }}">+ {{ _('تسجيل قراءة') }}</a>{% endif %}
+    </div>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">{{ _('تسجيل يدوي دوري — يساعدك تكتشف تسريب أو استهلاك غير طبيعي بمقارنة القراءات مع الوقت.') }}</p>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('ملاحظات') }}</th></tr>
+    {% for r in readings %}
+    <tr>
+      <td>{{ r.date }}</td>
+      <td>{{ type_labels.get(r.utility_type, r.utility_type) }}</td>
+      <td>{{ r.quantity }} {{ r.unit or '' }}</td>
+      <td>{{ r.cost or '-' }}</td>
+      <td>{{ r.notes or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد قراءات مسجّلة بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

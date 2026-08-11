@@ -36,6 +36,7 @@ from app.models.animal_batch import AnimalBatch
 from app.models.warehouse import Warehouse, FeedWarehouseStock, PharmacyWarehouseStock
 from app.models.equipment import Equipment, EquipmentMovement
 from app.models.checklist import ChecklistItem, ChecklistCompletion
+from app.models.asset import Asset, AssetMaintenanceLog, UtilityReading
 
 __all__ = [
     "Role", "Permission", "role_permissions",
@@ -62,4 +63,5 @@ __all__ = [
     "Equipment", "EquipmentMovement",
     "ProcessedTelegramUpdate",
     "ChecklistItem", "ChecklistCompletion",
+    "Asset", "AssetMaintenanceLog", "UtilityReading",
 ]

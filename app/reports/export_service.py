@@ -178,6 +178,22 @@ def build_invoice_pdf(finance_row, animal, farm_settings) -> io.BytesIO:
         c.setFont("Arabic", 9)
         c.drawRightString(right_margin, y, ar(f"ملاحظات: {finance_row.description}"))
 
+    # رمز QR بأسلوب "فاتورة" المرحلة الأولى (بند إضافي 184) — بس لو
+    # صاحب الحلال سجّل رقماً ضريبياً فعلياً بالإعدادات؛ فاضي = بدون رمز
+    # إطلاقاً (نفس فلسفة كل ميزة اختيارية بالمشروع: صفر إعداد = صفر أثر).
+    from app.core.zatca_service import invoice_qr_image
+    from datetime import datetime as _dt
+    qr_buf = invoice_qr_image(
+        farm_settings=farm_settings, invoice_total=finance_row.amount,
+        timestamp=_dt.combine(finance_row.date, _dt.min.time()),
+    )
+    if qr_buf:
+        from reportlab.lib.utils import ImageReader
+        qr_size = 28 * mm
+        c.drawImage(ImageReader(qr_buf), left_margin, 15 * mm, width=qr_size, height=qr_size)
+        c.setFont("Arabic", 7)
+        c.drawString(left_margin, 12 * mm, ar("QR مبسّط (المرحلة الأولى) — ليس فاتورة ضريبية معتمدة رسمياً"))
+
     c.save()
     buf.seek(0)
     return buf

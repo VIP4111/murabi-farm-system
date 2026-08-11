@@ -71,6 +71,35 @@ def send_test_email_report():
     return redirect(request.referrer or url_for("core.home"))
 
 
+@core_bp.route("/catalog/<token>")
+def sales_catalog(token):
+    """كتالوج مبيعات عام (بند إضافي 185) — بدون تسجيل دخول، رابط
+    مشاركة واحد بالرمز السري لكل مزرعة. يعرض حصراً الرؤوس النشطة
+    بغرض "بيع" — صفر بيانات حساسة (مالية، صحية تفصيلية، أسماء فريق)."""
+    fs = FarmSettings.get()
+    if not fs.sales_catalog_token or token != fs.sales_catalog_token:
+        abort(404)
+    animals = Animal.query.filter_by(status="active", purpose="بيع").order_by(Animal.animal_no).all()
+    from app.core.animal_profile_service import _age_label
+    rows = [{
+        "animal": a, "age_label": _age_label(a.birth_date),
+        "estimated_value": a.workflow.estimated_value if a.workflow else None,
+    } for a in animals]
+    return render_template("catalog_public.html", rows=rows, farm_settings=fs)
+
+
+@core_bp.route("/settings/catalog-token/regenerate", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def regenerate_catalog_token():
+    fs = FarmSettings.get()
+    import secrets
+    fs.sales_catalog_token = secrets.token_urlsafe(24)
+    db.session.commit()
+    flash("تم توليد رابط كتالوج جديد — الرابط القديم ما عاد يشتغل", "success")
+    return redirect(url_for("core.settings_home"))
+
+
 @core_bp.route("/")
 @login_required
 def home():
@@ -1349,7 +1378,9 @@ def settings_home():
     from app.models import FarmSettings
     services = ServiceToggle.query.order_by(ServiceToggle.name).all()
     roles = Role.query.order_by(Role.id).all()
-    return render_template("settings.html", services=services, roles=roles, fs=FarmSettings.get())
+    fs = FarmSettings.get()
+    fs.ensure_catalog_token()
+    return render_template("settings.html", services=services, roles=roles, fs=fs)
 
 
 @core_bp.route("/settings/farm", methods=["POST"])
@@ -1394,6 +1425,7 @@ def farm_identity_save():
     fs.farm_name = request.form.get("farm_name") or None
     fs.farm_phone = request.form.get("farm_phone") or None
     fs.farm_address = request.form.get("farm_address") or None
+    fs.vat_number = request.form.get("vat_number") or None
     db.session.add(fs)
     db.session.commit()
     flash("تم حفظ بيانات المزرعة", "success")

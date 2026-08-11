@@ -5,7 +5,8 @@ from app.equipment import equipment_bp
 from app.equipment import equipment_service as svc
 from app.auth.decorators import require_permission
 from app.extensions import db
-from app.models import Equipment, EquipmentMovement, Barn, User
+from app.models import Equipment, EquipmentMovement, Barn, User, Asset, AssetMaintenanceLog, UtilityReading
+from datetime import date
 
 
 @equipment_bp.route("/items")
@@ -94,3 +95,88 @@ def movement_return(movement_id):
     except ValueError as e:
         flash(str(e), "error")
     return redirect(url_for("equipment.items_movement", item_id=movement.equipment_id))
+
+
+# ---------- إدارة الأصول والصيانة الدورية (بند إضافي 186) ----------
+
+@equipment_bp.route("/assets")
+@login_required
+@require_permission("equipment.view")
+def assets_list():
+    assets = Asset.query.filter_by(status="active").order_by(Asset.name).all()
+    today = date.today()
+    for a in assets:
+        if a.maintenance_interval_days:
+            reference = a.last_maintenance_date or a.created_at.date()
+            from datetime import timedelta
+            a.next_due = reference + timedelta(days=a.maintenance_interval_days)
+            a.is_due = a.next_due <= today
+        else:
+            a.next_due = None
+            a.is_due = False
+    return render_template("equipment/assets_list.html", assets=assets)
+
+
+@equipment_bp.route("/assets/new", methods=["GET", "POST"])
+@login_required
+@require_permission("equipment.manage")
+def assets_new():
+    if request.method == "POST":
+        asset = Asset(
+            name=request.form["name"], category=request.form.get("category") or "other",
+            barn_id=request.form.get("barn_id") or None,
+            maintenance_interval_days=int(request.form["maintenance_interval_days"]) if request.form.get("maintenance_interval_days") else None,
+            notes=request.form.get("notes"),
+        )
+        db.session.add(asset)
+        db.session.commit()
+        flash("تمت إضافة الأصل", "success")
+        return redirect(url_for("equipment.assets_list"))
+    return render_template("equipment/asset_form.html", barns=Barn.query.order_by(Barn.barn_name).all())
+
+
+@equipment_bp.route("/assets/<int:asset_id>/maintenance", methods=["GET", "POST"])
+@login_required
+@require_permission("equipment.manage")
+def asset_maintenance(asset_id):
+    asset = Asset.query.get_or_404(asset_id)
+    if request.method == "POST":
+        maintenance_date = date.fromisoformat(request.form["date"])
+        db.session.add(AssetMaintenanceLog(
+            asset_id=asset.id, date=maintenance_date, notes=request.form.get("notes"),
+            cost=float(request.form["cost"]) if request.form.get("cost") else None,
+            performed_by_id=current_user.id,
+        ))
+        asset.last_maintenance_date = maintenance_date
+        db.session.commit()
+        flash("تم تسجيل الصيانة", "success")
+        return redirect(url_for("equipment.asset_maintenance", asset_id=asset.id))
+    logs = AssetMaintenanceLog.query.filter_by(asset_id=asset.id).order_by(AssetMaintenanceLog.date.desc()).all()
+    return render_template("equipment/asset_maintenance.html", asset=asset, logs=logs, today=date.today().isoformat())
+
+
+# ---------- استهلاك الطاقة والماء (بند إضافي 186) ----------
+
+@equipment_bp.route("/utilities")
+@login_required
+@require_permission("equipment.view")
+def utilities_list():
+    readings = UtilityReading.query.order_by(UtilityReading.date.desc()).limit(60).all()
+    return render_template("equipment/utilities_list.html", readings=readings)
+
+
+@equipment_bp.route("/utilities/new", methods=["GET", "POST"])
+@login_required
+@require_permission("equipment.manage")
+def utilities_new():
+    if request.method == "POST":
+        db.session.add(UtilityReading(
+            utility_type=request.form["utility_type"], date=date.fromisoformat(request.form["date"]),
+            quantity=float(request.form["quantity"]), unit=request.form.get("unit"),
+            cost=float(request.form["cost"]) if request.form.get("cost") else None,
+            notes=request.form.get("notes"),
+        ))
+        db.session.commit()
+        flash("تم تسجيل القراءة", "success")
+        return redirect(url_for("equipment.utilities_list"))
+    return render_template("equipment/utility_form.html", today=date.today().isoformat())

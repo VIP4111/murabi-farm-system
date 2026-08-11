@@ -490,6 +490,10 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     scheduled_care_service.generate_vaccination_due_tasks()
     scheduled_care_service.generate_overdue_weight_tasks()
 
+    # صيانة أصول مستحقة (بند إضافي 186) — نفس الفلسفة.
+    from app.core import asset_maintenance_service
+    asset_maintenance_service.generate_maintenance_due_tasks()
+
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()

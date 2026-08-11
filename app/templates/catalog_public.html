@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ farm_settings.farm_name or _('كتالوج المبيعات') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>🐑 {{ farm_settings.farm_name or _('كتالوج المبيعات') }}</h2>
+  {% if farm_settings.farm_phone %}<p style="color:var(--muted);">📞 {{ farm_settings.farm_phone }}</p>{% endif %}
+  <p style="color:var(--muted); font-size:13px;">{{ _('الرؤوس الجاهزة للبيع حالياً — الأسعار تقديرية وقابلة للتفاوض، تواصل مباشرة معنا.') }}</p>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('العمر') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('السعر التقديري') }}</th></tr>
+    {% for row in rows %}
+    <tr>
+      <td>{{ row.animal.animal_no }}</td>
+      <td>{{ row.animal.gender or '-' }}</td>
+      <td>{{ row.age_label or '-' }}</td>
+      <td>{{ row.animal.weight or '-' }}</td>
+      <td>{{ "%.2f"|format(row.estimated_value) if row.estimated_value is not none else _('تواصل للسعر') }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه رؤوس جاهزة للبيع حالياً.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}
