@@ -97,19 +97,34 @@
     }
     .side-menu-head b{display:block; font-size:18px;}
     .side-menu-head small{display:block; color:var(--muted); margin-top:4px;}
-    .drawer-group{margin:14px 0 18px;}
+    .drawer-group{margin:0 0 8px; border-bottom:1px solid var(--line);}
     .drawer-group-title{color:var(--muted); font-size:12px; font-weight:900; margin:0 2px 8px;}
+    /* أقسام قابلة للطي (بند إضافي 198) — <details>/<summary> بدل قائمة
+       طويلة دائمة الظهور، يقلّل طول الصفحة بشكل كبير على الجوال. */
+    details.drawer-group{padding:10px 2px;}
+    details.drawer-group summary{
+      list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px;
+      color:var(--text); font-size:14px; font-weight:800; padding:4px 2px;
+    }
+    details.drawer-group summary::-webkit-details-marker{display:none;}
+    details.drawer-group summary::after{content:'›'; margin-inline-start:auto; font-size:20px; color:var(--muted); transition:transform .15s;}
+    details.drawer-group[open] summary::after{transform:rotate(90deg);}
+    .drawer-group-icon{width:32px; height:32px; border-radius:12px; background:#f4efe7; display:grid; place-items:center; flex:0 0 auto; color:var(--primary);}
+    .drawer-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px;}
+    .drawer-grid:has(.drawer-link:only-child){grid-template-columns:1fr;}
     .drawer-link{
       width:100%; border:1px solid var(--line); background:#fff; color:var(--text);
-      border-radius:16px; padding:10px; margin-bottom:8px; display:flex; align-items:center;
+      border-radius:14px; padding:10px 8px; display:flex; align-items:center;
       gap:10px; text-align:right; cursor:pointer; text-decoration:none;
-      box-shadow:0 6px 16px rgba(70,45,25,.06);
+      box-shadow:0 4px 12px rgba(70,45,25,.05);
     }
+    .drawer-grid .drawer-link{flex-direction:column; text-align:center; padding:12px 6px; gap:2px; justify-content:center; min-height:56px;}
     .drawer-link.active{border-color:var(--primary); color:var(--primary); background:#f7efe4; box-shadow:0 0 0 2px rgba(111,78,47,.08);}
     .drawer-link.danger{color:var(--danger);}
     .drawer-icon{width:34px; height:34px; border-radius:13px; background:#f4efe7; display:grid; place-items:center; flex:0 0 auto; font-size:18px;}
     .drawer-text{min-width:0; flex:1;}
     .drawer-text b{display:block; font-size:14px; line-height:1.4;}
+    .drawer-grid .drawer-text b{font-size:12.5px; line-height:1.3;}
     .x{width:38px; height:38px; border:0; border-radius:14px; background:#fff; color:var(--danger); font-weight:900; cursor:pointer;}
 
     /* -------- شبكة إجراءات سريعة (الرئيسية) -------- */
@@ -376,6 +391,9 @@
     :root[data-theme="dark"] .drawer-link{background:#2c2620; color:var(--text); box-shadow:none;}
     :root[data-theme="dark"] .drawer-link.active{background:#3a2f1f;}
     :root[data-theme="dark"] .drawer-icon{background:#1b1712;}
+    :root[data-theme="dark"] .drawer-group-icon{background:#1b1712;}
+    :root[data-theme="dark"] .drawer-group{border-color:#3d342a;}
+    :root[data-theme="dark"] details.drawer-group summary{color:var(--text);}
     :root[data-theme="dark"] .x{background:#2c2620;}
     :root[data-theme="dark"] .quick a{background:#2c2620; box-shadow:none;}
     :root[data-theme="dark"] td{background:#211c16;}
@@ -452,99 +470,136 @@
         <button class="x" onclick="closeDrawer()">✕</button>
       </div>
 
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('الرئيسية') }}</div>
-        <a class="drawer-link" href="{{ url_for('core.home') }}"><span class="drawer-icon">🏠</span><span class="drawer-text"><b>{{ _('الرئيسية') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('core.today') }}"><span class="drawer-icon">🗓️</span><span class="drawer-text"><b>{{ _('صفحة اليوم') }}</b></span></a>
-        {% if current_user.has_permission('assistant.use') %}<a class="drawer-link" href="{{ url_for('assistant.chat') }}"><span class="drawer-icon">🤖</span><span class="drawer-text"><b>{{ _('المساعد الذكي') }}</b></span></a>{% endif %}
-      </div>
+      {% macro nav_icon(name) %}<span class="drawer-group-icon">{% if name == 'home' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg>
+      {%- elif name == 'animals' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="7" r="2"/><circle cx="12" cy="5" r="2"/></svg>
+      {%- elif name == 'health' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>
+      {%- elif name == 'feed' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c9 0 14-5 14-14V5h-2C8 5 3 10 3 19v2"/><path d="M5 21c0-6 4-10 10-12"/></svg>
+      {%- elif name == 'equipment' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2-2z"/></svg>
+      {%- elif name == 'climate' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+      {%- elif name == 'team' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17" cy="8" r="2.5"/><path d="M16 14.2c2.7.5 4.5 2.7 4.5 5.8"/></svg>
+      {%- elif name == 'finance' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.4 1.3-2.5 3-2.5s3 1 3 2.2c0 3-6 1.3-6 4.3 0 1.3 1.3 2.3 3 2.3s3-1 3-2.3"/></svg>
+      {%- elif name == 'reports' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M4 20h16"/></svg>
+      {%- elif name == 'system' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a7.9 7.9 0 000-2l2-1.6-2-3.4-2.4 1a8 8 0 00-1.7-1L15 3h-4l-.3 2.5a8 8 0 00-1.7 1l-2.4-1-2 3.4L6.6 11a7.9 7.9 0 000 2l-2 1.6 2 3.4 2.4-1c.5.4 1.1.8 1.7 1L11 21h4l.3-2.5c.6-.2 1.2-.6 1.7-1l2.4 1 2-3.4-2-1.6z"/></svg>
+      {%- endif %}</span>{% endmacro %}
+
+      <details class="drawer-group" {{ 'open' if request.endpoint in ['core.home', 'core.today', 'assistant.chat'] else '' }}>
+        <summary>{{ nav_icon('home') }}{{ _('الرئيسية') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('core.home') }}"><span class="drawer-text"><b>{{ _('الرئيسية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('core.today') }}"><span class="drawer-text"><b>{{ _('صفحة اليوم') }}</b></span></a>
+        {% if current_user.has_permission('assistant.use') %}<a class="drawer-link" href="{{ url_for('assistant.chat') }}"><span class="drawer-text"><b>{{ _('المساعد الذكي') }}</b></span></a>{% endif %}
+        </div>
+      </details>
 
       {% if current_user.has_permission('animals.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('الحلال') }}</div>
-        <a class="drawer-link" href="{{ url_for('core.animals_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('الحيوانات') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('core.animals_bulk_home') }}"><span class="drawer-icon">📦</span><span class="drawer-text"><b>{{ _('الإجراء الجماعي') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('core.barns_list') }}"><span class="drawer-icon">🏚️</span><span class="drawer-text"><b>{{ _('الحظائر') }}</b></span></a>
+      {% set _animals_endpoints = ['core.animals_list', 'core.animals_bulk_home', 'core.barns_list', 'repro.matings_list', 'repro.pregnancies_list', 'repro.sonar_list', 'repro.programs_list', 'ostrich.eggs_list'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _animals_endpoints else '' }}>
+        <summary>{{ nav_icon('animals') }}{{ _('الحلال') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('core.animals_list') }}"><span class="drawer-text"><b>{{ _('الحيوانات') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('core.animals_bulk_home') }}"><span class="drawer-text"><b>{{ _('الإجراء الجماعي') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('core.barns_list') }}"><span class="drawer-text"><b>{{ _('الحظائر') }}</b></span></a>
         {% if current_user.has_permission('repro.view') %}
-        <a class="drawer-link" href="{{ url_for('repro.matings_list') }}"><span class="drawer-icon">🐑</span><span class="drawer-text"><b>{{ _('التقريع') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('repro.pregnancies_list') }}"><span class="drawer-icon">🤰</span><span class="drawer-text"><b>{{ _('تشخيص الحمل') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('repro.sonar_list') }}"><span class="drawer-icon">📟</span><span class="drawer-text"><b>{{ _('فحص السونار') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('repro.programs_list') }}"><span class="drawer-icon">🐣</span><span class="drawer-text"><b>{{ _('استخدام الاسفنجة للمتاوة') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.matings_list') }}"><span class="drawer-text"><b>{{ _('التقريع') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.pregnancies_list') }}"><span class="drawer-text"><b>{{ _('تشخيص الحمل') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.sonar_list') }}"><span class="drawer-text"><b>{{ _('فحص السونار') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('repro.programs_list') }}"><span class="drawer-text"><b>{{ _('استخدام الاسفنجة للمتاوة') }}</b></span></a>
         {% endif %}
-        {% if current_user.has_permission('repro.view') %}<a class="drawer-link" href="{{ url_for('ostrich.eggs_list') }}"><span class="drawer-icon">🦤</span><span class="drawer-text"><b>{{ _('النعام (بيض/تفقيس)') }}</b></span></a>{% endif %}
-      </div>
+        {% if current_user.has_permission('repro.view') %}<a class="drawer-link" href="{{ url_for('ostrich.eggs_list') }}"><span class="drawer-text"><b>{{ _('النعام (بيض/تفقيس)') }}</b></span></a>{% endif %}
+        </div>
+      </details>
       {% endif %}
 
       {% if current_user.has_permission('health.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('الصحة') }}</div>
-        <a class="drawer-link" href="{{ url_for('health.dashboard') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('مركز الطبيب') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.pharmacy_list') }}"><span class="drawer-icon">💊</span><span class="drawer-text"><b>{{ _('الصيدلية') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.vet_visits_list') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('الزيارات البيطرية') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.diseases_list') }}"><span class="drawer-icon">🌡️</span><span class="drawer-text"><b>{{ _('الأمراض') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.vaccinations_list') }}"><span class="drawer-icon">💉</span><span class="drawer-text"><b>{{ _('التطعيمات') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.vaccination_schedule_list') }}"><span class="drawer-icon">📅</span><span class="drawer-text"><b>{{ _('تقويم التحصينات') }}</b></span></a>
+      {% set _health_endpoints = ['health.dashboard', 'health.pharmacy_list', 'health.vet_visits_list', 'health.diseases_list', 'health.vaccinations_list', 'health.vaccination_schedule_list', 'health.diagnose_start', 'health.injection_guide', 'health.body_condition_guide', 'health.doctors_list', 'health.protocols_list'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _health_endpoints else '' }}>
+        <summary>{{ nav_icon('health') }}{{ _('الصحة') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('health.dashboard') }}"><span class="drawer-text"><b>{{ _('مركز الطبيب') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.pharmacy_list') }}"><span class="drawer-text"><b>{{ _('الصيدلية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.vet_visits_list') }}"><span class="drawer-text"><b>{{ _('الزيارات البيطرية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.diseases_list') }}"><span class="drawer-text"><b>{{ _('الأمراض') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.vaccinations_list') }}"><span class="drawer-text"><b>{{ _('التطعيمات') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.vaccination_schedule_list') }}"><span class="drawer-text"><b>{{ _('تقويم التحصينات') }}</b></span></a>
         {% if current_user.has_permission('health.manage') %}
-        <a class="drawer-link" href="{{ url_for('health.diagnose_start') }}"><span class="drawer-icon">🩺</span><span class="drawer-text"><b>{{ _('المساعد التشخيصي') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.diagnose_start') }}"><span class="drawer-text"><b>{{ _('المساعد التشخيصي') }}</b></span></a>
         {% endif %}
-        <a class="drawer-link" href="{{ url_for('health.injection_guide') }}"><span class="drawer-icon">📋</span><span class="drawer-text"><b>{{ _('دليل الحقن الميداني') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.body_condition_guide') }}"><span class="drawer-icon">📏</span><span class="drawer-text"><b>{{ _('دليل تقييم حالة الجسم') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.doctors_list') }}"><span class="drawer-icon">📞</span><span class="drawer-text"><b>{{ _('دليل الأطباء') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('health.protocols_list') }}"><span class="drawer-icon">📑</span><span class="drawer-text"><b>{{ _('بروتوكولات العلاج') }}</b></span></a>
-      </div>
+        <a class="drawer-link" href="{{ url_for('health.injection_guide') }}"><span class="drawer-text"><b>{{ _('دليل الحقن الميداني') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.body_condition_guide') }}"><span class="drawer-text"><b>{{ _('دليل تقييم حالة الجسم') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.doctors_list') }}"><span class="drawer-text"><b>{{ _('دليل الأطباء') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('health.protocols_list') }}"><span class="drawer-text"><b>{{ _('بروتوكولات العلاج') }}</b></span></a>
+        </div>
+      </details>
       {% endif %}
 
       {% if current_user.has_permission('feed.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('العلف') }}</div>
-        <a class="drawer-link" href="{{ url_for('feed.calculator') }}"><span class="drawer-icon">🌾</span><span class="drawer-text"><b>{{ _('حاسبة العلف') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('feed.fcr_report') }}"><span class="drawer-icon">📈</span><span class="drawer-text"><b>{{ _('معدل التحويل الغذائي (FCR)') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('feed.optimizer') }}"><span class="drawer-icon">⚖️</span><span class="drawer-text"><b>{{ _('موازِن العليقة التلقائي') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('warehouses.warehouses_list') }}"><span class="drawer-icon">🏬</span><span class="drawer-text"><b>{{ _('المستودعات') }}</b></span></a>
-      </div>
+      {% set _feed_endpoints = ['feed.calculator', 'feed.fcr_report', 'feed.optimizer', 'warehouses.warehouses_list'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _feed_endpoints else '' }}>
+        <summary>{{ nav_icon('feed') }}{{ _('العلف') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('feed.calculator') }}"><span class="drawer-text"><b>{{ _('حاسبة العلف') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('feed.fcr_report') }}"><span class="drawer-text"><b>{{ _('معدل التحويل الغذائي (FCR)') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('feed.optimizer') }}"><span class="drawer-text"><b>{{ _('موازِن العليقة التلقائي') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('warehouses.warehouses_list') }}"><span class="drawer-text"><b>{{ _('المستودعات') }}</b></span></a>
+        </div>
+      </details>
       {% endif %}
 
       {% if current_user.has_permission('equipment.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('المعدات') }}</div>
-        <a class="drawer-link" href="{{ url_for('equipment.items_list') }}"><span class="drawer-icon">🛠️</span><span class="drawer-text"><b>{{ _('مستودع المعدات') }}</b></span></a>
-      </div>
+      <details class="drawer-group" {{ 'open' if request.endpoint == 'equipment.items_list' else '' }}>
+        <summary>{{ nav_icon('equipment') }}{{ _('المعدات') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('equipment.items_list') }}"><span class="drawer-text"><b>{{ _('مستودع المعدات') }}</b></span></a>
+        </div>
+      </details>
       {% endif %}
 
       {% if current_user.has_permission('climate.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('المناخ') }}</div>
-        <a class="drawer-link" href="{{ url_for('climate.dashboard') }}"><span class="drawer-icon">☀️</span><span class="drawer-text"><b>{{ _('رادار المناخ والإجهاد الحراري') }}</b></span></a>
-      </div>
+      <details class="drawer-group" {{ 'open' if request.endpoint == 'climate.dashboard' else '' }}>
+        <summary>{{ nav_icon('climate') }}{{ _('المناخ') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('climate.dashboard') }}"><span class="drawer-text"><b>{{ _('رادار المناخ والإجهاد الحراري') }}</b></span></a>
+        </div>
+      </details>
       {% endif %}
 
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('الفريق') }}</div>
-        <a class="drawer-link" href="{{ url_for('team.tasks_list') }}"><span class="drawer-icon">✅</span><span class="drawer-text"><b>{{ _('المهام') }}</b></span></a>
-        <a class="drawer-link" href="{{ url_for('team.reports_list') }}"><span class="drawer-icon">📋</span><span class="drawer-text"><b>{{ _('البلاغات') }}</b></span></a>
-        {% if current_user.has_permission('users.manage') %}<a class="drawer-link" href="{{ url_for('team.members_list') }}"><span class="drawer-icon">👥</span><span class="drawer-text"><b>{{ _('أعضاء الفريق') }}</b></span></a>{% endif %}
-      </div>
+      {% set _team_endpoints = ['team.tasks_list', 'team.reports_list', 'team.members_list'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _team_endpoints else '' }}>
+        <summary>{{ nav_icon('team') }}{{ _('الفريق') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('team.tasks_list') }}"><span class="drawer-text"><b>{{ _('المهام') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('team.reports_list') }}"><span class="drawer-text"><b>{{ _('البلاغات') }}</b></span></a>
+        {% if current_user.has_permission('users.manage') %}<a class="drawer-link" href="{{ url_for('team.members_list') }}"><span class="drawer-text"><b>{{ _('أعضاء الفريق') }}</b></span></a>{% endif %}
+        </div>
+      </details>
 
       {% if current_user.has_permission('finance.full.manage') or current_user.has_permission('finance.health.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('المالية') }}</div>
-        {% if current_user.has_permission('finance.full.manage') %}<a class="drawer-link" href="{{ url_for('finance.finance_list') }}"><span class="drawer-icon">💰</span><span class="drawer-text"><b>{{ _('المالية') }}</b></span></a>{% endif %}
-        {% if current_user.has_permission('finance.health.view') and not current_user.has_permission('finance.full.manage') %}<a class="drawer-link" href="{{ url_for('finance.finance_health_view') }}"><span class="drawer-icon">💰</span><span class="drawer-text"><b>{{ _('مالية الصحة') }}</b></span></a>{% endif %}
-      </div>
+      {% set _finance_endpoints = ['finance.finance_list', 'finance.finance_health_view'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _finance_endpoints else '' }}>
+        <summary>{{ nav_icon('finance') }}{{ _('المالية') }}</summary>
+        <div class="drawer-grid">
+        {% if current_user.has_permission('finance.full.manage') %}<a class="drawer-link" href="{{ url_for('finance.finance_list') }}"><span class="drawer-text"><b>{{ _('المالية') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('finance.health.view') and not current_user.has_permission('finance.full.manage') %}<a class="drawer-link" href="{{ url_for('finance.finance_health_view') }}"><span class="drawer-text"><b>{{ _('مالية الصحة') }}</b></span></a>{% endif %}
+        </div>
+      </details>
       {% endif %}
 
       {% if current_user.has_permission('analytics.view') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">{{ _('التقارير') }}</div>
-        <a class="drawer-link" href="{{ url_for('reports.overview') }}"><span class="drawer-icon">📊</span><span class="drawer-text"><b>{{ _('التقارير التحليلية') }}</b></span></a>
-      </div>
+      <details class="drawer-group" {{ 'open' if request.endpoint == 'reports.overview' else '' }}>
+        <summary>{{ nav_icon('reports') }}{{ _('التقارير') }}</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('reports.overview') }}"><span class="drawer-text"><b>{{ _('التقارير التحليلية') }}</b></span></a>
+        </div>
+      </details>
       {% endif %}
 
       {% if current_user.has_permission('settings.manage') %}
-      <div class="drawer-group">
-        <div class="drawer-group-title">النظام</div>
-        <a class="drawer-link" href="{{ url_for('core.settings_home') }}"><span class="drawer-icon">⚙️</span><span class="drawer-text"><b>الإعدادات</b></span></a>
-      </div>
+      <details class="drawer-group" {{ 'open' if request.endpoint == 'core.settings_home' else '' }}>
+        <summary>{{ nav_icon('system') }}النظام</summary>
+        <div class="drawer-grid">
+        <a class="drawer-link" href="{{ url_for('core.settings_home') }}"><span class="drawer-text"><b>الإعدادات</b></span></a>
+        </div>
+      </details>
       {% endif %}
 
       <div class="drawer-group">
