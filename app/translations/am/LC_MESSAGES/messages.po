@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 17:01+0300\n"
+"POT-Creation-Date: 2026-08-11 20:48+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1067,6 +1067,7 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 #: app/templates/bulk_action_form.html:450 app/templates/catalog_public.html:13
 #: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
+#: app/templates/finance/culling_index.html:25
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "ቁጥር"
@@ -1101,7 +1102,7 @@ msgstr "ጾታ"
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:34
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:35
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1189,12 +1190,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "የተቀበለ የውጭ ድጋፍ (ዕዳ)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "سداد دين"
 msgstr "የዕዳ ክፍያ"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:34
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:35
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "ንጥል"
@@ -1217,7 +1218,7 @@ msgstr "እንስሳ"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:437 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 msgid "المبلغ"
 msgstr "መጠን"
 
@@ -1291,7 +1292,7 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 #: app/templates/equipment/utility_form.html:7
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:34 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:35 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1511,7 +1512,7 @@ msgstr "በእርሻው የተወለደ"
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "شراء"
 msgstr "ግዢ"
 
@@ -1925,7 +1926,7 @@ msgstr "ክብደት"
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2196,12 +2197,12 @@ msgid "الوصف"
 msgstr "መግለጫ"
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "بيع"
 msgstr "ሽያጭ"
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "مصروف"
 msgstr "ወጪ"
 
@@ -2421,7 +2422,7 @@ msgid "إضافة"
 msgstr "ጨምር"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:57
+#: app/templates/finance/list.html:58
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -5232,7 +5233,7 @@ msgstr "የአሃድ ዋጋ"
 msgid "الكمية المتوفرة"
 msgstr "ያለ መጠን"
 
-#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
+#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:77
 msgid "مكوّنات العلف"
 msgstr "የመኖ ንጥረ ነገሮች"
 
@@ -5361,7 +5362,24 @@ msgstr "መቶኛ"
 msgid "إجمالي التكلفة اليومية للرأس"
 msgstr "ለእንስሳ ጠቅላላ ዕለታዊ ወጪ"
 
-#: app/templates/feed/optimizer.html:63
+#: app/templates/feed/optimizer.html:65
+msgid "التكلفة اليومية الحالية (من خطة الحظيرة الفعلية)"
+msgstr "የአሁኑ ዕለታዊ ወጪ (ከበረት ንቁ ዕቅድ)"
+
+#: app/templates/feed/optimizer.html:68
+msgid "توفير يومي/رأس"
+msgstr "ዕለታዊ ቁጠባ/እንስሳ"
+
+#: app/templates/feed/optimizer.html:68
+msgid "زيادة تكلفة يومية/رأس (الخلطة الحالية أرخص فعلاً)"
+msgstr "ዕለታዊ ወጪ ጭማሪ/እንስሳ (የአሁኑ ድብልቅ በእውነት ርካሽ ነው)"
+
+#: app/templates/feed/optimizer.html:72
+#, python-format
+msgid "يعني توفير تقديري %(monthly)s شهرياً لهذا الرأس لو طبّقت الخلطة المقترحة بدل الحالية."
+msgstr "ይህ ማለት ከአሁኑ ይልቅ የተጠቆመውን ድብልቅ ከተጠቀሙ ለዚህ እንስሳ የተገመተ %(monthly)s ወርሃዊ ቁጠባ ማለት ነው።"
+
+#: app/templates/feed/optimizer.html:77
 msgid "مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع"
 msgstr "በድብልቅ ውስጥ አንድ ወይም ከዚያ በላይ ንጥረ ነገር ክምችት ከሚያስፈልገው መጠን ያነሰ ነው — ይመልከቱ"
 
@@ -5427,12 +5445,13 @@ msgid "التحليل المالي ونقطة التعادل"
 msgstr "የገንዘብ ትንተና እና ዕኩልነት ነጥብ"
 
 #: app/templates/finance/break_even_report.html:7
-#: app/templates/finance/list.html:28 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:29 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Excel ላክ"
 
 #: app/templates/finance/break_even_report.html:8
+#: app/templates/finance/culling_index.html:6
 #: app/templates/finance/monthly_cost_report.html:6
 msgid "رجوع للمالية"
 msgstr "ወደ ገንዘብ ተመለስ"
@@ -5468,6 +5487,43 @@ msgstr "የተገመተ ዋጋ ጨምር"
 #: app/templates/finance/break_even_report.html:40
 msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "ለመተንተን ንቁ እንስሳት የሉም።"
+
+#: app/templates/finance/culling_index.html:5
+#: app/templates/finance/list.html:28
+msgid "مؤشر الاستبعاد المالي"
+msgstr "የማስወገጃ መለኪያ"
+
+#: app/templates/finance/culling_index.html:9
+msgid "يعرض الإناث \"غير الدافعة\" (بالغة، بدون أي ولادة خلال آخر 400 يوم) مع تكلفة استمرار الاحتفاظ بها شهرياً (علف + صحة آخر 6 أشهر) — لأنها بحكم التعريف بدون قيمة إنتاجية بهذي الفترة. هذا رقم مالي فقط، مو قرار بيع تلقائي — راجع دائماً السجل الطبي والتكاثري (تأخر تقريع مؤقت، مرض مؤقت...) قبل أي قرار فعلي."
+msgstr "\"የማያመርቱ\" ሴቶችን (አዋቂ፣ ባለፉት 400 ቀናት ውስጥ ምንም ልደት የሌላቸው) በወር ማቆየት ወጪ (መኖ + ባለፉት 6 ወራት ጤና) ያሳያል — በትርጓሜ በዚህ ጊዜ ውስጥ ምንም የምርት ዋጋ ስላላፈሩ። ይህ የገንዘብ ቁጥር ብቻ ነው፣ ራስ-ሰር የሽያጭ ውሳኔ አይደለም — ከማንኛውም ትክክለኛ ውሳኔ በፊት ሁልጊዜ የሕክምና እና የመራቢያ መዝገብን (ጊዜያዊ የማዳቀል መዘግየት፣ ጊዜያዊ በሽታ...) ይገምግሙ።"
+
+#: app/templates/finance/culling_index.html:17
+msgid "إجمالي التوفير الشهري المحتمل لو استُبعدت كل هذي الرؤوس"
+msgstr "እነዚህ ሁሉ እንስሳት ቢወገዱ ጠቅላላ ሊሆን የሚችል ወርሃዊ ቁጠባ"
+
+#: app/templates/finance/culling_index.html:25
+msgid "تكلفة العلف الشهرية التقديرية"
+msgstr "የተገመተ ወርሃዊ የመኖ ወጪ"
+
+#: app/templates/finance/culling_index.html:25
+msgid "متوسط تكلفة الصحة الشهرية (آخر 6 أشهر)"
+msgstr "አማካይ ወርሃዊ የጤና ወጪ (ባለፉት 6 ወራት)"
+
+#: app/templates/finance/culling_index.html:25
+msgid "إجمالي التكلفة الشهرية"
+msgstr "ጠቅላላ ወርሃዊ ወጪ"
+
+#: app/templates/finance/culling_index.html:29
+msgid "بدون خطة تغذية مسجَّلة"
+msgstr "የተመዘገበ የመመገቢያ ዕቅድ የለም"
+
+#: app/templates/finance/culling_index.html:32
+msgid "راجع سجل التكاثر"
+msgstr "የመራቢያ መዝገብ ይመልከቱ"
+
+#: app/templates/finance/culling_index.html:35
+msgid "لا يوجد إناث غير دافعة حالياً — أو ما فيها بيانات كافية للتحليل."
+msgstr "በአሁኑ ጊዜ የማያመርቱ ሴቶች የሉም — ወይም ለመተንተን በቂ ውሂብ የለም።"
 
 #: app/templates/finance/form.html:4
 msgid "عملية مالية جديدة"
@@ -5576,44 +5632,44 @@ msgstr "በእርስዎ ላይ የቀረው"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "ወርሃዊ የእንስሳ ዋጋ ሪፖርት"
 
-#: app/templates/finance/list.html:29
+#: app/templates/finance/list.html:30
 msgid "عملية جديدة"
 msgstr "አዲስ ግብይት"
 
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 msgid "الفاتورة"
 msgstr "ደረሰኝ"
 
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "دعم خارجي (دين)"
 msgstr "የውጭ ድጋፍ (ዕዳ)"
 
-#: app/templates/finance/list.html:41
+#: app/templates/finance/list.html:42
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "የተሰረዘ"
 
-#: app/templates/finance/list.html:41
+#: app/templates/finance/list.html:42
 msgid "سارية"
 msgstr "ንቁ"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:45
 msgid "بدون فاتورة"
 msgstr "ያለ ደረሰኝ"
 
-#: app/templates/finance/list.html:46
+#: app/templates/finance/list.html:47
 msgid "إصدار"
 msgstr "አውጣ"
 
-#: app/templates/finance/list.html:49 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:50 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "ይመልከቱ"
 
-#: app/templates/finance/list.html:54
+#: app/templates/finance/list.html:55
 msgid "تأكيد الإلغاء؟"
 msgstr "መሰረዙን ያረጋግጡ?"
 
-#: app/templates/finance/list.html:63
+#: app/templates/finance/list.html:64
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "እስካሁን የገንዘብ ግብይት የለም።"
 

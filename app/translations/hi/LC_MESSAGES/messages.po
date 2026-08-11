@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 17:01+0300\n"
+"POT-Creation-Date: 2026-08-11 20:48+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1067,6 +1067,7 @@ msgstr "कुल मृत्यु मामले"
 #: app/templates/bulk_action_form.html:450 app/templates/catalog_public.html:13
 #: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
+#: app/templates/finance/culling_index.html:25
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "क्रमांक"
@@ -1101,7 +1102,7 @@ msgstr "लिंग"
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:34
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:35
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1189,12 +1190,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "प्राप्त बाहरी सहायता (ऋण)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "سداد دين"
 msgstr "ऋण चुकौती"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:34
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:35
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "मद"
@@ -1217,7 +1218,7 @@ msgstr "जानवर"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:437 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 msgid "المبلغ"
 msgstr "राशि"
 
@@ -1291,7 +1292,7 @@ msgstr "खपत मापन अवधि (दिन)"
 #: app/templates/equipment/utility_form.html:7
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:34 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:35 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1511,7 +1512,7 @@ msgstr "फार्म पर जन्मा"
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "شراء"
 msgstr "खरीद"
 
@@ -1925,7 +1926,7 @@ msgstr "गंभीरता"
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2196,12 +2197,12 @@ msgid "الوصف"
 msgstr "विवरण"
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "بيع"
 msgstr "बिक्री"
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "مصروف"
 msgstr "व्यय"
 
@@ -2421,7 +2422,7 @@ msgid "إضافة"
 msgstr "जोड़ें"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:57
+#: app/templates/finance/list.html:58
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -5232,7 +5233,7 @@ msgstr "इकाई मूल्य"
 msgid "الكمية المتوفرة"
 msgstr "उपलब्ध मात्रा"
 
-#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
+#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:77
 msgid "مكوّنات العلف"
 msgstr "चारा घटक"
 
@@ -5361,7 +5362,24 @@ msgstr "प्रतिशत"
 msgid "إجمالي التكلفة اليومية للرأس"
 msgstr "प्रति पशु कुल दैनिक लागत"
 
-#: app/templates/feed/optimizer.html:63
+#: app/templates/feed/optimizer.html:65
+msgid "التكلفة اليومية الحالية (من خطة الحظيرة الفعلية)"
+msgstr "वर्तमान दैनिक लागत (बाड़े की सक्रिय योजना से)"
+
+#: app/templates/feed/optimizer.html:68
+msgid "توفير يومي/رأس"
+msgstr "दैनिक बचत/पशु"
+
+#: app/templates/feed/optimizer.html:68
+msgid "زيادة تكلفة يومية/رأس (الخلطة الحالية أرخص فعلاً)"
+msgstr "दैनिक लागत वृद्धि/पशु (वर्तमान मिश्रण वास्तव में सस्ता है)"
+
+#: app/templates/feed/optimizer.html:72
+#, python-format
+msgid "يعني توفير تقديري %(monthly)s شهرياً لهذا الرأس لو طبّقت الخلطة المقترحة بدل الحالية."
+msgstr "इसका मतलब है कि यदि आप वर्तमान के बजाय सुझाए गए मिश्रण को अपनाते हैं तो इस पशु के लिए अनुमानित %(monthly)s मासिक बचत होगी।"
+
+#: app/templates/feed/optimizer.html:77
 msgid "مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع"
 msgstr "मिश्रण में एक या अधिक घटकों का स्टॉक आवश्यक मात्रा से कम है — देखें"
 
@@ -5427,12 +5445,13 @@ msgid "التحليل المالي ونقطة التعادل"
 msgstr "वित्तीय विश्लेषण और ब्रेक-ईवन"
 
 #: app/templates/finance/break_even_report.html:7
-#: app/templates/finance/list.html:28 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:29 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Excel निर्यात करें"
 
 #: app/templates/finance/break_even_report.html:8
+#: app/templates/finance/culling_index.html:6
 #: app/templates/finance/monthly_cost_report.html:6
 msgid "رجوع للمالية"
 msgstr "वित्त पर वापस जाएं"
@@ -5468,6 +5487,43 @@ msgstr "अनुमानित मूल्य जोड़ें"
 #: app/templates/finance/break_even_report.html:40
 msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "विश्लेषण के लिए कोई सक्रिय पशु नहीं है।"
+
+#: app/templates/finance/culling_index.html:5
+#: app/templates/finance/list.html:28
+msgid "مؤشر الاستبعاد المالي"
+msgstr "निष्कासन सूचकांक"
+
+#: app/templates/finance/culling_index.html:9
+msgid "يعرض الإناث \"غير الدافعة\" (بالغة، بدون أي ولادة خلال آخر 400 يوم) مع تكلفة استمرار الاحتفاظ بها شهرياً (علف + صحة آخر 6 أشهر) — لأنها بحكم التعريف بدون قيمة إنتاجية بهذي الفترة. هذا رقم مالي فقط، مو قرار بيع تلقائي — راجع دائماً السجل الطبي والتكاثري (تأخر تقريع مؤقت، مرض مؤقت...) قبل أي قرار فعلي."
+msgstr "\"अनुत्पादक\" मादाओं (वयस्क, पिछले 400 दिनों में कोई जन्म नहीं) को उन्हें रखना जारी रखने की मासिक लागत (चारा + पिछले 6 महीनों का स्वास्थ्य) के साथ दिखाता है — क्योंकि परिभाषा के अनुसार उन्होंने इस अवधि में कोई उत्पादन मूल्य उत्पन्न नहीं किया। यह केवल एक वित्तीय आंकड़ा है, स्वचालित बिक्री निर्णय नहीं — किसी भी वास्तविक निर्णय से पहले हमेशा चिकित्सा और प्रजनन रिकॉर्ड (अस्थायी संगमन देरी, अस्थायी बीमारी...) की समीक्षा करें।"
+
+#: app/templates/finance/culling_index.html:17
+msgid "إجمالي التوفير الشهري المحتمل لو استُبعدت كل هذي الرؤوس"
+msgstr "यदि इन सभी पशुओं को हटा दिया जाए तो कुल संभावित मासिक बचत"
+
+#: app/templates/finance/culling_index.html:25
+msgid "تكلفة العلف الشهرية التقديرية"
+msgstr "अनुमानित मासिक चारा लागत"
+
+#: app/templates/finance/culling_index.html:25
+msgid "متوسط تكلفة الصحة الشهرية (آخر 6 أشهر)"
+msgstr "औसत मासिक स्वास्थ्य लागत (पिछले 6 महीने)"
+
+#: app/templates/finance/culling_index.html:25
+msgid "إجمالي التكلفة الشهرية"
+msgstr "कुल मासिक लागत"
+
+#: app/templates/finance/culling_index.html:29
+msgid "بدون خطة تغذية مسجَّلة"
+msgstr "कोई आहार योजना दर्ज नहीं है"
+
+#: app/templates/finance/culling_index.html:32
+msgid "راجع سجل التكاثر"
+msgstr "प्रजनन रिकॉर्ड देखें"
+
+#: app/templates/finance/culling_index.html:35
+msgid "لا يوجد إناث غير دافعة حالياً — أو ما فيها بيانات كافية للتحليل."
+msgstr "फिलहाल कोई अनुत्पादक मादा नहीं है — या विश्लेषण के लिए पर्याप्त डेटा नहीं है।"
 
 #: app/templates/finance/form.html:4
 msgid "عملية مالية جديدة"
@@ -5576,44 +5632,44 @@ msgstr "आप पर शेष"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "मासिक प्रति पशु लागत रिपोर्ट"
 
-#: app/templates/finance/list.html:29
+#: app/templates/finance/list.html:30
 msgid "عملية جديدة"
 msgstr "नया लेनदेन"
 
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 msgid "الفاتورة"
 msgstr "चालान"
 
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "دعم خارجي (دين)"
 msgstr "बाहरी सहायता (ऋण)"
 
-#: app/templates/finance/list.html:41
+#: app/templates/finance/list.html:42
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "रद्द"
 
-#: app/templates/finance/list.html:41
+#: app/templates/finance/list.html:42
 msgid "سارية"
 msgstr "सक्रिय"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:45
 msgid "بدون فاتورة"
 msgstr "बिना चालान"
 
-#: app/templates/finance/list.html:46
+#: app/templates/finance/list.html:47
 msgid "إصدار"
 msgstr "जारी करें"
 
-#: app/templates/finance/list.html:49 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:50 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "देखें"
 
-#: app/templates/finance/list.html:54
+#: app/templates/finance/list.html:55
 msgid "تأكيد الإلغاء؟"
 msgstr "रद्द करने की पुष्टि करें?"
 
-#: app/templates/finance/list.html:63
+#: app/templates/finance/list.html:64
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "अभी तक कोई वित्तीय लेनदेन नहीं है।"
 

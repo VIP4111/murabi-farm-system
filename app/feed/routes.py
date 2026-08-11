@@ -276,6 +276,8 @@ def optimizer():
     result = None
     requirement = None
     selected_animal = None
+    current_daily_cost = None
+    daily_savings = None
     if request.method == "POST":
         animal_id = request.form.get("animal_id")
         state = request.form.get("state")
@@ -292,6 +294,10 @@ def optimizer():
             requirement = svc.daily_requirement(weight_kg=weight, state=state)
             usable_feeds = Feed.query.filter_by(status="active").all()
             result = svc.optimize_blend(requirement=requirement, feeds=usable_feeds)
+            barn_id = selected_animal.barn_id if selected_animal else None
+            current_daily_cost = svc.current_barn_daily_cost_per_head(barn_id)
+            if current_daily_cost is not None and result and result.get("feasible"):
+                daily_savings = round(current_daily_cost - result["total_daily_cost"], 3)
         else:
             flash("الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي", "error")
 
@@ -300,6 +306,7 @@ def optimizer():
         animals=Animal.query.filter_by(status="active").order_by(Animal.animal_no).all(),
         states=svc.PHYSIOLOGICAL_TARGETS.keys(),
         requirement=requirement, result=result, selected_animal=selected_animal,
+        current_daily_cost=current_daily_cost, daily_savings=daily_savings,
     )
 
 

@@ -1,6 +1,6 @@
 import click
 from app.extensions import db
-from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom, ChecklistItem
+from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom, ChecklistItem, Feed
 from app.permissions_registry import PERMISSIONS, DEFAULT_ROLES
 from app.disease_library_data import DISEASE_LIBRARY_V2, DISEASE_ALIAS_MAP
 
@@ -250,6 +250,24 @@ DEFAULT_CHECKLIST_ITEMS = [
 ]
 
 
+# مكتبة الأعلاف الافتراضية (بند إضافي 189) — قيم مرجعية شائعة بأدلة
+# تغذية المجترات الصغيرة (بروتين خام CP%، طاقة ممثلة ME محوَّلة من
+# MJ/kg إلى kcal/kg بمعامل 239 القياسي، ألياف خام CF%) — **مرجع عام
+# تقريبي، مو تحليل مخبري فعلي لأعلافك أنت**. `unit_price` متروك فاضياً
+# عمداً — يعبّيه صاحب الحلال بسعره الفعلي الحالي، وإلا موازِن العليقة
+# (`optimize_blend`) ما يقدر يستخدم الصنف أصلاً (يحتاج سعر مسجَّل).
+DEFAULT_FEED_LIBRARY = [
+    {"name": "شعير مجروش", "feed_class": "concentrate", "protein_percent": 11.5, "energy_kcal_per_kg": 2988, "fiber_percent": 6.0},
+    {"name": "مكعب مركّز 13%", "feed_class": "concentrate", "protein_percent": 13.0, "energy_kcal_per_kg": 2749, "fiber_percent": 8.0},
+    {"name": "مكعب مركّز 18% (بهم)", "feed_class": "concentrate", "protein_percent": 18.0, "energy_kcal_per_kg": 3059, "fiber_percent": 6.0},
+    {"name": "برسيم مجفف", "feed_class": "roughage", "protein_percent": 17.0, "energy_kcal_per_kg": 2271, "fiber_percent": 25.0},
+    {"name": "تبن قمح/شعير", "feed_class": "roughage", "protein_percent": 3.5, "energy_kcal_per_kg": 1554, "fiber_percent": 38.0},
+    {"name": "كسب فول الصويا 44%", "feed_class": "concentrate", "protein_percent": 44.0, "energy_kcal_per_kg": 3155, "fiber_percent": 6.0},
+    {"name": "نخالة قمح", "feed_class": "concentrate", "protein_percent": 14.5, "energy_kcal_per_kg": 2510, "fiber_percent": 11.0},
+    {"name": "ذرة صفراء", "feed_class": "concentrate", "protein_percent": 8.5, "energy_kcal_per_kg": 3227, "fiber_percent": 2.5},
+]
+
+
 def register_cli(app):
     @app.cli.command("reset-password")
     @click.argument("phone")
@@ -466,6 +484,19 @@ def register_cli(app):
             item.link_endpoint = entry.get("link_endpoint")
             item.sort_order = entry["sort_order"]
             item.is_active = True
+        db.session.commit()
+
+        # 10) مكتبة الأعلاف الافتراضية (بند إضافي 189) — idempotent عبر
+        # `name`، صفر سعر مفروض (يعبّيه المالك بنفسه).
+        for entry in DEFAULT_FEED_LIBRARY:
+            feed = Feed.query.filter_by(name=entry["name"]).first()
+            if not feed:
+                feed = Feed(name=entry["name"], status="active")
+                db.session.add(feed)
+            feed.feed_class = entry["feed_class"]
+            feed.protein_percent = entry["protein_percent"]
+            feed.energy_kcal_per_kg = entry["energy_kcal_per_kg"]
+            feed.fiber_percent = entry["fiber_percent"]
         db.session.commit()
 
         click.echo("تمت التهيئة بنجاح.")

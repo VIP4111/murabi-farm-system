@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('مؤشر الاستبعاد المالي') }}</h2>
+    <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
+  </div>
+  <div class="notice">
+    {{ _('يعرض الإناث "غير الدافعة" (بالغة، بدون أي ولادة خلال آخر 400 يوم) مع تكلفة استمرار الاحتفاظ بها شهرياً (علف + صحة آخر 6 أشهر) — لأنها بحكم التعريف بدون قيمة إنتاجية بهذي الفترة. هذا رقم مالي فقط، مو قرار بيع تلقائي — راجع دائماً السجل الطبي والتكاثري (تأخر تقريع مؤقت، مرض مؤقت...) قبل أي قرار فعلي.') }}
+  </div>
+</div>
+
+{% if rows %}
+<div class="card">
+  <div class="stat" style="background:var(--danger, #c0392b); color:#fff;">
+    <b>{{ total_potential_savings }}</b>
+    <span>{{ _('إجمالي التوفير الشهري المحتمل لو استُبعدت كل هذي الرؤوس') }}</span>
+  </div>
+</div>
+{% endif %}
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('تكلفة العلف الشهرية التقديرية') }}</th><th>{{ _('متوسط تكلفة الصحة الشهرية (آخر 6 أشهر)') }}</th><th>{{ _('إجمالي التكلفة الشهرية') }}</th><th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id) }}">{{ r.animal.animal_no }}</a></td>
+      <td>{{ r.monthly_feed_cost }}{% if not r.feed_data_available %} <small style="color:var(--muted);">({{ _('بدون خطة تغذية مسجَّلة') }})</small>{% endif %}</td>
+      <td>{{ r.monthly_health_cost }}</td>
+      <td><b>{{ r.monthly_total_cost }}</b></td>
+      <td><a class="btn light" href="{{ url_for('core.animal_detail', animal_id=r.animal.id, tab='repro') }}" style="font-size:12px; padding:4px 10px;">{{ _('راجع سجل التكاثر') }}</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد إناث غير دافعة حالياً — أو ما فيها بيانات كافية للتحليل.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

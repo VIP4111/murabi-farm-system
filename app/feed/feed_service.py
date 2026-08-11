@@ -129,6 +129,26 @@ def concentrate_increase_warning(*, barn_id: int, new_ration: FeedRation, new_st
     }
 
 
+def current_barn_daily_cost_per_head(barn_id: int | None) -> float | None:
+    """تكلفة الكيلوغرام اليومية الحالية للرأس الواحد بحظيرة معيّنة —
+    من خطة التغذية النشطة حالياً (`FeedBarnPlan` بدون `end_date` أو
+    بتاريخ نهاية بالمستقبل) — تُستخدم لمقارنة "التوفير" اللي يقترحه
+    موازِن العليقة مقابل الوضع الفعلي الحالي، مو رقماً افتراضياً."""
+    if not barn_id:
+        return None
+    today = date.today()
+    plan = (
+        FeedBarnPlan.query.filter_by(barn_id=barn_id)
+        .filter((FeedBarnPlan.end_date.is_(None)) | (FeedBarnPlan.end_date >= today))
+        .order_by(FeedBarnPlan.start_date.desc())
+        .first()
+    )
+    if not plan or not plan.ration:
+        return None
+    cost_per_kg = ration_profile(plan.ration)["cost_per_kg"]
+    return round(cost_per_kg * plan.daily_qty_per_animal_kg, 3)
+
+
 def recommend_rations(*, requirement: dict, limit: int = 5) -> list[dict]:
     """يرتّب الوصفات الموجودة حسب أقرب تطابق للاحتياج وأرخص تكلفة، مع علامة
     توفّر المخزون الحالي."""

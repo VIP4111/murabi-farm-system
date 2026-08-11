@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 17:01+0300\n"
+"POT-Creation-Date: 2026-08-11 20:48+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1067,6 +1067,7 @@ msgstr "Total mortality cases"
 #: app/templates/bulk_action_form.html:450 app/templates/catalog_public.html:13
 #: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
+#: app/templates/finance/culling_index.html:25
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr "Number"
@@ -1101,7 +1102,7 @@ msgstr "Gender"
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:34
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:35
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1189,12 +1190,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "External support received (debt)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "سداد دين"
 msgstr "Debt repayment"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:34
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:35
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "Item"
@@ -1217,7 +1218,7 @@ msgstr "Animal"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:437 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 msgid "المبلغ"
 msgstr "Amount"
 
@@ -1291,7 +1292,7 @@ msgstr "Consumption measurement period (days)"
 #: app/templates/equipment/utility_form.html:7
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:34 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:35 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1511,7 +1512,7 @@ msgstr "Born on farm"
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "شراء"
 msgstr "Purchase"
 
@@ -1925,7 +1926,7 @@ msgstr "Severity"
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2196,12 +2197,12 @@ msgid "الوصف"
 msgstr "Description"
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "بيع"
 msgstr "Sale"
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "مصروف"
 msgstr "Expense"
 
@@ -2421,7 +2422,7 @@ msgid "إضافة"
 msgstr "Add"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:57
+#: app/templates/finance/list.html:58
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -5232,7 +5233,7 @@ msgstr "Unit price"
 msgid "الكمية المتوفرة"
 msgstr "Available quantity"
 
-#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:63
+#: app/templates/feed/items_list.html:5 app/templates/feed/optimizer.html:77
 msgid "مكوّنات العلف"
 msgstr "Feed items"
 
@@ -5361,7 +5362,24 @@ msgstr "Percentage"
 msgid "إجمالي التكلفة اليومية للرأس"
 msgstr "Total daily cost per head"
 
-#: app/templates/feed/optimizer.html:63
+#: app/templates/feed/optimizer.html:65
+msgid "التكلفة اليومية الحالية (من خطة الحظيرة الفعلية)"
+msgstr "Current daily cost (from the barn's active plan)"
+
+#: app/templates/feed/optimizer.html:68
+msgid "توفير يومي/رأس"
+msgstr "Daily savings/head"
+
+#: app/templates/feed/optimizer.html:68
+msgid "زيادة تكلفة يومية/رأس (الخلطة الحالية أرخص فعلاً)"
+msgstr "Daily cost increase/head (the current blend is actually cheaper)"
+
+#: app/templates/feed/optimizer.html:72
+#, python-format
+msgid "يعني توفير تقديري %(monthly)s شهرياً لهذا الرأس لو طبّقت الخلطة المقترحة بدل الحالية."
+msgstr "That means an estimated %(monthly)s monthly savings for this animal if you switch to the suggested blend instead of the current one."
+
+#: app/templates/feed/optimizer.html:77
 msgid "مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع"
 msgstr "One or more ingredients in the blend has less stock than required — check"
 
@@ -5427,12 +5445,13 @@ msgid "التحليل المالي ونقطة التعادل"
 msgstr "Financial analysis and break-even"
 
 #: app/templates/finance/break_even_report.html:7
-#: app/templates/finance/list.html:28 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:29 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Export Excel"
 
 #: app/templates/finance/break_even_report.html:8
+#: app/templates/finance/culling_index.html:6
 #: app/templates/finance/monthly_cost_report.html:6
 msgid "رجوع للمالية"
 msgstr "Back to Finance"
@@ -5468,6 +5487,43 @@ msgstr "Add an estimated value"
 #: app/templates/finance/break_even_report.html:40
 msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "No active animals to analyze."
+
+#: app/templates/finance/culling_index.html:5
+#: app/templates/finance/list.html:28
+msgid "مؤشر الاستبعاد المالي"
+msgstr "Culling index"
+
+#: app/templates/finance/culling_index.html:9
+msgid "يعرض الإناث \"غير الدافعة\" (بالغة، بدون أي ولادة خلال آخر 400 يوم) مع تكلفة استمرار الاحتفاظ بها شهرياً (علف + صحة آخر 6 أشهر) — لأنها بحكم التعريف بدون قيمة إنتاجية بهذي الفترة. هذا رقم مالي فقط، مو قرار بيع تلقائي — راجع دائماً السجل الطبي والتكاثري (تأخر تقريع مؤقت، مرض مؤقت...) قبل أي قرار فعلي."
+msgstr "Shows \"unproductive\" females (adult, no birth in the last 400 days) with the monthly cost of continuing to keep them (feed + health in the last 6 months) — since by definition they generated no production value in this period. This is a financial figure only, not an automatic sale decision — always review the medical and breeding record (temporary mating delay, temporary illness...) before any actual decision."
+
+#: app/templates/finance/culling_index.html:17
+msgid "إجمالي التوفير الشهري المحتمل لو استُبعدت كل هذي الرؤوس"
+msgstr "Total potential monthly savings if all these animals were culled"
+
+#: app/templates/finance/culling_index.html:25
+msgid "تكلفة العلف الشهرية التقديرية"
+msgstr "Estimated monthly feed cost"
+
+#: app/templates/finance/culling_index.html:25
+msgid "متوسط تكلفة الصحة الشهرية (آخر 6 أشهر)"
+msgstr "Average monthly health cost (last 6 months)"
+
+#: app/templates/finance/culling_index.html:25
+msgid "إجمالي التكلفة الشهرية"
+msgstr "Total monthly cost"
+
+#: app/templates/finance/culling_index.html:29
+msgid "بدون خطة تغذية مسجَّلة"
+msgstr "No feeding plan recorded"
+
+#: app/templates/finance/culling_index.html:32
+msgid "راجع سجل التكاثر"
+msgstr "Review breeding record"
+
+#: app/templates/finance/culling_index.html:35
+msgid "لا يوجد إناث غير دافعة حالياً — أو ما فيها بيانات كافية للتحليل."
+msgstr "No unproductive females currently — or there isn't enough data to analyze."
 
 #: app/templates/finance/form.html:4
 msgid "عملية مالية جديدة"
@@ -5576,44 +5632,44 @@ msgstr "Remaining owed"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "Monthly cost-per-head report"
 
-#: app/templates/finance/list.html:29
+#: app/templates/finance/list.html:30
 msgid "عملية جديدة"
 msgstr "New transaction"
 
-#: app/templates/finance/list.html:34
+#: app/templates/finance/list.html:35
 msgid "الفاتورة"
 msgstr "Invoice"
 
-#: app/templates/finance/list.html:38
+#: app/templates/finance/list.html:39
 msgid "دعم خارجي (دين)"
 msgstr "External support (debt)"
 
-#: app/templates/finance/list.html:41
+#: app/templates/finance/list.html:42
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr "Cancelled"
 
-#: app/templates/finance/list.html:41
+#: app/templates/finance/list.html:42
 msgid "سارية"
 msgstr "Active"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:45
 msgid "بدون فاتورة"
 msgstr "No invoice"
 
-#: app/templates/finance/list.html:46
+#: app/templates/finance/list.html:47
 msgid "إصدار"
 msgstr "Issue"
 
-#: app/templates/finance/list.html:49 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:50 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr "View"
 
-#: app/templates/finance/list.html:54
+#: app/templates/finance/list.html:55
 msgid "تأكيد الإلغاء؟"
 msgstr "Confirm cancellation?"
 
-#: app/templates/finance/list.html:63
+#: app/templates/finance/list.html:64
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "No financial transactions yet."
 

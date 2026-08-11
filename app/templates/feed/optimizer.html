@@ -59,6 +59,20 @@
   </table>
 </div>
   <div class="stat" style="background:var(--primary); color:#fff; margin-top:10px;"><b>{{ result.total_daily_cost }}</b><span style="color:rgba(255,255,255,.8);">{{ _('إجمالي التكلفة اليومية للرأس') }}</span></div>
+  {% if current_daily_cost is not none %}
+  <div class="card" style="margin-top:10px; padding:10px;">
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+      <div class="stat"><b>{{ current_daily_cost }}</b><span>{{ _('التكلفة اليومية الحالية (من خطة الحظيرة الفعلية)') }}</span></div>
+      <div class="stat" style="{{ 'background:var(--ok, #3a7d3a); color:#fff;' if daily_savings and daily_savings > 0 }}">
+        <b>{{ daily_savings }}</b>
+        <span>{{ _('توفير يومي/رأس') if daily_savings and daily_savings >= 0 else _('زيادة تكلفة يومية/رأس (الخلطة الحالية أرخص فعلاً)') }}</span>
+      </div>
+    </div>
+    {% if daily_savings and daily_savings > 0 %}
+    <p style="color:var(--muted); font-size:12px; margin-top:8px;">{{ _('يعني توفير تقديري %(monthly)s شهرياً لهذا الرأس لو طبّقت الخلطة المقترحة بدل الحالية.', monthly=(daily_savings * 30)|round(2)) }}</p>
+    {% endif %}
+  </div>
+  {% endif %}
   {% if not result.all_stock_ok %}
   <div class="notice" style="margin-top:10px;">⚠️ {{ _('مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع') }} <a href="{{ url_for('feed.items_list') }}">{{ _('مكوّنات العلف') }}</a>.</div>
   {% endif %}

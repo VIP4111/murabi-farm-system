@@ -118,6 +118,18 @@ def break_even_report():
     )
 
 
+@finance_bp.route("/culling-index")
+@login_required
+@require_permission("finance.full.manage")
+def culling_index():
+    from app.core.culling_index_service import culling_candidates
+    rows = culling_candidates()
+    total_potential_savings = round(sum(r["monthly_total_cost"] for r in rows), 2)
+    return render_template(
+        "finance/culling_index.html", rows=rows, total_potential_savings=total_potential_savings,
+    )
+
+
 @finance_bp.route("/new", methods=["GET", "POST"])
 @login_required
 @require_permission("finance.full.manage")
