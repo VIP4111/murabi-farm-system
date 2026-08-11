@@ -88,6 +88,21 @@ def sales_catalog(token):
     return render_template("catalog_public.html", rows=rows, farm_settings=fs)
 
 
+@core_bp.route("/lot/<token>")
+def lot_public(token):
+    """بروفايل تجاري عام لدفعة بيع (بند إضافي 191.3) — بدون تسجيل
+    دخول، عبر رمز مشاركة الدفعة نفسها (منفصل عن رمز الكتالوج العام).
+    صفر بيانات مالية داخلية (تكلفة/هامش ربح) — بس ما يهم المشتري."""
+    from app.models import SalesLot
+    from app.core import sales_lot_service as svc
+    lot = SalesLot.query.filter_by(share_token=token).first()
+    if not lot:
+        abort(404)
+    rows = [svc.animal_lot_row(item.animal) for item in lot.items]
+    stats = svc.lot_stats(rows)
+    return render_template("lot_public.html", lot=lot, rows=rows, stats=stats)
+
+
 @core_bp.route("/settings/catalog-token/regenerate", methods=["POST"])
 @login_required
 @require_permission("settings.manage")

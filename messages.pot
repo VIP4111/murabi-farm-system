@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 20:48+0300\n"
+"POT-Creation-Date: 2026-08-11 21:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,6 +281,409 @@ msgstr ""
 #: app/templates/equipment/assets_list.html:3
 #: app/templates/finance/form.html:38
 msgid "أخرى"
+msgstr ""
+
+#: app/__init__.py:225
+msgid "نقل حظائر جماعي"
+msgstr ""
+
+#: app/__init__.py:226 app/core/routes.py:319
+#: app/templates/animals_list.html:78
+msgid "عزل جماعي"
+msgstr ""
+
+#: app/__init__.py:227
+msgid "شراء دفعة جماعي"
+msgstr ""
+
+#: app/__init__.py:228
+msgid "تحديد غرض جماعي"
+msgstr ""
+
+#: app/__init__.py:229
+msgid "إضافة حيوان"
+msgstr ""
+
+#: app/__init__.py:230
+msgid "تسجيل نفوق"
+msgstr ""
+
+#: app/__init__.py:231
+msgid "حذف حيوان"
+msgstr ""
+
+#: app/__init__.py:232
+msgid "تعديل بيانات حيوان"
+msgstr ""
+
+#: app/__init__.py:233 app/templates/animal_detail.html:41
+#: app/templates/isolation_enter_form.html:4
+msgid "دخول عزل"
+msgstr ""
+
+#: app/__init__.py:234
+msgid "خروج من عزل"
+msgstr ""
+
+#: app/__init__.py:235
+msgid "استرجاع بيع ملغى"
+msgstr ""
+
+#: app/__init__.py:236
+msgid "بيع حيوان"
+msgstr ""
+
+#: app/__init__.py:237
+msgid "إنشاء نسخة احتياطية"
+msgstr ""
+
+#: app/__init__.py:238
+msgid "إضافة حظيرة"
+msgstr ""
+
+#: app/__init__.py:239 app/templates/barn_form.html:4
+msgid "تعديل حظيرة"
+msgstr ""
+
+#: app/__init__.py:240
+msgid "تقديم رأس بالدفعة"
+msgstr ""
+
+#: app/__init__.py:241
+msgid "تقديم مرحلة الدفعة"
+msgstr ""
+
+#: app/__init__.py:242
+msgid "إنشاء دفعة"
+msgstr ""
+
+#: app/__init__.py:243
+msgid "توزيع دفعة"
+msgstr ""
+
+#: app/__init__.py:244
+msgid "إيقاف رأس بالدفعة"
+msgstr ""
+
+#: app/__init__.py:245
+msgid "فك إيقاف رأس بالدفعة"
+msgstr ""
+
+#: app/__init__.py:246
+msgid "إضافة قالب مهمة يومية"
+msgstr ""
+
+#: app/__init__.py:247
+msgid "تفعيل/إيقاف قالب مهمة يومية"
+msgstr ""
+
+#: app/__init__.py:248
+msgid "إغلاق حالة مرضية"
+msgstr ""
+
+#: app/__init__.py:249 app/templates/health/disease_form.html:6
+msgid "تسجيل حالة مرضية"
+msgstr ""
+
+#: app/__init__.py:250
+msgid "ربط مرض بعرض"
+msgstr ""
+
+#: app/__init__.py:251
+msgid "حذف ربط مرض بعرض"
+msgstr ""
+
+#: app/__init__.py:252
+msgid "تعديل ربط مرض بعرض"
+msgstr ""
+
+#: app/__init__.py:253
+msgid "ربط أعراض بمرض (دفعة)"
+msgstr ""
+
+#: app/__init__.py:254
+msgid "إضافة عرض طوارئ"
+msgstr ""
+
+#: app/__init__.py:255
+msgid "حذف عرض طوارئ"
+msgstr ""
+
+#: app/__init__.py:256
+msgid "تجاوز تحذير كالسيوم/فسفور"
+msgstr ""
+
+#: app/__init__.py:257
+msgid "تجاوز تحذير زيادة المركّزات"
+msgstr ""
+
+#: app/__init__.py:258
+msgid "إضافة وصفة علف"
+msgstr ""
+
+#: app/__init__.py:259
+msgid "إلغاء حركة مالية"
+msgstr ""
+
+#: app/__init__.py:260
+msgid "تجاوز تحذير إعادة جرعة"
+msgstr ""
+
+#: app/__init__.py:261
+msgid "تسجيل فشل بيضة"
+msgstr ""
+
+#: app/__init__.py:262
+msgid "تسجيل فقس بيضة"
+msgstr ""
+
+#: app/__init__.py:263
+msgid "شراء دواء"
+msgstr ""
+
+#: app/__init__.py:264 app/templates/repro/pregnancies_list.html:28
+msgid "تسجيل إجهاض"
+msgstr ""
+
+#: app/__init__.py:265
+msgid "إنشاء بروتوكول علاج"
+msgstr ""
+
+#: app/__init__.py:266
+msgid "قبول بلاغ"
+msgstr ""
+
+#: app/__init__.py:267
+msgid "إلغاء بلاغ"
+msgstr ""
+
+#: app/__init__.py:268
+msgid "إغلاق بلاغ"
+msgstr ""
+
+#: app/__init__.py:269
+msgid "حذف بلاغ نهائي"
+msgstr ""
+
+#: app/__init__.py:270
+msgid "تنفيذ بلاغ"
+msgstr ""
+
+#: app/__init__.py:271
+msgid "تأجيل بلاغ"
+msgstr ""
+
+#: app/__init__.py:272
+msgid "استئناف بلاغ"
+msgstr ""
+
+#: app/__init__.py:273
+msgid "رفع بلاغ"
+msgstr ""
+
+#: app/__init__.py:274
+msgid "تحويل بلاغ"
+msgstr ""
+
+#: app/__init__.py:275
+msgid "إنشاء مسمّى وظيفي"
+msgstr ""
+
+#: app/__init__.py:276
+msgid "تعديل صلاحيات مسمّى وظيفي"
+msgstr ""
+
+#: app/__init__.py:277
+msgid "إنشاء دفعة بيع"
+msgstr ""
+
+#: app/__init__.py:278
+msgid "حذف دفعة بيع"
+msgstr ""
+
+#: app/__init__.py:279
+msgid "تفعيل/إيقاف خدمة"
+msgstr ""
+
+#: app/__init__.py:280
+msgid "حذف بيانات محاكاة"
+msgstr ""
+
+#: app/__init__.py:281
+msgid "تسجيل سونار جماعي"
+msgstr ""
+
+#: app/__init__.py:282
+msgid "اعتماد مهمة مقترحة"
+msgstr ""
+
+#: app/__init__.py:283
+msgid "تعيين مهمة"
+msgstr ""
+
+#: app/__init__.py:284
+msgid "إلغاء مهمة نشطة"
+msgstr ""
+
+#: app/__init__.py:285
+msgid "إنجاز مهمة"
+msgstr ""
+
+#: app/__init__.py:286
+msgid "إنجاز مهمة عبر تنفيذ علاج"
+msgstr ""
+
+#: app/__init__.py:287
+msgid "حذف مهمة نهائي"
+msgstr ""
+
+#: app/__init__.py:288
+msgid "تسجيل تعذّر مهمة"
+msgstr ""
+
+#: app/__init__.py:289
+msgid "استرجاع مهمة محذوفة"
+msgstr ""
+
+#: app/__init__.py:290
+msgid "تأجيل مهمة"
+msgstr ""
+
+#: app/__init__.py:291
+msgid "تأجيل مهمة نشطة"
+msgstr ""
+
+#: app/__init__.py:292
+msgid "حذف مهمة (بانتظار مراجعة)"
+msgstr ""
+
+#: app/__init__.py:293
+msgid "إضافة مستخدم"
+msgstr ""
+
+#: app/__init__.py:294
+msgid "تعديل مستخدم"
+msgstr ""
+
+#: app/__init__.py:295
+msgid "تفعيل/إيقاف مستخدم"
+msgstr ""
+
+#: app/__init__.py:296
+msgid "تسجيل تحصين"
+msgstr ""
+
+#: app/__init__.py:297
+msgid "إضافة جدول تحصين"
+msgstr ""
+
+#: app/__init__.py:298 app/templates/health/vet_visit_form.html:5
+msgid "تسجيل زيارة بيطرية"
+msgstr ""
+
+#: app/__init__.py:299 app/templates/warehouses/item_breakdown.html:21
+msgid "تحويل بين مستودعين"
+msgstr ""
+
+#: app/__init__.py:300
+msgid "تسجيل تقريع"
+msgstr ""
+
+#: app/__init__.py:304
+msgid "حيوان"
+msgstr ""
+
+#: app/__init__.py:304 app/templates/alerts_list.html:10
+#: app/templates/team/report_detail.html:20
+msgid "حظيرة"
+msgstr ""
+
+#: app/__init__.py:304
+msgid "مهمة"
+msgstr ""
+
+#: app/__init__.py:305 app/templates/team/report_detail.html:6
+msgid "بلاغ"
+msgstr ""
+
+#: app/__init__.py:305 app/templates/settings_simulation_data.html:15
+msgid "حالة مرضية"
+msgstr ""
+
+#: app/__init__.py:305 app/templates/bulk_action_form.html:441
+msgid "زيارة بيطرية"
+msgstr ""
+
+#: app/__init__.py:306
+msgid "تحصين"
+msgstr ""
+
+#: app/__init__.py:306 app/templates/settings_simulation_data.html:13
+msgid "حركة مالية"
+msgstr ""
+
+#: app/__init__.py:306
+msgid "مستخدم"
+msgstr ""
+
+#: app/__init__.py:307
+msgid "مسمّى وظيفي"
+msgstr ""
+
+#: app/__init__.py:307 app/templates/settings_simulation_data.html:14
+msgid "تقريع"
+msgstr ""
+
+#: app/__init__.py:307 app/templates/onboarding/checklist.html:12
+msgid "حمل"
+msgstr ""
+
+#: app/__init__.py:308
+msgid "دفعة حيوانات"
+msgstr ""
+
+#: app/__init__.py:308
+msgid "دفعة بيع"
+msgstr ""
+
+#: app/__init__.py:309
+msgid "وصفة علف"
+msgstr ""
+
+#: app/__init__.py:309
+msgid "دواء"
+msgstr ""
+
+#: app/__init__.py:309
+msgid "بروتوكول علاج"
+msgstr ""
+
+#: app/__init__.py:310
+msgid "بيضة نعام"
+msgstr ""
+
+#: app/__init__.py:310
+msgid "خدمة"
+msgstr ""
+
+#: app/__init__.py:310
+msgid "عرض طوارئ"
+msgstr ""
+
+#: app/__init__.py:311
+msgid "ربط مرض-عرض"
+msgstr ""
+
+#: app/__init__.py:311
+msgid "قالب مهمة يومية"
+msgstr ""
+
+#: app/__init__.py:312
+msgid "جدول تحصين"
+msgstr ""
+
+#: app/__init__.py:312
+msgid "مستودع"
 msgstr ""
 
 #: app/auth/routes.py:45
@@ -557,65 +960,61 @@ msgid ""
 "(بند 34)."
 msgstr ""
 
-#: app/core/routes.py:296 app/templates/animals_list.html:67
+#: app/core/routes.py:311 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr ""
 
-#: app/core/routes.py:297 app/templates/animals_list.html:76
+#: app/core/routes.py:312 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr ""
 
-#: app/core/routes.py:298 app/templates/animals_list.html:68
+#: app/core/routes.py:313 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr ""
 
-#: app/core/routes.py:299 app/templates/animals_list.html:69
+#: app/core/routes.py:314 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr ""
 
-#: app/core/routes.py:300 app/templates/animals_list.html:70
+#: app/core/routes.py:315 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr ""
 
-#: app/core/routes.py:301 app/templates/animals_list.html:71
+#: app/core/routes.py:316 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr ""
 
-#: app/core/routes.py:302 app/templates/animals_list.html:72
+#: app/core/routes.py:317 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr ""
 
-#: app/core/routes.py:303 app/templates/animals_list.html:77
+#: app/core/routes.py:318 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr ""
 
-#: app/core/routes.py:304 app/templates/animals_list.html:78
-msgid "عزل جماعي"
-msgstr ""
-
-#: app/core/routes.py:305 app/templates/animals_list.html:82
+#: app/core/routes.py:320 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr ""
 
-#: app/core/routes.py:306 app/templates/animals_list.html:79
+#: app/core/routes.py:321 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr ""
 
-#: app/core/routes.py:704 app/templates/animal_form.html:35
+#: app/core/routes.py:719 app/templates/animal_form.html:35
 msgid "إضافة فصيلة جديدة"
 msgstr ""
 
-#: app/core/routes.py:706
+#: app/core/routes.py:721
 msgid ""
 "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل"
 " بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr ""
 
-#: app/core/routes.py:725 app/templates/animal_form.html:45
+#: app/core/routes.py:740 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
 msgstr ""
 
-#: app/core/routes.py:769 app/templates/animal_form.html:24
+#: app/core/routes.py:784 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr ""
 
@@ -1108,6 +1507,8 @@ msgstr ""
 #: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
 #: app/templates/finance/culling_index.html:25
+#: app/templates/finance/lot_detail.html:34
+#: app/templates/finance/lot_form.html:32 app/templates/lot_public.html:17
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
 msgstr ""
@@ -1116,7 +1517,8 @@ msgstr ""
 #: app/templates/animal_detail.html:78 app/templates/animal_detail.html:299
 #: app/templates/animal_form.html:62
 #: app/templates/animals_bulk_purchase.html:37
-#: app/templates/catalog_public.html:13 app/templates/smart_sale_report.html:17
+#: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
 msgid "الجنس"
 msgstr ""
 
@@ -1142,7 +1544,7 @@ msgstr ""
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:35
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:36
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1230,12 +1632,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr ""
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "سداد دين"
 msgstr ""
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:35
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:36
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr ""
@@ -1258,7 +1660,7 @@ msgstr ""
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:437 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:35
+#: app/templates/finance/list.html:36
 msgid "المبلغ"
 msgstr ""
 
@@ -1332,7 +1734,7 @@ msgstr ""
 #: app/templates/equipment/utility_form.html:7
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:35 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:36 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1511,10 +1913,6 @@ msgstr ""
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr ""
 
-#: app/templates/alerts_list.html:10 app/templates/team/report_detail.html:20
-msgid "حظيرة"
-msgstr ""
-
 #: app/templates/alerts_list.html:11
 msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
 msgstr ""
@@ -1537,10 +1935,10 @@ msgid "الإعدادات"
 msgstr ""
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
-#: app/templates/home.html:60 app/templates/home.html:72
-#: app/templates/today.html:24 app/templates/today.html:45
-#: app/templates/today.html:46 app/templates/today.html:68
-#: app/templates/worker_home.html:63
+#: app/templates/finance/lots_list.html:24 app/templates/home.html:60
+#: app/templates/home.html:72 app/templates/today.html:24
+#: app/templates/today.html:45 app/templates/today.html:46
+#: app/templates/today.html:68 app/templates/worker_home.html:63
 msgid "فتح"
 msgstr ""
 
@@ -1561,7 +1959,7 @@ msgstr ""
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "شراء"
 msgstr ""
 
@@ -1582,6 +1980,8 @@ msgid "رقم"
 msgstr ""
 
 #: app/templates/animal_detail.html:18 app/templates/catalog_public.html:13
+#: app/templates/finance/lot_detail.html:34
+#: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
 msgid "العمر"
 msgstr ""
 
@@ -1617,11 +2017,6 @@ msgstr ""
 
 #: app/templates/animal_detail.html:39 app/templates/isolation_exit_form.html:4
 msgid "خروج من العزل"
-msgstr ""
-
-#: app/templates/animal_detail.html:41
-#: app/templates/isolation_enter_form.html:4
-msgid "دخول عزل"
 msgstr ""
 
 #: app/templates/animal_detail.html:50
@@ -1697,6 +2092,7 @@ msgstr ""
 #: app/templates/feed/item_form.html:33
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
+#: app/templates/finance/lot_form.html:26
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/pharmacy_form.html:110
 #: app/templates/health/vaccination_schedule_list.html:13
@@ -1975,7 +2371,7 @@ msgstr ""
 #: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
 #: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:125
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:35
+#: app/templates/finance/list.html:36 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2128,6 +2524,8 @@ msgstr ""
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/batches/batch_form.html:33
 #: app/templates/bulk_action_form.html:19 app/templates/catalog_public.html:13
+#: app/templates/finance/lot_detail.html:34
+#: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
 msgid "الوزن (كجم)"
 msgstr ""
 
@@ -2258,12 +2656,12 @@ msgid "الوصف"
 msgstr ""
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "بيع"
 msgstr ""
 
 #: app/templates/animal_detail.html:438 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "مصروف"
 msgstr ""
 
@@ -2319,6 +2717,8 @@ msgstr ""
 
 #: app/templates/animal_form.html:40 app/templates/feed/fcr_report.html:51
 #: app/templates/feed/fcr_report.html:69
+#: app/templates/finance/lot_detail.html:34
+#: app/templates/finance/lot_form.html:32 app/templates/lot_public.html:17
 msgid "السلالة"
 msgstr ""
 
@@ -2465,6 +2865,7 @@ msgstr ""
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:10
 #: app/templates/feed/ration_form.html:7
 #: app/templates/feed/rations_list.html:10
+#: app/templates/finance/lots_list.html:17
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:11
@@ -2493,7 +2894,7 @@ msgid "إضافة"
 msgstr ""
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:110
-#: app/templates/finance/list.html:58
+#: app/templates/finance/list.html:59
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:31
@@ -2933,10 +3334,6 @@ msgstr ""
 
 #: app/templates/audit_log.html:49
 msgid "ما فيه أي حدث مسجّل بعد."
-msgstr ""
-
-#: app/templates/barn_form.html:4
-msgid "تعديل حظيرة"
 msgstr ""
 
 #: app/templates/barn_form.html:4 app/templates/barns_list.html:6
@@ -3577,10 +3974,6 @@ msgstr ""
 msgid "نوع التسجيل عند التنفيذ"
 msgstr ""
 
-#: app/templates/bulk_action_form.html:441
-msgid "زيارة بيطرية"
-msgstr ""
-
 #: app/templates/bulk_action_form.html:442
 msgid "علاج/مرض"
 msgstr ""
@@ -3869,6 +4262,39 @@ msgstr ""
 msgid ""
 "وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع "
 "يستخدمه فريقك فعلياً."
+msgstr ""
+
+#: app/templates/lot_public.html:6
+msgid "دفعة رؤوس جاهزة للبيع — تواصل معنا مباشرة للتفاصيل والمعاينة."
+msgstr ""
+
+#: app/templates/lot_public.html:8
+msgid "رأس"
+msgstr ""
+
+#: app/templates/lot_public.html:9
+msgid "كجم إجمالي"
+msgstr ""
+
+#: app/templates/lot_public.html:10
+msgid "كجم متوسط الوزن"
+msgstr ""
+
+#: app/templates/lot_public.html:17
+msgid "الحالة الصحية"
+msgstr ""
+
+#: app/templates/lot_public.html:25 app/templates/settings_readiness.html:27
+msgid "سليم"
+msgstr ""
+
+#: app/templates/lot_public.html:25
+#, python-format
+msgid "%(n)s حالة مفتوحة"
+msgstr ""
+
+#: app/templates/lot_public.html:28
+msgid "ما فيه رؤوس بهذي الدفعة."
 msgstr ""
 
 #: app/templates/role_edit.html:4
@@ -4298,10 +4724,6 @@ msgstr ""
 msgid "حرج"
 msgstr ""
 
-#: app/templates/settings_readiness.html:27
-msgid "سليم"
-msgstr ""
-
 #: app/templates/settings_simulation_data.html:7
 msgid ""
 "هذي الأداة تحذف حصراً السجلات اللي ولّدها أمر \"المحاكاة التشغيلية\" "
@@ -4311,18 +4733,6 @@ msgstr ""
 
 #: app/templates/settings_simulation_data.html:12
 msgid "حيوان محاكاة"
-msgstr ""
-
-#: app/templates/settings_simulation_data.html:13
-msgid "حركة مالية"
-msgstr ""
-
-#: app/templates/settings_simulation_data.html:14
-msgid "تقريع"
-msgstr ""
-
-#: app/templates/settings_simulation_data.html:15
-msgid "حالة مرضية"
 msgstr ""
 
 #: app/templates/settings_simulation_data.html:16
@@ -4685,6 +5095,7 @@ msgid "دفعات استقبال قطيع جديد"
 msgstr ""
 
 #: app/templates/batches/batches_list.html:9
+#: app/templates/finance/lots_list.html:8
 msgid "دفعة جديدة"
 msgstr ""
 
@@ -4694,6 +5105,8 @@ msgstr ""
 
 #: app/templates/batches/batches_list.html:14
 #: app/templates/feed/fcr_report.html:69
+#: app/templates/finance/lot_detail.html:21
+#: app/templates/finance/lots_list.html:17
 #: app/templates/finance/monthly_cost_report.html:27
 msgid "عدد الرؤوس"
 msgstr ""
@@ -5640,13 +6053,14 @@ msgid "التحليل المالي ونقطة التعادل"
 msgstr ""
 
 #: app/templates/finance/break_even_report.html:7
-#: app/templates/finance/list.html:29 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:30 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr ""
 
 #: app/templates/finance/break_even_report.html:8
 #: app/templates/finance/culling_index.html:6
+#: app/templates/finance/lots_list.html:7
 #: app/templates/finance/monthly_cost_report.html:6
 msgid "رجوع للمالية"
 msgstr ""
@@ -5673,10 +6087,13 @@ msgid "سعر التعادل"
 msgstr ""
 
 #: app/templates/finance/break_even_report.html:24
+#: app/templates/finance/lot_detail.html:34
+#: app/templates/finance/lot_form.html:34
 msgid "القيمة التقديرية"
 msgstr ""
 
 #: app/templates/finance/break_even_report.html:24
+#: app/templates/finance/lot_detail.html:34
 msgid "الهامش"
 msgstr ""
 
@@ -5844,45 +6261,161 @@ msgstr ""
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr ""
 
-#: app/templates/finance/list.html:30
+#: app/templates/finance/list.html:29 app/templates/finance/lots_list.html:5
+msgid "دفعات البيع"
+msgstr ""
+
+#: app/templates/finance/list.html:31
 msgid "عملية جديدة"
 msgstr ""
 
-#: app/templates/finance/list.html:35
+#: app/templates/finance/list.html:36
 msgid "الفاتورة"
 msgstr ""
 
-#: app/templates/finance/list.html:39
+#: app/templates/finance/list.html:40
 msgid "دعم خارجي (دين)"
 msgstr ""
 
-#: app/templates/finance/list.html:42
+#: app/templates/finance/list.html:43
 #: app/templates/health/vaccination_schedule_list.html:56
 msgid "ملغاة"
 msgstr ""
 
-#: app/templates/finance/list.html:42
+#: app/templates/finance/list.html:43
 msgid "سارية"
 msgstr ""
 
-#: app/templates/finance/list.html:45
+#: app/templates/finance/list.html:46
 msgid "بدون فاتورة"
 msgstr ""
 
-#: app/templates/finance/list.html:47
+#: app/templates/finance/list.html:48
 msgid "إصدار"
 msgstr ""
 
-#: app/templates/finance/list.html:50 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
 msgid "عرض"
 msgstr ""
 
-#: app/templates/finance/list.html:55
+#: app/templates/finance/list.html:56
 msgid "تأكيد الإلغاء؟"
 msgstr ""
 
-#: app/templates/finance/list.html:64
+#: app/templates/finance/list.html:65
 msgid "لا يوجد عمليات مالية بعد."
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:6
+#: app/templates/finance/lot_form.html:6
+msgid "رجوع للدفعات"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:9
+msgid "الهدف المالي:"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:11
+msgid "تصدير بروفايل PDF"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:12
+msgid "رابط المشاركة العام"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:13
+msgid "حذف هذي الدفعة نهائياً؟ (الرؤوس نفسها ما تتأثر)"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:15
+msgid "حذف الدفعة"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:22
+msgid "إجمالي الوزن (كجم)"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:23
+msgid "متوسط الوزن (كجم)"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:24
+msgid "إجمالي التكلفة الفعلية"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:25
+#, python-format
+msgid "إجمالي القيمة التقديرية (%(n)s من %(total)s برأس مقدَّر)"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:27
+msgid "هامش الربح المتوقع"
+msgstr ""
+
+#: app/templates/finance/lot_detail.html:34
+#: app/templates/finance/lot_form.html:33
+msgid "التكلفة الفعلية"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:5
+msgid "دفعة بيع جديدة"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:8
+msgid ""
+"اختر الرؤوس اللي تبي تضمّها بالدفعة يدوياً، أو حدّد مبلغاً مستهدفاً "
+"والنظام يقترح لك أقرب مجموعة تحققه بأعلى ربحية (تقريبي، راجعه قبل "
+"الاعتماد)."
+msgstr ""
+
+#: app/templates/finance/lot_form.html:14
+msgid "المبلغ المستهدف (اختياري)"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:17
+msgid "اقترح لي أقرب مجموعة"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:24
+msgid "اسم الدفعة"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:24
+msgid "مثال: دفعة عيد الأضحى 2026"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:25
+msgid "الهدف المالي (اختياري)"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:28
+msgid "اختر الرؤوس"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:34
+msgid "الهامش المتوقع"
+msgstr ""
+
+#: app/templates/finance/lot_form.html:49
+msgid "ما فيه رؤوس بغرض \"بيع\" حالياً — حدّد الغرض من شاشة الحيوان أولاً."
+msgstr ""
+
+#: app/templates/finance/lot_form.html:53
+msgid "إنشاء الدفعة"
+msgstr ""
+
+#: app/templates/finance/lots_list.html:11
+msgid ""
+"صانع مجموعات البيع الذكي — جمّع رؤوساً جاهزة بدفعة واحدة، شوف إحصائياتها "
+"الاستثمارية، وشارك بروفايلاً تجارياً احترافياً مع المشتري."
+msgstr ""
+
+#: app/templates/finance/lots_list.html:17
+msgid "تاريخ الإنشاء"
+msgstr ""
+
+#: app/templates/finance/lots_list.html:27
+msgid "ما فيه دفعات بيع بعد."
 msgstr ""
 
 #: app/templates/finance/monthly_cost_report.html:5
@@ -6219,10 +6752,6 @@ msgstr ""
 
 #: app/templates/health/diagnose_start.html:57
 msgid "احسب الاحتمالات"
-msgstr ""
-
-#: app/templates/health/disease_form.html:6
-msgid "تسجيل حالة مرضية"
 msgstr ""
 
 #: app/templates/health/disease_form.html:13
@@ -7202,10 +7731,6 @@ msgstr ""
 msgid "لا يوجد تطعيمات مسجّلة بعد."
 msgstr ""
 
-#: app/templates/health/vet_visit_form.html:5
-msgid "تسجيل زيارة بيطرية"
-msgstr ""
-
 #: app/templates/health/vet_visits_list.html:6
 msgid "زيارة جديدة"
 msgstr ""
@@ -7224,10 +7749,6 @@ msgstr ""
 
 #: app/templates/onboarding/checklist.html:11
 msgid "شياع"
-msgstr ""
-
-#: app/templates/onboarding/checklist.html:12
-msgid "حمل"
 msgstr ""
 
 #: app/templates/onboarding/checklist.html:12
@@ -7792,10 +8313,6 @@ msgstr ""
 msgid ""
 "تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة "
 "الحظيرة. متأكد؟"
-msgstr ""
-
-#: app/templates/repro/pregnancies_list.html:28
-msgid "تسجيل إجهاض"
 msgstr ""
 
 #: app/templates/repro/pregnancies_list.html:34
@@ -8382,10 +8899,6 @@ msgstr ""
 msgid "لا يوجد أعضاء بعد."
 msgstr ""
 
-#: app/templates/team/report_detail.html:6
-msgid "بلاغ"
-msgstr ""
-
 #: app/templates/team/report_detail.html:12
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -8926,10 +9439,6 @@ msgstr ""
 
 #: app/templates/warehouses/item_breakdown.html:13
 msgid "غير متّسق"
-msgstr ""
-
-#: app/templates/warehouses/item_breakdown.html:21
-msgid "تحويل بين مستودعين"
 msgstr ""
 
 #: app/templates/warehouses/item_breakdown.html:37

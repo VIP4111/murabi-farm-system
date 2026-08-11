@@ -101,6 +101,78 @@ def build_pdf(title: str, columns: list[str], rows: list[list], subtitle: str | 
     return buf
 
 
+def build_lot_profile_pdf(lot, rows, stats, farm_settings) -> io.BytesIO:
+    """بروفايل تجاري احترافي لدفعة بيع (بند إضافي 191.3) — مستند
+    عرض للمشتري المحتمل: هوية المزرعة، إحصائيات الدفعة الاستثمارية،
+    وجدول تفصيلي بكل رأس (رقم، عمر، وزن، سلالة، حالة صحية عامة).
+    **صفر بيانات مالية داخلية حساسة** — لا تكلفة فعلية ولا هامش ربح،
+    بس الوزن والعمر والصحة (ما يهم المشتري فعلياً)."""
+    _ensure_font()
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=A4)
+    width, height = A4
+    right_margin = width - 15 * mm
+    left_margin = 15 * mm
+    y = height - 20 * mm
+
+    c.setFont("Arabic", 18)
+    c.drawRightString(right_margin, y, ar(lot.name))
+    y -= 8 * mm
+    c.setFont("Arabic", 10)
+    farm_name = farm_settings.farm_name or "مراح بو علي"
+    c.drawRightString(right_margin, y, ar(f"{farm_name} — {farm_settings.farm_phone or ''}"))
+    y -= 10 * mm
+
+    c.setFont("Arabic", 12)
+    summary = (
+        f"عدد الرؤوس: {stats['count']}   |   إجمالي الوزن: {stats['total_weight']} كجم"
+        f"   |   متوسط الوزن: {stats['avg_weight']} كجم"
+    )
+    c.drawRightString(right_margin, y, ar(summary))
+    y -= 10 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 8 * mm
+
+    columns = ["الرقم", "السلالة", "الجنس", "العمر", "الوزن (كجم)", "الحالة الصحية"]
+    n_cols = len(columns)
+    col_width = (right_margin - left_margin) / n_cols
+
+    def draw_header(yy):
+        c.setFont("Arabic", 9)
+        for i, col in enumerate(columns):
+            x = right_margin - i * col_width
+            c.drawRightString(x, yy, ar(col))
+        c.line(left_margin, yy - 2 * mm, right_margin, yy - 2 * mm)
+        return yy - 7 * mm
+
+    y = draw_header(y)
+    c.setFont("Arabic", 8.5)
+    for r in rows:
+        if y < 25 * mm:
+            c.showPage()
+            y = height - 20 * mm
+            y = draw_header(y)
+            c.setFont("Arabic", 8.5)
+        animal = r["animal"]
+        health_state = "سليم" if r.get("open_diseases", 0) == 0 else f"{r['open_diseases']} حالة مفتوحة"
+        values = [
+            animal.animal_no, animal.breed or "-", animal.gender or "-",
+            r["age_label"] or "-", r["weight"] or "-", health_state,
+        ]
+        for i, val in enumerate(values):
+            x = right_margin - i * col_width
+            c.drawRightString(x, y, ar(val))
+        y -= 6 * mm
+
+    y -= 6 * mm
+    c.setFont("Arabic", 9)
+    c.drawRightString(right_margin, y, ar("بيانات استرشادية معدَّة آلياً — تواصل معنا مباشرة للتفاصيل والمعاينة."))
+
+    c.save()
+    buf.seek(0)
+    return buf
+
+
 def build_invoice_pdf(finance_row, animal, farm_settings) -> io.BytesIO:
     """فاتورة بيع رسمية (بند إضافي 75) — المزرعة بائع، تصدر لمشترٍ. تخطيط
     مستند مفرد (رأس/طرفين/بند واحد/إجمالي) مو جدول تقرير، بس بنفس خط

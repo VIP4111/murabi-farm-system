@@ -36,6 +36,7 @@ from app.models.animal_batch import AnimalBatch
 from app.models.warehouse import Warehouse, FeedWarehouseStock, PharmacyWarehouseStock
 from app.models.equipment import Equipment, EquipmentMovement
 from app.models.checklist import ChecklistItem, ChecklistCompletion
+from app.models.sales_lot import SalesLot, SalesLotItem
 from app.models.asset import Asset, AssetMaintenanceLog, UtilityReading
 
 __all__ = [
@@ -64,4 +65,5 @@ __all__ = [
     "ProcessedTelegramUpdate",
     "ChecklistItem", "ChecklistCompletion",
     "Asset", "AssetMaintenanceLog", "UtilityReading",
+    "SalesLot", "SalesLotItem",
 ]

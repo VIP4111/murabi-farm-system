@@ -19,8 +19,10 @@ def _log(action, days_ago=0, actor_user_id=None):
 
 def _table_actions(body: str) -> list[str]:
     # الجدول نفسه بس — يستثني قائمة الفلترة المنسدلة اللي تعرض كل
-    # القيم الممكنة بغض النظر عن الفلترة الحالية.
-    return re.findall(r"<td>([\w.]+)</td>", body)
+    # القيم الممكنة بغض النظر عن الفلترة الحالية. يلتقط أي نص (بند
+    # إضافي 192 — الإجراء صار يُعرض بنص عربي مترجَم عبر `ar_audit_action`
+    # بدل مفتاح الكود الخام، فما يبقى مطابقاً لـ`[\w.]+` وحده).
+    return re.findall(r"<td>([^<]+)</td>", body)
 
 
 def test_filter_by_action(app, client, owner):
@@ -30,7 +32,7 @@ def test_filter_by_action(app, client, owner):
 
     resp = client.get("/settings/audit?action=animal.sell")
     actions = _table_actions(resp.data.decode())
-    assert "animal.sell" in actions
+    assert "بيع حيوان" in actions
     assert "task.delete" not in actions
 
 
@@ -41,8 +43,8 @@ def test_filter_by_actor(app, client, owner, worker):
 
     resp = client.get(f"/settings/audit?actor_user_id={worker.id}")
     actions = _table_actions(resp.data.decode())
-    assert "task.fail" in actions
-    assert "animal.sell" not in actions
+    assert "تسجيل تعذّر مهمة" in actions
+    assert "بيع حيوان" not in actions
 
 
 def test_filter_by_date_range(app, client, owner):

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('دفعة بيع جديدة') }}</h2>
+    <a class="btn light" href="{{ url_for('finance.lots_list') }}">← {{ _('رجوع للدفعات') }}</a>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">{{ _('اختر الرؤوس اللي تبي تضمّها بالدفعة يدوياً، أو حدّد مبلغاً مستهدفاً والنظام يقترح لك أقرب مجموعة تحققه بأعلى ربحية (تقريبي، راجعه قبل الاعتماد).') }}</p>
+</div>
+
+<div class="card">
+  <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+    <div>
+      <label style="margin:0 0 4px;">{{ _('المبلغ المستهدف (اختياري)') }}</label>
+      <input name="target_amount" type="number" step="0.01" value="{{ target_amount or '' }}" style="margin:0;">
+    </div>
+    <button class="btn light" type="submit" style="padding:10px 16px;">{{ _('اقترح لي أقرب مجموعة') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  <form method="post" id="lotForm">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('اسم الدفعة') }}</label><input name="name" required placeholder="{{ _('مثال: دفعة عيد الأضحى 2026') }}">
+    <label>{{ _('الهدف المالي (اختياري)') }}</label><input name="target_amount" type="number" step="0.01" value="{{ target_amount or '' }}">
+    <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
+
+    <h3 style="font-size:14px; margin-top:14px;">{{ _('اختر الرؤوس') }}</h3>
+    <div class="table-scroll">
+<table>
+      <tr>
+        <th></th><th>{{ _('الرقم') }}</th><th>{{ _('السلالة') }}</th><th>{{ _('الجنس') }}</th>
+        <th>{{ _('العمر') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('التكلفة الفعلية') }}</th>
+        <th>{{ _('القيمة التقديرية') }}</th><th>{{ _('الهامش المتوقع') }}</th>
+      </tr>
+      {% for r in candidates %}
+      <tr>
+        <td><input type="checkbox" name="animal_ids" value="{{ r.animal.id }}" style="width:auto; margin:0;" {{ 'checked' if r.animal.id in suggested_ids }}></td>
+        <td>{{ r.animal.animal_no }}</td>
+        <td>{{ r.animal.breed or '-' }}</td>
+        <td>{{ r.animal.gender or '-' }}</td>
+        <td>{{ r.age_label or '-' }}</td>
+        <td>{{ r.weight }}</td>
+        <td>{{ r.actual_cost }}</td>
+        <td>{{ r.estimated_value if r.estimated_value is not none else '-' }}</td>
+        <td>{{ r.margin if r.margin is not none else '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="9" style="color:#888;">{{ _('ما فيه رؤوس بغرض "بيع" حالياً — حدّد الغرض من شاشة الحيوان أولاً.') }}</td></tr>
+      {% endfor %}
+    </table>
+</div>
+    <button class="btn" type="submit" style="margin-top:10px;">{{ _('إنشاء الدفعة') }}</button>
+  </form>
+</div>
+{% endblock %}

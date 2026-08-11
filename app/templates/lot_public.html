@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ lot.name }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>🐑 {{ lot.name }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('دفعة رؤوس جاهزة للبيع — تواصل معنا مباشرة للتفاصيل والمعاينة.') }}</p>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;">
+    <div><b>{{ stats.count }}</b> {{ _('رأس') }}</div>
+    <div><b>{{ stats.total_weight }}</b> {{ _('كجم إجمالي') }}</div>
+    <div><b>{{ stats.avg_weight }}</b> {{ _('كجم متوسط الوزن') }}</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('السلالة') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('العمر') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('الحالة الصحية') }}</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.animal.animal_no }}</td>
+      <td>{{ r.animal.breed or '-' }}</td>
+      <td>{{ r.animal.gender or '-' }}</td>
+      <td>{{ r.age_label or '-' }}</td>
+      <td>{{ r.weight or '-' }}</td>
+      <td>{% if r.open_diseases == 0 %}<span class="badge on">{{ _('سليم') }}</span>{% else %}<span class="badge off">{{ _('%(n)s حالة مفتوحة', n=r.open_diseases) }}</span>{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">{{ _('ما فيه رؤوس بهذي الدفعة.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ lot.name }}</h2>
+    <a class="btn light" href="{{ url_for('finance.lots_list') }}">← {{ _('رجوع للدفعات') }}</a>
+  </div>
+  {% if lot.notes %}<p style="color:var(--muted); font-size:13px;">{{ lot.notes }}</p>{% endif %}
+  {% if lot.target_amount %}<p style="color:var(--muted); font-size:13px;">{{ _('الهدف المالي:') }} {{ lot.target_amount }}</p>{% endif %}
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+    <a class="btn light" href="{{ url_for('finance.lot_export_pdf', lot_id=lot.id) }}">📄 {{ _('تصدير بروفايل PDF') }}</a>
+    <a class="btn light" href="{{ url_for('core.lot_public', token=lot.share_token) }}" target="_blank">🔗 {{ _('رابط المشاركة العام') }}</a>
+    <form method="post" action="{{ url_for('finance.lot_delete', lot_id=lot.id) }}" onsubmit="return confirm('{{ _('حذف هذي الدفعة نهائياً؟ (الرؤوس نفسها ما تتأثر)') }}');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn danger" type="submit">{{ _('حذف الدفعة') }}</button>
+    </form>
+  </div>
+</div>
+
+<div class="card" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+  <div class="stat"><b>{{ stats.count }}</b><span>{{ _('عدد الرؤوس') }}</span></div>
+  <div class="stat"><b>{{ stats.total_weight }}</b><span>{{ _('إجمالي الوزن (كجم)') }}</span></div>
+  <div class="stat"><b>{{ stats.avg_weight }}</b><span>{{ _('متوسط الوزن (كجم)') }}</span></div>
+  <div class="stat"><b>{{ stats.total_actual_cost }}</b><span>{{ _('إجمالي التكلفة الفعلية') }}</span></div>
+  <div class="stat"><b>{{ stats.total_estimated_value if stats.total_estimated_value is not none else '-' }}</b><span>{{ _('إجمالي القيمة التقديرية (%(n)s من %(total)s برأس مقدَّر)', n=stats.priced_count, total=stats.count) }}</span></div>
+  <div class="stat" style="{{ 'background:var(--ok, #3a7d3a); color:#fff;' if stats.projected_margin and stats.projected_margin > 0 }}">
+    <b>{{ stats.projected_margin if stats.projected_margin is not none else '-' }}</b><span>{{ _('هامش الربح المتوقع') }}</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('السلالة') }}</th><th>{{ _('العمر') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('التكلفة الفعلية') }}</th><th>{{ _('القيمة التقديرية') }}</th><th>{{ _('الهامش') }}</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id) }}">{{ r.animal.animal_no }}</a></td>
+      <td>{{ r.animal.breed or '-' }}</td>
+      <td>{{ r.age_label or '-' }}</td>
+      <td>{{ r.weight }}</td>
+      <td>{{ r.actual_cost }}</td>
+      <td>{{ r.estimated_value if r.estimated_value is not none else '-' }}</td>
+      <td>{{ r.margin if r.margin is not none else '-' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

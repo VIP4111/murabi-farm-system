@@ -118,6 +118,102 @@ def break_even_report():
     )
 
 
+@finance_bp.route("/lots")
+@login_required
+@require_permission("finance.full.manage")
+def lots_list():
+    from app.models import SalesLot
+    lots = SalesLot.query.order_by(SalesLot.created_at.desc()).all()
+    return render_template("finance/lots_list.html", lots=lots)
+
+
+@finance_bp.route("/lots/new", methods=["GET", "POST"])
+@login_required
+@require_permission("finance.full.manage")
+def lots_new():
+    from app.models import SalesLot, SalesLotItem
+    from app.core import sales_lot_service as svc
+
+    candidates = [svc.animal_lot_row(a) for a in svc.sellable_animals()]
+
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        if not name:
+            flash("اسم الدفعة مطلوب", "error")
+            return redirect(url_for("finance.lots_new"))
+        animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
+        if not animal_ids:
+            flash("لازم تختار رأساً واحداً على الأقل", "error")
+            return redirect(url_for("finance.lots_new"))
+
+        lot = SalesLot(
+            name=name, notes=request.form.get("notes") or None,
+            target_amount=float(request.form["target_amount"]) if request.form.get("target_amount") else None,
+            created_by_id=current_user.id,
+        )
+        db.session.add(lot)
+        db.session.flush()
+        for animal_id in animal_ids:
+            db.session.add(SalesLotItem(lot_id=lot.id, animal_id=animal_id))
+        db.session.add(AuditLog(actor_user_id=current_user.id, action="sales_lot.create",
+                                 entity_type="SalesLot", entity_id=lot.id, details=name))
+        db.session.commit()
+        flash("تم إنشاء دفعة البيع", "success")
+        return redirect(url_for("finance.lot_detail", lot_id=lot.id))
+
+    target_amount = request.args.get("target_amount", type=float)
+    suggested_ids = set(svc.suggest_lot_for_target(target_amount=target_amount, candidates=candidates)) if target_amount else set()
+
+    return render_template(
+        "finance/lot_form.html", candidates=candidates,
+        target_amount=target_amount, suggested_ids=suggested_ids,
+    )
+
+
+@finance_bp.route("/lots/<int:lot_id>")
+@login_required
+@require_permission("finance.full.manage")
+def lot_detail(lot_id):
+    from app.models import SalesLot
+    from app.core import sales_lot_service as svc
+    lot = SalesLot.query.get_or_404(lot_id)
+    rows = [svc.animal_lot_row(item.animal) for item in lot.items]
+    stats = svc.lot_stats(rows)
+    return render_template("finance/lot_detail.html", lot=lot, rows=rows, stats=stats)
+
+
+@finance_bp.route("/lots/<int:lot_id>/export/pdf")
+@login_required
+@require_permission("finance.full.manage")
+def lot_export_pdf(lot_id):
+    from flask import Response
+    from app.models import SalesLot, FarmSettings
+    from app.core import sales_lot_service as svc
+    from app.reports import export_service as ex
+    lot = SalesLot.query.get_or_404(lot_id)
+    rows = [svc.animal_lot_row(item.animal) for item in lot.items]
+    stats = svc.lot_stats(rows)
+    buf = ex.build_lot_profile_pdf(lot, rows, stats, FarmSettings.get())
+    return Response(
+        buf.read(), mimetype="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=lot_{lot.id}.pdf"},
+    )
+
+
+@finance_bp.route("/lots/<int:lot_id>/delete", methods=["POST"])
+@login_required
+@require_permission("finance.full.manage")
+def lot_delete(lot_id):
+    from app.models import SalesLot
+    lot = SalesLot.query.get_or_404(lot_id)
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="sales_lot.delete",
+                             entity_type="SalesLot", entity_id=lot.id, details=lot.name))
+    db.session.delete(lot)
+    db.session.commit()
+    flash("تم حذف الدفعة", "success")
+    return redirect(url_for("finance.lots_list"))
+
+
 @finance_bp.route("/culling-index")
 @login_required
 @require_permission("finance.full.manage")

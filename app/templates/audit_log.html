@@ -24,7 +24,7 @@
       <select name="action" style="margin:0;">
         <option value="">{{ _('الكل') }}</option>
         {% for a in actions %}
-        <option value="{{ a }}" {{ 'selected' if action == a }}>{{ a }}</option>
+        <option value="{{ a }}" {{ 'selected' if action == a }}>{{ a|ar_audit_action }}</option>
         {% endfor %}
       </select>
     </div>
@@ -41,8 +41,8 @@
     <tr>
       <td>{{ row.created_at.strftime('%Y-%m-%d %H:%M') if row.created_at else '-' }}</td>
       <td>{{ row.actor.name if row.actor else '-' }}</td>
-      <td>{{ row.action }}</td>
-      <td>{{ row.entity_type or '-' }}{{ ' #' + row.entity_id|string if row.entity_id }}</td>
+      <td>{{ row.action|ar_audit_action }}</td>
+      <td>{{ row.entity_type|ar_audit_entity if row.entity_type else '-' }}{{ ' #' + row.entity_id|string if row.entity_id }}</td>
       <td style="max-width:280px; overflow-wrap:anywhere;">{{ row.details or '-' }}</td>
     </tr>
     {% else %}

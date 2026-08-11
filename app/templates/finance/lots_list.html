@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('دفعات البيع') }}</h2>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
+      <a class="btn" href="{{ url_for('finance.lots_new') }}">+ {{ _('دفعة جديدة') }}</a>
+    </div>
+  </div>
+  <p style="color:var(--muted); font-size:13px;">{{ _('صانع مجموعات البيع الذكي — جمّع رؤوساً جاهزة بدفعة واحدة، شوف إحصائياتها الاستثمارية، وشارك بروفايلاً تجارياً احترافياً مع المشتري.') }}</p>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('تاريخ الإنشاء') }}</th><th></th></tr>
+    {% for lot in lots %}
+    <tr>
+      <td><a href="{{ url_for('finance.lot_detail', lot_id=lot.id) }}">{{ lot.name }}</a></td>
+      <td>{{ lot.items|length }}</td>
+      <td><span class="badge {{ 'on' if lot.status == 'open' else 'off' }}">{{ lot.status }}</span></td>
+      <td>{{ lot.created_at.strftime('%Y-%m-%d') if lot.created_at else '-' }}</td>
+      <td><a class="btn light" href="{{ url_for('finance.lot_detail', lot_id=lot.id) }}" style="padding:4px 10px; font-size:12px;">{{ _('فتح') }}</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">{{ _('ما فيه دفعات بيع بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

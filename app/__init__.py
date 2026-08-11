@@ -217,6 +217,109 @@ def create_app(config_class=Config):
     def ar_report_type(value):
         return REPORT_TYPE_LABELS_AR.get(value, value)
 
+    # سجل التدقيق (بند إضافي 192) — `AuditLog.action` و`AuditLog.entity_type`
+    # كانا يُعرَضان بمفاتيح الكود الخام (report.accept، user.edit، Animal...)
+    # بدل نص عربي مقروء — نفس أسلوب ar_status/ar_report_type بالضبط: قاموس
+    # ثابت + fallback آمن (قيمة غير معروفة ترجع كما هي، ما تختفي بصمت).
+    AUDIT_ACTION_LABELS_AR = {
+        "animal.bulk_barn_move": _l("نقل حظائر جماعي"),
+        "animal.bulk_isolation": _l("عزل جماعي"),
+        "animal.bulk_purchase": _l("شراء دفعة جماعي"),
+        "animal.bulk_purpose": _l("تحديد غرض جماعي"),
+        "animal.create": _l("إضافة حيوان"),
+        "animal.death": _l("تسجيل نفوق"),
+        "animal.delete": _l("حذف حيوان"),
+        "animal.edit": _l("تعديل بيانات حيوان"),
+        "animal.enter_isolation": _l("دخول عزل"),
+        "animal.exit_isolation": _l("خروج من عزل"),
+        "animal.sale_cancelled_restore": _l("استرجاع بيع ملغى"),
+        "animal.sell": _l("بيع حيوان"),
+        "backup.create": _l("إنشاء نسخة احتياطية"),
+        "barn.create": _l("إضافة حظيرة"),
+        "barn.update": _l("تعديل حظيرة"),
+        "batch.advance_single_animal": _l("تقديم رأس بالدفعة"),
+        "batch.advance_stage": _l("تقديم مرحلة الدفعة"),
+        "batch.create": _l("إنشاء دفعة"),
+        "batch.distribute": _l("توزيع دفعة"),
+        "batch.hold_animal": _l("إيقاف رأس بالدفعة"),
+        "batch.release_hold": _l("فك إيقاف رأس بالدفعة"),
+        "daily_task_template.create": _l("إضافة قالب مهمة يومية"),
+        "daily_task_template.toggle": _l("تفعيل/إيقاف قالب مهمة يومية"),
+        "disease.close": _l("إغلاق حالة مرضية"),
+        "disease.create": _l("تسجيل حالة مرضية"),
+        "disease_symptom_link.create": _l("ربط مرض بعرض"),
+        "disease_symptom_link.delete": _l("حذف ربط مرض بعرض"),
+        "disease_symptom_link.update": _l("تعديل ربط مرض بعرض"),
+        "disease_symptom_link.wizard_batch": _l("ربط أعراض بمرض (دفعة)"),
+        "emergency_symptom.create": _l("إضافة عرض طوارئ"),
+        "emergency_symptom.delete": _l("حذف عرض طوارئ"),
+        "feed.ca_phosphorus_override": _l("تجاوز تحذير كالسيوم/فسفور"),
+        "feed.concentrate_increase_override": _l("تجاوز تحذير زيادة المركّزات"),
+        "feed_ration.create": _l("إضافة وصفة علف"),
+        "finance.cancel": _l("إلغاء حركة مالية"),
+        "health.redose_override": _l("تجاوز تحذير إعادة جرعة"),
+        "ostrich_egg.fail": _l("تسجيل فشل بيضة"),
+        "ostrich_egg.hatch": _l("تسجيل فقس بيضة"),
+        "pharmacy.purchase": _l("شراء دواء"),
+        "pregnancy.abortion": _l("تسجيل إجهاض"),
+        "protocol.create": _l("إنشاء بروتوكول علاج"),
+        "report.accept": _l("قبول بلاغ"),
+        "report.cancel": _l("إلغاء بلاغ"),
+        "report.close": _l("إغلاق بلاغ"),
+        "report.delete_final": _l("حذف بلاغ نهائي"),
+        "report.execute": _l("تنفيذ بلاغ"),
+        "report.postpone": _l("تأجيل بلاغ"),
+        "report.resume": _l("استئناف بلاغ"),
+        "report.submit": _l("رفع بلاغ"),
+        "report.transfer": _l("تحويل بلاغ"),
+        "role.create": _l("إنشاء مسمّى وظيفي"),
+        "role.update_permissions": _l("تعديل صلاحيات مسمّى وظيفي"),
+        "sales_lot.create": _l("إنشاء دفعة بيع"),
+        "sales_lot.delete": _l("حذف دفعة بيع"),
+        "service.toggle": _l("تفعيل/إيقاف خدمة"),
+        "simulation_data.purge": _l("حذف بيانات محاكاة"),
+        "sonar.bulk_create": _l("تسجيل سونار جماعي"),
+        "task.approve": _l("اعتماد مهمة مقترحة"),
+        "task.assign": _l("تعيين مهمة"),
+        "task.cancel_active": _l("إلغاء مهمة نشطة"),
+        "task.complete": _l("إنجاز مهمة"),
+        "task.complete_via_treatment": _l("إنجاز مهمة عبر تنفيذ علاج"),
+        "task.delete_final": _l("حذف مهمة نهائي"),
+        "task.fail": _l("تسجيل تعذّر مهمة"),
+        "task.owner_restore": _l("استرجاع مهمة محذوفة"),
+        "task.postpone": _l("تأجيل مهمة"),
+        "task.postpone_active": _l("تأجيل مهمة نشطة"),
+        "task.soft_delete": _l("حذف مهمة (بانتظار مراجعة)"),
+        "user.create": _l("إضافة مستخدم"),
+        "user.edit": _l("تعديل مستخدم"),
+        "user.toggle": _l("تفعيل/إيقاف مستخدم"),
+        "vaccination.create": _l("تسجيل تحصين"),
+        "vaccination_schedule.create": _l("إضافة جدول تحصين"),
+        "vet_visit.create": _l("تسجيل زيارة بيطرية"),
+        "warehouse.transfer": _l("تحويل بين مستودعين"),
+        "mating.create": _l("تسجيل تقريع"),
+    }
+
+    AUDIT_ENTITY_LABELS_AR = {
+        "Animal": _l("حيوان"), "Barn": _l("حظيرة"), "Task": _l("مهمة"),
+        "Report": _l("بلاغ"), "Disease": _l("حالة مرضية"), "VetVisit": _l("زيارة بيطرية"),
+        "Vaccination": _l("تحصين"), "Finance": _l("حركة مالية"), "User": _l("مستخدم"),
+        "Role": _l("مسمّى وظيفي"), "Mating": _l("تقريع"), "Pregnancy": _l("حمل"),
+        "AnimalBatch": _l("دفعة حيوانات"), "SalesLot": _l("دفعة بيع"),
+        "FeedRation": _l("وصفة علف"), "Pharmacy": _l("دواء"), "TreatmentProtocol": _l("بروتوكول علاج"),
+        "OstrichEgg": _l("بيضة نعام"), "ServiceToggle": _l("خدمة"), "EmergencySymptom": _l("عرض طوارئ"),
+        "DiseaseSymptomLink": _l("ربط مرض-عرض"), "DailyTaskTemplate": _l("قالب مهمة يومية"),
+        "VaccinationSchedule": _l("جدول تحصين"), "Warehouse": _l("مستودع"),
+    }
+
+    @app.template_filter("ar_audit_action")
+    def ar_audit_action(value):
+        return AUDIT_ACTION_LABELS_AR.get(value, value)
+
+    @app.template_filter("ar_audit_entity")
+    def ar_audit_entity(value):
+        return AUDIT_ENTITY_LABELS_AR.get(value, value)
+
     # تحويل حالة المهمة إلى إحدى 5 حالات شارة موحّدة (نظام تصميم
     # claude.ai/design، بند إضافي 76) — Task.status له أكثر من 5 قيمة
     # فعلية، فهذا تجميع بصري بس (fallback "pending" الأكثر حياداً)،
