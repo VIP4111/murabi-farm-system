@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 05:56+0300\n"
+"POT-Creation-Date: 2026-08-11 14:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1063,6 +1063,7 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
@@ -1105,7 +1106,7 @@ msgstr "ጾታ"
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
 #: app/templates/repro/mating_form.html:18
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
@@ -1691,7 +1692,7 @@ msgstr "የእርሻ መግቢያ ቀን"
 #: app/templates/health/vaccination_schedule_form.html:7
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:81
@@ -2216,7 +2217,8 @@ msgstr "ዝርያ"
 msgid "أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً."
 msgstr "አኝኪ ያልሆነ ማንኛውም ዝርያ (ሰጎን ወይም አዲስ ዝርያ) ወደ ምርት ዑደት (ማዳቀል/እርግዝና/ጡት ማስጣል) በራስ-ሰር አይገባም።"
 
-#: app/templates/animal_form.html:40
+#: app/templates/animal_form.html:40 app/templates/feed/fcr_report.html:51
+#: app/templates/feed/fcr_report.html:69
 msgid "السلالة"
 msgstr "ዝርያ (ንዑስ)"
 
@@ -4428,6 +4430,7 @@ msgid "رقم الدفعة"
 msgstr "የጭነት ቁጥር"
 
 #: app/templates/batches/batches_list.html:14
+#: app/templates/feed/fcr_report.html:69
 #: app/templates/finance/monthly_cost_report.html:27
 msgid "عدد الرؤوس"
 msgstr "የእንስሳት ብዛት"
@@ -4910,6 +4913,34 @@ msgstr "ከ%(total)s በበረቱ ውስጥ ካሉ እንስሳት %(with_data)s
 msgid "ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة المحددة."
 msgstr "FCR ማስላት አልቻልንም — በተመረጠው ጊዜ ውስጥ ቢያንስ አንድ እንስሳ ሁለት የተመዘገቡ ክብደቶች ሊኖረው ይገባል።"
 
+#: app/templates/feed/fcr_report.html:45
+msgid "ترتيب الرؤوس حسب معدل النمو (لكشف الأبطأ)"
+msgstr "በእድገት መጠን የተደረደሩ እንስሳት (በጣም ቀርፋፎችን ለማወቅ)"
+
+#: app/templates/feed/fcr_report.html:47
+msgid "⚠️ هذا مو FCR فردي حقيقي — العلف يُستهلك جماعياً من نفس المعلف، والنظام ما يتتبّع كمية علف كل رأس لحاله. البديل الصادق: ترتيب الرؤوس حسب معدل نموها الفعلي (كجم/يوم) وهي بنفس ظروف التغذية المشتركة — رأس نما أبطأ من زملائه مرشّح للمراجعة (سبب صحي أو وراثي)، مو دليل قاطع على هدر علف."
+msgstr "⚠️ ይህ እውነተኛ የግለሰብ FCR አይደለም — መኖ ከአንድ ገንዳ በጋራ ይበላል፣ ሲስተሙም የእያንዳንዱን እንስሳ ራሱን የቻለ ፍጆታ አይከታተልም። ታማኝ አማራጭ: እንስሳትን በተመሳሳይ የመመገቢያ ሁኔታዎች ውስጥ በትክክለኛ የእድገት መጠናቸው (ኪ.ግ/ቀን) መደርደር — ከጓደኞቹ ይልቅ ቀርፋፋ ያደገ እንስሳ ለግምገማ እጩ ነው (የጤና ወይም የዘር ምክንያት)፣ የመኖ ብክነት ማረጋገጫ አይደለም።"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "زيادة الوزن (كجم)"
+msgstr "የክብደት ጭማሪ (ኪ.ግ)"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "عدد الأيام"
+msgstr "የቀናት ብዛት"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "معدل النمو (كجم/يوم)"
+msgstr "የእድገት መጠን (ኪ.ግ/ቀን)"
+
+#: app/templates/feed/fcr_report.html:66
+msgid "متوسط معدل النمو حسب السلالة"
+msgstr "በዝርያ የአማካይ እድገት መጠን"
+
+#: app/templates/feed/fcr_report.html:69
+msgid "متوسط النمو (كجم/يوم)"
+msgstr "አማካይ እድገት (ኪ.ግ/ቀን)"
+
 #: app/templates/feed/item_form.html:4
 msgid "تعديل مكوّن علف"
 msgstr "የመኖ ንጥረ ነገር አርትዕ"
@@ -5166,7 +5197,7 @@ msgstr "የገንዘብ ትንተና እና ዕኩልነት ነጥብ"
 
 #: app/templates/finance/break_even_report.html:7
 #: app/templates/finance/list.html:28 app/templates/reports/_filter.html:11
-#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Excel ላክ"
 
@@ -7054,7 +7085,7 @@ msgid "مين أعطاها"
 msgstr "ማን ሰጠው"
 
 #: app/templates/repro/mating_form.html:4
-#: app/templates/repro/matings_list.html:8
+#: app/templates/repro/matings_list.html:9
 msgid "تقريع جديد"
 msgstr "አዲስ ማዳቀል"
 
@@ -7080,7 +7111,7 @@ msgid "هذا تحذير إحصائي مبني على الأنساب المسج�
 msgstr "ይህ በሲስተሙ ውስጥ በተመዘገበው የዘር ግንድ ላይ ብቻ የተመሠረተ ስታቲስቲካዊ ማስጠንቀቂያ ነው፣ የላብራቶሪ የዘር ምርመራ አይደለም — እርግጠኛ ካልሆኑ ሐኪምዎን ያማክሩ።"
 
 #: app/templates/repro/mating_form.html:19
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
 #: app/templates/repro/program_form.html:10
@@ -7105,13 +7136,19 @@ msgstr "ከላይ ያለውን የዘር ግንድ ዝምድና ማስጠንቀ�
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "በዑደቱ ውስጥ ቀጣይ ደረጃ: ማዳቀሉን ካስቀመጡ በኋላ፣ ለበቂ ጊዜ በኋላ በ\"መራባት\" ← \"እርግዝና\" ← \"+ አዲስ የእርግዝና ምርመራ\" በኩል ሴቷን ይከታተሉ እርግዝናውን ለማረጋገጥ (በእጅ ምርመራ ወይም ሶናር) — ከተረጋገጠ፣ የሚጠበቀው የልደት ቀን ከቅንብሮች በተቀመጠው የእርግዝና ጊዜ በራስ-ሰር ይሰላል።"
 
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/sires_list.html:5
+msgid "تقييم أداء الفحول"
+msgstr "የወንድ አፈጻጸም ግምገማ"
+
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/program_detail.html:13
 #: app/templates/repro/program_detail.html:93
+#: app/templates/repro/sires_list.html:17
 msgid "الفحل"
 msgstr "ወንድ"
 
-#: app/templates/repro/matings_list.html:22
+#: app/templates/repro/matings_list.html:23
 msgid "لا يوجد عمليات تقريع مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ ማዳቀል የለም።"
 
@@ -7373,6 +7410,47 @@ msgstr "መጀመሪያ"
 #: app/templates/repro/programs_list.html:21
 msgid "لا يوجد برامج شياع توأمي مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ የመንታ ወራት ፕሮግራም የለም።"
+
+#: app/templates/repro/sires_list.html:6
+msgid "رجوع للتقريع"
+msgstr "ወደ ማዳቀል ተመለስ"
+
+#: app/templates/repro/sires_list.html:9
+msgid "كل الأرقام هنا مبنية حصراً على سجلات فعلية موجودة بالنظام (تقريع، تشخيص حمل، مواليد فعليين مربوطين بالأب) — صفر تقدير. لا نعرض \"درجة\" واحدة مجمّعة عمداً — كل مؤشر يُعرض بمفرده، والمقارنة والقرار يبقيان لك (فحل بمعدل توائم عالي بس صحة مواليد أضعف قرار مختلف عن فحل متوسط بكل شي)."
+msgstr "እዚህ ያሉት ሁሉም ቁጥሮች በሲስተሙ ውስጥ ባሉ እውነተኛ መዝገቦች ላይ ብቻ የተመሠረቱ ናቸው (ማዳቀል፣ የእርግዝና ምርመራ፣ ከአባት ጋር የተያያዙ ትክክለኛ ልጆች) — ዜሮ ግምት። ሆን ብለን አንድ የተዋሃደ \"ነጥብ\" አናሳይም — እያንዳንዱ አመልካች ለብቻው ይታያል፣ ንጽጽሩ እና ውሳኔው የእርስዎ ሆነው ይቀራሉ (ከፍተኛ የመንታ መጠን ያለው ግን ደካማ የልጅ ጤንነት ያለው ወንድ ከአማካይ ወንድ የተለየ ውሳኔ ነው)።"
+
+#: app/templates/repro/sires_list.html:17
+msgid "عدد عمليات التقريع"
+msgstr "የማዳቀል ብዛት"
+
+#: app/templates/repro/sires_list.html:17
+msgid "نسبة نجاح التقريع"
+msgstr "የማዳቀል የስኬት መጠን"
+
+#: app/templates/repro/sires_list.html:18
+msgid "نسبة التوائم"
+msgstr "የመንታ መጠን"
+
+#: app/templates/repro/sires_list.html:18
+msgid "عدد المواليد الفعليين"
+msgstr "ትክክለኛ የልጆች ብዛት"
+
+#: app/templates/repro/sires_list.html:19
+msgid "نسبة بقاء المواليد"
+msgstr "የልጆች የመትረፍ መጠን"
+
+#: app/templates/repro/sires_list.html:19
+msgid "متوسط وزن المواليد"
+msgstr "አማካይ የልጅ ክብደት"
+
+#: app/templates/repro/sires_list.html:27
+#, python-format
+msgid "من %(n)s فحص"
+msgstr "ከ%(n)s ምርመራዎች"
+
+#: app/templates/repro/sires_list.html:35
+msgid "ما فيه فحول عندها عمليات تقريع مسجّلة بعد."
+msgstr "እስካሁን የተመዘገበ ማዳቀል ያለው ወንድ የለም።"
 
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"

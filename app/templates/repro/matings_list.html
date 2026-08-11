@@ -4,6 +4,7 @@
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('التقريع') }}</h2>
     <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('repro.sires_list') }}">🐏 {{ _('تقييم أداء الفحول') }}</a>
       <a class="btn light" href="{{ url_for('repro.matings_export') }}">📥 {{ _('تصدير Excel') }}</a>
       {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.matings_new') }}">+ {{ _('تقريع جديد') }}</a>{% endif %}
     </div>

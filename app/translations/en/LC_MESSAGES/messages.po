@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 05:56+0300\n"
+"POT-Creation-Date: 2026-08-11 14:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1063,6 +1063,7 @@ msgstr "Total mortality cases"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
@@ -1105,7 +1106,7 @@ msgstr "Gender"
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
 #: app/templates/repro/mating_form.html:18
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
@@ -1691,7 +1692,7 @@ msgstr "Farm entry date"
 #: app/templates/health/vaccination_schedule_form.html:7
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:81
@@ -2216,7 +2217,8 @@ msgstr "Species"
 msgid "أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً."
 msgstr "Any species that isn't a ruminant (ostrich or a new species) doesn't automatically enter the production cycle (mating/pregnancy/weaning)."
 
-#: app/templates/animal_form.html:40
+#: app/templates/animal_form.html:40 app/templates/feed/fcr_report.html:51
+#: app/templates/feed/fcr_report.html:69
 msgid "السلالة"
 msgstr "Breed"
 
@@ -4428,6 +4430,7 @@ msgid "رقم الدفعة"
 msgstr "Batch number"
 
 #: app/templates/batches/batches_list.html:14
+#: app/templates/feed/fcr_report.html:69
 #: app/templates/finance/monthly_cost_report.html:27
 msgid "عدد الرؤوس"
 msgstr "Head count"
@@ -4910,6 +4913,34 @@ msgstr "%(with_data)s of %(total)s animals in the barn have two recorded weights
 msgid "ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة المحددة."
 msgstr "Couldn't calculate FCR — needs at least one animal with two weights recorded in the selected period."
 
+#: app/templates/feed/fcr_report.html:45
+msgid "ترتيب الرؤوس حسب معدل النمو (لكشف الأبطأ)"
+msgstr "Animals ranked by growth rate (to spot the slowest)"
+
+#: app/templates/feed/fcr_report.html:47
+msgid "⚠️ هذا مو FCR فردي حقيقي — العلف يُستهلك جماعياً من نفس المعلف، والنظام ما يتتبّع كمية علف كل رأس لحاله. البديل الصادق: ترتيب الرؤوس حسب معدل نموها الفعلي (كجم/يوم) وهي بنفس ظروف التغذية المشتركة — رأس نما أبطأ من زملائه مرشّح للمراجعة (سبب صحي أو وراثي)، مو دليل قاطع على هدر علف."
+msgstr "⚠️ This is not a true individual FCR — feed is consumed collectively from the same trough, and the system doesn't track each animal's own intake. The honest alternative: rank animals by their actual growth rate (kg/day) under the same shared feeding conditions — an animal that grew slower than its peers is a candidate for review (health or genetic cause), not definitive proof of feed waste."
+
+#: app/templates/feed/fcr_report.html:51
+msgid "زيادة الوزن (كجم)"
+msgstr "Weight gain (kg)"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "عدد الأيام"
+msgstr "Number of days"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "معدل النمو (كجم/يوم)"
+msgstr "Growth rate (kg/day)"
+
+#: app/templates/feed/fcr_report.html:66
+msgid "متوسط معدل النمو حسب السلالة"
+msgstr "Average growth rate by breed"
+
+#: app/templates/feed/fcr_report.html:69
+msgid "متوسط النمو (كجم/يوم)"
+msgstr "Average growth (kg/day)"
+
 #: app/templates/feed/item_form.html:4
 msgid "تعديل مكوّن علف"
 msgstr "Edit feed item"
@@ -5166,7 +5197,7 @@ msgstr "Financial analysis and break-even"
 
 #: app/templates/finance/break_even_report.html:7
 #: app/templates/finance/list.html:28 app/templates/reports/_filter.html:11
-#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Export Excel"
 
@@ -7054,7 +7085,7 @@ msgid "مين أعطاها"
 msgstr "Given by"
 
 #: app/templates/repro/mating_form.html:4
-#: app/templates/repro/matings_list.html:8
+#: app/templates/repro/matings_list.html:9
 msgid "تقريع جديد"
 msgstr "New mating"
 
@@ -7080,7 +7111,7 @@ msgid "هذا تحذير إحصائي مبني على الأنساب المسج�
 msgstr "This is a statistical warning based only on the pedigree recorded in the system, not a lab genetic test — consult your vet if unsure."
 
 #: app/templates/repro/mating_form.html:19
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
 #: app/templates/repro/program_form.html:10
@@ -7105,13 +7136,19 @@ msgstr "I confirm I have reviewed the genetic relatedness warning above and deci
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "Next step in the cycle: after saving the mating, follow up on the female after a sufficient period via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy diagnosis\" to confirm pregnancy (manual exam or sonar) — if confirmed, the expected birth date is calculated automatically from the gestation duration set in settings."
 
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/sires_list.html:5
+msgid "تقييم أداء الفحول"
+msgstr "Sire performance evaluation"
+
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/program_detail.html:13
 #: app/templates/repro/program_detail.html:93
+#: app/templates/repro/sires_list.html:17
 msgid "الفحل"
 msgstr "Male"
 
-#: app/templates/repro/matings_list.html:22
+#: app/templates/repro/matings_list.html:23
 msgid "لا يوجد عمليات تقريع مسجّلة بعد."
 msgstr "No matings recorded yet."
 
@@ -7373,6 +7410,47 @@ msgstr "Start"
 #: app/templates/repro/programs_list.html:21
 msgid "لا يوجد برامج شياع توأمي مسجّلة بعد."
 msgstr "No twin-estrus programs recorded yet."
+
+#: app/templates/repro/sires_list.html:6
+msgid "رجوع للتقريع"
+msgstr "Back to matings"
+
+#: app/templates/repro/sires_list.html:9
+msgid "كل الأرقام هنا مبنية حصراً على سجلات فعلية موجودة بالنظام (تقريع، تشخيص حمل، مواليد فعليين مربوطين بالأب) — صفر تقدير. لا نعرض \"درجة\" واحدة مجمّعة عمداً — كل مؤشر يُعرض بمفرده، والمقارنة والقرار يبقيان لك (فحل بمعدل توائم عالي بس صحة مواليد أضعف قرار مختلف عن فحل متوسط بكل شي)."
+msgstr "All the numbers here are built strictly from actual records already in the system (matings, pregnancy diagnoses, actual offspring linked to the father) — zero estimation. We deliberately don't show a single combined \"score\" — each indicator is shown on its own, and the comparison and decision remain yours (a sire with a high twin rate but weaker offspring health is a different decision than an average sire across the board)."
+
+#: app/templates/repro/sires_list.html:17
+msgid "عدد عمليات التقريع"
+msgstr "Number of matings"
+
+#: app/templates/repro/sires_list.html:17
+msgid "نسبة نجاح التقريع"
+msgstr "Mating success rate"
+
+#: app/templates/repro/sires_list.html:18
+msgid "نسبة التوائم"
+msgstr "Twin rate"
+
+#: app/templates/repro/sires_list.html:18
+msgid "عدد المواليد الفعليين"
+msgstr "Actual offspring count"
+
+#: app/templates/repro/sires_list.html:19
+msgid "نسبة بقاء المواليد"
+msgstr "Offspring survival rate"
+
+#: app/templates/repro/sires_list.html:19
+msgid "متوسط وزن المواليد"
+msgstr "Average offspring weight"
+
+#: app/templates/repro/sires_list.html:27
+#, python-format
+msgid "من %(n)s فحص"
+msgstr "of %(n)s exams"
+
+#: app/templates/repro/sires_list.html:35
+msgid "ما فيه فحول عندها عمليات تقريع مسجّلة بعد."
+msgstr "No sires with recorded matings yet."
 
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"

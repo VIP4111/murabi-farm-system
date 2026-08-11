@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ _('تقييم أداء الفحول') }}</h2>
+    <a class="btn light" href="{{ url_for('repro.matings_list') }}">← {{ _('رجوع للتقريع') }}</a>
+  </div>
+  <div class="notice">
+    {{ _('كل الأرقام هنا مبنية حصراً على سجلات فعلية موجودة بالنظام (تقريع، تشخيص حمل، مواليد فعليين مربوطين بالأب) — صفر تقدير. لا نعرض "درجة" واحدة مجمّعة عمداً — كل مؤشر يُعرض بمفرده، والمقارنة والقرار يبقيان لك (فحل بمعدل توائم عالي بس صحة مواليد أضعف قرار مختلف عن فحل متوسط بكل شي).') }}
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table>
+    <tr>
+      <th>{{ _('الفحل') }}</th><th>{{ _('عدد عمليات التقريع') }}</th><th>{{ _('نسبة نجاح التقريع') }}</th>
+      <th>{{ _('نسبة التوائم') }}</th><th>{{ _('عدد المواليد الفعليين') }}</th>
+      <th>{{ _('نسبة بقاء المواليد') }}</th><th>{{ _('متوسط وزن المواليد') }}</th>
+    </tr>
+    {% for c in cards %}
+    <tr>
+      <td><a href="{{ url_for('core.animal_detail', animal_id=c.sire.id) }}">{{ c.sire.animal_no }}</a></td>
+      <td>{{ c.matings_count }}</td>
+      <td>{{ (c.conception_rate ~ '%') if c.conception_rate is not none else '-' }}</td>
+      <td>
+        {% if c.twin_rate is not none %}{{ c.twin_rate }}% <small style="color:var(--muted);">({{ _('من %(n)s فحص', n=c.twin_sample_size) }})</small>
+        {% else %}-{% endif %}
+      </td>
+      <td>{{ c.offspring_count }}</td>
+      <td>{{ (c.survival_rate ~ '%') if c.survival_rate is not none else '-' }}</td>
+      <td>{{ c.avg_birth_weight if c.avg_birth_weight is not none else '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" style="color:#888;">{{ _('ما فيه فحول عندها عمليات تقريع مسجّلة بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

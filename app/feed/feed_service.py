@@ -355,6 +355,60 @@ def calculate_fcr(*, barn_id: int, start_date: date, end_date: date) -> dict:
     }
 
 
+def calculate_fcr_by_animal(*, barn_id: int, start_date: date, end_date: date) -> dict:
+    """تفصيل نمو كل رأس بالحظيرة خلال نفس فترة `calculate_fcr` (بند
+    إضافي 182) — يرتّب الرؤوس حسب معدل النمو الفعلي (كجم/يوم) لكشف
+    الأبطأ نمواً، ويجمّع متوسط النمو حسب السلالة.
+
+    **تنبيه صادق مهم**: هذا مو "FCR فردي" حقيقي — العلف يُستهلك جماعياً
+    من نفس المعلف بكل حظيرة، والنظام ما يتتبّع كمية علف كل رأس لحاله
+    (يحتاج تقنية تغذية فردية غير متوفرة). البديل الصادق: ترتيب الرؤوس
+    حسب معدل نموها الفعلي وهي بنفس ظروف التغذية المشتركة — رأس نما
+    أبطأ من زملائه بنفس الحظيرة ونفس العليقة مرشّح للمراجعة (سبب صحي أو
+    وراثي)، مو دليل قاطع إنه "يهدر علف أكثر" حرفياً."""
+    from app.models import Animal
+    from app.models.animal_log import AnimalWeight
+
+    animals = Animal.query.filter_by(barn_id=barn_id, status="active").all()
+    rows = []
+    for animal in animals:
+        start_w = (AnimalWeight.query.filter(AnimalWeight.animal_id == animal.id, AnimalWeight.date <= start_date)
+                   .order_by(AnimalWeight.date.desc()).first())
+        end_w = (AnimalWeight.query.filter(AnimalWeight.animal_id == animal.id, AnimalWeight.date <= end_date)
+                 .order_by(AnimalWeight.date.desc()).first())
+        if not start_w or not end_w or end_w.id == start_w.id:
+            continue
+        days = (end_w.date - start_w.date).days
+        if days <= 0:
+            continue
+        gain = end_w.weight - start_w.weight
+        rows.append({
+            "animal": animal,
+            "breed": animal.breed or "عام/غير محدد",
+            "gain_kg": round(gain, 2),
+            "days": days,
+            "gain_per_day": round(gain / days, 3),
+        })
+
+    rows.sort(key=lambda r: r["gain_per_day"])  # الأبطأ نمواً أولاً
+
+    by_breed: dict = {}
+    for r in rows:
+        by_breed.setdefault(r["breed"], []).append(r["gain_per_day"])
+    breed_summary = [
+        {"breed": breed, "count": len(values), "avg_gain_per_day": round(sum(values) / len(values), 3)}
+        for breed, values in by_breed.items()
+    ]
+    breed_summary.sort(key=lambda b: b["avg_gain_per_day"])
+
+    return {
+        "animals": rows,
+        "by_breed": breed_summary,
+        "animals_with_data": len(rows),
+        "animals_total": len(animals),
+    }
+
+
 HEAT_RECENT_WINDOW_DAYS = 3
 HEAT_BASELINE_WINDOW_DAYS = 14
 HEAT_DROP_THRESHOLD_PERCENT = 15.0

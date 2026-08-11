@@ -247,6 +247,7 @@ def movements_new():
 @require_permission("feed.view")
 def fcr_report():
     result = None
+    animal_breakdown = None
     barn_id = None
     start_date = None
     end_date = None
@@ -255,11 +256,13 @@ def fcr_report():
         start_date = date.fromisoformat(request.form["start_date"])
         end_date = date.fromisoformat(request.form["end_date"])
         result = svc.calculate_fcr(barn_id=barn_id, start_date=start_date, end_date=end_date)
+        animal_breakdown = svc.calculate_fcr_by_animal(barn_id=barn_id, start_date=start_date, end_date=end_date)
 
     return render_template(
         "feed/fcr_report.html",
         barns=Barn.query.order_by(Barn.barn_name).all(),
-        result=result, barn_id=barn_id, start_date=start_date, end_date=end_date,
+        result=result, animal_breakdown=animal_breakdown,
+        barn_id=barn_id, start_date=start_date, end_date=end_date,
         today=date.today().isoformat(),
     )
 

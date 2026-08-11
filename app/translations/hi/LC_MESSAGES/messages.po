@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-11 05:56+0300\n"
+"POT-Creation-Date: 2026-08-11 14:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1063,6 +1063,7 @@ msgstr "कुल मृत्यु मामले"
 #: app/templates/bulk_action_form.html:359
 #: app/templates/bulk_action_form.html:381
 #: app/templates/bulk_action_form.html:427
+#: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
 #: app/templates/smart_sale_report.html:17
 msgid "الرقم"
@@ -1105,7 +1106,7 @@ msgstr "लिंग"
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
 #: app/templates/repro/mating_form.html:18
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
@@ -1691,7 +1692,7 @@ msgstr "फार्म प्रवेश तिथि"
 #: app/templates/health/vaccination_schedule_form.html:7
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:50
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:81
@@ -2216,7 +2217,8 @@ msgstr "प्रजाति"
 msgid "أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً."
 msgstr "जुगाली न करने वाली कोई भी प्रजाति (शुतुरमुर्ग या नई प्रजाति) स्वतः उत्पादन चक्र (संगमन/गर्भावस्था/दूध छुड़ाना) में प्रवेश नहीं करती।"
 
-#: app/templates/animal_form.html:40
+#: app/templates/animal_form.html:40 app/templates/feed/fcr_report.html:51
+#: app/templates/feed/fcr_report.html:69
 msgid "السلالة"
 msgstr "नस्ल"
 
@@ -4428,6 +4430,7 @@ msgid "رقم الدفعة"
 msgstr "खेप संख्या"
 
 #: app/templates/batches/batches_list.html:14
+#: app/templates/feed/fcr_report.html:69
 #: app/templates/finance/monthly_cost_report.html:27
 msgid "عدد الرؤوس"
 msgstr "पशु संख्या"
@@ -4910,6 +4913,34 @@ msgstr "बाड़े के %(total)s में से %(with_data)s पश�
 msgid "ما قدرنا نحسب FCR — محتاج على الأقل رأساً واحداً بوزنين مسجَّلين بالفترة المحددة."
 msgstr "FCR की गणना नहीं हो सकी — चयनित अवधि में कम से कम एक पशु के दो दर्ज वजन आवश्यक हैं।"
 
+#: app/templates/feed/fcr_report.html:45
+msgid "ترتيب الرؤوس حسب معدل النمو (لكشف الأبطأ)"
+msgstr "विकास दर के अनुसार पशुओं की रैंकिंग (सबसे धीमे की पहचान के लिए)"
+
+#: app/templates/feed/fcr_report.html:47
+msgid "⚠️ هذا مو FCR فردي حقيقي — العلف يُستهلك جماعياً من نفس المعلف، والنظام ما يتتبّع كمية علف كل رأس لحاله. البديل الصادق: ترتيب الرؤوس حسب معدل نموها الفعلي (كجم/يوم) وهي بنفس ظروف التغذية المشتركة — رأس نما أبطأ من زملائه مرشّح للمراجعة (سبب صحي أو وراثي)، مو دليل قاطع على هدر علف."
+msgstr "⚠️ यह वास्तविक व्यक्तिगत FCR नहीं है — चारा एक ही नांद से सामूहिक रूप से खाया जाता है, और सिस्टम प्रत्येक पशु के अपने सेवन को ट्रैक नहीं करता। ईमानदार विकल्प: समान साझा आहार स्थितियों में पशुओं को उनकी वास्तविक विकास दर (किग्रा/दिन) के अनुसार रैंक करना — जो पशु अपने साथियों से धीमा बढ़ा वह समीक्षा का उम्मीदवार है (स्वास्थ्य या आनुवंशिक कारण), चारे की बर्बादी का निश्चित प्रमाण नहीं।"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "زيادة الوزن (كجم)"
+msgstr "वजन वृद्धि (किग्रा)"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "عدد الأيام"
+msgstr "दिनों की संख्या"
+
+#: app/templates/feed/fcr_report.html:51
+msgid "معدل النمو (كجم/يوم)"
+msgstr "विकास दर (किग्रा/दिन)"
+
+#: app/templates/feed/fcr_report.html:66
+msgid "متوسط معدل النمو حسب السلالة"
+msgstr "नस्ल के अनुसार औसत विकास दर"
+
+#: app/templates/feed/fcr_report.html:69
+msgid "متوسط النمو (كجم/يوم)"
+msgstr "औसत विकास (किग्रा/दिन)"
+
 #: app/templates/feed/item_form.html:4
 msgid "تعديل مكوّن علف"
 msgstr "चारा घटक संपादित करें"
@@ -5166,7 +5197,7 @@ msgstr "वित्तीय विश्लेषण और ब्रेक-�
 
 #: app/templates/finance/break_even_report.html:7
 #: app/templates/finance/list.html:28 app/templates/reports/_filter.html:11
-#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Excel निर्यात करें"
 
@@ -7054,7 +7085,7 @@ msgid "مين أعطاها"
 msgstr "किसने दी"
 
 #: app/templates/repro/mating_form.html:4
-#: app/templates/repro/matings_list.html:8
+#: app/templates/repro/matings_list.html:9
 msgid "تقريع جديد"
 msgstr "नया संगमन"
 
@@ -7080,7 +7111,7 @@ msgid "هذا تحذير إحصائي مبني على الأنساب المسج�
 msgstr "यह केवल सिस्टम में दर्ज वंशावली पर आधारित एक सांख्यिकीय चेतावनी है, प्रयोगशाला आनुवंशिक परीक्षण नहीं — यदि अनिश्चित हों तो अपने डॉक्टर से सलाह लें।"
 
 #: app/templates/repro/mating_form.html:19
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
 #: app/templates/repro/program_form.html:10
@@ -7105,13 +7136,19 @@ msgstr "मैं पुष्टि करता हूं कि मैंन�
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "चक्र में अगला कदम: संगमन सहेजने के बाद, पर्याप्त अवधि के बाद \"प्रजनन\" ← \"गर्भावस्था\" ← \"+ नया गर्भावस्था निदान\" के माध्यम से गर्भावस्था की पुष्टि के लिए मादा को फॉलो करें (मैनुअल जांच या सोनार) — यदि पुष्टि हो जाए, तो अपेक्षित जन्म तिथि सेटिंग्स में निर्धारित गर्भावस्था अवधि से स्वतः गणना होती है।"
 
-#: app/templates/repro/matings_list.html:13
+#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/sires_list.html:5
+msgid "تقييم أداء الفحول"
+msgstr "नर प्रदर्शन मूल्यांकन"
+
+#: app/templates/repro/matings_list.html:14
 #: app/templates/repro/program_detail.html:13
 #: app/templates/repro/program_detail.html:93
+#: app/templates/repro/sires_list.html:17
 msgid "الفحل"
 msgstr "नर"
 
-#: app/templates/repro/matings_list.html:22
+#: app/templates/repro/matings_list.html:23
 msgid "لا يوجد عمليات تقريع مسجّلة بعد."
 msgstr "अभी तक कोई संगमन दर्ज नहीं है।"
 
@@ -7373,6 +7410,47 @@ msgstr "शुरुआत"
 #: app/templates/repro/programs_list.html:21
 msgid "لا يوجد برامج شياع توأمي مسجّلة بعد."
 msgstr "अभी तक कोई जुड़वां मद कार्यक्रम दर्ज नहीं है।"
+
+#: app/templates/repro/sires_list.html:6
+msgid "رجوع للتقريع"
+msgstr "संगमन पर वापस जाएं"
+
+#: app/templates/repro/sires_list.html:9
+msgid "كل الأرقام هنا مبنية حصراً على سجلات فعلية موجودة بالنظام (تقريع، تشخيص حمل، مواليد فعليين مربوطين بالأب) — صفر تقدير. لا نعرض \"درجة\" واحدة مجمّعة عمداً — كل مؤشر يُعرض بمفرده، والمقارنة والقرار يبقيان لك (فحل بمعدل توائم عالي بس صحة مواليد أضعف قرار مختلف عن فحل متوسط بكل شي)."
+msgstr "यहां के सभी आंकड़े केवल सिस्टम में मौजूद वास्तविक रिकॉर्ड (संगमन, गर्भावस्था निदान, पिता से जुड़ी वास्तविक संतान) पर आधारित हैं — शून्य अनुमान। हम जानबूझकर एक संयुक्त \"स्कोर\" नहीं दिखाते — प्रत्येक संकेतक अपने आप में दिखाया जाता है, और तुलना व निर्णय आपके पास रहते हैं (उच्च जुड़वां दर लेकिन कमजोर संतान स्वास्थ्य वाला नर, सभी में औसत नर से अलग निर्णय है)।"
+
+#: app/templates/repro/sires_list.html:17
+msgid "عدد عمليات التقريع"
+msgstr "संगमन की संख्या"
+
+#: app/templates/repro/sires_list.html:17
+msgid "نسبة نجاح التقريع"
+msgstr "संगमन सफलता दर"
+
+#: app/templates/repro/sires_list.html:18
+msgid "نسبة التوائم"
+msgstr "जुड़वां दर"
+
+#: app/templates/repro/sires_list.html:18
+msgid "عدد المواليد الفعليين"
+msgstr "वास्तविक संतान संख्या"
+
+#: app/templates/repro/sires_list.html:19
+msgid "نسبة بقاء المواليد"
+msgstr "संतान अस्तित्व दर"
+
+#: app/templates/repro/sires_list.html:19
+msgid "متوسط وزن المواليد"
+msgstr "औसत संतान वजन"
+
+#: app/templates/repro/sires_list.html:27
+#, python-format
+msgid "من %(n)s فحص"
+msgstr "%(n)s जांचों में से"
+
+#: app/templates/repro/sires_list.html:35
+msgid "ما فيه فحول عندها عمليات تقريع مسجّلة بعد."
+msgstr "अभी तक किसी नर के पास दर्ज संगमन नहीं है।"
 
 #: app/templates/repro/sonar_form.html:4
 msgid "فحص سونار جديد"

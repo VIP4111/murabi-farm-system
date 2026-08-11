@@ -27,6 +27,16 @@ def _log(action, entity_type, entity_id, details=""):
     ))
 
 
+# ---------- تقييم أداء الفحول (بند إضافي 183) ----------
+
+@repro_bp.route("/sires")
+@login_required
+@require_permission("repro.view")
+def sires_list():
+    from app.core.sire_score_service import all_sire_scorecards
+    return render_template("repro/sires_list.html", cards=all_sire_scorecards())
+
+
 # ---------- التقريع العادي ----------
 
 @repro_bp.route("/matings")

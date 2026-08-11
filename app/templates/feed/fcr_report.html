@@ -39,4 +39,43 @@
   </p>
 </div>
 {% endif %}
+
+{% if animal_breakdown and animal_breakdown.animals %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('ترتيب الرؤوس حسب معدل النمو (لكشف الأبطأ)') }}</h3>
+  <div class="notice">
+    {{ _('⚠️ هذا مو FCR فردي حقيقي — العلف يُستهلك جماعياً من نفس المعلف، والنظام ما يتتبّع كمية علف كل رأس لحاله. البديل الصادق: ترتيب الرؤوس حسب معدل نموها الفعلي (كجم/يوم) وهي بنفس ظروف التغذية المشتركة — رأس نما أبطأ من زملائه مرشّح للمراجعة (سبب صحي أو وراثي)، مو دليل قاطع على هدر علف.') }}
+  </div>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('السلالة') }}</th><th>{{ _('زيادة الوزن (كجم)') }}</th><th>{{ _('عدد الأيام') }}</th><th>{{ _('معدل النمو (كجم/يوم)') }}</th></tr>
+    {% for r in animal_breakdown.animals %}
+    <tr style="{{ 'background:#fff5f2;' if loop.index <= 3 and animal_breakdown.animals|length > 3 }}">
+      <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id) }}">{{ r.animal.animal_no }}</a></td>
+      <td>{{ r.breed }}</td>
+      <td>{{ r.gain_kg }}</td>
+      <td>{{ r.days }}</td>
+      <td><b>{{ r.gain_per_day }}</b></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('متوسط معدل النمو حسب السلالة') }}</h3>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('السلالة') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('متوسط النمو (كجم/يوم)') }}</th></tr>
+    {% for b in animal_breakdown.by_breed %}
+    <tr>
+      <td>{{ b.breed }}</td>
+      <td>{{ b.count }}</td>
+      <td>{{ b.avg_gain_per_day }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endif %}
 {% endblock %}
