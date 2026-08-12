@@ -104,6 +104,9 @@ DEFAULT_ROLES = {
             "tasks.view_own",
             "reports.submit",
             "assistant.use",
+            # عرض شاشة "معداتي" المبسّطة (بند إضافي 199) — أخذ/استرجاع
+            # معدات بضغطة وحدة، بدون صلاحية إدارة مخزون كاملة.
+            "equipment.view",
         ],
     },
     "nurse": {

@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
@@ -20,10 +20,10 @@
         {% if i.min_stock_qty and i.available_qty <= i.min_stock_qty %}<span class="badge off">{{ _('منخفض') }}</span>{% endif %}
       </td>
       <td>{{ i.unit_price or '-' }}</td>
-      <td>
+      <td class="actions-col">
         {% if current_user.has_permission('equipment.manage') %}
-        <a href="{{ url_for('equipment.items_edit', item_id=i.id) }}">{{ _('تعديل') }}</a>
-        · <a href="{{ url_for('equipment.items_movement', item_id=i.id) }}">📦 {{ _('حركة (شراء/صرف)') }}</a>
+        <a href="{{ url_for('equipment.items_edit', item_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
+        <a class="btn" href="{{ url_for('equipment.items_movement', item_id=i.id) }}">📦 {{ _('حركة (شراء/صرف)') }}</a>
         {% endif %}
       </td>
     </tr>

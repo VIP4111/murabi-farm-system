@@ -4,10 +4,29 @@ from datetime import date, datetime, timedelta, timezone
 
 from app.extensions import db
 from app.models import Equipment, EquipmentMovement
+from app.core.cloud_storage_service import save_upload
+
+ALLOWED_PHOTO_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
+MAX_PHOTO_BYTES = 8 * 1024 * 1024
 
 
 def _now():
     return datetime.now(timezone.utc)
+
+
+def save_equipment_photo(file_storage) -> str | None:
+    """صورة صنف معدات (بند إضافي 199) — نفس آلية `save_evidence_image`
+    بالضبط (سحابياً لو مضبوط Cloudinary، وإلا محلياً)."""
+    return save_upload(file_storage, subfolder="images",
+                        allowed_extensions=ALLOWED_PHOTO_EXTENSIONS, max_bytes=MAX_PHOTO_BYTES)
+
+
+def my_borrow(item, user_id):
+    """آخر استعارة قائمة لهذا المستخدم لهذي القطعة (بند إضافي 199) —
+    تُستخدم بشاشة العامل المبسّطة لتحديد لو زر "أخذ" أو "استرجاع"."""
+    return (EquipmentMovement.query
+            .filter_by(equipment_id=item.id, borrowed_by_id=user_id, returned_at=None)
+            .order_by(EquipmentMovement.created_at.desc()).first())
 
 
 def record_movement(*, item: Equipment, movement_type: str, quantity: float, barn_id=None,

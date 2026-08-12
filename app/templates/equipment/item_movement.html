@@ -3,28 +3,49 @@
 <div class="card" style="max-width:420px;">
   <h2>{{ _('حركة مخزون') }} — {{ item.name }}</h2>
   <p style="color:var(--muted); font-size:12px;">{{ _('المتوفر حالياً:') }} {{ item.available_qty }} {{ item.unit }}</p>
-  <form method="post" data-offline>
+  <form method="post" data-offline id="movementForm">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('نوع الحركة') }}</label>
-    <select name="movement_type" required>
-      <option value="in">{{ _('وارد (شراء)') }}</option>
-      <option value="out">{{ _('صادر (صرف/استهلاك)') }}</option>
-    </select>
+    <div style="display:flex; gap:8px; margin-bottom:12px;">
+      <label style="flex:1; border:2px solid var(--line); border-radius:14px; padding:14px 8px; text-align:center; cursor:pointer; margin:0;">
+        <input type="radio" name="movement_type" value="in" checked style="width:auto; margin-left:6px;">
+        🛒 {{ _('شراء (زيادة المخزون)') }}
+      </label>
+      <label style="flex:1; border:2px solid var(--line); border-radius:14px; padding:14px 8px; text-align:center; cursor:pointer; margin:0;">
+        <input type="radio" name="movement_type" value="out" style="width:auto; margin-left:6px;">
+        📤 {{ _('صرف (إخراج من المخزون)') }}
+      </label>
+    </div>
     <label>{{ _('الكمية') }}</label><input name="quantity" type="number" step="any" min="0.01" required>
-    <label>{{ _('لو صادر — مين استلمها؟ (اختياري — عبّه بس لو استعارة ترجع، مو صرف نهائي)') }}</label>
-    <select name="borrowed_by_id">
-      <option value="">-- {{ _('صرف نهائي (بدون استعارة)') }} --</option>
-      {% for u in users %}<option value="{{ u.id }}">{{ u.name }}</option>{% endfor %}
-    </select>
-    <label>{{ _('الحظيرة (اختياري)') }}</label>
-    <select name="barn_id">
-      <option value="">-</option>
-      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
-    </select>
+    <div id="outOnlyFields" style="display:none;">
+      <label>{{ _('مين يستلمها؟') }}</label>
+      <select name="borrowed_by_id">
+        <option value="">-- {{ _('صرف نهائي (بدون استعارة)') }} --</option>
+        {% for u in users %}<option value="{{ u.id }}">{{ u.name }}</option>{% endfor %}
+      </select>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('اختَر اسم مستلم فقط لو المعدة استعارة رح ترجع — خله فاضي لو صرف نهائي.') }}</p>
+      <label>{{ _('الحظيرة (اختياري)') }}</label>
+      <select name="barn_id">
+        <option value="">-</option>
+        {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+      </select>
+    </div>
     <label>{{ _('ملاحظة (اختياري)') }}</label><textarea name="note" rows="2"></textarea>
     <button class="btn" type="submit">{{ _('تسجيل الحركة') }}</button>
   </form>
 </div>
+<script>
+(function(){
+  var form = document.getElementById('movementForm');
+  var outFields = document.getElementById('outOnlyFields');
+  function sync(){
+    var checked = form.querySelector('input[name="movement_type"]:checked');
+    outFields.style.display = (checked && checked.value === 'out') ? 'block' : 'none';
+  }
+  form.querySelectorAll('input[name="movement_type"]').forEach(function(r){ r.addEventListener('change', sync); });
+  sync();
+})();
+</script>
 
 <div class="card">
   <h3 style="font-size:15px;">{{ _('آخر الحركات') }}</h3>

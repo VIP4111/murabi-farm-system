@@ -546,10 +546,15 @@
       {% endif %}
 
       {% if current_user.has_permission('equipment.view') %}
-      <details class="drawer-group" {{ 'open' if request.endpoint == 'equipment.items_list' else '' }}>
+      {% set _equipment_endpoints = ['equipment.items_list', 'equipment.items_mine'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _equipment_endpoints else '' }}>
         <summary>{{ nav_icon('equipment') }}{{ _('المعدات') }}</summary>
         <div class="drawer-grid">
+        {% if current_user.has_permission('equipment.manage') %}
         <a class="drawer-link" href="{{ url_for('equipment.items_list') }}"><span class="drawer-text"><b>{{ _('مستودع المعدات') }}</b></span></a>
+        {% else %}
+        <a class="drawer-link" href="{{ url_for('equipment.items_mine') }}"><span class="drawer-text"><b>{{ _('معداتي') }}</b></span></a>
+        {% endif %}
         </div>
       </details>
       {% endif %}

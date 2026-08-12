@@ -95,6 +95,12 @@
       <span class="emoji">🥚</span>
       <span><b>{{ _('بيض / حضانة (نعام)') }}</b><small>{{ _('الإبلاغ عن بيضة جديدة أو ملاحظة حضانة') }}</small></span>
     </a>
+    {% if current_user.has_permission('equipment.view') %}
+    <a class="worker-btn" href="{{ url_for('equipment.items_mine') }}">
+      <span class="emoji">🛠️</span>
+      <span><b>{{ _('معداتي') }}</b><small>{{ _('أخذ أو استرجاع معدة بضغطة وحدة') }}</small></span>
+    </a>
+    {% endif %}
     <a class="worker-btn tasks" href="{{ url_for('team.tasks_list') }}" style="grid-column:1 / -1;">
       <span class="emoji">✅</span>
       <span><b>{{ _('مهامي اليوم') }}</b><small>{{ _('عرض وإنجاز المهام المطلوبة منك') }}</small></span>

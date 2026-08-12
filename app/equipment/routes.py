@@ -29,6 +29,7 @@ def items_new():
             available_qty=float(request.form.get("available_qty") or 0),
             min_stock_qty=float(request.form.get("min_stock_qty") or 0),
             notes=request.form.get("notes"),
+            photo_url=svc.save_equipment_photo(request.files.get("photo")),
         )
         db.session.add(item)
         db.session.commit()
@@ -50,6 +51,9 @@ def items_edit(item_id):
         item.available_qty = float(request.form.get("available_qty") or 0)
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.notes = request.form.get("notes")
+        new_photo = svc.save_equipment_photo(request.files.get("photo"))
+        if new_photo:
+            item.photo_url = new_photo
         db.session.commit()
         flash("تم تحديث الصنف", "success")
         return redirect(url_for("equipment.items_list"))
@@ -81,6 +85,69 @@ def items_movement(item_id):
         barns=Barn.query.order_by(Barn.barn_name).all(),
         users=User.query.filter_by(is_active_account=True).order_by(User.name).all(),
     )
+
+
+@equipment_bp.route("/items/mine")
+@login_required
+@require_permission("equipment.view")
+def items_mine():
+    """شاشة العامل المبسّطة (بند إضافي 199) — بطاقات صور، ضغطة وحدة
+    للأخذ أو الاسترجاع، بدون أي فورم أو حقول. تعمد استخدام `svc.record_movement`/
+    `svc.return_item` نفسها المستخدمة بشاشة الإدارة الكاملة — بدون منطق مخزون
+    مكرَّر، فقط واجهة مبسَّطة فوقها."""
+    items = Equipment.query.filter_by(status="active").order_by(Equipment.name).all()
+    rows = []
+    for item in items:
+        mine = svc.my_borrow(item, current_user.id)
+        held_by_other = None
+        if not mine:
+            other = (EquipmentMovement.query
+                     .filter_by(equipment_id=item.id, returned_at=None)
+                     .filter(EquipmentMovement.borrowed_by_id.isnot(None))
+                     .order_by(EquipmentMovement.created_at.desc()).first())
+            if other and other.borrowed_by_id != current_user.id:
+                held_by_other = other.borrowed_by
+        rows.append({"item": item, "mine": mine, "held_by_other": held_by_other})
+    return render_template("equipment/items_mine.html", rows=rows)
+
+
+@equipment_bp.route("/items/<int:item_id>/take", methods=["POST"])
+@login_required
+@require_permission("equipment.view")
+def items_take(item_id):
+    """أخذ قطعة (بند إضافي 199) — استعارة كمية 1 باسم المستخدم الحالي
+    فقط، بدون أي حقول تُملأ يدوياً. لا يحتاج صلاحية equipment.manage
+    عمداً — العامل يسجّل استعارته لنفسه بس، ما يقدر يعدّل مخزون صنف
+    ثاني أو باسم حد ثاني."""
+    item = Equipment.query.get_or_404(item_id)
+    try:
+        svc.record_movement(
+            item=item, movement_type="out", quantity=1,
+            created_by_id=current_user.id, borrowed_by_id=current_user.id,
+        )
+        flash("تم تسجيل أخذك للقطعة", "success")
+    except ValueError as e:
+        flash(str(e), "error")
+    return redirect(url_for("equipment.items_mine"))
+
+
+@equipment_bp.route("/items/<int:item_id>/return-mine", methods=["POST"])
+@login_required
+@require_permission("equipment.view")
+def items_return_mine(item_id):
+    """استرجاع قطعة (بند إضافي 199) — يبحث عن استعارة المستخدم الحالي
+    القائمة لهذي القطعة بنفسه، ما يقدر يرجّع استعارة حد ثاني."""
+    item = Equipment.query.get_or_404(item_id)
+    mine = svc.my_borrow(item, current_user.id)
+    if not mine:
+        flash("ما فيه استعارة قائمة لك بهذي القطعة", "error")
+        return redirect(url_for("equipment.items_mine"))
+    try:
+        svc.return_item(mine)
+        flash("تم تسجيل استرجاع القطعة", "success")
+    except ValueError as e:
+        flash(str(e), "error")
+    return redirect(url_for("equipment.items_mine"))
 
 
 @equipment_bp.route("/movements/<int:movement_id>/return", methods=["POST"])

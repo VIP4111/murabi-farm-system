@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .eq-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-top:12px;}
+  .eq-card{background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 6px 16px rgba(70,45,25,.06); display:flex; flex-direction:column;}
+  .eq-photo{width:100%; aspect-ratio:1/1; object-fit:cover; background:var(--bg);}
+  .eq-photo-placeholder{width:100%; aspect-ratio:1/1; background:var(--bg); display:grid; place-items:center; font-size:36px;}
+  .eq-body{padding:10px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .eq-name{font-weight:800; font-size:14px; line-height:1.3;}
+  .eq-status{font-size:11.5px; color:var(--muted);}
+  .eq-action-btn{border:0; border-radius:12px; padding:9px; font-weight:800; cursor:pointer; font-size:13px; width:100%;}
+  .eq-action-take{background:var(--primary); color:#fff;}
+  .eq-action-return{background:var(--danger); color:#fff;}
+</style>
+
+<div class="card">
+  <h2>{{ _('المعدات') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('اضغط على المعدة لتسجيل أخذها — واضغط "استرجاع" لما ترجعها.') }}</p>
+</div>
+
+<div class="card">
+  <div class="eq-grid">
+    {% for row in rows %}
+    <div class="eq-card">
+      {% if row.item.photo_url %}
+      <img class="eq-photo" src="{{ row.item.photo_url }}" alt="{{ row.item.name }}">
+      {% else %}
+      <div class="eq-photo-placeholder">🛠️</div>
+      {% endif %}
+      <div class="eq-body">
+        <div class="eq-name">{{ row.item.name }}</div>
+        {% if row.mine %}
+        <div class="eq-status">✅ {{ _('عندك حالياً') }}</div>
+        <form method="post" action="{{ url_for('equipment.items_return_mine', item_id=row.item.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="eq-action-btn eq-action-return" type="submit">↩️ {{ _('استرجاع') }}</button>
+        </form>
+        {% elif row.held_by_other %}
+        <div class="eq-status">⏳ {{ _('عند:') }} {{ row.held_by_other.name }}</div>
+        <button class="eq-action-btn" type="button" disabled style="background:var(--line); color:var(--muted); cursor:not-allowed;">{{ _('مو متوفرة') }}</button>
+        {% else %}
+        <div class="eq-status">{{ row.item.available_qty|round(0) }} {{ row.item.unit }} {{ _('متوفر') }}</div>
+        <form method="post" action="{{ url_for('equipment.items_take', item_id=row.item.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="eq-action-btn eq-action-take" type="submit">✋ {{ _('أخذ') }}</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    {% else %}
+    <p class="empty" style="color:var(--muted);">{{ _('ما فيه أصناف معدات مسجَّلة بعد.') }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

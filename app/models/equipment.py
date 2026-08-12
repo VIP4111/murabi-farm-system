@@ -20,6 +20,9 @@ class Equipment(db.Model):
     unit_price = db.Column(db.Float)
     available_qty = db.Column(db.Float, default=0)
     min_stock_qty = db.Column(db.Float, default=0)
+    # صورة الصنف (بند إضافي 199) — لشاشة العامل المبسّطة (بطاقات صور
+    # بدل قوائم نصية)، نفس آلية الرفع المستخدمة لصور أدلة البلاغات.
+    photo_url = db.Column(db.String(255))
 
     status = db.Column(db.String(32), default="active", nullable=False)
     notes = db.Column(db.Text)
