@@ -143,10 +143,15 @@ def home():
     if current_user.role.name == "owner" and not FarmSettings.get().setup_checklist_dismissed:
         setup_checklist_items = setup_checklist_service.get_setup_checklist_items()
 
+    today_tasks_count = today_alerts_count = None
+    if current_user.has_permission("tasks.view_own") or current_user.has_permission("animals.view"):
+        today_tasks_count, today_alerts_count = _today_counts(current_user)
+
     return render_template(
         "home.html", user=current_user,
         setup_checklist_items=setup_checklist_items,
         daily_checklist=daily_checklist,
+        today_tasks_count=today_tasks_count, today_alerts_count=today_alerts_count,
     )
 
 
@@ -164,6 +169,27 @@ def setup_checklist_dismiss():
 
 def _my_barn_ids(user) -> list[int]:
     return [b.id for b in Barn.query.filter_by(responsible_worker_id=user.id).all()]
+
+
+def _today_counts(user) -> tuple[int, int]:
+    """عدد المهام المفتوحة (pending/in_progress) وعدد التنبيهات النشطة
+    لهذا المستخدم — نفس استعلامات `today()` بالضبط، بس عدّ بدل جلب
+    الصفوف كاملة، مستخدَمة ببطاقة "صفحة اليوم" بالرئيسية (بند إضافي
+    206) عشان تعرض رقمين حقيقيين بدل وصف عام بدون أرقام."""
+    my_role_name = user.role.name if user.role else None
+    tasks_count = (Task.query
+                   .filter(
+                       Task.status.in_(["pending", "in_progress"]),
+                       db.or_(
+                           Task.assignee_id == user.id,
+                           db.and_(Task.assignee_id.is_(None), Task.target_role == my_role_name),
+                       ),
+                   ).count())
+    if user.has_permission("animals.view"):
+        alerts_count = len(alerts_service.get_alerts())
+    else:
+        alerts_count = len(alerts_service.get_alerts(barn_ids=_my_barn_ids(user)))
+    return tasks_count, alerts_count
 
 
 @core_bp.route("/alerts")

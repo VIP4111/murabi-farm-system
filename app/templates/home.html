@@ -56,6 +56,13 @@
     <div>
       <h3 style="margin:0;">🗓️ {{ _('صفحة اليوم') }}</h3>
       <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة') }}</p>
+      {% if today_tasks_count is not none %}
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        {% if today_tasks_count %}<span class="badge off">✅ {{ _('%(n)s مهمة مطلوبة', n=today_tasks_count) }}</span>{% endif %}
+        {% if today_alerts_count %}<span class="badge off">🔔 {{ _('%(n)s تنبيه', n=today_alerts_count) }}</span>{% endif %}
+        {% if not today_tasks_count and not today_alerts_count %}<span class="badge on">✅ {{ _('كل شي مضبوط اليوم') }}</span>{% endif %}
+      </div>
+      {% endif %}
     </div>
     <a class="btn" href="{{ url_for('core.today') }}">{{ _('فتح') }} ←</a>
   </div>

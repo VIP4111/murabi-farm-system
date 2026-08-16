@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 21:04+0300\n"
+"POT-Creation-Date: 2026-08-16 23:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,7 +243,7 @@ msgstr ""
 msgid "إكمال بيانات حيوان"
 msgstr ""
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:679
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:689
 #: app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr ""
@@ -287,7 +287,7 @@ msgstr ""
 msgid "نقل حظائر جماعي"
 msgstr ""
 
-#: app/__init__.py:226 app/core/routes.py:319
+#: app/__init__.py:226 app/core/routes.py:345
 #: app/templates/animals_list.html:78
 msgid "عزل جماعي"
 msgstr ""
@@ -931,9 +931,9 @@ msgid "%(n)s حساب نشط."
 msgstr ""
 
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
-#: app/templates/base.html:519 app/templates/family_view.html:158
+#: app/templates/base.html:529 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
-#: app/templates/home.html:101
+#: app/templates/home.html:108
 msgid "الصيدلية"
 msgstr ""
 
@@ -960,61 +960,61 @@ msgid ""
 "(بند 34)."
 msgstr ""
 
-#: app/core/routes.py:311 app/templates/animals_list.html:67
+#: app/core/routes.py:337 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr ""
 
-#: app/core/routes.py:312 app/templates/animals_list.html:76
+#: app/core/routes.py:338 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr ""
 
-#: app/core/routes.py:313 app/templates/animals_list.html:68
+#: app/core/routes.py:339 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr ""
 
-#: app/core/routes.py:314 app/templates/animals_list.html:69
+#: app/core/routes.py:340 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr ""
 
-#: app/core/routes.py:315 app/templates/animals_list.html:70
+#: app/core/routes.py:341 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr ""
 
-#: app/core/routes.py:316 app/templates/animals_list.html:71
+#: app/core/routes.py:342 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr ""
 
-#: app/core/routes.py:317 app/templates/animals_list.html:72
+#: app/core/routes.py:343 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr ""
 
-#: app/core/routes.py:318 app/templates/animals_list.html:77
+#: app/core/routes.py:344 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr ""
 
-#: app/core/routes.py:320 app/templates/animals_list.html:82
+#: app/core/routes.py:346 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr ""
 
-#: app/core/routes.py:321 app/templates/animals_list.html:79
+#: app/core/routes.py:347 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr ""
 
-#: app/core/routes.py:719 app/templates/animal_form.html:35
+#: app/core/routes.py:745 app/templates/animal_form.html:35
 msgid "إضافة فصيلة جديدة"
 msgstr ""
 
-#: app/core/routes.py:721
+#: app/core/routes.py:747
 msgid ""
 "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل"
 " بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr ""
 
-#: app/core/routes.py:740 app/templates/animal_form.html:45
+#: app/core/routes.py:766 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
 msgstr ""
 
-#: app/core/routes.py:784 app/templates/animal_form.html:24
+#: app/core/routes.py:810 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr ""
 
@@ -1930,7 +1930,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:145 app/templates/settings_backup.html:4
+#: app/templates/home.html:152 app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
 #: app/templates/settings_simulation_data.html:4
@@ -1938,8 +1938,8 @@ msgid "الإعدادات"
 msgstr ""
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
-#: app/templates/finance/lots_list.html:24 app/templates/home.html:60
-#: app/templates/home.html:72 app/templates/today.html:24
+#: app/templates/finance/lots_list.html:24 app/templates/home.html:67
+#: app/templates/home.html:79 app/templates/today.html:24
 #: app/templates/today.html:45 app/templates/today.html:46
 #: app/templates/today.html:68 app/templates/worker_home.html:63
 msgid "فتح"
@@ -2060,8 +2060,8 @@ msgid "سجل بيطري"
 msgstr ""
 
 #: app/templates/animal_detail.html:63 app/templates/animal_detail.html:212
-#: app/templates/base.html:521 app/templates/health/diseases_list.html:6
-#: app/templates/home.html:100
+#: app/templates/base.html:531 app/templates/health/diseases_list.html:6
+#: app/templates/home.html:107
 msgid "الأمراض"
 msgstr ""
 
@@ -2069,7 +2069,7 @@ msgstr ""
 msgid "التحصينات"
 msgstr ""
 
-#: app/templates/animal_detail.html:65 app/templates/home.html:108
+#: app/templates/animal_detail.html:65 app/templates/home.html:115
 msgid "التكاثر"
 msgstr ""
 
@@ -2117,9 +2117,9 @@ msgstr ""
 msgid "ملاحظات"
 msgstr ""
 
-#: app/templates/animal_detail.html:70 app/templates/base.html:589
-#: app/templates/base.html:591 app/templates/finance/list.html:24
-#: app/templates/home.html:126
+#: app/templates/animal_detail.html:70 app/templates/base.html:599
+#: app/templates/base.html:601 app/templates/finance/list.html:24
+#: app/templates/home.html:133
 msgid "المالية"
 msgstr ""
 
@@ -2316,7 +2316,7 @@ msgstr ""
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr ""
 
-#: app/templates/animal_detail.html:193 app/templates/base.html:530
+#: app/templates/animal_detail.html:193 app/templates/base.html:540
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr ""
@@ -2325,7 +2325,7 @@ msgstr ""
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr ""
 
-#: app/templates/animal_detail.html:198 app/templates/base.html:520
+#: app/templates/animal_detail.html:198 app/templates/base.html:530
 #: app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr ""
@@ -2420,8 +2420,8 @@ msgstr ""
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr ""
 
-#: app/templates/animal_detail.html:243 app/templates/base.html:503
-#: app/templates/home.html:110 app/templates/repro/matings_list.html:5
+#: app/templates/animal_detail.html:243 app/templates/base.html:513
+#: app/templates/home.html:117 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr ""
 
@@ -2452,8 +2452,8 @@ msgstr ""
 msgid "لا يوجد تقريع مسجّل."
 msgstr ""
 
-#: app/templates/animal_detail.html:258 app/templates/base.html:504
-#: app/templates/home.html:111 app/templates/repro/pregnancies_list.html:5
+#: app/templates/animal_detail.html:258 app/templates/base.html:514
+#: app/templates/home.html:118 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr ""
 
@@ -3181,7 +3181,7 @@ msgstr ""
 msgid "حفظ الدفعة كاملة"
 msgstr ""
 
-#: app/templates/animals_list.html:5 app/templates/base.html:500
+#: app/templates/animals_list.html:5 app/templates/base.html:510
 msgid "الإجراء الجماعي"
 msgstr ""
 
@@ -3197,7 +3197,7 @@ msgstr ""
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr ""
 
-#: app/templates/animals_list.html:12 app/templates/home.html:89
+#: app/templates/animals_list.html:12 app/templates/home.html:96
 msgid "حيوان جديد"
 msgstr ""
 
@@ -3450,7 +3450,7 @@ msgstr ""
 msgid "إضافة موعد وجبة"
 msgstr ""
 
-#: app/templates/barns_list.html:5 app/templates/base.html:501
+#: app/templates/barns_list.html:5 app/templates/base.html:511
 msgid "الحظائر"
 msgstr ""
 
@@ -3466,166 +3466,167 @@ msgstr ""
 msgid "لا يوجد حظائر مسجّلة بعد."
 msgstr ""
 
-#: app/templates/base.html:457
+#: app/templates/base.html:463 app/templates/base.html:464
+#: app/templates/base.html:474
 msgid "مراح بو علي"
 msgstr ""
 
-#: app/templates/base.html:486 app/templates/base.html:488
+#: app/templates/base.html:496 app/templates/base.html:498
 #: app/templates/onboarding/checklist.html:5
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
 msgid "الرئيسية"
 msgstr ""
 
-#: app/templates/base.html:489 app/templates/home.html:57
+#: app/templates/base.html:499 app/templates/home.html:57
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
 msgid "صفحة اليوم"
 msgstr ""
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:490 app/templates/home.html:142
+#: app/templates/base.html:500 app/templates/home.html:149
 msgid "المساعد الذكي"
 msgstr ""
 
-#: app/templates/base.html:497
+#: app/templates/base.html:507
 msgid "الحلال"
 msgstr ""
 
-#: app/templates/base.html:499 app/templates/home.html:86
+#: app/templates/base.html:509 app/templates/home.html:93
 msgid "الحيوانات"
 msgstr ""
 
-#: app/templates/base.html:505 app/templates/home.html:112
+#: app/templates/base.html:515 app/templates/home.html:119
 msgid "فحص السونار"
 msgstr ""
 
-#: app/templates/base.html:506
+#: app/templates/base.html:516
 msgid "استخدام الاسفنجة للمتاوة"
 msgstr ""
 
-#: app/templates/base.html:508
+#: app/templates/base.html:518
 msgid "النعام (بيض/تفقيس)"
 msgstr ""
 
-#: app/templates/base.html:516 app/templates/home.html:96
+#: app/templates/base.html:526 app/templates/home.html:103
 msgid "الصحة"
 msgstr ""
 
-#: app/templates/base.html:518 app/templates/health/dashboard.html:3
-#: app/templates/health/dashboard.html:6 app/templates/home.html:69
+#: app/templates/base.html:528 app/templates/health/dashboard.html:3
+#: app/templates/health/dashboard.html:6 app/templates/home.html:76
 msgid "مركز الطبيب"
 msgstr ""
 
-#: app/templates/base.html:522 app/templates/health/vaccinations_list.html:5
-#: app/templates/home.html:99
+#: app/templates/base.html:532 app/templates/health/vaccinations_list.html:5
+#: app/templates/home.html:106
 msgid "التطعيمات"
 msgstr ""
 
-#: app/templates/base.html:523
+#: app/templates/base.html:533
 #: app/templates/health/vaccination_schedule_list.html:5
 msgid "تقويم التحصينات"
 msgstr ""
 
-#: app/templates/base.html:525 app/templates/health/dashboard.html:89
+#: app/templates/base.html:535 app/templates/health/dashboard.html:89
 #: app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr ""
 
-#: app/templates/base.html:527 app/templates/health/dashboard.html:83
+#: app/templates/base.html:537 app/templates/health/dashboard.html:83
 #: app/templates/health/injection_guide.html:5
 msgid "دليل الحقن الميداني"
 msgstr ""
 
-#: app/templates/base.html:528 app/templates/health/body_condition_guide.html:2
+#: app/templates/base.html:538 app/templates/health/body_condition_guide.html:2
 msgid "دليل تقييم حالة الجسم"
 msgstr ""
 
-#: app/templates/base.html:529 app/templates/health/dashboard.html:86
+#: app/templates/base.html:539 app/templates/health/dashboard.html:86
 #: app/templates/health/doctors_list.html:5
 msgid "دليل الأطباء"
 msgstr ""
 
-#: app/templates/base.html:540 app/templates/home.html:123
+#: app/templates/base.html:550 app/templates/home.html:130
 msgid "العلف"
 msgstr ""
 
-#: app/templates/base.html:542 app/templates/feed/items_list.html:5
+#: app/templates/base.html:552 app/templates/feed/items_list.html:5
 #: app/templates/feed/optimizer.html:77
 msgid "مكوّنات العلف"
 msgstr ""
 
-#: app/templates/base.html:543
+#: app/templates/base.html:553
 msgid "حركة المخزون (شراء/صرف)"
 msgstr ""
 
-#: app/templates/base.html:544 app/templates/feed/barn_plans_list.html:5
+#: app/templates/base.html:554 app/templates/feed/barn_plans_list.html:5
 msgid "خطط تغذية الحظائر"
 msgstr ""
 
-#: app/templates/base.html:545
+#: app/templates/base.html:555
 msgid "حاسبة العلف"
 msgstr ""
 
-#: app/templates/base.html:546 app/templates/feed/fcr_report.html:5
+#: app/templates/base.html:556 app/templates/feed/fcr_report.html:5
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr ""
 
-#: app/templates/base.html:547 app/templates/feed/optimizer.html:5
+#: app/templates/base.html:557 app/templates/feed/optimizer.html:5
 msgid "موازِن العليقة التلقائي"
 msgstr ""
 
-#: app/templates/base.html:548 app/templates/feed/items_list.html:31
+#: app/templates/base.html:558 app/templates/feed/items_list.html:31
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr ""
 
-#: app/templates/base.html:556 app/templates/equipment/items_mine.html:17
+#: app/templates/base.html:566 app/templates/equipment/items_mine.html:17
 #: app/templates/family_view.html:159 app/templates/family_view.html:194
 msgid "المعدات"
 msgstr ""
 
-#: app/templates/base.html:559 app/templates/equipment/items_list.html:5
+#: app/templates/base.html:569 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr ""
 
-#: app/templates/base.html:561 app/templates/worker_home.html:101
+#: app/templates/base.html:571 app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr ""
 
-#: app/templates/base.html:569
+#: app/templates/base.html:579
 msgid "المناخ"
 msgstr ""
 
-#: app/templates/base.html:571 app/templates/climate/dashboard.html:5
+#: app/templates/base.html:581 app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr ""
 
-#: app/templates/base.html:578
+#: app/templates/base.html:588
 msgid "الفريق"
 msgstr ""
 
-#: app/templates/base.html:580 app/templates/family_view.html:97
-#: app/templates/family_view.html:104 app/templates/home.html:84
+#: app/templates/base.html:590 app/templates/family_view.html:97
+#: app/templates/family_view.html:104 app/templates/home.html:91
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr ""
 
-#: app/templates/base.html:581 app/templates/home.html:83
+#: app/templates/base.html:591 app/templates/home.html:90
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr ""
 
-#: app/templates/base.html:582 app/templates/team/members_list.html:5
+#: app/templates/base.html:592 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr ""
 
-#: app/templates/base.html:592 app/templates/home.html:128
+#: app/templates/base.html:602 app/templates/home.html:135
 msgid "مالية الصحة"
 msgstr ""
 
-#: app/templates/base.html:599 app/templates/home.html:131
+#: app/templates/base.html:609 app/templates/home.html:138
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3633,37 +3634,37 @@ msgstr ""
 msgid "التقارير"
 msgstr ""
 
-#: app/templates/base.html:601
+#: app/templates/base.html:611
 msgid "التقارير التحليلية"
 msgstr ""
 
-#: app/templates/base.html:616
+#: app/templates/base.html:626
 msgid "المظهر"
 msgstr ""
 
-#: app/templates/base.html:618
+#: app/templates/base.html:628
 msgid "نهاري"
 msgstr ""
 
-#: app/templates/base.html:618
+#: app/templates/base.html:628
 msgid "ليلي"
 msgstr ""
 
-#: app/templates/base.html:630
+#: app/templates/base.html:640
 msgid "التقرير اليومي بالبريد"
 msgstr ""
 
-#: app/templates/base.html:633
+#: app/templates/base.html:643
 msgid "أرسل تقرير تجريبي الآن"
 msgstr ""
 
-#: app/templates/base.html:639 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:649 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr ""
 
-#: app/templates/base.html:652
+#: app/templates/base.html:662
 msgid "خروج"
 msgstr ""
 
@@ -4241,31 +4242,45 @@ msgstr ""
 msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
 msgstr ""
 
-#: app/templates/home.html:70
+#: app/templates/home.html:61
+#, python-format
+msgid "%(n)s مهمة مطلوبة"
+msgstr ""
+
+#: app/templates/home.html:62
+#, python-format
+msgid "%(n)s تنبيه"
+msgstr ""
+
+#: app/templates/home.html:63
+msgid "كل شي مضبوط اليوم"
+msgstr ""
+
+#: app/templates/home.html:77
 msgid "سجل الحالات، التحصينات القادمة، والموسوعة المرجعية بصفحة وحدة"
 msgstr ""
 
-#: app/templates/home.html:78
+#: app/templates/home.html:85
 msgid "إجراءات سريعة"
 msgstr ""
 
-#: app/templates/home.html:81
+#: app/templates/home.html:88
 msgid "الأكثر استخدامًا"
 msgstr ""
 
-#: app/templates/home.html:98
+#: app/templates/home.html:105
 msgid "البيطرة"
 msgstr ""
 
-#: app/templates/home.html:113
+#: app/templates/home.html:120
 msgid "برامج التزامن"
 msgstr ""
 
-#: app/templates/home.html:120
+#: app/templates/home.html:127
 msgid "العلف والمالية والتقارير"
 msgstr ""
 
-#: app/templates/home.html:139
+#: app/templates/home.html:146
 msgid "النظام"
 msgstr ""
 
