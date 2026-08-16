@@ -25,7 +25,7 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <h3 style="font-size:14px;">{{ _('توزيع الدفعة على الحظائر الدائمة') }}</h3>
       <div class="table-scroll">
-<table>
+<table class="compact-table">
         <tr><th>{{ _('الرأس') }}</th><th>{{ _('حظيرة دائمة') }}</th></tr>
         {% for a in batch.animals %}
         {% if not a.batch_hold_reason and a.status == 'active' %}
@@ -51,7 +51,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('رؤوس الدفعة') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الرقم') }}</th><th>{{ _('الحظيرة الحالية') }}</th><th>{{ _('الاستبعاد الفردي') }}</th><th></th></tr>
     {% for a in batch.animals %}
     <tr>

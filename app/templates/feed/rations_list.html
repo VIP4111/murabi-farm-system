@@ -6,7 +6,7 @@
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.rations_new') }}">+ {{ _('وصفة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('الغرض') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/كجم') }}</th></tr>
     {% for r in rations %}
     <tr>

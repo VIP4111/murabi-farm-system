@@ -6,7 +6,7 @@
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.barn_plans_new') }}">+ {{ _('خطة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('الوصفة') }}</th><th>{{ _('كمية/رأس/يوم') }}</th><th>{{ _('من') }}</th><th>{{ _('إلى') }}</th></tr>
     {% for p in plans %}
     <tr>

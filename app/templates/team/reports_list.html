@@ -22,7 +22,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('صندوق الوارد (بلاغات جديدة)') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in inbox %}{{ report_row(r) }}{% else %}
     <tr><td colspan="5" style="color:#888;">{{ _('صندوق الوارد فاضي.') }}</td></tr>
@@ -34,7 +34,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('بلاغات مستلمة مني') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_accepted %}{{ report_row(r) }}{% else %}
     <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد بلاغات مستلمة حالياً.') }}</td></tr>
@@ -47,7 +47,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('محوّلة لي للتنفيذ') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_executor_tasks %}{{ report_row(r) }}{% else %}
     <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد بلاغات محوّلة لك حالياً.') }}</td></tr>
@@ -60,7 +60,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('بلاغاتي المرفوعة') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_reports %}
     <tr>
@@ -81,7 +81,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('بلاغات ملغاة (بانتظار حذف نهائي أو أرشفة)') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('سبب الإلغاء') }}</th></tr>
     {% for r in cancelled %}
     <tr>

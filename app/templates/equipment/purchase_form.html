@@ -5,7 +5,10 @@
   <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">{{ _('يزيد المخزون ويسجّل العملية المالية بضغطة وحدة — بدل الدخول من "حركة المخزون" و"المالية" كل مرة لحالها.') }}</p>
   <form method="post" enctype="multipart/form-data" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>{{ _('الصنف') }}</label>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <label style="margin:0;">{{ _('الصنف') }}</label>
+      <a class="btn light" href="{{ url_for('equipment.items_new') }}" style="font-size:12px; padding:4px 10px;">+ {{ _('إضافة صنف جديد') }}</a>
+    </div>
     <select name="equipment_id" required>
       {% for i in items %}<option value="{{ i.id }}">{{ i.name }} ({{ i.available_qty }} {{ i.unit }})</option>{% endfor %}
     </select>

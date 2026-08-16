@@ -74,7 +74,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('بيانات أساسية') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><td>{{ _('الجنس') }}</td><td>{{ animal.gender or '-' }}</td></tr>
       <tr><td>{{ _('اللون') }}</td><td>{{ animal.color or '-' }}</td></tr>
       <tr><td>{{ _('الغرض') }}</td><td>{{ animal.purpose or '-' }}</td></tr>
@@ -122,7 +122,7 @@
     </form>
     {% else %}
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><td>{{ _('تنفّس طبيعي') }}</td><td>{{ _('نعم') if br and br.breathing_ok else (_('لا') if br and br.breathing_ok == false else _('غير محدد')) }}</td></tr>
       <tr><td>{{ _('وقف على قوائمه') }}</td><td>{{ _('نعم') if br and br.standing_ok else (_('لا') if br and br.standing_ok == false else _('غير محدد')) }}</td></tr>
       <tr><td>{{ _('رضع اللبأ') }}</td><td>{{ _('نعم') if br and br.colostrum_received else (_('لا') if br and br.colostrum_received == false else _('غير محدد')) }}</td></tr>
@@ -157,7 +157,7 @@
     </form>
     {% else %}
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><td>{{ _('ترفض إرضاع مولودها') }}</td><td>{{ _('نعم') if animal.refuses_nursing else (_('لا') if animal.refuses_nursing == false else _('غير محدد')) }}</td></tr>
       <tr><td>{{ _('الضرع/الدرة تالفة') }}</td><td>{{ _('نعم') if animal.udder_damaged else (_('لا') if animal.udder_damaged == false else _('غير محدد')) }}</td></tr>
     </table>
@@ -197,7 +197,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('الزيارات البيطرية') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الطبيب') }}</th><th>{{ _('التشخيص') }}</th><th>{{ _('التكلفة') }}</th></tr>
       {% for v in vet_visits %}
       <tr><td>{{ v.date }}</td><td>{{ v.doctor.name if v.doctor else '-' }}</td><td>{{ v.diagnosis or '-' }}</td><td>{{ v.cost }}</td></tr>
@@ -211,7 +211,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('الأمراض') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('الحالة') }}</th></tr>
       {% for d in diseases %}
       <tr>
@@ -228,7 +228,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('التحصينات') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الجرعة القادمة') }}</th></tr>
       {% for vc in vaccinations %}
       <tr><td>{{ vc.date }}</td><td>{{ vc.vaccine_name }}</td><td>{{ vc.next_due_date or '-' }}</td></tr>
@@ -242,7 +242,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('التقريع') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الدور') }}</th><th>{{ _('الطرف الآخر') }}</th></tr>
       {% for m in matings %}
       <tr>
@@ -257,7 +257,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('تشخيص الحمل') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('عدد الأجنة') }}</th></tr>
       {% for p in pregnancies %}
       <tr><td>{{ p.date }}</td><td>{{ _('مؤكد') if p.confirmed else _('قيد الفحص') }}</td><td>{{ p.embryo_count or '-' }}</td></tr>
@@ -268,7 +268,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('فحوصات السونار') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنة') }}</th></tr>
       {% for s in sonar_results %}
       <tr><td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td><td>{{ s.embryo_count or '-' }}</td></tr>
@@ -280,7 +280,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('برامج الشياع التوأمي') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('البرنامج') }}</th><th>{{ _('البدء') }}</th><th>{{ _('الحالة') }}</th></tr>
       {% for prog in twin_programs %}
       <tr><td><a href="{{ url_for('repro.program_detail', program_id=prog.id) }}">{{ prog.protocol_name or (_('برنامج #') ~ prog.id) }}</a></td><td>{{ prog.start_date }}</td><td>{{ prog.status|ar_status }}</td></tr>
@@ -295,7 +295,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('الولادات') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('رقم المولود') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('الوزن عند الولادة') }}</th></tr>
       {% for b in births %}
       <tr>
@@ -347,7 +347,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('سجل الأوزان') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('ملاحظات') }}</th></tr>
       {% for w in weights %}
       <tr><td>{{ w.date }}</td><td>{{ w.weight }}</td><td>{{ w.notes or '-' }}</td></tr>
@@ -378,7 +378,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('سجل الحليب') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الجلسة') }}</th><th>{{ _('الكمية (لتر)') }}</th><th>{{ _('ملاحظات') }}</th></tr>
       {% for mr in milk_records %}
       <tr><td>{{ mr.date }}</td><td>{{ mr.session }}</td><td>{{ mr.quantity_liters }}</td><td>{{ mr.notes or '-' }}</td></tr>
@@ -403,7 +403,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('الملاحظات المسجّلة') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الملاحظة') }}</th><th>{{ _('بواسطة') }}</th></tr>
       {% for n in notes %}
       <tr><td>{{ n.date }}</td><td>{{ n.note }}</td><td>{{ n.created_by.name if n.created_by else '-' }}</td></tr>
@@ -433,7 +433,7 @@
   <div class="card">
     <h3 style="font-size:15px;">{{ _('الحركات المالية المرتبطة') }}</h3>
     <div class="table-scroll">
-<table>
+<table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('المبلغ') }}</th></tr>
       {% set op_labels = {'sale': _('بيع'), 'purchase': _('شراء'), 'expense': _('مصروف')} %}
       {% for f in finance_rows %}

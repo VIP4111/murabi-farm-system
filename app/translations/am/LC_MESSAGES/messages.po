@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 23:45+0300\n"
+"POT-Creation-Date: 2026-08-17 02:23+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1634,11 +1634,11 @@ msgstr "ጾታ"
 #: app/templates/equipment/asset_maintenance.html:13
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/item_movement.html:54
-#: app/templates/equipment/purchase_form.html:12
+#: app/templates/equipment/purchase_form.html:15
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10
-#: app/templates/feed/purchase_form.html:12 app/templates/finance/form.html:7
+#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:36
 #: app/templates/health/dashboard.html:22
@@ -1847,7 +1847,7 @@ msgid "النوع"
 msgstr "ዓይነት"
 
 #: app/reports/report_service.py:477
-#: app/templates/equipment/purchase_form.html:8
+#: app/templates/equipment/purchase_form.html:9
 msgid "الصنف"
 msgstr "ንጥል"
 
@@ -2379,12 +2379,12 @@ msgstr "ከሌሎች ምክንያቶች ጋር ሳይገናኝ።"
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
 #: app/templates/equipment/item_form.html:17
-#: app/templates/equipment/purchase_form.html:18
+#: app/templates/equipment/purchase_form.html:21
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
-#: app/templates/feed/purchase_form.html:18
+#: app/templates/feed/purchase_form.html:22
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
 #: app/templates/health/disease_type_detail.html:41
@@ -3866,9 +3866,9 @@ msgstr "ቀን (ለሁሉም እንስሳት)"
 
 #: app/templates/bulk_action_form.html:19
 #: app/templates/equipment/item_movement.html:54
-#: app/templates/equipment/purchase_form.html:17
+#: app/templates/equipment/purchase_form.html:20
 #: app/templates/feed/movement_form.html:27
-#: app/templates/feed/purchase_form.html:17
+#: app/templates/feed/purchase_form.html:21
 msgid "ملاحظة"
 msgstr "ማስታወሻ"
 
@@ -5854,22 +5854,26 @@ msgstr ""
 "ክምችቱን ይጨምራል እና የገንዘብ ግብይቱን በአንድ ጊዜ ይመዘግባል — ከ\"ክምችት እንቅስቃሴ\" እና \"ፋይናንስ\""
 " ለየብቻ ከመግባት ይልቅ።"
 
-#: app/templates/equipment/purchase_form.html:13
-#: app/templates/feed/purchase_form.html:13
+#: app/templates/equipment/purchase_form.html:10
+msgid "إضافة صنف جديد"
+msgstr "አዲስ ንጥል ያክሉ"
+
+#: app/templates/equipment/purchase_form.html:16
+#: app/templates/feed/purchase_form.html:16
 #: app/templates/health/pharmacy_purchase_form.html:12
 msgid "الكمية المشتراة"
 msgstr "የተገዛ መጠን"
 
-#: app/templates/equipment/purchase_form.html:14
+#: app/templates/equipment/purchase_form.html:17
 #: app/templates/feed/item_form.html:36
-#: app/templates/feed/purchase_form.html:14
+#: app/templates/feed/purchase_form.html:18
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "የአሃድ ዋጋ"
 
-#: app/templates/equipment/purchase_form.html:15
-#: app/templates/feed/purchase_form.html:15
+#: app/templates/equipment/purchase_form.html:18
+#: app/templates/feed/purchase_form.html:19
 msgid "إرفاق فاتورة المورّد (إن وجدت)"
 msgstr "የግዢ ደረሰኝ ያያይዙ (ካለ)"
 
@@ -5953,6 +5957,7 @@ msgstr "መጠን/እንስሳ/ቀን"
 #: app/templates/feed/barn_plans_list.html:15
 #: app/templates/feed/calculator.html:21 app/templates/feed/calculator.html:39
 #: app/templates/feed/optimizer.html:16 app/templates/feed/optimizer.html:33
+#: app/templates/feed/purchase_form.html:44
 msgid "كجم"
 msgstr "ኪግ"
 
@@ -6301,7 +6306,7 @@ msgstr "አዲስ የመኖ ክምችት እንቅስቃሴ"
 
 #: app/templates/feed/movement_form.html:7
 #: app/templates/feed/movements_list.html:10
-#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:8
+#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:9
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/team/task_detail.html:43
 msgid "المكوّن"
@@ -6418,6 +6423,22 @@ msgstr "በድብልቅ ውስጥ አንድ ወይም ከዚያ በላይ ንጥ
 #: app/templates/feed/purchase_form.html:4
 msgid "شراء علف"
 msgstr "የመኖ ግዢ"
+
+#: app/templates/feed/purchase_form.html:10
+msgid "إضافة مكون جديد"
+msgstr "አዲስ ንጥል ያክሉ"
+
+#: app/templates/feed/purchase_form.html:40
+msgid "الوحدة:"
+msgstr "አሃድ:"
+
+#: app/templates/feed/purchase_form.html:42
+msgid "كجم لكل"
+msgstr "ኪግ በ"
+
+#: app/templates/feed/purchase_form.html:44
+msgid "إجمالي تقريبي:"
+msgstr "ግምታዊ ድምር:"
 
 #: app/templates/feed/ration_detail.html:9
 msgid "بروتين خام موزون"

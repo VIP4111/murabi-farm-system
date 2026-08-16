@@ -6,7 +6,7 @@
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.sonar_new') }}">+ {{ _('فحص جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الأنثى') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنّة') }}</th><th>{{ _('نبض') }}</th><th>{{ _('البرنامج') }}</th></tr>
     {% for r in rows %}
     <tr>

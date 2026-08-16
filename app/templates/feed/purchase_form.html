@@ -5,12 +5,16 @@
   <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">{{ _('يزيد المخزون ويسجّل العملية المالية بضغطة وحدة — بدل الدخول من "حركة المخزون" و"المالية" كل مرة لحالها.') }}</p>
   <form method="post" enctype="multipart/form-data" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>{{ _('المكوّن') }}</label>
-    <select name="feed_id" required>
-      {% for f in feeds %}<option value="{{ f.id }}">{{ f.name }} ({{ f.available_qty }} {{ f.unit }})</option>{% endfor %}
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <label style="margin:0;">{{ _('المكوّن') }}</label>
+      <a class="btn light" href="{{ url_for('feed.items_new') }}" style="font-size:12px; padding:4px 10px;">+ {{ _('إضافة مكون جديد') }}</a>
+    </div>
+    <select name="feed_id" id="feedSelect" required>
+      {% for f in feeds %}<option value="{{ f.id }}" data-unit="{{ f.unit }}" data-unit-weight="{{ f.unit_weight_kg or '' }}">{{ f.name }} ({{ f.available_qty }} {{ f.unit }})</option>{% endfor %}
     </select>
     <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
-    <label>{{ _('الكمية المشتراة') }}</label><input name="quantity" type="number" step="0.01" required>
+    <label>{{ _('الكمية المشتراة') }}</label><input name="quantity" type="number" step="0.01" required id="qtyInput">
+    <p id="unitHint" style="color:var(--muted); font-size:12px; margin:-6px 0 10px;"></p>
     <label>{{ _('سعر الوحدة') }}</label><input name="unit_price" type="number" step="0.01" required>
     <label>{{ _('إرفاق فاتورة المورّد (إن وجدت)') }}</label>
     <input type="file" name="invoice_file" accept="image/*,application/pdf">
@@ -18,4 +22,33 @@
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
+<script>
+(function(){
+  // توضيح "كم كيلو فعلياً" وقت الشراء (بند إضافي 207) — الوحدة خاصية
+  // ثابتة بالصنف نفسه (بند 202)، هذا عرض حي بس يفسّرها وقت إدخال
+  // الكمية، عشان يبين وضوح لمستودع الشركات وقت تقسيم الكمية لاحقاً
+  // على الحظائر/الرؤوس — صفر حساب جديد، فقط عرض قيم موجودة أصلاً.
+  var sel = document.getElementById('feedSelect');
+  var qty = document.getElementById('qtyInput');
+  var hint = document.getElementById('unitHint');
+  function update(){
+    var opt = sel.options[sel.selectedIndex];
+    if (!opt) { hint.textContent = ''; return; }
+    var unit = opt.getAttribute('data-unit') || '';
+    var unitWeight = parseFloat(opt.getAttribute('data-unit-weight'));
+    var q = parseFloat(qty.value);
+    var text = {{ _('الوحدة:')|tojson }} + ' ' + unit;
+    if (!isNaN(unitWeight) && unitWeight > 0) {
+      text += ' (' + unitWeight + ' {{ _("كجم لكل") }} ' + unit + ')';
+      if (!isNaN(q) && q > 0) {
+        text += ' — {{ _("إجمالي تقريبي:") }} ' + Math.round(q * unitWeight * 100) / 100 + ' {{ _("كجم") }}';
+      }
+    }
+    hint.textContent = text;
+  }
+  sel.addEventListener('change', update);
+  qty.addEventListener('input', update);
+  update();
+})();
+</script>
 {% endblock %}

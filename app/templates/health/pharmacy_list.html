@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('فئة الدواء') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('سعر الوحدة') }}</th><th>{{ _('تاريخ الانتهاء') }}</th><th>{{ _('فترة السحب (يوم)') }}</th><th>{{ _('طريقة الاستخدام') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
@@ -24,8 +24,8 @@
       <td>{{ i.status|ar_status }}</td>
       <td>
         {% if current_user.has_permission('pharmacy.manage') %}
-        <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">{{ _('تعديل') }}</a>
-        · <a href="{{ url_for('warehouses.item_breakdown', kind='pharmacy', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
+        <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
+        <a href="{{ url_for('warehouses.item_breakdown', kind='pharmacy', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
         {% endif %}
       </td>
     </tr>

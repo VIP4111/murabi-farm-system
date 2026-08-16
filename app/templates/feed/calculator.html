@@ -34,7 +34,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('النتيجة') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><td>{{ _('الحالة المستخدمة') }}</td><td>{{ result.state }}</td></tr>
     <tr><td>{{ _('احتياج المادة الجافة اليومي') }}</td><td>{{ result.daily_dry_matter_kg }} {{ _('كجم') }}</td></tr>
     <tr><td>{{ _('هدف بروتين خام') }}</td><td>{{ result.target_protein_percent }}%</td></tr>
@@ -46,7 +46,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('أقرب الوصفات (مرتّبة: تطابق ثم أرخص تكلفة)') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الوصفة') }}</th><th>{{ _('تطابق') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/رأس/يوم') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
     {% for r in recommendations %}
     <tr>

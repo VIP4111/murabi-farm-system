@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 23:45+0300\n"
+"POT-Creation-Date: 2026-08-17 02:23+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1682,11 +1682,11 @@ msgstr "Gender"
 #: app/templates/equipment/asset_maintenance.html:13
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/item_movement.html:54
-#: app/templates/equipment/purchase_form.html:12
+#: app/templates/equipment/purchase_form.html:15
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10
-#: app/templates/feed/purchase_form.html:12 app/templates/finance/form.html:7
+#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:36
 #: app/templates/health/dashboard.html:22
@@ -1895,7 +1895,7 @@ msgid "النوع"
 msgstr "Type"
 
 #: app/reports/report_service.py:477
-#: app/templates/equipment/purchase_form.html:8
+#: app/templates/equipment/purchase_form.html:9
 msgid "الصنف"
 msgstr "Item"
 
@@ -2436,12 +2436,12 @@ msgstr "regardless of the other factors."
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
 #: app/templates/equipment/item_form.html:17
-#: app/templates/equipment/purchase_form.html:18
+#: app/templates/equipment/purchase_form.html:21
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
-#: app/templates/feed/purchase_form.html:18
+#: app/templates/feed/purchase_form.html:22
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
 #: app/templates/health/disease_type_detail.html:41
@@ -3959,9 +3959,9 @@ msgstr "Date (for all animals)"
 
 #: app/templates/bulk_action_form.html:19
 #: app/templates/equipment/item_movement.html:54
-#: app/templates/equipment/purchase_form.html:17
+#: app/templates/equipment/purchase_form.html:20
 #: app/templates/feed/movement_form.html:27
-#: app/templates/feed/purchase_form.html:17
+#: app/templates/feed/purchase_form.html:21
 msgid "ملاحظة"
 msgstr "Note"
 
@@ -6025,22 +6025,26 @@ msgstr ""
 "Increases stock and records the finance entry in one step — instead of "
 "going through \"stock movement\" and \"finance\" separately each time."
 
-#: app/templates/equipment/purchase_form.html:13
-#: app/templates/feed/purchase_form.html:13
+#: app/templates/equipment/purchase_form.html:10
+msgid "إضافة صنف جديد"
+msgstr "Add new item"
+
+#: app/templates/equipment/purchase_form.html:16
+#: app/templates/feed/purchase_form.html:16
 #: app/templates/health/pharmacy_purchase_form.html:12
 msgid "الكمية المشتراة"
 msgstr "Quantity purchased"
 
-#: app/templates/equipment/purchase_form.html:14
+#: app/templates/equipment/purchase_form.html:17
 #: app/templates/feed/item_form.html:36
-#: app/templates/feed/purchase_form.html:14
+#: app/templates/feed/purchase_form.html:18
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "Unit price"
 
-#: app/templates/equipment/purchase_form.html:15
-#: app/templates/feed/purchase_form.html:15
+#: app/templates/equipment/purchase_form.html:18
+#: app/templates/feed/purchase_form.html:19
 msgid "إرفاق فاتورة المورّد (إن وجدت)"
 msgstr "Attach purchase invoice (if any)"
 
@@ -6124,6 +6128,7 @@ msgstr "Qty/head/day"
 #: app/templates/feed/barn_plans_list.html:15
 #: app/templates/feed/calculator.html:21 app/templates/feed/calculator.html:39
 #: app/templates/feed/optimizer.html:16 app/templates/feed/optimizer.html:33
+#: app/templates/feed/purchase_form.html:44
 msgid "كجم"
 msgstr "kg"
 
@@ -6482,7 +6487,7 @@ msgstr "New feed stock movement"
 
 #: app/templates/feed/movement_form.html:7
 #: app/templates/feed/movements_list.html:10
-#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:8
+#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:9
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/team/task_detail.html:43
 msgid "المكوّن"
@@ -6603,6 +6608,22 @@ msgstr "One or more ingredients in the blend has less stock than required — ch
 #: app/templates/feed/purchase_form.html:4
 msgid "شراء علف"
 msgstr "Purchase feed"
+
+#: app/templates/feed/purchase_form.html:10
+msgid "إضافة مكون جديد"
+msgstr "Add new item"
+
+#: app/templates/feed/purchase_form.html:40
+msgid "الوحدة:"
+msgstr "Unit:"
+
+#: app/templates/feed/purchase_form.html:42
+msgid "كجم لكل"
+msgstr "kg per"
+
+#: app/templates/feed/purchase_form.html:44
+msgid "إجمالي تقريبي:"
+msgstr "Approx. total:"
 
 #: app/templates/feed/ration_detail.html:9
 msgid "بروتين خام موزون"

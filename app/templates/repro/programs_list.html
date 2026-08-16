@@ -6,7 +6,7 @@
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.programs_new') }}">+ {{ _('برنامج جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>#</th><th>{{ _('الأنثى') }}</th><th>{{ _('البروتوكول') }}</th><th>{{ _('بداية') }}</th><th>{{ _('الطبيب المشرف') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in rows %}
     <tr>

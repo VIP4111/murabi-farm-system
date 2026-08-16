@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 23:45+0300\n"
+"POT-Creation-Date: 2026-08-17 02:23+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1677,11 +1677,11 @@ msgstr "लिंग"
 #: app/templates/equipment/asset_maintenance.html:13
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/item_movement.html:54
-#: app/templates/equipment/purchase_form.html:12
+#: app/templates/equipment/purchase_form.html:15
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:12
 #: app/templates/feed/movements_list.html:10
-#: app/templates/feed/purchase_form.html:12 app/templates/finance/form.html:7
+#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:36
 #: app/templates/health/dashboard.html:22
@@ -1890,7 +1890,7 @@ msgid "النوع"
 msgstr "प्रकार"
 
 #: app/reports/report_service.py:477
-#: app/templates/equipment/purchase_form.html:8
+#: app/templates/equipment/purchase_form.html:9
 msgid "الصنف"
 msgstr "वस्तु"
 
@@ -2431,12 +2431,12 @@ msgstr "अन्य कारकों की परवाह किए बि�
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
 #: app/templates/equipment/item_form.html:17
-#: app/templates/equipment/purchase_form.html:18
+#: app/templates/equipment/purchase_form.html:21
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
-#: app/templates/feed/purchase_form.html:18
+#: app/templates/feed/purchase_form.html:22
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
 #: app/templates/health/disease_type_detail.html:41
@@ -3947,9 +3947,9 @@ msgstr "तिथि (सभी पशुओं के लिए)"
 
 #: app/templates/bulk_action_form.html:19
 #: app/templates/equipment/item_movement.html:54
-#: app/templates/equipment/purchase_form.html:17
+#: app/templates/equipment/purchase_form.html:20
 #: app/templates/feed/movement_form.html:27
-#: app/templates/feed/purchase_form.html:17
+#: app/templates/feed/purchase_form.html:21
 msgid "ملاحظة"
 msgstr "टिप्पणी"
 
@@ -6004,22 +6004,26 @@ msgstr ""
 "एक ही चरण में स्टॉक बढ़ाता है और वित्तीय लेनदेन दर्ज करता है — हर बार अलग"
 " से \"स्टॉक गतिविधि\" और \"वित्त\" में जाने के बजाय।"
 
-#: app/templates/equipment/purchase_form.html:13
-#: app/templates/feed/purchase_form.html:13
+#: app/templates/equipment/purchase_form.html:10
+msgid "إضافة صنف جديد"
+msgstr "नया आइटम जोड़ें"
+
+#: app/templates/equipment/purchase_form.html:16
+#: app/templates/feed/purchase_form.html:16
 #: app/templates/health/pharmacy_purchase_form.html:12
 msgid "الكمية المشتراة"
 msgstr "खरीदी गई मात्रा"
 
-#: app/templates/equipment/purchase_form.html:14
+#: app/templates/equipment/purchase_form.html:17
 #: app/templates/feed/item_form.html:36
-#: app/templates/feed/purchase_form.html:14
+#: app/templates/feed/purchase_form.html:18
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "इकाई मूल्य"
 
-#: app/templates/equipment/purchase_form.html:15
-#: app/templates/feed/purchase_form.html:15
+#: app/templates/equipment/purchase_form.html:18
+#: app/templates/feed/purchase_form.html:19
 msgid "إرفاق فاتورة المورّد (إن وجدت)"
 msgstr "खरीद चालान संलग्न करें (यदि हो)"
 
@@ -6103,6 +6107,7 @@ msgstr "मात्रा/पशु/दिन"
 #: app/templates/feed/barn_plans_list.html:15
 #: app/templates/feed/calculator.html:21 app/templates/feed/calculator.html:39
 #: app/templates/feed/optimizer.html:16 app/templates/feed/optimizer.html:33
+#: app/templates/feed/purchase_form.html:44
 msgid "كجم"
 msgstr "किग्रा"
 
@@ -6459,7 +6464,7 @@ msgstr "नई चारा स्टॉक गतिविधि"
 
 #: app/templates/feed/movement_form.html:7
 #: app/templates/feed/movements_list.html:10
-#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:8
+#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:9
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/team/task_detail.html:43
 msgid "المكوّن"
@@ -6579,6 +6584,22 @@ msgstr "मिश्रण में एक या अधिक घटकों 
 #: app/templates/feed/purchase_form.html:4
 msgid "شراء علف"
 msgstr "चारा खरीद"
+
+#: app/templates/feed/purchase_form.html:10
+msgid "إضافة مكون جديد"
+msgstr "नया आइटम जोड़ें"
+
+#: app/templates/feed/purchase_form.html:40
+msgid "الوحدة:"
+msgstr "इकाई:"
+
+#: app/templates/feed/purchase_form.html:42
+msgid "كجم لكل"
+msgstr "किग्रा प्रति"
+
+#: app/templates/feed/purchase_form.html:44
+msgid "إجمالي تقريبي:"
+msgstr "अनुमानित कुल:"
 
 #: app/templates/feed/ration_detail.html:9
 msgid "بروتين خام موزون"

@@ -98,7 +98,7 @@
     <a class="btn" href="{{ url_for('core.role_new') }}">+ {{ _('مسمّى جديد') }}</a>
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('عدد الصلاحيات') }}</th><th>{{ _('نوع') }}</th><th></th></tr>
     {% for r in roles %}
     <tr>
@@ -140,7 +140,7 @@
   <h3 style="font-size:15px;">{{ _('جدول المؤشرات') }}</h3>
   <p style="color:var(--muted); font-size:13px;">{{ _('من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير.') }}</p>
   <div class="table-scroll">
-  <table>
+  <table class="compact-table">
     <tr>{% for col in indicators_table.columns %}<th>{{ col }}</th>{% endfor %}</tr>
     {% for row in indicators_table.rows %}
     <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>

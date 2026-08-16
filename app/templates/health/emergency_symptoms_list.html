@@ -10,7 +10,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('الأعراض المسجَّلة (%(n)s)', n=entries|length) }}</h3>
   <div class="table-scroll">
-  <table>
+  <table class="compact-table">
     <tr><th>{{ _('العرض') }}</th><th>{{ _('الخطورة') }}</th><th>{{ _('التشخيص التفريقي') }}</th><th>{{ _('التوصية') }}</th><th></th></tr>
     {% for e in entries %}
     <tr>

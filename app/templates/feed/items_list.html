@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('فئة العلف') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة (ك.كالوري/كجم)') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th>{{ _('نفاد متوقع') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
@@ -27,8 +27,8 @@
       <td>{% if stockout.get(i.id) %}~{{ stockout[i.id] }} {{ _('يوم') }}{% else %}-{% endif %}</td>
       <td>
         {% if current_user.has_permission('feed.manage') %}
-        <a href="{{ url_for('feed.items_edit', item_id=i.id) }}">{{ _('تعديل') }}</a>
-        · <a href="{{ url_for('warehouses.item_breakdown', kind='feed', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
+        <a href="{{ url_for('feed.items_edit', item_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
+        <a href="{{ url_for('warehouses.item_breakdown', kind='feed', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
         {% endif %}
       </td>
     </tr>

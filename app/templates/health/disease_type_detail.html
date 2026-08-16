@@ -20,7 +20,7 @@
   <h3 style="font-size:15px;">{{ _('الأعراض المرتبطة (%(n)s)', n=links|length) }}</h3>
   {% if current_user.has_permission('medical_options.manage') %}
   <div class="table-scroll">
-  <table>
+  <table class="compact-table">
     <tr><th>{{ _('العرض') }}</th><th>{{ _('الوزن (1-3)') }}</th><th>{{ _('إجباري') }}</th><th>{{ _('استبعادي') }}</th><th></th></tr>
     {% for l in links %}
     <tr>
@@ -55,7 +55,7 @@
   </div>
   {% else %}
   <div class="table-scroll">
-  <table>
+  <table class="compact-table">
     <tr><th>{{ _('العرض') }}</th><th>{{ _('الوزن') }}</th><th>{{ _('إجباري') }}</th><th>{{ _('استبعادي') }}</th><th>{{ _('عزل فوري') }}</th></tr>
     {% for l in links %}
     <tr>

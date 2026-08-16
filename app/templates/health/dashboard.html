@@ -18,7 +18,7 @@
     <a class="btn light" href="{{ url_for('health.diseases_list') }}" style="font-size:12px; padding:4px 10px;">{{ _('السجل الكامل') }} ←</a>
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('منذ') }}</th></tr>
     {% for d in active_cases %}
     <tr>
@@ -39,7 +39,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('آخر الحالات المغلقة') }}</h3>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('تاريخ الإغلاق') }}</th><th>{{ _('ملاحظة التعافي') }}</th></tr>
     {% for d in recent_closed %}
     <tr>
@@ -60,7 +60,7 @@
     <a class="btn light" href="{{ url_for('health.vaccination_schedule_list') }}" style="font-size:12px; padding:4px 10px;">{{ _('تقويم التحصينات الكامل') }} ←</a>
   </div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الحيوان') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('تاريخ الاستحقاق') }}</th></tr>
     {% for v in upcoming_vaccinations %}
     <tr>
