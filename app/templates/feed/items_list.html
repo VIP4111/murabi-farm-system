@@ -17,6 +17,7 @@
       <td>{{ i.energy_kcal_per_kg or '-' }}</td>
       <td>
         {{ i.available_qty }} {{ i.unit }}
+        {% if i.unit_weight_kg %}<span style="color:var(--muted); font-size:11.5px;">({{ i.unit_weight_kg }} {{ _('كجم/') }}{{ i.unit }})</span>{% endif %}
         {% if i.min_stock_qty and i.available_qty <= i.min_stock_qty %}<span class="badge off">{{ _('منخفض') }}</span>{% endif %}
       </td>
       <td>{{ i.unit_price or '-' }}</td>

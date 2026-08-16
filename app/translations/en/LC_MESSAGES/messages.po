@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 05:42+0300\n"
+"POT-Creation-Date: 2026-08-16 09:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -2246,7 +2246,7 @@ msgstr "Milk"
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:16
 #: app/templates/feed/barn_plan_form.html:18
-#: app/templates/feed/item_form.html:33
+#: app/templates/feed/item_form.html:39
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
@@ -2330,7 +2330,7 @@ msgstr "Care note for the %(breed)s breed:"
 
 #: app/templates/animal_detail.html:93 app/templates/barns_list.html:19
 #: app/templates/equipment/items_list.html:25
-#: app/templates/feed/items_list.html:26
+#: app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2433,7 +2433,7 @@ msgstr "regardless of the other factors."
 #: app/templates/equipment/item_form.html:17
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
-#: app/templates/feed/item_form.html:34
+#: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
@@ -3759,7 +3759,7 @@ msgstr "Feed conversion ratio (FCR)"
 msgid "موازِن العليقة التلقائي"
 msgstr "Automatic ration balancer"
 
-#: app/templates/base.html:548 app/templates/feed/items_list.html:27
+#: app/templates/base.html:548 app/templates/feed/items_list.html:28
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
@@ -5781,7 +5781,7 @@ msgid "الكمية المتوفرة حالياً"
 msgstr "Currently available quantity"
 
 #: app/templates/equipment/item_form.html:14
-#: app/templates/feed/item_form.html:32
+#: app/templates/feed/item_form.html:38
 #: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr "Minimum stock alert threshold"
@@ -5907,7 +5907,7 @@ msgid "السعر/وحدة"
 msgstr "Price/unit"
 
 #: app/templates/equipment/items_list.html:20
-#: app/templates/feed/items_list.html:20
+#: app/templates/feed/items_list.html:21
 msgid "منخفض"
 msgstr "Low"
 
@@ -6311,13 +6311,37 @@ msgstr "Calcium %%"
 msgid "فسفور %%"
 msgstr "Phosphorus %%"
 
-#: app/templates/feed/item_form.html:30
+#: app/templates/feed/item_form.html:33
+msgid ""
+"قائمة ثابتة عمداً — عشان تقرير \"طلب الشراء\" يقدر يقارن ويجمع الأصناف "
+"البديلة صح (بند إضافي 156)."
+msgstr ""
+"Deliberately a fixed list — so the \"Purchase Request\" report can "
+"correctly compare and group substitutable items (item 156)."
+
+#: app/templates/feed/item_form.html:34
+msgid "وزن الوحدة الواحدة بالكيلو (اختياري)"
+msgstr "Weight of one unit in kg (optional)"
+
+#: app/templates/feed/item_form.html:34
+msgid "مثال: ربطة برسيم = 15 كجم"
+msgstr "Example: 1 alfalfa bale = 15 kg"
+
+#: app/templates/feed/item_form.html:35
+msgid ""
+"مفيد للوحدات اللي وزنها مو ثابت (ربطة، كيس) — مرجع لك بس، ما يدخل بأي "
+"حساب تلقائي."
+msgstr ""
+"Useful for units whose weight isn't fixed (bale, bag) — a reference for "
+"you only, not used in any automatic calculation."
+
+#: app/templates/feed/item_form.html:36
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "Unit price"
 
-#: app/templates/feed/item_form.html:31
+#: app/templates/feed/item_form.html:37
 #: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr "Available quantity"
@@ -6344,7 +6368,11 @@ msgstr "Expected stockout"
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "Contains high copper"
 
-#: app/templates/feed/items_list.html:23
+#: app/templates/feed/items_list.html:20
+msgid "كجم/"
+msgstr "kg/"
+
+#: app/templates/feed/items_list.html:24
 #: app/templates/health/disease_form.html:37
 #: app/templates/health/pharmacy_form.html:142
 #: app/templates/health/protocol_apply_form.html:7
@@ -6354,7 +6382,7 @@ msgstr "Contains high copper"
 msgid "يوم"
 msgstr "day"
 
-#: app/templates/feed/items_list.html:32
+#: app/templates/feed/items_list.html:33
 msgid "لا يوجد مكوّنات علف مسجّلة بعد."
 msgstr "No feed items recorded yet."
 
@@ -6517,7 +6545,9 @@ msgstr "Ingredients (percentages of the ration's total weight)"
 #: app/templates/feed/ration_form.html:28
 #, python-format
 msgid "اترك أي صف فاضي لو ما تحتاجه. مجموع النسب المفروض يقارب 100%%."
-msgstr "Leave any row empty if you don't need it. The percentages should add up to roughly 100%%."
+msgstr ""
+"Leave any row empty if you don't need it. The percentages should add up "
+"to roughly 100%%."
 
 #: app/templates/feed/ration_form.html:31
 msgid "سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)"

@@ -26,7 +26,13 @@
     <label>{{ _('ألياف %%') }}</label><input name="fiber_percent" type="number" step="0.01" value="{{ item.fiber_percent if item and item.fiber_percent is not none else '' }}">
     <label>{{ _('كالسيوم %%') }}</label><input name="calcium_percent" type="number" step="0.01" value="{{ item.calcium_percent if item and item.calcium_percent is not none else '' }}">
     <label>{{ _('فسفور %%') }}</label><input name="phosphorus_percent" type="number" step="0.01" value="{{ item.phosphorus_percent if item and item.phosphorus_percent is not none else '' }}">
-    <label>{{ _('الوحدة') }}</label><input name="unit" value="{{ item.unit if item else 'كجم' }}">
+    <label>{{ _('الوحدة') }}</label>
+    <select name="unit">
+      {% for u in units %}<option value="{{ u }}" {{ 'selected' if (item.unit if item else 'كجم') == u }}>{{ u }}</option>{% endfor %}
+    </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('قائمة ثابتة عمداً — عشان تقرير "طلب الشراء" يقدر يقارن ويجمع الأصناف البديلة صح (بند إضافي 156).') }}</p>
+    <label>{{ _('وزن الوحدة الواحدة بالكيلو (اختياري)') }}</label><input name="unit_weight_kg" type="number" step="0.01" placeholder="{{ _('مثال: ربطة برسيم = 15 كجم') }}" value="{{ item.unit_weight_kg if item and item.unit_weight_kg is not none else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('مفيد للوحدات اللي وزنها مو ثابت (ربطة، كيس) — مرجع لك بس، ما يدخل بأي حساب تلقائي.') }}</p>
     <label>{{ _('سعر الوحدة') }}</label><input name="unit_price" type="number" step="0.01" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
     <label>{{ _('الكمية المتوفرة') }}</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
     <label>{{ _('الحد الأدنى للتنبيه') }}</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">

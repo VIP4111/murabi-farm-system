@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 05:42+0300\n"
+"POT-Creation-Date: 2026-08-16 09:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -2189,7 +2189,7 @@ msgstr "ወተት"
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:16
 #: app/templates/feed/barn_plan_form.html:18
-#: app/templates/feed/item_form.html:33
+#: app/templates/feed/item_form.html:39
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
@@ -2273,7 +2273,7 @@ msgstr "ለ%(breed)s ዝርያ የእንክብካቤ ማስታወሻ:"
 
 #: app/templates/animal_detail.html:93 app/templates/barns_list.html:19
 #: app/templates/equipment/items_list.html:25
-#: app/templates/feed/items_list.html:26
+#: app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2376,7 +2376,7 @@ msgstr "ከሌሎች ምክንያቶች ጋር ሳይገናኝ።"
 #: app/templates/equipment/item_form.html:17
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
-#: app/templates/feed/item_form.html:34
+#: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
@@ -3670,7 +3670,7 @@ msgstr "የመኖ ልወጣ መጠን (FCR)"
 msgid "موازِن العليقة التلقائي"
 msgstr "ራስ-ሰር የመኖ ማመጣጠኛ"
 
-#: app/templates/base.html:548 app/templates/feed/items_list.html:27
+#: app/templates/base.html:548 app/templates/feed/items_list.html:28
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
@@ -5613,7 +5613,7 @@ msgid "الكمية المتوفرة حالياً"
 msgstr "በአሁኑ ጊዜ ያለ መጠን"
 
 #: app/templates/equipment/item_form.html:14
-#: app/templates/feed/item_form.html:32
+#: app/templates/feed/item_form.html:38
 #: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr "ዝቅተኛ የማስጠንቀቂያ ገደብ"
@@ -5737,7 +5737,7 @@ msgid "السعر/وحدة"
 msgstr "ዋጋ/አሃድ"
 
 #: app/templates/equipment/items_list.html:20
-#: app/templates/feed/items_list.html:20
+#: app/templates/feed/items_list.html:21
 msgid "منخفض"
 msgstr "ዝቅተኛ"
 
@@ -6131,13 +6131,37 @@ msgstr "ካልሲየም %%"
 msgid "فسفور %%"
 msgstr "ፎስፎረስ %%"
 
-#: app/templates/feed/item_form.html:30
+#: app/templates/feed/item_form.html:33
+msgid ""
+"قائمة ثابتة عمداً — عشان تقرير \"طلب الشراء\" يقدر يقارن ويجمع الأصناف "
+"البديلة صح (بند إضافي 156)."
+msgstr ""
+"ሆን ተብሎ ቋሚ ዝርዝር ነው — \"የግዢ ጥያቄ\" ሪፖርት ተለዋጭ ዕቃዎችን በትክክል እንዲያወዳድርና እንዲያሰባስብ "
+"ለማድረግ።"
+
+#: app/templates/feed/item_form.html:34
+msgid "وزن الوحدة الواحدة بالكيلو (اختياري)"
+msgstr "የአንድ ክፍል ክብደት በኪግ (አማራጭ)"
+
+#: app/templates/feed/item_form.html:34
+msgid "مثال: ربطة برسيم = 15 كجم"
+msgstr "ምሳሌ: 1 የበርሲም እሽግ = 15 ኪግ"
+
+#: app/templates/feed/item_form.html:35
+msgid ""
+"مفيد للوحدات اللي وزنها مو ثابت (ربطة، كيس) — مرجع لك بس، ما يدخل بأي "
+"حساب تلقائي."
+msgstr ""
+"ክብደታቸው ቋሚ ላልሆኑ ክፍሎች (እሽግ፣ ከረጢት) ጠቃሚ — ለእርስዎ ማጣቀሻ ብቻ፣ በራስ-ሰር "
+"ስሌት ውስጥ አይካተትም።"
+
+#: app/templates/feed/item_form.html:36
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "የአሃድ ዋጋ"
 
-#: app/templates/feed/item_form.html:31
+#: app/templates/feed/item_form.html:37
 #: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr "ያለ መጠን"
@@ -6164,7 +6188,11 @@ msgstr "የሚጠበቅ ማለቅ"
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "ከፍተኛ መዳብ ይዟል"
 
-#: app/templates/feed/items_list.html:23
+#: app/templates/feed/items_list.html:20
+msgid "كجم/"
+msgstr "ኪግ/"
+
+#: app/templates/feed/items_list.html:24
 #: app/templates/health/disease_form.html:37
 #: app/templates/health/pharmacy_form.html:142
 #: app/templates/health/protocol_apply_form.html:7
@@ -6174,7 +6202,7 @@ msgstr "ከፍተኛ መዳብ ይዟል"
 msgid "يوم"
 msgstr "ቀን"
 
-#: app/templates/feed/items_list.html:32
+#: app/templates/feed/items_list.html:33
 msgid "لا يوجد مكوّنات علف مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ የመኖ ንጥረ ነገር የለም።"
 

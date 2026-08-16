@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 05:42+0300\n"
+"POT-Creation-Date: 2026-08-16 09:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2089,7 +2089,7 @@ msgstr ""
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:16
 #: app/templates/feed/barn_plan_form.html:18
-#: app/templates/feed/item_form.html:33
+#: app/templates/feed/item_form.html:39
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
@@ -2173,7 +2173,7 @@ msgstr ""
 
 #: app/templates/animal_detail.html:93 app/templates/barns_list.html:19
 #: app/templates/equipment/items_list.html:25
-#: app/templates/feed/items_list.html:26
+#: app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2276,7 +2276,7 @@ msgstr ""
 #: app/templates/equipment/item_form.html:17
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
-#: app/templates/feed/item_form.html:34
+#: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
@@ -3534,7 +3534,7 @@ msgstr ""
 msgid "موازِن العليقة التلقائي"
 msgstr ""
 
-#: app/templates/base.html:548 app/templates/feed/items_list.html:27
+#: app/templates/base.html:548 app/templates/feed/items_list.html:28
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
@@ -5412,7 +5412,7 @@ msgid "الكمية المتوفرة حالياً"
 msgstr ""
 
 #: app/templates/equipment/item_form.html:14
-#: app/templates/feed/item_form.html:32
+#: app/templates/feed/item_form.html:38
 #: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr ""
@@ -5536,7 +5536,7 @@ msgid "السعر/وحدة"
 msgstr ""
 
 #: app/templates/equipment/items_list.html:20
-#: app/templates/feed/items_list.html:20
+#: app/templates/feed/items_list.html:21
 msgid "منخفض"
 msgstr ""
 
@@ -5913,13 +5913,33 @@ msgstr ""
 msgid "فسفور %%"
 msgstr ""
 
-#: app/templates/feed/item_form.html:30
+#: app/templates/feed/item_form.html:33
+msgid ""
+"قائمة ثابتة عمداً — عشان تقرير \"طلب الشراء\" يقدر يقارن ويجمع الأصناف "
+"البديلة صح (بند إضافي 156)."
+msgstr ""
+
+#: app/templates/feed/item_form.html:34
+msgid "وزن الوحدة الواحدة بالكيلو (اختياري)"
+msgstr ""
+
+#: app/templates/feed/item_form.html:34
+msgid "مثال: ربطة برسيم = 15 كجم"
+msgstr ""
+
+#: app/templates/feed/item_form.html:35
+msgid ""
+"مفيد للوحدات اللي وزنها مو ثابت (ربطة، كيس) — مرجع لك بس، ما يدخل بأي "
+"حساب تلقائي."
+msgstr ""
+
+#: app/templates/feed/item_form.html:36
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr ""
 
-#: app/templates/feed/item_form.html:31
+#: app/templates/feed/item_form.html:37
 #: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr ""
@@ -5946,7 +5966,11 @@ msgstr ""
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr ""
 
-#: app/templates/feed/items_list.html:23
+#: app/templates/feed/items_list.html:20
+msgid "كجم/"
+msgstr ""
+
+#: app/templates/feed/items_list.html:24
 #: app/templates/health/disease_form.html:37
 #: app/templates/health/pharmacy_form.html:142
 #: app/templates/health/protocol_apply_form.html:7
@@ -5956,7 +5980,7 @@ msgstr ""
 msgid "يوم"
 msgstr ""
 
-#: app/templates/feed/items_list.html:32
+#: app/templates/feed/items_list.html:33
 msgid "لا يوجد مكوّنات علف مسجّلة بعد."
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-16 05:42+0300\n"
+"POT-Creation-Date: 2026-08-16 09:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -2241,7 +2241,7 @@ msgstr "दूध"
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:16
 #: app/templates/feed/barn_plan_form.html:18
-#: app/templates/feed/item_form.html:33
+#: app/templates/feed/item_form.html:39
 #: app/templates/feed/ration_detail.html:13
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
@@ -2325,7 +2325,7 @@ msgstr "%(breed)s नस्ल के लिए देखभाल टिप्�
 
 #: app/templates/animal_detail.html:93 app/templates/barns_list.html:19
 #: app/templates/equipment/items_list.html:25
-#: app/templates/feed/items_list.html:26
+#: app/templates/feed/items_list.html:27
 #: app/templates/health/pharmacy_list.html:27
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
@@ -2428,7 +2428,7 @@ msgstr "अन्य कारकों की परवाह किए बि�
 #: app/templates/equipment/item_form.html:17
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
-#: app/templates/feed/item_form.html:34
+#: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:28
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
@@ -3747,7 +3747,7 @@ msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
 msgid "موازِن العليقة التلقائي"
 msgstr "स्वचालित राशन संतुलक"
 
-#: app/templates/base.html:548 app/templates/feed/items_list.html:27
+#: app/templates/base.html:548 app/templates/feed/items_list.html:28
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
@@ -5760,7 +5760,7 @@ msgid "الكمية المتوفرة حالياً"
 msgstr "वर्तमान उपलब्ध मात्रा"
 
 #: app/templates/equipment/item_form.html:14
-#: app/templates/feed/item_form.html:32
+#: app/templates/feed/item_form.html:38
 #: app/templates/health/pharmacy_form.html:101
 msgid "الحد الأدنى للتنبيه"
 msgstr "न्यूनतम स्टॉक चेतावनी सीमा"
@@ -5886,7 +5886,7 @@ msgid "السعر/وحدة"
 msgstr "मूल्य/इकाई"
 
 #: app/templates/equipment/items_list.html:20
-#: app/templates/feed/items_list.html:20
+#: app/templates/feed/items_list.html:21
 msgid "منخفض"
 msgstr "कम"
 
@@ -6288,13 +6288,37 @@ msgstr "कैल्शियम %%"
 msgid "فسفور %%"
 msgstr "फास्फोरस %%"
 
-#: app/templates/feed/item_form.html:30
+#: app/templates/feed/item_form.html:33
+msgid ""
+"قائمة ثابتة عمداً — عشان تقرير \"طلب الشراء\" يقدر يقارن ويجمع الأصناف "
+"البديلة صح (بند إضافي 156)."
+msgstr ""
+"जानबूझकर एक निश्चित सूची — ताकि \"खरीद अनुरोध\" रिपोर्ट विकल्प वाली "
+"वस्तुओं की सही तुलना और समूहीकरण कर सके।"
+
+#: app/templates/feed/item_form.html:34
+msgid "وزن الوحدة الواحدة بالكيلو (اختياري)"
+msgstr "एक इकाई का वज़न किलो में (वैकल्पिक)"
+
+#: app/templates/feed/item_form.html:34
+msgid "مثال: ربطة برسيم = 15 كجم"
+msgstr "उदाहरण: 1 अल्फाल्फा गठरी = 15 किग्रा"
+
+#: app/templates/feed/item_form.html:35
+msgid ""
+"مفيد للوحدات اللي وزنها مو ثابت (ربطة، كيس) — مرجع لك بس، ما يدخل بأي "
+"حساب تلقائي."
+msgstr ""
+"उन इकाइयों के लिए उपयोगी जिनका वज़न तय नहीं है (गठरी، बोरी) — यह केवल "
+"आपके संदर्भ के लिए है, किसी स्वचालित गणना में उपयोग नहीं होता।"
+
+#: app/templates/feed/item_form.html:36
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "سعر الوحدة"
 msgstr "इकाई मूल्य"
 
-#: app/templates/feed/item_form.html:31
+#: app/templates/feed/item_form.html:37
 #: app/templates/health/pharmacy_form.html:99
 msgid "الكمية المتوفرة"
 msgstr "उपलब्ध मात्रा"
@@ -6321,7 +6345,11 @@ msgstr "अनुमानित समाप्ति"
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "उच्च तांबा युक्त"
 
-#: app/templates/feed/items_list.html:23
+#: app/templates/feed/items_list.html:20
+msgid "كجم/"
+msgstr "किग्रा/"
+
+#: app/templates/feed/items_list.html:24
 #: app/templates/health/disease_form.html:37
 #: app/templates/health/pharmacy_form.html:142
 #: app/templates/health/protocol_apply_form.html:7
@@ -6331,7 +6359,7 @@ msgstr "उच्च तांबा युक्त"
 msgid "يوم"
 msgstr "दिन"
 
-#: app/templates/feed/items_list.html:32
+#: app/templates/feed/items_list.html:33
 msgid "لا يوجد مكوّنات علف مسجّلة بعد."
 msgstr "अभी तक कोई चारा घटक दर्ज नहीं है।"
 
@@ -6493,7 +6521,9 @@ msgstr "सामग्री (राशन के कुल वजन का �
 #: app/templates/feed/ration_form.html:28
 #, python-format
 msgid "اترك أي صف فاضي لو ما تحتاجه. مجموع النسب المفروض يقارب 100%%."
-msgstr "जिस पंक्ति की ज़रूरत नहीं उसे खाली छोड़ें। कुल प्रतिशत लगभग 100%% होना चाहिए।"
+msgstr ""
+"जिस पंक्ति की ज़रूरत नहीं उसे खाली छोड़ें। कुल प्रतिशत लगभग 100%% होना "
+"चाहिए।"
 
 #: app/templates/feed/ration_form.html:31
 msgid "سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)"

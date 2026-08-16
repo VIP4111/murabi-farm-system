@@ -39,7 +39,8 @@ def items_new():
             fiber_percent=float(request.form["fiber_percent"]) if request.form.get("fiber_percent") else None,
             calcium_percent=float(request.form["calcium_percent"]) if request.form.get("calcium_percent") else None,
             phosphorus_percent=float(request.form["phosphorus_percent"]) if request.form.get("phosphorus_percent") else None,
-            unit=request.form.get("unit") or "كجم",
+            unit=request.form.get("unit") if request.form.get("unit") in Feed.UNITS else "كجم",
+            unit_weight_kg=float(request.form["unit_weight_kg"]) if request.form.get("unit_weight_kg") else None,
             unit_price=float(request.form["unit_price"]) if request.form.get("unit_price") else None,
             available_qty=float(request.form.get("available_qty") or 0),
             min_stock_qty=float(request.form.get("min_stock_qty") or 0),
@@ -51,7 +52,7 @@ def items_new():
         return redirect(url_for("feed.items_list"))
     return render_template(
         "feed/item_form.html",
-        feed_classes=Feed.FEED_CLASSES, feed_class_labels=Feed.FEED_CLASS_LABELS_AR,
+        feed_classes=Feed.FEED_CLASSES, feed_class_labels=Feed.FEED_CLASS_LABELS_AR, units=Feed.UNITS,
     )
 
 
@@ -70,7 +71,8 @@ def items_edit(item_id):
         item.fiber_percent = float(request.form["fiber_percent"]) if request.form.get("fiber_percent") else None
         item.calcium_percent = float(request.form["calcium_percent"]) if request.form.get("calcium_percent") else None
         item.phosphorus_percent = float(request.form["phosphorus_percent"]) if request.form.get("phosphorus_percent") else None
-        item.unit = request.form.get("unit") or "كجم"
+        item.unit = request.form.get("unit") if request.form.get("unit") in Feed.UNITS else "كجم"
+        item.unit_weight_kg = float(request.form["unit_weight_kg"]) if request.form.get("unit_weight_kg") else None
         item.unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None
         item.available_qty = float(request.form.get("available_qty") or 0)
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
@@ -80,7 +82,7 @@ def items_edit(item_id):
         return redirect(url_for("feed.items_list"))
     return render_template(
         "feed/item_form.html", item=item,
-        feed_classes=Feed.FEED_CLASSES, feed_class_labels=Feed.FEED_CLASS_LABELS_AR,
+        feed_classes=Feed.FEED_CLASSES, feed_class_labels=Feed.FEED_CLASS_LABELS_AR, units=Feed.UNITS,
     )
 
 
