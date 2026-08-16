@@ -89,6 +89,19 @@ class Animal(db.Model):
     udder_damaged = db.Column(db.Boolean)
 
     status = db.Column(db.String(32), default="active", nullable=False)  # active/sold/dead
+
+    # "طلع للسوق" (بند إضافي 204) — علم مؤقت، مو قيمة `status` جديدة عمداً:
+    # الحيوان لسا فعلياً "نشط" بكل أنظمة المزرعة (تغذية، مهام، صحة...)
+    # طول ما هو خارج للسوق يحاول يبيعه صاحب الحلال، وأي واحدة من
+    # النتيجتين ممكنة — يبيعه فعلاً (يستخدم فورم البيع العادي، يمسح
+    # العلم تلقائياً) أو يرجعه للمزرعة بدون بيع (يمسح العلم بس، صفر
+    # تأثير على أي سجل آخر). لو أضفنا `status` جديد بدلها كنا نضطر نراجع
+    # كل فلتر `status == 'active'` بالنظام (تغذية/مهام/تنبيهات...) بدون
+    # داعٍ حقيقي — الحيوان أثناء رحلة السوق لسا يستهلك علفاً ويحتاج
+    # متابعة صحية عادية لو ما انباع.
+    market_trip_started_at = db.Column(db.DateTime, nullable=True)
+    market_trip_note = db.Column(db.Text, nullable=True)
+
     created_at = db.Column(db.DateTime, default=_now)
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
 

@@ -1268,6 +1268,29 @@ def animal_sell(animal_id):
     return redirect(url_for("core.animal_workflow", animal_id=animal.id))
 
 
+@core_bp.route("/animals/<int:animal_id>/send-to-market", methods=["POST"])
+@login_required
+@require_permission("animals.manage")
+def animal_send_to_market(animal_id):
+    animal = Animal.query.get_or_404(animal_id)
+    try:
+        cycle_engine.send_to_market(animal, actor_user_id=current_user.id, note=request.form.get("note"))
+        flash("تم تسجيل خروج الرأس للسوق", "success")
+    except cycle_engine.CycleExitBlocked as e:
+        flash(str(e), "error")
+    return redirect(url_for("core.animal_workflow", animal_id=animal.id))
+
+
+@core_bp.route("/animals/<int:animal_id>/return-from-market", methods=["POST"])
+@login_required
+@require_permission("animals.manage")
+def animal_return_from_market(animal_id):
+    animal = Animal.query.get_or_404(animal_id)
+    cycle_engine.return_from_market(animal, actor_user_id=current_user.id, note=request.form.get("note"))
+    flash("تم تسجيل رجوع الرأس للمزرعة بدون بيع", "success")
+    return redirect(url_for("core.animal_workflow", animal_id=animal.id))
+
+
 @core_bp.route("/animals/<int:animal_id>/mark-dead", methods=["POST"])
 @login_required
 @require_permission("animals.manage")

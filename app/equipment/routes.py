@@ -60,6 +60,38 @@ def items_edit(item_id):
     return render_template("equipment/item_form.html", item=item)
 
 
+@equipment_bp.route("/purchase", methods=["GET", "POST"])
+@login_required
+@require_permission("equipment.manage")
+def purchase_new():
+    """شراء معدات موحّد (بند إضافي 203) — نفس فكرة `feed.purchase_new`
+    بالضبط: يزيد المخزون ويسجّل العملية المالية بضغطة وحدة."""
+    if not current_user.has_permission("finance.full.manage"):
+        flash("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية).", "error")
+        return redirect(url_for("equipment.items_list"))
+    if request.method == "POST":
+        item = Equipment.query.get_or_404(int(request.form["equipment_id"]))
+        try:
+            from app.core.stock_purchase_service import record_purchase
+            record_purchase(
+                kind="equipment", item=item,
+                quantity=float(request.form["quantity"]),
+                unit_price=float(request.form["unit_price"]),
+                purchase_date=date.fromisoformat(request.form["date"]),
+                invoice_file=request.files.get("invoice_file"),
+                note=request.form.get("note"), created_by_id=current_user.id,
+            )
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("equipment.purchase_new"))
+        flash("تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً", "success")
+        return redirect(url_for("equipment.items_list"))
+    return render_template(
+        "equipment/purchase_form.html",
+        items=Equipment.query.filter_by(status="active").order_by(Equipment.name).all(),
+    )
+
+
 @equipment_bp.route("/items/<int:item_id>/movement", methods=["GET", "POST"])
 @login_required
 @require_permission("equipment.manage")

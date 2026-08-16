@@ -3,7 +3,10 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('مكوّنات العلف') }}</h2>
-    {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.items_new') }}">+ {{ _('مكوّن جديد') }}</a>{% endif %}
+    <div style="display:flex; gap:8px;">
+      {% if current_user.has_permission('feed.manage') and current_user.has_permission('finance.full.manage') %}<a class="btn" href="{{ url_for('feed.purchase_new') }}">🛒 {{ _('شراء') }}</a>{% endif %}
+      {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.items_new') }}">+ {{ _('مكوّن جديد') }}</a>{% endif %}
+    </div>
   </div>
   <div class="table-scroll">
 <table>

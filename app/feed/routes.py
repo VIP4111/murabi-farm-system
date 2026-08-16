@@ -207,6 +207,40 @@ def barn_plans_new():
 
 # ---------- حركة المخزون ----------
 
+@feed_bp.route("/purchase", methods=["GET", "POST"])
+@login_required
+@require_permission("feed.manage")
+def purchase_new():
+    """شراء علف موحّد (بند إضافي 203) — يزيد المخزون ويسجّل العملية
+    المالية بضغطة وحدة، بدل ما تدخل من "حركة المخزون" و"المالية" كل
+    مرة لحالها. يحتاج صلاحية إدارة العلف **و** المالية معاً — أي زيادة
+    مخزون مربوطة هنا بمبلغ فعلي يخرج من حساب المزرعة."""
+    if not current_user.has_permission("finance.full.manage"):
+        flash("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية).", "error")
+        return redirect(url_for("feed.items_list"))
+    if request.method == "POST":
+        feed = Feed.query.get_or_404(int(request.form["feed_id"]))
+        try:
+            from app.core.stock_purchase_service import record_purchase
+            record_purchase(
+                kind="feed", item=feed,
+                quantity=float(request.form["quantity"]),
+                unit_price=float(request.form["unit_price"]),
+                purchase_date=date.fromisoformat(request.form["date"]),
+                invoice_file=request.files.get("invoice_file"),
+                note=request.form.get("note"), created_by_id=current_user.id,
+            )
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("feed.purchase_new"))
+        flash("تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً", "success")
+        return redirect(url_for("feed.items_list"))
+    return render_template(
+        "feed/purchase_form.html",
+        feeds=Feed.query.filter_by(status="active").order_by(Feed.name).all(),
+    )
+
+
 @feed_bp.route("/movements")
 @login_required
 @require_permission("feed.view")

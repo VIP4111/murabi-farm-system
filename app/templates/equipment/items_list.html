@@ -5,6 +5,7 @@
     <h2>{{ _('مستودع المعدات') }}</h2>
     <div style="display:flex; gap:8px;">
       <a class="btn light" href="{{ url_for('equipment.assets_list') }}">🔧 {{ _('الأصول والصيانة الدورية') }}</a>
+      {% if current_user.has_permission('equipment.manage') and current_user.has_permission('finance.full.manage') %}<a class="btn" href="{{ url_for('equipment.purchase_new') }}">🛒 {{ _('شراء') }}</a>{% endif %}
       {% if current_user.has_permission('equipment.manage') %}<a class="btn" href="{{ url_for('equipment.items_new') }}">+ {{ _('صنف جديد') }}</a>{% endif %}
     </div>
   </div>

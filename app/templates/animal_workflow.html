@@ -59,6 +59,28 @@
 </div>
 
 {% if animal.status == 'active' %}
+<div class="card" id="market-trip">
+  <h3 style="font-size:15px;">{{ _('رحلة السوق') }}</h3>
+  {% if animal.market_trip_started_at %}
+  <p style="color:var(--muted); font-size:13px;">
+    <span class="badge off">🚚 {{ _('بالسوق منذ %(date)s', date=animal.market_trip_started_at.strftime('%Y-%m-%d %H:%M')) }}</span>
+    {% if animal.market_trip_note %} — {{ animal.market_trip_note }}{% endif %}
+  </p>
+  <p style="color:var(--muted); font-size:12px; margin:-4px 0 10px;">{{ _('لسا "نشط" بكل شاشات النظام (تغذية/مهام/صحة) — هذا مجرد تذكير إنه خارج المزرعة حالياً. لو انباع فعلاً سجّل البيع بالفورم تحت وينمسح هذا التنبيه تلقائياً؛ لو رجع بدون بيع اضغط الزر التالي.') }}</p>
+  <form method="post" action="{{ url_for('core.animal_return_from_market', animal_id=animal.id) }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn light" type="submit">↩️ {{ _('رجع للمزرعة بدون بيع') }}</button>
+  </form>
+  {% else %}
+  <form method="post" action="{{ url_for('core.animal_send_to_market', animal_id=animal.id) }}" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('ملاحظة (اختياري — مثلاً اسم السوق أو الموعد)') }}</label><input name="note">
+    <button class="btn light" type="submit">🚚 {{ _('طلّعها للسوق') }}</button>
+  </form>
+  <p style="color:var(--muted); font-size:12px; margin:6px 0 0;">{{ _('اختياري تماماً — بس تذكير مرئي إنها خارج المزرعة، لحد ما ترجع تسجّل تحت "تم البيع" أو "رجعت بدون بيع".') }}</p>
+  {% endif %}
+</div>
+
 <div class="card" id="exit">
   <h3 style="font-size:15px;">{{ _('قرار الخروج') }}</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">

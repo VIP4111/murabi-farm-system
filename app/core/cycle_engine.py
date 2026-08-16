@@ -465,6 +465,8 @@ def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_d
     )
     db.session.add(fin)
     animal.status = "sold"
+    animal.market_trip_started_at = None  # بند 204 — انباع فعلاً، انتهت رحلة السوق لو كانت قائمة
+    animal.market_trip_note = None
     db.session.add(AuditLog(actor_user_id=actor_user_id, action="animal.sell", entity_type="Animal",
                              entity_id=animal.id, details=f"price={sale_price}"))
     db.session.flush()
@@ -484,6 +486,39 @@ def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_d
 
     record_cycle_event(animal, "sale", source_type="Finance", source_id=fin.id, event_date=sale_date)
     return fin
+
+
+def send_to_market(animal: Animal, *, actor_user_id: int, note=None):
+    """طلعت الرأس فعلياً من المزرعة تحاول تبيعها بالسوق — بند إضافي 204،
+    طلبك بالنص: "كيف أطلّعها من المزرعة وأرجع أسجّل عملية مستمرة أو تم
+    البيع؟". نفس بوابة `sell_animal` بالضبط (مرحلة 'قرار المصير' + بلا
+    فترة تحريم دواء) — لو ما تقدر تبيعها الحين، ما تقدر تطلّعها للسوق
+    أصلاً. ما يغيّر `animal.status` — لسا 'نشط' بكل الأنظمة الثانية."""
+    from app.models import AuditLog
+
+    from datetime import datetime, timezone
+
+    assert_exit_allowed(animal)
+    animal.market_trip_started_at = datetime.now(timezone.utc)
+    animal.market_trip_note = note
+    db.session.add(animal)
+    db.session.add(AuditLog(actor_user_id=actor_user_id, action="animal.send_to_market",
+                             entity_type="Animal", entity_id=animal.id, details=note or ""))
+    db.session.commit()
+
+
+def return_from_market(animal: Animal, *, actor_user_id: int, note=None):
+    """رجعت الرأس للمزرعة بدون ما تنباع — يمسح علم "بالسوق" بس، صفر
+    تأثير على أي سجل مالي أو حالة ثانية (ما فيه شي يحتاج استرجاع أصلاً
+    لأن ما فيه بيع اتسجّل)."""
+    from app.models import AuditLog
+
+    animal.market_trip_started_at = None
+    animal.market_trip_note = None
+    db.session.add(animal)
+    db.session.add(AuditLog(actor_user_id=actor_user_id, action="animal.return_from_market",
+                             entity_type="Animal", entity_id=animal.id, details=note or ""))
+    db.session.commit()
 
 
 def mark_animal_dead(animal: Animal, *, actor_user_id: int, reason=None, death_date=None):

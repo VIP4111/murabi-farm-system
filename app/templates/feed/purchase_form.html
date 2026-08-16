@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>{{ _('شراء علف') }}</h2>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">{{ _('يزيد المخزون ويسجّل العملية المالية بضغطة وحدة — بدل الدخول من "حركة المخزون" و"المالية" كل مرة لحالها.') }}</p>
+  <form method="post" enctype="multipart/form-data" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('المكوّن') }}</label>
+    <select name="feed_id" required>
+      {% for f in feeds %}<option value="{{ f.id }}">{{ f.name }} ({{ f.available_qty }} {{ f.unit }})</option>{% endfor %}
+    </select>
+    <label>{{ _('التاريخ') }}</label><input name="date" type="date" required>
+    <label>{{ _('الكمية المشتراة') }}</label><input name="quantity" type="number" step="0.01" required>
+    <label>{{ _('سعر الوحدة') }}</label><input name="unit_price" type="number" step="0.01" required>
+    <label>{{ _('إرفاق فاتورة المورّد (إن وجدت)') }}</label>
+    <input type="file" name="invoice_file" accept="image/*,application/pdf">
+    <label>{{ _('ملاحظة') }}</label><input name="note">
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
+  </form>
+</div>
+{% endblock %}
