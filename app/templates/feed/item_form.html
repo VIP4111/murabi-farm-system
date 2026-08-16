@@ -21,11 +21,11 @@
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('قائمة ثابتة منفصلة عن "الفئة" النصية أعلاه — تحديد "مركّز" هنا هو اللي يدخل بحساب حارس الزيادة الأسبوعية (بند إضافي 51).') }}</p>
     <label><input type="checkbox" name="contains_high_copper" value="1" {{ 'checked' if item and item.contains_high_copper }} style="width:auto; margin-left:6px;"> {{ _('يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافات معدنية)') }}</label>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">{{ _('يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته "نعيمي" (بند إضافي 51) — بلا خيار تجاوز.') }}</p>
-    <label>{{ _('بروتين خام % (من ملصق الكيس)') }}</label><input name="protein_percent" type="number" step="0.01" value="{{ item.protein_percent if item and item.protein_percent is not none else '' }}">
+    <label>{{ _('بروتين خام %% (من ملصق الكيس)') }}</label><input name="protein_percent" type="number" step="0.01" value="{{ item.protein_percent if item and item.protein_percent is not none else '' }}">
     <label>{{ _('طاقة ممثلة (كيلوكالوري/كجم)') }}</label><input name="energy_kcal_per_kg" type="number" step="1" value="{{ item.energy_kcal_per_kg if item and item.energy_kcal_per_kg is not none else '' }}">
-    <label>{{ _('ألياف %') }}</label><input name="fiber_percent" type="number" step="0.01" value="{{ item.fiber_percent if item and item.fiber_percent is not none else '' }}">
-    <label>{{ _('كالسيوم %') }}</label><input name="calcium_percent" type="number" step="0.01" value="{{ item.calcium_percent if item and item.calcium_percent is not none else '' }}">
-    <label>{{ _('فسفور %') }}</label><input name="phosphorus_percent" type="number" step="0.01" value="{{ item.phosphorus_percent if item and item.phosphorus_percent is not none else '' }}">
+    <label>{{ _('ألياف %%') }}</label><input name="fiber_percent" type="number" step="0.01" value="{{ item.fiber_percent if item and item.fiber_percent is not none else '' }}">
+    <label>{{ _('كالسيوم %%') }}</label><input name="calcium_percent" type="number" step="0.01" value="{{ item.calcium_percent if item and item.calcium_percent is not none else '' }}">
+    <label>{{ _('فسفور %%') }}</label><input name="phosphorus_percent" type="number" step="0.01" value="{{ item.phosphorus_percent if item and item.phosphorus_percent is not none else '' }}">
     <label>{{ _('الوحدة') }}</label><input name="unit" value="{{ item.unit if item else 'كجم' }}">
     <label>{{ _('سعر الوحدة') }}</label><input name="unit_price" type="number" step="0.01" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
     <label>{{ _('الكمية المتوفرة') }}</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">

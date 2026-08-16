@@ -47,7 +47,7 @@
   <h3 style="font-size:15px;">{{ _('أقرب الوصفات (مرتّبة: تطابق ثم أرخص تكلفة)') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الوصفة') }}</th><th>{{ _('تطابق') }}</th><th>{{ _('بروتين%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/رأس/يوم') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
+    <tr><th>{{ _('الوصفة') }}</th><th>{{ _('تطابق') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/رأس/يوم') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
     {% for r in recommendations %}
     <tr>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=r.ration.id) }}">{{ r.ration.name }}</a></td>

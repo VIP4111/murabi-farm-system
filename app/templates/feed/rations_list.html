@@ -7,7 +7,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الغرض') }}</th><th>{{ _('بروتين%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/كجم') }}</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الغرض') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/كجم') }}</th></tr>
     {% for r in rations %}
     <tr>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=r.id) }}">{{ r.name }}</a></td>
