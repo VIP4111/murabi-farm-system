@@ -8,12 +8,21 @@
      بدل ما يعتمد كل ملف على حقل مخفي داخل فورم معيّن. #}
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{% block title %}مراح بو علي{% endblock %}</title>
+  {# الهوية البصرية الرسمية (بند إضافي 205) — شعار "مراح بو علي" أيقونة
+     موحّدة بكل الواجهات: تبويب المتصفح، أيقونة آيفون/أندرويد عند "إضافة
+     للشاشة الرئيسية"، واختصار سطح المكتب (PWA). مقصود يظهر بكل الصفحات
+     (حتى قبل تسجيل الدخول) — مو مقصور على المستخدم الموثّق زي manifest
+     العمل بدون إنترنت تحت. #}
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icons/icon-16.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='icons/icon-32.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+  <meta name="theme-color" content="#6f4e2f">
   {% if current_user.is_authenticated %}
   {# دعم العمل بدون إنترنت (بند 41، وسِّع لكل الأدوار والشاشات ببند 53) —
      كان مقصوراً على عامل/دكتور/ممرض بثمانية شاشات ميدانية فقط؛ صار متاحاً
      لأي مستخدم بأي دور الآن، بما فيها العمليات الجماعية والمالية. #}
-  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
-  <meta name="theme-color" content="#6f4e2f">
   <script src="{{ url_for('static', filename='offline_sync.js') }}" defer></script>
   {% endif %}
   <style>
@@ -69,10 +78,9 @@
     .brand{display:flex; align-items:center; gap:10px; min-width:0;}
     .logo{
       width:42px; height:42px; border-radius:16px;
-      background:linear-gradient(135deg,var(--primary),#c09a61);
-      display:grid; place-items:center; color:#fff; font-size:22px;
-      box-shadow:var(--shadow); flex:0 0 auto;
+      box-shadow:var(--shadow); flex:0 0 auto; overflow:hidden;
     }
+    .logo img{width:100%; height:100%; object-fit:cover; display:block;}
     .brand h1{font-size:17px; margin:0; line-height:1.2; white-space:nowrap;}
 
     .icon-btn{
@@ -384,7 +392,6 @@
       --shadow:0 12px 30px rgba(0,0,0,.4);
     }
     :root[data-theme="dark"] .top{background:linear-gradient(180deg,#211c16,#1b1712);}
-    :root[data-theme="dark"] .logo{color:#1b1712;}
     :root[data-theme="dark"] .icon-btn{background:#2c2620; color:var(--primary);}
     :root[data-theme="dark"] .side-menu,
     :root[data-theme="dark"] .side-menu-head{background:#211c16;}
@@ -453,7 +460,7 @@
   <div class="top">
     {% if current_user.is_authenticated %}<button class="icon-btn" onclick="openDrawer()">☰</button>{% endif %}
     <div class="brand">
-      <div class="logo">🐑</div>
+      <div class="logo"><img src="{{ url_for('static', filename='icons/icon-96.png') }}" alt="{{ _('مراح بو علي') }}"></div>
       <h1>{{ _('مراح بو علي') }}</h1>
     </div>
     {% if current_user.is_authenticated %}<span style="color:var(--muted); font-size:13px;">{{ current_user.name }}</span>{% endif %}
@@ -463,9 +470,12 @@
   <div class="side-drawer" id="sideDrawer" onclick="if(event.target===this) closeDrawer()">
     <div class="side-menu">
       <div class="side-menu-head">
-        <div>
-          <b>{{ current_user.name }}</b>
-          <small>{{ current_user.role.display_name }}</small>
+        <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+          <div class="logo"><img src="{{ url_for('static', filename='icons/icon-96.png') }}" alt="{{ _('مراح بو علي') }}"></div>
+          <div>
+            <b>{{ current_user.name }}</b>
+            <small>{{ current_user.role.display_name }}</small>
+          </div>
         </div>
         <button class="x" onclick="closeDrawer()">✕</button>
       </div>
