@@ -74,6 +74,23 @@ function isCacheablePath(requestUrl, origin) {
   }
 }
 
+// مهلة الشبكة (بند إضافي 201) — قبل هذا البند ما كان فيه أي حد أقصى
+// لانتظار fetch()، وعلى iOS Safari تحديداً fetch() لطلب فعلاً ميت (لا
+// يوجد اتصال إطلاقاً، مو خطأ سيرفر) ممكن يعلّق لثواني طويلة قبل ما
+// يرفض الوعد — يعني fallback الكاش تحت ما يوصله دوره أبداً بوقت
+// معقول، والمستخدم يشوف "تحميل" بلا نهاية بدل النسخة المخزَّنة اللي
+// كانت جاهزة أصلاً. الحل: سباق (race) بين fetch() ومهلة قصيرة — أول
+// واحد يخلص يفوز. دالة صرفة خارج حارس `self` (بند إضافي 83، نفس نمط
+// isCacheablePath/keysToEvict) عشان تصير قابلة للاختبار بـNode.js.
+const NETWORK_TIMEOUT_MS = 4000;
+
+function raceNetworkWithTimeout(networkPromise, ms, timeoutFn) {
+  timeoutFn = timeoutFn || function (delay) {
+    return new Promise((resolve) => setTimeout(() => resolve(null), delay));
+  };
+  return Promise.race([networkPromise, timeoutFn(ms)]);
+}
+
 // تسجيل الأحداث محصور ببيئة Service Worker حقيقية بس (بند إضافي 83) —
 // `self.addEventListener` غير موجود بـNode.js، وهذا الشرط يخلي نفس
 // الملف قابل لـ`require()` وقت الاختبار بدون أي خطأ عند التحميل.
@@ -102,14 +119,22 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
     // طلب ثاني (POST، أو ملف مرفوع، أو دخول/خروج) يمرّ عادي بدون أي تدخّل.
     if (req.method !== "GET" || !isCacheablePath(req.url)) return;
 
+    const networkFetch = fetch(req)
+      .then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy).then(() => trimCache(cache)));
+        return res;
+      })
+      .catch(() => null);
+
     event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy).then(() => trimCache(cache)));
-          return res;
-        })
-        .catch(() => caches.match(req))
+      raceNetworkWithTimeout(networkFetch, NETWORK_TIMEOUT_MS).then((res) => {
+        if (res) return res;
+        // لا رد من الشبكة خلال المهلة (أو فشلت) — النسخة المخزَّنة أول
+        // شي، وإلا نترك networkFetch يكمل بالخلفية (ممكن يوصل متأخر
+        // ويحدّث الكاش لمرة قادمة حتى لو ما استفدنا منه الآن).
+        return caches.match(req).then((cached) => cached || networkFetch);
+      })
     );
   });
 }
@@ -117,5 +142,8 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
 // تصدير للاختبار بـNode.js (بند إضافي 83) — بلا أثر بالمتصفح الفعلي،
 // `module` غير معرَّف هناك فهذا الشرط ما يتنفَّذ إطلاقاً وقت التشغيل الحي.
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES };
+  module.exports = {
+    isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
+    raceNetworkWithTimeout, NETWORK_TIMEOUT_MS,
+  };
 }

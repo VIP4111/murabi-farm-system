@@ -4,7 +4,10 @@
 "use strict";
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES } = require("../../app/static/sw.js");
+const {
+  isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
+  raceNetworkWithTimeout, NETWORK_TIMEOUT_MS,
+} = require("../../app/static/sw.js");
 
 const ORIGIN = "https://murabi-farm-system.onrender.com";
 
@@ -43,4 +46,26 @@ test("keysToEvict: over the limit → evicts oldest first (FIFO)", () => {
 test("keysToEvict: exactly at the limit → nothing to evict", () => {
   const urls = Array.from({ length: 150 }, (_, i) => `${ORIGIN}/page/${i}`);
   assert.deepEqual(keysToEvict(urls, 150), []);
+});
+
+// بند إضافي 201 — قبل هذا البند، fetch() لطلب على شبكة ميتة فعلياً (لا
+// خطأ سيرفر، بس صفر اتصال) ممكن يعلّق طويل جداً على iOS Safari تحديداً
+// قبل ما يرفض الوعد، فمستخدم الآيفون يشوف "تحميل" بلا نهاية بدل النسخة
+// المخزَّنة اللي كانت جاهزة. هذي الاختبارات تتحقق من سلوك السباق نفسه
+// بمعزل عن بيئة Service Worker حقيقية (بدون محاكاة self/caches كاملة).
+test("raceNetworkWithTimeout: fast network response wins over timeout", async () => {
+  const fastNetwork = Promise.resolve("network-response");
+  const result = await raceNetworkWithTimeout(fastNetwork, 4000, (ms) => new Promise(() => {})); // timeout never fires
+  assert.equal(result, "network-response");
+});
+
+test("raceNetworkWithTimeout: network that never resolves falls back to timeout (null)", async () => {
+  const hangingNetwork = new Promise(() => {}); // يحاكي fetch() المعلَّق على شبكة ميتة
+  const fastTimeout = (ms) => Promise.resolve(null); // مهلة "تنتهي فوراً" وقت الاختبار
+  const result = await raceNetworkWithTimeout(hangingNetwork, 4000, fastTimeout);
+  assert.equal(result, null);
+});
+
+test("NETWORK_TIMEOUT_MS: a real, sane value (not accidentally 0 or absurdly long)", () => {
+  assert.ok(NETWORK_TIMEOUT_MS > 0 && NETWORK_TIMEOUT_MS <= 10000);
 });
