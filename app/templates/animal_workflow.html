@@ -30,6 +30,7 @@
   {% endif %}
 
   <h3 style="margin-top:18px; font-size:15px;">{{ _('خط سير المراحل') }}</h3>
+  <p style="color:var(--muted); font-size:12px; margin:-8px 0 10px;">{{ _('يعرض بس المراحل المطلوبة فعلياً لمسار هذا الرأس ("%(route)s") — مسارات ثانية (تسمين، فحل تربية...) تتخطّى مراحل التكاثر/الحمل اللي ما تنطبق عليها، فرقم المرحلة مو بالضرورة متسلسل.', route=route_label) }}</p>
   <div class="workflow-map">
     {% for idx, code, name in stages %}
     {% if idx in active_stages %}

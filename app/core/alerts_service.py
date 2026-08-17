@@ -135,6 +135,35 @@ def _out_of_order_animals() -> list[dict]:
     ]
 
 
+def _stalled_workflow(fs: FarmSettings) -> list[dict]:
+    """رأس واقف عند نفس مرحلة دورة الإنتاج بدون أي تقدّم لفترة أطول من
+    `workflow_stall_alert_days` (بند إضافي 209) — قبل هذا البند، بيانات
+    "متطلبات ناقصة للانتقال" كانت تظهر بس لو دخلت صفحة الرأس بنفسك،
+    صفر تنبيه استباقي بشاشة "التنبيهات" العامة. `updated_at` يتحرّك
+    فقط لما `evaluate()` يغيّر شي فعلياً بالصف (مرحلة/حالة/نواقص) —
+    مؤشر موثوق لآخر تقدّم حقيقي، مو مجرد آخر فتح للصفحة."""
+    from datetime import datetime, timezone
+    cutoff = datetime.now(timezone.utc) - timedelta(days=fs.workflow_stall_alert_days)
+    rows = (ProductionWorkflow.query
+            .filter(ProductionWorkflow.status == "active", ProductionWorkflow.missing_items.isnot(None))
+            .all())
+    alerts = []
+    for wf in rows:
+        updated = wf.updated_at
+        if updated and updated.tzinfo is None:
+            updated = updated.replace(tzinfo=timezone.utc)
+        if updated and updated <= cutoff:
+            days_stuck = (datetime.now(timezone.utc) - updated).days
+            alerts.append({
+                "category": "توقّف بدورة الإنتاج", "icon": "⏸️",
+                "label": f"{wf.animal.animal_no} — واقف بمرحلة '{wf.stage_name}' منذ {days_stuck} يوم",
+                "detail": wf.missing_items.replace("|", "؛ "),
+                "urgent": days_stuck >= fs.workflow_stall_alert_days * 2,
+                "animal_id": wf.animal_id, "barn_id": wf.animal.barn_id,
+            })
+    return alerts
+
+
 def _stale_new_reports(fs: FarmSettings) -> list[dict]:
     from datetime import datetime, timezone
     cutoff = datetime.now(timezone.utc) - timedelta(hours=fs.report_stale_hours)
@@ -453,6 +482,23 @@ def _weight_gain_underperformers() -> list[dict]:
     return alerts
 
 
+def vaccination_counts() -> tuple[int, int]:
+    """(متأخرة، قادمة) — آخر تطعيم مسجَّل لكل رأس عنده `next_due_date`
+    (بند إضافي 209، لبطاقة "التطعيمات" بالرئيسية). بلا نافذة زمنية
+    (`alert_before_days`) خلافاً لـ`_vaccinations_due` — هنا العدد
+    الكامل لكل شي "لم يحن وقته بعد" مهما بعُد تاريخه، مو بس القريب."""
+    today = date.today()
+    rows = Vaccination.query.filter(Vaccination.next_due_date.isnot(None)).all()
+    latest_by_animal = {}
+    for v in rows:
+        prev = latest_by_animal.get(v.animal_id)
+        if prev is None or v.date > prev.date:
+            latest_by_animal[v.animal_id] = v
+    overdue = sum(1 for v in latest_by_animal.values() if v.next_due_date < today)
+    upcoming = sum(1 for v in latest_by_animal.values() if v.next_due_date >= today)
+    return overdue, upcoming
+
+
 def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     """
     `barn_ids=None` (الافتراضي، سلوك بند 20 الأصلي بدون تغيير): كل
@@ -505,7 +551,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)
         + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
         + _failed_tasks_pending_review() + _isolation_without_barn()
-        + _incomplete_animal_data()
+        + _incomplete_animal_data() + _stalled_workflow(fs)
     )
     if barn_ids is not None:
         allowed = set(barn_ids)

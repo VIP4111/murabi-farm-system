@@ -24,6 +24,7 @@ def _base_form(fs):
         "regular_sale_age_days": fs.regular_sale_age_days, "udhiyah_min_age_days": fs.udhiyah_min_age_days,
         "female_delayed_conception_days": fs.female_delayed_conception_days,
         "report_stale_hours": fs.report_stale_hours, "ostrich_incubation_days": fs.ostrich_incubation_days,
+        "workflow_stall_alert_days": fs.workflow_stall_alert_days,
         "colostrum_window_hours": fs.colostrum_window_hours,
         "placenta_check_hours": fs.placenta_check_hours,
         "postpartum_mother_followup_days": fs.postpartum_mother_followup_days,

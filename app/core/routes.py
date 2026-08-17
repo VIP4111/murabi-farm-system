@@ -147,11 +147,17 @@ def home():
     if current_user.has_permission("tasks.view_own") or current_user.has_permission("animals.view"):
         today_tasks_count, today_alerts_count = _today_counts(current_user)
 
+    vaccinations_overdue_count = vaccinations_upcoming_count = None
+    if current_user.has_permission("health.view"):
+        vaccinations_overdue_count, vaccinations_upcoming_count = alerts_service.vaccination_counts()
+
     return render_template(
         "home.html", user=current_user,
         setup_checklist_items=setup_checklist_items,
         daily_checklist=daily_checklist,
         today_tasks_count=today_tasks_count, today_alerts_count=today_alerts_count,
+        vaccinations_overdue_count=vaccinations_overdue_count,
+        vaccinations_upcoming_count=vaccinations_upcoming_count,
     )
 
 
@@ -1472,7 +1478,7 @@ def farm_settings_save():
         "doctor_check_hours", "postpartum_vaccination_days",
         "min_breeding_age_days", "min_rest_after_birth_days",
         "regular_sale_age_days", "udhiyah_min_age_days", "female_delayed_conception_days",
-        "report_stale_hours", "ostrich_incubation_days",
+        "report_stale_hours", "ostrich_incubation_days", "workflow_stall_alert_days",
         # بند إضافي 105 — كانت مخزَّنة بدون أي شاشة تعديل.
         "quarantine_days", "reweigh_followup_days", "antiparasitic_redose_days", "weight_check_interval_days",
         "newborn_route_max_age_days", "male_fertility_exam_alt_age_days",

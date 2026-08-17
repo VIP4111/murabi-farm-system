@@ -43,6 +43,11 @@ class FarmSettings(db.Model):
     vaccination_repeat_days = db.Column(db.Integer, default=180, nullable=False)
 
     isolation_days = db.Column(db.Integer, default=7, nullable=False)
+    # تنبيه توقّف دورة الإنتاج (بند إضافي 209) — رأس واقف عند نفس
+    # المرحلة بدون أي تقدّم لفترة أطول من هالرقم يطلع له تنبيه، عشان
+    # ما يضيع بين الرؤوس بدون ما يلاحظه أحد (كان يظهر بس لو دخلت
+    # صفحة الرأس بنفسك، صفر تنبيه استباقي قبل هذا البند).
+    workflow_stall_alert_days = db.Column(db.Integer, default=5, nullable=False)
     doctor_check_hours = db.Column(db.Integer, default=48, nullable=False)
     postpartum_vaccination_days = db.Column(db.Integer, default=45, nullable=False)
 
