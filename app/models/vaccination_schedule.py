@@ -33,8 +33,28 @@ class VaccinationSchedule(db.Model):
     notes = db.Column(db.Text)
     completed_at = db.Column(db.DateTime, nullable=True)
 
+    # رؤوس مستهدفة محدَّدة يدوياً (بند إضافي 210) — طلبك بالنص: "أختار
+    # اللي أحتاجه أحصّنه ولي ما أحتاجه ما أحط عليه علامة". فاضي = كل
+    # رؤوس الحظيرة (السلوك الأصلي قبل هذا البند، `live_head_count`
+    # يبقى يشتغل بلا تغيير). معبّى = أرقام IDs مفصولة بفاصلة لرؤوس
+    # مختارة صراحة وقت الجدولة، تُقرَأ كصورة ثابتة — لو رأس خرج من
+    # الحظيرة بعدها يبقى بالقائمة (مرجع تاريخي لما اختاره المستخدم).
+    target_animal_ids = db.Column(db.Text, nullable=True)
+
     created_at = db.Column(db.DateTime, default=_now)
 
     def live_head_count(self) -> int:
         from app.models import Animal
         return Animal.query.filter_by(barn_id=self.barn_id, status="active").count()
+
+    def target_animals(self):
+        from app.models import Animal
+        if not self.target_animal_ids:
+            return Animal.query.filter_by(barn_id=self.barn_id, status="active").order_by(Animal.animal_no).all()
+        ids = [int(x) for x in self.target_animal_ids.split(",") if x.strip()]
+        return Animal.query.filter(Animal.id.in_(ids)).order_by(Animal.animal_no).all()
+
+    def target_count(self) -> int:
+        if not self.target_animal_ids:
+            return self.live_head_count()
+        return len([x for x in self.target_animal_ids.split(",") if x.strip()])

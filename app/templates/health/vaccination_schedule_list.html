@@ -5,12 +5,12 @@
     <h2>{{ _('تقويم التحصينات') }}</h2>
     {% if current_user.has_permission('health.manage') %}<a class="btn" href="{{ url_for('health.vaccination_schedule_new') }}">+ {{ _('جدولة تحصين جديد') }}</a>{% endif %}
   </div>
-  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">{{ _('جدولة تحصين مستقبلي لحظيرة كاملة — عدد الرؤوس يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة.') }}</p>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">{{ _('جدولة تحصين مستقبلي لحظيرة كاملة أو لرؤوس محدَّدة تختارها — "كل الحظيرة" يُحسب حياً من عدد الحظيرة الفعلي وقت العرض، مو رقماً ثابتاً وقت الجدولة.') }}</p>
 
   <h3 style="font-size:14px;">{{ _('القادمة') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('التاريخ المخطَّط') }}</th><th>{{ _('عدد الرؤوس الآن') }}</th><th>{{ _('ملاحظات') }}</th><th>{{ _('إجراءات') }}</th></tr>
+    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('التاريخ المخطَّط') }}</th><th>{{ _('الرؤوس المستهدَفة') }}</th><th>{{ _('ملاحظات') }}</th><th>{{ _('إجراءات') }}</th></tr>
     {% for s in upcoming %}
     <tr>
       <td>{{ s.barn.barn_name }}</td>
@@ -22,7 +22,13 @@
         {% elif days_left == 0 %}<span style="color:#8b6d1e;"> ({{ _('اليوم') }})</span>
         {% else %}<span style="color:var(--muted);"> ({{ _('بعد %(n)s يوم', n=days_left) }})</span>{% endif %}
       </td>
-      <td>{{ s.live_head_count() }}</td>
+      <td>
+        {% if s.target_animal_ids %}
+        {{ s.target_count() }} {{ _('رأس محدَّد') }}: {{ s.target_animals() | map(attribute='animal_no') | join('، ') }}
+        {% else %}
+        {{ _('كل الحظيرة') }} ({{ s.live_head_count() }})
+        {% endif %}
+      </td>
       <td>{{ s.notes or '-' }}</td>
       <td>
         {% if current_user.has_permission('health.manage') %}

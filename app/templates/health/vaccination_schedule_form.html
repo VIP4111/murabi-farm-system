@@ -13,6 +13,18 @@
     </select>
     <p id="headCountHint" style="color:var(--muted); font-size:12px; margin:-6px 0 10px;"></p>
 
+    <div id="animalsBox" style="display:none; margin-bottom:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <label style="margin:0;">{{ _('الرؤوس المستهدَفة') }}</label>
+        <div style="display:flex; gap:6px;">
+          <button type="button" id="selectAllBtn" class="btn light" style="font-size:11px; padding:3px 8px;">{{ _('الكل') }}</button>
+          <button type="button" id="clearAllBtn" class="btn light" style="font-size:11px; padding:3px 8px;">{{ _('مسح التحديد') }}</button>
+        </div>
+      </div>
+      <p style="color:var(--muted); font-size:12px; margin:-2px 0 6px;">{{ _('اختر الرؤوس اللي تحتاج هذا اللقاح بس — سيب القائمة فاضية (أو اضغط "الكل") لو تقصد كل رؤوس الحظيرة الحالية والمستقبلية.') }}</p>
+      <div id="animalsList" style="display:flex; flex-wrap:wrap; gap:6px; max-height:180px; overflow-y:auto; padding:8px; border:1px solid var(--line); border-radius:12px;"></div>
+    </div>
+
     <label>{{ _('اللقاح') }}</label>
     <select name="pharmacy_id" required>
       <option value="">{{ _('اختر لقاح من الصيدلية') }}</option>
@@ -22,6 +34,7 @@
     </select>
 
     <label>{{ _('التاريخ المخطَّط') }}</label>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 6px;">{{ _('هذا تاريخ مستقبلي تنوي تنفّذ فيه التحصين لاحقاً — تذكير بس، مو تسجيل تحصين فعلي الآن (التسجيل الفعلي يصير من شاشة "تسجيل تطعيم" وقت التنفيذ).') }}</p>
     <input name="planned_date" type="date" required value="{{ today }}">
 
     <label>{{ _('ملاحظات (اختياري)') }}</label>
@@ -36,14 +49,43 @@
   var barnSelect = document.getElementById('barnSelect');
   var hint = document.getElementById('headCountHint');
   var BARN_COUNTS = {{ barn_head_counts | tojson }};
+  var BARN_ANIMALS = {{ barn_animals | tojson }};
   var HEAD_COUNT_LABEL = {{ _('عدد الرؤوس الحالي بهذي الحظيرة:')|tojson }};
+  var animalsBox = document.getElementById('animalsBox');
+  var animalsList = document.getElementById('animalsList');
   if (!barnSelect || !hint) return;
+
+  function renderAnimals(){
+    var animals = BARN_ANIMALS[barnSelect.value] || [];
+    animalsList.innerHTML = '';
+    if (!animals.length){ animalsBox.style.display = 'none'; return; }
+    animalsBox.style.display = 'block';
+    animals.forEach(function(a){
+      var label = document.createElement('label');
+      label.style.cssText = 'display:inline-flex; align-items:center; gap:4px; font-weight:normal; border:1px solid var(--line); border-radius:8px; padding:3px 8px; font-size:12.5px;';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.name = 'animal_ids'; cb.value = a.id;
+      cb.style.cssText = 'width:auto; margin:0;';
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(a.animal_no));
+      animalsList.appendChild(label);
+    });
+  }
+
   function update(){
     var count = BARN_COUNTS[barnSelect.value];
     hint.textContent = count === undefined ? '' : (HEAD_COUNT_LABEL + ' ' + count);
+    renderAnimals();
   }
   barnSelect.addEventListener('change', update);
   update();
+
+  document.getElementById('selectAllBtn').addEventListener('click', function(){
+    animalsList.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = true; });
+  });
+  document.getElementById('clearAllBtn').addEventListener('click', function(){
+    animalsList.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
+  });
 })();
 </script>
 {% endblock %}

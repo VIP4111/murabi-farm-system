@@ -36,12 +36,15 @@ def test_home_shows_vaccination_counts(app, client):
     assert "1 متأخرة" in body
 
 
-def test_home_shows_no_scheduled_vaccinations_badge(app, client):
+def test_home_shows_no_bubbles_when_nothing_pending(app, client):
+    """بند إضافي 210 — استُبدلت بطاقة "التطعيمات" النصية (بند 209) بفقعتين
+    ملوّنتين فوق زر الإجراءات السريعة (طلبك بالنص). بلا شي معلَّق، ما
+    تظهر أي فقعة أصلاً — لا حاجة لبطاقة "الكل تمام" منفصلة بعد الآن."""
     owner = _make_owner(phone="0599999211")
     client.post("/login", data={"phone": owner.phone, "password": "test1234"})
     resp = client.get("/")
     body = resp.data.decode()
-    assert "لا يوجد تطعيمات مجدولة حالياً" in body
+    assert 'class="notif-bubble' not in body
 
 
 def test_newborn_auto_registration_question_matches_add_animal_entry():

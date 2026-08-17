@@ -69,23 +69,6 @@
 </div>
 {% endif %}
 
-{% if vaccinations_overdue_count is not none %}
-<div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-    <div>
-      <h3 style="margin:0;">💉 {{ _('التطعيمات') }}</h3>
-      <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('كل التطعيمات المسجَّلة اللي لها موعد قادم') }}</p>
-      <div style="display:flex; gap:8px; margin-top:8px;">
-        {% if vaccinations_overdue_count %}<span class="badge off">⏰ {{ _('%(n)s متأخرة', n=vaccinations_overdue_count) }}</span>{% endif %}
-        {% if vaccinations_upcoming_count %}<span class="badge on">📅 {{ _('%(n)s قادمة لم يحن وقتها', n=vaccinations_upcoming_count) }}</span>{% endif %}
-        {% if not vaccinations_overdue_count and not vaccinations_upcoming_count %}<span class="badge on">✅ {{ _('لا يوجد تطعيمات مجدولة حالياً') }}</span>{% endif %}
-      </div>
-    </div>
-    <a class="btn" href="{{ url_for('health.vaccinations_list') }}">{{ _('فتح') }} ←</a>
-  </div>
-</div>
-{% endif %}
-
 {% if user.role.name == 'doctor' %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
@@ -120,7 +103,11 @@
     <div class="quick-group-title">{{ _('الصحة') }}</div>
     <div class="quick">
       <a href="{{ url_for('health.vet_visits_list') }}"><span class="emoji">🩺</span> {{ _('البيطرة') }}</a>
-      <a href="{{ url_for('health.vaccinations_list') }}"><span class="emoji">💉</span> {{ _('التطعيمات') }}</a>
+      <a href="{{ url_for('health.vaccinations_list') }}" style="position:relative;">
+        {% if vaccinations_overdue_count %}<span class="notif-bubble overdue" title="{{ _('%(n)s متأخرة', n=vaccinations_overdue_count) }}">{{ vaccinations_overdue_count }}</span>{% endif %}
+        {% if vaccinations_upcoming_count %}<span class="notif-bubble upcoming" title="{{ _('%(n)s قادمة لم يحن وقتها', n=vaccinations_upcoming_count) }}">{{ vaccinations_upcoming_count }}</span>{% endif %}
+        <span class="emoji">💉</span> {{ _('التطعيمات') }}
+      </a>
       <a href="{{ url_for('health.diseases_list') }}"><span class="emoji">🌡️</span> {{ _('الأمراض') }}</a>
       <a href="{{ url_for('health.pharmacy_list') }}"><span class="emoji">💊</span> {{ _('الصيدلية') }}</a>
     </div>

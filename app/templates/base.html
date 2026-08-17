@@ -148,6 +148,17 @@
     .quick a:active{transform:translateY(1px) scale(.97); box-shadow:0 3px 10px rgba(70,45,25,.10);}
     .quick .emoji{font-size:26px;}
 
+    /* فقعتا تنبيه ملوّنتان فوق زر إجراء سريع (بند إضافي 210) — متأخر
+       (أحمر) وقادم لم يحن وقته (برتقالي)، بدل بطاقة نصية منفصلة. */
+    .notif-bubble{
+      position:absolute; top:6px; min-width:19px; height:19px; padding:0 5px;
+      border-radius:999px; font-size:10.5px; font-weight:800; color:#fff;
+      display:flex; align-items:center; justify-content:center; line-height:1;
+      box-shadow:0 2px 6px rgba(0,0,0,.2);
+    }
+    .notif-bubble.overdue{background:#c0392b; right:6px;}
+    .notif-bubble.upcoming{background:#d68910; left:6px;}
+
     /* مجموعات مصنَّفة داخل شبكة الإجراءات السريعة (بند إضافي 123 —
        تبسيط لوحات صاحب الحلال/الدكتور/الممرض/المحاسب) — عنوان صغير
        فوق كل مجموعة بدل شبكة واحدة مسطّحة طويلة، يخفّف الازدحام

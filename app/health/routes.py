@@ -1023,11 +1023,18 @@ def vaccination_schedule_new():
         if pharmacy.medicine_class != "vaccine":
             flash("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)", "error")
             return redirect(url_for("health.vaccination_schedule_new"))
+        # رؤوس مختارة يدوياً (بند إضافي 210) — لو ما اختار المستخدم
+        # ولا رأس (ترك القائمة فاضية أو ضغط "الكل")، نخزّن فاضي عشان
+        # يبقى يعني "كل رؤوس الحظيرة" حياً (سلوك `live_head_count`
+        # الأصلي بلا تغيير).
+        selected_ids = request.form.getlist("animal_ids")
+        target_ids = ",".join(selected_ids) if selected_ids else None
         schedule = VaccinationSchedule(
             barn_id=int(request.form["barn_id"]),
             pharmacy_id=pharmacy.id,
             planned_date=date.fromisoformat(request.form["planned_date"]),
             notes=request.form.get("notes") or None,
+            target_animal_ids=target_ids,
         )
         db.session.add(schedule)
         db.session.add(AuditLog(actor_user_id=current_user.id, action="vaccination_schedule.create",
@@ -1036,12 +1043,18 @@ def vaccination_schedule_new():
         flash("تمت جدولة التحصين", "success")
         return redirect(url_for("health.vaccination_schedule_list"))
     barns = Barn.query.order_by(Barn.barn_name).all()
+    barn_animals = {
+        b.id: [{"id": a.id, "animal_no": a.animal_no}
+               for a in Animal.query.filter_by(barn_id=b.id, status="active").order_by(Animal.animal_no).all()]
+        for b in barns
+    }
     return render_template(
         "health/vaccination_schedule_form.html",
         barns=barns,
         vaccines=Pharmacy.query.filter_by(status="active", medicine_class="vaccine").all(),
         today=date.today().isoformat(),
         barn_head_counts={b.id: Animal.query.filter_by(barn_id=b.id, status="active").count() for b in barns},
+        barn_animals=barn_animals,
     )
 
 
