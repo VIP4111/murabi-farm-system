@@ -29,6 +29,7 @@
         {% if current_user.has_permission('feed.manage') %}
         <a href="{{ url_for('feed.items_edit', item_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
         <a href="{{ url_for('warehouses.item_breakdown', kind='feed', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
+        <a href="{{ url_for('warehouses.item_count', kind='feed', item_id=i.id) }}">🧮 {{ _('جرد') }}</a>
         {% endif %}
       </td>
     </tr>

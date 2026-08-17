@@ -26,6 +26,7 @@
         {% if current_user.has_permission('pharmacy.manage') %}
         <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
         <a href="{{ url_for('warehouses.item_breakdown', kind='pharmacy', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
+        <a href="{{ url_for('warehouses.item_count', kind='pharmacy', item_id=i.id) }}">🧮 {{ _('جرد') }}</a>
         {% endif %}
       </td>
     </tr>

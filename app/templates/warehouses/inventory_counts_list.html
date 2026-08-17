@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>🧮 {{ _('سجل الجرد') }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin-top:-6px;">{{ _('آخر عمليات الجرد بكل المستودعات — الفرق السالب (هالك) مسجَّل مصروفاً مالياً تلقائياً.') }}</p>
+  <div class="table-scroll">
+<table class="compact-table">
+    <tr>
+      <th>{{ _('التاريخ') }}</th><th>{{ _('القسم') }}</th><th>{{ _('الصنف') }}</th>
+      <th>{{ _('المتوقّع') }}</th><th>{{ _('الفعلي') }}</th><th>{{ _('الفرق') }}</th>
+      <th>{{ _('قيمة الهالك') }}</th><th>{{ _('ملاحظة') }}</th>
+    </tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.count_date }}</td>
+      <td>{{ kind_labels.get(r.kind, r.kind) }}</td>
+      <td>{{ r.item_name }}</td>
+      <td>{{ r.expected_qty }}</td>
+      <td>{{ r.actual_qty }}</td>
+      <td>
+        {% if r.diff_qty > 0 %}<span class="badge on">+{{ r.diff_qty }}</span>
+        {% elif r.diff_qty < 0 %}<span class="badge off">{{ r.diff_qty }}</span>
+        {% else %}<span class="badge">0</span>{% endif %}
+      </td>
+      <td>{{ r.diff_value if r.diff_value is not none else '-' }}</td>
+      <td>{{ r.note or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="8" style="color:#888;">{{ _('ما فيه عمليات جرد مسجَّلة بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

@@ -4,7 +4,7 @@
   <h2>{{ _('توزيع المستودعات') }} — {{ item.name }}</h2>
   <div style="color:var(--muted); font-size:13px; margin-bottom:10px;">{{ _('الإجمالي الحالي:') }} {{ item.available_qty }}</div>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('المستودع') }}</th><th>{{ _('الكمية') }}</th><th></th></tr>
     {% for e in breakdown %}
     <tr>

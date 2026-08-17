@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:460px;">
+  <h2>🧮 {{ _('جرد') }} — {{ item.name }}</h2>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">
+    {{ _('الرصيد المحسوب بالنظام حالياً:') }} <strong>{{ item.available_qty }} {{ item.unit }}</strong>
+  </p>
+  <p style="color:var(--muted); font-size:12px; margin:-6px 0 12px;">
+    {{ _('اوزن/عدّ الكمية الفعلية بالمستودع واكتبها هنا — النظام يصحّح الرصيد تلقائياً. الزيادة تصحيح مخزون بس، والنقص يُسجَّل "هالك" (مصروف غير مباشر يُوزَّع على كل الرؤوس تلقائياً بتقرير تكلفة الرأس الشهرية).') }}
+  </p>
+  <form method="post" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('تاريخ الجرد') }}</label><input name="count_date" type="date" required value="{{ today }}">
+    <label>{{ _('الكمية الفعلية (بالميزان/العدّ)') }}</label>
+    <input name="actual_qty" type="number" step="0.01" required value="{{ item.available_qty }}">
+    <label>{{ _('ملاحظة (اختياري)') }}</label><input name="note">
+    <button class="btn" type="submit">{{ _('حفظ الجرد') }}</button>
+  </form>
+</div>
+{% endblock %}

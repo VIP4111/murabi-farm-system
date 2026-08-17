@@ -38,6 +38,7 @@ from app.models.equipment import Equipment, EquipmentMovement
 from app.models.checklist import ChecklistItem, ChecklistCompletion
 from app.models.sales_lot import SalesLot, SalesLotItem
 from app.models.asset import Asset, AssetMaintenanceLog, UtilityReading
+from app.models.inventory_count import InventoryCount
 
 __all__ = [
     "Role", "Permission", "role_permissions",
@@ -66,4 +67,5 @@ __all__ = [
     "ChecklistItem", "ChecklistCompletion",
     "Asset", "AssetMaintenanceLog", "UtilityReading",
     "SalesLot", "SalesLotItem",
+    "InventoryCount",
 ]

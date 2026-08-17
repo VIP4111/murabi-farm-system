@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-17 02:23+0300\n"
+"POT-Creation-Date: 2026-08-17 04:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1700,6 +1700,7 @@ msgstr "लिंग"
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
+#: app/templates/warehouses/inventory_counts_list.html:9
 msgid "التاريخ"
 msgstr "तारीख़"
 
@@ -1885,12 +1886,13 @@ msgstr "खपत मापन अवधि (दिन)"
 #: app/templates/team/reports_list.html:85
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
 #: app/templates/warehouses/warehouse_form.html:8
-#: app/templates/warehouses/warehouses_list.html:13
+#: app/templates/warehouses/warehouses_list.html:16
 msgid "النوع"
 msgstr "प्रकार"
 
 #: app/reports/report_service.py:477
 #: app/templates/equipment/purchase_form.html:9
+#: app/templates/warehouses/inventory_counts_list.html:9
 msgid "الصنف"
 msgstr "वस्तु"
 
@@ -3070,7 +3072,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/warehouses/warehouse_form.html:7
-#: app/templates/warehouses/warehouses_list.html:13
+#: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
 msgstr "नाम"
 
@@ -3950,6 +3952,7 @@ msgstr "तिथि (सभी पशुओं के लिए)"
 #: app/templates/equipment/purchase_form.html:20
 #: app/templates/feed/movement_form.html:27
 #: app/templates/feed/purchase_form.html:21
+#: app/templates/warehouses/inventory_counts_list.html:11
 msgid "ملاحظة"
 msgstr "टिप्पणी"
 
@@ -5887,6 +5890,7 @@ msgstr ""
 #: app/templates/repro/pregnancies_list.html:27
 #: app/templates/team/report_detail.html:76
 #: app/templates/team/task_detail.html:98
+#: app/templates/warehouses/item_count_form.html:16
 msgid "ملاحظة (اختياري)"
 msgstr "टिप्पणी (वैकल्पिक)"
 
@@ -5958,7 +5962,14 @@ msgstr "कम"
 msgid "حركة (شراء/صرف)"
 msgstr "गतिविधि (खरीद/निर्गम)"
 
-#: app/templates/equipment/items_list.html:32
+#: app/templates/equipment/items_list.html:28
+#: app/templates/feed/items_list.html:32
+#: app/templates/health/pharmacy_list.html:29
+#: app/templates/warehouses/item_count_form.html:4
+msgid "جرد"
+msgstr "गणना"
+
+#: app/templates/equipment/items_list.html:33
 msgid "لا يوجد أصناف معدات مسجّلة بعد."
 msgstr "अभी तक कोई उपकरण वस्तु दर्ज नहीं है।"
 
@@ -6454,7 +6465,7 @@ msgstr "किग्रा/"
 msgid "يوم"
 msgstr "दिन"
 
-#: app/templates/feed/items_list.html:36
+#: app/templates/feed/items_list.html:37
 msgid "لا يوجد مكوّنات علف مسجّلة بعد."
 msgstr "अभी तक कोई चारा घटक दर्ज नहीं है।"
 
@@ -8160,7 +8171,7 @@ msgstr "समाप्त"
 msgid "منتهي"
 msgstr "समाप्त"
 
-#: app/templates/health/pharmacy_list.html:33
+#: app/templates/health/pharmacy_list.html:34
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "अभी तक कोई दवा दर्ज नहीं है।"
 
@@ -10267,6 +10278,43 @@ msgstr "यहाँ लिखें कि आपने क्या देख�
 msgid "إرسال البلاغ"
 msgstr "रिपोर्ट भेजें"
 
+#: app/templates/warehouses/inventory_counts_list.html:4
+#: app/templates/warehouses/warehouses_list.html:7
+msgid "سجل الجرد"
+msgstr "गणना लॉग"
+
+#: app/templates/warehouses/inventory_counts_list.html:5
+msgid ""
+"آخر عمليات الجرد بكل المستودعات — الفرق السالب (هالك) مسجَّل مصروفاً "
+"مالياً تلقائياً."
+msgstr ""
+"सभी गोदामों में नवीनतम गणनाएं — ऋणात्मक अंतर (हानि) स्वचालित रूप से "
+"वित्तीय व्यय के रूप में दर्ज होता है।"
+
+#: app/templates/warehouses/inventory_counts_list.html:9
+msgid "القسم"
+msgstr "अनुभाग"
+
+#: app/templates/warehouses/inventory_counts_list.html:10
+msgid "المتوقّع"
+msgstr "अपेक्षित"
+
+#: app/templates/warehouses/inventory_counts_list.html:10
+msgid "الفعلي"
+msgstr "वास्तविक"
+
+#: app/templates/warehouses/inventory_counts_list.html:10
+msgid "الفرق"
+msgstr "अंतर"
+
+#: app/templates/warehouses/inventory_counts_list.html:11
+msgid "قيمة الهالك"
+msgstr "हानि मूल्य"
+
+#: app/templates/warehouses/inventory_counts_list.html:29
+msgid "ما فيه عمليات جرد مسجَّلة بعد."
+msgstr "अभी तक कोई गणना दर्ज नहीं है।"
+
 #: app/templates/warehouses/item_breakdown.html:4
 msgid "توزيع المستودعات"
 msgstr "गोदाम वितरण"
@@ -10305,8 +10353,35 @@ msgstr ""
 "स्थानांतरण वर्तमान कुल को कभी नहीं बदलता — यह केवल फार्म के भीतर भंडारण "
 "स्थान बदलना है।"
 
+#: app/templates/warehouses/item_count_form.html:6
+msgid "الرصيد المحسوب بالنظام حالياً:"
+msgstr "सिस्टम द्वारा गणना किया गया वर्तमान शेष:"
+
+#: app/templates/warehouses/item_count_form.html:9
+msgid ""
+"اوزن/عدّ الكمية الفعلية بالمستودع واكتبها هنا — النظام يصحّح الرصيد "
+"تلقائياً. الزيادة تصحيح مخزون بس، والنقص يُسجَّل \"هالك\" (مصروف غير "
+"مباشر يُوزَّع على كل الرؤوس تلقائياً بتقرير تكلفة الرأس الشهرية)."
+msgstr ""
+"गोदाम में वास्तविक मात्रा तौलें/गिनें और यहां दर्ज करें — सिस्टम "
+"स्वचालित रूप से शेष को सही करता है। अधिशेष केवल स्टॉक सुधार है, और कमी "
+"को \"हानि\" के रूप में दर्ज किया जाता है (एक अप्रत्यक्ष व्यय जो मासिक "
+"प्रति-सिर लागत रिपोर्ट में स्वचालित रूप से सभी सिरों पर वितरित होता है)।"
+
+#: app/templates/warehouses/item_count_form.html:13
+msgid "تاريخ الجرد"
+msgstr "गणना तिथि"
+
+#: app/templates/warehouses/item_count_form.html:14
+msgid "الكمية الفعلية (بالميزان/العدّ)"
+msgstr "वास्तविक मात्रा (तौली/गिनी गई)"
+
+#: app/templates/warehouses/item_count_form.html:17
+msgid "حفظ الجرد"
+msgstr "गणना सहेजें"
+
 #: app/templates/warehouses/warehouse_form.html:4
-#: app/templates/warehouses/warehouses_list.html:6
+#: app/templates/warehouses/warehouses_list.html:8
 msgid "مستودع جديد"
 msgstr "नया गोदाम"
 
@@ -10322,7 +10397,7 @@ msgstr "स्थान टिप्पणी (वैकल्पिक)"
 msgid "مثال: بجانب حظيرة 3"
 msgstr "उदाहरण: बाड़ा 3 के पास"
 
-#: app/templates/warehouses/warehouses_list.html:9
+#: app/templates/warehouses/warehouses_list.html:12
 msgid ""
 "طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً "
 "موزَّع (مستودع رئيسي، صيدلية فرعية، حظيرة تغذية مباشرة...). للتحويل أو "
@@ -10333,11 +10408,11 @@ msgstr ""
 "बाड़ा...)। किसी विशेष वस्तु को स्थानांतरित करने या उसका वितरण देखने के "
 "लिए, चारा या फार्मेसी सूची से उसका पृष्ठ खोलें।"
 
-#: app/templates/warehouses/warehouses_list.html:13
+#: app/templates/warehouses/warehouses_list.html:16
 msgid "ملاحظة الموقع"
 msgstr "स्थान टिप्पणी"
 
-#: app/templates/warehouses/warehouses_list.html:16
+#: app/templates/warehouses/warehouses_list.html:19
 msgid ""
 "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي "
 "الافتراضي."

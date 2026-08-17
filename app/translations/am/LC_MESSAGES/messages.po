@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-17 02:23+0300\n"
+"POT-Creation-Date: 2026-08-17 04:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1657,6 +1657,7 @@ msgstr "ጾታ"
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
+#: app/templates/warehouses/inventory_counts_list.html:9
 msgid "التاريخ"
 msgstr "ቀን"
 
@@ -1842,12 +1843,13 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 #: app/templates/team/reports_list.html:85
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
 #: app/templates/warehouses/warehouse_form.html:8
-#: app/templates/warehouses/warehouses_list.html:13
+#: app/templates/warehouses/warehouses_list.html:16
 msgid "النوع"
 msgstr "ዓይነት"
 
 #: app/reports/report_service.py:477
 #: app/templates/equipment/purchase_form.html:9
+#: app/templates/warehouses/inventory_counts_list.html:9
 msgid "الصنف"
 msgstr "ንጥል"
 
@@ -3007,7 +3009,7 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/warehouses/warehouse_form.html:7
-#: app/templates/warehouses/warehouses_list.html:13
+#: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
 msgstr "ስም"
 
@@ -3869,6 +3871,7 @@ msgstr "ቀን (ለሁሉም እንስሳት)"
 #: app/templates/equipment/purchase_form.html:20
 #: app/templates/feed/movement_form.html:27
 #: app/templates/feed/purchase_form.html:21
+#: app/templates/warehouses/inventory_counts_list.html:11
 msgid "ملاحظة"
 msgstr "ማስታወሻ"
 
@@ -5737,6 +5740,7 @@ msgstr "ተቀባይ የሚመረጠው ተውሶ የሚመለስ ከሆነ ብ�
 #: app/templates/repro/pregnancies_list.html:27
 #: app/templates/team/report_detail.html:76
 #: app/templates/team/task_detail.html:98
+#: app/templates/warehouses/item_count_form.html:16
 msgid "ملاحظة (اختياري)"
 msgstr "ማስታወሻ (አማራጭ)"
 
@@ -5808,7 +5812,14 @@ msgstr "ዝቅተኛ"
 msgid "حركة (شراء/صرف)"
 msgstr "እንቅስቃሴ (ግዢ/ወጪ)"
 
-#: app/templates/equipment/items_list.html:32
+#: app/templates/equipment/items_list.html:28
+#: app/templates/feed/items_list.html:32
+#: app/templates/health/pharmacy_list.html:29
+#: app/templates/warehouses/item_count_form.html:4
+msgid "جرد"
+msgstr "ቆጠራ"
+
+#: app/templates/equipment/items_list.html:33
 msgid "لا يوجد أصناف معدات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ የመሳሪያ ዕቃ የለም።"
 
@@ -6296,7 +6307,7 @@ msgstr "ኪግ/"
 msgid "يوم"
 msgstr "ቀን"
 
-#: app/templates/feed/items_list.html:36
+#: app/templates/feed/items_list.html:37
 msgid "لا يوجد مكوّنات علف مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ የመኖ ንጥረ ነገር የለም።"
 
@@ -7950,7 +7961,7 @@ msgstr "ጊዜው ያለፈበት"
 msgid "منتهي"
 msgstr "ያለፈበት"
 
-#: app/templates/health/pharmacy_list.html:33
+#: app/templates/health/pharmacy_list.html:34
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ መድሃኒት የለም።"
 
@@ -10003,6 +10014,42 @@ msgstr "ያስተዋልከውን እዚህ ጻፍ..."
 msgid "إرسال البلاغ"
 msgstr "ሪፖርት ላክ"
 
+#: app/templates/warehouses/inventory_counts_list.html:4
+#: app/templates/warehouses/warehouses_list.html:7
+msgid "سجل الجرد"
+msgstr "የቆጠራ መዝገብ"
+
+#: app/templates/warehouses/inventory_counts_list.html:5
+msgid ""
+"آخر عمليات الجرد بكل المستودعات — الفرق السالب (هالك) مسجَّل مصروفاً "
+"مالياً تلقائياً."
+msgstr ""
+"በሁሉም መጋዘኖች የቅርብ ጊዜ ቆጠራዎች — አሉታዊ ልዩነት (ብክነት) በራስ-ሰር እንደ ወጪ ይመዘገባል።"
+
+#: app/templates/warehouses/inventory_counts_list.html:9
+msgid "القسم"
+msgstr "ክፍል"
+
+#: app/templates/warehouses/inventory_counts_list.html:10
+msgid "المتوقّع"
+msgstr "የሚጠበቅ"
+
+#: app/templates/warehouses/inventory_counts_list.html:10
+msgid "الفعلي"
+msgstr "ትክክለኛ"
+
+#: app/templates/warehouses/inventory_counts_list.html:10
+msgid "الفرق"
+msgstr "ልዩነት"
+
+#: app/templates/warehouses/inventory_counts_list.html:11
+msgid "قيمة الهالك"
+msgstr "የብክነት ዋጋ"
+
+#: app/templates/warehouses/inventory_counts_list.html:29
+msgid "ما فيه عمليات جرد مسجَّلة بعد."
+msgstr "እስካሁን የተመዘገበ ቆጠራ የለም።"
+
 #: app/templates/warehouses/item_breakdown.html:4
 msgid "توزيع المستودعات"
 msgstr "የመጋዘን ስርጭት"
@@ -10037,8 +10084,34 @@ msgid ""
 "المزرعة."
 msgstr "ማዛወር የአሁኑን ጠቅላላ በፍጹም አይለውጥም — በእርሻው ውስጥ የማከማቻ ቦታን ማንቀሳቀስ ብቻ ነው።"
 
+#: app/templates/warehouses/item_count_form.html:6
+msgid "الرصيد المحسوب بالنظام حالياً:"
+msgstr "በስርዓቱ የተሰላው የአሁኑ ቀሪ ሂሳብ፦"
+
+#: app/templates/warehouses/item_count_form.html:9
+msgid ""
+"اوزن/عدّ الكمية الفعلية بالمستودع واكتبها هنا — النظام يصحّح الرصيد "
+"تلقائياً. الزيادة تصحيح مخزون بس، والنقص يُسجَّل \"هالك\" (مصروف غير "
+"مباشر يُوزَّع على كل الرؤوس تلقائياً بتقرير تكلفة الرأس الشهرية)."
+msgstr ""
+"በመጋዘኑ ያለውን ትክክለኛ መጠን ይመዝኑ/ይቁጠሩ እና እዚህ ያስገቡ — ስርዓቱ ቀሪ ሂሳቡን በራስ-ሰር "
+"ያስተካክላል። ትርፍ ቀሪ ሂሳብ ማስተካከያ ብቻ ነው፣ እጥረት ግን እንደ \"ብክነት\" ይመዘገባል (በወርሃዊ "
+"የነፍስ ወከፍ ወጪ ሪፖርት ላይ በራስ-ሰር በሁሉም እንስሳት ላይ የሚከፋፈል ቀጥተኛ ያልሆነ ወጪ)።"
+
+#: app/templates/warehouses/item_count_form.html:13
+msgid "تاريخ الجرد"
+msgstr "የቆጠራ ቀን"
+
+#: app/templates/warehouses/item_count_form.html:14
+msgid "الكمية الفعلية (بالميزان/العدّ)"
+msgstr "ትክክለኛ መጠን (የተመዘነ/የተቆጠረ)"
+
+#: app/templates/warehouses/item_count_form.html:17
+msgid "حفظ الجرد"
+msgstr "ቆጠራ አስቀምጥ"
+
 #: app/templates/warehouses/warehouse_form.html:4
-#: app/templates/warehouses/warehouses_list.html:6
+#: app/templates/warehouses/warehouses_list.html:8
 msgid "مستودع جديد"
 msgstr "አዲስ መጋዘን"
 
@@ -10054,7 +10127,7 @@ msgstr "የአካባቢ ማስታወሻ (አማራጭ)"
 msgid "مثال: بجانب حظيرة 3"
 msgstr "ምሳሌ: ከበረት 3 አጠገብ"
 
-#: app/templates/warehouses/warehouses_list.html:9
+#: app/templates/warehouses/warehouses_list.html:12
 msgid ""
 "طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً "
 "موزَّع (مستودع رئيسي، صيدلية فرعية، حظيرة تغذية مباشرة...). للتحويل أو "
@@ -10064,11 +10137,11 @@ msgstr ""
 "ንዑስ ፋርማሲ፣ ቀጥተኛ-መመገቢያ በረት...)። የተወሰነ ዕቃ ለማዛወር ወይም ስርጭቱን ለማየት፣ ገጹን ከመኖ ወይም "
 "ፋርማሲ ዝርዝር ይክፈቱ።"
 
-#: app/templates/warehouses/warehouses_list.html:13
+#: app/templates/warehouses/warehouses_list.html:16
 msgid "ملاحظة الموقع"
 msgstr "የአካባቢ ማስታወሻ"
 
-#: app/templates/warehouses/warehouses_list.html:16
+#: app/templates/warehouses/warehouses_list.html:19
 msgid ""
 "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي "
 "الافتراضي."

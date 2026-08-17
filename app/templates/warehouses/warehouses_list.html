@@ -3,13 +3,16 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('المستودعات') }}</h2>
-    <a class="btn" href="{{ url_for('warehouses.warehouses_new') }}">+ {{ _('مستودع جديد') }}</a>
+    <div style="display:flex; gap:8px;">
+      <a class="btn light" href="{{ url_for('warehouses.inventory_counts_list') }}">🧮 {{ _('سجل الجرد') }}</a>
+      <a class="btn" href="{{ url_for('warehouses.warehouses_new') }}">+ {{ _('مستودع جديد') }}</a>
+    </div>
   </div>
   <p style="color:var(--muted); font-size:13px;">
     {{ _('طبقة إضافية فوق الإجمالي الحالي للعلف/الصيدلية — تعرف أين المخزون فعلياً موزَّع (مستودع رئيسي، صيدلية فرعية، حظيرة تغذية مباشرة...). للتحويل أو معاينة توزيع صنف معيّن، افتح صفحته من قائمة الأعلاف أو الصيدلية.') }}
   </p>
   <div class="table-scroll">
-<table>
+<table class="compact-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('ملاحظة الموقع') }}</th></tr>
     {% for w in warehouses %}
     <tr><td>{{ w.name }}</td><td>{{ type_labels.get(w.warehouse_type, w.warehouse_type) }}</td><td>{{ w.location_note or '-' }}</td></tr>

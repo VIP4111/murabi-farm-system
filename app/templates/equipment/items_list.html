@@ -25,6 +25,7 @@
         {% if current_user.has_permission('equipment.manage') %}
         <a href="{{ url_for('equipment.items_edit', item_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
         <a class="btn" href="{{ url_for('equipment.items_movement', item_id=i.id) }}">📦 {{ _('حركة (شراء/صرف)') }}</a>
+        <a href="{{ url_for('warehouses.item_count', kind='equipment', item_id=i.id) }}">🧮 {{ _('جرد') }}</a>
         {% endif %}
       </td>
     </tr>
