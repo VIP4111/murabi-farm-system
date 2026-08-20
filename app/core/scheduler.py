@@ -44,8 +44,13 @@ def _generate_if_needed_today():
     from app.core import daily_email_report_service
     try:
         daily_email_report_service.generate_daily_email_report_if_needed()
-    except Exception:
-        pass
+    except Exception as e:
+        # بند إضافي 219 — كان `except Exception: pass` بدون أي تسجيل،
+        # عكس كل مسارات except عامة ثانية بالمشروع (llm_bridge،
+        # telegram) اللي كلها تسجّل التحذير — فشل التقرير اليومي كان
+        # يختفي بلا أثر إطلاقاً، حتى بسجلات السيرفر.
+        from flask import current_app
+        current_app.logger.warning("daily_email_report_service failed: %s", e)
 
 
 def _run_daily_tasks_job(app):

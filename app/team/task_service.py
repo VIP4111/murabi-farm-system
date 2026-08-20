@@ -464,7 +464,13 @@ def _move_barn_physiology(task: Task, *, chosen_barn_id=None) -> None:
     `chosen_barn_id` (بند 216): العامل ينقل الرأس فعلياً وممكن يحطه
     بحظيرة غير المقترحة (مثلاً المقترحة مليانة) — لو مرّر رقم حظيرة
     صريح وقت إنجاز المهمة، ينقله لها بدل الحظيرة المشتقة من
-    `source_type` تلقائياً، طالما الحظيرة موجودة فعلاً."""
+    `source_type` تلقائياً، طالما الحظيرة موجودة فعلاً.
+
+    **إصلاح بند 219**: نفس ثغرة `_move_to_pregnant_barn` بالضبط كانت
+    موجودة هنا (اكتشفها فحص شامل ثانٍ) — لو الحظيرة الهدف (أو
+    `chosen_barn_id` نفسه) غير موجودة، الدالة كانت ترجع بصمت والمهمة
+    تتعلّم "منجزة" رغم إن الرأس ما انتقل. الحين ترفع خطأ صريح قبل
+    الـcommit، فتبقى المهمة مفتوحة."""
     from app.models import Barn
 
     if chosen_barn_id:
@@ -473,13 +479,17 @@ def _move_barn_physiology(task: Task, *, chosen_barn_id=None) -> None:
             task.animal.barn_id = barn.id
             db.session.add(task.animal)
             return
+        raise TaskStateError("الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك.")
 
     if not task.source_type or ":" not in task.source_type:
-        return
+        raise TaskStateError("تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم الفني.")
     target_barn_type = task.source_type.split(":", 1)[1]
     barn = Barn.query.filter_by(barn_type=target_barn_type).order_by(Barn.id).first()
     if not barn:
-        return
+        raise TaskStateError(
+            f'ما فيه حظيرة بنوع "{target_barn_type}" بالنظام — أنشئها من شاشة الحظائر '
+            "أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+        )
     task.animal.barn_id = barn.id
     db.session.add(task.animal)
 
