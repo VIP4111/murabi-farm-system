@@ -691,6 +691,22 @@ def diseases_list():
     return render_template("health/diseases_list.html", diseases=diseases)
 
 
+@health_bp.route("/diseases/new-simple")
+@login_required
+@require_permission("health.manage")
+def diseases_new_simple():
+    """تسجيل حالة مرضية — واجهة "بسيط جداً" (بند إضافي 225): بطاقات
+    كبيرة، سؤال وحد بالمرة (JS بسيط بالقالب، بدون منطق سيرفر جديد).
+    الفورم يرسل مباشرة لنفس `health.diseases_new` الحالية — صفر منطق
+    حفظ مكرَّر، نفس البيانات ونفس التحقق بالضبط."""
+    return render_template(
+        "health/disease_new_simple.html",
+        animals=Animal.query.filter_by(status="active").order_by(Animal.animal_no).all(),
+        disease_types=DiseaseType.query.order_by(DiseaseType.name).all(),
+        today=date.today().isoformat(),
+    )
+
+
 @health_bp.route("/diseases/new", methods=["GET", "POST"])
 @login_required
 @require_permission("health.manage")

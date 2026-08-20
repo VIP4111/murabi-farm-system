@@ -54,6 +54,18 @@ def set_theme():
     return redirect(request.referrer or url_for("core.home"))
 
 
+@core_bp.route("/settings/set-ui-level", methods=["POST"])
+@login_required
+def set_ui_level():
+    """تبديل مستوى تبسيط الواجهة (بند إضافي 225) — نفس فلسفة
+    `set_theme` بالضبط."""
+    level = request.form.get("ui_level")
+    if level in ("normal", "simple"):
+        current_user.ui_level = level
+        db.session.commit()
+    return redirect(request.referrer or url_for("core.home"))
+
+
 @core_bp.route("/settings/send-test-email-report", methods=["POST"])
 @login_required
 def send_test_email_report():
@@ -138,6 +150,12 @@ def home():
             "worker_home.html", user=current_user, my_alerts_count=my_alerts_count,
             daily_checklist=daily_checklist,
         )
+
+    # مستوى "بسيط جداً" (بند إضافي 225) — تفضيل شخصي، يبدّل الشاشة
+    # الرئيسية بس، نفس البيانات ونفس الصلاحيات تماماً. العامل مستثنى
+    # (له أصلاً worker_home.html أبسط أساساً، لا يحتاج مستوى ثانٍ).
+    if current_user.ui_level == "simple":
+        return render_template("simple_home.html", user=current_user)
 
     setup_checklist_items = None
     if current_user.role.name == "owner" and not FarmSettings.get().setup_checklist_dismissed:

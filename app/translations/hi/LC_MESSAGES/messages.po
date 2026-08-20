@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 01:36+0300\n"
+"POT-Creation-Date: 2026-08-21 02:07+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -244,7 +244,7 @@ msgstr "बाड़ा स्थानांतरण (शारीरिक �
 msgid "إكمال بيانات حيوان"
 msgstr "पशु डेटा पूर्ण करें"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:720
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:736
 #: app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -288,7 +288,7 @@ msgstr "अन्य"
 msgid "نقل حظائر جماعي"
 msgstr "सामूहिक बाड़ा स्थानांतरण"
 
-#: app/__init__.py:226 app/core/routes.py:361
+#: app/__init__.py:226 app/core/routes.py:379
 #: app/templates/animals_list.html:78
 msgid "عزل جماعي"
 msgstr "सामूहिक अलगाव"
@@ -608,6 +608,7 @@ msgid "بلاغ"
 msgstr "रिपोर्ट"
 
 #: app/__init__.py:305 app/templates/settings_simulation_data.html:33
+#: app/templates/simple_home.html:33
 msgid "حالة مرضية"
 msgstr "रोग के मामले"
 
@@ -948,59 +949,59 @@ msgstr "कम से कम एक बैकअप मौजूद है (म�
 msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
 msgstr "अभी तक कोई बैकअप नहीं लिया गया — सेटिंग्स स्क्रीन में \"बैकअप\" देखें (मद 34)।"
 
-#: app/core/routes.py:353 app/templates/animals_list.html:67
+#: app/core/routes.py:371 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "सामूहिक वजन"
 
-#: app/core/routes.py:354 app/templates/animals_list.html:76
+#: app/core/routes.py:372 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr "सामूहिक टीकाकरण"
 
-#: app/core/routes.py:355 app/templates/animals_list.html:68
+#: app/core/routes.py:373 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr "सामूहिक टिप्पणी"
 
-#: app/core/routes.py:356 app/templates/animals_list.html:69
+#: app/core/routes.py:374 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr "सामूहिक बाड़ा स्थानांतरण"
 
-#: app/core/routes.py:357 app/templates/animals_list.html:70
+#: app/core/routes.py:375 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr "सामूहिक उद्देश्य निर्धारण (प्रजनन/मोटा करना/बिक्री)"
 
-#: app/core/routes.py:358 app/templates/animals_list.html:71
+#: app/core/routes.py:376 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr "सामूहिक बिक्री"
 
-#: app/core/routes.py:359 app/templates/animals_list.html:72
+#: app/core/routes.py:377 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr "सामूहिक मृत्यु दर्ज करना"
 
-#: app/core/routes.py:360 app/templates/animals_list.html:77
+#: app/core/routes.py:378 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr "सामूहिक उपचार/रोग"
 
-#: app/core/routes.py:362 app/templates/animals_list.html:82
+#: app/core/routes.py:380 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr "सामूहिक सोनार जांच"
 
-#: app/core/routes.py:363 app/templates/animals_list.html:79
+#: app/core/routes.py:381 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "नियोजित उपचार योजना (क्रियान्वयन पुष्टि की प्रतीक्षा में)"
 
-#: app/core/routes.py:761 app/templates/animal_form.html:35
+#: app/core/routes.py:779 app/templates/animal_form.html:35
 msgid "إضافة فصيلة جديدة"
 msgstr "नई प्रजाति जोड़ें"
 
-#: app/core/routes.py:763
+#: app/core/routes.py:781
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "नई प्रजाति स्वतः उत्पादन चक्र इंजन (संगमन/गर्भावस्था/दूध छुड़ाना) में शामिल नहीं होती — जब तक इसके लिए एक समर्पित सिस्टम नहीं बनता तब तक इसे शुतुरमुर्ग की तरह सुरक्षित रूप से संभाला जाता है।"
 
-#: app/core/routes.py:782 app/templates/animal_form.html:45
+#: app/core/routes.py:800 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
 msgstr "नई नस्ल जोड़ें"
 
-#: app/core/routes.py:826 app/templates/animal_form.html:24
+#: app/core/routes.py:844 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr "नया रंग जोड़ें"
 
@@ -2252,6 +2253,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/feed/purchase_form.html:22
 #: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:50
 #: app/templates/health/disease_form.html:45
+#: app/templates/health/disease_new_simple.html:75
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
 #: app/templates/health/doctor_form.html:17
@@ -3321,7 +3323,7 @@ msgstr "नया बाड़ा"
 msgid "مثال: B-01"
 msgstr "उदाहरण: B-01"
 
-#: app/templates/barn_form.html:11
+#: app/templates/barn_form.html:11 app/templates/base.html:673
 msgid "عادية"
 msgstr "सामान्य"
 
@@ -3400,7 +3402,8 @@ msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
 #: app/templates/base.html:525 app/templates/base.html:527
-#: app/templates/onboarding/checklist.html:5
+#: app/templates/health/disease_new_simple.html:22
+#: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
 msgid "الرئيسية"
@@ -3422,6 +3425,7 @@ msgid "الحلال"
 msgstr "पशुधन"
 
 #: app/templates/base.html:538 app/templates/home.html:100
+#: app/templates/simple_home.html:39
 msgid "الحيوانات"
 msgstr "जानवर"
 
@@ -3523,7 +3527,8 @@ msgstr "उपकरण"
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
-#: app/templates/base.html:602 app/templates/worker_home.html:101
+#: app/templates/base.html:602 app/templates/simple_home.html:45
+#: app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr "मेरे उपकरण"
 
@@ -3546,7 +3551,7 @@ msgid "المهام"
 msgstr "कार्य"
 
 #: app/templates/base.html:622 app/templates/home.html:95
-#: app/templates/team/reports_list.html:6
+#: app/templates/simple_home.html:54 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्टें"
 
@@ -3583,20 +3588,32 @@ msgid "ليلي"
 msgstr "रात"
 
 #: app/templates/base.html:671
+msgid "مستوى الواجهة"
+msgstr "इंटरफेस स्तर"
+
+#: app/templates/base.html:673
+msgid "بسيط جداً"
+msgstr "बहुत आसान"
+
+#: app/templates/base.html:681
+msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
+msgstr "\"बहुत आसान\" आपकी मुख्य स्क्रीन को बड़े बटनों में बदल देता है, एक बार में एक सवाल — बिल्कुल वही डेटा।"
+
+#: app/templates/base.html:687
 msgid "التقرير اليومي بالبريد"
 msgstr "दैनिक ईमेल रिपोर्ट"
 
-#: app/templates/base.html:674
+#: app/templates/base.html:690
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "अभी परीक्षण रिपोर्ट भेजें"
 
-#: app/templates/base.html:680 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:696 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:693
+#: app/templates/base.html:709
 msgid "خروج"
 msgstr "लॉग आउट"
 
@@ -3844,16 +3861,22 @@ msgstr "सूची से चुनें या नया नाम लिख
 
 #: app/templates/bulk_action_form.html:351
 #: app/templates/health/disease_form.html:30
+#: app/templates/health/disease_new_simple.html:62
+#: app/templates/health/disease_new_simple.html:83
 msgid "بسيطة"
 msgstr "हल्का"
 
 #: app/templates/bulk_action_form.html:352
 #: app/templates/health/disease_form.html:31
+#: app/templates/health/disease_new_simple.html:63
+#: app/templates/health/disease_new_simple.html:83
 msgid "متوسطة"
 msgstr "मध्यम"
 
 #: app/templates/bulk_action_form.html:353
 #: app/templates/health/disease_form.html:32
+#: app/templates/health/disease_new_simple.html:64
+#: app/templates/health/disease_new_simple.html:83
 msgid "شديدة"
 msgstr "गंभीर"
 
@@ -4814,6 +4837,42 @@ msgstr "सिमुलेशन डेटा स्थायी रूप स�
 msgid "ما فيه بيانات محاكاة حالياً."
 msgstr "फिलहाल कोई सिमुलेशन डेटा नहीं है।"
 
+#: app/templates/simple_home.html:23 app/templates/worker_home.html:27
+msgid "أهلاً"
+msgstr "स्वागत है"
+
+#: app/templates/simple_home.html:24
+msgid "اضغط على اللي تبي تسويه"
+msgstr "जो करना है उस पर टैप करें"
+
+#: app/templates/simple_home.html:33
+msgid "نعجة أو فحل تعبان"
+msgstr "बीमार भेड़ या मेढ़ा"
+
+#: app/templates/simple_home.html:39
+msgid "شوف كل رؤوسك"
+msgstr "अपने सभी जानवर देखें"
+
+#: app/templates/simple_home.html:45
+msgid "أخذ أو استرجاع معدة"
+msgstr "उपकरण लें या वापस करें"
+
+#: app/templates/simple_home.html:50 app/templates/team/tasks_list.html:56
+msgid "مهامي"
+msgstr "मेरे कार्य"
+
+#: app/templates/simple_home.html:50
+msgid "شوف وأنجز مهامك"
+msgstr "अपने कार्य देखें और पूरे करें"
+
+#: app/templates/simple_home.html:54
+msgid "بلّغ عن أي شي"
+msgstr "कुछ भी रिपोर्ट करें"
+
+#: app/templates/simple_home.html:63
+msgid "رجّعني للواجهة العادية"
+msgstr "मुझे सामान्य इंटरफेस पर वापस ले जाएं"
+
 #: app/templates/smart_sale_report.html:6
 msgid "رجوع لسجل الحيوانات"
 msgstr "पशु रजिस्ट्री पर वापस जाएं"
@@ -4874,10 +4933,6 @@ msgstr "मेरी खुली रिपोर्टें"
 #: app/templates/today.html:71
 msgid "ما عندك بلاغات مفتوحة حالياً."
 msgstr "अभी आपके पास कोई खुली रिपोर्ट नहीं है।"
-
-#: app/templates/worker_home.html:27
-msgid "أهلاً"
-msgstr "स्वागत है"
 
 #: app/templates/worker_home.html:28
 msgid "اختر الإجراء اللي تبي تسجّله"
@@ -6992,6 +7047,50 @@ msgstr "पहले रोग चुनें"
 #: app/templates/health/disease_link_wizard.html:106
 msgid "اختر عرض واحد على الأقل"
 msgstr "कम से कम एक लक्षण चुनें"
+
+#: app/templates/health/disease_new_simple.html:32
+msgid "أي حيوان؟"
+msgstr "कौन सा जानवर?"
+
+#: app/templates/health/disease_new_simple.html:40
+msgid "ما فيه حيوانات نشطة مسجَّلة."
+msgstr "कोई सक्रिय जानवर दर्ज नहीं।"
+
+#: app/templates/health/disease_new_simple.html:46
+msgid "شنو المشكلة؟"
+msgstr "समस्या क्या है?"
+
+#: app/templates/health/disease_new_simple.html:54
+msgid "شي ثاني (اكتبه)"
+msgstr "कुछ और (लिखें)"
+
+#: app/templates/health/disease_new_simple.html:60
+msgid "كم شديدة؟"
+msgstr "कितनी गंभीर?"
+
+#: app/templates/health/disease_new_simple.html:69
+msgid "تأكيد وحفظ"
+msgstr "पुष्टि करें और सहेजें"
+
+#: app/templates/health/disease_new_simple.html:71
+msgid "الحيوان:"
+msgstr "जानवर:"
+
+#: app/templates/health/disease_new_simple.html:72
+msgid "المشكلة:"
+msgstr "समस्या:"
+
+#: app/templates/health/disease_new_simple.html:73
+msgid "الشدة:"
+msgstr "गंभीरता:"
+
+#: app/templates/health/disease_new_simple.html:76
+msgid "ابدأ من جديد"
+msgstr "फिर से शुरू करें"
+
+#: app/templates/health/disease_new_simple.html:96
+msgid "اكتب اسم المشكلة"
+msgstr "समस्या का नाम लिखें"
 
 #: app/templates/health/disease_type_detail.html:8
 msgid "المعالج التفاعلي"
@@ -9307,10 +9406,6 @@ msgstr "कार्य असाइन करें"
 #: app/templates/team/tasks_list.html:24
 msgid "لو صار خطأ بالإدخال، الصفحة تفتح كاملة لتصحيحه."
 msgstr "यदि इनपुट में त्रुटि हो, तो सुधार के लिए पूरा पेज खुलेगा।"
-
-#: app/templates/team/tasks_list.html:56
-msgid "مهامي"
-msgstr "मेरे कार्य"
 
 #: app/templates/team/tasks_list.html:96
 msgid "مهام مقترحة بانتظار الاعتماد"

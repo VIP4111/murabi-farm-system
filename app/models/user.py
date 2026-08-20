@@ -28,6 +28,13 @@ class User(UserMixin, db.Model):
     # مستخدم لنفسه من قائمة الإعدادات الجانبية بدون صلاحية خاصة.
     theme = db.Column(db.String(8), default="light", nullable=False)
 
+    # مستوى تبسيط الواجهة (بند إضافي 225) — نفس فلسفة `theme`/`language`
+    # بالضبط: تفضيل شخصي محفوظ لكل حساب. "normal" = اللوحة الكاملة
+    # الحالية. "simple" = واجهة "بسيط جداً" (أزرار كبيرة، سؤال وحد
+    # بالمرة) بدل اللوحة العادية عند الدخول — نفس البيانات ونفس
+    # الحفظ بالضبط، بس بأقل تفاصيل ممكنة بالشاشة.
+    ui_level = db.Column(db.String(8), default="normal", nullable=False)
+
     is_active_account = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DateTime, default=_now)
 

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .s-step{display:none;}
+  .s-step.active{display:block;}
+  .s-title{font-size:22px; font-weight:800; text-align:center; margin:10px 0 18px;}
+  .s-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px;}
+  .s-card{
+    background:var(--card); border:2px solid var(--line); border-radius:18px; padding:14px 8px;
+    text-align:center; cursor:pointer; font-size:15px; font-weight:700; display:flex;
+    flex-direction:column; align-items:center; gap:8px; min-height:96px; justify-content:center;
+  }
+  .s-card:active, .s-card.picked{border-color:var(--primary); background:#f7efe4;}
+  .s-photo{width:52px; height:52px; border-radius:14px; object-fit:cover; background:var(--bg);}
+  .s-emoji{font-size:34px;}
+  .s-back{margin-bottom:14px;}
+  .s-severity{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .s-severity .s-card{min-height:76px; font-size:16px;}
+</style>
+
+<div class="card">
+  <button class="btn light s-back" type="button" onclick="window.location='{{ url_for('core.home') }}'">→ {{ _('الرئيسية') }}</button>
+
+  <form method="post" action="{{ url_for('health.diseases_new') }}" id="simpleDiseaseForm" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="date" value="{{ today }}">
+    <input type="hidden" name="animal_id" id="fAnimal">
+    <input type="hidden" name="disease_name" id="fDisease">
+    <input type="hidden" name="severity" id="fSeverity">
+
+    <div class="s-step active" data-step="1">
+      <div class="s-title">🐑 {{ _('أي حيوان؟') }}</div>
+      <div class="s-grid">
+        {% for a in animals %}
+        <div class="s-card" data-value="{{ a.id }}" onclick="pick(1,'{{ a.id }}','{{ a.animal_no }}')">
+          {% if a.image_url %}<img class="s-photo" src="{{ a.image_url }}" alt="">{% else %}<span class="s-emoji">🐑</span>{% endif %}
+          {{ a.animal_no }}
+        </div>
+        {% else %}
+        <p class="empty">{{ _('ما فيه حيوانات نشطة مسجَّلة.') }}</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="s-step" data-step="2">
+      <div class="s-title">🌡️ {{ _('شنو المشكلة؟') }}</div>
+      <div class="s-grid">
+        {% for t in disease_types %}
+        <div class="s-card" data-value="{{ t.name }}" onclick="pick(2,'{{ t.name }}','{{ t.name }}')">
+          <span class="s-emoji">🌡️</span>{{ t.name }}
+        </div>
+        {% endfor %}
+        <div class="s-card" data-value="__other__" onclick="pickOther()">
+          <span class="s-emoji">✏️</span>{{ _('شي ثاني (اكتبه)') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="s-step" data-step="3">
+      <div class="s-title">📊 {{ _('كم شديدة؟') }}</div>
+      <div class="s-severity">
+        <div class="s-card" data-value="light" onclick="pickSeverity('light')"><span class="s-emoji">🙂</span>{{ _('بسيطة') }}</div>
+        <div class="s-card" data-value="medium" onclick="pickSeverity('medium')"><span class="s-emoji">😐</span>{{ _('متوسطة') }}</div>
+        <div class="s-card" data-value="severe" onclick="pickSeverity('severe')"><span class="s-emoji">😟</span>{{ _('شديدة') }}</div>
+      </div>
+    </div>
+
+    <div class="s-step" data-step="4">
+      <div class="s-title">✅ {{ _('تأكيد وحفظ') }}</div>
+      <div class="card" style="background:var(--bg);">
+        <p style="margin:4px 0;"><b>{{ _('الحيوان:') }}</b> <span id="confAnimal"></span></p>
+        <p style="margin:4px 0;"><b>{{ _('المشكلة:') }}</b> <span id="confDisease"></span></p>
+        <p style="margin:4px 0;"><b>{{ _('الشدة:') }}</b> <span id="confSeverity"></span></p>
+      </div>
+      <button class="btn" type="submit" style="width:100%; margin-top:14px; font-size:18px; padding:16px;">💾 {{ _('حفظ') }}</button>
+      <button class="btn light" type="button" style="width:100%; margin-top:8px;" onclick="goStep(1)">↺ {{ _('ابدأ من جديد') }}</button>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+  var severityLabels = {light: '{{ _("بسيطة") }}', medium: '{{ _("متوسطة") }}', severe: '{{ _("شديدة") }}'};
+
+  window.goStep = function(n){
+    document.querySelectorAll('.s-step').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step') == n); });
+    window.scrollTo(0, 0);
+  };
+
+  window.pick = function(step, value, label){
+    if (step === 1) { document.getElementById('fAnimal').value = value; document.getElementById('confAnimal').textContent = label; goStep(2); }
+    if (step === 2) { document.getElementById('fDisease').value = value; document.getElementById('confDisease').textContent = label; goStep(3); }
+  };
+
+  window.pickOther = function(){
+    var name = prompt('{{ _("اكتب اسم المشكلة") }}');
+    if (name) { document.getElementById('fDisease').value = name; document.getElementById('confDisease').textContent = name; goStep(3); }
+  };
+
+  window.pickSeverity = function(value){
+    document.getElementById('fSeverity').value = value;
+    document.getElementById('confSeverity').textContent = severityLabels[value];
+    goStep(4);
+  };
+})();
+</script>
+{% endblock %}

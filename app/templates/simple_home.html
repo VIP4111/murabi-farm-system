@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ _('الرئيسية') }}{% endblock %}
+{% block content %}
+<style>
+  .simple-greet{text-align:center; padding:6px 0 4px;}
+  .simple-greet h2{margin:0; font-size:20px;}
+  .simple-greet p{color:var(--muted); margin:4px 0 0; font-size:13px;}
+  .simple-grid{display:grid; grid-template-columns:1fr; gap:14px; margin-top:16px;}
+  @media (min-width:600px){.simple-grid{grid-template-columns:1fr 1fr;}}
+  .simple-btn{
+    display:flex; align-items:center; gap:16px; background:#fff; border:1px solid var(--line);
+    border-radius:24px; padding:22px 20px; text-decoration:none; color:var(--text);
+    box-shadow:0 10px 26px rgba(70,45,25,.10); min-height:96px;
+  }
+  .simple-btn:active{box-shadow:0 4px 12px rgba(70,45,25,.10); transform:translateY(1px);}
+  .simple-btn .emoji{font-size:38px; flex:0 0 auto; width:56px; text-align:center;}
+  .simple-btn b{display:block; font-size:17px; line-height:1.4;}
+  .simple-btn small{display:block; color:var(--muted); font-size:12.5px; margin-top:3px;}
+</style>
+
+<div class="card">
+  <div class="simple-greet">
+    <h2>{{ _('أهلاً') }} {{ user.name }} ⭐</h2>
+    <p>{{ _('اضغط على اللي تبي تسويه') }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="simple-grid">
+    {% if user.has_permission('health.manage') %}
+    <a class="simple-btn" href="{{ url_for('health.diseases_new_simple') }}">
+      <span class="emoji">🌡️</span>
+      <span><b>{{ _('حالة مرضية') }}</b><small>{{ _('نعجة أو فحل تعبان') }}</small></span>
+    </a>
+    {% endif %}
+    {% if user.has_permission('animals.view') %}
+    <a class="simple-btn" href="{{ url_for('core.animals_list') }}">
+      <span class="emoji">🐑</span>
+      <span><b>{{ _('الحيوانات') }}</b><small>{{ _('شوف كل رؤوسك') }}</small></span>
+    </a>
+    {% endif %}
+    {% if user.has_permission('equipment.view') %}
+    <a class="simple-btn" href="{{ url_for('equipment.items_mine') }}">
+      <span class="emoji">🛠️</span>
+      <span><b>{{ _('معداتي') }}</b><small>{{ _('أخذ أو استرجاع معدة') }}</small></span>
+    </a>
+    {% endif %}
+    <a class="simple-btn" href="{{ url_for('team.tasks_list') }}">
+      <span class="emoji">✅</span>
+      <span><b>{{ _('مهامي') }}</b><small>{{ _('شوف وأنجز مهامك') }}</small></span>
+    </a>
+    <a class="simple-btn" href="{{ url_for('team.reports_list') }}">
+      <span class="emoji">📋</span>
+      <span><b>{{ _('البلاغات') }}</b><small>{{ _('بلّغ عن أي شي') }}</small></span>
+    </a>
+  </div>
+</div>
+
+<div class="card" style="text-align:center;">
+  <form method="post" action="{{ url_for('core.set_ui_level') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="ui_level" value="normal">
+    <button type="submit" class="btn light" style="font-size:12.5px; padding:8px 16px;">📋 {{ _('رجّعني للواجهة العادية') }}</button>
+  </form>
+</div>
+{% endblock %}

@@ -666,6 +666,22 @@
         </div>
       </div>
 
+      {% if current_user.role.name != 'worker' %}
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('مستوى الواجهة') }}</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          {% for code, label in [('normal','📋 ' + _('عادية')), ('simple','⭐ ' + _('بسيط جداً'))] %}
+          <form method="post" action="{{ url_for('core.set_ui_level') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="ui_level" value="{{ code }}">
+            <button type="submit" class="badge {{ 'on' if current_user.ui_level == code else '' }}" style="cursor:pointer; border:1px solid var(--line);">{{ label }}</button>
+          </form>
+          {% endfor %}
+        </div>
+        <p style="color:var(--muted); font-size:11.5px; margin:6px 2px 0;">{{ _('"بسيط جداً" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط.') }}</p>
+      </div>
+      {% endif %}
+
       {% if current_user.has_permission('reports.manage') %}
       <div class="drawer-group">
         <div class="drawer-group-title">{{ _('التقرير اليومي بالبريد') }}</div>
