@@ -123,7 +123,7 @@
     <a class="btn light" href="{{ url_for('core.readiness_check') }}">✅ {{ _('فحص الجاهزية قبل النشر') }}</a>
     <a class="btn light" href="{{ url_for('core.data_integrity_check') }}">🔍 {{ _('فحص سلامة البيانات') }}</a>
     {% if current_user.role.name == 'owner' %}
-    <a class="btn light" href="{{ url_for('core.simulation_data_purge') }}">🧹 {{ _('تنظيف بيانات المحاكاة') }}</a>
+    <a class="btn light" href="{{ url_for('core.simulation_data_purge') }}">🎬 {{ _('وضع عرض تجريبي') }}</a>
     {% endif %}
     <a class="btn light" href="{{ url_for('core.backup_list') }}">📦 {{ _('النسخ الاحتياطي') }}</a>
     {% if current_user.has_permission('audit.view') %}
