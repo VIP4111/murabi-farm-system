@@ -340,7 +340,7 @@ def optimizer():
     return render_template(
         "feed/optimizer.html",
         animals=Animal.query.filter_by(status="active").order_by(Animal.animal_no).all(),
-        states=svc.PHYSIOLOGICAL_TARGETS.keys(),
+        states=svc.PHYSIOLOGICAL_TARGETS.keys(), state_labels=svc.STATE_LABELS_AR,
         requirement=requirement, result=result, selected_animal=selected_animal,
         current_daily_cost=current_daily_cost, daily_savings=daily_savings,
     )
@@ -376,6 +376,29 @@ def calculator():
     return render_template(
         "feed/calculator.html",
         animals=Animal.query.filter_by(status="active").order_by(Animal.animal_no).all(),
-        states=svc.PHYSIOLOGICAL_TARGETS.keys(),
+        states=svc.PHYSIOLOGICAL_TARGETS.keys(), state_labels=svc.STATE_LABELS_AR,
         result=result, recommendations=recommendations, selected_animal=selected_animal,
+    )
+
+
+# ---------- تقرير علف الحظيرة المفصَّل حسب الفئة (بند إضافي 218) ----------
+
+@feed_bp.route("/barn-report")
+@login_required
+@require_permission("feed.view")
+def barn_report():
+    """تقرير مستقل بقسم العلف (كان الحساب مدفوناً جوا تفاصيل مهمة
+    "وجبة علف" التلقائية بس) — يعرض احتياج كل حظيرة **مفصَّلاً حسب
+    الفئة** (نمو، حمل متأخر، رضاعة، فحل بخدمة فعلية، عادي، مواليد على
+    حليب أمهاتهم) بدل رقم إجمالي واحد يخفي التفاصيل."""
+    barn_id = request.args.get("barn_id", type=int)
+    result = None
+    barn = None
+    if barn_id:
+        barn = Barn.query.get_or_404(barn_id)
+        result = svc.barn_daily_blend(barn_id=barn_id)
+    return render_template(
+        "feed/barn_report.html",
+        barns=Barn.query.order_by(Barn.barn_name).all(),
+        barn=barn, result=result, state_labels=svc.STATE_LABELS_AR,
     )

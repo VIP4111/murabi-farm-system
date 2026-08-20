@@ -19,6 +19,10 @@ PHYSIOLOGICAL_TARGETS = {
     "growth": (1.15, 14.0, 2600),
     "late_pregnancy": (1.30, 13.0, 2500),
     "lactation": (1.60, 16.0, 2800),
+    # فحل بموسم تقريع فعلي (بند إضافي 218) — بروتين +30% (إنتاج
+    # الحيوانات المنوية بروتين-مكثّف)، طاقة +14% بس (تركيز على الجودة
+    # مو الكمية، حسب توصيتك الصريحة).
+    "breeding_active": (1.18, 13.0, 2500),
 }
 
 PURPOSE_TO_STATE = {
@@ -29,10 +33,49 @@ PURPOSE_TO_STATE = {
     "صيانة": "maintenance",
 }
 
+STATE_LABELS_AR = {
+    "maintenance": "عادي (صيانة)",
+    "growth": "نمو",
+    "late_pregnancy": "حمل متأخر",
+    "lactation": "رضاعة (الأم)",
+    "breeding_active": "فحل — موسم تقريع فعلي",
+    "nursing_newborn": "مولود على حليب أمه",
+}
 
-def infer_physiological_state(animal) -> str:
+
+def is_nursing_newborn(animal, *, today: date | None = None) -> bool:
+    """مولود لسا على حليب أمه (بند إضافي 218) — يُستثنى من حساب العلف
+    الصلب كلياً بدل ما يدخل بمعادلة الوزن×2.5% ويطلع رقم صغير غير
+    منطقي يخلط حساب الحظيرة. العمر الفاصل قابل للتعديل من الإعدادات
+    (`weaning_solid_feed_age_days`)، مو ثابتاً بالكود."""
+    if animal.species != "sheep_goat" or not animal.birth_date:
+        return False
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+    today = today or date.today()
+    return (today - animal.birth_date).days < fs.weaning_solid_feed_age_days
+
+
+def _is_ram_in_active_service(animal, *, today: date) -> bool:
+    """فحل له تقريع مسجَّل خلال نافذة "موسم التقريع الفعلي" (بند إضافي
+    218) — النافذة قابلة للتعديل من الإعدادات
+    (`ram_breeding_season_window_days`)."""
+    from app.models import FarmSettings, Mating
+    fs = FarmSettings.get()
+    cutoff = today - timedelta(days=fs.ram_breeding_season_window_days)
+    return Mating.query.filter(Mating.male_id == animal.id, Mating.date >= cutoff).first() is not None
+
+
+def infer_physiological_state(animal, *, today: date | None = None) -> str:
     """تخمين الحالة الفسيولوجية من دورة الإنتاج الحالية للحيوان — تقدير
-    آلي، يقدر المستخدم يتجاوزه يدوياً بشاشة الحاسبة."""
+    آلي، يقدر المستخدم يتجاوزه يدوياً بشاشة الحاسبة. وسّعت بند إضافي
+    218: مولود صغير يستثنى كلياً، وفحل بخدمة فعلية ياخذ حالة مستقلة
+    بدل "عادي" الافتراضية."""
+    today = today or date.today()
+    if is_nursing_newborn(animal, today=today):
+        return "nursing_newborn"
+    if animal.gender == "ذكر" and animal.purpose == "تربية" and _is_ram_in_active_service(animal, today=today):
+        return "breeding_active"
     wf = animal.workflow
     if not wf:
         return "maintenance"
@@ -46,6 +89,11 @@ def infer_physiological_state(animal) -> str:
 
 
 def daily_requirement(*, weight_kg: float, state: str) -> dict:
+    if state == "nursing_newborn":
+        return {
+            "state": state, "daily_dry_matter_kg": 0.0,
+            "target_protein_percent": 0.0, "target_energy_kcal_per_kg": 0,
+        }
     multiplier, protein_target, energy_target = PHYSIOLOGICAL_TARGETS.get(state, PHYSIOLOGICAL_TARGETS["maintenance"])
     dmi_kg = round(weight_kg * BASE_DMI_PERCENT_OF_BODYWEIGHT * multiplier, 3)
     return {
@@ -230,12 +278,36 @@ def barn_daily_blend(*, barn_id: int) -> dict:
             "feasible": False,
             "reason": "ما فيه رؤوس نشطة بهذي الحظيرة عندها وزن مسجَّل — سجّل وزن الرؤوس أولاً.",
             "animals_included": 0, "animals_skipped": skipped_no_weight,
+            "breakdown": {}, "nursing_excluded": 0,
         }
 
-    requirements = [
-        daily_requirement(weight_kg=a.weight, state=infer_physiological_state(a))
-        for a in with_weight
-    ]
+    # تفصيل حسب الفئة (بند إضافي 218) — بدل ما يُرمى الاحتياج الفردي
+    # بمجرد ما يُجمَع، يُحفَظ مصنَّفاً حسب الحالة الفسيولوجية عشان
+    # التقرير يقدر يقولك "كم رأس نمو، كم فحل فعّال، كم حمل متأخر..."
+    # مو رقم إجمالي واحد بس. المواليد على حليب أمهم (`nursing_newborn`)
+    # تُستثنى كلياً من حساب العلف الصلب — تُعدّ بس، ما تدخل مجموع DMI.
+    breakdown: dict[str, dict] = {}
+    requirements = []
+    nursing_excluded = 0
+    for a in with_weight:
+        state = infer_physiological_state(a)
+        req = daily_requirement(weight_kg=a.weight, state=state)
+        bucket = breakdown.setdefault(state, {"count": 0, "daily_dry_matter_kg": 0.0})
+        bucket["count"] += 1
+        if state == "nursing_newborn":
+            nursing_excluded += 1
+            continue
+        bucket["daily_dry_matter_kg"] = round(bucket["daily_dry_matter_kg"] + req["daily_dry_matter_kg"], 3)
+        requirements.append(req)
+
+    if not requirements:
+        return {
+            "feasible": False,
+            "reason": "كل رؤوس هذي الحظيرة (النشطة وعندها وزن) لسا على حليب أمهاتهم — ما فيه احتياج علف صلب يُحسب.",
+            "animals_included": 0, "animals_skipped": skipped_no_weight,
+            "breakdown": breakdown, "nursing_excluded": nursing_excluded,
+        }
+
     total_dmi = sum(r["daily_dry_matter_kg"] for r in requirements)
     target_protein = sum(r["target_protein_percent"] * r["daily_dry_matter_kg"] for r in requirements) / total_dmi
     target_energy = sum(r["target_energy_kcal_per_kg"] * r["daily_dry_matter_kg"] for r in requirements) / total_dmi
@@ -248,8 +320,10 @@ def barn_daily_blend(*, barn_id: int) -> dict:
     }
     usable_feeds = Feed.query.filter_by(status="active").all()
     result = optimize_blend(requirement=aggregate_requirement, feeds=usable_feeds)
-    result["animals_included"] = len(with_weight)
+    result["animals_included"] = len(requirements)
     result["animals_skipped"] = skipped_no_weight
+    result["breakdown"] = breakdown
+    result["nursing_excluded"] = nursing_excluded
     return result
 
 

@@ -556,7 +556,8 @@
       {% if current_user.has_permission('feed.view') %}
       {% set _feed_endpoints = ['feed.items_list', 'feed.items_new', 'feed.items_edit', 'feed.movements_list',
                                  'feed.movements_new', 'feed.barn_plans_list', 'feed.barn_plans_new',
-                                 'feed.calculator', 'feed.fcr_report', 'feed.optimizer', 'warehouses.warehouses_list'] %}
+                                 'feed.calculator', 'feed.fcr_report', 'feed.optimizer', 'feed.barn_report',
+                                 'warehouses.warehouses_list'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _feed_endpoints else '' }}>
         <summary>{{ nav_icon('feed') }}{{ _('العلف') }}</summary>
         <div class="drawer-grid">
@@ -566,6 +567,7 @@
         <a class="drawer-link" href="{{ url_for('feed.calculator') }}"><span class="drawer-text"><b>{{ _('حاسبة العلف') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('feed.fcr_report') }}"><span class="drawer-text"><b>{{ _('معدل التحويل الغذائي (FCR)') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('feed.optimizer') }}"><span class="drawer-text"><b>{{ _('موازِن العليقة التلقائي') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('feed.barn_report') }}"><span class="drawer-text"><b>{{ _('تقرير علف الحظيرة') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('warehouses.warehouses_list') }}"><span class="drawer-text"><b>{{ _('المستودعات') }}</b></span></a>
         </div>
       </details>

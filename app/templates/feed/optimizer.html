@@ -19,7 +19,7 @@
     <label>{{ _('الحالة الفسيولوجية (اتركه فاضي ليخمّنه النظام من دورة الإنتاج)') }}</label>
     <select name="state">
       <option value="">{{ _('تخمين تلقائي') }}</option>
-      {% for s in states %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+      {% for s in states %}<option value="{{ s }}">{{ state_labels.get(s, s) }}</option>{% endfor %}
     </select>
     <button class="btn" type="submit">{{ _('وازِن الخلطة') }}</button>
   </form>

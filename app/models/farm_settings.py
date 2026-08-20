@@ -141,6 +141,12 @@ class FarmSettings(db.Model):
     ca_phosphorus_tolerance = db.Column(db.Float, default=0.5, nullable=False)
     abortion_barn_monitor_days = db.Column(db.Integer, default=14, nullable=False)
 
+    # تقرير علف الحظيرة المفصَّل حسب الفئة (بند إضافي 218) — بطلبك
+    # الصريح: أرقام اجتهادية بس قابلة للتعديل من الإعدادات، مو مثبَّتة
+    # بالكود.
+    weaning_solid_feed_age_days = db.Column(db.Integer, default=45, nullable=False)
+    ram_breeding_season_window_days = db.Column(db.Integer, default=60, nullable=False)
+
     # جدولة تلقائية حقيقية (بند إضافي 78، 2026-08-01) — يمنع تكرار توليد
     # المهام اليومية أكثر من مرة بنفس اليوم لو أكثر من عملية worker
     # بغانيكورن حاولت بنفس الوقت (حراسة بسيطة، مو قفل موزَّع مثالي —

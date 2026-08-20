@@ -28,6 +28,8 @@ def _base_form(fs):
         "colostrum_window_hours": fs.colostrum_window_hours,
         "placenta_check_hours": fs.placenta_check_hours,
         "postpartum_mother_followup_days": fs.postpartum_mother_followup_days,
+        "weaning_solid_feed_age_days": fs.weaning_solid_feed_age_days,
+        "ram_breeding_season_window_days": fs.ram_breeding_season_window_days,
     }
 
 

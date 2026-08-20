@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>{{ _('تقرير علف الحظيرة') }}</h2>
+    <a class="btn light" href="{{ url_for('feed.optimizer') }}">{{ _('موازِن العليقة (رأس واحد)') }}</a>
+  </div>
+  <p style="font-size:12px; color:#888;">
+    {{ _('احتياج الحظيرة مفصَّلاً حسب فئة كل رأس (نمو، حمل متأخر، رضاعة، فحل بخدمة فعلية، عادي) — بدل رقم إجمالي واحد يخفي التفاصيل. النسب والأعمار (فطام العلف الصلب، نافذة موسم التقريع) قابلة للتعديل من الإعدادات.') }}
+  </p>
+  <form method="get" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+    <label style="margin:0;">{{ _('اختر حظيرة') }}</label>
+    <select name="barn_id" onchange="this.form.submit()" style="width:auto; margin:0;">
+      <option value="">-- {{ _('اختر') }} --</option>
+      {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if barn and barn.id == b.id }}>{{ b.barn_name }}{{ ' (' + b.barn_type + ')' if b.barn_type else '' }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+
+{% if barn and result %}
+{% if not result.feasible %}
+<div class="card">
+  <p style="color:var(--danger,#c0392b);">⚠️ {{ result.reason }}</p>
+</div>
+{% endif %}
+
+{% if result.breakdown %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('التفصيل حسب الفئة') }}</h3>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('الفئة') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('احتياج مادة جافة يومي') }}</th></tr>
+    {% for state, row in result.breakdown.items() %}
+    <tr>
+      <td>{{ state_labels.get(state, state) }}</td>
+      <td>{{ row.count }}</td>
+      <td>{% if state == 'nursing_newborn' %}<span style="color:var(--muted);">{{ _('على حليب أمه — بدون علف صلب') }}</span>{% else %}{{ row.daily_dry_matter_kg }} {{ _('كجم') }}{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% if result.nursing_excluded %}
+  <p style="font-size:12px; color:var(--muted); margin-top:8px;">{{ _('%(n)s مولود مستثنى كلياً من الحساب أعلاه — يعتمد على حليب أمه لحد سن الفطام المحدَّد بالإعدادات.', n=result.nursing_excluded) }}</p>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if result.feasible %}
+<div class="card">
+  <h3 style="font-size:15px;">{{ _('الخلطة المقترحة لكل الحظيرة') }}</h3>
+  <p style="font-size:13px; color:var(--muted);">{{ _('إجمالي مادة جافة يومياً:') }} {{ result.daily_dry_matter_kg }} {{ _('كجم') }} — {{ _('عدد الرؤوس المحسوبة:') }} {{ result.animals_included }}{% if result.animals_skipped %} ({{ _('%(n)s رأس بدون وزن مسجَّل استُبعد', n=result.animals_skipped) }}){% endif %}</p>
+  <div class="table-scroll">
+<table>
+    <tr><th>{{ _('المكوّن') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('النسبة') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('المخزون') }}</th></tr>
+    {% for row in result.blend %}
+    <tr>
+      <td>{{ row.feed.name }}</td>
+      <td>{{ row.quantity_kg }} {{ _('كجم') }}</td>
+      <td>{{ row.percent }}%</td>
+      <td>{{ row.cost }}</td>
+      <td>{% if row.stock_ok %}<span class="badge on">{{ _('كافٍ') }}</span>{% else %}<span class="badge off">{{ _('ناقص') }}</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <p style="font-size:14px; font-weight:800; margin-top:10px;">{{ _('إجمالي التكلفة اليومية للحظيرة:') }} {{ result.total_daily_cost }}</p>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
