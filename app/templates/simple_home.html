@@ -40,7 +40,7 @@
     </a>
     {% endif %}
     {% if user.has_permission('animals.view') %}
-    <a class="simple-btn" href="{{ url_for('core.animals_list') }}">
+    <a class="simple-btn" href="{{ url_for('core.animals_list_simple') }}">
       <span class="emoji">🐑</span>
       <span><b>{{ _('الحيوانات') }}</b><small>{{ _('شوف كل رؤوسك') }}</small></span>
     </a>
@@ -51,16 +51,36 @@
       <span><b>{{ _('معداتي') }}</b><small>{{ _('أخذ أو استرجاع معدة') }}</small></span>
     </a>
     {% endif %}
-    <a class="simple-btn" href="{{ url_for('team.tasks_list') }}">
+    <a class="simple-btn" href="{{ url_for('core.today') }}">
       <span class="emoji">✅</span>
       <span><b>{{ _('مهامي') }}</b><small>{{ _('شوف وأنجز مهامك') }}</small></span>
     </a>
-    <a class="simple-btn" href="{{ url_for('team.reports_list') }}">
-      <span class="emoji">📋</span>
-      <span><b>{{ _('البلاغات') }}</b><small>{{ _('بلّغ عن أي شي') }}</small></span>
+  </div>
+</div>
+
+{% if user.has_permission('reports.submit') %}
+<div class="card">
+  <h3 style="font-size:15px; margin:0 0 10px;">📋 {{ _('بلّغ عن مشكلة') }}</h3>
+  <div class="simple-grid">
+    <a class="simple-btn" style="background:var(--danger,#c0392b); color:#fff; border-color:transparent;" href="{{ url_for('team.worker_quick_report', category='emergency') }}">
+      <span class="emoji">🚨</span>
+      <span><b>{{ _('حالة طارئة') }}</b><small style="color:rgba(255,255,255,.85);">{{ _('تحتاج تدخّل سريع') }}</small></span>
+    </a>
+    <a class="simple-btn" href="{{ url_for('team.worker_quick_report', category='health') }}">
+      <span class="emoji">🩺</span>
+      <span><b>{{ _('فحص / حالة صحية') }}</b></span>
+    </a>
+    <a class="simple-btn" href="{{ url_for('team.worker_quick_report', category='isolation') }}">
+      <span class="emoji">🚧</span>
+      <span><b>{{ _('نقل إلى العزل') }}</b></span>
+    </a>
+    <a class="simple-btn" href="{{ url_for('team.worker_quick_report', category='feed') }}">
+      <span class="emoji">🌾</span>
+      <span><b>{{ _('تغذية / عليقة') }}</b></span>
     </a>
   </div>
 </div>
+{% endif %}
 
 <div class="card" style="text-align:center;">
   <form method="post" action="{{ url_for('core.set_ui_level') }}">

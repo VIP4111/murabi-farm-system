@@ -328,6 +328,18 @@ def animals_list():
     return render_template("animals_list.html", **_animals_list_context(bulk_mode=False))
 
 
+@core_bp.route("/animals/simple")
+@login_required
+@require_permission("animals.view")
+def animals_list_simple():
+    """سجل الحيوانات — واجهة "بسيط جداً" (بند إضافي 227): بطاقات كبيرة
+    بصورة/أيقونة بدل جدول بأعمدة، بدون فلاتر. نفس بيانات `animals_list`
+    (كل الرؤوس النشطة)، بس عرض مختلف بالكامل."""
+    animals = animal_filters_service.get_filtered("all")
+    alert_counts = alerts_service.alert_counts_by_animal()
+    return render_template("animals_list_simple.html", animals=animals, alert_counts=alert_counts)
+
+
 @core_bp.route("/animals/bulk")
 @login_required
 @require_permission("animals.view")

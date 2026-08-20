@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .a-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:12px;}
+  .a-card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    box-shadow:0 6px 16px rgba(70,45,25,.06); display:flex; flex-direction:column; text-decoration:none; color:var(--text);
+    position:relative;
+  }
+  .a-photo{width:100%; aspect-ratio:1/1; object-fit:cover; background:var(--bg);}
+  .a-photo-placeholder{width:100%; aspect-ratio:1/1; background:var(--bg); display:grid; place-items:center; font-size:40px;}
+  .a-body{padding:10px; text-align:center;}
+  .a-no{font-weight:800; font-size:16px;}
+  .a-status{font-size:12px; color:var(--muted); margin-top:2px;}
+  .a-alert{position:absolute; top:8px; left:8px; background:var(--danger,#c0392b); color:#fff; border-radius:999px; font-size:12px; font-weight:800; padding:2px 8px;}
+</style>
+
+<div class="card">
+  <button class="btn light" type="button" onclick="window.location='{{ url_for('core.home') }}'">→ {{ _('الرئيسية') }}</button>
+  <h2 style="margin-top:12px;">🐑 {{ _('الحيوانات') }}</h2>
+</div>
+
+<div class="card">
+  <div class="a-grid">
+    {% for a in animals %}
+    <a class="a-card" href="{{ url_for('core.animal_detail', animal_id=a.id) }}">
+      {% if alert_counts.get(a.id) %}<span class="a-alert">⚠️ {{ alert_counts[a.id] }}</span>{% endif %}
+      {% if a.image_url %}<img class="a-photo" src="{{ a.image_url }}" alt="{{ a.animal_no }}">{% else %}<div class="a-photo-placeholder">{{ '🦤' if a.species == 'ostrich' else '🐑' }}</div>{% endif %}
+      <div class="a-body">
+        <div class="a-no">{{ a.name or a.animal_no }}</div>
+        <div class="a-status">{{ a.status|ar_status }}</div>
+      </div>
+    </a>
+    {% else %}
+    <p class="empty">{{ _('ما فيه حيوانات مسجَّلة بعد.') }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
