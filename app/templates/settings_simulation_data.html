@@ -2,10 +2,30 @@
 {% block content %}
 <div class="card">
   <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
-  <h2 style="margin-top:12px;">{{ _('تنظيف بيانات المحاكاة') }}</h2>
+  <h2 style="margin-top:12px;">{{ _('بيانات العرض التجريبي') }}</h2>
   <div class="notice">
-    {{ _('هذي الأداة تحذف حصراً السجلات اللي ولّدها أمر "المحاكاة التشغيلية" (flask simulate-farm-month) — يُعرف بدقة عبر رقم حيوان يبدأ بـ SIM- ومهام مصدرها FarmSimulation. صفر لمس لأي بيانات حقيقية بمزرعتك.') }}
+    {{ _('عبّي المزرعة ببيانات واقعية كاملة (رؤوس، مهام، أمراض، تقريع) عشان تعرض التطبيق شغّال لأي حد — كلها موسومة برقم حيوان يبدأ بـ SIM- ومهام مصدرها FarmSimulation، ما تلمس أي بيانات حقيقية، وتقدر تحذفها كاملة بضغطة من نفس الصفحة بعد ما تخلص العرض.') }}
   </div>
+</div>
+
+<div class="card" style="max-width:480px;">
+  <h3 style="font-size:15px;">▶️ {{ _('تشغيل عرض تجريبي') }}</h3>
+  <form method="post" action="{{ url_for('core.simulation_data_run') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('عدد أيام المحاكاة') }}</label>
+    <input name="days" type="number" min="1" max="90" value="30">
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+      <input type="checkbox" name="send_email" value="1" style="width:auto;">
+      {{ _('أرسل ملخص التقرير لبريدي بعد التشغيل (اختياري)') }}
+    </label>
+    <label>{{ _('اكتب العبارة التالية بالضبط للتأكيد:') }} <code>{{ _('تشغيل بيانات تجريبية') }}</code></label>
+    <input name="confirm_phrase" required placeholder="{{ _('تشغيل بيانات تجريبية') }}">
+    <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+      <input type="checkbox" name="confirm_check" value="1" style="width:auto;" required>
+      {{ _('فاهم إن هذا يكتب بيانات وهمية فعلية بقاعدة البيانات، وبيني وبين نفسي أقدر أحذفها لاحقاً من هذي الصفحة.') }}
+    </label>
+    <button class="btn" type="submit">{{ _('تشغيل الآن (قد يأخذ لحظات)') }}</button>
+  </form>
 </div>
 
 <div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">

@@ -1698,6 +1698,47 @@ def simulation_data_purge():
     return render_template("settings_simulation_data.html", preview=preview, result=result)
 
 
+@core_bp.route("/settings/simulation-data/run", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def simulation_data_run():
+    """وضع عرض تجريبي (بند إضافي 211) — يشغّل نفس محاكاة `flask
+    simulate-farm-month` من زر بالإعدادات بدل الـCLI، لتعبئة المزرعة
+    ببيانات واقعية كاملة (رؤوس SIM-، مهام، أمراض، تقريع) بضغطة وحدة،
+    عشان تُعرض للزوار بدون لمس بيانات المزرعة الحقيقية — نفس بادئة
+    SIM- المستخدمة بأداة التنظيف (بند 181)، فزر "حذف بيانات المحاكاة"
+    بنفس الصفحة يمسحها بعدين بأمان. مقصور على المالك ويتطلب تأكيداً
+    صريحاً — نفس مستوى حذر أي إجراء يكتب بيانات فعلية بحجم كبير."""
+    if current_user.role.name != "owner":
+        abort(403)
+    if request.form.get("confirm_phrase") != "تشغيل بيانات تجريبية" or request.form.get("confirm_check") != "1":
+        flash("لازم تكتب العبارة بالضبط وتؤشّر على التأكيد.", "error")
+        return redirect(url_for("core.simulation_data_purge"))
+
+    from app.core.simulation_service import run_farm_month_simulation
+    try:
+        days = int(request.form.get("days") or 30)
+    except ValueError:
+        days = 30
+    days = max(1, min(days, 90))
+    send_email = request.form.get("send_email") == "1"
+
+    result = run_farm_month_simulation(days, send_email=send_email)
+    if not result["ok"]:
+        flash(result["message"], "error")
+        return redirect(url_for("core.simulation_data_purge"))
+
+    db.session.add(AuditLog(
+        actor_user_id=current_user.id, action="simulation_data.run",
+        entity_type="Animal", details=str(result["counters"]),
+    ))
+    db.session.commit()
+    flash(f"تم تشغيل العرض التجريبي ({days} يوم) — {result['counters']['animals_purchased']} رأس، "
+          f"{result['counters']['matings']} تقريع، {result['counters']['diseases_opened']} حالة مرضية. "
+          f"تقدر تحذفها لاحقاً من نفس الصفحة.", "success")
+    return redirect(url_for("core.simulation_data_purge"))
+
+
 # ---------- شاشة متابعة مبسّطة (بند إضافي 106) ----------
 
 FAMILY_VIEW_ROLES = [
