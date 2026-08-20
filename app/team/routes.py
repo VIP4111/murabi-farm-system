@@ -523,13 +523,15 @@ def task_detail(task_id):
         abort(403)
     ctx = tsvc.task_rich_context(task)
     barns = suggested_barn_id = None
-    if task.task_type == "barn_physiology_move":
+    if task.task_type in ("barn_physiology_move", "move_to_pregnant_barn"):
         from app.models import Barn
         barns = Barn.query.order_by(Barn.barn_name).all()
-        if task.source_type and ":" in task.source_type:
+        if task.task_type == "barn_physiology_move" and task.source_type and ":" in task.source_type:
             target_barn_type = task.source_type.split(":", 1)[1]
-            suggested_barn = Barn.query.filter_by(barn_type=target_barn_type).order_by(Barn.id).first()
-            suggested_barn_id = suggested_barn.id if suggested_barn else None
+        else:
+            target_barn_type = "حوامل"
+        suggested_barn = Barn.query.filter_by(barn_type=target_barn_type).order_by(Barn.id).first()
+        suggested_barn_id = suggested_barn.id if suggested_barn else None
     return render_template("team/task_detail.html", task=task, ctx=ctx, today=date.today(),
                             failure_reasons=tsvc.FAILURE_REASONS,
                             failure_reason_labels=tsvc.FAILURE_REASON_LABELS,

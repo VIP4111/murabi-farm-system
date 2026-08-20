@@ -329,7 +329,7 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
                              entity_type="Task", entity_id=task.id))
 
     if task.task_type == "move_to_pregnant_barn" and task.animal_id:
-        _move_to_pregnant_barn(task)
+        _move_to_pregnant_barn(task, chosen_barn_id=barn_id)
 
     if task.task_type == "barn_physiology_move" and task.animal_id:
         _move_barn_physiology(task, chosen_barn_id=barn_id)
@@ -423,16 +423,32 @@ def _maybe_close_protocol_application(task: Task) -> None:
     )
 
 
-def _move_to_pregnant_barn(task: Task) -> None:
-    """نقل فعلي لحظيرة الحوامل (بند إضافي، 2026-07-28) — يُنفَّذ فقط
-    عند إنجاز مهمة "نقل لحظيرة الحوامل" نفسها (نفس نمط
-    `complete_task_via_treatment`: إجراء خاص يشغّله إنجاز نوع مهمة
-    معيّن)، بعد ما العزل والفحص خلصا فعلياً حسب تقدير الدكتور/المالك."""
+def _move_to_pregnant_barn(task: Task, *, chosen_barn_id=None) -> None:
+    """نقل فعلي لحظيرة الحوامل (بند إضافي، 2026-07-28، صار قابلاً لاختيار
+    حظيرة بديلة + رفض واضح بند إضافي 217) — يُنفَّذ فقط عند إنجاز مهمة
+    "نقل لحظيرة الحوامل" نفسها، بعد ما العزل والفحص خلصا فعلياً حسب
+    تقدير الدكتور/المالك.
+
+    **إصلاح بند 217**: قبل هذا البند، لو ما فيه حظيرة "حوامل" أصلاً،
+    الدالة ترجع بصمت والمهمة تظل تتعلّم "منجزة" رغم إن الحيوان ما انتقل
+    فعلياً — نجاح كاذب. الحين لو ما فيه حظيرة (ولا اختار العامل بديلة)،
+    نرفع خطأ صريح قبل ما `complete_task` يعلّم المهمة منجزة، فتبقى
+    مفتوحة لين تتوفر حظيرة فعلية."""
     from app.models import Barn
+
+    if chosen_barn_id:
+        barn = Barn.query.get(chosen_barn_id)
+        if barn:
+            task.animal.barn_id = barn.id
+            db.session.add(task.animal)
+            return
 
     barn = Barn.query.filter_by(barn_type="حوامل").order_by(Barn.id).first()
     if not barn:
-        return
+        raise TaskStateError(
+            'ما فيه حظيرة بنوع "حوامل" بالنظام — أنشئها من شاشة الحظائر '
+            "أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+        )
     task.animal.barn_id = barn.id
     db.session.add(task.animal)
 

@@ -95,7 +95,7 @@
   <h3 style="font-size:15px;">✅ {{ _('إنجاز المهمة') }}</h3>
   <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" enctype="multipart/form-data">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    {% if task.task_type == "barn_physiology_move" and barns %}
+    {% if task.task_type in ("barn_physiology_move", "move_to_pregnant_barn") and barns %}
     <label>{{ _('أي حظيرة نقلته لها فعلياً؟') }}</label>
     <select name="barn_id">
       {% for b in barns %}

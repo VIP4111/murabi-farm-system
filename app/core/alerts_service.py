@@ -361,7 +361,12 @@ def _barn_physiology_target_missing() -> list[dict]:
     إضافي 216) — `barn_physiology_service.generate_barn_move_tasks` كانت
     تتجاهل بصمت أي رأس محتاج حظيرة "حامل - الشهور الأخيرة"/"رضاعة" لو
     ما فيه حظيرة بهذا النوع أصلاً، بدون أي تنبيه يخبرك إنك تحتاج تنشئها
-    — نفس مبدأ `_isolation_without_barn` أعلاه بالضبط، لنفس نوع الفجوة."""
+    — نفس مبدأ `_isolation_without_barn` أعلاه بالضبط، لنفس نوع الفجوة.
+
+    وسّعتها ببند إضافي 217 لتغطي حظيرة "حوامل" كمان — نفس الفجوة بالضبط
+    كانت موجودة بمهمة "نقل لحظيرة الحوامل" (`_move_to_pregnant_barn`)،
+    واكتُشفت بفحص شامل لكل الأماكن اللي فيها نفس نمط "تجاهل صامت لسجل
+    ناقص"."""
     from app.core import barn_physiology_service as bps
 
     today = date.today()
@@ -382,7 +387,44 @@ def _barn_physiology_target_missing() -> list[dict]:
                       "يقدر يقترح نقل هالرؤوس تلقائياً (بانتظار موافقة الدكتور دائماً).",
             "urgent": False, "animal_id": None, "barn_id": None,
         })
+
+    open_pregnant_move_tasks = Task.query.filter(
+        Task.task_type == "move_to_pregnant_barn",
+        Task.status.in_(("suggested", "pending", "in_progress")),
+    ).count()
+    if open_pregnant_move_tasks and not Barn.query.filter_by(barn_type="حوامل").first():
+        alerts.append({
+            "category": "حظيرة هدف ناقصة", "icon": "🏚️",
+            "label": f"{open_pregnant_move_tasks} مهمة \"نقل لحظيرة الحوامل\" بانتظار حظيرة \"حوامل\" غير موجودة",
+            "detail": "أنشئ حظيرة بنوع \"حوامل\" من شاشة الحظائر — بدونها المهمة ما تقدر تنقل الرأس فعلياً "
+                      "لما تُنجَز (تقدر تختار حظيرة بديلة يدوياً وقت الإنجاز لو ما تبي تنشئ هذا النوع).",
+            "urgent": False, "animal_id": None, "barn_id": None,
+        })
     return alerts
+
+
+def _weight_schedule_missing_reference_date() -> list[dict]:
+    """رأس مستثنى بصمت من جدولة "أوزان متأخرة" (بند إضافي 217، اكتشف
+    بفحص شامل) — `scheduled_care_service.generate_overdue_weight_tasks`
+    تحتاج تاريخاً مرجعياً (آخر وزن، أو ولادة/شراء/دخول لو ما فيه وزن
+    أصلاً) عشان تحسب "من متى ما اتوزن" — لو الرأس ما عنده أي وزن مسجَّل
+    ولا أي تاريخ من الثلاثة، الدالة تتجاهله للأبد بصمت، بدون أي تنبيه."""
+    animals = Animal.query.filter_by(status="active", species="sheep_goat").all()
+    missing = [
+        a for a in animals
+        if not AnimalWeight.query.filter_by(animal_id=a.id).first()
+        and not (a.birth_date or a.purchase_date or a.entry_date)
+    ]
+    if not missing:
+        return []
+    return [{
+        "category": "بيانات ناقصة", "icon": "⚖️",
+        "label": f"{len(missing)} رأس ما راح يدخل جدولة الأوزان المتأخرة إطلاقاً",
+        "detail": "ما عندها وزن مسجَّل ولا تاريخ ولادة/شراء/دخول — بدون أي تاريخ مرجعي، "
+                  "النظام ما يقدر يحسب \"من متى ما اتوزنت\"، فتنبيه الوزن المتأخر ما يشتغل "
+                  "لها أبداً. أكمّل تاريخ الشراء/الدخول أو سجّل وزناً أول من شاشة تعديل الحيوان.",
+        "urgent": False, "animal_id": None, "barn_id": None,
+    }]
 
 
 def _isolation_without_barn() -> list[dict]:
@@ -394,21 +436,43 @@ def _isolation_without_barn() -> list[dict]:
     بدون `barn_id` — بدل فحص "هل توجد حظيرة عزل" بشكل عام (كان يصير
     تنبيهاً دائماً حتى لمزرعة ما احتاجت عزل بعد، بدون أي فايدة فعلية)."""
     from app.models import Task
+    alerts = []
     rows = (Task.query.filter(
         Task.task_type == "isolation_check", Task.barn_id.is_(None),
         Task.status.in_(("suggested", "pending", "in_progress", "postponed")),
     ).all())
-    if not rows:
-        return []
-    animal_ids = sorted({t.animal_id for t in rows if t.animal_id})
-    return [{
-        "category": "عزل بدون حظيرة مصنّفة", "icon": "🚧",
-        "label": f"{len(animal_ids)} رأس بمهام عزل بدون حظيرة عزل فعلية",
-        "detail": "ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً "
-                  "لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من "
-                  "شاشة الحظائر عشان العزل التلقائي يشتغل صح للولادات الجاية.",
-        "urgent": True, "animal_id": None, "barn_id": None,
-    }]
+    if rows:
+        animal_ids = sorted({t.animal_id for t in rows if t.animal_id})
+        alerts.append({
+            "category": "عزل بدون حظيرة مصنّفة", "icon": "🚧",
+            "label": f"{len(animal_ids)} رأس بمهام عزل بدون حظيرة عزل فعلية",
+            "detail": "ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً "
+                      "لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من "
+                      "شاشة الحظائر عشان العزل التلقائي يشتغل صح للولادات الجاية.",
+            "urgent": True, "animal_id": None, "barn_id": None,
+        })
+
+    # امتداد بند إضافي 217 — نفس الفجوة بالضبط عند الإجهاض:
+    # `isolation_service.record_abortion` تعزل الرأس فقط لو فيه حظيرة
+    # "عزل" فعلياً، وإلا تتركه بحظيرته العادية بصمت (بدون barn_id=None
+    # بمهمة العينات، فالفحص أعلاه ما يلتقطها) — نتحقق مباشرة من وجود
+    # مهام "سحب عيّنات إجهاض" مفتوحة بدون حظيرة عزل موجودة أصلاً.
+    abortion_rows = Task.query.filter(
+        Task.task_type == "abortion_sampling",
+        Task.status.in_(("suggested", "pending", "in_progress", "postponed")),
+    ).all()
+    if abortion_rows and not Barn.query.filter_by(barn_type="عزل").first():
+        animal_ids2 = sorted({t.animal_id for t in abortion_rows if t.animal_id})
+        alerts.append({
+            "category": "عزل بدون حظيرة مصنّفة", "icon": "🚧",
+            "label": f"{len(animal_ids2)} رأس أجهض بدون عزل فعلي — ما فيه حظيرة عزل",
+            "detail": "ما فيه حظيرة بنوع \"عزل\" بالنظام — الرأس المُجهِض ما انتقل لعزل طبي "
+                      "منفصل ولسا يخالط باقي القطيع رغم احتمال عدوى. أنشئ حظيرة بنوع \"عزل\" "
+                      "من شاشة الحظائر ثم انقل الرأس يدوياً.",
+            "urgent": True, "animal_id": None, "barn_id": None,
+        })
+
+    return alerts
 
 
 def _failed_tasks_pending_review() -> list[dict]:
@@ -581,7 +645,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
         + _failed_tasks_pending_review() + _isolation_without_barn()
         + _incomplete_animal_data() + _stalled_workflow(fs)
-        + _barn_physiology_target_missing()
+        + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
