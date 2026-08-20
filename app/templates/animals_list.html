@@ -110,7 +110,7 @@
         </td>
         <td>
           {% if alert_counts.get(a.id) %}
-          <a class="badge off" href="{{ url_for('core.animal_detail', animal_id=a.id) }}" title="{{ _('اضغط لتفاصيل الرأس') }}">⚠️ {{ alert_counts[a.id] }}</a>
+          <a class="badge off" href="{{ url_for('core.animal_detail', animal_id=a.id) }}#alerts" title="{{ _('اضغط لعرض كل تنبيهات هذا الرأس') }}">⚠️ {{ alert_counts[a.id] }}</a>
           {% else %}<span style="color:var(--muted);">-</span>{% endif %}
         </td>
       </tr>

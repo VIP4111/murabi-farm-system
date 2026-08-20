@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-20 21:03+0300\n"
+"POT-Creation-Date: 2026-08-20 21:43+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1093,13 +1093,13 @@ msgstr "वजन बेहतर हो रहा है — बिक्री
 msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع"
 msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ लक्ष्य %(target)s%% — बेचने का अच्छा समय"
 
-#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:145
-#: app/templates/animal_detail.html:161
+#: app/core/smart_sale_service.py:205 app/templates/animal_detail.html:160
+#: app/templates/animal_detail.html:176
 msgid "ترفض إرضاع مولودها"
 msgstr "अपनी संतान को दूध पिलाने से इनकार करती है"
 
-#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:146
-#: app/templates/animal_detail.html:162
+#: app/core/smart_sale_service.py:207 app/templates/animal_detail.html:161
+#: app/templates/animal_detail.html:177
 msgid "الضرع/الدرة تالفة"
 msgstr "थन क्षतिग्रस्त"
 
@@ -1434,7 +1434,7 @@ msgstr "अवधि का शुद्ध"
 msgid "تحصينات بالفترة"
 msgstr "अवधि में टीकाकरण"
 
-#: app/reports/report_service.py:119 app/templates/animal_detail.html:55
+#: app/reports/report_service.py:119 app/templates/animal_detail.html:70
 msgid "أمراض مفتوحة حالياً"
 msgstr "वर्तमान में खुले रोग"
 
@@ -1475,7 +1475,7 @@ msgid "الرقم"
 msgstr "क्रमांक"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
-#: app/templates/animal_detail.html:78 app/templates/animal_detail.html:299
+#: app/templates/animal_detail.html:93 app/templates/animal_detail.html:314
 #: app/templates/animal_form.html:62
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
@@ -1485,13 +1485,13 @@ msgstr "लिंग"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:253
 #: app/reports/report_service.py:296 app/reports/report_service.py:378
-#: app/templates/animal_detail.html:201 app/templates/animal_detail.html:215
-#: app/templates/animal_detail.html:232 app/templates/animal_detail.html:246
-#: app/templates/animal_detail.html:261 app/templates/animal_detail.html:272
-#: app/templates/animal_detail.html:299 app/templates/animal_detail.html:319
-#: app/templates/animal_detail.html:351 app/templates/animal_detail.html:366
-#: app/templates/animal_detail.html:382 app/templates/animal_detail.html:397
-#: app/templates/animal_detail.html:407 app/templates/animal_detail.html:437
+#: app/templates/animal_detail.html:216 app/templates/animal_detail.html:230
+#: app/templates/animal_detail.html:247 app/templates/animal_detail.html:261
+#: app/templates/animal_detail.html:276 app/templates/animal_detail.html:287
+#: app/templates/animal_detail.html:314 app/templates/animal_detail.html:334
+#: app/templates/animal_detail.html:366 app/templates/animal_detail.html:381
+#: app/templates/animal_detail.html:397 app/templates/animal_detail.html:412
+#: app/templates/animal_detail.html:422 app/templates/animal_detail.html:452
 #: app/templates/animal_workflow.html:148
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:241
@@ -1558,12 +1558,12 @@ msgstr "अवधि में पुष्टित गर्भावस्थ
 msgid "نسبة نجاح التقريع→حمل"
 msgstr "संगमन→गर्भावस्था सफलता दर"
 
-#: app/reports/report_service.py:211 app/templates/animal_detail.html:83
+#: app/reports/report_service.py:211 app/templates/animal_detail.html:98
 #: app/templates/animal_form.html:108
 msgid "تاريخ الولادة"
 msgstr "जन्म तिथि"
 
-#: app/reports/report_service.py:211 app/templates/animal_detail.html:81
+#: app/reports/report_service.py:211 app/templates/animal_detail.html:96
 #: app/templates/ostrich/egg_form.html:10
 #: app/templates/ostrich/egg_hatch_form.html:7
 #: app/templates/ostrich/eggs_list.html:23
@@ -1623,7 +1623,7 @@ msgid "الحيوان"
 msgstr "जानवर"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/animal_detail.html:437 app/templates/finance/form.html:33
+#: app/templates/animal_detail.html:452 app/templates/finance/form.html:33
 #: app/templates/finance/list.html:36
 msgid "المبلغ"
 msgstr "राशि"
@@ -1690,7 +1690,7 @@ msgstr "खरीद की आवश्यकता वाली वस्त�
 msgid "فترة قياس الاستهلاك (أيام)"
 msgstr "खपत मापन अवधि (दिन)"
 
-#: app/reports/report_service.py:477 app/templates/animal_detail.html:437
+#: app/reports/report_service.py:477 app/templates/animal_detail.html:452
 #: app/templates/barn_form.html:9 app/templates/barns_list.html:10
 #: app/templates/equipment/asset_form.html:8
 #: app/templates/equipment/assets_list.html:14
@@ -1913,7 +1913,7 @@ msgstr "पशु विवरण"
 msgid "مولود بالمزرعة"
 msgstr "फार्म पर जन्मा"
 
-#: app/templates/animal_detail.html:4 app/templates/animal_detail.html:438
+#: app/templates/animal_detail.html:4 app/templates/animal_detail.html:453
 #: app/templates/animal_form.html:50 app/templates/animal_form.html:55
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
@@ -1981,69 +1981,78 @@ msgid "خروج من العزل"
 msgstr "अलगाव से बाहर निकलना"
 
 #: app/templates/animal_detail.html:50
+#, python-format
+msgid "تنبيهات هذا الرأس (%(n)s)"
+msgstr "इस जानवर पर अलर्ट (%(n)s)"
+
+#: app/templates/animal_detail.html:59
+msgid "كل تنبيه يختفي لحاله فور ما تسدّ سببه من التبويبات تحت (وزن، صحة، تحصينات...) — القائمة تتحدّث تلقائياً كل ما ترجع للصفحة."
+msgstr "नीचे के टैब (वजन, स्वास्थ्य, टीकाकरण...) से कारण हल करते ही हर अलर्ट अपने आप हट जाता है — जब भी आप इस पेज पर वापस आते हैं सूची अपने आप अपडेट होती है।"
+
+#: app/templates/animal_detail.html:65
 #: app/templates/animals_bulk_purchase.html:23
 #: app/templates/team/report_detail.html:17
 msgid "نعام"
 msgstr "शुतुरमुर्ग"
 
-#: app/templates/animal_detail.html:50
+#: app/templates/animal_detail.html:65
 msgid "الفصيلة — بدون دورة إنتاج (مجترات فقط)"
 msgstr "प्रजाति — उत्पादन चक्र नहीं (केवल जुगाली करने वाले)"
 
-#: app/templates/animal_detail.html:52
+#: app/templates/animal_detail.html:67
 #, python-format
 msgid "مرحلة الدورة (%(n)s/10)"
 msgstr "चक्र चरण (%(n)s/10)"
 
-#: app/templates/animal_detail.html:54
+#: app/templates/animal_detail.html:69
 msgid "آخر وزن مسجّل (كجم)"
 msgstr "अंतिम दर्ज वजन (किग्रा)"
 
-#: app/templates/animal_detail.html:56
+#: app/templates/animal_detail.html:71
 msgid "عدد الولادات المسجّلة"
 msgstr "दर्ज जन्मों की संख्या"
 
-#: app/templates/animal_detail.html:60
+#: app/templates/animal_detail.html:75
 msgid "ملخص"
 msgstr "सारांश"
 
-#: app/templates/animal_detail.html:61
+#: app/templates/animal_detail.html:76
 msgid "التسلسل الزمني"
 msgstr "समयरेखा"
 
-#: app/templates/animal_detail.html:62
+#: app/templates/animal_detail.html:77
 msgid "سجل بيطري"
 msgstr "पशु चिकित्सा रिकॉर्ड"
 
-#: app/templates/animal_detail.html:63 app/templates/animal_detail.html:212
+#: app/templates/animal_detail.html:78 app/templates/animal_detail.html:227
 #: app/templates/base.html:542 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:114
 msgid "الأمراض"
 msgstr "बीमारियाँ"
 
-#: app/templates/animal_detail.html:64 app/templates/animal_detail.html:229
+#: app/templates/animal_detail.html:79 app/templates/animal_detail.html:244
 msgid "التحصينات"
 msgstr "टीकाकरण"
 
-#: app/templates/animal_detail.html:65 app/templates/home.html:122
+#: app/templates/animal_detail.html:80 app/templates/home.html:122
 msgid "التكاثر"
 msgstr "प्रजनन"
 
-#: app/templates/animal_detail.html:66 app/templates/animal_detail.html:296
+#: app/templates/animal_detail.html:81 app/templates/animal_detail.html:311
 msgid "الولادات"
 msgstr "जन्म"
 
-#: app/templates/animal_detail.html:67
+#: app/templates/animal_detail.html:82
 msgid "الأوزان"
 msgstr "वजन"
 
-#: app/templates/animal_detail.html:68
+#: app/templates/animal_detail.html:83
 msgid "الحليب"
 msgstr "दूध"
 
-#: app/templates/animal_detail.html:69 app/templates/animal_detail.html:321
-#: app/templates/animal_detail.html:351 app/templates/animal_detail.html:373
-#: app/templates/animal_detail.html:382 app/templates/animal_workflow.html:94
+#: app/templates/animal_detail.html:84 app/templates/animal_detail.html:336
+#: app/templates/animal_detail.html:366 app/templates/animal_detail.html:388
+#: app/templates/animal_detail.html:397 app/templates/animal_workflow.html:94
 #: app/templates/barn_form.html:27 app/templates/equipment/asset_form.html:23
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
@@ -2073,41 +2082,41 @@ msgstr "दूध"
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
-#: app/templates/animal_detail.html:70 app/templates/base.html:612
+#: app/templates/animal_detail.html:85 app/templates/base.html:612
 #: app/templates/base.html:614 app/templates/finance/list.html:24
 #: app/templates/home.html:140
 msgid "المالية"
 msgstr "वित्त"
 
-#: app/templates/animal_detail.html:75
+#: app/templates/animal_detail.html:90
 msgid "بيانات أساسية"
 msgstr "मूल डेटा"
 
-#: app/templates/animal_detail.html:79 app/templates/animal_form.html:18
+#: app/templates/animal_detail.html:94 app/templates/animal_form.html:18
 msgid "اللون"
 msgstr "रंग"
 
-#: app/templates/animal_detail.html:80 app/templates/feed/ration_detail.html:7
+#: app/templates/animal_detail.html:95 app/templates/feed/ration_detail.html:7
 #: app/templates/feed/ration_form.html:8
 #: app/templates/feed/rations_list.html:10
 msgid "الغرض"
 msgstr "उद्देश्य"
 
-#: app/templates/animal_detail.html:82
+#: app/templates/animal_detail.html:97
 msgid "الأب"
 msgstr "पिता"
 
-#: app/templates/animal_detail.html:84 app/templates/animal_form.html:112
+#: app/templates/animal_detail.html:99 app/templates/animal_form.html:112
 #: app/templates/health/pharmacy_purchase_form.html:9
 #: app/templates/health/pharmacy_purchase_form.html:32
 msgid "تاريخ الشراء"
 msgstr "खरीद तिथि"
 
-#: app/templates/animal_detail.html:85
+#: app/templates/animal_detail.html:100
 msgid "تاريخ الدخول للمزرعة"
 msgstr "फार्म प्रवेश तिथि"
 
-#: app/templates/animal_detail.html:86 app/templates/animal_form.html:87
+#: app/templates/animal_detail.html:101 app/templates/animal_form.html:87
 #: app/templates/animals_list.html:92
 #: app/templates/equipment/assets_list.html:14
 #: app/templates/feed/barn_plan_form.html:7
@@ -2123,16 +2132,16 @@ msgstr "फार्म प्रवेश तिथि"
 msgid "الحظيرة"
 msgstr "बाड़ा"
 
-#: app/templates/animal_detail.html:87 app/templates/animal_workflow.html:122
+#: app/templates/animal_detail.html:102 app/templates/animal_workflow.html:122
 msgid "السعر"
 msgstr "मूल्य"
 
-#: app/templates/animal_detail.html:92
+#: app/templates/animal_detail.html:107
 #, python-format
 msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
 msgstr "%(breed)s नस्ल के लिए देखभाल टिप्पणी:"
 
-#: app/templates/animal_detail.html:93 app/templates/barns_list.html:19
+#: app/templates/animal_detail.html:108 app/templates/barns_list.html:19
 #: app/templates/equipment/items_list.html:26
 #: app/templates/feed/items_list.html:30
 #: app/templates/health/pharmacy_list.html:27
@@ -2140,38 +2149,38 @@ msgstr "%(breed)s नस्ल के लिए देखभाल टिप्�
 msgid "تعديل"
 msgstr "संपादित करें"
 
-#: app/templates/animal_detail.html:101
+#: app/templates/animal_detail.html:116
 msgid "قائمة تحقق الولادة"
 msgstr "जन्म जांच सूची"
 
-#: app/templates/animal_detail.html:106 app/templates/animal_detail.html:126
+#: app/templates/animal_detail.html:121 app/templates/animal_detail.html:141
 msgid "تنفّس طبيعي"
 msgstr "सामान्य श्वास"
 
-#: app/templates/animal_detail.html:107 app/templates/animal_detail.html:127
+#: app/templates/animal_detail.html:122 app/templates/animal_detail.html:142
 msgid "وقف على قوائمه"
 msgstr "अपने पैरों पर खड़ा हुआ"
 
-#: app/templates/animal_detail.html:108 app/templates/animal_detail.html:128
+#: app/templates/animal_detail.html:123 app/templates/animal_detail.html:143
 msgid "رضع اللبأ"
 msgstr "कोलोस्ट्रम प्राप्त किया"
 
-#: app/templates/animal_detail.html:109 app/templates/animal_detail.html:129
+#: app/templates/animal_detail.html:124 app/templates/animal_detail.html:144
 msgid "تعقيم السرة"
 msgstr "नाभि उपचारित"
 
-#: app/templates/animal_detail.html:114 app/templates/animal_detail.html:126
-#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:128
-#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:151
-#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:162
+#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:141
+#: app/templates/animal_detail.html:142 app/templates/animal_detail.html:143
+#: app/templates/animal_detail.html:144 app/templates/animal_detail.html:166
+#: app/templates/animal_detail.html:176 app/templates/animal_detail.html:177
 #: app/templates/ostrich/egg_form.html:17
 msgid "غير محدد"
 msgstr "अनिर्दिष्ट"
 
-#: app/templates/animal_detail.html:115 app/templates/animal_detail.html:126
-#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:128
-#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:152
-#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:162
+#: app/templates/animal_detail.html:130 app/templates/animal_detail.html:141
+#: app/templates/animal_detail.html:142 app/templates/animal_detail.html:143
+#: app/templates/animal_detail.html:144 app/templates/animal_detail.html:167
+#: app/templates/animal_detail.html:176 app/templates/animal_detail.html:177
 #: app/templates/animal_form.html:73
 #: app/templates/health/disease_type_detail.html:63
 #: app/templates/health/disease_type_detail.html:64
@@ -2183,10 +2192,10 @@ msgstr "अनिर्दिष्ट"
 msgid "نعم"
 msgstr "हाँ"
 
-#: app/templates/animal_detail.html:116 app/templates/animal_detail.html:126
-#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:128
-#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:153
-#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:162
+#: app/templates/animal_detail.html:131 app/templates/animal_detail.html:141
+#: app/templates/animal_detail.html:142 app/templates/animal_detail.html:143
+#: app/templates/animal_detail.html:144 app/templates/animal_detail.html:168
+#: app/templates/animal_detail.html:176 app/templates/animal_detail.html:177
 #: app/templates/animal_form.html:72
 #: app/templates/health/disease_link_wizard.html:83
 #: app/templates/health/disease_link_wizard.html:87
@@ -2195,40 +2204,40 @@ msgstr "हाँ"
 msgid "لا"
 msgstr "नहीं"
 
-#: app/templates/animal_detail.html:119
+#: app/templates/animal_detail.html:134
 msgid "عيوب خلقية (اتركه فاضي لو ما فيه)"
 msgstr "जन्मजात दोष (यदि न हो तो खाली छोड़ें)"
 
-#: app/templates/animal_detail.html:121
+#: app/templates/animal_detail.html:136
 msgid "حفظ قائمة التحقق"
 msgstr "जांच सूची सहेजें"
 
-#: app/templates/animal_detail.html:130
+#: app/templates/animal_detail.html:145
 msgid "عيوب خلقية"
 msgstr "जन्मजात दोष"
 
-#: app/templates/animal_detail.html:130
+#: app/templates/animal_detail.html:145
 msgid "لا يوجد"
 msgstr "कोई नहीं"
 
-#: app/templates/animal_detail.html:139
+#: app/templates/animal_detail.html:154
 msgid "علامات بيع (محرك البيع الذكي — بند 19)"
 msgstr "बिक्री संकेत (स्मार्ट बिक्री इंजन — मद 19)"
 
-#: app/templates/animal_detail.html:140
+#: app/templates/animal_detail.html:155
 msgid "أي علامة \"نعم\" هنا تعني توصية بيع فورية بتقرير"
 msgstr "यहां कोई भी \"हाँ\" संकेत तत्काल बिक्री की सिफारिश दर्शाता है"
 
-#: app/templates/animal_detail.html:140
+#: app/templates/animal_detail.html:155
 msgid "البيع الذكي"
 msgstr "स्मार्ट बिक्री रिपोर्ट में"
 
-#: app/templates/animal_detail.html:140
+#: app/templates/animal_detail.html:155
 msgid "بغض النظر عن باقي العوامل."
 msgstr "अन्य कारकों की परवाह किए बिना।"
 
-#: app/templates/animal_detail.html:156 app/templates/animal_detail.html:322
-#: app/templates/animal_detail.html:374 app/templates/animal_detail.html:399
+#: app/templates/animal_detail.html:171 app/templates/animal_detail.html:337
+#: app/templates/animal_detail.html:389 app/templates/animal_detail.html:414
 #: app/templates/animal_form.html:130 app/templates/animal_workflow.html:58
 #: app/templates/barn_form.html:41 app/templates/breed_edit_form.html:10
 #: app/templates/climate/settings.html:33
@@ -2264,29 +2273,29 @@ msgstr "अन्य कारकों की परवाह किए बि�
 msgid "حفظ"
 msgstr "सहेजें"
 
-#: app/templates/animal_detail.html:172
+#: app/templates/animal_detail.html:187
 msgid "كل السجلات مرتبة بالتاريخ"
 msgstr "तिथि के अनुसार क्रमबद्ध सभी रिकॉर्ड"
 
-#: app/templates/animal_detail.html:184
+#: app/templates/animal_detail.html:199
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "अभी तक इस पशु से जुड़ा कोई रिकॉर्ड नहीं है।"
 
-#: app/templates/animal_detail.html:193 app/templates/base.html:551
+#: app/templates/animal_detail.html:208 app/templates/base.html:551
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr "उपचार प्रोटोकॉल"
 
-#: app/templates/animal_detail.html:194
+#: app/templates/animal_detail.html:209
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr "इस पशु पर तैयार उपचार प्रोटोकॉल लागू करें"
 
-#: app/templates/animal_detail.html:198 app/templates/base.html:541
+#: app/templates/animal_detail.html:213 app/templates/base.html:541
 #: app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr "पशु चिकित्सक यात्राएं"
 
-#: app/templates/animal_detail.html:201
+#: app/templates/animal_detail.html:216
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:17
 #: app/templates/health/vet_visits_list.html:10
@@ -2294,14 +2303,14 @@ msgstr "पशु चिकित्सक यात्राएं"
 msgid "الطبيب"
 msgstr "डॉक्टर"
 
-#: app/templates/animal_detail.html:201
+#: app/templates/animal_detail.html:216
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:21
 #: app/templates/health/vet_visits_list.html:10
 msgid "التشخيص"
 msgstr "निदान"
 
-#: app/templates/animal_detail.html:201
+#: app/templates/animal_detail.html:216
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:49
@@ -2312,11 +2321,11 @@ msgstr "निदान"
 msgid "التكلفة"
 msgstr "लागत"
 
-#: app/templates/animal_detail.html:204
+#: app/templates/animal_detail.html:219
 msgid "لا يوجد زيارات مسجّلة."
 msgstr "कोई दर्ज यात्रा नहीं है।"
 
-#: app/templates/animal_detail.html:215
+#: app/templates/animal_detail.html:230
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/dashboard.html:43
@@ -2324,15 +2333,15 @@ msgstr "कोई दर्ज यात्रा नहीं है।"
 msgid "المرض"
 msgstr "रोग"
 
-#: app/templates/animal_detail.html:215 app/templates/bulk_action_form.html:349
+#: app/templates/animal_detail.html:230 app/templates/bulk_action_form.html:349
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:28
 #: app/templates/health/diseases_list.html:14
 msgid "الشدة"
 msgstr "गंभीरता"
 
-#: app/templates/animal_detail.html:215 app/templates/animal_detail.html:261
-#: app/templates/animal_detail.html:284 app/templates/animal_workflow.html:148
+#: app/templates/animal_detail.html:230 app/templates/animal_detail.html:276
+#: app/templates/animal_detail.html:299 app/templates/animal_workflow.html:148
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
 #: app/templates/finance/list.html:36 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
@@ -2356,11 +2365,11 @@ msgstr "गंभीरता"
 msgid "الحالة"
 msgstr "स्थिति"
 
-#: app/templates/animal_detail.html:221
+#: app/templates/animal_detail.html:236
 msgid "لا يوجد أمراض مسجّلة."
 msgstr "कोई दर्ज रोग नहीं है।"
 
-#: app/templates/animal_detail.html:232 app/templates/health/dashboard.html:64
+#: app/templates/animal_detail.html:247 app/templates/health/dashboard.html:64
 #: app/templates/health/vaccination_schedule_form.html:28
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:56
@@ -2368,31 +2377,31 @@ msgstr "कोई दर्ज रोग नहीं है।"
 msgid "اللقاح"
 msgstr "टीका"
 
-#: app/templates/animal_detail.html:232
+#: app/templates/animal_detail.html:247
 msgid "الجرعة القادمة"
 msgstr "अगली खुराक"
 
-#: app/templates/animal_detail.html:235
+#: app/templates/animal_detail.html:250
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "कोई दर्ज टीकाकरण नहीं है।"
 
-#: app/templates/animal_detail.html:243 app/templates/base.html:524
+#: app/templates/animal_detail.html:258 app/templates/base.html:524
 #: app/templates/home.html:124 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "प्रजनन"
 
-#: app/templates/animal_detail.html:246
+#: app/templates/animal_detail.html:261
 #: app/templates/team/member_edit_form.html:9
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
 msgid "الدور"
 msgstr "भूमिका"
 
-#: app/templates/animal_detail.html:246
+#: app/templates/animal_detail.html:261
 msgid "الطرف الآخر"
 msgstr "दूसरा पक्ष"
 
-#: app/templates/animal_detail.html:250 app/templates/animal_form.html:65
+#: app/templates/animal_detail.html:265 app/templates/animal_form.html:65
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:66
 #: app/templates/batches/batch_form.html:26
@@ -2400,43 +2409,43 @@ msgstr "दूसरा पक्ष"
 msgid "أنثى"
 msgstr "मादा"
 
-#: app/templates/animal_detail.html:250
+#: app/templates/animal_detail.html:265
 msgid "فحل"
 msgstr "नर"
 
-#: app/templates/animal_detail.html:253
+#: app/templates/animal_detail.html:268
 msgid "لا يوجد تقريع مسجّل."
 msgstr "कोई दर्ज संगमन नहीं है।"
 
-#: app/templates/animal_detail.html:258 app/templates/base.html:525
+#: app/templates/animal_detail.html:273 app/templates/base.html:525
 #: app/templates/home.html:125 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
 
-#: app/templates/animal_detail.html:261 app/templates/animal_detail.html:272
+#: app/templates/animal_detail.html:276 app/templates/animal_detail.html:287
 #: app/templates/bulk_action_form.html:404
 msgid "عدد الأجنة"
 msgstr "भ्रूणों की संख्या"
 
-#: app/templates/animal_detail.html:263
+#: app/templates/animal_detail.html:278
 msgid "مؤكد"
 msgstr "पुष्टित"
 
-#: app/templates/animal_detail.html:263
+#: app/templates/animal_detail.html:278
 msgid "قيد الفحص"
 msgstr "जांच में"
 
-#: app/templates/animal_detail.html:264
+#: app/templates/animal_detail.html:279
 msgid "لا يوجد تشخيص حمل مسجّل."
 msgstr "कोई दर्ज गर्भावस्था निदान नहीं है।"
 
-#: app/templates/animal_detail.html:269
+#: app/templates/animal_detail.html:284
 #: app/templates/repro/program_detail.html:110
 #: app/templates/repro/sonar_list.html:5
 msgid "فحوصات السونار"
 msgstr "सोनार जांचें"
 
-#: app/templates/animal_detail.html:272 app/templates/bulk_action_form.html:404
+#: app/templates/animal_detail.html:287 app/templates/bulk_action_form.html:404
 #: app/templates/feed/calculator.html:35
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/program_detail.html:115
@@ -2445,44 +2454,44 @@ msgstr "सोनार जांचें"
 msgid "النتيجة"
 msgstr "परिणाम"
 
-#: app/templates/animal_detail.html:275
+#: app/templates/animal_detail.html:290
 msgid "لا يوجد فحوصات سونار مسجّلة."
 msgstr "कोई दर्ज सोनार जांच नहीं है।"
 
-#: app/templates/animal_detail.html:281
+#: app/templates/animal_detail.html:296
 #: app/templates/repro/programs_list.html:5
 msgid "برامج الشياع التوأمي"
 msgstr "जुड़वां मद प्रजनन कार्यक्रम"
 
-#: app/templates/animal_detail.html:284 app/templates/repro/sonar_list.html:10
+#: app/templates/animal_detail.html:299 app/templates/repro/sonar_list.html:10
 msgid "البرنامج"
 msgstr "कार्यक्रम"
 
-#: app/templates/animal_detail.html:284
+#: app/templates/animal_detail.html:299
 msgid "البدء"
 msgstr "शुरुआत"
 
-#: app/templates/animal_detail.html:286
+#: app/templates/animal_detail.html:301
 msgid "برنامج #"
 msgstr "कार्यक्रम #"
 
-#: app/templates/animal_detail.html:299
+#: app/templates/animal_detail.html:314
 msgid "رقم المولود"
 msgstr "संतान संख्या"
 
-#: app/templates/animal_detail.html:299
+#: app/templates/animal_detail.html:314
 msgid "الوزن عند الولادة"
 msgstr "जन्म के समय वजन"
 
-#: app/templates/animal_detail.html:307
+#: app/templates/animal_detail.html:322
 msgid "لا يوجد ولادات مسجّلة لهذا الحيوان."
 msgstr "इस पशु के लिए कोई दर्ज जन्म नहीं है।"
 
-#: app/templates/animal_detail.html:316
+#: app/templates/animal_detail.html:331
 msgid "تسجيل وزن جديد"
 msgstr "नया वजन दर्ज करें"
 
-#: app/templates/animal_detail.html:320 app/templates/animal_detail.html:351
+#: app/templates/animal_detail.html:335 app/templates/animal_detail.html:366
 #: app/templates/animal_form.html:126
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/batches/batch_form.html:33
@@ -2492,111 +2501,111 @@ msgstr "नया वजन दर्ज करें"
 msgid "الوزن (كجم)"
 msgstr "वजन (किग्रा)"
 
-#: app/templates/animal_detail.html:330
+#: app/templates/animal_detail.html:345
 #, python-format
 msgid "نسبة التغيّر القصوى المقبولة بدون تأكيد (%%)"
 msgstr "बिना पुष्टि के स्वीकार्य अधिकतम परिवर्तन प्रतिशत (%%)"
 
-#: app/templates/animal_detail.html:331
+#: app/templates/animal_detail.html:346
 #, python-format
 msgid "الوزن الجديد يختلف بنسبة __PCT__%% عن آخر وزن مسجَّل (__PREV__ كجم) — تأكيد فعلاً هذا الرقم؟"
 msgstr "नया वजन अंतिम दर्ज वजन (__PREV__ किग्रा) से __PCT__%% भिन्न है — क्या यह संख्या सही है, पुष्टि करें?"
 
-#: app/templates/animal_detail.html:348
+#: app/templates/animal_detail.html:363
 msgid "سجل الأوزان"
 msgstr "वजन लॉग"
 
-#: app/templates/animal_detail.html:354
+#: app/templates/animal_detail.html:369
 msgid "لا يوجد أوزان مسجّلة بعد."
 msgstr "अभी तक कोई वजन दर्ज नहीं है।"
 
-#: app/templates/animal_detail.html:363
+#: app/templates/animal_detail.html:378
 msgid "تسجيل حلبة جديدة"
 msgstr "नई दुहाई दर्ज करें"
 
-#: app/templates/animal_detail.html:367 app/templates/animal_detail.html:382
+#: app/templates/animal_detail.html:382 app/templates/animal_detail.html:397
 msgid "الجلسة"
 msgstr "सत्र"
 
-#: app/templates/animal_detail.html:369
+#: app/templates/animal_detail.html:384
 msgid "صباح"
 msgstr "सुबह"
 
-#: app/templates/animal_detail.html:370
+#: app/templates/animal_detail.html:385
 msgid "مساء"
 msgstr "शाम"
 
-#: app/templates/animal_detail.html:372 app/templates/animal_detail.html:382
+#: app/templates/animal_detail.html:387 app/templates/animal_detail.html:397
 msgid "الكمية (لتر)"
 msgstr "मात्रा (लीटर)"
 
-#: app/templates/animal_detail.html:379
+#: app/templates/animal_detail.html:394
 msgid "سجل الحليب"
 msgstr "दूध लॉग"
 
-#: app/templates/animal_detail.html:385
+#: app/templates/animal_detail.html:400
 msgid "لا يوجد حليب مسجّل بعد."
 msgstr "अभी तक कोई दूध दर्ज नहीं है।"
 
-#: app/templates/animal_detail.html:394
+#: app/templates/animal_detail.html:409
 msgid "إضافة ملاحظة"
 msgstr "टिप्पणी जोड़ें"
 
-#: app/templates/animal_detail.html:398 app/templates/animal_detail.html:407
+#: app/templates/animal_detail.html:413 app/templates/animal_detail.html:422
 msgid "الملاحظة"
 msgstr "टिप्पणी"
 
-#: app/templates/animal_detail.html:404
+#: app/templates/animal_detail.html:419
 msgid "الملاحظات المسجّلة"
 msgstr "दर्ज टिप्पणियां"
 
-#: app/templates/animal_detail.html:407
+#: app/templates/animal_detail.html:422
 #: app/templates/equipment/asset_maintenance.html:24
 msgid "بواسطة"
 msgstr "द्वारा"
 
-#: app/templates/animal_detail.html:410
+#: app/templates/animal_detail.html:425
 msgid "لا يوجد ملاحظات بعد."
 msgstr "अभी तक कोई टिप्पणी नहीं है।"
 
-#: app/templates/animal_detail.html:418
+#: app/templates/animal_detail.html:433
 msgid "تقرير تكلفة الرأس الفردي"
 msgstr "व्यक्तिगत पशु लागत रिपोर्ट"
 
-#: app/templates/animal_detail.html:420
+#: app/templates/animal_detail.html:435
 msgid "تكلفة الشراء"
 msgstr "खरीद लागत"
 
-#: app/templates/animal_detail.html:421
+#: app/templates/animal_detail.html:436
 msgid "تكاليف طبية مباشرة (زيارات + أمراض + تحصينات)"
 msgstr "प्रत्यक्ष चिकित्सा लागत (यात्राएं + रोग + टीकाकरण)"
 
-#: app/templates/animal_detail.html:422
+#: app/templates/animal_detail.html:437
 #, python-format
 msgid "تقدير تكلفة العلف (%(n)s يوم)"
 msgstr "चारा लागत अनुमान (%(n)s दिन)"
 
-#: app/templates/animal_detail.html:423
+#: app/templates/animal_detail.html:438
 msgid "نصيبه من المصاريف غير المباشرة (إيجار/صيانة/رواتب — موزَّعة على القطيع)"
 msgstr "अप्रत्यक्ष खर्चों में इसका हिस्सा (किराया/रखरखाव/वेतन — झुंड में वितरित)"
 
-#: app/templates/animal_detail.html:424
+#: app/templates/animal_detail.html:439
 msgid "الإجمالي التقديري منذ الدخول"
 msgstr "प्रवेश के बाद से अनुमानित कुल"
 
-#: app/templates/animal_detail.html:427
+#: app/templates/animal_detail.html:442
 msgid "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة، أو ما فيه خطة تغذية فعّالة لحظيرته حالياً."
 msgstr "⚠️ चारा अनुमान = 0 — पशु के पास कोई बाड़ा नहीं है, या उसके बाड़े में वर्तमान में कोई सक्रिय आहार योजना नहीं है।"
 
-#: app/templates/animal_detail.html:430
+#: app/templates/animal_detail.html:445
 msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
 msgstr "ℹ️ इस रिपोर्ट के बारे में ईमानदार चेतावनियां: (1) चारा अनुमान अनुमानित है — यह मानता है कि पशु ने अपनी पूरी अवधि एक ही बाड़े में उसकी वर्तमान योजना के तहत बिताई (सिस्टम बाड़ा-स्थानांतरण इतिहास को ट्रैक नहीं करता)। (2) अप्रत्यक्ष व्यय हिस्सा (किराया/रखरखाव/वेतन) वर्तमान सक्रिय पशु संख्या से गणना होता है, न कि प्रत्येक पिछली अवधि में वास्तविक संख्या से (मद 18 में \"मासिक पशु लागत\" रिपोर्ट जैसी ही सीमा) — और यह भी निर्भर करता है कि व्यय दर्ज करते समय \"अप्रत्यक्ष\" के रूप में टैग किया गया हो, अन्यथा यह यहां नहीं गिना जाता। (3) चिकित्सा लागत स्वतः (मात्रा × फार्मेसी इकाई मूल्य) से गणना होती है जब दोनों दर्ज हों, अन्यथा वे उस समय डॉक्टर द्वारा दर्ज मैन्युअल मूल्य पर वापस चली जाती हैं।"
 
-#: app/templates/animal_detail.html:434
+#: app/templates/animal_detail.html:449
 msgid "الحركات المالية المرتبطة"
 msgstr "जुड़े वित्तीय लेनदेन"
 
-#: app/templates/animal_detail.html:437 app/templates/finance/form.html:32
+#: app/templates/animal_detail.html:452 app/templates/finance/form.html:32
 #: app/templates/team/report_detail.html:25
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -2606,17 +2615,17 @@ msgstr "जुड़े वित्तीय लेनदेन"
 msgid "الوصف"
 msgstr "विवरण"
 
-#: app/templates/animal_detail.html:438 app/templates/finance/form.html:10
+#: app/templates/animal_detail.html:453 app/templates/finance/form.html:10
 #: app/templates/finance/list.html:40
 msgid "بيع"
 msgstr "बिक्री"
 
-#: app/templates/animal_detail.html:438 app/templates/finance/form.html:12
+#: app/templates/animal_detail.html:453 app/templates/finance/form.html:12
 #: app/templates/finance/list.html:40
 msgid "مصروف"
 msgstr "व्यय"
 
-#: app/templates/animal_detail.html:441
+#: app/templates/animal_detail.html:456
 msgid "لا يوجد حركات مالية مرتبطة بهذا الحيوان."
 msgstr "इस पशु से जुड़ा कोई वित्तीय लेनदेन नहीं है।"
 
@@ -3223,13 +3232,17 @@ msgstr "तक"
 msgid "باقي %(n)s يوم"
 msgstr "%(n)s दिन शेष"
 
-#: app/templates/animals_list.html:108 app/templates/animals_list.html:113
+#: app/templates/animals_list.html:108
 msgid "اضغط لتفاصيل الرأس"
 msgstr "पशु विवरण के लिए क्लिक करें"
 
 #: app/templates/animals_list.html:108
 msgid "آمن"
 msgstr "सुरक्षित"
+
+#: app/templates/animals_list.html:113
+msgid "اضغط لعرض كل تنبيهات هذا الرأس"
+msgstr "इस जानवर के सभी अलर्ट देखने के लिए टैप करें"
 
 #: app/templates/animals_list.html:118
 msgid "لا يوجد حيوانات ضمن هذا الفلتر حالياً."

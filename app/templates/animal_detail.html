@@ -45,6 +45,21 @@
   </div>
 </div>
 
+{% if animal_alerts %}
+<div class="card" id="alerts" style="border-color:var(--danger,#c0392b);">
+  <h3 style="font-size:15px; margin:0 0 10px; color:var(--danger,#c0392b);">⚠️ {{ _('تنبيهات هذا الرأس (%(n)s)', n=animal_alerts|length) }}</h3>
+  <ul style="margin:0; padding:0 18px 0 0; display:flex; flex-direction:column; gap:8px;">
+    {% for al in animal_alerts %}
+    <li>
+      <b>{{ al.icon }} {{ al.category }}</b> — {{ al.label }}
+      {% if al.detail %}<div style="color:var(--muted); font-size:13px;">{{ al.detail }}</div>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  <p style="color:var(--muted); font-size:12px; margin:10px 0 0;">{{ _('كل تنبيه يختفي لحاله فور ما تسدّ سببه من التبويبات تحت (وزن، صحة، تحصينات...) — القائمة تتحدّث تلقائياً كل ما ترجع للصفحة.') }}</p>
+</div>
+{% endif %}
+
 <div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
   {% if animal.species == 'ostrich' %}
   <div class="stat"><b>{{ _('نعام') }}</b><span>{{ _('الفصيلة — بدون دورة إنتاج (مجترات فقط)') }}</span></div>

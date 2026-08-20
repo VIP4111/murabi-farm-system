@@ -1017,12 +1017,14 @@ def animal_detail(animal_id):
     wf = cycle_engine.get_or_create_workflow(animal) if animal.species == "sheep_goat" else None
     withdrawal_until = animal_under_withdrawal(animal.id)
     breed_row = Breed.query.filter_by(name=animal.breed).first() if animal.breed else None
+    animal_alerts = alerts_service.alerts_for_animal(animal.id) if current_user.has_permission("animals.view") else []
     return render_template(
         "animal_detail.html", wf=wf,
         withdrawal_until=withdrawal_until,
         withdrawal_days_left=(withdrawal_until - date.today()).days if withdrawal_until else None,
         today=date.today().isoformat(),
         breed_care_notes=breed_row.care_notes if breed_row else None,
+        animal_alerts=animal_alerts,
         **profile,
     )
 
