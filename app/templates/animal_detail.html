@@ -50,9 +50,12 @@
   <h3 style="font-size:15px; margin:0 0 10px; color:var(--danger,#c0392b);">⚠️ {{ _('تنبيهات هذا الرأس (%(n)s)', n=animal_alerts|length) }}</h3>
   <ul style="margin:0; padding:0 18px 0 0; display:flex; flex-direction:column; gap:8px;">
     {% for al in animal_alerts %}
-    <li>
-      <b>{{ al.icon }} {{ al.category }}</b> — {{ al.label }}
-      {% if al.detail %}<div style="color:var(--muted); font-size:13px;">{{ al.detail }}</div>{% endif %}
+    <li style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+      <div>
+        <b>{{ al.icon }} {{ al.category }}</b> — {{ al.label }}
+        {% if al.detail %}<div style="color:var(--muted); font-size:13px;">{{ al.detail }}</div>{% endif %}
+      </div>
+      {% if al.action_url %}<a class="btn light" style="padding:6px 12px; font-size:12.5px; flex:0 0 auto;" href="{{ al.action_url }}">{{ _('حل المشكلة') }} ◀</a>{% endif %}
     </li>
     {% endfor %}
   </ul>
@@ -151,8 +154,11 @@
 
   {% if animal.gender == 'أنثى' %}
   <div class="card">
-    <h3 style="font-size:15px;">{{ _('علامات بيع (محرك البيع الذكي — بند 19)') }}</h3>
-    <p style="color:var(--muted); font-size:12px;">{{ _('أي علامة "نعم" هنا تعني توصية بيع فورية بتقرير') }} <a href="{{ url_for('core.smart_sale_report') }}">{{ _('البيع الذكي') }}</a>، {{ _('بغض النظر عن باقي العوامل.') }}</p>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <h3 style="font-size:15px; margin:0;">{{ _('علامات بيع (محرك البيع الذكي — بند 19)') }}</h3>
+      <a class="btn" href="{{ url_for('core.smart_sale_report') }}">💰 {{ _('تقرير البيع الذكي') }} ◀</a>
+    </div>
+    <p style="color:var(--muted); font-size:12px;">{{ _('أي علامة "نعم" هنا تعني توصية بيع فورية بتقرير البيع الذكي، بغض النظر عن باقي العوامل.') }}</p>
     {% if current_user.has_permission('health.manage') %}
     <form method="post" action="{{ url_for('core.animal_repro_flags_save', animal_id=animal.id) }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

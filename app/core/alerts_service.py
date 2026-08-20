@@ -683,13 +683,46 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     return alerts
 
 
+# رابط "حل المشكلة" لكل فئة تنبيه (بند إضافي 222) — بطلبك الصريح:
+# "زر يحولني لموقع كل مشكلة على حدا". مو كل فئة عندها شاشة حل مباشرة
+# (بعضها معلوماتي بحت زي "فترة سحب" — تنتهي لحالها، ما فيه إجراء)،
+# فالفئات الناقصة من هالخريطة عمداً تبقى بدون زر (تفصيلها النصي يبقى
+# كافياً). كل دالة تاخذ animal_id وترجع endpoint + kwargs لـ`url_for`.
+_ALERT_ACTION_ROUTES = {
+    "تحصين": lambda aid: ("health.vaccinations_new", {}),
+    "مرض مفتوح": lambda aid: ("health.diseases_list", {}),
+    "بيانات ناقصة": lambda aid: ("core.animals_edit", {"animal_id": aid}),
+    "ترتيب غير منتظم": lambda aid: ("core.animal_workflow", {"animal_id": aid}),
+    "توقّف بدورة الإنتاج": lambda aid: ("core.animal_workflow", {"animal_id": aid}),
+    "جاهز للبيع": lambda aid: ("core.animal_workflow", {"animal_id": aid, "_anchor": "exit"}),
+    "تأخر شياع": lambda aid: ("repro.programs_list", {}),
+    "جهاز تكاثر": lambda aid: ("repro.programs_list", {}),
+    "تباطؤ نمو مشبوه": lambda aid: ("core.animals_edit", {"animal_id": aid}),
+}
+
+
+def alert_action_url(alert: dict) -> str | None:
+    """رابط "حل هذي المشكلة" لتنبيه واحد — يستخدم `_ALERT_ACTION_ROUTES`
+    أعلاه. يرجّع None لو الفئة ما عندها إجراء مباشر (تبقى معلوماتية)."""
+    from flask import url_for
+    resolver = _ALERT_ACTION_ROUTES.get(alert.get("category"))
+    if not resolver:
+        return None
+    endpoint, kwargs = resolver(alert.get("animal_id"))
+    return url_for(endpoint, **kwargs)
+
+
 def alerts_for_animal(animal_id: int) -> list[dict]:
     """كل تنبيهات رأس واحد بالتفصيل (بند إضافي 221) — الزر ⚠️ برقم
     بسجل الحيوانات كان يوديك لصفحة تفاصيل الرأس بدون أي قائمة توضّح
     شنو بالضبط التنبيهات، فتضطر تدوّر بنفسك. هذي تُستخدم بأعلى صفحة
     تفاصيل الرأس لعرض كل تنبيه بعنوانه وتفصيله صراحة، بدل ما يبقى
-    مجرد رقم."""
-    return [a for a in get_alerts() if a.get("animal_id") == animal_id]
+    مجرد رقم. كل تنبيه يرجع ومعه `action_url` (بند إضافي 222) —
+    رابط مباشر لشاشة حل تلك المشكلة بالذات، لو موجودة."""
+    rows = [a for a in get_alerts() if a.get("animal_id") == animal_id]
+    for a in rows:
+        a["action_url"] = alert_action_url(a)
+    return rows
 
 
 def alert_counts_by_animal() -> dict:
