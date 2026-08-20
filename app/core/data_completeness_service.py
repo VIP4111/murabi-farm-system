@@ -16,7 +16,7 @@ from app.team import task_service
 
 SOURCE_TYPE = "IncompleteAnimalData"
 
-REQUIRED_FIELDS_ALWAYS = ["gender", "weight", "purpose"]
+REQUIRED_FIELDS_ALWAYS = ["gender", "weight", "purpose", "color"]
 REQUIRED_FIELDS_BY_SOURCE = {
     AnimalSource.PURCHASE: ["price"],
     AnimalSource.GIFT: ["price"],
@@ -25,6 +25,7 @@ REQUIRED_FIELDS_BY_SOURCE = {
 
 FIELD_LABELS_AR = {
     "gender": "الجنس", "weight": "الوزن", "purpose": "الغرض (تربية/تسمين/بيع)", "price": "السعر",
+    "color": "اللون",
 }
 
 

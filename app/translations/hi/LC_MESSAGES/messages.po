@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-20 04:31+0300\n"
+"POT-Creation-Date: 2026-08-20 05:28+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -288,7 +288,7 @@ msgstr "अन्य"
 msgid "نقل حظائر جماعي"
 msgstr "सामूहिक बाड़ा स्थानांतरण"
 
-#: app/__init__.py:226 app/core/routes.py:351
+#: app/__init__.py:226 app/core/routes.py:361
 #: app/templates/animals_list.html:78
 msgid "عزل جماعي"
 msgstr "सामूहिक अलगाव"
@@ -607,7 +607,7 @@ msgstr "कार्य"
 msgid "بلاغ"
 msgstr "रिपोर्ट"
 
-#: app/__init__.py:305 app/templates/settings_simulation_data.html:35
+#: app/__init__.py:305 app/templates/settings_simulation_data.html:33
 msgid "حالة مرضية"
 msgstr "रोग के मामले"
 
@@ -619,7 +619,7 @@ msgstr "पशु चिकित्सा यात्रा"
 msgid "تحصين"
 msgstr "टीकाकरण"
 
-#: app/__init__.py:306 app/templates/settings_simulation_data.html:33
+#: app/__init__.py:306 app/templates/settings_simulation_data.html:31
 msgid "حركة مالية"
 msgstr "वित्तीय लेनदेन"
 
@@ -631,7 +631,7 @@ msgstr "उपयोगकर्ता"
 msgid "مسمّى وظيفي"
 msgstr "पद"
 
-#: app/__init__.py:307 app/templates/settings_simulation_data.html:34
+#: app/__init__.py:307 app/templates/settings_simulation_data.html:32
 msgid "تقريع"
 msgstr "संगमन"
 
@@ -923,7 +923,7 @@ msgstr "%(n)s सक्रिय खाते।"
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
 #: app/templates/base.html:540 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
-#: app/templates/home.html:112
+#: app/templates/home.html:115
 msgid "الصيدلية"
 msgstr "फार्मेसी"
 
@@ -948,59 +948,59 @@ msgstr "कम से कम एक बैकअप मौजूद है (म�
 msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
 msgstr "अभी तक कोई बैकअप नहीं लिया गया — सेटिंग्स स्क्रीन में \"बैकअप\" देखें (मद 34)।"
 
-#: app/core/routes.py:343 app/templates/animals_list.html:67
+#: app/core/routes.py:353 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "सामूहिक वजन"
 
-#: app/core/routes.py:344 app/templates/animals_list.html:76
+#: app/core/routes.py:354 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr "सामूहिक टीकाकरण"
 
-#: app/core/routes.py:345 app/templates/animals_list.html:68
+#: app/core/routes.py:355 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr "सामूहिक टिप्पणी"
 
-#: app/core/routes.py:346 app/templates/animals_list.html:69
+#: app/core/routes.py:356 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr "सामूहिक बाड़ा स्थानांतरण"
 
-#: app/core/routes.py:347 app/templates/animals_list.html:70
+#: app/core/routes.py:357 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr "सामूहिक उद्देश्य निर्धारण (प्रजनन/मोटा करना/बिक्री)"
 
-#: app/core/routes.py:348 app/templates/animals_list.html:71
+#: app/core/routes.py:358 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr "सामूहिक बिक्री"
 
-#: app/core/routes.py:349 app/templates/animals_list.html:72
+#: app/core/routes.py:359 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr "सामूहिक मृत्यु दर्ज करना"
 
-#: app/core/routes.py:350 app/templates/animals_list.html:77
+#: app/core/routes.py:360 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr "सामूहिक उपचार/रोग"
 
-#: app/core/routes.py:352 app/templates/animals_list.html:82
+#: app/core/routes.py:362 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr "सामूहिक सोनार जांच"
 
-#: app/core/routes.py:353 app/templates/animals_list.html:79
+#: app/core/routes.py:363 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "नियोजित उपचार योजना (क्रियान्वयन पुष्टि की प्रतीक्षा में)"
 
-#: app/core/routes.py:751 app/templates/animal_form.html:35
+#: app/core/routes.py:761 app/templates/animal_form.html:35
 msgid "إضافة فصيلة جديدة"
 msgstr "नई प्रजाति जोड़ें"
 
-#: app/core/routes.py:753
+#: app/core/routes.py:763
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "नई प्रजाति स्वतः उत्पादन चक्र इंजन (संगमन/गर्भावस्था/दूध छुड़ाना) में शामिल नहीं होती — जब तक इसके लिए एक समर्पित सिस्टम नहीं बनता तब तक इसे शुतुरमुर्ग की तरह सुरक्षित रूप से संभाला जाता है।"
 
-#: app/core/routes.py:772 app/templates/animal_form.html:45
+#: app/core/routes.py:782 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
 msgstr "नई नस्ल जोड़ें"
 
-#: app/core/routes.py:816 app/templates/animal_form.html:24
+#: app/core/routes.py:826 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr "नया रंग जोड़ें"
 
@@ -1863,7 +1863,8 @@ msgstr "इस प्रविष्टि को अपलोड किए ब�
 msgid "تنبيهاتي"
 msgstr "मेरी सूचनाएं"
 
-#: app/templates/alerts_list.html:5 app/templates/assistant/chat.html:52
+#: app/templates/alerts_list.html:5 app/templates/animals_list.html:92
+#: app/templates/assistant/chat.html:52
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
@@ -1884,7 +1885,7 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "सिस्टम डेटा से सीधे बना लाइव व्यू — देय टीकाकरण, समाप्त होने वाली प्रतीक्षा अवधि, आगामी अपेक्षित प्रसव, प्रजनन उपकरण अनुस्मारक, लंबे समय से खुली बीमारियाँ, अनियमित क्रम वाले पशु, लंबित रिपोर्टें, अभी बिक्री के लिए तैयार पशु, बिना ज़िम्मेदार कर्मचारी के बाड़े, और आगामी निर्धारित टीकाकरण के लिए अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से आती है"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:156 app/templates/settings_backup.html:4
+#: app/templates/home.html:159 app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
 #: app/templates/settings_simulation_data.html:4
@@ -2015,7 +2016,7 @@ msgstr "पशु चिकित्सा रिकॉर्ड"
 
 #: app/templates/animal_detail.html:63 app/templates/animal_detail.html:212
 #: app/templates/base.html:542 app/templates/health/diseases_list.html:6
-#: app/templates/home.html:111
+#: app/templates/home.html:114
 msgid "الأمراض"
 msgstr "बीमारियाँ"
 
@@ -2023,7 +2024,7 @@ msgstr "बीमारियाँ"
 msgid "التحصينات"
 msgstr "टीकाकरण"
 
-#: app/templates/animal_detail.html:65 app/templates/home.html:119
+#: app/templates/animal_detail.html:65 app/templates/home.html:122
 msgid "التكاثر"
 msgstr "प्रजनन"
 
@@ -2073,7 +2074,7 @@ msgstr "टिप्पणियां"
 
 #: app/templates/animal_detail.html:70 app/templates/base.html:610
 #: app/templates/base.html:612 app/templates/finance/list.html:24
-#: app/templates/home.html:137
+#: app/templates/home.html:140
 msgid "المالية"
 msgstr "वित्त"
 
@@ -2375,7 +2376,7 @@ msgid "لا يوجد تحصينات مسجّلة."
 msgstr "कोई दर्ज टीकाकरण नहीं है।"
 
 #: app/templates/animal_detail.html:243 app/templates/base.html:524
-#: app/templates/home.html:121 app/templates/repro/matings_list.html:5
+#: app/templates/home.html:124 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "प्रजनन"
 
@@ -2407,7 +2408,7 @@ msgid "لا يوجد تقريع مسجّل."
 msgstr "कोई दर्ज संगमन नहीं है।"
 
 #: app/templates/animal_detail.html:258 app/templates/base.html:525
-#: app/templates/home.html:122 app/templates/repro/pregnancies_list.html:5
+#: app/templates/home.html:125 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
 
@@ -3124,7 +3125,7 @@ msgstr "संगरोध अनुवर्ती"
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "स्मार्ट बिक्री और हानि से बचाव"
 
-#: app/templates/animals_list.html:12 app/templates/home.html:96
+#: app/templates/animals_list.html:12 app/templates/home.html:99
 msgid "حيوان جديد"
 msgstr "नया जानवर"
 
@@ -3221,7 +3222,7 @@ msgstr "तक"
 msgid "باقي %(n)s يوم"
 msgstr "%(n)s दिन शेष"
 
-#: app/templates/animals_list.html:108
+#: app/templates/animals_list.html:108 app/templates/animals_list.html:113
 msgid "اضغط لتفاصيل الرأس"
 msgstr "पशु विवरण के लिए क्लिक करें"
 
@@ -3229,11 +3230,11 @@ msgstr "पशु विवरण के लिए क्लिक करें"
 msgid "آمن"
 msgstr "सुरक्षित"
 
-#: app/templates/animals_list.html:113
+#: app/templates/animals_list.html:118
 msgid "لا يوجد حيوانات ضمن هذا الفلتر حالياً."
 msgstr "इस फ़िल्टर में फिलहाल कोई पशु नहीं है।"
 
-#: app/templates/animals_list.html:113
+#: app/templates/animals_list.html:118
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
@@ -3398,7 +3399,7 @@ msgid "صفحة اليوم"
 msgstr "आज का पेज"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:511 app/templates/home.html:153
+#: app/templates/base.html:511 app/templates/home.html:156
 msgid "المساعد الذكي"
 msgstr "स्मार्ट सहायक"
 
@@ -3406,11 +3407,11 @@ msgstr "स्मार्ट सहायक"
 msgid "الحلال"
 msgstr "पशुधन"
 
-#: app/templates/base.html:520 app/templates/home.html:93
+#: app/templates/base.html:520 app/templates/home.html:95
 msgid "الحيوانات"
 msgstr "जानवर"
 
-#: app/templates/base.html:526 app/templates/home.html:123
+#: app/templates/base.html:526 app/templates/home.html:126
 msgid "فحص السونار"
 msgstr "सोनार जांच"
 
@@ -3422,7 +3423,7 @@ msgstr "मदाई सिंक्रोनाइज़ेशन के लि
 msgid "النعام (بيض/تفقيس)"
 msgstr "शुतुरमुर्ग (अंडे/हैचिंग)"
 
-#: app/templates/base.html:537 app/templates/home.html:103
+#: app/templates/base.html:537 app/templates/home.html:106
 msgid "الصحة"
 msgstr "स्वास्थ्य"
 
@@ -3432,7 +3433,7 @@ msgid "مركز الطبيب"
 msgstr "पशु चिकित्सक केंद्र"
 
 #: app/templates/base.html:543 app/templates/health/vaccinations_list.html:5
-#: app/templates/home.html:109
+#: app/templates/home.html:112
 msgid "التطعيمات"
 msgstr "टीकाकरण"
 
@@ -3460,7 +3461,7 @@ msgstr "शरीर स्थिति गाइड"
 msgid "دليل الأطباء"
 msgstr "पशु चिकित्सक निर्देशिका"
 
-#: app/templates/base.html:561 app/templates/home.html:134
+#: app/templates/base.html:561 app/templates/home.html:137
 msgid "العلف"
 msgstr "चारा"
 
@@ -3535,11 +3536,11 @@ msgstr "रिपोर्टें"
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:613 app/templates/home.html:139
+#: app/templates/base.html:613 app/templates/home.html:142
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:620 app/templates/home.html:142
+#: app/templates/base.html:620 app/templates/home.html:145
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -4149,29 +4150,34 @@ msgstr "त्वरित कार्रवाइयाँ"
 msgid "الأكثر استخدامًا"
 msgstr "सबसे ज्यादा उपयोग होने वाले"
 
-#: app/templates/home.html:105
+#: app/templates/home.html:94
+#, python-format
+msgid "%(n)s تنبيه على رؤوس مسجَّلة"
+msgstr "पंजीकृत जानवरों पर %(n)s अलर्ट"
+
+#: app/templates/home.html:108
 msgid "البيطرة"
 msgstr "पशु चिकित्सा"
 
-#: app/templates/home.html:107
+#: app/templates/home.html:110
 #, python-format
 msgid "%(n)s متأخرة"
 msgstr "अतिदेय"
 
-#: app/templates/home.html:108
+#: app/templates/home.html:111
 #, python-format
 msgid "%(n)s قادمة لم يحن وقتها"
 msgstr "%(n)s अभी देय नहीं"
 
-#: app/templates/home.html:124
+#: app/templates/home.html:127
 msgid "برامج التزامن"
 msgstr "सिंक कार्यक्रम"
 
-#: app/templates/home.html:131
+#: app/templates/home.html:134
 msgid "العلف والمالية والتقارير"
 msgstr "चारा, वित्त और रिपोर्टें"
 
-#: app/templates/home.html:150
+#: app/templates/home.html:153
 msgid "النظام"
 msgstr "सिस्टम"
 
@@ -4716,74 +4722,68 @@ msgstr "सिमुलेशन अवधि (दिन)"
 msgid "أرسل ملخص التقرير لبريدي بعد التشغيل (اختياري)"
 msgstr "चलने के बाद रिपोर्ट सारांश मेरे ईमेल पर भेजें (वैकल्पिक)"
 
-#: app/templates/settings_simulation_data.html:21
-#: app/templates/settings_simulation_data.html:49
-msgid "اكتب العبارة التالية بالضبط للتأكيد:"
-msgstr "पुष्टि के लिए निम्न वाक्यांश बिल्कुल टाइप करें:"
-
-#: app/templates/settings_simulation_data.html:21
-#: app/templates/settings_simulation_data.html:22
-msgid "تشغيل بيانات تجريبية"
-msgstr "डेमो डेटा चलाएं"
-
-#: app/templates/settings_simulation_data.html:25
+#: app/templates/settings_simulation_data.html:23
 msgid "فاهم إن هذا يكتب بيانات وهمية فعلية بقاعدة البيانات، وبيني وبين نفسي أقدر أحذفها لاحقاً من هذي الصفحة."
 msgstr "मुझे पता है कि यह डेटाबेस में असली नकली डेटा लिखता है, और मैं इसे बाद में इसी पेज से हटा सकता हूं।"
 
-#: app/templates/settings_simulation_data.html:27
+#: app/templates/settings_simulation_data.html:25
 msgid "تشغيل الآن (قد يأخذ لحظات)"
 msgstr "अभी चलाएं (कुछ पल लग सकते हैं)"
 
-#: app/templates/settings_simulation_data.html:32
+#: app/templates/settings_simulation_data.html:30
 msgid "حيوان محاكاة"
 msgstr "सिमुलेशन पशु"
 
-#: app/templates/settings_simulation_data.html:36
+#: app/templates/settings_simulation_data.html:34
 msgid "مهمة محاكاة"
 msgstr "सिमुलेशन कार्य"
 
-#: app/templates/settings_simulation_data.html:41
+#: app/templates/settings_simulation_data.html:39
 msgid "تم الحذف"
 msgstr "हटाया गया"
 
-#: app/templates/settings_simulation_data.html:42
+#: app/templates/settings_simulation_data.html:40
 msgid "حيوانات:"
 msgstr "पशु:"
 
-#: app/templates/settings_simulation_data.html:42
+#: app/templates/settings_simulation_data.html:40
 msgid "حركات مالية:"
 msgstr "वित्तीय लेनदेन:"
 
-#: app/templates/settings_simulation_data.html:42
+#: app/templates/settings_simulation_data.html:40
 msgid "تقريع:"
 msgstr "संगमन:"
 
-#: app/templates/settings_simulation_data.html:42
+#: app/templates/settings_simulation_data.html:40
 msgid "أمراض:"
 msgstr "रोग:"
 
-#: app/templates/settings_simulation_data.html:42
+#: app/templates/settings_simulation_data.html:40
 msgid "مهام:"
 msgstr "कार्य:"
 
-#: app/templates/settings_simulation_data.html:46
+#: app/templates/settings_simulation_data.html:44
 msgid "تأكيد الحذف"
 msgstr "हटाने की पुष्टि करें"
 
-#: app/templates/settings_simulation_data.html:49
-#: app/templates/settings_simulation_data.html:50
+#: app/templates/settings_simulation_data.html:47
+msgid "اكتب العبارة التالية بالضبط للتأكيد:"
+msgstr "पुष्टि के लिए निम्न वाक्यांश बिल्कुल टाइप करें:"
+
+#: app/templates/settings_simulation_data.html:47
+#: app/templates/settings_simulation_data.html:48
 msgid "حذف بيانات المحاكاة"
 msgstr "सिमुलेशन डेटा हटाएं"
 
-#: app/templates/settings_simulation_data.html:53
+#: app/templates/settings_simulation_data.html:51
 msgid "أؤكد إني أبي أحذف بيانات المحاكاة أعلاه نهائياً — لا رجعة."
 msgstr "मैं पुष्टि करता हूं कि मैं ऊपर के सिमुलेशन डेटा को स्थायी रूप से हटाना चाहता हूं — कोई पूर्ववत नहीं।"
 
-#: app/templates/settings_simulation_data.html:55
+#: app/templates/settings_simulation_data.html:53
 msgid "حذف بيانات المحاكاة نهائياً"
 msgstr "सिमुलेशन डेटा स्थायी रूप से हटाएं"
 
-#: app/templates/settings_simulation_data.html:60
+#: app/templates/settings_simulation_data.html:58
 msgid "ما فيه بيانات محاكاة حالياً."
 msgstr "फिलहाल कोई सिमुलेशन डेटा नहीं है।"
 
@@ -9461,4 +9461,7 @@ msgstr "अभी तक कोई अतिरिक्त नामित ग�
 
 #~ msgid "تنظيف بيانات المحاكاة"
 #~ msgstr "सिमुलेशन डेटा साफ़ करें"
+
+#~ msgid "تشغيل بيانات تجريبية"
+#~ msgstr "डेमो डेटा चलाएं"
 

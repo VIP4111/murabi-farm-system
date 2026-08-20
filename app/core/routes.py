@@ -151,6 +151,14 @@ def home():
     if current_user.has_permission("health.view"):
         vaccinations_overdue_count, vaccinations_upcoming_count = alerts_service.vaccination_counts()
 
+    # إجمالي تنبيهات مربوطة برؤوس محدَّدة (بند إضافي 214) — فقعة على
+    # زر "الحيوانات" بالإجراءات السريعة، تجمع كل تنبيه فيه animal_id
+    # (بيانات ناقصة، أمراض مفتوحة، وزن متأخر...) بعدد واحد إجمالي —
+    # عكس فقعتي التطعيمات اللي منفصلتين لأنها بحاجة تمييز متأخر/قادم.
+    animals_alerts_count = None
+    if current_user.has_permission("animals.view"):
+        animals_alerts_count = sum(alerts_service.alert_counts_by_animal().values())
+
     return render_template(
         "home.html", user=current_user,
         setup_checklist_items=setup_checklist_items,
@@ -158,6 +166,7 @@ def home():
         today_tasks_count=today_tasks_count, today_alerts_count=today_alerts_count,
         vaccinations_overdue_count=vaccinations_overdue_count,
         vaccinations_upcoming_count=vaccinations_upcoming_count,
+        animals_alerts_count=animals_alerts_count,
     )
 
 
@@ -283,8 +292,9 @@ def _animals_list_context(*, bulk_mode: bool) -> dict:
         animals = [a for a in animals if a.barn_id == int(barn_filter_id)]
 
     withdrawal_map = {a.id: animal_under_withdrawal(a.id) for a in animals}
+    alert_counts = alerts_service.alert_counts_by_animal()
     return dict(
-        animals=animals, withdrawal_map=withdrawal_map, today=date.today(),
+        animals=animals, withdrawal_map=withdrawal_map, alert_counts=alert_counts, today=date.today(),
         filters=animal_filters_service.FILTERS, active_filter=filter_key,
         counts=animal_filters_service.get_counts(),
         barns=Barn.query.order_by(Barn.barn_name).all(),

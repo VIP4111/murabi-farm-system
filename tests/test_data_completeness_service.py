@@ -13,8 +13,17 @@ def _complete_purchase(animal_no="C-01"):
     a = make_animal(animal_no=animal_no, gender="ذكر", source=AnimalSource.PURCHASE, price=500)
     a.weight = 40
     a.purpose = "تسمين"
+    a.color = "أبيض"
     db.session.commit()
     return a
+
+
+def test_missing_color_is_flagged(app):
+    a = make_animal(animal_no="P-06", gender="ذكر", source=AnimalSource.PURCHASE, price=500)
+    a.weight = 40
+    a.purpose = "تسمين"
+    db.session.commit()
+    assert "color" in dcs.missing_fields(a)
 
 
 def test_purchase_missing_price_is_flagged(app):
@@ -101,6 +110,7 @@ def test_incomplete_data_generates_separate_alert_per_missing_field(app):
     قسمه على حسب المذكور فيه" — بدل تنبيه واحد يجمع كل النواقص بنص
     طويل، تنبيه مستقل لكل حقل ناقص لحاله."""
     a = make_animal(animal_no="P-05", gender="ذكر", source=AnimalSource.PURCHASE, price=None)
+    a.color = "أبيض"
     db.session.commit()
 
     alerts = [al for al in alerts_service.get_alerts()

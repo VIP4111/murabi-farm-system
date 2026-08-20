@@ -90,7 +90,10 @@
       <a href="{{ url_for('team.reports_list') }}"><span class="emoji">📋</span> {{ _('البلاغات') }}</a>
       <a href="{{ url_for('team.tasks_list') }}"><span class="emoji">✅</span> {{ _('المهام') }}</a>
       {% if user.has_permission('animals.view') %}
-      <a href="{{ url_for('core.animals_list') }}"><span class="emoji">🐑</span> {{ _('الحيوانات') }}</a>
+      <a href="{{ url_for('core.animals_list') }}" style="position:relative;">
+        {% if animals_alerts_count %}<span class="notif-bubble overdue" title="{{ _('%(n)s تنبيه على رؤوس مسجَّلة', n=animals_alerts_count) }}">{{ animals_alerts_count }}</span>{% endif %}
+        <span class="emoji">🐑</span> {{ _('الحيوانات') }}
+      </a>
       {% endif %}
       {% if user.has_permission('animals.manage') %}
       <a href="{{ url_for('core.animals_new') }}"><span class="emoji">➕</span> {{ _('حيوان جديد') }}</a>

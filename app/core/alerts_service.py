@@ -558,3 +558,16 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         alerts = [a for a in alerts if a.get("barn_id") in allowed]
     alerts.sort(key=lambda a: not a["urgent"])
     return alerts
+
+
+def alert_counts_by_animal() -> dict:
+    """عدد التنبيهات لكل رأس على حدة (بند إضافي 214) — لعمود "التنبيهات"
+    بسجل الحيوانات وفقعة إجمالي التنبيهات على زر "الحيوانات" بالرئيسية.
+    يعيد استخدام `get_alerts()` نفسها (كل التنبيهات مربوطة أصلاً بـ
+    `animal_id` لو تخص رأساً محدداً)، بدل بناء منطق تجميع مستقل."""
+    counts: dict[int, int] = {}
+    for a in get_alerts():
+        animal_id = a.get("animal_id")
+        if animal_id:
+            counts[animal_id] = counts.get(animal_id, 0) + 1
+    return counts

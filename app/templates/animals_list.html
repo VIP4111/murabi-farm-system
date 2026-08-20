@@ -89,7 +89,7 @@
 <table>
       <tr>
         {% if can_bulk %}<th><input type="checkbox" id="selectAll" style="width:auto; margin:0;"></th>{% endif %}
-        <th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('المصدر') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المرحلة') }}</th><th>{{ _('فترة سحب') }}</th>
+        <th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('المصدر') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المرحلة') }}</th><th>{{ _('فترة سحب') }}</th><th>{{ _('التنبيهات') }}</th>
       </tr>
       {% set source_labels = {'birth': _('مولود بالمزرعة'), 'purchase': _('شراء'), 'gift': _('هدية/دعم'), 'opening_balance': _('رصيد افتتاحي')} %}
       {% for a in animals %}
@@ -108,9 +108,14 @@
           {% else %}<span class="badge on" title="{{ _('اضغط لتفاصيل الرأس') }}">{{ _('آمن') }}</span>{% endif %}
           </a>
         </td>
+        <td>
+          {% if alert_counts.get(a.id) %}
+          <a class="badge off" href="{{ url_for('core.animal_detail', animal_id=a.id) }}" title="{{ _('اضغط لتفاصيل الرأس') }}">⚠️ {{ alert_counts[a.id] }}</a>
+          {% else %}<span style="color:var(--muted);">-</span>{% endif %}
+        </td>
       </tr>
       {% else %}
-      <tr><td colspan="8" style="color:#888;">{{ _('لا يوجد حيوانات ضمن هذا الفلتر حالياً.') if active_filter != 'all' else _('لا يوجد حيوانات مسجّلة بعد.') }}</td></tr>
+      <tr><td colspan="9" style="color:#888;">{{ _('لا يوجد حيوانات ضمن هذا الفلتر حالياً.') if active_filter != 'all' else _('لا يوجد حيوانات مسجّلة بعد.') }}</td></tr>
       {% endfor %}
     </table>
 </div>
