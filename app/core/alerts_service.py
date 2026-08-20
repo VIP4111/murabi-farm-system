@@ -475,6 +475,34 @@ def _isolation_without_barn() -> list[dict]:
     return alerts
 
 
+def _feed_distribution_shortage() -> list[dict]:
+    """توزيع علف تلقائي فشل جزئياً/كلياً (بند إضافي 220) — قبل هذا
+    البند، `task_service._distribute_barn_feed` كانت تكتب سبب عدم
+    الخصم بملاحظة إنجاز المهمة بس (نص مدفون، لازم تفتح المهمة بنفسك
+    تشوفه) — المهمة نفسها تنجز عادي بدون أي إشارة بالواجهة الرئيسية
+    إن العلف ما اتوزّع فعلياً. هذا التنبيه يفحص العرَض المباشر: مهمة
+    "وجبة علف" منجزة خلال آخر `FAILED_TASK_ALERT_WINDOW_DAYS` أيام
+    وملاحظتها فيها ⚠️ (نفس الرمز اللي تكتبه `_distribute_barn_feed`
+    دائماً عند أي نقص) — نفس نافذة زمنية `_failed_tasks_pending_review`
+    بالضبط، لنفس السبب (ما فيه حقل "تمّت المراجعة" بعد)."""
+    from datetime import datetime, timezone
+    cutoff = datetime.now(timezone.utc).replace(tzinfo=None) - timedelta(days=FAILED_TASK_ALERT_WINDOW_DAYS)
+    rows = (Task.query.filter(
+        Task.task_type == "feeding_schedule", Task.status == "done",
+        Task.completed_at.isnot(None), Task.completed_at >= cutoff,
+        Task.completion_note.isnot(None), Task.completion_note.contains("⚠️"),
+    ).all())
+    return [
+        {
+            "category": "توزيع علف ناقص", "icon": "🥣",
+            "label": f"{t.title} — العلف ما اتوزّع بالكامل",
+            "detail": (t.completion_note or "").strip(),
+            "urgent": True, "animal_id": t.animal_id, "barn_id": t.barn_id,
+        }
+        for t in rows
+    ]
+
+
 def _failed_tasks_pending_review() -> list[dict]:
     """مهام متعذّرة بانتظار مراجعة (بند إضافي 99) — قبل هذا، `fail_task`
     كان يسجّل الحالة والسبب بس (`app/team/task_service.py`)، بدون أي
@@ -646,6 +674,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _failed_tasks_pending_review() + _isolation_without_barn()
         + _incomplete_animal_data() + _stalled_workflow(fs)
         + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
+        + _feed_distribution_shortage()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
