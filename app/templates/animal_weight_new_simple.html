@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .s-step{display:none;}
+  .s-step.active{display:block;}
+  .s-title{font-size:22px; font-weight:800; text-align:center; margin:10px 0 18px;}
+  .s-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px;}
+  .s-card{
+    background:var(--card); border:2px solid var(--line); border-radius:18px; padding:14px 8px;
+    text-align:center; cursor:pointer; font-size:15px; font-weight:700; display:flex;
+    flex-direction:column; align-items:center; gap:8px; min-height:96px; justify-content:center;
+  }
+  .s-card:active, .s-card.picked{border-color:var(--primary); background:#f7efe4;}
+  .s-photo{width:52px; height:52px; border-radius:14px; object-fit:cover; background:var(--bg);}
+  .s-emoji{font-size:34px;}
+  .s-back{margin-bottom:14px;}
+  .s-weight-input{font-size:40px; text-align:center; padding:20px; border-radius:18px; width:100%;}
+</style>
+
+<div class="card">
+  <button class="btn light s-back" type="button" onclick="window.location='{{ url_for('core.home') }}'">→ {{ _('الرئيسية') }}</button>
+
+  <div class="s-step active" data-step="1">
+    <div class="s-title">🐑 {{ _('أي حيوان؟') }}</div>
+    <div class="s-grid">
+      {% for a in animals %}
+      <div class="s-card" data-value="{{ a.id }}" onclick="pickAnimal('{{ a.id }}','{{ a.animal_no }}')">
+        {% if a.image_url %}<img class="s-photo" src="{{ a.image_url }}" alt="">{% else %}<span class="s-emoji">🐑</span>{% endif %}
+        {{ a.animal_no }}
+      </div>
+      {% else %}
+      <p class="empty">{{ _('ما فيه حيوانات نشطة مسجَّلة.') }}</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="s-step" data-step="2">
+    <div class="s-title">⚖️ <span id="weightTitleAnimal"></span></div>
+    <form method="post" id="weightForm" data-offline>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="date" value="{{ today }}">
+      <label style="text-align:center; display:block;">{{ _('الوزن (كجم)') }}</label>
+      <input class="s-weight-input" name="weight" type="number" step="0.1" inputmode="decimal" required autofocus>
+      <button class="btn" type="submit" style="width:100%; margin-top:16px; font-size:18px; padding:16px;">💾 {{ _('حفظ') }}</button>
+      <button class="btn light" type="button" style="width:100%; margin-top:8px;" onclick="goStep(1)">↺ {{ _('غيّر الحيوان') }}</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var postTemplate = {{ post_url_template|tojson }};
+
+  window.goStep = function(n){
+    document.querySelectorAll('.s-step').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-step') == n); });
+    window.scrollTo(0, 0);
+  };
+
+  window.pickAnimal = function(id, label){
+    document.getElementById('weightForm').action = postTemplate.replace('/0/', '/' + id + '/');
+    document.getElementById('weightTitleAnimal').textContent = label;
+    goStep(2);
+  };
+})();
+</script>
+{% endblock %}

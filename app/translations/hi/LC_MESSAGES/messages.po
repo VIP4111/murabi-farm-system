@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 02:07+0300\n"
+"POT-Creation-Date: 2026-08-21 02:16+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -2239,9 +2239,10 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 
 #: app/templates/animal_detail.html:177 app/templates/animal_detail.html:343
 #: app/templates/animal_detail.html:395 app/templates/animal_detail.html:420
-#: app/templates/animal_form.html:130 app/templates/animal_workflow.html:58
-#: app/templates/barn_form.html:41 app/templates/breed_edit_form.html:10
-#: app/templates/climate/settings.html:33
+#: app/templates/animal_form.html:130
+#: app/templates/animal_weight_new_simple.html:44
+#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:41
+#: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
 #: app/templates/equipment/item_form.html:17
@@ -2495,6 +2496,7 @@ msgstr "नया वजन दर्ज करें"
 
 #: app/templates/animal_detail.html:341 app/templates/animal_detail.html:372
 #: app/templates/animal_form.html:126
+#: app/templates/animal_weight_new_simple.html:42
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/batches/batch_form.html:33
 #: app/templates/bulk_action_form.html:19 app/templates/catalog_public.html:13
@@ -2855,6 +2857,28 @@ msgstr "जोड़ें"
 #: app/templates/team/report_detail.html:56
 msgid "إلغاء"
 msgstr "रद्द करें"
+
+#: app/templates/animal_weight_new_simple.html:21 app/templates/base.html:525
+#: app/templates/base.html:527 app/templates/health/disease_new_simple.html:22
+#: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
+#: app/templates/team/worker_report_form.html:6
+#: app/templates/worker_home.html:2
+msgid "الرئيسية"
+msgstr "मुख्य पृष्ठ"
+
+#: app/templates/animal_weight_new_simple.html:24
+#: app/templates/health/disease_new_simple.html:32
+msgid "أي حيوان؟"
+msgstr "कौन सा जानवर?"
+
+#: app/templates/animal_weight_new_simple.html:32
+#: app/templates/health/disease_new_simple.html:40
+msgid "ما فيه حيوانات نشطة مسجَّلة."
+msgstr "कोई सक्रिय जानवर दर्ज नहीं।"
+
+#: app/templates/animal_weight_new_simple.html:45
+msgid "غيّر الحيوان"
+msgstr "जानवर बदलें"
 
 #: app/templates/animal_workflow.html:7
 msgid "صفحة تفاصيل الرأس"
@@ -3401,14 +3425,6 @@ msgstr "अभी तक कोई बाड़ा दर्ज नहीं ह
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:525 app/templates/base.html:527
-#: app/templates/health/disease_new_simple.html:22
-#: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
-#: app/templates/team/worker_report_form.html:6
-#: app/templates/worker_home.html:2
-msgid "الرئيسية"
-msgstr "मुख्य पृष्ठ"
-
 #: app/templates/base.html:528 app/templates/home.html:62
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
@@ -3425,7 +3441,7 @@ msgid "الحلال"
 msgstr "पशुधन"
 
 #: app/templates/base.html:538 app/templates/home.html:100
-#: app/templates/simple_home.html:39
+#: app/templates/simple_home.html:45
 msgid "الحيوانات"
 msgstr "जानवर"
 
@@ -3527,7 +3543,7 @@ msgstr "उपकरण"
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
-#: app/templates/base.html:602 app/templates/simple_home.html:45
+#: app/templates/base.html:602 app/templates/simple_home.html:51
 #: app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr "मेरे उपकरण"
@@ -3551,7 +3567,7 @@ msgid "المهام"
 msgstr "कार्य"
 
 #: app/templates/base.html:622 app/templates/home.html:95
-#: app/templates/simple_home.html:54 app/templates/team/reports_list.html:6
+#: app/templates/simple_home.html:60 app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्टें"
 
@@ -4850,26 +4866,34 @@ msgid "نعجة أو فحل تعبان"
 msgstr "बीमार भेड़ या मेढ़ा"
 
 #: app/templates/simple_home.html:39
+msgid "تسجيل وزن"
+msgstr "वजन दर्ज करें"
+
+#: app/templates/simple_home.html:39
+msgid "وزنت حيوان الحين"
+msgstr "अभी किसी जानवर का वजन लें"
+
+#: app/templates/simple_home.html:45
 msgid "شوف كل رؤوسك"
 msgstr "अपने सभी जानवर देखें"
 
-#: app/templates/simple_home.html:45
+#: app/templates/simple_home.html:51
 msgid "أخذ أو استرجاع معدة"
 msgstr "उपकरण लें या वापस करें"
 
-#: app/templates/simple_home.html:50 app/templates/team/tasks_list.html:56
+#: app/templates/simple_home.html:56 app/templates/team/tasks_list.html:56
 msgid "مهامي"
 msgstr "मेरे कार्य"
 
-#: app/templates/simple_home.html:50
+#: app/templates/simple_home.html:56
 msgid "شوف وأنجز مهامك"
 msgstr "अपने कार्य देखें और पूरे करें"
 
-#: app/templates/simple_home.html:54
+#: app/templates/simple_home.html:60
 msgid "بلّغ عن أي شي"
 msgstr "कुछ भी रिपोर्ट करें"
 
-#: app/templates/simple_home.html:63
+#: app/templates/simple_home.html:69
 msgid "رجّعني للواجهة العادية"
 msgstr "मुझे सामान्य इंटरफेस पर वापस ले जाएं"
 
@@ -7047,14 +7071,6 @@ msgstr "पहले रोग चुनें"
 #: app/templates/health/disease_link_wizard.html:106
 msgid "اختر عرض واحد على الأقل"
 msgstr "कम से कम एक लक्षण चुनें"
-
-#: app/templates/health/disease_new_simple.html:32
-msgid "أي حيوان؟"
-msgstr "कौन सा जानवर?"
-
-#: app/templates/health/disease_new_simple.html:40
-msgid "ما فيه حيوانات نشطة مسجَّلة."
-msgstr "कोई सक्रिय जानवर दर्ज नहीं।"
 
 #: app/templates/health/disease_new_simple.html:46
 msgid "شنو المشكلة؟"

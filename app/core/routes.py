@@ -1047,6 +1047,22 @@ def animal_detail(animal_id):
     )
 
 
+@core_bp.route("/weights/new-simple")
+@login_required
+@require_permission("animals.manage")
+def animal_weight_new_simple():
+    """تسجيل وزن — واجهة "بسيط جداً" (بند إضافي 226): اختر الحيوان
+    ببطاقة كبيرة، اكتب الوزن، احفظ. يبني رابط POST لنفس
+    `core.animal_weight_new` الحالية عبر استبدال JS بسيط (بدون أي
+    منطق حفظ جديد)."""
+    return render_template(
+        "animal_weight_new_simple.html",
+        animals=Animal.query.filter_by(status="active").order_by(Animal.animal_no).all(),
+        post_url_template=url_for("core.animal_weight_new", animal_id=0),
+        today=date.today().isoformat(),
+    )
+
+
 @core_bp.route("/animals/<int:animal_id>/weights/new", methods=["POST"])
 @login_required
 @require_permission("animals.manage")

@@ -33,6 +33,12 @@
       <span><b>{{ _('حالة مرضية') }}</b><small>{{ _('نعجة أو فحل تعبان') }}</small></span>
     </a>
     {% endif %}
+    {% if user.has_permission('animals.manage') %}
+    <a class="simple-btn" href="{{ url_for('core.animal_weight_new_simple') }}">
+      <span class="emoji">⚖️</span>
+      <span><b>{{ _('تسجيل وزن') }}</b><small>{{ _('وزنت حيوان الحين') }}</small></span>
+    </a>
+    {% endif %}
     {% if user.has_permission('animals.view') %}
     <a class="simple-btn" href="{{ url_for('core.animals_list') }}">
       <span class="emoji">🐑</span>
