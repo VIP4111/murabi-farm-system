@@ -336,6 +336,24 @@
     .notice{background:#fff4d7; border:1px solid #f1d88b; color:#6c4b00; border-radius:18px; padding:12px; margin:10px 0; font-size:13px; line-height:1.7;}
     .empty{text-align:center; color:var(--muted); padding:24px 10px; background:#fff; border:1px dashed var(--line); border-radius:22px;}
 
+    /* أقسام "خيارات متقدمة" قابلة للطي (بند إضافي 224) — نفس نمط
+       details.drawer-group بالضبط (بند 198)، مستخدَم هنا داخل فورمات
+       طويلة (الإعدادات، الإجراء الجماعي...) بدل القائمة الجانبية —
+       الحقول تُرسَل مع الفورم عادي حتى لو القسم مقفول (سلوك HTML
+       details/summary القياسي). مقفولة افتراضياً. */
+    details.settings-advanced{
+      margin:14px 0; border:1px solid var(--line); border-radius:14px;
+      padding:2px 14px; background:var(--bg);
+    }
+    details.settings-advanced summary{
+      list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
+      font-weight:800; font-size:13.5px; padding:12px 2px; color:var(--text);
+    }
+    details.settings-advanced summary::-webkit-details-marker{display:none;}
+    details.settings-advanced summary::after{content:'›'; margin-inline-start:auto; font-size:18px; color:var(--muted); transition:transform .15s;}
+    details.settings-advanced[open] summary::after{transform:rotate(90deg);}
+    .settings-advanced-body{padding-bottom:12px;}
+
     .workflow-map{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;}
     @media (min-width:760px){.workflow-map{grid-template-columns:repeat(5,minmax(0,1fr));}}
     .workflow-stage{background:#fff; border:1px solid var(--line); border-radius:16px; padding:11px; min-height:100px;}

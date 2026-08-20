@@ -5,7 +5,12 @@
   <p style="color:var(--muted);">{{ _('مسمّاك الوظيفي:') }} {{ user.role.display_name }}</p>
 </div>
 
-{% if not user.onboarding_completed_at %}
+{% if not user.onboarding_completed_at and not setup_checklist_items %}
+{# بند إضافي 224 — قبل هذا، بطاقة "أول مرة تستخدم النظام؟" وبطاقة
+   "خطوات تجهيز النظام" (تحت) كانتا تظهران مع بعض لأي مالك جديد —
+   بطاقتان "ابدأ من هنا" متزاحمتان بأعلى الصفحة. صار الترتيب منطقي:
+   لو لسا فيه خطوات تجهيز أساسية ناقصة (حظيرة/حيوان/عامل...)، هذي
+   الأولوية الفعلية — الجولة التعريفية تظهر بس بعد ما تخلص أو تتجاهلها. #}
 <div class="card" style="background:var(--primary); color:#fff;">
   <h3 style="margin:0; color:#fff;">👋 {{ _('أول مرة تستخدم النظام؟') }}</h3>
   <p style="margin:8px 0 12px; color:rgba(255,255,255,.85); font-size:13px;">{{ _('جولة سريعة (دقيقتين) تعرّفك على دليلك اليومي — يتغيّر تلقائياً حسب حالة قطيعك.') }}</p>
