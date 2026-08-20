@@ -522,9 +522,18 @@ def task_detail(task_id):
     ):
         abort(403)
     ctx = tsvc.task_rich_context(task)
+    barns = suggested_barn_id = None
+    if task.task_type == "barn_physiology_move":
+        from app.models import Barn
+        barns = Barn.query.order_by(Barn.barn_name).all()
+        if task.source_type and ":" in task.source_type:
+            target_barn_type = task.source_type.split(":", 1)[1]
+            suggested_barn = Barn.query.filter_by(barn_type=target_barn_type).order_by(Barn.id).first()
+            suggested_barn_id = suggested_barn.id if suggested_barn else None
     return render_template("team/task_detail.html", task=task, ctx=ctx, today=date.today(),
                             failure_reasons=tsvc.FAILURE_REASONS,
-                            failure_reason_labels=tsvc.FAILURE_REASON_LABELS)
+                            failure_reason_labels=tsvc.FAILURE_REASON_LABELS,
+                            barns=barns, suggested_barn_id=suggested_barn_id)
 
 
 @team_bp.route("/tasks/daily-templates", methods=["GET", "POST"])
@@ -635,6 +644,7 @@ def task_complete(task_id):
             task, actor=current_user, note=request.form.get("note"),
             evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
             voice_note_url=svc.save_voice_note(request.files.get("voice_note")),
+            barn_id=request.form.get("barn_id", type=int),
         )
         flash("تم إنجاز المهمة", "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:

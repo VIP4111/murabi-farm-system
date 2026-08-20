@@ -356,6 +356,35 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
 FAILED_TASK_ALERT_WINDOW_DAYS = 3
 
 
+def _barn_physiology_target_missing() -> list[dict]:
+    """حظيرة هدف ناقصة لآلية "فرز الحظائر حسب الحالة الفسيولوجية" (بند
+    إضافي 216) — `barn_physiology_service.generate_barn_move_tasks` كانت
+    تتجاهل بصمت أي رأس محتاج حظيرة "حامل - الشهور الأخيرة"/"رضاعة" لو
+    ما فيه حظيرة بهذا النوع أصلاً، بدون أي تنبيه يخبرك إنك تحتاج تنشئها
+    — نفس مبدأ `_isolation_without_barn` أعلاه بالضبط، لنفس نوع الفجوة."""
+    from app.core import barn_physiology_service as bps
+
+    today = date.today()
+    targets = {
+        "حامل - الشهور الأخيرة": bps._late_pregnancy_animal_ids(today),
+        "رضاعة": bps._nursing_animal_ids(today),
+    }
+    alerts = []
+    for target_barn_type, animal_ids in targets.items():
+        if not animal_ids:
+            continue
+        if Barn.query.filter_by(barn_type=target_barn_type).first():
+            continue
+        alerts.append({
+            "category": "حظيرة هدف ناقصة", "icon": "🏚️",
+            "label": f"{len(animal_ids)} رأس بحاجة حظيرة \"{target_barn_type}\" — ما أنشأتها بعد",
+            "detail": f"أنشئ حظيرة بنوع \"{target_barn_type}\" من شاشة الحظائر، عشان النظام "
+                      "يقدر يقترح نقل هالرؤوس تلقائياً (بانتظار موافقة الدكتور دائماً).",
+            "urgent": False, "animal_id": None, "barn_id": None,
+        })
+    return alerts
+
+
 def _isolation_without_barn() -> list[dict]:
     """عزل بدون حظيرة عزل مصنّفة (بند إضافي 112) — لو ما فيه أي حظيرة
     `barn_type="عزل"` وقت ولادة، `start_isolation_plan` (بند 4) كانت
@@ -552,6 +581,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _medicine_expiring_soon(fs) + _weight_gain_underperformers()
         + _failed_tasks_pending_review() + _isolation_without_barn()
         + _incomplete_animal_data() + _stalled_workflow(fs)
+        + _barn_physiology_target_missing()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)

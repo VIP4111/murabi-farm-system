@@ -307,7 +307,8 @@ def start_task(task: Task, *, actor) -> Task:
     return task
 
 
-def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voice_note_url=None) -> Task:
+def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voice_note_url=None,
+                   barn_id=None) -> Task:
     _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
         raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
@@ -331,7 +332,7 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
         _move_to_pregnant_barn(task)
 
     if task.task_type == "barn_physiology_move" and task.animal_id:
-        _move_barn_physiology(task)
+        _move_barn_physiology(task, chosen_barn_id=barn_id)
 
     if task.task_type == "feeding_schedule" and task.barn_id:
         _distribute_barn_feed(task)
@@ -436,13 +437,26 @@ def _move_to_pregnant_barn(task: Task) -> None:
     db.session.add(task.animal)
 
 
-def _move_barn_physiology(task: Task) -> None:
-    """نقل فعلي حسب الحالة الفسيولوجية (بند إضافي 133) — نفس نمط
-    `_move_to_pregnant_barn` بالضبط، بس عام لأي نوع حظيرة مشفَّر داخل
-    `source_type` (`barn_physiology_service._source_type`) بدل نوع
-    واحد مثبَّت. يُنفَّذ فقط عند إنجاز المهمة نفسها — بانتظار تقدير
-    الدكتور/العامل، مو نقل صامت وقت التوليد."""
+def _move_barn_physiology(task: Task, *, chosen_barn_id=None) -> None:
+    """نقل فعلي حسب الحالة الفسيولوجية (بند إضافي 133، صار قابلاً
+    لاختيار حظيرة بديلة ببند إضافي 216) — نفس نمط `_move_to_pregnant_barn`
+    بالضبط، بس عام لأي نوع حظيرة مشفَّر داخل `source_type`
+    (`barn_physiology_service._source_type`) بدل نوع واحد مثبَّت. يُنفَّذ
+    فقط عند إنجاز المهمة نفسها — بانتظار تقدير الدكتور/العامل، مو نقل
+    صامت وقت التوليد.
+
+    `chosen_barn_id` (بند 216): العامل ينقل الرأس فعلياً وممكن يحطه
+    بحظيرة غير المقترحة (مثلاً المقترحة مليانة) — لو مرّر رقم حظيرة
+    صريح وقت إنجاز المهمة، ينقله لها بدل الحظيرة المشتقة من
+    `source_type` تلقائياً، طالما الحظيرة موجودة فعلاً."""
     from app.models import Barn
+
+    if chosen_barn_id:
+        barn = Barn.query.get(chosen_barn_id)
+        if barn:
+            task.animal.barn_id = barn.id
+            db.session.add(task.animal)
+            return
 
     if not task.source_type or ":" not in task.source_type:
         return

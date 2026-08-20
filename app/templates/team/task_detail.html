@@ -95,6 +95,15 @@
   <h3 style="font-size:15px;">✅ {{ _('إنجاز المهمة') }}</h3>
   <form method="post" action="{{ url_for('team.task_complete', task_id=task.id) }}" enctype="multipart/form-data">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if task.task_type == "barn_physiology_move" and barns %}
+    <label>{{ _('أي حظيرة نقلته لها فعلياً؟') }}</label>
+    <select name="barn_id">
+      {% for b in barns %}
+      <option value="{{ b.id }}" {{ 'selected' if b.id == suggested_barn_id else '' }}>{{ b.barn_name }}{{ ' (' + b.barn_type + ')' if b.barn_type else '' }}</option>
+      {% endfor %}
+    </select>
+    <p class="notice" style="font-size:12px;">{{ _('محدَّدة الحظيرة المقترحة بالمهمة افتراضياً — غيّرها لو نقلته فعلياً لحظيرة ثانية.') }}</p>
+    {% endif %}
     <label>{{ _('ملاحظة (اختياري)') }}</label>
     <textarea name="note" rows="2"></textarea>
     <label>{{ _('صورة دليل (إلزامي)') if task.requires_photo else _('صورة دليل (اختياري)') }}</label>
