@@ -904,6 +904,25 @@ def animals_new():
         ))
         db.session.commit()
         flash("تمت إضافة الحيوان", "success")
+        isolation_warning = getattr(animal, "_isolation_barn_warning", None)
+        if isolation_warning:
+            flash(isolation_warning, "warning")
+
+        # إشعار تيليجرام فوري بالولادة (بند إضافي 231) — قبل كذا كان
+        # الاعتماد كلياً على المهام (تعرف بالولادة بس لو فتحت "مهامي")،
+        # مو حدث بحجم البيع أهمية. نفس نمط إشعارات نقص المخزون
+        # (`stock_alert_service.py`): كل من يملك health.manage.
+        if source == "birth":
+            from app.core import telegram_service
+            from app.models import User
+            mother = Animal.query.get(request.form.get("mother_id")) if request.form.get("mother_id") else None
+            for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
+                if u.has_permission("health.manage"):
+                    telegram_service.notify_user(
+                        u,
+                        f"🍼 ولادة جديدة — {animal.animal_no}"
+                        + (f" (الأم {mother.animal_no})" if mother else ""),
+                    )
         return redirect(url_for("core.animals_list"))
 
     _seed_system_barns()
@@ -1271,6 +1290,7 @@ def animal_workflow(animal_id):
         sale_finance = (Finance.query
                          .filter_by(related_animal_id=animal.id, operation_type="sale", is_cancelled=False)
                          .order_by(Finance.id.desc()).first())
+    from app.health.health_service import animal_under_withdrawal
     return render_template(
         "animal_workflow.html",
         animal=animal, wf=wf, events=events,
@@ -1280,6 +1300,7 @@ def animal_workflow(animal_id):
         missing_items=missing_items,
         missing_items_with_actions=missing_items_with_actions,
         sale_finance=sale_finance,
+        withdrawal_until=animal_under_withdrawal(animal.id),
     )
 
 
@@ -1332,6 +1353,9 @@ def animal_workflow_plan(animal_id):
 @require_permission("animals.manage")
 def animal_sell(animal_id):
     animal = Animal.query.get_or_404(animal_id)
+    override_reason = request.form.get("withdrawal_override_reason") or None
+    if override_reason and not current_user.has_permission("sales.override_withdrawal"):
+        override_reason = None  # دفاع بعمق — تجاهل صامت لو المستخدم ما يملك الصلاحية فعلاً
     try:
         cycle_engine.sell_animal(
             animal,
@@ -1342,8 +1366,20 @@ def animal_sell(animal_id):
             buyer_name=request.form.get("buyer_name") or None,
             buyer_phone=request.form.get("buyer_phone") or None,
             no_invoice=bool(request.form.get("no_invoice")),
+            withdrawal_override_reason=override_reason,
         )
         flash("تم تسجيل البيع", "success")
+
+        # إشعار تيليجرام فوري بالبيع (بند إضافي 231) — حدث مالي مهم،
+        # نفس نمط إشعار الولادة فوق. أصحاب صلاحية finance.full.manage
+        # (صاحب الحلال + المحاسب افتراضياً).
+        from app.core import telegram_service
+        from app.models import User
+        for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
+            if u.has_permission("finance.full.manage"):
+                telegram_service.notify_user(
+                    u, f"💰 بيع رأس — {animal.animal_no} بسعر {request.form['sale_price']}",
+                )
     except cycle_engine.CycleExitBlocked as e:
         # يشمل الآن حظر فترة التحريم أيضاً (بند إضافي 50) — كان تحذيراً
         # بعد البيع، صار رفضاً حقيقياً قبله.
@@ -1527,7 +1563,7 @@ def farm_settings_save():
         "pre_birth_feed_change_days", "postpartum_feed_days", "male_sale_after_birth_days",
         "alert_before_days", "vaccination_repeat_days", "isolation_days",
         "doctor_check_hours", "postpartum_vaccination_days",
-        "min_breeding_age_days", "min_rest_after_birth_days",
+        "min_breeding_age_days", "min_male_breeding_age_days", "min_rest_after_birth_days",
         "regular_sale_age_days", "udhiyah_min_age_days", "female_delayed_conception_days",
         "report_stale_hours", "ostrich_incubation_days", "workflow_stall_alert_days",
         # بند إضافي 105 — كانت مخزَّنة بدون أي شاشة تعديل.

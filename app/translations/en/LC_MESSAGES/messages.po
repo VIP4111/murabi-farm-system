@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 21:32+0300\n"
+"POT-Creation-Date: 2026-08-21 23:05+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "Has registered medicines."
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:151 app/templates/settings_backup.html:5
+#: app/templates/settings.html:152 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "Backup"
 
@@ -1494,7 +1494,7 @@ msgstr "Gender"
 #: app/templates/animal_detail.html:372 app/templates/animal_detail.html:387
 #: app/templates/animal_detail.html:403 app/templates/animal_detail.html:418
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:241
 #: app/templates/bulk_action_form.html:348
@@ -1519,7 +1519,7 @@ msgstr "Gender"
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:24
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
@@ -2082,7 +2082,7 @@ msgstr "Milk"
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
-#: app/templates/repro/mating_form.html:34
+#: app/templates/repro/mating_form.html:45
 #: app/templates/repro/pregnancy_form.html:21
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
@@ -2140,7 +2140,7 @@ msgstr "Farm entry date"
 msgid "الحظيرة"
 msgstr "Barn"
 
-#: app/templates/animal_detail.html:105 app/templates/animal_workflow.html:122
+#: app/templates/animal_detail.html:105 app/templates/animal_workflow.html:128
 msgid "السعر"
 msgstr "Price"
 
@@ -2269,7 +2269,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
-#: app/templates/repro/mating_form.html:42
+#: app/templates/repro/mating_form.html:61
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
@@ -2348,7 +2348,7 @@ msgid "الشدة"
 msgstr "Severity"
 
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
-#: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:148
+#: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
 #: app/templates/finance/list.html:36 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
@@ -2835,7 +2835,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:126 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:127 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
@@ -3000,7 +3000,7 @@ msgstr "Exit decision"
 msgid "بيع — السعر"
 msgstr "Sale — price"
 
-#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:123
+#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:129
 msgid "تاريخ البيع"
 msgstr "Sale date"
 
@@ -3016,92 +3016,101 @@ msgstr "Buyer phone (optional)"
 msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
 msgstr "No invoice for this sale (informal cash sale)"
 
-#: app/templates/animal_workflow.html:99
+#: app/templates/animal_workflow.html:101
+#, python-format
+msgid "الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب موثَّق هنا لو قررت التجاوز (مثلاً ذبح اضطراري أو بيع لمزرعة تربية غير مخصَّص للاستهلاك البشري)."
+msgstr "This head is under a drug withdrawal period until %(d)s — sale is blocked by default. Write a documented reason here if you decide to override it (e.g. emergency slaughter, or sale to a breeding farm not intended for human consumption)."
+
+#: app/templates/animal_workflow.html:102
+msgid "سبب تجاوز فترة السحب"
+msgstr "Reason for overriding the withdrawal period"
+
+#: app/templates/animal_workflow.html:105
 msgid "تسجيل البيع"
 msgstr "Record sale"
 
-#: app/templates/animal_workflow.html:103
+#: app/templates/animal_workflow.html:109
 msgid "نفوق — السبب"
 msgstr "Death — reason"
 
-#: app/templates/animal_workflow.html:104
+#: app/templates/animal_workflow.html:110
 msgid "تاريخ النفوق"
 msgstr "Death date"
 
-#: app/templates/animal_workflow.html:105
+#: app/templates/animal_workflow.html:111
 msgid "تسجيل النفوق"
 msgstr "Record death"
 
-#: app/templates/animal_workflow.html:107
+#: app/templates/animal_workflow.html:113
 msgid "تأكيد الأرشفة؟"
 msgstr "Confirm archiving?"
 
-#: app/templates/animal_workflow.html:109
+#: app/templates/animal_workflow.html:115
 msgid "أرشفة — السبب"
 msgstr "Archive — reason"
 
-#: app/templates/animal_workflow.html:110
+#: app/templates/animal_workflow.html:116
 msgid "تجاوز وجود عمليات مالية مرتبطة"
 msgstr "Override existing linked financial transactions"
 
-#: app/templates/animal_workflow.html:111
+#: app/templates/animal_workflow.html:117
 msgid "أرشفة"
 msgstr "Archive"
 
-#: app/templates/animal_workflow.html:119
+#: app/templates/animal_workflow.html:125
 msgid "بيانات البيع"
 msgstr "Sale data"
 
-#: app/templates/animal_workflow.html:124
+#: app/templates/animal_workflow.html:130
 msgid "المشتري"
 msgstr "Buyer"
 
-#: app/templates/animal_workflow.html:125
+#: app/templates/animal_workflow.html:131
 msgid "رقم الفاتورة"
 msgstr "Invoice number"
 
-#: app/templates/animal_workflow.html:130
+#: app/templates/animal_workflow.html:136
 msgid "لا توجد فاتورة لهذا البيع"
 msgstr "No invoice for this sale"
 
-#: app/templates/animal_workflow.html:132
+#: app/templates/animal_workflow.html:138
 msgid "تنزيل الفاتورة"
 msgstr "Download invoice"
 
-#: app/templates/animal_workflow.html:132
+#: app/templates/animal_workflow.html:138
 msgid "إصدار فاتورة"
 msgstr "Issue invoice"
 
-#: app/templates/animal_workflow.html:134
+#: app/templates/animal_workflow.html:140
 msgid "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق)."
 msgstr "Undo the sale? The animal returns to active status and the financial transaction is cancelled (it stays in the record for auditing)."
 
-#: app/templates/animal_workflow.html:136
+#: app/templates/animal_workflow.html:142
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
 msgstr "Sale reversal from the production cycle page"
 
-#: app/templates/animal_workflow.html:137
+#: app/templates/animal_workflow.html:143
 msgid "استرجاع البيع"
 msgstr "Undo sale"
 
-#: app/templates/animal_workflow.html:145
+#: app/templates/animal_workflow.html:151
 msgid "سجل أحداث الدورة"
 msgstr "Cycle events log"
 
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 msgid "الحدث"
 msgstr "Event"
 
-#: app/templates/animal_workflow.html:148 app/templates/animals_list.html:92
+#: app/templates/animal_workflow.html:154 app/templates/animals_list.html:92
 #: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "Stage"
 
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 msgid "المتطلب التالي"
 msgstr "Next requirement"
 
-#: app/templates/animal_workflow.html:158
+#: app/templates/animal_workflow.html:164
 msgid "لا يوجد أحداث مسجّلة بعد."
 msgstr "No events recorded yet."
 
@@ -3293,7 +3302,7 @@ msgstr "Animals"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "No animals registered yet."
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:153
+#: app/templates/audit_log.html:5 app/templates/settings.html:154
 msgid "سجل التدقيق"
 msgstr "Audit log"
 
@@ -4482,213 +4491,217 @@ msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "Minimum age for first mating (days)"
 
 #: app/templates/settings.html:44
+msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
+msgstr "Minimum age for a ram to enter mating (days)"
+
+#: app/templates/settings.html:45
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "Minimum rest period after birth before remating (days)"
 
-#: app/templates/settings.html:47
+#: app/templates/settings.html:48
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "Production cycle engine age thresholds"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:50
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "Maximum age classified as \"newborn\" in the cycle (days)"
 
-#: app/templates/settings.html:50
+#: app/templates/settings.html:51
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "Alternative age to skip fertility exam for males (days)"
 
-#: app/templates/settings.html:51
+#: app/templates/settings.html:52
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "Minimum age for weaning stage (days)"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:53
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "Alternative age to skip recording weaning date (days)"
 
-#: app/templates/settings.html:57
+#: app/templates/settings.html:58
 msgid "البيع الذكي"
 msgstr "Smart sale"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:60
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "Target profit margin (%%)"
 
-#: app/templates/settings.html:60
+#: app/templates/settings.html:61
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "Regular sale age for males (days)"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:62
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "Minimum age for sacrifice sale (days)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:63
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "Maximum acceptable pregnancy delay for a female before sale recommendation (days)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:64
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "Maximum wait for a new report before alert (hours)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:65
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "Head stalled at the same production cycle stage before alert (days)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:66
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "Ostrich egg incubation duration (days)"
 
-#: app/templates/settings.html:70
+#: app/templates/settings.html:71
 msgid "الصحة والتغذية"
 msgstr "Health and nutrition"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:73
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "New animal quarantine before mixing (days)"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:74
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "Reweigh reminder after treatment (days)"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:75
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "Maximum period between two weighings before \"overdue weight\" alert (days)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:76
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "Minimum interval between two antiparasitic doses (days)"
 
-#: app/templates/settings.html:76
+#: app/templates/settings.html:77
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "Maximum weekly concentrate increase (%%)"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:78
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "Concentrate increase measurement window (days)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:79
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "Target calcium/phosphorus ratio"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:80
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "Calcium/phosphorus ratio tolerance margin"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:81
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "Barn monitoring after abortion (days)"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:82
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "Solid-feed weaning age (days)"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:83
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "Ram active breeding-season window (days)"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:88
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "Newborn & mother postpartum protocol"
 
-#: app/templates/settings.html:89
+#: app/templates/settings.html:90
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "Colostrum feeding confirmation window (hours)"
 
-#: app/templates/settings.html:90
+#: app/templates/settings.html:91
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "Placenta passage follow-up window (hours)"
 
-#: app/templates/settings.html:91
+#: app/templates/settings.html:92
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "Mother's daily postpartum follow-up duration (days)"
 
-#: app/templates/settings.html:95
+#: app/templates/settings.html:96
 msgid "حفظ الإعدادات"
 msgstr "Save settings"
 
-#: app/templates/settings.html:100
+#: app/templates/settings.html:101
 msgid "الخدمات"
 msgstr "Services"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:102
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "Enable only what you need — a disabled service disappears completely from all screens."
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:110
 msgid "مفعّل"
 msgstr "Enabled"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:110
 msgid "غير مفعّل"
 msgstr "Disabled"
 
-#: app/templates/settings.html:112 app/templates/team/members_list.html:23
+#: app/templates/settings.html:113 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "Disable"
 
-#: app/templates/settings.html:112 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:113 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "Activate"
 
-#: app/templates/settings.html:121
+#: app/templates/settings.html:122
 msgid "المسميات الوظيفية"
 msgstr "Job titles"
 
-#: app/templates/settings.html:122
+#: app/templates/settings.html:123
 msgid "مسمّى جديد"
 msgstr "New title"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "عدد الصلاحيات"
 msgstr "Number of permissions"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "نوع"
 msgstr "Type"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "جاهز افتراضياً"
 msgstr "Built-in default"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "مضاف من المالك"
 msgstr "Added by owner"
 
-#: app/templates/settings.html:134
+#: app/templates/settings.html:135
 msgid "تعديل الصلاحيات"
 msgstr "Edit permissions"
 
-#: app/templates/settings.html:144
+#: app/templates/settings.html:145
 msgid "النظام والصيانة"
 msgstr "System and maintenance"
 
-#: app/templates/settings.html:146 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:147 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "Pre-deployment readiness check"
 
-#: app/templates/settings.html:147 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:148 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "Data integrity check"
 
-#: app/templates/settings.html:149
+#: app/templates/settings.html:150
 msgid "وضع عرض تجريبي"
 msgstr "Demo mode"
 
-#: app/templates/settings.html:156
+#: app/templates/settings.html:157
 msgid "شاشة متابعة مبسّطة"
 msgstr "Simplified follow-up screen"
 
-#: app/templates/settings.html:158
+#: app/templates/settings.html:159
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "Breed guide and care notes"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:164
+#: app/templates/reports/overview.html:18 app/templates/settings.html:165
 msgid "جدول المؤشرات"
 msgstr "Indicators table"
 
-#: app/templates/settings.html:165
+#: app/templates/settings.html:166
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "From the start of the current month to today — same engine as the reports screen."
 
@@ -5370,7 +5383,7 @@ msgstr "Water pump"
 
 #: app/templates/equipment/asset_form.html:16
 #: app/templates/equipment/item_movement.html:27
-#: app/templates/repro/mating_form.html:29
+#: app/templates/repro/mating_form.html:40
 msgid "الحظيرة (اختياري)"
 msgstr "Barn (optional)"
 
@@ -8291,7 +8304,7 @@ msgid "تاريخ التقريع"
 msgstr "Mating date"
 
 #: app/templates/repro/attempt_form.html:8
-#: app/templates/repro/mating_form.html:23
+#: app/templates/repro/mating_form.html:33
 msgid "الفحل (لو مسجّل بالنظام)"
 msgstr "Male (if registered in the system)"
 
@@ -8405,7 +8418,11 @@ msgstr "Approximate coefficient of relationship: %(pct)s%% — significantly hig
 msgid "هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد."
 msgstr "This is a statistical warning based only on the pedigree recorded in the system, not a lab genetic test — consult your vet if unsure."
 
-#: app/templates/repro/mating_form.html:19
+#: app/templates/repro/mating_form.html:17
+msgid "فيه طلب تجاوز مُرسَل بهذا السبب:"
+msgstr "There is a pending override request with this reason:"
+
+#: app/templates/repro/mating_form.html:25
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
@@ -8415,21 +8432,45 @@ msgstr "This is a statistical warning based only on the pedigree recorded in the
 msgid "الأنثى"
 msgstr "Female"
 
-#: app/templates/repro/mating_form.html:28
+#: app/templates/repro/mating_form.html:30
+msgid "نعاج مقترحة (غير قريبة حسب البيانات المسجَّلة):"
+msgstr "Suggested ewes (unrelated based on recorded data):"
+
+#: app/templates/repro/mating_form.html:38
+msgid "فحول أقل من الحد الأدنى لعمر التقريع (بالإعدادات) ما تطلع بهذي القائمة."
+msgstr "Rams younger than the minimum mating age (in Settings) won't appear in this list."
+
+#: app/templates/repro/mating_form.html:39
 msgid "وصف الفحل (لو خارجي/غير مسجّل)"
 msgstr "Male description (if external/not registered)"
 
-#: app/templates/repro/mating_form.html:28
+#: app/templates/repro/mating_form.html:39
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "Example: a male borrowed from Al-Rashid farm"
 
-#: app/templates/repro/mating_form.html:38
+#: app/templates/repro/mating_form.html:50
 msgid "أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي)."
 msgstr "I confirm I have reviewed the genetic relatedness warning above and decided to proceed anyway (my responsibility)."
 
-#: app/templates/repro/mating_form.html:41
+#: app/templates/repro/mating_form.html:54
+msgid "سبب طلب التجاوز (إلزامي)"
+msgstr "Override request reason (required)"
+
+#: app/templates/repro/mating_form.html:55
+msgid "مثال: نعجة نادرة السلالة، ما فيه بديل غير قريب متاح حالياً"
+msgstr "Example: rare-breed ewe, no unrelated alternative currently available"
+
+#: app/templates/repro/mating_form.html:56
+msgid "ما تملك صلاحية تجاوز تحذير القرابة مباشرة — طلبك يوصل صاحب الحلال بإشعار فوري، وهو يقرر ويحفظ التقريع بنفسه لو وافق."
+msgstr "You don't have permission to override the relatedness warning directly — your request will reach the owner instantly, and they'll decide and save the mating themselves if they approve."
+
+#: app/templates/repro/mating_form.html:59
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "Next step in the cycle: after saving the mating, follow up on the female after a sufficient period via \"Reproduction\" ← \"Pregnancy\" ← \"+ New pregnancy diagnosis\" to confirm pregnancy (manual exam or sonar) — if confirmed, the expected birth date is calculated automatically from the gestation duration set in settings."
+
+#: app/templates/repro/mating_form.html:61
+msgid "اطلب تجاوز من صاحب الحلال"
+msgstr "Request override from the owner"
 
 #: app/templates/repro/matings_list.html:7
 #: app/templates/repro/sires_list.html:5

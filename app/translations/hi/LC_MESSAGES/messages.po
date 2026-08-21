@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 21:32+0300\n"
+"POT-Creation-Date: 2026-08-21 23:05+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:151 app/templates/settings_backup.html:5
+#: app/templates/settings.html:152 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -1494,7 +1494,7 @@ msgstr "लिंग"
 #: app/templates/animal_detail.html:372 app/templates/animal_detail.html:387
 #: app/templates/animal_detail.html:403 app/templates/animal_detail.html:418
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:241
 #: app/templates/bulk_action_form.html:348
@@ -1519,7 +1519,7 @@ msgstr "लिंग"
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:24
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
@@ -2082,7 +2082,7 @@ msgstr "दूध"
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
-#: app/templates/repro/mating_form.html:34
+#: app/templates/repro/mating_form.html:45
 #: app/templates/repro/pregnancy_form.html:21
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
@@ -2140,7 +2140,7 @@ msgstr "फार्म प्रवेश तिथि"
 msgid "الحظيرة"
 msgstr "बाड़ा"
 
-#: app/templates/animal_detail.html:105 app/templates/animal_workflow.html:122
+#: app/templates/animal_detail.html:105 app/templates/animal_workflow.html:128
 msgid "السعر"
 msgstr "मूल्य"
 
@@ -2269,7 +2269,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
-#: app/templates/repro/mating_form.html:42
+#: app/templates/repro/mating_form.html:61
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
@@ -2348,7 +2348,7 @@ msgid "الشدة"
 msgstr "गंभीरता"
 
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
-#: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:148
+#: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
 #: app/templates/finance/list.html:36 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
@@ -2835,7 +2835,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:126 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:127 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
@@ -3000,7 +3000,7 @@ msgstr "निकास निर्णय"
 msgid "بيع — السعر"
 msgstr "बिक्री — मूल्य"
 
-#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:123
+#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:129
 msgid "تاريخ البيع"
 msgstr "बिक्री तिथि"
 
@@ -3016,92 +3016,101 @@ msgstr "खरीदार का मोबाइल (वैकल्पिक)"
 msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
 msgstr "इस बिक्री का कोई चालान नहीं (अनौपचारिक नकद बिक्री)"
 
-#: app/templates/animal_workflow.html:99
+#: app/templates/animal_workflow.html:101
+#, python-format
+msgid "الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب موثَّق هنا لو قررت التجاوز (مثلاً ذبح اضطراري أو بيع لمزرعة تربية غير مخصَّص للاستهلاك البشري)."
+msgstr "यह पशु %(d)s तक दवा वापसी अवधि में है — बिक्री डिफ़ॉल्ट रूप से अवरुद्ध है। यदि आप इसे ओवरराइड करने का निर्णय लेते हैं तो यहाँ एक प्रलेखित कारण लिखें (जैसे आपातकालीन वध, या मानव उपभोग के लिए न होने वाले प्रजनन फार्म को बिक्री)।"
+
+#: app/templates/animal_workflow.html:102
+msgid "سبب تجاوز فترة السحب"
+msgstr "वापसी अवधि को ओवरराइड करने का कारण"
+
+#: app/templates/animal_workflow.html:105
 msgid "تسجيل البيع"
 msgstr "बिक्री दर्ज करें"
 
-#: app/templates/animal_workflow.html:103
+#: app/templates/animal_workflow.html:109
 msgid "نفوق — السبب"
 msgstr "मृत्यु — कारण"
 
-#: app/templates/animal_workflow.html:104
+#: app/templates/animal_workflow.html:110
 msgid "تاريخ النفوق"
 msgstr "मृत्यु तिथि"
 
-#: app/templates/animal_workflow.html:105
+#: app/templates/animal_workflow.html:111
 msgid "تسجيل النفوق"
 msgstr "मृत्यु दर्ज करें"
 
-#: app/templates/animal_workflow.html:107
+#: app/templates/animal_workflow.html:113
 msgid "تأكيد الأرشفة؟"
 msgstr "संग्रह की पुष्टि करें?"
 
-#: app/templates/animal_workflow.html:109
+#: app/templates/animal_workflow.html:115
 msgid "أرشفة — السبب"
 msgstr "संग्रह — कारण"
 
-#: app/templates/animal_workflow.html:110
+#: app/templates/animal_workflow.html:116
 msgid "تجاوز وجود عمليات مالية مرتبطة"
 msgstr "जुड़े वित्तीय लेनदेन को अनदेखा करें"
 
-#: app/templates/animal_workflow.html:111
+#: app/templates/animal_workflow.html:117
 msgid "أرشفة"
 msgstr "संग्रह"
 
-#: app/templates/animal_workflow.html:119
+#: app/templates/animal_workflow.html:125
 msgid "بيانات البيع"
 msgstr "बिक्री डेटा"
 
-#: app/templates/animal_workflow.html:124
+#: app/templates/animal_workflow.html:130
 msgid "المشتري"
 msgstr "खरीदार"
 
-#: app/templates/animal_workflow.html:125
+#: app/templates/animal_workflow.html:131
 msgid "رقم الفاتورة"
 msgstr "चालान संख्या"
 
-#: app/templates/animal_workflow.html:130
+#: app/templates/animal_workflow.html:136
 msgid "لا توجد فاتورة لهذا البيع"
 msgstr "इस बिक्री का कोई चालान नहीं"
 
-#: app/templates/animal_workflow.html:132
+#: app/templates/animal_workflow.html:138
 msgid "تنزيل الفاتورة"
 msgstr "चालान डाउनलोड करें"
 
-#: app/templates/animal_workflow.html:132
+#: app/templates/animal_workflow.html:138
 msgid "إصدار فاتورة"
 msgstr "चालान जारी करें"
 
-#: app/templates/animal_workflow.html:134
+#: app/templates/animal_workflow.html:140
 msgid "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق)."
 msgstr "बिक्री पूर्ववत करें? पशु सक्रिय स्थिति में लौट आएगा और वित्तीय लेनदेन रद्द हो जाएगा (यह ऑडिट के लिए रिकॉर्ड में रहेगा)।"
 
-#: app/templates/animal_workflow.html:136
+#: app/templates/animal_workflow.html:142
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
 msgstr "उत्पादन चक्र पृष्ठ से बिक्री पूर्ववत करना"
 
-#: app/templates/animal_workflow.html:137
+#: app/templates/animal_workflow.html:143
 msgid "استرجاع البيع"
 msgstr "बिक्री पूर्ववत करें"
 
-#: app/templates/animal_workflow.html:145
+#: app/templates/animal_workflow.html:151
 msgid "سجل أحداث الدورة"
 msgstr "चक्र घटना लॉग"
 
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 msgid "الحدث"
 msgstr "घटना"
 
-#: app/templates/animal_workflow.html:148 app/templates/animals_list.html:92
+#: app/templates/animal_workflow.html:154 app/templates/animals_list.html:92
 #: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "चरण"
 
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 msgid "المتطلب التالي"
 msgstr "अगली आवश्यकता"
 
-#: app/templates/animal_workflow.html:158
+#: app/templates/animal_workflow.html:164
 msgid "لا يوجد أحداث مسجّلة بعد."
 msgstr "अभी तक कोई घटना दर्ज नहीं है।"
 
@@ -3293,7 +3302,7 @@ msgstr "जानवर"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "अभी तक कोई जानवर दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:153
+#: app/templates/audit_log.html:5 app/templates/settings.html:154
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -4482,213 +4491,217 @@ msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "पहले संगमन के लिए न्यूनतम आयु (दिन)"
 
 #: app/templates/settings.html:44
+msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
+msgstr "नर के प्रजनन में शामिल होने की न्यूनतम आयु (दिन)"
+
+#: app/templates/settings.html:45
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "पुनः संगमन से पहले जन्म के बाद न्यूनतम आराम अवधि (दिन)"
 
-#: app/templates/settings.html:47
+#: app/templates/settings.html:48
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "उत्पादन चक्र इंजन आयु सीमाएं"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:50
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "चक्र में \"नवजात\" वर्गीकृत अधिकतम आयु (दिन)"
 
-#: app/templates/settings.html:50
+#: app/templates/settings.html:51
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "नर के लिए प्रजनन क्षमता जांच छोड़ने की वैकल्पिक आयु (दिन)"
 
-#: app/templates/settings.html:51
+#: app/templates/settings.html:52
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "दूध छुड़ाने के चरण के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:53
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "दूध छुड़ाने की तिथि दर्ज करना छोड़ने की वैकल्पिक आयु (दिन)"
 
-#: app/templates/settings.html:57
+#: app/templates/settings.html:58
 msgid "البيع الذكي"
 msgstr "स्मार्ट बिक्री"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:60
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "लक्षित लाभ मार्जिन (%%)"
 
-#: app/templates/settings.html:60
+#: app/templates/settings.html:61
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "नर के लिए नियमित बिक्री आयु (दिन)"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:62
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "बलि बिक्री के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:63
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "बिक्री सिफारिश से पहले मादा के लिए स्वीकार्य अधिकतम गर्भधारण देरी (दिन)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:64
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "अलर्ट से पहले नई रिपोर्ट के लिए अधिकतम प्रतीक्षा (घंटे)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:65
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "सिर उत्पादन चक्र के एक ही चरण में अटका (सूचना से पहले दिन)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:66
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "शुतुरमुर्ग अंडा इनक्यूबेशन अवधि (दिन)"
 
-#: app/templates/settings.html:70
+#: app/templates/settings.html:71
 msgid "الصحة والتغذية"
 msgstr "स्वास्थ्य और पोषण"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:73
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "मिश्रण से पहले नए पशु का संगरोध (दिन)"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:74
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "उपचार के बाद पुनः वजन अनुस्मारक (दिन)"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:75
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "\"विलंबित वजन\" अलर्ट से पहले दो वजन के बीच अधिकतम अवधि (दिन)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:76
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "दो कृमिनाशक खुराक के बीच न्यूनतम अंतराल (दिन)"
 
-#: app/templates/settings.html:76
+#: app/templates/settings.html:77
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "सांद्रण के लिए अधिकतम साप्ताहिक वृद्धि (%%)"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:78
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "सांद्रण वृद्धि माप विंडो (दिन)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:79
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "लक्षित कैल्शियम/फॉस्फोरस अनुपात"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:80
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "कैल्शियम/फॉस्फोरस अनुपात सहनशीलता मार्जिन"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:81
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "गर्भपात के बाद बाड़ा निगरानी (दिन)"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:82
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "ठोस चारे का दूध छुड़ाई उम्र (दिन)"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:83
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "मेढ़े की सक्रिय प्रजनन-मौसम खिड़की (दिन)"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:88
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "नवजात और माँ का प्रसवोत्तर प्रोटोकॉल"
 
-#: app/templates/settings.html:89
+#: app/templates/settings.html:90
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "कोलोस्ट्रम पिलाने की पुष्टि विंडो (घंटे)"
 
-#: app/templates/settings.html:90
+#: app/templates/settings.html:91
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "अपरा निकलने की निगरानी विंडो (घंटे)"
 
-#: app/templates/settings.html:91
+#: app/templates/settings.html:92
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "माँ की दैनिक प्रसवोत्तर निगरानी अवधि (दिन)"
 
-#: app/templates/settings.html:95
+#: app/templates/settings.html:96
 msgid "حفظ الإعدادات"
 msgstr "सेटिंग्स सहेजें"
 
-#: app/templates/settings.html:100
+#: app/templates/settings.html:101
 msgid "الخدمات"
 msgstr "सेवाएं"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:102
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "केवल जो आवश्यक हो उसे सक्षम करें — निष्क्रिय सेवा सभी स्क्रीन से पूरी तरह गायब हो जाती है।"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:110
 msgid "مفعّل"
 msgstr "सक्षम"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:110
 msgid "غير مفعّل"
 msgstr "अक्षम"
 
-#: app/templates/settings.html:112 app/templates/team/members_list.html:23
+#: app/templates/settings.html:113 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
-#: app/templates/settings.html:112 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:113 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "सक्रिय करें"
 
-#: app/templates/settings.html:121
+#: app/templates/settings.html:122
 msgid "المسميات الوظيفية"
 msgstr "पद"
 
-#: app/templates/settings.html:122
+#: app/templates/settings.html:123
 msgid "مسمّى جديد"
 msgstr "नया पद"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "عدد الصلاحيات"
 msgstr "अनुमतियों की संख्या"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "نوع"
 msgstr "प्रकार"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "جاهز افتراضياً"
 msgstr "अंतर्निहित डिफ़ॉल्ट"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "مضاف من المالك"
 msgstr "मालिक द्वारा जोड़ा गया"
 
-#: app/templates/settings.html:134
+#: app/templates/settings.html:135
 msgid "تعديل الصلاحيات"
 msgstr "अनुमतियां संपादित करें"
 
-#: app/templates/settings.html:144
+#: app/templates/settings.html:145
 msgid "النظام والصيانة"
 msgstr "सिस्टम और रखरखाव"
 
-#: app/templates/settings.html:146 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:147 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "तैनाती से पहले तत्परता जांच"
 
-#: app/templates/settings.html:147 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:148 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:149
+#: app/templates/settings.html:150
 msgid "وضع عرض تجريبي"
 msgstr "डेमो मोड"
 
-#: app/templates/settings.html:156
+#: app/templates/settings.html:157
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:158
+#: app/templates/settings.html:159
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:164
+#: app/templates/reports/overview.html:18 app/templates/settings.html:165
 msgid "جدول المؤشرات"
 msgstr "संकेतक तालिका"
 
-#: app/templates/settings.html:165
+#: app/templates/settings.html:166
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
 
@@ -5370,7 +5383,7 @@ msgstr "पानी पंप"
 
 #: app/templates/equipment/asset_form.html:16
 #: app/templates/equipment/item_movement.html:27
-#: app/templates/repro/mating_form.html:29
+#: app/templates/repro/mating_form.html:40
 msgid "الحظيرة (اختياري)"
 msgstr "बाड़ा (वैकल्पिक)"
 
@@ -8291,7 +8304,7 @@ msgid "تاريخ التقريع"
 msgstr "संगमन तिथि"
 
 #: app/templates/repro/attempt_form.html:8
-#: app/templates/repro/mating_form.html:23
+#: app/templates/repro/mating_form.html:33
 msgid "الفحل (لو مسجّل بالنظام)"
 msgstr "नर (यदि सिस्टम में दर्ज हो)"
 
@@ -8405,7 +8418,11 @@ msgstr "अनुमानित संबंध गुणांक: %(pct)s%% �
 msgid "هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد."
 msgstr "यह केवल सिस्टम में दर्ज वंशावली पर आधारित एक सांख्यिकीय चेतावनी है, प्रयोगशाला आनुवंशिक परीक्षण नहीं — यदि अनिश्चित हों तो अपने डॉक्टर से सलाह लें।"
 
-#: app/templates/repro/mating_form.html:19
+#: app/templates/repro/mating_form.html:17
+msgid "فيه طلب تجاوز مُرسَل بهذا السبب:"
+msgstr "इस कारण के साथ एक लंबित ओवरराइड अनुरोध है:"
+
+#: app/templates/repro/mating_form.html:25
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
@@ -8415,21 +8432,45 @@ msgstr "यह केवल सिस्टम में दर्ज वंश�
 msgid "الأنثى"
 msgstr "मादा"
 
-#: app/templates/repro/mating_form.html:28
+#: app/templates/repro/mating_form.html:30
+msgid "نعاج مقترحة (غير قريبة حسب البيانات المسجَّلة):"
+msgstr "सुझाई गई भेड़ें (दर्ज डेटा के अनुसार असंबंधित):"
+
+#: app/templates/repro/mating_form.html:38
+msgid "فحول أقل من الحد الأدنى لعمر التقريع (بالإعدادات) ما تطلع بهذي القائمة."
+msgstr "न्यूनतम प्रजनन आयु (सेटिंग्स में) से कम उम्र के नर इस सूची में नहीं दिखाई देंगे।"
+
+#: app/templates/repro/mating_form.html:39
 msgid "وصف الفحل (لو خارجي/غير مسجّل)"
 msgstr "नर का विवरण (यदि बाहरी/अपंजीकृत हो)"
 
-#: app/templates/repro/mating_form.html:28
+#: app/templates/repro/mating_form.html:39
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "उदाहरण: अल-रशीद फार्म से उधार लिया गया नर"
 
-#: app/templates/repro/mating_form.html:38
+#: app/templates/repro/mating_form.html:50
 msgid "أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي)."
 msgstr "मैं पुष्टि करता हूं कि मैंने ऊपर दी गई आनुवंशिक संबंध चेतावनी की समीक्षा की है और फिर भी आगे बढ़ने का निर्णय लिया है (मेरी जिम्मेदारी)।"
 
-#: app/templates/repro/mating_form.html:41
+#: app/templates/repro/mating_form.html:54
+msgid "سبب طلب التجاوز (إلزامي)"
+msgstr "ओवरराइड अनुरोध का कारण (अनिवार्य)"
+
+#: app/templates/repro/mating_form.html:55
+msgid "مثال: نعجة نادرة السلالة، ما فيه بديل غير قريب متاح حالياً"
+msgstr "उदाहरण: दुर्लभ नस्ल की भेड़, फिलहाल कोई असंबंधित विकल्प उपलब्ध नहीं"
+
+#: app/templates/repro/mating_form.html:56
+msgid "ما تملك صلاحية تجاوز تحذير القرابة مباشرة — طلبك يوصل صاحب الحلال بإشعار فوري، وهو يقرر ويحفظ التقريع بنفسه لو وافق."
+msgstr "आपके पास रिश्तेदारी चेतावनी को सीधे ओवरराइड करने की अनुमति नहीं है — आपका अनुरोध तुरंत मालिक तक पहुँच जाएगा, और यदि वे सहमत हों तो वे स्वयं निर्णय लेकर संभोग सहेजेंगे।"
+
+#: app/templates/repro/mating_form.html:59
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "चक्र में अगला कदम: संगमन सहेजने के बाद, पर्याप्त अवधि के बाद \"प्रजनन\" ← \"गर्भावस्था\" ← \"+ नया गर्भावस्था निदान\" के माध्यम से गर्भावस्था की पुष्टि के लिए मादा को फॉलो करें (मैनुअल जांच या सोनार) — यदि पुष्टि हो जाए, तो अपेक्षित जन्म तिथि सेटिंग्स में निर्धारित गर्भावस्था अवधि से स्वतः गणना होती है।"
+
+#: app/templates/repro/mating_form.html:61
+msgid "اطلب تجاوز من صاحب الحلال"
+msgstr "मालिक से ओवरराइड का अनुरोध करें"
 
 #: app/templates/repro/matings_list.html:7
 #: app/templates/repro/sires_list.html:5

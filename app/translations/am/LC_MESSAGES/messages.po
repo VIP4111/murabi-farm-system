@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 21:32+0300\n"
+"POT-Creation-Date: 2026-08-21 23:05+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "የተመዘገቡ መድሃኒቶች አሉት።"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:151 app/templates/settings_backup.html:5
+#: app/templates/settings.html:152 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "መጠባበቂያ"
 
@@ -1494,7 +1494,7 @@ msgstr "ጾታ"
 #: app/templates/animal_detail.html:372 app/templates/animal_detail.html:387
 #: app/templates/animal_detail.html:403 app/templates/animal_detail.html:418
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:241
 #: app/templates/bulk_action_form.html:348
@@ -1519,7 +1519,7 @@ msgstr "ጾታ"
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:18
+#: app/templates/repro/mating_form.html:24
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:8
@@ -2082,7 +2082,7 @@ msgstr "ወተት"
 #: app/templates/repro/attempt_form.html:21
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
-#: app/templates/repro/mating_form.html:34
+#: app/templates/repro/mating_form.html:45
 #: app/templates/repro/pregnancy_form.html:21
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
@@ -2140,7 +2140,7 @@ msgstr "የእርሻ መግቢያ ቀን"
 msgid "الحظيرة"
 msgstr "በረት"
 
-#: app/templates/animal_detail.html:105 app/templates/animal_workflow.html:122
+#: app/templates/animal_detail.html:105 app/templates/animal_workflow.html:128
 msgid "السعر"
 msgstr "ዋጋ"
 
@@ -2269,7 +2269,7 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
-#: app/templates/repro/mating_form.html:42
+#: app/templates/repro/mating_form.html:61
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
 #: app/templates/repro/sonar_form.html:36
@@ -2348,7 +2348,7 @@ msgid "الشدة"
 msgstr "ክብደት"
 
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
-#: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:148
+#: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
 #: app/templates/finance/list.html:36 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
@@ -2835,7 +2835,7 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:126 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:127 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
@@ -3000,7 +3000,7 @@ msgstr "የመውጫ ውሳኔ"
 msgid "بيع — السعر"
 msgstr "ሽያጭ — ዋጋ"
 
-#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:123
+#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:129
 msgid "تاريخ البيع"
 msgstr "የሽያጭ ቀን"
 
@@ -3016,92 +3016,101 @@ msgstr "የገዢ ስልክ (አማራጭ)"
 msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
 msgstr "ለዚህ ሽያጭ ደረሰኝ የለም (መደበኛ ያልሆነ የጥሬ ገንዘብ ሽያጭ)"
 
-#: app/templates/animal_workflow.html:99
+#: app/templates/animal_workflow.html:101
+#, python-format
+msgid "الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب موثَّق هنا لو قررت التجاوز (مثلاً ذبح اضطراري أو بيع لمزرعة تربية غير مخصَّص للاستهلاك البشري)."
+msgstr "ይህ እንስሳ እስከ %(d)s ድረስ የመድሃኒት ማንሳት ጊዜ ውስጥ ነው — ሽያጭ በነባሪ የተከለከለ ነው። ማለፍ ከወሰኑ እዚህ የተመዘገበ ምክንያት ይጻፉ (ለምሳሌ የአስቸኳይ ጊዜ እርድ ወይም ለሰው ፍጆታ ላልታሰበ የእርባታ እርሻ ሽያጭ)።"
+
+#: app/templates/animal_workflow.html:102
+msgid "سبب تجاوز فترة السحب"
+msgstr "የመንሳት ጊዜን የማለፍ ምክንያት"
+
+#: app/templates/animal_workflow.html:105
 msgid "تسجيل البيع"
 msgstr "ሽያጭ መዝግብ"
 
-#: app/templates/animal_workflow.html:103
+#: app/templates/animal_workflow.html:109
 msgid "نفوق — السبب"
 msgstr "ሞት — ምክንያት"
 
-#: app/templates/animal_workflow.html:104
+#: app/templates/animal_workflow.html:110
 msgid "تاريخ النفوق"
 msgstr "የሞት ቀን"
 
-#: app/templates/animal_workflow.html:105
+#: app/templates/animal_workflow.html:111
 msgid "تسجيل النفوق"
 msgstr "ሞት መዝግብ"
 
-#: app/templates/animal_workflow.html:107
+#: app/templates/animal_workflow.html:113
 msgid "تأكيد الأرشفة؟"
 msgstr "ወደ ማህደር መውሰድን ያረጋግጡ?"
 
-#: app/templates/animal_workflow.html:109
+#: app/templates/animal_workflow.html:115
 msgid "أرشفة — السبب"
 msgstr "ማህደር — ምክንያት"
 
-#: app/templates/animal_workflow.html:110
+#: app/templates/animal_workflow.html:116
 msgid "تجاوز وجود عمليات مالية مرتبطة"
 msgstr "የተያያዙ የገንዘብ ግብይቶችን ችላ ይበሉ"
 
-#: app/templates/animal_workflow.html:111
+#: app/templates/animal_workflow.html:117
 msgid "أرشفة"
 msgstr "ማህደር"
 
-#: app/templates/animal_workflow.html:119
+#: app/templates/animal_workflow.html:125
 msgid "بيانات البيع"
 msgstr "የሽያጭ መረጃ"
 
-#: app/templates/animal_workflow.html:124
+#: app/templates/animal_workflow.html:130
 msgid "المشتري"
 msgstr "ገዢ"
 
-#: app/templates/animal_workflow.html:125
+#: app/templates/animal_workflow.html:131
 msgid "رقم الفاتورة"
 msgstr "የደረሰኝ ቁጥር"
 
-#: app/templates/animal_workflow.html:130
+#: app/templates/animal_workflow.html:136
 msgid "لا توجد فاتورة لهذا البيع"
 msgstr "ለዚህ ሽያጭ ደረሰኝ የለም"
 
-#: app/templates/animal_workflow.html:132
+#: app/templates/animal_workflow.html:138
 msgid "تنزيل الفاتورة"
 msgstr "ደረሰኝ አውርድ"
 
-#: app/templates/animal_workflow.html:132
+#: app/templates/animal_workflow.html:138
 msgid "إصدار فاتورة"
 msgstr "ደረሰኝ ስጥ"
 
-#: app/templates/animal_workflow.html:134
+#: app/templates/animal_workflow.html:140
 msgid "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل للتدقيق)."
 msgstr "ሽያጭን መልስ? እንስሳው ወደ ንቁ ሁኔታ ይመለሳል እና የገንዘብ ግብይቱ ይሰረዛል (ለኦዲት በመዝገብ ውስጥ ይቀራል)።"
 
-#: app/templates/animal_workflow.html:136
+#: app/templates/animal_workflow.html:142
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
 msgstr "ከምርት ዑደት ገጽ የሽያጭ መመለስ"
 
-#: app/templates/animal_workflow.html:137
+#: app/templates/animal_workflow.html:143
 msgid "استرجاع البيع"
 msgstr "ሽያጭ መልስ"
 
-#: app/templates/animal_workflow.html:145
+#: app/templates/animal_workflow.html:151
 msgid "سجل أحداث الدورة"
 msgstr "የዑደት ክስተት መዝገብ"
 
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 msgid "الحدث"
 msgstr "ክስተት"
 
-#: app/templates/animal_workflow.html:148 app/templates/animals_list.html:92
+#: app/templates/animal_workflow.html:154 app/templates/animals_list.html:92
 #: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "ደረጃ"
 
-#: app/templates/animal_workflow.html:148
+#: app/templates/animal_workflow.html:154
 msgid "المتطلب التالي"
 msgstr "ቀጣይ መስፈርት"
 
-#: app/templates/animal_workflow.html:158
+#: app/templates/animal_workflow.html:164
 msgid "لا يوجد أحداث مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ ክስተት የለም።"
 
@@ -3293,7 +3302,7 @@ msgstr "እንስሳት"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:153
+#: app/templates/audit_log.html:5 app/templates/settings.html:154
 msgid "سجل التدقيق"
 msgstr "የኦዲት መዝገብ"
 
@@ -4482,213 +4491,217 @@ msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "ለመጀመሪያ ማዳቀል ዝቅተኛ ዕድሜ (ቀናት)"
 
 #: app/templates/settings.html:44
+msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
+msgstr "ወንድ ወደ ማዳቀል የሚገባበት አነስተኛ ዕድሜ (ቀን)"
+
+#: app/templates/settings.html:45
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "ዳግም ከመዳቀሉ በፊት ከወሊድ በኋላ ዝቅተኛ የዕረፍት ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:47
+#: app/templates/settings.html:48
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "የምርት ዑደት ሞተር የዕድሜ ገደቦች"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:50
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "በዑደት ውስጥ \"አዲስ የተወለደ\" ተብሎ የሚመደብ ከፍተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:50
+#: app/templates/settings.html:51
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "ለወንዶች የመራባት ምርመራን ለመዝለል አማራጭ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:51
+#: app/templates/settings.html:52
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "ለጡት ማስጣል ደረጃ ዝቅተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:53
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "የጡት ማስጣል ቀን መመዝገብን ለመዝለል አማራጭ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:57
+#: app/templates/settings.html:58
 msgid "البيع الذكي"
 msgstr "ብልህ ሽያጭ"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:60
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "የታለመ የትርፍ ህዳግ (%%)"
 
-#: app/templates/settings.html:60
+#: app/templates/settings.html:61
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "ለወንዶች የመደበኛ ሽያጭ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:62
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "ለመስዋዕት ሽያጭ ዝቅተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:63
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "ከሽያጭ ምክር በፊት ለሴት ተቀባይነት ያለው ከፍተኛ የእርግዝና መዘግየት (ቀናት)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:64
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "ከማንቂያ በፊት ለአዲስ ሪፖርት ከፍተኛ መጠበቂያ (ሰዓታት)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:65
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "ራስ በተመሳሳይ የምርት ዑደት ደረጃ ላይ ከመቆም በፊት ማንቂያ (ቀናት)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:66
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "የሰጎን እንቁላል የመፈልፈያ ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:70
+#: app/templates/settings.html:71
 msgid "الصحة والتغذية"
 msgstr "ጤናና ስነ-ምግብ"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:73
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "ከመቀላቀል በፊት የአዲስ እንስሳ ማገድ (ቀናት)"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:74
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "ከሕክምና በኋላ ዳግም ክብደት ማስታወሻ (ቀናት)"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:75
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "\"የዘገየ ክብደት\" ማንቂያ በፊት በሁለት ክብደቶች መካከል ከፍተኛ ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:76
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "በሁለት ፀረ-ጥገኛ መጠኖች መካከል ዝቅተኛ የጊዜ ልዩነት (ቀናት)"
 
-#: app/templates/settings.html:76
+#: app/templates/settings.html:77
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "ለተከማቹ ምግቦች ከፍተኛ ሳምንታዊ ጭማሪ (%%)"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:78
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "የተከማቹ ምግቦች ጭማሪ መለኪያ መስኮት (ቀናት)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:79
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "የታለመ የካልሲየም/ፎስፈረስ ጥምርታ"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:80
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "የካልሲየም/ፎስፈረስ ጥምርታ የመቻቻል ህዳግ"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:81
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "ከውርጃ በኋላ የበረት ክትትል (ቀናት)"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:82
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "ጠንካራ መኖ የመጥባት እድሜ (ቀናት)"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:83
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "የበግ ንቁ የመራቢያ ወቅት መስኮት (ቀናት)"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:88
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "አዲስ የተወለደና እናት ድህረ ወሊድ ፕሮቶኮል"
 
-#: app/templates/settings.html:89
+#: app/templates/settings.html:90
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "የኮሎስትረም ማጥባት ማረጋገጫ መስኮት (ሰዓታት)"
 
-#: app/templates/settings.html:90
+#: app/templates/settings.html:91
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "የእንግዴ ልጅ መውጣት ክትትል መስኮት (ሰዓታት)"
 
-#: app/templates/settings.html:91
+#: app/templates/settings.html:92
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "የእናት ዕለታዊ ድህረ-ወሊድ ክትትል ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:95
+#: app/templates/settings.html:96
 msgid "حفظ الإعدادات"
 msgstr "ቅንብሮችን አስቀምጥ"
 
-#: app/templates/settings.html:100
+#: app/templates/settings.html:101
 msgid "الخدمات"
 msgstr "አገልግሎቶች"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:102
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "የሚያስፈልግዎትን ብቻ ያንቁ — የቆመ አገልግሎት ከሁሉም ማያ ገጾች ሙሉ በሙሉ ይጠፋል።"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:110
 msgid "مفعّل"
 msgstr "ነቅቷል"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:110
 msgid "غير مفعّل"
 msgstr "አልነቃም"
 
-#: app/templates/settings.html:112 app/templates/team/members_list.html:23
+#: app/templates/settings.html:113 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "አቦዝን"
 
-#: app/templates/settings.html:112 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:113 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "አንቃ"
 
-#: app/templates/settings.html:121
+#: app/templates/settings.html:122
 msgid "المسميات الوظيفية"
 msgstr "የሥራ ማዕረጎች"
 
-#: app/templates/settings.html:122
+#: app/templates/settings.html:123
 msgid "مسمّى جديد"
 msgstr "አዲስ ማዕረግ"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "عدد الصلاحيات"
 msgstr "የፈቃዶች ብዛት"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "نوع"
 msgstr "ዓይነት"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "جاهز افتراضياً"
 msgstr "አብሮገነብ ነባሪ"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "مضاف من المالك"
 msgstr "በባለቤት የተጨመረ"
 
-#: app/templates/settings.html:134
+#: app/templates/settings.html:135
 msgid "تعديل الصلاحيات"
 msgstr "ፈቃዶችን አርትዕ"
 
-#: app/templates/settings.html:144
+#: app/templates/settings.html:145
 msgid "النظام والصيانة"
 msgstr "ሲስተም እና ጥገና"
 
-#: app/templates/settings.html:146 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:147 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "ከማሰማራት በፊት የዝግጁነት ምርመራ"
 
-#: app/templates/settings.html:147 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:148 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "የውሂብ ትክክለኛነት ምርመራ"
 
-#: app/templates/settings.html:149
+#: app/templates/settings.html:150
 msgid "وضع عرض تجريبي"
 msgstr "የማሳያ ሁነታ"
 
-#: app/templates/settings.html:156
+#: app/templates/settings.html:157
 msgid "شاشة متابعة مبسّطة"
 msgstr "ቀላል የክትትል ማያ ገጽ"
 
-#: app/templates/settings.html:158
+#: app/templates/settings.html:159
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:164
+#: app/templates/reports/overview.html:18 app/templates/settings.html:165
 msgid "جدول المؤشرات"
 msgstr "የጠቋሚዎች ሠንጠረዥ"
 
-#: app/templates/settings.html:165
+#: app/templates/settings.html:166
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "ከአሁኑ ወር መጀመሪያ እስከ ዛሬ — ልክ እንደ ሪፖርቶች ገፅ ተመሳሳይ ሞተር።"
 
@@ -5370,7 +5383,7 @@ msgstr "የውሃ ፓምፕ"
 
 #: app/templates/equipment/asset_form.html:16
 #: app/templates/equipment/item_movement.html:27
-#: app/templates/repro/mating_form.html:29
+#: app/templates/repro/mating_form.html:40
 msgid "الحظيرة (اختياري)"
 msgstr "በረት (አማራጭ)"
 
@@ -8291,7 +8304,7 @@ msgid "تاريخ التقريع"
 msgstr "የማዳቀል ቀን"
 
 #: app/templates/repro/attempt_form.html:8
-#: app/templates/repro/mating_form.html:23
+#: app/templates/repro/mating_form.html:33
 msgid "الفحل (لو مسجّل بالنظام)"
 msgstr "ወንድ (በሲስተም ውስጥ ከተመዘገበ)"
 
@@ -8405,7 +8418,11 @@ msgstr "የግምታዊ ዝምድና ቅንጅት: %(pct)s%% — ከመደበኛ
 msgid "هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد."
 msgstr "ይህ በሲስተሙ ውስጥ በተመዘገበው የዘር ግንድ ላይ ብቻ የተመሠረተ ስታቲስቲካዊ ማስጠንቀቂያ ነው፣ የላብራቶሪ የዘር ምርመራ አይደለም — እርግጠኛ ካልሆኑ ሐኪምዎን ያማክሩ።"
 
-#: app/templates/repro/mating_form.html:19
+#: app/templates/repro/mating_form.html:17
+msgid "فيه طلب تجاوز مُرسَل بهذا السبب:"
+msgstr "በዚህ ምክንያት የቀረበ የመተላለፍ ጥያቄ አለ:"
+
+#: app/templates/repro/mating_form.html:25
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/pregnancy_form.html:9
@@ -8415,21 +8432,45 @@ msgstr "ይህ በሲስተሙ ውስጥ በተመዘገበው የዘር ግን�
 msgid "الأنثى"
 msgstr "ሴት"
 
-#: app/templates/repro/mating_form.html:28
+#: app/templates/repro/mating_form.html:30
+msgid "نعاج مقترحة (غير قريبة حسب البيانات المسجَّلة):"
+msgstr "የተጠቆሙ በጎች (በተመዘገበው መረጃ መሰረት ዝምድና የሌላቸው):"
+
+#: app/templates/repro/mating_form.html:38
+msgid "فحول أقل من الحد الأدنى لعمر التقريع (بالإعدادات) ما تطلع بهذي القائمة."
+msgstr "ከአነስተኛ የማዳቀል ዕድሜ (በቅንብሮች ውስጥ) በታች የሆኑ ወንዶች በዚህ ዝርዝር ውስጥ አይታዩም።"
+
+#: app/templates/repro/mating_form.html:39
 msgid "وصف الفحل (لو خارجي/غير مسجّل)"
 msgstr "የወንድ መግለጫ (ውጫዊ/ያልተመዘገበ ከሆነ)"
 
-#: app/templates/repro/mating_form.html:28
+#: app/templates/repro/mating_form.html:39
 msgid "مثال: فحل مستعار من مزرعة الرشيد"
 msgstr "ምሳሌ: ከአል-ራሺድ እርሻ የተዋሰ ወንድ"
 
-#: app/templates/repro/mating_form.html:38
+#: app/templates/repro/mating_form.html:50
 msgid "أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي)."
 msgstr "ከላይ ያለውን የዘር ግንድ ዝምድና ማስጠንቀቂያ እንደተመለከትኩ እና ቢሆንም ለመቀጠል እንደወሰንኩ አረጋግጣለሁ (የእኔ ኃላፊነት)።"
 
-#: app/templates/repro/mating_form.html:41
+#: app/templates/repro/mating_form.html:54
+msgid "سبب طلب التجاوز (إلزامي)"
+msgstr "የመተላለፍ ጥያቄ ምክንያት (ግዴታ)"
+
+#: app/templates/repro/mating_form.html:55
+msgid "مثال: نعجة نادرة السلالة، ما فيه بديل غير قريب متاح حالياً"
+msgstr "ምሳሌ: ብርቅዬ ዝርያ በግ፣ በአሁኑ ጊዜ ምንም ዝምድና የሌለው አማራጭ የለም"
+
+#: app/templates/repro/mating_form.html:56
+msgid "ما تملك صلاحية تجاوز تحذير القرابة مباشرة — طلبك يوصل صاحب الحلال بإشعار فوري، وهو يقرر ويحفظ التقريع بنفسه لو وافق."
+msgstr "የዝምድና ማስጠንቀቂያውን በቀጥታ የማለፍ ፈቃድ የለዎትም — ጥያቄዎ ወዲያውኑ ለባለቤቱ ይደርሳል፣ እሱም ከተስማማ በራሱ ወስኖ ማዳቀሉን ያስቀምጣል።"
+
+#: app/templates/repro/mating_form.html:59
 msgid "الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
 msgstr "በዑደቱ ውስጥ ቀጣይ ደረጃ: ማዳቀሉን ካስቀመጡ በኋላ፣ ለበቂ ጊዜ በኋላ በ\"መራባት\" ← \"እርግዝና\" ← \"+ አዲስ የእርግዝና ምርመራ\" በኩል ሴቷን ይከታተሉ እርግዝናውን ለማረጋገጥ (በእጅ ምርመራ ወይም ሶናር) — ከተረጋገጠ፣ የሚጠበቀው የልደት ቀን ከቅንብሮች በተቀመጠው የእርግዝና ጊዜ በራስ-ሰር ይሰላል።"
+
+#: app/templates/repro/mating_form.html:61
+msgid "اطلب تجاوز من صاحب الحلال"
+msgstr "ከባለቤቱ መተላለፍን ይጠይቁ"
 
 #: app/templates/repro/matings_list.html:7
 #: app/templates/repro/sires_list.html:5

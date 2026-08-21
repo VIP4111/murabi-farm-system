@@ -100,3 +100,20 @@ def relationship_warning(female_id: int, male_id: int) -> dict | None:
     result["label"] = label
     result["coefficient_percent"] = round(coefficient * 100)
     return result
+
+
+def suggest_unrelated_females(male_id: int, limit: int = 5) -> list[dict]:
+    """اقتراح نعاج "جاهزة للتقريع" (بند إضافي 231) — بطلبك الصريح: بعد
+    اختيار الفحل، نساعدك تختار أنثى ما لها علاقة قرابة موثّقة معه، بدل
+    ما تكتشف التحذير بعد ما تعبّي الفورم كامل. **نفس حدود `check_relationship`
+    أعلاه**: الاقتراح يعتمد بس على الأنساب المسجَّلة بالنظام — "غير
+    قريبة" هنا معناها "غير قريبة حسب البيانات المسجَّلة"، مو تأكيداً
+    وراثياً مطلقاً، خصوصاً لو أنساب القطيع القديمة غير مكتملة."""
+    from app.core.animal_filters_service import get_filtered
+    candidates = []
+    for female in get_filtered("ready_to_mate"):
+        if check_relationship(female.id, male_id) is None:
+            candidates.append({"id": female.id, "animal_no": female.animal_no})
+        if len(candidates) >= limit:
+            break
+    return candidates

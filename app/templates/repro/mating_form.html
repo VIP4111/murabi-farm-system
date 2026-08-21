@@ -12,19 +12,30 @@
     <p style="margin:6px 0; font-size:12.5px; color:var(--muted);">{{ _('هذا تحذير إحصائي مبني على الأنساب المسجَّلة بالنظام فقط، مو فحصاً وراثياً مخبرياً — راجع طبيبك لو غير متأكد.') }}</p>
   </div>
   {% endif %}
+  {% if form_data and form_data.override_reason and can_override %}
+  <div class="notice" style="background:#fff9e8; border-color:#f0dfa0; color:#6b5410;">
+    <b>📤 {{ _('فيه طلب تجاوز مُرسَل بهذا السبب:') }}</b>
+    <p style="margin:6px 0;">{{ form_data.override_reason }}</p>
+  </div>
+  {% endif %}
 
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ form_data.date if form_data }}">
     <label>{{ _('الأنثى') }}</label>
-    <select name="female_id" required>
+    <select name="female_id" id="femaleSelect" required>
       {% for f in females %}<option value="{{ f.id }}" {{ 'selected' if form_data and form_data.female_id|string == f.id|string }}>{{ f.animal_no }}</option>{% endfor %}
     </select>
+    <div id="suggestBox" style="display:none; margin:-4px 0 10px; font-size:12.5px;">
+      <span style="color:var(--muted);">{{ _('نعاج مقترحة (غير قريبة حسب البيانات المسجَّلة):') }}</span>
+      <div id="suggestChips" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;"></div>
+    </div>
     <label>{{ _('الفحل (لو مسجّل بالنظام)') }}</label>
-    <select name="male_id">
+    <select name="male_id" id="maleSelect">
       <option value="">-</option>
       {% for m in males %}<option value="{{ m.id }}" {{ 'selected' if form_data and form_data.male_id|string == m.id|string }}>{{ m.animal_no }}</option>{% endfor %}
     </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('فحول أقل من الحد الأدنى لعمر التقريع (بالإعدادات) ما تطلع بهذي القائمة.') }}</p>
     <label>{{ _('وصف الفحل (لو خارجي/غير مسجّل)') }}</label><input name="male_note" placeholder="{{ _('مثال: فحل مستعار من مزرعة الرشيد') }}" value="{{ form_data.male_note if form_data }}">
     <label>{{ _('الحظيرة (اختياري)') }}</label>
     <select name="barn_id">
@@ -32,14 +43,54 @@
       {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if form_data and form_data.barn_id|string == b.id|string }}>{{ b.barn_name }}</option>{% endfor %}
     </select>
     <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2">{{ form_data.notes if form_data }}</textarea>
-    {% if relation_warning %}
+
+    {% if relation_warning and can_override %}
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal; background:#fff5f2; padding:10px; border-radius:10px;">
-      <input type="checkbox" name="confirm_relation" value="1" style="width:auto;" required>
+      <input type="checkbox" name="confirm_relation" value="1" style="width:auto;" required {{ 'checked' if form_data and form_data.confirm_relation == '1' }}>
       {{ _('أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي).') }}
     </label>
+    {% elif relation_warning %}
+    <input type="hidden" name="confirm_relation" value="1">
+    <label>{{ _('سبب طلب التجاوز (إلزامي)') }}</label>
+    <textarea name="override_reason" rows="2" required placeholder="{{ _('مثال: نعجة نادرة السلالة، ما فيه بديل غير قريب متاح حالياً') }}">{{ form_data.override_reason if form_data }}</textarea>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('ما تملك صلاحية تجاوز تحذير القرابة مباشرة — طلبك يوصل صاحب الحلال بإشعار فوري، وهو يقرر ويحفظ التقريع بنفسه لو وافق.') }}</p>
     {% endif %}
+
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('الخطوة الجاية بالدورة: بعد ما تحفظ التقريع، تابع الأنثى بعدها بفترة كافية عبر "التكاثر" ← "الحمل" ← "+ تشخيص حمل جديد" لتأكيد الحمل (بفحص يدوي أو سونار) — لو أُكِّد، تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات.') }}</p>
-    <button class="btn" type="submit">{{ _('حفظ') }}</button>
+    <button class="btn" type="submit">
+      {% if relation_warning and not can_override %}📤 {{ _('اطلب تجاوز من صاحب الحلال') }}{% else %}{{ _('حفظ') }}{% endif %}
+    </button>
   </form>
 </div>
+<script>
+(function(){
+  var maleSelect = document.getElementById('maleSelect');
+  var femaleSelect = document.getElementById('femaleSelect');
+  var suggestBox = document.getElementById('suggestBox');
+  var suggestChips = document.getElementById('suggestChips');
+  if (!maleSelect) return;
+  maleSelect.addEventListener('change', function(){
+    var maleId = maleSelect.value;
+    suggestBox.style.display = 'none';
+    suggestChips.innerHTML = '';
+    if (!maleId) return;
+    fetch('{{ url_for("repro.matings_suggest_females") }}?male_id=' + encodeURIComponent(maleId))
+      .then(function(r){ return r.json(); })
+      .then(function(rows){
+        if (!rows.length) return;
+        rows.forEach(function(f){
+          var chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'btn light';
+          chip.style.cssText = 'font-size:12px; padding:5px 10px;';
+          chip.textContent = f.animal_no;
+          chip.addEventListener('click', function(){ femaleSelect.value = f.id; });
+          suggestChips.appendChild(chip);
+        });
+        suggestBox.style.display = 'block';
+      })
+      .catch(function(){});
+  });
+})();
+</script>
 {% endblock %}

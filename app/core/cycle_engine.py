@@ -426,7 +426,8 @@ def record_cycle_event(animal: Animal, event_type: str, *, source_type=None, sou
 
 # ---------- الخروج من الدورة ----------
 
-def assert_exit_allowed(animal: Animal) -> None:
+def assert_exit_allowed(animal: Animal, *, withdrawal_override_reason: str | None = None,
+                         actor_user_id: int | None = None) -> None:
     evaluate(animal)
     wf = animal.workflow
     if wf.current_stage < 10 or wf.status == "out_of_order":
@@ -440,9 +441,22 @@ def assert_exit_allowed(animal: Animal) -> None:
     # والجماعي معاً بدون أي تكرار منطق. الحظر يُرفع تلقائياً بمجرد ما
     # ينتهي التاريخ — الدالة تُحسب حية من الجداول الفعلية، صفر عمود
     # حالة مخزَّن يحتاج تحديثاً يدوياً أو مهمة مجدولة.
+    #
+    # تجاوز موثَّق (بند إضافي 231) — بطلب ذبح اضطراري أو بيع لمزرعة
+    # تربية مثلاً. `withdrawal_override_reason` يُمرَّر بس من الراوت
+    # بعد ما يتأكد إن المستخدم يملك صلاحية `sales.override_withdrawal`
+    # صراحة — هذي الدالة نفسها ما تتحقق من صلاحيات، بس تسجّل التجاوز.
     from app.health.health_service import animal_under_withdrawal
+    from app.models import AuditLog
     until = animal_under_withdrawal(animal.id)
     if until:
+        if withdrawal_override_reason:
+            db.session.add(AuditLog(
+                actor_user_id=actor_user_id, action="animal.withdrawal_override",
+                entity_type="Animal", entity_id=animal.id,
+                details=f"تجاوز فترة سحب حتى {until} — السبب: {withdrawal_override_reason}",
+            ))
+            return
         days_left = (until - date.today()).days
         raise CycleExitBlocked(
             f'"{animal.animal_no}" تحت فترة تحريم دواء حتى {until} (باقي {days_left} يوم) — '
@@ -451,11 +465,11 @@ def assert_exit_allowed(animal: Animal) -> None:
 
 
 def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_date=None, notes=None,
-                 buyer_name=None, buyer_phone=None, no_invoice=False):
+                 buyer_name=None, buyer_phone=None, no_invoice=False, withdrawal_override_reason=None):
     from app.models import Finance, AuditLog
 
     sale_date = sale_date or date.today()
-    assert_exit_allowed(animal)
+    assert_exit_allowed(animal, withdrawal_override_reason=withdrawal_override_reason, actor_user_id=actor_user_id)
     wf = animal.workflow
 
     fin = Finance(
@@ -480,7 +494,7 @@ def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_d
     # علاج...) تُلغى تلقائياً؛ رأس مباع ما له أي عمل ميداني معلَّق يستاهل
     # بقاءه بقوائم العمال اليومية.
     from app.team import task_service
-    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} انباع")
+    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} انباع", actor_user_id=actor_user_id)
 
     db.session.commit()
 
@@ -550,7 +564,7 @@ def mark_animal_dead(animal: Animal, *, actor_user_id: int, reason=None, death_d
 
     # بند إضافي 98 — نفس منطق sell_animal بالضبط.
     from app.team import task_service
-    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} نفق")
+    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} نفق", actor_user_id=actor_user_id)
 
     db.session.commit()
 
@@ -577,7 +591,7 @@ def delete_animal(animal: Animal, *, actor_user_id: int, force: bool = False, re
 
     # بند إضافي 98 — نفس منطق sell_animal/mark_animal_dead بالضبط.
     from app.team import task_service
-    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} اتحذف/أُرشف")
+    task_service.cancel_open_tasks_for_animal(animal, reason=f"أُلغيت تلقائياً — الرأس {animal.animal_no} اتحذف/أُرشف", actor_user_id=actor_user_id)
 
     db.session.commit()
 

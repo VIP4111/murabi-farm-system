@@ -147,6 +147,12 @@ class FarmSettings(db.Model):
     weaning_solid_feed_age_days = db.Column(db.Integer, default=45, nullable=False)
     ram_breeding_season_window_days = db.Column(db.Integer, default=60, nullable=False)
 
+    # حد أدنى لعمر الفحل عشان يدخل التقريع (بند إضافي 231) — منفصل عمداً
+    # عن min_breeding_age_days (خاص بجاهزية الأنثى فقط). فحل أصغر من هذا
+    # العمر يُستبعد تماماً من قائمة "الفحل" بفورم التقريع الجديد — استبعاد
+    # صامت، مو تحذير قابل للتجاوز، لأنه مو قرار حكم (عدم نضج فسيولوجي).
+    min_male_breeding_age_days = db.Column(db.Integer, default=180, nullable=False)
+
     # جدولة تلقائية حقيقية (بند إضافي 78، 2026-08-01) — يمنع تكرار توليد
     # المهام اليومية أكثر من مرة بنفس اليوم لو أكثر من عملية worker
     # بغانيكورن حاولت بنفس الوقت (حراسة بسيطة، مو قفل موزَّع مثالي —

@@ -6,7 +6,7 @@ from app.repro import repro_bp
 from app.auth.decorators import require_permission
 from app.extensions import db
 from app.models import (
-    Animal, Barn, Doctor, AuditLog,
+    Animal, Barn, Doctor, AuditLog, FarmSettings,
     Mating, Pregnancy, SonarResult,
     TwinEstrusProgram, TwinEstrusAttempt, ReproDevice, HormoneInjection,
 )
@@ -16,8 +16,21 @@ def _females():
     return Animal.query.filter_by(gender="أنثى").order_by(Animal.animal_no).all()
 
 
+def _age_days(animal: Animal) -> int | None:
+    if not animal.birth_date:
+        return None
+    return (date.today() - animal.birth_date).days
+
+
 def _males():
-    return Animal.query.filter_by(gender="ذكر").order_by(Animal.animal_no).all()
+    """قائمة الفحول المتاحة بفورم التقريع (بند إضافي 231) — فحل أصغر من
+    `min_male_breeding_age_days` يُستبعد صامتاً من القائمة أساساً: هذا مو
+    قرار حكم يستاهل تحذير قابل للتجاوز (زي القرابة)، هذا عدم نضج
+    فسيولوجي بسيط. فحل بدون تاريخ ميلاد مسجَّل (عمره غير معروف) يبقى
+    بالقائمة — ما نمنعه بناءً على معلومة ناقصة."""
+    fs = FarmSettings.get()
+    rows = Animal.query.filter_by(gender="ذكر").order_by(Animal.animal_no).all()
+    return [m for m in rows if (age := _age_days(m)) is None or age >= fs.min_male_breeding_age_days]
 
 
 def _log(action, entity_type, entity_id, details=""):
@@ -25,6 +38,44 @@ def _log(action, entity_type, entity_id, details=""):
         actor_user_id=current_user.id, action=action,
         entity_type=entity_type, entity_id=entity_id, details=details,
     ))
+
+
+def _send_override_request(*, female_id, male_id, relation, reason, date_, male_note, barn_id, notes):
+    """طلب تجاوز تحذير قرابة وراثية (بند إضافي 231) — الدكتور ما يملك
+    صلاحية التجاوز المباشر، فبدل ما نرفضه بصمت، نرسل طلبه لكل من يملك
+    `repro.override_close_relation` (صاحب الحلال افتراضياً): إشعار
+    تيليجرام فيه رابط جاهز يفتح نفس الفورم معبّى، ومهمة متابعة بحسابه —
+    نفس نمط إشعارات نقص المخزون (`stock_alert_service.py`)."""
+    from app.models import User, Task
+    from app.core import telegram_service
+
+    female = Animal.query.get(female_id)
+    male = Animal.query.get(male_id)
+    link = url_for(
+        "repro.matings_new", female_id=female_id, male_id=male_id, date=date_,
+        male_note=male_note or "", barn_id=barn_id or "", notes=notes or "",
+        confirm_relation="1", override_reason=reason, _external=True,
+    )
+    message = (
+        f"⚠️ طلب تجاوز قرابة وراثية من {current_user.name}\n"
+        f"{female.animal_no if female else '-'} × {male.animal_no if male else '-'} "
+        f"({relation['label']} — {relation['relation_type']})\n"
+        f"السبب: {reason}\n"
+        f"للمراجعة والتأكيد: {link}"
+    )
+    for user in User.query.filter(User.is_active_account.is_(True)).all():
+        if not user.has_permission("repro.override_close_relation"):
+            continue
+        telegram_service.notify_user(user, message)
+        task = Task(
+            title=f"طلب تجاوز قرابة وراثية — {female.animal_no if female else '-'} × {male.animal_no if male else '-'}",
+            task_type="custom", status="pending", assignee_id=user.id,
+            notes=f"طلب من {current_user.name}. السبب: {reason}\nرابط التأكيد: {link}",
+        )
+        db.session.add(task)
+    _log("mating.override_requested", "Animal", male_id,
+         details=f"طلب من {current_user.name} — {reason}")
+    db.session.commit()
 
 
 # ---------- تقييم أداء الفحول (بند إضافي 183) ----------
@@ -81,6 +132,17 @@ def matings_new():
         female_id = int(request.form["female_id"])
         male_id = int(request.form["male_id"]) if request.form.get("male_id") else None
 
+        # دفاع بعمق (بند إضافي 231) — تأكيد إضافي إن الفحل المختار فعلاً
+        # ضمن قائمة الفحول المسموحة (عمر كافٍ)، حتى لو حاول أحد يرسل
+        # male_id مباشرة بدون المرور بالقائمة المفلترة بالفورم.
+        if male_id and male_id not in {m.id for m in _males()}:
+            flash("هذا الفحل غير متاح للتقريع (عمره أقل من الحد الأدنى المسموح)", "error")
+            return render_template(
+                "repro/mating_form.html",
+                females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
+                form_data=request.form,
+            )
+
         # محرك الوقاية من القرابة الوراثية (بند إضافي 175) — لو فيه
         # علاقة قرابة درجة أولى/ثانية موثّقة بالأنساب، ما نحفظ مباشرة؛
         # نعيد عرض النموذج بتحذير حرج ونطلب تأكيداً صريحاً قبل أي حفظ.
@@ -93,7 +155,29 @@ def matings_new():
                 females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
                 relation_warning=relation,
                 form_data=request.form,
+                can_override=current_user.has_permission("repro.override_close_relation"),
             )
+
+        # صلاحية التجاوز الفعلي (بند إضافي 231) — تأكيد المربّع لحاله ما
+        # يكفي إذا المستخدم ما يملك repro.override_close_relation (صاحب
+        # الحلال بس افتراضياً). بدونها، ما نحفظ التقريع — نحوّله لطلب
+        # تجاوز يوصل صاحب الحلال بإشعار فوري + مهمة، وهو يقرر بنفسه.
+        if relation and not current_user.has_permission("repro.override_close_relation"):
+            reason = (request.form.get("override_reason") or "").strip()
+            if not reason:
+                flash("⚠️ لازم تكتب سبب طلب التجاوز قبل الإرسال", "error")
+                return render_template(
+                    "repro/mating_form.html",
+                    females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
+                    relation_warning=relation, form_data=request.form, can_override=False,
+                )
+            _send_override_request(
+                female_id=female_id, male_id=male_id, relation=relation, reason=reason,
+                date_=request.form["date"], male_note=request.form.get("male_note"),
+                barn_id=request.form.get("barn_id"), notes=request.form.get("notes"),
+            )
+            flash("تم إرسال طلب التجاوز لصاحب الحلال للتأكيد — بينتظر رده قبل ما يتسجّل التقريع", "success")
+            return redirect(url_for("repro.matings_list"))
 
         row = Mating(
             female_id=female_id,
@@ -114,10 +198,39 @@ def matings_new():
 
         flash("تم تسجيل التقريع", "success")
         return redirect(url_for("repro.matings_list"))
+
+    # تعبئة مسبقة من رابط طلب التجاوز (بند إضافي 231) — صاحب الحلال
+    # يفتح نفس الفورم من رسالة تيليجرام/المهمة، معبّى بنفس بيانات طلب
+    # الدكتور، عشان يراجعها ويحفظ بضغطة وحدة بدل ما يعيد تعبئتها يدوياً.
+    prefill_female_id = request.args.get("female_id", type=int)
+    prefill_male_id = request.args.get("male_id", type=int)
+    relation_warning = None
+    form_data = None
+    if prefill_female_id and prefill_male_id:
+        from app.core import lineage_service
+        relation_warning = lineage_service.relationship_warning(prefill_female_id, prefill_male_id)
+        form_data = request.args
     return render_template(
         "repro/mating_form.html",
         females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
+        relation_warning=relation_warning, form_data=form_data,
+        can_override=current_user.has_permission("repro.override_close_relation"),
     )
+
+
+@repro_bp.route("/matings/suggest-females")
+@login_required
+@require_permission("repro.manage")
+def matings_suggest_females():
+    """اقتراح نعاج جاهزة للتقريع وغير قريبة للفحل المختار (بند إضافي
+    231) — يُستدعى عبر JS من فورم تقريع جديد بمجرد ما يختار المستخدم
+    الفحل، يرجّع JSON بس (مو صفحة كاملة)."""
+    from flask import jsonify
+    from app.core import lineage_service
+    male_id = request.args.get("male_id", type=int)
+    if not male_id:
+        return jsonify([])
+    return jsonify(lineage_service.suggest_unrelated_females(male_id))
 
 
 # ---------- تشخيص الحمل ----------

@@ -19,6 +19,7 @@ def _base_form(fs):
         "isolation_days": fs.isolation_days, "doctor_check_hours": fs.doctor_check_hours,
         "postpartum_vaccination_days": fs.postpartum_vaccination_days,
         "min_breeding_age_days": fs.min_breeding_age_days,
+        "min_male_breeding_age_days": fs.min_male_breeding_age_days,
         "min_rest_after_birth_days": fs.min_rest_after_birth_days,
         "target_profit_margin_percent": fs.target_profit_margin_percent,
         "regular_sale_age_days": fs.regular_sale_age_days, "udhiyah_min_age_days": fs.udhiyah_min_age_days,

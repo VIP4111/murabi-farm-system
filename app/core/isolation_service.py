@@ -99,15 +99,41 @@ def exit_isolation(*, animal_id: int, target_barn_id: int, note_date: date, acto
     return animal
 
 
-def start_isolation_plan(*, mother, newborn, birth_date_: date):
+def start_isolation_plan(*, mother, newborn, birth_date_: date) -> str | None:
     """يُشغَّل تلقائياً عند تسجيل ولادة — يعزل الأم والمولود ويولّد مهام
-    مقترحة (تحتاج موافقة الدكتور قبل ما توصل للعامل، حسب دورة حياة المهام)."""
+    مقترحة (تحتاج موافقة الدكتور قبل ما توصل للعامل، حسب دورة حياة المهام).
 
-    from app.models import Barn, FarmSettings
+    اختيار الحظيرة (بند إضافي 231): كان يختار دايماً أول حظيرة
+    `barn_type="عزل"` بغض النظر — نفس الحظيرة المستخدمة لحجر الحيوانات
+    الوافدة الجديدة (شراء). طبياً هذا خطأ: أم ومولود حديث الولادة ما
+    يفترض ينضمّون لنفس المكان اللي فيه حيوانات مشكوك بمرضها. الآن
+    نفضّل حظيرة `barn_type="نفاس"` (قيمة كانت موجودة أصلاً كخيار
+    بحقل نوع الحظيرة بدون أي منطق يستخدمها)، ونرجع لـ"عزل" بس لو
+    ماكو حظيرة نفاس معرَّفة — سلوك متوافق للخلف بالكامل.
+
+    يرجّع نص تحذير لو الحظيرة المختارة فيها حالة مرضية مفتوحة حالياً
+    (تنبيه بس، مو منع — نفس فلسفة "تنبيه بدل حظر صامت" بالمشروع)،
+    وإلا None."""
+
+    from app.models import Barn, FarmSettings, Disease, Animal
     settings = FarmSettings.get()
 
-    isolation_barn = Barn.query.filter_by(barn_type="عزل").order_by(Barn.id).first()
+    isolation_barn = (
+        Barn.query.filter_by(barn_type="نفاس").order_by(Barn.id).first()
+        or Barn.query.filter_by(barn_type="عزل").order_by(Barn.id).first()
+    )
+    warning = None
     if isolation_barn:
+        sick_present = (
+            Disease.query.join(Animal, Disease.animal_id == Animal.id)
+            .filter(Animal.barn_id == isolation_barn.id, Disease.status == "active")
+            .count()
+        )
+        if sick_present:
+            warning = (
+                f'⚠️ حظيرة "{isolation_barn.barn_name}" اللي انتقلت لها الأم والمولود فيها '
+                f"{sick_present} حالة مرضية مفتوحة حالياً — راجعها وتأكد الوضع مناسب."
+            )
         mother.barn_id = isolation_barn.id
         newborn.barn_id = isolation_barn.id
         mother.isolation_started_at = birth_date_
@@ -218,6 +244,8 @@ def start_isolation_plan(*, mother, newborn, birth_date_: date):
             notes="راقب الشهية، الإفرازات، وسلامة الرضاعة — أي خمول أو إفراز كريه = استدعاء طبيب.",
             source_type="PostpartumMotherPlan", source_id=mother.id * 1000 + day_offset,
         )
+
+    return warning
 
 
 def record_abortion(*, pregnancy, outcome_date, notes: str | None, actor_user_id: int) -> dict:

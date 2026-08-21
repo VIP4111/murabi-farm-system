@@ -196,7 +196,8 @@ def create_animal(
                                 event_date=birth_date or date.today())
 
             from app.core.isolation_service import start_isolation_plan
-            start_isolation_plan(mother=mother, newborn=animal, birth_date_=birth_date or date.today())
+            animal._isolation_barn_warning = start_isolation_plan(
+                mother=mother, newborn=animal, birth_date_=birth_date or date.today())
 
     if gender == "أنثى" and is_pregnant_at_intake and source != AnimalSource.BIRTH:
         _register_pregnancy_intake(animal, intake_date=purchase_date or entry_date or date.today())

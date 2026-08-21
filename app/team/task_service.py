@@ -601,7 +601,7 @@ def cancel_active_task(task: Task, *, actor, reason=None) -> Task:
 OPEN_TASK_STATUSES = ("suggested", "pending", "in_progress", "postponed")
 
 
-def cancel_open_tasks_for_animal(animal, *, reason: str) -> list[Task]:
+def cancel_open_tasks_for_animal(animal, *, reason: str, actor_user_id: int | None = None) -> list[Task]:
     """إلغاء كل مهام رأس معيّن اللي لسا مفتوحة (بند إضافي 98) — قبل هذا
     البند، بيع/نفوق رأس كان يحدّث حالته بس، بدون ما يلمس أي مهمة مرتبطة
     فيه (تحصين، رش، خطوة بروتوكول علاج...). المهام تبقى معلّقة تشير
@@ -609,10 +609,19 @@ def cancel_open_tasks_for_animal(animal, *, reason: str) -> list[Task]:
     خطوات البروتوكول العلاجي كمان (`source_type='ProtocolApplication'`)
     لأنها كلها `Task` عادية بـ`animal_id` نفسه — صفر جدول ثاني يحتاج
     تعديل. مهام منجزة/فاشلة/ملغاة أصلاً ما تُلمَس — سجل تاريخي، مو
-    عمل معلّق."""
+    عمل معلّق.
+
+    كل مهمة تُلغى تسجّل سطر `AuditLog` مستقل (بند إضافي 231) — قبل هذا
+    كان الإلغاء يظهر بس كملاحظة نصية داخل المهمة نفسها، بدون أي أثر
+    بسجل التدقيق المركزي (البيع نفسه له سجل تدقيق، إلغاء مهامه التابعة
+    ما كان له)."""
     tasks = Task.query.filter(Task.animal_id == animal.id, Task.status.in_(OPEN_TASK_STATUSES)).all()
     for t in tasks:
         t.status = "cancelled"
         t.notes = (t.notes + " | " if t.notes else "") + reason
         db.session.add(t)
+        db.session.add(AuditLog(
+            actor_user_id=actor_user_id, action="task.auto_cancel_on_animal_exit",
+            entity_type="Task", entity_id=t.id, details=reason,
+        ))
     return tasks
