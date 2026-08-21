@@ -736,3 +736,40 @@ def alert_counts_by_animal() -> dict:
         if animal_id:
             counts[animal_id] = counts.get(animal_id, 0) + 1
     return counts
+
+
+# ---------- تنبيهات سياقية فورية (Contextual Triggered Notifications) ----------
+# بند إضافي 230: بعد إتمام إجراء بصفحة 1، هل فيه شي بصفحة 2 يستاهل
+# مراجعة فورية؟ نفس نافذة `alert_before_days` المستخدمة بكل دوال هذا
+# الملف — ما فيه شرط "متى نعتبره مستحق قريباً" مستقل، مصدر واحد للحقيقة.
+
+def vaccination_followup_toast(animal_id: int) -> dict | None:
+    """بعد ما يسجّل المستخدم تطعيم فعلي لرأس (صفحة 1: `health.vaccinations_new`)،
+    نتحقق هل فيه موعد بجدول التحصينات المجدولة (`VaccinationSchedule`)
+    لنفس حظيرة الرأس مستحق قريباً بعد (نفس نافذة `alert_before_days`).
+    لو فيه، نرجّع بيانات Toast يوجّه لصفحة "جدول التحصينات" (صفحة 2)
+    مباشرة، بدل ما ينتظر المستخدم يوصله شاشة التنبيهات العامة لاحقاً."""
+    from app.models import VaccinationSchedule
+    animal = Animal.query.get(animal_id)
+    if not animal or not animal.barn_id:
+        return None
+    fs = FarmSettings.query.first()
+    window_end = date.today() + timedelta(days=fs.alert_before_days if fs else 7)
+    upcoming = (
+        VaccinationSchedule.query
+        .filter(
+            VaccinationSchedule.barn_id == animal.barn_id,
+            VaccinationSchedule.status == "scheduled",
+            VaccinationSchedule.planned_date <= window_end,
+        )
+        .order_by(VaccinationSchedule.planned_date)
+        .first()
+    )
+    if not upcoming:
+        return None
+    return {
+        "message": f"فيه موعد تحصين مجدول لحظيرة {animal.barn.barn_name} بتاريخ {upcoming.planned_date} — تبي تراجع جدول التحصينات؟",
+        "url_endpoint": "health.vaccination_schedule_list",
+        "url_kwargs": {},
+        "button_text": "افتح جدول التحصينات ←",
+    }

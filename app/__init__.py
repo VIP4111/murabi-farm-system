@@ -346,6 +346,13 @@ def create_app(config_class=Config):
     def task_badge_state(value):
         return STATUS_BADGE_STATE.get(value, "pending")
 
+    @app.template_filter("from_json")
+    def from_json(value):
+        # لتفكيك رسائل flash بصيغة JSON — تنبيهات Toast السياقية (بند
+        # إضافي 230، app/core/toast_service.py).
+        import json
+        return json.loads(value)
+
     @app.route("/_healthz")
     def health():
         # فحص تقني بسيط لتشغيل السيرفر - غير مرتبط بوحدة الصحة البيطرية

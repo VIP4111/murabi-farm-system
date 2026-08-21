@@ -920,6 +920,11 @@ def vaccinations_new():
             return redirect(url_for("health.vaccinations_new"))
         flash("تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)", "success")
         _complete_originating_task(request.form.get("task_id"))
+        # تنبيه سياقي فوري (بند إضافي 230): لو حظيرة هذا الرأس فيها موعد
+        # بجدول التحصينات مستحق قريباً، وجّه المستخدم لمراجعته فوراً.
+        from app.core.alerts_service import vaccination_followup_toast
+        from app.core.toast_service import flash_toast
+        flash_toast(vaccination_followup_toast(animal_id))
         return redirect(url_for("health.vaccinations_list"))
 
     return render_template(

@@ -236,6 +236,17 @@
     .flash.error{background:#9f2419;}
     .flash.warning{background:#a15c07;}
 
+    /* تنبيه سياقي فوري (Toast) — بند إضافي 230 */
+    .toast-wrap{position:fixed; left:0; right:0; bottom:16px; z-index:9999;
+      display:flex; justify-content:center; padding:0 12px; pointer-events:none;}
+    .toast-box{pointer-events:auto; background:var(--card-bg,#fff); color:var(--text);
+      border:1.5px solid var(--primary2); border-radius:16px; box-shadow:var(--shadow);
+      padding:14px 16px; max-width:420px; width:100%;
+      display:flex; flex-direction:column; gap:10px; animation:toast-in .25s ease;}
+    .toast-box .toast-msg{font-weight:700; font-size:13.5px; line-height:1.5;}
+    .toast-box .toast-actions{display:flex; gap:8px; justify-content:flex-end;}
+    @keyframes toast-in{from{transform:translateY(12px); opacity:0;} to{transform:translateY(0); opacity:1;}}
+
     .btn{
       display:inline-block; border:0; border-radius:16px; padding:11px 16px;
       font-weight:800; cursor:pointer; background:var(--primary); color:#fff;
@@ -731,11 +742,33 @@
     {% endif %}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% for category, message in messages %}
+        {% if category != 'toast' %}
         <div class="flash {{ category }}">{{ message }}</div>
+        {% endif %}
       {% endfor %}
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
+
+  {# تنبيه سياقي فوري (Toast) — بند إضافي 230: فئة flash خاصة "toast"
+     رسالتها JSON (نص + رابط + نص الزر)، بدل سطر Flash عادي. #}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages if category == 'toast' %}
+      {% set toast = message | from_json %}
+      <div class="toast-wrap" id="ctxToast">
+        <div class="toast-box">
+          <div class="toast-msg">🔔 {{ toast.message }}</div>
+          <div class="toast-actions">
+            <button type="button" class="btn light" onclick="document.getElementById('ctxToast').remove();" style="padding:7px 12px; font-size:12.5px;">{{ _('تجاهل') }}</button>
+            <a class="btn" href="{{ toast.url }}" style="padding:7px 14px; font-size:12.5px;">{{ toast.button_text }}</a>
+          </div>
+        </div>
+      </div>
+      <script>
+        setTimeout(function(){ var t = document.getElementById('ctxToast'); if (t) t.remove(); }, 12000);
+      </script>
+    {% endfor %}
+  {% endwith %}
   {% if current_user.is_authenticated and current_user.has_permission('reports.submit')
         and not (request.endpoint == 'team.worker_quick_report' and request.view_args.get('category') == 'emergency') %}
   <a class="emergency-fab" href="{{ url_for('team.worker_quick_report', category='emergency') }}" title="{{ _('حالة طارئة') }}">🚨</a>
