@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:520px;">
+  <h2>🔍 {{ _('تشخيص بوت تيليجرام') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('فحص مباشر لسبب أي توقف بإرسال إشعارات تيليجرام — بدون الحاجة لـShell.') }}</p>
+
+  <div class="table-scroll">
+  <table class="compact-table">
+    <tr><td>{{ _('التوكن مضبوط؟') }}</td><td><b>{{ 'نعم ✅' if info.token_set else 'لا ❌' }}</b></td></tr>
+    {% if info.token_valid is not none %}
+    <tr><td>{{ _('التوكن صالح؟') }}</td><td><b>{{ 'نعم ✅' if info.token_valid else 'لا ❌' }}</b></td></tr>
+    {% endif %}
+    {% if info.bot_username %}
+    <tr><td>{{ _('اسم البوت') }}</td><td>@{{ info.bot_username }}</td></tr>
+    {% endif %}
+    {% if 'webhook_url' in info %}
+    <tr><td>{{ _('رابط الـwebhook المسجَّل') }}</td><td style="direction:ltr; text-align:left;">{{ info.webhook_url or _('(ما فيه)') }}</td></tr>
+    <tr><td>{{ _('تحديثات معلَّقة') }}</td><td>{{ info.pending_update_count }}</td></tr>
+    {% if info.last_error_message %}
+    <tr><td>{{ _('آخر خطأ عند تيليجرام') }}</td><td>{{ info.last_error_message }} ({{ info.last_error_date }})</td></tr>
+    {% endif %}
+    {% endif %}
+  </table>
+  </div>
+
+  <div class="notice" style="margin-top:14px; background:#fff9e8; border-color:#f0dfa0; color:#6b5410;">
+    <b>📋 {{ _('التشخيص:') }}</b>
+    <p style="margin:6px 0 0;">{{ info.diagnosis }}</p>
+  </div>
+
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="display:inline-block; margin-top:14px;">← {{ _('رجوع للإعدادات') }}</a>
+</div>
+{% endblock %}

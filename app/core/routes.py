@@ -1552,6 +1552,18 @@ def settings_home():
     )
 
 
+@core_bp.route("/settings/telegram-status")
+@login_required
+@require_permission("settings.manage")
+def telegram_status():
+    """تشخيص حالة بوت تيليجرام من المتصفح مباشرة (بند إضافي 232،
+    تعديل) — أمر `flask telegram-status` يحتاج Shell بلوحة Render،
+    وهذي ميزة مدفوعة (مو متاحة بخطة Free). نفس المنطق بالضبط، بس
+    كصفحة ويب عادية بدل CLI."""
+    from app.core.telegram_service import diagnose
+    return render_template("telegram_status.html", info=diagnose())
+
+
 @core_bp.route("/settings/farm", methods=["POST"])
 @login_required
 @require_permission("settings.manage")

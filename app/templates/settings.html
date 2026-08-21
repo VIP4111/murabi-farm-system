@@ -146,6 +146,7 @@
   <div style="display:flex; gap:10px; flex-wrap:wrap;">
     <a class="btn light" href="{{ url_for('core.readiness_check') }}">✅ {{ _('فحص الجاهزية قبل النشر') }}</a>
     <a class="btn light" href="{{ url_for('core.data_integrity_check') }}">🔍 {{ _('فحص سلامة البيانات') }}</a>
+    <a class="btn light" href="{{ url_for('core.telegram_status') }}">🔍 {{ _('تشخيص بوت تيليجرام') }}</a>
     {% if current_user.role.name == 'owner' %}
     <a class="btn light" href="{{ url_for('core.simulation_data_purge') }}">🎬 {{ _('وضع عرض تجريبي') }}</a>
     {% endif %}

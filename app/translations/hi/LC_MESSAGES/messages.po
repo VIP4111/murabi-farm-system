@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 23:05+0300\n"
+"POT-Creation-Date: 2026-08-22 02:31+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:152 app/templates/settings_backup.html:5
+#: app/templates/settings.html:153 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -3302,7 +3302,7 @@ msgstr "जानवर"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "अभी तक कोई जानवर दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:154
+#: app/templates/audit_log.html:5 app/templates/settings.html:155
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -4685,23 +4685,27 @@ msgstr "तैनाती से पहले तत्परता जां�
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:150
+#: app/templates/settings.html:149 app/templates/telegram_status.html:4
+msgid "تشخيص بوت تيليجرام"
+msgstr "टेलीग्राम बॉट निदान"
+
+#: app/templates/settings.html:151
 msgid "وضع عرض تجريبي"
 msgstr "डेमो मोड"
 
-#: app/templates/settings.html:157
+#: app/templates/settings.html:158
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:159
+#: app/templates/settings.html:160
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:165
+#: app/templates/reports/overview.html:18 app/templates/settings.html:166
 msgid "جدول المؤشرات"
 msgstr "संकेतक तालिका"
 
-#: app/templates/settings.html:166
+#: app/templates/settings.html:167
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
 
@@ -4950,6 +4954,46 @@ msgstr "सुझाई गई विंडो"
 #: app/templates/smart_sale_report.html:30
 msgid "لا يوجد حيوانات نشطة لتقييمها."
 msgstr "मूल्यांकन के लिए कोई सक्रिय पशु नहीं है।"
+
+#: app/templates/telegram_status.html:5
+msgid "فحص مباشر لسبب أي توقف بإرسال إشعارات تيليجرام — بدون الحاجة لـShell."
+msgstr "टेलीग्राम सूचनाएं क्यों रुकीं इसकी सीधी जांच — Shell की आवश्यकता नहीं।"
+
+#: app/templates/telegram_status.html:8
+msgid "التوكن مضبوط؟"
+msgstr "टोकन सेट है?"
+
+#: app/templates/telegram_status.html:10
+msgid "التوكن صالح؟"
+msgstr "टोकन मान्य है?"
+
+#: app/templates/telegram_status.html:13
+msgid "اسم البوت"
+msgstr "बॉट का उपयोगकर्ता नाम"
+
+#: app/templates/telegram_status.html:16
+msgid "رابط الـwebhook المسجَّل"
+msgstr "पंजीकृत वेबहुक URL"
+
+#: app/templates/telegram_status.html:16
+msgid "(ما فيه)"
+msgstr "(कोई नहीं)"
+
+#: app/templates/telegram_status.html:17
+msgid "تحديثات معلَّقة"
+msgstr "लंबित अपडेट"
+
+#: app/templates/telegram_status.html:19
+msgid "آخر خطأ عند تيليجرام"
+msgstr "टेलीग्राम की ओर से अंतिम त्रुटि"
+
+#: app/templates/telegram_status.html:25
+msgid "التشخيص:"
+msgstr "निदान:"
+
+#: app/templates/telegram_status.html:29
+msgid "رجوع للإعدادات"
+msgstr "सेटिंग्स पर वापस जाएं"
 
 #: app/templates/today.html:7
 msgid "مهامك المفتوحة، تنبيهات حظائرك، وبلاغاتك المفتوحة — كلها هنا بدل ما تتنقّل بين شاشات."
