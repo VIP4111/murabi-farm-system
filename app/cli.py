@@ -515,6 +515,26 @@ def register_cli(app):
         for c in chats:
             click.echo(f"{c['name']}: {c['chat_id']}")
 
+    @app.cli.command("telegram-status")
+    def telegram_status():
+        """تشخيص مباشر لسبب توقف/فشل إرسال تيليجرام (بند إضافي 232) —
+        شغّلها من Shell بلوحة Render. ترجع سبب التوقف مباشرة (توكن غير
+        مضبوط/منسحب، webhook منكسر، أو خطأ آخر مسجَّل عند تيليجرام
+        نفسه) بدل التخمين."""
+        from app.core.telegram_service import diagnose
+        info = diagnose()
+        click.echo(f"التوكن مضبوط: {'نعم' if info.get('token_set') else 'لا'}")
+        if info.get("token_valid") is not None:
+            click.echo(f"التوكن صالح: {'نعم' if info.get('token_valid') else 'لا'}")
+        if info.get("bot_username"):
+            click.echo(f"اسم البوت: @{info['bot_username']}")
+        if "webhook_url" in info:
+            click.echo(f"رابط الـwebhook المسجَّل: {info.get('webhook_url') or '(ما فيه)'}")
+            click.echo(f"تحديثات معلَّقة: {info.get('pending_update_count')}")
+            if info.get("last_error_message"):
+                click.echo(f"آخر خطأ عند تيليجرام: {info['last_error_message']} (بتاريخ {info.get('last_error_date')})")
+        click.echo(f"\n📋 التشخيص: {info.get('diagnosis')}")
+
     @app.cli.command("simulate-farm-month")
     @click.option("--days", default=30, help="عدد أيام المحاكاة (افتراضي 30).")
     def simulate_farm_month(days):
