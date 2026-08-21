@@ -92,6 +92,17 @@ class Task(db.Model):
     failure_reason = db.Column(db.String(64))
     voice_note_url = db.Column(db.String(255))
 
+    # تقييم جودة يدوي اختياري لمهمة مُنجزة (بند إضافي 229) — يضاف
+    # بعد ما صاحب الحلال/الدكتور/الممرض يراجع المهمة فعلياً (مثلاً
+    # يشيك العليقة بعد "إضافة علف")، بجانب النقطة التلقائية بتقرير
+    # الأداء الشامل. "weak"/"medium"/"excellent" — الملاحظة إلزامية
+    # بس لو "weak" (واجهة، مو قيد قاعدة بيانات).
+    quality_rating = db.Column(db.String(16), nullable=True)
+    quality_rating_note = db.Column(db.Text, nullable=True)
+    quality_rated_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    quality_rated_by = db.relationship("User", foreign_keys=[quality_rated_by_id])
+    quality_rated_at = db.Column(db.DateTime, nullable=True)
+
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)

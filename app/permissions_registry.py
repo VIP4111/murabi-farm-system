@@ -121,6 +121,10 @@ DEFAULT_ROLES = {
             "tasks.view_own",
             "reports.submit",
             "assistant.use",
+            # مراجعة مهام الفريق اليومية وتقييم جودتها (بند إضافي 229) —
+            # بطلبك الصريح: صاحب الحلال/الدكتور/الممرض يقدرون يراجعون
+            # مهام اليوم المنجزة.
+            "tasks.review_daily",
         ],
     },
     "accountant": {

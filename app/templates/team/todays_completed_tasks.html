@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>📋 {{ _('مهام اليوم المنجزة') }}</h2>
+    <a class="btn light" href="{{ url_for('team.performance_report') }}">📊 {{ _('تقرير الأداء الشامل') }}</a>
+  </div>
+  <p style="color:var(--muted); font-size:12px; margin:4px 0 0;">{{ _('راجع أي مهمة وتأكد إنها اتسوّت صح فعلاً، وحط تقييم جودة اختياري — ضعيف، متوسط، أو ممتاز. لو اخترت "ضعيف" اكتب سبب موجز، يظهر بتقرير الأداء الشامل.') }}</p>
+</div>
+
+<div class="card">
+  {% for t in tasks %}
+  <div style="padding:12px 0; border-top:1px solid var(--line);">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+      <div>
+        <b>{{ t.title }}</b>
+        <div style="color:var(--muted); font-size:12.5px; margin-top:2px;">
+          {{ _('العامل:') }} {{ t.accepted_by.name if t.accepted_by else (t.assignee.name if t.assignee else '-') }}
+          · {{ _('أُنجزت:') }} {{ t.completed_at.strftime('%H:%M') if t.completed_at }}
+          {% if t.barn %} · {{ t.barn.barn_name }}{% endif %}
+          {% if t.animal %} · {{ t.animal.animal_no }}{% endif %}
+        </div>
+        {% if t.completion_note %}<div style="font-size:13px; margin-top:4px;">💬 {{ t.completion_note }}</div>{% endif %}
+      </div>
+      {% if t.quality_rating %}
+      <span class="badge {{ 'off' if t.quality_rating == 'weak' else ('on' if t.quality_rating == 'excellent' else '') }}">
+        {{ '⚠️' if t.quality_rating == 'weak' else ('✅' if t.quality_rating == 'excellent' else '➖') }}
+        {{ quality_labels.get(t.quality_rating, t.quality_rating) }}
+      </span>
+      {% endif %}
+    </div>
+
+    <form method="post" action="{{ url_for('team.task_quality_rate', task_id=t.id) }}" class="qrForm" style="margin-top:10px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="quality_rating" class="qrValue">
+      <button type="button" class="btn light qrBtn" data-rating="weak" style="font-size:12.5px; padding:6px 12px; {{ 'border-color:var(--danger,#c0392b); color:var(--danger,#c0392b);' if t.quality_rating == 'weak' }}">⚠️ {{ _('ضعيف') }}</button>
+      <button type="button" class="btn light qrBtn" data-rating="medium" style="font-size:12.5px; padding:6px 12px;">➖ {{ _('متوسط') }}</button>
+      <button type="button" class="btn light qrBtn" data-rating="excellent" style="font-size:12.5px; padding:6px 12px;">✅ {{ _('ممتاز') }}</button>
+      <div class="qrNoteWrap" style="display:none; flex:1 1 200px;">
+        <input type="text" name="quality_rating_note" class="qrNote" placeholder="{{ _('ليش ضعيف؟ اكتب السبب باختصار') }}" value="{{ t.quality_rating_note or '' }}" style="margin:0;">
+      </div>
+      <button type="submit" class="btn qrSubmit" style="display:none; font-size:12.5px; padding:6px 14px;">{{ _('حفظ') }}</button>
+    </form>
+  </div>
+  {% else %}
+  <p class="empty">{{ _('ما فيه أي مهمة اتنجزت اليوم بعد.') }}</p>
+  {% endfor %}
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.qrForm').forEach(function(form){
+    var valueInput = form.querySelector('.qrValue');
+    var noteWrap = form.querySelector('.qrNoteWrap');
+    var submitBtn = form.querySelector('.qrSubmit');
+    form.querySelectorAll('.qrBtn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var rating = btn.getAttribute('data-rating');
+        valueInput.value = rating;
+        noteWrap.style.display = (rating === 'weak') ? 'block' : 'none';
+        submitBtn.style.display = 'inline-block';
+        form.querySelectorAll('.qrBtn').forEach(function(b){ b.style.fontWeight = (b === btn) ? '900' : 'normal'; });
+      });
+    });
+  });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>{{ _('تقرير أداء الفريق') }}</h2>
+    <a class="btn light" href="{{ url_for('team.todays_completed_tasks') }}">📋 {{ _('مراجعة مهام اليوم') }}</a>
+  </div>
+  <p style="color:var(--muted); font-size:12px; margin:4px 0 0;">{{ _('نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة بجانبها.') }}</p>
+  <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; margin-top:12px;">
+    <div><label style="margin:0 0 4px;">{{ _('من') }}</label><input name="start" type="date" value="{{ start_date }}" style="margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('إلى') }}</label><input name="end" type="date" value="{{ end_date }}" style="margin:0;"></div>
+    <button class="btn" type="submit" style="padding:10px 16px;">{{ _('عرض') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+<table class="compact-table">
+    <tr>
+      <th>{{ _('#') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('النقطة') }}</th>
+      <th>{{ _('منجزة') }}</th><th>{{ _('متعذّرة') }}</th><th>{{ _('نسبة الإنجاز') }}</th>
+      <th>{{ _('الالتزام بالوقت') }}</th><th>{{ _('متوسط سرعة التنفيذ') }}</th><th>{{ _('البلاغات') }}</th>
+      <th>{{ _('تقييمات الجودة') }}</th>
+    </tr>
+    {% for row in rows %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ row.user.name }}</td>
+      <td><b>{{ row.score }}%</b></td>
+      <td>{{ row.completed_count }}</td>
+      <td>{{ row.failed_count }}</td>
+      <td>{{ row.completion_rate }}%</td>
+      <td>{{ row.on_time_rate ~ '%' if row.on_time_rate is not none else '-' }}</td>
+      <td>{{ (row.avg_duration_minutes ~ ' ' ~ _('د')) if row.avg_duration_minutes is not none else '-' }}</td>
+      <td>{{ row.reports_count }}</td>
+      <td>
+        {% if row.quality_counts.excellent %}<span class="badge on">✅ {{ row.quality_counts.excellent }}</span>{% endif %}
+        {% if row.quality_counts.medium %}<span class="badge">➖ {{ row.quality_counts.medium }}</span>{% endif %}
+        {% if row.quality_counts.weak %}<span class="badge off">⚠️ {{ row.quality_counts.weak }}</span>{% endif %}
+        {% if not row.quality_counts.excellent and not row.quality_counts.medium and not row.quality_counts.weak %}-{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="10" style="color:#888;">{{ _('ما فيه أي مهمة محسومة بهذي الفترة.') }}</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+
+{% for row in rows %}
+{% if row.weak_notes %}
+<div class="card">
+  <h3 style="font-size:14px; color:var(--danger,#c0392b);">⚠️ {{ _('ملاحظات ضعف — %(name)s', name=row.user.name) }}</h3>
+  {% for w in row.weak_notes %}
+  <div style="padding:6px 0; border-top:1px solid var(--line);">
+    <b>{{ w.task.title }}</b>
+    <div style="color:var(--muted); font-size:13px;">{{ w.note }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

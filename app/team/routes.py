@@ -418,6 +418,66 @@ MANUAL_TASK_TYPE_OPTIONS = [
 ]
 
 
+# ---------- تقييم الأداء ومراجعة الجودة اليومية (بند إضافي 229) ----------
+
+@team_bp.route("/performance-report")
+@login_required
+@require_permission("tasks.review_daily")
+def performance_report():
+    from app.team import performance_service as perf_svc
+    today = date.today()
+    start_arg = request.args.get("start")
+    end_arg = request.args.get("end")
+    try:
+        start_date = date.fromisoformat(start_arg) if start_arg else today.replace(day=1)
+    except ValueError:
+        start_date = today.replace(day=1)
+    try:
+        end_date = date.fromisoformat(end_arg) if end_arg else today
+    except ValueError:
+        end_date = today
+    if start_date > end_date:
+        start_date, end_date = end_date, start_date
+    rows = perf_svc.worker_performance(start_date=start_date, end_date=end_date)
+    return render_template(
+        "team/performance_report.html", rows=rows, start_date=start_date, end_date=end_date,
+        quality_labels=perf_svc.QUALITY_LABELS_AR,
+    )
+
+
+@team_bp.route("/tasks/today-completed")
+@login_required
+@require_permission("tasks.review_daily")
+def todays_completed_tasks():
+    from app.team import performance_service as perf_svc
+    tasks = perf_svc.todays_completed_tasks()
+    return render_template(
+        "team/todays_completed_tasks.html", tasks=tasks,
+        quality_labels=perf_svc.QUALITY_LABELS_AR,
+    )
+
+
+@team_bp.route("/tasks/<int:task_id>/quality-rate", methods=["POST"])
+@login_required
+@require_permission("tasks.review_daily")
+def task_quality_rate(task_id):
+    from datetime import datetime, timezone
+    task = Task.query.get_or_404(task_id)
+    rating = request.form.get("quality_rating")
+    if rating not in ("weak", "medium", "excellent"):
+        flash("قيمة تقييم غير صحيحة", "error")
+        return redirect(url_for("team.todays_completed_tasks"))
+    task.quality_rating = rating
+    task.quality_rating_note = request.form.get("quality_rating_note") or None
+    task.quality_rated_by_id = current_user.id
+    task.quality_rated_at = datetime.now(timezone.utc)
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="task.quality_rate",
+                             entity_type="Task", entity_id=task.id, details=rating))
+    db.session.commit()
+    flash("تم حفظ التقييم", "success")
+    return redirect(url_for("team.todays_completed_tasks"))
+
+
 @team_bp.route("/tasks")
 @login_required
 def tasks_list():

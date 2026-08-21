@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 03:22+0300\n"
+"POT-Creation-Date: 2026-08-21 21:13+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -74,7 +74,7 @@ msgstr "Suggested"
 msgid "قيد التنفيذ"
 msgstr "In progress"
 
-#: app/__init__.py:138
+#: app/__init__.py:138 app/templates/team/performance_report.html:21
 msgid "منجزة"
 msgstr "Completed"
 
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:736
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:741
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -2090,8 +2090,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:630
-#: app/templates/base.html:632 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:635
+#: app/templates/base.html:637 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "Finance"
@@ -2275,6 +2275,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "Save"
@@ -2837,6 +2838,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/settings.html:126 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/team/performance_report.html:20
 #: app/templates/warehouses/warehouse_form.html:7
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -3302,12 +3304,14 @@ msgstr "The last %(n)s sensitive events in the system (deletion, permission gran
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
+#: app/templates/team/performance_report.html:10
 #: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "From"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
+#: app/templates/team/performance_report.html:11
 #: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "To"
@@ -3360,7 +3364,7 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:673
+#: app/templates/barn_form.html:11 app/templates/base.html:678
 msgid "عادية"
 msgstr "Regular"
 
@@ -3564,30 +3568,39 @@ msgstr "Climate"
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "Climate & heat stress radar"
 
-#: app/templates/base.html:619
+#: app/templates/base.html:620
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:621 app/templates/family_view.html:97
+#: app/templates/base.html:622 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:622 app/templates/home.html:53
+#: app/templates/base.html:623 app/templates/home.html:53
+#: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:623 app/templates/team/members_list.html:5
+#: app/templates/base.html:624 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:633 app/templates/home.html:105
+#: app/templates/base.html:626 app/templates/team/performance_report.html:6
+msgid "مراجعة مهام اليوم"
+msgstr "Review Today's Tasks"
+
+#: app/templates/base.html:627 app/templates/team/performance_report.html:5
+msgid "تقرير أداء الفريق"
+msgstr "Team Performance Report"
+
+#: app/templates/base.html:638 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:640 app/templates/home.html:108
+#: app/templates/base.html:645 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3595,49 +3608,49 @@ msgstr "Health finance"
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:642
+#: app/templates/base.html:647
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:657
+#: app/templates/base.html:662
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:671
+#: app/templates/base.html:676
 msgid "مستوى الواجهة"
 msgstr "Interface level"
 
-#: app/templates/base.html:673
+#: app/templates/base.html:678
 msgid "بسيط جداً"
 msgstr "Very simple"
 
-#: app/templates/base.html:681
+#: app/templates/base.html:686
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"Very simple\" switches your home screen to big buttons, one question at a time — the exact same data."
 
-#: app/templates/base.html:687
+#: app/templates/base.html:692
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:690
+#: app/templates/base.html:695
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:696 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:701 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:709
+#: app/templates/base.html:714
 msgid "خروج"
 msgstr "Logout"
 
@@ -6510,8 +6523,9 @@ msgid "إصدار"
 msgstr "Issue"
 
 #: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
+#: app/templates/team/performance_report.html:12
 msgid "عرض"
-msgstr "View"
+msgstr "Show"
 
 #: app/templates/finance/list.html:56
 msgid "تأكيد الإلغاء؟"
@@ -8008,6 +8022,7 @@ msgid "الجودة"
 msgstr "Quality"
 
 #: app/templates/ostrich/egg_form.html:18
+#: app/templates/team/todays_completed_tasks.html:38
 msgid "ممتاز"
 msgstr "Excellent"
 
@@ -8016,8 +8031,9 @@ msgid "جيد"
 msgstr "Good"
 
 #: app/templates/ostrich/egg_form.html:20
+#: app/templates/team/todays_completed_tasks.html:37
 msgid "متوسط"
-msgstr "Average"
+msgstr "Medium"
 
 #: app/templates/ostrich/egg_form.html:21
 msgid "مرفوض"
@@ -9004,6 +9020,51 @@ msgstr "Disabled"
 msgid "لا يوجد أعضاء بعد."
 msgstr "No members yet."
 
+#: app/templates/team/performance_report.html:8
+msgid "نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة بجانبها."
+msgstr "The automatic score = completion rate + on-time rate (50/50) — no personal opinion in the number itself. Manual quality ratings (if any) are shown separately next to it."
+
+#: app/templates/team/performance_report.html:20
+msgid "#"
+msgstr "#"
+
+#: app/templates/team/performance_report.html:20
+msgid "النقطة"
+msgstr "Score"
+
+#: app/templates/team/performance_report.html:21
+msgid "متعذّرة"
+msgstr "Failed"
+
+#: app/templates/team/performance_report.html:21
+msgid "نسبة الإنجاز"
+msgstr "Completion Rate"
+
+#: app/templates/team/performance_report.html:22
+msgid "الالتزام بالوقت"
+msgstr "On-time Rate"
+
+#: app/templates/team/performance_report.html:22
+msgid "متوسط سرعة التنفيذ"
+msgstr "Avg. Completion Time"
+
+#: app/templates/team/performance_report.html:23
+msgid "تقييمات الجودة"
+msgstr "Quality Ratings"
+
+#: app/templates/team/performance_report.html:34
+msgid "د"
+msgstr "min"
+
+#: app/templates/team/performance_report.html:44
+msgid "ما فيه أي مهمة محسومة بهذي الفترة."
+msgstr "No resolved tasks in this period."
+
+#: app/templates/team/performance_report.html:53
+#, python-format
+msgid "ملاحظات ضعف — %(name)s"
+msgstr "Weak-rating notes — %(name)s"
+
 #: app/templates/team/report_detail.html:12
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -9463,6 +9524,38 @@ msgstr "Owner review box (tasks deleted by the doctor)"
 #: app/templates/team/tasks_list.html:205
 msgid "فاضي."
 msgstr "Empty."
+
+#: app/templates/team/todays_completed_tasks.html:5
+msgid "مهام اليوم المنجزة"
+msgstr "Today's Completed Tasks"
+
+#: app/templates/team/todays_completed_tasks.html:6
+msgid "تقرير الأداء الشامل"
+msgstr "Full Performance Report"
+
+#: app/templates/team/todays_completed_tasks.html:8
+msgid "راجع أي مهمة وتأكد إنها اتسوّت صح فعلاً، وحط تقييم جودة اختياري — ضعيف، متوسط، أو ممتاز. لو اخترت \"ضعيف\" اكتب سبب موجز، يظهر بتقرير الأداء الشامل."
+msgstr "Review any task and confirm it was actually done correctly, then add an optional quality rating — weak, medium, or excellent. If you pick \"weak\", write a short reason — it will show up in the full performance report."
+
+#: app/templates/team/todays_completed_tasks.html:18
+msgid "العامل:"
+msgstr "Worker:"
+
+#: app/templates/team/todays_completed_tasks.html:19
+msgid "أُنجزت:"
+msgstr "Completed:"
+
+#: app/templates/team/todays_completed_tasks.html:36
+msgid "ضعيف"
+msgstr "Weak"
+
+#: app/templates/team/todays_completed_tasks.html:40
+msgid "ليش ضعيف؟ اكتب السبب باختصار"
+msgstr "Why weak? Write a short reason"
+
+#: app/templates/team/todays_completed_tasks.html:46
+msgid "ما فيه أي مهمة اتنجزت اليوم بعد."
+msgstr "No tasks completed today yet."
 
 #: app/templates/team/worker_report_form.html:12
 msgid "اتصل بالطبيب الآن"

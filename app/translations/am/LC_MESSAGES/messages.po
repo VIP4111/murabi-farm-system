@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 03:22+0300\n"
+"POT-Creation-Date: 2026-08-21 21:13+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -74,7 +74,7 @@ msgstr "የተጠቆመ"
 msgid "قيد التنفيذ"
 msgstr "በሂደት ላይ"
 
-#: app/__init__.py:138
+#: app/__init__.py:138 app/templates/team/performance_report.html:21
 msgid "منجزة"
 msgstr "የተጠናቀቀ"
 
@@ -244,7 +244,7 @@ msgstr "በረት ማዛወር (የፊዚዮሎጂ ሁኔታ)"
 msgid "إكمال بيانات حيوان"
 msgstr "የእንስሳ መረጃ ማሟላት"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:736
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:741
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "አስቸኳይ ሁኔታ"
@@ -2090,8 +2090,8 @@ msgstr "ወተት"
 msgid "ملاحظات"
 msgstr "ማስታወሻዎች"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:630
-#: app/templates/base.html:632 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:635
+#: app/templates/base.html:637 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "ፋይናንስ"
@@ -2275,6 +2275,7 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "አስቀምጥ"
@@ -2837,6 +2838,7 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/settings.html:126 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/team/performance_report.html:20
 #: app/templates/warehouses/warehouse_form.html:7
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -3302,12 +3304,14 @@ msgstr "በስርዓቱ ውስጥ የመጨረሻዎቹ %(n)s ስሱ ክንው�
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
+#: app/templates/team/performance_report.html:10
 #: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "ከ"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
+#: app/templates/team/performance_report.html:11
 #: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "እስከ"
@@ -3360,7 +3364,7 @@ msgstr "አዲስ በረት"
 msgid "مثال: B-01"
 msgstr "ምሳሌ: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:673
+#: app/templates/barn_form.html:11 app/templates/base.html:678
 msgid "عادية"
 msgstr "መደበኛ"
 
@@ -3564,30 +3568,39 @@ msgstr "የአየር ንብረት"
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "የአየር ንብረት እና የሙቀት ጭንቀት ራዳር"
 
-#: app/templates/base.html:619
+#: app/templates/base.html:620
 msgid "الفريق"
 msgstr "ቡድን"
 
-#: app/templates/base.html:621 app/templates/family_view.html:97
+#: app/templates/base.html:622 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "ተግባራት"
 
-#: app/templates/base.html:622 app/templates/home.html:53
+#: app/templates/base.html:623 app/templates/home.html:53
+#: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "ሪፖርቶች"
 
-#: app/templates/base.html:623 app/templates/team/members_list.html:5
+#: app/templates/base.html:624 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "የቡድን አባላት"
 
-#: app/templates/base.html:633 app/templates/home.html:105
+#: app/templates/base.html:626 app/templates/team/performance_report.html:6
+msgid "مراجعة مهام اليوم"
+msgstr "የዛሬ ስራዎችን ገምግም"
+
+#: app/templates/base.html:627 app/templates/team/performance_report.html:5
+msgid "تقرير أداء الفريق"
+msgstr "የቡድን አፈጻጸም ሪፖርት"
+
+#: app/templates/base.html:638 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "የጤና ፋይናንስ"
 
-#: app/templates/base.html:640 app/templates/home.html:108
+#: app/templates/base.html:645 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3595,49 +3608,49 @@ msgstr "የጤና ፋይናንስ"
 msgid "التقارير"
 msgstr "ሪፖርቶች"
 
-#: app/templates/base.html:642
+#: app/templates/base.html:647
 msgid "التقارير التحليلية"
 msgstr "የትንተና ሪፖርቶች"
 
-#: app/templates/base.html:657
+#: app/templates/base.html:662
 msgid "المظهر"
 msgstr "ገጽታ"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "نهاري"
 msgstr "ብርሃን"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "ليلي"
 msgstr "ጨለማ"
 
-#: app/templates/base.html:671
+#: app/templates/base.html:676
 msgid "مستوى الواجهة"
 msgstr "የገፅ ደረጃ"
 
-#: app/templates/base.html:673
+#: app/templates/base.html:678
 msgid "بسيط جداً"
 msgstr "በጣም ቀላል"
 
-#: app/templates/base.html:681
+#: app/templates/base.html:686
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"በጣም ቀላል\" የመነሻ ገፅዎን ወደ ትላልቅ አዝራሮች ይቀይራል፣ በአንድ ጊዜ አንድ ጥያቄ — ልክ ተመሳሳይ ውሂብ።"
 
-#: app/templates/base.html:687
+#: app/templates/base.html:692
 msgid "التقرير اليومي بالبريد"
 msgstr "የዕለታዊ ኢሜይል ሪፖርት"
 
-#: app/templates/base.html:690
+#: app/templates/base.html:695
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "የሙከራ ሪፖርት አሁን ላክ"
 
-#: app/templates/base.html:696 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:701 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "ቋንቋ"
 
-#: app/templates/base.html:709
+#: app/templates/base.html:714
 msgid "خروج"
 msgstr "ውጣ"
 
@@ -6510,8 +6523,9 @@ msgid "إصدار"
 msgstr "አውጣ"
 
 #: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
+#: app/templates/team/performance_report.html:12
 msgid "عرض"
-msgstr "ይመልከቱ"
+msgstr "አሳይ"
 
 #: app/templates/finance/list.html:56
 msgid "تأكيد الإلغاء؟"
@@ -8008,14 +8022,16 @@ msgid "الجودة"
 msgstr "ጥራት"
 
 #: app/templates/ostrich/egg_form.html:18
+#: app/templates/team/todays_completed_tasks.html:38
 msgid "ممتاز"
-msgstr "እጅግ በጣም ጥሩ"
+msgstr "እጅግ ጥሩ"
 
 #: app/templates/ostrich/egg_form.html:19
 msgid "جيد"
 msgstr "ጥሩ"
 
 #: app/templates/ostrich/egg_form.html:20
+#: app/templates/team/todays_completed_tasks.html:37
 msgid "متوسط"
 msgstr "መካከለኛ"
 
@@ -9004,6 +9020,51 @@ msgstr "ቦዝኗል"
 msgid "لا يوجد أعضاء بعد."
 msgstr "እስካሁን አባል የለም።"
 
+#: app/templates/team/performance_report.html:8
+msgid "نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة بجانبها."
+msgstr "ራስ-ሰር ገለልተኛ ነጥብ = የመጠናቀቅ መጠን + በሰዓቱ የመፈጸም መጠን (50/50) — በቁጥሩ ላይ ምንም የግል አስተያየት የለም። በእጅ የሚደረጉ የጥራት ደረጃዎች (ካሉ) ለብቻ ይታያሉ።"
+
+#: app/templates/team/performance_report.html:20
+msgid "#"
+msgstr "#"
+
+#: app/templates/team/performance_report.html:20
+msgid "النقطة"
+msgstr "ነጥብ"
+
+#: app/templates/team/performance_report.html:21
+msgid "متعذّرة"
+msgstr "ያልተሳካ"
+
+#: app/templates/team/performance_report.html:21
+msgid "نسبة الإنجاز"
+msgstr "የመጠናቀቅ መጠን"
+
+#: app/templates/team/performance_report.html:22
+msgid "الالتزام بالوقت"
+msgstr "በሰዓቱ የመፈጸም መጠን"
+
+#: app/templates/team/performance_report.html:22
+msgid "متوسط سرعة التنفيذ"
+msgstr "አማካይ የማጠናቀቂያ ጊዜ"
+
+#: app/templates/team/performance_report.html:23
+msgid "تقييمات الجودة"
+msgstr "የጥራት ደረጃዎች"
+
+#: app/templates/team/performance_report.html:34
+msgid "د"
+msgstr "ደቂቃ"
+
+#: app/templates/team/performance_report.html:44
+msgid "ما فيه أي مهمة محسومة بهذي الفترة."
+msgstr "በዚህ ጊዜ ውስጥ የተጠናቀቀ ስራ የለም።"
+
+#: app/templates/team/performance_report.html:53
+#, python-format
+msgid "ملاحظات ضعف — %(name)s"
+msgstr "የድክመት ማስታወሻዎች — %(name)s"
+
 #: app/templates/team/report_detail.html:12
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -9463,6 +9524,38 @@ msgstr "የባለቤት ግምገማ ሳጥን (በዶክተሩ የተሰረዙ 
 #: app/templates/team/tasks_list.html:205
 msgid "فاضي."
 msgstr "ባዶ ነው።"
+
+#: app/templates/team/todays_completed_tasks.html:5
+msgid "مهام اليوم المنجزة"
+msgstr "ዛሬ የተጠናቀቁ ስራዎች"
+
+#: app/templates/team/todays_completed_tasks.html:6
+msgid "تقرير الأداء الشامل"
+msgstr "ሙሉ የአፈጻጸም ሪፖርት"
+
+#: app/templates/team/todays_completed_tasks.html:8
+msgid "راجع أي مهمة وتأكد إنها اتسوّت صح فعلاً، وحط تقييم جودة اختياري — ضعيف، متوسط، أو ممتاز. لو اخترت \"ضعيف\" اكتب سبب موجز، يظهر بتقرير الأداء الشامل."
+msgstr "ማንኛውንም ስራ ገምግም እና በትክክል መከናወኑን አረጋግጥ፣ ከዚያም አማራጭ የጥራት ደረጃ ጨምር — ደካማ፣ መካከለኛ፣ ወይም እጅግ ጥሩ። \"ደካማ\" ከመረጥክ አጭር ምክንያት ጻፍ — ይህ በሙሉ የአፈጻጸም ሪፖርት ውስጥ ይታያል።"
+
+#: app/templates/team/todays_completed_tasks.html:18
+msgid "العامل:"
+msgstr "ሰራተኛ:"
+
+#: app/templates/team/todays_completed_tasks.html:19
+msgid "أُنجزت:"
+msgstr "ተጠናቋል:"
+
+#: app/templates/team/todays_completed_tasks.html:36
+msgid "ضعيف"
+msgstr "ደካማ"
+
+#: app/templates/team/todays_completed_tasks.html:40
+msgid "ليش ضعيف؟ اكتب السبب باختصار"
+msgstr "ለምን ደካማ? ምክንያቱን በአጭሩ ጻፍ"
+
+#: app/templates/team/todays_completed_tasks.html:46
+msgid "ما فيه أي مهمة اتنجزت اليوم بعد."
+msgstr "እስካሁን ዛሬ የተጠናቀቀ ስራ የለም።"
 
 #: app/templates/team/worker_report_form.html:12
 msgid "اتصل بالطبيب الآن"

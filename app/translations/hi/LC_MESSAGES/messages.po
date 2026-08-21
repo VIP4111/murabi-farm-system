@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-21 03:22+0300\n"
+"POT-Creation-Date: 2026-08-21 21:13+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -74,7 +74,7 @@ msgstr "सुझाया गया"
 msgid "قيد التنفيذ"
 msgstr "प्रगति पर"
 
-#: app/__init__.py:138
+#: app/__init__.py:138 app/templates/team/performance_report.html:21
 msgid "منجزة"
 msgstr "पूर्ण"
 
@@ -244,7 +244,7 @@ msgstr "बाड़ा स्थानांतरण (शारीरिक �
 msgid "إكمال بيانات حيوان"
 msgstr "पशु डेटा पूर्ण करें"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:736
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:741
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -2090,8 +2090,8 @@ msgstr "दूध"
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:630
-#: app/templates/base.html:632 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:635
+#: app/templates/base.html:637 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "वित्त"
@@ -2275,6 +2275,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "सहेजें"
@@ -2837,6 +2838,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/settings.html:126 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/team/performance_report.html:20
 #: app/templates/warehouses/warehouse_form.html:7
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -3302,12 +3304,14 @@ msgstr "सिस्टम में अंतिम %(n)s संवेदनश
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
+#: app/templates/team/performance_report.html:10
 #: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "से"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
+#: app/templates/team/performance_report.html:11
 #: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "तक"
@@ -3360,7 +3364,7 @@ msgstr "नया बाड़ा"
 msgid "مثال: B-01"
 msgstr "उदाहरण: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:673
+#: app/templates/barn_form.html:11 app/templates/base.html:678
 msgid "عادية"
 msgstr "सामान्य"
 
@@ -3564,30 +3568,39 @@ msgstr "जलवायु"
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "जलवायु और गर्मी तनाव रडार"
 
-#: app/templates/base.html:619
+#: app/templates/base.html:620
 msgid "الفريق"
 msgstr "टीम"
 
-#: app/templates/base.html:621 app/templates/family_view.html:97
+#: app/templates/base.html:622 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "कार्य"
 
-#: app/templates/base.html:622 app/templates/home.html:53
+#: app/templates/base.html:623 app/templates/home.html:53
+#: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
-msgstr "रिपोर्टें"
+msgstr "रिपोर्ट्स"
 
-#: app/templates/base.html:623 app/templates/team/members_list.html:5
+#: app/templates/base.html:624 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:633 app/templates/home.html:105
+#: app/templates/base.html:626 app/templates/team/performance_report.html:6
+msgid "مراجعة مهام اليوم"
+msgstr "आज के कार्यों की समीक्षा करें"
+
+#: app/templates/base.html:627 app/templates/team/performance_report.html:5
+msgid "تقرير أداء الفريق"
+msgstr "टीम प्रदर्शन रिपोर्ट"
+
+#: app/templates/base.html:638 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:640 app/templates/home.html:108
+#: app/templates/base.html:645 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3595,49 +3608,49 @@ msgstr "स्वास्थ्य वित्त"
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:642
+#: app/templates/base.html:647
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
-#: app/templates/base.html:657
+#: app/templates/base.html:662
 msgid "المظهر"
 msgstr "दिखावट"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "نهاري"
 msgstr "दिन"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "ليلي"
 msgstr "रात"
 
-#: app/templates/base.html:671
+#: app/templates/base.html:676
 msgid "مستوى الواجهة"
 msgstr "इंटरफेस स्तर"
 
-#: app/templates/base.html:673
+#: app/templates/base.html:678
 msgid "بسيط جداً"
 msgstr "बहुत आसान"
 
-#: app/templates/base.html:681
+#: app/templates/base.html:686
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"बहुत आसान\" आपकी मुख्य स्क्रीन को बड़े बटनों में बदल देता है, एक बार में एक सवाल — बिल्कुल वही डेटा।"
 
-#: app/templates/base.html:687
+#: app/templates/base.html:692
 msgid "التقرير اليومي بالبريد"
 msgstr "दैनिक ईमेल रिपोर्ट"
 
-#: app/templates/base.html:690
+#: app/templates/base.html:695
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "अभी परीक्षण रिपोर्ट भेजें"
 
-#: app/templates/base.html:696 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:701 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:709
+#: app/templates/base.html:714
 msgid "خروج"
 msgstr "लॉग आउट"
 
@@ -6510,8 +6523,9 @@ msgid "إصدار"
 msgstr "जारी करें"
 
 #: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
+#: app/templates/team/performance_report.html:12
 msgid "عرض"
-msgstr "देखें"
+msgstr "दिखाएं"
 
 #: app/templates/finance/list.html:56
 msgid "تأكيد الإلغاء؟"
@@ -8008,6 +8022,7 @@ msgid "الجودة"
 msgstr "गुणवत्ता"
 
 #: app/templates/ostrich/egg_form.html:18
+#: app/templates/team/todays_completed_tasks.html:38
 msgid "ممتاز"
 msgstr "उत्कृष्ट"
 
@@ -8016,8 +8031,9 @@ msgid "جيد"
 msgstr "अच्छा"
 
 #: app/templates/ostrich/egg_form.html:20
+#: app/templates/team/todays_completed_tasks.html:37
 msgid "متوسط"
-msgstr "औसत"
+msgstr "मध्यम"
 
 #: app/templates/ostrich/egg_form.html:21
 msgid "مرفوض"
@@ -9004,6 +9020,51 @@ msgstr "निष्क्रिय"
 msgid "لا يوجد أعضاء بعد."
 msgstr "अभी तक कोई सदस्य नहीं है।"
 
+#: app/templates/team/performance_report.html:8
+msgid "نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة بجانبها."
+msgstr "स्वचालित वस्तुनिष्ठ स्कोर = पूर्णता दर + समय पर दर (50/50) — संख्या में कोई व्यक्तिगत राय नहीं। मैन्युअल गुणवत्ता रेटिंग (यदि कोई हो) अलग से दिखाई जाती है।"
+
+#: app/templates/team/performance_report.html:20
+msgid "#"
+msgstr "#"
+
+#: app/templates/team/performance_report.html:20
+msgid "النقطة"
+msgstr "स्कोर"
+
+#: app/templates/team/performance_report.html:21
+msgid "متعذّرة"
+msgstr "विफल"
+
+#: app/templates/team/performance_report.html:21
+msgid "نسبة الإنجاز"
+msgstr "पूर्णता दर"
+
+#: app/templates/team/performance_report.html:22
+msgid "الالتزام بالوقت"
+msgstr "समय पर दर"
+
+#: app/templates/team/performance_report.html:22
+msgid "متوسط سرعة التنفيذ"
+msgstr "औसत पूर्णता समय"
+
+#: app/templates/team/performance_report.html:23
+msgid "تقييمات الجودة"
+msgstr "गुणवत्ता रेटिंग"
+
+#: app/templates/team/performance_report.html:34
+msgid "د"
+msgstr "मिनट"
+
+#: app/templates/team/performance_report.html:44
+msgid "ما فيه أي مهمة محسومة بهذي الفترة."
+msgstr "इस अवधि में कोई तय किया गया कार्य नहीं है।"
+
+#: app/templates/team/performance_report.html:53
+#, python-format
+msgid "ملاحظات ضعف — %(name)s"
+msgstr "कमज़ोरी नोट्स — %(name)s"
+
 #: app/templates/team/report_detail.html:12
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -9463,6 +9524,38 @@ msgstr "मालिक समीक्षा बॉक्स (डॉक्ट�
 #: app/templates/team/tasks_list.html:205
 msgid "فاضي."
 msgstr "खाली।"
+
+#: app/templates/team/todays_completed_tasks.html:5
+msgid "مهام اليوم المنجزة"
+msgstr "आज के पूर्ण किए गए कार्य"
+
+#: app/templates/team/todays_completed_tasks.html:6
+msgid "تقرير الأداء الشامل"
+msgstr "पूर्ण प्रदर्शन रिपोर्ट"
+
+#: app/templates/team/todays_completed_tasks.html:8
+msgid "راجع أي مهمة وتأكد إنها اتسوّت صح فعلاً، وحط تقييم جودة اختياري — ضعيف، متوسط، أو ممتاز. لو اخترت \"ضعيف\" اكتب سبب موجز، يظهر بتقرير الأداء الشامل."
+msgstr "किसी भी कार्य की समीक्षा करें और सुनिश्चित करें कि वह सही तरीके से पूरा हुआ है, फिर एक वैकल्पिक गुणवत्ता रेटिंग जोड़ें — कमज़ोर, मध्यम, या उत्कृष्ट। अगर आप \"कमज़ोर\" चुनते हैं, तो एक संक्षिप्त कारण लिखें — यह पूर्ण प्रदर्शन रिपोर्ट में दिखाई देगा।"
+
+#: app/templates/team/todays_completed_tasks.html:18
+msgid "العامل:"
+msgstr "कर्मचारी:"
+
+#: app/templates/team/todays_completed_tasks.html:19
+msgid "أُنجزت:"
+msgstr "पूर्ण हुआ:"
+
+#: app/templates/team/todays_completed_tasks.html:36
+msgid "ضعيف"
+msgstr "कमज़ोर"
+
+#: app/templates/team/todays_completed_tasks.html:40
+msgid "ليش ضعيف؟ اكتب السبب باختصار"
+msgstr "कमज़ोर क्यों? संक्षेप में कारण लिखें"
+
+#: app/templates/team/todays_completed_tasks.html:46
+msgid "ما فيه أي مهمة اتنجزت اليوم بعد."
+msgstr "आज तक कोई कार्य पूरा नहीं हुआ है।"
 
 #: app/templates/team/worker_report_form.html:12
 msgid "اتصل بالطبيب الآن"
