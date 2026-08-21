@@ -15,7 +15,6 @@ from app.core import smart_sale_service
 from app.core import alerts_service
 from app.core import backup_service
 from app.core import readiness_service
-from app.core import setup_checklist_service
 from app.core import isolation_service
 from app.auth.decorators import require_permission
 from app.extensions import db
@@ -157,10 +156,6 @@ def home():
     if current_user.ui_level == "simple":
         return render_template("simple_home.html", user=current_user)
 
-    setup_checklist_items = None
-    if current_user.role.name == "owner" and not FarmSettings.get().setup_checklist_dismissed:
-        setup_checklist_items = setup_checklist_service.get_setup_checklist_items()
-
     today_tasks_count = today_alerts_count = None
     if current_user.has_permission("tasks.view_own") or current_user.has_permission("animals.view"):
         today_tasks_count, today_alerts_count = _today_counts(current_user)
@@ -179,8 +174,6 @@ def home():
 
     return render_template(
         "home.html", user=current_user,
-        setup_checklist_items=setup_checklist_items,
-        daily_checklist=daily_checklist,
         today_tasks_count=today_tasks_count, today_alerts_count=today_alerts_count,
         vaccinations_overdue_count=vaccinations_overdue_count,
         vaccinations_upcoming_count=vaccinations_upcoming_count,

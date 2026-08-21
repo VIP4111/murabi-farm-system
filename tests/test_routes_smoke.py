@@ -19,10 +19,19 @@ def test_owner_can_view_animals_list(app, logged_in_client):
     assert resp.status_code == 200
 
 
-def test_owner_home_shows_setup_checklist_when_nothing_added_yet(app, logged_in_client):
+def test_owner_home_no_longer_shows_setup_checklist_or_daily_checklist(app, logged_in_client):
+    """بند إضافي 228 — بطاقتا "خطوات تجهيز النظام لأول مرة" و"دليلك
+    اليوم" أُزيلتا من الرئيسية بطلب صريح (كانت تزاحم الشاشة لأي مالك
+    جديد). الرابط `core.setup_checklist_dismiss` بقي شغّالاً كإرث
+    غير مستخدَم — ما فيه ضرر بإبقائه."""
     resp = logged_in_client.get("/")
     assert resp.status_code == 200
-    assert "خطوات تجهيز النظام لأول مرة".encode() in resp.data
+    assert "خطوات تجهيز النظام لأول مرة".encode() not in resp.data
+    # ملاحظة: "دليلك اليوم" (عنوان البطاقة المحذوفة) مو نص فريد كفاية
+    # للتحقق منه — هو جزء من "دليلك اليومي" (وصف الجولة التعريفية
+    # المتبقّي عمداً)، فنتحقق من رمز onboarding.toggle الفريد للبطاقة
+    # المحذوفة تحديداً بدل النص العام.
+    assert b'onboarding.toggle' not in resp.data
 
 
 def test_owner_can_dismiss_setup_checklist(app, logged_in_client):
