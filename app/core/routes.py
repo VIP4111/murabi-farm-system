@@ -1585,6 +1585,7 @@ def farm_settings_save():
         "concentrate_increase_window_days", "abortion_barn_monitor_days",
         # بند إضافي 218 — تقرير علف الحظيرة المفصَّل حسب الفئة.
         "weaning_solid_feed_age_days", "ram_breeding_season_window_days",
+        "creep_feed_start_age_days", "creep_feed_target_grams_per_day",
         # بند إضافي 188 — بروتوكول حديث الولادة وأمه.
         "colostrum_window_hours", "placenta_check_hours", "postpartum_mother_followup_days",
     ):

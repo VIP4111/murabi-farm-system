@@ -31,6 +31,8 @@ def _base_form(fs):
         "postpartum_mother_followup_days": fs.postpartum_mother_followup_days,
         "weaning_solid_feed_age_days": fs.weaning_solid_feed_age_days,
         "ram_breeding_season_window_days": fs.ram_breeding_season_window_days,
+        "creep_feed_start_age_days": fs.creep_feed_start_age_days,
+        "creep_feed_target_grams_per_day": fs.creep_feed_target_grams_per_day,
     }
 
 

@@ -147,6 +147,14 @@ class FarmSettings(db.Model):
     weaning_solid_feed_age_days = db.Column(db.Integer, default=45, nullable=False)
     ram_breeding_season_window_days = db.Column(db.Integer, default=60, nullable=False)
 
+    # تدرّج تغذية المولود التأسيسي — Creep Feeding (بند إضافي 235) —
+    # قبل هذا، المولود يُستثنى كلياً من العلف الصلب لين يوصل
+    # weaning_solid_feed_age_days بالضبط (استثناء صفر/كامل مفاجئ). من
+    # creep_feed_start_age_days لين weaning_solid_feed_age_days، ياخذ
+    # تدرّج خطي من صفر لين creep_feed_target_grams_per_day.
+    creep_feed_start_age_days = db.Column(db.Integer, default=20, nullable=False)
+    creep_feed_target_grams_per_day = db.Column(db.Integer, default=200, nullable=False)
+
     # حد أدنى لعمر الفحل عشان يدخل التقريع (بند إضافي 231) — منفصل عمداً
     # عن min_breeding_age_days (خاص بجاهزية الأنثى فقط). فحل أصغر من هذا
     # العمر يُستبعد تماماً من قائمة "الفحل" بفورم التقريع الجديد — استبعاد

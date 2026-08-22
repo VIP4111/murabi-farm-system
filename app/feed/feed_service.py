@@ -40,20 +40,48 @@ STATE_LABELS_AR = {
     "lactation": "رضاعة (الأم)",
     "breeding_active": "فحل — موسم تقريع فعلي",
     "nursing_newborn": "مولود على حليب أمه",
+    "creep_feeding": "مولود — تغذية تأسيسية (Creep Feed)",
 }
 
 
 def is_nursing_newborn(animal, *, today: date | None = None) -> bool:
-    """مولود لسا على حليب أمه (بند إضافي 218) — يُستثنى من حساب العلف
-    الصلب كلياً بدل ما يدخل بمعادلة الوزن×2.5% ويطلع رقم صغير غير
-    منطقي يخلط حساب الحظيرة. العمر الفاصل قابل للتعديل من الإعدادات
-    (`weaning_solid_feed_age_days`)، مو ثابتاً بالكود."""
+    """مولود لسا على حليب أمه بالكامل، قبل بداية التغذية التأسيسية
+    (بند إضافي 235، عدّل بند 218) — يُستثنى من حساب العلف الصلب كلياً.
+    العمر الفاصل قابل للتعديل من الإعدادات (`creep_feed_start_age_days`،
+    افتراضي 20 يوم)، مو ثابتاً بالكود. من هذا العمر لين
+    `weaning_solid_feed_age_days`، يدخل بمرحلة "creep_feeding" بدلاً
+    من الاستثناء الكامل — راجع `is_in_creep_feeding_window`."""
     if animal.species != "sheep_goat" or not animal.birth_date:
         return False
     from app.models import FarmSettings
     fs = FarmSettings.get()
     today = today or date.today()
-    return (today - animal.birth_date).days < fs.weaning_solid_feed_age_days
+    return (today - animal.birth_date).days < fs.creep_feed_start_age_days
+
+
+def is_in_creep_feeding_window(animal, *, today: date | None = None) -> bool:
+    """مولود بمرحلة التغذية التأسيسية (بند إضافي 235) — بين
+    `creep_feed_start_age_days` و`weaning_solid_feed_age_days`. تغذية
+    حقيقية بمزارع الأغنام/الماعز تبدأ تدريجياً من عمر مبكر (15-21 يوم)
+    بدل انتظار الفطام الكامل — استثناء المولود بالكامل لين يوم الفطام
+    كان يعطي عجزاً غير مفسَّر باستهلاك الحظيرة الفعلي."""
+    if animal.species != "sheep_goat" or not animal.birth_date:
+        return False
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+    today = today or date.today()
+    age = (today - animal.birth_date).days
+    return fs.creep_feed_start_age_days <= age < fs.weaning_solid_feed_age_days
+
+
+def creep_feed_progress_ratio(age_days: int, fs) -> float:
+    """نسبة تقدّم التدرّج الخطي (0 عند creep_feed_start_age_days، 1 عند
+    weaning_solid_feed_age_days) — بند إضافي 235."""
+    span = fs.weaning_solid_feed_age_days - fs.creep_feed_start_age_days
+    if span <= 0:
+        return 1.0
+    ratio = (age_days - fs.creep_feed_start_age_days) / span
+    return max(0.0, min(1.0, ratio))
 
 
 def _is_ram_in_active_service(animal, *, today: date) -> bool:
@@ -74,6 +102,8 @@ def infer_physiological_state(animal, *, today: date | None = None) -> str:
     today = today or date.today()
     if is_nursing_newborn(animal, today=today):
         return "nursing_newborn"
+    if is_in_creep_feeding_window(animal, today=today):
+        return "creep_feeding"
     if animal.gender == "ذكر" and animal.purpose == "تربية" and _is_ram_in_active_service(animal, today=today):
         return "breeding_active"
     wf = animal.workflow
@@ -88,11 +118,26 @@ def infer_physiological_state(animal, *, today: date | None = None) -> str:
     return "maintenance"
 
 
-def daily_requirement(*, weight_kg: float, state: str) -> dict:
+def daily_requirement(*, weight_kg: float, state: str, age_days: int | None = None) -> dict:
     if state == "nursing_newborn":
         return {
             "state": state, "daily_dry_matter_kg": 0.0,
             "target_protein_percent": 0.0, "target_energy_kcal_per_kg": 0,
+        }
+    if state == "creep_feeding":
+        # بند إضافي 235 — تدرّج خطي بجرامات ثابتة (مو % من الوزن، الرقم
+        # المرجعي هنا هدف علف بادئ تأسيسي معتمد بالإعدادات)، بدل معادلة
+        # الوزن×2.5% اللي ترجع رقم صغير غير منطقي بهالعمر. القيم
+        # الغذائية المستهدفة (بروتين/طاقة) نفس هدف "نمو" — علف بادئ
+        # المواليد بروتين-مكثّف بطبيعته.
+        from app.models import FarmSettings
+        fs = FarmSettings.get()
+        ratio = creep_feed_progress_ratio(age_days, fs) if age_days is not None else 0.0
+        _, protein_target, energy_target = PHYSIOLOGICAL_TARGETS["growth"]
+        dmi_kg = round(fs.creep_feed_target_grams_per_day / 1000 * ratio, 3)
+        return {
+            "state": state, "daily_dry_matter_kg": dmi_kg,
+            "target_protein_percent": protein_target, "target_energy_kcal_per_kg": energy_target,
         }
     multiplier, protein_target, energy_target = PHYSIOLOGICAL_TARGETS.get(state, PHYSIOLOGICAL_TARGETS["maintenance"])
     dmi_kg = round(weight_kg * BASE_DMI_PERCENT_OF_BODYWEIGHT * multiplier, 3)
@@ -289,9 +334,11 @@ def barn_daily_blend(*, barn_id: int) -> dict:
     breakdown: dict[str, dict] = {}
     requirements = []
     nursing_excluded = 0
+    today = date.today()
     for a in with_weight:
-        state = infer_physiological_state(a)
-        req = daily_requirement(weight_kg=a.weight, state=state)
+        state = infer_physiological_state(a, today=today)
+        age_days = (today - a.birth_date).days if a.birth_date else None
+        req = daily_requirement(weight_kg=a.weight, state=state, age_days=age_days)
         bucket = breakdown.setdefault(state, {"count": 0, "daily_dry_matter_kg": 0.0})
         bucket["count"] += 1
         if state == "nursing_newborn":

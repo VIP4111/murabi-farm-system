@@ -327,7 +327,8 @@ def optimizer():
             state = state or "maintenance"
 
         if weight:
-            requirement = svc.daily_requirement(weight_kg=weight, state=state)
+            age_days = (date.today() - selected_animal.birth_date).days if selected_animal and selected_animal.birth_date else None
+            requirement = svc.daily_requirement(weight_kg=weight, state=state, age_days=age_days)
             usable_feeds = Feed.query.filter_by(status="active").all()
             result = svc.optimize_blend(requirement=requirement, feeds=usable_feeds)
             barn_id = selected_animal.barn_id if selected_animal else None
@@ -368,7 +369,8 @@ def calculator():
             state = state or "maintenance"
 
         if weight:
-            result = svc.daily_requirement(weight_kg=weight, state=state)
+            age_days = (date.today() - selected_animal.birth_date).days if selected_animal and selected_animal.birth_date else None
+            result = svc.daily_requirement(weight_kg=weight, state=state, age_days=age_days)
             recommendations = svc.recommend_rations(requirement=result)
         else:
             flash("الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي", "error")

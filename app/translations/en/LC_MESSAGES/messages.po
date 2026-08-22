@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-22 02:31+0300\n"
+"POT-Creation-Date: 2026-08-22 18:55+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:774
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:788
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -613,7 +613,7 @@ msgstr "Report"
 msgid "حالة مرضية"
 msgstr "Disease cases"
 
-#: app/__init__.py:305 app/templates/bulk_action_form.html:441
+#: app/__init__.py:305 app/templates/bulk_action_form.html:442
 msgid "زيارة بيطرية"
 msgstr "Vet visit"
 
@@ -923,7 +923,7 @@ msgid "%(n)s حساب نشط."
 msgstr "%(n)s active accounts."
 
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
-#: app/templates/base.html:569 app/templates/family_view.html:158
+#: app/templates/base.html:583 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
 #: app/templates/home.html:78
 msgid "الصيدلية"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "Has registered medicines."
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:153 app/templates/settings_backup.html:5
+#: app/templates/settings.html:155 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "Backup"
 
@@ -1458,15 +1458,15 @@ msgstr "Total mortality cases"
 #: app/templates/barns_list.html:10 app/templates/batches/batch_detail.html:55
 #: app/templates/bulk_action_form.html:19
 #: app/templates/bulk_action_form.html:103
-#: app/templates/bulk_action_form.html:245
-#: app/templates/bulk_action_form.html:267
-#: app/templates/bulk_action_form.html:290
-#: app/templates/bulk_action_form.html:307
-#: app/templates/bulk_action_form.html:331
-#: app/templates/bulk_action_form.html:365
-#: app/templates/bulk_action_form.html:382
-#: app/templates/bulk_action_form.html:404
-#: app/templates/bulk_action_form.html:450 app/templates/catalog_public.html:13
+#: app/templates/bulk_action_form.html:246
+#: app/templates/bulk_action_form.html:268
+#: app/templates/bulk_action_form.html:291
+#: app/templates/bulk_action_form.html:308
+#: app/templates/bulk_action_form.html:332
+#: app/templates/bulk_action_form.html:366
+#: app/templates/bulk_action_form.html:383
+#: app/templates/bulk_action_form.html:405
+#: app/templates/bulk_action_form.html:451 app/templates/catalog_public.html:13
 #: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
 #: app/templates/finance/culling_index.html:25
@@ -1496,9 +1496,9 @@ msgstr "Gender"
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
 #: app/templates/animal_workflow.html:154
 #: app/templates/bulk_action_form.html:63
-#: app/templates/bulk_action_form.html:241
-#: app/templates/bulk_action_form.html:348
-#: app/templates/bulk_action_form.html:378
+#: app/templates/bulk_action_form.html:242
+#: app/templates/bulk_action_form.html:349
+#: app/templates/bulk_action_form.html:379
 #: app/templates/climate/dashboard.html:42
 #: app/templates/equipment/asset_maintenance.html:13
 #: app/templates/equipment/asset_maintenance.html:24
@@ -2033,7 +2033,7 @@ msgid "سجل بيطري"
 msgstr "Vet record"
 
 #: app/templates/animal_detail.html:81 app/templates/animal_detail.html:233
-#: app/templates/base.html:571 app/templates/health/diseases_list.html:6
+#: app/templates/base.html:585 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:77
 msgid "الأمراض"
 msgstr "Diseases"
@@ -2090,8 +2090,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:646
-#: app/templates/base.html:648 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:660
+#: app/templates/base.html:662 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "Finance"
@@ -2288,7 +2288,7 @@ msgstr "All records ordered by date"
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "No records linked to this animal yet."
 
-#: app/templates/animal_detail.html:214 app/templates/base.html:580
+#: app/templates/animal_detail.html:214 app/templates/base.html:594
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr "Treatment protocols"
@@ -2297,7 +2297,7 @@ msgstr "Treatment protocols"
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr "Apply a ready-made treatment protocol to this animal"
 
-#: app/templates/animal_detail.html:219 app/templates/base.html:570
+#: app/templates/animal_detail.html:219 app/templates/base.html:584
 #: app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr "Vet Visits"
@@ -2340,7 +2340,7 @@ msgstr "No visits recorded."
 msgid "المرض"
 msgstr "Disease"
 
-#: app/templates/animal_detail.html:236 app/templates/bulk_action_form.html:349
+#: app/templates/animal_detail.html:236 app/templates/bulk_action_form.html:350
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:28
 #: app/templates/health/diseases_list.html:14
@@ -2392,7 +2392,7 @@ msgstr "Next dose"
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "No vaccinations recorded."
 
-#: app/templates/animal_detail.html:264 app/templates/base.html:553
+#: app/templates/animal_detail.html:264 app/templates/base.html:567
 #: app/templates/home.html:87 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "Mating"
@@ -2424,13 +2424,13 @@ msgstr "Male"
 msgid "لا يوجد تقريع مسجّل."
 msgstr "No mating recorded."
 
-#: app/templates/animal_detail.html:279 app/templates/base.html:554
+#: app/templates/animal_detail.html:279 app/templates/base.html:568
 #: app/templates/home.html:88 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "Pregnancy diagnosis"
 
 #: app/templates/animal_detail.html:282 app/templates/animal_detail.html:293
-#: app/templates/bulk_action_form.html:404
+#: app/templates/bulk_action_form.html:405
 msgid "عدد الأجنة"
 msgstr "Number of embryos"
 
@@ -2452,7 +2452,7 @@ msgstr "No pregnancy diagnosis recorded."
 msgid "فحوصات السونار"
 msgstr "Sonar exams"
 
-#: app/templates/animal_detail.html:293 app/templates/bulk_action_form.html:404
+#: app/templates/animal_detail.html:293 app/templates/bulk_action_form.html:405
 #: app/templates/feed/calculator.html:35
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/program_detail.html:115
@@ -2737,17 +2737,17 @@ msgstr "Purpose (determines the production-cycle path later)"
 msgid "غير محدد بعد"
 msgstr "Not determined yet"
 
-#: app/templates/animal_form.html:82 app/templates/bulk_action_form.html:282
+#: app/templates/animal_form.html:82 app/templates/bulk_action_form.html:283
 msgid "تربية"
 msgstr "Breeding"
 
-#: app/templates/animal_form.html:83 app/templates/bulk_action_form.html:283
+#: app/templates/animal_form.html:83 app/templates/bulk_action_form.html:284
 #: app/templates/feed/ration_form.html:14
 #: app/templates/onboarding/checklist.html:12
 msgid "تسمين"
 msgstr "Fattening"
 
-#: app/templates/animal_form.html:84 app/templates/bulk_action_form.html:284
+#: app/templates/animal_form.html:84 app/templates/bulk_action_form.html:285
 msgid "بيع سريع"
 msgstr "Quick sale"
 
@@ -2807,15 +2807,15 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/barn_form.html:8 app/templates/barns_list.html:10
 #: app/templates/bulk_action_form.html:19
 #: app/templates/bulk_action_form.html:103
-#: app/templates/bulk_action_form.html:245
-#: app/templates/bulk_action_form.html:267
-#: app/templates/bulk_action_form.html:290
-#: app/templates/bulk_action_form.html:307
-#: app/templates/bulk_action_form.html:331
-#: app/templates/bulk_action_form.html:365
-#: app/templates/bulk_action_form.html:382
-#: app/templates/bulk_action_form.html:404
-#: app/templates/bulk_action_form.html:450
+#: app/templates/bulk_action_form.html:246
+#: app/templates/bulk_action_form.html:268
+#: app/templates/bulk_action_form.html:291
+#: app/templates/bulk_action_form.html:308
+#: app/templates/bulk_action_form.html:332
+#: app/templates/bulk_action_form.html:366
+#: app/templates/bulk_action_form.html:383
+#: app/templates/bulk_action_form.html:405
+#: app/templates/bulk_action_form.html:451
 #: app/templates/equipment/asset_form.html:7
 #: app/templates/equipment/assets_list.html:14
 #: app/templates/equipment/item_form.html:7
@@ -2835,7 +2835,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:127 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:129 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
@@ -2864,8 +2864,8 @@ msgid "إلغاء"
 msgstr "Cancel"
 
 #: app/templates/animal_weight_new_simple.html:21
-#: app/templates/animals_list_simple.html:19 app/templates/base.html:536
-#: app/templates/base.html:538 app/templates/health/disease_new_simple.html:22
+#: app/templates/animals_list_simple.html:19 app/templates/base.html:550
+#: app/templates/base.html:552 app/templates/health/disease_new_simple.html:22
 #: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
@@ -3160,7 +3160,7 @@ msgstr "Leave the animal number empty for any row you want to skip."
 msgid "حفظ الدفعة كاملة"
 msgstr "Save the whole batch"
 
-#: app/templates/animals_list.html:5 app/templates/base.html:550
+#: app/templates/animals_list.html:5 app/templates/base.html:564
 msgid "الإجراء الجماعي"
 msgstr "Bulk Action"
 
@@ -3293,7 +3293,7 @@ msgstr "No animals within this filter currently."
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "No animals recorded yet."
 
-#: app/templates/animals_list_simple.html:20 app/templates/base.html:549
+#: app/templates/animals_list_simple.html:20 app/templates/base.html:563
 #: app/templates/home.html:58 app/templates/simple_home.html:45
 msgid "الحيوانات"
 msgstr "Animals"
@@ -3302,7 +3302,7 @@ msgstr "Animals"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "No animals registered yet."
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:155
+#: app/templates/audit_log.html:5 app/templates/settings.html:157
 msgid "سجل التدقيق"
 msgstr "Audit log"
 
@@ -3373,7 +3373,7 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:689
+#: app/templates/barn_form.html:11 app/templates/base.html:703
 msgid "عادية"
 msgstr "Regular"
 
@@ -3430,7 +3430,7 @@ msgstr "An independent setting per barn — add a time for each meal you want to
 msgid "إضافة موعد وجبة"
 msgstr "Add meal time"
 
-#: app/templates/barns_list.html:5 app/templates/base.html:551
+#: app/templates/barns_list.html:5 app/templates/base.html:565
 msgid "الحظائر"
 msgstr "Barns"
 
@@ -3446,170 +3446,170 @@ msgstr "Number of animals"
 msgid "لا يوجد حظائر مسجّلة بعد."
 msgstr "No barns recorded yet."
 
-#: app/templates/base.html:503 app/templates/base.html:504
-#: app/templates/base.html:514
+#: app/templates/base.html:517 app/templates/base.html:518
+#: app/templates/base.html:528
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:539 app/templates/home.html:20
+#: app/templates/base.html:553 app/templates/home.html:20
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
 msgid "صفحة اليوم"
 msgstr "Today's page"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:540 app/templates/home.html:119
+#: app/templates/base.html:554 app/templates/home.html:119
 msgid "المساعد الذكي"
 msgstr "Smart Assistant"
 
-#: app/templates/base.html:547
+#: app/templates/base.html:561
 msgid "الحلال"
 msgstr "Livestock"
 
-#: app/templates/base.html:555 app/templates/home.html:89
+#: app/templates/base.html:569 app/templates/home.html:89
 msgid "فحص السونار"
 msgstr "Sonar exam"
 
-#: app/templates/base.html:556
+#: app/templates/base.html:570
 msgid "استخدام الاسفنجة للمتاوة"
 msgstr "Using the sponge for estrus sync"
 
-#: app/templates/base.html:558
+#: app/templates/base.html:572
 msgid "النعام (بيض/تفقيس)"
 msgstr "Ostriches (eggs/hatching)"
 
-#: app/templates/base.html:566 app/templates/home.html:69
+#: app/templates/base.html:580 app/templates/home.html:69
 msgid "الصحة"
 msgstr "Health"
 
-#: app/templates/base.html:568 app/templates/health/dashboard.html:3
+#: app/templates/base.html:582 app/templates/health/dashboard.html:3
 #: app/templates/health/dashboard.html:6 app/templates/home.html:39
 msgid "مركز الطبيب"
 msgstr "Vet center"
 
-#: app/templates/base.html:572 app/templates/health/vaccinations_list.html:5
+#: app/templates/base.html:586 app/templates/health/vaccinations_list.html:5
 #: app/templates/home.html:75
 msgid "التطعيمات"
 msgstr "Vaccinations"
 
-#: app/templates/base.html:573
+#: app/templates/base.html:587
 #: app/templates/health/vaccination_schedule_list.html:5
 msgid "تقويم التحصينات"
 msgstr "Vaccination calendar"
 
-#: app/templates/base.html:575 app/templates/health/dashboard.html:89
+#: app/templates/base.html:589 app/templates/health/dashboard.html:89
 #: app/templates/health/diagnose_start.html:5
 msgid "المساعد التشخيصي"
 msgstr "Diagnostic assistant"
 
-#: app/templates/base.html:577 app/templates/health/dashboard.html:83
+#: app/templates/base.html:591 app/templates/health/dashboard.html:83
 #: app/templates/health/injection_guide.html:5
 msgid "دليل الحقن الميداني"
 msgstr "Field injection guide"
 
-#: app/templates/base.html:578 app/templates/health/body_condition_guide.html:2
+#: app/templates/base.html:592 app/templates/health/body_condition_guide.html:2
 msgid "دليل تقييم حالة الجسم"
 msgstr "Body condition guide"
 
-#: app/templates/base.html:579 app/templates/health/dashboard.html:86
+#: app/templates/base.html:593 app/templates/health/dashboard.html:86
 #: app/templates/health/doctors_list.html:5
 msgid "دليل الأطباء"
 msgstr "Vet directory"
 
-#: app/templates/base.html:591 app/templates/home.html:100
+#: app/templates/base.html:605 app/templates/home.html:100
 msgid "العلف"
 msgstr "Feed"
 
-#: app/templates/base.html:593 app/templates/feed/items_list.html:5
+#: app/templates/base.html:607 app/templates/feed/items_list.html:5
 #: app/templates/feed/optimizer.html:77
 msgid "مكوّنات العلف"
 msgstr "Feed items"
 
-#: app/templates/base.html:594
+#: app/templates/base.html:608
 msgid "حركة المخزون (شراء/صرف)"
 msgstr "Stock movements (purchase/issue)"
 
-#: app/templates/base.html:595 app/templates/feed/barn_plans_list.html:5
+#: app/templates/base.html:609 app/templates/feed/barn_plans_list.html:5
 msgid "خطط تغذية الحظائر"
 msgstr "Barn feeding plans"
 
-#: app/templates/base.html:596
+#: app/templates/base.html:610
 msgid "حاسبة العلف"
 msgstr "Feed Calculator"
 
-#: app/templates/base.html:597 app/templates/feed/fcr_report.html:5
+#: app/templates/base.html:611 app/templates/feed/fcr_report.html:5
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "Feed conversion ratio (FCR)"
 
-#: app/templates/base.html:598 app/templates/feed/optimizer.html:5
+#: app/templates/base.html:612 app/templates/feed/optimizer.html:5
 msgid "موازِن العليقة التلقائي"
 msgstr "Automatic ration balancer"
 
-#: app/templates/base.html:599 app/templates/feed/barn_report.html:5
+#: app/templates/base.html:613 app/templates/feed/barn_report.html:5
 msgid "تقرير علف الحظيرة"
 msgstr "Barn feed report"
 
-#: app/templates/base.html:600 app/templates/feed/items_list.html:31
+#: app/templates/base.html:614 app/templates/feed/items_list.html:31
 #: app/templates/health/pharmacy_list.html:28
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr "Warehouses"
 
-#: app/templates/base.html:608 app/templates/equipment/items_mine.html:17
+#: app/templates/base.html:622 app/templates/equipment/items_mine.html:17
 #: app/templates/family_view.html:159 app/templates/family_view.html:194
 msgid "المعدات"
 msgstr "Equipment"
 
-#: app/templates/base.html:611 app/templates/equipment/items_list.html:5
+#: app/templates/base.html:625 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "Equipment warehouse"
 
-#: app/templates/base.html:613 app/templates/simple_home.html:51
+#: app/templates/base.html:627 app/templates/simple_home.html:51
 #: app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr "My equipment"
 
-#: app/templates/base.html:621
+#: app/templates/base.html:635
 msgid "المناخ"
 msgstr "Climate"
 
-#: app/templates/base.html:623 app/templates/climate/dashboard.html:5
+#: app/templates/base.html:637 app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "Climate & heat stress radar"
 
-#: app/templates/base.html:631
+#: app/templates/base.html:645
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:633 app/templates/family_view.html:97
+#: app/templates/base.html:647 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:634 app/templates/home.html:53
+#: app/templates/base.html:648 app/templates/home.html:53
 #: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:635 app/templates/team/members_list.html:5
+#: app/templates/base.html:649 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:637 app/templates/team/performance_report.html:6
+#: app/templates/base.html:651 app/templates/team/performance_report.html:6
 msgid "مراجعة مهام اليوم"
 msgstr "Review Today's Tasks"
 
-#: app/templates/base.html:638 app/templates/team/performance_report.html:5
+#: app/templates/base.html:652 app/templates/team/performance_report.html:5
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
-#: app/templates/base.html:649 app/templates/home.html:105
+#: app/templates/base.html:663 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:656 app/templates/home.html:108
+#: app/templates/base.html:670 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3617,53 +3617,53 @@ msgstr "Health finance"
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:658
+#: app/templates/base.html:672
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:673
+#: app/templates/base.html:687
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:675
+#: app/templates/base.html:689
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:675
+#: app/templates/base.html:689
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:687
+#: app/templates/base.html:701
 msgid "مستوى الواجهة"
 msgstr "Interface level"
 
-#: app/templates/base.html:689
+#: app/templates/base.html:703
 msgid "بسيط جداً"
 msgstr "Very simple"
 
-#: app/templates/base.html:697
+#: app/templates/base.html:711
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"Very simple\" switches your home screen to big buttons, one question at a time — the exact same data."
 
-#: app/templates/base.html:703
+#: app/templates/base.html:717
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:706
+#: app/templates/base.html:720
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:712 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:726 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:725
+#: app/templates/base.html:739
 msgid "خروج"
 msgstr "Logout"
 
-#: app/templates/base.html:762
+#: app/templates/base.html:776
 msgid "تجاهل"
 msgstr "Dismiss"
 
@@ -3778,9 +3778,9 @@ msgid "اللقاح الثاني"
 msgstr "Second vaccine"
 
 #: app/templates/bulk_action_form.html:98
-#: app/templates/bulk_action_form.html:264
-#: app/templates/bulk_action_form.html:287
-#: app/templates/bulk_action_form.html:362
+#: app/templates/bulk_action_form.html:265
+#: app/templates/bulk_action_form.html:288
+#: app/templates/bulk_action_form.html:363
 msgid "الرؤوس المحددة"
 msgstr "Selected animals"
 
@@ -3815,233 +3815,233 @@ msgstr "🟢 Stock is sufficient — need is %(needed)s %(unit)s out of %(availa
 msgid "🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s %(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً)."
 msgstr "🔴 Stock is not enough — need is %(needed)s %(unit)s and only %(available)s %(unit2)s available (enough for roughly %(coverable)s of the %(checked)s selected) — uncheck some animals, or update stock with the button below; the rest will be rejected automatically with a clear message on save (not a fake vaccination)."
 
-#: app/templates/bulk_action_form.html:242
+#: app/templates/bulk_action_form.html:243
 msgid "ملاحظة عامة (تُضاف لكل الرؤوس)"
 msgstr "General note (added to all animals)"
 
-#: app/templates/bulk_action_form.html:245
+#: app/templates/bulk_action_form.html:246
 msgid "ملاحظة إضافية لهذا الرأس (اختياري)"
 msgstr "Additional note for this animal (optional)"
 
-#: app/templates/bulk_action_form.html:251
+#: app/templates/bulk_action_form.html:252
 msgid "حفظ الملاحظات"
 msgstr "Save notes"
 
-#: app/templates/bulk_action_form.html:260
+#: app/templates/bulk_action_form.html:261
 msgid "الحظيرة الجديدة"
 msgstr "New barn"
 
 #: app/templates/batches/batch_detail.html:55
-#: app/templates/bulk_action_form.html:267
-#: app/templates/bulk_action_form.html:382
+#: app/templates/bulk_action_form.html:268
+#: app/templates/bulk_action_form.html:383
 msgid "الحظيرة الحالية"
 msgstr "Current barn"
 
-#: app/templates/bulk_action_form.html:271
+#: app/templates/bulk_action_form.html:272
 msgid "نقل الكل للحظيرة الجديدة"
 msgstr "Move all to new barn"
 
-#: app/templates/bulk_action_form.html:280
+#: app/templates/bulk_action_form.html:281
 msgid "الغرض الجديد (لكل الرؤوس المحددة)"
 msgstr "New purpose (for all selected animals)"
 
-#: app/templates/bulk_action_form.html:286
+#: app/templates/bulk_action_form.html:287
 msgid "تحديد \"تسمين\" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة."
 msgstr "Selecting \"fattening\" here sets the feeding target (higher protein/energy) for the automatic feed-mix calculation — check 'meal times' on the barn screen."
 
-#: app/templates/bulk_action_form.html:290
+#: app/templates/bulk_action_form.html:291
 msgid "الغرض الحالي"
 msgstr "Current purpose"
 
-#: app/templates/bulk_action_form.html:294
+#: app/templates/bulk_action_form.html:295
 msgid "تحديد الغرض للكل"
 msgstr "Set purpose for all"
 
-#: app/templates/bulk_action_form.html:303
+#: app/templates/bulk_action_form.html:304
 msgid "تاريخ البيع (لكل الرؤوس)"
 msgstr "Sale date (for all animals)"
 
-#: app/templates/bulk_action_form.html:304
+#: app/templates/bulk_action_form.html:305
 msgid "ملاحظة عامة (اختياري، مثلاً اسم المشتري)"
 msgstr "General note (optional, e.g. buyer name)"
 
-#: app/templates/bulk_action_form.html:307
+#: app/templates/bulk_action_form.html:308
 msgid "سعر البيع"
 msgstr "Sale price"
 
-#: app/templates/bulk_action_form.html:317
+#: app/templates/bulk_action_form.html:318
 msgid "اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة."
 msgstr "Leave the price field empty for any animal you want to skip. The sale is protected by the cycle-completion gate — if a particular animal is rejected, the rest sell normally and you'll see the rejection reason in a separate message."
 
-#: app/templates/bulk_action_form.html:318
+#: app/templates/bulk_action_form.html:319
 msgid "بيع الكل"
 msgstr "Sell all"
 
-#: app/templates/bulk_action_form.html:327
+#: app/templates/bulk_action_form.html:328
 msgid "تاريخ النفوق (لكل الرؤوس)"
 msgstr "Death date (for all animals)"
 
-#: app/templates/bulk_action_form.html:328
+#: app/templates/bulk_action_form.html:329
 msgid "السبب (اختياري، يُسجَّل لكل الرؤوس)"
 msgstr "Reason (optional, recorded for all animals)"
 
-#: app/templates/bulk_action_form.html:335
+#: app/templates/bulk_action_form.html:336
 msgid "تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل."
 msgstr "Death is recorded without the cycle-completion condition — it's a real fact, not a business decision."
 
-#: app/templates/bulk_action_form.html:336
+#: app/templates/bulk_action_form.html:337
 #, python-format
 msgid "تأكيد تسجيل نفوق %(n)s رأس؟"
 msgstr "Confirm recording the death of %(n)s animals?"
 
-#: app/templates/bulk_action_form.html:336
+#: app/templates/bulk_action_form.html:337
 msgid "تسجيل النفوق للكل"
 msgstr "Record death for all"
 
-#: app/templates/bulk_action_form.html:345
+#: app/templates/bulk_action_form.html:346
 #: app/templates/health/disease_form.html:23
 #: app/templates/health/disease_type_form.html:7
 msgid "اسم المرض"
 msgstr "Disease Name"
 
-#: app/templates/bulk_action_form.html:346
+#: app/templates/bulk_action_form.html:347
 #: app/templates/health/disease_form.html:24
 msgid "اختر من القائمة أو اكتب اسماً جديداً"
 msgstr "Choose from the list or type a new name"
 
-#: app/templates/bulk_action_form.html:351
+#: app/templates/bulk_action_form.html:352
 #: app/templates/health/disease_form.html:30
 #: app/templates/health/disease_new_simple.html:62
 #: app/templates/health/disease_new_simple.html:83
 msgid "بسيطة"
 msgstr "Mild"
 
-#: app/templates/bulk_action_form.html:352
+#: app/templates/bulk_action_form.html:353
 #: app/templates/health/disease_form.html:31
 #: app/templates/health/disease_new_simple.html:63
 #: app/templates/health/disease_new_simple.html:83
 msgid "متوسطة"
 msgstr "Moderate"
 
-#: app/templates/bulk_action_form.html:353
+#: app/templates/bulk_action_form.html:354
 #: app/templates/health/disease_form.html:32
 #: app/templates/health/disease_new_simple.html:64
 #: app/templates/health/disease_new_simple.html:83
 msgid "شديدة"
 msgstr "Severe"
 
-#: app/templates/bulk_action_form.html:355
+#: app/templates/bulk_action_form.html:356
 msgid "الدواء من الصيدلية (اختياري)"
 msgstr "Medicine from the pharmacy (optional)"
 
-#: app/templates/bulk_action_form.html:357
+#: app/templates/bulk_action_form.html:358
 #: app/templates/health/disease_form.html:36
 #: app/templates/health/vet_visit_form.html:24
 msgid "بدون دواء"
 msgstr "No medicine"
 
-#: app/templates/bulk_action_form.html:358
-#: app/templates/bulk_action_form.html:436
+#: app/templates/bulk_action_form.html:359
+#: app/templates/bulk_action_form.html:437
 #, python-format
 msgid "سحب: %(n)s يوم"
 msgstr "Withdrawal: %(n)s days"
 
-#: app/templates/bulk_action_form.html:360
+#: app/templates/bulk_action_form.html:361
 msgid "الكمية المستخدمة لكل رأس"
 msgstr "Quantity used per animal"
 
-#: app/templates/bulk_action_form.html:361
+#: app/templates/bulk_action_form.html:362
 msgid "* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة."
 msgstr "* Required if you selected a medicine above — the cost is calculated automatically from the unit price."
 
-#: app/templates/bulk_action_form.html:369
+#: app/templates/bulk_action_form.html:370
 msgid "تسجيل الحالة للكل"
 msgstr "Record the case for all"
 
-#: app/templates/bulk_action_form.html:379
+#: app/templates/bulk_action_form.html:380
 msgid "سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)"
 msgstr "Isolation reason (optional, recorded as a note on each animal)"
 
-#: app/templates/bulk_action_form.html:386
+#: app/templates/bulk_action_form.html:387
 msgid "ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل)."
 msgstr "All are automatically moved to the isolation barn defined in the system (barn_type = isolation)."
 
-#: app/templates/bulk_action_form.html:387
+#: app/templates/bulk_action_form.html:388
 msgid "عزل الكل"
 msgstr "Isolate all"
 
-#: app/templates/bulk_action_form.html:396
+#: app/templates/bulk_action_form.html:397
 msgid "تاريخ الفحص (لكل الرؤوس)"
 msgstr "Exam date (for all animals)"
 
-#: app/templates/bulk_action_form.html:397
+#: app/templates/bulk_action_form.html:398
 msgid "الطبيب (اختياري)"
 msgstr "Doctor (optional)"
 
-#: app/templates/bulk_action_form.html:399
+#: app/templates/bulk_action_form.html:400
 msgid "بدون تحديد"
 msgstr "Not specified"
 
-#: app/templates/bulk_action_form.html:412
+#: app/templates/bulk_action_form.html:413
 #: app/templates/repro/sonar_form.html:22
 msgid "حامل"
 msgstr "Pregnant"
 
-#: app/templates/bulk_action_form.html:413
+#: app/templates/bulk_action_form.html:414
 #: app/templates/repro/sonar_form.html:23
 msgid "غير حامل"
 msgstr "Not pregnant"
 
-#: app/templates/bulk_action_form.html:414
+#: app/templates/bulk_action_form.html:415
 msgid "غير واضح"
 msgstr "Unclear"
 
-#: app/templates/bulk_action_form.html:422
+#: app/templates/bulk_action_form.html:423
 msgid "حفظ نتائج الكل"
 msgstr "Save results for all"
 
-#: app/templates/bulk_action_form.html:429
+#: app/templates/bulk_action_form.html:430
 msgid "⚠️ هذا الإجراء ما يسجّل ولا يخصم أي شيء الآن (بند إضافي 50) — بس يولّد مهمة \"علاج مخطَّط\" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم \"تأكيد التنفيذ\" الفعلي لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية)."
 msgstr "⚠️ This action does not record or deduct anything right now — it only generates a suggested \"planned treatment\" task for each animal, awaiting the doctor's review, then actual \"execution confirmation\" for each animal individually (that's where the real pharmacy deduction happens)."
 
-#: app/templates/bulk_action_form.html:434
+#: app/templates/bulk_action_form.html:435
 msgid "الدواء المخطَّط"
 msgstr "Planned medicine"
 
-#: app/templates/bulk_action_form.html:438
+#: app/templates/bulk_action_form.html:439
 msgid "الجرعة لكل رأس"
 msgstr "Dose per animal"
 
-#: app/templates/bulk_action_form.html:439
+#: app/templates/bulk_action_form.html:440
 msgid "نوع التسجيل عند التنفيذ"
 msgstr "Record type upon execution"
 
-#: app/templates/bulk_action_form.html:442
+#: app/templates/bulk_action_form.html:443
 msgid "علاج/مرض"
 msgstr "Treatment/disease"
 
-#: app/templates/bulk_action_form.html:443
+#: app/templates/bulk_action_form.html:444
 msgid "تطعيم"
 msgstr "Vaccination"
 
-#: app/templates/bulk_action_form.html:445
+#: app/templates/bulk_action_form.html:446
 msgid "سبب المهمة/الدافع"
 msgstr "Task reason/motive"
 
-#: app/templates/bulk_action_form.html:445
+#: app/templates/bulk_action_form.html:446
 msgid "مثال: فحص دوري كشف انتشار طفيليات بالحظيرة"
 msgstr "Example: a routine check found parasites spreading in the barn"
 
-#: app/templates/bulk_action_form.html:446
+#: app/templates/bulk_action_form.html:447
 msgid "الموعد المستهدف للتنفيذ"
 msgstr "Target execution date"
 
-#: app/templates/bulk_action_form.html:447
+#: app/templates/bulk_action_form.html:448
 #, python-format
 msgid "الرؤوس المحددة (%(n)s)"
 msgstr "Selected animals (%(n)s)"
 
-#: app/templates/bulk_action_form.html:454
+#: app/templates/bulk_action_form.html:455
 msgid "إنشاء خطة العلاج (مقترحة)"
 msgstr "Create treatment plan (suggested)"
 
@@ -4600,112 +4600,120 @@ msgstr "Solid-feed weaning age (days)"
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "Ram active breeding-season window (days)"
 
-#: app/templates/settings.html:88
+#: app/templates/settings.html:84
+msgid "بداية التغذية التأسيسية للمولود (يوم)"
+msgstr "Creep feeding start age for newborns (days)"
+
+#: app/templates/settings.html:85
+msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
+msgstr "Target daily starter feed at full weaning (grams)"
+
+#: app/templates/settings.html:90
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "Newborn & mother postpartum protocol"
 
-#: app/templates/settings.html:90
+#: app/templates/settings.html:92
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "Colostrum feeding confirmation window (hours)"
 
-#: app/templates/settings.html:91
+#: app/templates/settings.html:93
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "Placenta passage follow-up window (hours)"
 
-#: app/templates/settings.html:92
+#: app/templates/settings.html:94
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "Mother's daily postpartum follow-up duration (days)"
 
-#: app/templates/settings.html:96
+#: app/templates/settings.html:98
 msgid "حفظ الإعدادات"
 msgstr "Save settings"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:103
 msgid "الخدمات"
 msgstr "Services"
 
-#: app/templates/settings.html:102
+#: app/templates/settings.html:104
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "Enable only what you need — a disabled service disappears completely from all screens."
 
-#: app/templates/settings.html:110
+#: app/templates/settings.html:112
 msgid "مفعّل"
 msgstr "Enabled"
 
-#: app/templates/settings.html:110
+#: app/templates/settings.html:112
 msgid "غير مفعّل"
 msgstr "Disabled"
 
-#: app/templates/settings.html:113 app/templates/team/members_list.html:23
+#: app/templates/settings.html:115 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "Disable"
 
-#: app/templates/settings.html:113 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:115 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "Activate"
 
-#: app/templates/settings.html:122
+#: app/templates/settings.html:124
 msgid "المسميات الوظيفية"
 msgstr "Job titles"
 
-#: app/templates/settings.html:123
+#: app/templates/settings.html:125
 msgid "مسمّى جديد"
 msgstr "New title"
 
-#: app/templates/settings.html:127
+#: app/templates/settings.html:129
 msgid "عدد الصلاحيات"
 msgstr "Number of permissions"
 
-#: app/templates/settings.html:127
+#: app/templates/settings.html:129
 msgid "نوع"
 msgstr "Type"
 
-#: app/templates/settings.html:132
+#: app/templates/settings.html:134
 msgid "جاهز افتراضياً"
 msgstr "Built-in default"
 
-#: app/templates/settings.html:132
+#: app/templates/settings.html:134
 msgid "مضاف من المالك"
 msgstr "Added by owner"
 
-#: app/templates/settings.html:135
+#: app/templates/settings.html:137
 msgid "تعديل الصلاحيات"
 msgstr "Edit permissions"
 
-#: app/templates/settings.html:145
+#: app/templates/settings.html:147
 msgid "النظام والصيانة"
 msgstr "System and maintenance"
 
-#: app/templates/settings.html:147 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:149 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "Pre-deployment readiness check"
 
-#: app/templates/settings.html:148 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:150 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "Data integrity check"
 
-#: app/templates/settings.html:149 app/templates/telegram_status.html:4
+#: app/templates/settings.html:151 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "Telegram Bot Diagnostics"
 
-#: app/templates/settings.html:151
+#: app/templates/settings.html:153
 msgid "وضع عرض تجريبي"
 msgstr "Demo mode"
 
-#: app/templates/settings.html:158
+#: app/templates/settings.html:160
 msgid "شاشة متابعة مبسّطة"
 msgstr "Simplified follow-up screen"
 
-#: app/templates/settings.html:160
+#: app/templates/settings.html:162
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "Breed guide and care notes"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:166
+#: app/templates/reports/overview.html:18 app/templates/settings.html:168
 msgid "جدول المؤشرات"
 msgstr "Indicators table"
 
-#: app/templates/settings.html:167
+#: app/templates/settings.html:169
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "From the start of the current month to today — same engine as the reports screen."
 
@@ -4959,39 +4967,39 @@ msgstr "No active animals to evaluate."
 msgid "فحص مباشر لسبب أي توقف بإرسال إشعارات تيليجرام — بدون الحاجة لـShell."
 msgstr "A direct check for why Telegram notifications may have stopped — no Shell access needed."
 
-#: app/templates/telegram_status.html:8
+#: app/templates/telegram_status.html:9
 msgid "التوكن مضبوط؟"
 msgstr "Token set?"
 
-#: app/templates/telegram_status.html:10
+#: app/templates/telegram_status.html:11
 msgid "التوكن صالح؟"
 msgstr "Token valid?"
 
-#: app/templates/telegram_status.html:13
+#: app/templates/telegram_status.html:14
 msgid "اسم البوت"
 msgstr "Bot username"
 
-#: app/templates/telegram_status.html:16
+#: app/templates/telegram_status.html:17
 msgid "رابط الـwebhook المسجَّل"
 msgstr "Registered webhook URL"
 
-#: app/templates/telegram_status.html:16
+#: app/templates/telegram_status.html:17
 msgid "(ما فيه)"
 msgstr "(none)"
 
-#: app/templates/telegram_status.html:17
+#: app/templates/telegram_status.html:18
 msgid "تحديثات معلَّقة"
 msgstr "Pending updates"
 
-#: app/templates/telegram_status.html:19
+#: app/templates/telegram_status.html:20
 msgid "آخر خطأ عند تيليجرام"
 msgstr "Last error from Telegram"
 
-#: app/templates/telegram_status.html:25
+#: app/templates/telegram_status.html:27
 msgid "التشخيص:"
 msgstr "Diagnosis:"
 
-#: app/templates/telegram_status.html:29
+#: app/templates/telegram_status.html:31
 msgid "رجوع للإعدادات"
 msgstr "Back to settings"
 
