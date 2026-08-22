@@ -12,7 +12,7 @@
 
 {% macro medicine_info_widget(select_id, quantity_id=None, cost_id=None) %}
 <div id="{{ select_id }}Info" class="notice" style="display:none; margin-top:-4px;"></div>
-<div id="{{ select_id }}StockWarning" class="notice" style="display:none; margin-top:-4px; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;"></div>
+<div id="{{ select_id }}StockWarning" class="notice notice-danger" style="display:none; margin-top:-4px;"></div>
 {% if cost_id is none and quantity_id %}
 <div id="{{ select_id }}CostPreview" style="display:none; font-size:12px; color:var(--muted); margin:-6px 0 10px;"></div>
 {% endif %}

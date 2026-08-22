@@ -20,7 +20,7 @@
 <div class="card">
   <div class="timeline">
     {% for a in alerts %}
-    <div class="timeline-row" style="{{ 'border-color:#ffd0c7; background:#fff5f2;' if a.urgent }}">
+    <div class="timeline-row {{ 'urgent' if a.urgent }}">
       <span class="timeline-icon">{{ a.icon }}</span>
       <div class="timeline-body">
         <b>[{{ a.category }}] {{ a.label }}</b>

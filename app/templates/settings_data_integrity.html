@@ -5,9 +5,9 @@
   <h2 style="margin-top:12px;">{{ _('فحص سلامة البيانات') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('فحص حي لسجلات يتيمة، تواريخ ولادة غير منطقية، وحركات مالية بلا فئات — عرض فقط، بدون أي تعديل تلقائي على بياناتك. الإصلاح يبقى قرارك من شاشة السجل نفسه.') }}</p>
   {% if issues %}
-  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('%(n)s مشكلة تحتاج مراجعتك.', n=issues|length) }}</div>
+  <div class="notice notice-danger">⚠️ {{ _('%(n)s مشكلة تحتاج مراجعتك.', n=issues|length) }}</div>
   {% else %}
-  <div class="notice" style="background:#f2fbf5; border-color:#b7e4c7; color:#146c3a;">✅ {{ _('ما فيه أي مشكلة سلامة بيانات مكتشَفة حالياً.') }}</div>
+  <div class="notice notice-success">✅ {{ _('ما فيه أي مشكلة سلامة بيانات مكتشَفة حالياً.') }}</div>
   {% endif %}
 </div>
 

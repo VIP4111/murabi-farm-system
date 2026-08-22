@@ -9,7 +9,7 @@
 {% for t in my_tasks %}
 {% set locked = t.depends_on_task_id and t.depends_on and t.depends_on.status != 'done' %}
 {% set overdue = t.due_date and t.due_date < today %}
-<tr {{ 'style="background:#fff5f2;"' if overdue }}>
+<tr class="{{ 'row-danger' if overdue }}">
   <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a>{% if overdue %} <span class="badge off" title="{{ _('فات موعدها') }}">⏰ {{ _('متأخرة') }}</span>{% endif %}</td>
   <td>{{ t.task_type|ar_task_type }}</td>
   <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>

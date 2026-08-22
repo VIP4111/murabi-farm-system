@@ -5,7 +5,7 @@
   <h2>{{ _('رفع بلاغ جديد') }}</h2>
   <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.') }}</p>
   {% if scoped %}<p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('القوائم أدناه مقصورة على حظائرك المسؤول عنها.') }}</p>{% endif %}
-  <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
+  <div id="animalOrBarnError" class="notice notice-danger" style="display:none;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
   <form method="post" enctype="multipart/form-data" id="reportForm" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('نوع البلاغ') }}</label>

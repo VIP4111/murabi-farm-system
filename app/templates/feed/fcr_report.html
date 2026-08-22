@@ -50,7 +50,7 @@
 <table class="compact-table">
     <tr><th>{{ _('الرقم') }}</th><th>{{ _('السلالة') }}</th><th>{{ _('زيادة الوزن (كجم)') }}</th><th>{{ _('عدد الأيام') }}</th><th>{{ _('معدل النمو (كجم/يوم)') }}</th></tr>
     {% for r in animal_breakdown.animals %}
-    <tr style="{{ 'background:#fff5f2;' if loop.index <= 3 and animal_breakdown.animals|length > 3 }}">
+    <tr class="{{ 'row-danger' if loop.index <= 3 and animal_breakdown.animals|length > 3 }}">
       <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id) }}">{{ r.animal.animal_no }}</a></td>
       <td>{{ r.breed }}</td>
       <td>{{ r.gain_kg }}</td>

@@ -167,15 +167,16 @@
     if (headsChecked === 0) { box.style.display = 'none'; return; }
 
     box.style.display = 'block';
+    box.classList.remove('notice-success', 'notice-danger');
     if (totalNeeded <= stock.available_qty) {
-      box.style.cssText = 'display:block; background:#f0f9f0; border-color:#c8e6c9; color:#1e6b1e; font-size:12px; margin:-6px 0 10px;';
+      box.classList.add('notice-success');
       box.textContent = MSG_ENOUGH
         .replace('%(needed)s', totalNeeded.toFixed(2)).replace('%(unit)s', stock.unit || '')
         .replace('%(available)s', stock.available_qty).replace('%(unit2)s', stock.unit || '');
     } else {
       var avgDose = headsWithDose > 0 ? (totalNeeded / headsWithDose) : 0;
       var coverableHeads = avgDose > 0 ? Math.floor(stock.available_qty / avgDose) : 0;
-      box.style.cssText = 'display:block; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16; font-size:12px; margin:-6px 0 10px;';
+      box.classList.add('notice-danger');
       box.textContent = MSG_NOT_ENOUGH
         .replace('%(needed)s', totalNeeded.toFixed(2)).replace('%(unit)s', stock.unit || '')
         .replace('%(available)s', stock.available_qty).replace('%(unit2)s', stock.unit || '')

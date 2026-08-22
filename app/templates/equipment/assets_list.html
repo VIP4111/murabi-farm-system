@@ -13,7 +13,7 @@
 <table>
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('آخر صيانة') }}</th><th>{{ _('الصيانة القادمة') }}</th><th></th></tr>
     {% for a in assets %}
-    <tr style="{{ 'background:#fff5f2;' if a.is_due }}">
+    <tr class="{{ 'row-danger' if a.is_due }}">
       <td>{{ a.name }}</td>
       <td>{{ category_labels.get(a.category, a.category) }}</td>
       <td>{{ a.barn.barn_name if a.barn else '-' }}</td>

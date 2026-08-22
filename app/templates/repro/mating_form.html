@@ -5,7 +5,7 @@
   <p style="color:var(--muted); font-size:13px; margin:-6px 0 12px;">{{ _('سجّل هنا محاولة تقريع (تلقيح) أنثى بفحل — يُنشئ سجل تقريع مرتبط بالأنثى، تقدر بعدها تتابعه لتأكيد الحمل.') }}</p>
 
   {% if relation_warning %}
-  <div class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">
+  <div class="notice notice-danger">
     <b>⚠️ {{ _('تحذير قرابة وراثية —') }} {{ relation_warning.label }}</b>
     <p style="margin:6px 0;">{{ _('نوع العلاقة:') }} {{ relation_warning.relation_type }}</p>
     <p style="margin:6px 0;">{{ _('معامل القرابة التقريبي: %(pct)s%% — أعلى من الطبيعي بمقدار كبير، يزيد احتمال ظهور صفات وراثية متنحية ضارة، ضعف مناعة، وتشوّهات خلقية بالمواليد الناتجة.', pct=relation_warning.coefficient_percent) }}</p>
@@ -45,7 +45,7 @@
     <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2">{{ form_data.notes if form_data }}</textarea>
 
     {% if relation_warning and can_override %}
-    <label style="display:flex; align-items:center; gap:8px; font-weight:normal; background:#fff5f2; padding:10px; border-radius:10px;">
+    <label class="notice-danger" style="display:flex; align-items:center; gap:8px; font-weight:normal; padding:10px; border-radius:10px;">
       <input type="checkbox" name="confirm_relation" value="1" style="width:auto;" required {{ 'checked' if form_data and form_data.confirm_relation == '1' }}>
       {{ _('أؤكد إني اطّلعت على تحذير القرابة الوراثية أعلاه وقرّرت المتابعة رغم ذلك (مسؤوليتي).') }}
     </label>

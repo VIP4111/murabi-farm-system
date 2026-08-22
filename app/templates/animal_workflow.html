@@ -97,8 +97,8 @@
         {{ _('لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)') }}
       </label>
       {% if withdrawal_until and current_user.has_permission('sales.override_withdrawal') %}
-      <div style="background:#fff5f2; border:1px solid #ffd0c7; border-radius:10px; padding:10px; margin-top:6px;">
-        <p style="margin:0 0 6px; font-size:13px; color:#8b1e16;">⚠️ {{ _('الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب موثَّق هنا لو قررت التجاوز (مثلاً ذبح اضطراري أو بيع لمزرعة تربية غير مخصَّص للاستهلاك البشري).', d=withdrawal_until) }}</p>
+      <div class="notice notice-danger" style="border-radius:10px; padding:10px; margin-top:6px;">
+        <p style="margin:0 0 6px; font-size:13px;">⚠️ {{ _('الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب موثَّق هنا لو قررت التجاوز (مثلاً ذبح اضطراري أو بيع لمزرعة تربية غير مخصَّص للاستهلاك البشري).', d=withdrawal_until) }}</p>
         <input name="withdrawal_override_reason" placeholder="{{ _('سبب تجاوز فترة السحب') }}">
       </div>
       {% endif %}

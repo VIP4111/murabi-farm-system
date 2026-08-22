@@ -68,7 +68,7 @@
 <div class="card">
   <h3 style="font-size:15px;">{{ _('بلاغ جديد بهذا التصنيف') if my_tasks else _('تسجيل بلاغ') }}</h3>
   <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل — عشان ما يضيع تتبّع البلاغ.') }}</p>
-  <div id="animalOrBarnError" class="notice" style="display:none; background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
+  <div id="animalOrBarnError" class="notice notice-danger" style="display:none;">⚠️ {{ _('لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال.') }}</div>
   <form method="post" enctype="multipart/form-data" data-offline id="workerReportForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="hidden" name="symptom_code" id="symptomCodeInput" value="">

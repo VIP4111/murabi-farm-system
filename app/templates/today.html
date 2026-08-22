@@ -15,7 +15,7 @@
   <div class="timeline" style="margin-top:10px;">
     {% for t in my_tasks %}
     {% set overdue = t.due_date and t.due_date < today %}
-    <div class="timeline-row" style="{{ 'border-color:#ffd0c7; background:#fff5f2;' if overdue }}">
+    <div class="timeline-row {{ 'urgent' if overdue }}">
       <div class="timeline-body">
         <b>{{ t.title }}</b>
         <small>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}</small>
@@ -36,7 +36,7 @@
   </div>
   <div class="timeline" style="margin-top:10px;">
     {% for a in alerts %}
-    <div class="timeline-row" style="{{ 'border-color:#ffd0c7; background:#fff5f2;' if a.urgent }}">
+    <div class="timeline-row {{ 'urgent' if a.urgent }}">
       <span class="timeline-icon">{{ a.icon }}</span>
       <div class="timeline-body">
         <b>[{{ a.category }}] {{ a.label }}</b>

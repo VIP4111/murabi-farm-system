@@ -23,7 +23,7 @@
 <table class="compact-table">
     <tr><th>{{ _('الرقم') }}</th><th>{{ _('سعر التعادل') }}</th><th>{{ _('القيمة التقديرية') }}</th><th>{{ _('الهامش') }}</th></tr>
     {% for r in rows %}
-    <tr style="{{ 'background:#fff5f2;' if r.at_risk }}">
+    <tr class="{{ 'row-danger' if r.at_risk }}">
       <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id, tab='finance') }}">{{ r.animal.animal_no }}</a></td>
       <td>{{ "%.2f"|format(r.break_even_price) }}</td>
       <td>

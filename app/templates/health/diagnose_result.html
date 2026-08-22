@@ -13,7 +13,7 @@
     {% if temperature is not none %}<br>{{ _('درجة الحرارة:') }} {{ temperature }}° — {{ _(temperature_note) }}{% endif %}
   </div>
   {% if temperature is not none and temperature_note == 'مرتفعة عن الطبيعي (حمى محتملة)' %}
-  <p class="notice" style="background:#fff5f2; border-color:#ffd0c7; color:#8b1e16;">
+  <p class="notice notice-danger">
     🌡️ {{ _('الحرارة أعلى من النطاق الطبيعي التقريبي — عامل سياقي يرفع احتمالية الحالات الالتهابية/المعدية، بس يبقى القرار النهائي للدكتور.') }}
   </p>
   {% endif %}
