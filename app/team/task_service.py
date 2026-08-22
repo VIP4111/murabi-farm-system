@@ -109,6 +109,12 @@ def create_suggested_task(*, title, task_type, barn_id=None, animal_id=None, due
 
 
 def approve_suggested_task(task: Task, *, actor) -> Task:
+    """اعتماد مهمة مقترحة — بند إضافي 233: زر الشاشة اسمه "اعتماد
+    وإرسال" وكان فعلاً بس "اعتماد" — ما يرسل أي إشعار للعامل المكلَّف
+    إطلاقاً، عكس `assign_task()` (التوزيع المباشر) اللي ترسل إشعار
+    تيليجرام فوري دايماً. نفس النمط الآن — لو المهمة لها مكلَّف (يتحدد
+    وقت الإنشاء من مسؤول الحظيرة، `create_suggested_task`)، يوصله
+    إشعار فوري بمجرد الاعتماد."""
     if not actor.has_permission("tasks.review_daily"):
         raise TaskPermissionError("ما تملك صلاحية مراجعة المهام اليومية.")
     if task.status != "suggested":
@@ -118,6 +124,12 @@ def approve_suggested_task(task: Task, *, actor) -> Task:
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.approve",
                              entity_type="Task", entity_id=task.id))
     db.session.commit()
+
+    if task.assignee_id:
+        from app.core import telegram_service
+        telegram_service.notify_user(
+            task.assignee, f"📋 مهمة جديدة: {task.title}" + (f"\nالموعد: {task.due_date}" if task.due_date else ""),
+        )
     return task
 
 

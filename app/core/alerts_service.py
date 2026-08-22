@@ -531,6 +531,33 @@ def _failed_tasks_pending_review() -> list[dict]:
     ]
 
 
+SUGGESTED_TASK_ALERT_MIN_AGE_HOURS = 24
+
+
+def _suggested_tasks_pending_approval() -> list[dict]:
+    """مهام مقترحة بانتظار الاعتماد (بند إضافي 233) — طلبك: "ليش موب
+    طالعين لي بالتنبيهات". قبل هذا، شاشة "مهام مقترحة" كانت شاشة
+    منفصلة تماماً عن التنبيهات — لو حد ما فتحها بنفسه بمبادرة منه،
+    تراكم مهام (تنظيف/تحصين/رش وقائي...) بانتظار اعتماد بدون أي تذكير
+    بأي مكان ثاني بالنظام. نطاق متعمَّد: بس المهام اللي عدّت
+    `SUGGESTED_TASK_ALERT_MIN_AGE_HOURS` (افتراضي يوم) بدون اعتماد —
+    مو أي مهمة تولّدت قبل دقايق، عشان الدكتور يعطى فرصة طبيعية يراجعها
+    أول قبل ما تُحسب "متأخرة"."""
+    from datetime import datetime, timezone
+    cutoff = datetime.now(timezone.utc).replace(tzinfo=None) - timedelta(hours=SUGGESTED_TASK_ALERT_MIN_AGE_HOURS)
+    rows = (Task.query.filter(Task.status == "suggested", Task.created_at.isnot(None))
+            .filter(Task.created_at <= cutoff).all())
+    return [
+        {
+            "category": "مهمة مقترحة بانتظار الاعتماد", "icon": "📥",
+            "label": f"{t.title} — بانتظار اعتمادك من قبل {t.created_at.date()}",
+            "detail": "افتح شاشة \"مهام مقترحة بانتظار الاعتماد\" واعتمدها أو أجّلها أو احذفها.",
+            "urgent": False, "animal_id": t.animal_id, "barn_id": t.barn_id,
+        }
+        for t in rows
+    ]
+
+
 WEIGHT_TREND_WINDOW_DAYS = 90
 WEIGHT_TREND_MIN_COHORT = 3
 WEIGHT_TREND_RATIO_THRESHOLD = 0.5
@@ -674,7 +701,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _failed_tasks_pending_review() + _isolation_without_barn()
         + _incomplete_animal_data() + _stalled_workflow(fs)
         + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
-        + _feed_distribution_shortage()
+        + _feed_distribution_shortage() + _suggested_tasks_pending_approval()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
@@ -698,6 +725,7 @@ _ALERT_ACTION_ROUTES = {
     "تأخر شياع": lambda aid: ("repro.programs_list", {}),
     "جهاز تكاثر": lambda aid: ("repro.programs_list", {}),
     "تباطؤ نمو مشبوه": lambda aid: ("core.animals_edit", {"animal_id": aid}),
+    "مهمة مقترحة بانتظار الاعتماد": lambda aid: ("team.tasks_list", {"_anchor": "suggested-tasks"}),
 }
 
 

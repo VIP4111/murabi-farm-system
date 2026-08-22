@@ -92,7 +92,7 @@
 </script>
 
 {% if current_user.has_permission('tasks.review_daily') %}
-<div class="card">
+<div class="card" id="suggested-tasks">
   <h3 style="font-size:15px;">{{ _('مهام مقترحة بانتظار الاعتماد') }}</h3>
   <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">{{ _('مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً.') }}</p>
   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
