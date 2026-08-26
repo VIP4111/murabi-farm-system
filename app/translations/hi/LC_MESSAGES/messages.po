@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 08:55+0300\n"
+"POT-Creation-Date: 2026-08-26 09:08+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:157 app/templates/settings_backup.html:5
+#: app/templates/settings.html:158 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -2152,7 +2152,7 @@ msgstr "%(breed)s नस्ल के लिए देखभाल टिप्�
 #: app/templates/animal_detail.html:111 app/templates/barns_list.html:19
 #: app/templates/equipment/items_list.html:26
 #: app/templates/feed/items_list.html:30
-#: app/templates/health/pharmacy_list.html:27
+#: app/templates/health/pharmacy_list.html:28
 #: app/templates/team/members_list.html:19
 msgid "تعديل"
 msgstr "संपादित करें"
@@ -2835,7 +2835,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:131 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:132 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
@@ -3302,7 +3302,7 @@ msgstr "जानवर"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "अभी तक कोई जानवर दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:159
+#: app/templates/audit_log.html:5 app/templates/settings.html:160
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -3550,7 +3550,7 @@ msgid "تقرير علف الحظيرة"
 msgstr "बाड़े का चारा रिपोर्ट"
 
 #: app/templates/base.html:614 app/templates/feed/items_list.html:31
-#: app/templates/health/pharmacy_list.html:28
+#: app/templates/health/pharmacy_list.html:29
 #: app/templates/warehouses/warehouses_list.html:5
 msgid "المستودعات"
 msgstr "गोदाम"
@@ -4616,112 +4616,116 @@ msgstr "नर के पास वापसी की खिड़की (द�
 msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
 msgstr "संभोग के बाद स्वचालित सोनार जांच (दिन) — संभावित गर्भावस्था के लिए"
 
-#: app/templates/settings.html:92
+#: app/templates/settings.html:88
+msgid "تنبيه مخزون قبل النفاد المتوقَّع بـ (يوم)"
+msgstr "अपेक्षित स्टॉक समाप्ति से पहले सूचना (दिन)"
+
+#: app/templates/settings.html:93
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "नवजात और माँ का प्रसवोत्तर प्रोटोकॉल"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:95
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "कोलोस्ट्रम पिलाने की पुष्टि विंडो (घंटे)"
 
-#: app/templates/settings.html:95
+#: app/templates/settings.html:96
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "अपरा निकलने की निगरानी विंडो (घंटे)"
 
-#: app/templates/settings.html:96
+#: app/templates/settings.html:97
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "माँ की दैनिक प्रसवोत्तर निगरानी अवधि (दिन)"
 
-#: app/templates/settings.html:100
+#: app/templates/settings.html:101
 msgid "حفظ الإعدادات"
 msgstr "सेटिंग्स सहेजें"
 
-#: app/templates/settings.html:105
+#: app/templates/settings.html:106
 msgid "الخدمات"
 msgstr "सेवाएं"
 
-#: app/templates/settings.html:106
+#: app/templates/settings.html:107
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "केवल जो आवश्यक हो उसे सक्षम करें — निष्क्रिय सेवा सभी स्क्रीन से पूरी तरह गायब हो जाती है।"
 
-#: app/templates/settings.html:114
+#: app/templates/settings.html:115
 msgid "مفعّل"
 msgstr "सक्षम"
 
-#: app/templates/settings.html:114
+#: app/templates/settings.html:115
 msgid "غير مفعّل"
 msgstr "अक्षम"
 
-#: app/templates/settings.html:117 app/templates/team/members_list.html:23
+#: app/templates/settings.html:118 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
-#: app/templates/settings.html:117 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:118 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "सक्रिय करें"
 
-#: app/templates/settings.html:126
+#: app/templates/settings.html:127
 msgid "المسميات الوظيفية"
 msgstr "पद"
 
-#: app/templates/settings.html:127
+#: app/templates/settings.html:128
 msgid "مسمّى جديد"
 msgstr "नया पद"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "عدد الصلاحيات"
 msgstr "अनुमतियों की संख्या"
 
-#: app/templates/settings.html:131
+#: app/templates/settings.html:132
 msgid "نوع"
 msgstr "प्रकार"
 
-#: app/templates/settings.html:136
+#: app/templates/settings.html:137
 msgid "جاهز افتراضياً"
 msgstr "अंतर्निहित डिफ़ॉल्ट"
 
-#: app/templates/settings.html:136
+#: app/templates/settings.html:137
 msgid "مضاف من المالك"
 msgstr "मालिक द्वारा जोड़ा गया"
 
-#: app/templates/settings.html:139
+#: app/templates/settings.html:140
 msgid "تعديل الصلاحيات"
 msgstr "अनुमतियां संपादित करें"
 
-#: app/templates/settings.html:149
+#: app/templates/settings.html:150
 msgid "النظام والصيانة"
 msgstr "सिस्टम और रखरखाव"
 
-#: app/templates/settings.html:151 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:152 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "तैनाती से पहले तत्परता जांच"
 
-#: app/templates/settings.html:152 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:153 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:153 app/templates/telegram_status.html:4
+#: app/templates/settings.html:154 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "टेलीग्राम बॉट निदान"
 
-#: app/templates/settings.html:155
+#: app/templates/settings.html:156
 msgid "وضع عرض تجريبي"
 msgstr "डेमो मोड"
 
-#: app/templates/settings.html:162
+#: app/templates/settings.html:163
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:164
+#: app/templates/settings.html:165
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:170
+#: app/templates/reports/overview.html:18 app/templates/settings.html:171
 msgid "جدول المؤشرات"
 msgstr "संकेतक तालिका"
 
-#: app/templates/settings.html:171
+#: app/templates/settings.html:172
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
 
@@ -5672,7 +5676,7 @@ msgstr "गतिविधि (खरीद/निर्गम)"
 
 #: app/templates/equipment/items_list.html:28
 #: app/templates/feed/items_list.html:32
-#: app/templates/health/pharmacy_list.html:29
+#: app/templates/health/pharmacy_list.html:30
 #: app/templates/warehouses/item_count_form.html:4
 msgid "جرد"
 msgstr "गणना"
@@ -6169,6 +6173,7 @@ msgid "طاقة (ك.كالوري/كجم)"
 msgstr "ऊर्जा (कैलोरी/किग्रा)"
 
 #: app/templates/feed/items_list.html:13
+#: app/templates/health/pharmacy_list.html:13
 msgid "نفاد متوقع"
 msgstr "अनुमानित समाप्ति"
 
@@ -6185,6 +6190,7 @@ msgstr "किग्रा/"
 #: app/templates/feed/items_list.html:27
 #: app/templates/health/disease_form.html:37
 #: app/templates/health/pharmacy_form.html:142
+#: app/templates/health/pharmacy_list.html:20
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:21
 #: app/templates/health/vaccination_form.html:22
@@ -7682,15 +7688,15 @@ msgstr "न्यूनतम सीमा पर या उससे नीच�
 msgid "بدون فئة دواء — لازم لتفعيل حارس منع تكرار جرعة الطفيليات"
 msgstr "बिना दवा वर्ग के — परजीवी खुराक दोहराव रक्षक सक्रिय करने के लिए आवश्यक"
 
-#: app/templates/health/pharmacy_list.html:21
+#: app/templates/health/pharmacy_list.html:22
 msgid "منتهي الصلاحية"
 msgstr "समाप्त"
 
-#: app/templates/health/pharmacy_list.html:21
+#: app/templates/health/pharmacy_list.html:22
 msgid "منتهي"
 msgstr "समाप्त"
 
-#: app/templates/health/pharmacy_list.html:34
+#: app/templates/health/pharmacy_list.html:35
 msgid "لا يوجد أدوية مسجّلة بعد."
 msgstr "अभी तक कोई दवा दर्ज नहीं है।"
 

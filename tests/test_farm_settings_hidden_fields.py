@@ -35,6 +35,7 @@ def _base_form(fs):
         "creep_feed_target_grams_per_day": fs.creep_feed_target_grams_per_day,
         "estrus_return_window_days": fs.estrus_return_window_days,
         "implicit_pregnancy_sonar_check_days": fs.implicit_pregnancy_sonar_check_days,
+        "predictive_stock_alert_days": fs.predictive_stock_alert_days,
     }
 
 

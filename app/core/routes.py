@@ -1588,6 +1588,8 @@ def farm_settings_save():
         "creep_feed_start_age_days", "creep_feed_target_grams_per_day",
         # بند إضافي 236 — كشف حمل ضمني.
         "estrus_return_window_days", "implicit_pregnancy_sonar_check_days",
+        # بند إضافي 237 — تنبيه مخزون تنبؤي.
+        "predictive_stock_alert_days",
         # بند إضافي 188 — بروتوكول حديث الولادة وأمه.
         "colostrum_window_hours", "placenta_check_hours", "postpartum_mother_followup_days",
     ):

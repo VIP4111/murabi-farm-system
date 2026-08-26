@@ -214,6 +214,28 @@ def _withdrawal_until(event_date: date, pharmacy: Pharmacy | None) -> date | Non
     return None
 
 
+def pharmacy_days_until_stockout(pharmacy: Pharmacy, lookback_days: int = 14) -> float | None:
+    """تنبؤ نفاد مخزون دواء (بند إضافي 237) — نفس فكرة `feed_service.
+    days_until_stockout` بالضبط، بس الاستهلاك هنا موزَّع على 3 جداول
+    (VetVisit/Disease/Vaccination) بدل حركة مخزون واحدة موحَّدة زي
+    العلف — كل وحدة فيها quantity_used مباشر مربوط بنفس الدواء."""
+    since = date.today() - timedelta(days=lookback_days)
+    consumed = 0.0
+    for model in (VetVisit, Disease, Vaccination):
+        total = (
+            db.session.query(db.func.coalesce(db.func.sum(model.quantity_used), 0))
+            .filter(model.pharmacy_id == pharmacy.id, model.created_at >= since)
+            .scalar()
+        )
+        consumed += total or 0
+    if not consumed:
+        return None
+    avg_daily = consumed / lookback_days
+    if avg_daily <= 0:
+        return None
+    return round((pharmacy.available_qty or 0) / avg_daily, 1)
+
+
 def _deduct_if_used(pharmacy: Pharmacy | None, quantity_used: float | None) -> None:
     if pharmacy and quantity_used:
         try:

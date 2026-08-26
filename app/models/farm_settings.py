@@ -163,6 +163,12 @@ class FarmSettings(db.Model):
     estrus_return_window_days = db.Column(db.Integer, default=21, nullable=False)
     implicit_pregnancy_sonar_check_days = db.Column(db.Integer, default=45, nullable=False)
 
+    # تنبيه مخزون تنبؤي (بند إضافي 237) — بدل الاعتماد بس على حد أدنى
+    # ثابت (min_stock_qty)، لو معدل الاستهلاك الفعلي الأخير يوصّل
+    # للنفاد خلال هالعدد من الأيام، ينبّه حتى لو الكمية المتبقية أكبر
+    # من الحد الأدنى المضبوط (صنف يُستهلك بسرعة عالية مؤقتاً).
+    predictive_stock_alert_days = db.Column(db.Integer, default=7, nullable=False)
+
     # حد أدنى لعمر الفحل عشان يدخل التقريع (بند إضافي 231) — منفصل عمداً
     # عن min_breeding_age_days (خاص بجاهزية الأنثى فقط). فحل أصغر من هذا
     # العمر يُستبعد تماماً من قائمة "الفحل" بفورم التقريع الجديد — استبعاد
