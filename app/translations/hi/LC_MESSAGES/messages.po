@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 11:15+0300\n"
+"POT-Creation-Date: 2026-08-26 11:49+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -112,15 +112,15 @@ msgstr "पुष्टि की गई"
 msgid "فشلت"
 msgstr "विफल"
 
-#: app/__init__.py:169 app/team/routes.py:412
+#: app/__init__.py:169 app/team/routes.py:441
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:170 app/team/routes.py:413
+#: app/__init__.py:170 app/team/routes.py:442
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:171 app/team/routes.py:417
+#: app/__init__.py:171 app/team/routes.py:446
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -136,15 +136,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:175 app/team/routes.py:414
+#: app/__init__.py:175 app/team/routes.py:443
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:176 app/team/routes.py:415
+#: app/__init__.py:176 app/team/routes.py:444
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:177 app/team/routes.py:416
+#: app/__init__.py:177 app/team/routes.py:445
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -244,7 +244,7 @@ msgstr "बाड़ा स्थानांतरण (शारीरिक �
 msgid "إكمال بيانات حيوان"
 msgstr "पशु डेटा पूर्ण करें"
 
-#: app/__init__.py:214 app/team/routes.py:31 app/templates/base.html:803
+#: app/__init__.py:214 app/team/routes.py:31 app/templates/base.html:804
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -717,7 +717,7 @@ msgstr "गंभीर तनाव"
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:400
+#: app/core/animal_filters_service.py:181 app/team/routes.py:429
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1787,15 +1787,15 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:401 app/templates/team/employee_of_month.html:12
+#: app/team/routes.py:430 app/templates/team/employee_of_month.html:12
 msgid "العامل"
 msgstr "कर्मचारी"
 
-#: app/team/routes.py:402
+#: app/team/routes.py:431
 msgid "الطبيب البيطري"
 msgstr "पशु चिकित्सक"
 
-#: app/team/routes.py:403
+#: app/team/routes.py:432
 msgid "المحاسب"
 msgstr "लेखाकार"
 
@@ -2090,8 +2090,8 @@ msgstr "दूध"
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:668
-#: app/templates/base.html:670 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:669
+#: app/templates/base.html:671 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "वित्त"
@@ -2275,6 +2275,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/team/salaries_list.html:20
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -2402,6 +2403,7 @@ msgstr "प्रजनन"
 #: app/templates/team/member_edit_form.html:9
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
+#: app/templates/team/salaries_list.html:11
 msgid "الدور"
 msgstr "भूमिका"
 
@@ -2840,6 +2842,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
+#: app/templates/team/salaries_list.html:11
 #: app/templates/warehouses/warehouse_form.html:7
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -3374,7 +3377,7 @@ msgstr "नया बाड़ा"
 msgid "مثال: B-01"
 msgstr "उदाहरण: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:711
+#: app/templates/barn_form.html:11 app/templates/base.html:712
 msgid "عادية"
 msgstr "सामान्य"
 
@@ -3606,19 +3609,23 @@ msgstr "रिपोर्ट्स"
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:659 app/templates/team/performance_report.html:6
+#: app/templates/base.html:658
+msgid "الرواتب"
+msgstr "वेतन"
+
+#: app/templates/base.html:660 app/templates/team/performance_report.html:6
 msgid "مراجعة مهام اليوم"
 msgstr "आज के कार्यों की समीक्षा करें"
 
-#: app/templates/base.html:660 app/templates/team/performance_report.html:5
+#: app/templates/base.html:661 app/templates/team/performance_report.html:5
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
-#: app/templates/base.html:671 app/templates/home.html:105
+#: app/templates/base.html:672 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:678 app/templates/home.html:108
+#: app/templates/base.html:679 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3626,61 +3633,61 @@ msgstr "स्वास्थ्य वित्त"
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:680
+#: app/templates/base.html:681
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
-#: app/templates/base.html:695
+#: app/templates/base.html:696
 msgid "المظهر"
 msgstr "दिखावट"
 
-#: app/templates/base.html:697
+#: app/templates/base.html:698
 msgid "نهاري"
 msgstr "दिन"
 
-#: app/templates/base.html:697
+#: app/templates/base.html:698
 msgid "ليلي"
 msgstr "रात"
 
-#: app/templates/base.html:709
+#: app/templates/base.html:710
 msgid "مستوى الواجهة"
 msgstr "इंटरफेस स्तर"
 
-#: app/templates/base.html:711
+#: app/templates/base.html:712
 msgid "بسيط جداً"
 msgstr "बहुत आसान"
 
-#: app/templates/base.html:719
+#: app/templates/base.html:720
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"बहुत आसान\" आपकी मुख्य स्क्रीन को बड़े बटनों में बदल देता है, एक बार में एक सवाल — बिल्कुल वही डेटा।"
 
-#: app/templates/base.html:725
+#: app/templates/base.html:726
 msgid "التقرير اليومي بالبريد"
 msgstr "दैनिक ईमेल रिपोर्ट"
 
-#: app/templates/base.html:728
+#: app/templates/base.html:729
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "अभी परीक्षण रिपोर्ट भेजें"
 
-#: app/templates/base.html:732
+#: app/templates/base.html:733
 msgid "الملخص اليومي بتيليجرام"
 msgstr "दैनिक टेलीग्राम सारांश"
 
-#: app/templates/base.html:735
+#: app/templates/base.html:736
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "अभी परीक्षण सारांश भेजें"
 
-#: app/templates/base.html:741 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:742 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:754
+#: app/templates/base.html:755
 msgid "خروج"
 msgstr "लॉग आउट"
 
-#: app/templates/base.html:791
+#: app/templates/base.html:792
 msgid "تجاهل"
 msgstr "अनदेखा करें"
 
@@ -9466,6 +9473,26 @@ msgstr "रद्द की गई रिपोर्टें (अंतिम 
 #: app/templates/team/reports_list.html:95
 msgid "لا يوجد بلاغات ملغاة."
 msgstr "कोई रद्द रिपोर्ट नहीं।"
+
+#: app/templates/team/salaries_list.html:4
+msgid "الرواتب الأساسية"
+msgstr "मूल वेतन"
+
+#: app/templates/team/salaries_list.html:5
+msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
+msgstr "प्रत्येक टीम सदस्य का निश्चित मूल वेतन — मासिक वेतन पर्ची तैयार करते समय (बोनस और कटौती के साथ) आधार बिंदु के रूप में उपयोग किया जाता है। खाली का अर्थ है अभी तक कोई वेतन निर्धारित नहीं है।"
+
+#: app/templates/team/salaries_list.html:11
+msgid "الراتب الأساسي"
+msgstr "मूल वेतन"
+
+#: app/templates/team/salaries_list.html:19
+msgid "غير محدَّد"
+msgstr "निर्धारित नहीं"
+
+#: app/templates/team/salaries_list.html:25
+msgid "لا يوجد أعضاء نشطون."
+msgstr "कोई सक्रिय सदस्य नहीं।"
 
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"

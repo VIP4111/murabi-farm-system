@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>💰 {{ _('الرواتب الأساسية') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد.') }}</p>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+  <table class="compact-table">
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الدور') }}</th><th>{{ _('الراتب الأساسي') }}</th></tr>
+    {% for m in members %}
+    <tr>
+      <td>{{ m.name }}</td>
+      <td>{{ m.role.display_name if m.role else '-' }}</td>
+      <td>
+        <form method="post" action="{{ url_for('team.salary_update', user_id=m.id) }}" style="display:flex; gap:6px; align-items:center;" data-offline>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="number" name="base_salary" step="0.01" min="0" value="{{ m.base_salary if m.base_salary is not none else '' }}" placeholder="{{ _('غير محدَّد') }}" style="width:130px; margin:0;">
+          <button class="btn light" type="submit" style="padding:6px 12px; font-size:12.5px;">{{ _('حفظ') }}</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="3" style="color:#888;">{{ _('لا يوجد أعضاء نشطون.') }}</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endblock %}

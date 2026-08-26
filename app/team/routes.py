@@ -117,6 +117,35 @@ def members_edit(user_id):
                             roles=Role.query.order_by(Role.id).all())
 
 
+@team_bp.route("/salaries")
+@login_required
+@require_permission("team.manage_salary")
+def salaries_list():
+    """شاشة الرواتب الأساسية (بند إضافي 241) — منفصلة عمداً عن شاشة
+    "أعضاء الفريق" الكاملة (users.manage): المحاسب يقدر يوصلها بدون
+    ما يملك صلاحية تغيير الأدوار أو كلمات المرور أو تعطيل الحسابات."""
+    members = User.query.filter_by(is_active_account=True).order_by(User.name).all()
+    return render_template("team/salaries_list.html", members=members)
+
+
+@team_bp.route("/salaries/<int:user_id>/update", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def salary_update(user_id):
+    user = User.query.get_or_404(user_id)
+    raw = request.form.get("base_salary", "").strip()
+    try:
+        user.base_salary = float(raw) if raw else None
+    except ValueError:
+        flash("قيمة راتب غير صحيحة", "error")
+        return redirect(url_for("team.salaries_list"))
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="user.salary_update",
+                             entity_type="User", entity_id=user.id, details=raw or "cleared"))
+    db.session.commit()
+    flash(f"تم تحديث راتب {user.name}", "success")
+    return redirect(url_for("team.salaries_list"))
+
+
 @team_bp.route("/members/<int:user_id>/toggle", methods=["POST"])
 @login_required
 @require_permission("users.manage")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 11:15+0300\n"
+"POT-Creation-Date: 2026-08-26 11:49+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -112,15 +112,15 @@ msgstr "Confirmed"
 msgid "فشلت"
 msgstr "Failed"
 
-#: app/__init__.py:169 app/team/routes.py:412
+#: app/__init__.py:169 app/team/routes.py:441
 msgid "مهمة عامة"
 msgstr "General task"
 
-#: app/__init__.py:170 app/team/routes.py:413
+#: app/__init__.py:170 app/team/routes.py:442
 msgid "فحص عزل"
 msgstr "Isolation check"
 
-#: app/__init__.py:171 app/team/routes.py:417
+#: app/__init__.py:171 app/team/routes.py:446
 msgid "مراجعة الدكتور"
 msgstr "Doctor review"
 
@@ -136,15 +136,15 @@ msgstr "Selenium dose"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "Colostrum/nursing follow-up"
 
-#: app/__init__.py:175 app/team/routes.py:414
+#: app/__init__.py:175 app/team/routes.py:443
 msgid "وزن"
 msgstr "Weighing"
 
-#: app/__init__.py:176 app/team/routes.py:415
+#: app/__init__.py:176 app/team/routes.py:444
 msgid "تحصين مستحق"
 msgstr "Vaccination due"
 
-#: app/__init__.py:177 app/team/routes.py:416
+#: app/__init__.py:177 app/team/routes.py:445
 msgid "تبديل علف"
 msgstr "Feed switch"
 
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:214 app/team/routes.py:31 app/templates/base.html:803
+#: app/__init__.py:214 app/team/routes.py:31 app/templates/base.html:804
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -717,7 +717,7 @@ msgstr "Severe stress"
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:400
+#: app/core/animal_filters_service.py:181 app/team/routes.py:429
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1787,15 +1787,15 @@ msgstr "Move to Isolation"
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
 
-#: app/team/routes.py:401 app/templates/team/employee_of_month.html:12
+#: app/team/routes.py:430 app/templates/team/employee_of_month.html:12
 msgid "العامل"
 msgstr "Worker"
 
-#: app/team/routes.py:402
+#: app/team/routes.py:431
 msgid "الطبيب البيطري"
 msgstr "Veterinarian"
 
-#: app/team/routes.py:403
+#: app/team/routes.py:432
 msgid "المحاسب"
 msgstr "Accountant"
 
@@ -2090,8 +2090,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:668
-#: app/templates/base.html:670 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:669
+#: app/templates/base.html:671 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "Finance"
@@ -2275,6 +2275,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
+#: app/templates/team/salaries_list.html:20
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -2402,6 +2403,7 @@ msgstr "Mating"
 #: app/templates/team/member_edit_form.html:9
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
+#: app/templates/team/salaries_list.html:11
 msgid "الدور"
 msgstr "Role"
 
@@ -2840,6 +2842,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
+#: app/templates/team/salaries_list.html:11
 #: app/templates/warehouses/warehouse_form.html:7
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -3374,7 +3377,7 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:711
+#: app/templates/barn_form.html:11 app/templates/base.html:712
 msgid "عادية"
 msgstr "Regular"
 
@@ -3606,19 +3609,23 @@ msgstr "Reports"
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:659 app/templates/team/performance_report.html:6
+#: app/templates/base.html:658
+msgid "الرواتب"
+msgstr "Salaries"
+
+#: app/templates/base.html:660 app/templates/team/performance_report.html:6
 msgid "مراجعة مهام اليوم"
 msgstr "Review Today's Tasks"
 
-#: app/templates/base.html:660 app/templates/team/performance_report.html:5
+#: app/templates/base.html:661 app/templates/team/performance_report.html:5
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
-#: app/templates/base.html:671 app/templates/home.html:105
+#: app/templates/base.html:672 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:678 app/templates/home.html:108
+#: app/templates/base.html:679 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3626,61 +3633,61 @@ msgstr "Health finance"
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:680
+#: app/templates/base.html:681
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:695
+#: app/templates/base.html:696
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:697
+#: app/templates/base.html:698
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:697
+#: app/templates/base.html:698
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:709
+#: app/templates/base.html:710
 msgid "مستوى الواجهة"
 msgstr "Interface level"
 
-#: app/templates/base.html:711
+#: app/templates/base.html:712
 msgid "بسيط جداً"
 msgstr "Very simple"
 
-#: app/templates/base.html:719
+#: app/templates/base.html:720
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"Very simple\" switches your home screen to big buttons, one question at a time — the exact same data."
 
-#: app/templates/base.html:725
+#: app/templates/base.html:726
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:728
+#: app/templates/base.html:729
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:732
+#: app/templates/base.html:733
 msgid "الملخص اليومي بتيليجرام"
 msgstr "Daily Telegram Summary"
 
-#: app/templates/base.html:735
+#: app/templates/base.html:736
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "Send test summary now"
 
-#: app/templates/base.html:741 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:742 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:754
+#: app/templates/base.html:755
 msgid "خروج"
 msgstr "Logout"
 
-#: app/templates/base.html:791
+#: app/templates/base.html:792
 msgid "تجاهل"
 msgstr "Dismiss"
 
@@ -9466,6 +9473,26 @@ msgstr "Cancelled reports (awaiting final delete or archive)"
 #: app/templates/team/reports_list.html:95
 msgid "لا يوجد بلاغات ملغاة."
 msgstr "No cancelled reports."
+
+#: app/templates/team/salaries_list.html:4
+msgid "الرواتب الأساسية"
+msgstr "Base Salaries"
+
+#: app/templates/team/salaries_list.html:5
+msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
+msgstr "Each team member's fixed base salary — used as the starting point when preparing the monthly payslip (with bonuses and deductions). Empty means no salary set yet."
+
+#: app/templates/team/salaries_list.html:11
+msgid "الراتب الأساسي"
+msgstr "Base salary"
+
+#: app/templates/team/salaries_list.html:19
+msgid "غير محدَّد"
+msgstr "Not set"
+
+#: app/templates/team/salaries_list.html:25
+msgid "لا يوجد أعضاء نشطون."
+msgstr "No active members."
 
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"
