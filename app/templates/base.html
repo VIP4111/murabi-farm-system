@@ -641,24 +641,18 @@
 
       {% set _team_endpoints = ['team.tasks_list', 'team.reports_list', 'team.members_list',
                                  'team.performance_report', 'team.todays_completed_tasks',
-                                 'team.employee_of_month', 'team.salaries_list', 'team.payroll_list',
+                                 'team.salaries_list', 'team.payroll_list',
                                  'team.payroll_prepare', 'team.payroll_reports'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _team_endpoints else '' }}>
-        <summary>{{ nav_icon('team') }}{{ _('الفريق') }}
-          {% if current_user.role.name == 'owner' and employee_of_month_pending %}
-          <span class="badge off" style="margin-inline-start:6px;" title="{{ _('موظف الشهر بانتظار تأكيدك') }}">🏆 {{ employee_of_month_pending }}</span>
-          {% endif %}
-        </summary>
+        <summary>{{ nav_icon('team') }}{{ _('الفريق') }}</summary>
         <div class="drawer-grid">
         <a class="drawer-link" href="{{ url_for('team.tasks_list') }}"><span class="drawer-text"><b>{{ _('المهام') }}</b></span></a>
-        {% if current_user.role.name == 'owner' %}
-        <a class="drawer-link" href="{{ url_for('team.employee_of_month') }}"><span class="drawer-text"><b>{{ _('موظف الشهر') }}</b></span>{% if employee_of_month_pending %} <span class="badge off">🏆</span>{% endif %}</a>
-        {% endif %}
         <a class="drawer-link" href="{{ url_for('team.reports_list') }}"><span class="drawer-text"><b>{{ _('البلاغات') }}</b></span></a>
         {% if current_user.has_permission('users.manage') %}<a class="drawer-link" href="{{ url_for('team.members_list') }}"><span class="drawer-text"><b>{{ _('أعضاء الفريق') }}</b></span></a>{% endif %}
         {% if current_user.has_permission('team.manage_salary') %}
-        <a class="drawer-link" href="{{ url_for('team.salaries_list') }}"><span class="drawer-text"><b>{{ _('الرواتب الأساسية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('team.salaries_list') }}"><span class="drawer-text"><b>{{ _('إعداد الرواتب') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('team.payroll_list') }}"><span class="drawer-text"><b>{{ _('رواتب الشهر') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('team.payroll_reports') }}"><span class="drawer-text"><b>{{ _('تقارير الرواتب') }}</b></span></a>
         {% endif %}
         {% if current_user.has_permission('tasks.review_daily') %}
         <a class="drawer-link" href="{{ url_for('team.todays_completed_tasks') }}"><span class="drawer-text"><b>{{ _('مراجعة مهام اليوم') }}</b></span></a>

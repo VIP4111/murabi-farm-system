@@ -40,12 +40,9 @@
         </a>
         {% if p and p.status == 'confirmed' %}
         <a class="btn light" href="{{ url_for('team.payroll_receipt', payroll_id=p.id) }}" style="padding:5px 10px; font-size:12px;">🖨️ {{ _('طباعة الوصل') }}</a>
-        <form method="post" action="{{ url_for('team.payroll_upload_receipt', payroll_id=p.id) }}" enctype="multipart/form-data" style="display:flex; gap:4px; align-items:center;">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <input type="file" name="receipt_file" accept="image/*,application/pdf" style="width:150px; font-size:11px;">
-          <button class="btn light" type="submit" style="padding:5px 8px; font-size:11px;">{{ _('رفع الوصل الموقَّع') }}</button>
-        </form>
-        {% if p.signed_receipt_file_url %}<a href="{{ p.signed_receipt_file_url }}" target="_blank" style="font-size:11px;">📎 {{ _('عرض الموقَّع') }}</a>{% endif %}
+        <a class="btn light" href="{{ url_for('team.payroll_upload_receipt', payroll_id=p.id) }}" style="padding:5px 10px; font-size:12px;">
+          📎 {{ _('الوصل الموقَّع') }}{% if p.signed_receipt_file_url %} ✅{% endif %}
+        </a>
         {% endif %}
       </td>
     </tr>

@@ -61,15 +61,6 @@ def _generate_if_needed_today():
         from flask import current_app
         current_app.logger.warning("daily_telegram_report_service failed: %s", e)
 
-    # موظف الشهر (بند إضافي 239) — نفس نقطة الاستدعاء اليومية، idempotent
-    # عبر قيد فريد (year, month) بجدول EmployeeOfMonth نفسه.
-    from app.team import employee_of_month_service
-    try:
-        employee_of_month_service.select_employee_of_month_if_needed()
-    except Exception as e:
-        from flask import current_app
-        current_app.logger.warning("employee_of_month_service failed: %s", e)
-
 
 def _run_daily_tasks_job(app):
     with app.app_context():

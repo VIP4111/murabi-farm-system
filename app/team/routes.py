@@ -237,22 +237,41 @@ def payroll_prepare(user_id):
         flash("تم حفظ المسودة", "success")
         return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
 
-    return render_template("team/payroll_prepare.html", user=user, payroll=payroll, year=year, month=month)
+    # هل هذا العامل صاحب أعلى نقطة أداء الشهر الماضي؟ (بند إضافي 245 —
+    # دمج "موظف الشهر" هنا بدل نظام منفصل) — يظهر بس لو الراتب لسا
+    # مسودة (بعد التأكيد ما فيه داعي نعرضه).
+    top_performer = None
+    if payroll.status != "confirmed":
+        prev_year, prev_month = (year - 1, 12) if month == 1 else (year, month - 1)
+        from app.team import payroll_service
+        top = payroll_service.top_performer_for_month(year=prev_year, month=prev_month)
+        if top and top["user"].id == user.id:
+            top_performer = top
+
+    return render_template("team/payroll_prepare.html", user=user, payroll=payroll, year=year, month=month,
+                            top_performer=top_performer)
 
 
-@team_bp.route("/payroll/<int:payroll_id>/upload-receipt", methods=["POST"])
+@team_bp.route("/payroll/<int:payroll_id>/upload-receipt", methods=["GET", "POST"])
 @login_required
 @require_permission("team.manage_salary")
 def payroll_upload_receipt(payroll_id):
+    """صفحة مستقلة لرفع الوصل الموقَّع (بند إضافي 245) — كانت فورم
+    رفع ملف محشورة جوّه خلية جدول ضيقة بشاشة "رواتب الشهر"، صارت
+    شاشة مستقلة واضحة (طلبك: "فيه تشتت... تتفنن")."""
     from app.models import Payroll
     from app.team import payroll_service
     payroll = Payroll.query.get_or_404(payroll_id)
     if payroll.status != "confirmed":
         flash("لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع.", "error")
         return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
-    payroll_service.attach_signed_receipt(payroll, request.files.get("receipt_file"))
-    flash("تم رفع الوصل الموقَّع", "success")
-    return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
+
+    if request.method == "POST":
+        payroll_service.attach_signed_receipt(payroll, request.files.get("receipt_file"))
+        flash("تم رفع الوصل الموقَّع", "success")
+        return redirect(url_for("team.payroll_upload_receipt", payroll_id=payroll.id))
+
+    return render_template("team/payroll_upload_receipt.html", payroll=payroll)
 
 
 @team_bp.route("/payroll/<int:payroll_id>/receipt")
@@ -1108,57 +1127,3 @@ def report_delete(report_id):
         return _redirect_back(report_id)
 
 
-# ---------- موظف الشهر (بند إضافي 239) ----------
-
-@team_bp.route("/employee-of-month")
-@login_required
-def employee_of_month():
-    if current_user.role.name != "owner":
-        abort(403)
-    from app.models import EmployeeOfMonth
-    from app.team.employee_of_month_service import select_employee_of_month_if_needed
-    select_employee_of_month_if_needed()
-    records = EmployeeOfMonth.query.order_by(EmployeeOfMonth.year.desc(), EmployeeOfMonth.month.desc()).all()
-    return render_template("team/employee_of_month.html", records=records)
-
-
-@team_bp.route("/employee-of-month/<int:record_id>/confirm", methods=["POST"])
-@login_required
-def employee_of_month_confirm(record_id):
-    if current_user.role.name != "owner":
-        abort(403)
-    from app.models import EmployeeOfMonth
-    from app.team import employee_of_month_service
-    record = EmployeeOfMonth.query.get_or_404(record_id)
-    if record.status != "pending_confirmation":
-        flash("هذا السجل أُكِّد مسبقاً", "error")
-        return redirect(url_for("team.employee_of_month"))
-    try:
-        bonus = float(request.form["bonus_amount"])
-    except (KeyError, ValueError):
-        flash("لازم تحدد مبلغ المكافأة", "error")
-        return redirect(url_for("team.employee_of_month"))
-    recipient_name = request.form.get("recipient_name")
-    employee_of_month_service.confirm(record, actor=current_user, bonus_amount=bonus, recipient_name=recipient_name)
-    flash(f"تم التأكيد — رحّلت مكافأة {record.user.name} ({bonus}) لسجل المالية.", "success")
-    return redirect(url_for("team.employee_of_month"))
-
-
-@team_bp.route("/employee-of-month/<int:record_id>/receipt")
-@login_required
-def employee_of_month_receipt(record_id):
-    """وصل استلام مكافأة موظف الشهر (بند إضافي 240) — يطلع بس بعد
-    التأكيد الفعلي (لازم مبلغ مسجَّل)."""
-    if current_user.role.name != "owner":
-        abort(403)
-    from flask import send_file
-    from app.models import EmployeeOfMonth, FarmSettings
-    from app.reports.export_service import build_employee_of_month_receipt_pdf
-
-    record = EmployeeOfMonth.query.get_or_404(record_id)
-    if record.status != "confirmed":
-        flash("هذا السجل لسا ما تأكَّد — ما فيه وصل يُطبع.", "error")
-        return redirect(url_for("team.employee_of_month"))
-    buf = build_employee_of_month_receipt_pdf(record, FarmSettings.get())
-    return send_file(buf, mimetype="application/pdf", as_attachment=True,
-                      download_name=f"موظف_الشهر_{record.month}_{record.year}.pdf")

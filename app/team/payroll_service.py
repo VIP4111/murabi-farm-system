@@ -2,7 +2,7 @@
 "موظف الشهر"، بند 239، مكافأة أداء لأفضل عامل بس). كل راتب = الأساسي
 + المكافأة - مجموع الخصومات (كل خصم بسبب مستقل)، بحالة مسودة قابلة
 للتعديل قبل التأكيد النهائي."""
-from datetime import date
+from datetime import date, timedelta
 
 from app.extensions import db
 from app.models import Payroll, PayrollDeduction, Finance
@@ -10,6 +10,23 @@ from app.core.cloud_storage_service import save_upload
 
 ALLOWED_RECEIPT_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "pdf"}
 MAX_RECEIPT_BYTES = 8 * 1024 * 1024
+
+
+def top_performer_for_month(*, year: int, month: int) -> dict | None:
+    """أعلى نقطة أداء موضوعية لشهر معيّن (بند إضافي 245 — دمج "موظف
+    الشهر" داخل الرواتب بدل نظام منفصل بجدول/شاشة/وصل خاص به). يعيد
+    استخدام `performance_service.worker_performance` مباشرة (حساب حي،
+    بدون تخزين وسيط) — نفس مصدر الحقيقة المستخدم أصلاً بتقرير أداء
+    الفريق، بدل تكرار منطق "من الأفضل هذا الشهر" بمكان ثانٍ."""
+    from app.team.performance_service import worker_performance
+
+    first_of_month = date(year, month, 1)
+    last_of_month = (
+        date(year, 12, 31) if month == 12
+        else date(year, month + 1, 1) - timedelta(days=1)
+    )
+    rows = worker_performance(start_date=first_of_month, end_date=last_of_month)
+    return rows[0] if rows else None
 
 
 def get_or_create_draft(*, user, year: int, month: int) -> Payroll:

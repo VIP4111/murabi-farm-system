@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <h2>💰 {{ _('الرواتب الأساسية') }}</h2>
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>⚙️ {{ _('إعداد الرواتب') }}</h2>
+    <a class="btn light" href="{{ url_for('team.payroll_list') }}">💰 {{ _('رواتب الشهر') }} ←</a>
+  </div>
   <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('الراتب الأساسي وبيانات الهوية لكل عضو — تُدخَل يدوياً مرة وحدة، وتُستخدم تلقائياً بكل مسير راتب بعدها. فاضي = ما فيها بيانات بعد.') }}</p>
 </div>
 

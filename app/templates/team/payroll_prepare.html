@@ -6,6 +6,13 @@
     {% if payroll.status == 'confirmed' %} — <span class="badge on">✅ {{ _('مؤكَّد') }}</span>{% endif %}
   </p>
 
+  {% if top_performer %}
+  <div class="notice notice-success" style="margin-top:10px;">
+    🏆 {{ _('أعلى نقطة أداء الشهر الماضي —') }} <b>{{ top_performer.score }}%</b>
+    <button type="button" id="useSuggestedBonusBtn" class="btn light" style="padding:4px 10px; font-size:11.5px; margin-inline-start:8px;">{{ _('اقترح مكافأة') }}</button>
+  </div>
+  {% endif %}
+
   <form method="post" data-offline>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <fieldset {{ 'disabled' if payroll.status == 'confirmed' }} style="border:none; padding:0; margin:0;">
@@ -68,6 +75,15 @@
       e.target.closest('.deduction-row').remove();
     }
   });
+
+  var suggestBtn = document.getElementById('useSuggestedBonusBtn');
+  var bonusInput = document.querySelector('input[name="bonus_amount"]');
+  if (suggestBtn && bonusInput) {
+    suggestBtn.addEventListener('click', function(){
+      bonusInput.focus();
+      bonusInput.select();
+    });
+  }
 })();
 </script>
 {% endblock %}
