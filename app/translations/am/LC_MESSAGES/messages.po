@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 20:37+0300\n"
+"POT-Creation-Date: 2026-08-26 21:04+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -112,15 +112,15 @@ msgstr "የተረጋገጠ"
 msgid "فشلت"
 msgstr "አልተሳካም"
 
-#: app/__init__.py:169 app/team/routes.py:560
+#: app/__init__.py:169 app/team/routes.py:583
 msgid "مهمة عامة"
 msgstr "አጠቃላይ ተግባር"
 
-#: app/__init__.py:170 app/team/routes.py:561
+#: app/__init__.py:170 app/team/routes.py:584
 msgid "فحص عزل"
 msgstr "የመነጠል ምርመራ"
 
-#: app/__init__.py:171 app/team/routes.py:565
+#: app/__init__.py:171 app/team/routes.py:588
 msgid "مراجعة الدكتور"
 msgstr "የዶክተር ግምገማ"
 
@@ -136,15 +136,15 @@ msgstr "የሴሌኒየም መጠን"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "የኮለስትረም/ጡት ማጥባት ክትትል"
 
-#: app/__init__.py:175 app/team/routes.py:562
+#: app/__init__.py:175 app/team/routes.py:585
 msgid "وزن"
 msgstr "ክብደት መለካት"
 
-#: app/__init__.py:176 app/team/routes.py:563
+#: app/__init__.py:176 app/team/routes.py:586
 msgid "تحصين مستحق"
 msgstr "የደረሰ ክትባት"
 
-#: app/__init__.py:177 app/team/routes.py:564
+#: app/__init__.py:177 app/team/routes.py:587
 msgid "تبديل علف"
 msgstr "የመኖ ለውጥ"
 
@@ -717,7 +717,7 @@ msgstr "ከባድ ውጥረት"
 msgid "إجهاد طارئ"
 msgstr "የአደጋ ጊዜ ውጥረት"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:548
+#: app/core/animal_filters_service.py:181 app/team/routes.py:571
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1790,16 +1790,16 @@ msgstr "ወደ ማግለያ ማዛወር"
 msgid "بيض / حضانة (نعام)"
 msgstr "እንቁላል / ማቀፊያ (ሰጎን)"
 
-#: app/team/routes.py:549 app/templates/team/employee_of_month.html:12
+#: app/team/routes.py:572 app/templates/team/employee_of_month.html:12
 #: app/templates/team/payroll_reports.html:8
 msgid "العامل"
 msgstr "ሠራተኛ"
 
-#: app/team/routes.py:550
+#: app/team/routes.py:573
 msgid "الطبيب البيطري"
 msgstr "የእንስሳት ሐኪም"
 
-#: app/team/routes.py:551
+#: app/team/routes.py:574
 msgid "المحاسب"
 msgstr "የሂሳብ ባለሙያ"
 
@@ -2279,7 +2279,8 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
-#: app/templates/team/salaries_list.html:18
+#: app/templates/team/salaries_list.html:16
+#: app/templates/team/salaries_list.html:36
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -6530,7 +6531,7 @@ msgstr "ቀጥተኛ ያልሆነ ወጪ (ኪራይ/ጥገና/ደመወዝ — �
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "በአሁኑ ንቁ የእንስሳት ብዛት ላይ በራስ-ሰር በእኩል ይከፋፈላል — በ\"ወርሃዊ/ዓመታዊ የእንስሳ ዋጋ\" ሪፖርት ውስጥ እና በእያንዳንዱ እንስሳ ዝርዝር ገጽ ላይ እንደ ግለሰብ ድርሻ ይታያል።"
 
-#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:17
+#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:29
 msgid "طريقة الدفع"
 msgstr "የክፍያ ዘዴ"
 
@@ -6538,7 +6539,7 @@ msgstr "የክፍያ ዘዴ"
 msgid "نقدي"
 msgstr "ጥሬ ገንዘብ"
 
-#: app/templates/finance/form.html:37
+#: app/templates/finance/form.html:37 app/templates/team/salaries_list.html:33
 msgid "تحويل بنكي"
 msgstr "የባንክ ዝውውር"
 
@@ -9236,7 +9237,7 @@ msgstr "ዓመት"
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/payroll_prepare.html:12
 #: app/templates/team/payroll_reports.html:22
-#: app/templates/team/salaries_list.html:13
+#: app/templates/team/salaries_list.html:25
 msgid "الراتب الأساسي"
 msgstr "መሰረታዊ ደመወዝ"
 
@@ -9261,7 +9262,7 @@ msgid "عرض الموقَّع"
 msgstr "የተፈረመውን ይመልከቱ"
 
 #: app/templates/team/payroll_list.html:53
-#: app/templates/team/salaries_list.html:22
+#: app/templates/team/salaries_list.html:43
 msgid "لا يوجد أعضاء نشطون."
 msgstr "ንቁ አባላት የሉም።"
 
@@ -9600,25 +9601,49 @@ msgstr "የተሰረዙ ሪፖርቶች የሉም።"
 msgid "الراتب الأساسي وبيانات الهوية لكل عضو — تُدخَل يدوياً مرة وحدة، وتُستخدم تلقائياً بكل مسير راتب بعدها. فاضي = ما فيها بيانات بعد."
 msgstr "ለእያንዳንዱ አባል መሰረታዊ ደመወዝ እና የመታወቂያ ዝርዝሮች — በእጅ አንድ ጊዜ ይግቡ፣ ከዚያ በኋላ በእያንዳንዱ የደመወዝ ደረሰኝ ላይ ራስ-ሰር ጥቅም ላይ ይውላል። ባዶ ማለት እስካሁን መረጃ የለም ማለት ነው።"
 
+#: app/templates/team/salaries_list.html:9
+msgid "بيانات صاحب الحلال"
+msgstr "የባለቤቱ ዝርዝሮች"
+
+#: app/templates/team/salaries_list.html:10
+msgid "تظهر تلقائياً كصاحب عمل بكل مسير راتب."
+msgstr "በእያንዳንዱ የደመወዝ ደረሰኝ ላይ እንደ አሰሪ ራስ-ሰር ይታያል።"
+
 #: app/templates/team/salaries_list.html:13
+msgid "اسم صاحب الحلال"
+msgstr "የባለቤቱ ስም"
+
+#: app/templates/team/salaries_list.html:14
+msgid "رقم هوية صاحب الحلال"
+msgstr "የባለቤቱ ብሔራዊ መታወቂያ ቁጥር"
+
+#: app/templates/team/salaries_list.html:15
+msgid "رقم جوال صاحب الحلال"
+msgstr "የባለቤቱ ስልክ ቁጥር"
+
+#: app/templates/team/salaries_list.html:25
 msgid "غير محدَّد"
 msgstr "አልተወሰነም"
 
-#: app/templates/team/salaries_list.html:14
+#: app/templates/team/salaries_list.html:26
 msgid "الجنسية"
 msgstr "ዜግነት"
 
-#: app/templates/team/salaries_list.html:15
+#: app/templates/team/salaries_list.html:27
 msgid "رقم الجواز"
 msgstr "የፓስፖርት ቁጥር"
 
-#: app/templates/team/salaries_list.html:16
+#: app/templates/team/salaries_list.html:28
 msgid "رقم الحدود"
 msgstr "የድንበር ቁጥር"
 
-#: app/templates/team/salaries_list.html:17
-msgid "نقداً / تحويل بنكي"
-msgstr "ጥሬ ገንዘብ / የባንክ ዝውውር"
+#: app/templates/team/salaries_list.html:32
+msgid "نقداً"
+msgstr "ጥሬ ገንዘብ"
+
+#: app/templates/team/salaries_list.html:39
+msgid "طريقة الدفع تحويل — اسم مستلم الحوالة يُحدَّد كل شهر بشكل منفصل وقت تأكيد الراتب (يختلف حسب الشهر)."
+msgstr "የክፍያ ዘዴ ዝውውር ነው — የተቀባዩ ስም ደመወዝ በሚረጋገጥበት ጊዜ በእያንዳንዱ ወር ለብቻ ይወሰናል (እንደ ወሩ ሊለያይ ይችላል)።"
 
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"
@@ -10155,4 +10180,7 @@ msgstr "እስካሁን ተጨማሪ የተሰየመ መጋዘን የለም — 
 
 #~ msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
 #~ msgstr "የእያንዳንዱ የቡድን አባል ቋሚ መሰረታዊ ደመወዝ — የወሩን ደመወዝ (ከጉርሻ እና ቅናሾች ጋር) ሲያዘጋጁ እንደ መነሻ ነጥብ ይጠቅማል። ባዶ ማለት እስካሁን ደመወዝ አልተመዘገበም ማለት ነው።"
+
+#~ msgid "نقداً / تحويل بنكي"
+#~ msgstr "ጥሬ ገንዘብ / የባንክ ዝውውር"
 

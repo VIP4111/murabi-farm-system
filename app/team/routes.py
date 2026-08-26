@@ -124,8 +124,31 @@ def salaries_list():
     """شاشة الرواتب الأساسية (بند إضافي 241) — منفصلة عمداً عن شاشة
     "أعضاء الفريق" الكاملة (users.manage): المحاسب يقدر يوصلها بدون
     ما يملك صلاحية تغيير الأدوار أو كلمات المرور أو تعطيل الحسابات."""
+    from app.models import FarmSettings
     members = User.query.filter_by(is_active_account=True).order_by(User.name).all()
-    return render_template("team/salaries_list.html", members=members)
+    return render_template("team/salaries_list.html", members=members, fs=FarmSettings.get())
+
+
+@team_bp.route("/salaries/owner-identity", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def salaries_owner_identity_update():
+    """اسم/هوية/جوال صاحب الحلال — نفس حقول "بيانات المزرعة" بالإعدادات
+    (farm_name/owner_national_id/farm_phone)، بس عبر صلاحية
+    team.manage_salary هنا (مو settings.manage الكاملة) عشان المحاسب
+    يقدر يعبّيها من نفس شاشة الرواتب مباشرة، بطلبك الصريح: "ناقص
+    بالجدول اسم صاحب الحلال... رقم هوية... رقم جوال". ما تلمس بقية
+    حقول بيانات المزرعة (العنوان/الرقم الضريبي) — تلك تبقى صلاحية
+    الإعدادات الكاملة بس."""
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+    fs.farm_name = request.form.get("farm_name") or None
+    fs.owner_national_id = request.form.get("owner_national_id") or None
+    fs.farm_phone = request.form.get("farm_phone") or None
+    db.session.add(fs)
+    db.session.commit()
+    flash("تم حفظ بيانات صاحب الحلال", "success")
+    return redirect(url_for("team.salaries_list"))
 
 
 @team_bp.route("/salaries/<int:user_id>/update", methods=["POST"])

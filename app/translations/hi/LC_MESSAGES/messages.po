@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 20:37+0300\n"
+"POT-Creation-Date: 2026-08-26 21:04+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -112,15 +112,15 @@ msgstr "पुष्टि की गई"
 msgid "فشلت"
 msgstr "विफल"
 
-#: app/__init__.py:169 app/team/routes.py:560
+#: app/__init__.py:169 app/team/routes.py:583
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:170 app/team/routes.py:561
+#: app/__init__.py:170 app/team/routes.py:584
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:171 app/team/routes.py:565
+#: app/__init__.py:171 app/team/routes.py:588
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -136,15 +136,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:175 app/team/routes.py:562
+#: app/__init__.py:175 app/team/routes.py:585
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:176 app/team/routes.py:563
+#: app/__init__.py:176 app/team/routes.py:586
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:177 app/team/routes.py:564
+#: app/__init__.py:177 app/team/routes.py:587
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -717,7 +717,7 @@ msgstr "गंभीर तनाव"
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:548
+#: app/core/animal_filters_service.py:181 app/team/routes.py:571
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1790,16 +1790,16 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:549 app/templates/team/employee_of_month.html:12
+#: app/team/routes.py:572 app/templates/team/employee_of_month.html:12
 #: app/templates/team/payroll_reports.html:8
 msgid "العامل"
 msgstr "कर्मचारी"
 
-#: app/team/routes.py:550
+#: app/team/routes.py:573
 msgid "الطبيب البيطري"
 msgstr "पशु चिकित्सक"
 
-#: app/team/routes.py:551
+#: app/team/routes.py:574
 msgid "المحاسب"
 msgstr "लेखाकार"
 
@@ -2279,7 +2279,8 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
-#: app/templates/team/salaries_list.html:18
+#: app/templates/team/salaries_list.html:16
+#: app/templates/team/salaries_list.html:36
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -6530,7 +6531,7 @@ msgstr "अप्रत्यक्ष व्यय (किराया/रख�
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "वर्तमान सक्रिय पशुओं की संख्या पर स्वचालित रूप से समान रूप से विभाजित — \"मासिक/वार्षिक प्रति पशु लागत\" रिपोर्ट में और प्रत्येक पशु के विवरण पृष्ठ पर व्यक्तिगत हिस्से के रूप में दिखाई देता है।"
 
-#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:17
+#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:29
 msgid "طريقة الدفع"
 msgstr "भुगतान विधि"
 
@@ -6538,7 +6539,7 @@ msgstr "भुगतान विधि"
 msgid "نقدي"
 msgstr "नकद"
 
-#: app/templates/finance/form.html:37
+#: app/templates/finance/form.html:37 app/templates/team/salaries_list.html:33
 msgid "تحويل بنكي"
 msgstr "बैंक हस्तांतरण"
 
@@ -9236,7 +9237,7 @@ msgstr "वर्ष"
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/payroll_prepare.html:12
 #: app/templates/team/payroll_reports.html:22
-#: app/templates/team/salaries_list.html:13
+#: app/templates/team/salaries_list.html:25
 msgid "الراتب الأساسي"
 msgstr "मूल वेतन"
 
@@ -9261,7 +9262,7 @@ msgid "عرض الموقَّع"
 msgstr "हस्ताक्षरित प्रति देखें"
 
 #: app/templates/team/payroll_list.html:53
-#: app/templates/team/salaries_list.html:22
+#: app/templates/team/salaries_list.html:43
 msgid "لا يوجد أعضاء نشطون."
 msgstr "कोई सक्रिय सदस्य नहीं।"
 
@@ -9600,25 +9601,49 @@ msgstr "कोई रद्द रिपोर्ट नहीं।"
 msgid "الراتب الأساسي وبيانات الهوية لكل عضو — تُدخَل يدوياً مرة وحدة، وتُستخدم تلقائياً بكل مسير راتب بعدها. فاضي = ما فيها بيانات بعد."
 msgstr "हर सदस्य का मूल वेतन और पहचान विवरण — एक बार मैन्युअल रूप से दर्ज करें, फिर हर वेतन पर्ची पर स्वचालित रूप से उपयोग होगा। खाली का मतलब अभी तक कोई डेटा नहीं है।"
 
+#: app/templates/team/salaries_list.html:9
+msgid "بيانات صاحب الحلال"
+msgstr "मालिक का विवरण"
+
+#: app/templates/team/salaries_list.html:10
+msgid "تظهر تلقائياً كصاحب عمل بكل مسير راتب."
+msgstr "हर वेतन पर्ची पर नियोक्ता के रूप में स्वचालित रूप से दिखाई देता है।"
+
 #: app/templates/team/salaries_list.html:13
+msgid "اسم صاحب الحلال"
+msgstr "मालिक का नाम"
+
+#: app/templates/team/salaries_list.html:14
+msgid "رقم هوية صاحب الحلال"
+msgstr "मालिक की राष्ट्रीय पहचान संख्या"
+
+#: app/templates/team/salaries_list.html:15
+msgid "رقم جوال صاحب الحلال"
+msgstr "मालिक का फोन नंबर"
+
+#: app/templates/team/salaries_list.html:25
 msgid "غير محدَّد"
 msgstr "निर्धारित नहीं"
 
-#: app/templates/team/salaries_list.html:14
+#: app/templates/team/salaries_list.html:26
 msgid "الجنسية"
 msgstr "राष्ट्रीयता"
 
-#: app/templates/team/salaries_list.html:15
+#: app/templates/team/salaries_list.html:27
 msgid "رقم الجواز"
 msgstr "पासपोर्ट नंबर"
 
-#: app/templates/team/salaries_list.html:16
+#: app/templates/team/salaries_list.html:28
 msgid "رقم الحدود"
 msgstr "बॉर्डर नंबर"
 
-#: app/templates/team/salaries_list.html:17
-msgid "نقداً / تحويل بنكي"
-msgstr "नकद / बैंक हस्तांतरण"
+#: app/templates/team/salaries_list.html:32
+msgid "نقداً"
+msgstr "नकद"
+
+#: app/templates/team/salaries_list.html:39
+msgid "طريقة الدفع تحويل — اسم مستلم الحوالة يُحدَّد كل شهر بشكل منفصل وقت تأكيد الراتب (يختلف حسب الشهر)."
+msgstr "भुगतान विधि स्थानांतरण है — प्राप्तकर्ता का नाम वेतन की पुष्टि के समय हर महीने अलग से निर्धारित किया जाता है (महीने के अनुसार बदल सकता है)।"
 
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"
@@ -10155,4 +10180,7 @@ msgstr "अभी तक कोई अतिरिक्त नामित ग�
 
 #~ msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
 #~ msgstr "प्रत्येक टीम सदस्य का निश्चित मूल वेतन — मासिक वेतन पर्ची तैयार करते समय (बोनस और कटौती के साथ) आधार बिंदु के रूप में उपयोग किया जाता है। खाली का अर्थ है अभी तक कोई वेतन निर्धारित नहीं है।"
+
+#~ msgid "نقداً / تحويل بنكي"
+#~ msgstr "नकद / बैंक हस्तांतरण"
 

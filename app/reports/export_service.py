@@ -409,11 +409,15 @@ def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
         y -= 5.5 * mm
     c.drawRightString(right_margin, y, ar(f"فترة الراتب: {_ARABIC_MONTHS.get(payroll.month, payroll.month)} {payroll.year}"))
     y -= 5.5 * mm
-    if payroll.user.payment_method:
-        c.drawRightString(right_margin, y, ar(f"طريقة الدفع: {payroll.user.payment_method}"))
+    if payroll.user.payment_method == "تحويل بنكي":
+        # حوالة (بند إضافي 244) — بطلبك: "من المحوّل ومن مستلم الحوالة"
+        # صريحين. المحوّل = صاحب الحلال (مذكور فوق أصلاً)، والمستلم
+        # حقل مستقل قابل للاستبدال كل شهر (Payroll.recipient_name).
+        recipient = payroll.recipient_name or payroll.user.name
+        c.drawRightString(right_margin, y, ar(f"طريقة الدفع: تحويل بنكي — من {farm_settings.farm_name or 'صاحب الحلال'} إلى {recipient}"))
         y -= 5.5 * mm
-    if payroll.recipient_name:
-        c.drawRightString(right_margin, y, ar(f"اسم المستلم (حوالة): {payroll.recipient_name}"))
+    elif payroll.user.payment_method:
+        c.drawRightString(right_margin, y, ar(f"طريقة الدفع: {payroll.user.payment_method}"))
         y -= 5.5 * mm
 
     y -= 10 * mm
