@@ -610,7 +610,9 @@
       {% set _feed_endpoints = ['feed.items_list', 'feed.items_new', 'feed.items_edit', 'feed.movements_list',
                                  'feed.movements_new', 'feed.barn_plans_list', 'feed.barn_plans_new',
                                  'feed.calculator', 'feed.fcr_report', 'feed.optimizer', 'feed.barn_report',
-                                 'warehouses.warehouses_list'] %}
+                                 'feed.rations_list', 'feed.rations_new', 'feed.ration_detail', 'feed.purchase_new',
+                                 'warehouses.warehouses_list', 'warehouses.warehouses_new', 'warehouses.item_breakdown',
+                                 'warehouses.item_count', 'warehouses.inventory_counts_list'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _feed_endpoints else '' }}>
         <summary>{{ nav_icon('feed') }}{{ _('العلف') }}</summary>
         <div class="drawer-grid">
