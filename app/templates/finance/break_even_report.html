@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="notice">
-    {{ _('"سعر التعادل" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. "الهامش" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة "بيانات تخطيط السوق" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق.') }}
+    {{ _('"سعر التعادل" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. "القيمة التقديرية" تُحسب تلقائياً من متوسط أسعار بيع حقيقية لرؤوس مشابهة (نفس النوع/الجنس، وعمر قريب) آخر 90 يوم — يتحدّث كل مرة تفتح الشاشة، ما يصدأ. لو ما فيه مبيعات مشابهة كافية، يرجع للقيمة اليدوية المسجَّلة (شاشة "بيانات تخطيط السوق") لو موجودة، وإلا الهامش ما يُحسب (ما نخترع سعر سوق).') }}
   </div>
 </div>
 
@@ -27,7 +27,13 @@
       <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id, tab='finance') }}">{{ r.animal.animal_no }}</a></td>
       <td>{{ "%.2f"|format(r.break_even_price) }}</td>
       <td>
-        {% if r.estimated_value is not none %}{{ "%.2f"|format(r.estimated_value) }}
+        {% if r.estimated_value is not none %}
+        {{ "%.2f"|format(r.estimated_value) }}
+        {% if r.estimate_source == 'auto' %}
+        <span style="color:var(--muted); font-size:11px; display:block;">📊 {{ _('من %(n)s مبيعات مشابهة', n=r.estimate_sample_count) }}</span>
+        {% else %}
+        <span style="color:var(--muted); font-size:11px; display:block;">✍️ {{ _('تقدير يدوي') }}</span>
+        {% endif %}
         {% else %}<a href="{{ url_for('core.animal_workflow', animal_id=r.animal.id) }}" style="font-size:12px;">{{ _('أضف قيمة تقديرية') }}</a>{% endif %}
       </td>
       <td>

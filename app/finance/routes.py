@@ -76,11 +76,13 @@ def break_even_export():
     from app.reports import export_service as ex
     from app.core.animal_profile_service import break_even_summary
     rows = break_even_summary()
-    columns = ["رقم الرأس", "سعر التعادل", "القيمة التقديرية", "الهامش"]
+    columns = ["رقم الرأس", "سعر التعادل", "القيمة التقديرية", "مصدر التقدير", "الهامش"]
+    _source_label = {"auto": "مبيعات مشابهة", "manual": "تقدير يدوي"}
     table_rows = [
         [
             r["animal"].animal_no, r["break_even_price"],
             r["estimated_value"] if r["estimated_value"] is not None else "-",
+            _source_label.get(r["estimate_source"], "-"),
             r["margin"] if r["margin"] is not None else "-",
         ]
         for r in rows

@@ -12,12 +12,18 @@ Disease...) مو من CycleEvent — CycleEvent مخصص لمحاسبة بواب
 صفحة "دورة الإنتاج" الحالية (animal_workflow.html) تبقى المصدر لأحداث
 البوابات، وهذه الصفحة تكمّلها بمحتوى السجلات نفسها.
 """
-from datetime import date
+from datetime import date, timedelta
+from app.extensions import db
 from app.models import (
     Animal, VetVisit, Disease, Vaccination, Finance,
     Mating, Pregnancy, SonarResult, TwinEstrusProgram,
     AnimalWeight, AnimalNote, MilkRecord, FeedBarnPlan,
 )
+
+# تقدير القيمة السوقية من مبيعات حقيقية مشابهة (بند إضافي 254)
+COMPARABLE_SALES_WINDOW_DAYS = 90
+COMPARABLE_AGE_TOLERANCE_DAYS = 60
+COMPARABLE_SALES_MIN_SAMPLE = 2
 
 
 def _age_label(birth_date) -> str | None:
@@ -227,13 +233,55 @@ def get_profile(animal: Animal) -> dict:
     }
 
 
+def estimate_market_value_from_comparable_sales(animal: Animal) -> dict | None:
+    """يقدّر القيمة السوقية لرأس نشط من عمليات بيع حقيقية سابقة لرؤوس
+    مشابهة (بند إضافي 254، طلبك الصريح: "ليش الهامش ما يعتمد على أرقام
+    البيع الذي يتم عن طريق المزرعة") — بدل قيمة يدوية تصدأ (كانت
+    القيمة الوحيدة المتاحة سابقاً، `ProductionWorkflow.estimated_value`)،
+    يحسب حي من مبيعات حقيقية (نفس النوع + الجنس، وعمر قريب لو متوفر
+    تاريخ ميلاد الطرفين) ضمن آخر `COMPARABLE_SALES_WINDOW_DAYS` يوم —
+    يتحدّث تلقائياً كل مرة تُفتح الشاشة، ما يصدأ أبداً. يرجع `None`
+    صراحةً لو ما فيه عينة كافية (ما نخترع رقم من عدم)."""
+    cutoff = date.today() - timedelta(days=COMPARABLE_SALES_WINDOW_DAYS)
+    sales = (
+        db.session.query(Finance, Animal)
+        .join(Animal, Finance.related_animal_id == Animal.id)
+        .filter(
+            Finance.operation_type == "sale", Finance.is_cancelled.is_(False),
+            Finance.date >= cutoff, Animal.id != animal.id,
+            Animal.species == animal.species, Animal.gender == animal.gender,
+        ).all()
+    )
+    if not sales:
+        return None
+
+    target_age_days = (date.today() - animal.birth_date).days if animal.birth_date else None
+    narrow = []
+    for fin, other in sales:
+        if target_age_days is not None and other.birth_date:
+            age_at_sale = (fin.date - other.birth_date).days
+            if abs(age_at_sale - target_age_days) <= COMPARABLE_AGE_TOLERANCE_DAYS:
+                narrow.append(fin.amount)
+
+    prices = narrow if len(narrow) >= COMPARABLE_SALES_MIN_SAMPLE else [fin.amount for fin, _ in sales]
+    if len(prices) < COMPARABLE_SALES_MIN_SAMPLE:
+        return None
+
+    return {"value": round(sum(prices) / len(prices), 2), "sample_count": len(prices),
+            "narrowed_by_age": narrow is prices}
+
+
 def break_even_summary() -> list[dict]:
-    """محرك التحليل المالي ونقطة التعادل (بند إضافي 176) — لكل رأس
-    نشط: التكلفة الإجمالية المقدَّرة منذ الدخول (= سعر البيع الأدنى
-    لتحقيق التعادل، نفس رقم `total_cost_estimate` بتقرير الرأس الفردي)
-    مقابل القيمة التقديرية المسجَّلة (لو موجودة بـ`ProductionWorkflow.
-    estimated_value` من شاشة "بيانات تخطيط السوق"). لو ما فيه قيمة
-    تقديرية مسجَّلة، الهامش ما يُحسب (ما نخترع سعر سوق غير موجود)."""
+    """محرك التحليل المالي ونقطة التعادل (بند إضافي 176، محدَّثة ببند
+    254) — لكل رأس نشط: التكلفة الإجمالية المقدَّرة منذ الدخول (= سعر
+    البيع الأدنى لتحقيق التعادل، نفس رقم `total_cost_estimate` بتقرير
+    الرأس الفردي) مقابل قيمة تقديرية للبيع. أولوية مصدر القيمة
+    التقديرية: (1) تقدير محسوب حي من مبيعات حقيقية مشابهة
+    (`estimate_market_value_from_comparable_sales` — يتحدّث تلقائياً
+    كل مرة، ما يصدأ)، (2) وإلا القيمة اليدوية المسجَّلة
+    (`ProductionWorkflow.estimated_value` من شاشة "بيانات تخطيط
+    السوق")، (3) وإلا ما فيه قيمة أصلاً — الهامش ما يُحسب (ما نخترع
+    سعر سوق غير موجود)."""
     animals = Animal.query.filter_by(status="active").all()
     from app.core.finance_report_service import average_head_count_between, build_entry_exit_maps
     entry_exit_maps = build_entry_exit_maps()
@@ -269,13 +317,32 @@ def break_even_summary() -> list[dict]:
         break_even_price = round(
             purchase_cost + direct_medical_cost + feed_cost_estimate["total"] + indirect_cost_share, 2
         )
+        # القيمة التقديرية (بند إضافي 254) — الأولوية لتقدير محسوب من
+        # مبيعات حقيقية مشابهة (يتحدّث تلقائياً، ما يصدأ)، وإلا رجوع
+        # للقيمة اليدوية (بند 176، شاشة "بيانات تخطيط السوق") لو
+        # مسجَّلة، وإلا ما فيه قيمة أصلاً (الهامش ما يُحسب).
+        auto_estimate = estimate_market_value_from_comparable_sales(animal)
         wf = animal.workflow
-        estimated_value = wf.estimated_value if wf and wf.estimated_value else None
+        manual_value = wf.estimated_value if wf and wf.estimated_value else None
+        if auto_estimate:
+            estimated_value = auto_estimate["value"]
+            estimate_source = "auto"
+            estimate_sample_count = auto_estimate["sample_count"]
+        elif manual_value is not None:
+            estimated_value = manual_value
+            estimate_source = "manual"
+            estimate_sample_count = None
+        else:
+            estimated_value = None
+            estimate_source = None
+            estimate_sample_count = None
         margin = round(estimated_value - break_even_price, 2) if estimated_value is not None else None
         rows.append({
             "animal": animal,
             "break_even_price": break_even_price,
             "estimated_value": estimated_value,
+            "estimate_source": estimate_source,
+            "estimate_sample_count": estimate_sample_count,
             "margin": margin,
             "at_risk": margin is not None and margin < 0,
         })

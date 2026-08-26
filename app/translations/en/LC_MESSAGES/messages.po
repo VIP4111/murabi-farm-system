@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:26+0300\n"
+"POT-Creation-Date: 2026-08-27 00:44+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -6432,8 +6432,8 @@ msgid "رجوع للمالية"
 msgstr "Back to Finance"
 
 #: app/templates/finance/break_even_report.html:12
-msgid "\"سعر التعادل\" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. \"الهامش\" يُحسب فقط لو عندك قيمة تقديرية مسجَّلة لهذا الرأس (شاشة \"بيانات تخطيط السوق\" بصفحة دورة الإنتاج) — النظام ما يخترع سعر سوق."
-msgstr "\"Break-even price\" = all estimated costs for this animal since entry (purchase + treatment + feed + its share of indirect expenses) — the lowest sale price that actually covers your cost; selling below it is a net loss. \"Margin\" is only calculated if you have a recorded estimated value for this animal (the \"market planning data\" screen on the production cycle page) — the system doesn't invent a market price."
+msgid "\"سعر التعادل\" = كل التكاليف المقدَّرة لهذا الرأس منذ دخوله (شراء + علاج + علف + نصيبه من المصاريف غير المباشرة) — أقل سعر بيع يغطي تكلفتك فعلياً، أي بيع تحته خسارة صافية. \"القيمة التقديرية\" تُحسب تلقائياً من متوسط أسعار بيع حقيقية لرؤوس مشابهة (نفس النوع/الجنس، وعمر قريب) آخر 90 يوم — يتحدّث كل مرة تفتح الشاشة، ما يصدأ. لو ما فيه مبيعات مشابهة كافية، يرجع للقيمة اليدوية المسجَّلة (شاشة \"بيانات تخطيط السوق\") لو موجودة، وإلا الهامش ما يُحسب (ما نخترع سعر سوق)."
+msgstr "\"Break-even price\" = all estimated costs for this animal since entry (purchase + treatment + feed + its share of indirect expenses) — the lowest sale price that actually covers your cost; selling below it is a net loss. The \"estimated value\" is calculated automatically from the average of real sale prices for comparable animals (same type/gender, similar age) over the last 90 days — it updates every time you open the screen, never goes stale. If there aren't enough comparable sales, it falls back to the manually recorded value (\"Market Planning Data\" screen) if present, otherwise the margin isn't calculated (we don't invent a market price)."
 
 #: app/templates/finance/break_even_report.html:17
 msgid "رؤوس بهامش سالب (خطر خسارة)"
@@ -6458,11 +6458,20 @@ msgstr "Estimated value"
 msgid "الهامش"
 msgstr "Margin"
 
-#: app/templates/finance/break_even_report.html:31
+#: app/templates/finance/break_even_report.html:33
+#, python-format
+msgid "من %(n)s مبيعات مشابهة"
+msgstr "from %(n)s comparable sales"
+
+#: app/templates/finance/break_even_report.html:35
+msgid "تقدير يدوي"
+msgstr "Manual estimate"
+
+#: app/templates/finance/break_even_report.html:37
 msgid "أضف قيمة تقديرية"
 msgstr "Add an estimated value"
 
-#: app/templates/finance/break_even_report.html:40
+#: app/templates/finance/break_even_report.html:46
 msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "No active animals to analyze."
 
