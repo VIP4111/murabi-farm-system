@@ -268,15 +268,49 @@ def _computed_cost(pharmacy: Pharmacy | None, quantity_used: float | None, manua
     return manual_cost or 0
 
 
+def _is_medicine_derived_cost(pharmacy: Pharmacy | None, quantity_used: float | None) -> bool:
+    return bool(pharmacy and quantity_used and pharmacy.unit_price)
+
+
+def _link_finance_for_cost(*, cost: float, pharmacy: Pharmacy | None, quantity_used: float | None,
+                            date_, category: str, item: str, animal_id: int | None) -> int | None:
+    """يربط تكلفة زيارة/مرض/تطعيم بعملية مالية حقيقية (بند إضافي 261)
+    — قبل هذا البند، `cost` كان يُخزَّن على السجل نفسه بس، بدون أي أثر
+    بسجل "المالية" العام (إجمالي الخارج، صافي الربح، تكلفة الرأس
+    الشهرية...). **مهم**: لو التكلفة محسوبة من استهلاك دواء صيدلية
+    (`quantity_used × pharmacy.unit_price`)، **ما نُنشئ عملية مالية
+    جديدة هنا** — قيمة ذلك الدواء اتُّحسبت فعلياً وقت شرائه (بند 259،
+    `stock_purchase_service`)، فإنشاء عملية ثانية هنا يكون احتساب
+    مزدوج لنفس المبلغ. نُنشئ عملية بس للتكلفة اليدوية (أجرة كشف/خدمة
+    الطبيب مثلاً) اللي ما لها أي أثر مالي مسجَّل بمكان ثاني."""
+    if cost <= 0 or _is_medicine_derived_cost(pharmacy, quantity_used):
+        return None
+    from app.models import Finance
+    fin = Finance(
+        date=date_, operation_type="expense", category=category,
+        item=item, amount=cost, related_animal_id=animal_id,
+    )
+    db.session.add(fin)
+    db.session.flush()
+    return fin.id
+
+
 def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
                       pharmacy_id=None, quantity_used=None, cost=0, notes=None) -> VetVisit:
+    from app.models import Animal
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
     _require_quantity_if_medicine(pharmacy, quantity_used)
+    final_cost = _computed_cost(pharmacy, quantity_used, cost)
+    animal = Animal.query.get(animal_id)
+    finance_id = _link_finance_for_cost(
+        cost=final_cost, pharmacy=pharmacy, quantity_used=quantity_used, date_=date_,
+        category="زيارة بيطرية", item=animal.animal_no if animal else None, animal_id=animal_id,
+    )
     visit = VetVisit(
         animal_id=animal_id, doctor_id=doctor_id, date=date_, diagnosis=diagnosis,
         pharmacy_id=pharmacy_id, quantity_used=quantity_used,
-        cost=_computed_cost(pharmacy, quantity_used, cost), notes=notes,
-        withdrawal_until=_withdrawal_until(date_, pharmacy),
+        cost=final_cost, notes=notes,
+        withdrawal_until=_withdrawal_until(date_, pharmacy), finance_id=finance_id,
     )
     _deduct_if_used(pharmacy, quantity_used)
     db.session.add(visit)
@@ -291,13 +325,20 @@ def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
 
 def record_disease(*, actor_user_id, animal_id, disease_name, date_, severity,
                     pharmacy_id=None, quantity_used=None, treatment_cost=0) -> Disease:
+    from app.models import Animal
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
     _require_quantity_if_medicine(pharmacy, quantity_used)
+    final_cost = _computed_cost(pharmacy, quantity_used, treatment_cost)
+    animal = Animal.query.get(animal_id)
+    finance_id = _link_finance_for_cost(
+        cost=final_cost, pharmacy=pharmacy, quantity_used=quantity_used, date_=date_,
+        category="علاج مرض", item=animal.animal_no if animal else None, animal_id=animal_id,
+    )
     disease = Disease(
         animal_id=animal_id, disease_name=disease_name, date=date_, severity=severity,
         pharmacy_id=pharmacy_id, quantity_used=quantity_used,
-        treatment_cost=_computed_cost(pharmacy, quantity_used, treatment_cost),
-        withdrawal_until=_withdrawal_until(date_, pharmacy),
+        treatment_cost=final_cost,
+        withdrawal_until=_withdrawal_until(date_, pharmacy), finance_id=finance_id,
     )
     _deduct_if_used(pharmacy, quantity_used)
     db.session.add(disease)

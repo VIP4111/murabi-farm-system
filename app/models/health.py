@@ -117,6 +117,13 @@ class VetVisit(db.Model):
     # فترة السحب المحسوبة تلقائياً من دواء الصيدلية (انظر health_service.py)
     withdrawal_until = db.Column(db.Date, nullable=True)
 
+    # ربط بعملية مالية حقيقية (بند إضافي 261) — قبل هذا البند، `cost`
+    # كان يُخزَّن هنا بس، بدون أي أثر بسجل "المالية" العام (إجمالي
+    # الخارج، صافي الربح، تكلفة الرأس الشهرية...). لو التكلفة > 0،
+    # health_service.record_vet_visit() يُنشئ Finance مرتبطة تلقائياً.
+    finance_id = db.Column(db.Integer, db.ForeignKey("finance.id"), nullable=True)
+    finance = db.relationship("Finance")
+
     created_at = db.Column(db.DateTime, default=_now)
 
 
@@ -148,6 +155,12 @@ class Disease(db.Model):
     closed_by = db.relationship("User")
 
     withdrawal_until = db.Column(db.Date, nullable=True)
+
+    # ربط بعملية مالية حقيقية (بند إضافي 261) — نفس مبدأ VetVisit.finance_id
+    # أعلاه، بس لتكلفة علاج المرض (`treatment_cost`).
+    finance_id = db.Column(db.Integer, db.ForeignKey("finance.id"), nullable=True)
+    finance = db.relationship("Finance")
+
     created_at = db.Column(db.DateTime, default=_now)
 
 
