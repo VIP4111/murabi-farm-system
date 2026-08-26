@@ -188,6 +188,10 @@ class FarmSettings(db.Model):
     # ونفس نقطة التدارك عند أول طلب باليوم.
     last_daily_email_report_sent = db.Column(db.Date, nullable=True)
 
+    # ملخص يومي موحّد بتيليجرام (بند إضافي 238) — حارس منفصل عن البريد
+    # عمداً، عشان فشل قناة وحدة ما يوقف الثانية.
+    last_daily_telegram_report_sent = db.Column(db.Date, nullable=True)
+
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
 
     @classmethod

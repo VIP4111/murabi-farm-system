@@ -82,6 +82,23 @@ def send_test_email_report():
     return redirect(request.referrer or url_for("core.home"))
 
 
+@core_bp.route("/settings/send-test-telegram-report", methods=["POST"])
+@login_required
+def send_test_telegram_report():
+    """زر "أرسل ملخص تيليجرام تجريبي الآن" (بند إضافي 238) — نفس نمط
+    زر البريد التجريبي بالضبط، يتأكد إن التوكن/الـChat ID شغّالين
+    بدون انتظار الجدولة اليومية."""
+    if not current_user.has_permission("reports.manage"):
+        abort(403)
+    from app.core.daily_telegram_report_service import send_daily_report_now
+    sent = send_daily_report_now()
+    if sent:
+        flash(f"تم إرسال الملخص فعلياً لعدد {sent} من المستخدمين.", "success")
+    else:
+        flash("ما نجح أي إرسال — تأكد إن Chat ID مسجَّل لك وإن توكن تيليجرام مضبوط صحيح (راجع تشخيص بوت تيليجرام بالإعدادات).", "error")
+    return redirect(request.referrer or url_for("core.home"))
+
+
 @core_bp.route("/catalog/<token>")
 def sales_catalog(token):
     """كتالوج مبيعات عام (بند إضافي 185) — بدون تسجيل دخول، رابط

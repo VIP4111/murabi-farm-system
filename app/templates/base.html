@@ -720,6 +720,13 @@
           <button type="submit" class="btn light" style="cursor:pointer;">📧 {{ _('أرسل تقرير تجريبي الآن') }}</button>
         </form>
       </div>
+      <div class="drawer-group">
+        <div class="drawer-group-title">{{ _('الملخص اليومي بتيليجرام') }}</div>
+        <form method="post" action="{{ url_for('core.send_test_telegram_report') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn light" style="cursor:pointer;">📨 {{ _('أرسل ملخص تجريبي الآن') }}</button>
+        </form>
+      </div>
       {% endif %}
 
       <div class="drawer-group">

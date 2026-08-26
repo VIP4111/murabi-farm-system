@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 09:08+0300\n"
+"POT-Creation-Date: 2026-08-26 09:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -244,7 +244,7 @@ msgstr "በረት ማዛወር (የፊዚዮሎጂ ሁኔታ)"
 msgid "إكمال بيانات حيوان"
 msgstr "የእንስሳ መረጃ ማሟላት"
 
-#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:788
+#: app/__init__.py:205 app/team/routes.py:31 app/templates/base.html:795
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "አስቸኳይ ሁኔታ"
@@ -289,7 +289,7 @@ msgstr "ሌላ"
 msgid "نقل حظائر جماعي"
 msgstr "የቡድን በረት ማዛወር"
 
-#: app/__init__.py:226 app/core/routes.py:384
+#: app/__init__.py:226 app/core/routes.py:401
 #: app/templates/animals_list.html:78
 msgid "عزل جماعي"
 msgstr "የቡድን መገለል"
@@ -950,59 +950,59 @@ msgstr "ቢያንስ አንድ መጠባበቂያ አለ (ንጥል 34)።"
 msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
 msgstr "እስካሁን መጠባበቂያ አልወሰዱም — በቅንብሮች ማያ ገጽ ላይ \"መጠባበቂያ\" ይመልከቱ (ንጥል 34)።"
 
-#: app/core/routes.py:376 app/templates/animals_list.html:67
+#: app/core/routes.py:393 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "የቡድን ክብደት"
 
-#: app/core/routes.py:377 app/templates/animals_list.html:76
+#: app/core/routes.py:394 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr "የቡድን ክትባት"
 
-#: app/core/routes.py:378 app/templates/animals_list.html:68
+#: app/core/routes.py:395 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr "የቡድን ማስታወሻ"
 
-#: app/core/routes.py:379 app/templates/animals_list.html:69
+#: app/core/routes.py:396 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr "የቡድን በረት ማዛወር"
 
-#: app/core/routes.py:380 app/templates/animals_list.html:70
+#: app/core/routes.py:397 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr "የቡድን ዓላማ መወሰን (ማራባት/ማድለብ/ሽያጭ)"
 
-#: app/core/routes.py:381 app/templates/animals_list.html:71
+#: app/core/routes.py:398 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr "የቡድን ሽያጭ"
 
-#: app/core/routes.py:382 app/templates/animals_list.html:72
+#: app/core/routes.py:399 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr "የቡድን ሞት መመዝገብ"
 
-#: app/core/routes.py:383 app/templates/animals_list.html:77
+#: app/core/routes.py:400 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr "የቡድን ሕክምና/በሽታ"
 
-#: app/core/routes.py:385 app/templates/animals_list.html:82
+#: app/core/routes.py:402 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr "የቡድን ሶናር ምርመራ"
 
-#: app/core/routes.py:386 app/templates/animals_list.html:79
+#: app/core/routes.py:403 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "የታቀደ የሕክምና ዕቅድ (የማስፈጸም ማረጋገጫ በመጠበቅ ላይ)"
 
-#: app/core/routes.py:784 app/templates/animal_form.html:35
+#: app/core/routes.py:801 app/templates/animal_form.html:35
 msgid "إضافة فصيلة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
-#: app/core/routes.py:786
+#: app/core/routes.py:803
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "አዲስ ዝርያ በራስ-ሰር ወደ ምርት ዑደት ሞተር (ማዳቀል/እርግዝና/ጡት ማስጣት) አይገባም — ለእሱ ልዩ ስርዓት እስኪገነባ ድረስ እንደ ሰጎን በደህንነት ይያዛል።"
 
-#: app/core/routes.py:805 app/templates/animal_form.html:45
+#: app/core/routes.py:822 app/templates/animal_form.html:45
 msgid "إضافة سلالة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
-#: app/core/routes.py:849 app/templates/animal_form.html:24
+#: app/core/routes.py:866 app/templates/animal_form.html:24
 msgid "إضافة لون جديد"
 msgstr "አዲስ ቀለም ያክሉ"
 
@@ -3653,17 +3653,25 @@ msgstr "የዕለታዊ ኢሜይል ሪፖርት"
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "የሙከራ ሪፖርት አሁን ላክ"
 
-#: app/templates/base.html:726 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:724
+msgid "الملخص اليومي بتيليجرام"
+msgstr "ዕለታዊ የቴሌግራም ማጠቃለያ"
+
+#: app/templates/base.html:727
+msgid "أرسل ملخص تجريبي الآن"
+msgstr "የሙከራ ማጠቃለያ አሁን ላክ"
+
+#: app/templates/base.html:733 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "ቋንቋ"
 
-#: app/templates/base.html:739
+#: app/templates/base.html:746
 msgid "خروج"
 msgstr "ውጣ"
 
-#: app/templates/base.html:776
+#: app/templates/base.html:783
 msgid "تجاهل"
 msgstr "ችላ በል"
 

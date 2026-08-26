@@ -52,6 +52,15 @@ def _generate_if_needed_today():
         from flask import current_app
         current_app.logger.warning("daily_email_report_service failed: %s", e)
 
+    # ملخص يومي موحّد بتيليجرام (بند إضافي 238) — نفس الحارس والفلسفة،
+    # قناة مستقلة عن البريد فوق (حارسها الخاص last_daily_telegram_report_sent).
+    from app.core import daily_telegram_report_service
+    try:
+        daily_telegram_report_service.generate_daily_telegram_report_if_needed()
+    except Exception as e:
+        from flask import current_app
+        current_app.logger.warning("daily_telegram_report_service failed: %s", e)
+
 
 def _run_daily_tasks_job(app):
     with app.app_context():
