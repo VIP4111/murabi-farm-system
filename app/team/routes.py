@@ -967,6 +967,27 @@ def employee_of_month_confirm(record_id):
     except (KeyError, ValueError):
         flash("لازم تحدد مبلغ المكافأة", "error")
         return redirect(url_for("team.employee_of_month"))
-    employee_of_month_service.confirm(record, actor=current_user, bonus_amount=bonus)
+    recipient_name = request.form.get("recipient_name")
+    employee_of_month_service.confirm(record, actor=current_user, bonus_amount=bonus, recipient_name=recipient_name)
     flash(f"تم التأكيد — رحّلت مكافأة {record.user.name} ({bonus}) لسجل المالية.", "success")
     return redirect(url_for("team.employee_of_month"))
+
+
+@team_bp.route("/employee-of-month/<int:record_id>/receipt")
+@login_required
+def employee_of_month_receipt(record_id):
+    """وصل استلام مكافأة موظف الشهر (بند إضافي 240) — يطلع بس بعد
+    التأكيد الفعلي (لازم مبلغ مسجَّل)."""
+    if current_user.role.name != "owner":
+        abort(403)
+    from flask import send_file
+    from app.models import EmployeeOfMonth, FarmSettings
+    from app.reports.export_service import build_employee_of_month_receipt_pdf
+
+    record = EmployeeOfMonth.query.get_or_404(record_id)
+    if record.status != "confirmed":
+        flash("هذا السجل لسا ما تأكَّد — ما فيه وصل يُطبع.", "error")
+        return redirect(url_for("team.employee_of_month"))
+    buf = build_employee_of_month_receipt_pdf(record, FarmSettings.get())
+    return send_file(buf, mimetype="application/pdf", as_attachment=True,
+                      download_name=f"موظف_الشهر_{record.month}_{record.year}.pdf")

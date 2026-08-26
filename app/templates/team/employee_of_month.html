@@ -27,13 +27,15 @@
       <td>{{ r.bonus_amount if r.bonus_amount is not none else '-' }}</td>
       <td>
         {% if r.status == 'pending_confirmation' %}
-        <form method="post" action="{{ url_for('team.employee_of_month_confirm', record_id=r.id) }}" style="display:flex; gap:6px; align-items:center;" data-offline>
+        <form method="post" action="{{ url_for('team.employee_of_month_confirm', record_id=r.id) }}" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;" data-offline>
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input type="number" name="bonus_amount" step="0.01" min="0" required placeholder="{{ _('مبلغ المكافأة') }}" style="width:120px; margin:0;">
+          <input type="text" name="recipient_name" placeholder="{{ _('اسم المستلم (اختياري، لو حوالة)') }}" style="width:180px; margin:0;">
           <button class="btn" type="submit" style="padding:6px 12px; font-size:12.5px;">{{ _('تأكيد') }}</button>
         </form>
         {% else %}
-        <span style="color:var(--muted); font-size:12px;">{{ _('أكَّدها') }} {{ r.confirmed_by.name if r.confirmed_by else '-' }}</span>
+        <span style="color:var(--muted); font-size:12px; display:block; margin-bottom:4px;">{{ _('أكَّدها') }} {{ r.confirmed_by.name if r.confirmed_by else '-' }}</span>
+        <a class="btn light" href="{{ url_for('team.employee_of_month_receipt', record_id=r.id) }}" style="padding:5px 10px; font-size:12px;">🖨️ {{ _('طباعة الوصل') }}</a>
         {% endif %}
       </td>
     </tr>

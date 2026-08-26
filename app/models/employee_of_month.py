@@ -30,6 +30,12 @@ class EmployeeOfMonth(db.Model):
     finance_id = db.Column(db.Integer, db.ForeignKey("finance.id"), nullable=True)
     finance = db.relationship("Finance")
 
+    # اسم مستلم الحوالة ببلد الاستلام (بند إضافي 240) — بطلبك الصريح:
+    # عمال كثير يحوّلون رواتبهم لشخص ثاني (أهلهم) ببلدهم، فاسم المستلم
+    # الفعلي يختلف عن اسم العامل نفسه. اختياري — فاضي لو الاستلام
+    # مباشر للعامل نفسه.
+    recipient_name = db.Column(db.String(120), nullable=True)
+
     confirmed_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     confirmed_by = db.relationship("User", foreign_keys=[confirmed_by_id])
     confirmed_at = db.Column(db.DateTime, nullable=True)

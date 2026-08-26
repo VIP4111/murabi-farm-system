@@ -58,9 +58,11 @@ def pending_count() -> int:
     return EmployeeOfMonth.query.filter_by(status="pending_confirmation").count()
 
 
-def confirm(record: EmployeeOfMonth, *, actor, bonus_amount: float) -> EmployeeOfMonth:
+def confirm(record: EmployeeOfMonth, *, actor, bonus_amount: float, recipient_name: str | None = None) -> EmployeeOfMonth:
     """تأكيد صاحب الحلال + تحديد مبلغ المكافأة — يسجّل حركة مالية
-    "مصروف" فعلية باسم العامل ويحوّل حالة السجل لـ"confirmed"."""
+    "مصروف" فعلية باسم العامل ويحوّل حالة السجل لـ"confirmed".
+    `recipient_name` اختياري (بند إضافي 240) — اسم مستلم الحوالة
+    الفعلي ببلد الاستلام، لو مختلف عن العامل نفسه."""
     from datetime import datetime, timezone
     fin = Finance(
         date=date.today(), operation_type="expense", category="مكافأة موظف الشهر",
@@ -72,6 +74,7 @@ def confirm(record: EmployeeOfMonth, *, actor, bonus_amount: float) -> EmployeeO
 
     record.status = "confirmed"
     record.bonus_amount = bonus_amount
+    record.recipient_name = (recipient_name or "").strip() or None
     record.finance_id = fin.id
     record.confirmed_by_id = actor.id
     record.confirmed_at = datetime.now(timezone.utc)
