@@ -935,3 +935,38 @@ def report_delete(report_id):
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
         return _redirect_back(report_id)
+
+
+# ---------- موظف الشهر (بند إضافي 239) ----------
+
+@team_bp.route("/employee-of-month")
+@login_required
+def employee_of_month():
+    if current_user.role.name != "owner":
+        abort(403)
+    from app.models import EmployeeOfMonth
+    from app.team.employee_of_month_service import select_employee_of_month_if_needed
+    select_employee_of_month_if_needed()
+    records = EmployeeOfMonth.query.order_by(EmployeeOfMonth.year.desc(), EmployeeOfMonth.month.desc()).all()
+    return render_template("team/employee_of_month.html", records=records)
+
+
+@team_bp.route("/employee-of-month/<int:record_id>/confirm", methods=["POST"])
+@login_required
+def employee_of_month_confirm(record_id):
+    if current_user.role.name != "owner":
+        abort(403)
+    from app.models import EmployeeOfMonth
+    from app.team import employee_of_month_service
+    record = EmployeeOfMonth.query.get_or_404(record_id)
+    if record.status != "pending_confirmation":
+        flash("هذا السجل أُكِّد مسبقاً", "error")
+        return redirect(url_for("team.employee_of_month"))
+    try:
+        bonus = float(request.form["bonus_amount"])
+    except (KeyError, ValueError):
+        flash("لازم تحدد مبلغ المكافأة", "error")
+        return redirect(url_for("team.employee_of_month"))
+    employee_of_month_service.confirm(record, actor=current_user, bonus_amount=bonus)
+    flash(f"تم التأكيد — رحّلت مكافأة {record.user.name} ({bonus}) لسجل المالية.", "success")
+    return redirect(url_for("team.employee_of_month"))

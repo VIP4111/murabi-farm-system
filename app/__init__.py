@@ -61,6 +61,15 @@ def create_app(config_class=Config):
         theme = current_user.theme if current_user.is_authenticated else "light"
         return {"html_theme": theme}
 
+    @app.context_processor
+    def inject_employee_of_month_badge():
+        # فقاعة "موظف الشهر" بانتظار التأكيد (بند إضافي 239) — لصاحب
+        # الحلال بس، نفس مكان فقاعات التنبيه الثانية بالقائمة الجانبية.
+        if current_user.is_authenticated and current_user.role.name == "owner":
+            from app.team.employee_of_month_service import pending_count
+            return {"employee_of_month_pending": pending_count()}
+        return {"employee_of_month_pending": 0}
+
     from app.models import User
 
     @login_manager.user_loader
