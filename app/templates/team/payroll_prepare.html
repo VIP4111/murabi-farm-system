@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:520px;">
+  <h2>💰 {{ _('تجهيز راتب') }} — {{ user.name }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('الفترة:') }} {{ month }}/{{ year }}
+    {% if payroll.status == 'confirmed' %} — <span class="badge on">✅ {{ _('مؤكَّد') }}</span>{% endif %}
+  </p>
+
+  <form method="post" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <fieldset {{ 'disabled' if payroll.status == 'confirmed' }} style="border:none; padding:0; margin:0;">
+    <label>{{ _('الراتب الأساسي') }}</label>
+    <input name="base_salary" type="number" step="0.01" min="0" value="{{ payroll.base_salary }}">
+    <label>{{ _('المكافأة (اختياري)') }}</label>
+    <input name="bonus_amount" type="number" step="0.01" min="0" value="{{ payroll.bonus_amount }}">
+    <label>{{ _('اسم المستلم (اختياري، لو حوالة)') }}</label>
+    <input name="recipient_name" value="{{ payroll.recipient_name or '' }}">
+
+    <div style="margin-top:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <label style="margin:0;">{{ _('الخصومات') }}</label>
+        <button type="button" id="addDeductionBtn" class="btn light" style="padding:5px 12px; font-size:12px;">+ {{ _('إضافة خصم') }}</button>
+      </div>
+      <div id="deductionRows">
+        {% for d in payroll.deductions %}
+        <div class="deduction-row" style="display:flex; gap:6px; margin-top:8px;">
+          <input type="number" name="deduction_amount" step="0.01" min="0" placeholder="{{ _('المبلغ') }}" value="{{ d.amount }}" style="width:110px; margin:0;">
+          <input type="text" name="deduction_reason" placeholder="{{ _('سبب الخصم') }}" value="{{ d.reason or '' }}" style="flex:1; margin:0;">
+          <button type="button" class="btn light removeDeductionBtn" style="padding:6px 10px; font-size:12px;">✕</button>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <p style="color:var(--muted); font-size:12px; margin:14px 0 6px;">{{ _('الصافي المستحق الحالي:') }} <b>{{ '%.2f'|format(payroll.net_amount) }}</b></p>
+
+    <div style="display:flex; gap:8px; margin-top:10px;">
+      <button class="btn light" type="submit" name="action" value="save">{{ _('حفظ مسودة') }}</button>
+      <button class="btn" type="submit" name="action" value="confirm" onclick="return confirm('{{ _('تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟') }}');">✅ {{ _('تأكيد نهائي') }}</button>
+    </div>
+    </fieldset>
+  </form>
+
+  {% if payroll.status == 'confirmed' %}
+  <div style="margin-top:14px;">
+    <a class="btn light" href="{{ url_for('team.payroll_receipt', payroll_id=payroll.id) }}">🖨️ {{ _('طباعة الوصل') }}</a>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+(function(){
+  var rowsBox = document.getElementById('deductionRows');
+  var addBtn = document.getElementById('addDeductionBtn');
+  if (!addBtn) return;
+  addBtn.addEventListener('click', function(){
+    var row = document.createElement('div');
+    row.className = 'deduction-row';
+    row.style.cssText = 'display:flex; gap:6px; margin-top:8px;';
+    row.innerHTML =
+      '<input type="number" name="deduction_amount" step="0.01" min="0" placeholder="{{ _('المبلغ') }}" style="width:110px; margin:0;">' +
+      '<input type="text" name="deduction_reason" placeholder="{{ _('سبب الخصم') }}" style="flex:1; margin:0;">' +
+      '<button type="button" class="btn light removeDeductionBtn" style="padding:6px 10px; font-size:12px;">✕</button>';
+    rowsBox.appendChild(row);
+  });
+  rowsBox.addEventListener('click', function(e){
+    if (e.target.classList.contains('removeDeductionBtn')) {
+      e.target.closest('.deduction-row').remove();
+    }
+  });
+})();
+</script>
+{% endblock %}

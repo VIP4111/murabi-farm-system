@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>💰 {{ _('رواتب الشهر') }}</h2>
+    <a class="btn light" href="{{ url_for('team.payroll_reports') }}">📊 {{ _('تقارير الرواتب حسب العامل') }}</a>
+  </div>
+  <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; margin-top:12px;">
+    <div><label style="margin:0 0 4px;">{{ _('الشهر') }}</label>
+      <select name="month" style="margin:0;">
+        {% for m in range(1, 13) %}<option value="{{ m }}" {{ 'selected' if m == month }}>{{ m }}</option>{% endfor %}
+      </select>
+    </div>
+    <div><label style="margin:0 0 4px;">{{ _('السنة') }}</label><input name="year" type="number" value="{{ year }}" style="width:100px; margin:0;"></div>
+    <button class="btn" type="submit" style="padding:10px 16px;">{{ _('عرض') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  <div class="table-scroll">
+  <table class="compact-table">
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الراتب الأساسي') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('الصافي') }}</th><th></th></tr>
+    {% for member, p in rows %}
+    <tr>
+      <td>{{ member.name }}</td>
+      <td>{{ member.base_salary if member.base_salary is not none else '-' }}</td>
+      <td>
+        {% if not p %}
+        <span class="badge off">{{ _('ما تجهّز بعد') }}</span>
+        {% elif p.status == 'confirmed' %}
+        <span class="badge on">✅ {{ _('مؤكَّد') }}</span>
+        {% else %}
+        <span class="badge off">📝 {{ _('مسودة') }}</span>
+        {% endif %}
+      </td>
+      <td>{{ '%.2f'|format(p.net_amount) if p else '-' }}</td>
+      <td style="display:flex; gap:6px; flex-wrap:wrap;">
+        <a class="btn light" href="{{ url_for('team.payroll_prepare', user_id=member.id, year=year, month=month) }}" style="padding:5px 10px; font-size:12px;">
+          {{ _('عرض/تجهيز') if not p or p.status != 'confirmed' else _('عرض') }}
+        </a>
+        {% if p and p.status == 'confirmed' %}
+        <a class="btn light" href="{{ url_for('team.payroll_receipt', payroll_id=p.id) }}" style="padding:5px 10px; font-size:12px;">🖨️ {{ _('طباعة الوصل') }}</a>
+        <form method="post" action="{{ url_for('team.payroll_upload_receipt', payroll_id=p.id) }}" enctype="multipart/form-data" style="display:flex; gap:4px; align-items:center;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="file" name="receipt_file" accept="image/*,application/pdf" style="width:150px; font-size:11px;">
+          <button class="btn light" type="submit" style="padding:5px 8px; font-size:11px;">{{ _('رفع الوصل الموقَّع') }}</button>
+        </form>
+        {% if p.signed_receipt_file_url %}<a href="{{ p.signed_receipt_file_url }}" target="_blank" style="font-size:11px;">📎 {{ _('عرض الموقَّع') }}</a>{% endif %}
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد أعضاء نشطون.') }}</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endblock %}

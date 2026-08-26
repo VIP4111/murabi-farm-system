@@ -146,6 +146,119 @@ def salary_update(user_id):
     return redirect(url_for("team.salaries_list"))
 
 
+@team_bp.route("/payroll")
+@login_required
+@require_permission("team.manage_salary")
+def payroll_list():
+    """قائمة رواتب شهر معيّن لكل الأعضاء النشطين (بند إضافي 242) —
+    افتراضياً الشهر الحالي، تقدر تختار شهر/سنة ثانية من الفورم."""
+    from app.models import Payroll
+    today = date.today()
+    year = request.args.get("year", type=int) or today.year
+    month = request.args.get("month", type=int) or today.month
+
+    members = User.query.filter_by(is_active_account=True).order_by(User.name).all()
+    existing = {p.user_id: p for p in Payroll.query.filter_by(year=year, month=month).all()}
+    rows = [(m, existing.get(m.id)) for m in members]
+    return render_template("team/payroll_list.html", rows=rows, year=year, month=month, today=today)
+
+
+@team_bp.route("/payroll/<int:user_id>/prepare", methods=["GET", "POST"])
+@login_required
+@require_permission("team.manage_salary")
+def payroll_prepare(user_id):
+    from app.team import payroll_service
+    user = User.query.get_or_404(user_id)
+    year = request.args.get("year", type=int) or date.today().year
+    month = request.args.get("month", type=int) or date.today().month
+    payroll = payroll_service.get_or_create_draft(user=user, year=year, month=month)
+
+    if request.method == "POST":
+        if payroll.status == "confirmed":
+            flash("هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل.", "error")
+            return redirect(url_for("team.payroll_list", year=year, month=month))
+        try:
+            base_salary = float(request.form.get("base_salary") or 0)
+            bonus_amount = float(request.form.get("bonus_amount") or 0)
+        except ValueError:
+            flash("قيمة غير صحيحة بالراتب أو المكافأة", "error")
+            return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
+
+        amounts = request.form.getlist("deduction_amount")
+        reasons = request.form.getlist("deduction_reason")
+        deductions = []
+        for amt, reason in zip(amounts, reasons):
+            amt = (amt or "").strip()
+            if amt:
+                try:
+                    deductions.append((float(amt), reason))
+                except ValueError:
+                    continue
+
+        payroll_service.save_draft(
+            payroll, base_salary=base_salary, bonus_amount=bonus_amount,
+            deductions=deductions, recipient_name=request.form.get("recipient_name"),
+        )
+
+        if request.form.get("action") == "confirm":
+            payroll_service.confirm(payroll, actor=current_user)
+            flash(f"تم تأكيد راتب {user.name} — رحّل {payroll.net_amount:,.2f} لسجل المالية.", "success")
+            return redirect(url_for("team.payroll_list", year=year, month=month))
+
+        flash("تم حفظ المسودة", "success")
+        return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
+
+    return render_template("team/payroll_prepare.html", user=user, payroll=payroll, year=year, month=month)
+
+
+@team_bp.route("/payroll/<int:payroll_id>/upload-receipt", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def payroll_upload_receipt(payroll_id):
+    from app.models import Payroll
+    from app.team import payroll_service
+    payroll = Payroll.query.get_or_404(payroll_id)
+    if payroll.status != "confirmed":
+        flash("لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع.", "error")
+        return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
+    payroll_service.attach_signed_receipt(payroll, request.files.get("receipt_file"))
+    flash("تم رفع الوصل الموقَّع", "success")
+    return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
+
+
+@team_bp.route("/payroll/<int:payroll_id>/receipt")
+@login_required
+@require_permission("team.manage_salary")
+def payroll_receipt(payroll_id):
+    from flask import send_file
+    from app.models import Payroll, FarmSettings
+    from app.reports.export_service import build_payroll_receipt_pdf
+    payroll = Payroll.query.get_or_404(payroll_id)
+    if payroll.status != "confirmed":
+        flash("هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع.", "error")
+        return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
+    buf = build_payroll_receipt_pdf(payroll, FarmSettings.get())
+    return send_file(buf, mimetype="application/pdf", as_attachment=True,
+                      download_name=f"راتب_{payroll.user.name}_{payroll.month}_{payroll.year}.pdf")
+
+
+@team_bp.route("/payroll/reports")
+@login_required
+@require_permission("team.manage_salary")
+def payroll_reports():
+    """تقارير الرواتب حسب العامل (بند إضافي 242، طلبك الصريح): "اختار
+    اسم العامل وشوف التقارير الخاصة فيه" — كل رواتبه المؤكَّدة عبر
+    الأشهر + رابط الوصل الموقَّع لو مرفوع."""
+    from app.models import Payroll
+    members = User.query.order_by(User.name).all()
+    user_id = request.args.get("user_id", type=int)
+    records = []
+    if user_id:
+        records = (Payroll.query.filter_by(user_id=user_id, status="confirmed")
+                   .order_by(Payroll.year.desc(), Payroll.month.desc()).all())
+    return render_template("team/payroll_reports.html", members=members, records=records, selected_user_id=user_id)
+
+
 @team_bp.route("/members/<int:user_id>/toggle", methods=["POST"])
 @login_required
 @require_permission("users.manage")

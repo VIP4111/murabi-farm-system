@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 11:49+0300\n"
+"POT-Creation-Date: 2026-08-26 12:00+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -112,15 +112,15 @@ msgstr "Confirmed"
 msgid "فشلت"
 msgstr "Failed"
 
-#: app/__init__.py:169 app/team/routes.py:441
+#: app/__init__.py:169 app/team/routes.py:554
 msgid "مهمة عامة"
 msgstr "General task"
 
-#: app/__init__.py:170 app/team/routes.py:442
+#: app/__init__.py:170 app/team/routes.py:555
 msgid "فحص عزل"
 msgstr "Isolation check"
 
-#: app/__init__.py:171 app/team/routes.py:446
+#: app/__init__.py:171 app/team/routes.py:559
 msgid "مراجعة الدكتور"
 msgstr "Doctor review"
 
@@ -136,15 +136,15 @@ msgstr "Selenium dose"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "Colostrum/nursing follow-up"
 
-#: app/__init__.py:175 app/team/routes.py:443
+#: app/__init__.py:175 app/team/routes.py:556
 msgid "وزن"
 msgstr "Weighing"
 
-#: app/__init__.py:176 app/team/routes.py:444
+#: app/__init__.py:176 app/team/routes.py:557
 msgid "تحصين مستحق"
 msgstr "Vaccination due"
 
-#: app/__init__.py:177 app/team/routes.py:445
+#: app/__init__.py:177 app/team/routes.py:558
 msgid "تبديل علف"
 msgstr "Feed switch"
 
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:214 app/team/routes.py:31 app/templates/base.html:804
+#: app/__init__.py:214 app/team/routes.py:31 app/templates/base.html:808
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -717,7 +717,7 @@ msgstr "Severe stress"
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:429
+#: app/core/animal_filters_service.py:181 app/team/routes.py:542
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1589,7 +1589,8 @@ msgstr "Total sales"
 msgid "إجمالي المشتريات+المصروفات"
 msgstr "Total purchases+expenses"
 
-#: app/reports/report_service.py:247
+#: app/reports/report_service.py:247 app/templates/team/payroll_list.html:22
+#: app/templates/team/payroll_reports.html:22
 msgid "الصافي"
 msgstr "Net"
 
@@ -1627,6 +1628,8 @@ msgstr "Animal"
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:458 app/templates/finance/form.html:33
 #: app/templates/finance/list.html:36
+#: app/templates/team/payroll_prepare.html:27
+#: app/templates/team/payroll_prepare.html:61
 msgid "المبلغ"
 msgstr "Amount"
 
@@ -1787,15 +1790,16 @@ msgstr "Move to Isolation"
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
 
-#: app/team/routes.py:430 app/templates/team/employee_of_month.html:12
+#: app/team/routes.py:543 app/templates/team/employee_of_month.html:12
+#: app/templates/team/payroll_reports.html:8
 msgid "العامل"
 msgstr "Worker"
 
-#: app/team/routes.py:431
+#: app/team/routes.py:544
 msgid "الطبيب البيطري"
 msgstr "Veterinarian"
 
-#: app/team/routes.py:432
+#: app/team/routes.py:545
 msgid "المحاسب"
 msgstr "Accountant"
 
@@ -2090,8 +2094,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:669
-#: app/templates/base.html:671 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:673
+#: app/templates/base.html:675 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "Finance"
@@ -2365,6 +2369,7 @@ msgstr "Severity"
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/employee_of_month.html:13
 #: app/templates/team/members_list.html:10
+#: app/templates/team/payroll_list.html:22
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -2841,6 +2846,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/settings.html:132 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
+#: app/templates/team/payroll_list.html:22
 #: app/templates/team/performance_report.html:20
 #: app/templates/team/salaries_list.html:11
 #: app/templates/warehouses/warehouse_form.html:7
@@ -3377,7 +3383,7 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:712
+#: app/templates/barn_form.html:11 app/templates/base.html:716
 msgid "عادية"
 msgstr "Regular"
 
@@ -3581,51 +3587,55 @@ msgstr "Climate"
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "Climate & heat stress radar"
 
-#: app/templates/base.html:646
+#: app/templates/base.html:647
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:648
+#: app/templates/base.html:649
 msgid "موظف الشهر بانتظار تأكيدك"
 msgstr "Employee of the month pending your confirmation"
 
-#: app/templates/base.html:652 app/templates/family_view.html:97
+#: app/templates/base.html:653 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:654 app/templates/team/employee_of_month.html:4
+#: app/templates/base.html:655 app/templates/team/employee_of_month.html:4
 msgid "موظف الشهر"
 msgstr "Employee of the Month"
 
-#: app/templates/base.html:656 app/templates/home.html:53
+#: app/templates/base.html:657 app/templates/home.html:53
 #: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:657 app/templates/team/members_list.html:5
+#: app/templates/base.html:658 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:658
-msgid "الرواتب"
-msgstr "Salaries"
+#: app/templates/base.html:660 app/templates/team/salaries_list.html:4
+msgid "الرواتب الأساسية"
+msgstr "Base Salaries"
 
-#: app/templates/base.html:660 app/templates/team/performance_report.html:6
+#: app/templates/base.html:661 app/templates/team/payroll_list.html:5
+msgid "رواتب الشهر"
+msgstr "This Month's Payroll"
+
+#: app/templates/base.html:664 app/templates/team/performance_report.html:6
 msgid "مراجعة مهام اليوم"
 msgstr "Review Today's Tasks"
 
-#: app/templates/base.html:661 app/templates/team/performance_report.html:5
+#: app/templates/base.html:665 app/templates/team/performance_report.html:5
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
-#: app/templates/base.html:672 app/templates/home.html:105
+#: app/templates/base.html:676 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:679 app/templates/home.html:108
+#: app/templates/base.html:683 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3633,61 +3643,61 @@ msgstr "Health finance"
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:681
+#: app/templates/base.html:685
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:700
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:698
+#: app/templates/base.html:702
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:698
+#: app/templates/base.html:702
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:710
+#: app/templates/base.html:714
 msgid "مستوى الواجهة"
 msgstr "Interface level"
 
-#: app/templates/base.html:712
+#: app/templates/base.html:716
 msgid "بسيط جداً"
 msgstr "Very simple"
 
-#: app/templates/base.html:720
+#: app/templates/base.html:724
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"Very simple\" switches your home screen to big buttons, one question at a time — the exact same data."
 
-#: app/templates/base.html:726
+#: app/templates/base.html:730
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:729
+#: app/templates/base.html:733
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:733
+#: app/templates/base.html:737
 msgid "الملخص اليومي بتيليجرام"
 msgstr "Daily Telegram Summary"
 
-#: app/templates/base.html:736
+#: app/templates/base.html:740
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "Send test summary now"
 
-#: app/templates/base.html:742 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:746 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:755
+#: app/templates/base.html:759
 msgid "خروج"
 msgstr "Logout"
 
-#: app/templates/base.html:792
+#: app/templates/base.html:796
 msgid "تجاهل"
 msgstr "Dismiss"
 
@@ -6630,6 +6640,9 @@ msgid "إصدار"
 msgstr "Issue"
 
 #: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
+#: app/templates/team/payroll_list.html:15
+#: app/templates/team/payroll_list.html:39
+#: app/templates/team/payroll_reports.html:14
 #: app/templates/team/performance_report.html:12
 msgid "عرض"
 msgstr "Show"
@@ -6777,6 +6790,7 @@ msgstr "Estimated cost per head"
 
 #: app/templates/finance/monthly_cost_report.html:27
 #: app/templates/team/employee_of_month.html:12
+#: app/templates/team/payroll_list.html:9
 msgid "الشهر"
 msgstr "Month"
 
@@ -8324,6 +8338,7 @@ msgid "التوزيع الزمني"
 msgstr "Time distribution"
 
 #: app/templates/reports/mortality.html:36
+#: app/templates/team/payroll_reports.html:22
 msgid "الفترة"
 msgstr "Period"
 
@@ -9109,10 +9124,13 @@ msgid "النقطة"
 msgstr "Score"
 
 #: app/templates/team/employee_of_month.html:13
+#: app/templates/team/payroll_reports.html:22
 msgid "المكافأة"
 msgstr "Bonus"
 
 #: app/templates/team/employee_of_month.html:22
+#: app/templates/team/payroll_list.html:31
+#: app/templates/team/payroll_prepare.html:6
 msgid "مؤكَّد"
 msgstr "Confirmed"
 
@@ -9125,6 +9143,7 @@ msgid "مبلغ المكافأة"
 msgstr "Bonus amount"
 
 #: app/templates/team/employee_of_month.html:33
+#: app/templates/team/payroll_prepare.html:16
 msgid "اسم المستلم (اختياري، لو حوالة)"
 msgstr "Recipient name (optional — for remittance)"
 
@@ -9137,6 +9156,8 @@ msgid "أكَّدها"
 msgstr "Confirmed by"
 
 #: app/templates/team/employee_of_month.html:38
+#: app/templates/team/payroll_list.html:42
+#: app/templates/team/payroll_prepare.html:46
 msgid "طباعة الوصل"
 msgstr "Print receipt"
 
@@ -9200,6 +9221,105 @@ msgstr "Disabled"
 #: app/templates/team/members_list.html:29
 msgid "لا يوجد أعضاء بعد."
 msgstr "No members yet."
+
+#: app/templates/team/payroll_list.html:6
+#: app/templates/team/payroll_reports.html:4
+msgid "تقارير الرواتب حسب العامل"
+msgstr "Payroll Reports by Employee"
+
+#: app/templates/team/payroll_list.html:14
+msgid "السنة"
+msgstr "Year"
+
+#: app/templates/team/payroll_list.html:22
+#: app/templates/team/payroll_prepare.html:12
+#: app/templates/team/payroll_reports.html:22
+#: app/templates/team/salaries_list.html:11
+msgid "الراتب الأساسي"
+msgstr "Base salary"
+
+#: app/templates/team/payroll_list.html:29
+msgid "ما تجهّز بعد"
+msgstr "Not prepared yet"
+
+#: app/templates/team/payroll_list.html:33
+msgid "مسودة"
+msgstr "Draft"
+
+#: app/templates/team/payroll_list.html:39
+msgid "عرض/تجهيز"
+msgstr "View/Prepare"
+
+#: app/templates/team/payroll_list.html:46
+msgid "رفع الوصل الموقَّع"
+msgstr "Upload signed receipt"
+
+#: app/templates/team/payroll_list.html:48
+msgid "عرض الموقَّع"
+msgstr "View signed copy"
+
+#: app/templates/team/payroll_list.html:53
+#: app/templates/team/salaries_list.html:25
+msgid "لا يوجد أعضاء نشطون."
+msgstr "No active members."
+
+#: app/templates/team/payroll_prepare.html:4
+msgid "تجهيز راتب"
+msgstr "Prepare Payroll"
+
+#: app/templates/team/payroll_prepare.html:5
+msgid "الفترة:"
+msgstr "Period:"
+
+#: app/templates/team/payroll_prepare.html:14
+msgid "المكافأة (اختياري)"
+msgstr "Bonus (optional)"
+
+#: app/templates/team/payroll_prepare.html:21
+#: app/templates/team/payroll_reports.html:22
+msgid "الخصومات"
+msgstr "Deductions"
+
+#: app/templates/team/payroll_prepare.html:22
+msgid "إضافة خصم"
+msgstr "Add deduction"
+
+#: app/templates/team/payroll_prepare.html:28
+#: app/templates/team/payroll_prepare.html:62
+msgid "سبب الخصم"
+msgstr "Deduction reason"
+
+#: app/templates/team/payroll_prepare.html:35
+msgid "الصافي المستحق الحالي:"
+msgstr "Current net amount:"
+
+#: app/templates/team/payroll_prepare.html:38
+msgid "حفظ مسودة"
+msgstr "Save draft"
+
+#: app/templates/team/payroll_prepare.html:39
+msgid "تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟"
+msgstr "Final confirmation — an actual amount will be posted to the finance record and cannot be edited afterward. Are you sure?"
+
+#: app/templates/team/payroll_prepare.html:39
+msgid "تأكيد نهائي"
+msgstr "Final confirmation"
+
+#: app/templates/team/payroll_reports.html:5
+msgid "اختر عامل وشوف كل رواتبه المؤكَّدة عبر الأشهر، مع الوصل الموقَّع لو مرفوع."
+msgstr "Pick an employee and see all their confirmed payslips across months, with the signed receipt if uploaded."
+
+#: app/templates/team/payroll_reports.html:31
+msgid "الوصل"
+msgstr "Receipt"
+
+#: app/templates/team/payroll_reports.html:32
+msgid "الموقَّع"
+msgstr "Signed copy"
+
+#: app/templates/team/payroll_reports.html:36
+msgid "ما فيه رواتب مؤكَّدة لهذا العامل بعد."
+msgstr "No confirmed payslips for this employee yet."
 
 #: app/templates/team/performance_report.html:8
 msgid "نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة بجانبها."
@@ -9474,25 +9594,13 @@ msgstr "Cancelled reports (awaiting final delete or archive)"
 msgid "لا يوجد بلاغات ملغاة."
 msgstr "No cancelled reports."
 
-#: app/templates/team/salaries_list.html:4
-msgid "الرواتب الأساسية"
-msgstr "Base Salaries"
-
 #: app/templates/team/salaries_list.html:5
 msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
 msgstr "Each team member's fixed base salary — used as the starting point when preparing the monthly payslip (with bonuses and deductions). Empty means no salary set yet."
 
-#: app/templates/team/salaries_list.html:11
-msgid "الراتب الأساسي"
-msgstr "Base salary"
-
 #: app/templates/team/salaries_list.html:19
 msgid "غير محدَّد"
 msgstr "Not set"
-
-#: app/templates/team/salaries_list.html:25
-msgid "لا يوجد أعضاء نشطون."
-msgstr "No active members."
 
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"
@@ -10023,4 +10131,7 @@ msgstr "No additional named warehouses yet — all stock is in the default main 
 
 #~ msgid "النظام"
 #~ msgstr "System"
+
+#~ msgid "الرواتب"
+#~ msgstr "Salaries"
 

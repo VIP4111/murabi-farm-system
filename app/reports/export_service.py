@@ -354,3 +354,93 @@ def build_employee_of_month_receipt_pdf(record, farm_settings) -> io.BytesIO:
     c.save()
     buf.seek(0)
     return buf
+
+
+def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
+    """مسير راتب شهر واحد (بند إضافي 242) — نظام الرواتب العام (بخلاف
+    وصل "موظف الشهر" الأبسط، بند 240): يفصّل الراتب الأساسي + المكافأة
+    - كل سطر خصم بسببه - = الصافي المستحق، بطلبك الصريح."""
+    _ensure_font()
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=A4)
+    width, height = A4
+    right_margin = width - 20 * mm
+    left_margin = 20 * mm
+    y = height - 25 * mm
+
+    c.setFont("Arabic", 18)
+    c.drawRightString(right_margin, y, ar("مسير راتب الشهر"))
+    y -= 10 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(f"التاريخ: {payroll.confirmed_at.date() if payroll.confirmed_at else ''}"))
+    y -= 12 * mm
+
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("صاحب العمل"))
+    y -= 6 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(farm_settings.farm_name or "مراح بو علي"))
+    y -= 5.5 * mm
+    if farm_settings.farm_phone:
+        c.drawRightString(right_margin, y, ar(farm_settings.farm_phone))
+        y -= 5.5 * mm
+
+    y -= 8 * mm
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("العامل"))
+    y -= 6 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(payroll.user.name))
+    y -= 5.5 * mm
+    c.drawRightString(right_margin, y, ar(f"الفترة: {_ARABIC_MONTHS.get(payroll.month, payroll.month)} {payroll.year}"))
+    y -= 5.5 * mm
+    if payroll.recipient_name:
+        c.drawRightString(right_margin, y, ar(f"اسم المستلم (حوالة): {payroll.recipient_name}"))
+        y -= 5.5 * mm
+
+    y -= 10 * mm
+    col_item = right_margin
+    col_amount = left_margin + 30 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(col_item, y, ar("البيان"))
+    c.drawRightString(col_amount, y, ar("المبلغ"))
+    y -= 3 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 7 * mm
+
+    c.setFont("Arabic", 10)
+    c.drawRightString(col_item, y, ar("الراتب الأساسي"))
+    c.drawRightString(col_amount, y, ar(f"{payroll.base_salary:,.2f}"))
+    y -= 6 * mm
+    if payroll.bonus_amount:
+        c.drawRightString(col_item, y, ar("المكافأة"))
+        c.drawRightString(col_amount, y, ar(f"{payroll.bonus_amount:,.2f}"))
+        y -= 6 * mm
+    for d in payroll.deductions:
+        label = f"خصم — {d.reason}" if d.reason else "خصم"
+        c.drawRightString(col_item, y, ar(label))
+        c.drawRightString(col_amount, y, ar(f"-{d.amount:,.2f}"))
+        y -= 6 * mm
+
+    y -= 2 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    c.setFont("Arabic", 13)
+    c.drawRightString(right_margin, y, ar(f"الصافي المستحق: {payroll.net_amount:,.2f}"))
+    y -= 10 * mm
+    c.setFont("Arabic", 9)
+    c.drawRightString(right_margin, y, ar(f"معتمَد من: {payroll.confirmed_by.name if payroll.confirmed_by else '-'}"))
+
+    y -= 30 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar("توقيع العامل: ......................"))
+    y -= 12 * mm
+    c.drawRightString(right_margin, y, ar("توقيع صاحب الحلال: ......................"))
+
+    c.save()
+    buf.seek(0)
+    return buf

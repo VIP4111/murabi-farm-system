@@ -641,7 +641,8 @@
 
       {% set _team_endpoints = ['team.tasks_list', 'team.reports_list', 'team.members_list',
                                  'team.performance_report', 'team.todays_completed_tasks',
-                                 'team.employee_of_month', 'team.salaries_list'] %}
+                                 'team.employee_of_month', 'team.salaries_list', 'team.payroll_list',
+                                 'team.payroll_prepare', 'team.payroll_reports'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _team_endpoints else '' }}>
         <summary>{{ nav_icon('team') }}{{ _('الفريق') }}
           {% if current_user.role.name == 'owner' and employee_of_month_pending %}
@@ -655,7 +656,10 @@
         {% endif %}
         <a class="drawer-link" href="{{ url_for('team.reports_list') }}"><span class="drawer-text"><b>{{ _('البلاغات') }}</b></span></a>
         {% if current_user.has_permission('users.manage') %}<a class="drawer-link" href="{{ url_for('team.members_list') }}"><span class="drawer-text"><b>{{ _('أعضاء الفريق') }}</b></span></a>{% endif %}
-        {% if current_user.has_permission('team.manage_salary') %}<a class="drawer-link" href="{{ url_for('team.salaries_list') }}"><span class="drawer-text"><b>{{ _('الرواتب') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('team.manage_salary') %}
+        <a class="drawer-link" href="{{ url_for('team.salaries_list') }}"><span class="drawer-text"><b>{{ _('الرواتب الأساسية') }}</b></span></a>
+        <a class="drawer-link" href="{{ url_for('team.payroll_list') }}"><span class="drawer-text"><b>{{ _('رواتب الشهر') }}</b></span></a>
+        {% endif %}
         {% if current_user.has_permission('tasks.review_daily') %}
         <a class="drawer-link" href="{{ url_for('team.todays_completed_tasks') }}"><span class="drawer-text"><b>{{ _('مراجعة مهام اليوم') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('team.performance_report') }}"><span class="drawer-text"><b>{{ _('تقرير أداء الفريق') }}</b></span></a>

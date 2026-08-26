@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>📊 {{ _('تقارير الرواتب حسب العامل') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('اختر عامل وشوف كل رواتبه المؤكَّدة عبر الأشهر، مع الوصل الموقَّع لو مرفوع.') }}</p>
+  <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; margin-top:12px;">
+    <div style="flex:1; min-width:200px;">
+      <label style="margin:0 0 4px;">{{ _('العامل') }}</label>
+      <select name="user_id" style="margin:0;">
+        <option value="">-</option>
+        {% for m in members %}<option value="{{ m.id }}" {{ 'selected' if m.id == selected_user_id }}>{{ m.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <button class="btn" type="submit" style="padding:10px 16px;">{{ _('عرض') }}</button>
+  </form>
+</div>
+
+{% if selected_user_id %}
+<div class="card">
+  <div class="table-scroll">
+  <table class="compact-table">
+    <tr><th>{{ _('الفترة') }}</th><th>{{ _('الراتب الأساسي') }}</th><th>{{ _('المكافأة') }}</th><th>{{ _('الخصومات') }}</th><th>{{ _('الصافي') }}</th><th></th></tr>
+    {% for p in records %}
+    <tr>
+      <td>{{ p.month }}/{{ p.year }}</td>
+      <td>{{ '%.2f'|format(p.base_salary) }}</td>
+      <td>{{ '%.2f'|format(p.bonus_amount) }}</td>
+      <td>{{ '%.2f'|format(p.total_deductions) }}</td>
+      <td><b>{{ '%.2f'|format(p.net_amount) }}</b></td>
+      <td style="display:flex; gap:6px;">
+        <a class="btn light" href="{{ url_for('team.payroll_receipt', payroll_id=p.id) }}" style="padding:5px 10px; font-size:12px;">🖨️ {{ _('الوصل') }}</a>
+        {% if p.signed_receipt_file_url %}<a href="{{ p.signed_receipt_file_url }}" target="_blank" style="padding:5px 10px; font-size:12px;" class="btn light">📎 {{ _('الموقَّع') }}</a>{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="color:#888;">{{ _('ما فيه رواتب مؤكَّدة لهذا العامل بعد.') }}</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

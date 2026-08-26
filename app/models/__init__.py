@@ -17,6 +17,7 @@ from app.models.doctor import Doctor
 from app.models.health import VetVisit, Disease, Vaccination, DiseaseType, Symptom, DiseaseSymptomLink, EmergencySymptom
 from app.models.finance import Finance
 from app.models.employee_of_month import EmployeeOfMonth
+from app.models.payroll import Payroll, PayrollDeduction
 from app.models.repro import (
     Mating, Pregnancy, TwinEstrusProgram, TwinEstrusAttempt,
     ReproDevice, HormoneInjection, SonarResult,
