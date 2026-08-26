@@ -311,41 +311,83 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+def _month_range(start_year: int, start_month: int, end_year: int, end_month: int) -> list[tuple[int, int]]:
+    """كل الأشهر (سنة، شهر) من البداية للنهاية شاملة الطرفين، بالترتيب."""
+    months = []
+    y, m = start_year, start_month
+    while (y, m) <= (end_year, end_month):
+        months.append((y, m))
+        m += 1
+        if m > 12:
+            m = 1
+            y += 1
+    return months
+
+
 def _payroll_month_end_reminder() -> list[dict]:
     """تذكير رواتب آخر كل شهر (بند إضافي 246، طلبك الصريح: "احتاج
     تنبيه برواتب كل اخر شهر مع تأكيد لو فيه خصومات على العامل") — نفس
     فلسفة هذا الملف بالضبط (فحص حي عند فتح شاشة التنبيهات، بدون Cron).
-    يبان فقط خلال آخر `PAYROLL_MONTH_END_REMINDER_DAYS` أيام من الشهر
-    الحالي (أو أي وقت بعده لو الشهر خلص وراتب العامل لسا ما تأكَّد)،
-    لكل عضو فريق نشط له راتب أساسي مسجَّل (`User.base_salary`) وما
-    عنده راتب مؤكَّد لهذا الشهر بعد. لو فيه مسودة موجودة وفيها خصومات،
-    التفصيل يذكرها صراحةً — التأكيد الفعلي بوجود خصومات نفسه يصير
-    كتحذير إضافي بشاشة تجهيز الراتب نفسها (`payroll_prepare.html`)،
-    مو هنا."""
+
+    يغطي حالتين:
+    1. الشهر الحالي، بس خلال آخر `PAYROLL_MONTH_END_REMINDER_DAYS` أيام
+       منه — تذكير عادي، ما فيه داعي يزعج قبل قرب نهاية الشهر.
+    2. **أي شهر سابق كامل** (من أول شهر تأسَّس فيه نظام الرواتب فعلياً —
+       أقدم سجل `Payroll` بالنظام كله — لين الشهر قبل الحالي) ما تأكَّد
+       راتب العامل فيه. هذي الحالة أُضيفت لاحقاً (نفس البند) بعد ملاحظة
+       صريحة منك: التذكير الأصلي كان يشتغل بس آخر 3 أيام من الشهر
+       الحالي، فلو صاحب الحلال فاته الشهر كامل بدون ما يفتح التطبيق،
+       ما فيه أي شي يذكّره بعدها — صارت الآن حالة "متأخر" دائمة تبقى
+       تظهر لين يتحل، بغض النظر أي يوم احنا فيه الحين.
+    """
     from app.models import Payroll, User
     today = date.today()
     days_in_month = calendar.monthrange(today.year, today.month)[1]
-    is_near_month_end = today.day >= days_in_month - PAYROLL_MONTH_END_REMINDER_DAYS + 1
-    if not is_near_month_end:
+
+    earliest = Payroll.query.order_by(Payroll.year, Payroll.month).first()
+    if earliest is None:
+        # ما فيه أي راتب اتسجَّل بالنظام كله بعد — ما فيه أساس نحكم
+        # منه على "شهر متأخر"، فقط الشهر الحالي (لو قرب ينتهي) يُفحص.
+        past_months = []
+    else:
+        prev_year, prev_month = (today.year - 1, 12) if today.month == 1 else (today.year, today.month - 1)
+        past_months = _month_range(earliest.year, earliest.month, prev_year, prev_month)
+
+    is_near_current_month_end = today.day >= days_in_month - PAYROLL_MONTH_END_REMINDER_DAYS + 1
+    months_to_check = list(past_months)
+    if is_near_current_month_end:
+        months_to_check.append((today.year, today.month))
+
+    if not months_to_check:
         return []
 
     alerts = []
     workers = User.query.filter(User.is_active_account == True, User.base_salary.isnot(None)).all()  # noqa: E712
     for w in workers:
-        payroll = Payroll.query.filter_by(user_id=w.id, year=today.year, month=today.month).first()
-        if payroll and payroll.status == "confirmed":
-            continue
-        if payroll and payroll.total_deductions > 0:
-            detail = (f"فيه مسودة راتب محفوظة عليها خصومات بقيمة "
-                      f"{payroll.total_deductions:.2f} — راجعها قبل التأكيد.")
-        else:
-            detail = "لسا ما تجهَّز راتب هذا الشهر له."
-        alerts.append({
-            "category": "تذكير رواتب نهاية الشهر", "icon": "💰",
-            "label": f"راتب {w.name} — {today.month}/{today.year}",
-            "detail": detail,
-            "urgent": today.day == days_in_month, "animal_id": None, "barn_id": None,
-        })
+        # ما نطالب عامل براتب شهر قبل ما أصلاً كان له حساب بالنظام —
+        # `created_at` تاريخ إنشاء حسابه.
+        joined = w.created_at.date() if w.created_at else date.min
+        for (y, m) in months_to_check:
+            if (y, m) < (joined.year, joined.month):
+                continue
+            payroll = Payroll.query.filter_by(user_id=w.id, year=y, month=m).first()
+            if payroll and payroll.status == "confirmed":
+                continue
+            is_current_month = (y, m) == (today.year, today.month)
+            if payroll and payroll.total_deductions > 0:
+                detail = (f"فيه مسودة راتب محفوظة عليها خصومات بقيمة "
+                          f"{payroll.total_deductions:.2f} — راجعها قبل التأكيد.")
+            elif is_current_month:
+                detail = "لسا ما تجهَّز راتب هذا الشهر له."
+            else:
+                detail = "راتب شهر سابق ما تأكَّد بعد — متأخر، راجعه بأقرب فرصة."
+            alerts.append({
+                "category": "تذكير رواتب نهاية الشهر", "icon": "💰",
+                "label": f"راتب {w.name} — {m}/{y}",
+                "detail": detail,
+                "urgent": (is_current_month and today.day == days_in_month) or not is_current_month,
+                "animal_id": None, "barn_id": None,
+            })
     return alerts
 
 
