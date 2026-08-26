@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:35+0300\n"
+"POT-Creation-Date: 2026-08-27 00:04+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -112,15 +112,15 @@ msgstr "የተረጋገጠ"
 msgid "فشلت"
 msgstr "አልተሳካም"
 
-#: app/__init__.py:161 app/team/routes.py:725
+#: app/__init__.py:161 app/team/routes.py:746
 msgid "مهمة عامة"
 msgstr "አጠቃላይ ተግባር"
 
-#: app/__init__.py:162 app/team/routes.py:726
+#: app/__init__.py:162 app/team/routes.py:747
 msgid "فحص عزل"
 msgstr "የመነጠል ምርመራ"
 
-#: app/__init__.py:163 app/team/routes.py:730
+#: app/__init__.py:163 app/team/routes.py:751
 msgid "مراجعة الدكتور"
 msgstr "የዶክተር ግምገማ"
 
@@ -136,15 +136,15 @@ msgstr "የሴሌኒየም መጠን"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "የኮለስትረም/ጡት ማጥባት ክትትል"
 
-#: app/__init__.py:167 app/team/routes.py:727
+#: app/__init__.py:167 app/team/routes.py:748
 msgid "وزن"
 msgstr "ክብደት መለካት"
 
-#: app/__init__.py:168 app/team/routes.py:728
+#: app/__init__.py:168 app/team/routes.py:749
 msgid "تحصين مستحق"
 msgstr "የደረሰ ክትባት"
 
-#: app/__init__.py:169 app/team/routes.py:729
+#: app/__init__.py:169 app/team/routes.py:750
 msgid "تبديل علف"
 msgstr "የመኖ ለውጥ"
 
@@ -717,7 +717,7 @@ msgstr "ከባድ ውጥረት"
 msgid "إجهاد طارئ"
 msgstr "የአደጋ ጊዜ ውጥረት"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:713
+#: app/core/animal_filters_service.py:181 app/team/routes.py:734
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1791,16 +1791,16 @@ msgstr "ወደ ማግለያ ማዛወር"
 msgid "بيض / حضانة (نعام)"
 msgstr "እንቁላል / ማቀፊያ (ሰጎን)"
 
-#: app/team/routes.py:714 app/templates/team/payroll_reports.html:21
+#: app/team/routes.py:735 app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:36
 msgid "العامل"
 msgstr "ሠራተኛ"
 
-#: app/team/routes.py:715
+#: app/team/routes.py:736
 msgid "الطبيب البيطري"
 msgstr "የእንስሳት ሐኪም"
 
-#: app/team/routes.py:716
+#: app/team/routes.py:737
 msgid "المحاسب"
 msgstr "የሂሳብ ባለሙያ"
 
@@ -6772,13 +6772,13 @@ msgid "تكلفة الرأس الشهرية"
 msgstr "ወርሃዊ የእንስሳ ዋጋ"
 
 #: app/templates/finance/monthly_cost_report.html:9
-msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
-msgstr "ዋጋ = በየወሩ የግዢ + ወጪ ድምር (ዕዳዎችን እና ሽያጭን ሳይጨምር)፣ በአሁኑ ንቁ የእንስሳት ብዛት ተከፋፍሎ — ስርዓቱ እስካሁን ለእንስሳት ብዛት ታሪካዊ ክትትል የለውም፣ ስለዚህ ያለፉ ወራት የአሁኑን ቁጥር እንደ ግምት ይጠቀማሉ፣ በዚያ ጊዜ የነበረውን ትክክለኛ ቁጥር አይደለም። ቀጥተኛ ያልሆኑ ወጪዎች (ኪራይ/ጥገና/ደመወዝ — በግቤት ጊዜ \"ቀጥተኛ ያልሆነ ወጪ\" የተባሉ) እዚህ በራስ-ሰር በ\"ወጪ\" ውስጥ ይካተታሉ — በመንጋው ላይ በእኩል ይከፋፈላል።"
+msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس الفعلي بذلك الشهر بالذات (يُحسب من تاريخ دخول/خروج كل رأس فعلياً — مو العدد الحالي). المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
+msgstr "ወጪ = በየወሩ ግዢ + ወጪ (ብድር እና ሽያጭ ሳይካተት)፣ ለዚያ ወር ትክክለኛ ብዛት ተከፍሎ (ከእያንዳንዱ እንስሳ ትክክለኛ መግቢያ/መውጫ ቀን ይሰላል — የአሁኑ ብዛት አይደለም)። ቀጥተኛ ያልሆኑ ወጪዎች (ኪራይ/ጥገና/ደመወዝ — በግቤት ላይ \"ቀጥተኛ ያልሆነ ወጪ\" ተብሎ የተመለከተ) እዚህ በራስ-ሰር ከ\"ወጪ\" ስር ይካተታሉ — በመንጋው ላይ እኩል ክፍፍል።"
 
 #: app/templates/finance/monthly_cost_report.html:15
 #, python-format
-msgid "إجمالي آخر %(n)s شهر (سنوي تقريبي)"
-msgstr "የመጨረሻዎቹ %(n)s ወራት ጠቅላላ (የግምት ዓመታዊ)"
+msgid "إجمالي آخر %(n)s شهر"
+msgstr "የመጨረሻዎቹ %(n)s ወራት ድምር"
 
 #: app/templates/finance/monthly_cost_report.html:17
 #: app/templates/finance/monthly_cost_report.html:27
@@ -6786,22 +6786,19 @@ msgid "إجمالي التكلفة"
 msgstr "ጠቅላላ ዋጋ"
 
 #: app/templates/finance/monthly_cost_report.html:18
-msgid "عدد الرؤوس الحالي"
-msgstr "የአሁኑ የእንስሳት ብዛት"
+msgid "متوسط عدد الرؤوس"
+msgstr "አማካይ የራስ ብዛት"
 
 #: app/templates/finance/monthly_cost_report.html:19
-msgid "تكلفة الرأس التقديرية"
-msgstr "የተገመተ የእንስሳ ዋጋ"
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "تكلفة الرأس"
+msgstr "የእንስሳ ዋጋ"
 
 #: app/templates/finance/monthly_cost_report.html:27
 #: app/templates/team/payroll_list.html:9
 #: app/templates/team/payroll_reports.html:7
 msgid "الشهر"
 msgstr "ወር"
-
-#: app/templates/finance/monthly_cost_report.html:27
-msgid "تكلفة الرأس"
-msgstr "የእንስሳ ዋጋ"
 
 #: app/templates/finance/monthly_cost_report.html:36
 msgid "لا يوجد بيانات."
@@ -10324,4 +10321,10 @@ msgstr "እስካሁን ተጨማሪ የተሰየመ መጋዘን የለም — 
 
 #~ msgid "عرض الموقَّع"
 #~ msgstr "የተፈረመውን ይመልከቱ"
+
+#~ msgid "عدد الرؤوس الحالي"
+#~ msgstr "የአሁኑ የእንስሳት ብዛት"
+
+#~ msgid "تكلفة الرأس التقديرية"
+#~ msgstr "የተገመተ የእንስሳ ዋጋ"
 

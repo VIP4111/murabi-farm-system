@@ -6,17 +6,17 @@
     <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
   </div>
   <div class="notice">
-    {{ _('التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها "مصروف غير مباشر" عند الإدخال) تدخل هنا تلقائياً ضمن "المصروف" — نفس التوزيع بالتساوي على القطيع.') }}
+    {{ _('التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس الفعلي بذلك الشهر بالذات (يُحسب من تاريخ دخول/خروج كل رأس فعلياً — مو العدد الحالي). المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها "مصروف غير مباشر" عند الإدخال) تدخل هنا تلقائياً ضمن "المصروف" — نفس التوزيع بالتساوي على القطيع.') }}
   </div>
 </div>
 
 {% if annual %}
 <div class="card" style="background:var(--primary); color:#fff;">
-  <h3 style="color:#fff; margin-top:0;">{{ _('إجمالي آخر %(n)s شهر (سنوي تقريبي)', n=annual.months_count) }}</h3>
+  <h3 style="color:#fff; margin-top:0;">{{ _('إجمالي آخر %(n)s شهر', n=annual.months_count) }}</h3>
   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; text-align:center;">
     <div><b style="font-size:20px;">{{ "%.2f"|format(annual.total_cost) }}</b><div style="opacity:.8; font-size:12px;">{{ _('إجمالي التكلفة') }}</div></div>
-    <div><b style="font-size:20px;">{{ annual.head_count }}</b><div style="opacity:.8; font-size:12px;">{{ _('عدد الرؤوس الحالي') }}</div></div>
-    <div><b style="font-size:20px;">{{ "%.2f"|format(annual.cost_per_head) if annual.cost_per_head is not none else '-' }}</b><div style="opacity:.8; font-size:12px;">{{ _('تكلفة الرأس التقديرية') }}</div></div>
+    <div><b style="font-size:20px;">{{ annual.head_count }}</b><div style="opacity:.8; font-size:12px;">{{ _('متوسط عدد الرؤوس') }}</div></div>
+    <div><b style="font-size:20px;">{{ "%.2f"|format(annual.cost_per_head) if annual.cost_per_head is not none else '-' }}</b><div style="opacity:.8; font-size:12px;">{{ _('تكلفة الرأس') }}</div></div>
   </div>
 </div>
 {% endif %}

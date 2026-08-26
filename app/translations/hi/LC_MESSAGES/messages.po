@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:35+0300\n"
+"POT-Creation-Date: 2026-08-27 00:04+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -112,15 +112,15 @@ msgstr "पुष्टि की गई"
 msgid "فشلت"
 msgstr "विफल"
 
-#: app/__init__.py:161 app/team/routes.py:725
+#: app/__init__.py:161 app/team/routes.py:746
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:162 app/team/routes.py:726
+#: app/__init__.py:162 app/team/routes.py:747
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:163 app/team/routes.py:730
+#: app/__init__.py:163 app/team/routes.py:751
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -136,15 +136,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:167 app/team/routes.py:727
+#: app/__init__.py:167 app/team/routes.py:748
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:168 app/team/routes.py:728
+#: app/__init__.py:168 app/team/routes.py:749
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:169 app/team/routes.py:729
+#: app/__init__.py:169 app/team/routes.py:750
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -717,7 +717,7 @@ msgstr "गंभीर तनाव"
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:713
+#: app/core/animal_filters_service.py:181 app/team/routes.py:734
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1791,16 +1791,16 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:714 app/templates/team/payroll_reports.html:21
+#: app/team/routes.py:735 app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:36
 msgid "العامل"
 msgstr "कर्मचारी"
 
-#: app/team/routes.py:715
+#: app/team/routes.py:736
 msgid "الطبيب البيطري"
 msgstr "पशु चिकित्सक"
 
-#: app/team/routes.py:716
+#: app/team/routes.py:737
 msgid "المحاسب"
 msgstr "लेखाकार"
 
@@ -6772,13 +6772,13 @@ msgid "تكلفة الرأس الشهرية"
 msgstr "मासिक प्रति पशु लागत"
 
 #: app/templates/finance/monthly_cost_report.html:9
-msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس النشطة الحالي — النظام ما عنده تتبّع تاريخي لعدد الرؤوس بعد، فالأشهر الماضية تستخدم نفس العدد الحالي كتقريب، مو العدد الفعلي وقتها. المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
-msgstr "लागत = हर महीने खरीद + व्यय का योग (ऋण और बिक्री को छोड़कर), वर्तमान सक्रिय पशुओं की संख्या से विभाजित — सिस्टम अभी तक पशुओं की संख्या का ऐतिहासिक ट्रैक नहीं रखता, इसलिए पिछले महीने अनुमान के रूप में वर्तमान संख्या का उपयोग करते हैं, उस समय की वास्तविक संख्या नहीं। अप्रत्यक्ष व्यय (किराया/रखरखाव/वेतन — प्रविष्टि पर \"अप्रत्यक्ष व्यय\" चिह्नित) यहां स्वचालित रूप से \"व्यय\" के अंतर्गत शामिल होते हैं — झुंड पर समान रूप से विभाजित।"
+msgid "التكلفة = مجموع الشراء + المصروف بكل شهر (بدون الديون ولا البيع)، مقسومة على عدد الرؤوس الفعلي بذلك الشهر بالذات (يُحسب من تاريخ دخول/خروج كل رأس فعلياً — مو العدد الحالي). المصاريف غير المباشرة (إيجار/صيانة/رواتب — علّمتها \"مصروف غير مباشر\" عند الإدخال) تدخل هنا تلقائياً ضمن \"المصروف\" — نفس التوزيع بالتساوي على القطيع."
+msgstr "लागत = हर महीने खरीद + व्यय (ऋण और बिक्री को छोड़कर), उस विशिष्ट महीने की वास्तविक संख्या से विभाजित (प्रत्येक जानवर की वास्तविक प्रवेश/निकास तारीख से गणना — वर्तमान संख्या नहीं)। अप्रत्यक्ष व्यय (किराया/रखरखाव/वेतन — प्रविष्टि पर \"अप्रत्यक्ष व्यय\" चिह्नित) यहाँ स्वचालित रूप से \"व्यय\" के तहत शामिल होते हैं — झुंड में समान विभाजन।"
 
 #: app/templates/finance/monthly_cost_report.html:15
 #, python-format
-msgid "إجمالي آخر %(n)s شهر (سنوي تقريبي)"
-msgstr "पिछले %(n)s महीनों का कुल (अनुमानित वार्षिक)"
+msgid "إجمالي آخر %(n)s شهر"
+msgstr "पिछले %(n)s महीनों का कुल"
 
 #: app/templates/finance/monthly_cost_report.html:17
 #: app/templates/finance/monthly_cost_report.html:27
@@ -6786,22 +6786,19 @@ msgid "إجمالي التكلفة"
 msgstr "कुल लागत"
 
 #: app/templates/finance/monthly_cost_report.html:18
-msgid "عدد الرؤوس الحالي"
-msgstr "वर्तमान पशु संख्या"
+msgid "متوسط عدد الرؤوس"
+msgstr "औसत सिर गिनती"
 
 #: app/templates/finance/monthly_cost_report.html:19
-msgid "تكلفة الرأس التقديرية"
-msgstr "अनुमानित प्रति पशु लागत"
+#: app/templates/finance/monthly_cost_report.html:27
+msgid "تكلفة الرأس"
+msgstr "प्रति पशु लागत"
 
 #: app/templates/finance/monthly_cost_report.html:27
 #: app/templates/team/payroll_list.html:9
 #: app/templates/team/payroll_reports.html:7
 msgid "الشهر"
 msgstr "महीना"
-
-#: app/templates/finance/monthly_cost_report.html:27
-msgid "تكلفة الرأس"
-msgstr "प्रति पशु लागत"
 
 #: app/templates/finance/monthly_cost_report.html:36
 msgid "لا يوجد بيانات."
@@ -10324,4 +10321,10 @@ msgstr "अभी तक कोई अतिरिक्त नामित ग�
 
 #~ msgid "عرض الموقَّع"
 #~ msgstr "हस्ताक्षरित प्रति देखें"
+
+#~ msgid "عدد الرؤوس الحالي"
+#~ msgstr "वर्तमान पशु संख्या"
+
+#~ msgid "تكلفة الرأس التقديرية"
+#~ msgstr "अनुमानित प्रति पशु लागत"
 
