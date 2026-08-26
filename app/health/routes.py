@@ -264,34 +264,38 @@ def pharmacy_edit(pharmacy_id):
 @login_required
 @require_permission("pharmacy.manage")
 def pharmacy_purchase(pharmacy_id):
-    """تسجيل عملية شراء دواء (بند إضافي 96) — قبل هذا، أي إضافة مخزون
-    كانت بالكتابة فوق `available_qty` مباشرة من فورم التعديل، بدون أي
-    أثر لتاريخ الشراء أو تاريخ انتهاء تلك الدفعة تحديداً. هذا الفورم
-    الجديد يسجّل دفعة مستقلة (`PharmacyBatch`) بتاريخها وتاريخ انتهائها
+    """تسجيل عملية شراء دواء (بند إضافي 96، وُصِّلت بالمالية ببند 259)
+    — يسجّل دفعة مستقلة (`PharmacyBatch`) بتاريخها وتاريخ انتهائها
     الخاص، ويزيد `available_qty` الإجمالي تلقائياً بنفس الكمية —
     فورم التعديل المباشر يبقى شغّال زي ما هو لتصحيحات المخزون العامة،
-    مو بديلاً عن هذا الفورم."""
+    مو بديلاً عن هذا الفورم. **بند 259**: لو سعر الوحدة انكتب، تُنشأ
+    عملية مالية "شراء" حقيقية بنفس النمط الموحّد للعلف/المعدات (بند
+    203) — قبل هذا البند المبلغ كان يختفي تماماً من كل تقارير المالية.
+    يحتاج صلاحية `finance.full.manage` كمان لو فيه سعر (نفس قيد شراء
+    العلف — أي مبلغ يخرج من حساب المزرعة يحتاج صلاحية مالية)."""
     item = Pharmacy.query.get_or_404(pharmacy_id)
     if request.method == "POST":
         quantity = float(request.form["quantity"])
-        batch = PharmacyBatch(
-            pharmacy_id=item.id,
+        unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None
+        if unit_price is not None and not current_user.has_permission("finance.full.manage"):
+            flash("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية).", "error")
+            return redirect(url_for("health.pharmacy_purchase", pharmacy_id=item.id))
+
+        from app.core.stock_purchase_service import record_purchase
+        record_purchase(
+            kind="pharmacy", item=item, quantity=quantity, unit_price=unit_price,
             purchase_date=date.fromisoformat(request.form["purchase_date"]),
-            quantity=quantity,
-            remaining_qty=quantity,
             expiry_date=date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None,
-            unit_price=float(request.form["unit_price"]) if request.form.get("unit_price") else None,
-            notes=request.form.get("notes"),
-            created_by_id=current_user.id,
+            note=request.form.get("notes"), created_by_id=current_user.id,
         )
-        item.add_stock(quantity)
-        db.session.add(batch)
-        db.session.add(item)
         db.session.add(AuditLog(actor_user_id=current_user.id, action="pharmacy.purchase",
                                  entity_type="Pharmacy", entity_id=item.id,
                                  details=f"+{quantity:g} {item.unit or ''}"))
         db.session.commit()
-        flash("تم تسجيل عملية الشراء", "success")
+        if unit_price is None:
+            flash("تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية.", "warning")
+        else:
+            flash("تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً", "success")
         return redirect(url_for("health.pharmacy_edit", pharmacy_id=item.id))
     return render_template(
         "health/pharmacy_purchase_form.html", item=item, today=date.today().isoformat(),
