@@ -29,11 +29,14 @@
 "تنبيهاتي" للعامل المسؤول عن حظائر معيّنة (`core.alerts_mine`)، بدل ما
 يحتاج صلاحية `animals.view` العامة لمجرد ما يشوف تنبيهات حظائره هو.
 """
+import calendar
 from datetime import date, timedelta
 from app.models import (
     Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
     AnimalWeight, Task,
 )
+
+PAYROLL_MONTH_END_REMINDER_DAYS = 3
 
 
 def _vaccinations_due(fs: FarmSettings) -> list[dict]:
@@ -305,6 +308,44 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
                 "detail": f"{head_count} رأس بالحظيرة حالياً — سجّل جرعة افتراضية على الدواء لمقارنة المخزون تلقائياً.",
                 "urgent": False, "animal_id": None, "barn_id": s.barn_id,
             })
+    return alerts
+
+
+def _payroll_month_end_reminder() -> list[dict]:
+    """تذكير رواتب آخر كل شهر (بند إضافي 246، طلبك الصريح: "احتاج
+    تنبيه برواتب كل اخر شهر مع تأكيد لو فيه خصومات على العامل") — نفس
+    فلسفة هذا الملف بالضبط (فحص حي عند فتح شاشة التنبيهات، بدون Cron).
+    يبان فقط خلال آخر `PAYROLL_MONTH_END_REMINDER_DAYS` أيام من الشهر
+    الحالي (أو أي وقت بعده لو الشهر خلص وراتب العامل لسا ما تأكَّد)،
+    لكل عضو فريق نشط له راتب أساسي مسجَّل (`User.base_salary`) وما
+    عنده راتب مؤكَّد لهذا الشهر بعد. لو فيه مسودة موجودة وفيها خصومات،
+    التفصيل يذكرها صراحةً — التأكيد الفعلي بوجود خصومات نفسه يصير
+    كتحذير إضافي بشاشة تجهيز الراتب نفسها (`payroll_prepare.html`)،
+    مو هنا."""
+    from app.models import Payroll, User
+    today = date.today()
+    days_in_month = calendar.monthrange(today.year, today.month)[1]
+    is_near_month_end = today.day >= days_in_month - PAYROLL_MONTH_END_REMINDER_DAYS + 1
+    if not is_near_month_end:
+        return []
+
+    alerts = []
+    workers = User.query.filter(User.is_active_account == True, User.base_salary.isnot(None)).all()  # noqa: E712
+    for w in workers:
+        payroll = Payroll.query.filter_by(user_id=w.id, year=today.year, month=today.month).first()
+        if payroll and payroll.status == "confirmed":
+            continue
+        if payroll and payroll.total_deductions > 0:
+            detail = (f"فيه مسودة راتب محفوظة عليها خصومات بقيمة "
+                      f"{payroll.total_deductions:.2f} — راجعها قبل التأكيد.")
+        else:
+            detail = "لسا ما تجهَّز راتب هذا الشهر له."
+        alerts.append({
+            "category": "تذكير رواتب نهاية الشهر", "icon": "💰",
+            "label": f"راتب {w.name} — {today.month}/{today.year}",
+            "detail": detail,
+            "urgent": today.day == days_in_month, "animal_id": None, "barn_id": None,
+        })
     return alerts
 
 
@@ -704,6 +745,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _incomplete_animal_data() + _stalled_workflow(fs)
         + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
         + _feed_distribution_shortage() + _suggested_tasks_pending_approval()
+        + _payroll_month_end_reminder()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
@@ -728,6 +770,7 @@ _ALERT_ACTION_ROUTES = {
     "جهاز تكاثر": lambda aid: ("repro.programs_list", {}),
     "تباطؤ نمو مشبوه": lambda aid: ("core.animals_edit", {"animal_id": aid}),
     "مهمة مقترحة بانتظار الاعتماد": lambda aid: ("team.tasks_list", {"_anchor": "suggested-tasks"}),
+    "تذكير رواتب نهاية الشهر": lambda aid: ("team.payroll_list", {}),
 }
 
 

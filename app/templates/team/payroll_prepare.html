@@ -43,7 +43,7 @@
 
     <div style="display:flex; gap:8px; margin-top:10px;">
       <button class="btn light" type="submit" name="action" value="save">{{ _('حفظ مسودة') }}</button>
-      <button class="btn" type="submit" name="action" value="confirm" onclick="return confirm('{{ _('تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟') }}');">✅ {{ _('تأكيد نهائي') }}</button>
+      <button class="btn" type="submit" name="action" value="confirm" id="confirmFinalBtn">✅ {{ _('تأكيد نهائي') }}</button>
     </div>
     </fieldset>
   </form>
@@ -82,6 +82,28 @@
     suggestBtn.addEventListener('click', function(){
       bonusInput.focus();
       bonusInput.select();
+    });
+  }
+
+  // تأكيد إضافي لو فيه خصومات على العامل (بند إضافي 246، طلبك الصريح:
+  // "تأكيد لو فيه خصومات على العامل") — يحسب من قيم الفورم الحالية
+  // مباشرة (مو من payroll.deductions المحفوظة بالسيرفر)، عشان يلتقط
+  // حتى خصم أضافه المستخدم للتو بدون ما يحفظ مسودة أول.
+  var confirmBtn = document.getElementById('confirmFinalBtn');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', function(e){
+      var amounts = Array.prototype.map.call(document.querySelectorAll('input[name="deduction_amount"]'), function(i){ return parseFloat(i.value) || 0; });
+      var reasons = Array.prototype.map.call(document.querySelectorAll('input[name="deduction_reason"]'), function(i){ return i.value.trim(); });
+      var total = amounts.reduce(function(a, b){ return a + b; }, 0);
+      var msg;
+      if (total > 0) {
+        var reasonsText = reasons.filter(function(r){ return r; }).join('، ') || '{{ _('بدون سبب مذكور') }}';
+        msg = '{{ _('تنبيه: على هذا العامل خصومات بقيمة') }} ' + total.toFixed(2) + ' ({{ _('السبب:') }} ' + reasonsText + ').\n' +
+              '{{ _('تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟') }}';
+      } else {
+        msg = '{{ _('تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟') }}';
+      }
+      if (!confirm(msg)) e.preventDefault();
     });
   }
 })();

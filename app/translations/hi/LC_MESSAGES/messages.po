@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 22:26+0300\n"
+"POT-Creation-Date: 2026-08-26 22:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4135,6 +4135,7 @@ msgid "ما قدر"
 msgstr "नहीं कर सका"
 
 #: app/templates/family_view.html:123
+#: app/templates/team/payroll_prepare.html:101
 msgid "السبب:"
 msgstr "कारण:"
 
@@ -9264,12 +9265,21 @@ msgid "حفظ مسودة"
 msgstr "ड्राफ्ट सहेजें"
 
 #: app/templates/team/payroll_prepare.html:46
-msgid "تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟"
-msgstr "अंतिम पुष्टि — एक वास्तविक राशि वित्तीय रिकॉर्ड में दर्ज होगी और बाद में संपादित नहीं की जा सकेगी। क्या आप निश्चित हैं?"
-
-#: app/templates/team/payroll_prepare.html:46
 msgid "تأكيد نهائي"
 msgstr "अंतिम पुष्टि"
+
+#: app/templates/team/payroll_prepare.html:100
+msgid "بدون سبب مذكور"
+msgstr "कोई कारण नहीं बताया गया"
+
+#: app/templates/team/payroll_prepare.html:101
+msgid "تنبيه: على هذا العامل خصومات بقيمة"
+msgstr "चेतावनी: इस कर्मचारी की कटौतियां कुल"
+
+#: app/templates/team/payroll_prepare.html:102
+#: app/templates/team/payroll_prepare.html:104
+msgid "تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟"
+msgstr "अंतिम पुष्टि — एक वास्तविक राशि वित्तीय रिकॉर्ड में दर्ज होगी और बाद में संपादित नहीं की जा सकेगी। क्या आप निश्चित हैं?"
 
 #: app/templates/team/payroll_reports.html:5
 msgid "اختر عامل وشوف كل رواتبه المؤكَّدة عبر الأشهر، مع الوصل الموقَّع لو مرفوع."
