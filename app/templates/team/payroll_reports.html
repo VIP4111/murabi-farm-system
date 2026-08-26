@@ -1,6 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
+  <h2>💵 {{ _('إجمالي رواتب الشهر') }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('مجموع كل الرواتب المؤكَّدة لشهر معيّن، بغض النظر عن العامل.') }}</p>
+  <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; margin-top:12px;">
+    <div><label style="margin:0 0 4px;">{{ _('الشهر') }}</label>
+      <select name="total_month" style="margin:0;">
+        {% for m in range(1, 13) %}<option value="{{ m }}" {{ 'selected' if m == total_month }}>{{ m }}</option>{% endfor %}
+      </select>
+    </div>
+    <div><label style="margin:0 0 4px;">{{ _('السنة') }}</label><input name="total_year" type="number" value="{{ total_year }}" style="width:100px; margin:0;"></div>
+    <button class="btn light" type="submit" style="padding:10px 16px;">{{ _('عرض') }}</button>
+  </form>
+  <p style="font-size:20px; font-weight:700; margin:14px 0 4px;">{{ '%.2f'|format(total_amount) }} <span style="font-size:13px; color:var(--muted); font-weight:normal;">({{ total_records|length }} {{ _('راتب مؤكَّد') }})</span></p>
+  {% if total_records %}
+  <details style="margin-top:6px;">
+    <summary style="cursor:pointer; color:var(--muted); font-size:12.5px;">{{ _('تفصيل الرواتب المكوّنة للإجمالي') }}</summary>
+    <div class="table-scroll" style="margin-top:8px;">
+    <table class="compact-table">
+      <tr><th>{{ _('العامل') }}</th><th>{{ _('الصافي') }}</th></tr>
+      {% for p in total_records %}
+      <tr><td>{{ p.user.name }}</td><td>{{ '%.2f'|format(p.net_amount) }}</td></tr>
+      {% endfor %}
+    </table>
+    </div>
+  </details>
+  {% endif %}
+</div>
+
+<div class="card">
   <h2>📊 {{ _('تقارير الرواتب حسب العامل') }}</h2>
   <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('اختر عامل وشوف كل رواتبه المؤكَّدة عبر الأشهر، مع الوصل الموقَّع لو مرفوع.') }}</p>
   <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; margin-top:12px;">

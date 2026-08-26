@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:15+0300\n"
+"POT-Creation-Date: 2026-08-26 23:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -112,15 +112,15 @@ msgstr "Confirmed"
 msgid "فشلت"
 msgstr "Failed"
 
-#: app/__init__.py:161 app/team/routes.py:636
+#: app/__init__.py:161 app/team/routes.py:650
 msgid "مهمة عامة"
 msgstr "General task"
 
-#: app/__init__.py:162 app/team/routes.py:637
+#: app/__init__.py:162 app/team/routes.py:651
 msgid "فحص عزل"
 msgstr "Isolation check"
 
-#: app/__init__.py:163 app/team/routes.py:641
+#: app/__init__.py:163 app/team/routes.py:655
 msgid "مراجعة الدكتور"
 msgstr "Doctor review"
 
@@ -136,15 +136,15 @@ msgstr "Selenium dose"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "Colostrum/nursing follow-up"
 
-#: app/__init__.py:167 app/team/routes.py:638
+#: app/__init__.py:167 app/team/routes.py:652
 msgid "وزن"
 msgstr "Weighing"
 
-#: app/__init__.py:168 app/team/routes.py:639
+#: app/__init__.py:168 app/team/routes.py:653
 msgid "تحصين مستحق"
 msgstr "Vaccination due"
 
-#: app/__init__.py:169 app/team/routes.py:640
+#: app/__init__.py:169 app/team/routes.py:654
 msgid "تبديل علف"
 msgstr "Feed switch"
 
@@ -717,7 +717,7 @@ msgstr "Severe stress"
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:624
+#: app/core/animal_filters_service.py:181 app/team/routes.py:638
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1590,7 +1590,8 @@ msgid "إجمالي المشتريات+المصروفات"
 msgstr "Total purchases+expenses"
 
 #: app/reports/report_service.py:247 app/templates/team/payroll_list.html:22
-#: app/templates/team/payroll_reports.html:22
+#: app/templates/team/payroll_reports.html:21
+#: app/templates/team/payroll_reports.html:50
 msgid "الصافي"
 msgstr "Net"
 
@@ -1790,15 +1791,16 @@ msgstr "Move to Isolation"
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
 
-#: app/team/routes.py:625 app/templates/team/payroll_reports.html:8
+#: app/team/routes.py:639 app/templates/team/payroll_reports.html:21
+#: app/templates/team/payroll_reports.html:36
 msgid "العامل"
 msgstr "Worker"
 
-#: app/team/routes.py:626
+#: app/team/routes.py:640
 msgid "الطبيب البيطري"
 msgstr "Veterinarian"
 
-#: app/team/routes.py:627
+#: app/team/routes.py:641
 msgid "المحاسب"
 msgstr "Accountant"
 
@@ -2279,7 +2281,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
 #: app/templates/team/salaries_list.html:19
-#: app/templates/team/salaries_list.html:43
+#: app/templates/team/salaries_list.html:52
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -6527,7 +6529,7 @@ msgstr "Indirect expense (rent/maintenance/salaries — applies to the whole her
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "Automatically split evenly across the current number of active animals — appears in the \"Monthly/Annual Cost per Head\" report and as an individual share on each animal's detail page."
 
-#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:36
+#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:35
 msgid "طريقة الدفع"
 msgstr "Payment method"
 
@@ -6535,7 +6537,7 @@ msgstr "Payment method"
 msgid "نقدي"
 msgstr "Cash"
 
-#: app/templates/finance/form.html:37 app/templates/team/salaries_list.html:40
+#: app/templates/finance/form.html:37 app/templates/team/salaries_list.html:39
 msgid "تحويل بنكي"
 msgstr "Bank transfer"
 
@@ -6641,7 +6643,8 @@ msgstr "Issue"
 #: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
 #: app/templates/team/payroll_list.html:15
 #: app/templates/team/payroll_list.html:39
-#: app/templates/team/payroll_reports.html:14
+#: app/templates/team/payroll_reports.html:13
+#: app/templates/team/payroll_reports.html:42
 #: app/templates/team/performance_report.html:12
 msgid "عرض"
 msgstr "Show"
@@ -6789,6 +6792,7 @@ msgstr "Estimated cost per head"
 
 #: app/templates/finance/monthly_cost_report.html:27
 #: app/templates/team/payroll_list.html:9
+#: app/templates/team/payroll_reports.html:7
 msgid "الشهر"
 msgstr "Month"
 
@@ -8336,7 +8340,7 @@ msgid "التوزيع الزمني"
 msgstr "Time distribution"
 
 #: app/templates/reports/mortality.html:36
-#: app/templates/team/payroll_reports.html:22
+#: app/templates/team/payroll_reports.html:50
 msgid "الفترة"
 msgstr "Period"
 
@@ -9170,18 +9174,19 @@ msgid "لا يوجد أعضاء بعد."
 msgstr "No members yet."
 
 #: app/templates/team/payroll_list.html:6
-#: app/templates/team/payroll_reports.html:4
+#: app/templates/team/payroll_reports.html:32
 msgid "تقارير الرواتب حسب العامل"
 msgstr "Payroll Reports by Employee"
 
 #: app/templates/team/payroll_list.html:14
+#: app/templates/team/payroll_reports.html:12
 msgid "السنة"
 msgstr "Year"
 
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/payroll_prepare.html:29
-#: app/templates/team/payroll_reports.html:22
-#: app/templates/team/salaries_list.html:31
+#: app/templates/team/payroll_reports.html:50
+#: app/templates/team/salaries_list.html:34
 msgid "الراتب الأساسي"
 msgstr "Base salary"
 
@@ -9214,7 +9219,7 @@ msgid "الوصل الموقَّع"
 msgstr "Signed Receipt"
 
 #: app/templates/team/payroll_list.html:50
-#: app/templates/team/salaries_list.html:63
+#: app/templates/team/salaries_list.html:72
 msgid "لا يوجد أعضاء نشطون."
 msgstr "No active members."
 
@@ -9255,7 +9260,7 @@ msgid "اسم المستلم (اختياري، لو حوالة)"
 msgstr "Recipient name (optional — for remittance)"
 
 #: app/templates/team/payroll_prepare.html:38
-#: app/templates/team/payroll_reports.html:22
+#: app/templates/team/payroll_reports.html:50
 msgid "الخصومات"
 msgstr "Deductions"
 
@@ -9293,23 +9298,39 @@ msgstr "Warning: this worker has deductions totaling"
 msgid "تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟"
 msgstr "Final confirmation — an actual amount will be posted to the finance record and cannot be edited afterward. Are you sure?"
 
+#: app/templates/team/payroll_reports.html:4
+msgid "إجمالي رواتب الشهر"
+msgstr "Monthly Payroll Total"
+
 #: app/templates/team/payroll_reports.html:5
+msgid "مجموع كل الرواتب المؤكَّدة لشهر معيّن، بغض النظر عن العامل."
+msgstr "Total of all confirmed payrolls for a given month, across all workers."
+
+#: app/templates/team/payroll_reports.html:15
+msgid "راتب مؤكَّد"
+msgstr "confirmed payroll"
+
+#: app/templates/team/payroll_reports.html:18
+msgid "تفصيل الرواتب المكوّنة للإجمالي"
+msgstr "Breakdown of payrolls making up the total"
+
+#: app/templates/team/payroll_reports.html:33
 msgid "اختر عامل وشوف كل رواتبه المؤكَّدة عبر الأشهر، مع الوصل الموقَّع لو مرفوع."
 msgstr "Pick an employee and see all their confirmed payslips across months, with the signed receipt if uploaded."
 
-#: app/templates/team/payroll_reports.html:22
+#: app/templates/team/payroll_reports.html:50
 msgid "المكافأة"
 msgstr "Bonus"
 
-#: app/templates/team/payroll_reports.html:31
+#: app/templates/team/payroll_reports.html:59
 msgid "الوصل"
 msgstr "Receipt"
 
-#: app/templates/team/payroll_reports.html:32
+#: app/templates/team/payroll_reports.html:60
 msgid "الموقَّع"
 msgstr "Signed copy"
 
-#: app/templates/team/payroll_reports.html:36
+#: app/templates/team/payroll_reports.html:64
 msgid "ما فيه رواتب مؤكَّدة لهذا العامل بعد."
 msgstr "No confirmed payslips for this employee yet."
 
@@ -9646,43 +9667,51 @@ msgstr "Owner's phone number"
 msgid "مسافر حالياً"
 msgstr "Currently traveling"
 
-#: app/templates/team/salaries_list.html:31
+#: app/templates/team/salaries_list.html:32
+msgid "بيانات الراتب"
+msgstr "Salary Data"
+
+#: app/templates/team/salaries_list.html:34
 msgid "غير محدَّد"
 msgstr "Not set"
 
-#: app/templates/team/salaries_list.html:32
-msgid "الجنسية"
-msgstr "Nationality"
-
-#: app/templates/team/salaries_list.html:33
-msgid "رقم الجواز"
-msgstr "Passport number"
-
-#: app/templates/team/salaries_list.html:34
-msgid "رقم الحدود"
-msgstr "Border number"
-
-#: app/templates/team/salaries_list.html:35
-msgid "تاريخ الوصول للسعودية"
-msgstr "Arrival date in Saudi Arabia"
-
-#: app/templates/team/salaries_list.html:39
+#: app/templates/team/salaries_list.html:38
 msgid "نقداً"
 msgstr "Cash"
 
+#: app/templates/team/salaries_list.html:42
+msgid "تاريخ الوصول للسعودية"
+msgstr "Arrival date in Saudi Arabia"
+
+#: app/templates/team/salaries_list.html:45
+msgid "بيانات الهوية"
+msgstr "Identity Data"
+
+#: app/templates/team/salaries_list.html:47
+msgid "الجنسية"
+msgstr "Nationality"
+
+#: app/templates/team/salaries_list.html:48
+msgid "رقم الجواز"
+msgstr "Passport number"
+
 #: app/templates/team/salaries_list.html:49
+msgid "رقم الحدود"
+msgstr "Border number"
+
+#: app/templates/team/salaries_list.html:58
 msgid "تسجيل عودة"
 msgstr "Record return"
 
-#: app/templates/team/salaries_list.html:51
+#: app/templates/team/salaries_list.html:60
 msgid "تسجيل سفر"
 msgstr "Record travel"
 
-#: app/templates/team/salaries_list.html:55
+#: app/templates/team/salaries_list.html:64
 msgid "راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر."
 msgstr "His salary is prorated based on actual attendance days each month."
 
-#: app/templates/team/salaries_list.html:59
+#: app/templates/team/salaries_list.html:68
 msgid "طريقة الدفع تحويل — اسم مستلم الحوالة يُحدَّد كل شهر بشكل منفصل وقت تأكيد الراتب (يختلف حسب الشهر)."
 msgstr "Payment method is transfer — the recipient name is set separately each month when confirming payroll (can change month to month)."
 

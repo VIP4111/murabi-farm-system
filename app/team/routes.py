@@ -338,7 +338,21 @@ def payroll_reports():
     if user_id:
         records = (Payroll.query.filter_by(user_id=user_id, status="confirmed")
                    .order_by(Payroll.year.desc(), Payroll.month.desc()).all())
-    return render_template("team/payroll_reports.html", members=members, records=records, selected_user_id=user_id)
+
+    # إجمالي رواتب الشهر (بند إضافي 248، بعد نقدك الصريح: "ما فيه إجمالي
+    # شهري... كم صرفنا على الرواتب هالشهر") — مستقل تماماً عن اختيار
+    # العامل أعلاه (فلترة بسنة/شهر بدل عامل واحد)، تفصيل الرواتب المكوّنة
+    # للإجمالي يظهر تحته مباشرة.
+    today = date.today()
+    total_year = request.args.get("total_year", type=int) or today.year
+    total_month = request.args.get("total_month", type=int) or today.month
+    total_records = (Payroll.query.filter_by(year=total_year, month=total_month, status="confirmed")
+                      .join(User, Payroll.user_id == User.id).order_by(User.name).all())
+    total_amount = sum(p.net_amount for p in total_records)
+
+    return render_template("team/payroll_reports.html", members=members, records=records, selected_user_id=user_id,
+                            total_year=total_year, total_month=total_month,
+                            total_records=total_records, total_amount=total_amount)
 
 
 @team_bp.route("/members/<int:user_id>/toggle", methods=["POST"])
