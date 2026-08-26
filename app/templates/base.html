@@ -576,7 +576,16 @@
 
       {% if current_user.has_permission('health.view') %}
       {% set _health_endpoints = ['health.dashboard', 'health.pharmacy_list', 'health.vet_visits_list', 'health.diseases_list', 'health.vaccinations_list', 'health.vaccination_schedule_list', 'health.diagnose_start', 'health.injection_guide', 'health.body_condition_guide', 'health.doctors_list', 'health.protocols_list',
-                                   'health.pharmacy_shortages', 'health.pharmacy_new', 'health.pharmacy_edit', 'health.pharmacy_purchase'] %}
+                                   'health.pharmacy_shortages', 'health.pharmacy_new', 'health.pharmacy_edit', 'health.pharmacy_purchase',
+                                   'health.pharmacy_dose_rules_json', 'health.usage_routes_new', 'health.drug_catalog_new',
+                                   'health.disease_types_list', 'health.disease_types_new', 'health.disease_type_detail',
+                                   'health.link_wizard', 'health.disease_symptom_link_new', 'health.disease_symptom_link_update',
+                                   'health.disease_symptom_link_delete', 'health.symptoms_list', 'health.symptoms_new',
+                                   'health.emergency_symptoms_list', 'health.emergency_symptoms_new', 'health.emergency_symptoms_delete',
+                                   'health.doctors_new', 'health.vet_visits_new', 'health.diseases_new_simple', 'health.diseases_new',
+                                   'health.diagnose_result', 'health.disease_close', 'health.vaccinations_new',
+                                   'health.protocols_new', 'health.protocols_apply', 'health.vaccination_schedule_new',
+                                   'health.vaccination_schedule_cancel', 'health.vaccination_schedule_complete'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _health_endpoints else '' }}>
         <summary>{{ nav_icon('health') }}{{ _('الصحة') }}</summary>
         <div class="drawer-grid">
