@@ -40,11 +40,15 @@ def finance_list():
     net_profit = total_in - total_out
     profit_percent = round((net_profit / total_out) * 100, 1) if total_out else None
 
+    from app.core.loss_diagnosis_service import diagnose_recent_loss
+    loss_diagnosis = diagnose_recent_loss()
+
     return render_template(
         "finance/list.html", rows=rows, total_in=total_in, total_out=total_out,
         total_debt_in=total_debt_in, total_debt_repaid=total_debt_repaid,
         debt_outstanding=total_debt_in - total_debt_repaid,
         net_profit=net_profit, profit_percent=profit_percent,
+        loss_diagnosis=loss_diagnosis,
     )
 
 

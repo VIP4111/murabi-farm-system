@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 01:17+0300\n"
+"POT-Creation-Date: 2026-08-27 01:27+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1509,7 +1509,7 @@ msgstr "लिंग"
 #: app/templates/feed/movements_list.html:10
 #: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:40
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1600,13 +1600,13 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "प्राप्त बाहरी सहायता (ऋण)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:73
 msgid "سداد دين"
 msgstr "ऋण चुकौती"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:40
-#: app/templates/settings_readiness.html:21
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:20
+#: app/templates/finance/list.html:69 app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "मद"
 
@@ -1628,7 +1628,7 @@ msgstr "जानवर"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:458 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:20 app/templates/finance/list.html:69
 #: app/templates/team/payroll_prepare.html:44
 #: app/templates/team/payroll_prepare.html:78
 msgid "المبلغ"
@@ -1705,7 +1705,7 @@ msgstr "खपत मापन अवधि (दिन)"
 #: app/templates/equipment/utility_form.html:7
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:40 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:69 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1929,7 +1929,7 @@ msgstr "फार्म पर जन्मा"
 #: app/templates/batches/batches_list.html:4
 #: app/templates/equipment/items_list.html:8
 #: app/templates/feed/items_list.html:7 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:73
 msgid "شراء"
 msgstr "खरीद"
 
@@ -2096,7 +2096,7 @@ msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
 #: app/templates/animal_detail.html:88 app/templates/base.html:670
-#: app/templates/base.html:672 app/templates/finance/list.html:27
+#: app/templates/base.html:672 app/templates/finance/list.html:56
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "वित्त"
@@ -2358,7 +2358,7 @@ msgstr "गंभीरता"
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
 #: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:40 app/templates/finance/lots_list.html:17
+#: app/templates/finance/list.html:69 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2633,12 +2633,12 @@ msgid "الوصف"
 msgstr "विवरण"
 
 #: app/templates/animal_detail.html:459 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:73
 msgid "بيع"
 msgstr "बिक्री"
 
 #: app/templates/animal_detail.html:459 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:73
 msgid "مصروف"
 msgstr "व्यय"
 
@@ -2864,7 +2864,7 @@ msgid "إضافة"
 msgstr "जोड़ें"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:140
-#: app/templates/finance/list.html:63
+#: app/templates/finance/list.html:92
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:44
@@ -6414,12 +6414,12 @@ msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "अभी तक कोई राशन दर्ज नहीं है।"
 
 #: app/templates/finance/break_even_report.html:5
-#: app/templates/finance/list.html:30
+#: app/templates/finance/list.html:59
 msgid "التحليل المالي ونقطة التعادل"
 msgstr "वित्तीय विश्लेषण और ब्रेक-ईवन"
 
 #: app/templates/finance/break_even_report.html:7
-#: app/templates/finance/list.html:34 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:63 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Excel निर्यात करें"
@@ -6477,7 +6477,7 @@ msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "विश्लेषण के लिए कोई सक्रिय पशु नहीं है।"
 
 #: app/templates/finance/culling_index.html:5
-#: app/templates/finance/list.html:32
+#: app/templates/finance/list.html:61
 msgid "مؤشر الاستبعاد المالي"
 msgstr "निष्कासन सूचकांक"
 
@@ -6613,63 +6613,94 @@ msgid "صافي الربح = إجمالي الداخل − إجمالي الخا
 msgstr "शुद्ध लाभ = कुल आवक − कुल जावक। लाभ प्रतिशत = शुद्ध लाभ ÷ कुल जावक × 100 — ऋण (बाहरी सहायता/चुकौती) दोनों गणनाओं से बाहर रखा गया है, क्योंकि यह एक देनदारी है, वास्तविक परिचालन आय या व्यय नहीं।"
 
 #: app/templates/finance/list.html:16
+msgid "ليش أنا بخسارة؟"
+msgstr "मुझे नुकसान क्यों हो रहा है?"
+
+#: app/templates/finance/list.html:17
+#, python-format
+msgid "آخر %(n)s يوم صافيهم سالب (%(net)s). التفصيل أدناه من بياناتك الفعلية بس — النظام ما يقترح حل جاهز، يوريك الحقائق تقرر أنت."
+msgstr "पिछले %(n)s दिनों का शुद्ध नकारात्मक था (%(net)s)। नीचे दिया गया विवरण केवल आपके वास्तविक डेटा से है — सिस्टम कोई तैयार समाधान सुझाता नहीं, यह आपको तथ्य दिखाता है ताकि आप निर्णय ले सकें।"
+
+#: app/templates/finance/list.html:20
+#, python-format
+msgid "%% من إجمالي الخارج"
+msgstr "% कुल जावक का"
+
+#: app/templates/finance/list.html:20
+msgid "التغيّر عن الفترة السابقة"
+msgstr "पिछली अवधि की तुलना में परिवर्तन"
+
+#: app/templates/finance/list.html:29
+msgid "جديد هذي الفترة"
+msgstr "इस अवधि में नया"
+
+#: app/templates/finance/list.html:36
+#, python-format
+msgid "عندك %(n)s رأس بهامش سالب فعلياً (خطر خسارة لو بيع الآن) —"
+msgstr "आपके पास %(n)s जानवर हैं जिनका वास्तविक मार्जिन नकारात्मक है (अभी बेचने पर नुकसान का जोखिम) —"
+
+#: app/templates/finance/list.html:37
+msgid "راجعهم بشاشة نقطة التعادل"
+msgstr "ब्रेक-ईवन स्क्रीन पर उनकी समीक्षा करें"
+
+#: app/templates/finance/list.html:45
 msgid "الديون (منفصلة عن الداخل/الخارج التشغيلي)"
 msgstr "ऋण (परिचालन आवक/जावक से अलग)"
 
-#: app/templates/finance/list.html:18
+#: app/templates/finance/list.html:47
 msgid "دعم خارجي مستلم"
 msgstr "प्राप्त बाहरी सहायता"
 
-#: app/templates/finance/list.html:19
+#: app/templates/finance/list.html:48
 msgid "مُسدَّد"
 msgstr "चुकाया गया"
 
-#: app/templates/finance/list.html:20
+#: app/templates/finance/list.html:49
 msgid "المتبقي عليك"
 msgstr "आप पर शेष"
 
-#: app/templates/finance/list.html:29
+#: app/templates/finance/list.html:58
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "मासिक प्रति पशु लागत रिपोर्ट"
 
-#: app/templates/finance/list.html:31
+#: app/templates/finance/list.html:60
 msgid "موسمية أسعار البيع"
 msgstr "बिक्री मूल्य मौसमीता"
 
-#: app/templates/finance/list.html:33 app/templates/finance/lots_list.html:5
+#: app/templates/finance/list.html:62 app/templates/finance/lots_list.html:5
 msgid "دفعات البيع"
 msgstr "बिक्री खेप"
 
-#: app/templates/finance/list.html:35
+#: app/templates/finance/list.html:64
 msgid "عملية جديدة"
 msgstr "नया लेनदेन"
 
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:69
 msgid "الفاتورة"
 msgstr "चालान"
 
-#: app/templates/finance/list.html:44
+#: app/templates/finance/list.html:73
 msgid "دعم خارجي (دين)"
 msgstr "बाहरी सहायता (ऋण)"
 
-#: app/templates/finance/list.html:47
+#: app/templates/finance/list.html:76
 #: app/templates/health/vaccination_schedule_list.html:62
 msgid "ملغاة"
 msgstr "रद्द"
 
-#: app/templates/finance/list.html:47
+#: app/templates/finance/list.html:76
 msgid "سارية"
 msgstr "सक्रिय"
 
-#: app/templates/finance/list.html:50
+#: app/templates/finance/list.html:79
 msgid "بدون فاتورة"
 msgstr "बिना चालान"
 
-#: app/templates/finance/list.html:52
+#: app/templates/finance/list.html:81
 msgid "إصدار"
 msgstr "जारी करें"
 
-#: app/templates/finance/list.html:55 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:84 app/templates/reports/purchases.html:44
 #: app/templates/team/payroll_list.html:15
 #: app/templates/team/payroll_list.html:39
 #: app/templates/team/payroll_reports.html:13
@@ -6678,11 +6709,11 @@ msgstr "जारी करें"
 msgid "عرض"
 msgstr "दिखाएं"
 
-#: app/templates/finance/list.html:60
+#: app/templates/finance/list.html:89
 msgid "تأكيد الإلغاء؟"
 msgstr "रद्द करने की पुष्टि करें?"
 
-#: app/templates/finance/list.html:69
+#: app/templates/finance/list.html:98
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "अभी तक कोई वित्तीय लेनदेन नहीं है।"
 

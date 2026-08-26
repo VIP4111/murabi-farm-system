@@ -11,6 +11,35 @@
   <p style="color:var(--muted); font-size:12px; margin:8px 0 0;">{{ _('صافي الربح = إجمالي الداخل − إجمالي الخارج. نسبة الربح = صافي الربح ÷ إجمالي الخارج × 100 — الديون (دعم خارجي/سداد) مستثناة من الحسابين، هي التزام مو دخل أو مصروف تشغيلي حقيقي.') }}</p>
 </div>
 
+{% if loss_diagnosis %}
+<div class="card">
+  <h3 style="font-size:15px; margin:0 0 4px;">🔍 {{ _('ليش أنا بخسارة؟') }}</h3>
+  <p style="color:var(--muted); font-size:12.5px; margin:0 0 8px;">{{ _('آخر %(n)s يوم صافيهم سالب (%(net)s). التفصيل أدناه من بياناتك الفعلية بس — النظام ما يقترح حل جاهز، يوريك الحقائق تقرر أنت.', n=loss_diagnosis.window_days, net='%.2f'|format(loss_diagnosis.net)) }}</p>
+  <div class="table-scroll">
+  <table class="compact-table">
+    <tr><th>{{ _('البند') }}</th><th>{{ _('المبلغ') }}</th><th>{{ _('%% من إجمالي الخارج') }}</th><th>{{ _('التغيّر عن الفترة السابقة') }}</th></tr>
+    {% for c in loss_diagnosis.categories %}
+    <tr>
+      <td>{{ c.category }}</td>
+      <td>{{ "%.2f"|format(c.amount) }}</td>
+      <td>{{ c.percent_of_total }}%</td>
+      <td>
+        {% if c.change_pct is not none %}
+        <span style="color:{{ '#a32d2d' if c.change_pct > 0 else '#0f6e56' }};">{{ '+' if c.change_pct > 0 else '' }}{{ c.change_pct }}%</span>
+        {% else %}{{ _('جديد هذي الفترة') }}{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% if loss_diagnosis.at_risk_count %}
+  <p style="margin:10px 0 0;">⚠️ {{ _('عندك %(n)s رأس بهامش سالب فعلياً (خطر خسارة لو بيع الآن) —', n=loss_diagnosis.at_risk_count) }}
+    <a href="{{ url_for('finance.break_even_report') }}">{{ _('راجعهم بشاشة نقطة التعادل') }}</a>.
+  </p>
+  {% endif %}
+</div>
+{% endif %}
+
 {% if total_debt_in %}
 <div class="card">
   <h3 style="font-size:15px;">{{ _('الديون (منفصلة عن الداخل/الخارج التشغيلي)') }}</h3>
