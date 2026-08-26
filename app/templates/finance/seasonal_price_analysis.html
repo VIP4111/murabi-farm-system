@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2>📈 {{ _('موسمية أسعار البيع (بالتقويم الهجري)') }}</h2>
+    <a class="btn light" href="{{ url_for('finance.finance_list') }}">← {{ _('رجوع للمالية') }}</a>
+  </div>
+  <div class="notice">
+    {{ _('العمود الأزرق = متوسط أسعار بيعك الحقيقية بهذا الشهر الهجري لهذه السنة. العمود البرتقالي = متوسط أسعار بيعك الحقيقية بنفس الشهر الهجري عبر كل السنين اللي عندك بيانات فيها — كلها من مبيعاتك الفعلية، صفر تخمين أو بيانات سوق خارجية. الخلفية الرمادية الفاتحة = رمضان وذو الحجة (فيه عيد الأضحى) — الموسمان الدينيان الأكثر تأثيراً بسوق الأغنام/الماعز، لأنهما يتحركان بالتقويم الهجري لا الميلادي.') }}
+  </div>
+  {% if not data.sufficient_data %}
+  <div class="notice">
+    ⚠️ {{ _('عندك بيانات مبيعات من %(n)s سنة هجرية بس — النمط الموسمي لسا مو موثوق، يحتاج سنتين على الأقل ليصير له معنى حقيقي. الأعمدة البرتقالية أدناه مبنية على هذي البيانات المحدودة، خذها كمؤشر أولي بس.', n=data.data_years_count) }}
+  </div>
+  {% endif %}
+</div>
+
+<div class="card">
+  {% if data.total_sales_count == 0 %}
+  <p style="color:#888;">{{ _('ما فيه عمليات بيع مسجَّلة بعد لتحليلها.') }}</p>
+  {% else %}
+  <div class="table-scroll">
+  <svg viewBox="0 0 720 320" style="width:100%; min-width:640px; height:auto;" xmlns="http://www.w3.org/2000/svg">
+    {% set chart_h = 240 %}
+    {% set chart_top = 20 %}
+    {% set bar_group_w = 56 %}
+    {% for m in data.months %}
+      {% set gx = 10 + loop.index0 * bar_group_w %}
+      {% if m.is_religious_season %}
+      <rect x="{{ gx }}" y="{{ chart_top }}" width="{{ bar_group_w }}" height="{{ chart_h }}" fill="var(--muted)" opacity="0.12"></rect>
+      {% endif %}
+      {% set cur_h = ((m.current_year_avg or 0) / max_price * chart_h) if max_price else 0 %}
+      {% set hist_h = ((m.historical_avg or 0) / max_price * chart_h) if max_price else 0 %}
+      <rect x="{{ gx + 6 }}" y="{{ chart_top + chart_h - cur_h }}" width="18" height="{{ cur_h }}" fill="#2f6fed"></rect>
+      <rect x="{{ gx + 28 }}" y="{{ chart_top + chart_h - hist_h }}" width="18" height="{{ hist_h }}" fill="#e08a2c"></rect>
+      <text x="{{ gx + bar_group_w/2 }}" y="{{ chart_top + chart_h + 18 }}" font-size="11" text-anchor="middle" fill="var(--text, #333)">{{ m.month_name }}</text>
+    {% endfor %}
+    <line x1="8" y1="{{ chart_top + chart_h }}" x2="710" y2="{{ chart_top + chart_h }}" stroke="var(--muted)" stroke-width="1"></line>
+  </svg>
+  </div>
+  <div style="display:flex; gap:16px; margin-top:8px; font-size:12px;">
+    <span><span style="display:inline-block; width:12px; height:12px; background:#2f6fed; margin-inline-end:4px; vertical-align:middle;"></span>{{ _('هذي السنة الفعلي') }}</span>
+    <span><span style="display:inline-block; width:12px; height:12px; background:#e08a2c; margin-inline-end:4px; vertical-align:middle;"></span>{{ _('متوسط تاريخي (كل السنين)') }}</span>
+  </div>
+
+  <div class="table-scroll" style="margin-top:16px;">
+  <table class="compact-table">
+    <tr><th>{{ _('الشهر الهجري') }}</th><th>{{ _('متوسط هذي السنة') }}</th><th>{{ _('متوسط تاريخي') }}</th><th>{{ _('عدد المبيعات (تاريخي)') }}</th></tr>
+    {% for m in data.months %}
+    <tr style="{{ 'background:rgba(224,138,44,.12);' if m.is_religious_season }}">
+      <td>{{ m.month_name }}{% if m.is_religious_season %} 🕌{% endif %}</td>
+      <td>{{ "%.2f"|format(m.current_year_avg) if m.current_year_avg is not none else '-' }}</td>
+      <td>{{ "%.2f"|format(m.historical_avg) if m.historical_avg is not none else '-' }}</td>
+      <td>{{ m.historical_count }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

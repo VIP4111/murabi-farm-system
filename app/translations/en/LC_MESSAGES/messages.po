@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:44+0300\n"
+"POT-Creation-Date: 2026-08-27 01:02+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1509,7 +1509,7 @@ msgstr "Gender"
 #: app/templates/feed/movements_list.html:10
 #: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:36
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:37
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:18
 #: app/templates/health/diseases_list.html:14
@@ -1600,12 +1600,12 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "External support received (debt)"
 
 #: app/reports/report_service.py:249 app/templates/finance/form.html:14
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:41
 msgid "سداد دين"
 msgstr "Debt repayment"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/finance/form.html:31 app/templates/finance/list.html:36
+#: app/templates/finance/form.html:31 app/templates/finance/list.html:37
 #: app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "Item"
@@ -1628,7 +1628,7 @@ msgstr "Animal"
 
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:458 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 #: app/templates/team/payroll_prepare.html:44
 #: app/templates/team/payroll_prepare.html:78
 msgid "المبلغ"
@@ -1705,7 +1705,7 @@ msgstr "Consumption measurement period (days)"
 #: app/templates/equipment/utility_form.html:7
 #: app/templates/feed/movement_form.html:11
 #: app/templates/feed/movements_list.html:10 app/templates/finance/form.html:8
-#: app/templates/finance/list.html:36 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:37 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:5
@@ -1929,7 +1929,7 @@ msgstr "Born on farm"
 #: app/templates/batches/batches_list.html:4
 #: app/templates/equipment/items_list.html:8
 #: app/templates/feed/items_list.html:7 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:41
 msgid "شراء"
 msgstr "Purchase"
 
@@ -2358,7 +2358,7 @@ msgstr "Severity"
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
 #: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92 app/templates/finance/health_view.html:34
-#: app/templates/finance/list.html:36 app/templates/finance/lots_list.html:17
+#: app/templates/finance/list.html:37 app/templates/finance/lots_list.html:17
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:13
@@ -2633,12 +2633,12 @@ msgid "الوصف"
 msgstr "Description"
 
 #: app/templates/animal_detail.html:459 app/templates/finance/form.html:10
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:41
 msgid "بيع"
 msgstr "Sale"
 
 #: app/templates/animal_detail.html:459 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:41
 msgid "مصروف"
 msgstr "Expense"
 
@@ -2864,7 +2864,7 @@ msgid "إضافة"
 msgstr "Add"
 
 #: app/templates/animal_option_form.html:11 app/templates/family_view.html:140
-#: app/templates/finance/list.html:59
+#: app/templates/finance/list.html:60
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:44
@@ -6419,7 +6419,7 @@ msgid "التحليل المالي ونقطة التعادل"
 msgstr "Financial analysis and break-even"
 
 #: app/templates/finance/break_even_report.html:7
-#: app/templates/finance/list.html:30 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:31 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:8
 msgid "تصدير Excel"
 msgstr "Export Excel"
@@ -6428,6 +6428,7 @@ msgstr "Export Excel"
 #: app/templates/finance/culling_index.html:6
 #: app/templates/finance/lots_list.html:7
 #: app/templates/finance/monthly_cost_report.html:6
+#: app/templates/finance/seasonal_price_analysis.html:6
 msgid "رجوع للمالية"
 msgstr "Back to Finance"
 
@@ -6476,7 +6477,7 @@ msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "No active animals to analyze."
 
 #: app/templates/finance/culling_index.html:5
-#: app/templates/finance/list.html:28
+#: app/templates/finance/list.html:29
 msgid "مؤشر الاستبعاد المالي"
 msgstr "Culling index"
 
@@ -6619,40 +6620,44 @@ msgstr "Remaining owed"
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "Monthly cost-per-head report"
 
-#: app/templates/finance/list.html:29 app/templates/finance/lots_list.html:5
+#: app/templates/finance/list.html:28
+msgid "موسمية أسعار البيع"
+msgstr "Sale Price Seasonality"
+
+#: app/templates/finance/list.html:30 app/templates/finance/lots_list.html:5
 msgid "دفعات البيع"
 msgstr "Sales lots"
 
-#: app/templates/finance/list.html:31
+#: app/templates/finance/list.html:32
 msgid "عملية جديدة"
 msgstr "New transaction"
 
-#: app/templates/finance/list.html:36
+#: app/templates/finance/list.html:37
 msgid "الفاتورة"
 msgstr "Invoice"
 
-#: app/templates/finance/list.html:40
+#: app/templates/finance/list.html:41
 msgid "دعم خارجي (دين)"
 msgstr "External support (debt)"
 
-#: app/templates/finance/list.html:43
+#: app/templates/finance/list.html:44
 #: app/templates/health/vaccination_schedule_list.html:62
 msgid "ملغاة"
 msgstr "Cancelled"
 
-#: app/templates/finance/list.html:43
+#: app/templates/finance/list.html:44
 msgid "سارية"
 msgstr "Active"
 
-#: app/templates/finance/list.html:46
+#: app/templates/finance/list.html:47
 msgid "بدون فاتورة"
 msgstr "No invoice"
 
-#: app/templates/finance/list.html:48
+#: app/templates/finance/list.html:49
 msgid "إصدار"
 msgstr "Issue"
 
-#: app/templates/finance/list.html:51 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:52 app/templates/reports/purchases.html:44
 #: app/templates/team/payroll_list.html:15
 #: app/templates/team/payroll_list.html:39
 #: app/templates/team/payroll_reports.html:13
@@ -6661,11 +6666,11 @@ msgstr "Issue"
 msgid "عرض"
 msgstr "Show"
 
-#: app/templates/finance/list.html:56
+#: app/templates/finance/list.html:57
 msgid "تأكيد الإلغاء؟"
 msgstr "Confirm cancellation?"
 
-#: app/templates/finance/list.html:65
+#: app/templates/finance/list.html:66
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "No financial transactions yet."
 
@@ -6812,6 +6817,47 @@ msgstr "Month"
 #: app/templates/finance/monthly_cost_report.html:36
 msgid "لا يوجد بيانات."
 msgstr "No data."
+
+#: app/templates/finance/seasonal_price_analysis.html:5
+msgid "موسمية أسعار البيع (بالتقويم الهجري)"
+msgstr "Sale Price Seasonality (Hijri Calendar)"
+
+#: app/templates/finance/seasonal_price_analysis.html:9
+msgid "العمود الأزرق = متوسط أسعار بيعك الحقيقية بهذا الشهر الهجري لهذه السنة. العمود البرتقالي = متوسط أسعار بيعك الحقيقية بنفس الشهر الهجري عبر كل السنين اللي عندك بيانات فيها — كلها من مبيعاتك الفعلية، صفر تخمين أو بيانات سوق خارجية. الخلفية الرمادية الفاتحة = رمضان وذو الحجة (فيه عيد الأضحى) — الموسمان الدينيان الأكثر تأثيراً بسوق الأغنام/الماعز، لأنهما يتحركان بالتقويم الهجري لا الميلادي."
+msgstr "The blue bar = the average of your real sale prices for this Hijri month this year. The orange bar = the average of your real sale prices for the same Hijri month across every year you have data for — all from your actual sales, zero guesswork or external market data. The light gray shading = Ramadan and Dhul Hijjah (which contains Eid al-Adha) — the two religious seasons that most affect the sheep/goat market, since they move by the Hijri calendar, not the Gregorian one."
+
+#: app/templates/finance/seasonal_price_analysis.html:13
+#, python-format
+msgid "عندك بيانات مبيعات من %(n)s سنة هجرية بس — النمط الموسمي لسا مو موثوق، يحتاج سنتين على الأقل ليصير له معنى حقيقي. الأعمدة البرتقالية أدناه مبنية على هذي البيانات المحدودة، خذها كمؤشر أولي بس."
+msgstr "You have sales data from only %(n)s Hijri year(s) — the seasonal pattern isn't reliable yet; it needs at least two years to become meaningful. The orange bars below are based on this limited data — treat them as an early indicator only."
+
+#: app/templates/finance/seasonal_price_analysis.html:20
+msgid "ما فيه عمليات بيع مسجَّلة بعد لتحليلها."
+msgstr "No sale transactions recorded yet to analyze."
+
+#: app/templates/finance/seasonal_price_analysis.html:42
+msgid "هذي السنة الفعلي"
+msgstr "This year (actual)"
+
+#: app/templates/finance/seasonal_price_analysis.html:43
+msgid "متوسط تاريخي (كل السنين)"
+msgstr "Historical average (all years)"
+
+#: app/templates/finance/seasonal_price_analysis.html:48
+msgid "الشهر الهجري"
+msgstr "Hijri Month"
+
+#: app/templates/finance/seasonal_price_analysis.html:48
+msgid "متوسط هذي السنة"
+msgstr "This Year's Average"
+
+#: app/templates/finance/seasonal_price_analysis.html:48
+msgid "متوسط تاريخي"
+msgstr "Historical Average"
+
+#: app/templates/finance/seasonal_price_analysis.html:48
+msgid "عدد المبيعات (تاريخي)"
+msgstr "Sales Count (Historical)"
 
 #: app/templates/health/_medicine_widget.html:47
 msgid "طريقة الاستخدام:"

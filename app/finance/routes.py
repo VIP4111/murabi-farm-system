@@ -120,6 +120,21 @@ def break_even_report():
     )
 
 
+@finance_bp.route("/seasonal-price-analysis")
+@login_required
+@require_permission("finance.full.manage")
+def seasonal_price_analysis():
+    """شارت موسمية أسعار البيع بالتقويم الهجري (بند إضافي 255)."""
+    from app.core.seasonal_price_service import seasonal_price_analysis as analyze
+    data = analyze()
+    max_price = max(
+        [m["current_year_avg"] or 0 for m in data["months"]]
+        + [m["historical_avg"] or 0 for m in data["months"]],
+        default=0,
+    )
+    return render_template("finance/seasonal_price_analysis.html", data=data, max_price=max_price)
+
+
 @finance_bp.route("/lots")
 @login_required
 @require_permission("finance.full.manage")

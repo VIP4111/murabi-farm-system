@@ -665,7 +665,7 @@
       {% set _finance_endpoints = ['finance.finance_list', 'finance.finance_health_view',
                                     'finance.monthly_cost_report', 'finance.break_even_report',
                                     'finance.culling_index', 'finance.lots_list', 'finance.lot_detail',
-                                    'finance.lots_new', 'finance.finance_new'] %}
+                                    'finance.lots_new', 'finance.finance_new', 'finance.seasonal_price_analysis'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _finance_endpoints else '' }}>
         <summary>{{ nav_icon('finance') }}{{ _('المالية') }}</summary>
         <div class="drawer-grid">
