@@ -65,6 +65,28 @@ def present_days_in_month(user, *, year: int, month: int) -> tuple[int, int]:
     return max(present, 0), days_in_month
 
 
+def confirmed_payrolls_touched_by_period(user_id: int, start_date: date, end_date: date | None) -> list[Payroll]:
+    """رواتب مؤكَّدة (Payroll.status == confirmed) لأي شهر يتقاطع مع
+    فترة سفر معيّنة — بند إضافي 250، بعد نقدك الصريح: "لو عدّلت أو
+    حذفت فترة سفر لشهر راتبه متأكَّد أصلاً، ما فيه أي تنبيه". يُستخدم
+    كتحذير فقط عند تعديل/حذف فترة بشاشة "سجل السفر" — الراتب المؤكَّد
+    نفسه Snapshot ثابت عمداً (بند 242)، ما يتغيَّر تلقائياً، بس
+    المستخدم يستاهل يعرف إنه لازم يعدّله يدوياً لو احتاج."""
+    end = end_date or date.today()
+    months = set()
+    y, m = start_date.year, start_date.month
+    while (y, m) <= (end.year, end.month):
+        months.add((y, m))
+        m += 1
+        if m > 12:
+            m = 1
+            y += 1
+    if not months:
+        return []
+    rows = Payroll.query.filter_by(user_id=user_id, status="confirmed").all()
+    return [p for p in rows if (p.year, p.month) in months]
+
+
 def prorated_salary(user, *, year: int, month: int) -> float:
     """الراتب المتناسب لشهر معيّن حسب أيام الحضور الفعلية — قيمة
     مقترحة تُستخدم كنقطة بداية للمسودة عند إنشائها، تبقى قابلة

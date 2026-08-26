@@ -222,6 +222,23 @@ def travel_history(user_id):
     return render_template("team/travel_history.html", member=user, periods=periods)
 
 
+def _warn_if_touches_confirmed_payroll(user_id, *ranges):
+    """تحذير (بس، ما يمنع الحفظ) لو تعديل/حذف/إضافة فترة سفر يتقاطع
+    مع شهر عنده راتب مؤكَّد أصلاً (بند إضافي 250) — بعد نقدك الصريح:
+    "لو عدّلت أو حذفت فترة سفر لشهر راتبه متأكَّد أصلاً، ما فيه أي
+    تنبيه". الراتب المؤكَّد Snapshot ثابت عمداً وما يتغيَّر لحاله —
+    بس نعلمك عشان تعدّله يدوياً لو احتجت."""
+    from app.team import payroll_service
+    touched = []
+    for start, end in ranges:
+        if start:
+            touched += payroll_service.confirmed_payrolls_touched_by_period(user_id, start, end)
+    if touched:
+        periods_txt = "، ".join(f"{p.month}/{p.year}" for p in {(p.year, p.month): p for p in touched}.values())
+        flash(f"تنبيه: هذا التغيير يخص شهر (أشهر) عندها راتب مؤكَّد بالفعل ({periods_txt}) — "
+              f"المبلغ المؤكَّد ما يتغيَّر تلقائياً، عدّله يدوياً بشاشة الراتب لو احتجت.", "warning")
+
+
 @team_bp.route("/salaries/<int:user_id>/travel-history/add", methods=["POST"])
 @login_required
 @require_permission("team.manage_salary")
@@ -242,6 +259,7 @@ def travel_history_add(user_id):
     db.session.add(WorkerTravelPeriod(user_id=user.id, start_date=start, end_date=end))
     db.session.commit()
     flash("تمت إضافة فترة السفر", "success")
+    _warn_if_touches_confirmed_payroll(user.id, (start, end))
     return redirect(url_for("team.travel_history", user_id=user.id))
 
 
@@ -262,10 +280,12 @@ def travel_history_update(period_id):
     if end and end < start:
         flash("تاريخ النهاية لازم يكون بعد تاريخ البداية", "error")
         return redirect(url_for("team.travel_history", user_id=period.user_id))
+    old_start, old_end, user_id = period.start_date, period.end_date, period.user_id
     period.start_date = start
     period.end_date = end
     db.session.commit()
     flash("تم تعديل فترة السفر", "success")
+    _warn_if_touches_confirmed_payroll(user_id, (old_start, old_end), (start, end))
     return redirect(url_for("team.travel_history", user_id=period.user_id))
 
 
@@ -275,10 +295,11 @@ def travel_history_update(period_id):
 def travel_history_delete(period_id):
     from app.models import WorkerTravelPeriod
     period = WorkerTravelPeriod.query.get_or_404(period_id)
-    user_id = period.user_id
+    user_id, old_start, old_end = period.user_id, period.start_date, period.end_date
     db.session.delete(period)
     db.session.commit()
     flash("تم حذف فترة السفر", "success")
+    _warn_if_touches_confirmed_payroll(user_id, (old_start, old_end))
     return redirect(url_for("team.travel_history", user_id=user_id))
 
 
