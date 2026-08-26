@@ -16,7 +16,7 @@ from app.models.vaccination_schedule import VaccinationSchedule
 from app.models.doctor import Doctor
 from app.models.health import VetVisit, Disease, Vaccination, DiseaseType, Symptom, DiseaseSymptomLink, EmergencySymptom
 from app.models.finance import Finance
-from app.models.payroll import Payroll, PayrollDeduction
+from app.models.payroll import Payroll, PayrollDeduction, WorkerTravelPeriod
 from app.models.repro import (
     Mating, Pregnancy, TwinEstrusProgram, TwinEstrusAttempt,
     ReproDevice, HormoneInjection, SonarResult,

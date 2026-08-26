@@ -2,14 +2,80 @@
 "موظف الشهر"، بند 239، مكافأة أداء لأفضل عامل بس). كل راتب = الأساسي
 + المكافأة - مجموع الخصومات (كل خصم بسبب مستقل)، بحالة مسودة قابلة
 للتعديل قبل التأكيد النهائي."""
+import calendar
 from datetime import date, timedelta
 
 from app.extensions import db
-from app.models import Payroll, PayrollDeduction, Finance
+from app.models import Payroll, PayrollDeduction, Finance, WorkerTravelPeriod
 from app.core.cloud_storage_service import save_upload
 
 ALLOWED_RECEIPT_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "pdf"}
 MAX_RECEIPT_BYTES = 8 * 1024 * 1024
+
+
+def is_traveling(user) -> bool:
+    """هل العامل مسافر حالياً (فترة سفر مفتوحة، end_date=None)؟ —
+    بند إضافي 247."""
+    return WorkerTravelPeriod.query.filter_by(user_id=user.id, end_date=None).first() is not None
+
+
+def start_travel(user) -> WorkerTravelPeriod:
+    if is_traveling(user):
+        return WorkerTravelPeriod.query.filter_by(user_id=user.id, end_date=None).first()
+    period = WorkerTravelPeriod(user_id=user.id, start_date=date.today())
+    db.session.add(period)
+    db.session.commit()
+    return period
+
+
+def end_travel(user) -> WorkerTravelPeriod | None:
+    period = WorkerTravelPeriod.query.filter_by(user_id=user.id, end_date=None).first()
+    if period:
+        period.end_date = date.today()
+        db.session.commit()
+    return period
+
+
+def present_days_in_month(user, *, year: int, month: int) -> tuple[int, int]:
+    """(أيام الحضور الفعلية، إجمالي أيام الشهر) — بند إضافي 247، طلبك
+    الصريح: "النظام يعتمد رواتب العامل من تاريخ وصوله الى تاريخ اخر
+    شهر... كل شهر، دايماً حسب أيام الحضور الفعلية". الحضور = أيام
+    الشهر ناقص (أيام قبل تاريخ الوصول لو وقع بنفس الشهر) ناقص (أيام
+    أي فترة سفر متداخلة مع الشهر — فترة مفتوحة تُحسب لين نهاية الشهر
+    كحد أقصى، بما إنه لسا ما رجع)."""
+    days_in_month = calendar.monthrange(year, month)[1]
+    month_start = date(year, month, 1)
+    month_end = date(year, month, days_in_month)
+
+    effective_start = month_start
+    if user.saudi_arrival_date and user.saudi_arrival_date > month_start:
+        if user.saudi_arrival_date > month_end:
+            return 0, days_in_month
+        effective_start = user.saudi_arrival_date
+
+    present = (month_end - effective_start).days + 1
+
+    for p in WorkerTravelPeriod.query.filter_by(user_id=user.id).all():
+        p_end = p.end_date or month_end
+        overlap_start = max(p.start_date, effective_start)
+        overlap_end = min(p_end, month_end)
+        if overlap_start <= overlap_end:
+            present -= (overlap_end - overlap_start).days + 1
+
+    return max(present, 0), days_in_month
+
+
+def prorated_salary(user, *, year: int, month: int) -> float:
+    """الراتب المتناسب لشهر معيّن حسب أيام الحضور الفعلية — قيمة
+    مقترحة تُستخدم كنقطة بداية للمسودة عند إنشائها، تبقى قابلة
+    للتعديل اليدوي بشاشة تجهيز الراتب (نفس مبدأ المشروع: النظام
+    يقترح، صاحب القرار يعدّل لو احتاج)."""
+    if not user.base_salary:
+        return 0.0
+    present, total = present_days_in_month(user, year=year, month=month)
+    if total == 0:
+        return 0.0
+    return round(user.base_salary * present / total, 2)
 
 
 def top_performer_for_month(*, year: int, month: int) -> dict | None:
@@ -35,7 +101,7 @@ def get_or_create_draft(*, user, year: int, month: int) -> Payroll:
         return payroll
     payroll = Payroll(
         user_id=user.id, year=year, month=month,
-        base_salary=user.base_salary or 0, bonus_amount=0, status="draft",
+        base_salary=prorated_salary(user, year=year, month=month), bonus_amount=0, status="draft",
     )
     db.session.add(payroll)
     db.session.commit()

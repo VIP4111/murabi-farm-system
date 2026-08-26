@@ -6,6 +6,16 @@
     {% if payroll.status == 'confirmed' %} — <span class="badge on">✅ {{ _('مؤكَّد') }}</span>{% endif %}
   </p>
 
+  {% if user.saudi_arrival_date %}
+  <div class="notice" style="margin-top:10px;">
+    📅 {{ _('أيام الحضور الفعلية هذا الشهر:') }} <b>{{ present_days }}/{{ days_in_month }}</b>
+    {{ _('— الراتب المتناسب المقترح:') }} <b>{{ '%.2f'|format(prorated_salary) }}</b>
+    {% if payroll.status != 'confirmed' %}
+    <button type="button" id="useProratedSalaryBtn" class="btn light" style="padding:4px 10px; font-size:11.5px; margin-inline-start:8px;" data-value="{{ prorated_salary }}">{{ _('استخدم القيمة المقترحة') }}</button>
+    {% endif %}
+  </div>
+  {% endif %}
+
   {% if top_performer %}
   <div class="notice notice-success" style="margin-top:10px;">
     🏆 {{ _('أعلى نقطة أداء الشهر الماضي —') }} <b>{{ top_performer.score }}%</b>
@@ -75,6 +85,15 @@
       e.target.closest('.deduction-row').remove();
     }
   });
+
+  var proratedBtn = document.getElementById('useProratedSalaryBtn');
+  var salaryInput = document.querySelector('input[name="base_salary"]');
+  if (proratedBtn && salaryInput) {
+    proratedBtn.addEventListener('click', function(){
+      salaryInput.value = proratedBtn.getAttribute('data-value');
+      salaryInput.focus();
+    });
+  }
 
   var suggestBtn = document.getElementById('useSuggestedBonusBtn');
   var bonusInput = document.querySelector('input[name="bonus_amount"]');

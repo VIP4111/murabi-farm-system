@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 22:40+0300\n"
+"POT-Creation-Date: 2026-08-26 23:15+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -112,15 +112,15 @@ msgstr "የተረጋገጠ"
 msgid "فشلت"
 msgstr "አልተሳካም"
 
-#: app/__init__.py:161 app/team/routes.py:602
+#: app/__init__.py:161 app/team/routes.py:636
 msgid "مهمة عامة"
 msgstr "አጠቃላይ ተግባር"
 
-#: app/__init__.py:162 app/team/routes.py:603
+#: app/__init__.py:162 app/team/routes.py:637
 msgid "فحص عزل"
 msgstr "የመነጠል ምርመራ"
 
-#: app/__init__.py:163 app/team/routes.py:607
+#: app/__init__.py:163 app/team/routes.py:641
 msgid "مراجعة الدكتور"
 msgstr "የዶክተር ግምገማ"
 
@@ -136,15 +136,15 @@ msgstr "የሴሌኒየም መጠን"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "የኮለስትረም/ጡት ማጥባት ክትትል"
 
-#: app/__init__.py:167 app/team/routes.py:604
+#: app/__init__.py:167 app/team/routes.py:638
 msgid "وزن"
 msgstr "ክብደት መለካት"
 
-#: app/__init__.py:168 app/team/routes.py:605
+#: app/__init__.py:168 app/team/routes.py:639
 msgid "تحصين مستحق"
 msgstr "የደረሰ ክትባት"
 
-#: app/__init__.py:169 app/team/routes.py:606
+#: app/__init__.py:169 app/team/routes.py:640
 msgid "تبديل علف"
 msgstr "የመኖ ለውጥ"
 
@@ -717,7 +717,7 @@ msgstr "ከባድ ውጥረት"
 msgid "إجهاد طارئ"
 msgstr "የአደጋ ጊዜ ውጥረት"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:590
+#: app/core/animal_filters_service.py:181 app/team/routes.py:624
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1628,8 +1628,8 @@ msgstr "እንስሳ"
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/templates/animal_detail.html:458 app/templates/finance/form.html:33
 #: app/templates/finance/list.html:36
-#: app/templates/team/payroll_prepare.html:34
-#: app/templates/team/payroll_prepare.html:68
+#: app/templates/team/payroll_prepare.html:44
+#: app/templates/team/payroll_prepare.html:78
 msgid "المبلغ"
 msgstr "መጠን"
 
@@ -1790,15 +1790,15 @@ msgstr "ወደ ማግለያ ማዛወር"
 msgid "بيض / حضانة (نعام)"
 msgstr "እንቁላል / ማቀፊያ (ሰጎን)"
 
-#: app/team/routes.py:591 app/templates/team/payroll_reports.html:8
+#: app/team/routes.py:625 app/templates/team/payroll_reports.html:8
 msgid "العامل"
 msgstr "ሠራተኛ"
 
-#: app/team/routes.py:592
+#: app/team/routes.py:626
 msgid "الطبيب البيطري"
 msgstr "የእንስሳት ሐኪም"
 
-#: app/team/routes.py:593
+#: app/team/routes.py:627
 msgid "المحاسب"
 msgstr "የሂሳብ ባለሙያ"
 
@@ -2279,7 +2279,7 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
 #: app/templates/team/salaries_list.html:19
-#: app/templates/team/salaries_list.html:39
+#: app/templates/team/salaries_list.html:43
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -4135,7 +4135,7 @@ msgid "ما قدر"
 msgstr "አልቻለም"
 
 #: app/templates/family_view.html:123
-#: app/templates/team/payroll_prepare.html:101
+#: app/templates/team/payroll_prepare.html:120
 msgid "السبب:"
 msgstr "ምክንያት:"
 
@@ -6527,7 +6527,7 @@ msgstr "ቀጥተኛ ያልሆነ ወጪ (ኪራይ/ጥገና/ደመወዝ — �
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "በአሁኑ ንቁ የእንስሳት ብዛት ላይ በራስ-ሰር በእኩል ይከፋፈላል — በ\"ወርሃዊ/ዓመታዊ የእንስሳ ዋጋ\" ሪፖርት ውስጥ እና በእያንዳንዱ እንስሳ ዝርዝር ገጽ ላይ እንደ ግለሰብ ድርሻ ይታያል።"
 
-#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:32
+#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:36
 msgid "طريقة الدفع"
 msgstr "የክፍያ ዘዴ"
 
@@ -6535,7 +6535,7 @@ msgstr "የክፍያ ዘዴ"
 msgid "نقدي"
 msgstr "ጥሬ ገንዘብ"
 
-#: app/templates/finance/form.html:37 app/templates/team/salaries_list.html:36
+#: app/templates/finance/form.html:37 app/templates/team/salaries_list.html:40
 msgid "تحويل بنكي"
 msgstr "የባንክ ዝውውር"
 
@@ -9179,9 +9179,9 @@ msgid "السنة"
 msgstr "ዓመት"
 
 #: app/templates/team/payroll_list.html:22
-#: app/templates/team/payroll_prepare.html:19
+#: app/templates/team/payroll_prepare.html:29
 #: app/templates/team/payroll_reports.html:22
-#: app/templates/team/salaries_list.html:28
+#: app/templates/team/salaries_list.html:31
 msgid "الراتب الأساسي"
 msgstr "መሰረታዊ ደመወዝ"
 
@@ -9203,7 +9203,7 @@ msgid "عرض/تجهيز"
 msgstr "ይመልከቱ/ያዘጋጁ"
 
 #: app/templates/team/payroll_list.html:42
-#: app/templates/team/payroll_prepare.html:53
+#: app/templates/team/payroll_prepare.html:63
 #: app/templates/team/payroll_upload_receipt.html:25
 msgid "طباعة الوصل"
 msgstr "ደረሰኝ አትም"
@@ -9214,7 +9214,7 @@ msgid "الوصل الموقَّع"
 msgstr "ፈራሚ ደረሰኝ"
 
 #: app/templates/team/payroll_list.html:50
-#: app/templates/team/salaries_list.html:46
+#: app/templates/team/salaries_list.html:63
 msgid "لا يوجد أعضاء نشطون."
 msgstr "ንቁ አባላት የሉም።"
 
@@ -9227,57 +9227,69 @@ msgid "الفترة:"
 msgstr "ጊዜ:"
 
 #: app/templates/team/payroll_prepare.html:11
+msgid "أيام الحضور الفعلية هذا الشهر:"
+msgstr "በዚህ ወር ትክክለኛ የመገኘት ቀናት:"
+
+#: app/templates/team/payroll_prepare.html:12
+msgid "— الراتب المتناسب المقترح:"
+msgstr "— የተጠቆመ ተመጣጣኝ ደመወዝ:"
+
+#: app/templates/team/payroll_prepare.html:14
+msgid "استخدم القيمة المقترحة"
+msgstr "የተጠቆመውን ዋጋ ተጠቀም"
+
+#: app/templates/team/payroll_prepare.html:21
 msgid "أعلى نقطة أداء الشهر الماضي —"
 msgstr "የባለፈው ወር ከፍተኛ አፈጻጸም ነጥብ —"
 
-#: app/templates/team/payroll_prepare.html:12
+#: app/templates/team/payroll_prepare.html:22
 msgid "اقترح مكافأة"
 msgstr "ጉርሻ ጠቁም"
 
-#: app/templates/team/payroll_prepare.html:21
+#: app/templates/team/payroll_prepare.html:31
 msgid "المكافأة (اختياري)"
 msgstr "ጉርሻ (አማራጭ)"
 
-#: app/templates/team/payroll_prepare.html:23
+#: app/templates/team/payroll_prepare.html:33
 msgid "اسم المستلم (اختياري، لو حوالة)"
 msgstr "የተቀባዩ ስም (አማራጭ — ለገንዘብ ዝውውር)"
 
-#: app/templates/team/payroll_prepare.html:28
+#: app/templates/team/payroll_prepare.html:38
 #: app/templates/team/payroll_reports.html:22
 msgid "الخصومات"
 msgstr "ቅናሾች"
 
-#: app/templates/team/payroll_prepare.html:29
+#: app/templates/team/payroll_prepare.html:39
 msgid "إضافة خصم"
 msgstr "ቅናሽ ጨምር"
 
-#: app/templates/team/payroll_prepare.html:35
-#: app/templates/team/payroll_prepare.html:69
+#: app/templates/team/payroll_prepare.html:45
+#: app/templates/team/payroll_prepare.html:79
 msgid "سبب الخصم"
 msgstr "የቅናሽ ምክንያት"
 
-#: app/templates/team/payroll_prepare.html:42
+#: app/templates/team/payroll_prepare.html:52
 msgid "الصافي المستحق الحالي:"
 msgstr "የአሁኑ ተጣራ መጠን:"
 
-#: app/templates/team/payroll_prepare.html:45
+#: app/templates/team/payroll_prepare.html:55
 msgid "حفظ مسودة"
 msgstr "ረቂቅ አስቀምጥ"
 
-#: app/templates/team/payroll_prepare.html:46
+#: app/templates/team/payroll_prepare.html:56
 msgid "تأكيد نهائي"
 msgstr "የመጨረሻ ማረጋገጫ"
 
-#: app/templates/team/payroll_prepare.html:100
+#: app/templates/team/payroll_prepare.html:119
 msgid "بدون سبب مذكور"
 msgstr "ምንም ምክንያት አልተጠቀሰም"
 
-#: app/templates/team/payroll_prepare.html:101
+#: app/templates/team/payroll_prepare.html:120
 msgid "تنبيه: على هذا العامل خصومات بقيمة"
 msgstr "ማስጠንቀቂያ: ይህ ሰራተኛ ቅናሽ አለው በድምሩ"
 
-#: app/templates/team/payroll_prepare.html:102
-#: app/templates/team/payroll_prepare.html:104
+#: app/templates/team/payroll_prepare.html:121
+#: app/templates/team/payroll_prepare.html:123
 msgid "تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟"
 msgstr "የመጨረሻ ማረጋገጫ — ትክክለኛ መጠን ወደ ፋይናንስ መዝገብ ይመዘገባል፣ ከዚያ በኋላ ሊስተካከል አይችልም። እርግጠኛ ነዎት?"
 
@@ -9630,27 +9642,47 @@ msgstr "የባለቤቱ ብሔራዊ መታወቂያ ቁጥር"
 msgid "رقم جوال صاحب الحلال"
 msgstr "የባለቤቱ ስልክ ቁጥር"
 
-#: app/templates/team/salaries_list.html:28
+#: app/templates/team/salaries_list.html:27
+msgid "مسافر حالياً"
+msgstr "አሁን በጉዞ ላይ"
+
+#: app/templates/team/salaries_list.html:31
 msgid "غير محدَّد"
 msgstr "አልተወሰነም"
 
-#: app/templates/team/salaries_list.html:29
+#: app/templates/team/salaries_list.html:32
 msgid "الجنسية"
 msgstr "ዜግነት"
 
-#: app/templates/team/salaries_list.html:30
+#: app/templates/team/salaries_list.html:33
 msgid "رقم الجواز"
 msgstr "የፓስፖርት ቁጥር"
 
-#: app/templates/team/salaries_list.html:31
+#: app/templates/team/salaries_list.html:34
 msgid "رقم الحدود"
 msgstr "የድንበር ቁጥር"
 
 #: app/templates/team/salaries_list.html:35
+msgid "تاريخ الوصول للسعودية"
+msgstr "ወደ ሳዑዲ አረቢያ የመድረሻ ቀን"
+
+#: app/templates/team/salaries_list.html:39
 msgid "نقداً"
 msgstr "ጥሬ ገንዘብ"
 
-#: app/templates/team/salaries_list.html:42
+#: app/templates/team/salaries_list.html:49
+msgid "تسجيل عودة"
+msgstr "መመለስን መዝግብ"
+
+#: app/templates/team/salaries_list.html:51
+msgid "تسجيل سفر"
+msgstr "ጉዞን መዝግብ"
+
+#: app/templates/team/salaries_list.html:55
+msgid "راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر."
+msgstr "ደመወዙ በየወሩ ትክክለኛ የመገኘት ቀናት መሰረት በተመጣጣኝ ሁኔታ ይሰላል።"
+
+#: app/templates/team/salaries_list.html:59
 msgid "طريقة الدفع تحويل — اسم مستلم الحوالة يُحدَّد كل شهر بشكل منفصل وقت تأكيد الراتب (يختلف حسب الشهر)."
 msgstr "የክፍያ ዘዴ ዝውውር ነው — የተቀባዩ ስም ደመወዝ በሚረጋገጥበት ጊዜ በእያንዳንዱ ወር ለብቻ ይወሰናል (እንደ ወሩ ሊለያይ ይችላል)።"
 

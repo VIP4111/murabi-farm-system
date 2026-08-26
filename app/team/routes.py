@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from flask_babel import lazy_gettext as _l
 from sqlalchemy.exc import IntegrityError
 
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from app.team import team_bp
 from app.team import report_service as svc
@@ -124,9 +124,11 @@ def salaries_list():
     """شاشة الرواتب الأساسية (بند إضافي 241) — منفصلة عمداً عن شاشة
     "أعضاء الفريق" الكاملة (users.manage): المحاسب يقدر يوصلها بدون
     ما يملك صلاحية تغيير الأدوار أو كلمات المرور أو تعطيل الحسابات."""
-    from app.models import FarmSettings
+    from app.models import FarmSettings, WorkerTravelPeriod
     members = User.query.filter_by(is_active_account=True).order_by(User.name).all()
-    return render_template("team/salaries_list.html", members=members, fs=FarmSettings.get())
+    traveling_ids = {p.user_id for p in WorkerTravelPeriod.query.filter_by(end_date=None).all()}
+    return render_template("team/salaries_list.html", members=members, fs=FarmSettings.get(),
+                            traveling_ids=traveling_ids)
 
 
 @team_bp.route("/salaries/owner-identity", methods=["POST"])
@@ -168,10 +170,40 @@ def salary_update(user_id):
     user.passport_number = request.form.get("passport_number") or None
     user.border_number = request.form.get("border_number") or None
     user.payment_method = request.form.get("payment_method") or None
+    # تاريخ وصول العامل للسعودية (بند إضافي 247) — أساس الراتب المتناسب.
+    arrival_raw = (request.form.get("saudi_arrival_date") or "").strip()
+    if arrival_raw:
+        try:
+            user.saudi_arrival_date = datetime.strptime(arrival_raw, "%Y-%m-%d").date()
+        except ValueError:
+            flash("تاريخ وصول غير صحيح", "error")
+            return redirect(url_for("team.salaries_list"))
+    else:
+        user.saudi_arrival_date = None
     db.session.add(AuditLog(actor_user_id=current_user.id, action="user.salary_update",
                              entity_type="User", entity_id=user.id, details=raw or "cleared"))
     db.session.commit()
     flash(f"تم تحديث بيانات راتب {user.name}", "success")
+    return redirect(url_for("team.salaries_list"))
+
+
+@team_bp.route("/salaries/<int:user_id>/travel/toggle", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def salary_travel_toggle(user_id):
+    """زر "سفر" (بند إضافي 247، طلبك الصريح: "اضف زر سفر اذا كان مسافر
+    يتسجل مسافر بدون راتب") — تبديل: يبدأ فترة سفر لو ما كان مسافر،
+    ينهيها لو كان مسافر. أيام السفر تُستبعد من حساب الراتب المتناسب
+    الشهري (payroll_service.present_days_in_month)، مو تصفير الشهر
+    كامل."""
+    from app.team import payroll_service
+    user = User.query.get_or_404(user_id)
+    if payroll_service.is_traveling(user):
+        payroll_service.end_travel(user)
+        flash(f"تم تسجيل عودة {user.name} من السفر", "success")
+    else:
+        payroll_service.start_travel(user)
+        flash(f"تم تسجيل {user.name} كمسافر — أيام السفر تُستبعد من راتبه", "success")
     return redirect(url_for("team.salaries_list"))
 
 
@@ -248,8 +280,10 @@ def payroll_prepare(user_id):
         if top and top["user"].id == user.id:
             top_performer = top
 
+    present_days, days_in_month = payroll_service.present_days_in_month(user, year=year, month=month)
     return render_template("team/payroll_prepare.html", user=user, payroll=payroll, year=year, month=month,
-                            top_performer=top_performer)
+                            top_performer=top_performer, present_days=present_days, days_in_month=days_in_month,
+                            prorated_salary=payroll_service.prorated_salary(user, year=year, month=month))
 
 
 @team_bp.route("/payroll/<int:payroll_id>/upload-receipt", methods=["GET", "POST"])

@@ -61,3 +61,19 @@ class PayrollDeduction(db.Model):
     payroll_id = db.Column(db.Integer, db.ForeignKey("payroll.id"), nullable=False, index=True)
     amount = db.Column(db.Float, nullable=False)
     reason = db.Column(db.String(200), nullable=True)
+
+
+class WorkerTravelPeriod(db.Model):
+    """فترة سفر عامل (بند إضافي 247، طلبك الصريح: "زر سفر اذا كان
+    مسافر يتسجل مسافر بدون راتب") — `end_date=None` يعني لسا مسافر
+    (الفترة مفتوحة). راتب أيام السفر يُستبعد من حساب الراتب المتناسب
+    الشهري (`payroll_service.present_days_in_month`)، مو تصفير الشهر
+    كامل — بحسب توضيحك: "الراتب يتقسم على أيام الشهر"."""
+    __tablename__ = "worker_travel_periods"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False, index=True)
+    user = db.relationship("User", foreign_keys=[user_id])
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=True)
+    created_at = db.Column(db.DateTime, default=_now)
