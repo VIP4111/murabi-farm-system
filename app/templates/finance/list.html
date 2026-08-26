@@ -5,7 +5,10 @@
   <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;">
     <div class="stat"><b style="color:#0f6e56;">{{ "%.2f"|format(total_in) }}</b><span>{{ _('إجمالي الداخل (بيع)') }}</span></div>
     <div class="stat"><b style="color:#a32d2d;">{{ "%.2f"|format(total_out) }}</b><span>{{ _('إجمالي الخارج (شراء+مصروف)') }}</span></div>
+    <div class="stat"><b style="color:{{ '#0f6e56' if net_profit >= 0 else '#a32d2d' }};">{{ "%.2f"|format(net_profit) }}</b><span>{{ _('صافي الربح') }}</span></div>
+    <div class="stat"><b style="color:{{ '#0f6e56' if profit_percent is not none and profit_percent >= 0 else '#a32d2d' }};">{{ "%.1f"|format(profit_percent) + '%' if profit_percent is not none else '-' }}</b><span>{{ _('نسبة الربح') }}</span></div>
   </div>
+  <p style="color:var(--muted); font-size:12px; margin:8px 0 0;">{{ _('صافي الربح = إجمالي الداخل − إجمالي الخارج. نسبة الربح = صافي الربح ÷ إجمالي الخارج × 100 — الديون (دعم خارجي/سداد) مستثناة من الحسابين، هي التزام مو دخل أو مصروف تشغيلي حقيقي.') }}</p>
 </div>
 
 {% if total_debt_in %}

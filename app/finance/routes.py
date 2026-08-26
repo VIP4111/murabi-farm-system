@@ -33,10 +33,18 @@ def finance_list():
     # حقيقي، هو التزام لازم يُرد، فما يُحسب مع صافي الدخل (بند 18).
     total_debt_in = sum(r.amount for r in rows if r.operation_type == "debt_in" and not r.is_cancelled)
     total_debt_repaid = sum(r.amount for r in rows if r.operation_type == "debt_repayment" and not r.is_cancelled)
+
+    # صافي الربح ونسبته % (بند إضافي 256، طلبك الصريح: "كم نسبة أرباحي")
+    # — الديون مستثناة عمداً (نفس منطق الداخل/الخارج أعلاه)، الديون
+    # التزام مو دخل/مصروف تشغيلي حقيقي.
+    net_profit = total_in - total_out
+    profit_percent = round((net_profit / total_out) * 100, 1) if total_out else None
+
     return render_template(
         "finance/list.html", rows=rows, total_in=total_in, total_out=total_out,
         total_debt_in=total_debt_in, total_debt_repaid=total_debt_repaid,
         debt_outstanding=total_debt_in - total_debt_repaid,
+        net_profit=net_profit, profit_percent=profit_percent,
     )
 
 
