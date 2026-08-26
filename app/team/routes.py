@@ -139,10 +139,16 @@ def salary_update(user_id):
     except ValueError:
         flash("قيمة راتب غير صحيحة", "error")
         return redirect(url_for("team.salaries_list"))
+    # بيانات هوية العامل لمسير الراتب (بند إضافي 243) — تُدخَل يدوياً
+    # مرة وحدة هنا، تُستخدم تلقائياً بكل وصل راتب بعدها.
+    user.nationality = request.form.get("nationality") or None
+    user.passport_number = request.form.get("passport_number") or None
+    user.border_number = request.form.get("border_number") or None
+    user.payment_method = request.form.get("payment_method") or None
     db.session.add(AuditLog(actor_user_id=current_user.id, action="user.salary_update",
                              entity_type="User", entity_id=user.id, details=raw or "cleared"))
     db.session.commit()
-    flash(f"تم تحديث راتب {user.name}", "success")
+    flash(f"تم تحديث بيانات راتب {user.name}", "success")
     return redirect(url_for("team.salaries_list"))
 
 

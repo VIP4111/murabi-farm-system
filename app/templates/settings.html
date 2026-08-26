@@ -9,6 +9,7 @@
     <label>{{ _('جوال المزرعة') }}</label><input name="farm_phone" value="{{ fs.farm_phone or '' }}">
     <label>{{ _('عنوان المزرعة') }}</label><input name="farm_address" value="{{ fs.farm_address or '' }}">
     <label>{{ _('الرقم الضريبي (اختياري)') }}</label><input name="vat_number" value="{{ fs.vat_number or '' }}">
+    <label>{{ _('رقم هوية صاحب العمل (اختياري — يظهر بمسير الراتب)') }}</label><input name="owner_national_id" value="{{ fs.owner_national_id or '' }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('لو عبّيته، فواتير البيع تضيف تلقائياً رمز QR مبسّط بأسلوب "فاتورة" (المرحلة الأولى بس — راجع محاسبك قبل اعتمادها فاتورة ضريبية رسمية).') }}</p>
     <button class="btn" type="submit">{{ _('حفظ بيانات المزرعة') }}</button>
   </form>

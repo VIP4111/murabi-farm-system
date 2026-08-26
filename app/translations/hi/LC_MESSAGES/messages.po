@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 12:00+0300\n"
+"POT-Creation-Date: 2026-08-26 20:37+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -112,15 +112,15 @@ msgstr "पुष्टि की गई"
 msgid "فشلت"
 msgstr "विफल"
 
-#: app/__init__.py:169 app/team/routes.py:554
+#: app/__init__.py:169 app/team/routes.py:560
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:170 app/team/routes.py:555
+#: app/__init__.py:170 app/team/routes.py:561
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:171 app/team/routes.py:559
+#: app/__init__.py:171 app/team/routes.py:565
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -136,15 +136,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:175 app/team/routes.py:556
+#: app/__init__.py:175 app/team/routes.py:562
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:176 app/team/routes.py:557
+#: app/__init__.py:176 app/team/routes.py:563
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:177 app/team/routes.py:558
+#: app/__init__.py:177 app/team/routes.py:564
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -717,7 +717,7 @@ msgstr "गंभीर तनाव"
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:542
+#: app/core/animal_filters_service.py:181 app/team/routes.py:548
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:158 app/templates/settings_backup.html:5
+#: app/templates/settings.html:159 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -1790,16 +1790,16 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:543 app/templates/team/employee_of_month.html:12
+#: app/team/routes.py:549 app/templates/team/employee_of_month.html:12
 #: app/templates/team/payroll_reports.html:8
 msgid "العامل"
 msgstr "कर्मचारी"
 
-#: app/team/routes.py:544
+#: app/team/routes.py:550
 msgid "الطبيب البيطري"
 msgstr "पशु चिकित्सक"
 
-#: app/team/routes.py:545
+#: app/team/routes.py:551
 msgid "المحاسب"
 msgstr "लेखाकार"
 
@@ -2279,7 +2279,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/repro/sonar_form.html:36
 #: app/templates/team/member_edit_form.html:33
 #: app/templates/team/member_form.html:21
-#: app/templates/team/salaries_list.html:20
+#: app/templates/team/salaries_list.html:18
 #: app/templates/team/todays_completed_tasks.html:42
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
@@ -2408,7 +2408,6 @@ msgstr "प्रजनन"
 #: app/templates/team/member_edit_form.html:9
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
-#: app/templates/team/salaries_list.html:11
 msgid "الدور"
 msgstr "भूमिका"
 
@@ -2843,12 +2842,11 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:132 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:133 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/performance_report.html:20
-#: app/templates/team/salaries_list.html:11
 #: app/templates/warehouses/warehouse_form.html:7
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -3312,7 +3310,7 @@ msgstr "जानवर"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "अभी तक कोई जानवर दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:160
+#: app/templates/audit_log.html:5 app/templates/settings.html:161
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -4445,321 +4443,325 @@ msgid "الرقم الضريبي (اختياري)"
 msgstr "वैट संख्या (वैकल्पिक)"
 
 #: app/templates/settings.html:12
+msgid "رقم هوية صاحب العمل (اختياري — يظهر بمسير الراتب)"
+msgstr "नियोक्ता की राष्ट्रीय पहचान संख्या (वैकल्पिक — वेतन पर्ची पर दिखाई देती है)"
+
+#: app/templates/settings.html:13
 msgid "لو عبّيته، فواتير البيع تضيف تلقائياً رمز QR مبسّط بأسلوب \"فاتورة\" (المرحلة الأولى بس — راجع محاسبك قبل اعتمادها فاتورة ضريبية رسمية)."
 msgstr "यदि भरा गया, तो बिक्री चालान स्वतः एक सरलीकृत \"फातूरा\"-शैली QR कोड जोड़ते हैं (केवल चरण 1 — इसे आधिकारिक कर चालान मानने से पहले अपने अकाउंटेंट से जांच करें)।"
 
-#: app/templates/settings.html:13
+#: app/templates/settings.html:14
 msgid "حفظ بيانات المزرعة"
 msgstr "फार्म डेटा सहेजें"
 
-#: app/templates/settings.html:18
+#: app/templates/settings.html:19
 msgid "كتالوج المبيعات العام"
 msgstr "सार्वजनिक बिक्री सूची"
 
-#: app/templates/settings.html:19
+#: app/templates/settings.html:20
 msgid "رابط عام (بدون تسجيل دخول) يعرض الرؤوس الجاهزة للبيع فقط — شاركه مع المشترين المحتملين."
 msgstr "एक सार्वजनिक लिंक (बिना लॉगिन) केवल बिक्री के लिए तैयार पशु दिखाता है — इसे संभावित खरीदारों के साथ साझा करें।"
 
-#: app/templates/settings.html:21
+#: app/templates/settings.html:22
 msgid "توليد رابط جديد يلغي الرابط الحالي فوراً — متأكد؟"
 msgstr "नया लिंक बनाने से मौजूदा लिंक तुरंत अमान्य हो जाता है — क्या आप निश्चित हैं?"
 
-#: app/templates/settings.html:23
+#: app/templates/settings.html:24
 msgid "توليد رابط جديد"
 msgstr "नया लिंक बनाएं"
 
-#: app/templates/settings.html:28
+#: app/templates/settings.html:29
 msgid "الإعدادات الزمنية"
 msgstr "समय सेटिंग्स"
 
-#: app/templates/settings.html:29
+#: app/templates/settings.html:30
 msgid "تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، تنبيهات...)."
 msgstr "सिस्टम में सभी तिथियों और स्वचालित कार्यों को नियंत्रित करता है (अलगाव, टीकाकरण, दूध छुड़ाना, अलर्ट...)।"
 
-#: app/templates/settings.html:32
+#: app/templates/settings.html:33
 msgid "مدة الحمل (يوم)"
 msgstr "गर्भधारण अवधि (दिन)"
 
-#: app/templates/settings.html:33
+#: app/templates/settings.html:34
 msgid "مدة الإسفنجة (يوم)"
 msgstr "स्पंज अवधि (दिन)"
 
-#: app/templates/settings.html:34
+#: app/templates/settings.html:35
 msgid "دخول الفحل بعد إزالة الإسفنجة (يوم)"
 msgstr "स्पंज हटाने के बाद नर का प्रवेश (दिन)"
 
-#: app/templates/settings.html:35
+#: app/templates/settings.html:36
 msgid "تغيير علف الحامل قبل الولادة (يوم)"
 msgstr "प्रसव से पहले गर्भवती चारा परिवर्तन (दिन)"
 
-#: app/templates/settings.html:36
+#: app/templates/settings.html:37
 msgid "علف الأم بعد الولادة (يوم)"
 msgstr "प्रसव के बाद माँ का चारा (दिन)"
 
-#: app/templates/settings.html:37
+#: app/templates/settings.html:38
 msgid "بيع الذكر بعد الولادة (يوم)"
 msgstr "जन्म के बाद नर की बिक्री (दिन)"
 
-#: app/templates/settings.html:38
+#: app/templates/settings.html:39
 msgid "التنبيه قبل الموعد (يوم)"
 msgstr "नियत तिथि से पहले अलर्ट (दिन)"
 
-#: app/templates/settings.html:39
+#: app/templates/settings.html:40
 msgid "تكرار التحصينات الدورية (يوم)"
 msgstr "नियमित टीकाकरण दोहराव (दिन)"
 
-#: app/templates/settings.html:40
+#: app/templates/settings.html:41
 msgid "مدة عزل المولود والأم (يوم)"
 msgstr "संतान और माँ की अलगाव अवधि (दिन)"
 
-#: app/templates/settings.html:41
+#: app/templates/settings.html:42
 msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
 msgstr "जन्म के बाद अनिवार्य डॉक्टर जांच (घंटे)"
 
-#: app/templates/settings.html:42
+#: app/templates/settings.html:43
 msgid "تحصين الأم بعد الولادة (يوم)"
 msgstr "जन्म के बाद माँ का टीकाकरण (दिन)"
 
-#: app/templates/settings.html:43
+#: app/templates/settings.html:44
 msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "पहले संगमन के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:44
+#: app/templates/settings.html:45
 msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
 msgstr "नर के प्रजनन में शामिल होने की न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:45
+#: app/templates/settings.html:46
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "पुनः संगमन से पहले जन्म के बाद न्यूनतम आराम अवधि (दिन)"
 
-#: app/templates/settings.html:48
+#: app/templates/settings.html:49
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "उत्पादन चक्र इंजन आयु सीमाएं"
 
-#: app/templates/settings.html:50
+#: app/templates/settings.html:51
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "चक्र में \"नवजात\" वर्गीकृत अधिकतम आयु (दिन)"
 
-#: app/templates/settings.html:51
+#: app/templates/settings.html:52
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "नर के लिए प्रजनन क्षमता जांच छोड़ने की वैकल्पिक आयु (दिन)"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:53
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "दूध छुड़ाने के चरण के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:53
+#: app/templates/settings.html:54
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "दूध छुड़ाने की तिथि दर्ज करना छोड़ने की वैकल्पिक आयु (दिन)"
 
-#: app/templates/settings.html:58
+#: app/templates/settings.html:59
 msgid "البيع الذكي"
 msgstr "स्मार्ट बिक्री"
 
-#: app/templates/settings.html:60
+#: app/templates/settings.html:61
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "लक्षित लाभ मार्जिन (%%)"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:62
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "नर के लिए नियमित बिक्री आयु (दिन)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:63
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "बलि बिक्री के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:64
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "बिक्री सिफारिश से पहले मादा के लिए स्वीकार्य अधिकतम गर्भधारण देरी (दिन)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:65
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "अलर्ट से पहले नई रिपोर्ट के लिए अधिकतम प्रतीक्षा (घंटे)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:66
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "सिर उत्पादन चक्र के एक ही चरण में अटका (सूचना से पहले दिन)"
 
-#: app/templates/settings.html:66
+#: app/templates/settings.html:67
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "शुतुरमुर्ग अंडा इनक्यूबेशन अवधि (दिन)"
 
-#: app/templates/settings.html:71
+#: app/templates/settings.html:72
 msgid "الصحة والتغذية"
 msgstr "स्वास्थ्य और पोषण"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:74
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "मिश्रण से पहले नए पशु का संगरोध (दिन)"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:75
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "उपचार के बाद पुनः वजन अनुस्मारक (दिन)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:76
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "\"विलंबित वजन\" अलर्ट से पहले दो वजन के बीच अधिकतम अवधि (दिन)"
 
-#: app/templates/settings.html:76
+#: app/templates/settings.html:77
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "दो कृमिनाशक खुराक के बीच न्यूनतम अंतराल (दिन)"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:78
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "सांद्रण के लिए अधिकतम साप्ताहिक वृद्धि (%%)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:79
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "सांद्रण वृद्धि माप विंडो (दिन)"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:80
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "लक्षित कैल्शियम/फॉस्फोरस अनुपात"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:81
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "कैल्शियम/फॉस्फोरस अनुपात सहनशीलता मार्जिन"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:82
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "गर्भपात के बाद बाड़ा निगरानी (दिन)"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:83
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "ठोस चारे का दूध छुड़ाई उम्र (दिन)"
 
-#: app/templates/settings.html:83
+#: app/templates/settings.html:84
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "मेढ़े की सक्रिय प्रजनन-मौसम खिड़की (दिन)"
 
-#: app/templates/settings.html:84
+#: app/templates/settings.html:85
 msgid "بداية التغذية التأسيسية للمولود (يوم)"
 msgstr "नवजात के लिए क्रीप फीडिंग शुरू करने की आयु (दिन)"
 
-#: app/templates/settings.html:85
+#: app/templates/settings.html:86
 msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
 msgstr "पूर्ण दूध छुड़ाने पर लक्षित दैनिक स्टार्टर फ़ीड (ग्राम)"
 
-#: app/templates/settings.html:86
+#: app/templates/settings.html:87
 msgid "نافذة عودة الأنثى للفحل (يوم) — لكشف الحمل الضمني"
 msgstr "नर के पास वापसी की खिड़की (दिन) — अंतर्निहित गर्भावस्था का पता लगाने के लिए"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:88
 msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
 msgstr "संभोग के बाद स्वचालित सोनार जांच (दिन) — संभावित गर्भावस्था के लिए"
 
-#: app/templates/settings.html:88
+#: app/templates/settings.html:89
 msgid "تنبيه مخزون قبل النفاد المتوقَّع بـ (يوم)"
 msgstr "अपेक्षित स्टॉक समाप्ति से पहले सूचना (दिन)"
 
-#: app/templates/settings.html:93
+#: app/templates/settings.html:94
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "नवजात और माँ का प्रसवोत्तर प्रोटोकॉल"
 
-#: app/templates/settings.html:95
+#: app/templates/settings.html:96
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "कोलोस्ट्रम पिलाने की पुष्टि विंडो (घंटे)"
 
-#: app/templates/settings.html:96
+#: app/templates/settings.html:97
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "अपरा निकलने की निगरानी विंडो (घंटे)"
 
-#: app/templates/settings.html:97
+#: app/templates/settings.html:98
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "माँ की दैनिक प्रसवोत्तर निगरानी अवधि (दिन)"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:102
 msgid "حفظ الإعدادات"
 msgstr "सेटिंग्स सहेजें"
 
-#: app/templates/settings.html:106
+#: app/templates/settings.html:107
 msgid "الخدمات"
 msgstr "सेवाएं"
 
-#: app/templates/settings.html:107
+#: app/templates/settings.html:108
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "केवल जो आवश्यक हो उसे सक्षम करें — निष्क्रिय सेवा सभी स्क्रीन से पूरी तरह गायब हो जाती है।"
 
-#: app/templates/settings.html:115
+#: app/templates/settings.html:116
 msgid "مفعّل"
 msgstr "सक्षम"
 
-#: app/templates/settings.html:115
+#: app/templates/settings.html:116
 msgid "غير مفعّل"
 msgstr "अक्षम"
 
-#: app/templates/settings.html:118 app/templates/team/members_list.html:23
+#: app/templates/settings.html:119 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
-#: app/templates/settings.html:118 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:119 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "सक्रिय करें"
 
-#: app/templates/settings.html:127
+#: app/templates/settings.html:128
 msgid "المسميات الوظيفية"
 msgstr "पद"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:129
 msgid "مسمّى جديد"
 msgstr "नया पद"
 
-#: app/templates/settings.html:132
+#: app/templates/settings.html:133
 msgid "عدد الصلاحيات"
 msgstr "अनुमतियों की संख्या"
 
-#: app/templates/settings.html:132
+#: app/templates/settings.html:133
 msgid "نوع"
 msgstr "प्रकार"
 
-#: app/templates/settings.html:137
+#: app/templates/settings.html:138
 msgid "جاهز افتراضياً"
 msgstr "अंतर्निहित डिफ़ॉल्ट"
 
-#: app/templates/settings.html:137
+#: app/templates/settings.html:138
 msgid "مضاف من المالك"
 msgstr "मालिक द्वारा जोड़ा गया"
 
-#: app/templates/settings.html:140
+#: app/templates/settings.html:141
 msgid "تعديل الصلاحيات"
 msgstr "अनुमतियां संपादित करें"
 
-#: app/templates/settings.html:150
+#: app/templates/settings.html:151
 msgid "النظام والصيانة"
 msgstr "सिस्टम और रखरखाव"
 
-#: app/templates/settings.html:152 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:153 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "तैनाती से पहले तत्परता जांच"
 
-#: app/templates/settings.html:153 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:154 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:154 app/templates/telegram_status.html:4
+#: app/templates/settings.html:155 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "टेलीग्राम बॉट निदान"
 
-#: app/templates/settings.html:156
+#: app/templates/settings.html:157
 msgid "وضع عرض تجريبي"
 msgstr "डेमो मोड"
 
-#: app/templates/settings.html:163
+#: app/templates/settings.html:164
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:165
+#: app/templates/settings.html:166
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:171
+#: app/templates/reports/overview.html:18 app/templates/settings.html:172
 msgid "جدول المؤشرات"
 msgstr "संकेतक तालिका"
 
-#: app/templates/settings.html:172
+#: app/templates/settings.html:173
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
 
@@ -6528,7 +6530,7 @@ msgstr "अप्रत्यक्ष व्यय (किराया/रख�
 msgid "يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير \"تكلفة الرأس الشهرية/السنوية\" وكنصيب فردي بصفحة تفاصيل كل رأس."
 msgstr "वर्तमान सक्रिय पशुओं की संख्या पर स्वचालित रूप से समान रूप से विभाजित — \"मासिक/वार्षिक प्रति पशु लागत\" रिपोर्ट में और प्रत्येक पशु के विवरण पृष्ठ पर व्यक्तिगत हिस्से के रूप में दिखाई देता है।"
 
-#: app/templates/finance/form.html:34
+#: app/templates/finance/form.html:34 app/templates/team/salaries_list.html:17
 msgid "طريقة الدفع"
 msgstr "भुगतान विधि"
 
@@ -9234,7 +9236,7 @@ msgstr "वर्ष"
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/payroll_prepare.html:12
 #: app/templates/team/payroll_reports.html:22
-#: app/templates/team/salaries_list.html:11
+#: app/templates/team/salaries_list.html:13
 msgid "الراتب الأساسي"
 msgstr "मूल वेतन"
 
@@ -9259,7 +9261,7 @@ msgid "عرض الموقَّع"
 msgstr "हस्ताक्षरित प्रति देखें"
 
 #: app/templates/team/payroll_list.html:53
-#: app/templates/team/salaries_list.html:25
+#: app/templates/team/salaries_list.html:22
 msgid "لا يوجد أعضاء نشطون."
 msgstr "कोई सक्रिय सदस्य नहीं।"
 
@@ -9595,12 +9597,28 @@ msgid "لا يوجد بلاغات ملغاة."
 msgstr "कोई रद्द रिपोर्ट नहीं।"
 
 #: app/templates/team/salaries_list.html:5
-msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
-msgstr "प्रत्येक टीम सदस्य का निश्चित मूल वेतन — मासिक वेतन पर्ची तैयार करते समय (बोनस और कटौती के साथ) आधार बिंदु के रूप में उपयोग किया जाता है। खाली का अर्थ है अभी तक कोई वेतन निर्धारित नहीं है।"
+msgid "الراتب الأساسي وبيانات الهوية لكل عضو — تُدخَل يدوياً مرة وحدة، وتُستخدم تلقائياً بكل مسير راتب بعدها. فاضي = ما فيها بيانات بعد."
+msgstr "हर सदस्य का मूल वेतन और पहचान विवरण — एक बार मैन्युअल रूप से दर्ज करें, फिर हर वेतन पर्ची पर स्वचालित रूप से उपयोग होगा। खाली का मतलब अभी तक कोई डेटा नहीं है।"
 
-#: app/templates/team/salaries_list.html:19
+#: app/templates/team/salaries_list.html:13
 msgid "غير محدَّد"
 msgstr "निर्धारित नहीं"
+
+#: app/templates/team/salaries_list.html:14
+msgid "الجنسية"
+msgstr "राष्ट्रीयता"
+
+#: app/templates/team/salaries_list.html:15
+msgid "رقم الجواز"
+msgstr "पासपोर्ट नंबर"
+
+#: app/templates/team/salaries_list.html:16
+msgid "رقم الحدود"
+msgstr "बॉर्डर नंबर"
+
+#: app/templates/team/salaries_list.html:17
+msgid "نقداً / تحويل بنكي"
+msgstr "नकद / बैंक हस्तांतरण"
 
 #: app/templates/team/task_detail.html:7
 msgid "رجوع للمهام"
@@ -10134,4 +10152,7 @@ msgstr "अभी तक कोई अतिरिक्त नामित ग�
 
 #~ msgid "الرواتب"
 #~ msgstr "वेतन"
+
+#~ msgid "الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد."
+#~ msgstr "प्रत्येक टीम सदस्य का निश्चित मूल वेतन — मासिक वेतन पर्ची तैयार करते समय (बोनस और कटौती के साथ) आधार बिंदु के रूप में उपयोग किया जाता है। खाली का अर्थ है अभी तक कोई वेतन निर्धारित नहीं है।"
 

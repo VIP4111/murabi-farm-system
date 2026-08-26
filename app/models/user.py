@@ -63,6 +63,14 @@ class User(UserMixin, db.Model):
     # ما يحتاج يقدر يغيّر الدور أو كلمة المرور، بس الراتب).
     base_salary = db.Column(db.Float, nullable=True)
 
+    # بيانات هوية العامل لمسير الراتب الرسمي (بند إضافي 243) — كلها
+    # اختيارية، تُدخَل يدوياً مرة وحدة (نفس شاشة الرواتب الأساسية)
+    # وتُستخدم تلقائياً بكل وصل راتب بعدها.
+    nationality = db.Column(db.String(80), nullable=True)
+    passport_number = db.Column(db.String(40), nullable=True)
+    border_number = db.Column(db.String(40), nullable=True)
+    payment_method = db.Column(db.String(40), nullable=True)
+
     # دليل المربي المبتدئ ومحرك التوجيه اليومي (بند إضافي 168) — وسم
     # مستقل عن الدور الوظيفي (role_id): مالك أو عامل ممكن يكون مبتدئاً
     # فعلياً بغض النظر عن صلاحياته. يُضبط باختيار المستخدم نفسه بمسار

@@ -2,29 +2,23 @@
 {% block content %}
 <div class="card">
   <h2>💰 {{ _('الرواتب الأساسية') }}</h2>
-  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('الراتب الأساسي الثابت لكل عضو فريق — يُستخدم كنقطة بداية عند تجهيز راتب الشهر (مع المكافآت والخصومات). فاضي = ما فيه راتب مسجَّل بعد.') }}</p>
+  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('الراتب الأساسي وبيانات الهوية لكل عضو — تُدخَل يدوياً مرة وحدة، وتُستخدم تلقائياً بكل مسير راتب بعدها. فاضي = ما فيها بيانات بعد.') }}</p>
 </div>
 
+{% for m in members %}
 <div class="card">
-  <div class="table-scroll">
-  <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الدور') }}</th><th>{{ _('الراتب الأساسي') }}</th></tr>
-    {% for m in members %}
-    <tr>
-      <td>{{ m.name }}</td>
-      <td>{{ m.role.display_name if m.role else '-' }}</td>
-      <td>
-        <form method="post" action="{{ url_for('team.salary_update', user_id=m.id) }}" style="display:flex; gap:6px; align-items:center;" data-offline>
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <input type="number" name="base_salary" step="0.01" min="0" value="{{ m.base_salary if m.base_salary is not none else '' }}" placeholder="{{ _('غير محدَّد') }}" style="width:130px; margin:0;">
-          <button class="btn light" type="submit" style="padding:6px 12px; font-size:12.5px;">{{ _('حفظ') }}</button>
-        </form>
-      </td>
-    </tr>
-    {% else %}
-    <tr><td colspan="3" style="color:#888;">{{ _('لا يوجد أعضاء نشطون.') }}</td></tr>
-    {% endfor %}
-  </table>
-  </div>
+  <h3 style="font-size:15px; margin:0 0 4px;">{{ m.name }} <span style="color:var(--muted); font-weight:normal; font-size:12.5px;">({{ m.role.display_name if m.role else '-' }})</span></h3>
+  <form method="post" action="{{ url_for('team.salary_update', user_id=m.id) }}" style="display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end; margin-top:8px;" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div><label style="margin:0 0 4px;">{{ _('الراتب الأساسي') }}</label><input type="number" name="base_salary" step="0.01" min="0" value="{{ m.base_salary if m.base_salary is not none else '' }}" placeholder="{{ _('غير محدَّد') }}" style="width:120px; margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('الجنسية') }}</label><input name="nationality" value="{{ m.nationality or '' }}" style="width:110px; margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('رقم الجواز') }}</label><input name="passport_number" value="{{ m.passport_number or '' }}" style="width:130px; margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('رقم الحدود') }}</label><input name="border_number" value="{{ m.border_number or '' }}" style="width:130px; margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('طريقة الدفع') }}</label><input name="payment_method" value="{{ m.payment_method or '' }}" placeholder="{{ _('نقداً / تحويل بنكي') }}" style="width:140px; margin:0;"></div>
+    <button class="btn light" type="submit" style="padding:9px 16px; font-size:12.5px;">{{ _('حفظ') }}</button>
+  </form>
 </div>
+{% else %}
+<div class="card"><p style="color:#888;">{{ _('لا يوجد أعضاء نشطون.') }}</p></div>
+{% endfor %}
 {% endblock %}

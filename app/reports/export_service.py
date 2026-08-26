@@ -384,19 +384,34 @@ def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
     c.setFont("Arabic", 10)
     c.drawRightString(right_margin, y, ar(farm_settings.farm_name or "مراح بو علي"))
     y -= 5.5 * mm
+    if farm_settings.owner_national_id:
+        c.drawRightString(right_margin, y, ar(f"رقم الهوية: {farm_settings.owner_national_id}"))
+        y -= 5.5 * mm
     if farm_settings.farm_phone:
-        c.drawRightString(right_margin, y, ar(farm_settings.farm_phone))
+        c.drawRightString(right_margin, y, ar(f"رقم الجوال: {farm_settings.farm_phone}"))
         y -= 5.5 * mm
 
     y -= 8 * mm
     c.setFont("Arabic", 12)
-    c.drawRightString(right_margin, y, ar("العامل"))
+    c.drawRightString(right_margin, y, ar("بيانات العامل"))
     y -= 6 * mm
     c.setFont("Arabic", 10)
-    c.drawRightString(right_margin, y, ar(payroll.user.name))
+    c.drawRightString(right_margin, y, ar(f"اسم العامل: {payroll.user.name}"))
     y -= 5.5 * mm
-    c.drawRightString(right_margin, y, ar(f"الفترة: {_ARABIC_MONTHS.get(payroll.month, payroll.month)} {payroll.year}"))
+    if payroll.user.nationality:
+        c.drawRightString(right_margin, y, ar(f"الجنسية: {payroll.user.nationality}"))
+        y -= 5.5 * mm
+    if payroll.user.passport_number:
+        c.drawRightString(right_margin, y, ar(f"رقم الجواز: {payroll.user.passport_number}"))
+        y -= 5.5 * mm
+    if payroll.user.border_number:
+        c.drawRightString(right_margin, y, ar(f"رقم الحدود: {payroll.user.border_number}"))
+        y -= 5.5 * mm
+    c.drawRightString(right_margin, y, ar(f"فترة الراتب: {_ARABIC_MONTHS.get(payroll.month, payroll.month)} {payroll.year}"))
     y -= 5.5 * mm
+    if payroll.user.payment_method:
+        c.drawRightString(right_margin, y, ar(f"طريقة الدفع: {payroll.user.payment_method}"))
+        y -= 5.5 * mm
     if payroll.recipient_name:
         c.drawRightString(right_margin, y, ar(f"اسم المستلم (حوالة): {payroll.recipient_name}"))
         y -= 5.5 * mm

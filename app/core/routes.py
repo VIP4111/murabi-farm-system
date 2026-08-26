@@ -1633,6 +1633,7 @@ def farm_identity_save():
     fs.farm_phone = request.form.get("farm_phone") or None
     fs.farm_address = request.form.get("farm_address") or None
     fs.vat_number = request.form.get("vat_number") or None
+    fs.owner_national_id = request.form.get("owner_national_id") or None
     db.session.add(fs)
     db.session.commit()
     flash("تم حفظ بيانات المزرعة", "success")
