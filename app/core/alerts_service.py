@@ -661,6 +661,8 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
     # الاثنين ينشئان صف Task فعلي (مو تنبيهاً عابراً) عند الاستحقاق.
     from app.core import pregnancy_care_service
     pregnancy_care_service.generate_late_pregnancy_tasks()
+    # كشف حمل ضمني (بند إضافي 236) — نفس نقطة الاستدعاء بالضبط.
+    pregnancy_care_service.detect_implicit_pregnancies()
 
     # مهام يومية تلقائية (بند إضافي 55.1) — نفس الفلسفة بالضبط.
     from app.core import daily_task_service

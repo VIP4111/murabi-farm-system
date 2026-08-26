@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-22 18:55+0300\n"
+"POT-Creation-Date: 2026-08-26 08:55+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "የተመዘገቡ መድሃኒቶች አሉት።"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:155 app/templates/settings_backup.html:5
+#: app/templates/settings.html:157 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "መጠባበቂያ"
 
@@ -2835,7 +2835,7 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:129 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:131 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/performance_report.html:20
@@ -3302,7 +3302,7 @@ msgstr "እንስሳት"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:157
+#: app/templates/audit_log.html:5 app/templates/settings.html:159
 msgid "سجل التدقيق"
 msgstr "የኦዲት መዝገብ"
 
@@ -4608,112 +4608,120 @@ msgstr "ለአራስ ልጅ የመነሻ ምግብ (Creep Feeding) መጀመሪ�
 msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
 msgstr "ጡት መጣል ሲጠናቀቅ ዒላማ የቀን መነሻ መኖ (ግራም)"
 
-#: app/templates/settings.html:90
+#: app/templates/settings.html:86
+msgid "نافذة عودة الأنثى للفحل (يوم) — لكشف الحمل الضمني"
+msgstr "ሴቷ ወደ ወንድ የምትመለስበት ጊዜ (ቀን) — ስውር እርግዝናን ለማወቅ"
+
+#: app/templates/settings.html:87
+msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
+msgstr "ከማዳቀል በኋላ ራስ-ሰር የሶናር ምርመራ (ቀን) — ለሚጠበቅ እርግዝና"
+
+#: app/templates/settings.html:92
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "አዲስ የተወለደና እናት ድህረ ወሊድ ፕሮቶኮል"
 
-#: app/templates/settings.html:92
+#: app/templates/settings.html:94
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "የኮሎስትረም ማጥባት ማረጋገጫ መስኮት (ሰዓታት)"
 
-#: app/templates/settings.html:93
+#: app/templates/settings.html:95
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "የእንግዴ ልጅ መውጣት ክትትል መስኮት (ሰዓታት)"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:96
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "የእናት ዕለታዊ ድህረ-ወሊድ ክትትል ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:100
 msgid "حفظ الإعدادات"
 msgstr "ቅንብሮችን አስቀምጥ"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:105
 msgid "الخدمات"
 msgstr "አገልግሎቶች"
 
-#: app/templates/settings.html:104
+#: app/templates/settings.html:106
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "የሚያስፈልግዎትን ብቻ ያንቁ — የቆመ አገልግሎት ከሁሉም ማያ ገጾች ሙሉ በሙሉ ይጠፋል።"
 
-#: app/templates/settings.html:112
+#: app/templates/settings.html:114
 msgid "مفعّل"
 msgstr "ነቅቷል"
 
-#: app/templates/settings.html:112
+#: app/templates/settings.html:114
 msgid "غير مفعّل"
 msgstr "አልነቃም"
 
-#: app/templates/settings.html:115 app/templates/team/members_list.html:23
+#: app/templates/settings.html:117 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "አቦዝን"
 
-#: app/templates/settings.html:115 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:117 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "አንቃ"
 
-#: app/templates/settings.html:124
+#: app/templates/settings.html:126
 msgid "المسميات الوظيفية"
 msgstr "የሥራ ማዕረጎች"
 
-#: app/templates/settings.html:125
+#: app/templates/settings.html:127
 msgid "مسمّى جديد"
 msgstr "አዲስ ማዕረግ"
 
-#: app/templates/settings.html:129
+#: app/templates/settings.html:131
 msgid "عدد الصلاحيات"
 msgstr "የፈቃዶች ብዛት"
 
-#: app/templates/settings.html:129
+#: app/templates/settings.html:131
 msgid "نوع"
 msgstr "ዓይነት"
 
-#: app/templates/settings.html:134
+#: app/templates/settings.html:136
 msgid "جاهز افتراضياً"
 msgstr "አብሮገነብ ነባሪ"
 
-#: app/templates/settings.html:134
+#: app/templates/settings.html:136
 msgid "مضاف من المالك"
 msgstr "በባለቤት የተጨመረ"
 
-#: app/templates/settings.html:137
+#: app/templates/settings.html:139
 msgid "تعديل الصلاحيات"
 msgstr "ፈቃዶችን አርትዕ"
 
-#: app/templates/settings.html:147
+#: app/templates/settings.html:149
 msgid "النظام والصيانة"
 msgstr "ሲስተም እና ጥገና"
 
-#: app/templates/settings.html:149 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:151 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "ከማሰማራት በፊት የዝግጁነት ምርመራ"
 
-#: app/templates/settings.html:150 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:152 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "የውሂብ ትክክለኛነት ምርመራ"
 
-#: app/templates/settings.html:151 app/templates/telegram_status.html:4
+#: app/templates/settings.html:153 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "የቴሌግራም ቦት ምርመራ"
 
-#: app/templates/settings.html:153
+#: app/templates/settings.html:155
 msgid "وضع عرض تجريبي"
 msgstr "የማሳያ ሁነታ"
 
-#: app/templates/settings.html:160
+#: app/templates/settings.html:162
 msgid "شاشة متابعة مبسّطة"
 msgstr "ቀላል የክትትል ማያ ገጽ"
 
-#: app/templates/settings.html:162
+#: app/templates/settings.html:164
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:168
+#: app/templates/reports/overview.html:18 app/templates/settings.html:170
 msgid "جدول المؤشرات"
 msgstr "የጠቋሚዎች ሠንጠረዥ"
 
-#: app/templates/settings.html:169
+#: app/templates/settings.html:171
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "ከአሁኑ ወር መጀመሪያ እስከ ዛሬ — ልክ እንደ ሪፖርቶች ገፅ ተመሳሳይ ሞተር።"
 

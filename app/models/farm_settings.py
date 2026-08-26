@@ -155,6 +155,14 @@ class FarmSettings(db.Model):
     creep_feed_start_age_days = db.Column(db.Integer, default=20, nullable=False)
     creep_feed_target_grams_per_day = db.Column(db.Integer, default=200, nullable=False)
 
+    # كشف حمل ضمني (بند إضافي 236) — لو الأنثى ما رجعت للفحل خلال نافذة
+    # دورة الشياع المتوقعة بعد تقريع مسجَّل، هذا مؤشر (مو تأكيد) إنها
+    # حملت — نسجّلها "حمل محتمل" غير مؤكَّد (نفس منطق نعجة حامل عند
+    # الشراء، Pregnancy.confirmed=False) ونجدول فحص سونار تلقائياً، بدل
+    # ما تبقى بانتظار تسجيل يدوي قد ينسى.
+    estrus_return_window_days = db.Column(db.Integer, default=21, nullable=False)
+    implicit_pregnancy_sonar_check_days = db.Column(db.Integer, default=45, nullable=False)
+
     # حد أدنى لعمر الفحل عشان يدخل التقريع (بند إضافي 231) — منفصل عمداً
     # عن min_breeding_age_days (خاص بجاهزية الأنثى فقط). فحل أصغر من هذا
     # العمر يُستبعد تماماً من قائمة "الفحل" بفورم التقريع الجديد — استبعاد

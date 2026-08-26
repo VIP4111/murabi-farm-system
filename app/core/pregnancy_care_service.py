@@ -8,7 +8,8 @@
 """
 from datetime import date, timedelta
 
-from app.models import FarmSettings, Pregnancy, Task
+from app.extensions import db
+from app.models import Animal, FarmSettings, Mating, Pregnancy, Task
 from app.team import task_service
 
 
@@ -47,5 +48,69 @@ def generate_late_pregnancy_tasks() -> list[Task]:
             ),
         )
         created.append(task)
+
+    return created
+
+
+def detect_implicit_pregnancies() -> list[Pregnancy]:
+    """كشف حمل ضمني (بند إضافي 236) — نفس فلسفة `generate_late_pregnancy_
+    tasks` أعلاه بالضبط (تُستدعى عند فتح شاشة التنبيهات، idempotency عبر
+    source_type/source_id). لو تقريع مسجَّل مرّ عليه `estrus_return_window_
+    days` بدون ما ترجع الأنثى للفحل مرة ثانية خلال نفس النافذة، هذا مؤشر
+    حمل قوي (مو تأكيد طبي) — نسجّل حمل غير مؤكَّد مربوط بالتقريع نفسه
+    (`mating_id`)، ونجدول فحص سونار تلقائياً بدل ما يبقى بانتظار تسجيل
+    يدوي قد يُنسى تماماً."""
+    fs = FarmSettings.get()
+    today = date.today()
+    created = []
+
+    cutoff = today - timedelta(days=fs.estrus_return_window_days)
+    for mating in Mating.query.filter(Mating.date <= cutoff).all():
+        female = mating.female
+        if not female or female.status != "active":
+            continue
+
+        if Pregnancy.query.filter_by(mating_id=mating.id).first():
+            continue  # هذا التقريع بالذات أصلاً له سجل حمل (يدوي أو مكتشَف قبل)
+
+        later_mating = Mating.query.filter(
+            Mating.female_id == female.id, Mating.date > mating.date,
+            Mating.date <= mating.date + timedelta(days=fs.estrus_return_window_days),
+        ).first()
+        if later_mating:
+            continue  # رجعت للفحل — مؤشر إنها ما حملت من هذا التقريع
+
+        already_confirmed = Pregnancy.query.filter(
+            Pregnancy.female_id == female.id, Pregnancy.date >= mating.date, Pregnancy.confirmed.is_(True),
+        ).first()
+        if already_confirmed:
+            continue
+
+        gave_birth_since = Animal.query.filter(
+            Animal.mother_id == female.id, Animal.birth_date >= mating.date,
+        ).first()
+        if gave_birth_since:
+            continue  # الدورة خلصت بولادة فعلية أصلاً، ما فيه داعي لمؤشر متأخر
+
+        pregnancy = Pregnancy(
+            female_id=female.id, mating_id=mating.id, date=mating.date, confirmed=False,
+            notes=(
+                f"حمل محتمل — اكتُشف تلقائياً لأن {female.animal_no} ما رجعت للفحل "
+                f"خلال {fs.estrus_return_window_days} يوم بعد التقريع بتاريخ {mating.date}. "
+                "بانتظار تأكيد الطبيب (فحص سونار أو تشخيص يدوي)."
+            ),
+        )
+        db.session.add(pregnancy)
+        db.session.flush()
+
+        task_service.create_suggested_task(
+            title=f"🔬 فحص سونار لتأكيد حمل محتمل — {female.animal_no}",
+            task_type="pregnancy_sonar_check",
+            barn_id=female.barn_id, animal_id=female.id,
+            due_date=mating.date + timedelta(days=fs.implicit_pregnancy_sonar_check_days),
+            source_type="ImplicitPregnancy", source_id=mating.id,
+            notes=pregnancy.notes,
+        )
+        created.append(pregnancy)
 
     return created

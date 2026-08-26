@@ -33,6 +33,8 @@ def _base_form(fs):
         "ram_breeding_season_window_days": fs.ram_breeding_season_window_days,
         "creep_feed_start_age_days": fs.creep_feed_start_age_days,
         "creep_feed_target_grams_per_day": fs.creep_feed_target_grams_per_day,
+        "estrus_return_window_days": fs.estrus_return_window_days,
+        "implicit_pregnancy_sonar_check_days": fs.implicit_pregnancy_sonar_check_days,
     }
 
 
