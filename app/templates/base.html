@@ -575,7 +575,8 @@
       {% endif %}
 
       {% if current_user.has_permission('health.view') %}
-      {% set _health_endpoints = ['health.dashboard', 'health.pharmacy_list', 'health.vet_visits_list', 'health.diseases_list', 'health.vaccinations_list', 'health.vaccination_schedule_list', 'health.diagnose_start', 'health.injection_guide', 'health.body_condition_guide', 'health.doctors_list', 'health.protocols_list'] %}
+      {% set _health_endpoints = ['health.dashboard', 'health.pharmacy_list', 'health.vet_visits_list', 'health.diseases_list', 'health.vaccinations_list', 'health.vaccination_schedule_list', 'health.diagnose_start', 'health.injection_guide', 'health.body_condition_guide', 'health.doctors_list', 'health.protocols_list',
+                                   'health.pharmacy_shortages', 'health.pharmacy_new', 'health.pharmacy_edit', 'health.pharmacy_purchase'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _health_endpoints else '' }}>
         <summary>{{ nav_icon('health') }}{{ _('الصحة') }}</summary>
         <div class="drawer-grid">
