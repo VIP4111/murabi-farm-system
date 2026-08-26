@@ -642,7 +642,7 @@
       {% set _team_endpoints = ['team.tasks_list', 'team.reports_list', 'team.members_list',
                                  'team.performance_report', 'team.todays_completed_tasks',
                                  'team.salaries_list', 'team.payroll_list',
-                                 'team.payroll_prepare', 'team.payroll_reports'] %}
+                                 'team.payroll_prepare', 'team.payroll_reports', 'team.travel_history'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _team_endpoints else '' }}>
         <summary>{{ nav_icon('team') }}{{ _('الفريق') }}</summary>
         <div class="drawer-grid">

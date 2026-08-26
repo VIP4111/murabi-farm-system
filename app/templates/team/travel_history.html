@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>🛫 {{ _('سجل السفر') }} — {{ member.name }}</h2>
+  <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('كل فترة تُستبعد أيامها من راتب الشهر المتناسب. عدّل أو احذف فترة لو الغلط بتاريخ.') }}</p>
+</div>
+
+<div class="card">
+  <h3 style="font-size:14px; margin:0 0 8px;">{{ _('إضافة فترة سفر يدوياً') }}</h3>
+  <form method="post" action="{{ url_for('team.travel_history_add', user_id=member.id) }}" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div><label style="margin:0 0 4px;">{{ _('تاريخ البداية') }}</label><input type="date" name="start_date" required style="margin:0;"></div>
+    <div><label style="margin:0 0 4px;">{{ _('تاريخ النهاية (فاضي = لسا مسافر)') }}</label><input type="date" name="end_date" style="margin:0;"></div>
+    <button class="btn light" type="submit" style="padding:9px 16px; font-size:12.5px;">{{ _('إضافة') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  {% if periods %}
+  <div class="table-scroll">
+  <table class="compact-table">
+    <tr><th>{{ _('فترة السفر') }}</th></tr>
+    {% for p in periods %}
+    <tr>
+      <td colspan="3">
+        <form method="post" action="{{ url_for('team.travel_history_update', period_id=p.id) }}" style="display:flex; gap:6px; align-items:flex-end; flex-wrap:wrap;" data-offline>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="date" name="start_date" value="{{ p.start_date.isoformat() }}" style="margin:0; width:145px;">
+          <input type="date" name="end_date" value="{{ p.end_date.isoformat() if p.end_date else '' }}" placeholder="{{ _('لسا مسافر') }}" style="margin:0; width:145px;">
+          <button class="btn light" type="submit" style="padding:5px 10px; font-size:12px;">{{ _('حفظ') }}</button>
+          <button class="btn light" type="submit" formaction="{{ url_for('team.travel_history_delete', period_id=p.id) }}" onclick="return confirm('{{ _('حذف هذي الفترة نهائياً؟') }}');" style="padding:5px 10px; font-size:12px; color:#c0392b;">🗑️ {{ _('حذف') }}</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% else %}
+  <p style="color:#888;">{{ _('ما فيه فترات سفر مسجَّلة لهذا العامل.') }}</p>
+  {% endif %}
+</div>
+
+<a class="btn light" href="{{ url_for('team.salaries_list') }}">← {{ _('رجوع لإعداد الرواتب') }}</a>
+{% endblock %}

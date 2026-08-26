@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:26+0300\n"
+"POT-Creation-Date: 2026-08-26 23:35+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -112,15 +112,15 @@ msgstr "पुष्टि की गई"
 msgid "فشلت"
 msgstr "विफल"
 
-#: app/__init__.py:161 app/team/routes.py:650
+#: app/__init__.py:161 app/team/routes.py:725
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:162 app/team/routes.py:651
+#: app/__init__.py:162 app/team/routes.py:726
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:163 app/team/routes.py:655
+#: app/__init__.py:163 app/team/routes.py:730
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -136,15 +136,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:167 app/team/routes.py:652
+#: app/__init__.py:167 app/team/routes.py:727
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:168 app/team/routes.py:653
+#: app/__init__.py:168 app/team/routes.py:728
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:169 app/team/routes.py:654
+#: app/__init__.py:169 app/team/routes.py:729
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -717,7 +717,7 @@ msgstr "गंभीर तनाव"
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:638
+#: app/core/animal_filters_service.py:181 app/team/routes.py:713
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1791,16 +1791,16 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:639 app/templates/team/payroll_reports.html:21
+#: app/team/routes.py:714 app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:36
 msgid "العامل"
 msgstr "कर्मचारी"
 
-#: app/team/routes.py:640
+#: app/team/routes.py:715
 msgid "الطبيب البيطري"
 msgstr "पशु चिकित्सक"
 
-#: app/team/routes.py:641
+#: app/team/routes.py:716
 msgid "المحاسب"
 msgstr "लेखाकार"
 
@@ -2283,6 +2283,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 #: app/templates/team/salaries_list.html:19
 #: app/templates/team/salaries_list.html:52
 #: app/templates/team/todays_completed_tasks.html:42
+#: app/templates/team/travel_history.html:30
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "सहेजें"
@@ -2858,6 +2859,7 @@ msgstr "नाम"
 #: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14
 #: app/templates/team/report_form.html:16
+#: app/templates/team/travel_history.html:14
 msgid "إضافة"
 msgstr "जोड़ें"
 
@@ -5830,6 +5832,7 @@ msgid "الكمية اليومية لكل رأس (كجم)"
 msgstr "प्रति पशु दैनिक मात्रा (किग्रा)"
 
 #: app/templates/feed/barn_plan_form.html:16
+#: app/templates/team/travel_history.html:12
 msgid "تاريخ البداية"
 msgstr "आरंभ तिथि"
 
@@ -7299,6 +7302,7 @@ msgstr "इस रोग और इस लक्षण के बीच का �
 #: app/templates/health/emergency_symptoms_list.html:25
 #: app/templates/team/_suggested_tasks_rows.html:25
 #: app/templates/team/task_detail.html:80
+#: app/templates/team/travel_history.html:31
 msgid "حذف"
 msgstr "हटाएं"
 
@@ -9219,7 +9223,7 @@ msgid "الوصل الموقَّع"
 msgstr "हस्ताक्षरित रसीद"
 
 #: app/templates/team/payroll_list.html:50
-#: app/templates/team/salaries_list.html:72
+#: app/templates/team/salaries_list.html:73
 msgid "لا يوجد أعضاء نشطون."
 msgstr "कोई सक्रिय सदस्य नहीं।"
 
@@ -9707,11 +9711,16 @@ msgstr "वापसी दर्ज करें"
 msgid "تسجيل سفر"
 msgstr "यात्रा दर्ज करें"
 
-#: app/templates/team/salaries_list.html:64
+#: app/templates/team/salaries_list.html:63
+#: app/templates/team/travel_history.html:4
+msgid "سجل السفر"
+msgstr "यात्रा इतिहास"
+
+#: app/templates/team/salaries_list.html:65
 msgid "راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر."
 msgstr "उसका वेतन हर महीने वास्तविक उपस्थिति के दिनों के अनुसार आनुपातिक रूप से गणना किया जाता है।"
 
-#: app/templates/team/salaries_list.html:68
+#: app/templates/team/salaries_list.html:69
 msgid "طريقة الدفع تحويل — اسم مستلم الحوالة يُحدَّد كل شهر بشكل منفصل وقت تأكيد الراتب (يختلف حسب الشهر)."
 msgstr "भुगतान विधि स्थानांतरण है — प्राप्तकर्ता का नाम वेतन की पुष्टि के समय हर महीने अलग से निर्धारित किया जाता है (महीने के अनुसार बदल सकता है)।"
 
@@ -9974,6 +9983,38 @@ msgstr "कमज़ोर क्यों? संक्षेप में क�
 #: app/templates/team/todays_completed_tasks.html:46
 msgid "ما فيه أي مهمة اتنجزت اليوم بعد."
 msgstr "आज तक कोई कार्य पूरा नहीं हुआ है।"
+
+#: app/templates/team/travel_history.html:5
+msgid "كل فترة تُستبعد أيامها من راتب الشهر المتناسب. عدّل أو احذف فترة لو الغلط بتاريخ."
+msgstr "प्रत्येक अवधि के दिन आनुपातिक मासिक वेतन से हटा दिए जाते हैं। यदि तारीख गलत है तो अवधि संपादित या हटाएं।"
+
+#: app/templates/team/travel_history.html:9
+msgid "إضافة فترة سفر يدوياً"
+msgstr "यात्रा अवधि मैन्युअल रूप से जोड़ें"
+
+#: app/templates/team/travel_history.html:13
+msgid "تاريخ النهاية (فاضي = لسا مسافر)"
+msgstr "समाप्ति तिथि (खाली = अभी भी यात्रा पर)"
+
+#: app/templates/team/travel_history.html:22
+msgid "فترة السفر"
+msgstr "यात्रा अवधि"
+
+#: app/templates/team/travel_history.html:29
+msgid "لسا مسافر"
+msgstr "अभी भी यात्रा पर"
+
+#: app/templates/team/travel_history.html:31
+msgid "حذف هذي الفترة نهائياً؟"
+msgstr "इस अवधि को स्थायी रूप से हटाएं?"
+
+#: app/templates/team/travel_history.html:39
+msgid "ما فيه فترات سفر مسجَّلة لهذا العامل."
+msgstr "इस कर्मचारी के लिए कोई यात्रा अवधि दर्ज नहीं है।"
+
+#: app/templates/team/travel_history.html:43
+msgid "رجوع لإعداد الرواتب"
+msgstr "वेतन सेटअप पर वापस जाएं"
 
 #: app/templates/team/worker_report_form.html:12
 msgid "اتصل بالطبيب الآن"

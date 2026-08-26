@@ -207,6 +207,81 @@ def salary_travel_toggle(user_id):
     return redirect(url_for("team.salaries_list"))
 
 
+@team_bp.route("/salaries/<int:user_id>/travel-history")
+@login_required
+@require_permission("team.manage_salary")
+def travel_history(user_id):
+    """سجل فترات سفر عامل (بند إضافي 249، طلبك الصريح بعد النقد الصريح
+    على غياب أي شاشة تراجع/تصحح فيها سجل السفر): كل فترة سابقة قابلة
+    للتعديل أو الحذف، + فورم لإضافة فترة يدوياً (لو نسيت تسجّل السفر
+    وقته وتبيه تضيفه بأثر رجعي بتاريخ صحيح)."""
+    from app.models import WorkerTravelPeriod
+    user = User.query.get_or_404(user_id)
+    periods = (WorkerTravelPeriod.query.filter_by(user_id=user.id)
+               .order_by(WorkerTravelPeriod.start_date.desc()).all())
+    return render_template("team/travel_history.html", member=user, periods=periods)
+
+
+@team_bp.route("/salaries/<int:user_id>/travel-history/add", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def travel_history_add(user_id):
+    from app.models import WorkerTravelPeriod
+    user = User.query.get_or_404(user_id)
+    start_raw = (request.form.get("start_date") or "").strip()
+    end_raw = (request.form.get("end_date") or "").strip()
+    try:
+        start = datetime.strptime(start_raw, "%Y-%m-%d").date()
+        end = datetime.strptime(end_raw, "%Y-%m-%d").date() if end_raw else None
+    except ValueError:
+        flash("تاريخ غير صحيح", "error")
+        return redirect(url_for("team.travel_history", user_id=user.id))
+    if end and end < start:
+        flash("تاريخ النهاية لازم يكون بعد تاريخ البداية", "error")
+        return redirect(url_for("team.travel_history", user_id=user.id))
+    db.session.add(WorkerTravelPeriod(user_id=user.id, start_date=start, end_date=end))
+    db.session.commit()
+    flash("تمت إضافة فترة السفر", "success")
+    return redirect(url_for("team.travel_history", user_id=user.id))
+
+
+@team_bp.route("/travel-history/<int:period_id>/update", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def travel_history_update(period_id):
+    from app.models import WorkerTravelPeriod
+    period = WorkerTravelPeriod.query.get_or_404(period_id)
+    start_raw = (request.form.get("start_date") or "").strip()
+    end_raw = (request.form.get("end_date") or "").strip()
+    try:
+        start = datetime.strptime(start_raw, "%Y-%m-%d").date()
+        end = datetime.strptime(end_raw, "%Y-%m-%d").date() if end_raw else None
+    except ValueError:
+        flash("تاريخ غير صحيح", "error")
+        return redirect(url_for("team.travel_history", user_id=period.user_id))
+    if end and end < start:
+        flash("تاريخ النهاية لازم يكون بعد تاريخ البداية", "error")
+        return redirect(url_for("team.travel_history", user_id=period.user_id))
+    period.start_date = start
+    period.end_date = end
+    db.session.commit()
+    flash("تم تعديل فترة السفر", "success")
+    return redirect(url_for("team.travel_history", user_id=period.user_id))
+
+
+@team_bp.route("/travel-history/<int:period_id>/delete", methods=["POST"])
+@login_required
+@require_permission("team.manage_salary")
+def travel_history_delete(period_id):
+    from app.models import WorkerTravelPeriod
+    period = WorkerTravelPeriod.query.get_or_404(period_id)
+    user_id = period.user_id
+    db.session.delete(period)
+    db.session.commit()
+    flash("تم حذف فترة السفر", "success")
+    return redirect(url_for("team.travel_history", user_id=user_id))
+
+
 @team_bp.route("/payroll")
 @login_required
 @require_permission("team.manage_salary")

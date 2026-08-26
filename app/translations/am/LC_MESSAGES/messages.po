@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:26+0300\n"
+"POT-Creation-Date: 2026-08-26 23:35+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -112,15 +112,15 @@ msgstr "የተረጋገጠ"
 msgid "فشلت"
 msgstr "አልተሳካም"
 
-#: app/__init__.py:161 app/team/routes.py:650
+#: app/__init__.py:161 app/team/routes.py:725
 msgid "مهمة عامة"
 msgstr "አጠቃላይ ተግባር"
 
-#: app/__init__.py:162 app/team/routes.py:651
+#: app/__init__.py:162 app/team/routes.py:726
 msgid "فحص عزل"
 msgstr "የመነጠል ምርመራ"
 
-#: app/__init__.py:163 app/team/routes.py:655
+#: app/__init__.py:163 app/team/routes.py:730
 msgid "مراجعة الدكتور"
 msgstr "የዶክተር ግምገማ"
 
@@ -136,15 +136,15 @@ msgstr "የሴሌኒየም መጠን"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "የኮለስትረም/ጡት ማጥባት ክትትል"
 
-#: app/__init__.py:167 app/team/routes.py:652
+#: app/__init__.py:167 app/team/routes.py:727
 msgid "وزن"
 msgstr "ክብደት መለካት"
 
-#: app/__init__.py:168 app/team/routes.py:653
+#: app/__init__.py:168 app/team/routes.py:728
 msgid "تحصين مستحق"
 msgstr "የደረሰ ክትባት"
 
-#: app/__init__.py:169 app/team/routes.py:654
+#: app/__init__.py:169 app/team/routes.py:729
 msgid "تبديل علف"
 msgstr "የመኖ ለውጥ"
 
@@ -717,7 +717,7 @@ msgstr "ከባድ ውጥረት"
 msgid "إجهاد طارئ"
 msgstr "የአደጋ ጊዜ ውጥረት"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:638
+#: app/core/animal_filters_service.py:181 app/team/routes.py:713
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1791,16 +1791,16 @@ msgstr "ወደ ማግለያ ማዛወር"
 msgid "بيض / حضانة (نعام)"
 msgstr "እንቁላል / ማቀፊያ (ሰጎን)"
 
-#: app/team/routes.py:639 app/templates/team/payroll_reports.html:21
+#: app/team/routes.py:714 app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:36
 msgid "العامل"
 msgstr "ሠራተኛ"
 
-#: app/team/routes.py:640
+#: app/team/routes.py:715
 msgid "الطبيب البيطري"
 msgstr "የእንስሳት ሐኪም"
 
-#: app/team/routes.py:641
+#: app/team/routes.py:716
 msgid "المحاسب"
 msgstr "የሂሳብ ባለሙያ"
 
@@ -2283,6 +2283,7 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/team/salaries_list.html:19
 #: app/templates/team/salaries_list.html:52
 #: app/templates/team/todays_completed_tasks.html:42
+#: app/templates/team/travel_history.html:30
 #: app/templates/warehouses/warehouse_form.html:14
 msgid "حفظ"
 msgstr "አስቀምጥ"
@@ -2858,6 +2859,7 @@ msgstr "ስም"
 #: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14
 #: app/templates/team/report_form.html:16
+#: app/templates/team/travel_history.html:14
 msgid "إضافة"
 msgstr "ጨምር"
 
@@ -5830,6 +5832,7 @@ msgid "الكمية اليومية لكل رأس (كجم)"
 msgstr "በቀን ለአንድ እንስሳ የሚሆን መጠን (ኪግ)"
 
 #: app/templates/feed/barn_plan_form.html:16
+#: app/templates/team/travel_history.html:12
 msgid "تاريخ البداية"
 msgstr "የመጀመሪያ ቀን"
 
@@ -7299,6 +7302,7 @@ msgstr "በዚህ በሽታ እና በዚህ ምልክት መካከል ያለው
 #: app/templates/health/emergency_symptoms_list.html:25
 #: app/templates/team/_suggested_tasks_rows.html:25
 #: app/templates/team/task_detail.html:80
+#: app/templates/team/travel_history.html:31
 msgid "حذف"
 msgstr "ሰርዝ"
 
@@ -9219,7 +9223,7 @@ msgid "الوصل الموقَّع"
 msgstr "ፈራሚ ደረሰኝ"
 
 #: app/templates/team/payroll_list.html:50
-#: app/templates/team/salaries_list.html:72
+#: app/templates/team/salaries_list.html:73
 msgid "لا يوجد أعضاء نشطون."
 msgstr "ንቁ አባላት የሉም።"
 
@@ -9707,11 +9711,16 @@ msgstr "መመለስን መዝግብ"
 msgid "تسجيل سفر"
 msgstr "ጉዞን መዝግብ"
 
-#: app/templates/team/salaries_list.html:64
+#: app/templates/team/salaries_list.html:63
+#: app/templates/team/travel_history.html:4
+msgid "سجل السفر"
+msgstr "የጉዞ ታሪክ"
+
+#: app/templates/team/salaries_list.html:65
 msgid "راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر."
 msgstr "ደመወዙ በየወሩ ትክክለኛ የመገኘት ቀናት መሰረት በተመጣጣኝ ሁኔታ ይሰላል።"
 
-#: app/templates/team/salaries_list.html:68
+#: app/templates/team/salaries_list.html:69
 msgid "طريقة الدفع تحويل — اسم مستلم الحوالة يُحدَّد كل شهر بشكل منفصل وقت تأكيد الراتب (يختلف حسب الشهر)."
 msgstr "የክፍያ ዘዴ ዝውውር ነው — የተቀባዩ ስም ደመወዝ በሚረጋገጥበት ጊዜ በእያንዳንዱ ወር ለብቻ ይወሰናል (እንደ ወሩ ሊለያይ ይችላል)።"
 
@@ -9974,6 +9983,38 @@ msgstr "ለምን ደካማ? ምክንያቱን በአጭሩ ጻፍ"
 #: app/templates/team/todays_completed_tasks.html:46
 msgid "ما فيه أي مهمة اتنجزت اليوم بعد."
 msgstr "እስካሁን ዛሬ የተጠናቀቀ ስራ የለም።"
+
+#: app/templates/team/travel_history.html:5
+msgid "كل فترة تُستبعد أيامها من راتب الشهر المتناسب. عدّل أو احذف فترة لو الغلط بتاريخ."
+msgstr "የእያንዳንዱ ጊዜ ቀናት ከተመጣጣኝ ወርሃዊ ደመወዝ ይቀነሳሉ። ቀን ስህተት ከሆነ ጊዜውን ያርትዑ ወይም ይሰርዙ።"
+
+#: app/templates/team/travel_history.html:9
+msgid "إضافة فترة سفر يدوياً"
+msgstr "የጉዞ ጊዜ በእጅ ጨምር"
+
+#: app/templates/team/travel_history.html:13
+msgid "تاريخ النهاية (فاضي = لسا مسافر)"
+msgstr "የመጨረሻ ቀን (ባዶ = አሁንም በጉዞ ላይ)"
+
+#: app/templates/team/travel_history.html:22
+msgid "فترة السفر"
+msgstr "የጉዞ ጊዜ"
+
+#: app/templates/team/travel_history.html:29
+msgid "لسا مسافر"
+msgstr "አሁንም በጉዞ ላይ"
+
+#: app/templates/team/travel_history.html:31
+msgid "حذف هذي الفترة نهائياً؟"
+msgstr "ይህን ጊዜ በቋሚነት ይሰርዙ?"
+
+#: app/templates/team/travel_history.html:39
+msgid "ما فيه فترات سفر مسجَّلة لهذا العامل."
+msgstr "ለዚህ ሰራተኛ የተመዘገበ የጉዞ ጊዜ የለም።"
+
+#: app/templates/team/travel_history.html:43
+msgid "رجوع لإعداد الرواتب"
+msgstr "ወደ የደመወዝ ማዋቀር ተመለስ"
 
 #: app/templates/team/worker_report_form.html:12
 msgid "اتصل بالطبيب الآن"

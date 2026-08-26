@@ -60,6 +60,7 @@
       <button class="btn light" type="submit" style="padding:6px 12px; font-size:12px;">🛫 {{ _('تسجيل سفر') }}</button>
       {% endif %}
     </form>
+    <a class="btn light" href="{{ url_for('team.travel_history', user_id=m.id) }}" style="padding:6px 12px; font-size:12px;">📋 {{ _('سجل السفر') }}</a>
     {% if m.saudi_arrival_date %}
     <span style="color:var(--muted); font-size:12px;">{{ _('راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر.') }}</span>
     {% endif %}
