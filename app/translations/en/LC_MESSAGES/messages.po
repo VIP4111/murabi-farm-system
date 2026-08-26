@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:04+0300\n"
+"POT-Creation-Date: 2026-08-27 00:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:802
+#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:805
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -2095,8 +2095,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:667
-#: app/templates/base.html:669 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:670
+#: app/templates/base.html:672 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "Finance"
@@ -2615,8 +2615,8 @@ msgid "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة،
 msgstr "⚠️ Feed estimate = 0 — the animal has no barn, or its barn has no active feeding plan currently."
 
 #: app/templates/animal_detail.html:451
-msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
-msgstr "ℹ️ Honest caveats about this report: (1) The feed estimate is approximate — it assumes the animal spent its entire duration in the same barn under its current plan (the system doesn't track barn-transfer history). (2) The indirect-expense share (rent/maintenance/salaries) is calculated from the current active head count, not the actual count at each past period (the same limitation as the \"monthly animal cost\" report in item 18) — and also depends on the expense being tagged \"indirect\" at entry time, otherwise it isn't counted here. (3) Medical costs are calculated automatically from (quantity × pharmacy unit price) when both are recorded, otherwise they fall back to the manual value the doctor entered at the time."
+msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من متوسط عدد الرؤوس الفعلي خلال فترة وجود هذا الرأس بالقطيع (مو عدد اليوم الثابت) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
+msgstr "ℹ️ Honest notes on this report: (1) The feed cost estimate is approximate — it assumes the animal spent its whole tenure in its current barn under its current plan (the system doesn't track barn-transfer history). (2) The share of indirect expenses (rent/maintenance/salaries) is calculated from the actual average head count over this animal's time in the herd (not a fixed current-day count) — and also depends on marking the expense as \"indirect\" when it was actually entered, otherwise it's not counted here. (3) Medical costs are calculated automatically from (quantity × pharmacy unit price) when both are recorded, otherwise they fall back to the manual value the vet entered at the time."
 
 #: app/templates/animal_detail.html:455
 msgid "الحركات المالية المرتبطة"
@@ -3384,7 +3384,7 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:710
+#: app/templates/barn_form.html:11 app/templates/base.html:713
 msgid "عادية"
 msgstr "Regular"
 
@@ -3629,11 +3629,11 @@ msgstr "Review Today's Tasks"
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
-#: app/templates/base.html:670 app/templates/home.html:105
+#: app/templates/base.html:673 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:677 app/templates/home.html:108
+#: app/templates/base.html:680 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3641,61 +3641,61 @@ msgstr "Health finance"
 msgid "التقارير"
 msgstr "Reports"
 
-#: app/templates/base.html:679
+#: app/templates/base.html:682
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:694
+#: app/templates/base.html:697
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:699
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:699
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:708
+#: app/templates/base.html:711
 msgid "مستوى الواجهة"
 msgstr "Interface level"
 
-#: app/templates/base.html:710
+#: app/templates/base.html:713
 msgid "بسيط جداً"
 msgstr "Very simple"
 
-#: app/templates/base.html:718
+#: app/templates/base.html:721
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"Very simple\" switches your home screen to big buttons, one question at a time — the exact same data."
 
-#: app/templates/base.html:724
+#: app/templates/base.html:727
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:727
+#: app/templates/base.html:730
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:731
+#: app/templates/base.html:734
 msgid "الملخص اليومي بتيليجرام"
 msgstr "Daily Telegram Summary"
 
-#: app/templates/base.html:734
+#: app/templates/base.html:737
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "Send test summary now"
 
-#: app/templates/base.html:740 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:743 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:753
+#: app/templates/base.html:756
 msgid "خروج"
 msgstr "Logout"
 
-#: app/templates/base.html:790
+#: app/templates/base.html:793
 msgid "تجاهل"
 msgstr "Dismiss"
 

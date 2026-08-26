@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:04+0300\n"
+"POT-Creation-Date: 2026-08-27 00:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -244,7 +244,7 @@ msgstr "बाड़ा स्थानांतरण (शारीरिक �
 msgid "إكمال بيانات حيوان"
 msgstr "पशु डेटा पूर्ण करें"
 
-#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:802
+#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:805
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -2095,8 +2095,8 @@ msgstr "दूध"
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:667
-#: app/templates/base.html:669 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:670
+#: app/templates/base.html:672 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "वित्त"
@@ -2615,8 +2615,8 @@ msgid "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة،
 msgstr "⚠️ चारा अनुमान = 0 — पशु के पास कोई बाड़ा नहीं है, या उसके बाड़े में वर्तमान में कोई सक्रिय आहार योजना नहीं है।"
 
 #: app/templates/animal_detail.html:451
-msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
-msgstr "ℹ️ इस रिपोर्ट के बारे में ईमानदार चेतावनियां: (1) चारा अनुमान अनुमानित है — यह मानता है कि पशु ने अपनी पूरी अवधि एक ही बाड़े में उसकी वर्तमान योजना के तहत बिताई (सिस्टम बाड़ा-स्थानांतरण इतिहास को ट्रैक नहीं करता)। (2) अप्रत्यक्ष व्यय हिस्सा (किराया/रखरखाव/वेतन) वर्तमान सक्रिय पशु संख्या से गणना होता है, न कि प्रत्येक पिछली अवधि में वास्तविक संख्या से (मद 18 में \"मासिक पशु लागत\" रिपोर्ट जैसी ही सीमा) — और यह भी निर्भर करता है कि व्यय दर्ज करते समय \"अप्रत्यक्ष\" के रूप में टैग किया गया हो, अन्यथा यह यहां नहीं गिना जाता। (3) चिकित्सा लागत स्वतः (मात्रा × फार्मेसी इकाई मूल्य) से गणना होती है जब दोनों दर्ज हों, अन्यथा वे उस समय डॉक्टर द्वारा दर्ज मैन्युअल मूल्य पर वापस चली जाती हैं।"
+msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من متوسط عدد الرؤوس الفعلي خلال فترة وجود هذا الرأس بالقطيع (مو عدد اليوم الثابت) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
+msgstr "ℹ️ इस रिपोर्ट पर ईमानदार टिप्पणियाँ: (1) चारे की लागत का अनुमान अनुमानित है — यह मानता है कि जानवर ने अपना पूरा समय वर्तमान बाड़े और योजना में बिताया (सिस्टम बाड़ा-स्थानांतरण इतिहास को ट्रैक नहीं करता)। (2) अप्रत्यक्ष व्यय (किराया/रखरखाव/वेतन) का हिस्सा इस जानवर के झुंड में रहने की अवधि के दौरान वास्तविक औसत सिर गिनती से गणना किया जाता है (स्थिर वर्तमान गिनती नहीं) — और यह भी निर्भर करता है कि व्यय दर्ज करते समय उसे \"अप्रत्यक्ष\" के रूप में चिह्नित किया गया हो, अन्यथा यहाँ नहीं गिना जाता। (3) चिकित्सा लागतें स्वचालित रूप से (मात्रा × फार्मेसी इकाई मूल्य) से गणना की जाती हैं जब दोनों दर्ज हों, अन्यथा वे उस समय पशु चिकित्सक द्वारा दर्ज किए गए मैन्युअल मूल्य पर वापस चली जाती हैं।"
 
 #: app/templates/animal_detail.html:455
 msgid "الحركات المالية المرتبطة"
@@ -3384,7 +3384,7 @@ msgstr "नया बाड़ा"
 msgid "مثال: B-01"
 msgstr "उदाहरण: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:710
+#: app/templates/barn_form.html:11 app/templates/base.html:713
 msgid "عادية"
 msgstr "सामान्य"
 
@@ -3629,11 +3629,11 @@ msgstr "आज के कार्यों की समीक्षा कर�
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
-#: app/templates/base.html:670 app/templates/home.html:105
+#: app/templates/base.html:673 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:677 app/templates/home.html:108
+#: app/templates/base.html:680 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3641,61 +3641,61 @@ msgstr "स्वास्थ्य वित्त"
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
-#: app/templates/base.html:679
+#: app/templates/base.html:682
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
-#: app/templates/base.html:694
+#: app/templates/base.html:697
 msgid "المظهر"
 msgstr "दिखावट"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:699
 msgid "نهاري"
 msgstr "दिन"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:699
 msgid "ليلي"
 msgstr "रात"
 
-#: app/templates/base.html:708
+#: app/templates/base.html:711
 msgid "مستوى الواجهة"
 msgstr "इंटरफेस स्तर"
 
-#: app/templates/base.html:710
+#: app/templates/base.html:713
 msgid "بسيط جداً"
 msgstr "बहुत आसान"
 
-#: app/templates/base.html:718
+#: app/templates/base.html:721
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"बहुत आसान\" आपकी मुख्य स्क्रीन को बड़े बटनों में बदल देता है, एक बार में एक सवाल — बिल्कुल वही डेटा।"
 
-#: app/templates/base.html:724
+#: app/templates/base.html:727
 msgid "التقرير اليومي بالبريد"
 msgstr "दैनिक ईमेल रिपोर्ट"
 
-#: app/templates/base.html:727
+#: app/templates/base.html:730
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "अभी परीक्षण रिपोर्ट भेजें"
 
-#: app/templates/base.html:731
+#: app/templates/base.html:734
 msgid "الملخص اليومي بتيليجرام"
 msgstr "दैनिक टेलीग्राम सारांश"
 
-#: app/templates/base.html:734
+#: app/templates/base.html:737
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "अभी परीक्षण सारांश भेजें"
 
-#: app/templates/base.html:740 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:743 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:753
+#: app/templates/base.html:756
 msgid "خروج"
 msgstr "लॉग आउट"
 
-#: app/templates/base.html:790
+#: app/templates/base.html:793
 msgid "تجاهل"
 msgstr "अनदेखा करें"
 

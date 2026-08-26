@@ -178,21 +178,25 @@ def get_profile(animal: Animal) -> dict:
     purchase_cost = round(sum(f.amount for f in finance_rows if f.operation_type == "purchase"), 2)
     feed_cost_estimate = _feed_cost_estimate(animal)
 
-    # نصيب الرأس من المصاريف غير المباشرة (بند إضافي، 2026-07-23) —
-    # إيجار/صيانة/رواتب **صارت متتبَّعة الآن** عبر `Finance.is_indirect`،
-    # وتُوزَّع بالتساوي على عدد الرؤوس النشطة الحالي (نفس منهجية تقرير
-    # "تكلفة الرأس الشهرية" ببند 18، بقرارك الصريح). النطاق الزمني: من
-    # تاريخ دخول هذا الرأس للمزرعة (ولادة/شراء/دخول) لحد اليوم — قبل
-    # دخوله ما كان جزء من القطيع، فما يتحمّل مصاريفه.
+    # نصيب الرأس من المصاريف غير المباشرة (بند إضافي، 2026-07-23،
+    # مصحَّحة ببند 253) — إيجار/صيانة/رواتب متتبَّعة عبر
+    # `Finance.is_indirect`، وتُوزَّع على **متوسط** عدد الرؤوس خلال
+    # فترة وجود هذا الرأس بالقطيع (مو عدد اليوم الثابت — كان يشوّه
+    # الرقم لو تغيّر حجم القطيع بين دخول الرأس واليوم؛ نفس المبدأ
+    # المصحَّح بتقرير "تكلفة الرأس الشهرية" ببند 251، بس بمتوسط بدل
+    # تفصيل شهري كامل — أخف حسابياً لصفحة تُفتح لكل رأس بشكل متكرر).
+    # النطاق الزمني: من تاريخ دخول هذا الرأس للمزرعة (ولادة/شراء/دخول)
+    # لحد اليوم — قبل دخوله ما كان جزء من القطيع، فما يتحمّل مصاريفه.
     since = animal.entry_date or animal.birth_date or animal.purchase_date or (animal.created_at.date() if animal.created_at else date.today())
-    active_head_count = Animal.query.filter_by(status="active").count()
+    from app.core.finance_report_service import average_head_count_between
+    avg_head_count = average_head_count_between(since, date.today())
     indirect_total_since_entry = sum(
         f.amount for f in Finance.query.filter(
             Finance.operation_type == "expense", Finance.is_indirect.is_(True),
             Finance.is_cancelled.is_(False), Finance.date >= since,
         ).all()
     )
-    indirect_cost_share = round(indirect_total_since_entry / active_head_count, 2) if active_head_count else 0
+    indirect_cost_share = round(indirect_total_since_entry / avg_head_count, 2) if avg_head_count else 0
 
     total_cost_estimate = round(
         purchase_cost + direct_medical_cost + feed_cost_estimate["total"] + indirect_cost_share, 2
@@ -231,8 +235,10 @@ def break_even_summary() -> list[dict]:
     estimated_value` من شاشة "بيانات تخطيط السوق"). لو ما فيه قيمة
     تقديرية مسجَّلة، الهامش ما يُحسب (ما نخترع سعر سوق غير موجود)."""
     animals = Animal.query.filter_by(status="active").all()
-    active_head_count = len(animals)
+    from app.core.finance_report_service import average_head_count_between, build_entry_exit_maps
+    entry_exit_maps = build_entry_exit_maps()
     since_cache: dict = {}
+    avg_head_count_cache: dict = {}
     rows = []
     for animal in animals:
         finance_rows = Finance.query.filter_by(related_animal_id=animal.id, is_cancelled=False).all()
@@ -255,7 +261,10 @@ def break_even_summary() -> list[dict]:
                     Finance.is_cancelled.is_(False), Finance.date >= since,
                 ).all()
             )
-        indirect_cost_share = round(since_cache[since] / active_head_count, 2) if active_head_count else 0
+        if since not in avg_head_count_cache:
+            avg_head_count_cache[since] = average_head_count_between(since, date.today(), maps=entry_exit_maps)
+        avg_head_count = avg_head_count_cache[since]
+        indirect_cost_share = round(since_cache[since] / avg_head_count, 2) if avg_head_count else 0
 
         break_even_price = round(
             purchase_cost + direct_medical_cost + feed_cost_estimate["total"] + indirect_cost_share, 2

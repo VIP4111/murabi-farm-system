@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:04+0300\n"
+"POT-Creation-Date: 2026-08-27 00:26+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -244,7 +244,7 @@ msgstr "በረት ማዛወር (የፊዚዮሎጂ ሁኔታ)"
 msgid "إكمال بيانات حيوان"
 msgstr "የእንስሳ መረጃ ማሟላት"
 
-#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:802
+#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:805
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "አስቸኳይ ሁኔታ"
@@ -2095,8 +2095,8 @@ msgstr "ወተት"
 msgid "ملاحظات"
 msgstr "ማስታወሻዎች"
 
-#: app/templates/animal_detail.html:88 app/templates/base.html:667
-#: app/templates/base.html:669 app/templates/finance/list.html:24
+#: app/templates/animal_detail.html:88 app/templates/base.html:670
+#: app/templates/base.html:672 app/templates/finance/list.html:24
 #: app/templates/home.html:103
 msgid "المالية"
 msgstr "ፋይናንስ"
@@ -2615,8 +2615,8 @@ msgid "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة،
 msgstr "⚠️ የመኖ ግምት = 0 — እንስሳው በረት የለውም፣ ወይም በረቱ በአሁኑ ጊዜ ንቁ የመመገቢያ ዕቅድ የለውም።"
 
 #: app/templates/animal_detail.html:451
-msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من عدد الرؤوس النشطة الحالي، مو العدد الفعلي بكل فترة زمنية سابقة (نفس قيد تقرير \"تكلفة الرأس الشهرية\" ببند 18) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
-msgstr "ℹ️ ስለዚህ ሪፖርት ትክክለኛ ማስጠንቀቂያዎች: (1) የመኖ ግምት ግምታዊ ነው — እንስሳው ሙሉ ጊዜውን በአንድ በረት በአሁኑ ዕቅዱ እንዳሳለፈ ይገምታል (ሲስተሙ በበረቶች መካከል የመዛወር ታሪክን አይከታተልም)። (2) የተዘዋዋሪ ወጪ ድርሻ (ኪራይ/ጥገና/ደመወዝ) የሚሰላው ከአሁኑ ንቁ የራስ ብዛት ነው፣ በእያንዳንዱ ያለፈ ጊዜ ውስጥ ካለው ትክክለኛ ብዛት አይደለም (በንጥል 18 ላይ ካለው \"ወርሃዊ የእንስሳ ወጪ\" ሪፖርት ጋር ተመሳሳይ ገደብ) — እንዲሁም ወጪው ሲገባ \"ተዘዋዋሪ\" ተብሎ በምልክት ላይ ጥገኛ ነው፣ አለበለዚያ እዚህ አይቆጠርም። (3) የሕክምና ወጪዎች ሁለቱም ሲመዘገቡ ከ(መጠን × የፋርማሲ አሃድ ዋጋ) በራስ-ሰር ይሰላሉ፣ አለበለዚያ ሐኪሙ በወቅቱ ወደ አስገባው በእጅ የገባ ዋጋ ይመለሳሉ።"
+msgid "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ التنقّل بين الحظائر). (2) نصيب المصاريف غير المباشرة (إيجار/صيانة/رواتب) يُحسب من متوسط عدد الرؤوس الفعلي خلال فترة وجود هذا الرأس بالقطيع (مو عدد اليوم الثابت) — ويعتمد كمان على تعليم المصروف كـ\"غير مباشر\" عند إدخاله فعلاً، وإلا ما يُحتسب هنا. (3) التكاليف الطبية تُحسب تلقائياً من (الكمية × سعر الوحدة بالصيدلية) لما الاثنان مسجَّلان، وإلا ترجع للقيمة اليدوية اللي أدخلها الدكتور وقتها."
+msgstr "ℹ️ በዚህ ሪፖርት ላይ ታማኝ ማስታወሻዎች: (1) የመኖ ወጪ ግምት ግምታዊ ነው — እንስሳው ጠቅላላ ጊዜውን በአሁኑ በረት እና እቅድ ውስጥ እንዳሳለፈ ይገምታል (ስርዓቱ በበረቶች መካከል የመዘዋወር ታሪክን አይከታተልም)። (2) ቀጥተኛ ያልሆኑ ወጪዎች (ኪራይ/ጥገና/ደመወዝ) ድርሻ ይህ እንስሳ በመንጋው ውስጥ በቆየበት ጊዜ ውስጥ ካለው አማካይ ትክክለኛ የራስ ብዛት ይሰላል (ቋሚ የአሁኑ ብዛት አይደለም) — እንዲሁም ወጪው ሲገባ \"ቀጥተኛ ያልሆነ\" ተብሎ በመሰየሙ ላይ የተመሰረተ ነው፣ ካልሆነ እዚህ አይቆጠርም። (3) የህክምና ወጪዎች በራስ-ሰር ከ(ብዛት × የፋርማሲ የአሃድ ዋጋ) ይሰላሉ ሁለቱም ሲመዘገቡ፣ ካልሆነ ግን ዶክተሩ በወቅቱ ወደ አስገባው በእጅ የገባ ዋጋ ይመለሳሉ።"
 
 #: app/templates/animal_detail.html:455
 msgid "الحركات المالية المرتبطة"
@@ -3384,7 +3384,7 @@ msgstr "አዲስ በረት"
 msgid "مثال: B-01"
 msgstr "ምሳሌ: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:710
+#: app/templates/barn_form.html:11 app/templates/base.html:713
 msgid "عادية"
 msgstr "መደበኛ"
 
@@ -3629,11 +3629,11 @@ msgstr "የዛሬ ስራዎችን ገምግም"
 msgid "تقرير أداء الفريق"
 msgstr "የቡድን አፈጻጸም ሪፖርት"
 
-#: app/templates/base.html:670 app/templates/home.html:105
+#: app/templates/base.html:673 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "የጤና ፋይናንስ"
 
-#: app/templates/base.html:677 app/templates/home.html:108
+#: app/templates/base.html:680 app/templates/home.html:108
 #: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
 #: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -3641,61 +3641,61 @@ msgstr "የጤና ፋይናንስ"
 msgid "التقارير"
 msgstr "ሪፖርቶች"
 
-#: app/templates/base.html:679
+#: app/templates/base.html:682
 msgid "التقارير التحليلية"
 msgstr "የትንተና ሪፖርቶች"
 
-#: app/templates/base.html:694
+#: app/templates/base.html:697
 msgid "المظهر"
 msgstr "ገጽታ"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:699
 msgid "نهاري"
 msgstr "ብርሃን"
 
-#: app/templates/base.html:696
+#: app/templates/base.html:699
 msgid "ليلي"
 msgstr "ጨለማ"
 
-#: app/templates/base.html:708
+#: app/templates/base.html:711
 msgid "مستوى الواجهة"
 msgstr "የገፅ ደረጃ"
 
-#: app/templates/base.html:710
+#: app/templates/base.html:713
 msgid "بسيط جداً"
 msgstr "በጣም ቀላል"
 
-#: app/templates/base.html:718
+#: app/templates/base.html:721
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"በጣም ቀላል\" የመነሻ ገፅዎን ወደ ትላልቅ አዝራሮች ይቀይራል፣ በአንድ ጊዜ አንድ ጥያቄ — ልክ ተመሳሳይ ውሂብ።"
 
-#: app/templates/base.html:724
+#: app/templates/base.html:727
 msgid "التقرير اليومي بالبريد"
 msgstr "የዕለታዊ ኢሜይል ሪፖርት"
 
-#: app/templates/base.html:727
+#: app/templates/base.html:730
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "የሙከራ ሪፖርት አሁን ላክ"
 
-#: app/templates/base.html:731
+#: app/templates/base.html:734
 msgid "الملخص اليومي بتيليجرام"
 msgstr "ዕለታዊ የቴሌግራም ማጠቃለያ"
 
-#: app/templates/base.html:734
+#: app/templates/base.html:737
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "የሙከራ ማጠቃለያ አሁን ላክ"
 
-#: app/templates/base.html:740 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:743 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "ቋንቋ"
 
-#: app/templates/base.html:753
+#: app/templates/base.html:756
 msgid "خروج"
 msgstr "ውጣ"
 
-#: app/templates/base.html:790
+#: app/templates/base.html:793
 msgid "تجاهل"
 msgstr "ችላ በል"
 

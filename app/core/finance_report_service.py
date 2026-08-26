@@ -33,7 +33,7 @@ def _entry_reference_date(animal: Animal) -> date | None:
     return animal.birth_date or animal.purchase_date or animal.entry_date
 
 
-def _build_entry_exit_maps() -> tuple[dict[int, date], dict[int, date]]:
+def build_entry_exit_maps() -> tuple[dict[int, date], dict[int, date]]:
     """يبني خريطتي (دخول، خروج) لكل رأس مرّة وحدة — يُعاد استخدامها
     لحساب عدد الرؤوس لأي عدد من الأشهر بدون استعلام مكرر لكل شهر."""
     entries: dict[int, date] = {}
@@ -68,9 +68,36 @@ def _head_count_for_month(month_start: date, month_end: date,
     return count
 
 
+def average_head_count_between(start: date, end: date, *, maps: tuple[dict, dict] | None = None) -> float:
+    """متوسط عدد الرؤوس بين تاريخين (بند إضافي 253) — بدل تقسيم
+    تكلفة "منذ الدخول" على عدد الرؤوس الحالي (اليوم) بشاشات تحليل
+    الرأس الفردي/نقطة التعادل (كانتا تستخدمان `Animal.query.filter_by
+    (status="active").count()` مباشرة، غير متسقة مع الحساب الدقيق
+    شهر-بشهر اللي صار بالتقرير الشهري ببند 251). يعيد استخدام نفس
+    خرائط الدخول/الخروج، بس بمتوسط بدل تفصيل شهري كامل — أخف حسابياً
+    (مناسب لصفحة تُفتح لكل رأس بشكل متكرر)، ودقته قريبة جداً من
+    الحساب الكامل. `maps`: خرائط (دخول، خروج) جاهزة مسبقاً — تفادي
+    إعادة بنائها من الصفر لكل رأس عند استدعائها لعدة رؤوس بنفس الوقت
+    (مثال: `break_even_summary`)."""
+    if start > end:
+        return 0.0
+    entries, exits = maps if maps is not None else build_entry_exit_maps()
+    counts = []
+    y, m = start.year, start.month
+    while (y, m) <= (end.year, end.month):
+        month_start = date(y, m, 1)
+        month_end = date(y, m, monthrange(y, m)[1])
+        counts.append(_head_count_for_month(month_start, month_end, entries, exits))
+        m += 1
+        if m > 12:
+            m = 1
+            y += 1
+    return (sum(counts) / len(counts)) if counts else 0.0
+
+
 def monthly_cost_per_head(*, months: int = 12) -> list[dict]:
     today = date.today()
-    entries, exits = _build_entry_exit_maps()
+    entries, exits = build_entry_exit_maps()
 
     results = []
     year, month = today.year, today.month
