@@ -19,11 +19,24 @@
     <label>{{ _('الكمية') }}</label><input name="quantity" type="number" step="any" min="0.01" required>
     <div id="outOnlyFields" style="display:none;">
       <label>{{ _('مين يستلمها؟') }}</label>
-      <select name="borrowed_by_id">
-        <option value="">-- {{ _('صرف نهائي (بدون استعارة)') }} --</option>
+      <select name="borrowed_by_id" id="borrowedBySelect">
+        <option value="">-- {{ _('اختَر مستلم') }} --</option>
         {% for u in users %}<option value="{{ u.id }}">{{ u.name }}</option>{% endfor %}
       </select>
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('اختَر اسم مستلم فقط لو المعدة استعارة رح ترجع — خله فاضي لو صرف نهائي.') }}</p>
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('لازم تحدد مين استلم القطعة قبل تسجيل الصرف.') }}</p>
+      <label style="display:flex; align-items:center; gap:8px;">
+        <input type="checkbox" name="no_return_expected" value="1" style="width:auto;">
+        {{ _('صرف نهائي (مادة استهلاكية، ما راح ترجع)') }}
+      </label>
+      <label>{{ _('حالة القطعة وقت التسليم') }}</label>
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <label style="flex:1; border:2px solid var(--line); border-radius:14px; padding:10px 8px; text-align:center; cursor:pointer; margin:0;">
+          <input type="radio" name="condition_at_handout" value="good" checked style="width:auto; margin-left:6px;"> 🟢 {{ _('سليمة') }}
+        </label>
+        <label style="flex:1; border:2px solid var(--line); border-radius:14px; padding:10px 8px; text-align:center; cursor:pointer; margin:0;">
+          <input type="radio" name="condition_at_handout" value="needs_maintenance" style="width:auto; margin-left:6px;"> 🔧 {{ _('تحتاج صيانة') }}
+        </label>
+      </div>
       <label>{{ _('الحظيرة (اختياري)') }}</label>
       <select name="barn_id">
         <option value="">-</option>
@@ -38,9 +51,12 @@
 (function(){
   var form = document.getElementById('movementForm');
   var outFields = document.getElementById('outOnlyFields');
+  var borrowedBySelect = document.getElementById('borrowedBySelect');
   function sync(){
     var checked = form.querySelector('input[name="movement_type"]:checked');
-    outFields.style.display = (checked && checked.value === 'out') ? 'block' : 'none';
+    var isOut = checked && checked.value === 'out';
+    outFields.style.display = isOut ? 'block' : 'none';
+    borrowedBySelect.required = isOut;
   }
   form.querySelectorAll('input[name="movement_type"]').forEach(function(r){ r.addEventListener('change', sync); });
   sync();
@@ -51,7 +67,7 @@
   <h3 style="font-size:15px;">{{ _('آخر الحركات') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('الرصيد بعدها') }}</th><th>{{ _('الاستعارة') }}</th><th>{{ _('ملاحظة') }}</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('الرصيد بعدها') }}</th><th>{{ _('الاستعارة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('ملاحظة') }}</th></tr>
     {% for m in movements %}
     <tr>
       <td>{{ m.created_at.strftime('%Y-%m-%d %H:%M') if m.created_at else '-' }}</td>
@@ -64,19 +80,30 @@
           <span class="badge on">✅ {{ _('رجعت') }} — {{ m.borrowed_by.name if m.borrowed_by else '-' }}<br>{{ m.returned_at.strftime('%Y-%m-%d %H:%M') }}</span>
           {% else %}
           <span class="badge off">⏳ {{ _('عند:') }} {{ m.borrowed_by.name if m.borrowed_by else '-' }}</span>
-          <form method="post" action="{{ url_for('equipment.movement_return', movement_id=m.id) }}" style="margin-top:4px;">
+          <form method="post" action="{{ url_for('equipment.movement_return', movement_id=m.id) }}" style="margin-top:4px; display:flex; flex-direction:column; gap:4px;">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <select name="condition_at_return" required style="font-size:11px; padding:4px;">
+              <option value="good">🟢 {{ _('رجعت سليمة') }}</option>
+              <option value="needs_maintenance">🔧 {{ _('رجعت تحتاج صيانة') }}</option>
+            </select>
             <button class="btn light" type="submit" style="font-size:11px; padding:4px 8px;">{{ _('تسجيل استرجاع') }}</button>
           </form>
           {% endif %}
+        {% elif m.movement_type == 'out' %}
+        {{ _('صرف نهائي') if m.no_return_expected else '-' }}
         {% else %}
         -
         {% endif %}
       </td>
+      <td>
+        {% if m.condition_at_handout == 'needs_maintenance' %}<span class="badge off">🔧 {{ _('استُلمت معطوبة') }}</span>{% endif %}
+        {% if m.condition_at_return == 'needs_maintenance' %}<span class="badge off">🔧 {{ _('رجعت تحتاج صيانة') }}</span>{% endif %}
+        {% if m.movement_type == 'out' and m.condition_at_handout == 'good' and m.condition_at_return != 'needs_maintenance' %}<span class="badge on">🟢 {{ _('سليمة') }}</span>{% endif %}
+      </td>
       <td>{{ m.note or '-' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">{{ _('ما فيه حركات مسجَّلة بعد.') }}</td></tr>
+    <tr><td colspan="7" style="color:#888;">{{ _('ما فيه حركات مسجَّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

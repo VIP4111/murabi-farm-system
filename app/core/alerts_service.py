@@ -311,6 +311,34 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
     return alerts
 
 
+def _equipment_needs_maintenance() -> list[dict]:
+    """معدة تحتاج صيانة (بند إضافي 276) — طلبك الصريح: "ضيف تنبيه في
+    حال نحتاج صيانة لصاحب الحلال". يُرفع تلقائياً من `Equipment.needs_maintenance`
+    (تسجّله شاشة الحركة/الاستلام لما يُختار "تحتاج صيانة" وقت التسليم أو
+    الاستلام)، وينزل يدوياً من شاشة تعديل الصنف بعد الإصلاح الفعلي."""
+    from app.extensions import db
+    from app.models import Equipment, EquipmentMovement
+    items = Equipment.query.filter_by(needs_maintenance=True).all()
+    alerts = []
+    for item in items:
+        last = (EquipmentMovement.query.filter_by(equipment_id=item.id)
+                .filter(db.or_(EquipmentMovement.condition_at_handout == "needs_maintenance",
+                                EquipmentMovement.condition_at_return == "needs_maintenance"))
+                .order_by(EquipmentMovement.created_at.desc()).first())
+        who = None
+        if last:
+            who = last.borrowed_by.name if last.borrowed_by else None
+        detail = f"آخر من استعملها: {who}" if who else "راجع شاشة حركة الصنف لمعرفة آخر من استعملها."
+        alerts.append({
+            "category": "معدة تحتاج صيانة", "icon": "🔧",
+            "label": f"{item.name} — تحتاج صيانة",
+            "detail": detail,
+            "urgent": False, "animal_id": None, "barn_id": None,
+            "equipment_id": item.id,
+        })
+    return alerts
+
+
 def _month_range(start_year: int, start_month: int, end_year: int, end_month: int) -> list[tuple[int, int]]:
     """كل الأشهر (سنة، شهر) من البداية للنهاية شاملة الطرفين، بالترتيب."""
     months = []
@@ -787,7 +815,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _incomplete_animal_data() + _stalled_workflow(fs)
         + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
         + _feed_distribution_shortage() + _suggested_tasks_pending_approval()
-        + _payroll_month_end_reminder()
+        + _payroll_month_end_reminder() + _equipment_needs_maintenance()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
@@ -820,6 +848,8 @@ def alert_action_url(alert: dict) -> str | None:
     """رابط "حل هذي المشكلة" لتنبيه واحد — يستخدم `_ALERT_ACTION_ROUTES`
     أعلاه. يرجّع None لو الفئة ما عندها إجراء مباشر (تبقى معلوماتية)."""
     from flask import url_for
+    if alert.get("category") == "معدة تحتاج صيانة" and alert.get("equipment_id"):
+        return url_for("equipment.items_edit", item_id=alert["equipment_id"])
     resolver = _ALERT_ACTION_ROUTES.get(alert.get("category"))
     if not resolver:
         return None

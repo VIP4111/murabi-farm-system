@@ -29,6 +29,13 @@ class Equipment(db.Model):
     created_at = db.Column(db.DateTime, default=_now)
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
 
+    # بند إضافي 276 — طلبك الصريح: "ما بين عندي مين اخذ المعدة" + تتبّع
+    # حالتها (سليمة/تحتاج صيانة) وقت التسليم ووقت الاستلام. يُرفع تلقائياً
+    # لما أي حركة تُسجَّل بحالة "تحتاج صيانة"، ويُنزَّل يدوياً من شاشة
+    # تعديل الصنف بعد ما تنصلح فعلياً (نفس نمط "علم يرفعه النظام، الإنسان
+    # ينزّله" المستخدم بميزات ثانية بالمشروع).
+    needs_maintenance = db.Column(db.Boolean, default=False, nullable=False)
+
     def deduct_stock(self, qty: float) -> None:
         """نفس قيد `Feed.deduct_stock`/`Pharmacy.deduct_stock` — سحب سالب
         ممنوع، يرفض العملية كاملة بدل القصّ الصامت."""
@@ -73,6 +80,17 @@ class EquipmentMovement(db.Model):
     borrowed_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     borrowed_by = db.relationship("User", foreign_keys=[borrowed_by_id])
     returned_at = db.Column(db.DateTime, nullable=True)
+    # صرف نهائي (مواد استهلاكية) لا يُتوقّع رجوعه — يُستثنى من "قطع لسا
+    # عند حد" حتى لو `borrowed_by_id` معبّى (بند 276: الاستلام صار
+    # إلزامي لكل صادر، فـ`borrowed_by_id` لحاله ما عاد كافي للتمييز).
+    no_return_expected = db.Column(db.Boolean, default=False, nullable=False)
+
+    # حالة القطعة وقت التسليم ووقت الاستلام (بند إضافي 276، طلبك الصريح
+    # "خيار سليمة او تحتاج صيانة... وقت التسليم وفي وقت الاستلام") —
+    # 'good' أو 'needs_maintenance'. تُستخدم لمعرفة عند مين تعطّلت القطعة
+    # (آخر شخص استلمها وقت ما صارت الحالة "تحتاج صيانة").
+    condition_at_handout = db.Column(db.String(20), nullable=True)
+    condition_at_return = db.Column(db.String(20), nullable=True)
 
     note = db.Column(db.Text)
     created_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)

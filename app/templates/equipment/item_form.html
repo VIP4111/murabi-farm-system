@@ -14,6 +14,12 @@
     <label>{{ _('الحد الأدنى للتنبيه') }}</label><input name="min_stock_qty" type="number" step="any" value="{{ item.min_stock_qty if item else 0 }}">
     <label>{{ _('سعر الوحدة (اختياري)') }}</label><input name="unit_price" type="number" step="any" value="{{ item.unit_price if item and item.unit_price else '' }}">
     <label>{{ _('ملاحظات (اختياري)') }}</label><textarea name="notes" rows="2">{{ item.notes if item else '' }}</textarea>
+    {% if item and item.needs_maintenance %}
+    <label style="display:flex; align-items:center; gap:8px; margin:12px 0;">
+      <input type="checkbox" name="needs_maintenance" value="1" checked style="width:auto;">
+      🔧 {{ _('تحتاج صيانة (بيّن هذا الخيار فاضي بعد ما تصلحها فعلياً)') }}
+    </label>
+    {% endif %}
     <button class="btn" type="submit">{{ _('حفظ') if item else _('إضافة') }}</button>
   </form>
 </div>

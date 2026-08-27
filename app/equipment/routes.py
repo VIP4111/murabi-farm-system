@@ -14,7 +14,13 @@ from datetime import date
 @require_permission("equipment.view")
 def items_list():
     items = Equipment.query.order_by(Equipment.name).all()
-    return render_template("equipment/items_list.html", items=items)
+    # بند إضافي 276 — طلبك الصريح "ما بين عندي مين اخذ المعدة": نعرض
+    # "آخر من أخذها" مباشرة بالقائمة، بدون ما تدخل حركة كل صنف لحاله.
+    holders = {}
+    for item in items:
+        open_borrows = svc.outstanding_borrows(item)
+        holders[item.id] = open_borrows[0].borrowed_by if open_borrows else None
+    return render_template("equipment/items_list.html", items=items, holders=holders)
 
 
 @equipment_bp.route("/items/new", methods=["GET", "POST"])
@@ -51,6 +57,10 @@ def items_edit(item_id):
         item.available_qty = float(request.form.get("available_qty") or 0)
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.notes = request.form.get("notes")
+        # بند إضافي 276 — علم "تحتاج صيانة" ما يظهر بالفورم إلا لو مرفوع
+        # أصلاً؛ لو مو ظاهر، ما نلمسه (يبقى False كأي صنف سليم عادي).
+        if item.needs_maintenance:
+            item.needs_maintenance = request.form.get("needs_maintenance") == "1"
         new_photo = svc.save_equipment_photo(request.files.get("photo"))
         if new_photo:
             item.photo_url = new_photo
@@ -98,13 +108,20 @@ def purchase_new():
 def items_movement(item_id):
     item = Equipment.query.get_or_404(item_id)
     if request.method == "POST":
+        movement_type = request.form["movement_type"]
+        # بند إضافي 276 — طلبك الصريح: كل صرف لازم يُسجَّل مين استلمه.
+        if movement_type == "out" and not request.form.get("borrowed_by_id"):
+            flash("لازم تحدد مين يستلم القطعة قبل تسجيل الصرف.", "error")
+            return redirect(url_for("equipment.items_movement", item_id=item.id))
         try:
             svc.record_movement(
-                item=item, movement_type=request.form["movement_type"],
+                item=item, movement_type=movement_type,
                 quantity=float(request.form["quantity"]),
                 barn_id=request.form.get("barn_id") or None,
                 note=request.form.get("note"), created_by_id=current_user.id,
                 borrowed_by_id=request.form.get("borrowed_by_id") or None,
+                no_return_expected=request.form.get("no_return_expected") == "1",
+                condition_at_handout=request.form.get("condition_at_handout") or None,
             )
             flash("تم تسجيل الحركة", "success")
         except ValueError as e:
@@ -134,7 +151,7 @@ def items_mine():
         held_by_other = None
         if not mine:
             other = (EquipmentMovement.query
-                     .filter_by(equipment_id=item.id, returned_at=None)
+                     .filter_by(equipment_id=item.id, returned_at=None, no_return_expected=False)
                      .filter(EquipmentMovement.borrowed_by_id.isnot(None))
                      .order_by(EquipmentMovement.created_at.desc()).first())
             if other and other.borrowed_by_id != current_user.id:
@@ -152,10 +169,12 @@ def items_take(item_id):
     عمداً — العامل يسجّل استعارته لنفسه بس، ما يقدر يعدّل مخزون صنف
     ثاني أو باسم حد ثاني."""
     item = Equipment.query.get_or_404(item_id)
+    condition = request.form.get("condition_at_handout") or "good"
     try:
         svc.record_movement(
             item=item, movement_type="out", quantity=1,
             created_by_id=current_user.id, borrowed_by_id=current_user.id,
+            condition_at_handout=condition,
         )
         flash("تم تسجيل أخذك للقطعة", "success")
     except ValueError as e:
@@ -174,8 +193,9 @@ def items_return_mine(item_id):
     if not mine:
         flash("ما فيه استعارة قائمة لك بهذي القطعة", "error")
         return redirect(url_for("equipment.items_mine"))
+    condition = request.form.get("condition_at_return") or "good"
     try:
-        svc.return_item(mine)
+        svc.return_item(mine, condition_at_return=condition)
         flash("تم تسجيل استرجاع القطعة", "success")
     except ValueError as e:
         flash(str(e), "error")
@@ -188,8 +208,9 @@ def items_return_mine(item_id):
 def movement_return(movement_id):
     """تسجيل استرجاع قطعة مستعارة (بند إضافي 110)."""
     movement = EquipmentMovement.query.get_or_404(movement_id)
+    condition = request.form.get("condition_at_return") or "good"
     try:
-        svc.return_item(movement)
+        svc.return_item(movement, condition_at_return=condition)
         flash("تم تسجيل استرجاع القطعة", "success")
     except ValueError as e:
         flash(str(e), "error")

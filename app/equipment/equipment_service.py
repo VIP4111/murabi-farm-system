@@ -64,10 +64,13 @@ def my_borrow(item, user_id):
 
 
 def record_movement(*, item: Equipment, movement_type: str, quantity: float, barn_id=None,
-                     note=None, created_by_id=None, borrowed_by_id=None) -> EquipmentMovement:
-    """`borrowed_by_id` (بند إضافي 110) — يُعبَّى بس لو الصادر استعارة
-    (أداة ترجع)، مو صرف نهائي. القطعة تُخصَم من الرصيد فوراً وقت
-    الاستعارة (نفس أي صادر عادي) — ترجع للرصيد لما تُسجَّل `return_item`."""
+                     note=None, created_by_id=None, borrowed_by_id=None,
+                     no_return_expected=False, condition_at_handout=None) -> EquipmentMovement:
+    """`borrowed_by_id` (بند إضافي 110، صار إلزامي لكل صادر ببند 276
+    "ما بين عندي مين اخذ المعدة") — مين استلم القطعة فعلياً. `no_return_expected`
+    (بند 276) يستثنيها من قائمة "لسا عند حد" لو صرف نهائي (مادة استهلاكية).
+    `condition_at_handout` (بند 276) — حالة القطعة وقت التسليم؛ لو
+    'needs_maintenance' يرفع علم `Equipment.needs_maintenance` فوراً."""
     before = item.available_qty or 0
     if movement_type == "in":
         item.add_stock(quantity)
@@ -80,23 +83,32 @@ def record_movement(*, item: Equipment, movement_type: str, quantity: float, bar
         before_qty=before, after_qty=after, barn_id=barn_id,
         note=note, created_by_id=created_by_id,
         borrowed_by_id=borrowed_by_id if movement_type == "out" else None,
+        no_return_expected=bool(no_return_expected) if movement_type == "out" else False,
+        condition_at_handout=condition_at_handout if movement_type == "out" else None,
     )
+    if movement_type == "out" and condition_at_handout == "needs_maintenance":
+        item.needs_maintenance = True
     db.session.add(mv)
     db.session.add(item)
     db.session.commit()
     return mv
 
 
-def return_item(movement: EquipmentMovement) -> EquipmentMovement:
+def return_item(movement: EquipmentMovement, *, condition_at_return=None) -> EquipmentMovement:
     """تسجيل استرجاع قطعة مستعارة (بند إضافي 110) — يرجّع الكمية
     للرصيد ويختم `returned_at` بوقت السيرفر. يرفض لو الحركة مو استعارة
-    أصلاً أو رجعت من قبل — عشان ما ينضاف رصيد مرتين بالغلط."""
+    أصلاً أو رجعت من قبل — عشان ما ينضاف رصيد مرتين بالغلط.
+    `condition_at_return` (بند إضافي 276) — حالة القطعة وقت الاستلام
+    منه؛ لو 'needs_maintenance' يرفع علم الصنف عشان يظهر بالتنبيهات."""
     if not movement.borrowed_by_id:
         raise ValueError("هذي الحركة مو استعارة أصلاً.")
     if movement.returned_at:
         raise ValueError("هذي القطعة مسجَّلة راجعة من قبل.")
     movement.returned_at = _now()
+    movement.condition_at_return = condition_at_return
     movement.equipment.add_stock(movement.quantity)
+    if condition_at_return == "needs_maintenance":
+        movement.equipment.needs_maintenance = True
     db.session.add(movement)
     db.session.add(movement.equipment)
     db.session.commit()
@@ -105,9 +117,11 @@ def return_item(movement: EquipmentMovement) -> EquipmentMovement:
 
 def outstanding_borrows(item):
     """قطع مستعارة لسا ما رجعت (بند إضافي 110) — تُستخدم بشاشة والدك
-    المبسّطة عشان يشوف مين مستلم شنو بدون ما يفتح شاشة الحركات الكاملة."""
+    المبسّطة عشان يشوف مين مستلم شنو بدون ما يفتح شاشة الحركات الكاملة.
+    تستثني الصرف النهائي (بند 276: `no_return_expected`) — قطعة مصروفة
+    نهائياً مو "لسا عند حد"، حتى لو `borrowed_by_id` معبّى."""
     return (EquipmentMovement.query
-            .filter_by(equipment_id=item.id, returned_at=None)
+            .filter_by(equipment_id=item.id, returned_at=None, no_return_expected=False)
             .filter(EquipmentMovement.borrowed_by_id.isnot(None))
             .order_by(EquipmentMovement.created_at.desc()).all())
 

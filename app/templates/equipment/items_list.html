@@ -11,16 +11,23 @@
   </div>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th>{{ _('آخر من أخذها') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
-      <td>{{ i.name }}</td>
+      <td>
+        {{ i.name }}
+        {% if i.needs_maintenance %}<span class="badge off">🔧 {{ _('تحتاج صيانة') }}</span>{% endif %}
+      </td>
       <td>{{ i.category or '-' }}</td>
       <td>
         {{ i.available_qty }} {{ i.unit }}
         {% if i.min_stock_qty and i.available_qty <= i.min_stock_qty %}<span class="badge off">{{ _('منخفض') }}</span>{% endif %}
       </td>
       <td>{{ i.unit_price or '-' }}</td>
+      <td>
+        {% set holder = holders.get(i.id) %}
+        {% if holder %}<span class="badge on">⏳ {{ holder.name }}</span>{% else %}-{% endif %}
+      </td>
       <td class="actions-col">
         {% if current_user.has_permission('equipment.manage') %}
         <a href="{{ url_for('equipment.items_edit', item_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
@@ -30,7 +37,7 @@
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد أصناف معدات مسجّلة بعد.') }}</td></tr>
+    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد أصناف معدات مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

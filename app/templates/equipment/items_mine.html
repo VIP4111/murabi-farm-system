@@ -31,18 +31,20 @@
         <div class="eq-name">{{ row.item.name }}</div>
         {% if row.mine %}
         <div class="eq-status">✅ {{ _('عندك حالياً') }}</div>
-        <form method="post" action="{{ url_for('equipment.items_return_mine', item_id=row.item.id) }}">
+        <form method="post" action="{{ url_for('equipment.items_return_mine', item_id=row.item.id) }}" style="display:flex; flex-direction:column; gap:6px;">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="eq-action-btn eq-action-return" type="submit">↩️ {{ _('استرجاع') }}</button>
+          <button class="eq-action-btn eq-action-return" type="submit" name="condition_at_return" value="good">↩️ {{ _('استرجاع — سليمة') }}</button>
+          <button class="eq-action-btn" type="submit" name="condition_at_return" value="needs_maintenance" style="background:#b45309; color:#fff;">🔧 {{ _('استرجاع — تحتاج صيانة') }}</button>
         </form>
         {% elif row.held_by_other %}
         <div class="eq-status">⏳ {{ _('عند:') }} {{ row.held_by_other.name }}</div>
         <button class="eq-action-btn" type="button" disabled style="background:var(--line); color:var(--muted); cursor:not-allowed;">{{ _('مو متوفرة') }}</button>
         {% else %}
         <div class="eq-status">{{ row.item.available_qty|round(0) }} {{ row.item.unit }} {{ _('متوفر') }}</div>
-        <form method="post" action="{{ url_for('equipment.items_take', item_id=row.item.id) }}">
+        <form method="post" action="{{ url_for('equipment.items_take', item_id=row.item.id) }}" style="display:flex; flex-direction:column; gap:6px;">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="eq-action-btn eq-action-take" type="submit">✋ {{ _('أخذ') }}</button>
+          <button class="eq-action-btn eq-action-take" type="submit" name="condition_at_handout" value="good">✋ {{ _('أخذ — سليمة') }}</button>
+          <button class="eq-action-btn" type="submit" name="condition_at_handout" value="needs_maintenance" style="background:#b45309; color:#fff;">🔧 {{ _('أخذ — فيها عيب') }}</button>
         </form>
         {% endif %}
       </div>
