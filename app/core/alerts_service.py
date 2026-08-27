@@ -30,7 +30,7 @@
 يحتاج صلاحية `animals.view` العامة لمجرد ما يشوف تنبيهات حظائره هو.
 """
 import calendar
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from app.models import (
     Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
     AnimalWeight, Task,
@@ -307,6 +307,45 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
                 "label": label,
                 "detail": f"{head_count} رأس بالحظيرة حالياً — سجّل جرعة افتراضية على الدواء لمقارنة المخزون تلقائياً.",
                 "urgent": False, "animal_id": None, "barn_id": s.barn_id,
+            })
+    return alerts
+
+
+def _late_time_critical_tasks(fs: FarmSettings, *, now: datetime | None = None) -> list[dict]:
+    """مهام لها موعد وقت محدد (`Task.due_time`، بند إضافي 278) —
+    طلبك الصريح: "وضع العلف لو وصلت الساعة 8 معناتها متأخر، الساعة 9
+    يعتبر إنذار يوصل لصاحب الحلال — حتى لو العامل أكد إنه أنجزها".
+    `task_late_grace_minutes` (افتراضي ساعة) هو الفرق بين "الموعد" و
+    "الإنذار الفعلي". يشمل حالتين: (1) لسا ما انجزت وفات الموعد+المهلة،
+    (2) انجزت لكن بعد الموعد+المهلة — تقرير واقعة، مو منع أو حجب."""
+    now = now or datetime.now()
+    today = now.date()
+    grace = timedelta(minutes=fs.task_late_grace_minutes)
+    tasks = Task.query.filter(
+        Task.due_date == today, Task.due_time.isnot(None),
+        Task.status.notin_(["cancelled", "deleted_pending_review", "postponed"]),
+    ).all()
+    alerts = []
+    for t in tasks:
+        deadline = datetime.combine(today, t.due_time) + grace
+        if t.status == "done":
+            if t.completed_at and t.completed_at > deadline:
+                who = t.accepted_by.name if t.accepted_by else (t.assignee.name if t.assignee else "غير محدد")
+                alerts.append({
+                    "category": "مهمة أُنجزت متأخرة عن موعدها", "icon": "🕘",
+                    "label": f"{t.title} — أُنجزت الساعة {t.completed_at.strftime('%H:%M')}",
+                    "detail": f"موعدها كان {t.due_time.strftime('%H:%M')} — نفّذها: {who}.",
+                    "urgent": False, "animal_id": None, "barn_id": t.barn_id,
+                    "task_id": t.id,
+                })
+        elif now > deadline:
+            who = t.assignee.name if t.assignee else "بدون عامل مكلَّف"
+            alerts.append({
+                "category": "مهمة متأخرة عن موعدها", "icon": "⏰",
+                "label": f"{t.title} — لسا ما انجزت",
+                "detail": f"موعدها كان {t.due_time.strftime('%H:%M')} — العامل المكلَّف: {who}.",
+                "urgent": True, "animal_id": None, "barn_id": t.barn_id,
+                "task_id": t.id,
             })
     return alerts
 
@@ -758,7 +797,7 @@ def vaccination_counts() -> tuple[int, int]:
     return overdue, upcoming
 
 
-def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
+def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None) -> list[dict]:
     """
     `barn_ids=None` (الافتراضي، سلوك بند 20 الأصلي بدون تغيير): كل
     التنبيهات بالمزرعة، لأي شاشة تستخدم `animals.view`. `barn_ids=[..]`:
@@ -816,6 +855,7 @@ def get_alerts(barn_ids: list[int] | None = None) -> list[dict]:
         + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
         + _feed_distribution_shortage() + _suggested_tasks_pending_approval()
         + _payroll_month_end_reminder() + _equipment_needs_maintenance()
+        + _late_time_critical_tasks(fs, now=now)
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
@@ -850,6 +890,8 @@ def alert_action_url(alert: dict) -> str | None:
     from flask import url_for
     if alert.get("category") == "معدة تحتاج صيانة" and alert.get("equipment_id"):
         return url_for("equipment.items_edit", item_id=alert["equipment_id"])
+    if alert.get("category") in ("مهمة متأخرة عن موعدها", "مهمة أُنجزت متأخرة عن موعدها") and alert.get("task_id"):
+        return url_for("team.task_detail", task_id=alert["task_id"])
     resolver = _ALERT_ACTION_ROUTES.get(alert.get("category"))
     if not resolver:
         return None

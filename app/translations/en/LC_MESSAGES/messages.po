@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 00:47+0300\n"
+"POT-Creation-Date: 2026-08-28 01:12+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "Has registered medicines."
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:159 app/templates/settings_backup.html:5
+#: app/templates/settings.html:160 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "Backup"
 
@@ -2846,7 +2846,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:133 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:134 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
@@ -3315,7 +3315,7 @@ msgstr "Animals"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "No animals registered yet."
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:161
+#: app/templates/audit_log.html:5 app/templates/settings.html:162
 msgid "سجل التدقيق"
 msgstr "Audit log"
 
@@ -4510,261 +4510,265 @@ msgid "التنبيه قبل الموعد (يوم)"
 msgstr "Alert before due date (days)"
 
 #: app/templates/settings.html:40
+msgid "مهلة إنذار المهام حسّاسة الوقت (دقيقة) — مثل وجبات العلف المجدولة"
+msgstr "Grace period before time-critical tasks alert (minutes) — e.g. scheduled feeding"
+
+#: app/templates/settings.html:41
 msgid "تكرار التحصينات الدورية (يوم)"
 msgstr "Periodic vaccination repeat (days)"
 
-#: app/templates/settings.html:41
+#: app/templates/settings.html:42
 msgid "مدة عزل المولود والأم (يوم)"
 msgstr "Offspring and mother isolation duration (days)"
 
-#: app/templates/settings.html:42
+#: app/templates/settings.html:43
 msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
 msgstr "Mandatory doctor check after birth (hours)"
 
-#: app/templates/settings.html:43
+#: app/templates/settings.html:44
 msgid "تحصين الأم بعد الولادة (يوم)"
 msgstr "Mother's vaccination after birth (days)"
 
-#: app/templates/settings.html:44
+#: app/templates/settings.html:45
 msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "Minimum age for first mating (days)"
 
-#: app/templates/settings.html:45
+#: app/templates/settings.html:46
 msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
 msgstr "Minimum age for a ram to enter mating (days)"
 
-#: app/templates/settings.html:46
+#: app/templates/settings.html:47
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "Minimum rest period after birth before remating (days)"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:50
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "Production cycle engine age thresholds"
 
-#: app/templates/settings.html:51
+#: app/templates/settings.html:52
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "Maximum age classified as \"newborn\" in the cycle (days)"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:53
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "Alternative age to skip fertility exam for males (days)"
 
-#: app/templates/settings.html:53
+#: app/templates/settings.html:54
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "Minimum age for weaning stage (days)"
 
-#: app/templates/settings.html:54
+#: app/templates/settings.html:55
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "Alternative age to skip recording weaning date (days)"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:60
 msgid "البيع الذكي"
 msgstr "Smart sale"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:62
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "Target profit margin (%%)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:63
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "Regular sale age for males (days)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:64
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "Minimum age for sacrifice sale (days)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:65
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "Maximum acceptable pregnancy delay for a female before sale recommendation (days)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:66
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "Maximum wait for a new report before alert (hours)"
 
-#: app/templates/settings.html:66
+#: app/templates/settings.html:67
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "Head stalled at the same production cycle stage before alert (days)"
 
-#: app/templates/settings.html:67
+#: app/templates/settings.html:68
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "Ostrich egg incubation duration (days)"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:73
 msgid "الصحة والتغذية"
 msgstr "Health and nutrition"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:75
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "New animal quarantine before mixing (days)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:76
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "Reweigh reminder after treatment (days)"
 
-#: app/templates/settings.html:76
+#: app/templates/settings.html:77
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "Maximum period between two weighings before \"overdue weight\" alert (days)"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:78
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "Minimum interval between two antiparasitic doses (days)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:79
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "Maximum weekly concentrate increase (%%)"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:80
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "Concentrate increase measurement window (days)"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:81
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "Target calcium/phosphorus ratio"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:82
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "Calcium/phosphorus ratio tolerance margin"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:83
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "Barn monitoring after abortion (days)"
 
-#: app/templates/settings.html:83
+#: app/templates/settings.html:84
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "Solid-feed weaning age (days)"
 
-#: app/templates/settings.html:84
+#: app/templates/settings.html:85
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "Ram active breeding-season window (days)"
 
-#: app/templates/settings.html:85
+#: app/templates/settings.html:86
 msgid "بداية التغذية التأسيسية للمولود (يوم)"
 msgstr "Creep feeding start age for newborns (days)"
 
-#: app/templates/settings.html:86
+#: app/templates/settings.html:87
 msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
 msgstr "Target daily starter feed at full weaning (grams)"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:88
 msgid "نافذة عودة الأنثى للفحل (يوم) — لكشف الحمل الضمني"
 msgstr "Return-to-ram window (days) — for implicit pregnancy detection"
 
-#: app/templates/settings.html:88
+#: app/templates/settings.html:89
 msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
 msgstr "Automatic sonar check after mating (days) — for likely pregnancy"
 
-#: app/templates/settings.html:89
+#: app/templates/settings.html:90
 msgid "تنبيه مخزون قبل النفاد المتوقَّع بـ (يوم)"
 msgstr "Stock alert before expected stockout (days)"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:95
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "Newborn & mother postpartum protocol"
 
-#: app/templates/settings.html:96
+#: app/templates/settings.html:97
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "Colostrum feeding confirmation window (hours)"
 
-#: app/templates/settings.html:97
+#: app/templates/settings.html:98
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "Placenta passage follow-up window (hours)"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:99
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "Mother's daily postpartum follow-up duration (days)"
 
-#: app/templates/settings.html:102
+#: app/templates/settings.html:103
 msgid "حفظ الإعدادات"
 msgstr "Save settings"
 
-#: app/templates/settings.html:107
+#: app/templates/settings.html:108
 msgid "الخدمات"
 msgstr "Services"
 
-#: app/templates/settings.html:108
+#: app/templates/settings.html:109
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "Enable only what you need — a disabled service disappears completely from all screens."
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:117
 msgid "مفعّل"
 msgstr "Enabled"
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:117
 msgid "غير مفعّل"
 msgstr "Disabled"
 
-#: app/templates/settings.html:119 app/templates/team/members_list.html:23
+#: app/templates/settings.html:120 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "Disable"
 
-#: app/templates/settings.html:119 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:120 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "Activate"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:129
 msgid "المسميات الوظيفية"
 msgstr "Job titles"
 
-#: app/templates/settings.html:129
+#: app/templates/settings.html:130
 msgid "مسمّى جديد"
 msgstr "New title"
 
-#: app/templates/settings.html:133
+#: app/templates/settings.html:134
 msgid "عدد الصلاحيات"
 msgstr "Number of permissions"
 
-#: app/templates/settings.html:133
+#: app/templates/settings.html:134
 msgid "نوع"
 msgstr "Type"
 
-#: app/templates/settings.html:138
+#: app/templates/settings.html:139
 msgid "جاهز افتراضياً"
 msgstr "Built-in default"
 
-#: app/templates/settings.html:138
+#: app/templates/settings.html:139
 msgid "مضاف من المالك"
 msgstr "Added by owner"
 
-#: app/templates/settings.html:141
+#: app/templates/settings.html:142
 msgid "تعديل الصلاحيات"
 msgstr "Edit permissions"
 
-#: app/templates/settings.html:151
+#: app/templates/settings.html:152
 msgid "النظام والصيانة"
 msgstr "System and maintenance"
 
-#: app/templates/settings.html:153 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:154 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "Pre-deployment readiness check"
 
-#: app/templates/settings.html:154 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:155 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "Data integrity check"
 
-#: app/templates/settings.html:155 app/templates/telegram_status.html:4
+#: app/templates/settings.html:156 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "Telegram Bot Diagnostics"
 
-#: app/templates/settings.html:157
+#: app/templates/settings.html:158
 msgid "وضع عرض تجريبي"
 msgstr "Demo mode"
 
-#: app/templates/settings.html:164
+#: app/templates/settings.html:165
 msgid "شاشة متابعة مبسّطة"
 msgstr "Simplified follow-up screen"
 
-#: app/templates/settings.html:166
+#: app/templates/settings.html:167
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "Breed guide and care notes"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:172
+#: app/templates/reports/overview.html:18 app/templates/settings.html:173
 msgid "جدول المؤشرات"
 msgstr "Indicators table"
 
-#: app/templates/settings.html:173
+#: app/templates/settings.html:174
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "From the start of the current month to today — same engine as the reports screen."
 
@@ -5670,7 +5674,7 @@ msgstr "Needs maintenance"
 #: app/templates/equipment/item_movement.html:46
 #: app/templates/repro/pregnancies_list.html:27
 #: app/templates/team/report_detail.html:76
-#: app/templates/team/task_detail.html:107
+#: app/templates/team/task_detail.html:108
 #: app/templates/warehouses/item_count_form.html:16
 msgid "ملاحظة (اختياري)"
 msgstr "Note (optional)"
@@ -5987,13 +5991,13 @@ msgstr "%(n)s head(s) with no recorded weight excluded"
 #: app/templates/feed/movements_list.html:10
 #: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:9
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/team/task_detail.html:43
+#: app/templates/team/task_detail.html:44
 msgid "المكوّن"
 msgstr "Component"
 
 #: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:49
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/team/task_detail.html:43
+#: app/templates/team/task_detail.html:44
 msgid "النسبة"
 msgstr "Percentage"
 
@@ -7456,7 +7460,7 @@ msgstr "Delete the link between this disease and this symptom?"
 #: app/templates/health/disease_type_detail.html:47
 #: app/templates/health/emergency_symptoms_list.html:25
 #: app/templates/team/_suggested_tasks_rows.html:25
-#: app/templates/team/task_detail.html:80
+#: app/templates/team/task_detail.html:81
 #: app/templates/team/travel_history.html:31
 msgid "حذف"
 msgstr "Delete"
@@ -7905,7 +7909,7 @@ msgid "تسجيل عملية شراء"
 msgstr "Record a purchase"
 
 #: app/templates/health/pharmacy_purchase_form.html:5
-#: app/templates/team/task_detail.html:31
+#: app/templates/team/task_detail.html:32
 msgid "المخزون الحالي:"
 msgstr "Current stock:"
 
@@ -9115,7 +9119,7 @@ msgid "مقفلة"
 msgstr "Locked"
 
 #: app/templates/team/_my_tasks_rows.html:24
-#: app/templates/team/task_detail.html:87
+#: app/templates/team/task_detail.html:88
 #: app/templates/team/worker_report_form.html:40
 msgid "بدء"
 msgstr "Start"
@@ -9138,7 +9142,7 @@ msgid "العمر:"
 msgstr "Age:"
 
 #: app/templates/team/_report_widgets.html:21
-#: app/templates/team/task_detail.html:15
+#: app/templates/team/task_detail.html:16
 msgid "الحظيرة:"
 msgstr "Barn:"
 
@@ -9583,7 +9587,7 @@ msgid "صورة مرفقة"
 msgstr "Attached photo"
 
 #: app/templates/team/report_detail.html:26
-#: app/templates/team/task_detail.html:142
+#: app/templates/team/task_detail.html:143
 msgid "عرض الصورة"
 msgstr "View photo"
 
@@ -9684,7 +9688,7 @@ msgid "رابط صورة (اختياري)"
 msgstr "Image link (optional)"
 
 #: app/templates/team/report_detail.html:111
-#: app/templates/team/task_detail.html:113
+#: app/templates/team/task_detail.html:114
 msgid "تم الإنجاز"
 msgstr "Done"
 
@@ -9887,166 +9891,174 @@ msgstr "Payment method is transfer — the recipient name is set separately each
 msgid "رجوع للمهام"
 msgstr "Back to tasks"
 
-#: app/templates/team/task_detail.html:13
+#: app/templates/team/task_detail.html:10
+msgid "العامل المكلَّف:"
+msgstr "Assigned worker:"
+
+#: app/templates/team/task_detail.html:10
+msgid "بدون عامل مكلَّف"
+msgstr "No assigned worker"
+
+#: app/templates/team/task_detail.html:14
 msgid "تفصيل المهمة"
 msgstr "Task detail"
 
-#: app/templates/team/task_detail.html:14
+#: app/templates/team/task_detail.html:15
 msgid "السبب/الدافع:"
 msgstr "Reason/motive:"
 
-#: app/templates/team/task_detail.html:15
+#: app/templates/team/task_detail.html:16
 msgid "عدد الرؤوس بالدفعة:"
 msgstr "Head count in batch:"
 
-#: app/templates/team/task_detail.html:18
+#: app/templates/team/task_detail.html:19
 msgid "عرض كل رؤوس الدفعة"
 msgstr "Show all heads in the batch"
 
-#: app/templates/team/task_detail.html:21
+#: app/templates/team/task_detail.html:22
 msgid "هذه المهمة"
 msgstr "this task"
 
-#: app/templates/team/task_detail.html:29
+#: app/templates/team/task_detail.html:30
 msgid "الدواء المخطَّط:"
 msgstr "Planned medicine:"
 
-#: app/templates/team/task_detail.html:30
+#: app/templates/team/task_detail.html:31
 msgid "الجرعة لكل رأس:"
 msgstr "Dose per head:"
 
-#: app/templates/team/task_detail.html:30
+#: app/templates/team/task_detail.html:31
 msgid "الجرعة الإجمالية للدفعة:"
 msgstr "Total dose for the batch:"
 
-#: app/templates/team/task_detail.html:31
+#: app/templates/team/task_detail.html:32
 msgid "المتبقي المتوقع بعد التنفيذ:"
 msgstr "Expected remainder after execution:"
 
-#: app/templates/team/task_detail.html:32
+#: app/templates/team/task_detail.html:33
 msgid "المخزون لا يكفي كامل الدفعة"
 msgstr "Stock isn't enough for the whole batch"
 
-#: app/templates/team/task_detail.html:38
+#: app/templates/team/task_detail.html:39
 msgid "خلطة اليوم المقترحة (تُحسب تلقائياً من المخزون الفعلي)"
 msgstr "Today's suggested blend (calculated automatically from actual stock)"
 
-#: app/templates/team/task_detail.html:40
+#: app/templates/team/task_detail.html:41
 msgid "محسوبة لـ"
 msgstr "Calculated for"
 
-#: app/templates/team/task_detail.html:40
+#: app/templates/team/task_detail.html:41
 msgid "رأس نشط عندهم وزن مسجّل"
 msgstr "active head(s) with recorded weight"
 
-#: app/templates/team/task_detail.html:40
+#: app/templates/team/task_detail.html:41
 msgid "رأس بدون وزن مسجّل استُثنوا من الحساب"
 msgstr "head(s) without recorded weight excluded from the calculation"
 
-#: app/templates/team/task_detail.html:43
+#: app/templates/team/task_detail.html:44
 msgid "الكمية (كجم)"
 msgstr "Quantity (kg)"
 
-#: app/templates/team/task_detail.html:47
+#: app/templates/team/task_detail.html:48
 msgid "المخزون لا يكفي"
 msgstr "Stock is insufficient"
 
-#: app/templates/team/task_detail.html:52
+#: app/templates/team/task_detail.html:53
 msgid "إجمالي التكلفة اليومية التقديرية:"
 msgstr "Estimated total daily cost:"
 
-#: app/templates/team/task_detail.html:59
+#: app/templates/team/task_detail.html:60
 msgid "المهمة التالية بالسلسلة:"
 msgstr "Next task in the sequence:"
 
-#: app/templates/team/task_detail.html:64 app/templates/team/tasks_list.html:59
+#: app/templates/team/task_detail.html:65 app/templates/team/tasks_list.html:59
 #: app/templates/team/tasks_list.html:105
 #: app/templates/team/tasks_list.html:187
 msgid "الإجراءات"
 msgstr "Actions"
 
-#: app/templates/team/task_detail.html:69
+#: app/templates/team/task_detail.html:70
 msgid "تأكيد التنفيذ"
 msgstr "Confirm execution"
 
-#: app/templates/team/task_detail.html:76
+#: app/templates/team/task_detail.html:77
 msgid "موافقة"
 msgstr "Approve"
 
-#: app/templates/team/task_detail.html:95
+#: app/templates/team/task_detail.html:96
 msgid "إنجاز المهمة"
 msgstr "Complete task"
 
-#: app/templates/team/task_detail.html:99
+#: app/templates/team/task_detail.html:100
 msgid "أي حظيرة نقلته لها فعلياً؟"
 msgstr "Which barn did you actually move it to?"
 
-#: app/templates/team/task_detail.html:105
+#: app/templates/team/task_detail.html:106
 msgid "محدَّدة الحظيرة المقترحة بالمهمة افتراضياً — غيّرها لو نقلته فعلياً لحظيرة ثانية."
 msgstr "The barn suggested by the task is selected by default — change it if you moved the animal to a different barn instead."
 
-#: app/templates/team/task_detail.html:109
+#: app/templates/team/task_detail.html:110
 msgid "صورة دليل (إلزامي)"
 msgstr "Evidence photo (required)"
 
-#: app/templates/team/task_detail.html:109
+#: app/templates/team/task_detail.html:110
 msgid "صورة دليل (اختياري)"
 msgstr "Evidence photo (optional)"
 
-#: app/templates/team/task_detail.html:111
+#: app/templates/team/task_detail.html:112
 msgid "تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض."
 msgstr "You can take a photo directly with the camera, or upload from the gallery."
 
-#: app/templates/team/task_detail.html:118
+#: app/templates/team/task_detail.html:119
 msgid "تعذّر التنفيذ"
 msgstr "Couldn't execute"
 
-#: app/templates/team/task_detail.html:119
+#: app/templates/team/task_detail.html:120
 msgid "لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة."
 msgstr "If you couldn't complete the task, record the reason here instead of leaving it silent — it goes straight to the doctor."
 
-#: app/templates/team/task_detail.html:122
-#: app/templates/team/task_detail.html:140
+#: app/templates/team/task_detail.html:123
+#: app/templates/team/task_detail.html:141
 msgid "سبب التعذّر"
 msgstr "Reason for failure"
 
-#: app/templates/team/task_detail.html:124
+#: app/templates/team/task_detail.html:125
 msgid "اختر السبب..."
 msgstr "Choose the reason..."
 
-#: app/templates/team/task_detail.html:129
+#: app/templates/team/task_detail.html:130
 msgid "تفاصيل إضافية (اختياري)"
 msgstr "Additional details (optional)"
 
-#: app/templates/team/task_detail.html:131
+#: app/templates/team/task_detail.html:132
 msgid "صورة توضيحية (اختياري)"
 msgstr "Illustrative photo (optional)"
 
-#: app/templates/team/task_detail.html:133
+#: app/templates/team/task_detail.html:134
 msgid "تسجيل التعذّر"
 msgstr "Record failure"
 
-#: app/templates/team/task_detail.html:148
+#: app/templates/team/task_detail.html:149
 msgid "تفاصيل الإنجاز"
 msgstr "Completion details"
 
-#: app/templates/team/task_detail.html:149
+#: app/templates/team/task_detail.html:150
 msgid "المدة:"
 msgstr "Duration:"
 
-#: app/templates/team/task_detail.html:149
+#: app/templates/team/task_detail.html:150
 msgid "دقيقة"
 msgstr "minute(s)"
 
-#: app/templates/team/task_detail.html:150
+#: app/templates/team/task_detail.html:151
 msgid "باشرها:"
 msgstr "Started by:"
 
-#: app/templates/team/task_detail.html:151
+#: app/templates/team/task_detail.html:152
 msgid "ملاحظة:"
 msgstr "Note:"
 
-#: app/templates/team/task_detail.html:152
+#: app/templates/team/task_detail.html:153
 msgid "عرض صورة الدليل"
 msgstr "View evidence photo"
 

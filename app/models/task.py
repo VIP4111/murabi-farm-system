@@ -39,6 +39,11 @@ class Task(db.Model):
     animal = db.relationship("Animal")
 
     due_date = db.Column(db.Date, index=True)
+    # موعد وقت محدد (بند إضافي 278) — لمهام حسّاسة بالوقت (حالياً وجبات
+    # العلف المجدولة فقط، `feeding_schedule_service.py`)، عكس `due_date`
+    # اللي على مستوى اليوم بس. فاضي لكل بقية أنواع المهام — الأصل غياب
+    # موعد وقت محدد، لا صفر افتراضي زي الموعد نفسه ساعة 00:00.
+    due_time = db.Column(db.Time, nullable=True)
     requires_photo = db.Column(db.Boolean, default=False, nullable=False)
 
     # ترتيب عرض ثانوي (بند إضافي 67، 2026-07-28) — لما أكثر من مهمة

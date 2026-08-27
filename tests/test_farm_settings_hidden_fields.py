@@ -36,6 +36,7 @@ def _base_form(fs):
         "estrus_return_window_days": fs.estrus_return_window_days,
         "implicit_pregnancy_sonar_check_days": fs.implicit_pregnancy_sonar_check_days,
         "predictive_stock_alert_days": fs.predictive_stock_alert_days,
+        "task_late_grace_minutes": fs.task_late_grace_minutes,
     }
 
 

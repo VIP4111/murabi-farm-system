@@ -44,6 +44,7 @@ def generate_feeding_tasks(*, now: datetime | None = None) -> list:
             task = task_service.create_suggested_task(
                 title=f"🥣 وجبة علف {schedule.meal_time.strftime('%H:%M')} — {barn.barn_name}",
                 task_type="feeding_schedule", barn_id=barn.id, due_date=today,
+                due_time=schedule.meal_time,  # بند إضافي 278 — أساس تنبيه التأخر
                 source_type=SOURCE_TYPE, source_id=source_id,
                 notes="توزيع العلف + تنظيف المعالف + تغيير الماء لهذي الوجبة.",
                 sort_order=schedule.sort_order, target_role="worker", auto_approve=True,

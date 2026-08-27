@@ -1609,6 +1609,8 @@ def farm_settings_save():
         "predictive_stock_alert_days",
         # بند إضافي 188 — بروتوكول حديث الولادة وأمه.
         "colostrum_window_hours", "placenta_check_hours", "postpartum_mother_followup_days",
+        # بند إضافي 278 — مهلة إنذار المهام حسّاسة الوقت (وجبات العلف).
+        "task_late_grace_minutes",
     ):
         setattr(fs, field, int(request.form[field]))
     fs.target_profit_margin_percent = float(request.form["target_profit_margin_percent"])

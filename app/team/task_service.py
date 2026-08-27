@@ -84,8 +84,8 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
 
 
 def create_suggested_task(*, title, task_type, barn_id=None, animal_id=None, due_date=None,
-                           requires_photo=False, source_type=None, source_id=None, notes=None,
-                           sort_order=0, target_role=None, auto_approve=False) -> Task:
+                           due_time=None, requires_photo=False, source_type=None, source_id=None,
+                           notes=None, sort_order=0, target_role=None, auto_approve=False) -> Task:
     """مهمة تتولّد تلقائياً من النظام (محرك الدورة، خطة العزل...) — تحتاج
     مراجعة الدكتور قبل ما توصل للعامل، إلا لو `auto_approve=True` (بند
     إضافي 107 — المهام اليومية الروتينية تحديداً: تنظيف/سقاية/فحص عام،
@@ -99,7 +99,7 @@ def create_suggested_task(*, title, task_type, barn_id=None, animal_id=None, due
     task = Task(
         title=title, task_type=task_type, status="pending" if auto_approve else "suggested",
         assignee_id=assignee_id, barn_id=barn_id, animal_id=animal_id,
-        due_date=due_date, requires_photo=requires_photo, notes=notes,
+        due_date=due_date, due_time=due_time, requires_photo=requires_photo, notes=notes,
         source_type=source_type, source_id=source_id, sort_order=sort_order,
         target_role=target_role or None,
     )

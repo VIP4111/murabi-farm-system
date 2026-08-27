@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 00:47+0300\n"
+"POT-Creation-Date: 2026-08-28 01:12+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -938,7 +938,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "የተመዘገቡ መድሃኒቶች አሉት።"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:159 app/templates/settings_backup.html:5
+#: app/templates/settings.html:160 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "መጠባበቂያ"
 
@@ -2846,7 +2846,7 @@ msgstr "ግዴታ — ምንጩ \"በእርሻ የተወለደ\" ካልሆነ �
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:133 app/templates/team/member_edit_form.html:7
+#: app/templates/settings.html:134 app/templates/team/member_edit_form.html:7
 #: app/templates/team/member_form.html:7
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
@@ -3315,7 +3315,7 @@ msgstr "እንስሳት"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:161
+#: app/templates/audit_log.html:5 app/templates/settings.html:162
 msgid "سجل التدقيق"
 msgstr "የኦዲት መዝገብ"
 
@@ -4510,261 +4510,265 @@ msgid "التنبيه قبل الموعد (يوم)"
 msgstr "ከቀጠሮው በፊት ማንቂያ (ቀናት)"
 
 #: app/templates/settings.html:40
+msgid "مهلة إنذار المهام حسّاسة الوقت (دقيقة) — مثل وجبات العلف المجدولة"
+msgstr "ጊዜ-ወሳኝ ተግባራት ማንቂያ ፈቃድ ጊዜ (ደቂቃ) — ለምሳሌ የታቀደ መመገብ"
+
+#: app/templates/settings.html:41
 msgid "تكرار التحصينات الدورية (يوم)"
 msgstr "የመደበኛ ክትባት ድግግሞሽ (ቀናት)"
 
-#: app/templates/settings.html:41
+#: app/templates/settings.html:42
 msgid "مدة عزل المولود والأم (يوم)"
 msgstr "የልጅ እና እናት የለይቶ ማቆያ ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:42
+#: app/templates/settings.html:43
 msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
 msgstr "ከወሊድ በኋላ አስገዳጅ የሐኪም ምርመራ (ሰዓታት)"
 
-#: app/templates/settings.html:43
+#: app/templates/settings.html:44
 msgid "تحصين الأم بعد الولادة (يوم)"
 msgstr "ከወሊድ በኋላ የእናት ክትባት (ቀናት)"
 
-#: app/templates/settings.html:44
+#: app/templates/settings.html:45
 msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "ለመጀመሪያ ማዳቀል ዝቅተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:45
+#: app/templates/settings.html:46
 msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
 msgstr "ወንድ ወደ ማዳቀል የሚገባበት አነስተኛ ዕድሜ (ቀን)"
 
-#: app/templates/settings.html:46
+#: app/templates/settings.html:47
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "ዳግም ከመዳቀሉ በፊት ከወሊድ በኋላ ዝቅተኛ የዕረፍት ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:50
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "የምርት ዑደት ሞተር የዕድሜ ገደቦች"
 
-#: app/templates/settings.html:51
+#: app/templates/settings.html:52
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "በዑደት ውስጥ \"አዲስ የተወለደ\" ተብሎ የሚመደብ ከፍተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:53
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "ለወንዶች የመራባት ምርመራን ለመዝለል አማራጭ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:53
+#: app/templates/settings.html:54
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "ለጡት ማስጣል ደረጃ ዝቅተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:54
+#: app/templates/settings.html:55
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "የጡት ማስጣል ቀን መመዝገብን ለመዝለል አማራጭ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:60
 msgid "البيع الذكي"
 msgstr "ብልህ ሽያጭ"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:62
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "የታለመ የትርፍ ህዳግ (%%)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:63
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "ለወንዶች የመደበኛ ሽያጭ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:64
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "ለመስዋዕት ሽያጭ ዝቅተኛ ዕድሜ (ቀናት)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:65
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "ከሽያጭ ምክር በፊት ለሴት ተቀባይነት ያለው ከፍተኛ የእርግዝና መዘግየት (ቀናት)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:66
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "ከማንቂያ በፊት ለአዲስ ሪፖርት ከፍተኛ መጠበቂያ (ሰዓታት)"
 
-#: app/templates/settings.html:66
+#: app/templates/settings.html:67
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "ራስ በተመሳሳይ የምርት ዑደት ደረጃ ላይ ከመቆም በፊት ማንቂያ (ቀናት)"
 
-#: app/templates/settings.html:67
+#: app/templates/settings.html:68
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "የሰጎን እንቁላል የመፈልፈያ ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:73
 msgid "الصحة والتغذية"
 msgstr "ጤናና ስነ-ምግብ"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:75
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "ከመቀላቀል በፊት የአዲስ እንስሳ ማገድ (ቀናት)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:76
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "ከሕክምና በኋላ ዳግም ክብደት ማስታወሻ (ቀናት)"
 
-#: app/templates/settings.html:76
+#: app/templates/settings.html:77
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "\"የዘገየ ክብደት\" ማንቂያ በፊት በሁለት ክብደቶች መካከል ከፍተኛ ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:78
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "በሁለት ፀረ-ጥገኛ መጠኖች መካከል ዝቅተኛ የጊዜ ልዩነት (ቀናት)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:79
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "ለተከማቹ ምግቦች ከፍተኛ ሳምንታዊ ጭማሪ (%%)"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:80
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "የተከማቹ ምግቦች ጭማሪ መለኪያ መስኮት (ቀናት)"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:81
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "የታለመ የካልሲየም/ፎስፈረስ ጥምርታ"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:82
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "የካልሲየም/ፎስፈረስ ጥምርታ የመቻቻል ህዳግ"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:83
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "ከውርጃ በኋላ የበረት ክትትል (ቀናት)"
 
-#: app/templates/settings.html:83
+#: app/templates/settings.html:84
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "ጠንካራ መኖ የመጥባት እድሜ (ቀናት)"
 
-#: app/templates/settings.html:84
+#: app/templates/settings.html:85
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "የበግ ንቁ የመራቢያ ወቅት መስኮት (ቀናት)"
 
-#: app/templates/settings.html:85
+#: app/templates/settings.html:86
 msgid "بداية التغذية التأسيسية للمولود (يوم)"
 msgstr "ለአራስ ልጅ የመነሻ ምግብ (Creep Feeding) መጀመሪያ ዕድሜ (ቀን)"
 
-#: app/templates/settings.html:86
+#: app/templates/settings.html:87
 msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
 msgstr "ጡት መጣል ሲጠናቀቅ ዒላማ የቀን መነሻ መኖ (ግራም)"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:88
 msgid "نافذة عودة الأنثى للفحل (يوم) — لكشف الحمل الضمني"
 msgstr "ሴቷ ወደ ወንድ የምትመለስበት ጊዜ (ቀን) — ስውር እርግዝናን ለማወቅ"
 
-#: app/templates/settings.html:88
+#: app/templates/settings.html:89
 msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
 msgstr "ከማዳቀል በኋላ ራስ-ሰር የሶናር ምርመራ (ቀን) — ለሚጠበቅ እርግዝና"
 
-#: app/templates/settings.html:89
+#: app/templates/settings.html:90
 msgid "تنبيه مخزون قبل النفاد المتوقَّع بـ (يوم)"
 msgstr "ከሚጠበቀው የክምችት ማለቅ በፊት ማንቂያ (ቀን)"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:95
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "አዲስ የተወለደና እናት ድህረ ወሊድ ፕሮቶኮል"
 
-#: app/templates/settings.html:96
+#: app/templates/settings.html:97
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "የኮሎስትረም ማጥባት ማረጋገጫ መስኮት (ሰዓታት)"
 
-#: app/templates/settings.html:97
+#: app/templates/settings.html:98
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "የእንግዴ ልጅ መውጣት ክትትል መስኮት (ሰዓታት)"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:99
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "የእናት ዕለታዊ ድህረ-ወሊድ ክትትል ጊዜ (ቀናት)"
 
-#: app/templates/settings.html:102
+#: app/templates/settings.html:103
 msgid "حفظ الإعدادات"
 msgstr "ቅንብሮችን አስቀምጥ"
 
-#: app/templates/settings.html:107
+#: app/templates/settings.html:108
 msgid "الخدمات"
 msgstr "አገልግሎቶች"
 
-#: app/templates/settings.html:108
+#: app/templates/settings.html:109
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr "የሚያስፈልግዎትን ብቻ ያንቁ — የቆመ አገልግሎት ከሁሉም ማያ ገጾች ሙሉ በሙሉ ይጠፋል።"
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:117
 msgid "مفعّل"
 msgstr "ነቅቷል"
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:117
 msgid "غير مفعّل"
 msgstr "አልነቃም"
 
-#: app/templates/settings.html:119 app/templates/team/members_list.html:23
+#: app/templates/settings.html:120 app/templates/team/members_list.html:23
 msgid "تعطيل"
 msgstr "አቦዝን"
 
-#: app/templates/settings.html:119 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:120 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:23
 msgid "تفعيل"
 msgstr "አንቃ"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:129
 msgid "المسميات الوظيفية"
 msgstr "የሥራ ማዕረጎች"
 
-#: app/templates/settings.html:129
+#: app/templates/settings.html:130
 msgid "مسمّى جديد"
 msgstr "አዲስ ማዕረግ"
 
-#: app/templates/settings.html:133
+#: app/templates/settings.html:134
 msgid "عدد الصلاحيات"
 msgstr "የፈቃዶች ብዛት"
 
-#: app/templates/settings.html:133
+#: app/templates/settings.html:134
 msgid "نوع"
 msgstr "ዓይነት"
 
-#: app/templates/settings.html:138
+#: app/templates/settings.html:139
 msgid "جاهز افتراضياً"
 msgstr "አብሮገነብ ነባሪ"
 
-#: app/templates/settings.html:138
+#: app/templates/settings.html:139
 msgid "مضاف من المالك"
 msgstr "በባለቤት የተጨመረ"
 
-#: app/templates/settings.html:141
+#: app/templates/settings.html:142
 msgid "تعديل الصلاحيات"
 msgstr "ፈቃዶችን አርትዕ"
 
-#: app/templates/settings.html:151
+#: app/templates/settings.html:152
 msgid "النظام والصيانة"
 msgstr "ሲስተም እና ጥገና"
 
-#: app/templates/settings.html:153 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:154 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "ከማሰማራት በፊት የዝግጁነት ምርመራ"
 
-#: app/templates/settings.html:154 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:155 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "የውሂብ ትክክለኛነት ምርመራ"
 
-#: app/templates/settings.html:155 app/templates/telegram_status.html:4
+#: app/templates/settings.html:156 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "የቴሌግራም ቦት ምርመራ"
 
-#: app/templates/settings.html:157
+#: app/templates/settings.html:158
 msgid "وضع عرض تجريبي"
 msgstr "የማሳያ ሁነታ"
 
-#: app/templates/settings.html:164
+#: app/templates/settings.html:165
 msgid "شاشة متابعة مبسّطة"
 msgstr "ቀላል የክትትል ማያ ገጽ"
 
-#: app/templates/settings.html:166
+#: app/templates/settings.html:167
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:172
+#: app/templates/reports/overview.html:18 app/templates/settings.html:173
 msgid "جدول المؤشرات"
 msgstr "የጠቋሚዎች ሠንጠረዥ"
 
-#: app/templates/settings.html:173
+#: app/templates/settings.html:174
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "ከአሁኑ ወር መጀመሪያ እስከ ዛሬ — ልክ እንደ ሪፖርቶች ገፅ ተመሳሳይ ሞተር።"
 
@@ -5670,7 +5674,7 @@ msgstr "ጥገና ይፈልጋል"
 #: app/templates/equipment/item_movement.html:46
 #: app/templates/repro/pregnancies_list.html:27
 #: app/templates/team/report_detail.html:76
-#: app/templates/team/task_detail.html:107
+#: app/templates/team/task_detail.html:108
 #: app/templates/warehouses/item_count_form.html:16
 msgid "ملاحظة (اختياري)"
 msgstr "ማስታወሻ (አማራጭ)"
@@ -5987,13 +5991,13 @@ msgstr "%(n)s ራስ ያለ የተመዘገበ ክብደት ተገለለ"
 #: app/templates/feed/movements_list.html:10
 #: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:9
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/team/task_detail.html:43
+#: app/templates/team/task_detail.html:44
 msgid "المكوّن"
 msgstr "ክፍል"
 
 #: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:49
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/team/task_detail.html:43
+#: app/templates/team/task_detail.html:44
 msgid "النسبة"
 msgstr "መቶኛ"
 
@@ -7456,7 +7460,7 @@ msgstr "በዚህ በሽታ እና በዚህ ምልክት መካከል ያለው
 #: app/templates/health/disease_type_detail.html:47
 #: app/templates/health/emergency_symptoms_list.html:25
 #: app/templates/team/_suggested_tasks_rows.html:25
-#: app/templates/team/task_detail.html:80
+#: app/templates/team/task_detail.html:81
 #: app/templates/team/travel_history.html:31
 msgid "حذف"
 msgstr "ሰርዝ"
@@ -7905,7 +7909,7 @@ msgid "تسجيل عملية شراء"
 msgstr "ግዢ ይመዝግቡ"
 
 #: app/templates/health/pharmacy_purchase_form.html:5
-#: app/templates/team/task_detail.html:31
+#: app/templates/team/task_detail.html:32
 msgid "المخزون الحالي:"
 msgstr "አሁን ያለ ክምችት:"
 
@@ -9115,7 +9119,7 @@ msgid "مقفلة"
 msgstr "ተቆልፏል"
 
 #: app/templates/team/_my_tasks_rows.html:24
-#: app/templates/team/task_detail.html:87
+#: app/templates/team/task_detail.html:88
 #: app/templates/team/worker_report_form.html:40
 msgid "بدء"
 msgstr "ጀምር"
@@ -9138,7 +9142,7 @@ msgid "العمر:"
 msgstr "ዕድሜ:"
 
 #: app/templates/team/_report_widgets.html:21
-#: app/templates/team/task_detail.html:15
+#: app/templates/team/task_detail.html:16
 msgid "الحظيرة:"
 msgstr "በረት:"
 
@@ -9583,7 +9587,7 @@ msgid "صورة مرفقة"
 msgstr "የተያያዘ ፎቶ"
 
 #: app/templates/team/report_detail.html:26
-#: app/templates/team/task_detail.html:142
+#: app/templates/team/task_detail.html:143
 msgid "عرض الصورة"
 msgstr "ፎቶ ይመልከቱ"
 
@@ -9684,7 +9688,7 @@ msgid "رابط صورة (اختياري)"
 msgstr "የፎቶ ማገናኛ (አማራጭ)"
 
 #: app/templates/team/report_detail.html:111
-#: app/templates/team/task_detail.html:113
+#: app/templates/team/task_detail.html:114
 msgid "تم الإنجاز"
 msgstr "ተጠናቅቋል"
 
@@ -9887,166 +9891,174 @@ msgstr "የክፍያ ዘዴ ዝውውር ነው — የተቀባዩ ስም ደ�
 msgid "رجوع للمهام"
 msgstr "ወደ ተግባራት ተመለስ"
 
-#: app/templates/team/task_detail.html:13
+#: app/templates/team/task_detail.html:10
+msgid "العامل المكلَّف:"
+msgstr "የተመደበ ሰራተኛ፦"
+
+#: app/templates/team/task_detail.html:10
+msgid "بدون عامل مكلَّف"
+msgstr "ያለ የተመደበ ሰራተኛ"
+
+#: app/templates/team/task_detail.html:14
 msgid "تفصيل المهمة"
 msgstr "የተግባር ዝርዝር"
 
-#: app/templates/team/task_detail.html:14
+#: app/templates/team/task_detail.html:15
 msgid "السبب/الدافع:"
 msgstr "ምክንያት:"
 
-#: app/templates/team/task_detail.html:15
+#: app/templates/team/task_detail.html:16
 msgid "عدد الرؤوس بالدفعة:"
 msgstr "በጭነቱ ውስጥ ያሉ እንስሳት ብዛት:"
 
-#: app/templates/team/task_detail.html:18
+#: app/templates/team/task_detail.html:19
 msgid "عرض كل رؤوس الدفعة"
 msgstr "በጭነቱ ውስጥ ያሉትን ሁሉንም እንስሳት አሳይ"
 
-#: app/templates/team/task_detail.html:21
+#: app/templates/team/task_detail.html:22
 msgid "هذه المهمة"
 msgstr "ይህ ተግባር"
 
-#: app/templates/team/task_detail.html:29
+#: app/templates/team/task_detail.html:30
 msgid "الدواء المخطَّط:"
 msgstr "የታቀደ መድሃኒት:"
 
-#: app/templates/team/task_detail.html:30
+#: app/templates/team/task_detail.html:31
 msgid "الجرعة لكل رأس:"
 msgstr "የአንድ እንስሳ መጠን:"
 
-#: app/templates/team/task_detail.html:30
+#: app/templates/team/task_detail.html:31
 msgid "الجرعة الإجمالية للدفعة:"
 msgstr "ለጭነቱ አጠቃላይ መጠን:"
 
-#: app/templates/team/task_detail.html:31
+#: app/templates/team/task_detail.html:32
 msgid "المتبقي المتوقع بعد التنفيذ:"
 msgstr "ከአፈጻጸም በኋላ የሚጠበቅ ቀሪ:"
 
-#: app/templates/team/task_detail.html:32
+#: app/templates/team/task_detail.html:33
 msgid "المخزون لا يكفي كامل الدفعة"
 msgstr "ክምችቱ ለጠቅላላው ጭነት በቂ አይደለም"
 
-#: app/templates/team/task_detail.html:38
+#: app/templates/team/task_detail.html:39
 msgid "خلطة اليوم المقترحة (تُحسب تلقائياً من المخزون الفعلي)"
 msgstr "የዛሬው የተጠቆመ ድብልቅ (ከትክክለኛ ክምችት በራስሰር ይሰላል)"
 
-#: app/templates/team/task_detail.html:40
+#: app/templates/team/task_detail.html:41
 msgid "محسوبة لـ"
 msgstr "የተሰላው ለ"
 
-#: app/templates/team/task_detail.html:40
+#: app/templates/team/task_detail.html:41
 msgid "رأس نشط عندهم وزن مسجّل"
 msgstr "ክብደት የተመዘገበላቸው ንቁ ራሶች"
 
-#: app/templates/team/task_detail.html:40
+#: app/templates/team/task_detail.html:41
 msgid "رأس بدون وزن مسجّل استُثنوا من الحساب"
 msgstr "ክብደት ያልተመዘገበላቸው ራሶች ከስሌቱ ተገለሉ"
 
-#: app/templates/team/task_detail.html:43
+#: app/templates/team/task_detail.html:44
 msgid "الكمية (كجم)"
 msgstr "መጠን (ኪ.ግ)"
 
-#: app/templates/team/task_detail.html:47
+#: app/templates/team/task_detail.html:48
 msgid "المخزون لا يكفي"
 msgstr "ክምችቱ በቂ አይደለም"
 
-#: app/templates/team/task_detail.html:52
+#: app/templates/team/task_detail.html:53
 msgid "إجمالي التكلفة اليومية التقديرية:"
 msgstr "የተገመተ ጠቅላላ ዕለታዊ ወጪ:"
 
-#: app/templates/team/task_detail.html:59
+#: app/templates/team/task_detail.html:60
 msgid "المهمة التالية بالسلسلة:"
 msgstr "በሰንሰለቱ ውስጥ ቀጣይ ተግባር:"
 
-#: app/templates/team/task_detail.html:64 app/templates/team/tasks_list.html:59
+#: app/templates/team/task_detail.html:65 app/templates/team/tasks_list.html:59
 #: app/templates/team/tasks_list.html:105
 #: app/templates/team/tasks_list.html:187
 msgid "الإجراءات"
 msgstr "እርምጃዎች"
 
-#: app/templates/team/task_detail.html:69
+#: app/templates/team/task_detail.html:70
 msgid "تأكيد التنفيذ"
 msgstr "አፈጻጸምን አረጋግጥ"
 
-#: app/templates/team/task_detail.html:76
+#: app/templates/team/task_detail.html:77
 msgid "موافقة"
 msgstr "አጽድቅ"
 
-#: app/templates/team/task_detail.html:95
+#: app/templates/team/task_detail.html:96
 msgid "إنجاز المهمة"
 msgstr "ተግባሩን አጠናቅቅ"
 
-#: app/templates/team/task_detail.html:99
+#: app/templates/team/task_detail.html:100
 msgid "أي حظيرة نقلته لها فعلياً؟"
 msgstr "በትክክል ወደየትኛው በረት ወሰዱት?"
 
-#: app/templates/team/task_detail.html:105
+#: app/templates/team/task_detail.html:106
 msgid "محدَّدة الحظيرة المقترحة بالمهمة افتراضياً — غيّرها لو نقلته فعلياً لحظيرة ثانية."
 msgstr "በስራው የተጠቆመው በረት በነባሪነት ተመርጧል — እንስሳውን ወደ ሌላ በረት ካዛወሩት ይለውጡት።"
 
-#: app/templates/team/task_detail.html:109
+#: app/templates/team/task_detail.html:110
 msgid "صورة دليل (إلزامي)"
 msgstr "የማስረጃ ፎቶ (ግዴታ)"
 
-#: app/templates/team/task_detail.html:109
+#: app/templates/team/task_detail.html:110
 msgid "صورة دليل (اختياري)"
 msgstr "የማስረጃ ፎቶ (አማራጭ)"
 
-#: app/templates/team/task_detail.html:111
+#: app/templates/team/task_detail.html:112
 msgid "تقدر تلتقط صورة من الكاميرا مباشرة أو ترفع من المعرض."
 msgstr "በቀጥታ በካሜራ ፎቶ ማንሳት ወይም ከጋለሪ መስቀል ይችላሉ።"
 
-#: app/templates/team/task_detail.html:118
+#: app/templates/team/task_detail.html:119
 msgid "تعذّر التنفيذ"
 msgstr "ማከናወን አልተቻለም"
 
-#: app/templates/team/task_detail.html:119
+#: app/templates/team/task_detail.html:120
 msgid "لو ما قدرت تنجز المهمة، سجّل السبب هنا بدل ما تسكت عنها — يوصل للدكتور مباشرة."
 msgstr "ተግባሩን ማጠናቀቅ ካልቻሉ፣ ዝም ከማለት ይልቅ ምክንያቱን እዚህ ይመዝግቡ — በቀጥታ ወደ ዶክተሩ ይደርሳል።"
 
-#: app/templates/team/task_detail.html:122
-#: app/templates/team/task_detail.html:140
+#: app/templates/team/task_detail.html:123
+#: app/templates/team/task_detail.html:141
 msgid "سبب التعذّر"
 msgstr "ያልተከናወነበት ምክንያት"
 
-#: app/templates/team/task_detail.html:124
+#: app/templates/team/task_detail.html:125
 msgid "اختر السبب..."
 msgstr "ምክንያቱን ይምረጡ..."
 
-#: app/templates/team/task_detail.html:129
+#: app/templates/team/task_detail.html:130
 msgid "تفاصيل إضافية (اختياري)"
 msgstr "ተጨማሪ ዝርዝሮች (አማራጭ)"
 
-#: app/templates/team/task_detail.html:131
+#: app/templates/team/task_detail.html:132
 msgid "صورة توضيحية (اختياري)"
 msgstr "ገላጭ ፎቶ (አማራጭ)"
 
-#: app/templates/team/task_detail.html:133
+#: app/templates/team/task_detail.html:134
 msgid "تسجيل التعذّر"
 msgstr "አለመከናወኑን መዝግብ"
 
-#: app/templates/team/task_detail.html:148
+#: app/templates/team/task_detail.html:149
 msgid "تفاصيل الإنجاز"
 msgstr "የመጠናቀቅ ዝርዝሮች"
 
-#: app/templates/team/task_detail.html:149
+#: app/templates/team/task_detail.html:150
 msgid "المدة:"
 msgstr "ጊዜ:"
 
-#: app/templates/team/task_detail.html:149
+#: app/templates/team/task_detail.html:150
 msgid "دقيقة"
 msgstr "ደቂቃ"
 
-#: app/templates/team/task_detail.html:150
+#: app/templates/team/task_detail.html:151
 msgid "باشرها:"
 msgstr "የጀመረው:"
 
-#: app/templates/team/task_detail.html:151
+#: app/templates/team/task_detail.html:152
 msgid "ملاحظة:"
 msgstr "ማስታወሻ:"
 
-#: app/templates/team/task_detail.html:152
+#: app/templates/team/task_detail.html:153
 msgid "عرض صورة الدليل"
 msgstr "የማስረጃ ፎቶ ይመልከቱ"
 

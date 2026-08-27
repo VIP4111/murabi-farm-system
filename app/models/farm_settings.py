@@ -152,6 +152,14 @@ class FarmSettings(db.Model):
     weaning_solid_feed_age_days = db.Column(db.Integer, default=45, nullable=False)
     ram_breeding_season_window_days = db.Column(db.Integer, default=60, nullable=False)
 
+    # مهلة سماح لمهام لها موعد وقت محدد (`Task.due_time`، بند إضافي 278)
+    # قبل ما تُعتبر "متأخرة" وتصل لصاحب الحلال — بطلبك الصريح: "لو
+    # وصلت الساعة 8 معناتها متأخر... الساعة 9 يعتبر إنذار يوصل لصاحب
+    # الحلال" (ساعة مهلة). تنطبق على أي مهمة عندها due_time (حالياً
+    # وجبات العلف المجدولة فقط)، وتُبلَّغ حتى لو العامل أنجزها متأخراً
+    # (تسجيل واقعة، مو منع).
+    task_late_grace_minutes = db.Column(db.Integer, default=60, nullable=False)
+
     # تدرّج تغذية المولود التأسيسي — Creep Feeding (بند إضافي 235) —
     # قبل هذا، المولود يُستثنى كلياً من العلف الصلب لين يوصل
     # weaning_solid_feed_age_days بالضبط (استثناء صفر/كامل مفاجئ). من

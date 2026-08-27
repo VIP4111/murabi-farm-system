@@ -6,7 +6,8 @@
     <h2>{{ task.title }}</h2>
     <a class="btn light" href="{{ url_for('team.tasks_list') }}">← {{ _('رجوع للمهام') }}</a>
   </div>
-  <p><b>{{ _('الحالة:') }}</b> {{ task.status|ar_status }}{% if task.due_date %} — <b>{{ _('الموعد:') }}</b> {{ task.due_date }}{% if task.due_date < today %} <span class="badge off">⏰ {{ _('متأخرة') }}</span>{% endif %}{% endif %}</p>
+  <p><b>{{ _('الحالة:') }}</b> {{ task.status|ar_status }}{% if task.due_date %} — <b>{{ _('الموعد:') }}</b> {{ task.due_date }}{% if task.due_time %} {{ task.due_time.strftime('%H:%M') }}{% endif %}{% if task.due_date < today %} <span class="badge off">⏰ {{ _('متأخرة') }}</span>{% endif %}{% endif %}</p>
+  <p><b>{{ _('العامل المكلَّف:') }}</b> {{ task.assignee.name if task.assignee else _('بدون عامل مكلَّف') }}{% if task.assignee and task.assignee.phone %} — {{ task.assignee.phone }}{% endif %}</p>
 </div>
 
 <div class="card">
