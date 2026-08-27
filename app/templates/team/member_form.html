@@ -11,6 +11,9 @@
     <select name="role_id" required>
       {% for r in roles %}<option value="{{ r.id }}">{{ r.display_name }}</option>{% endfor %}
     </select>
+    <label>{{ _('التخصص/المسمى الوظيفي (اختياري)') }}</label>
+    <input name="specialty" placeholder="{{ _('مثلاً: زراعة أعلاف، سائق، حارس') }}">
+    <p style="color:var(--muted); font-size:11.5px; margin:2px 0 8px;">{{ _('وصف إضافي للعرض بالتقارير بس — ما يغيّر صلاحياته، تبقى زي أي عامل بنفس الدور.') }}</p>
     <label>{{ _('اللغة') }}</label>
     <select name="language">
       <option value="ar">العربية</option>

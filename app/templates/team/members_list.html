@@ -12,7 +12,7 @@
     <tr>
       <td>{{ m.name }}</td>
       <td>{{ m.phone }}</td>
-      <td>{{ m.role.display_name if m.role else '-' }}</td>
+      <td>{{ m.role.display_name if m.role else '-' }}{% if m.specialty %}<span style="color:var(--muted); font-size:11.5px; display:block;">{{ m.specialty }}</span>{% endif %}</td>
       <td>{{ m.language }}</td>
       <td>{% if m.is_active_account %}<span class="badge on">{{ _('نشط') }}</span>{% else %}<span class="badge off">{{ _('معطّل') }}</span>{% endif %}</td>
       <td style="display:flex; gap:6px;">
