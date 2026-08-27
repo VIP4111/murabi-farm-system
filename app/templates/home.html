@@ -20,9 +20,9 @@
       <h3 style="margin:0;">🗓️ {{ _('صفحة اليوم') }}</h3>
       <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة') }}</p>
       {% if today_tasks_count is not none %}
-      <div style="display:flex; gap:8px; margin-top:8px;">
-        {% if today_tasks_count %}<span class="badge off">✅ {{ _('%(n)s مهمة مطلوبة', n=today_tasks_count) }}</span>{% endif %}
-        {% if today_alerts_count %}<span class="badge off">🔔 {{ _('%(n)s تنبيه', n=today_alerts_count) }}</span>{% endif %}
+      <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
+        {% if today_tasks_count %}<a class="badge off" style="text-decoration:none;" href="{{ url_for('team.tasks_list') }}">✅ {{ _('%(n)s مهمة مطلوبة', n=today_tasks_count) }}</a>{% endif %}
+        {% if today_alerts_count %}<a class="badge off" style="text-decoration:none;" href="{{ url_for('core.alerts_list') if user.has_permission('animals.view') else url_for('core.alerts_mine') }}">🔔 {{ _('%(n)s تنبيه', n=today_alerts_count) }}</a>{% endif %}
         {% if not today_tasks_count and not today_alerts_count %}<span class="badge on">✅ {{ _('كل شي مضبوط اليوم') }}</span>{% endif %}
       </div>
       {% endif %}

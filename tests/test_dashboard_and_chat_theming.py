@@ -38,6 +38,19 @@ def test_home_shows_task_count_badge_when_tasks_pending(app, client):
     assert "1 مهمة مطلوبة" in body
 
 
+def test_home_tasks_badge_is_a_shortcut_button(app, client):
+    """بند إضافي 279 — طلبك الصريح: "المهام والتنبيهات ابيها تكون
+    تفاعلية حولها الى زر" — البطاقة بالرئيسية، مو بس شاشة /today."""
+    owner = _make_owner(phone="0599999192")
+    client.post("/login", data={"phone": owner.phone, "password": "test1234"})
+    db.session.add(Task(title="مهمة اختبار زر الرئيسية", status="pending",
+                         target_role="owner", assignee_id=owner.id))
+    db.session.commit()
+    resp = client.get("/")
+    body = resp.data.decode()
+    assert 'href="/team/tasks"' in body
+
+
 def test_chat_page_does_not_use_hardcoded_white_backgrounds(app, client):
     """التأكد إن الإصلاح فعلي بالملف الحي، مو بس بالنية — hardcoded
     #fff/#fbf8f1 كانت السبب المباشر لعدم وضوح الألوان بالوضع الداكن."""
