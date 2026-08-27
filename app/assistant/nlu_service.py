@@ -41,6 +41,7 @@ PERMISSION_DENIED_MSG = "هذا السؤال يحتاج صلاحية غير مت
 
 HELP_MSG = (
     "أقدر أساعدك بأمثلة زي:\n"
+    "- ماذا علي فعله اليوم؟\n"
     "- كم عدد الحيوانات بالمزرعة؟\n"
     "- كم رأس حوامل لدينا؟\n"
     "- ما حالة الحاضنات اليوم؟\n"
@@ -141,6 +142,40 @@ def _handle_alerts(user) -> str:
     return "\n".join(lines)
 
 
+def _handle_today_plan(user) -> str:
+    """"شنو أسوي اليوم؟" (بند إضافي 274، طلبك الصريح) — يجمع مهامك
+    المفتوحة الحالية (`tasks.view_own`، متاحة لكل عضو فريق فعّال) +
+    أهم التنبيهات العاجلة (`animals.view` — لو ما عندك هالصلاحية،
+    يظهر قسم المهام بس، بدون خطأ). مو نية جديدة تحسب شي إضافي —
+    تجميع لنيتين موجودتين أصلاً (`tasks`/`alerts`) بردٍ واحد مختصر،
+    عشان ما تحتاج تسأل سؤالين منفصلين."""
+    parts = []
+
+    tasks = context_service.my_tasks_summary(user)
+    if tasks["count"] == 0:
+        parts.append("ما عندك مهام مفتوحة اليوم.")
+    else:
+        lines = [f"📋 عندك {tasks['count']} مهمة مفتوحة:"]
+        for t in tasks["items"]:
+            lock = " 🔒 مقفلة" if t["locked"] else ""
+            due = f" (موعدها {t['due_date']})" if t["due_date"] else ""
+            lines.append(f"- {t['title']}{due}{lock}")
+        parts.append("\n".join(lines))
+
+    if user.has_permission("animals.view"):
+        alerts = context_service.alerts_summary(limit=3)
+        if alerts["urgent_total"]:
+            lines = [f"\n⚠️ عندك {alerts['urgent_total']} تنبيه عاجل من أصل {alerts['total']}:"]
+            for a in alerts["top"]:
+                if a["urgent"]:
+                    lines.append(f"- {a['icon']} {a['label']}")
+            parts.append("\n".join(lines))
+        elif alerts["total"]:
+            parts.append(f"\nℹ️ عندك {alerts['total']} تنبيه غير عاجل — راجعها بشاشة التنبيهات وقت مناسب.")
+
+    return "\n".join(parts)
+
+
 def _handle_tasks(user) -> str:
     s = context_service.my_tasks_summary(user)
     if s["count"] == 0:
@@ -201,6 +236,9 @@ INTENTS: list[Intent] = [
     Intent("feed_location", [["علف", "اعلاف", "أعلاف"], ["وين", "أين", "فين", "مكان", "لقى", "اجد", "أجد"]],
            _handle_feed_location, permission="feed.view"),
     Intent("feed_cost", [["علف", "اعلاف", "أعلاف"], ["تكلفة", "مصروف", "كم"]], _handle_feed_cost, permission="feed.view"),
+    Intent("today_plan", [["ماذا اسوي اليوم", "وش اسوي اليوم", "شنو اسوي اليوم", "ايش اسوي اليوم",
+                            "ماذا علي فعله اليوم", "شنو برنامجي اليوم", "خطة اليوم", "وش برنامجي اليوم"]],
+           _handle_today_plan, permission="tasks.view_own"),
     Intent("alerts", [["تنبيه", "تنبيهات", "انذار", "إنذار"]], _handle_alerts, permission="animals.view"),
     Intent("tasks", [["مهامي", "مهمتي", "مهام اليوم", "مهامي اليوم"]], _handle_tasks, permission="tasks.view_own"),
     Intent("diseases", [["امراض مفتوحة", "مرض مفتوح", "حيوانات مريضة", "كم مريض"]], _handle_diseases, permission="health.view"),
