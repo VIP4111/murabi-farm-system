@@ -629,7 +629,10 @@
       {% endif %}
 
       {% if current_user.has_permission('equipment.view') %}
-      {% set _equipment_endpoints = ['equipment.items_list', 'equipment.items_mine'] %}
+      {% set _equipment_endpoints = ['equipment.items_list', 'equipment.items_mine', 'equipment.items_new',
+                                      'equipment.items_edit', 'equipment.purchase_new', 'equipment.items_movement',
+                                      'equipment.assets_list', 'equipment.assets_new', 'equipment.asset_maintenance',
+                                      'equipment.utilities_list', 'equipment.utilities_new'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _equipment_endpoints else '' }}>
         <summary>{{ nav_icon('equipment') }}{{ _('المعدات') }}</summary>
         <div class="drawer-grid">

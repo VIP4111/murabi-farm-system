@@ -21,6 +21,40 @@ def save_equipment_photo(file_storage) -> str | None:
                         allowed_extensions=ALLOWED_PHOTO_EXTENSIONS, max_bytes=MAX_PHOTO_BYTES)
 
 
+def record_maintenance_cost(*, asset, cost: float | None, date_) -> int | None:
+    """يربط تكلفة صيانة أصل بعملية مالية حقيقية (بند إضافي 263) —
+    قبل هذا البند، `AssetMaintenanceLog.cost` كان يُخزَّن بس، بدون أي
+    أثر بسجل "المالية" العام. مصروف حقيقي جديد (مو استهلاك مخزون
+    مدفوع من قبل)، فما فيه احتمال احتساب مزدوج — أي تكلفة > 0 تُنشئ
+    عملية مالية مباشرة."""
+    if not cost or cost <= 0:
+        return None
+    from app.models import Finance
+    fin = Finance(
+        date=date_, operation_type="expense", category="صيانة معدات",
+        item=asset.name, amount=cost,
+    )
+    db.session.add(fin)
+    db.session.flush()
+    return fin.id
+
+
+def record_utility_cost(*, utility_type: str, cost: float | None, date_) -> int | None:
+    """يربط فاتورة كهرباء/ماء بعملية مالية حقيقية (بند إضافي 263) —
+    نفس مبدأ `record_maintenance_cost` أعلاه."""
+    if not cost or cost <= 0:
+        return None
+    from app.models import Finance
+    label = "كهرباء" if utility_type == "electricity" else "ماء"
+    fin = Finance(
+        date=date_, operation_type="expense", category=f"فاتورة {label}",
+        item=label, amount=cost,
+    )
+    db.session.add(fin)
+    db.session.flush()
+    return fin.id
+
+
 def my_borrow(item, user_id):
     """آخر استعارة قائمة لهذا المستخدم لهذي القطعة (بند إضافي 199) —
     تُستخدم بشاشة العامل المبسّطة لتحديد لو زر "أخذ" أو "استرجاع"."""

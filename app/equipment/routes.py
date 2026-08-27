@@ -241,10 +241,11 @@ def asset_maintenance(asset_id):
     asset = Asset.query.get_or_404(asset_id)
     if request.method == "POST":
         maintenance_date = date.fromisoformat(request.form["date"])
+        cost = float(request.form["cost"]) if request.form.get("cost") else None
+        finance_id = svc.record_maintenance_cost(asset=asset, cost=cost, date_=maintenance_date)
         db.session.add(AssetMaintenanceLog(
             asset_id=asset.id, date=maintenance_date, notes=request.form.get("notes"),
-            cost=float(request.form["cost"]) if request.form.get("cost") else None,
-            performed_by_id=current_user.id,
+            cost=cost, performed_by_id=current_user.id, finance_id=finance_id,
         ))
         asset.last_maintenance_date = maintenance_date
         db.session.commit()
@@ -269,11 +270,14 @@ def utilities_list():
 @require_permission("equipment.manage")
 def utilities_new():
     if request.method == "POST":
+        reading_date = date.fromisoformat(request.form["date"])
+        utility_type = request.form["utility_type"]
+        cost = float(request.form["cost"]) if request.form.get("cost") else None
+        finance_id = svc.record_utility_cost(utility_type=utility_type, cost=cost, date_=reading_date)
         db.session.add(UtilityReading(
-            utility_type=request.form["utility_type"], date=date.fromisoformat(request.form["date"]),
+            utility_type=utility_type, date=reading_date,
             quantity=float(request.form["quantity"]), unit=request.form.get("unit"),
-            cost=float(request.form["cost"]) if request.form.get("cost") else None,
-            notes=request.form.get("notes"),
+            cost=cost, notes=request.form.get("notes"), finance_id=finance_id,
         ))
         db.session.commit()
         flash("تم تسجيل القراءة", "success")

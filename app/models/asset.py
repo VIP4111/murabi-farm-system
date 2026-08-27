@@ -41,6 +41,13 @@ class AssetMaintenanceLog(db.Model):
     cost = db.Column(db.Float, nullable=True)
     performed_by_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     performed_by = db.relationship("User")
+
+    # ربط بعملية مالية حقيقية (بند إضافي 263) — قبل هذا البند، `cost`
+    # كان يُخزَّن هنا بس، بدون أي أثر بسجل "المالية" العام (إجمالي
+    # الخارج، صافي الربح، تكلفة الرأس الشهرية، تشخيص الخسارة...).
+    finance_id = db.Column(db.Integer, db.ForeignKey("finance.id"), nullable=True)
+    finance = db.relationship("Finance")
+
     created_at = db.Column(db.DateTime, default=_now)
 
 
@@ -59,4 +66,10 @@ class UtilityReading(db.Model):
     unit = db.Column(db.String(16))  # m3 / kWh
     cost = db.Column(db.Float, nullable=True)
     notes = db.Column(db.Text)
+
+    # ربط بعملية مالية حقيقية (بند إضافي 263) — نفس مبدأ
+    # AssetMaintenanceLog.finance_id أعلاه، لفاتورة الكهرباء/الماء.
+    finance_id = db.Column(db.Integer, db.ForeignKey("finance.id"), nullable=True)
+    finance = db.relationship("Finance")
+
     created_at = db.Column(db.DateTime, default=_now)
