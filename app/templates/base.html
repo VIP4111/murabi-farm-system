@@ -559,7 +559,14 @@
       {% set _animals_endpoints = ['core.animals_list', 'core.animals_bulk_home', 'core.barns_list', 'repro.matings_list', 'repro.pregnancies_list', 'repro.sonar_list', 'repro.programs_list', 'ostrich.eggs_list',
                                     'repro.sires_list', 'repro.matings_new', 'repro.pregnancies_new', 'repro.sonar_new',
                                     'repro.programs_new', 'repro.program_detail', 'repro.program_attempt_new',
-                                    'repro.program_device_new', 'repro.program_injection_new'] %}
+                                    'repro.program_device_new', 'repro.program_injection_new',
+                                    'core.animals_list_simple', 'core.smart_sale_report', 'core.species_types_new',
+                                    'core.breeds_new', 'core.breeds_list', 'core.breed_edit', 'core.colors_new',
+                                    'core.animals_new', 'core.animals_edit', 'core.animal_detail',
+                                    'core.animal_isolation_enter', 'core.animal_isolation_exit', 'core.animal_workflow',
+                                    'core.animal_sale_invoice', 'core.animals_bulk_purchase',
+                                    'core.barns_new', 'core.barns_edit',
+                                    'ostrich.eggs_new', 'ostrich.eggs_hatch', 'ostrich.incubators_list', 'ostrich.incubators_new'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _animals_endpoints else '' }}>
         <summary>{{ nav_icon('animals') }}{{ _('الحلال') }}</summary>
         <div class="drawer-grid">
