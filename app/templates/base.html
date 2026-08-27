@@ -556,7 +556,10 @@
       </details>
 
       {% if current_user.has_permission('animals.view') %}
-      {% set _animals_endpoints = ['core.animals_list', 'core.animals_bulk_home', 'core.barns_list', 'repro.matings_list', 'repro.pregnancies_list', 'repro.sonar_list', 'repro.programs_list', 'ostrich.eggs_list'] %}
+      {% set _animals_endpoints = ['core.animals_list', 'core.animals_bulk_home', 'core.barns_list', 'repro.matings_list', 'repro.pregnancies_list', 'repro.sonar_list', 'repro.programs_list', 'ostrich.eggs_list',
+                                    'repro.sires_list', 'repro.matings_new', 'repro.pregnancies_new', 'repro.sonar_new',
+                                    'repro.programs_new', 'repro.program_detail', 'repro.program_attempt_new',
+                                    'repro.program_device_new', 'repro.program_injection_new'] %}
       <details class="drawer-group" {{ 'open' if request.endpoint in _animals_endpoints else '' }}>
         <summary>{{ nav_icon('animals') }}{{ _('الحلال') }}</summary>
         <div class="drawer-grid">
