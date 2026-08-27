@@ -170,11 +170,17 @@ def finance_summary() -> dict:
     expenses = sum(r.amount for r in rows if r.operation_type == "expense")
     debt_in = sum(r.amount for r in rows if r.operation_type == "debt_in")
     debt_repaid = sum(r.amount for r in rows if r.operation_type == "debt_repayment")
+    total_out = purchases + expenses
+    net = sales - total_out
     return {
         "month_name": month_start.strftime("%Y-%m"),
         "sales": sales,
         "purchases": purchases,
         "expenses": expenses,
-        "net": sales - purchases - expenses,
+        "net": net,
+        # نسبة الربح لهذا الشهر (بند إضافي 273) — نفس معادلة بطاقة "نسبة
+        # الربح" بشاشة المالية الرئيسية (بند 256): صافي ÷ إجمالي الخارج،
+        # None لو ما فيه إجمالي خارج (تقسيم على صفر).
+        "net_percent": round((net / total_out) * 100, 1) if total_out else None,
         "debt_outstanding": debt_in - debt_repaid,
     }

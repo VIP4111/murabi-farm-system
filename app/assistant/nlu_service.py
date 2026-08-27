@@ -175,10 +175,13 @@ def _handle_vaccinations_due(user) -> str:
 
 def _handle_finance(user) -> str:
     s = context_service.finance_summary()
+    net_line = f"الصافي (بدون الديون): {_fmt(s['net'])}"
+    if s["net_percent"] is not None:
+        net_line += f" — نسبة الربح: {s['net_percent']:g}%"
     lines = [
         f"ملخص المالية لشهر {s['month_name']}:",
         f"مبيعات: {_fmt(s['sales'])} | مشتريات: {_fmt(s['purchases'])} | مصروفات: {_fmt(s['expenses'])}",
-        f"الصافي (بدون الديون): {_fmt(s['net'])}",
+        net_line,
     ]
     if s["debt_outstanding"]:
         lines.append(f"دين مستحق حالياً: {_fmt(s['debt_outstanding'])}")
@@ -203,7 +206,8 @@ INTENTS: list[Intent] = [
     Intent("diseases", [["امراض مفتوحة", "مرض مفتوح", "حيوانات مريضة", "كم مريض"]], _handle_diseases, permission="health.view"),
     Intent("vaccinations_due", [["تحصين مستحق", "تطعيم مستحق", "تحصينات مستحقة", "موعد تحصين", "تحصين متاخر"]],
            _handle_vaccinations_due, permission="health.view"),
-    Intent("finance", [["المبيعات", "الارباح", "صافي الربح", "الوضع المالي", "المصروفات هذا الشهر"]],
+    Intent("finance", [["المبيعات", "الارباح", "صافي الربح", "الوضع المالي", "المصروفات هذا الشهر",
+                         "نسبة الربح", "نسبة ربحي", "كم ربحي", "نسبة ارباحي"]],
            _handle_finance, permission="finance.full.manage"),
     Intent("herd_count", [["كم", "عدد"], ["حيوان", "راس", "رأس", "رؤوس", "قطيع", "حلال"]],
            _handle_herd_count, permission="animals.view"),
