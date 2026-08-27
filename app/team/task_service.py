@@ -161,6 +161,31 @@ def soft_delete_suggested_task(task: Task, *, actor, reason=None) -> Task:
     return task
 
 
+STALE_SUGGESTED_TASK_DAYS = 2  # بند إضافي 280
+
+
+def expire_stale_suggested_tasks(*, today: date | None = None) -> list[Task]:
+    """حذف تلقائي (نفس حالة `soft_delete_suggested_task` النهائية —
+    `deleted_pending_review`، تتحول لصندوق مراجعة صاحب الحلال، مو حذف
+    نهائي صامت) لأي مهمة "مقترحة" فات موعدها بيومين أو أكثر بدون
+    اعتماد أو تأجيل أو حذف يدوي (بند إضافي 280، طلبك الصريح: "لو عديت
+    ودخلت 30 بدون اعتماد 28 تنحذف تلقائي"). ما فيه `actor` بشري هنا —
+    نفس فلسفة كل التوليد التلقائي بالمشروع (بدون Cron، يُستدعى عند فتح
+    شاشة المهام)، فما فيه `AuditLog` بفاعل — العملية نفسها موثَّقة
+    بالملاحظة."""
+    today = today or date.today()
+    cutoff = today - timedelta(days=STALE_SUGGESTED_TASK_DAYS)
+    stale = Task.query.filter(
+        Task.status == "suggested", Task.due_date.isnot(None), Task.due_date <= cutoff,
+    ).all()
+    for t in stale:
+        t.status = "deleted_pending_review"
+        t.notes = ((t.notes + " | ") if t.notes else "") + "انتهت صلاحيتها تلقائياً — فات موعدها بدون اعتماد."
+    if stale:
+        db.session.commit()
+    return stale
+
+
 def owner_restore_task(task: Task, *, actor) -> Task:
     if not actor.has_permission("tasks.delete_final"):
         raise TaskPermissionError("الاسترجاع حصري لصاحب الحلال.")

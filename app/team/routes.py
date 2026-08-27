@@ -844,7 +844,18 @@ def tasks_list():
     if role_filter not in dict(ROLE_FILTER_TABS):
         role_filter = "all"
     if current_user.has_permission("tasks.review_daily"):
-        suggested = Task.query.filter_by(status="suggested").order_by(Task.due_date, Task.sort_order).all()
+        # بند إضافي 280 — طلبك الصريح: (1) القائمة تعرض اليوم وبكرة بس،
+        # (2) لو فات الموعد يومين بدون اعتماد تُحذف تلقائياً (تنظيف
+        # الصف نفسه) بدل ما تتراكم للأبد. المهام بدون موعد محدد (نادرة،
+        # زي بعض خطط العلاج المقترحة) تبقى تظهر دايماً — ما فيه تاريخ
+        # نقارن عليه أصلاً.
+        tsvc.expire_stale_suggested_tasks()
+        today = date.today()
+        suggested = (Task.query.filter(
+                Task.status == "suggested",
+                db.or_(Task.due_date.is_(None),
+                       db.and_(Task.due_date >= today, Task.due_date <= today + timedelta(days=1))),
+            ).order_by(Task.due_date, Task.sort_order).all())
         # فلترة حسب الدور المستهدف (بند إضافي 68) — تطابق target_role
         # الصريح، أو دور الشخص المعيّن فعلاً لو ما فيه target_role
         # مسجَّل (مهام قديمة أو مُنشأة قبل هذا البند).
