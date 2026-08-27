@@ -20,13 +20,14 @@ from app.extensions import db
 from app.models import AssistantMessage
 from app.assistant import context_service, knowledge_base, llm_bridge
 from app.assistant.text_utils import normalize
+from app.assistant.translations import tr, lang_for
 
 
 @dataclass
 class Intent:
     code: str
     keyword_groups: list[list[str]]  # AND بين المجموعات، OR داخل كل مجموعة
-    handler: Callable[[object], str]
+    handler: Callable[[object, str], str]
     permission: str | None = None
     normalized_groups: list[list[str]] = field(default_factory=list, repr=False)
 
@@ -37,112 +38,101 @@ class Intent:
         return all(any(kw in normalized_text for kw in group) for group in self.normalized_groups)
 
 
-PERMISSION_DENIED_MSG = "هذا السؤال يحتاج صلاحية غير متوفرة بحسابك حالياً — راجع صاحب المزرعة لو تحتاجها."
+def PERMISSION_DENIED_MSG(lang="ar"):
+    return tr("permission_denied", lang)
 
-HELP_MSG = (
-    "أقدر أساعدك بأمثلة زي:\n"
-    "- ماذا علي فعله اليوم؟\n"
-    "- كم عدد الحيوانات بالمزرعة؟\n"
-    "- كم رأس حوامل لدينا؟\n"
-    "- ما حالة الحاضنات اليوم؟\n"
-    "- كم التكلفة اليومية للأعلاف؟\n"
-    "- وش التنبيهات الحالية؟\n"
-    "- كم عندي مهمة اليوم؟\n"
-    "- كم عدد الأمراض المفتوحة؟\n"
-    "- إرشادات عن التفقيس، التحصينات، العزل، الشعير المستنبت، أو الأزولا."
-)
 
-GREETING_MSG = "وعليكم السلام، أهلاً بك! أنا مساعد مزرعة \"مربي\" الذكي. " + HELP_MSG
+def HELP_MSG(lang="ar"):
+    return tr("help", lang)
 
-FALLBACK_MSG = (
-    "ما قدرت أفهم سؤالك بدقة. " + HELP_MSG
-)
+
+def GREETING_MSG(lang="ar"):
+    return tr("greeting", lang) + HELP_MSG(lang)
+
+
+def FALLBACK_MSG(lang="ar"):
+    return tr("fallback_prefix", lang) + HELP_MSG(lang)
 
 
 def _fmt(n: float) -> str:
     return f"{n:,.2f}"
 
 
-def _handle_greeting(user) -> str:
-    return GREETING_MSG
+def _handle_greeting(user, lang) -> str:
+    return GREETING_MSG(lang)
 
 
-def _handle_help(user) -> str:
-    return HELP_MSG
+def _handle_help(user, lang) -> str:
+    return HELP_MSG(lang)
 
 
-def _handle_herd_count(user) -> str:
+def _handle_herd_count(user, lang) -> str:
     s = context_service.herd_summary()
     lines = [
-        f"القطيع النشط حالياً: {s['total_active']} رأس.",
-        f"المجترات (غنم/ماعز): {s['ruminants_total']} — ذكور {s['ruminants_male']}، إناث {s['ruminants_female']}.",
+        tr("herd_count_active", lang, total=s["total_active"]),
+        tr("herd_count_ruminants", lang, total=s["ruminants_total"], male=s["ruminants_male"], female=s["ruminants_female"]),
     ]
     if s["ostrich_total"]:
-        lines.append(f"النعام: {s['ostrich_total']} — ذكور {s['ostrich_male']}، إناث {s['ostrich_female']}.")
+        lines.append(tr("herd_count_ostrich", lang, total=s["ostrich_total"], male=s["ostrich_male"], female=s["ostrich_female"]))
     return "\n".join(lines)
 
 
-def _handle_pregnant(user) -> str:
+def _handle_pregnant(user, lang) -> str:
     s = context_service.pregnant_summary()
     if s["count"] == 0:
-        return "ما فيه حالياً إناث حوامل مسجّلة بالنظام."
+        return tr("no_pregnant", lang)
     nums = "، ".join(s["animal_numbers"])
-    extra = f" (وغيرهم حتى {s['count']})" if s["count"] > len(s["animal_numbers"]) else ""
-    reply = f"عدد الإناث الحوامل حالياً: {s['count']} رأس: {nums}{extra}."
+    extra = tr("pregnant_extra", lang, count=s["count"]) if s["count"] > len(s["animal_numbers"]) else ""
+    reply = tr("pregnant_count", lang, count=s["count"], names=nums, extra=extra)
     if s["near_birth_count"]:
-        reply += f"\nمنهم {s['near_birth_count']} قريبين من الولادة خلال 30 يوم القادمة."
+        reply += "\n" + tr("pregnant_near_birth_note", lang, count=s["near_birth_count"])
     return reply
 
 
-def _handle_near_birth(user) -> str:
+def _handle_near_birth(user, lang) -> str:
     s = context_service.pregnant_summary()
     if s["near_birth_count"] == 0:
-        return "ما فيه حيوانات قريبة من الولادة خلال 30 يوم القادمة حالياً."
+        return tr("no_near_birth", lang)
     nums = "، ".join(s["near_birth_numbers"])
-    return f"عندك {s['near_birth_count']} رأس قريب من الولادة خلال 30 يوم القادمة: {nums}."
+    return tr("near_birth_count", lang, count=s["near_birth_count"], names=nums)
 
 
-def _handle_ostrich(user) -> str:
+def _handle_ostrich(user, lang) -> str:
     s = context_service.ostrich_summary()
-    line1 = f"الحاضنات: {s['incubators_total']} حاضنة فعّالة، مشغولة حالياً: {s['incubators_occupied']}"
-    if s["capacity_total"]:
-        line1 += f" (سعة إجمالية {s['capacity_total']} بيضة)."
-    else:
-        line1 += "."
-    line2 = f"البيض: {s['eggs_pending']} قيد الحضانة، {s['eggs_hatched']} فقست، {s['eggs_failed']} فشلت."
+    line1 = tr("ostrich_line1", lang, total=s["incubators_total"], occupied=s["incubators_occupied"])
+    line1 += tr("ostrich_capacity", lang, capacity=s["capacity_total"]) if s["capacity_total"] else "."
+    line2 = tr("ostrich_eggs", lang, pending=s["eggs_pending"], hatched=s["eggs_hatched"], failed=s["eggs_failed"])
     return line1 + "\n" + line2
 
 
-def _handle_feed_location(user) -> str:
-    return (
-        "مخزون العلف تلقاه بشاشة \"الأعلاف\" من القائمة الرئيسية (/feed/items)، "
-        "أو من شاشة \"متابعة مبسّطة\" ← المخزون ← الأعلاف لو تبي عرض مبسّط بخط كبير."
-    )
+def _handle_feed_location(user, lang) -> str:
+    return tr("feed_location", lang)
 
 
-def _handle_feed_cost(user) -> str:
+def _handle_feed_cost(user, lang) -> str:
     s = context_service.feed_cost_summary()
     if not s["has_active_plans"]:
-        return "ما فيه خطط تغذية فعّالة حالياً بشاشة العلف، فما أقدر أحسب التكلفة اليومية."
-    lines = [f"التكلفة اليومية التقديرية للعلف: {_fmt(s['total_daily_cost'])} (تقدير شهري ≈ {_fmt(s['total_monthly_estimate'])})."]
+        return tr("feed_cost_none", lang)
+    lines = [tr("feed_cost_total", lang, daily=_fmt(s["total_daily_cost"]), monthly=_fmt(s["total_monthly_estimate"]))]
     for b in s["barn_breakdown"][:5]:
-        lines.append(f"- {b['barn_name']} ({b['head_count']} رأس، وصفة {b['ration_name']}): {_fmt(b['daily_cost'])}")
+        lines.append(tr("feed_cost_barn_line", lang, barn=b["barn_name"], count=b["head_count"],
+                         ration=b["ration_name"], cost=_fmt(b["daily_cost"])))
     return "\n".join(lines)
 
 
-def _handle_alerts(user) -> str:
+def _handle_alerts(user, lang) -> str:
     s = context_service.alerts_summary(limit=5)
     if s["total"] == 0:
-        return "ما فيه تنبيهات حالياً — كل شي تمام."
-    lines = [f"عندك {s['total']} تنبيه ({s['urgent_total']} عاجل). أهمها:"]
+        return tr("alerts_none", lang)
+    lines = [tr("alerts_count", lang, total=s["total"], urgent=s["urgent_total"])]
     for a in s["top"]:
         detail = f" — {a['detail']}" if a["detail"] else ""
         lines.append(f"- {a['icon']} {a['label']}{detail}")
-    lines.append("افتح شاشة التنبيهات لعرض القائمة كاملة.")
+    lines.append(tr("alerts_footer", lang))
     return "\n".join(lines)
 
 
-def _handle_today_plan(user) -> str:
+def _handle_today_plan(user, lang) -> str:
     """"شنو أسوي اليوم؟" (بند إضافي 274، طلبك الصريح) — يجمع مهامك
     المفتوحة الحالية (`tasks.view_own`، متاحة لكل عضو فريق فعّال) +
     أهم التنبيهات العاجلة (`animals.view` — لو ما عندك هالصلاحية،
@@ -153,73 +143,73 @@ def _handle_today_plan(user) -> str:
 
     tasks = context_service.my_tasks_summary(user)
     if tasks["count"] == 0:
-        parts.append("ما عندك مهام مفتوحة اليوم.")
+        parts.append(tr("today_no_tasks", lang))
     else:
-        lines = [f"📋 عندك {tasks['count']} مهمة مفتوحة:"]
+        lines = [tr("today_tasks_header", lang, count=tasks["count"])]
         for t in tasks["items"]:
-            lock = " 🔒 مقفلة" if t["locked"] else ""
-            due = f" (موعدها {t['due_date']})" if t["due_date"] else ""
+            lock = tr("task_locked", lang) if t["locked"] else ""
+            due = tr("task_due", lang, due=t["due_date"]) if t["due_date"] else ""
             lines.append(f"- {t['title']}{due}{lock}")
         parts.append("\n".join(lines))
 
     if user.has_permission("animals.view"):
         alerts = context_service.alerts_summary(limit=3)
         if alerts["urgent_total"]:
-            lines = [f"\n⚠️ عندك {alerts['urgent_total']} تنبيه عاجل من أصل {alerts['total']}:"]
+            lines = [tr("today_urgent_header", lang, urgent=alerts["urgent_total"], total=alerts["total"])]
             for a in alerts["top"]:
                 if a["urgent"]:
                     lines.append(f"- {a['icon']} {a['label']}")
             parts.append("\n".join(lines))
         elif alerts["total"]:
-            parts.append(f"\nℹ️ عندك {alerts['total']} تنبيه غير عاجل — راجعها بشاشة التنبيهات وقت مناسب.")
+            parts.append(tr("today_nonurgent_note", lang, total=alerts["total"]))
 
     return "\n".join(parts)
 
 
-def _handle_tasks(user) -> str:
+def _handle_tasks(user, lang) -> str:
     s = context_service.my_tasks_summary(user)
     if s["count"] == 0:
-        return "ما عندك مهام مفتوحة حالياً."
-    lines = [f"عندك {s['count']} مهمة مفتوحة:"]
+        return tr("tasks_none", lang)
+    lines = [tr("tasks_count", lang, count=s["count"])]
     for t in s["items"]:
-        lock = " 🔒 مقفلة" if t["locked"] else ""
-        due = f" (موعدها {t['due_date']})" if t["due_date"] else ""
+        lock = tr("task_locked", lang) if t["locked"] else ""
+        due = tr("task_due", lang, due=t["due_date"]) if t["due_date"] else ""
         lines.append(f"- {t['title']}{due}{lock}")
     return "\n".join(lines)
 
 
-def _handle_diseases(user) -> str:
+def _handle_diseases(user, lang) -> str:
     s = context_service.disease_summary()
     if s["count"] == 0:
-        return "ما فيه أمراض مفتوحة حالياً — الوضع الصحي للقطيع سليم."
-    lines = [f"عندك {s['count']} حالة مرض مفتوحة:"]
+        return tr("diseases_none", lang)
+    lines = [tr("diseases_count", lang, count=s["count"])]
     for d in s["items"]:
-        lines.append(f"- {d['animal_no']}: {d['disease_name']} (مفتوح منذ {d['days_open']} يوم)")
+        lines.append(tr("disease_line", lang, animal=d["animal_no"], name=d["disease_name"], days=d["days_open"]))
     return "\n".join(lines)
 
 
-def _handle_vaccinations_due(user) -> str:
+def _handle_vaccinations_due(user, lang) -> str:
     s = context_service.vaccinations_due_summary()
     if s["count"] == 0:
-        return "ما فيه تحصينات مستحقة أو متأخرة حالياً."
-    lines = [f"عندك {s['count']} تحصين مستحق/متأخر ({s['overdue_count']} متأخر فعلياً):"]
+        return tr("vaccinations_none", lang)
+    lines = [tr("vaccinations_count", lang, count=s["count"], overdue=s["overdue_count"])]
     for a in s["items"]:
-        lines.append(f"- {a['label']} — {a['detail']}")
+        lines.append(tr("vaccination_line", lang, label=a["label"], detail=a["detail"]))
     return "\n".join(lines)
 
 
-def _handle_finance(user) -> str:
+def _handle_finance(user, lang) -> str:
     s = context_service.finance_summary()
-    net_line = f"الصافي (بدون الديون): {_fmt(s['net'])}"
+    net_line = tr("finance_net", lang, net=_fmt(s["net"]))
     if s["net_percent"] is not None:
-        net_line += f" — نسبة الربح: {s['net_percent']:g}%"
+        net_line += tr("finance_net_percent", lang, percent=f"{s['net_percent']:g}")
     lines = [
-        f"ملخص المالية لشهر {s['month_name']}:",
-        f"مبيعات: {_fmt(s['sales'])} | مشتريات: {_fmt(s['purchases'])} | مصروفات: {_fmt(s['expenses'])}",
+        tr("finance_header", lang, month=s["month_name"]),
+        tr("finance_line", lang, sales=_fmt(s["sales"]), purchases=_fmt(s["purchases"]), expenses=_fmt(s["expenses"])),
         net_line,
     ]
     if s["debt_outstanding"]:
-        lines.append(f"دين مستحق حالياً: {_fmt(s['debt_outstanding'])}")
+        lines.append(tr("finance_debt", lang, debt=_fmt(s["debt_outstanding"])))
     return "\n".join(lines)
 
 
@@ -227,27 +217,70 @@ def _handle_finance(user) -> str:
 # النهاية — عشان "كم عدد الحاضنات" مثلاً يطابق نية النعام قبل ما يوصل لعدّاد
 # الحيوانات العام.
 INTENTS: list[Intent] = [
-    Intent("greeting", [["السلام عليكم", "مرحبا", "هلا", "صباح الخير", "مساء الخير"]], _handle_greeting),
-    Intent("help", [["مساعدة", "ماذا تستطيع", "شو تقدر تسوي", "ما هي قدراتك", "اوامر"]], _handle_help),
-    Intent("near_birth", [["قريب الولادة", "قرب الولادة", "بدها تولد", "متى تلد", "ولادات قريبة", "ولادات متوقعة"]],
+    Intent("greeting", [["السلام عليكم", "مرحبا", "هلا", "صباح الخير", "مساء الخير",
+                          "hello", "hi", "good morning", "good evening",
+                          "ሰላም", "እንደምን አደሩ",
+                          "नमस्ते", "नमस्कार"]], _handle_greeting),
+    Intent("help", [["مساعدة", "ماذا تستطيع", "شو تقدر تسوي", "ما هي قدراتك", "اوامر",
+                      "help", "what can you do",
+                      "እርዳታ", "ምን ማድረግ ትችላለህ",
+                      "मदद", "आप क्या कर सकते हैं"]], _handle_help),
+    Intent("near_birth", [["قريب الولادة", "قرب الولادة", "بدها تولد", "متى تلد", "ولادات قريبة", "ولادات متوقعة",
+                            "near delivery", "about to give birth", "due date",
+                            "ለመውለድ ተቃርበ", "የመውለጃ ቀን",
+                            "प्रसव के करीब", "प्रसव तिथि"]],
            _handle_near_birth, permission="animals.view"),
-    Intent("pregnant", [["حوامل", "حامل", "حمل مؤكد"]], _handle_pregnant, permission="animals.view"),
-    Intent("ostrich", [["حاضنة", "حاضنات", "تفقيس", "بيض النعام", "النعام"]], _handle_ostrich, permission="repro.view"),
-    Intent("feed_location", [["علف", "اعلاف", "أعلاف"], ["وين", "أين", "فين", "مكان", "لقى", "اجد", "أجد"]],
+    Intent("pregnant", [["حوامل", "حامل", "حمل مؤكد", "pregnant", "pregnancy", "እርጉዝ", "गर्भवती"]],
+           _handle_pregnant, permission="animals.view"),
+    Intent("ostrich", [["حاضنة", "حاضنات", "تفقيس", "بيض النعام", "النعام",
+                         "incubator", "hatching", "ostrich egg", "ostrich",
+                         "ማቀፊያ", "መፈልፈል", "ሰጎን",
+                         "इनक्यूबेटर", "हैचिंग", "शुतुरमुर्ग"]],
+           _handle_ostrich, permission="repro.view"),
+    Intent("feed_location", [["علف", "اعلاف", "أعلاف", "feed", "fodder", "መኖ", "चारा"],
+                              ["وين", "أين", "فين", "مكان", "لقى", "اجد", "أجد",
+                               "where", "location", "find",
+                               "የት", "የት አለ",
+                               "कहाँ", "कहां"]],
            _handle_feed_location, permission="feed.view"),
-    Intent("feed_cost", [["علف", "اعلاف", "أعلاف"], ["تكلفة", "مصروف", "كم"]], _handle_feed_cost, permission="feed.view"),
+    Intent("feed_cost", [["علف", "اعلاف", "أعلاف", "feed", "fodder", "መኖ", "चारा"],
+                          ["تكلفة", "مصروف", "كم", "cost", "how much", "ወጪ", "ስንት", "लागत", "कितना"]],
+           _handle_feed_cost, permission="feed.view"),
     Intent("today_plan", [["ماذا اسوي اليوم", "وش اسوي اليوم", "شنو اسوي اليوم", "ايش اسوي اليوم",
-                            "ماذا علي فعله اليوم", "شنو برنامجي اليوم", "خطة اليوم", "وش برنامجي اليوم"]],
+                            "ماذا علي فعله اليوم", "شنو برنامجي اليوم", "خطة اليوم", "وش برنامجي اليوم",
+                            "what should i do today", "today's plan", "my plan today",
+                            "ዛሬ ምን ማድረግ አለብኝ", "የዛሬ እቅድ",
+                            "आज मुझे क्या करना चाहिए", "आज की योजना"]],
            _handle_today_plan, permission="tasks.view_own"),
-    Intent("alerts", [["تنبيه", "تنبيهات", "انذار", "إنذار"]], _handle_alerts, permission="animals.view"),
-    Intent("tasks", [["مهامي", "مهمتي", "مهام اليوم", "مهامي اليوم"]], _handle_tasks, permission="tasks.view_own"),
-    Intent("diseases", [["امراض مفتوحة", "مرض مفتوح", "حيوانات مريضة", "كم مريض"]], _handle_diseases, permission="health.view"),
-    Intent("vaccinations_due", [["تحصين مستحق", "تطعيم مستحق", "تحصينات مستحقة", "موعد تحصين", "تحصين متاخر"]],
+    Intent("alerts", [["تنبيه", "تنبيهات", "انذار", "إنذار", "alert", "alerts", "notification",
+                        "ማንቂያ", "ማስጠንቀቂያ", "अलर्ट", "चेतावनी"]],
+           _handle_alerts, permission="animals.view"),
+    Intent("tasks", [["مهامي", "مهمتي", "مهام اليوم", "مهامي اليوم",
+                       "my tasks", "today's tasks",
+                       "የእኔ ተግባራት", "የዛሬ ተግባራት",
+                       "मेरे कार्य", "आज के कार्य"]],
+           _handle_tasks, permission="tasks.view_own"),
+    Intent("diseases", [["امراض مفتوحة", "مرض مفتوح", "حيوانات مريضة", "كم مريض",
+                          "open disease", "sick animals",
+                          "ክፍት በሽታ", "የታመሙ እንስሳት",
+                          "खुला रोग", "बीमार जानवर"]],
+           _handle_diseases, permission="health.view"),
+    Intent("vaccinations_due", [["تحصين مستحق", "تطعيم مستحق", "تحصينات مستحقة", "موعد تحصين", "تحصين متاخر",
+                                  "vaccination due", "overdue vaccination",
+                                  "የደረሰ ክትባት", "የዘገየ ክትባት",
+                                  "देय टीकाकरण", "विलंबित टीकाकरण"]],
            _handle_vaccinations_due, permission="health.view"),
     Intent("finance", [["المبيعات", "الارباح", "صافي الربح", "الوضع المالي", "المصروفات هذا الشهر",
-                         "نسبة الربح", "نسبة ربحي", "كم ربحي", "نسبة ارباحي"]],
+                         "نسبة الربح", "نسبة ربحي", "كم ربحي", "نسبة ارباحي",
+                         "sales", "profit", "net profit", "financial status", "profit percentage",
+                         "ሽያጭ", "ትርፍ", "የፋይናንስ ሁኔታ",
+                         "बिक्री", "लाभ", "वित्तीय स्थिति"]],
            _handle_finance, permission="finance.full.manage"),
-    Intent("herd_count", [["كم", "عدد"], ["حيوان", "راس", "رأس", "رؤوس", "قطيع", "حلال"]],
+    Intent("herd_count", [["كم", "عدد", "how many", "how much", "count", "ስንት", "कितने", "कितना"],
+                           ["حيوان", "راس", "رأس", "رؤوس", "قطيع", "حلال",
+                            "animal", "head", "herd",
+                            "እንስሳት", "ራስ", "መንጋ",
+                            "जानवर", "सिर", "झुंड"]],
            _handle_herd_count, permission="animals.view"),
 ]
 
@@ -271,27 +304,33 @@ def _build_llm_context(user) -> str:
     return "\n".join(parts) if parts else "لا توجد بيانات متاحة لصلاحيات هذا المستخدم."
 
 
-def answer(user, message_text: str) -> dict:
+def answer(user, message_text: str, lang: str | None = None) -> dict:
     """المنطق الصافي بدون أي حفظ بقاعدة البيانات — يرجع
-    {"reply", "intent_code", "answered_by"}."""
+    {"reply", "intent_code", "answered_by"}.
+
+    ``lang`` (بند إضافي 275، طلبك الصريح "كل شي دفعة وحدة" لما سألت
+    هل المساعد بعدة لغات) — افتراضياً `user.language` (نفس حقل اللغة
+    المستخدم أصلاً بـ8 شاشات ميدانية)، مقيّد بـ{ar, en, am, hi}."""
+    lang = lang or lang_for(user)
     normalized = normalize(message_text)
 
     for intent in INTENTS:
         if intent.matches(normalized):
             if intent.permission and not user.has_permission(intent.permission):
-                return {"reply": PERMISSION_DENIED_MSG, "intent_code": intent.code, "answered_by": "local"}
-            return {"reply": intent.handler(user), "intent_code": intent.code, "answered_by": "local"}
+                return {"reply": PERMISSION_DENIED_MSG(lang), "intent_code": intent.code, "answered_by": "local"}
+            return {"reply": intent.handler(user, lang), "intent_code": intent.code, "answered_by": "local"}
 
     kb_hits = knowledge_base.search(normalized, limit=1)
     if kb_hits:
         entry = kb_hits[0]
-        return {"reply": f"**{entry.title}**\n\n{entry.body}", "intent_code": f"kb:{entry.code}", "answered_by": "local"}
+        title, body = knowledge_base.localized_entry(entry, lang)
+        return {"reply": f"**{title}**\n\n{body}", "intent_code": f"kb:{entry.code}", "answered_by": "local"}
 
-    llm_reply = llm_bridge.ask(message_text, _build_llm_context(user))
+    llm_reply = llm_bridge.ask(message_text, _build_llm_context(user), lang=lang)
     if llm_reply:
         return {"reply": llm_reply, "intent_code": None, "answered_by": "llm"}
 
-    return {"reply": FALLBACK_MSG, "intent_code": None, "answered_by": "local"}
+    return {"reply": FALLBACK_MSG(lang), "intent_code": None, "answered_by": "local"}
 
 
 def ask_and_record(user, message_text: str) -> AssistantMessage:

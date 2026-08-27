@@ -17,7 +17,8 @@ import os
 SYSTEM_PROMPT_TEMPLATE = """أنت المساعد الذكي لنظام "مربي" لإدارة مزرعة أغنام/ماعز/نعام. تخاطب المربي (صاحب المزرعة) أو أحد أفراد فريقه.
 
 قواعد صارمة:
-- جاوب بالعربي دايماً، بإيجاز ووضوح، بدون مقدمات طويلة.
+- {language_instruction}
+- بإيجاز ووضوح، بدون مقدمات طويلة.
 - اعتمد فقط على بيانات المزرعة الحية المرفقة أدناه وعلى قاعدة المعرفة التشغيلية المرفقة — لا تخترع أرقام أو أسماء حيوانات غير موجودة بالسياق المعطى.
 - المساعد قرار مو طبيب: ممنوع اقتراح جرعة دواء أو تشخيص طبي نهائي لحيوان معيّن. أي قرار علاجي نهائي يحتاج الطبيب البيطري حصراً — وجّه المستخدم له عند الحاجة.
 - لو السؤال خارج نطاق إدارة المزرعة تماماً، وضّح بأدب أنك مختص بشؤون المزرعة فقط.
@@ -25,6 +26,15 @@ SYSTEM_PROMPT_TEMPLATE = """أنت المساعد الذكي لنظام "مرب�
 بيانات المزرعة الحية الآن:
 {context}
 """
+
+# بند إضافي 275 — طلبك الصريح "كل شي دفعة وحدة" لدعم لغات متعددة.
+# نفس مجموعة اللغات المدعومة أصلاً بالشاشات الميدانية (User.language).
+_LANGUAGE_INSTRUCTIONS = {
+    "ar": "جاوب بالعربي دايماً.",
+    "en": "Always answer in English.",
+    "am": "ሁልጊዜ በአማርኛ መልስ ስጥ።",
+    "hi": "हमेशा हिंदी में उत्तर दें।",
+}
 
 # بند إضافي 84، 2026-08-02 — القيمة القديمة "claude-opus-4-8" مو معرِّف
 # نموذج حقيقي إطلاقاً (خطأ كتابي من بند 25، ما اكتُشف لأن ask() يبتلع
@@ -38,9 +48,10 @@ def is_configured() -> bool:
     return bool(os.environ.get("ANTHROPIC_API_KEY"))
 
 
-def ask(question: str, context_text: str) -> str | None:
+def ask(question: str, context_text: str, lang: str = "ar") -> str | None:
     """يرجع رد Claude، أو None لو المفتاح غير مُفعّل أو صار أي خطأ (نرجع
-    None عمداً بدل رفع استثناء — nlu_service.py يلتف على fallback محلي)."""
+    None عمداً بدل رفع استثناء — nlu_service.py يلتف على fallback محلي).
+    ``lang`` يحدد لغة رد Claude نفسه (بند إضافي 275)."""
     if not is_configured():
         return None
     try:
@@ -49,10 +60,11 @@ def ask(question: str, context_text: str) -> str | None:
         return None
     try:
         client = anthropic.Anthropic()
+        language_instruction = _LANGUAGE_INSTRUCTIONS.get(lang, _LANGUAGE_INSTRUCTIONS["ar"])
         response = client.messages.create(
             model=DEFAULT_MODEL,
             max_tokens=1024,
-            system=SYSTEM_PROMPT_TEMPLATE.format(context=context_text),
+            system=SYSTEM_PROMPT_TEMPLATE.format(context=context_text, language_instruction=language_instruction),
             messages=[{"role": "user", "content": question}],
         )
         text = next((b.text for b in response.content if b.type == "text"), None)

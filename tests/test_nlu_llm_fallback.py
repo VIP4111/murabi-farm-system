@@ -5,7 +5,7 @@ from app.assistant import nlu_service
 
 
 def test_answer_falls_through_to_llm_bridge_when_nothing_matches_locally(monkeypatch, owner):
-    monkeypatch.setattr(nlu_service.llm_bridge, "ask", lambda q, ctx: "رد من Claude التجريبي")
+    monkeypatch.setattr(nlu_service.llm_bridge, "ask", lambda q, ctx, **kw: "رد من Claude التجريبي")
     result = nlu_service.answer(owner, "سؤال غريب جداً ما يطابق أي نية معروفة زطزط")
     assert result["answered_by"] == "llm"
     assert result["reply"] == "رد من Claude التجريبي"
@@ -13,10 +13,10 @@ def test_answer_falls_through_to_llm_bridge_when_nothing_matches_locally(monkeyp
 
 
 def test_answer_uses_local_fallback_when_llm_bridge_returns_none(monkeypatch, owner):
-    monkeypatch.setattr(nlu_service.llm_bridge, "ask", lambda q, ctx: None)
+    monkeypatch.setattr(nlu_service.llm_bridge, "ask", lambda q, ctx, **kw: None)
     result = nlu_service.answer(owner, "سؤال غريب جداً ما يطابق أي نية معروفة زطزط")
     assert result["answered_by"] == "local"
-    assert result["reply"] == nlu_service.FALLBACK_MSG
+    assert result["reply"] == nlu_service.FALLBACK_MSG()
 
 
 def test_answer_prefers_local_intent_over_llm(monkeypatch, owner):
@@ -24,7 +24,7 @@ def test_answer_prefers_local_intent_over_llm(monkeypatch, owner):
     ما توصل أبداً لـllm_bridge، حتى لو مفعَّلة."""
     called = {"count": 0}
 
-    def fake_ask(q, ctx):
+    def fake_ask(q, ctx, **kw):
         called["count"] += 1
         return "ما كان لازم توصل هنا"
 

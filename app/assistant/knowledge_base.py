@@ -21,9 +21,21 @@ class KBEntry:
     keywords: list[str]
     body: str
     normalized_keywords: list[str] = field(default_factory=list, repr=False)
+    # بند إضافي 275 — طلبك الصريح "كل شي دفعة وحدة" لدعم لغات متعددة.
+    # {lang: {"title": ..., "body": ...}} — لغة غير موجودة هنا = رجوع
+    # تلقائي للعربي (تغطية تدريجية، صفر كسر لأي بند لسا ما تُرجم).
+    translations: dict[str, dict[str, str]] = field(default_factory=dict, repr=False)
 
     def __post_init__(self):
         self.normalized_keywords = [normalize(kw) for kw in self.keywords]
+
+
+def localized_entry(entry: "KBEntry", lang: str) -> tuple[str, str]:
+    """يرجع (title, body) بلغة `lang` لو مترجمة، وإلا العربي الأصلي."""
+    tr = entry.translations.get(lang)
+    if tr:
+        return tr.get("title", entry.title), tr.get("body", entry.body)
+    return entry.title, entry.body
 
 
 ENTRIES: list[KBEntry] = [
