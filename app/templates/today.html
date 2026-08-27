@@ -10,7 +10,10 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h3 style="margin:0; font-size:15px;">✅ {{ _('مهامي المفتوحة') }}</h3>
-    <span class="badge {{ 'off' if my_tasks|length else 'on' }}">{{ my_tasks|length }}</span>
+    <a class="btn light" href="{{ url_for('team.tasks_list') }}" style="display:flex; align-items:center; gap:6px;">
+      <span class="badge {{ 'off' if my_tasks|length else 'on' }}">{{ my_tasks|length }}</span>
+      {{ _('كل المهام') }} ↗
+    </a>
   </div>
   <div class="timeline" style="margin-top:10px;">
     {% for t in my_tasks %}
@@ -32,7 +35,10 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h3 style="margin:0; font-size:15px;">🔔 {{ _('تنبيهاتي') }}</h3>
-    <span class="badge {{ 'off' if alerts|length else 'on' }}">{{ alerts|length }}</span>
+    <a class="btn light" href="{{ url_for('core.alerts_list') if current_user.has_permission('animals.view') else url_for('core.alerts_mine') }}" style="display:flex; align-items:center; gap:6px;">
+      <span class="badge {{ 'off' if alerts|length else 'on' }}">{{ alerts|length }}</span>
+      {{ _('كل التنبيهات') }} ↗
+    </a>
   </div>
   <div class="timeline" style="margin-top:10px;">
     {% for a in alerts %}

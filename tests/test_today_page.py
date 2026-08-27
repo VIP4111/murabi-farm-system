@@ -111,6 +111,26 @@ def test_today_page_alert_has_open_button(app, logged_in_client):
 
 
 def test_sidebar_no_longer_links_to_separate_alerts_page(app, logged_in_client):
+    """بند 136: النافبار الجانبي ما يكرر رابط "التنبيهات" بما إنه مدموج
+    بصفحة اليوم. بند إضافي 277 عكس هذا جزئياً بطلب صريح: زر اختصار
+    داخل الصفحة نفسها لشاشة التنبيهات الكاملة — فحصر الفحص هنا على
+    النافبار (`<nav`) فقط، مو محتوى الصفحة كله."""
     resp = logged_in_client.get("/today")
     body = resp.data.decode()
-    assert 'href="/alerts"' not in body
+    nav_html = body.split("<nav", 1)[1].split("</nav>", 1)[0] if "<nav" in body else ""
+    assert 'href="/alerts"' not in nav_html
+
+
+def test_alerts_shortcut_button_links_to_full_alerts_screen(app, logged_in_client):
+    """بند إضافي 277 — طلبك الصريح: تحويل عدّاد التنبيهات بصفحة اليوم
+    لزر اختصار خارجي يوديك لشاشة "التنبيهات" الكاملة."""
+    resp = logged_in_client.get("/today")
+    body = resp.data.decode()
+    assert 'href="/alerts"' in body
+
+
+def test_tasks_shortcut_button_links_to_full_tasks_screen(app, logged_in_client):
+    """بند إضافي 277 — نفس الفكرة لعدّاد المهام."""
+    resp = logged_in_client.get("/today")
+    body = resp.data.decode()
+    assert 'href="/team/tasks"' in body
