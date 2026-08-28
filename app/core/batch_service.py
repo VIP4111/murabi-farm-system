@@ -16,7 +16,7 @@ from datetime import date
 from app.extensions import db
 from app.models import AnimalBatch, Animal, Barn, AuditLog
 from app.models.animal import AnimalSource
-from app.core.animal_service import create_animal
+from app.core.animal_service import create_animal, create_intake_care_tasks
 from app.team import task_service
 
 
@@ -56,9 +56,6 @@ def create_batch(*, source: str, arrival_date: date, notes: str | None,
     barn_id = _quarantine_barn_id()
     animal_source = AnimalSource.PURCHASE if source == "purchase" else AnimalSource.GIFT
 
-    from app.models import FarmSettings
-    fs = FarmSettings.get()
-
     for entry in entries:
         animal = create_animal(
             animal_no=entry.get("animal_no") or None,
@@ -72,35 +69,16 @@ def create_batch(*, source: str, arrival_date: date, notes: str | None,
         animal.batch_id = batch.id
         db.session.add(animal)
 
-        # ربط بصنف صيدلية فعلي (بند إضافي 286، امتداد لبند 283) — نفس
-        # آلية `animal_service._maybe_start_purchase_quarantine` بالضبط،
-        # مطبَّقة هنا كمان بما إن هذي الشاشة عندها مسار توليد مهام
-        # منفصل تماماً (ما كان يستفيد من إصلاح بند 283 أصلاً).
-        spray_task = task_service.create_suggested_task(
-            title=f"🧴 رش وقائي — {animal.animal_no} (دفعة {batch.batch_no})",
-            task_type="batch_spray", barn_id=barn_id, animal_id=animal.id,
-            due_date=arrival_date, source_type="AnimalBatch", source_id=batch.id,
-            notes="رش وقائي ضد الطفيليات الخارجية عند الاستقبال — قبل الاختلاط بباقي القطيع.",
+        # بند إضافي 292 — نفس مهمتي الرش/التحصين المربوطتين بمخزون
+        # فعلي (بند 283)، عبر نقطة الدخول الموحّدة الوحيدة الآن
+        # (`animal_service.create_intake_care_tasks`) — قبل هذا البند
+        # كان نفس المنطق مكرَّراً هنا بالكامل، منفصلاً عن
+        # `animal_service._maybe_start_purchase_quarantine`.
+        create_intake_care_tasks(
+            animal, barn_id=barn_id, due_date=arrival_date,
+            source_type="AnimalBatch", source_id=batch.id,
+            label=f"(دفعة {batch.batch_no})",
         )
-        if fs.default_intake_spray_pharmacy_id:
-            spray = fs.default_intake_spray_pharmacy
-            spray_task.planned_pharmacy_id = spray.id
-            spray_task.planned_quantity = spray.default_dose_ml
-            spray_task.planned_treatment_kind = "vet_visit"
-            spray_task.notes += f"\nالدواء المقترح: {spray.name} (يفحص المخزون تلقائياً عند تأكيد التنفيذ)."
-
-        vaccination_task = task_service.create_suggested_task(
-            title=f"💉 تحصين مبدئي — {animal.animal_no} (دفعة {batch.batch_no})",
-            task_type="batch_initial_vaccination", barn_id=barn_id, animal_id=animal.id,
-            due_date=arrival_date, source_type="AnimalBatch", source_id=batch.id,
-            notes="تحصين مبدئي عند الاستقبال حسب البروتوكول المتّبع بالمزرعة.",
-        )
-        if fs.default_intake_vaccine_pharmacy_id:
-            vaccine = fs.default_intake_vaccine_pharmacy
-            vaccination_task.planned_pharmacy_id = vaccine.id
-            vaccination_task.planned_quantity = vaccine.default_dose_ml
-            vaccination_task.planned_treatment_kind = "vaccination"
-            vaccination_task.notes += f"\nاللقاح المقترح: {vaccine.name} (يفحص المخزون تلقائياً عند تأكيد التنفيذ)."
 
     db.session.add(AuditLog(actor_user_id=actor_user_id, action="batch.create",
                              entity_type="AnimalBatch", entity_id=batch.id,

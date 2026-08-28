@@ -42,31 +42,8 @@
     </div>
     {% endfor %}
     <p style="font-size:12px; color:#888;">{{ _('اترك أي صف فاضي لو ما تحتاجه — لازم "الجنس" و"اللون" على الأقل عشان يُحتسب الصف.') }}</p>
-    <script>
-    (function(){
-      // بند إضافي 288 — طلبك الصريح "ما حليت المشكلة، حطلي ألوان بدل
-      // الكتابة": القائمة النصية استُبدلت بفقاعات لونية فعلية تُضغط.
-      var UNKNOWN_COLOR_HEX = '#d1d5db';
-      var COLOR_HEX = {
-        'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
-        'بني': '#8b5e34', 'رمادي': '#9ca3af',
-        'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
-      };
-      document.querySelectorAll('.colorChips').forEach(function(container){
-        var input = container.parentElement.querySelector('.colorInput');
-        container.querySelectorAll('.colorChip').forEach(function(chip){
-          var hex = COLOR_HEX[chip.dataset.color];
-          chip.style.background = hex || UNKNOWN_COLOR_HEX;
-          if (!hex) { chip.style.borderStyle = 'dashed'; chip.style.borderColor = '#9ca3af'; }
-          chip.addEventListener('click', function(){
-            container.querySelectorAll('.colorChip').forEach(function(c){ c.style.boxShadow = 'none'; });
-            chip.style.boxShadow = '0 0 0 2px var(--primary)';
-            input.value = chip.dataset.color;
-          });
-        });
-      });
-    })();
-    </script>
+    <script src="{{ url_for('static', filename='color_chips.js') }}"></script>
+    <script>ColorChips.init(document);</script>
 
     <button class="btn" type="submit">{{ _('تسجيل الدفعة وعزلها') }}</button>
   </form>

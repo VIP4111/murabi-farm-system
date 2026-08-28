@@ -145,8 +145,12 @@
   // أخضر/أحمر. السيرفر يبقى الحاسم الفعلي لخصم/رفض المخزون
   // (Pharmacy.deduct_stock) — هذا تحذير مسبق بس قبل الإرسال.
   var slotStock = {}; // {slot: {available_qty, unit}}
-  var MSG_ENOUGH = {{ _('🟢 المخزون كافٍ — الاحتياج %(needed)s %(unit)s من أصل %(available)s %(unit2)s متوفرة.')|tojson }};
-  var MSG_NOT_ENOUGH = {{ _('🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s %(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً).')|tojson }};
+  {# بند إضافي 292 — نفس درس "هامش الربح المستهدف (%%)": `_()` يحاول
+     تعويض %(x)s فوراً حتى بدون kwargs، فيطيح بـKeyError. هذي النصوص
+     JS-side templates بس (تُستبدل لاحقاً بـ.replace())، فلازم %% موثّقة
+     عشان تطلع %( حرفية بعد معالجة _() نفسها. #}
+  var MSG_ENOUGH = {{ _('🟢 المخزون كافٍ — الاحتياج %%(needed)s %%(unit)s من أصل %%(available)s %%(unit2)s متوفرة.')|tojson }};
+  var MSG_NOT_ENOUGH = {{ _('🔴 المخزون ما يكفي — الاحتياج %%(needed)s %%(unit)s والمتوفر %%(available)s %%(unit2)s (يكفي تقريباً لـ%%(coverable)s رأس من أصل %%(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً).')|tojson }};
 
   function recomputeStockIndicator(slot){
     var box = document.getElementById('stockIndicator' + slot);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 21:44+0300\n"
+"POT-Creation-Date: 2026-08-28 23:09+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -278,7 +278,7 @@ msgstr "समस्या"
 msgid "صيانة"
 msgstr "रखरखाव"
 
-#: app/__init__.py:214 app/health/health_service.py:82
+#: app/__init__.py:214 app/health/health_service.py:139
 #: app/templates/equipment/asset_form.html:14
 #: app/templates/equipment/assets_list.html:3
 #: app/templates/finance/form.html:38
@@ -613,7 +613,7 @@ msgstr "रिपोर्ट"
 msgid "حالة مرضية"
 msgstr "रोग के मामले"
 
-#: app/__init__.py:306 app/templates/bulk_action_form.html:442
+#: app/__init__.py:306 app/templates/bulk_action_form.html:446
 msgid "زيارة بيطرية"
 msgstr "पशु चिकित्सा यात्रा"
 
@@ -990,19 +990,19 @@ msgstr "सामूहिक सोनार जांच"
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "नियोजित उपचार योजना (क्रियान्वयन पुष्टि की प्रतीक्षा में)"
 
-#: app/core/routes.py:804 app/templates/animal_form.html:92
+#: app/core/routes.py:807 app/templates/animal_form.html:57
 msgid "إضافة فصيلة جديدة"
 msgstr "नई प्रजाति जोड़ें"
 
-#: app/core/routes.py:806
+#: app/core/routes.py:809
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "नई प्रजाति स्वतः उत्पादन चक्र इंजन (संगमन/गर्भावस्था/दूध छुड़ाना) में शामिल नहीं होती — जब तक इसके लिए एक समर्पित सिस्टम नहीं बनता तब तक इसे शुतुरमुर्ग की तरह सुरक्षित रूप से संभाला जाता है।"
 
-#: app/core/routes.py:825 app/templates/animal_form.html:102
+#: app/core/routes.py:828 app/templates/animal_form.html:67
 msgid "إضافة سلالة جديدة"
 msgstr "नई नस्ल जोड़ें"
 
-#: app/core/routes.py:869 app/templates/animal_form.html:25
+#: app/core/routes.py:872 app/templates/animal_form.html:25
 msgid "إضافة لون جديد"
 msgstr "नया रंग जोड़ें"
 
@@ -1123,103 +1123,103 @@ msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ �
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "कोई बिक्री संकेत नहीं — उत्पादक मादा, रखना बेहतर"
 
-#: app/health/health_service.py:25
+#: app/health/health_service.py:82
 msgid "حقن عضل (IM)"
 msgstr "पेशीय इंजेक्शन (IM)"
 
-#: app/health/health_service.py:26
+#: app/health/health_service.py:83
 msgid "بعضلات الرقبة الجانبية أو الفخذ الخلفي عند البالغين، بعيداً عن العمود الفقري والأعصاب الكبيرة. دوّر مكان الحقن بين الجانبين لتفادي تندّب متكرر بنفس المكان. إبرة أقصر وأدق للحملان الصغيرة."
 msgstr "वयस्कों में गर्दन के पार्श्व पेशियों या पिछली जांघ में, रीढ़ और बड़ी नसों से दूर। एक ही जगह बार-बार निशान से बचने के लिए दोनों तरफ इंजेक्शन स्थान बदलते रहें। छोटे मेमनों के लिए छोटी, महीन सुई का उपयोग करें।"
 
-#: app/health/health_service.py:29
+#: app/health/health_service.py:86
 msgid "حقن وريدي (IV)"
 msgstr "शिरा इंजेक्शन (IV)"
 
-#: app/health/health_service.py:30
+#: app/health/health_service.py:87
 msgid "عادة بالوريد الوداجي بالرقبة — يحتاج خبرة ودقة عالية، الأصعب والأخطر بين طرق الحقن. يُترك للدكتور أو الممرض المدرَّب تحديداً، مو العامل الميداني بدون إشراف."
 msgstr "आमतौर पर गर्दन की जुगुलर शिरा में — उच्च कौशल और सटीकता आवश्यक, इंजेक्शन विधियों में सबसे कठिन और जोखिम भरा। यह विशेष रूप से डॉक्टर या प्रशिक्षित नर्स के लिए है, बिना निगरानी वाले क्षेत्रीय कर्मचारी के लिए नहीं।"
 
-#: app/health/health_service.py:33
+#: app/health/health_service.py:90
 msgid "حقن تحت الجلد (SC)"
 msgstr "त्वचा के नीचे इंजेक्शन (SC)"
 
-#: app/health/health_service.py:34
+#: app/health/health_service.py:91
 msgid "الطريقة الأكثر أماناً وشيوعاً بالإدخال الميداني اليومي. ارفع الجلد بأصابعك لتشكيل \"خيمة\" (عادة برقبة الحيوان أو خلف الكتف)، أدخل الإبرة بزاوية مائلة (تقريباً 30-45 درجة) بقاعدة الخيمة الجلدية بعيداً عن العضل تحتها، وتأكد إنك تحت الجلد فعلاً (سهولة الحقن بدون مقاومة) قبل الضغط."
 msgstr "दैनिक क्षेत्रीय उपयोग के लिए सबसे सुरक्षित और सामान्य तरीका। अपनी उंगलियों से त्वचा उठाकर \"तंबू\" बनाएं (आमतौर पर पशु की गर्दन या कंधे के पीछे), नीचे की मांसपेशी से दूर त्वचा तंबू के आधार पर सुई को तिरछे कोण (लगभग 30-45 डिग्री) पर डालें, और दबाने से पहले सुनिश्चित करें कि आप वास्तव में त्वचा के नीचे हैं (बिना प्रतिरोध के आसान इंजेक्शन)।"
 
-#: app/health/health_service.py:37
+#: app/health/health_service.py:94
 msgid "فموي"
 msgstr "मौखिक"
 
-#: app/health/health_service.py:38
+#: app/health/health_service.py:95
 msgid "يُعطى مباشرة بالفم بمحقنة فموية بدون إبرة، بحذر من دخول السائل للرئة (اختناق) — ثبّت رأس الحيوان بزاوية معتدلة، مو مائلة للخلف بشدة، وأعطِ الجرعة ببطء."
 msgstr "बिना सुई की मौखिक सिरिंज से सीधे मुंह से दिया जाता है, तरल के फेफड़ों में जाने (दम घुटने) से सावधान रहें — पशु के सिर को मध्यम कोण पर रखें, तेजी से पीछे झुका न हो, और खुराक धीरे-धीरे दें।"
 
-#: app/health/health_service.py:41
+#: app/health/health_service.py:98
 msgid "موضعي"
 msgstr "स्थानीय"
 
-#: app/health/health_service.py:42
+#: app/health/health_service.py:99
 msgid "يُوضَع مباشرة على سطح الجلد بالمكان المحدَّد (عادة خط الظهر) حسب تعليمات ملصق المنتج — تجنّب الجلد المجروح أو الملتهب."
 msgstr "उत्पाद लेबल निर्देशों के अनुसार निर्दिष्ट स्थान (आमतौर पर पीठ की रेखा) पर सीधे त्वचा की सतह पर लगाया जाता है — घायल या सूजी हुई त्वचा से बचें।"
 
-#: app/health/health_service.py:45
+#: app/health/health_service.py:102
 msgid "رذاذ/استنشاق"
 msgstr "स्प्रे/श्वास"
 
-#: app/health/health_service.py:46
+#: app/health/health_service.py:103
 msgid "يُستخدم عادة لعلاجات تنفسية جماعية بمساحة محدودة التهوية مؤقتاً، حسب تعليمات جهاز الرذاذ المستخدم — تأكد من تهوية المكان بعد انتهاء المدة الموصى بها."
 msgstr "आमतौर पर समूह श्वसन उपचारों के लिए अस्थायी रूप से सीमित हवादार क्षेत्र में उपयोग किया जाता है, उपयोग किए गए स्प्रे उपकरण के निर्देशों के अनुसार — अनुशंसित अवधि समाप्त होने के बाद क्षेत्र को हवादार करना सुनिश्चित करें।"
 
-#: app/health/health_service.py:62
+#: app/health/health_service.py:119
 msgid "لقاح/تحصين"
 msgstr "टीका/प्रतिरक्षण"
 
-#: app/health/health_service.py:63
+#: app/health/health_service.py:120
 msgid "يُعطى وقائياً قبل التعرّض للمرض لبناء مناعة الجسم ضده — ما يُستخدم لعلاج مرض قائم فعلاً. يحتاج عادة جرعة تنشيطية بعد مدة معيّنة (مدة الحماية) لاستمرار الوقاية."
 msgstr "रोग के संपर्क से पहले शरीर की प्रतिरोधक क्षमता बनाने के लिए निवारक रूप से दिया जाता है — किसी मौजूदा रोग के इलाज के लिए उपयोग नहीं किया जाता। सुरक्षा जारी रखने के लिए आमतौर पर एक निश्चित अवधि (सुरक्षा अवधि) के बाद बूस्टर खुराक की आवश्यकता होती है।"
 
-#: app/health/health_service.py:66
+#: app/health/health_service.py:123
 msgid "مضاد حيوي"
 msgstr "एंटीबायोटिक"
 
-#: app/health/health_service.py:67
+#: app/health/health_service.py:124
 msgid "يُستخدم لعلاج عدوى بكتيرية قائمة فعلاً، بعد تشخيص الدكتور — له عادة فترة سحب قبل بيع/حلب الحيوان. ما يُجدي مع الفيروسات."
 msgstr "डॉक्टर के निदान के बाद, मौजूदा जीवाणु संक्रमण के इलाज के लिए उपयोग किया जाता है — इसमें आमतौर पर पशु को बेचने/दूध निकालने से पहले एक निकासी अवधि होती है। वायरस के खिलाफ प्रभावी नहीं है।"
 
-#: app/health/health_service.py:70
+#: app/health/health_service.py:127
 msgid "مضاد طفيليات/ديدان"
 msgstr "परजीवी-रोधी/कृमिनाशक"
 
-#: app/health/health_service.py:71
+#: app/health/health_service.py:128
 msgid "يُعطى دورياً حسب برنامج المزرعة لمكافحة الطفيليات الداخلية/الخارجية — التكرار المتقارب جداً بدون داعٍ قد يقلل فعاليته لاحقاً (نفس حارس منع التكرار خلال 30 يوماً بالنظام)."
 msgstr "आंतरिक/बाह्य परजीवियों को नियंत्रित करने के लिए फार्म कार्यक्रम के अनुसार समय-समय पर दिया जाता है — बिना कारण बहुत निकट दोहराव बाद में इसकी प्रभावशीलता कम कर सकता है (सिस्टम में वही 30-दिन दोहराव-रोकथाम रक्षक)।"
 
-#: app/health/health_service.py:74
+#: app/health/health_service.py:131
 msgid "فيتامينات ومكمّلات"
 msgstr "विटामिन और पूरक"
 
-#: app/health/health_service.py:75
+#: app/health/health_service.py:132
 msgid "يدعم التغذية العامة أو يسدّ نقصاً غذائياً محدداً (مثل السيلينيوم) — مو علاجاً لمرض قائم، ومعظمها بدون فترة سحب."
 msgstr "सामान्य पोषण का समर्थन करता है या किसी विशिष्ट पोषण की कमी (जैसे सेलेनियम) को पूरा करता है — यह किसी मौजूदा रोग का उपचार नहीं है, और इनमें से अधिकांश की कोई निकासी अवधि नहीं होती।"
 
-#: app/health/health_service.py:78
+#: app/health/health_service.py:135
 msgid "مطهرات وعلاجات موضعية"
 msgstr "कीटाणुनाशक और स्थानीय उपचार"
 
-#: app/health/health_service.py:79
+#: app/health/health_service.py:136
 msgid "يُستخدم على سطح الجلد/الجرح مباشرة (تطهير، تندّب، طفيليات خارجية موضعية) — عادة أقل امتصاصاً جهازياً من الحقن/الفموي."
 msgstr "सीधे त्वचा/घाव की सतह पर उपयोग किया जाता है (कीटाणुशोधन, घाव भरना, स्थानीय बाह्य परजीवी) — आमतौर पर इंजेक्शन/मौखिक की तुलना में कम प्रणालीगत अवशोषण।"
 
-#: app/health/health_service.py:83
+#: app/health/health_service.py:140
 msgid "فئة عامة لما لا يندرج تحت الفئات الأخرى — راجع ملاحظة الجرعة المرجعية المكتوبة على الدواء نفسه."
 msgstr "अन्य श्रेणियों के अंतर्गत न आने वाली चीज़ों के लिए एक सामान्य श्रेणी — दवा पर लिखी गई संदर्भ खुराक टिप्पणी देखें।"
 
-#: app/health/health_service.py:102
+#: app/health/health_service.py:159
 msgid "خمول / ضعف عام"
 msgstr "सुस्ती / सामान्य कमजोरी"
 
-#: app/health/health_service.py:104
+#: app/health/health_service.py:161
 msgid ""
 "إجراءات أولية لحين وصول الطبيب:\n"
 "• افصل الرأس عن باقي القطيع بمكان هادئ ومظلّل، بعيد عن الزحام.\n"
@@ -1235,11 +1235,11 @@ msgstr ""
 "• डॉक्टर के सीधे निर्देश के बिना कोई दवा या इंजेक्शन न दें।\n"
 "• देखें: क्या यह सामान्य रूप से खड़ा और चलता है? क्या यह आपकी आवाज़ पर प्रतिक्रिया करता है? समय के साथ किसी भी बदलाव को नोट करें।"
 
-#: app/health/health_service.py:115
+#: app/health/health_service.py:172
 msgid "إسهال"
 msgstr "दस्त"
 
-#: app/health/health_service.py:117
+#: app/health/health_service.py:174
 msgid ""
 "إجراءات أولية لحين وصول الطبيب:\n"
 "• اعزل الرأس فوراً — الإسهال ينتقل بسرعة بين رؤوس القطيع.\n"
@@ -1255,11 +1255,11 @@ msgstr ""
 "• डॉक्टर के बिना कोई एंटीबायोटिक या दस्त की दवा न दें — अधिकांश हल्के दस्त के मामलों में केवल तरल पदार्थ और निगरानी की आवश्यकता होती है।\n"
 "• दूसरे पशुओं को लाने से पहले जहां पशु था वह जगह साफ करें।"
 
-#: app/health/health_service.py:128
+#: app/health/health_service.py:185
 msgid "امتناع عن الأكل"
 msgstr "खाने से इनकार"
 
-#: app/health/health_service.py:130
+#: app/health/health_service.py:187
 msgid ""
 "إجراءات أولية لحين وصول الطبيب:\n"
 "• تأكد إن العلف والماء متوفرين وبمتناوله فعلاً (مو مشكلة وصول).\n"
@@ -1275,11 +1275,11 @@ msgstr ""
 "• इसे खाने के लिए मजबूर न करें या डॉक्टर के बिना भूख बढ़ाने वाली दवा न दें।\n"
 "• किसी भी साथ के लक्षण (सुस्ती, दस्त, बुखार) को नोट करें — यह निदान में बहुत मदद करता है।"
 
-#: app/health/health_service.py:141
+#: app/health/health_service.py:198
 msgid "تغيّر ملحوظ بالحليب"
 msgstr "दूध में उल्लेखनीय बदलाव"
 
-#: app/health/health_service.py:143
+#: app/health/health_service.py:200
 msgid ""
 "إجراءات أولية لحين وصول الطبيب:\n"
 "• لاحظ التغيّر بدقة: كمية أقل، لون غير طبيعي، رائحة، تكتّل/دم — دوّنها.\n"
@@ -1295,11 +1295,11 @@ msgstr ""
 "• इसकी सुरक्षा की पुष्टि होने तक इस पशु का दूध बाकी उत्पादन से अलग करें।\n"
 "• हाल की जन्म तिथि जांचें — जन्म या दूध छुड़ाने के करीब दूध में बदलाव आमतौर पर सामान्य है, उनसे दूर अधिक ध्यान देने योग्य है।"
 
-#: app/health/health_service.py:154
+#: app/health/health_service.py:211
 msgid "عرج / صعوبة بالمشي"
 msgstr "लंगड़ाना / चलने में कठिनाई"
 
-#: app/health/health_service.py:156
+#: app/health/health_service.py:213
 msgid ""
 "إجراءات أولية لحين وصول الطبيب:\n"
 "• افحص القدم المتأثرة بلطف — جسم غريب، جرح، تورّم، أو حرارة موضعية.\n"
@@ -1313,11 +1313,11 @@ msgstr ""
 "• यदि घाव गहरा है या खून बह रहा है तो स्वयं कोई गहरा उपचार या सफाई करने का प्रयास न करें — डॉक्टर की प्रतीक्षा करें।\n"
 "• जांच होने तक जबरन गतिविधि कम करें (लंबी दूरी न ले जाएं)।"
 
-#: app/health/health_service.py:166
+#: app/health/health_service.py:223
 msgid "سقوط مفاجئ / تشنّج / عدم قدرة على الوقوف"
 msgstr "अचानक गिरना / दौरा / खड़े होने में असमर्थता"
 
-#: app/health/health_service.py:168
+#: app/health/health_service.py:225
 msgid ""
 "إجراءات أولية لحين وصول الطبيب — حالة تستدعي اتصال فوري بالطبيب، لا تنتظر:\n"
 "• أبعد أي شي حاد أو خطر حوله، وأعطه مساحة — لا تحاول تقييده بالقوة أثناء أي تشنّج.\n"
@@ -1331,43 +1331,43 @@ msgstr ""
 "• यदि आप कर सकते हैं तो घटना शुरू होने का समय और अवधि नोट करें — डॉक्टर के लिए बहुत महत्वपूर्ण जानकारी।\n"
 "• यह रिपोर्ट दर्ज करने के साथ-साथ तुरंत फोन पर भी डॉक्टर को कॉल करें — यह स्थिति इंतज़ार नहीं करती।"
 
-#: app/health/health_service.py:189
+#: app/health/health_service.py:246
 msgid "هزيل جداً"
 msgstr "बहुत दुबला"
 
-#: app/health/health_service.py:190
+#: app/health/health_service.py:247
 msgid "العمود الفقري بارز وحاد جداً تحت اليد، الأضلاع واضحة بوضوح بدون أي غطاء لحمي، ما فيه أي دهن محسوس فوق أو حول الفقرات. حالة طارئة تغذوية — راجع الطبيب."
 msgstr "रीढ़ हाथ के नीचे बहुत तेज़ और उभरी हुई है, पसलियां बिना किसी मांस आवरण के स्पष्ट दिखती हैं, कशेरुकाओं के ऊपर या आसपास कोई वसा महसूस नहीं होती। एक पोषण आपातकाल — डॉक्टर से सलाह लें।"
 
-#: app/health/health_service.py:193
+#: app/health/health_service.py:250
 msgid "هزيل"
 msgstr "दुबला"
 
-#: app/health/health_service.py:194
+#: app/health/health_service.py:251
 msgid "الفقرات القطنية محسوسة بوضوح لكن حوافها أقل حدة من الدرجة 1، الأضلاع تُحس بسهولة عند الضغط الخفيف. يحتاج تحسين خطة تغذية."
 msgstr "कटि कशेरुकाएं स्पष्ट रूप से महसूस होती हैं लेकिन उनके किनारे स्कोर 1 से कम तेज़ हैं, हल्के दबाव से पसलियां आसानी से महसूस होती हैं। बेहतर आहार योजना की आवश्यकता है।"
 
-#: app/health/health_service.py:197
+#: app/health/health_service.py:254
 msgid "معتدل (مثالي)"
 msgstr "मध्यम (आदर्श)"
 
-#: app/health/health_service.py:198
+#: app/health/health_service.py:255
 msgid "الفقرات محسوسة بضغط متوسط باليد لكن ناعمة الحواف، الأضلاع تُحس بضغط لكن ما تُرى بالعين. الوضع المستهدف لمعظم مراحل الإنتاج."
 msgstr "मध्यम हाथ दबाव से कशेरुकाएं महसूस होती हैं लेकिन किनारे चिकने हैं, दबाव से पसलियां महसूस होती हैं लेकिन आंख से नहीं दिखतीं। अधिकांश उत्पादन चरणों के लिए लक्षित स्थिति।"
 
-#: app/health/health_service.py:201
+#: app/health/health_service.py:258
 msgid "ممتلئ"
 msgstr "भरा हुआ"
 
-#: app/health/health_service.py:202
+#: app/health/health_service.py:259
 msgid "صعب تحسّس الفقرات إلا بضغط واضح، طبقة دهن ملحوظة فوق الأضلاع والقطنية. مقبول للحوامل بالثلث الأخير، مراقبة لباقي الحالات."
 msgstr "स्पष्ट दबाव के बिना कशेरुकाओं को महसूस करना मुश्किल, पसलियों और कमर पर उल्लेखनीय वसा परत। अंतिम तिमाही की गर्भवती के लिए स्वीकार्य, बाकी के लिए निगरानी।"
 
-#: app/health/health_service.py:205
+#: app/health/health_service.py:262
 msgid "سمين جداً"
 msgstr "बहुत मोटा"
 
-#: app/health/health_service.py:206
+#: app/health/health_service.py:263
 msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
 msgstr "मोटी वसा परत के नीचे न कशेरुकाएं महसूस होती हैं न पसलियां, पीठ का आकार समतल या गोलाकार। प्रसव और गति के लिए जोखिम — आहार समायोजन की आवश्यकता है।"
 
@@ -1458,15 +1458,15 @@ msgstr "कुल मृत्यु मामले"
 #: app/templates/barns_list.html:10 app/templates/batches/batch_detail.html:55
 #: app/templates/bulk_action_form.html:19
 #: app/templates/bulk_action_form.html:103
-#: app/templates/bulk_action_form.html:246
-#: app/templates/bulk_action_form.html:268
-#: app/templates/bulk_action_form.html:291
-#: app/templates/bulk_action_form.html:308
-#: app/templates/bulk_action_form.html:332
-#: app/templates/bulk_action_form.html:366
-#: app/templates/bulk_action_form.html:383
-#: app/templates/bulk_action_form.html:405
-#: app/templates/bulk_action_form.html:451 app/templates/catalog_public.html:13
+#: app/templates/bulk_action_form.html:250
+#: app/templates/bulk_action_form.html:272
+#: app/templates/bulk_action_form.html:295
+#: app/templates/bulk_action_form.html:312
+#: app/templates/bulk_action_form.html:336
+#: app/templates/bulk_action_form.html:370
+#: app/templates/bulk_action_form.html:387
+#: app/templates/bulk_action_form.html:409
+#: app/templates/bulk_action_form.html:455 app/templates/catalog_public.html:13
 #: app/templates/feed/fcr_report.html:51
 #: app/templates/finance/break_even_report.html:24
 #: app/templates/finance/culling_index.html:25
@@ -1478,7 +1478,7 @@ msgstr "क्रमांक"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
 #: app/templates/animal_detail.html:96 app/templates/animal_detail.html:320
-#: app/templates/animal_form.html:119
+#: app/templates/animal_form.html:84
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
 #: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
@@ -1496,9 +1496,9 @@ msgstr "लिंग"
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
 #: app/templates/animal_workflow.html:154
 #: app/templates/bulk_action_form.html:63
-#: app/templates/bulk_action_form.html:242
-#: app/templates/bulk_action_form.html:349
-#: app/templates/bulk_action_form.html:379
+#: app/templates/bulk_action_form.html:246
+#: app/templates/bulk_action_form.html:353
+#: app/templates/bulk_action_form.html:383
 #: app/templates/climate/dashboard.html:42
 #: app/templates/equipment/asset_maintenance.html:13
 #: app/templates/equipment/asset_maintenance.html:24
@@ -1561,7 +1561,7 @@ msgid "نسبة نجاح التقريع→حمل"
 msgstr "संगमन→गर्भावस्था सफलता दर"
 
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:101
-#: app/templates/animal_form.html:165
+#: app/templates/animal_form.html:130
 msgid "تاريخ الولادة"
 msgstr "जन्म तिथि"
 
@@ -1923,7 +1923,7 @@ msgid "مولود بالمزرعة"
 msgstr "फार्म पर जन्मा"
 
 #: app/templates/animal_detail.html:4 app/templates/animal_detail.html:459
-#: app/templates/animal_form.html:107 app/templates/animal_form.html:112
+#: app/templates/animal_form.html:72 app/templates/animal_form.html:77
 #: app/templates/animals_list.html:94 app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4
@@ -1940,7 +1940,7 @@ msgstr "खरीद"
 msgid "هدية/دعم"
 msgstr "उपहार/सहायता"
 
-#: app/templates/animal_detail.html:4 app/templates/animal_form.html:107
+#: app/templates/animal_detail.html:4 app/templates/animal_form.html:72
 #: app/templates/animals_list.html:94
 msgid "رصيد افتتاحي"
 msgstr "प्रारंभिक शेष"
@@ -2120,7 +2120,7 @@ msgstr "उद्देश्य"
 msgid "الأب"
 msgstr "पिता"
 
-#: app/templates/animal_detail.html:102 app/templates/animal_form.html:169
+#: app/templates/animal_detail.html:102 app/templates/animal_form.html:134
 #: app/templates/health/pharmacy_purchase_form.html:9
 #: app/templates/health/pharmacy_purchase_form.html:33
 msgid "تاريخ الشراء"
@@ -2130,7 +2130,7 @@ msgstr "खरीद तिथि"
 msgid "تاريخ الدخول للمزرعة"
 msgstr "फार्म प्रवेश तिथि"
 
-#: app/templates/animal_detail.html:104 app/templates/animal_form.html:144
+#: app/templates/animal_detail.html:104 app/templates/animal_form.html:109
 #: app/templates/animals_list.html:92
 #: app/templates/equipment/assets_list.html:14
 #: app/templates/feed/barn_plan_form.html:7
@@ -2195,7 +2195,7 @@ msgstr "अनिर्दिष्ट"
 #: app/templates/animal_detail.html:145 app/templates/animal_detail.html:146
 #: app/templates/animal_detail.html:147 app/templates/animal_detail.html:173
 #: app/templates/animal_detail.html:182 app/templates/animal_detail.html:183
-#: app/templates/animal_form.html:130
+#: app/templates/animal_form.html:95
 #: app/templates/health/disease_type_detail.html:63
 #: app/templates/health/disease_type_detail.html:64
 #: app/templates/health/disease_type_detail.html:65
@@ -2210,7 +2210,7 @@ msgstr "हाँ"
 #: app/templates/animal_detail.html:145 app/templates/animal_detail.html:146
 #: app/templates/animal_detail.html:147 app/templates/animal_detail.html:174
 #: app/templates/animal_detail.html:182 app/templates/animal_detail.html:183
-#: app/templates/animal_form.html:129
+#: app/templates/animal_form.html:94
 #: app/templates/health/disease_link_wizard.html:83
 #: app/templates/health/disease_link_wizard.html:87
 #: app/templates/health/disease_link_wizard.html:91
@@ -2248,7 +2248,7 @@ msgstr "यहाँ कोई भी \"हाँ\" फ्लैग स्मा
 
 #: app/templates/animal_detail.html:177 app/templates/animal_detail.html:343
 #: app/templates/animal_detail.html:395 app/templates/animal_detail.html:420
-#: app/templates/animal_form.html:187
+#: app/templates/animal_form.html:152
 #: app/templates/animal_weight_new_simple.html:44
 #: app/templates/animal_workflow.html:58 app/templates/barn_form.html:41
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
@@ -2349,7 +2349,7 @@ msgstr "कोई दर्ज यात्रा नहीं है।"
 msgid "المرض"
 msgstr "रोग"
 
-#: app/templates/animal_detail.html:236 app/templates/bulk_action_form.html:350
+#: app/templates/animal_detail.html:236 app/templates/bulk_action_form.html:354
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:28
 #: app/templates/health/diseases_list.html:14
@@ -2420,9 +2420,9 @@ msgstr "भूमिका"
 msgid "الطرف الآخر"
 msgstr "दूसरा पक्ष"
 
-#: app/templates/animal_detail.html:271 app/templates/animal_form.html:122
+#: app/templates/animal_detail.html:271 app/templates/animal_form.html:87
 #: app/templates/animals_bulk_purchase.html:44
-#: app/templates/animals_bulk_purchase.html:75
+#: app/templates/animals_bulk_purchase.html:79
 #: app/templates/batches/batch_form.html:26
 #: app/templates/ostrich/egg_hatch_form.html:27
 msgid "أنثى"
@@ -2442,7 +2442,7 @@ msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
 
 #: app/templates/animal_detail.html:282 app/templates/animal_detail.html:293
-#: app/templates/bulk_action_form.html:405
+#: app/templates/bulk_action_form.html:409
 msgid "عدد الأجنة"
 msgstr "भ्रूणों की संख्या"
 
@@ -2464,7 +2464,7 @@ msgstr "कोई दर्ज गर्भावस्था निदान �
 msgid "فحوصات السونار"
 msgstr "सोनार जांचें"
 
-#: app/templates/animal_detail.html:293 app/templates/bulk_action_form.html:405
+#: app/templates/animal_detail.html:293 app/templates/bulk_action_form.html:409
 #: app/templates/feed/calculator.html:35
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/program_detail.html:115
@@ -2511,7 +2511,7 @@ msgid "تسجيل وزن جديد"
 msgstr "नया वजन दर्ज करें"
 
 #: app/templates/animal_detail.html:341 app/templates/animal_detail.html:372
-#: app/templates/animal_form.html:183
+#: app/templates/animal_form.html:148
 #: app/templates/animal_weight_new_simple.html:42
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/batches/batch_form.html:40
@@ -2673,149 +2673,149 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 msgid "اضغط على لون"
 msgstr "एक रंग टैप करें"
 
-#: app/templates/animal_form.html:76
+#: app/templates/animal_form.html:41
 msgid "لازم تختار لون قبل الحفظ"
 msgstr "सहेजने से पहले आपको एक रंग चुनना होगा"
 
-#: app/templates/animal_form.html:83
+#: app/templates/animal_form.html:48
 msgid "الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين."
 msgstr "संख्या और रंग मिलकर पशु की क्षेत्र पहचान बनाते हैं — दोनों चुनना आवश्यक है।"
 
-#: app/templates/animal_form.html:85
+#: app/templates/animal_form.html:50
 #: app/templates/ostrich/incubator_form.html:8
 msgid "الاسم (اختياري)"
 msgstr "नाम (वैकल्पिक)"
 
-#: app/templates/animal_form.html:87
+#: app/templates/animal_form.html:52
 #: app/templates/animals_bulk_purchase.html:20
 msgid "الفصيلة"
 msgstr "प्रजाति"
 
-#: app/templates/animal_form.html:95
+#: app/templates/animal_form.html:60
 msgid "أي فصيلة غير \"حلال\" (نعام أو فصيلة جديدة) ما تدخل دورة الإنتاج (تقريع/حمل/فطام) تلقائياً."
 msgstr "जुगाली न करने वाली कोई भी प्रजाति (शुतुरमुर्ग या नई प्रजाति) स्वतः उत्पादन चक्र (संगमन/गर्भावस्था/दूध छुड़ाना) में प्रवेश नहीं करती।"
 
-#: app/templates/animal_form.html:97 app/templates/feed/fcr_report.html:51
+#: app/templates/animal_form.html:62 app/templates/feed/fcr_report.html:51
 #: app/templates/feed/fcr_report.html:69
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:32 app/templates/lot_public.html:17
 msgid "السلالة"
 msgstr "नस्ल"
 
-#: app/templates/animal_form.html:106 app/templates/animal_form.html:110
+#: app/templates/animal_form.html:71 app/templates/animal_form.html:75
 #: app/templates/animals_list.html:92 app/templates/batches/batch_form.html:11
 #: app/templates/batches/batches_list.html:14
 msgid "المصدر"
 msgstr "स्रोत"
 
-#: app/templates/animal_form.html:107 app/templates/animal_form.html:113
+#: app/templates/animal_form.html:72 app/templates/animal_form.html:78
 msgid "ولادة بالمزرعة"
 msgstr "फार्म पर जन्मा"
 
-#: app/templates/animal_form.html:107
+#: app/templates/animal_form.html:72
 msgid "هدية/دعم عيني"
 msgstr "उपहार/वस्तु सहायता"
 
-#: app/templates/animal_form.html:108
+#: app/templates/animal_form.html:73
 msgid "المصدر لا يتغيّر بعد الإنشاء (مرتبط بحركة مالية وحدث دورة إنتاج تسجّلا أصلاً) — لو أُدخل غلط، الأصح أرشفة هذا الرأس وإضافة رأس جديد صحيح."
 msgstr "स्रोत निर्माण के बाद बदला नहीं जा सकता (पहले से दर्ज वित्तीय लेनदेन और उत्पादन-चक्र घटना से जुड़ा हुआ) — यदि गलत दर्ज हो गया, तो सही तरीका इस पशु को संग्रहीत करना और एक नया सही पशु जोड़ना है।"
 
-#: app/templates/animal_form.html:114
+#: app/templates/animal_form.html:79
 msgid "هدية / دعم عيني"
 msgstr "उपहार / वस्तु सहायता"
 
-#: app/templates/animal_form.html:115
+#: app/templates/animal_form.html:80
 msgid "رصيد افتتاحي (موجود أصلاً بالقطيع)"
 msgstr "प्रारंभिक शेष (पहले से झुंड में मौजूद)"
 
-#: app/templates/animal_form.html:121
+#: app/templates/animal_form.html:86
 #: app/templates/animals_bulk_purchase.html:43
-#: app/templates/animals_bulk_purchase.html:74
+#: app/templates/animals_bulk_purchase.html:78
 #: app/templates/batches/batch_form.html:27
 #: app/templates/ostrich/egg_hatch_form.html:26
 msgid "ذكر"
 msgstr "नर"
 
-#: app/templates/animal_form.html:127
+#: app/templates/animal_form.html:92
 msgid "هل هي حامل؟"
 msgstr "क्या वह गर्भवती है?"
 
-#: app/templates/animal_form.html:132
+#: app/templates/animal_form.html:97
 msgid "لو \"نعم\": تُسجَّل كحمل غير مؤكَّد بعد (بانتظار تأكيد الطبيب)، وتتولّد مهمة تنقلها فعلياً لحظيرة الحوامل بعد انتهاء فترة العزل."
 msgstr "यदि \"हाँ\": अपुष्ट गर्भावस्था के रूप में दर्ज होता है (डॉक्टर की पुष्टि की प्रतीक्षा में), और उसे अलगाव अवधि समाप्त होने के बाद गर्भवती पशु बाड़े में स्थानांतरित करने के लिए एक कार्य बनता है।"
 
-#: app/templates/animal_form.html:136
+#: app/templates/animal_form.html:101
 msgid "الغرض (يحدّد مسار دورة الإنتاج لاحقاً)"
 msgstr "उद्देश्य (बाद में उत्पादन-चक्र पथ निर्धारित करता है)"
 
-#: app/templates/animal_form.html:138
+#: app/templates/animal_form.html:103
 #: app/templates/ostrich/egg_hatch_form.html:25
 msgid "غير محدد بعد"
 msgstr "अभी तय नहीं"
 
-#: app/templates/animal_form.html:139 app/templates/bulk_action_form.html:283
+#: app/templates/animal_form.html:104 app/templates/bulk_action_form.html:287
 msgid "تربية"
 msgstr "प्रजनन"
 
-#: app/templates/animal_form.html:140 app/templates/bulk_action_form.html:284
+#: app/templates/animal_form.html:105 app/templates/bulk_action_form.html:288
 #: app/templates/feed/ration_form.html:14
 #: app/templates/onboarding/checklist.html:12
 msgid "تسمين"
 msgstr "मोटा करना"
 
-#: app/templates/animal_form.html:141 app/templates/bulk_action_form.html:285
+#: app/templates/animal_form.html:106 app/templates/bulk_action_form.html:289
 msgid "بيع سريع"
 msgstr "त्वरित बिक्री"
 
-#: app/templates/animal_form.html:146
+#: app/templates/animal_form.html:111
 msgid "اختر الحظيرة..."
 msgstr "बाड़ा चुनें..."
 
-#: app/templates/animal_form.html:149
+#: app/templates/animal_form.html:114
 msgid "اختيار حظيرة العزل لرأس مشترى جديد يولّد له تلقائياً مهام رش وقائي وتحصين مبدئي إلزامية."
 msgstr "नए खरीदे गए पशु के लिए अलगाव बाड़ा चुनने से स्वतः अनिवार्य निवारक छिड़काव और प्रारंभिक टीकाकरण कार्य बनते हैं।"
 
-#: app/templates/animal_form.html:153
+#: app/templates/animal_form.html:118
 msgid "الأم (مطلوب فقط لو المصدر \"ولادة\")"
 msgstr "माँ (केवल तभी आवश्यक जब स्रोत \"जन्म\" हो)"
 
-#: app/templates/animal_form.html:159
+#: app/templates/animal_form.html:124
 msgid "الأب (اختياري، لو معروف ومسجّل بالنظام)"
 msgstr "पिता (वैकल्पिक, यदि ज्ञात हो और सिस्टम में दर्ज हो)"
 
-#: app/templates/animal_form.html:170
+#: app/templates/animal_form.html:135
 msgid "إرفاق فاتورة الشراء (إن وجدت)"
 msgstr "खरीद चालान संलग्न करें (यदि हो)"
 
-#: app/templates/animal_form.html:175
+#: app/templates/animal_form.html:140
 msgid "تاريخ الدخول"
 msgstr "प्रवेश तिथि"
 
-#: app/templates/animal_form.html:178
+#: app/templates/animal_form.html:143
 msgid "تاريخ الولادة (لو المصدر ولادة)"
 msgstr "जन्म तिथि (यदि स्रोत जन्म है)"
 
-#: app/templates/animal_form.html:179
+#: app/templates/animal_form.html:144
 msgid "تاريخ الشراء (لو المصدر شراء)"
 msgstr "खरीद तिथि (यदि स्रोत खरीद है)"
 
-#: app/templates/animal_form.html:180
+#: app/templates/animal_form.html:145
 msgid "تاريخ الدخول (لو المصدر هدية أو رصيد افتتاحي)"
 msgstr "प्रवेश तिथि (यदि स्रोत उपहार या प्रारंभिक शेष है)"
 
-#: app/templates/animal_form.html:184
+#: app/templates/animal_form.html:149
 msgid "السعر / القيمة التقديرية"
 msgstr "मूल्य / अनुमानित मूल्य"
 
-#: app/templates/animal_form.html:185
+#: app/templates/animal_form.html:150
 msgid "رابط الصورة (اختياري)"
 msgstr "छवि लिंक (वैकल्पिक)"
 
-#: app/templates/animal_form.html:199
+#: app/templates/animal_form.html:164
 msgid "اختياري لو ولادة بدون رقعة جاهزة بعد — يُولَّد رقم مؤقت تلقائياً."
 msgstr "वैकल्पिक यदि जन्म हो और टैग तैयार न हो — एक अस्थायी संख्या स्वतः बन जाती है।"
 
-#: app/templates/animal_form.html:200
+#: app/templates/animal_form.html:165
 msgid "إلزامي — إلا لو المصدر \"ولادة بالمزرعة\" بدون رقعة جاهزة بعد."
 msgstr "अनिवार्य — जब तक स्रोत \"फार्म पर जन्म\" न हो और टैग तैयार न हो।"
 
@@ -2823,15 +2823,15 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/barn_form.html:8 app/templates/barns_list.html:10
 #: app/templates/bulk_action_form.html:19
 #: app/templates/bulk_action_form.html:103
-#: app/templates/bulk_action_form.html:246
-#: app/templates/bulk_action_form.html:268
-#: app/templates/bulk_action_form.html:291
-#: app/templates/bulk_action_form.html:308
-#: app/templates/bulk_action_form.html:332
-#: app/templates/bulk_action_form.html:366
-#: app/templates/bulk_action_form.html:383
-#: app/templates/bulk_action_form.html:405
-#: app/templates/bulk_action_form.html:451
+#: app/templates/bulk_action_form.html:250
+#: app/templates/bulk_action_form.html:272
+#: app/templates/bulk_action_form.html:295
+#: app/templates/bulk_action_form.html:312
+#: app/templates/bulk_action_form.html:336
+#: app/templates/bulk_action_form.html:370
+#: app/templates/bulk_action_form.html:387
+#: app/templates/bulk_action_form.html:409
+#: app/templates/bulk_action_form.html:455
 #: app/templates/equipment/asset_form.html:7
 #: app/templates/equipment/assets_list.html:14
 #: app/templates/equipment/item_form.html:7
@@ -3817,9 +3817,9 @@ msgid "اللقاح الثاني"
 msgstr "दूसरा टीका"
 
 #: app/templates/bulk_action_form.html:98
-#: app/templates/bulk_action_form.html:265
-#: app/templates/bulk_action_form.html:288
-#: app/templates/bulk_action_form.html:363
+#: app/templates/bulk_action_form.html:269
+#: app/templates/bulk_action_form.html:292
+#: app/templates/bulk_action_form.html:367
 msgid "الرؤوس المحددة"
 msgstr "चयनित पशु"
 
@@ -3844,243 +3844,243 @@ msgstr "मिली"
 msgid "تسجيل التحصين للكل"
 msgstr "सभी के लिए टीकाकरण दर्ज करें"
 
-#: app/templates/bulk_action_form.html:148
+#: app/templates/bulk_action_form.html:152
 #, python-format
-msgid "🟢 المخزون كافٍ — الاحتياج %(needed)s %(unit)s من أصل %(available)s %(unit2)s متوفرة."
-msgstr "🟢 स्टॉक पर्याप्त है — आवश्यकता %(needed)s %(unit)s है, उपलब्ध %(available)s %(unit2)s में से।"
+msgid "🟢 المخزون كافٍ — الاحتياج %%(needed)s %%(unit)s من أصل %%(available)s %%(unit2)s متوفرة."
+msgstr "🟢 स्टॉक पर्याप्त है — आवश्यकता %%(needed)s %%(unit)s, उपलब्ध %%(available)s %%(unit2)s में से।"
 
-#: app/templates/bulk_action_form.html:149
+#: app/templates/bulk_action_form.html:153
 #, python-format
-msgid "🔴 المخزون ما يكفي — الاحتياج %(needed)s %(unit)s والمتوفر %(available)s %(unit2)s (يكفي تقريباً لـ%(coverable)s رأس من أصل %(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً)."
-msgstr "🔴 स्टॉक पर्याप्त नहीं है — आवश्यकता %(needed)s %(unit)s है और उपलब्ध केवल %(available)s %(unit2)s है (लगभग %(checked)s में से %(coverable)s पशुओं के लिए पर्याप्त) — कुछ पशुओं का चयन हटाएं, या नीचे बटन से स्टॉक अपडेट करें; बाकी सहेजते समय स्पष्ट संदेश के साथ स्वतः अस्वीकृत होंगे (नकली टीकाकरण नहीं)।"
+msgid "🔴 المخزون ما يكفي — الاحتياج %%(needed)s %%(unit)s والمتوفر %%(available)s %%(unit2)s (يكفي تقريباً لـ%%(coverable)s رأس من أصل %%(checked)s) — فك تأشير بعض الرؤوس، أو حدّث المخزون بالزر تحت، وباقي الرؤوس تُرفض تلقائياً برسالة واضحة عند الحفظ (مو تحصيناً وهمياً)."
+msgstr "🔴 स्टॉक पर्याप्त नहीं है — आवश्यकता %%(needed)s %%(unit)s, उपलब्ध %%(available)s %%(unit2)s (लगभग %%(checked)s में से %%(coverable)s सिरों के लिए पर्याप्त) — कुछ जानवरों को अनचेक करें, या नीचे दिए बटन से स्टॉक अपडेट करें; बाकी सिर सहेजते समय स्पष्ट संदेश के साथ स्वचालित रूप से अस्वीकार कर दिए जाएंगे (नकली टीकाकरण नहीं)।"
 
-#: app/templates/bulk_action_form.html:243
+#: app/templates/bulk_action_form.html:247
 msgid "ملاحظة عامة (تُضاف لكل الرؤوس)"
 msgstr "सामान्य टिप्पणी (सभी पशुओं में जुड़ेगी)"
 
-#: app/templates/bulk_action_form.html:246
+#: app/templates/bulk_action_form.html:250
 msgid "ملاحظة إضافية لهذا الرأس (اختياري)"
 msgstr "इस पशु के लिए अतिरिक्त टिप्पणी (वैकल्पिक)"
 
-#: app/templates/bulk_action_form.html:252
+#: app/templates/bulk_action_form.html:256
 msgid "حفظ الملاحظات"
 msgstr "टिप्पणियां सहेजें"
 
-#: app/templates/bulk_action_form.html:261
+#: app/templates/bulk_action_form.html:265
 msgid "الحظيرة الجديدة"
 msgstr "नया बाड़ा"
 
 #: app/templates/batches/batch_detail.html:55
-#: app/templates/bulk_action_form.html:268
-#: app/templates/bulk_action_form.html:383
+#: app/templates/bulk_action_form.html:272
+#: app/templates/bulk_action_form.html:387
 msgid "الحظيرة الحالية"
 msgstr "वर्तमान बाड़ा"
 
-#: app/templates/bulk_action_form.html:272
+#: app/templates/bulk_action_form.html:276
 msgid "نقل الكل للحظيرة الجديدة"
 msgstr "सभी को नए बाड़े में स्थानांतरित करें"
 
-#: app/templates/bulk_action_form.html:281
+#: app/templates/bulk_action_form.html:285
 msgid "الغرض الجديد (لكل الرؤوس المحددة)"
 msgstr "नया उद्देश्य (सभी चयनित पशुओं के लिए)"
 
-#: app/templates/bulk_action_form.html:287
+#: app/templates/bulk_action_form.html:291
 msgid "تحديد \"تسمين\" هنا يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي — راجع 'مواعيد وجبات العلف' بشاشة الحظيرة."
 msgstr "यहां \"मोटा करना\" चुनने से स्वचालित चारा मिश्रण गणना के लिए भोजन लक्ष्य (उच्च प्रोटीन/ऊर्जा) निर्धारित होता है — बाड़ा स्क्रीन पर 'भोजन समय' देखें।"
 
-#: app/templates/bulk_action_form.html:291
+#: app/templates/bulk_action_form.html:295
 msgid "الغرض الحالي"
 msgstr "वर्तमान उद्देश्य"
 
-#: app/templates/bulk_action_form.html:295
+#: app/templates/bulk_action_form.html:299
 msgid "تحديد الغرض للكل"
 msgstr "सभी के लिए उद्देश्य निर्धारित करें"
 
-#: app/templates/bulk_action_form.html:304
+#: app/templates/bulk_action_form.html:308
 msgid "تاريخ البيع (لكل الرؤوس)"
 msgstr "बिक्री तिथि (सभी पशुओं के लिए)"
 
-#: app/templates/bulk_action_form.html:305
+#: app/templates/bulk_action_form.html:309
 msgid "ملاحظة عامة (اختياري، مثلاً اسم المشتري)"
 msgstr "सामान्य टिप्पणी (वैकल्पिक, जैसे खरीदार का नाम)"
 
-#: app/templates/bulk_action_form.html:308
+#: app/templates/bulk_action_form.html:312
 msgid "سعر البيع"
 msgstr "बिक्री मूल्य"
 
-#: app/templates/bulk_action_form.html:318
+#: app/templates/bulk_action_form.html:322
 msgid "اترك حقل السعر فاضي لأي رأس تبي تتخطاه. البيع محمي ببوابة اكتمال الدورة — لو رأس معيّن مرفوض، بقية الرؤوس تُباع عادي وتشوف سبب الرفض برسالة منفصلة."
 msgstr "जिस पशु को छोड़ना हो उसका मूल्य फ़ील्ड खाली छोड़ें। बिक्री चक्र-पूर्णता द्वार द्वारा संरक्षित है — यदि कोई विशेष पशु अस्वीकृत हो, तो बाकी सामान्य रूप से बिकते हैं और आप अलग संदेश में अस्वीकृति कारण देखेंगे।"
 
-#: app/templates/bulk_action_form.html:319
+#: app/templates/bulk_action_form.html:323
 msgid "بيع الكل"
 msgstr "सभी बेचें"
 
-#: app/templates/bulk_action_form.html:328
+#: app/templates/bulk_action_form.html:332
 msgid "تاريخ النفوق (لكل الرؤوس)"
 msgstr "मृत्यु तिथि (सभी पशुओं के लिए)"
 
-#: app/templates/bulk_action_form.html:329
+#: app/templates/bulk_action_form.html:333
 msgid "السبب (اختياري، يُسجَّل لكل الرؤوس)"
 msgstr "कारण (वैकल्पिक, सभी पशुओं के लिए दर्ज होगा)"
 
-#: app/templates/bulk_action_form.html:336
+#: app/templates/bulk_action_form.html:340
 msgid "تسجيل النفوق بدون شرط اكتمال الدورة — حقيقة واقعية مو قرار عمل."
 msgstr "मृत्यु चक्र-पूर्णता शर्त के बिना दर्ज होती है — यह एक वास्तविक तथ्य है, व्यावसायिक निर्णय नहीं।"
 
-#: app/templates/bulk_action_form.html:337
+#: app/templates/bulk_action_form.html:341
 #, python-format
 msgid "تأكيد تسجيل نفوق %(n)s رأس؟"
 msgstr "%(n)s पशुओं की मृत्यु दर्ज करने की पुष्टि करें?"
 
-#: app/templates/bulk_action_form.html:337
+#: app/templates/bulk_action_form.html:341
 msgid "تسجيل النفوق للكل"
 msgstr "सभी के लिए मृत्यु दर्ज करें"
 
-#: app/templates/bulk_action_form.html:346
+#: app/templates/bulk_action_form.html:350
 #: app/templates/health/disease_form.html:23
 #: app/templates/health/disease_type_form.html:7
 msgid "اسم المرض"
 msgstr "बीमारी का नाम"
 
-#: app/templates/bulk_action_form.html:347
+#: app/templates/bulk_action_form.html:351
 #: app/templates/health/disease_form.html:24
 msgid "اختر من القائمة أو اكتب اسماً جديداً"
 msgstr "सूची से चुनें या नया नाम लिखें"
 
-#: app/templates/bulk_action_form.html:352
+#: app/templates/bulk_action_form.html:356
 #: app/templates/health/disease_form.html:30
 #: app/templates/health/disease_new_simple.html:62
 #: app/templates/health/disease_new_simple.html:83
 msgid "بسيطة"
 msgstr "हल्का"
 
-#: app/templates/bulk_action_form.html:353
+#: app/templates/bulk_action_form.html:357
 #: app/templates/health/disease_form.html:31
 #: app/templates/health/disease_new_simple.html:63
 #: app/templates/health/disease_new_simple.html:83
 msgid "متوسطة"
 msgstr "मध्यम"
 
-#: app/templates/bulk_action_form.html:354
+#: app/templates/bulk_action_form.html:358
 #: app/templates/health/disease_form.html:32
 #: app/templates/health/disease_new_simple.html:64
 #: app/templates/health/disease_new_simple.html:83
 msgid "شديدة"
 msgstr "गंभीर"
 
-#: app/templates/bulk_action_form.html:356
+#: app/templates/bulk_action_form.html:360
 msgid "الدواء من الصيدلية (اختياري)"
 msgstr "फार्मेसी से दवा (वैकल्पिक)"
 
-#: app/templates/bulk_action_form.html:358
+#: app/templates/bulk_action_form.html:362
 #: app/templates/health/disease_form.html:36
 #: app/templates/health/vet_visit_form.html:24
 msgid "بدون دواء"
 msgstr "बिना दवा"
 
-#: app/templates/bulk_action_form.html:359
-#: app/templates/bulk_action_form.html:437
+#: app/templates/bulk_action_form.html:363
+#: app/templates/bulk_action_form.html:441
 #, python-format
 msgid "سحب: %(n)s يوم"
 msgstr "निकासी: %(n)s दिन"
 
-#: app/templates/bulk_action_form.html:361
+#: app/templates/bulk_action_form.html:365
 msgid "الكمية المستخدمة لكل رأس"
 msgstr "प्रति पशु उपयोग की गई मात्रा"
 
-#: app/templates/bulk_action_form.html:362
+#: app/templates/bulk_action_form.html:366
 msgid "* إلزامية لو اخترت دواء أعلاه — التكلفة تُحسب تلقائياً من سعر الوحدة."
 msgstr "* यदि आपने ऊपर दवा चुनी है तो अनिवार्य — लागत इकाई मूल्य से स्वतः गणना होती है।"
 
-#: app/templates/bulk_action_form.html:370
+#: app/templates/bulk_action_form.html:374
 msgid "تسجيل الحالة للكل"
 msgstr "सभी के लिए मामला दर्ज करें"
 
-#: app/templates/bulk_action_form.html:380
+#: app/templates/bulk_action_form.html:384
 msgid "سبب العزل (اختياري، يُسجَّل كملاحظة على كل رأس)"
 msgstr "अलगाव का कारण (वैकल्पिक, प्रत्येक पशु पर टिप्पणी के रूप में दर्ज होगा)"
 
-#: app/templates/bulk_action_form.html:387
+#: app/templates/bulk_action_form.html:391
 msgid "ينقل الكل تلقائياً لحظيرة العزل المعرَّفة بالنظام (barn_type = عزل)."
 msgstr "सभी स्वतः सिस्टम में परिभाषित अलगाव बाड़े में स्थानांतरित होते हैं (barn_type = isolation)।"
 
-#: app/templates/bulk_action_form.html:388
+#: app/templates/bulk_action_form.html:392
 msgid "عزل الكل"
 msgstr "सभी को अलग करें"
 
-#: app/templates/bulk_action_form.html:397
+#: app/templates/bulk_action_form.html:401
 msgid "تاريخ الفحص (لكل الرؤوس)"
 msgstr "जांच तिथि (सभी पशुओं के लिए)"
 
-#: app/templates/bulk_action_form.html:398
+#: app/templates/bulk_action_form.html:402
 msgid "الطبيب (اختياري)"
 msgstr "डॉक्टर (वैकल्पिक)"
 
-#: app/templates/bulk_action_form.html:400
+#: app/templates/bulk_action_form.html:404
 msgid "بدون تحديد"
 msgstr "अनिर्दिष्ट"
 
-#: app/templates/bulk_action_form.html:413
+#: app/templates/bulk_action_form.html:417
 #: app/templates/repro/sonar_form.html:22
 msgid "حامل"
 msgstr "गर्भवती"
 
-#: app/templates/bulk_action_form.html:414
+#: app/templates/bulk_action_form.html:418
 #: app/templates/repro/sonar_form.html:23
 msgid "غير حامل"
 msgstr "गर्भवती नहीं"
 
-#: app/templates/bulk_action_form.html:415
+#: app/templates/bulk_action_form.html:419
 msgid "غير واضح"
 msgstr "अस्पष्ट"
 
-#: app/templates/bulk_action_form.html:423
+#: app/templates/bulk_action_form.html:427
 msgid "حفظ نتائج الكل"
 msgstr "सभी के परिणाम सहेजें"
 
-#: app/templates/bulk_action_form.html:430
+#: app/templates/bulk_action_form.html:434
 msgid "⚠️ هذا الإجراء ما يسجّل ولا يخصم أي شيء الآن (بند إضافي 50) — بس يولّد مهمة \"علاج مخطَّط\" مقترحة لكل رأس، بانتظار مراجعة الدكتور، ثم \"تأكيد التنفيذ\" الفعلي لكل رأس على حدة (هناك يصير الخصم الحقيقي من الصيدلية)."
 msgstr "⚠️ यह कार्रवाई अभी कुछ भी दर्ज या घटाती नहीं है — यह केवल प्रत्येक पशु के लिए एक सुझाई गई \"नियोजित उपचार\" कार्य बनाती है, डॉक्टर की समीक्षा की प्रतीक्षा में, फिर प्रत्येक पशु के लिए अलग से वास्तविक \"क्रियान्वयन पुष्टि\" (वहीं वास्तविक फार्मेसी कटौती होती है)।"
 
-#: app/templates/bulk_action_form.html:435
+#: app/templates/bulk_action_form.html:439
 msgid "الدواء المخطَّط"
 msgstr "नियोजित दवा"
 
-#: app/templates/bulk_action_form.html:439
+#: app/templates/bulk_action_form.html:443
 msgid "الجرعة لكل رأس"
 msgstr "प्रति पशु खुराक"
 
-#: app/templates/bulk_action_form.html:440
+#: app/templates/bulk_action_form.html:444
 msgid "نوع التسجيل عند التنفيذ"
 msgstr "क्रियान्वयन पर दर्ज प्रकार"
 
-#: app/templates/bulk_action_form.html:443
+#: app/templates/bulk_action_form.html:447
 msgid "علاج/مرض"
 msgstr "उपचार/रोग"
 
-#: app/templates/bulk_action_form.html:444
+#: app/templates/bulk_action_form.html:448
 msgid "تطعيم"
 msgstr "टीकाकरण"
 
-#: app/templates/bulk_action_form.html:446
+#: app/templates/bulk_action_form.html:450
 msgid "سبب المهمة/الدافع"
 msgstr "कार्य का कारण/प्रेरणा"
 
-#: app/templates/bulk_action_form.html:446
+#: app/templates/bulk_action_form.html:450
 msgid "مثال: فحص دوري كشف انتشار طفيليات بالحظيرة"
 msgstr "उदाहरण: नियमित जांच में बाड़े में परजीवियों का प्रसार पाया गया"
 
-#: app/templates/bulk_action_form.html:447
+#: app/templates/bulk_action_form.html:451
 msgid "الموعد المستهدف للتنفيذ"
 msgstr "लक्षित क्रियान्वयन तिथि"
 
-#: app/templates/bulk_action_form.html:448
+#: app/templates/bulk_action_form.html:452
 #, python-format
 msgid "الرؤوس المحددة (%(n)s)"
 msgstr "चयनित पशु (%(n)s)"
 
-#: app/templates/bulk_action_form.html:455
+#: app/templates/bulk_action_form.html:459
 msgid "إنشاء خطة العلاج (مقترحة)"
 msgstr "उपचार योजना बनाएं (सुझाई गई)"
 
@@ -5381,7 +5381,7 @@ msgstr "मूल्य (यदि खरीद है)"
 msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" و\"اللون\" على الأقل عشان يُحتسب الصف."
 msgstr "यदि आपको किसी पंक्ति की आवश्यकता नहीं है तो उसे खाली छोड़ दें — किसी पंक्ति की गिनती के लिए कम से कम \"लिंग\" और \"रंग\" आवश्यक हैं।"
 
-#: app/templates/batches/batch_form.html:71
+#: app/templates/batches/batch_form.html:48
 msgid "تسجيل الدفعة وعزلها"
 msgstr "खेप दर्ज करें और अलग करें"
 

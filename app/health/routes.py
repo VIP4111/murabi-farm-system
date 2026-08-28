@@ -900,6 +900,7 @@ def vaccinations_list():
 @login_required
 @require_permission("health.manage")
 def vaccinations_new():
+    health_service.seed_default_vaccine_catalog()  # بند إضافي 292
     if request.method == "POST":
         next_due = request.form.get("next_due_date")
         animal_id = int(request.form["animal_id"])
@@ -1045,6 +1046,7 @@ def vaccination_schedule_list():
 @login_required
 @require_permission("health.manage")
 def vaccination_schedule_new():
+    health_service.seed_default_vaccine_catalog()  # بند إضافي 292
     if request.method == "POST":
         pharmacy = Pharmacy.query.get_or_404(int(request.form["pharmacy_id"]))
         if pharmacy.medicine_class != "vaccine":

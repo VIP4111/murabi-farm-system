@@ -16,7 +16,7 @@
     {% endif %}
 
     <label>{{ _('اللون') }}</label>
-    <div id="colorChips" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+    <div id="colorChips" class="colorChips" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
       {% for c in colors %}
       <button type="button" class="colorChip" data-color="{{ c.name }}" title="{{ c.name }}"
               aria-label="{{ c.name }}"
@@ -24,52 +24,17 @@
       {% endfor %}
       <a class="btn light" href="{{ url_for('core.colors_new') }}" title="{{ _('إضافة لون جديد') }}" style="width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0; font-size:16px; flex:0 0 auto;">➕</a>
     </div>
-    <p id="colorChipHint" style="color:var(--muted); font-size:12px; margin:0 0 4px;">{{ _('اضغط على لون') }}</p>
-    <input type="hidden" name="color" id="colorInput" value="{{ animal.color if animal else '' }}">
+    <p id="colorChipHint" class="colorChipHint" style="color:var(--muted); font-size:12px; margin:0 0 4px;">{{ _('اضغط على لون') }}</p>
+    <input type="hidden" name="color" id="colorInput" class="colorInput" value="{{ animal.color if animal else '' }}">
+    <script src="{{ url_for('static', filename='color_chips.js') }}"></script>
     <script>
     (function(){
-      // بند إضافي 288 — طلبك الصريح "ما حليت المشكلة، حطلي ألوان بدل
-      // الكتابة": القائمة النصية (select) استُبدلت بفقاعات لونية فعلية
-      // تُضغط مباشرة — الطلب الأصلي (بند 284) كان بس فقعة واحدة جنب
-      // اسم نصي، مو اختيار بصري كامل. تغطي الألوان الستة الافتراضية
-      // بلونها الحقيقي؛ أي لون مخصَّص (بند 287) يعرض دائرة رمادية
-      // متقطّعة محايدة بدل ما نخمّن لونه.
-      var UNKNOWN_COLOR_HEX = '#d1d5db';
-      var COLOR_HEX = {
-        'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
-        'بني': '#8b5e34', 'رمادي': '#9ca3af',
-        'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
-      };
+      // بند إضافي 292 — منطق تلوين/تحديد الفقاعات المشترك صار بملف
+      // واحد (app/static/color_chips.js، كان مكرَّراً بـ3 ملفات). هذا
+      // الجزء يبقى هنا لأنه خاص بهذي الشاشة بس: منع الحفظ بدون لون.
+      ColorChips.init(document.getElementById('colorChips'));
       var input = document.getElementById('colorInput');
       var hint = document.getElementById('colorChipHint');
-      var chips = document.querySelectorAll('#colorChips .colorChip');
-      chips.forEach(function(chip){
-        var name = chip.dataset.color;
-        var hex = COLOR_HEX[name];
-        chip.style.background = hex || UNKNOWN_COLOR_HEX;
-        if (!hex) { chip.style.borderStyle = 'dashed'; chip.style.borderColor = '#9ca3af'; }
-        chip.addEventListener('click', function(){
-          chips.forEach(function(c){ c.style.boxShadow = 'none'; });
-          chip.style.boxShadow = '0 0 0 3px var(--primary)';
-          input.value = name;
-          hint.textContent = name;
-          hint.style.color = 'var(--text)';
-        });
-      });
-      if (input.value) {
-        var selected = document.querySelector('#colorChips .colorChip[data-color="' + input.value.replace(/"/g, '\\"') + '"]');
-        if (selected) {
-          selected.style.boxShadow = '0 0 0 3px var(--primary)';
-          hint.textContent = input.value;
-          hint.style.color = 'var(--text)';
-        } else {
-          // لون محفوظ أصلاً بالحيوان لكن ما ينطبق مع أي فقعة ظاهرة حالياً
-          // (نادر: حذف اللون من القائمة بعد تسجيل الحيوان) — نعرض اسمه نصاً
-          // بدل ما نصمت عن قيمة موجودة فعلياً.
-          hint.textContent = input.value;
-          hint.style.color = 'var(--text)';
-        }
-      }
       document.getElementById('animalForm').addEventListener('submit', function(e){
         if (!input.value) {
           e.preventDefault();

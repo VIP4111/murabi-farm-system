@@ -13,34 +13,34 @@ from app.models.animal_log import AnimalWeight, AnimalNote
 from app.models.milk_record import MilkRecord
 
 
-def _maybe_start_purchase_quarantine(animal: Animal) -> None:
-    """رأس مشترى وُضع بحظيرة العزل (بند إضافي، 2026-07-28) يحصل تلقائياً
-    على نفس مهمتي بداية دفعة الاستقبال (بند 52): رش وقائي وتحصين مبدئي —
-    اختيار المالك لحظيرة العزل وقت التسجيل هو اللي يفعّل هذا، مو تلقائي
-    بغض النظر عن الحظيرة المختارة (نفس مبدأ الاستقلالية اللي بُنيت عليه
-    شاشة تسجيل الحيوان من الأساس).
+def create_intake_care_tasks(animal: Animal, *, barn_id: int, due_date: date,
+                              source_type: str, source_id: int, label: str) -> tuple:
+    """رش وقائي + تحصين مبدئي لرأس وافد جديد (بند إضافي 52) — نقطة
+    الدخول الموحّدة الوحيدة لهاتين المهمتين. بند إضافي 292 — طلبك
+    الصريح "كملها الثلاثة كاملة": قبل هذا البند، نفس هالمنطق بالضبط
+    كان مكتوباً مرتين (هنا، وبـ`app/core/batch_service.py`) — أي تعديل
+    مستقبلي (زي بند 283) كان يحتاج يتذكر يعدّل المكانين، وفعلاً احتجنا
+    نصلح نفس الفجوة مرتين (بند 283 ثم 286). صار مكان واحد يستدعيه
+    الاثنان.
 
     ربط بصنف صيدلية فعلي (بند إضافي 283، طلبك الصريح: "هل الرش متوفر
     بالمستودع؟ هل يقترح نوع الرش؟") — لو المالك حدد دواء افتراضي بالإعدادات
     (`FarmSettings.default_intake_spray_pharmacy_id`/`..._vaccine_...`)،
     المهمة تُنشأ مربوطة فعلياً (`planned_pharmacy_id`) بنفس آلية بند 50 —
     زر "تأكيد التنفيذ" يفتح النموذج معبّى مسبقاً ويفحص المخزون فعلياً.
-    فاضي = تبقى تذكير عام بدون ربط (السلوك القديم، بدون كسر شي)."""
-    if not animal.barn_id:
-        return
-    from app.models import Barn, FarmSettings
-    from app.team import task_service
+    فاضي = تبقى تذكير عام بدون ربط (السلوك القديم، بدون كسر شي).
 
-    barn = Barn.query.get(animal.barn_id)
-    if not barn or barn.barn_type != "عزل":
-        return
+    `label` — لاحقة عنوان المهمة تميّز مصدرها (مثلاً "(وافد جديد)" أو
+    "(دفعة BATCH-...)") بدون تكرار بقية المنطق."""
+    from app.models import FarmSettings
+    from app.team import task_service
 
     fs = FarmSettings.get()
 
     spray_task = task_service.create_suggested_task(
-        title=f"🧴 رش وقائي — {animal.animal_no} (وافد جديد)",
-        task_type="batch_spray", barn_id=animal.barn_id, animal_id=animal.id,
-        due_date=date.today(), source_type="Animal", source_id=animal.id,
+        title=f"🧴 رش وقائي — {animal.animal_no} {label}",
+        task_type="batch_spray", barn_id=barn_id, animal_id=animal.id,
+        due_date=due_date, source_type=source_type, source_id=source_id,
         notes="رش وقائي ضد الطفيليات الخارجية عند الاستقبال — قبل الاختلاط بباقي القطيع.",
     )
     if fs.default_intake_spray_pharmacy_id:
@@ -51,9 +51,9 @@ def _maybe_start_purchase_quarantine(animal: Animal) -> None:
         spray_task.notes += f"\nالدواء المقترح: {spray.name} (يفحص المخزون تلقائياً عند تأكيد التنفيذ)."
 
     vaccination_task = task_service.create_suggested_task(
-        title=f"💉 تحصين مبدئي إلزامي — {animal.animal_no} (وافد جديد)",
-        task_type="batch_initial_vaccination", barn_id=animal.barn_id, animal_id=animal.id,
-        due_date=date.today(), source_type="Animal", source_id=animal.id,
+        title=f"💉 تحصين مبدئي إلزامي — {animal.animal_no} {label}",
+        task_type="batch_initial_vaccination", barn_id=barn_id, animal_id=animal.id,
+        due_date=due_date, source_type=source_type, source_id=source_id,
         notes="تحصين مبدئي عند الاستقبال حسب البروتوكول المتّبع بالمزرعة — إلزامي قبل خلط الرأس بالقطيع.",
     )
     if fs.default_intake_vaccine_pharmacy_id:
@@ -65,6 +65,28 @@ def _maybe_start_purchase_quarantine(animal: Animal) -> None:
 
     if fs.default_intake_spray_pharmacy_id or fs.default_intake_vaccine_pharmacy_id:
         db.session.commit()
+
+    return spray_task, vaccination_task
+
+
+def _maybe_start_purchase_quarantine(animal: Animal) -> None:
+    """رأس مشترى وُضع بحظيرة العزل (بند إضافي، 2026-07-28) يحصل تلقائياً
+    على نفس مهمتي بداية دفعة الاستقبال (بند 52): رش وقائي وتحصين مبدئي —
+    اختيار المالك لحظيرة العزل وقت التسجيل هو اللي يفعّل هذا، مو تلقائي
+    بغض النظر عن الحظيرة المختارة (نفس مبدأ الاستقلالية اللي بُنيت عليه
+    شاشة تسجيل الحيوان من الأساس)."""
+    if not animal.barn_id:
+        return
+    from app.models import Barn
+
+    barn = Barn.query.get(animal.barn_id)
+    if not barn or barn.barn_type != "عزل":
+        return
+
+    create_intake_care_tasks(
+        animal, barn_id=animal.barn_id, due_date=date.today(),
+        source_type="Animal", source_id=animal.id, label="(وافد جديد)",
+    )
 
 
 def _register_pregnancy_intake(animal: Animal, *, intake_date: date) -> None:

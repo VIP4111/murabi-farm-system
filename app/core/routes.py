@@ -425,6 +425,9 @@ def animals_bulk_select():
         flash("إجراء جماعي غير معروف", "error")
         return redirect(url_for("core.animals_bulk_home"))
 
+    from app.health.health_service import seed_default_vaccine_catalog
+    seed_default_vaccine_catalog()  # بند إضافي 292
+
     animals = Animal.query.filter(Animal.id.in_(animal_ids)).order_by(Animal.animal_no).all()
     # عمر كل رأس بالأيام (بند إضافي 60) — يُستخدم بس لعرض/مطابقة جدول
     # الجرعة حسب العمر بشاشة التحصين الجماعي (`PharmacyDoseRule`)، مو
