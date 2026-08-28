@@ -28,7 +28,7 @@
       </select>
       <select name="breed_{{ i }}" style="width:120px;">
         <option value="">{{ _('السلالة -') }}</option>
-        {% for b in breeds %}<option value="{{ b }}">{{ b }}</option>{% endfor %}
+        {% for b in breeds %}<option value="{{ b.name }}">{{ b.name }}</option>{% endfor %}
       </select>
       <div class="colorChips" style="display:flex; gap:3px; flex-wrap:wrap; max-width:150px;">
         {% for c in colors %}

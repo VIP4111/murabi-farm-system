@@ -5,7 +5,6 @@
 الأتمتة الكاملة اللي يشتغل بيها رأس بسلالة "نعيمي" أو أي سلالة ثانية،
 بدون أي قاعدة طبية مختلقة له."""
 from app.extensions import db
-from app.models.animal import Animal
 from app.models.animal_options import Breed
 from app.core.animal_service import create_animal
 from app.models.animal import AnimalSource
@@ -13,8 +12,11 @@ from app.models import ProductionWorkflow
 from factories import make_barn
 
 
-def test_goat_in_breeds_constant():
-    assert "ماعز" in Animal.BREEDS
+def test_goat_in_breed_table_after_seed(app):
+    """بند إضافي 291 — `Animal.BREEDS` الثابتة اتحذفت (كانت مصدر ثانٍ
+    منفصل لنفس المفهوم)؛ المصدر الحقيقي الوحيد الآن جدول `Breed`."""
+    Breed.seed_defaults()
+    assert Breed.query.filter_by(name="ماعز").first() is not None
 
 
 def test_seed_defaults_adds_goat_even_when_other_breeds_exist(app):

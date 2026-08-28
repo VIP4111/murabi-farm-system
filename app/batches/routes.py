@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from app.batches import batches_bp
 from app.auth.decorators import require_permission
 from app.core import batch_service
-from app.models import AnimalBatch, Animal, Barn, AnimalColor
+from app.models import AnimalBatch, Animal, Barn, AnimalColor, Breed
 
 BATCH_ENTRY_SLOTS = range(20)
 
@@ -51,9 +51,16 @@ def batches_new():
             return redirect(url_for("batches.batches_new"))
         flash(f'تم تسجيل الدفعة "{batch.batch_no}" ({len(entries)} رأس) وعزلها بحظيرة الحجر الصحي.', "success")
         return redirect(url_for("batches.batch_detail", batch_id=batch.id))
+    # بند إضافي 291 — طلبك الصريح "ابدأ" بعد ما لقينا فجوة حقيقية:
+    # هذي الشاشة كانت تقرأ قائمة سلالات ثابتة بالكود (`Animal.BREEDS`
+    # القديمة)، منفصلة تماماً عن جدول `Breed` الحقيقي اللي تضيف له
+    # سلالات جديدة من شاشة "+ حيوان جديد" — أي سلالة تضيفها هناك ما
+    # كانت تظهر هنا إطلاقاً. صارت تقرأ من نفس المصدر الحقيقي الوحيد.
+    Breed.seed_defaults()
     return render_template(
         "batches/batch_form.html", entry_slots=BATCH_ENTRY_SLOTS,
-        sources=AnimalBatch.SOURCES, breeds=Animal.BREEDS, today=date.today().isoformat(),
+        sources=AnimalBatch.SOURCES, breeds=Breed.query.order_by(Breed.name).all(),
+        today=date.today().isoformat(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
     )
 
