@@ -62,15 +62,23 @@ def _dispatch(text: str, user) -> str:
         return _today_summary()
 
     if command in ("بلاغاتي", "طوارئ"):
-        if role != "doctor":
-            return "هذا الأمر خاص بالدكتور فقط."
+        # بند إضافي 294 — طلبك الصريح "نعم" على إصلاح فجوة "المزارع"
+        # ببوت تيليجرام: الفحص كان باسم الدور الحرفي "doctor"، فأي دور
+        # مخصَّص (زي "المزارع" مستنسخ من عامل، أو دور بيطري مخصَّص لاحقاً)
+        # يُرفض حتى لو صلاحياته الفعلية تسمح له. صار يفحص الصلاحية
+        # الحقيقية (`health.view`) بدل اسم الدور — نفس مبدأ الصلاحيات
+        # المطبَّق بكل مكان ثانٍ بالنظام.
+        if not user.has_permission("health.view"):
+            return "هذا الأمر يحتاج صلاحية عرض السجل الصحي."
         if command == "بلاغاتي":
             return _my_reports_summary(user)
         return _isolation_summary()
 
     if command == "بلاغي_الجديد":
-        if role != "worker":
-            return "هذا الأمر خاص بالعامل فقط."
+        # بند إضافي 294 — نفس المبدأ: صلاحية `reports.submit` بدل اسم
+        # الدور الحرفي "worker".
+        if not user.has_permission("reports.submit"):
+            return "هذا الأمر يحتاج صلاحية رفع بلاغ."
         return _new_report_link()
 
     if command == "قبول":
@@ -82,16 +90,21 @@ def _dispatch(text: str, user) -> str:
     if command == "مهمة":
         return _assign_task_cmd(user, args)
 
-    return (
-        "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم"
-        + {
-            "owner": "، /تنبيهات، /بلاغات، /تقرير_اليوم، /قبول رقم_البلاغ،"
-                     " /إغلاق رقم_البلاغ، /مهمة جوال_العضو نص_المهمة",
-            "doctor": "، /بلاغاتي، /طوارئ، /قبول رقم_البلاغ، /إغلاق رقم_البلاغ،"
-                      " /مهمة جوال_العضو نص_المهمة",
-            "worker": "، /بلاغي_الجديد",
-        }.get(role, "")
-    )
+    # بند إضافي 294 — نص المساعدة نفسه صار حسب الصلاحية الفعلية بدل
+    # اسم الدور، عشان دور مخصَّص (زي "المزارع") يشوف الأوامر المتاحة
+    # له فعلياً، مو قائمة فاضية لأن اسمه ما يطابق "worker" حرفياً.
+    extra = ""
+    if role == "owner":
+        extra += "، /تنبيهات، /بلاغات، /تقرير_اليوم"
+    if user.has_permission("health.view"):
+        extra += "، /بلاغاتي، /طوارئ"
+    if user.has_permission("reports.manage"):
+        extra += "، /قبول رقم_البلاغ، /إغلاق رقم_البلاغ"
+    if user.has_permission("tasks.assign_any"):
+        extra += "، /مهمة جوال_العضو نص_المهمة"
+    if user.has_permission("reports.submit"):
+        extra += "، /بلاغي_الجديد"
+    return "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم" + extra
 
 
 def _my_tasks(user) -> str:

@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from app.extensions import db
 from app.core import telegram_commands_service as svc
-from app.models import Role, User, Task, Report
+from app.models import Role, User, Task, Report, Permission
 from app.team import report_service, task_service
 
 
@@ -67,9 +67,19 @@ def test_owner_only_command_allowed_for_owner(app, owner):
     assert "خاص" not in reply
 
 
-def test_doctor_only_command_rejected_for_owner(app, owner):
+def test_doctor_command_allowed_for_owner(app, owner):
+    """بند إضافي 294 — الفحص صار بصلاحية `health.view` بدل اسم الدور
+    الحرفي "doctor"؛ صاحب الحلال يملك كل الصلاحيات أصلاً (بما فيها
+    health.view)، فيقدر يستخدم أوامر الدكتور كمان — سلوك متوقّع
+    ومنطقي بنظام مبني على الصلاحيات، عكس التقييد الحرفي القديم."""
     reply = svc._dispatch("بلاغاتي", owner)
-    assert "خاص بالدكتور" in reply
+    assert "صلاحية عرض السجل الصحي" not in reply
+
+
+def test_doctor_only_command_rejected_for_worker_without_health_permission(app):
+    worker = _make_role_user("worker", "0599999165", telegram_chat_id="6")
+    reply = svc._dispatch("بلاغاتي", worker)
+    assert "صلاحية عرض السجل الصحي" in reply
 
 
 def test_doctor_only_command_allowed_for_doctor(app):
@@ -79,9 +89,35 @@ def test_doctor_only_command_allowed_for_doctor(app):
 
 
 def test_worker_only_command_rejected_for_doctor(app):
+    """بند إضافي 294 — الدكتور الافتراضي ما عنده صلاحية `reports.submit`
+    أصلاً، فيُرفض — بس بالرسالة الجديدة المبنية على الصلاحية، مو اسم
+    الدور الحرفي."""
     doctor = _make_role_user("doctor", "0599999163", telegram_chat_id="4")
     reply = svc._dispatch("بلاغي_الجديد", doctor)
-    assert "خاص بالعامل" in reply
+    assert "صلاحية رفع بلاغ" in reply
+
+
+def test_custom_role_with_reports_submit_permission_can_use_worker_command(app):
+    """أهم اختبار — نفس فجوة "المزارع" اللي بدأنا منها: دور مخصَّص
+    مستنسخ من صلاحيات العامل (فيه `reports.submit`) يقدر يستخدم
+    `/بلاغي_الجديد` رغم إن اسمه مو "worker" حرفياً."""
+    from app.extensions import db
+    from app.models import Role, Permission, User
+
+    perm = Permission.query.filter_by(code="reports.submit").first()
+    role = Role(name="المزارع", display_name="المزارع", is_system=False)
+    role.permissions = [perm]
+    db.session.add(role)
+    db.session.commit()
+
+    farmer = User(name="مزارع اختبار", phone="0599999166", role_id=role.id,
+                  telegram_chat_id="7")
+    farmer.set_password("pass1234")
+    db.session.add(farmer)
+    db.session.commit()
+
+    reply = svc._dispatch("بلاغي_الجديد", farmer)
+    assert "صلاحية رفع بلاغ" not in reply
 
 
 def test_worker_only_command_allowed_for_worker(app):
