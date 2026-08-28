@@ -17,7 +17,7 @@
 
     <label>{{ _('اللون') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
-      <span id="colorSwatch" style="width:22px; height:22px; border-radius:50%; border:1px solid var(--line); flex:0 0 auto; background:var(--bg);"></span>
+      <span id="colorSwatch" style="width:22px; height:22px; border-radius:50%; border:1px dashed #9ca3af; flex:0 0 auto; background:#d1d5db;"></span>
       <select name="color" id="colorSelect" required style="flex:1; margin-bottom:0;">
         <option value="">{{ _('اختر اللون...') }}</option>
         {% for c in colors %}<option value="{{ c.name }}" {{ 'selected' if animal and animal.color == c.name }}>{{ c.name }}</option>{% endfor %}
@@ -30,6 +30,14 @@
       // الألوان الافتراضية الستة المزروعة بـ`AnimalColor.seed_defaults()`؛
       // أي لون مخصَّص تضيفه لاحقاً بزر "+" ما يطابق هالقائمة يعرض دائرة
       // رمادية محايدة بدل ما نخمّن لونه.
+      //
+      // إصلاح بند إضافي 287 (طلبك الصريح: "حطيت لون اصفر طلع لي أسود")
+      // — اللون الاحتياطي كان `var(--bg)` (خلفية الصفحة)، وبالوضع
+      // الداكن هذا المتغيّر نفسه قريب من الأسود، فيبين وكأن النظام
+      // "اختار" أسود لأي لون مخصَّص غير موجود بالخريطة. صار لوناً رمادياً
+      // ثابتاً + حد متقطّع (dashed) — واضح إنه "غير معروف"، مو لون حقيقي،
+      // وما يتأثر بالوضع الداكن/الفاتح إطلاقاً.
+      var UNKNOWN_COLOR_HEX = '#d1d5db';
       var COLOR_HEX = {
         'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
         'بني': '#8b5e34', 'رمادي': '#9ca3af',
@@ -39,8 +47,9 @@
       var swatch = document.getElementById('colorSwatch');
       function sync(){
         var hex = COLOR_HEX[select.value];
-        swatch.style.background = hex || 'var(--bg)';
-        swatch.style.borderColor = select.value ? 'var(--line)' : 'var(--line)';
+        swatch.style.background = hex || UNKNOWN_COLOR_HEX;
+        swatch.style.borderStyle = hex ? 'solid' : 'dashed';
+        swatch.style.borderColor = hex ? 'var(--line)' : '#9ca3af';
       }
       select.addEventListener('change', sync);
       sync();
