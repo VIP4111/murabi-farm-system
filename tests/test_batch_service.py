@@ -12,7 +12,7 @@ from factories import make_barn
 
 
 def _entries(n=3, prefix="B1"):
-    return [{"animal_no": f"{prefix}-{i}", "gender": "أنثى"} for i in range(1, n + 1)]
+    return [{"animal_no": f"{prefix}-{i}", "gender": "أنثى", "color": "أبيض"} for i in range(1, n + 1)]
 
 
 def test_create_batch_registers_animals_and_isolates_and_creates_tasks(app):

@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from app.batches import batches_bp
 from app.auth.decorators import require_permission
 from app.core import batch_service
-from app.models import AnimalBatch, Animal, Barn
+from app.models import AnimalBatch, Animal, Barn, AnimalColor
 
 BATCH_ENTRY_SLOTS = range(20)
 
@@ -31,6 +31,7 @@ def batches_new():
             entries.append({
                 "animal_no": request.form.get(f"animal_no_{i}") or None,
                 "gender": gender,
+                "color": request.form.get(f"color_{i}") or None,
                 "weight": float(request.form[f"weight_{i}"]) if request.form.get(f"weight_{i}") else None,
                 "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
                 "breed": request.form.get(f"breed_{i}") or None,
@@ -53,6 +54,7 @@ def batches_new():
     return render_template(
         "batches/batch_form.html", entry_slots=BATCH_ENTRY_SLOTS,
         sources=AnimalBatch.SOURCES, breeds=Animal.BREEDS, today=date.today().isoformat(),
+        colors=AnimalColor.query.order_by(AnimalColor.name).all(),
     )
 
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 20:03+0300\n"
+"POT-Creation-Date: 2026-08-28 20:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -2514,7 +2514,7 @@ msgstr "नया वजन दर्ज करें"
 #: app/templates/animal_form.html:149
 #: app/templates/animal_weight_new_simple.html:42
 #: app/templates/animals_bulk_purchase.html:37
-#: app/templates/batches/batch_form.html:33
+#: app/templates/batches/batch_form.html:38
 #: app/templates/bulk_action_form.html:19 app/templates/catalog_public.html:13
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
@@ -5374,15 +5374,19 @@ msgstr "लिंग -"
 msgid "السلالة -"
 msgstr "नस्ल -"
 
-#: app/templates/batches/batch_form.html:34
+#: app/templates/batches/batch_form.html:35
+msgid "اللون -"
+msgstr "रंग -"
+
+#: app/templates/batches/batch_form.html:39
 msgid "السعر (لو شراء)"
 msgstr "मूल्य (यदि खरीद है)"
 
-#: app/templates/batches/batch_form.html:37
-msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" على الأقل عشان يُحتسب الصف."
-msgstr "जिस पंक्ति की आवश्यकता न हो उसे खाली छोड़ें — पंक्ति गिनने के लिए कम से कम \"लिंग\" आवश्यक है।"
+#: app/templates/batches/batch_form.html:42
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" و\"اللون\" على الأقل عشان يُحتسب الصف."
+msgstr "यदि आपको किसी पंक्ति की आवश्यकता नहीं है तो उसे खाली छोड़ दें — किसी पंक्ति की गिनती के लिए कम से कम \"लिंग\" और \"रंग\" आवश्यक हैं।"
 
-#: app/templates/batches/batch_form.html:39
+#: app/templates/batches/batch_form.html:63
 msgid "تسجيل الدفعة وعزلها"
 msgstr "खेप दर्ज करें और अलग करें"
 

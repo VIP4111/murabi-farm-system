@@ -30,11 +30,35 @@
         <option value="">{{ _('السلالة -') }}</option>
         {% for b in breeds %}<option value="{{ b }}">{{ b }}</option>{% endfor %}
       </select>
+      <span class="colorSwatch" style="width:16px; height:16px; border-radius:50%; border:1px solid var(--line); flex:0 0 auto; background:var(--bg);"></span>
+      <select name="color_{{ i }}" class="colorSelect" style="width:110px;">
+        <option value="">{{ _('اللون -') }}</option>
+        {% for c in colors %}<option value="{{ c.name }}">{{ c.name }}</option>{% endfor %}
+      </select>
       <input name="weight_{{ i }}" type="number" step="0.1" placeholder="{{ _('الوزن (كجم)') }}" style="width:110px;">
       <input name="price_{{ i }}" type="number" step="0.01" placeholder="{{ _('السعر (لو شراء)') }}" style="width:130px;">
     </div>
     {% endfor %}
-    <p style="font-size:12px; color:#888;">{{ _('اترك أي صف فاضي لو ما تحتاجه — لازم "الجنس" على الأقل عشان يُحتسب الصف.') }}</p>
+    <p style="font-size:12px; color:#888;">{{ _('اترك أي صف فاضي لو ما تحتاجه — لازم "الجنس" و"اللون" على الأقل عشان يُحتسب الصف.') }}</p>
+    <script>
+    (function(){
+      // بند إضافي 286 — نفس فقعة اللون الحية (بند 284/285) مطبَّقة
+      // هنا لكل صف بشاشة استقبال الدفعة.
+      var COLOR_HEX = {
+        'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
+        'بني': '#8b5e34', 'رمادي': '#9ca3af',
+        'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
+      };
+      document.querySelectorAll('.colorSelect').forEach(function(sel){
+        sel.addEventListener('change', function(){
+          var swatch = sel.previousElementSibling;
+          if (swatch && swatch.classList.contains('colorSwatch')) {
+            swatch.style.background = COLOR_HEX[sel.value] || 'var(--bg)';
+          }
+        });
+      });
+    })();
+    </script>
 
     <button class="btn" type="submit">{{ _('تسجيل الدفعة وعزلها') }}</button>
   </form>

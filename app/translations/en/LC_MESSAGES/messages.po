@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 20:03+0300\n"
+"POT-Creation-Date: 2026-08-28 20:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -2514,7 +2514,7 @@ msgstr "Record new weight"
 #: app/templates/animal_form.html:149
 #: app/templates/animal_weight_new_simple.html:42
 #: app/templates/animals_bulk_purchase.html:37
-#: app/templates/batches/batch_form.html:33
+#: app/templates/batches/batch_form.html:38
 #: app/templates/bulk_action_form.html:19 app/templates/catalog_public.html:13
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
@@ -5374,15 +5374,19 @@ msgstr "Gender -"
 msgid "السلالة -"
 msgstr "Breed -"
 
-#: app/templates/batches/batch_form.html:34
+#: app/templates/batches/batch_form.html:35
+msgid "اللون -"
+msgstr "Color -"
+
+#: app/templates/batches/batch_form.html:39
 msgid "السعر (لو شراء)"
 msgstr "Price (if purchase)"
 
-#: app/templates/batches/batch_form.html:37
-msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" على الأقل عشان يُحتسب الصف."
-msgstr "Leave any row empty if you don't need it — \"gender\" at minimum is required for the row to count."
+#: app/templates/batches/batch_form.html:42
+msgid "اترك أي صف فاضي لو ما تحتاجه — لازم \"الجنس\" و\"اللون\" على الأقل عشان يُحتسب الصف."
+msgstr "Leave any row empty if you don't need it — \"gender\" and \"color\" are at least required for a row to count."
 
-#: app/templates/batches/batch_form.html:39
+#: app/templates/batches/batch_form.html:63
 msgid "تسجيل الدفعة وعزلها"
 msgstr "Register batch and isolate it"
 
