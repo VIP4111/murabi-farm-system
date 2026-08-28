@@ -326,6 +326,13 @@ def answer(user, message_text: str, lang: str | None = None) -> dict:
         title, body = knowledge_base.localized_entry(entry, lang)
         return {"reply": f"**{title}**\n\n{body}", "intent_code": f"kb:{entry.code}", "answered_by": "local"}
 
+    # بند إضافي 297 — Gemini بأدوات القراءة الذكية يُجرَّب أولاً (يقرأ
+    # بيانات حية عبر استدعاء أدوات فعلية بدل نص سياق ثابت مجمَّع مسبقاً)؛
+    # لو غير مفعَّل أو فشل، نرجع لجسر Claude النصي القديم كما كان تماماً.
+    tools_reply = llm_bridge.ask_with_tools(message_text, user, lang=lang)
+    if tools_reply:
+        return {"reply": tools_reply, "intent_code": None, "answered_by": "llm_tools"}
+
     llm_reply = llm_bridge.ask(message_text, _build_llm_context(user), lang=lang)
     if llm_reply:
         return {"reply": llm_reply, "intent_code": None, "answered_by": "llm"}
