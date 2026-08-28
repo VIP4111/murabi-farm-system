@@ -313,6 +313,30 @@ def pregnancies_abort(pregnancy_id):
     return redirect(url_for("repro.pregnancies_list"))
 
 
+@repro_bp.route("/pregnancies/<int:pregnancy_id>/confirm", methods=["POST"])
+@login_required
+@require_permission("repro.manage")
+def pregnancies_confirm(pregnancy_id):
+    """تأكيد حمل كان مسجَّلاً "غير مؤكَّد" (بند إضافي 283) — قبل هذا
+    البند ما فيه أي طريقة تأكّد بها حمل مشكوك فيه لاحقاً بعد ما تتضح
+    نتيجته (سونار متأخر، أعراض واضحة...) غير حذف السجل وإعادة تسجيله
+    من الصفر. `confirmed=False` كان يعني الحمل يبقى غايباً للأبد عن
+    "كم رأس حوامل لدينا" (context_service.pregnant_summary تفحص
+    confirmed=True حصراً) — تأكيده هنا هو اللي يُدخله فعلياً بالعدّاد."""
+    pregnancy = Pregnancy.query.get_or_404(pregnancy_id)
+    if pregnancy.confirmed:
+        flash("هذا الحمل مؤكَّد أصلاً.", "error")
+        return redirect(url_for("repro.pregnancies_list"))
+    if pregnancy.outcome:
+        flash("هذا الحمل مسجَّل له نتيجة إجهاض — ما ينفع يُأكَّد.", "error")
+        return redirect(url_for("repro.pregnancies_list"))
+    pregnancy.confirmed = True
+    _log("pregnancy.confirm", "Pregnancy", pregnancy.id)
+    db.session.commit()
+    flash(f"تم تأكيد حمل {pregnancy.female.animal_no} — صارت تظهر ضمن عدد الحوامل.", "success")
+    return redirect(url_for("repro.pregnancies_list"))
+
+
 # ---------- فحص السونار (مستقل) ----------
 
 @repro_bp.route("/sonar")

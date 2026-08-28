@@ -18,28 +18,53 @@ def _maybe_start_purchase_quarantine(animal: Animal) -> None:
     على نفس مهمتي بداية دفعة الاستقبال (بند 52): رش وقائي وتحصين مبدئي —
     اختيار المالك لحظيرة العزل وقت التسجيل هو اللي يفعّل هذا، مو تلقائي
     بغض النظر عن الحظيرة المختارة (نفس مبدأ الاستقلالية اللي بُنيت عليه
-    شاشة تسجيل الحيوان من الأساس)."""
+    شاشة تسجيل الحيوان من الأساس).
+
+    ربط بصنف صيدلية فعلي (بند إضافي 283، طلبك الصريح: "هل الرش متوفر
+    بالمستودع؟ هل يقترح نوع الرش؟") — لو المالك حدد دواء افتراضي بالإعدادات
+    (`FarmSettings.default_intake_spray_pharmacy_id`/`..._vaccine_...`)،
+    المهمة تُنشأ مربوطة فعلياً (`planned_pharmacy_id`) بنفس آلية بند 50 —
+    زر "تأكيد التنفيذ" يفتح النموذج معبّى مسبقاً ويفحص المخزون فعلياً.
+    فاضي = تبقى تذكير عام بدون ربط (السلوك القديم، بدون كسر شي)."""
     if not animal.barn_id:
         return
-    from app.models import Barn
+    from app.models import Barn, FarmSettings
     from app.team import task_service
 
     barn = Barn.query.get(animal.barn_id)
     if not barn or barn.barn_type != "عزل":
         return
 
-    task_service.create_suggested_task(
+    fs = FarmSettings.get()
+
+    spray_task = task_service.create_suggested_task(
         title=f"🧴 رش وقائي — {animal.animal_no} (وافد جديد)",
         task_type="batch_spray", barn_id=animal.barn_id, animal_id=animal.id,
         due_date=date.today(), source_type="Animal", source_id=animal.id,
         notes="رش وقائي ضد الطفيليات الخارجية عند الاستقبال — قبل الاختلاط بباقي القطيع.",
     )
-    task_service.create_suggested_task(
+    if fs.default_intake_spray_pharmacy_id:
+        spray = fs.default_intake_spray_pharmacy
+        spray_task.planned_pharmacy_id = spray.id
+        spray_task.planned_quantity = spray.default_dose_ml
+        spray_task.planned_treatment_kind = "vet_visit"
+        spray_task.notes += f"\nالدواء المقترح: {spray.name} (يفحص المخزون تلقائياً عند تأكيد التنفيذ)."
+
+    vaccination_task = task_service.create_suggested_task(
         title=f"💉 تحصين مبدئي إلزامي — {animal.animal_no} (وافد جديد)",
         task_type="batch_initial_vaccination", barn_id=animal.barn_id, animal_id=animal.id,
         due_date=date.today(), source_type="Animal", source_id=animal.id,
         notes="تحصين مبدئي عند الاستقبال حسب البروتوكول المتّبع بالمزرعة — إلزامي قبل خلط الرأس بالقطيع.",
     )
+    if fs.default_intake_vaccine_pharmacy_id:
+        vaccine = fs.default_intake_vaccine_pharmacy
+        vaccination_task.planned_pharmacy_id = vaccine.id
+        vaccination_task.planned_quantity = vaccine.default_dose_ml
+        vaccination_task.planned_treatment_kind = "vaccination"
+        vaccination_task.notes += f"\nاللقاح المقترح: {vaccine.name} (يفحص المخزون تلقائياً عند تأكيد التنفيذ)."
+
+    if fs.default_intake_spray_pharmacy_id or fs.default_intake_vaccine_pharmacy_id:
+        db.session.commit()
 
 
 def _register_pregnancy_intake(animal: Animal, *, intake_date: date) -> None:

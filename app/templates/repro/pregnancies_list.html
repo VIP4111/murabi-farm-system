@@ -18,6 +18,12 @@
       <td>{{ expected_birth[r.id] }}</td>
       <td>{% if r.outcome == 'abortion' %}<span class="badge off">⛔ {{ _('إجهاض') }} {{ r.outcome_date }}</span>{% else %}-{% endif %}</td>
       <td>
+        {% if current_user.has_permission('repro.manage') and not r.confirmed and not r.outcome %}
+        <form method="post" action="{{ url_for('repro.pregnancies_confirm', pregnancy_id=r.id) }}" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn light" type="submit" style="padding:4px 10px; font-size:12px;">✅ {{ _('تأكيد الحمل') }}</button>
+        </form>
+        {% endif %}
         {% if current_user.has_permission('repro.manage') and not r.outcome %}
         <form method="post" action="{{ url_for('repro.pregnancies_abort', pregnancy_id=r.id) }}"
               onsubmit="return confirm('{{ _('تسجيل إجهاض لـ%(no)s — بيعزلها فوراً ويولّد مهام سحب عيّنات ومراقبة الحظيرة. متأكد؟', no=r.female.animal_no) }}');"

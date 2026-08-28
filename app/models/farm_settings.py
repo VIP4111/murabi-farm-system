@@ -160,6 +160,21 @@ class FarmSettings(db.Model):
     # (تسجيل واقعة، مو منع).
     task_late_grace_minutes = db.Column(db.Integer, default=60, nullable=False)
 
+    # الرش الوقائي/التحصين المبدئي لرأس وافد جديد (بند إضافي 283) —
+    # طلبك الصريح لما سألت "هل الرش متوفر بالمستودع، وهل يقترح نوع
+    # الرش/التحصين". قبل هذا البند، مهمتي "رش وقائي"/"تحصين مبدئي" عند
+    # الشراء (`animal_service._maybe_start_purchase_quarantine`) كانتا
+    # تذكير نصي عام بدون ربط بصنف صيدلية فعلي — صفر فحص مخزون، صفر
+    # اقتراح اسم. لو المالك يحدد هنا دواء افتراضي لكل بند، المهمتين
+    # تُنشآن مربوطتين فعلياً (planned_pharmacy_id) وتفتح لهما نفس زر
+    # "تأكيد التنفيذ" اللي يفحص المخزون وينقص منه فعلياً. فاضي = يبقى
+    # السلوك القديم (تذكير عام بدون ربط)، عمداً بدون قيمة افتراضية
+    # مفروضة — المالك يحدد دواءه الفعلي بنفسه.
+    default_intake_spray_pharmacy_id = db.Column(db.Integer, db.ForeignKey("pharmacy.id"), nullable=True)
+    default_intake_spray_pharmacy = db.relationship("Pharmacy", foreign_keys=[default_intake_spray_pharmacy_id])
+    default_intake_vaccine_pharmacy_id = db.Column(db.Integer, db.ForeignKey("pharmacy.id"), nullable=True)
+    default_intake_vaccine_pharmacy = db.relationship("Pharmacy", foreign_keys=[default_intake_vaccine_pharmacy_id])
+
     # تدرّج تغذية المولود التأسيسي — Creep Feeding (بند إضافي 235) —
     # قبل هذا، المولود يُستثنى كلياً من العلف الصلب لين يوصل
     # weaning_solid_feed_age_days بالضبط (استثناء صفر/كامل مفاجئ). من

@@ -16,6 +16,25 @@
 </div>
 
 <div class="card">
+  <h2>{{ _('دواء استقبال الرأس الجديد (بند إضافي 283)') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('لو حدّدت دواء هنا، مهام "رش وقائي" و"تحصين مبدئي" اللي تفتح تلقائياً عند شراء رأس جديد ووضعه بحظيرة العزل تصير مربوطة فعلياً بهذا الدواء — تفحص المخزون وتنقص منه عند التنفيذ. فاضي = تبقى المهمة تذكير عام بدون ربط بدواء معيّن.') }}</p>
+  <form method="post" action="{{ url_for('core.intake_medicine_settings_save') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('دواء الرش الوقائي الافتراضي') }}</label>
+    <select name="default_intake_spray_pharmacy_id">
+      <option value="">-- {{ _('بدون ربط (تذكير عام بس)') }} --</option>
+      {% for p in pharmacy_items %}<option value="{{ p.id }}" {{ 'selected' if fs.default_intake_spray_pharmacy_id == p.id }}>{{ p.name }}</option>{% endfor %}
+    </select>
+    <label>{{ _('لقاح التحصين المبدئي الافتراضي') }}</label>
+    <select name="default_intake_vaccine_pharmacy_id">
+      <option value="">-- {{ _('بدون ربط (تذكير عام بس)') }} --</option>
+      {% for p in pharmacy_items %}<option value="{{ p.id }}" {{ 'selected' if fs.default_intake_vaccine_pharmacy_id == p.id }}>{{ p.name }}</option>{% endfor %}
+    </select>
+    <button class="btn" type="submit">{{ _('حفظ') }}</button>
+  </form>
+</div>
+
+<div class="card">
   <h2>{{ _('كتالوج المبيعات العام') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('رابط عام (بدون تسجيل دخول) يعرض الرؤوس الجاهزة للبيع فقط — شاركه مع المشترين المحتملين.') }}</p>
   <input type="text" readonly value="{{ url_for('core.sales_catalog', token=fs.sales_catalog_token, _external=True) }}" onclick="this.select();" style="font-size:12px;">

@@ -1563,9 +1563,11 @@ def settings_home():
         from app.reports import report_service as report_svc
         start, end, _range_key = report_svc.parse_date_range({})
         indicators_table = report_svc.overview_report(start, end)["table"]
+    from app.models import Pharmacy
     return render_template(
         "settings.html", services=services, roles=roles, fs=fs,
         indicators_table=indicators_table,
+        pharmacy_items=Pharmacy.query.filter_by(status="active").order_by(Pharmacy.name).all(),
     )
 
 
@@ -1620,6 +1622,20 @@ def farm_settings_save():
     db.session.add(fs)
     db.session.commit()
     flash("تم حفظ الإعدادات الزمنية", "success")
+    return redirect(url_for("core.settings_home"))
+
+
+@core_bp.route("/settings/intake-medicine", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def intake_medicine_settings_save():
+    """دواء استقبال الرأس الجديد الافتراضي (بند إضافي 283)."""
+    from app.models import FarmSettings
+    fs = FarmSettings.get()
+    fs.default_intake_spray_pharmacy_id = request.form.get("default_intake_spray_pharmacy_id") or None
+    fs.default_intake_vaccine_pharmacy_id = request.form.get("default_intake_vaccine_pharmacy_id") or None
+    db.session.commit()
+    flash("تم حفظ إعدادات دواء الاستقبال", "success")
     return redirect(url_for("core.settings_home"))
 
 
