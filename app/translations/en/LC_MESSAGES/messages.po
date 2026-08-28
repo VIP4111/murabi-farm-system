@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 23:09+0300\n"
+"POT-Creation-Date: 2026-08-29 02:35+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -112,15 +112,15 @@ msgstr "Confirmed"
 msgid "فشلت"
 msgstr "Failed"
 
-#: app/__init__.py:161 app/team/routes.py:746
+#: app/__init__.py:161 app/team/routes.py:751
 msgid "مهمة عامة"
 msgstr "General task"
 
-#: app/__init__.py:162 app/team/routes.py:747
+#: app/__init__.py:162 app/team/routes.py:752
 msgid "فحص عزل"
 msgstr "Isolation check"
 
-#: app/__init__.py:163 app/team/routes.py:751
+#: app/__init__.py:163 app/team/routes.py:756
 msgid "مراجعة الدكتور"
 msgstr "Doctor review"
 
@@ -136,15 +136,15 @@ msgstr "Selenium dose"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "Colostrum/nursing follow-up"
 
-#: app/__init__.py:167 app/team/routes.py:748
+#: app/__init__.py:167 app/team/routes.py:753
 msgid "وزن"
 msgstr "Weighing"
 
-#: app/__init__.py:168 app/team/routes.py:749
+#: app/__init__.py:168 app/team/routes.py:754
 msgid "تحصين مستحق"
 msgstr "Vaccination due"
 
-#: app/__init__.py:169 app/team/routes.py:750
+#: app/__init__.py:169 app/team/routes.py:755
 msgid "تبديل علف"
 msgstr "Feed switch"
 
@@ -289,7 +289,7 @@ msgstr "Other"
 msgid "نقل حظائر جماعي"
 msgstr "Bulk barn transfer"
 
-#: app/__init__.py:227 app/core/routes.py:401
+#: app/__init__.py:227 app/core/routes.py:407
 #: app/templates/animals_list.html:78
 msgid "عزل جماعي"
 msgstr "Bulk isolation"
@@ -717,7 +717,7 @@ msgstr "Severe stress"
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:734
+#: app/core/animal_filters_service.py:181 app/team/routes.py:743
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -950,59 +950,59 @@ msgstr "At least one backup exists (item 34)."
 msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
 msgstr "No backup taken yet — check \"Backup\" in the settings screen (item 34)."
 
-#: app/core/routes.py:393 app/templates/animals_list.html:67
+#: app/core/routes.py:399 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "Bulk weighing"
 
-#: app/core/routes.py:394 app/templates/animals_list.html:76
+#: app/core/routes.py:400 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr "Bulk vaccination"
 
-#: app/core/routes.py:395 app/templates/animals_list.html:68
+#: app/core/routes.py:401 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr "Bulk note"
 
-#: app/core/routes.py:396 app/templates/animals_list.html:69
+#: app/core/routes.py:402 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr "Bulk barn transfer"
 
-#: app/core/routes.py:397 app/templates/animals_list.html:70
+#: app/core/routes.py:403 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr "Bulk purpose assignment (breeding/fattening/sale)"
 
-#: app/core/routes.py:398 app/templates/animals_list.html:71
+#: app/core/routes.py:404 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr "Bulk sale"
 
-#: app/core/routes.py:399 app/templates/animals_list.html:72
+#: app/core/routes.py:405 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr "Bulk mortality recording"
 
-#: app/core/routes.py:400 app/templates/animals_list.html:77
+#: app/core/routes.py:406 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr "Bulk treatment/disease"
 
-#: app/core/routes.py:402 app/templates/animals_list.html:82
+#: app/core/routes.py:408 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr "Bulk sonar exam"
 
-#: app/core/routes.py:403 app/templates/animals_list.html:79
+#: app/core/routes.py:409 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "Planned treatment plan (awaiting execution confirmation)"
 
-#: app/core/routes.py:807 app/templates/animal_form.html:57
+#: app/core/routes.py:813 app/templates/animal_form.html:57
 msgid "إضافة فصيلة جديدة"
 msgstr "Add new species"
 
-#: app/core/routes.py:809
+#: app/core/routes.py:815
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "A new species doesn't automatically enter the production cycle engine (mating/pregnancy/weaning) — it's handled safely like ostriches until a dedicated system is built for it."
 
-#: app/core/routes.py:828 app/templates/animal_form.html:67
+#: app/core/routes.py:834 app/templates/animal_form.html:67
 msgid "إضافة سلالة جديدة"
 msgstr "Add new breed"
 
-#: app/core/routes.py:872 app/templates/animal_form.html:25
+#: app/core/routes.py:878 app/templates/animal_form.html:25
 msgid "إضافة لون جديد"
 msgstr "Add new color"
 
@@ -1495,6 +1495,7 @@ msgstr "Gender"
 #: app/templates/animal_detail.html:403 app/templates/animal_detail.html:418
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
 #: app/templates/animal_workflow.html:154
+#: app/templates/assistant/farm_notes_list.html:35
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:246
 #: app/templates/bulk_action_form.html:353
@@ -1671,6 +1672,7 @@ msgid "الفئة"
 msgstr "Category"
 
 #: app/reports/report_service.py:378
+#: app/templates/assistant/farm_notes_list.html:35
 #: app/templates/team/_task_assign_fields.html:4
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
@@ -1791,19 +1793,6 @@ msgstr "Move to Isolation"
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
 
-#: app/team/routes.py:735 app/templates/team/payroll_reports.html:21
-#: app/templates/team/payroll_reports.html:36
-msgid "العامل"
-msgstr "Worker"
-
-#: app/team/routes.py:736
-msgid "الطبيب البيطري"
-msgstr "Veterinarian"
-
-#: app/team/routes.py:737
-msgid "المحاسب"
-msgstr "Accountant"
-
 #: app/team/task_service.py:34
 msgid "نقص الأدوات"
 msgstr "Missing tools"
@@ -1874,7 +1863,7 @@ msgid "تنبيهاتي"
 msgstr "My Alerts"
 
 #: app/templates/alerts_list.html:5 app/templates/animals_list.html:92
-#: app/templates/assistant/chat.html:52
+#: app/templates/assistant/chat.html:57
 msgid "التنبيهات"
 msgstr "Alerts"
 
@@ -3476,7 +3465,8 @@ msgid "صفحة اليوم"
 msgstr "Today's page"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/base.html:554 app/templates/home.html:119
+#: app/templates/assistant/farm_notes_list.html:7 app/templates/base.html:554
+#: app/templates/home.html:119
 msgid "المساعد الذكي"
 msgstr "Smart Assistant"
 
@@ -5204,53 +5194,114 @@ msgstr "My Tasks Today"
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr "View and complete your assigned tasks"
 
-#: app/templates/assistant/chat.html:26
+#: app/templates/assistant/chat.html:28
+msgid "دفتر الملاحظات"
+msgstr "Notes Journal"
+
+#: app/templates/assistant/chat.html:30
 msgid "مسح كل المحادثة؟"
 msgstr "Clear the whole conversation?"
 
-#: app/templates/assistant/chat.html:28
+#: app/templates/assistant/chat.html:32
 msgid "مسح المحادثة"
 msgstr "Clear conversation"
 
-#: app/templates/assistant/chat.html:35
+#: app/templates/assistant/chat.html:40
 msgid "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة."
 msgstr "Ask me about the herd's status, pregnancy, incubators, feed, alerts, or any operational guidance about the farm."
 
-#: app/templates/assistant/chat.html:48
+#: app/templates/assistant/chat.html:53
 msgid "كم عدد الحيوانات؟"
 msgstr "How many animals?"
 
-#: app/templates/assistant/chat.html:49
+#: app/templates/assistant/chat.html:54
 msgid "كم حوامل؟"
 msgstr "How many pregnant?"
 
-#: app/templates/assistant/chat.html:50
+#: app/templates/assistant/chat.html:55
 msgid "حالة الحاضنات"
 msgstr "Incubator status"
 
-#: app/templates/assistant/chat.html:51
+#: app/templates/assistant/chat.html:56
 msgid "تكلفة العلف"
 msgstr "Feed cost"
 
-#: app/templates/assistant/chat.html:56
+#: app/templates/assistant/chat.html:61
 msgid "اكتب سؤالك هنا..."
 msgstr "Type your question here..."
 
-#: app/templates/assistant/chat.html:57
+#: app/templates/assistant/chat.html:62
 msgid "إرسال"
 msgstr "Send"
 
-#: app/templates/assistant/chat.html:97
+#: app/templates/assistant/chat.html:102
 msgid "المساعد يكتب..."
 msgstr "Assistant is typing..."
 
-#: app/templates/assistant/chat.html:111
+#: app/templates/assistant/chat.html:116
 msgid "صار خطأ:"
 msgstr "An error occurred:"
 
-#: app/templates/assistant/chat.html:117
+#: app/templates/assistant/chat.html:122
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr "Couldn't reach the assistant. Try again."
+
+#: app/templates/assistant/farm_notes_list.html:2
+#: app/templates/assistant/farm_notes_list.html:6
+msgid "دفتر ملاحظات المزرعة"
+msgstr "Farm Notes Journal"
+
+#: app/templates/assistant/farm_notes_list.html:10
+msgid "أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي."
+msgstr "Any real field note you write here (barn behavior, a recurring problem's cause, a solution you tried...) becomes experience the smart assistant can recall for a similar question later. It is never used as a fixed medical rule — just reference context."
+
+#: app/templates/assistant/farm_notes_list.html:14
+msgid "البحث الذكي بهذا الدفتر غير مفعَّل حالياً (يحتاج GEMINI_API_KEY) — الملاحظات تُحفظ عادي، بس ما راح تظهر بنتائج المساعد لين يتفعّل المفتاح."
+msgstr "Smart search in this journal isn't active yet (needs GEMINI_API_KEY) — notes still save normally, but won't appear in assistant results until the key is set."
+
+#: app/templates/assistant/farm_notes_list.html:20
+msgid "عنوان مختصر (اختياري)"
+msgstr "Short title (optional)"
+
+#: app/templates/assistant/farm_notes_list.html:21
+msgid "اكتب الملاحظة هنا..."
+msgstr "Write the note here..."
+
+#: app/templates/assistant/farm_notes_list.html:24
+msgid "بدون ربط بحظيرة"
+msgstr "Not linked to a barn"
+
+#: app/templates/assistant/farm_notes_list.html:27
+msgid "رقم رأس (اختياري)"
+msgstr "Animal number (optional)"
+
+#: app/templates/assistant/farm_notes_list.html:28
+msgid "تصنيف (اختياري)"
+msgstr "Tag (optional)"
+
+#: app/templates/assistant/farm_notes_list.html:30
+msgid "إضافة الملاحظة"
+msgstr "Add Note"
+
+#: app/templates/assistant/farm_notes_list.html:35
+msgid "النص"
+msgstr "Note"
+
+#: app/templates/assistant/farm_notes_list.html:35
+msgid "الربط"
+msgstr "Linked to"
+
+#: app/templates/assistant/farm_notes_list.html:35
+msgid "الوسم"
+msgstr "Tag"
+
+#: app/templates/assistant/farm_notes_list.html:35
+msgid "كاتبها"
+msgstr "Written by"
+
+#: app/templates/assistant/farm_notes_list.html:46
+msgid "لا توجد ملاحظات بعد."
+msgstr "No notes yet."
 
 #: app/templates/batches/batch_detail.html:3
 #: app/templates/batches/batches_list.html:3
@@ -9542,6 +9593,11 @@ msgstr "confirmed payroll"
 msgid "تفصيل الرواتب المكوّنة للإجمالي"
 msgstr "Breakdown of payrolls making up the total"
 
+#: app/templates/team/payroll_reports.html:21
+#: app/templates/team/payroll_reports.html:36
+msgid "العامل"
+msgstr "Worker"
+
 #: app/templates/team/payroll_reports.html:33
 msgid "اختر عامل وشوف كل رواتبه المؤكَّدة عبر الأشهر، مع الوصل الموقَّع لو مرفوع."
 msgstr "Pick an employee and see all their confirmed payslips across months, with the signed receipt if uploaded."
@@ -10593,4 +10649,10 @@ msgstr "No additional named warehouses yet — all stock is in the default main 
 
 #~ msgid "اللون -"
 #~ msgstr "Color -"
+
+#~ msgid "الطبيب البيطري"
+#~ msgstr "Veterinarian"
+
+#~ msgid "المحاسب"
+#~ msgstr "Accountant"
 

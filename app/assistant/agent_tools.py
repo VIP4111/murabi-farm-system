@@ -28,7 +28,7 @@
 from datetime import date, datetime
 
 from app.models import Animal, Barn, Disease, AnimalWeight, Pregnancy, Vaccination, Finance
-from app.assistant import context_service
+from app.assistant import context_service, farm_note_service
 
 MAX_SEARCH_CANDIDATES = 6
 
@@ -155,6 +155,36 @@ def finance_summary(from_date: str, to_date: str) -> dict:
     }
 
 
+def search_farm_notes(query: str, barn_name: str | None = None, animal_no: str | None = None,
+                       tag: str | None = None) -> dict:
+    """يبحث بالمعنى (مو بمطابقة كلمة حرفية) بدفتر ملاحظات المزرعة —
+    خبرة حقيقية كتبها المربي أو الدكتور سابقاً عن مواقف مشابهة. استخدمها
+    لو سؤال المستخدم يحتاج سياقاً من خبرة سابقة موثَّقة (مثال: "ليش
+    الحظيرة الشرقية دايماً فيها إسهال؟"). حدّد `barn_name` أو `animal_no`
+    لو السؤال يخص حظيرة أو رأس معيّن — يضيّق نطاق البحث قبل حساب التشابه.
+    النتائج معلومات مرجعية بس، مو حقائق مؤكدة تُبنى عليها إجابة طبية نهائية.
+
+    Args:
+        query: نص السؤال أو الموضوع المطلوب البحث عنه بالمعنى.
+        barn_name: اسم الحظيرة لو السؤال يخصها تحديداً (اختياري).
+        animal_no: رقم الرأس لو السؤال يخصه تحديداً (اختياري).
+        tag: تصنيف الملاحظات لو معروف (اختياري).
+    """
+    barn_id = None
+    if barn_name:
+        barn = Barn.query.filter(Barn.barn_name.ilike(f"%{barn_name}%")).first()
+        barn_id = barn.id if barn else None
+    animal_id = None
+    if animal_no:
+        animal = Animal.query.filter_by(animal_no=animal_no).first()
+        animal_id = animal.id if animal else None
+
+    results = farm_note_service.search_notes(query, barn_id=barn_id, animal_id=animal_id, tag=tag)
+    if not results:
+        return {"status": "not_found", "message": "ما فيه ملاحظات سابقة ذات صلة بهذا السؤال."}
+    return {"status": "found", "notes": results}
+
+
 # خريطة كل أداة لصلاحية الوصول المطلوبة — نفس فلسفة `nlu_service.INTENTS`
 # (فحص الصلاحية قبل الاستدعاء، مو بعده). الأداة ما تُعرَض على Gemini
 # أصلاً لمستخدم ما يملك صلاحيتها.
@@ -163,6 +193,7 @@ _TOOL_PERMISSIONS = {
     herd_summary: "animals.view",
     animal_history: "animals.view",
     finance_summary: "finance.full.manage",
+    search_farm_notes: "animals.view",
 }
 
 

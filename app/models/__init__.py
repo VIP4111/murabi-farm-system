@@ -40,6 +40,7 @@ from app.models.checklist import ChecklistItem, ChecklistCompletion
 from app.models.sales_lot import SalesLot, SalesLotItem
 from app.models.asset import Asset, AssetMaintenanceLog, UtilityReading
 from app.models.inventory_count import InventoryCount
+from app.models.farm_note import FarmNote, FarmNoteEmbedding
 
 __all__ = [
     "Role", "Permission", "role_permissions",
@@ -69,4 +70,5 @@ __all__ = [
     "Asset", "AssetMaintenanceLog", "UtilityReading",
     "SalesLot", "SalesLotItem",
     "InventoryCount",
+    "FarmNote", "FarmNoteEmbedding",
 ]

@@ -111,6 +111,36 @@ def ask_with_tools(question: str, user, lang: str = "ar") -> str | None:
         return None
 
 
+# بند إضافي 298 — المرحلة ٣ (دفتر ملاحظات المزرعة + RAG). نموذج تمثيل
+# رقمي منفصل عن نموذج المحادثة أعلاه (نفس مفتاح `GEMINI_API_KEY`، خدمة
+# مختلفة من نفس المزوّد).
+DEFAULT_EMBEDDING_MODEL = os.environ.get("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001")
+
+
+def embed_text(text: str) -> list[float] | None:
+    """يرجع التمثيل الرقمي (embedding) لنص واحد، أو None عند أي فشل أو
+    غياب المفتاح — نفس فلسفة `ask()`/`ask_with_tools()` بالضبط، صفر
+    استثناء يطلع لمن يستدعيها."""
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+    except ImportError:
+        return None
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        response = client.models.embed_content(model=DEFAULT_EMBEDDING_MODEL, contents=text)
+        embedding = response.embeddings[0]
+        return list(embedding.values)
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.embed_text failed: %s", e)
+        except Exception:
+            pass
+        return None
+
+
 def ask(question: str, context_text: str, lang: str = "ar") -> str | None:
     """يرجع رد Claude، أو None لو المفتاح غير مُفعّل أو صار أي خطأ (نرجع
     None عمداً بدل رفع استثناء — nlu_service.py يلتف على fallback محلي).
