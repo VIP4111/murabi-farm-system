@@ -8,7 +8,7 @@ import pytest
 
 from app.core import bulk_service
 from app.core import cycle_engine
-from app.models import Barn, Finance, SonarResult
+from app.models import Animal, Barn, Finance, SonarResult
 from app.models.animal_log import AnimalNote
 from factories import make_animal, make_barn, make_pharmacy
 
@@ -170,14 +170,25 @@ def test_bulk_sonar_records_distinct_result_per_animal(app):
 def test_bulk_purchase_creates_all_animals_with_finance_rows(app):
     results = bulk_service.apply_bulk_purchase(
         rows=[
-            {"animal_no": "BP-01", "gender": "ذكر", "weight": 30, "price": 500},
-            {"animal_no": "BP-02", "gender": "أنثى", "weight": 28, "price": 450},
+            {"animal_no": "BP-01", "gender": "ذكر", "color": "أبيض", "weight": 30, "price": 500},
+            {"animal_no": "BP-02", "gender": "أنثى", "color": "أسود", "weight": 28, "price": 450},
         ],
         barn_id=None, purchase_date=date.today(), species="sheep_goat", actor_user_id=1,
     )
     assert results["BP-01"] == "تمت الإضافة"
     assert results["BP-02"] == "تمت الإضافة"
     assert Finance.query.filter_by(operation_type="purchase").count() == 2
+
+
+def test_bulk_purchase_rejects_row_without_color(app):
+    """بند إضافي 285 — طلبك الصريح: نفس القيد اللي بشاشة "+ حيوان جديد"
+    الفردية (اللون إلزامي) صار مطبَّقاً بالاستقبال الجماعي كمان."""
+    results = bulk_service.apply_bulk_purchase(
+        rows=[{"animal_no": "BP-03", "gender": "ذكر", "weight": 30, "price": 500}],
+        barn_id=None, purchase_date=date.today(), species="sheep_goat", actor_user_id=1,
+    )
+    assert results["BP-03"] == "مرفوض — لازم تحدد اللون"
+    assert Animal.query.filter_by(animal_no="BP-03").first() is None
 
 
 def test_bulk_purchase_rejects_duplicate_animal_no(app):

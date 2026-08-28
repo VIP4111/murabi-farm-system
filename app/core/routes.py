@@ -717,6 +717,7 @@ def animals_bulk_purchase():
             rows.append({
                 "animal_no": animal_no,
                 "gender": request.form.get(f"gender_{i}"),
+                "color": request.form.get(f"color_{i}") or None,
                 "weight": float(request.form[f"weight_{i}"]) if request.form.get(f"weight_{i}") else None,
                 "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
             })
@@ -735,9 +736,11 @@ def animals_bulk_purchase():
                 flash(f"{animal_no}: {r}", "error")
         return redirect(url_for("core.animals_bulk_home"))
 
+    from app.models import AnimalColor
     return render_template(
         "animals_bulk_purchase.html",
         barns=Barn.query.order_by(Barn.barn_name).all(),
+        colors=AnimalColor.query.order_by(AnimalColor.name).all(),
         today=date.today().isoformat(),
     )
 

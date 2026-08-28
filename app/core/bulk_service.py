@@ -296,19 +296,28 @@ def apply_bulk_purchase(*, rows: list[dict], barn_id: int | None, purchase_date:
                          species: str, actor_user_id: int) -> dict:
     """شراء دفعة جديدة كاملة بضغطة واحدة — مختلف شكلاً عن باقي دوال هذا
     الملف: يُنشئ رؤوساً جديدة (`create_animal`)، ما يطبّق فعل على رؤوس
-    موجودة. كل صف بـ`rows` قاموس {animal_no, gender, weight, price}.
+    موجودة. كل صف بـ`rows` قاموس {animal_no, gender, color, weight, price}.
     يمر بنفس نقطة الدخول الموحّدة `create_animal` — نفس قيد الحركة
-    المالية التلقائية للشراء (بند 18) ونفس تسجيل حدث دورة الإنتاج."""
+    المالية التلقائية للشراء (بند 18) ونفس تسجيل حدث دورة الإنتاج.
+
+    `color` (بند إضافي 285، طلبك الصريح "لا يوجد لون") — قبل هذا البند
+    الاستقبال الجماعي كان يُنشئ الرؤوس بلون فاضي دائماً، خلافاً لشاشة
+    "+ حيوان جديد" الفردية اللي تفرضه إلزامياً ("الرقم واللون مع بعض
+    هوية الرأس الميدانية"). نفس القيد صار هنا أيضاً — صف بدون لون يُرفض
+    برسالة واضحة، بدل ما يُحفظ الحيوان بهوية ميدانية ناقصة بصمت."""
     results = {}
     for row in rows:
         animal_no = (row.get("animal_no") or "").strip()
         if not animal_no:
             continue
+        if not row.get("color"):
+            results[animal_no] = "مرفوض — لازم تحدد اللون"
+            continue
         try:
             animal = create_animal(
                 animal_no=animal_no, source=AnimalSource.PURCHASE, gender=row["gender"],
                 species=species, barn_id=barn_id, purchase_date=purchase_date,
-                weight=row.get("weight"), price=row.get("price"),
+                weight=row.get("weight"), price=row.get("price"), color=row.get("color"),
             )
         except ValueError as e:
             results[animal_no] = f"مرفوض — {e}"

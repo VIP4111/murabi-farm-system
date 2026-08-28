@@ -34,7 +34,7 @@
 
     <div class="table-scroll">
 <table id="rowsTable" style="margin-top:14px;">
-      <tr><th>{{ _('رقم الحيوان') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('سعر الشراء') }}</th></tr>
+      <tr><th>{{ _('رقم الحيوان') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('اللون') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('سعر الشراء') }}</th></tr>
       {% for i in range(8) %}
       <tr>
         <td><input name="animal_no_{{ i }}"></td>
@@ -43,6 +43,15 @@
             <option value="ذكر">{{ _('ذكر') }}</option>
             <option value="أنثى">{{ _('أنثى') }}</option>
           </select>
+        </td>
+        <td>
+          <div style="display:flex; gap:4px; align-items:center;">
+            <span class="colorSwatch" style="width:16px; height:16px; border-radius:50%; border:1px solid var(--line); flex:0 0 auto; background:var(--bg);"></span>
+            <select name="color_{{ i }}" class="colorSelect" style="margin-bottom:0;">
+              <option value="">{{ _('بدون') }}</option>
+              {% for c in colors %}<option value="{{ c.name }}">{{ c.name }}</option>{% endfor %}
+            </select>
+          </div>
         </td>
         <td><input name="weight_{{ i }}" type="number" step="0.01"></td>
         <td><input name="price_{{ i }}" type="number" step="0.01"></td>
@@ -64,12 +73,35 @@
     var addBtn = document.getElementById('addRowBtn');
     var MALE_LABEL = {{ _('ذكر')|tojson }};
     var FEMALE_LABEL = {{ _('أنثى')|tojson }};
+    var NO_COLOR_LABEL = {{ _('بدون')|tojson }};
+    var COLOR_OPTIONS = {{ colors|map(attribute='name')|list|tojson }};
+    // بند إضافي 285 — نفس خريطة الفقعة اللونية بشاشة تسجيل الحيوان
+    // الفردي (بند 284)، مطبَّقة هنا لكل صف من صفوف الاستقبال الجماعي.
+    var COLOR_HEX = {
+      'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
+      'بني': '#8b5e34', 'رمادي': '#9ca3af',
+      'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
+    };
+    function syncSwatch(select){
+      var swatch = select.parentElement.querySelector('.colorSwatch');
+      if (!swatch) return;
+      swatch.style.background = COLOR_HEX[select.value] || 'var(--bg)';
+    }
+    table.addEventListener('change', function(e){
+      if (e.target.classList.contains('colorSelect')) syncSwatch(e.target);
+    });
     addBtn.addEventListener('click', function(){
       var i = parseInt(rowCountInput.value, 10);
       var tr = document.createElement('tr');
+      var colorOptionsHtml = '<option value="">' + NO_COLOR_LABEL + '</option>';
+      COLOR_OPTIONS.forEach(function(name){ colorOptionsHtml += '<option value="' + name + '">' + name + '</option>'; });
       tr.innerHTML =
         '<td><input name="animal_no_' + i + '"></td>' +
         '<td><select name="gender_' + i + '"><option value="ذكر">' + MALE_LABEL + '</option><option value="أنثى">' + FEMALE_LABEL + '</option></select></td>' +
+        '<td><div style="display:flex; gap:4px; align-items:center;">' +
+          '<span class="colorSwatch" style="width:16px; height:16px; border-radius:50%; border:1px solid var(--line); flex:0 0 auto; background:var(--bg);"></span>' +
+          '<select name="color_' + i + '" class="colorSelect" style="margin-bottom:0;">' + colorOptionsHtml + '</select>' +
+        '</div></td>' +
         '<td><input name="weight_' + i + '" type="number" step="0.01"></td>' +
         '<td><input name="price_' + i + '" type="number" step="0.01"></td>';
       table.appendChild(tr);
