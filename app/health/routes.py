@@ -101,6 +101,7 @@ def _inject_injection_guide():
 @login_required
 @require_permission("health.view")
 def pharmacy_list():
+    health_service.seed_default_vaccine_catalog()
     items = Pharmacy.query.order_by(Pharmacy.name).all()
     stockout = {p.id: health_service.pharmacy_days_until_stockout(p) for p in items}
     return render_template(
