@@ -17,12 +17,35 @@
 
     <label>{{ _('اللون') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
-      <select name="color" required style="flex:1; margin-bottom:0;">
+      <span id="colorSwatch" style="width:22px; height:22px; border-radius:50%; border:1px solid var(--line); flex:0 0 auto; background:var(--bg);"></span>
+      <select name="color" id="colorSelect" required style="flex:1; margin-bottom:0;">
         <option value="">{{ _('اختر اللون...') }}</option>
         {% for c in colors %}<option value="{{ c.name }}" {{ 'selected' if animal and animal.color == c.name }}>{{ c.name }}</option>{% endfor %}
       </select>
       <a class="btn light" href="{{ url_for('core.colors_new') }}" title="{{ _('إضافة لون جديد') }}" style="padding:6px 10px; font-size:16px; line-height:1; flex:0 0 auto;">➕</a>
     </div>
+    <script>
+    (function(){
+      // بند إضافي 284 — فقعة لونية جنب اسم اللون، بطلبك الصريح. تغطي
+      // الألوان الافتراضية الستة المزروعة بـ`AnimalColor.seed_defaults()`؛
+      // أي لون مخصَّص تضيفه لاحقاً بزر "+" ما يطابق هالقائمة يعرض دائرة
+      // رمادية محايدة بدل ما نخمّن لونه.
+      var COLOR_HEX = {
+        'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
+        'بني': '#8b5e34', 'رمادي': '#9ca3af',
+        'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
+      };
+      var select = document.getElementById('colorSelect');
+      var swatch = document.getElementById('colorSwatch');
+      function sync(){
+        var hex = COLOR_HEX[select.value];
+        swatch.style.background = hex || 'var(--bg)';
+        swatch.style.borderColor = select.value ? 'var(--line)' : 'var(--line)';
+      }
+      select.addEventListener('change', sync);
+      sync();
+    })();
+    </script>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">{{ _('الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين.') }}</p>
 
     <label>{{ _('الاسم (اختياري)') }}</label><input name="name" value="{{ animal.name or '' if animal }}">
