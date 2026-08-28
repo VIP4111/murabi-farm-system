@@ -51,10 +51,15 @@ class Breed(db.Model):
 
     @classmethod
     def seed_defaults(cls) -> None:
-        if cls.query.count() > 0:
-            return
-        for n in ("نعيمي", "عام/غير محدد"):
-            db.session.add(cls(name=n))
+        """بند إضافي 289 — صارت idempotent لكل اسم على حدة (مو بس أول
+        تشغيل للنظام كامل) عشان مزرعة شغّالة أصلاً (عندها سلالات
+        مسجَّلة من قبل) تقدر تلتقط سلالة افتراضية جديدة أُضيفت بالكود
+        لاحقاً (زي "ماعز" هنا) بمجرّد إعادة تشغيل `flask seed` — بدون
+        هذا التغيير، الحارس القديم (`count() > 0`) كان يوقف أي إضافة
+        مستقبلية بمجرد وجود سلالة واحدة، حتى لو كانت غير هذي بالاسم."""
+        for n in ("نعيمي", "ماعز", "عام/غير محدد"):
+            if not cls.query.filter_by(name=n).first():
+                db.session.add(cls(name=n))
         db.session.commit()
 
 
