@@ -23,6 +23,9 @@
 13. (إضافي، بند 97) تباطؤ نمو مشبوه — رأس أبطأ بوضوح من متوسط حظيرته
 14. (إضافي، بند 99) مهمة متعذّرة بانتظار المراجعة — آخر 3 أيام
 15. (إضافي، بند 112) عزل بدون حظيرة عزل مصنّفة — مهام isolation_check بلا حظيرة
+16. (إضافي، بند 296) توقّع نفاد علف قريب — تحليل إحصائي لمعدل استهلاك
+    الحركات الفعلية (FeedMovement) مقابل المخزون المتبقي (أول خطوة من
+    خطة "عقل المزرعة" الاستباقية)
 
 **إضافة (2026-07-23)**: كل تنبيه صار يحمل `barn_id` (حظيرة الحيوان
 المرتبط، أو حظيرة البلاغ مباشرة لو ما له حيوان محدد) — أساس شاشة
@@ -33,7 +36,7 @@ import calendar
 from datetime import date, datetime, timedelta
 from app.models import (
     Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
-    AnimalWeight, Task,
+    AnimalWeight, Task, Feed, FeedMovement,
 )
 
 PAYROLL_MONTH_END_REMINDER_DAYS = 3
@@ -653,6 +656,63 @@ def _feed_distribution_shortage() -> list[dict]:
     ]
 
 
+FEED_DEPLETION_WINDOW_DAYS = 14
+FEED_DEPLETION_MIN_MOVEMENTS = 3
+FEED_DEPLETION_ALERT_DAYS = 5
+
+
+def _feed_depletion_forecast() -> list[dict]:
+    """توقّع نفاد علف قريب (بند إضافي 296 — المرحلة ١ من خطة "عقل
+    المزرعة") — أول خطوة فعلية بخطة الوكيل الاستباقي: تحليل إحصائي
+    بسيط بدون أي نموذج لغوي، بنفس فلسفة هذا الملف بالضبط (حساب حي عند
+    فتح الشاشة، بدون Cron). الفكرة: معدل الاستهلاك الفعلي الحقيقي
+    موجود أصلاً بـ`FeedMovement` (كل خصم توزيع علف تلقائي، بند 134،
+    يسجّل حركة `out` هناك) — بدون أي حقل أو جدول جديد نحسب متوسط
+    الاستهلاك اليومي لكل صنف علف آخر `FEED_DEPLETION_WINDOW_DAYS` يوم،
+    ونقارنه بالمخزون المتبقي فعلياً (`Feed.available_qty`) لنتوقّع
+    بعد كم يوم ينفد الصنف لو استمر نفس المعدل.
+
+    **نطاق متعمَّد**: صنف عنده أقل من `FEED_DEPLETION_MIN_MOVEMENTS`
+    حركة صادرة بالنافذة يُتجاهَل (بيانات غير كافية لمعدل موثوق — نفس
+    منطق `WEIGHT_TREND_MIN_COHORT` ببند 97). التنبيه يظهر بس لو الأيام
+    المتبقية المتوقَّعة ≤ `FEED_DEPLETION_ALERT_DAYS`، ويُعتبر عاجلاً
+    دائماً لو المخزون نفد فعلياً (صفر أو أقل) أو الأيام المتبقية ≤ يومين."""
+    window_start = datetime.now() - timedelta(days=FEED_DEPLETION_WINDOW_DAYS)
+    rows = (FeedMovement.query
+            .filter(FeedMovement.movement_type == "out", FeedMovement.created_at >= window_start)
+            .all())
+
+    out_by_feed: dict[int, list[FeedMovement]] = {}
+    for m in rows:
+        out_by_feed.setdefault(m.feed_id, []).append(m)
+
+    alerts = []
+    for feed_id, movements in out_by_feed.items():
+        if len(movements) < FEED_DEPLETION_MIN_MOVEMENTS:
+            continue
+        feed = movements[0].feed
+        if feed is None:
+            continue
+        total_out = sum(m.quantity or 0 for m in movements)
+        span_days = max((datetime.now() - min(m.created_at for m in movements)).days, 1)
+        daily_rate = total_out / span_days
+        if daily_rate <= 0:
+            continue
+        available = feed.available_qty or 0
+        days_remaining = available / daily_rate
+        if days_remaining > FEED_DEPLETION_ALERT_DAYS:
+            continue
+        urgent = available <= 0 or days_remaining <= 2
+        alerts.append({
+            "category": "توقّع نفاد علف", "icon": "⏳",
+            "label": f"{feed.name} — يتوقّع نفاده خلال {days_remaining:.1f} يوم",
+            "detail": (f"المتبقي {available:.1f} {feed.unit or 'كجم'}، بمعدل استهلاك "
+                       f"{daily_rate:.1f} {feed.unit or 'كجم'}/يوم آخر {span_days} يوم — يوصى بطلب شراء الآن."),
+            "urgent": urgent, "animal_id": None, "barn_id": None,
+        })
+    return alerts
+
+
 def _failed_tasks_pending_review() -> list[dict]:
     """مهام متعذّرة بانتظار مراجعة (بند إضافي 99) — قبل هذا، `fail_task`
     كان يسجّل الحالة والسبب بس (`app/team/task_service.py`)، بدون أي
@@ -855,7 +915,7 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
         + _barn_physiology_target_missing() + _weight_schedule_missing_reference_date()
         + _feed_distribution_shortage() + _suggested_tasks_pending_approval()
         + _payroll_month_end_reminder() + _equipment_needs_maintenance()
-        + _late_time_critical_tasks(fs, now=now)
+        + _late_time_critical_tasks(fs, now=now) + _feed_depletion_forecast()
     )
     if barn_ids is not None:
         allowed = set(barn_ids)
@@ -881,6 +941,7 @@ _ALERT_ACTION_ROUTES = {
     "تباطؤ نمو مشبوه": lambda aid: ("core.animals_edit", {"animal_id": aid}),
     "مهمة مقترحة بانتظار الاعتماد": lambda aid: ("team.tasks_list", {"_anchor": "suggested-tasks"}),
     "تذكير رواتب نهاية الشهر": lambda aid: ("team.payroll_list", {}),
+    "توقّع نفاد علف": lambda aid: ("feed.purchase_new", {}),
 }
 
 
