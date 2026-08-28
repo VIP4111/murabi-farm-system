@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 01:12+0300\n"
+"POT-Creation-Date: 2026-08-28 12:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4764,11 +4764,43 @@ msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:173
+#: app/templates/settings.html:173
+msgid "منطقة الخطر"
+msgstr "खतरे का क्षेत्र"
+
+#: app/templates/settings.html:174
+msgid "ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة المرور) يبقى شغّال بعدها."
+msgstr "फ़ैक्टरी रीसेट सभी फार्म डेटा (जानवर, वित्त, कार्य, टीम, सब कुछ) को स्थायी रूप से और अपरिवर्तनीय रूप से हटा देता है और सिस्टम को नई स्थिति में लौटा देता है। आपका खाता (वही फ़ोन और पासवर्ड) उसके बाद भी काम करता रहेगा।"
+
+#: app/templates/settings.html:175
+msgid "ضبط المصنع"
+msgstr "फ़ैक्टरी रीसेट"
+
+#: app/templates/settings.html:181
+msgid "تأكيد ضبط المصنع"
+msgstr "फ़ैक्टरी रीसेट की पुष्टि करें"
+
+#: app/templates/settings.html:182
+msgid "هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً."
+msgstr "यह क्रिया स्थायी और अपरिवर्तनीय है। सभी वर्तमान फार्म डेटा पूरी तरह से हटा दिया जाएगा।"
+
+#: app/templates/settings.html:185
+msgid "اكتب عبارة التأكيد بالضبط: \"ضبط المصنع\""
+msgstr "पुष्टिकरण वाक्यांश बिल्कुल वैसे ही लिखें जैसा दिखाया गया है (अरबी में): \"ضبط المصنع\""
+
+#: app/templates/settings.html:187
+msgid "كلمة مرورك الحالية"
+msgstr "आपका वर्तमान पासवर्ड"
+
+#: app/templates/settings.html:189
+msgid "احذف كل شي نهائياً"
+msgstr "सब कुछ स्थायी रूप से हटाएं"
+
+#: app/templates/reports/overview.html:18 app/templates/settings.html:208
 msgid "جدول المؤشرات"
 msgstr "संकेतक तालिका"
 
-#: app/templates/settings.html:174
+#: app/templates/settings.html:209
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
 

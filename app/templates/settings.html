@@ -168,6 +168,41 @@
   </div>
 </div>
 
+{% if current_user.has_permission('system.factory_reset') %}
+<div class="card" style="border:2px solid #dc2626;">
+  <h2 style="color:#dc2626;">⚠️ {{ _('منطقة الخطر') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة المرور) يبقى شغّال بعدها.') }}</p>
+  <button type="button" class="btn" style="background:#dc2626;" id="openFactoryResetModalBtn">🏭 {{ _('ضبط المصنع') }}</button>
+</div>
+
+<div class="modal-overlay" id="factoryResetModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" id="closeFactoryResetModalBtn">✕</button>
+    <h2 style="color:#dc2626;">⚠️ {{ _('تأكيد ضبط المصنع') }}</h2>
+    <p style="color:var(--muted); font-size:13px;">{{ _('هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً.') }}</p>
+    <form method="post" action="{{ url_for('core.factory_reset') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>{{ _('اكتب عبارة التأكيد بالضبط: "ضبط المصنع"') }}</label>
+      <input name="confirm_phrase" required placeholder="ضبط المصنع">
+      <label>{{ _('كلمة مرورك الحالية') }}</label>
+      <input name="password" type="password" required>
+      <button class="btn" type="submit" style="background:#dc2626;">{{ _('احذف كل شي نهائياً') }}</button>
+    </form>
+  </div>
+</div>
+<script>
+(function(){
+  var openBtn = document.getElementById('openFactoryResetModalBtn');
+  var closeBtn = document.getElementById('closeFactoryResetModalBtn');
+  var overlay = document.getElementById('factoryResetModal');
+  if (!openBtn || !overlay) return;
+  openBtn.addEventListener('click', function(){ overlay.classList.add('open'); });
+  closeBtn.addEventListener('click', function(){ overlay.classList.remove('open'); });
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) overlay.classList.remove('open'); });
+})();
+</script>
+{% endif %}
+
 {% if indicators_table %}
 <div class="card">
   <h3 style="font-size:15px;">{{ _('جدول المؤشرات') }}</h3>

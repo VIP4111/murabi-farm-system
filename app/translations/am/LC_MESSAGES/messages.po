@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 01:12+0300\n"
+"POT-Creation-Date: 2026-08-28 12:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -4764,11 +4764,43 @@ msgstr "ቀላል የክትትል ማያ ገጽ"
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "የዝርያ መመሪያ እና የእንክብካቤ ማስታወሻዎች"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:173
+#: app/templates/settings.html:173
+msgid "منطقة الخطر"
+msgstr "የአደጋ ቀጠና"
+
+#: app/templates/settings.html:174
+msgid "ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة المرور) يبقى شغّال بعدها."
+msgstr "የፋብሪካ ዳግም ማስጀመር ሁሉንም የእርሻ መረጃ (እንስሳት፣ ፋይናንስ፣ ተግባራት፣ ቡድን፣ ሁሉንም) በቋሚነት እና ወደ ኋላ በማይመለስ ሁኔታ ይሰርዛል እና ስርዓቱን ወደ አዲስ ሁኔታ ይመልሳል። መለያዎ (ተመሳሳይ ስልክ እና የይለፍ ቃል) ከዚያ በኋላ መስራቱን ይቀጥላል።"
+
+#: app/templates/settings.html:175
+msgid "ضبط المصنع"
+msgstr "የፋብሪካ ዳግም ማስጀመር"
+
+#: app/templates/settings.html:181
+msgid "تأكيد ضبط المصنع"
+msgstr "የፋብሪካ ዳግም ማስጀመርን አረጋግጥ"
+
+#: app/templates/settings.html:182
+msgid "هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً."
+msgstr "ይህ እርምጃ ቋሚ እና የማይመለስ ነው። ሁሉም የአሁኑ የእርሻ መረጃ ሙሉ በሙሉ ይሰረዛል።"
+
+#: app/templates/settings.html:185
+msgid "اكتب عبارة التأكيد بالضبط: \"ضبط المصنع\""
+msgstr "የማረጋገጫ ሐረጉን በትክክል እንደሚታየው ይጻፉ (በአረብኛ)፦ \"ضبط المصنع\""
+
+#: app/templates/settings.html:187
+msgid "كلمة مرورك الحالية"
+msgstr "የአሁኑ የይለፍ ቃልዎ"
+
+#: app/templates/settings.html:189
+msgid "احذف كل شي نهائياً"
+msgstr "ሁሉንም ነገር በቋሚነት ሰርዝ"
+
+#: app/templates/reports/overview.html:18 app/templates/settings.html:208
 msgid "جدول المؤشرات"
 msgstr "የጠቋሚዎች ሠንጠረዥ"
 
-#: app/templates/settings.html:174
+#: app/templates/settings.html:209
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "ከአሁኑ ወር መጀመሪያ እስከ ዛሬ — ልክ እንደ ሪፖርቶች ገፅ ተመሳሳይ ሞተር።"
 

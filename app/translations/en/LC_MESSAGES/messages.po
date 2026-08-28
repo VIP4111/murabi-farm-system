@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 01:12+0300\n"
+"POT-Creation-Date: 2026-08-28 12:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -4764,11 +4764,43 @@ msgstr "Simplified follow-up screen"
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "Breed guide and care notes"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:173
+#: app/templates/settings.html:173
+msgid "منطقة الخطر"
+msgstr "Danger zone"
+
+#: app/templates/settings.html:174
+msgid "ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة المرور) يبقى شغّال بعدها."
+msgstr "Factory reset permanently and irreversibly deletes all farm data (animals, finance, tasks, team, everything) and returns the system to a fresh state. Your account (same phone and password) keeps working afterward."
+
+#: app/templates/settings.html:175
+msgid "ضبط المصنع"
+msgstr "Factory reset"
+
+#: app/templates/settings.html:181
+msgid "تأكيد ضبط المصنع"
+msgstr "Confirm factory reset"
+
+#: app/templates/settings.html:182
+msgid "هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً."
+msgstr "This action is permanent and irreversible. All current farm data will be completely deleted."
+
+#: app/templates/settings.html:185
+msgid "اكتب عبارة التأكيد بالضبط: \"ضبط المصنع\""
+msgstr "Type the confirmation phrase exactly as shown (in Arabic): \"ضبط المصنع\""
+
+#: app/templates/settings.html:187
+msgid "كلمة مرورك الحالية"
+msgstr "Your current password"
+
+#: app/templates/settings.html:189
+msgid "احذف كل شي نهائياً"
+msgstr "Delete everything permanently"
+
+#: app/templates/reports/overview.html:18 app/templates/settings.html:208
 msgid "جدول المؤشرات"
 msgstr "Indicators table"
 
-#: app/templates/settings.html:174
+#: app/templates/settings.html:209
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "From the start of the current month to today — same engine as the reports screen."
 

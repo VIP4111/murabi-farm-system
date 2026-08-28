@@ -1623,6 +1623,37 @@ def farm_settings_save():
     return redirect(url_for("core.settings_home"))
 
 
+FACTORY_RESET_CONFIRM_PHRASE = "ضبط المصنع"
+
+
+@core_bp.route("/settings/factory-reset", methods=["POST"])
+@login_required
+@require_permission("system.factory_reset")
+def factory_reset():
+    """ضبط المصنع (بند إضافي 282) — طلبك الصريح "سولي زر ضبط المصنع".
+    حصري لصاحب الحلال (`system.factory_reset` ما تُمنح لأي دور افتراضي
+    ثانٍ)، ومحمي بتأكيد مزدوج: كتابة عبارة التأكيد بالضبط + كلمة المرور
+    الحالية — عشان ضغطة غلط أو جلسة مفتوحة بدون مراقبة ما تمسح المزرعة
+    كاملة بالغلط."""
+    typed_phrase = (request.form.get("confirm_phrase") or "").strip()
+    password = request.form.get("password") or ""
+
+    if typed_phrase != FACTORY_RESET_CONFIRM_PHRASE:
+        flash(f'لازم تكتب عبارة التأكيد بالضبط: "{FACTORY_RESET_CONFIRM_PHRASE}"', "error")
+        return redirect(url_for("core.settings_home"))
+    if not current_user.check_password(password):
+        flash("كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع.", "error")
+        return redirect(url_for("core.settings_home"))
+
+    from app.core import factory_reset_service
+    from flask import current_app
+    from flask_login import logout_user
+    factory_reset_service.factory_reset(current_user=current_user, app=current_app._get_current_object())
+    logout_user()
+    flash("تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور.", "success")
+    return redirect(url_for("auth.login"))
+
+
 @core_bp.route("/settings/farm-identity", methods=["POST"])
 @login_required
 @require_permission("settings.manage")
