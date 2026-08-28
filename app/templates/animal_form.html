@@ -16,43 +16,68 @@
     {% endif %}
 
     <label>{{ _('اللون') }}</label>
-    <div style="display:flex; gap:6px; align-items:center;">
-      <span id="colorSwatch" style="width:22px; height:22px; border-radius:50%; border:1px dashed #9ca3af; flex:0 0 auto; background:#d1d5db;"></span>
-      <select name="color" id="colorSelect" required style="flex:1; margin-bottom:0;">
-        <option value="">{{ _('اختر اللون...') }}</option>
-        {% for c in colors %}<option value="{{ c.name }}" {{ 'selected' if animal and animal.color == c.name }}>{{ c.name }}</option>{% endfor %}
-      </select>
-      <a class="btn light" href="{{ url_for('core.colors_new') }}" title="{{ _('إضافة لون جديد') }}" style="padding:6px 10px; font-size:16px; line-height:1; flex:0 0 auto;">➕</a>
+    <div id="colorChips" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+      {% for c in colors %}
+      <button type="button" class="colorChip" data-color="{{ c.name }}" title="{{ c.name }}"
+              aria-label="{{ c.name }}"
+              style="width:36px; height:36px; border-radius:50%; border:2px solid var(--line); cursor:pointer; padding:0; flex:0 0 auto;"></button>
+      {% endfor %}
+      <a class="btn light" href="{{ url_for('core.colors_new') }}" title="{{ _('إضافة لون جديد') }}" style="width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0; font-size:16px; flex:0 0 auto;">➕</a>
     </div>
+    <p id="colorChipHint" style="color:var(--muted); font-size:12px; margin:0 0 4px;">{{ _('اضغط على لون') }}</p>
+    <input type="hidden" name="color" id="colorInput" value="{{ animal.color if animal else '' }}">
     <script>
     (function(){
-      // بند إضافي 284 — فقعة لونية جنب اسم اللون، بطلبك الصريح. تغطي
-      // الألوان الافتراضية الستة المزروعة بـ`AnimalColor.seed_defaults()`؛
-      // أي لون مخصَّص تضيفه لاحقاً بزر "+" ما يطابق هالقائمة يعرض دائرة
-      // رمادية محايدة بدل ما نخمّن لونه.
-      //
-      // إصلاح بند إضافي 287 (طلبك الصريح: "حطيت لون اصفر طلع لي أسود")
-      // — اللون الاحتياطي كان `var(--bg)` (خلفية الصفحة)، وبالوضع
-      // الداكن هذا المتغيّر نفسه قريب من الأسود، فيبين وكأن النظام
-      // "اختار" أسود لأي لون مخصَّص غير موجود بالخريطة. صار لوناً رمادياً
-      // ثابتاً + حد متقطّع (dashed) — واضح إنه "غير معروف"، مو لون حقيقي،
-      // وما يتأثر بالوضع الداكن/الفاتح إطلاقاً.
+      // بند إضافي 288 — طلبك الصريح "ما حليت المشكلة، حطلي ألوان بدل
+      // الكتابة": القائمة النصية (select) استُبدلت بفقاعات لونية فعلية
+      // تُضغط مباشرة — الطلب الأصلي (بند 284) كان بس فقعة واحدة جنب
+      // اسم نصي، مو اختيار بصري كامل. تغطي الألوان الستة الافتراضية
+      // بلونها الحقيقي؛ أي لون مخصَّص (بند 287) يعرض دائرة رمادية
+      // متقطّعة محايدة بدل ما نخمّن لونه.
       var UNKNOWN_COLOR_HEX = '#d1d5db';
       var COLOR_HEX = {
         'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
         'بني': '#8b5e34', 'رمادي': '#9ca3af',
         'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
       };
-      var select = document.getElementById('colorSelect');
-      var swatch = document.getElementById('colorSwatch');
-      function sync(){
-        var hex = COLOR_HEX[select.value];
-        swatch.style.background = hex || UNKNOWN_COLOR_HEX;
-        swatch.style.borderStyle = hex ? 'solid' : 'dashed';
-        swatch.style.borderColor = hex ? 'var(--line)' : '#9ca3af';
+      var input = document.getElementById('colorInput');
+      var hint = document.getElementById('colorChipHint');
+      var chips = document.querySelectorAll('#colorChips .colorChip');
+      chips.forEach(function(chip){
+        var name = chip.dataset.color;
+        var hex = COLOR_HEX[name];
+        chip.style.background = hex || UNKNOWN_COLOR_HEX;
+        if (!hex) { chip.style.borderStyle = 'dashed'; chip.style.borderColor = '#9ca3af'; }
+        chip.addEventListener('click', function(){
+          chips.forEach(function(c){ c.style.boxShadow = 'none'; });
+          chip.style.boxShadow = '0 0 0 3px var(--primary)';
+          input.value = name;
+          hint.textContent = name;
+          hint.style.color = 'var(--text)';
+        });
+      });
+      if (input.value) {
+        var selected = document.querySelector('#colorChips .colorChip[data-color="' + input.value.replace(/"/g, '\\"') + '"]');
+        if (selected) {
+          selected.style.boxShadow = '0 0 0 3px var(--primary)';
+          hint.textContent = input.value;
+          hint.style.color = 'var(--text)';
+        } else {
+          // لون محفوظ أصلاً بالحيوان لكن ما ينطبق مع أي فقعة ظاهرة حالياً
+          // (نادر: حذف اللون من القائمة بعد تسجيل الحيوان) — نعرض اسمه نصاً
+          // بدل ما نصمت عن قيمة موجودة فعلياً.
+          hint.textContent = input.value;
+          hint.style.color = 'var(--text)';
+        }
       }
-      select.addEventListener('change', sync);
-      sync();
+      document.getElementById('animalForm').addEventListener('submit', function(e){
+        if (!input.value) {
+          e.preventDefault();
+          hint.textContent = {{ _('لازم تختار لون قبل الحفظ')|tojson }};
+          hint.style.color = 'var(--danger)';
+          document.getElementById('colorChips').scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+      });
     })();
     </script>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">{{ _('الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين.') }}</p>

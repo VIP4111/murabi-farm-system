@@ -3,11 +3,14 @@
 بشاشة تسجيل/تعديل الحيوان، بدل ما يبقى اسم نصي بحت."""
 
 
-def test_animal_form_renders_color_swatch_element(app, logged_in_client):
+def test_animal_form_renders_color_chip_picker(app, logged_in_client):
+    """بند إضافي 288 — طلبك الصريح "حطلي ألوان بدل الكتابة": القائمة
+    النصية استُبدلت بفقاعات لونية فعلية تُضغط."""
     resp = logged_in_client.get("/animals/new")
     body = resp.data.decode()
-    assert 'id="colorSwatch"' in body
-    assert 'id="colorSelect"' in body
+    assert 'id="colorChips"' in body
+    assert 'class="colorChip"' in body
+    assert 'id="colorInput"' in body
 
 
 def test_color_hex_map_covers_all_seeded_defaults(app, logged_in_client):

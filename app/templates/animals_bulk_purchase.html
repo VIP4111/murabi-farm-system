@@ -45,13 +45,13 @@
           </select>
         </td>
         <td>
-          <div style="display:flex; gap:4px; align-items:center;">
-            <span class="colorSwatch" style="width:16px; height:16px; border-radius:50%; border:1px dashed #9ca3af; flex:0 0 auto; background:#d1d5db;"></span>
-            <select name="color_{{ i }}" class="colorSelect" style="margin-bottom:0;">
-              <option value="">{{ _('بدون') }}</option>
-              {% for c in colors %}<option value="{{ c.name }}">{{ c.name }}</option>{% endfor %}
-            </select>
+          <div class="colorChips" style="display:flex; gap:3px; flex-wrap:wrap; max-width:140px;">
+            {% for c in colors %}
+            <button type="button" class="colorChip" data-color="{{ c.name }}" title="{{ c.name }}" aria-label="{{ c.name }}"
+                    style="width:18px; height:18px; border-radius:50%; border:2px solid var(--line); cursor:pointer; padding:0; flex:0 0 auto;"></button>
+            {% endfor %}
           </div>
+          <input type="hidden" name="color_{{ i }}" class="colorInput">
         </td>
         <td><input name="weight_{{ i }}" type="number" step="0.01"></td>
         <td><input name="price_{{ i }}" type="number" step="0.01"></td>
@@ -73,45 +73,45 @@
     var addBtn = document.getElementById('addRowBtn');
     var MALE_LABEL = {{ _('ذكر')|tojson }};
     var FEMALE_LABEL = {{ _('أنثى')|tojson }};
-    var NO_COLOR_LABEL = {{ _('بدون')|tojson }};
     var COLOR_OPTIONS = {{ colors|map(attribute='name')|list|tojson }};
-    // بند إضافي 285 — نفس خريطة الفقعة اللونية بشاشة تسجيل الحيوان
-    // الفردي (بند 284)، مطبَّقة هنا لكل صف من صفوف الاستقبال الجماعي.
+    // بند إضافي 288 — طلبك الصريح "ما حليت المشكلة، حطلي ألوان بدل
+    // الكتابة": القائمة النصية استُبدلت بفقاعات لونية فعلية تُضغط.
     var COLOR_HEX = {
       'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
       'بني': '#8b5e34', 'رمادي': '#9ca3af',
       'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
     };
-    // إصلاح بند إضافي 287 — نفس درس animal_form.html: `var(--bg)` كخلفية
-    // احتياطية للون غير معروف يقرب من الأسود بالوضع الداكن، فيبين وكأن
-    // النظام اختار أسود بالغلط. لون رمادي ثابت + حد متقطّع بدلها.
     var UNKNOWN_COLOR_HEX = '#d1d5db';
-    function syncSwatch(select){
-      var swatch = select.parentElement.querySelector('.colorSwatch');
-      if (!swatch) return;
-      var hex = COLOR_HEX[select.value];
-      swatch.style.background = hex || UNKNOWN_COLOR_HEX;
-      swatch.style.borderStyle = hex ? 'solid' : 'dashed';
-      swatch.style.borderColor = hex ? 'var(--line)' : '#9ca3af';
+    function chipHtml(name){
+      var hex = COLOR_HEX[name];
+      var extraStyle = hex ? '' : 'border-style:dashed; border-color:#9ca3af;';
+      return '<button type="button" class="colorChip" data-color="' + name + '" title="' + name + '" ' +
+        'style="width:18px; height:18px; border-radius:50%; border:2px solid var(--line); cursor:pointer; padding:0; flex:0 0 auto; background:' + (hex || UNKNOWN_COLOR_HEX) + '; ' + extraStyle + '"></button>';
     }
-    table.addEventListener('change', function(e){
-      if (e.target.classList.contains('colorSelect')) syncSwatch(e.target);
-    });
+    function wireChipsGroup(container){
+      var input = container.parentElement.querySelector('.colorInput');
+      container.querySelectorAll('.colorChip').forEach(function(chip){
+        chip.addEventListener('click', function(){
+          container.querySelectorAll('.colorChip').forEach(function(c){ c.style.boxShadow = 'none'; });
+          chip.style.boxShadow = '0 0 0 2px var(--primary)';
+          input.value = chip.dataset.color;
+        });
+      });
+    }
+    document.querySelectorAll('.colorChips').forEach(wireChipsGroup);
     addBtn.addEventListener('click', function(){
       var i = parseInt(rowCountInput.value, 10);
       var tr = document.createElement('tr');
-      var colorOptionsHtml = '<option value="">' + NO_COLOR_LABEL + '</option>';
-      COLOR_OPTIONS.forEach(function(name){ colorOptionsHtml += '<option value="' + name + '">' + name + '</option>'; });
+      var colorChipsHtml = COLOR_OPTIONS.map(chipHtml).join('');
       tr.innerHTML =
         '<td><input name="animal_no_' + i + '"></td>' +
         '<td><select name="gender_' + i + '"><option value="ذكر">' + MALE_LABEL + '</option><option value="أنثى">' + FEMALE_LABEL + '</option></select></td>' +
-        '<td><div style="display:flex; gap:4px; align-items:center;">' +
-          '<span class="colorSwatch" style="width:16px; height:16px; border-radius:50%; border:1px dashed #9ca3af; flex:0 0 auto; background:#d1d5db;"></span>' +
-          '<select name="color_' + i + '" class="colorSelect" style="margin-bottom:0;">' + colorOptionsHtml + '</select>' +
-        '</div></td>' +
+        '<td><div class="colorChips" style="display:flex; gap:3px; flex-wrap:wrap; max-width:140px;">' + colorChipsHtml + '</div>' +
+          '<input type="hidden" name="color_' + i + '" class="colorInput"></td>' +
         '<td><input name="weight_' + i + '" type="number" step="0.01"></td>' +
         '<td><input name="price_' + i + '" type="number" step="0.01"></td>';
       table.appendChild(tr);
+      wireChipsGroup(tr.querySelector('.colorChips'));
       rowCountInput.value = i + 1;
     });
   })();

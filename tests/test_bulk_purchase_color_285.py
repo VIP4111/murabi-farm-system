@@ -6,10 +6,11 @@ from app.models import Animal
 
 
 def test_bulk_purchase_form_shows_color_column(app, logged_in_client):
+    """بند إضافي 288 — طلبك الصريح "حطلي ألوان بدل الكتابة"."""
     resp = logged_in_client.get("/animals/bulk-purchase")
     body = resp.data.decode()
     assert 'name="color_0"' in body
-    assert "colorSwatch" in body
+    assert "colorChip" in body
 
 
 def test_bulk_purchase_route_saves_chosen_color(app, logged_in_client):

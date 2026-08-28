@@ -75,10 +75,11 @@ def test_batch_spray_and_vaccine_tasks_linked_to_default_pharmacy(app):
 
 
 def test_batches_new_form_shows_color_column(app, logged_in_client):
+    """بند إضافي 288 — طلبك الصريح "حطلي ألوان بدل الكتابة"."""
     resp = logged_in_client.get("/batches/new")
     body = resp.data.decode()
     assert 'name="color_0"' in body
-    assert "colorSwatch" in body
+    assert "colorChip" in body
 
 
 def test_batches_new_route_rejects_missing_color(app, logged_in_client):
