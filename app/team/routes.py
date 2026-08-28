@@ -730,12 +730,17 @@ def report_close(report_id):
     return _redirect_back(report_id)
 
 
-ROLE_FILTER_TABS = [
-    ("all", _l("الكل")),
-    ("worker", _l("العامل")),
-    ("doctor", _l("الطبيب البيطري")),
-    ("accountant", _l("المحاسب")),
-]
+def _role_tabs() -> list[tuple[str, str]]:
+    """تبويبات فلترة المهام حسب الدور + قائمة "الدور المستهدف" بفورم
+    توزيع مهمة (بند إضافي 293) — كانت قائمة ثابتة بالكود (worker/doctor/
+    accountant بس)، فأي مسمّى وظيفي مخصَّص ينشئه المالك من الإعدادات
+    (بند إضافي 267، "المزارع" مثلاً) **ما كان يقدر يُستهدف بمهمة إطلاقاً**
+    — نفس نمط فجوة السلالة (بند 291): قائمة ثابتة منفصلة عن جدول حقيقي
+    قابل للتوسعة. صارت تُبنى حياً من `Role` نفسه — أي دور تنشئه من
+    الإعدادات يظهر هنا تلقائياً بدون أي تعديل كود. "المالك" مستثنى
+    عمداً (نفس السلوك القديم — تكليف مهمة لدور المالك نادر الفائدة)."""
+    roles = Role.query.filter(Role.name != "owner").order_by(Role.name).all()
+    return [("all", _l("الكل"))] + [(r.name, r.display_name) for r in roles]
 
 # قائمة مختارة لفورم "توزيع مهمة" اليدوي (بند إضافي 69) — مو كل 26 قيمة
 # فعلية لـ`task_type` (أغلبها تتولّد آلياً من محركات النظام نفسها، مو
@@ -840,8 +845,9 @@ def tasks_list():
     suggested = []
     review_box = []
     assigned_by_me = []
+    role_tabs = _role_tabs()
     role_filter = request.args.get("role", "all")
-    if role_filter not in dict(ROLE_FILTER_TABS):
+    if role_filter not in dict(role_tabs):
         role_filter = "all"
     if current_user.has_permission("tasks.review_daily"):
         # بند إضافي 280 — طلبك الصريح: (1) القائمة تعرض اليوم وبكرة بس،
@@ -903,7 +909,7 @@ def tasks_list():
         "team/tasks_list.html",
         my_tasks=my_tasks, suggested=suggested, review_box=review_box, assigned_by_me=assigned_by_me,
         approved_tasks=approved_tasks,
-        today=date.today(), role_tabs=ROLE_FILTER_TABS, active_role=role_filter,
+        today=date.today(), role_tabs=role_tabs, active_role=role_filter,
         **modal_context,
     )
 
@@ -1015,7 +1021,7 @@ def tasks_new():
         animals=Animal.query.order_by(Animal.animal_no).all(),
         open_tasks=open_tasks,
         task_type_options=MANUAL_TASK_TYPE_OPTIONS,
-        role_tabs=ROLE_FILTER_TABS,
+        role_tabs=_role_tabs(),
     )
 
 
