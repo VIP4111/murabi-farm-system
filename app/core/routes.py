@@ -151,16 +151,21 @@ def home():
     "واجهة حسب الدور" اللي اتفقنا عليه: القالب يقرر شنو يعرض حسب صلاحيات
     current_user، بدون ما نحتاج شاشات منفصلة بروابط مختلفة لكل دور.
 
-    استثناء واحد مقصود (بند 27): دور "العامل" تحديداً (نفس اسم الدور
-    الداخلي الثابت بـ`permissions_registry.py`، مو المسمّى الوظيفي القابل
-    للتخصيص) يشوف واجهة مبسّطة منفصلة تماماً (5 أزرار كبيرة) بدل اللوحة
-    العامة — العامل ميداني، يحتاج أقل احتكاك ممكن، مو لوحة تحكم عامة
-    فيها أقسام فاضية حسب صلاحياته المحدودة.
-    """
+    استثناء واحد مقصود (بند 27): أي عضو ميداني بلا `animals.view` (نفس
+    معيار تقييد شاشات البلاغات ببند 46) يشوف واجهة مبسّطة منفصلة تماماً
+    (5 أزرار كبيرة) بدل اللوحة العامة — ميداني، يحتاج أقل احتكاك ممكن،
+    مو لوحة تحكم عامة فيها أقسام فاضية حسب صلاحياته المحدودة.
+
+    بند إضافي 295 — طلبك "ابحث وحل المشكلة بدون توقف": كان الفحص
+    بالاسم الحرفي `role.name == "worker"`، فأي مسمّى وظيفي مخصَّص
+    مستنسخ من صلاحيات عامل بالضبط (زي "المزارع"، بند 267) كان يشوف
+    اللوحة العامة المعقّدة بدل الواجهة المبسّطة اللي بُنيت له أصلاً —
+    صار الفحص بغياب صلاحية `animals.view` (نفس المعيار المستخدم فعلياً
+    بمكان ثانٍ بالمشروع لتمييز "عامل ميداني" عن أي دور إداري)."""
     from app.core import checklist_service
     daily_checklist = checklist_service.daily_checklist_for(current_user)
 
-    if current_user.role.name == "worker":
+    if not current_user.has_permission("animals.view"):
         my_alerts_count = len(alerts_service.get_alerts(barn_ids=_my_barn_ids(current_user)))
         return render_template(
             "worker_home.html", user=current_user, my_alerts_count=my_alerts_count,
@@ -201,8 +206,9 @@ def home():
 @core_bp.route("/setup-checklist/dismiss", methods=["POST"])
 @login_required
 def setup_checklist_dismiss():
-    """صاحب الحلال بس يقدر يتجاهلها — نفس منطق أي إعداد عام للمزرعة."""
-    if current_user.role.name != "owner":
+    """بند إضافي 295 — صار يفحص صلاحية `settings.manage` بدل اسم الدور
+    الحرفي "owner"، نفس مبدأ بقية شاشات الإعدادات."""
+    if not current_user.has_permission("settings.manage"):
         abort(403)
     settings = FarmSettings.get()
     settings.setup_checklist_dismissed = True
