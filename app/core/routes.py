@@ -1092,12 +1092,17 @@ def animal_detail(animal_id):
 
     doctors = []
     checkup_item_presets = []
+    suggested_items = []
+    suggested_reason = None
     if current_user.has_permission("tasks.assign_any"):
         from app.models import User
         from app.team import task_service as tsvc
         doctors = (User.query.join(Role).filter(Role.name.in_(("doctor", "nurse")))
                    .order_by(User.name).all())
         checkup_item_presets = tsvc.ANIMAL_CHECKUP_ITEM_PRESETS
+        suggested_raw = request.args.get("suggested", "")
+        suggested_items = [i for i in suggested_raw.split("|") if i]
+        suggested_reason = request.args.get("suggested_reason") or None
 
     return render_template(
         "animal_detail.html", wf=wf,
@@ -1105,10 +1110,45 @@ def animal_detail(animal_id):
         withdrawal_days_left=(withdrawal_until - date.today()).days if withdrawal_until else None,
         today=date.today().isoformat(),
         breed_care_notes=breed_row.care_notes if breed_row else None,
+        suggested_items=suggested_items, suggested_reason=suggested_reason,
         animal_alerts=animal_alerts,
         doctors=doctors, checkup_item_presets=checkup_item_presets,
         **profile,
     )
+
+
+@core_bp.route("/animals/<int:animal_id>/checkup-suggest", methods=["POST"])
+@login_required
+@require_permission("tasks.assign_any")
+def animal_checkup_suggest(animal_id):
+    """اقتراح ذكي لبنود الفحص (بند إضافي 302) — طلبك الصريح: "ابي
+    اذكى اصناعي يقترح عليه المهام ودكتور يرفع تقرير". الاقتراح بس —
+    ما ينفّذ أي شي، يرجّعك لنفس الصفحة مع البنود المقترحة محدَّدة
+    مسبقاً بالتشيك بوكس، وأنت تراجع/تعدّل قبل الضغط على "توزيع"."""
+    from app.assistant import agent_tools, llm_bridge
+    from app.team import task_service as tsvc
+
+    animal = Animal.query.get_or_404(animal_id)
+    history = agent_tools.animal_history(animal.animal_no)
+    animal_alerts = alerts_service.alerts_for_animal(animal.id)
+    context_lines = [
+        f"رقم الرأس: {animal.animal_no}، الجنس: {animal.gender}، الحالة: {animal.status}",
+        f"آخر أوزان مسجَّلة: {history.get('recent_weights')}",
+        f"أمراض مفتوحة: {history.get('open_diseases')}",
+        f"آخر تحصين: {history.get('last_vaccination')}",
+        f"تنبيهات نشطة على هذا الرأس: {[a['category'] for a in animal_alerts]}",
+    ]
+    result = llm_bridge.suggest_checkup_items(
+        "\n".join(context_lines), tsvc.ANIMAL_CHECKUP_ITEM_PRESETS,
+    )
+    if not result:
+        flash("الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل.", "error")
+        return redirect(url_for("core.animal_detail", animal_id=animal_id))
+
+    return redirect(url_for(
+        "core.animal_detail", animal_id=animal_id,
+        suggested="|".join(result["items"]), suggested_reason=result["reason"],
+    ))
 
 
 @core_bp.route("/animals/<int:animal_id>/checkup-request", methods=["POST"])

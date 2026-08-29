@@ -65,14 +65,25 @@
 
 {% if current_user.has_permission('tasks.assign_any') %}
 <div class="card">
-  <h3 style="font-size:15px; margin:0 0 10px;">📋 {{ _('طلب فحص شامل لهذا الرأس') }}</h3>
-  <p style="color:var(--muted); font-size:12.5px; margin:0 0 10px;">{{ _('اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها بملاحظة هو تقريره.') }}</p>
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h3 style="font-size:15px; margin:0;">📋 {{ _('طلب فحص شامل لهذا الرأس') }}</h3>
+    <form method="post" action="{{ url_for('core.animal_checkup_suggest', animal_id=animal.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="btn light" style="padding:7px 12px; font-size:12.5px;">🤖 {{ _('اقترح لي بنود الفحص') }}</button>
+    </form>
+  </div>
+  <p style="color:var(--muted); font-size:12.5px; margin:6px 0 10px;">{{ _('اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها بملاحظة هو تقريره. أو اضغط "اقترح لي" ليحلّل الذكاء الاصطناعي بيانات هذا الرأس ويحدّد البنود المناسبة تلقائياً — تراجعها وتعدّلها قبل التوزيع.') }}</p>
+  {% if suggested_items %}
+  <div class="badge on" style="display:block; padding:8px 12px; margin-bottom:10px;">
+    🤖 {{ _('اقتراح الذكاء الاصطناعي محدَّد أدناه') }}{% if suggested_reason %} — {{ suggested_reason }}{% endif %}
+  </div>
+  {% endif %}
   <form method="post" action="{{ url_for('core.animal_checkup_request', animal_id=animal.id) }}" style="display:grid; gap:10px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div style="display:flex; flex-direction:column; gap:6px;">
       {% for item in checkup_item_presets %}
       <label style="display:flex; gap:8px; align-items:center; font-size:13.5px;">
-        <input type="checkbox" name="items" value="{{ item }}"> {{ item }}
+        <input type="checkbox" name="items" value="{{ item }}" {% if item in suggested_items %}checked{% endif %}> {{ item }}
       </label>
       {% endfor %}
     </div>

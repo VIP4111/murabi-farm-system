@@ -329,3 +329,62 @@ def ask(question: str, context_text: str, lang: str = "ar") -> str | None:
         except Exception:
             pass
         return None
+
+
+# ============================================================
+# بند إضافي 302 — طلبك: "ابي اذكى اصناعي يقترح عليه المهام ودكتور
+# يرفع تقرير". الذكاء الاصطناعي هنا يقترح فقط (اختيار من قائمة بنود
+# فحص مسموحة + تعليل قصير) — أبداً ما يقرر تشخيصاً ولا ينفّذ أي شي؛
+# صاحب الحلال يراجع الاقتراح ويعدّله (يشيل/يضيف بند) قبل ما يضغط
+# "توزيع مهام الفحص" الفعلي — نفس مبدأ "اقتراح ثم اعتماد بشري" المتكرر
+# بكل مراحل خطة "عقل المزرعة".
+# ============================================================
+
+CHECKUP_SUGGESTION_SYSTEM_PROMPT = """أنت مساعد بيطري مساند لنظام "مربي" لإدارة مزرعة أغنام/ماعز. مهمتك تقترح بس أي بنود فحص من القائمة المتاحة تستاهل الاهتمام لرأس معيّن، بناءً على بياناته الحية المرفقة (تنبيهات مفتوحة، أمراض، تاريخ وزن...).
+
+قواعد صارمة:
+- اختر فقط من قائمة البنود المتاحة المرفقة — ممنوع تخترع بند فحص غير موجود بالقائمة.
+- لو ما فيه أي مؤشر يستدعي فحصاً معيّناً، اقترح البنود الأساسية العامة بس (الشهية والحالة العامة + رفع تقرير).
+- ممنوع تشخّص مرضاً أو تقترح جرعة دواء — أنت تقترح "أي فحص يُجرى"، مو "وش النتيجة المتوقعة" أو "وش العلاج".
+- رجّع ردك **JSON صرف بس**، بدون أي نص قبله أو بعده، بالشكل التالي بالضبط:
+{"items": ["بند 1", "بند 2"], "reason": "جملة عربية قصيرة توضح سبب الاختيار"}
+"""
+
+
+def suggest_checkup_items(context_text: str, available_items: list[str]) -> dict | None:
+    """يرجع `{"items": [...], "reason": "..."}` (فلترة صارمة لاحقاً على
+    `available_items` بس)، أو None عند أي فشل/غياب مفتاح — نفس فلسفة
+    باقي دوال هذا الملف بالضبط. اقتراح بس، صفر تنفيذ."""
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        import json
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        prompt = f"بيانات الرأس:\n{context_text}\n\nالبنود المتاحة للاختيار منها:\n" + "\n".join(f"- {i}" for i in available_items)
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL, contents=prompt,
+            config=types.GenerateContentConfig(system_instruction=CHECKUP_SUGGESTION_SYSTEM_PROMPT),
+        )
+        text = (response.text or "").strip()
+        # بعض الأحيان يلف الرد بـ```json ... ``` رغم التعليمات — إزالة آمنة.
+        text = text.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        data = json.loads(text)
+        # **الحاجز الحقيقي**: نفلتر أي بند مو موجود حرفياً بالقائمة المتاحة
+        # أصلاً — حتى لو النموذج تجاهل التعليمات واخترع بنداً، ما يوصل
+        # أبداً لواجهة الاعتماد كخيار قابل للتنفيذ.
+        items = [i for i in data.get("items", []) if i in available_items]
+        if not items:
+            return None
+        return {"items": items, "reason": data.get("reason") or ""}
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.suggest_checkup_items failed: %s", e)
+        except Exception:
+            pass
+        return None
