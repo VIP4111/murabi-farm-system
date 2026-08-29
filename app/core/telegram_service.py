@@ -54,19 +54,32 @@ def set_webhook(url: str) -> bool:
         return False
 
 
-def send_message(chat_id: str | None, text: str) -> bool:
+def inline_keyboard(buttons: list[tuple[str, str]]) -> dict:
+    """يبني `reply_markup` لأزرار رابط (URL) تحت الرسالة (بند إضافي
+    304) — زر وحد بكل صف (أوضح على شاشة الجوال من صفوف متعددة الأعمدة).
+    كل زر رابط مباشر (مو callback_data)، فما يحتاج أي معالجة webhook
+    إضافية — تيليجرام يفتح الرابط بمتصفح الجوال مباشرة."""
+    return {"inline_keyboard": [[{"text": label, "url": url}] for label, url in buttons]}
+
+
+def send_message(chat_id: str | None, text: str, reply_markup: dict | None = None) -> bool:
     """يرجّع True لو نجح الإرسال فعلياً، False لأي سبب (بدون توكن، بدون
     chat_id، أو خطأ شبكة/API) — العملية الأساسية (توزيع مهمة، تنبيه
     طوارئ...) ما تتوقف أبداً بسبب فشل إشعار. بس صار يسجّل السبب بالـlog
     (بند إضافي 232) بدل الصمت الكامل — قبل كذا ما فيه أي أثر لو التوكن
-    انسحب أو فشل الإرسال فعلياً، تكتشفه بالصدفة بس."""
+    انسحب أو فشل الإرسال فعلياً، تكتشفه بالصدفة بس. ``reply_markup``
+    اختياري (بند إضافي 304) — أزرار تفاعلية تحت الرسالة، ابنها بـ
+    `inline_keyboard()`؛ بدونها نفس السلوك القديم حرفياً."""
     token = _bot_token()
     if not token or not chat_id:
         return False
+    payload = {"chat_id": chat_id, "text": text}
+    if reply_markup:
+        payload["reply_markup"] = reply_markup
     try:
         resp = requests.post(
             f"https://api.telegram.org/bot{token}/sendMessage",
-            json={"chat_id": chat_id, "text": text},
+            json=payload,
             timeout=5,
         )
         if not resp.ok:
@@ -85,10 +98,10 @@ def _log_failure(message: str) -> None:
         pass  # خارج سياق تطبيق (سكربت CLI مستقل) — ما فيه logger نشغّله عليه
 
 
-def notify_user(user, text: str) -> bool:
+def notify_user(user, text: str, reply_markup: dict | None = None) -> bool:
     if not user:
         return False
-    return send_message(getattr(user, "telegram_chat_id", None), text)
+    return send_message(getattr(user, "telegram_chat_id", None), text, reply_markup=reply_markup)
 
 
 def diagnose() -> dict:

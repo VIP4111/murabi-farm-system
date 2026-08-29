@@ -38,12 +38,27 @@ def _task_breakdown(today) -> dict:
             "total": overdue + due_today + no_date}
 
 
-def build_report_email() -> tuple[str, str, str]:
-    """يرجّع (العنوان، نص عادي، HTML) — نفس مصادر `/تقرير_اليوم`
-    بتيليجرام (بند 160 المرحلة أ) بس بصيغة أطول ومفصَّلة تناسب بريد
-    إلكتروني، مع تصحيح خلط الأرقام (بند 303)."""
+def _alert_link(alert: dict, abs_fn) -> str | None:
+    """رابط "حل المشكلة" المطلَق لتنبيه واحد — `alert_action_url`
+    تحتاج سياق طلب فعّال حتى لبناء مسار نسبي (`url_for`)، وهذا يُستدعى
+    من مهمة خلفية (APScheduler/Cron) بسياق تطبيق بس بدون طلب حقيقي."""
+    from app.core.alerts_service import alert_action_url
+    try:
+        from flask import current_app
+        with current_app.test_request_context():
+            path = alert_action_url(alert)
+    except Exception:
+        path = None
+    return abs_fn(path) if path else None
+
+
+def gather_report_data() -> dict:
+    """التجميع الخام المشترك بين نسخة البريد ونسخة تيليجرام (بند
+    إضافي 304) — بدل ما كل قناة تعيد حساب نفس الأرقام من الصفر (خطر
+    حقيقي: احتمال يفترق الاثنان لاحقاً بصمت لو تغيّر منطق أحدهما بس)،
+    كلتاهما تبنيان عرضهما من نفس المصدر الوحيد هنا."""
     from app.models import Animal, Report
-    from app.core.alerts_service import get_alerts, alert_action_url
+    from app.core.alerts_service import get_alerts
 
     today = date.today()
     total_animals = Animal.query.filter_by(status="active").count()
@@ -53,20 +68,29 @@ def build_report_email() -> tuple[str, str, str]:
     alerts = get_alerts()
     urgent_alerts = [a for a in alerts if a.get("urgent")]
     top_alerts = (urgent_alerts or alerts)[:3]
-
     base_url = _app_base_url()
 
-    def _abs(path: str) -> str:
+    def abs_fn(path: str) -> str:
         return f"{base_url}{path}" if base_url else path
 
-    def _alert_link(alert: dict) -> str | None:
-        try:
-            from flask import current_app
-            with current_app.test_request_context():
-                path = alert_action_url(alert)
-        except Exception:
-            path = None
-        return _abs(path) if path else None
+    return {
+        "today": today, "total_animals": total_animals, "tasks": tasks,
+        "open_reports": open_reports, "alerts": alerts, "urgent_alerts": urgent_alerts,
+        "top_alerts": top_alerts, "base_url": base_url, "abs": abs_fn,
+    }
+
+
+def build_report_email() -> tuple[str, str, str]:
+    """يرجّع (العنوان، نص عادي، HTML) — نفس مصادر `/تقرير_اليوم`
+    بتيليجرام (بند 160 المرحلة أ) بس بصيغة أطول ومفصَّلة تناسب بريد
+    إلكتروني، مع تصحيح خلط الأرقام (بند 303)."""
+    d = gather_report_data()
+    today, total_animals, tasks = d["today"], d["total_animals"], d["tasks"]
+    open_reports, alerts, urgent_alerts, top_alerts = d["open_reports"], d["alerts"], d["urgent_alerts"], d["top_alerts"]
+    _abs = d["abs"]
+
+    def _link(a):
+        return _alert_link(a, _abs)
 
     subject = f"📊 تقرير مراح بو علي اليومي — {today}"
 
@@ -82,7 +106,7 @@ def build_report_email() -> tuple[str, str, str]:
     if top_alerts:
         text_lines += ["", "أهم ما يحتاج إجراء اليوم:"]
         for a in top_alerts:
-            link = _alert_link(a)
+            link = _link(a)
             text_lines.append(f"- {a['icon']} {a['label']} — {a.get('detail', '')}" + (f" ← {link}" if link else ""))
     text_lines += [
         "", "روابط سريعة:",
