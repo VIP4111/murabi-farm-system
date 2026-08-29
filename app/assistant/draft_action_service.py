@@ -46,9 +46,17 @@ def _execute_record_weight(payload: dict, *, actor):
     weight = payload.get("weight")
     if weight in (None, ""):
         raise ValueError("الوزن غير محدَّد بالملاحظة — عدّلها وسجّل الوزن يدوياً.")
-    return animal_service.add_weight_record(
+    record = animal_service.add_weight_record(
         animal=animal, record_date=date.today(), weight=float(weight), recorded_by_id=actor.id,
     )
+    # بند إضافي 310 — فجوة تدقيق حقيقية: الراوت اليدوي لتسجيل الوزن
+    # (core/routes.py) يستدعي `cycle_engine.evaluate(animal)` دايماً
+    # بعد كل وزن جديد (بوابات "جاهز للفطام/البيع" تعتمد على الوزن) —
+    # هذا المسار كان يفوّتها، يعني وزن مسجَّل عبر الإدخال الذكي ما يحرّك
+    # دورة الإنتاج تلقائياً زي نظيره اليدوي بالضبط.
+    from app.core import cycle_engine
+    cycle_engine.evaluate(animal)
+    return record
 
 
 # **مصدر الحقيقة الوحيد لما يُنفَّذ فعلياً** — لازم يطابق

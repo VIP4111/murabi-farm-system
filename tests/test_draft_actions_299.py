@@ -101,6 +101,27 @@ def test_confirm_draft_executes_real_write_and_records_confirmer(app, owner):
     assert AnimalWeight.query.filter_by(animal_id=animal.id, weight=35).first() is not None
 
 
+def test_confirm_record_weight_triggers_cycle_engine_evaluation(app, owner):
+    """بند إضافي 310 — فجوة حقيقية: الراوت اليدوي لتسجيل الوزن يستدعي
+    cycle_engine.evaluate(animal) دايماً بعد كل وزن جديد (بوابات
+    'جاهز للفطام/البيع' تعتمد عليه) — نفس المسار عبر الإدخال الذكي
+    كان يفوّتها. لازم يتصرف نفس تصرف الشاشة اليدوية بالضبط."""
+    animal = make_animal(animal_no="905")
+    draft = AssistantDraftAction(
+        raw_text="سجلت وزن اليوم للرأس 905: 20 كجم", parsed_action_type="record_weight",
+        parsed_payload_json=AssistantDraftAction.encode_payload({"target_animal_no": "905", "weight": 20}),
+        status="pending", created_by_id=owner.id,
+    )
+    db.session.add(draft)
+    db.session.commit()
+
+    with patch("app.core.cycle_engine.evaluate") as mock_evaluate:
+        draft_action_service.confirm_draft(draft, actor=owner)
+
+    mock_evaluate.assert_called_once()
+    assert mock_evaluate.call_args[0][0].id == animal.id
+
+
 def test_confirm_draft_rejects_double_confirmation(app, owner):
     draft = AssistantDraftAction(raw_text="x", parsed_action_type="record_weight",
                                   parsed_payload_json="{}", status="confirmed", created_by_id=owner.id)
