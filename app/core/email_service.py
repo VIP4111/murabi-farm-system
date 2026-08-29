@@ -40,23 +40,29 @@ def _config() -> dict | None:
     }
 
 
-def send_email(to_email: str | None, subject: str, body: str) -> bool:
+def send_email(to_email: str | None, subject: str, body: str, *, html: str | None = None) -> bool:
     """يرجّع True لو نجح الإرسال فعلياً، False لأي سبب (بدون إعداد
     Resend، بدون بريد للمستقبل، أو خطأ اتصال/مصادقة) — بصمت دائماً، نفس
-    فلسفة `telegram_service.send_message`."""
+    فلسفة `telegram_service.send_message`. ``html`` اختياري (بند إضافي
+    303) — لو معبّى، Resend يرسل نسخة HTML منسَّقة مع نسخة النص العادي
+    كـfallback لعملاء البريد اللي ما تعرض HTML؛ بدونه السلوك القديم
+    (نص عادي بس) بدون أي تغيير."""
     cfg = _config()
     if not cfg or not to_email:
         return False
+    payload = {
+        "from": f"{cfg['from_name']} <{cfg['from_addr']}>",
+        "to": [to_email],
+        "subject": subject,
+        "text": body,
+    }
+    if html:
+        payload["html"] = html
     try:
         resp = requests.post(
             "https://api.resend.com/emails",
             headers={"Authorization": f"Bearer {cfg['api_key']}", "Content-Type": "application/json"},
-            json={
-                "from": f"{cfg['from_name']} <{cfg['from_addr']}>",
-                "to": [to_email],
-                "subject": subject,
-                "text": body,
-            },
+            json=payload,
             timeout=10,
         )
         return resp.ok
@@ -64,7 +70,7 @@ def send_email(to_email: str | None, subject: str, body: str) -> bool:
         return False
 
 
-def notify_user(user, subject: str, body: str) -> bool:
+def notify_user(user, subject: str, body: str, *, html: str | None = None) -> bool:
     if not user:
         return False
-    return send_email(getattr(user, "email", None), subject, body)
+    return send_email(getattr(user, "email", None), subject, body, html=html)

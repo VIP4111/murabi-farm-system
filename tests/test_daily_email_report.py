@@ -44,11 +44,37 @@ def test_send_email_handles_request_error(app, monkeypatch):
 
 
 def test_build_report_email_contains_key_sections(app):
-    subject, body = build_report_email()
+    """بند إضافي 303 — صار يرجّع (عنوان، نص، HTML) بدل (عنوان، نص) —
+    تصحيح خلط الأرقام: بدل رقم واحد "مهام مفتوحة/متأخرة" يخلط 3 حالات،
+    صارت 3 أرقام منفصلة صراحة."""
+    subject, text_body, html_body = build_report_email()
     assert "تقرير مراح بو علي" in subject
-    assert "الرؤوس النشطة" in body
-    assert "مهام مفتوحة" in body
-    assert "بلاغات مفتوحة" in body
+    assert "القطيع النشط" in text_body
+    assert "متأخرة فعلاً" in text_body
+    assert "بلاغات مفتوحة" in text_body
+    assert "<html" not in html_body.lower()  # قطعة HTML جزئية تُدرَج بجسم الرسالة، مو مستند كامل
+    assert "روابط سريعة" in html_body or "قل" in html_body  # تأكيد وجود قسم الروابط
+
+
+def test_build_report_email_task_breakdown_is_not_conflated(app, owner):
+    """أهم اختبار لتصحيح بند 303: مهمة بدون تاريخ استحقاق لا تُحسب
+    ضمن 'متأخرة فعلاً' — الخلط القديم كان يجمعهم برقم واحد مضلِّل."""
+    from app.team import task_service
+    from datetime import date, timedelta
+
+    task_service.assign_task(actor=owner, title="مهمة بدون تاريخ")
+    task_service.assign_task(actor=owner, title="مهمة متأخرة فعلاً", due_date=date.today() - timedelta(days=2))
+
+    subject, text_body, html_body = build_report_email()
+    assert "متأخرة فعلاً: 1" in text_body
+    assert "بدون تاريخ: 1" in text_body
+
+
+def test_build_report_email_includes_action_links_when_base_url_set(app, monkeypatch):
+    monkeypatch.setenv("RENDER_EXTERNAL_URL", "https://murabi-farm-system.onrender.com")
+    subject, text_body, html_body = build_report_email()
+    assert "https://murabi-farm-system.onrender.com/alerts" in text_body
+    assert "https://murabi-farm-system.onrender.com/team/tasks" in text_body
 
 
 def test_send_daily_report_now_sends_only_to_users_with_email_and_permission(app, owner):

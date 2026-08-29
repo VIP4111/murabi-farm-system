@@ -21,7 +21,10 @@ def send_daily_report_now() -> int:
     from app.models import User
     from app.core.daily_email_report_service import build_report_email
 
-    subject, body = build_report_email()
+    # بند إضافي 303 — `build_report_email` صارت ترجع (عنوان، نص، HTML)
+    # بدل (عنوان، نص)؛ تيليجرام يستخدم نسخة النص العادي بس (فيها فعلياً
+    # نفس التحسينات: تفصيل المهام بدل رقم مخلوط، وروابط مباشرة).
+    subject, body, _html = build_report_email()
     text = f"{subject}\n\n{body}"
     sent = 0
     for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
