@@ -58,5 +58,5 @@ def test_drafts_list_shows_audio_player_for_voice_drafts(app, client, owner):
     db.session.commit()
 
     client.post("/login", data={"phone": owner.phone, "password": "pass1234"})
-    resp = client.get("/assistant/drafts")
+    resp = client.get("/assistant/drafts", follow_redirects=True)
     assert b"/uploads/audio/sample.webm" in resp.data

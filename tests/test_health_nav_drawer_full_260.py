@@ -6,7 +6,10 @@ from factories import make_disease_type, make_animal
 
 
 def _drawer_open(html: str) -> bool:
-    idx = html.find(">الصحة<")
+    # بند إضافي 318 — عنوان المجموعة صار "الصحة والتحصين" بعد إعادة
+    # هيكلة القائمة الجانبية لـ5 مراكز رئيسية (نفس الرابط/الصلاحية،
+    # تسمية فقط).
+    idx = html.find(">الصحة والتحصين<")
     assert idx != -1
     details_idx = html.rfind("<details", 0, idx)
     return " open" in html[details_idx:idx]

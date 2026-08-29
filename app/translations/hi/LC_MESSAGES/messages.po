@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-29 12:19+0300\n"
+"POT-Creation-Date: 2026-08-29 16:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -244,7 +244,7 @@ msgstr "बाड़ा स्थानांतरण (शारीरिक �
 msgid "إكمال بيانات حيوان"
 msgstr "पशु डेटा पूर्ण करें"
 
-#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:834
+#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:843
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -923,7 +923,7 @@ msgid "%(n)s حساب نشط."
 msgstr "%(n)s सक्रिय खाते।"
 
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
-#: app/templates/base.html:603 app/templates/family_view.html:158
+#: app/templates/base.html:670 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
 #: app/templates/home.html:78
 msgid "الصيدلية"
@@ -1494,10 +1494,8 @@ msgstr "लिंग"
 #: app/templates/animal_detail.html:406 app/templates/animal_detail.html:421
 #: app/templates/animal_detail.html:437 app/templates/animal_detail.html:452
 #: app/templates/animal_detail.html:462 app/templates/animal_detail.html:492
-#: app/templates/animal_workflow.html:154
-#: app/templates/assistant/drafts_list.html:68
-#: app/templates/assistant/farm_notes_list.html:35
-#: app/templates/bulk_action_form.html:63
+#: app/templates/animal_workflow.html:154 app/templates/assistant/chat.html:103
+#: app/templates/assistant/chat.html:201 app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:246
 #: app/templates/bulk_action_form.html:353
 #: app/templates/bulk_action_form.html:383
@@ -1672,8 +1670,7 @@ msgstr "इस अवधि में कोई गतिविधि नही�
 msgid "الفئة"
 msgstr "श्रेणी"
 
-#: app/reports/report_service.py:378
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/reports/report_service.py:378 app/templates/assistant/chat.html:103
 #: app/templates/team/_task_assign_fields.html:4
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
@@ -1864,7 +1861,7 @@ msgid "تنبيهاتي"
 msgstr "मेरी सूचनाएं"
 
 #: app/templates/alerts_list.html:5 app/templates/animals_list.html:92
-#: app/templates/assistant/chat.html:61
+#: app/templates/assistant/chat.html:67
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
@@ -2056,7 +2053,7 @@ msgid "سجل بيطري"
 msgstr "पशु चिकित्सा रिकॉर्ड"
 
 #: app/templates/animal_detail.html:115 app/templates/animal_detail.html:267
-#: app/templates/base.html:605 app/templates/health/diseases_list.html:6
+#: app/templates/base.html:672 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:77
 msgid "الأمراض"
 msgstr "बीमारियाँ"
@@ -2113,9 +2110,8 @@ msgstr "दूध"
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
-#: app/templates/animal_detail.html:122 app/templates/base.html:699
-#: app/templates/base.html:701 app/templates/finance/list.html:56
-#: app/templates/home.html:103
+#: app/templates/animal_detail.html:122 app/templates/base.html:718
+#: app/templates/finance/list.html:56 app/templates/home.html:103
 msgid "المالية"
 msgstr "वित्त"
 
@@ -2315,7 +2311,7 @@ msgstr "तिथि के अनुसार क्रमबद्ध सभ�
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "अभी तक इस पशु से जुड़ा कोई रिकॉर्ड नहीं है।"
 
-#: app/templates/animal_detail.html:248 app/templates/base.html:614
+#: app/templates/animal_detail.html:248 app/templates/base.html:681
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr "उपचार प्रोटोकॉल"
@@ -2324,7 +2320,7 @@ msgstr "उपचार प्रोटोकॉल"
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr "इस पशु पर तैयार उपचार प्रोटोकॉल लागू करें"
 
-#: app/templates/animal_detail.html:253 app/templates/base.html:604
+#: app/templates/animal_detail.html:253 app/templates/base.html:671
 #: app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr "पशु चिकित्सक यात्राएं"
@@ -2376,8 +2372,7 @@ msgstr "गंभीरता"
 
 #: app/templates/animal_detail.html:270 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:339 app/templates/animal_workflow.html:154
-#: app/templates/animals_list.html:92
-#: app/templates/assistant/drafts_list.html:68
+#: app/templates/animals_list.html:92 app/templates/assistant/chat.html:201
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
 #: app/templates/finance/lots_list.html:17
@@ -2423,7 +2418,7 @@ msgstr "अगली खुराक"
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "कोई दर्ज टीकाकरण नहीं है।"
 
-#: app/templates/animal_detail.html:298 app/templates/base.html:577
+#: app/templates/animal_detail.html:298 app/templates/base.html:599
 #: app/templates/home.html:87 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "प्रजनन"
@@ -2455,7 +2450,7 @@ msgstr "नर"
 msgid "لا يوجد تقريع مسجّل."
 msgstr "कोई दर्ज संगमन नहीं है।"
 
-#: app/templates/animal_detail.html:313 app/templates/base.html:578
+#: app/templates/animal_detail.html:313 app/templates/base.html:600
 #: app/templates/home.html:88 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
@@ -2901,8 +2896,8 @@ msgid "إلغاء"
 msgstr "रद्द करें"
 
 #: app/templates/animal_weight_new_simple.html:21
-#: app/templates/animals_list_simple.html:19 app/templates/base.html:550
-#: app/templates/base.html:552 app/templates/health/disease_new_simple.html:22
+#: app/templates/animals_list_simple.html:19 app/templates/base.html:588
+#: app/templates/health/disease_new_simple.html:22
 #: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
@@ -3197,7 +3192,7 @@ msgstr "जिस पंक्ति को नज़रअंदाज़ क�
 msgid "حفظ الدفعة كاملة"
 msgstr "पूरी खेप सहेजें"
 
-#: app/templates/animals_list.html:5 app/templates/base.html:574
+#: app/templates/animals_list.html:5 app/templates/base.html:596
 msgid "الإجراء الجماعي"
 msgstr "थोक कार्रवाई"
 
@@ -3330,7 +3325,7 @@ msgstr "इस फ़िल्टर में फिलहाल कोई प�
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
-#: app/templates/animals_list_simple.html:20 app/templates/base.html:573
+#: app/templates/animals_list_simple.html:20 app/templates/base.html:595
 #: app/templates/home.html:58 app/templates/simple_home.html:45
 msgid "الحيوانات"
 msgstr "जानवर"
@@ -3410,7 +3405,7 @@ msgstr "नया बाड़ा"
 msgid "مثال: B-01"
 msgstr "उदाहरण: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:742
+#: app/templates/barn_form.html:11 app/templates/base.html:751
 msgid "عادية"
 msgstr "सामान्य"
 
@@ -3467,7 +3462,7 @@ msgstr "प्रत्येक बाड़े के लिए स्वत�
 msgid "إضافة موعد وجبة"
 msgstr "भोजन समय जोड़ें"
 
-#: app/templates/barns_list.html:5 app/templates/base.html:575
+#: app/templates/barns_list.html:5 app/templates/base.html:597
 msgid "الحظائر"
 msgstr "बाड़े"
 
@@ -3488,242 +3483,244 @@ msgstr "अभी तक कोई बाड़ा दर्ज नहीं ह
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:553 app/templates/home.html:20
+#: app/templates/base.html:586
+msgid "الرئيسية والقطيع"
+msgstr "होम और झुंड"
+
+#: app/templates/base.html:589 app/templates/home.html:20
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
 msgid "صفحة اليوم"
 msgstr "आज का पेज"
 
-#: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/assistant/drafts_list.html:7
-#: app/templates/assistant/farm_notes_list.html:7 app/templates/base.html:554
-#: app/templates/home.html:119
-msgid "المساعد الذكي"
-msgstr "स्मार्ट सहायक"
-
-#: app/templates/base.html:571
+#: app/templates/base.html:593
 msgid "الحلال"
 msgstr "पशुधन"
 
-#: app/templates/base.html:579 app/templates/home.html:89
+#: app/templates/base.html:601 app/templates/home.html:89
 msgid "فحص السونار"
 msgstr "सोनार जांच"
 
-#: app/templates/base.html:580
+#: app/templates/base.html:602
 msgid "استخدام الاسفنجة للمتاوة"
 msgstr "मदाई सिंक्रोनाइज़ेशन के लिए स्पंज का उपयोग"
 
-#: app/templates/base.html:582
+#: app/templates/base.html:603
 msgid "النعام (بيض/تفقيس)"
 msgstr "शुतुरमुर्ग (अंडे/हैचिंग)"
 
-#: app/templates/base.html:600 app/templates/home.html:69
-msgid "الصحة"
-msgstr "स्वास्थ्य"
-
-#: app/templates/base.html:602 app/templates/health/dashboard.html:3
-#: app/templates/health/dashboard.html:6 app/templates/home.html:39
-msgid "مركز الطبيب"
-msgstr "पशु चिकित्सक केंद्र"
-
-#: app/templates/base.html:606 app/templates/health/vaccinations_list.html:5
-#: app/templates/home.html:75
-msgid "التطعيمات"
-msgstr "टीकाकरण"
-
-#: app/templates/base.html:607
-#: app/templates/health/vaccination_schedule_list.html:5
-msgid "تقويم التحصينات"
-msgstr "टीकाकरण कैलेंडर"
-
-#: app/templates/base.html:609 app/templates/health/dashboard.html:89
-#: app/templates/health/diagnose_start.html:5
-msgid "المساعد التشخيصي"
-msgstr "निदान सहायक"
-
-#: app/templates/base.html:611 app/templates/health/dashboard.html:83
-#: app/templates/health/injection_guide.html:5
-msgid "دليل الحقن الميداني"
-msgstr "फील्ड इंजेक्शन गाइड"
-
-#: app/templates/base.html:612 app/templates/health/body_condition_guide.html:2
-msgid "دليل تقييم حالة الجسم"
-msgstr "शरीर स्थिति गाइड"
-
-#: app/templates/base.html:613 app/templates/health/dashboard.html:86
-#: app/templates/health/doctors_list.html:5
-msgid "دليل الأطباء"
-msgstr "पशु चिकित्सक निर्देशिका"
-
-#: app/templates/base.html:627 app/templates/home.html:100
-msgid "العلف"
-msgstr "चारा"
-
-#: app/templates/base.html:629 app/templates/feed/items_list.html:5
-#: app/templates/feed/optimizer.html:77
-msgid "مكوّنات العلف"
-msgstr "चारा घटक"
-
-#: app/templates/base.html:630
-msgid "حركة المخزون (شراء/صرف)"
-msgstr "स्टॉक गतिविधि (खरीद/वितरण)"
-
-#: app/templates/base.html:631 app/templates/feed/barn_plans_list.html:5
-msgid "خطط تغذية الحظائر"
-msgstr "बाड़ा आहार योजनाएं"
-
-#: app/templates/base.html:632
-msgid "حاسبة العلف"
-msgstr "चारा कैलकुलेटर"
-
-#: app/templates/base.html:633 app/templates/feed/fcr_report.html:5
-msgid "معدل التحويل الغذائي (FCR)"
-msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
-
-#: app/templates/base.html:634 app/templates/feed/optimizer.html:5
-msgid "موازِن العليقة التلقائي"
-msgstr "स्वचालित राशन संतुलक"
-
-#: app/templates/base.html:635 app/templates/feed/barn_report.html:5
-msgid "تقرير علف الحظيرة"
-msgstr "बाड़े का चारा रिपोर्ट"
-
-#: app/templates/base.html:636 app/templates/feed/items_list.html:31
-#: app/templates/health/pharmacy_list.html:29
-#: app/templates/warehouses/warehouses_list.html:5
-msgid "المستودعات"
-msgstr "गोदाम"
-
-#: app/templates/base.html:647 app/templates/equipment/items_mine.html:17
-#: app/templates/family_view.html:159 app/templates/family_view.html:194
-msgid "المعدات"
-msgstr "उपकरण"
-
-#: app/templates/base.html:650 app/templates/equipment/items_list.html:5
-msgid "مستودع المعدات"
-msgstr "उपकरण गोदाम"
-
-#: app/templates/base.html:652 app/templates/simple_home.html:51
-#: app/templates/worker_home.html:101
-msgid "معداتي"
-msgstr "मेरे उपकरण"
-
-#: app/templates/base.html:660
-msgid "المناخ"
-msgstr "जलवायु"
-
-#: app/templates/base.html:662 app/templates/climate/dashboard.html:5
-msgid "رادار المناخ والإجهاد الحراري"
-msgstr "जलवायु और गर्मी तनाव रडार"
-
-#: app/templates/base.html:676
+#: app/templates/base.html:608
 msgid "الفريق"
 msgstr "टीम"
 
-#: app/templates/base.html:678 app/templates/family_view.html:97
+#: app/templates/base.html:610 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "कार्य"
 
-#: app/templates/base.html:679 app/templates/home.html:53
+#: app/templates/base.html:611 app/templates/home.html:53
 #: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्ट्स"
 
-#: app/templates/base.html:680 app/templates/team/members_list.html:5
+#: app/templates/base.html:612 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:682 app/templates/team/salaries_list.html:5
+#: app/templates/base.html:614 app/templates/team/salaries_list.html:5
 msgid "إعداد الرواتب"
 msgstr "वेतन सेटअप"
 
-#: app/templates/base.html:683 app/templates/team/payroll_list.html:5
+#: app/templates/base.html:615 app/templates/team/payroll_list.html:5
 #: app/templates/team/salaries_list.html:6
 msgid "رواتب الشهر"
 msgstr "इस महीने का वेतन"
 
-#: app/templates/base.html:684
+#: app/templates/base.html:616
 msgid "تقارير الرواتب"
 msgstr "वेतन रिपोर्ट"
 
-#: app/templates/base.html:687 app/templates/team/performance_report.html:6
+#: app/templates/base.html:619 app/templates/team/performance_report.html:6
 msgid "مراجعة مهام اليوم"
 msgstr "आज के कार्यों की समीक्षा करें"
 
-#: app/templates/base.html:688 app/templates/team/performance_report.html:5
+#: app/templates/base.html:620 app/templates/team/performance_report.html:5
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
-#: app/templates/base.html:702 app/templates/home.html:105
+#: app/templates/base.html:625 app/templates/equipment/items_mine.html:17
+#: app/templates/family_view.html:159 app/templates/family_view.html:194
+msgid "المعدات"
+msgstr "उपकरण"
+
+#: app/templates/base.html:628 app/templates/equipment/items_list.html:5
+msgid "مستودع المعدات"
+msgstr "उपकरण गोदाम"
+
+#: app/templates/base.html:630 app/templates/simple_home.html:51
+#: app/templates/worker_home.html:101
+msgid "معداتي"
+msgstr "मेरे उपकरण"
+
+#: app/templates/base.html:636
+msgid "المناخ"
+msgstr "जलवायु"
+
+#: app/templates/base.html:638 app/templates/climate/dashboard.html:5
+msgid "رادار المناخ والإجهاد الحراري"
+msgstr "जलवायु और गर्मी तनाव रडार"
+
+#: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:26
+#: app/templates/base.html:647
+msgid "مركز الذكاء الاصطناعي"
+msgstr "एआई केंद्र"
+
+#: app/templates/base.html:649
+msgid "فتح المركز (محادثة، ملاحظات، إدخال ذكي)"
+msgstr "केंद्र खोलें (चैट, नोट्स, स्मार्ट एंट्री)"
+
+#: app/templates/base.html:667
+msgid "الصحة والتحصين"
+msgstr "स्वास्थ्य और टीकाकरण"
+
+#: app/templates/base.html:669 app/templates/health/dashboard.html:3
+#: app/templates/health/dashboard.html:6 app/templates/home.html:39
+msgid "مركز الطبيب"
+msgstr "पशु चिकित्सक केंद्र"
+
+#: app/templates/base.html:673 app/templates/health/vaccinations_list.html:5
+#: app/templates/home.html:75
+msgid "التطعيمات"
+msgstr "टीकाकरण"
+
+#: app/templates/base.html:674
+#: app/templates/health/vaccination_schedule_list.html:5
+msgid "تقويم التحصينات"
+msgstr "टीकाकरण कैलेंडर"
+
+#: app/templates/base.html:676 app/templates/health/dashboard.html:89
+#: app/templates/health/diagnose_start.html:5
+msgid "المساعد التشخيصي"
+msgstr "निदान सहायक"
+
+#: app/templates/base.html:678 app/templates/health/dashboard.html:83
+#: app/templates/health/injection_guide.html:5
+msgid "دليل الحقن الميداني"
+msgstr "फील्ड इंजेक्शन गाइड"
+
+#: app/templates/base.html:679 app/templates/health/body_condition_guide.html:2
+msgid "دليل تقييم حالة الجسم"
+msgstr "शरीर स्थिति गाइड"
+
+#: app/templates/base.html:680 app/templates/health/dashboard.html:86
+#: app/templates/health/doctors_list.html:5
+msgid "دليل الأطباء"
+msgstr "पशु चिकित्सक निर्देशिका"
+
+#: app/templates/base.html:694
+msgid "التغذية والأعلاف"
+msgstr "चारा और पोषण"
+
+#: app/templates/base.html:696 app/templates/feed/items_list.html:5
+#: app/templates/feed/optimizer.html:77
+msgid "مكوّنات العلف"
+msgstr "चारा घटक"
+
+#: app/templates/base.html:697
+msgid "حركة المخزون (شراء/صرف)"
+msgstr "स्टॉक गतिविधि (खरीद/वितरण)"
+
+#: app/templates/base.html:698 app/templates/feed/barn_plans_list.html:5
+msgid "خطط تغذية الحظائر"
+msgstr "बाड़ा आहार योजनाएं"
+
+#: app/templates/base.html:699
+msgid "حاسبة العلف"
+msgstr "चारा कैलकुलेटर"
+
+#: app/templates/base.html:700 app/templates/feed/fcr_report.html:5
+msgid "معدل التحويل الغذائي (FCR)"
+msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
+
+#: app/templates/base.html:701 app/templates/feed/optimizer.html:5
+msgid "موازِن العليقة التلقائي"
+msgstr "स्वचालित राशन संतुलक"
+
+#: app/templates/base.html:702 app/templates/feed/barn_report.html:5
+msgid "تقرير علف الحظيرة"
+msgstr "बाड़े का चारा रिपोर्ट"
+
+#: app/templates/base.html:703 app/templates/feed/items_list.html:31
+#: app/templates/health/pharmacy_list.html:29
+#: app/templates/warehouses/warehouses_list.html:5
+msgid "المستودعات"
+msgstr "गोदाम"
+
+#: app/templates/base.html:716
+msgid "المالية والمبيعات"
+msgstr "वित्त और बिक्री"
+
+#: app/templates/base.html:719 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:709 app/templates/home.html:108
-#: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
-#: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
-#: app/templates/reports/purchase_request.html:4
-#: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
-msgid "التقارير"
-msgstr "रिपोर्टें"
-
-#: app/templates/base.html:711
+#: app/templates/base.html:720
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
-#: app/templates/base.html:726
+#: app/templates/base.html:735
 msgid "المظهر"
 msgstr "दिखावट"
 
-#: app/templates/base.html:728
+#: app/templates/base.html:737
 msgid "نهاري"
 msgstr "दिन"
 
-#: app/templates/base.html:728
+#: app/templates/base.html:737
 msgid "ليلي"
 msgstr "रात"
 
-#: app/templates/base.html:740
+#: app/templates/base.html:749
 msgid "مستوى الواجهة"
 msgstr "इंटरफेस स्तर"
 
-#: app/templates/base.html:742
+#: app/templates/base.html:751
 msgid "بسيط جداً"
 msgstr "बहुत आसान"
 
-#: app/templates/base.html:750
+#: app/templates/base.html:759
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"बहुत आसान\" आपकी मुख्य स्क्रीन को बड़े बटनों में बदल देता है, एक बार में एक सवाल — बिल्कुल वही डेटा।"
 
-#: app/templates/base.html:756
+#: app/templates/base.html:765
 msgid "التقرير اليومي بالبريد"
 msgstr "दैनिक ईमेल रिपोर्ट"
 
-#: app/templates/base.html:759
+#: app/templates/base.html:768
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "अभी परीक्षण रिपोर्ट भेजें"
 
-#: app/templates/base.html:763
+#: app/templates/base.html:772
 msgid "الملخص اليومي بتيليجرام"
 msgstr "दैनिक टेलीग्राम सारांश"
 
-#: app/templates/base.html:766
+#: app/templates/base.html:775
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "अभी परीक्षण सारांश भेजें"
 
-#: app/templates/base.html:772 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:781 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:785
+#: app/templates/base.html:794
 msgid "خروج"
 msgstr "लॉग आउट"
 
-#: app/templates/base.html:822
+#: app/templates/base.html:831
 msgid "تجاهل"
 msgstr "अनदेखा करें"
 
@@ -4283,6 +4280,10 @@ msgstr "सबसे ज़्यादा उपयोग किए जान�
 msgid "%(n)s تنبيه على رؤوس مسجَّلة"
 msgstr "पंजीकृत जानवरों पर %(n)s अलर्ट"
 
+#: app/templates/home.html:69
+msgid "الصحة"
+msgstr "स्वास्थ्य"
+
 #: app/templates/home.html:71
 msgid "البيطرة"
 msgstr "पशु चिकित्सा दौरे"
@@ -4305,9 +4306,25 @@ msgstr "जुड़वां मद-चक्र कार्यक्रम"
 msgid "العلف والمالية والتقارير"
 msgstr "चारा, वित्त और रिपोर्ट"
 
+#: app/templates/home.html:100
+msgid "العلف"
+msgstr "चारा"
+
+#: app/templates/home.html:108 app/templates/reports/activity.html:4
+#: app/templates/reports/births.html:4 app/templates/reports/mortality.html:4
+#: app/templates/reports/overview.html:4
+#: app/templates/reports/purchase_request.html:4
+#: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
+msgid "التقارير"
+msgstr "रिपोर्टें"
+
 #: app/templates/home.html:116
 msgid "النظام"
 msgstr "सिस्टम"
+
+#: app/templates/home.html:119
+msgid "المساعد الذكي"
+msgstr "स्मार्ट सहायक"
 
 #: app/templates/isolation_enter_form.html:5
 msgid "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
@@ -5225,207 +5242,204 @@ msgstr "आज के मेरे कार्य"
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr "अपने सौंपे गए कार्य देखें और पूरे करें"
 
-#: app/templates/assistant/chat.html:28
+#: app/templates/assistant/chat.html:29 app/templates/assistant/chat.html:39
+msgid "المحادثة"
+msgstr "चैट"
+
+#: app/templates/assistant/chat.html:30 app/templates/assistant/chat.html:89
 msgid "دفتر الملاحظات"
 msgstr "नोट्स डायरी"
 
-#: app/templates/assistant/chat.html:31
+#: app/templates/assistant/chat.html:31 app/templates/assistant/chat.html:149
 msgid "الإدخال الذكي"
 msgstr "स्मार्ट एंट्री"
 
-#: app/templates/assistant/chat.html:33
+#: app/templates/assistant/chat.html:40
 msgid "مسح كل المحادثة؟"
 msgstr "पूरी बातचीत साफ़ करें?"
 
-#: app/templates/assistant/chat.html:35
+#: app/templates/assistant/chat.html:42
 msgid "مسح المحادثة"
 msgstr "बातचीत साफ़ करें"
 
-#: app/templates/assistant/chat.html:43
+#: app/templates/assistant/chat.html:49
 msgid "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة."
 msgstr "मुझसे झुंड की स्थिति, गर्भावस्था, इनक्यूबेटर, चारे, सूचनाओं, या फार्म के किसी भी परिचालन मार्गदर्शन के बारे में पूछें।"
 
-#: app/templates/assistant/chat.html:57
+#: app/templates/assistant/chat.html:63
 msgid "كم عدد الحيوانات؟"
 msgstr "कितने जानवर हैं?"
 
-#: app/templates/assistant/chat.html:58
+#: app/templates/assistant/chat.html:64
 msgid "كم حوامل؟"
 msgstr "कितनी गर्भवती हैं?"
 
-#: app/templates/assistant/chat.html:59
+#: app/templates/assistant/chat.html:65
 msgid "حالة الحاضنات"
 msgstr "इनक्यूबेटर की स्थिति"
 
-#: app/templates/assistant/chat.html:60
+#: app/templates/assistant/chat.html:66
 msgid "تكلفة العلف"
 msgstr "चारे की लागत"
 
-#: app/templates/assistant/chat.html:65
+#: app/templates/assistant/chat.html:71
 msgid "إزالة"
 msgstr "हटाएं"
 
-#: app/templates/assistant/chat.html:70
+#: app/templates/assistant/chat.html:76
 msgid "إرفاق صورة"
 msgstr "छवि जोड़ें"
 
-#: app/templates/assistant/chat.html:71
+#: app/templates/assistant/chat.html:77
 msgid "اكتب سؤالك هنا..."
 msgstr "अपना सवाल यहाँ लिखें..."
 
-#: app/templates/assistant/chat.html:72
+#: app/templates/assistant/chat.html:78
 msgid "إرسال"
 msgstr "भेजें"
 
-#: app/templates/assistant/chat.html:132
-msgid "📷 صورة"
-msgstr "📷 छवि"
-
-#: app/templates/assistant/chat.html:146
-msgid "المساعد يكتب..."
-msgstr "सहायक टाइप कर रहा है..."
-
-#: app/templates/assistant/chat.html:169
-msgid "صار خطأ:"
-msgstr "एक त्रुटि हुई:"
-
-#: app/templates/assistant/chat.html:175
-msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
-msgstr "सहायक से संपर्क नहीं हो सका। दोबारा प्रयास करें।"
-
-#: app/templates/assistant/drafts_list.html:2
-#: app/templates/assistant/drafts_list.html:6
-msgid "الإدخال الذكي — مسودات بانتظار الاعتماد"
-msgstr "स्मार्ट एंट्री — स्वीकृति की प्रतीक्षा में ड्राफ्ट"
-
-#: app/templates/assistant/drafts_list.html:10
-msgid "اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: \"سجلت ولادة اليوم لشاة رقم 405\") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط \"اعتماد\" بنفسك."
-msgstr "फार्म पर वाकई हुई किसी घटना को लिखें या आवाज़ में रिकॉर्ड करें (उदाहरण: \"मैंने आज भेड़ नंबर 405 के लिए जन्म दर्ज किया\") — असिस्टेंट एक ड्राफ्ट सुझाता है, और जब तक आप खुद \"स्वीकृत करें\" नहीं दबाते, डेटाबेस में कुछ भी नहीं लिखा जाता।"
-
-#: app/templates/assistant/drafts_list.html:14
-msgid "هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ\"غير مفهومة\"."
-msgstr "इस सुविधा के लिए सक्रिय GEMINI_API_KEY चाहिए — इसके बिना हर कोशिश अपने आप \"समझ में नहीं आया\" कहकर अस्वीकार हो जाती है।"
-
-#: app/templates/assistant/drafts_list.html:21
-msgid "مثال: سجلت ولادة اليوم لشاة رقم 405"
-msgstr "उदाहरण: मैंने आज भेड़ नंबर 405 के लिए जन्म दर्ज किया"
-
-#: app/templates/assistant/drafts_list.html:22
-msgid "إرسال نص"
-msgstr "टेक्स्ट भेजें"
-
-#: app/templates/assistant/drafts_list.html:27
-msgid "إرسال مقطع صوتي"
-msgstr "ऑडियो क्लिप भेजें"
-
-#: app/templates/assistant/drafts_list.html:31
-msgid "بانتظار اعتمادك"
-msgstr "आपकी स्वीकृति की प्रतीक्षा में"
-
-#: app/templates/assistant/drafts_list.html:33
-msgid "لا توجد مسودات معلَّقة حالياً."
-msgstr "अभी कोई लंबित ड्राफ्ट नहीं है।"
-
-#: app/templates/assistant/drafts_list.html:50
-msgid "اختر عضو الفريق المكلَّف..."
-msgstr "नियुक्त टीम सदस्य चुनें..."
-
-#: app/templates/assistant/drafts_list.html:54
-msgid "اعتماد"
-msgstr "स्वीकृत करें"
-
-#: app/templates/assistant/drafts_list.html:58
-msgid "رفض"
-msgstr "अस्वीकार करें"
-
-#: app/templates/assistant/drafts_list.html:65
-msgid "آخر القرارات"
-msgstr "हाल के फैसले"
-
-#: app/templates/assistant/drafts_list.html:68
-msgid "النص الأصلي"
-msgstr "मूल पाठ"
-
-#: app/templates/assistant/drafts_list.html:68
-msgid "السبب/المعتمِد"
-msgstr "कारण/स्वीकृतकर्ता"
-
-#: app/templates/assistant/drafts_list.html:74
-msgid "معتمَدة"
-msgstr "स्वीकृत"
-
-#: app/templates/assistant/drafts_list.html:75
-msgid "مرفوضة"
-msgstr "अस्वीकृत"
-
-#: app/templates/assistant/drafts_list.html:76
-msgid "منتهية بدون قرار"
-msgstr "बिना फैसले के समाप्त"
-
-#: app/templates/assistant/drafts_list.html:77
-msgid "رفض تلقائي"
-msgstr "स्वतः अस्वीकृत"
-
-#: app/templates/assistant/drafts_list.html:83
-msgid "لا يوجد سجل بعد."
-msgstr "अभी तक कोई इतिहास नहीं है।"
-
-#: app/templates/assistant/farm_notes_list.html:2
-#: app/templates/assistant/farm_notes_list.html:6
-msgid "دفتر ملاحظات المزرعة"
-msgstr "फार्म नोट्स डायरी"
-
-#: app/templates/assistant/farm_notes_list.html:10
-msgid "أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي."
-msgstr "यहाँ लिखा गया कोई भी असली फील्ड नोट (बाड़े का व्यवहार, बार-बार होने वाली समस्या का कारण, आजमाया हुआ समाधान...) भविष्य में मिलते-जुलते सवाल के लिए स्मार्ट असिस्टेंट के काम आने वाला अनुभव बन जाता है। इसे कभी भी स्थायी चिकित्सा नियम के रूप में इस्तेमाल नहीं किया जाता — बस संदर्भ जानकारी है।"
-
-#: app/templates/assistant/farm_notes_list.html:14
-msgid "البحث الذكي بهذا الدفتر غير مفعَّل حالياً (يحتاج GEMINI_API_KEY) — الملاحظات تُحفظ عادي، بس ما راح تظهر بنتائج المساعد لين يتفعّل المفتاح."
-msgstr "इस डायरी में स्मार्ट खोज अभी सक्रिय नहीं है (GEMINI_API_KEY चाहिए) — नोट्स सामान्य रूप से सेव होते रहेंगे, बस कुंजी सक्रिय होने तक असिस्टेंट के परिणामों में नहीं दिखेंगे।"
-
-#: app/templates/assistant/farm_notes_list.html:20
-msgid "عنوان مختصر (اختياري)"
-msgstr "छोटा शीर्षक (वैकल्पिक)"
-
-#: app/templates/assistant/farm_notes_list.html:21
-msgid "اكتب الملاحظة هنا..."
-msgstr "नोट यहाँ लिखें..."
-
-#: app/templates/assistant/farm_notes_list.html:24
-msgid "بدون ربط بحظيرة"
-msgstr "किसी बाड़े से न जोड़ें"
-
-#: app/templates/assistant/farm_notes_list.html:27
-msgid "رقم رأس (اختياري)"
-msgstr "पशु संख्या (वैकल्पिक)"
-
-#: app/templates/assistant/farm_notes_list.html:28
-msgid "تصنيف (اختياري)"
-msgstr "टैग (वैकल्पिक)"
-
-#: app/templates/assistant/farm_notes_list.html:30
+#: app/templates/assistant/chat.html:90 app/templates/assistant/chat.html:125
+#: app/templates/assistant/chat.html:138
 msgid "إضافة الملاحظة"
 msgstr "नोट जोड़ें"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:93
+msgid "أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي."
+msgstr "यहाँ लिखा गया कोई भी असली फील्ड नोट (बाड़े का व्यवहार, बार-बार होने वाली समस्या का कारण, आजमाया हुआ समाधान...) भविष्य में मिलते-जुलते सवाल के लिए स्मार्ट असिस्टेंट के काम आने वाला अनुभव बन जाता है। इसे कभी भी स्थायी चिकित्सा नियम के रूप में इस्तेमाल नहीं किया जाता — बस संदर्भ जानकारी है।"
+
+#: app/templates/assistant/chat.html:97
+msgid "البحث الذكي بهذا الدفتر غير مفعَّل حالياً (يحتاج GEMINI_API_KEY) — الملاحظات تُحفظ عادي، بس ما راح تظهر بنتائج المساعد لين يتفعّل المفتاح."
+msgstr "इस डायरी में स्मार्ट खोज अभी सक्रिय नहीं है (GEMINI_API_KEY चाहिए) — नोट्स सामान्य रूप से सेव होते रहेंगे, बस कुंजी सक्रिय होने तक असिस्टेंट के परिणामों में नहीं दिखेंगे।"
+
+#: app/templates/assistant/chat.html:103
 msgid "النص"
 msgstr "पाठ"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:103
 msgid "الربط"
 msgstr "जुड़ाव"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:103
 msgid "الوسم"
 msgstr "टैग"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:103
 msgid "كاتبها"
 msgstr "लेखक"
 
-#: app/templates/assistant/farm_notes_list.html:46
+#: app/templates/assistant/chat.html:114
 msgid "لا توجد ملاحظات بعد."
 msgstr "अभी तक कोई नोट नहीं है।"
+
+#: app/templates/assistant/chat.html:128
+msgid "عنوان مختصر (اختياري)"
+msgstr "छोटा शीर्षक (वैकल्पिक)"
+
+#: app/templates/assistant/chat.html:129
+msgid "اكتب الملاحظة هنا..."
+msgstr "नोट यहाँ लिखें..."
+
+#: app/templates/assistant/chat.html:132
+msgid "بدون ربط بحظيرة"
+msgstr "किसी बाड़े से न जोड़ें"
+
+#: app/templates/assistant/chat.html:135
+msgid "رقم رأس (اختياري)"
+msgstr "पशु संख्या (वैकल्पिक)"
+
+#: app/templates/assistant/chat.html:136
+msgid "تصنيف (اختياري)"
+msgstr "टैग (वैकल्पिक)"
+
+#: app/templates/assistant/chat.html:151 app/templates/assistant/chat.html:227
+#: app/templates/assistant/chat.html:231
+msgid "إرسال نص"
+msgstr "टेक्स्ट भेजें"
+
+#: app/templates/assistant/chat.html:152 app/templates/assistant/chat.html:240
+#: app/templates/assistant/chat.html:244
+msgid "إرسال مقطع صوتي"
+msgstr "ऑडियो क्लिप भेजें"
+
+#: app/templates/assistant/chat.html:156
+msgid "اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: \"سجلت ولادة اليوم لشاة رقم 405\") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط \"اعتماد\" بنفسك."
+msgstr "फार्म पर वाकई हुई किसी घटना को लिखें या आवाज़ में रिकॉर्ड करें (उदाहरण: \"मैंने आज भेड़ नंबर 405 के लिए जन्म दर्ज किया\") — असिस्टेंट एक ड्राफ्ट सुझाता है, और जब तक आप खुद \"स्वीकृत करें\" नहीं दबाते, डेटाबेस में कुछ भी नहीं लिखा जाता।"
+
+#: app/templates/assistant/chat.html:160
+msgid "هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ\"غير مفهومة\"."
+msgstr "इस सुविधा के लिए सक्रिय GEMINI_API_KEY चाहिए — इसके बिना हर कोशिश अपने आप \"समझ में नहीं आया\" कहकर अस्वीकार हो जाती है।"
+
+#: app/templates/assistant/chat.html:164
+msgid "بانتظار اعتمادك"
+msgstr "आपकी स्वीकृति की प्रतीक्षा में"
+
+#: app/templates/assistant/chat.html:166
+msgid "لا توجد مسودات معلَّقة حالياً."
+msgstr "अभी कोई लंबित ड्राफ्ट नहीं है।"
+
+#: app/templates/assistant/chat.html:183
+msgid "اختر عضو الفريق المكلَّف..."
+msgstr "नियुक्त टीम सदस्य चुनें..."
+
+#: app/templates/assistant/chat.html:187
+msgid "اعتماد"
+msgstr "स्वीकृत करें"
+
+#: app/templates/assistant/chat.html:191
+msgid "رفض"
+msgstr "अस्वीकार करें"
+
+#: app/templates/assistant/chat.html:198
+msgid "آخر القرارات"
+msgstr "हाल के फैसले"
+
+#: app/templates/assistant/chat.html:201
+msgid "النص الأصلي"
+msgstr "मूल पाठ"
+
+#: app/templates/assistant/chat.html:201
+msgid "السبب/المعتمِد"
+msgstr "कारण/स्वीकृतकर्ता"
+
+#: app/templates/assistant/chat.html:207
+msgid "معتمَدة"
+msgstr "स्वीकृत"
+
+#: app/templates/assistant/chat.html:208
+msgid "مرفوضة"
+msgstr "अस्वीकृत"
+
+#: app/templates/assistant/chat.html:209
+msgid "منتهية بدون قرار"
+msgstr "बिना फैसले के समाप्त"
+
+#: app/templates/assistant/chat.html:210
+msgid "رفض تلقائي"
+msgstr "स्वतः अस्वीकृत"
+
+#: app/templates/assistant/chat.html:216
+msgid "لا يوجد سجل بعد."
+msgstr "अभी तक कोई इतिहास नहीं है।"
+
+#: app/templates/assistant/chat.html:230
+msgid "مثال: سجلت ولادة اليوم لشاة رقم 405"
+msgstr "उदाहरण: मैंने आज भेड़ नंबर 405 के लिए जन्म दर्ज किया"
+
+#: app/templates/assistant/chat.html:309
+msgid "📷 صورة"
+msgstr "📷 छवि"
+
+#: app/templates/assistant/chat.html:323
+msgid "المساعد يكتب..."
+msgstr "सहायक टाइप कर रहा है..."
+
+#: app/templates/assistant/chat.html:346
+msgid "صار خطأ:"
+msgstr "एक त्रुटि हुई:"
+
+#: app/templates/assistant/chat.html:352
+msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
+msgstr "सहायक से संपर्क नहीं हो सका। दोबारा प्रयास करें।"
 
 #: app/templates/batches/batch_detail.html:3
 #: app/templates/batches/batches_list.html:3
@@ -10782,4 +10796,10 @@ msgstr "अभी तक कोई अतिरिक्त नामित ग�
 
 #~ msgid "اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها بملاحظة هو تقريره."
 #~ msgstr "डॉक्टर से चाहे गए जांच आइटम चुनें — हर आइटम एक अलग कार्य बन जाता है, और नोट के साथ पूरा करना ही रिपोर्ट है।"
+
+#~ msgid "الإدخال الذكي — مسودات بانتظار الاعتماد"
+#~ msgstr "स्मार्ट एंट्री — स्वीकृति की प्रतीक्षा में ड्राफ्ट"
+
+#~ msgid "دفتر ملاحظات المزرعة"
+#~ msgstr "फार्म नोट्स डायरी"
 

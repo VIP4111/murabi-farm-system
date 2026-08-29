@@ -80,5 +80,6 @@ def test_route_renders_with_data_and_shows_insufficient_warning(app, logged_in_c
 def test_finance_drawer_stays_open_on_seasonal_analysis(app, logged_in_client):
     resp = logged_in_client.get("/finance/seasonal-price-analysis")
     assert resp.status_code == 200
-    idx = resp.data.decode().find(">المالية<")
+    # بند إضافي 318 — عنوان المجموعة صار "المالية والمبيعات"
+    idx = resp.data.decode().find(">المالية والمبيعات<")
     assert idx != -1

@@ -8,7 +8,10 @@ from factories import make_feed
 
 
 def _drawer_open(html: str) -> bool:
-    idx = html.find(">العلف<")
+    # بند إضافي 318 — عنوان المجموعة صار "التغذية والأعلاف" بعد إعادة
+    # هيكلة القائمة الجانبية لـ5 مراكز رئيسية (نفس الرابط/الصلاحية،
+    # تسمية فقط).
+    idx = html.find(">التغذية والأعلاف<")
     assert idx != -1
     details_idx = html.rfind("<details", 0, idx)
     return " open" in html[details_idx:idx]

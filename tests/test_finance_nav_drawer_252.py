@@ -6,8 +6,11 @@ import re
 
 
 def _finance_drawer_open(html: str) -> bool:
-    idx = html.find(">المالية<")
-    assert idx != -1, "لقاء نص 'المالية' بالقائمة الجانبية غير موجود"
+    # بند إضافي 318 — عنوان المجموعة صار "المالية والمبيعات" بعد إعادة
+    # هيكلة القائمة الجانبية لـ5 مراكز رئيسية (نفس الرابط/الصلاحية،
+    # تسمية فقط).
+    idx = html.find(">المالية والمبيعات<")
+    assert idx != -1, "لقاء نص 'المالية والمبيعات' بالقائمة الجانبية غير موجود"
     details_idx = html.rfind("<details", 0, idx)
     segment = html[details_idx:idx]
     return " open" in segment or 'open>' in segment or re.search(r"\bopen\b", segment) is not None

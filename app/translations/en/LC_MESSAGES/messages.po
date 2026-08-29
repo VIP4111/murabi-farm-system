@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-29 12:19+0300\n"
+"POT-Creation-Date: 2026-08-29 16:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:834
+#: app/__init__.py:206 app/team/routes.py:31 app/templates/base.html:843
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -923,7 +923,7 @@ msgid "%(n)s حساب نشط."
 msgstr "%(n)s active accounts."
 
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
-#: app/templates/base.html:603 app/templates/family_view.html:158
+#: app/templates/base.html:670 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
 #: app/templates/home.html:78
 msgid "الصيدلية"
@@ -1494,10 +1494,8 @@ msgstr "Gender"
 #: app/templates/animal_detail.html:406 app/templates/animal_detail.html:421
 #: app/templates/animal_detail.html:437 app/templates/animal_detail.html:452
 #: app/templates/animal_detail.html:462 app/templates/animal_detail.html:492
-#: app/templates/animal_workflow.html:154
-#: app/templates/assistant/drafts_list.html:68
-#: app/templates/assistant/farm_notes_list.html:35
-#: app/templates/bulk_action_form.html:63
+#: app/templates/animal_workflow.html:154 app/templates/assistant/chat.html:103
+#: app/templates/assistant/chat.html:201 app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:246
 #: app/templates/bulk_action_form.html:353
 #: app/templates/bulk_action_form.html:383
@@ -1672,8 +1670,7 @@ msgstr "No activity in this period"
 msgid "الفئة"
 msgstr "Category"
 
-#: app/reports/report_service.py:378
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/reports/report_service.py:378 app/templates/assistant/chat.html:103
 #: app/templates/team/_task_assign_fields.html:4
 #: app/templates/team/daily_templates.html:18
 #: app/templates/team/tasks_list.html:59 app/templates/team/tasks_list.html:105
@@ -1864,7 +1861,7 @@ msgid "تنبيهاتي"
 msgstr "My Alerts"
 
 #: app/templates/alerts_list.html:5 app/templates/animals_list.html:92
-#: app/templates/assistant/chat.html:61
+#: app/templates/assistant/chat.html:67
 msgid "التنبيهات"
 msgstr "Alerts"
 
@@ -2056,7 +2053,7 @@ msgid "سجل بيطري"
 msgstr "Vet record"
 
 #: app/templates/animal_detail.html:115 app/templates/animal_detail.html:267
-#: app/templates/base.html:605 app/templates/health/diseases_list.html:6
+#: app/templates/base.html:672 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:77
 msgid "الأمراض"
 msgstr "Diseases"
@@ -2113,9 +2110,8 @@ msgstr "Milk"
 msgid "ملاحظات"
 msgstr "Notes"
 
-#: app/templates/animal_detail.html:122 app/templates/base.html:699
-#: app/templates/base.html:701 app/templates/finance/list.html:56
-#: app/templates/home.html:103
+#: app/templates/animal_detail.html:122 app/templates/base.html:718
+#: app/templates/finance/list.html:56 app/templates/home.html:103
 msgid "المالية"
 msgstr "Finance"
 
@@ -2315,7 +2311,7 @@ msgstr "All records ordered by date"
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "No records linked to this animal yet."
 
-#: app/templates/animal_detail.html:248 app/templates/base.html:614
+#: app/templates/animal_detail.html:248 app/templates/base.html:681
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr "Treatment protocols"
@@ -2324,7 +2320,7 @@ msgstr "Treatment protocols"
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr "Apply a ready-made treatment protocol to this animal"
 
-#: app/templates/animal_detail.html:253 app/templates/base.html:604
+#: app/templates/animal_detail.html:253 app/templates/base.html:671
 #: app/templates/health/vet_visits_list.html:5
 msgid "الزيارات البيطرية"
 msgstr "Vet Visits"
@@ -2376,8 +2372,7 @@ msgstr "Severity"
 
 #: app/templates/animal_detail.html:270 app/templates/animal_detail.html:316
 #: app/templates/animal_detail.html:339 app/templates/animal_workflow.html:154
-#: app/templates/animals_list.html:92
-#: app/templates/assistant/drafts_list.html:68
+#: app/templates/animals_list.html:92 app/templates/assistant/chat.html:201
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
 #: app/templates/finance/lots_list.html:17
@@ -2423,7 +2418,7 @@ msgstr "Next dose"
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "No vaccinations recorded."
 
-#: app/templates/animal_detail.html:298 app/templates/base.html:577
+#: app/templates/animal_detail.html:298 app/templates/base.html:599
 #: app/templates/home.html:87 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "Mating"
@@ -2455,7 +2450,7 @@ msgstr "Male"
 msgid "لا يوجد تقريع مسجّل."
 msgstr "No mating recorded."
 
-#: app/templates/animal_detail.html:313 app/templates/base.html:578
+#: app/templates/animal_detail.html:313 app/templates/base.html:600
 #: app/templates/home.html:88 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "Pregnancy diagnosis"
@@ -2901,8 +2896,8 @@ msgid "إلغاء"
 msgstr "Cancel"
 
 #: app/templates/animal_weight_new_simple.html:21
-#: app/templates/animals_list_simple.html:19 app/templates/base.html:550
-#: app/templates/base.html:552 app/templates/health/disease_new_simple.html:22
+#: app/templates/animals_list_simple.html:19 app/templates/base.html:588
+#: app/templates/health/disease_new_simple.html:22
 #: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
 #: app/templates/team/worker_report_form.html:6
 #: app/templates/worker_home.html:2
@@ -3197,7 +3192,7 @@ msgstr "Leave the animal number empty for any row you want to skip."
 msgid "حفظ الدفعة كاملة"
 msgstr "Save the whole batch"
 
-#: app/templates/animals_list.html:5 app/templates/base.html:574
+#: app/templates/animals_list.html:5 app/templates/base.html:596
 msgid "الإجراء الجماعي"
 msgstr "Bulk Action"
 
@@ -3330,7 +3325,7 @@ msgstr "No animals within this filter currently."
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "No animals recorded yet."
 
-#: app/templates/animals_list_simple.html:20 app/templates/base.html:573
+#: app/templates/animals_list_simple.html:20 app/templates/base.html:595
 #: app/templates/home.html:58 app/templates/simple_home.html:45
 msgid "الحيوانات"
 msgstr "Animals"
@@ -3410,7 +3405,7 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:742
+#: app/templates/barn_form.html:11 app/templates/base.html:751
 msgid "عادية"
 msgstr "Regular"
 
@@ -3467,7 +3462,7 @@ msgstr "An independent setting per barn — add a time for each meal you want to
 msgid "إضافة موعد وجبة"
 msgstr "Add meal time"
 
-#: app/templates/barns_list.html:5 app/templates/base.html:575
+#: app/templates/barns_list.html:5 app/templates/base.html:597
 msgid "الحظائر"
 msgstr "Barns"
 
@@ -3488,242 +3483,244 @@ msgstr "No barns recorded yet."
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:553 app/templates/home.html:20
+#: app/templates/base.html:586
+msgid "الرئيسية والقطيع"
+msgstr "Home & Herd"
+
+#: app/templates/base.html:589 app/templates/home.html:20
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
 msgid "صفحة اليوم"
 msgstr "Today's page"
 
-#: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
-#: app/templates/assistant/drafts_list.html:7
-#: app/templates/assistant/farm_notes_list.html:7 app/templates/base.html:554
-#: app/templates/home.html:119
-msgid "المساعد الذكي"
-msgstr "Smart Assistant"
-
-#: app/templates/base.html:571
+#: app/templates/base.html:593
 msgid "الحلال"
 msgstr "Livestock"
 
-#: app/templates/base.html:579 app/templates/home.html:89
+#: app/templates/base.html:601 app/templates/home.html:89
 msgid "فحص السونار"
 msgstr "Sonar exam"
 
-#: app/templates/base.html:580
+#: app/templates/base.html:602
 msgid "استخدام الاسفنجة للمتاوة"
 msgstr "Using the sponge for estrus sync"
 
-#: app/templates/base.html:582
+#: app/templates/base.html:603
 msgid "النعام (بيض/تفقيس)"
 msgstr "Ostriches (eggs/hatching)"
 
-#: app/templates/base.html:600 app/templates/home.html:69
-msgid "الصحة"
-msgstr "Health"
-
-#: app/templates/base.html:602 app/templates/health/dashboard.html:3
-#: app/templates/health/dashboard.html:6 app/templates/home.html:39
-msgid "مركز الطبيب"
-msgstr "Vet center"
-
-#: app/templates/base.html:606 app/templates/health/vaccinations_list.html:5
-#: app/templates/home.html:75
-msgid "التطعيمات"
-msgstr "Vaccinations"
-
-#: app/templates/base.html:607
-#: app/templates/health/vaccination_schedule_list.html:5
-msgid "تقويم التحصينات"
-msgstr "Vaccination calendar"
-
-#: app/templates/base.html:609 app/templates/health/dashboard.html:89
-#: app/templates/health/diagnose_start.html:5
-msgid "المساعد التشخيصي"
-msgstr "Diagnostic assistant"
-
-#: app/templates/base.html:611 app/templates/health/dashboard.html:83
-#: app/templates/health/injection_guide.html:5
-msgid "دليل الحقن الميداني"
-msgstr "Field injection guide"
-
-#: app/templates/base.html:612 app/templates/health/body_condition_guide.html:2
-msgid "دليل تقييم حالة الجسم"
-msgstr "Body condition guide"
-
-#: app/templates/base.html:613 app/templates/health/dashboard.html:86
-#: app/templates/health/doctors_list.html:5
-msgid "دليل الأطباء"
-msgstr "Vet directory"
-
-#: app/templates/base.html:627 app/templates/home.html:100
-msgid "العلف"
-msgstr "Feed"
-
-#: app/templates/base.html:629 app/templates/feed/items_list.html:5
-#: app/templates/feed/optimizer.html:77
-msgid "مكوّنات العلف"
-msgstr "Feed items"
-
-#: app/templates/base.html:630
-msgid "حركة المخزون (شراء/صرف)"
-msgstr "Stock movements (purchase/issue)"
-
-#: app/templates/base.html:631 app/templates/feed/barn_plans_list.html:5
-msgid "خطط تغذية الحظائر"
-msgstr "Barn feeding plans"
-
-#: app/templates/base.html:632
-msgid "حاسبة العلف"
-msgstr "Feed Calculator"
-
-#: app/templates/base.html:633 app/templates/feed/fcr_report.html:5
-msgid "معدل التحويل الغذائي (FCR)"
-msgstr "Feed conversion ratio (FCR)"
-
-#: app/templates/base.html:634 app/templates/feed/optimizer.html:5
-msgid "موازِن العليقة التلقائي"
-msgstr "Automatic ration balancer"
-
-#: app/templates/base.html:635 app/templates/feed/barn_report.html:5
-msgid "تقرير علف الحظيرة"
-msgstr "Barn feed report"
-
-#: app/templates/base.html:636 app/templates/feed/items_list.html:31
-#: app/templates/health/pharmacy_list.html:29
-#: app/templates/warehouses/warehouses_list.html:5
-msgid "المستودعات"
-msgstr "Warehouses"
-
-#: app/templates/base.html:647 app/templates/equipment/items_mine.html:17
-#: app/templates/family_view.html:159 app/templates/family_view.html:194
-msgid "المعدات"
-msgstr "Equipment"
-
-#: app/templates/base.html:650 app/templates/equipment/items_list.html:5
-msgid "مستودع المعدات"
-msgstr "Equipment warehouse"
-
-#: app/templates/base.html:652 app/templates/simple_home.html:51
-#: app/templates/worker_home.html:101
-msgid "معداتي"
-msgstr "My equipment"
-
-#: app/templates/base.html:660
-msgid "المناخ"
-msgstr "Climate"
-
-#: app/templates/base.html:662 app/templates/climate/dashboard.html:5
-msgid "رادار المناخ والإجهاد الحراري"
-msgstr "Climate & heat stress radar"
-
-#: app/templates/base.html:676
+#: app/templates/base.html:608
 msgid "الفريق"
 msgstr "Team"
 
-#: app/templates/base.html:678 app/templates/family_view.html:97
+#: app/templates/base.html:610 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:54
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:679 app/templates/home.html:53
+#: app/templates/base.html:611 app/templates/home.html:53
 #: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:680 app/templates/team/members_list.html:5
+#: app/templates/base.html:612 app/templates/team/members_list.html:5
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
-#: app/templates/base.html:682 app/templates/team/salaries_list.html:5
+#: app/templates/base.html:614 app/templates/team/salaries_list.html:5
 msgid "إعداد الرواتب"
 msgstr "Salary Setup"
 
-#: app/templates/base.html:683 app/templates/team/payroll_list.html:5
+#: app/templates/base.html:615 app/templates/team/payroll_list.html:5
 #: app/templates/team/salaries_list.html:6
 msgid "رواتب الشهر"
 msgstr "This Month's Payroll"
 
-#: app/templates/base.html:684
+#: app/templates/base.html:616
 msgid "تقارير الرواتب"
 msgstr "Payroll Reports"
 
-#: app/templates/base.html:687 app/templates/team/performance_report.html:6
+#: app/templates/base.html:619 app/templates/team/performance_report.html:6
 msgid "مراجعة مهام اليوم"
 msgstr "Review Today's Tasks"
 
-#: app/templates/base.html:688 app/templates/team/performance_report.html:5
+#: app/templates/base.html:620 app/templates/team/performance_report.html:5
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
-#: app/templates/base.html:702 app/templates/home.html:105
+#: app/templates/base.html:625 app/templates/equipment/items_mine.html:17
+#: app/templates/family_view.html:159 app/templates/family_view.html:194
+msgid "المعدات"
+msgstr "Equipment"
+
+#: app/templates/base.html:628 app/templates/equipment/items_list.html:5
+msgid "مستودع المعدات"
+msgstr "Equipment warehouse"
+
+#: app/templates/base.html:630 app/templates/simple_home.html:51
+#: app/templates/worker_home.html:101
+msgid "معداتي"
+msgstr "My equipment"
+
+#: app/templates/base.html:636
+msgid "المناخ"
+msgstr "Climate"
+
+#: app/templates/base.html:638 app/templates/climate/dashboard.html:5
+msgid "رادار المناخ والإجهاد الحراري"
+msgstr "Climate & heat stress radar"
+
+#: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:26
+#: app/templates/base.html:647
+msgid "مركز الذكاء الاصطناعي"
+msgstr "AI Center"
+
+#: app/templates/base.html:649
+msgid "فتح المركز (محادثة، ملاحظات، إدخال ذكي)"
+msgstr "Open Center (chat, notes, smart entry)"
+
+#: app/templates/base.html:667
+msgid "الصحة والتحصين"
+msgstr "Health & Vaccination"
+
+#: app/templates/base.html:669 app/templates/health/dashboard.html:3
+#: app/templates/health/dashboard.html:6 app/templates/home.html:39
+msgid "مركز الطبيب"
+msgstr "Vet center"
+
+#: app/templates/base.html:673 app/templates/health/vaccinations_list.html:5
+#: app/templates/home.html:75
+msgid "التطعيمات"
+msgstr "Vaccinations"
+
+#: app/templates/base.html:674
+#: app/templates/health/vaccination_schedule_list.html:5
+msgid "تقويم التحصينات"
+msgstr "Vaccination calendar"
+
+#: app/templates/base.html:676 app/templates/health/dashboard.html:89
+#: app/templates/health/diagnose_start.html:5
+msgid "المساعد التشخيصي"
+msgstr "Diagnostic assistant"
+
+#: app/templates/base.html:678 app/templates/health/dashboard.html:83
+#: app/templates/health/injection_guide.html:5
+msgid "دليل الحقن الميداني"
+msgstr "Field injection guide"
+
+#: app/templates/base.html:679 app/templates/health/body_condition_guide.html:2
+msgid "دليل تقييم حالة الجسم"
+msgstr "Body condition guide"
+
+#: app/templates/base.html:680 app/templates/health/dashboard.html:86
+#: app/templates/health/doctors_list.html:5
+msgid "دليل الأطباء"
+msgstr "Vet directory"
+
+#: app/templates/base.html:694
+msgid "التغذية والأعلاف"
+msgstr "Feed & Nutrition"
+
+#: app/templates/base.html:696 app/templates/feed/items_list.html:5
+#: app/templates/feed/optimizer.html:77
+msgid "مكوّنات العلف"
+msgstr "Feed items"
+
+#: app/templates/base.html:697
+msgid "حركة المخزون (شراء/صرف)"
+msgstr "Stock movements (purchase/issue)"
+
+#: app/templates/base.html:698 app/templates/feed/barn_plans_list.html:5
+msgid "خطط تغذية الحظائر"
+msgstr "Barn feeding plans"
+
+#: app/templates/base.html:699
+msgid "حاسبة العلف"
+msgstr "Feed Calculator"
+
+#: app/templates/base.html:700 app/templates/feed/fcr_report.html:5
+msgid "معدل التحويل الغذائي (FCR)"
+msgstr "Feed conversion ratio (FCR)"
+
+#: app/templates/base.html:701 app/templates/feed/optimizer.html:5
+msgid "موازِن العليقة التلقائي"
+msgstr "Automatic ration balancer"
+
+#: app/templates/base.html:702 app/templates/feed/barn_report.html:5
+msgid "تقرير علف الحظيرة"
+msgstr "Barn feed report"
+
+#: app/templates/base.html:703 app/templates/feed/items_list.html:31
+#: app/templates/health/pharmacy_list.html:29
+#: app/templates/warehouses/warehouses_list.html:5
+msgid "المستودعات"
+msgstr "Warehouses"
+
+#: app/templates/base.html:716
+msgid "المالية والمبيعات"
+msgstr "Finance & Sales"
+
+#: app/templates/base.html:719 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:709 app/templates/home.html:108
-#: app/templates/reports/activity.html:4 app/templates/reports/births.html:4
-#: app/templates/reports/mortality.html:4 app/templates/reports/overview.html:4
-#: app/templates/reports/purchase_request.html:4
-#: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
-msgid "التقارير"
-msgstr "Reports"
-
-#: app/templates/base.html:711
+#: app/templates/base.html:720
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
-#: app/templates/base.html:726
+#: app/templates/base.html:735
 msgid "المظهر"
 msgstr "Appearance"
 
-#: app/templates/base.html:728
+#: app/templates/base.html:737
 msgid "نهاري"
 msgstr "Light"
 
-#: app/templates/base.html:728
+#: app/templates/base.html:737
 msgid "ليلي"
 msgstr "Dark"
 
-#: app/templates/base.html:740
+#: app/templates/base.html:749
 msgid "مستوى الواجهة"
 msgstr "Interface level"
 
-#: app/templates/base.html:742
+#: app/templates/base.html:751
 msgid "بسيط جداً"
 msgstr "Very simple"
 
-#: app/templates/base.html:750
+#: app/templates/base.html:759
 msgid "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس البيانات بالضبط."
 msgstr "\"Very simple\" switches your home screen to big buttons, one question at a time — the exact same data."
 
-#: app/templates/base.html:756
+#: app/templates/base.html:765
 msgid "التقرير اليومي بالبريد"
 msgstr "Daily email report"
 
-#: app/templates/base.html:759
+#: app/templates/base.html:768
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "Send test report now"
 
-#: app/templates/base.html:763
+#: app/templates/base.html:772
 msgid "الملخص اليومي بتيليجرام"
 msgstr "Daily Telegram Summary"
 
-#: app/templates/base.html:766
+#: app/templates/base.html:775
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "Send test summary now"
 
-#: app/templates/base.html:772 app/templates/team/member_edit_form.html:13
+#: app/templates/base.html:781 app/templates/team/member_edit_form.html:13
 #: app/templates/team/member_form.html:14
 #: app/templates/team/members_list.html:10
 msgid "اللغة"
 msgstr "Language"
 
-#: app/templates/base.html:785
+#: app/templates/base.html:794
 msgid "خروج"
 msgstr "Logout"
 
-#: app/templates/base.html:822
+#: app/templates/base.html:831
 msgid "تجاهل"
 msgstr "Dismiss"
 
@@ -4283,6 +4280,10 @@ msgstr "Most used"
 msgid "%(n)s تنبيه على رؤوس مسجَّلة"
 msgstr "%(n)s alerts on registered animals"
 
+#: app/templates/home.html:69
+msgid "الصحة"
+msgstr "Health"
+
 #: app/templates/home.html:71
 msgid "البيطرة"
 msgstr "Vet visits"
@@ -4305,9 +4306,25 @@ msgstr "Twin estrus programs"
 msgid "العلف والمالية والتقارير"
 msgstr "Feed, finance & reports"
 
+#: app/templates/home.html:100
+msgid "العلف"
+msgstr "Feed"
+
+#: app/templates/home.html:108 app/templates/reports/activity.html:4
+#: app/templates/reports/births.html:4 app/templates/reports/mortality.html:4
+#: app/templates/reports/overview.html:4
+#: app/templates/reports/purchase_request.html:4
+#: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
+msgid "التقارير"
+msgstr "Reports"
+
 #: app/templates/home.html:116
 msgid "النظام"
 msgstr "System"
+
+#: app/templates/home.html:119
+msgid "المساعد الذكي"
+msgstr "Smart Assistant"
 
 #: app/templates/isolation_enter_form.html:5
 msgid "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي حالة استثنائية (اشتباه مرض، إصابة، إلخ) — سجّل سببها هنا."
@@ -5225,207 +5242,204 @@ msgstr "My Tasks Today"
 msgid "عرض وإنجاز المهام المطلوبة منك"
 msgstr "View and complete your assigned tasks"
 
-#: app/templates/assistant/chat.html:28
+#: app/templates/assistant/chat.html:29 app/templates/assistant/chat.html:39
+msgid "المحادثة"
+msgstr "Chat"
+
+#: app/templates/assistant/chat.html:30 app/templates/assistant/chat.html:89
 msgid "دفتر الملاحظات"
 msgstr "Notes Journal"
 
-#: app/templates/assistant/chat.html:31
+#: app/templates/assistant/chat.html:31 app/templates/assistant/chat.html:149
 msgid "الإدخال الذكي"
 msgstr "Smart Entry"
 
-#: app/templates/assistant/chat.html:33
+#: app/templates/assistant/chat.html:40
 msgid "مسح كل المحادثة؟"
 msgstr "Clear the whole conversation?"
 
-#: app/templates/assistant/chat.html:35
+#: app/templates/assistant/chat.html:42
 msgid "مسح المحادثة"
 msgstr "Clear conversation"
 
-#: app/templates/assistant/chat.html:43
+#: app/templates/assistant/chat.html:49
 msgid "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة."
 msgstr "Ask me about the herd's status, pregnancy, incubators, feed, alerts, or any operational guidance about the farm."
 
-#: app/templates/assistant/chat.html:57
+#: app/templates/assistant/chat.html:63
 msgid "كم عدد الحيوانات؟"
 msgstr "How many animals?"
 
-#: app/templates/assistant/chat.html:58
+#: app/templates/assistant/chat.html:64
 msgid "كم حوامل؟"
 msgstr "How many pregnant?"
 
-#: app/templates/assistant/chat.html:59
+#: app/templates/assistant/chat.html:65
 msgid "حالة الحاضنات"
 msgstr "Incubator status"
 
-#: app/templates/assistant/chat.html:60
+#: app/templates/assistant/chat.html:66
 msgid "تكلفة العلف"
 msgstr "Feed cost"
 
-#: app/templates/assistant/chat.html:65
+#: app/templates/assistant/chat.html:71
 msgid "إزالة"
 msgstr "Remove"
 
-#: app/templates/assistant/chat.html:70
+#: app/templates/assistant/chat.html:76
 msgid "إرفاق صورة"
 msgstr "Attach Image"
 
-#: app/templates/assistant/chat.html:71
+#: app/templates/assistant/chat.html:77
 msgid "اكتب سؤالك هنا..."
 msgstr "Type your question here..."
 
-#: app/templates/assistant/chat.html:72
+#: app/templates/assistant/chat.html:78
 msgid "إرسال"
 msgstr "Send"
 
-#: app/templates/assistant/chat.html:132
-msgid "📷 صورة"
-msgstr "📷 Image"
-
-#: app/templates/assistant/chat.html:146
-msgid "المساعد يكتب..."
-msgstr "Assistant is typing..."
-
-#: app/templates/assistant/chat.html:169
-msgid "صار خطأ:"
-msgstr "An error occurred:"
-
-#: app/templates/assistant/chat.html:175
-msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
-msgstr "Couldn't reach the assistant. Try again."
-
-#: app/templates/assistant/drafts_list.html:2
-#: app/templates/assistant/drafts_list.html:6
-msgid "الإدخال الذكي — مسودات بانتظار الاعتماد"
-msgstr "Smart Entry — Drafts Awaiting Approval"
-
-#: app/templates/assistant/drafts_list.html:10
-msgid "اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: \"سجلت ولادة اليوم لشاة رقم 405\") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط \"اعتماد\" بنفسك."
-msgstr "Write or record an event that actually happened on the farm (example: \"I recorded a birth today for ewe number 405\") — the assistant proposes a draft, and nothing is written to the database until you press \"Approve\" yourself."
-
-#: app/templates/assistant/drafts_list.html:14
-msgid "هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ\"غير مفهومة\"."
-msgstr "This feature needs an active GEMINI_API_KEY — without it, every attempt is automatically rejected as \"not understood\"."
-
-#: app/templates/assistant/drafts_list.html:21
-msgid "مثال: سجلت ولادة اليوم لشاة رقم 405"
-msgstr "Example: I recorded a birth today for ewe number 405"
-
-#: app/templates/assistant/drafts_list.html:22
-msgid "إرسال نص"
-msgstr "Send Text"
-
-#: app/templates/assistant/drafts_list.html:27
-msgid "إرسال مقطع صوتي"
-msgstr "Send Voice Clip"
-
-#: app/templates/assistant/drafts_list.html:31
-msgid "بانتظار اعتمادك"
-msgstr "Awaiting Your Approval"
-
-#: app/templates/assistant/drafts_list.html:33
-msgid "لا توجد مسودات معلَّقة حالياً."
-msgstr "No pending drafts right now."
-
-#: app/templates/assistant/drafts_list.html:50
-msgid "اختر عضو الفريق المكلَّف..."
-msgstr "Choose the assigned team member..."
-
-#: app/templates/assistant/drafts_list.html:54
-msgid "اعتماد"
-msgstr "Approve"
-
-#: app/templates/assistant/drafts_list.html:58
-msgid "رفض"
-msgstr "Reject"
-
-#: app/templates/assistant/drafts_list.html:65
-msgid "آخر القرارات"
-msgstr "Recent Decisions"
-
-#: app/templates/assistant/drafts_list.html:68
-msgid "النص الأصلي"
-msgstr "Original Text"
-
-#: app/templates/assistant/drafts_list.html:68
-msgid "السبب/المعتمِد"
-msgstr "Reason / Approved By"
-
-#: app/templates/assistant/drafts_list.html:74
-msgid "معتمَدة"
-msgstr "Approved"
-
-#: app/templates/assistant/drafts_list.html:75
-msgid "مرفوضة"
-msgstr "Rejected"
-
-#: app/templates/assistant/drafts_list.html:76
-msgid "منتهية بدون قرار"
-msgstr "Expired Without Decision"
-
-#: app/templates/assistant/drafts_list.html:77
-msgid "رفض تلقائي"
-msgstr "Auto-Rejected"
-
-#: app/templates/assistant/drafts_list.html:83
-msgid "لا يوجد سجل بعد."
-msgstr "No history yet."
-
-#: app/templates/assistant/farm_notes_list.html:2
-#: app/templates/assistant/farm_notes_list.html:6
-msgid "دفتر ملاحظات المزرعة"
-msgstr "Farm Notes Journal"
-
-#: app/templates/assistant/farm_notes_list.html:10
-msgid "أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي."
-msgstr "Any real field note you write here (barn behavior, a recurring problem's cause, a solution you tried...) becomes experience the smart assistant can recall for a similar question later. It is never used as a fixed medical rule — just reference context."
-
-#: app/templates/assistant/farm_notes_list.html:14
-msgid "البحث الذكي بهذا الدفتر غير مفعَّل حالياً (يحتاج GEMINI_API_KEY) — الملاحظات تُحفظ عادي، بس ما راح تظهر بنتائج المساعد لين يتفعّل المفتاح."
-msgstr "Smart search in this journal isn't active yet (needs GEMINI_API_KEY) — notes still save normally, but won't appear in assistant results until the key is set."
-
-#: app/templates/assistant/farm_notes_list.html:20
-msgid "عنوان مختصر (اختياري)"
-msgstr "Short title (optional)"
-
-#: app/templates/assistant/farm_notes_list.html:21
-msgid "اكتب الملاحظة هنا..."
-msgstr "Write the note here..."
-
-#: app/templates/assistant/farm_notes_list.html:24
-msgid "بدون ربط بحظيرة"
-msgstr "Not linked to a barn"
-
-#: app/templates/assistant/farm_notes_list.html:27
-msgid "رقم رأس (اختياري)"
-msgstr "Animal number (optional)"
-
-#: app/templates/assistant/farm_notes_list.html:28
-msgid "تصنيف (اختياري)"
-msgstr "Tag (optional)"
-
-#: app/templates/assistant/farm_notes_list.html:30
+#: app/templates/assistant/chat.html:90 app/templates/assistant/chat.html:125
+#: app/templates/assistant/chat.html:138
 msgid "إضافة الملاحظة"
 msgstr "Add Note"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:93
+msgid "أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي."
+msgstr "Any real field note you write here (barn behavior, a recurring problem's cause, a solution you tried...) becomes experience the smart assistant can recall for a similar question later. It is never used as a fixed medical rule — just reference context."
+
+#: app/templates/assistant/chat.html:97
+msgid "البحث الذكي بهذا الدفتر غير مفعَّل حالياً (يحتاج GEMINI_API_KEY) — الملاحظات تُحفظ عادي، بس ما راح تظهر بنتائج المساعد لين يتفعّل المفتاح."
+msgstr "Smart search in this journal isn't active yet (needs GEMINI_API_KEY) — notes still save normally, but won't appear in assistant results until the key is set."
+
+#: app/templates/assistant/chat.html:103
 msgid "النص"
 msgstr "Note"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:103
 msgid "الربط"
 msgstr "Linked to"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:103
 msgid "الوسم"
 msgstr "Tag"
 
-#: app/templates/assistant/farm_notes_list.html:35
+#: app/templates/assistant/chat.html:103
 msgid "كاتبها"
 msgstr "Written by"
 
-#: app/templates/assistant/farm_notes_list.html:46
+#: app/templates/assistant/chat.html:114
 msgid "لا توجد ملاحظات بعد."
 msgstr "No notes yet."
+
+#: app/templates/assistant/chat.html:128
+msgid "عنوان مختصر (اختياري)"
+msgstr "Short title (optional)"
+
+#: app/templates/assistant/chat.html:129
+msgid "اكتب الملاحظة هنا..."
+msgstr "Write the note here..."
+
+#: app/templates/assistant/chat.html:132
+msgid "بدون ربط بحظيرة"
+msgstr "Not linked to a barn"
+
+#: app/templates/assistant/chat.html:135
+msgid "رقم رأس (اختياري)"
+msgstr "Animal number (optional)"
+
+#: app/templates/assistant/chat.html:136
+msgid "تصنيف (اختياري)"
+msgstr "Tag (optional)"
+
+#: app/templates/assistant/chat.html:151 app/templates/assistant/chat.html:227
+#: app/templates/assistant/chat.html:231
+msgid "إرسال نص"
+msgstr "Send Text"
+
+#: app/templates/assistant/chat.html:152 app/templates/assistant/chat.html:240
+#: app/templates/assistant/chat.html:244
+msgid "إرسال مقطع صوتي"
+msgstr "Send Voice Clip"
+
+#: app/templates/assistant/chat.html:156
+msgid "اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: \"سجلت ولادة اليوم لشاة رقم 405\") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط \"اعتماد\" بنفسك."
+msgstr "Write or record an event that actually happened on the farm (example: \"I recorded a birth today for ewe number 405\") — the assistant proposes a draft, and nothing is written to the database until you press \"Approve\" yourself."
+
+#: app/templates/assistant/chat.html:160
+msgid "هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ\"غير مفهومة\"."
+msgstr "This feature needs an active GEMINI_API_KEY — without it, every attempt is automatically rejected as \"not understood\"."
+
+#: app/templates/assistant/chat.html:164
+msgid "بانتظار اعتمادك"
+msgstr "Awaiting Your Approval"
+
+#: app/templates/assistant/chat.html:166
+msgid "لا توجد مسودات معلَّقة حالياً."
+msgstr "No pending drafts right now."
+
+#: app/templates/assistant/chat.html:183
+msgid "اختر عضو الفريق المكلَّف..."
+msgstr "Choose the assigned team member..."
+
+#: app/templates/assistant/chat.html:187
+msgid "اعتماد"
+msgstr "Approve"
+
+#: app/templates/assistant/chat.html:191
+msgid "رفض"
+msgstr "Reject"
+
+#: app/templates/assistant/chat.html:198
+msgid "آخر القرارات"
+msgstr "Recent Decisions"
+
+#: app/templates/assistant/chat.html:201
+msgid "النص الأصلي"
+msgstr "Original Text"
+
+#: app/templates/assistant/chat.html:201
+msgid "السبب/المعتمِد"
+msgstr "Reason / Approved By"
+
+#: app/templates/assistant/chat.html:207
+msgid "معتمَدة"
+msgstr "Approved"
+
+#: app/templates/assistant/chat.html:208
+msgid "مرفوضة"
+msgstr "Rejected"
+
+#: app/templates/assistant/chat.html:209
+msgid "منتهية بدون قرار"
+msgstr "Expired Without Decision"
+
+#: app/templates/assistant/chat.html:210
+msgid "رفض تلقائي"
+msgstr "Auto-Rejected"
+
+#: app/templates/assistant/chat.html:216
+msgid "لا يوجد سجل بعد."
+msgstr "No history yet."
+
+#: app/templates/assistant/chat.html:230
+msgid "مثال: سجلت ولادة اليوم لشاة رقم 405"
+msgstr "Example: I recorded a birth today for ewe number 405"
+
+#: app/templates/assistant/chat.html:309
+msgid "📷 صورة"
+msgstr "📷 Image"
+
+#: app/templates/assistant/chat.html:323
+msgid "المساعد يكتب..."
+msgstr "Assistant is typing..."
+
+#: app/templates/assistant/chat.html:346
+msgid "صار خطأ:"
+msgstr "An error occurred:"
+
+#: app/templates/assistant/chat.html:352
+msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
+msgstr "Couldn't reach the assistant. Try again."
 
 #: app/templates/batches/batch_detail.html:3
 #: app/templates/batches/batches_list.html:3
@@ -10782,4 +10796,10 @@ msgstr "No additional named warehouses yet — all stock is in the default main 
 
 #~ msgid "اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها بملاحظة هو تقريره."
 #~ msgstr "Choose the checkup items you want the doctor to perform — each item becomes its own task, and completing it with a note is the report."
+
+#~ msgid "الإدخال الذكي — مسودات بانتظار الاعتماد"
+#~ msgstr "Smart Entry — Drafts Awaiting Approval"
+
+#~ msgid "دفتر ملاحظات المزرعة"
+#~ msgstr "Farm Notes Journal"
 

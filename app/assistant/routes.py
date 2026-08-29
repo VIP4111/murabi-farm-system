@@ -6,20 +6,52 @@ from app.assistant import nlu_service as svc
 from app.assistant import farm_note_service, draft_action_service
 from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
-from app.models import AssistantMessage, FarmNote, Barn, Animal, AssistantDraftAction
+from app.models import AssistantMessage, FarmNote, Barn, Animal, AssistantDraftAction, User
 
 HISTORY_LIMIT = 50
 
 
+# بند إضافي 318 — طلبك الصريح: "أرفض كثرة الشاشات... نريد البدء فوراً
+# في إعادة هيكلة وتجميع الشاشات (UX Consolidation)". دمجنا 3 شاشات
+# مستقلة (محادثة، دفتر ملاحظات، إدخال ذكي) بصفحة واحدة بتبويبات —
+# `chat()` صارت تجمّع بيانات الثلاثة معاً، والراوتات القديمة تحوّل
+# لنفس الصفحة (بدون كسر أي رابط قديم محفوظ). صفر تغيير على منطق
+# الخدمات نفسها (`farm_note_service`/`draft_action_service`) — هذا
+# دمج عرض بس.
 @assistant_bp.route("/")
 @login_required
 @require_permission("assistant.use")
 def chat():
-    rows = (
+    messages = list(reversed(
         AssistantMessage.query.filter_by(user_id=current_user.id)
         .order_by(AssistantMessage.created_at.desc()).limit(HISTORY_LIMIT).all()
+    ))
+
+    notes = barns = pending = history = assignable_users = None
+    if current_user.has_permission("farm_notes.manage"):
+        notes = FarmNote.query.order_by(FarmNote.created_at.desc()).limit(100).all()
+        barns = Barn.query.order_by(Barn.barn_name).all()
+
+    if current_user.has_permission("assistant.draft_actions.confirm"):
+        # خط دفاع ثانٍ (كسول، عند فتح الشاشة) بجانب الـCron الفعلي —
+        # نفس نمط `catch_up_daily_tasks_before_request` بالضبط (بند 89).
+        draft_action_service.expire_stale_drafts()
+        pending_q = AssistantDraftAction.query.filter_by(status="pending")
+        history_q = AssistantDraftAction.query.filter(AssistantDraftAction.status != "pending")
+        # بند إضافي 315 — عامل بدون animals.view يشوف مسوداته هو بس.
+        if not current_user.has_permission("animals.view"):
+            pending_q = pending_q.filter_by(created_by_id=current_user.id)
+            history_q = history_q.filter_by(created_by_id=current_user.id)
+        pending = pending_q.order_by(AssistantDraftAction.created_at.asc()).all()
+        history = history_q.order_by(AssistantDraftAction.created_at.desc()).limit(30).all()
+        assignable_users = User.query.filter_by(is_active_account=True).order_by(User.name).all()
+
+    active_tab = request.args.get("tab", "chat")
+    return render_template(
+        "assistant/chat.html", messages=messages, active_tab=active_tab,
+        notes=notes, barns=barns, pending=pending, history=history, assignable_users=assignable_users,
+        gemini_configured=svc.llm_bridge.is_gemini_configured(),
     )
-    return render_template("assistant/chat.html", messages=list(reversed(rows)))
 
 
 @assistant_bp.route("/send", methods=["POST"])
@@ -76,16 +108,17 @@ def clear():
     return redirect(url_for("assistant.chat"))
 
 
+# ============================================================
+# دفتر ملاحظات المزرعة (بند إضافي 298) — صار تبويب داخل `chat()`
+# (بند إضافي 318). الراوت القديم `/farm-notes` يبقى يشتغل كتحويل بس،
+# عشان أي رابط محفوظ قديم ما ينكسر.
+# ============================================================
+
 @assistant_bp.route("/farm-notes")
 @login_required
 @require_permission("farm_notes.manage")
 def farm_notes_list():
-    """دفتر ملاحظات المزرعة (بند إضافي 298) — الملاحظات المكتوبة هنا
-    تُغذّي ذاكرة المساعد الذكي التراكمية (RAG، `search_farm_notes`)."""
-    notes = FarmNote.query.order_by(FarmNote.created_at.desc()).limit(100).all()
-    barns = Barn.query.order_by(Barn.barn_name).all()
-    return render_template("assistant/farm_notes_list.html", notes=notes, barns=barns,
-                            gemini_configured=svc.llm_bridge.is_gemini_configured())
+    return redirect(url_for("assistant.chat", tab="notes"))
 
 
 @assistant_bp.route("/farm-notes/new", methods=["POST"])
@@ -93,14 +126,10 @@ def farm_notes_list():
 @require_permission("farm_notes.manage")
 @rate_limited("farm_notes_new", max_calls=20, window_seconds=300)
 def farm_notes_new():
-    # بند إضافي 314 (فجوة تدقيق حقيقية) — كل ملاحظة جديدة تستدعي
-    # Gemini فعلياً (`farm_note_service.create_note` → `embed_note` →
-    # `llm_bridge.embed_text`)، بس هذا المسار كان بلا أي `rate_limited`
-    # — نفس فئة فجوة بند 313 بالضبط، بمكان ثانٍ ما راجعناه.
     body = request.form.get("body", "").strip()
     if not body:
         flash("لازم تكتب نص الملاحظة.", "error")
-        return redirect(url_for("assistant.farm_notes_list"))
+        return redirect(url_for("assistant.chat", tab="notes"))
 
     barn_id = request.form.get("barn_id", type=int) or None
     animal_no = request.form.get("animal_no", "").strip()
@@ -109,7 +138,7 @@ def farm_notes_new():
         animal = Animal.query.filter_by(animal_no=animal_no).first()
         if not animal:
             flash(f"ما فيه حيوان برقم \"{animal_no}\".", "error")
-            return redirect(url_for("assistant.farm_notes_list"))
+            return redirect(url_for("assistant.chat", tab="notes"))
         animal_id = animal.id
 
     farm_note_service.create_note(
@@ -119,46 +148,19 @@ def farm_notes_new():
         barn_id=barn_id, animal_id=animal_id,
     )
     flash("تمت إضافة الملاحظة.", "success")
-    return redirect(url_for("assistant.farm_notes_list"))
+    return redirect(url_for("assistant.chat", tab="notes"))
 
 
 # ============================================================
-# بند إضافي 299 — المرحلة ٤ (الأخيرة): الإدخال الذكي بالنص/الصوت.
+# بند إضافي 299 — الإدخال الذكي بالنص/الصوت. صار تبويب داخل `chat()`
+# (بند إضافي 318). الراوت القديم `/drafts` يبقى تحويلاً بس.
 # ============================================================
 
 @assistant_bp.route("/drafts")
 @login_required
 @require_permission("assistant.draft_actions.confirm")
 def drafts_list():
-    # خط دفاع ثانٍ (كسول، عند فتح الشاشة) بجانب الـCron الفعلي —
-    # نفس نمط `catch_up_daily_tasks_before_request` بالضبط (بند 89).
-    draft_action_service.expire_stale_drafts()
-
-    pending_q = AssistantDraftAction.query.filter_by(status="pending")
-    history_q = AssistantDraftAction.query.filter(AssistantDraftAction.status != "pending")
-    # بند إضافي 315 (فجوة تدقيق حقيقية) — الشاشة كانت تعرض مسودات كل
-    # المزرعة (رقم/تفاصيل رأس بكل مسودة) لأي حامل `assistant.draft_
-    # actions.confirm` — صلاحية "تقدر تستخدم الإدخال الذكي"، مو "تقدر
-    # تشوف بيانات كل الحيوانات" (`animals.view`). عامل بدون animals.view
-    # (منح افتراضي فعلي، بند 299) كان يشوف مسودات كل حيوان بالمزرعة عبر
-    # هذي الشاشة، متجاوزاً نفس التقييد اللي يحميه بشاشة الحيوانات
-    # العادية. لو المستخدم ما يملك animals.view، يشوف مسوداته هو بس.
-    if not current_user.has_permission("animals.view"):
-        pending_q = pending_q.filter_by(created_by_id=current_user.id)
-        history_q = history_q.filter_by(created_by_id=current_user.id)
-
-    pending = pending_q.order_by(AssistantDraftAction.created_at.asc()).all()
-    history = history_q.order_by(AssistantDraftAction.created_at.desc()).limit(30).all()
-
-    # بند إضافي 316 — قائمة اختيار المكلَّف لمسودات "توزيع مهمة"، نفس
-    # قائمة شاشة توزيع المهمة اليدوية بالضبط (team/task_form.html —
-    # كل الأعضاء الفعّالين، بدون فلترة دور).
-    from app.models import User
-    assignable_users = User.query.filter_by(is_active_account=True).order_by(User.name).all()
-
-    return render_template("assistant/drafts_list.html", pending=pending, history=history,
-                            assignable_users=assignable_users,
-                            gemini_configured=svc.llm_bridge.is_gemini_configured())
+    return redirect(url_for("assistant.chat", tab="drafts"))
 
 
 @assistant_bp.route("/drafts/new-text", methods=["POST"])
@@ -169,10 +171,10 @@ def drafts_new_text():
     raw_text = request.form.get("raw_text", "").strip()
     if not raw_text:
         flash("اكتب وصف الحدث أولاً.", "error")
-        return redirect(url_for("assistant.drafts_list"))
+        return redirect(url_for("assistant.chat", tab="drafts"))
     draft_action_service.propose_from_text(raw_text, created_by=current_user)
     flash("تمت معالجة النص — راجع النتيجة أدناه.", "success")
-    return redirect(url_for("assistant.drafts_list"))
+    return redirect(url_for("assistant.chat", tab="drafts"))
 
 
 @assistant_bp.route("/drafts/new-voice", methods=["POST"])
@@ -183,7 +185,7 @@ def drafts_new_voice():
     audio_file = request.files.get("audio")
     if not audio_file or not audio_file.filename:
         flash("لازم ترفع مقطع صوتي.", "error")
-        return redirect(url_for("assistant.drafts_list"))
+        return redirect(url_for("assistant.chat", tab="drafts"))
 
     # بند إضافي 312 — نفس فحص مسار الصورة (بند 305): نقرأ البايتات
     # الخام أولاً للتحليل، ثم نحفظ رابطاً دائماً للمقطع نفسه (نفس
@@ -199,7 +201,7 @@ def drafts_new_voice():
         audio_bytes, audio_file.mimetype or "audio/mpeg", created_by=current_user, audio_url=audio_url,
     )
     flash("تمت معالجة المقطع الصوتي — راجع النتيجة أدناه.", "success")
-    return redirect(url_for("assistant.drafts_list"))
+    return redirect(url_for("assistant.chat", tab="drafts"))
 
 
 @assistant_bp.route("/drafts/<int:draft_id>/confirm", methods=["POST"])
@@ -218,7 +220,7 @@ def drafts_confirm(draft_id):
         flash(str(e), "error")
     except ValueError as e:
         flash(f"تعذّر التنفيذ: {e}", "error")
-    return redirect(url_for("assistant.drafts_list"))
+    return redirect(url_for("assistant.chat", tab="drafts"))
 
 
 @assistant_bp.route("/drafts/<int:draft_id>/reject", methods=["POST"])
@@ -231,4 +233,4 @@ def drafts_reject(draft_id):
         flash("تم رفض المسودة.", "success")
     except ValueError as e:
         flash(str(e), "error")
-    return redirect(url_for("assistant.drafts_list"))
+    return redirect(url_for("assistant.chat", tab="drafts"))

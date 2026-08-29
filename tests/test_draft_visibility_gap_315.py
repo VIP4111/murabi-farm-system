@@ -38,7 +38,7 @@ def test_worker_without_animals_view_only_sees_own_drafts(app, client, owner):
     worker_draft = _make_draft(worker, animal_no="962")
 
     client.post("/login", data={"phone": worker.phone, "password": "pass1234"})
-    resp = client.get("/assistant/drafts")
+    resp = client.get("/assistant/drafts", follow_redirects=True)
     body = resp.data.decode()
 
     assert worker_draft.raw_text in body
@@ -51,7 +51,7 @@ def test_owner_with_animals_view_sees_all_drafts(app, client, owner):
     worker_draft = _make_draft(worker, animal_no="964")
 
     client.post("/login", data={"phone": owner.phone, "password": "pass1234"})
-    resp = client.get("/assistant/drafts")
+    resp = client.get("/assistant/drafts", follow_redirects=True)
     body = resp.data.decode()
 
     assert owner_draft.raw_text in body

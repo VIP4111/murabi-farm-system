@@ -172,5 +172,5 @@ def test_drafts_list_shows_assignee_dropdown_for_assign_task_drafts(app, client,
     _make_role_user("doctor", "0599999267")
     _pending_assign_task_draft(owner)
     client.post("/login", data={"phone": owner.phone, "password": "pass1234"})
-    resp = client.get("/assistant/drafts")
+    resp = client.get("/assistant/drafts", follow_redirects=True)
     assert b'name="assignee_id"' in resp.data

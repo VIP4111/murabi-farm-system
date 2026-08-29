@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{{ _('المساعد الذكي') }}{% endblock %}
+{% block title %}{{ _('مركز الذكاء الاصطناعي') }}{% endblock %}
 {% block content %}
 <style>
-  .chat-card{padding:0; overflow:hidden; display:flex; flex-direction:column; height:calc(100vh - 160px); min-height:420px;}
+  .chat-card{padding:0; overflow:hidden; display:flex; flex-direction:column; height:calc(100vh - 220px); min-height:380px;}
   .chat-head{padding:14px 18px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex:0 0 auto;}
   .chat-head h2{margin:0; font-size:16px;}
   .chat-body{flex:1; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:10px;}
@@ -18,23 +18,29 @@
   .chat-suggestions{display:flex; gap:6px; overflow-x:auto; padding:0 0 10px;}
   .chat-suggestions button{flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--primary); border-radius:999px; padding:7px 12px; font-size:12px; cursor:pointer; white-space:nowrap;}
   .typing{align-self:flex-start; color:var(--muted); font-size:12.5px; padding:0 4px;}
+  .draft-card{background:var(--bg); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:10px;}
 </style>
 
+<div class="card" style="padding-bottom:6px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="margin:0;">🤖 {{ _('مركز الذكاء الاصطناعي') }}</h2>
+  </div>
+  <div class="tabs" style="margin-top:12px; margin-bottom:0;">
+    <button type="button" class="tab-btn" data-tab="chat" onclick="showTab('chat')">💬 {{ _('المحادثة') }}</button>
+    {% if notes is not none %}<button type="button" class="tab-btn" data-tab="notes" onclick="showTab('notes')">📓 {{ _('دفتر الملاحظات') }}</button>{% endif %}
+    {% if pending is not none %}<button type="button" class="tab-btn" data-tab="drafts" onclick="showTab('drafts')">🎙️ {{ _('الإدخال الذكي') }}{% if pending|length %} ({{ pending|length }}){% endif %}</button>{% endif %}
+  </div>
+</div>
+
+{# ============== تبويب المحادثة ============== #}
+<div class="tab-panel" data-tab="chat">
 <div class="card chat-card">
   <div class="chat-head">
-    <h2>🤖 {{ _('المساعد الذكي') }}</h2>
-    <div style="display:flex; gap:8px; align-items:center;">
-    {% if current_user.has_permission('farm_notes.manage') %}
-    <a class="btn light" href="{{ url_for('assistant.farm_notes_list') }}" style="padding:7px 12px; font-size:12px;">📓 {{ _('دفتر الملاحظات') }}</a>
-    {% endif %}
-    {% if current_user.has_permission('assistant.draft_actions.confirm') %}
-    <a class="btn light" href="{{ url_for('assistant.drafts_list') }}" style="padding:7px 12px; font-size:12px;">🎙️ {{ _('الإدخال الذكي') }}</a>
-    {% endif %}
+    <h2>💬 {{ _('المحادثة') }}</h2>
     <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('{{ _('مسح كل المحادثة؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">{{ _('مسح المحادثة') }}</button>
     </form>
-    </div>
   </div>
 
   <div class="chat-body" id="chatBody">
@@ -73,6 +79,173 @@
     </form>
   </div>
 </div>
+</div>
+
+{# ============== تبويب دفتر الملاحظات ============== #}
+{% if notes is not none %}
+<div class="tab-panel" data-tab="notes">
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2 style="margin:0;">📓 {{ _('دفتر الملاحظات') }}</h2>
+    <button type="button" class="btn" onclick="document.getElementById('newNoteModal').classList.add('open')">+ {{ _('إضافة الملاحظة') }}</button>
+  </div>
+  <p style="color:var(--muted); font-size:13.5px;">
+    {{ _('أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي.') }}
+  </p>
+  {% if not gemini_configured %}
+  <div class="badge off" style="display:inline-block; margin-bottom:10px;">
+    ⚠️ {{ _('البحث الذكي بهذا الدفتر غير مفعَّل حالياً (يحتاج GEMINI_API_KEY) — الملاحظات تُحفظ عادي، بس ما راح تظهر بنتائج المساعد لين يتفعّل المفتاح.') }}
+  </div>
+  {% endif %}
+
+  <div class="table-scroll">
+    <table class="compact-table">
+      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('العنوان') }}</th><th>{{ _('النص') }}</th><th>{{ _('الربط') }}</th><th>{{ _('الوسم') }}</th><th>{{ _('كاتبها') }}</th></tr>
+      {% for n in notes %}
+      <tr>
+        <td>{{ n.created_at.date() if n.created_at else '-' }}</td>
+        <td>{{ n.title or '-' }}</td>
+        <td style="max-width:320px; white-space:pre-wrap;">{{ n.body }}</td>
+        <td>{{ n.barn.barn_name if n.barn else '' }}{% if n.animal %} / {{ n.animal.animal_no }}{% endif %}{% if not n.barn and not n.animal %}-{% endif %}</td>
+        <td>{{ n.tag or '-' }}</td>
+        <td>{{ n.created_by.name if n.created_by else '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" style="color:#888;">{{ _('لا توجد ملاحظات بعد.') }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+</div>
+
+{# ---- Modal: ملاحظة جديدة (بند إضافي 318 — اعتماد على النوافذ المنبثقة) ---- #}
+<div class="modal-overlay" id="newNoteModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="document.getElementById('newNoteModal').classList.remove('open')">✕</button>
+    <h3 style="margin-top:0;">📓 {{ _('إضافة الملاحظة') }}</h3>
+    <form method="post" action="{{ url_for('assistant.farm_notes_new') }}" style="display:grid; gap:10px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="text" name="title" placeholder="{{ _('عنوان مختصر (اختياري)') }}">
+      <textarea name="body" required rows="3" placeholder="{{ _('اكتب الملاحظة هنا...') }}"></textarea>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <select name="barn_id" style="flex:1; min-width:160px;">
+          <option value="">{{ _('بدون ربط بحظيرة') }}</option>
+          {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+        </select>
+        <input type="text" name="animal_no" placeholder="{{ _('رقم رأس (اختياري)') }}" style="flex:1; min-width:140px;">
+        <input type="text" name="tag" placeholder="{{ _('تصنيف (اختياري)') }}" style="flex:1; min-width:140px;">
+      </div>
+      <button type="submit" class="btn">+ {{ _('إضافة الملاحظة') }}</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+{# ============== تبويب الإدخال الذكي ============== #}
+{% if pending is not none %}
+<div class="tab-panel" data-tab="drafts">
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+    <h2 style="margin:0;">🎙️ {{ _('الإدخال الذكي') }}</h2>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button type="button" class="btn" onclick="document.getElementById('newTextDraftModal').classList.add('open')">✍️ {{ _('إرسال نص') }}</button>
+      <button type="button" class="btn light" onclick="document.getElementById('newVoiceDraftModal').classList.add('open')">🎤 {{ _('إرسال مقطع صوتي') }}</button>
+    </div>
+  </div>
+  <p style="color:var(--muted); font-size:13.5px;">
+    {{ _('اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: "سجلت ولادة اليوم لشاة رقم 405") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط "اعتماد" بنفسك.') }}
+  </p>
+  {% if not gemini_configured %}
+  <div class="badge off" style="display:inline-block; margin-bottom:10px;">
+    ⚠️ {{ _('هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ"غير مفهومة".') }}
+  </div>
+  {% endif %}
+
+  <h3>{{ _('بانتظار اعتمادك') }} ({{ pending|length }})</h3>
+  {% if not pending %}
+  <p style="color:#888;">{{ _('لا توجد مسودات معلَّقة حالياً.') }}</p>
+  {% endif %}
+  {% for d in pending %}
+  <div class="draft-card">
+    <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+      <div>
+        <div style="font-weight:600;">{{ d.summary_ar or d.raw_text }}</div>
+        <div style="color:var(--muted); font-size:12.5px; margin-top:4px;">
+          "{{ d.raw_text }}" — {{ d.created_by.name if d.created_by else '-' }} — {{ d.created_at.strftime('%Y-%m-%d %H:%M') if d.created_at else '' }}
+        </div>
+        {% if d.audio_url %}<audio controls src="{{ d.audio_url }}" style="height:32px; margin-top:6px;"></audio>{% endif %}
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <form method="post" action="{{ url_for('assistant.drafts_confirm', draft_id=d.id) }}" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          {% if d.parsed_action_type == 'assign_task' %}
+          <select name="assignee_id" required>
+            <option value="">{{ _('اختر عضو الفريق المكلَّف...') }}</option>
+            {% for u in assignable_users %}<option value="{{ u.id }}">{{ u.name }}{% if u.role %} — {{ u.role.display_name }}{% endif %}</option>{% endfor %}
+          </select>
+          {% endif %}
+          <button type="submit" class="btn" style="padding:7px 14px;">✅ {{ _('اعتماد') }}</button>
+        </form>
+        <form method="post" action="{{ url_for('assistant.drafts_reject', draft_id=d.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn light" style="padding:7px 14px;">✖ {{ _('رفض') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <h3 style="margin-top:26px;">{{ _('آخر القرارات') }}</h3>
+  <div class="table-scroll">
+    <table class="compact-table">
+      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النص الأصلي') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('السبب/المعتمِد') }}</th></tr>
+      {% for d in history %}
+      <tr>
+        <td>{{ d.created_at.date() if d.created_at else '-' }}</td>
+        <td style="max-width:280px; white-space:pre-wrap;">{{ d.raw_text }}</td>
+        <td>
+          {% if d.status == 'confirmed' %}<span class="badge on">✅ {{ _('معتمَدة') }}</span>
+          {% elif d.status == 'rejected' %}<span class="badge off">✖ {{ _('مرفوضة') }}</span>
+          {% elif d.status == 'expired' %}<span class="badge off">⏳ {{ _('منتهية بدون قرار') }}</span>
+          {% else %}<span class="badge off">🚫 {{ _('رفض تلقائي') }}</span>
+          {% endif %}
+        </td>
+        <td>{{ d.rejection_reason or (d.confirmed_by.name if d.confirmed_by else '-') }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد سجل بعد.') }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+</div>
+
+{# ---- Modal: نص جديد ---- #}
+<div class="modal-overlay" id="newTextDraftModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="document.getElementById('newTextDraftModal').classList.remove('open')">✕</button>
+    <h3 style="margin-top:0;">✍️ {{ _('إرسال نص') }}</h3>
+    <form method="post" action="{{ url_for('assistant.drafts_new_text') }}" style="display:grid; gap:8px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <textarea name="raw_text" required rows="2" placeholder="{{ _('مثال: سجلت ولادة اليوم لشاة رقم 405') }}"></textarea>
+      <button type="submit" class="btn">✍️ {{ _('إرسال نص') }}</button>
+    </form>
+  </div>
+</div>
+
+{# ---- Modal: مقطع صوتي جديد ---- #}
+<div class="modal-overlay" id="newVoiceDraftModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="document.getElementById('newVoiceDraftModal').classList.remove('open')">✕</button>
+    <h3 style="margin-top:0;">🎤 {{ _('إرسال مقطع صوتي') }}</h3>
+    <form method="post" action="{{ url_for('assistant.drafts_new_voice') }}" enctype="multipart/form-data" style="display:grid; gap:8px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="file" name="audio" accept="audio/*" required>
+      <button type="submit" class="btn light">🎤 {{ _('إرسال مقطع صوتي') }}</button>
+    </form>
+  </div>
+</div>
+{% endif %}
 
 <script>
   var chatBody = document.getElementById('chatBody');
@@ -82,6 +255,10 @@
   var chatImageInput = document.getElementById('chatImageInput');
   var imagePreviewBar = document.getElementById('imagePreviewBar');
   var imagePreviewName = document.getElementById('imagePreviewName');
+
+  // بند إضافي 318 — تبويب البداية يجي من ?tab= بالرابط (تحوّلات
+  // الراوتات القديمة /farm-notes و/drafts تستخدمه)، وإلا "المحادثة".
+  showTab({{ active_tab|tojson }});
 
   function scrollToBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
   scrollToBottom();
