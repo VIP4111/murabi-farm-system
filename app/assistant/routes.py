@@ -174,6 +174,8 @@ def drafts_confirm(draft_id):
     try:
         draft_action_service.confirm_draft(draft, actor=current_user)
         flash("تم اعتماد المسودة وتنفيذها فعلياً.", "success")
+    except PermissionError as e:
+        flash(str(e), "error")
     except ValueError as e:
         flash(f"تعذّر التنفيذ: {e}", "error")
     return redirect(url_for("assistant.drafts_list"))

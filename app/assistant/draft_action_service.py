@@ -55,9 +55,21 @@ def _execute_record_weight(payload: dict, *, actor):
 # `llm_bridge.ALLOWED_DRAFT_ACTION_TYPES` تماماً (اختبار مخصَّص يتحقق
 # من هذا التطابق). أي إجراء مو هنا يستحيل تنفيذه حتى لو تجاوز الحاجز
 # البرمجي بطريقة ما — دفاع بطبقتين مستقلتين.
+#
+# `required_permission` (بند إضافي 307 — فجوة أمان حقيقية اكتشفناها
+# بالتدقيق): الراوت `/assistant/drafts/<id>/confirm` يفحص بس
+# `assistant.draft_actions.confirm` — صلاحية "تقدر تستخدم شاشة الإدخال
+# الذكي"، مو "تقدر تعدّل حيوانات فعلياً". بدون هذا الفحص، عامل عنده
+# `assistant.draft_actions.confirm` بس بدون `animals.manage` (منح
+# افتراضي فعلي لدور "worker" ببند 299) كان يقدر يسجّل ولادة/وزن حقيقي
+# عبر مسار المسودات — تجاوز كامل لنفس فحص `animals.manage` اللي يحمي
+# كل مسار كتابة حيوان ثاني بالنظام (`/animals/new`،
+# `/animals/<id>/weights/new`). هذا الفحص يطبّق نفس القاعدة هنا بالضبط.
 ALLOWED_ACTION_TYPES = {
-    "register_birth": {"label": "تسجيل ولادة", "execute": _execute_register_birth},
-    "record_weight": {"label": "تسجيل وزن", "execute": _execute_record_weight},
+    "register_birth": {"label": "تسجيل ولادة", "execute": _execute_register_birth,
+                        "required_permission": "animals.manage"},
+    "record_weight": {"label": "تسجيل وزن", "execute": _execute_record_weight,
+                       "required_permission": "animals.manage"},
 }
 
 
@@ -109,8 +121,11 @@ def confirm_draft(draft: AssistantDraftAction, *, actor):
     يكون واضحاً ومرئياً، مو صامتاً."""
     if draft.status != "pending":
         raise ValueError("هذي المسودة مو بانتظار الاعتماد.")
-    executor = ALLOWED_ACTION_TYPES[draft.parsed_action_type]["execute"]
-    result = executor(draft.get_payload(), actor=actor)
+    action_def = ALLOWED_ACTION_TYPES[draft.parsed_action_type]
+    required_permission = action_def["required_permission"]
+    if not actor.has_permission(required_permission):
+        raise PermissionError(f"تحتاج صلاحية \"{required_permission}\" لاعتماد هذا النوع من المسودات.")
+    result = action_def["execute"](draft.get_payload(), actor=actor)
     draft.status = "confirmed"
     draft.confirmed_by_id = actor.id
     draft.decided_at = _now()
