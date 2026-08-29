@@ -27,17 +27,36 @@ def chat():
 @require_permission("assistant.use")
 @rate_limited("assistant_send", max_calls=30, window_seconds=300)
 def send():
+    image_file = request.files.get("image") if not request.is_json else None
     message_text = (request.get_json(silent=True) or {}).get("message", "").strip() if request.is_json \
         else request.form.get("message", "").strip()
-    if not message_text:
+
+    if not message_text and not (image_file and image_file.filename):
         if request.is_json:
             return jsonify({"error": "الرسالة فاضية"}), 400
         flash("اكتب سؤالك أولاً", "error")
         return redirect(url_for("assistant.chat"))
 
-    reply = svc.ask_and_record(current_user, message_text)
+    if image_file and image_file.filename:
+        # بند إضافي 305 — صورة مرفقة: نحفظها (رابط دائم للعرض بالسجل)
+        # ونحلّل البايتات الخام مباشرة (بدون تحميل الرابط مرة ثانية).
+        from app.core.cloud_storage_service import save_upload
+        ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
+        MAX_IMAGE_BYTES = 8 * 1024 * 1024
+        image_file.stream.seek(0)
+        image_bytes = image_file.stream.read()
+        image_file.stream.seek(0)
+        image_url = save_upload(image_file, subfolder="assistant_chat",
+                                 allowed_extensions=ALLOWED_IMAGE_EXTENSIONS, max_bytes=MAX_IMAGE_BYTES)
+        if not image_bytes or len(image_bytes) > MAX_IMAGE_BYTES:
+            return jsonify({"error": "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"}), 400
+        reply = svc.ask_and_record_with_image(
+            current_user, message_text, image_bytes, image_file.mimetype or "image/jpeg", image_url,
+        )
+    else:
+        reply = svc.ask_and_record(current_user, message_text)
 
-    if request.is_json:
+    if request.is_json or image_file:
         return jsonify({
             "reply": reply.content,
             "intent_code": reply.intent_code,

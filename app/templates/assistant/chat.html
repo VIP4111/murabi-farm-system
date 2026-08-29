@@ -45,6 +45,7 @@
     {% endif %}
     {% for m in messages %}
     <div class="bubble {{ m.role }}">
+      {% if m.image_url %}<img src="{{ m.image_url }}" alt="" style="max-width:220px; border-radius:10px; display:block; margin-bottom:6px;">{% endif %}
       {{ m.content }}
       <small>{{ m.created_at.strftime('%H:%M') if m.created_at else '' }}</small>
     </div>
@@ -59,9 +60,15 @@
       <button type="button" onclick="askSuggestion('كم التكلفة اليومية للأعلاف؟')">{{ _('تكلفة العلف') }}</button>
       <button type="button" onclick="askSuggestion('وش التنبيهات الحالية؟')">{{ _('التنبيهات') }}</button>
     </div>
+    <div id="imagePreviewBar" style="display:none; align-items:center; gap:8px; padding:0 0 8px; font-size:12.5px; color:var(--muted);">
+      📷 <span id="imagePreviewName"></span>
+      <button type="button" onclick="clearImage()" style="border:none; background:none; color:var(--danger,#c0392b); cursor:pointer; font-size:12.5px;">✖ {{ _('إزالة') }}</button>
+    </div>
     <form class="chat-form" id="chatForm" method="post" action="{{ url_for('assistant.send') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <textarea id="chatInput" name="message" placeholder="{{ _('اكتب سؤالك هنا...') }}" required></textarea>
+      <input type="file" id="chatImageInput" accept="image/*" style="display:none;">
+      <button type="button" class="btn light" style="height:44px; padding:0 12px;" onclick="document.getElementById('chatImageInput').click();" title="{{ _('إرفاق صورة') }}">📷</button>
+      <textarea id="chatInput" name="message" placeholder="{{ _('اكتب سؤالك هنا...') }}"></textarea>
       <button type="submit" class="btn">{{ _('إرسال') }}</button>
     </form>
   </div>
@@ -72,15 +79,24 @@
   var chatForm = document.getElementById('chatForm');
   var chatInput = document.getElementById('chatInput');
   var chatEmpty = document.getElementById('chatEmpty');
+  var chatImageInput = document.getElementById('chatImageInput');
+  var imagePreviewBar = document.getElementById('imagePreviewBar');
+  var imagePreviewName = document.getElementById('imagePreviewName');
 
   function scrollToBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
   scrollToBottom();
 
-  function addBubble(role, text, time){
+  function addBubble(role, text, time, imageDataUrl){
     if(chatEmpty){ chatEmpty.remove(); chatEmpty = null; }
     var div = document.createElement('div');
     div.className = 'bubble ' + role;
-    div.textContent = text;
+    if(imageDataUrl){
+      var img = document.createElement('img');
+      img.src = imageDataUrl;
+      img.style.cssText = 'max-width:220px; border-radius:10px; display:block; margin-bottom:6px;';
+      div.appendChild(img);
+    }
+    div.appendChild(document.createTextNode(text));
     var small = document.createElement('small');
     small.textContent = time || '';
     div.appendChild(small);
@@ -93,11 +109,36 @@
     chatForm.requestSubmit ? chatForm.requestSubmit() : chatForm.submit();
   }
 
+  chatImageInput.addEventListener('change', function(){
+    var file = chatImageInput.files[0];
+    if(file){
+      imagePreviewName.textContent = file.name;
+      imagePreviewBar.style.display = 'flex';
+    }
+  });
+
+  function clearImage(){
+    chatImageInput.value = '';
+    imagePreviewBar.style.display = 'none';
+  }
+
   chatForm.addEventListener('submit', function(e){
     var text = chatInput.value.trim();
-    if(!text) return;
+    var file = chatImageInput.files[0];
+    if(!text && !file) return;
     e.preventDefault();
-    addBubble('user', text, new Date().toTimeString().slice(0,5));
+
+    var userBubbleReady = function(imageDataUrl){
+      addBubble('user', text || {{ _('📷 صورة')|tojson }}, new Date().toTimeString().slice(0,5), imageDataUrl);
+    };
+    if(file){
+      var reader = new FileReader();
+      reader.onload = function(){ userBubbleReady(reader.result); };
+      reader.readAsDataURL(file);
+    } else {
+      userBubbleReady(null);
+    }
+
     chatInput.value = '';
     chatInput.disabled = true;
     var typing = document.createElement('div');
@@ -106,14 +147,23 @@
     chatBody.appendChild(typing);
     scrollToBottom();
 
-    fetch(chatForm.action, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
-      },
-      body: JSON.stringify({message: text})
-    }).then(function(r){ return r.json(); }).then(function(data){
+    var fetchOptions;
+    if(file){
+      var formData = new FormData();
+      formData.append('message', text);
+      formData.append('image', file);
+      formData.append('csrf_token', document.querySelector('meta[name="csrf-token"]').content);
+      fetchOptions = { method: 'POST', headers: { 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content }, body: formData };
+    } else {
+      fetchOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content },
+        body: JSON.stringify({message: text}),
+      };
+    }
+    clearImage();
+
+    fetch(chatForm.action, fetchOptions).then(function(r){ return r.json(); }).then(function(data){
       typing.remove();
       if(data.error){
         addBubble('assistant', {{ _('صار خطأ:')|tojson }} + ' ' + data.error, '');

@@ -388,3 +388,54 @@ def suggest_checkup_items(context_text: str, available_items: list[str]) -> dict
         except Exception:
             pass
         return None
+
+
+# ============================================================
+# بند إضافي 305 — طلبك: "دعم مرفقات الصور (Multimodal Input / Vision)"
+# بمحادثة المساعد. Gemini يفهم الصور مباشرة (نفس أسلوب الصوت ببند 299)
+# — بدون OCR أو محرك رؤية منفصل.
+# ============================================================
+
+VISION_SYSTEM_PROMPT = """أنت مساعد بصري مساند لنظام "مربي" لإدارة مزرعة أغنام/ماعز. المستخدم أرسل لك صورة (حالة جلدية، رقم أذن، صنف علف، معدة...) مع سؤال نصي.
+
+قواعد صارمة:
+- {language_instruction}
+- صف اللي تشوفه بوضوح وباختصار، وجاوب على سؤال المستخدم النصي بالذات لو موجود.
+- المساعد قرار مو طبيب: ممنوع تشخّص مرضاً نهائياً من صورة أو تقترح جرعة دواء — وصف الأعراض الظاهرة كافٍ، وأي قرار علاجي نهائي وجّهه للطبيب البيطري.
+- لو الصورة غير واضحة أو ما تقدر تحدد شي مفيد منها، قل هذا صراحة بدل التخمين.
+"""
+
+
+def ask_with_image(question: str, image_bytes: bytes, mime_type: str, lang: str = "ar") -> str | None:
+    """نفس فلسفة `ask()`/`ask_with_tools()` بالضبط (None بصمت عند أي
+    فشل أو غياب المفتاح) — بس السؤال مرفق معه صورة تُمرَّر مباشرة
+    لـGemini (يفهمها أصلاً كنوع محتوى)، بدون أي معالجة وسيطة."""
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        language_instruction = _LANGUAGE_INSTRUCTIONS.get(lang, _LANGUAGE_INSTRUCTIONS["ar"])
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL,
+            contents=[
+                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+                question or "وش تلاحظ بهذي الصورة؟",
+            ],
+            config=types.GenerateContentConfig(
+                system_instruction=VISION_SYSTEM_PROMPT.format(language_instruction=language_instruction),
+            ),
+        )
+        text = (response.text or "").strip()
+        return text or None
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.ask_with_image failed: %s", e)
+        except Exception:
+            pass
+        return None

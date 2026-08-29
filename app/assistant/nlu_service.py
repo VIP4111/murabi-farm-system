@@ -353,3 +353,38 @@ def ask_and_record(user, message_text: str) -> AssistantMessage:
     db.session.add(assistant_msg)
     db.session.commit()
     return assistant_msg
+
+
+def answer_with_image(user, message_text: str, image_bytes: bytes, mime_type: str,
+                       lang: str | None = None) -> dict:
+    """بند إضافي 305 — صورة مرفقة تروح مباشرة لـGemini بالرؤية، بدون
+    محرك النيات المحلي أو قاعدة المعرفة (كلاهما نص بس، ما يفهمان صوراً
+    أصلاً). لو Gemini غير مفعَّل، رسالة واضحة بدل fallback عام مضلِّل."""
+    lang = lang or lang_for(user)
+    reply = llm_bridge.ask_with_image(message_text, image_bytes, mime_type, lang=lang)
+    if reply:
+        return {"reply": reply, "intent_code": None, "answered_by": "llm_vision"}
+    return {
+        "reply": "تحليل الصور يحتاج تفعيل GEMINI_API_KEY حالياً — رفعت صورتك بنجاح، بس ما قدرت أحلّلها. جرّب بعد شوي أو اسأل نصياً.",
+        "intent_code": None, "answered_by": "local",
+    }
+
+
+def ask_and_record_with_image(user, message_text: str, image_bytes: bytes, mime_type: str,
+                               image_url: str | None) -> AssistantMessage:
+    """نفس `ask_and_record` بالضبط بس مع صورة مرفقة — رسالة المستخدم
+    تُسجَّل مع `image_url` (رابط دائم، للعرض بسجل المحادثة فقط)، بينما
+    التحليل الفعلي يستخدم البايتات الخام مباشرة (بدون تحميل الرابط
+    مرة ثانية)."""
+    user_msg = AssistantMessage(user_id=user.id, role="user", content=message_text or "📷 صورة",
+                                 image_url=image_url)
+    db.session.add(user_msg)
+
+    result = answer_with_image(user, message_text, image_bytes, mime_type)
+    assistant_msg = AssistantMessage(
+        user_id=user.id, role="assistant", content=result["reply"],
+        intent_code=result["intent_code"], answered_by=result["answered_by"],
+    )
+    db.session.add(assistant_msg)
+    db.session.commit()
+    return assistant_msg

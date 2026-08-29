@@ -26,6 +26,12 @@ class AssistantMessage(db.Model):
     content = db.Column(db.Text, nullable=False)
 
     intent_code = db.Column(db.String(64), nullable=True)
-    answered_by = db.Column(db.String(16), nullable=True)  # local / llm
+    answered_by = db.Column(db.String(16), nullable=True)  # local / llm / llm_tools / llm_vision
+
+    # صورة مرفقة (بند إضافي 305) — تحليل بصري عبر Gemini (فحص حالة
+    # جلدية، قراءة رقم أذن، مطابقة نوع علف...). رابط دائم بس (نفس آلية
+    # `cloud_storage_service.save_upload` المستخدمة بأدلة البلاغات)،
+    # ما نخزّن البايتات نفسها بالجدول.
+    image_url = db.Column(db.String(500), nullable=True)
 
     created_at = db.Column(db.DateTime, default=_now)
