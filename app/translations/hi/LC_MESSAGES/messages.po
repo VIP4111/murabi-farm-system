@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-29 02:35+0300\n"
+"POT-Creation-Date: 2026-08-29 02:54+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1495,6 +1495,7 @@ msgstr "लिंग"
 #: app/templates/animal_detail.html:403 app/templates/animal_detail.html:418
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
 #: app/templates/animal_workflow.html:154
+#: app/templates/assistant/drafts_list.html:61
 #: app/templates/assistant/farm_notes_list.html:35
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:246
@@ -1863,7 +1864,7 @@ msgid "تنبيهاتي"
 msgstr "मेरी सूचनाएं"
 
 #: app/templates/alerts_list.html:5 app/templates/animals_list.html:92
-#: app/templates/assistant/chat.html:57
+#: app/templates/assistant/chat.html:60
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
@@ -2348,6 +2349,7 @@ msgstr "गंभीरता"
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
 #: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92
+#: app/templates/assistant/drafts_list.html:61
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
 #: app/templates/finance/lots_list.html:17
@@ -3465,6 +3467,7 @@ msgid "صفحة اليوم"
 msgstr "आज का पेज"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
+#: app/templates/assistant/drafts_list.html:7
 #: app/templates/assistant/farm_notes_list.html:7 app/templates/base.html:554
 #: app/templates/home.html:119
 msgid "المساعد الذكي"
@@ -5198,53 +5201,130 @@ msgstr "अपने सौंपे गए कार्य देखें औ�
 msgid "دفتر الملاحظات"
 msgstr "नोट्स डायरी"
 
-#: app/templates/assistant/chat.html:30
+#: app/templates/assistant/chat.html:31
+msgid "الإدخال الذكي"
+msgstr "स्मार्ट एंट्री"
+
+#: app/templates/assistant/chat.html:33
 msgid "مسح كل المحادثة؟"
 msgstr "पूरी बातचीत साफ़ करें?"
 
-#: app/templates/assistant/chat.html:32
+#: app/templates/assistant/chat.html:35
 msgid "مسح المحادثة"
 msgstr "बातचीत साफ़ करें"
 
-#: app/templates/assistant/chat.html:40
+#: app/templates/assistant/chat.html:43
 msgid "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة."
 msgstr "मुझसे झुंड की स्थिति, गर्भावस्था, इनक्यूबेटर, चारे, सूचनाओं, या फार्म के किसी भी परिचालन मार्गदर्शन के बारे में पूछें।"
 
-#: app/templates/assistant/chat.html:53
+#: app/templates/assistant/chat.html:56
 msgid "كم عدد الحيوانات؟"
 msgstr "कितने जानवर हैं?"
 
-#: app/templates/assistant/chat.html:54
+#: app/templates/assistant/chat.html:57
 msgid "كم حوامل؟"
 msgstr "कितनी गर्भवती हैं?"
 
-#: app/templates/assistant/chat.html:55
+#: app/templates/assistant/chat.html:58
 msgid "حالة الحاضنات"
 msgstr "इनक्यूबेटर की स्थिति"
 
-#: app/templates/assistant/chat.html:56
+#: app/templates/assistant/chat.html:59
 msgid "تكلفة العلف"
 msgstr "चारे की लागत"
 
-#: app/templates/assistant/chat.html:61
+#: app/templates/assistant/chat.html:64
 msgid "اكتب سؤالك هنا..."
 msgstr "अपना सवाल यहाँ लिखें..."
 
-#: app/templates/assistant/chat.html:62
+#: app/templates/assistant/chat.html:65
 msgid "إرسال"
 msgstr "भेजें"
 
-#: app/templates/assistant/chat.html:102
+#: app/templates/assistant/chat.html:105
 msgid "المساعد يكتب..."
 msgstr "सहायक टाइप कर रहा है..."
 
-#: app/templates/assistant/chat.html:116
+#: app/templates/assistant/chat.html:119
 msgid "صار خطأ:"
 msgstr "एक त्रुटि हुई:"
 
-#: app/templates/assistant/chat.html:122
+#: app/templates/assistant/chat.html:125
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr "सहायक से संपर्क नहीं हो सका। दोबारा प्रयास करें।"
+
+#: app/templates/assistant/drafts_list.html:2
+#: app/templates/assistant/drafts_list.html:6
+msgid "الإدخال الذكي — مسودات بانتظار الاعتماد"
+msgstr "स्मार्ट एंट्री — स्वीकृति की प्रतीक्षा में ड्राफ्ट"
+
+#: app/templates/assistant/drafts_list.html:10
+msgid "اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: \"سجلت ولادة اليوم لشاة رقم 405\") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط \"اعتماد\" بنفسك."
+msgstr "फार्म पर वाकई हुई किसी घटना को लिखें या आवाज़ में रिकॉर्ड करें (उदाहरण: \"मैंने आज भेड़ नंबर 405 के लिए जन्म दर्ज किया\") — असिस्टेंट एक ड्राफ्ट सुझाता है, और जब तक आप खुद \"स्वीकृत करें\" नहीं दबाते, डेटाबेस में कुछ भी नहीं लिखा जाता।"
+
+#: app/templates/assistant/drafts_list.html:14
+msgid "هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ\"غير مفهومة\"."
+msgstr "इस सुविधा के लिए सक्रिय GEMINI_API_KEY चाहिए — इसके बिना हर कोशिश अपने आप \"समझ में नहीं आया\" कहकर अस्वीकार हो जाती है।"
+
+#: app/templates/assistant/drafts_list.html:21
+msgid "مثال: سجلت ولادة اليوم لشاة رقم 405"
+msgstr "उदाहरण: मैंने आज भेड़ नंबर 405 के लिए जन्म दर्ज किया"
+
+#: app/templates/assistant/drafts_list.html:22
+msgid "إرسال نص"
+msgstr "टेक्स्ट भेजें"
+
+#: app/templates/assistant/drafts_list.html:27
+msgid "إرسال مقطع صوتي"
+msgstr "ऑडियो क्लिप भेजें"
+
+#: app/templates/assistant/drafts_list.html:31
+msgid "بانتظار اعتمادك"
+msgstr "आपकी स्वीकृति की प्रतीक्षा में"
+
+#: app/templates/assistant/drafts_list.html:33
+msgid "لا توجد مسودات معلَّقة حالياً."
+msgstr "अभी कोई लंबित ड्राफ्ट नहीं है।"
+
+#: app/templates/assistant/drafts_list.html:47
+msgid "اعتماد"
+msgstr "स्वीकृत करें"
+
+#: app/templates/assistant/drafts_list.html:51
+msgid "رفض"
+msgstr "अस्वीकार करें"
+
+#: app/templates/assistant/drafts_list.html:58
+msgid "آخر القرارات"
+msgstr "हाल के फैसले"
+
+#: app/templates/assistant/drafts_list.html:61
+msgid "النص الأصلي"
+msgstr "मूल पाठ"
+
+#: app/templates/assistant/drafts_list.html:61
+msgid "السبب/المعتمِد"
+msgstr "कारण/स्वीकृतकर्ता"
+
+#: app/templates/assistant/drafts_list.html:67
+msgid "معتمَدة"
+msgstr "स्वीकृत"
+
+#: app/templates/assistant/drafts_list.html:68
+msgid "مرفوضة"
+msgstr "अस्वीकृत"
+
+#: app/templates/assistant/drafts_list.html:69
+msgid "منتهية بدون قرار"
+msgstr "बिना फैसले के समाप्त"
+
+#: app/templates/assistant/drafts_list.html:70
+msgid "رفض تلقائي"
+msgstr "स्वतः अस्वीकृत"
+
+#: app/templates/assistant/drafts_list.html:76
+msgid "لا يوجد سجل بعد."
+msgstr "अभी तक कोई इतिहास नहीं है।"
 
 #: app/templates/assistant/farm_notes_list.html:2
 #: app/templates/assistant/farm_notes_list.html:6

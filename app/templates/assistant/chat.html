@@ -27,6 +27,9 @@
     {% if current_user.has_permission('farm_notes.manage') %}
     <a class="btn light" href="{{ url_for('assistant.farm_notes_list') }}" style="padding:7px 12px; font-size:12px;">📓 {{ _('دفتر الملاحظات') }}</a>
     {% endif %}
+    {% if current_user.has_permission('assistant.draft_actions.confirm') %}
+    <a class="btn light" href="{{ url_for('assistant.drafts_list') }}" style="padding:7px 12px; font-size:12px;">🎙️ {{ _('الإدخال الذكي') }}</a>
+    {% endif %}
     <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('{{ _('مسح كل المحادثة؟') }}');">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">{{ _('مسح المحادثة') }}</button>

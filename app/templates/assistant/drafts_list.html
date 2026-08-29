@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}{{ _('الإدخال الذكي — مسودات بانتظار الاعتماد') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>🎙️ {{ _('الإدخال الذكي — مسودات بانتظار الاعتماد') }}</h2>
+    <a class="btn light" href="{{ url_for('assistant.chat') }}">🤖 {{ _('المساعد الذكي') }}</a>
+  </div>
+  <p style="color:var(--muted); font-size:13.5px;">
+    {{ _('اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: "سجلت ولادة اليوم لشاة رقم 405") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط "اعتماد" بنفسك.') }}
+  </p>
+  {% if not gemini_configured %}
+  <div class="badge off" style="display:inline-block; margin-bottom:10px;">
+    ⚠️ {{ _('هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ"غير مفهومة".') }}
+  </div>
+  {% endif %}
+
+  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:22px;">
+    <form method="post" action="{{ url_for('assistant.drafts_new_text') }}" style="flex:1; min-width:260px; display:grid; gap:8px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <textarea name="raw_text" required rows="2" placeholder="{{ _('مثال: سجلت ولادة اليوم لشاة رقم 405') }}"></textarea>
+      <button type="submit" class="btn">✍️ {{ _('إرسال نص') }}</button>
+    </form>
+    <form method="post" action="{{ url_for('assistant.drafts_new_voice') }}" enctype="multipart/form-data" style="flex:1; min-width:260px; display:grid; gap:8px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="file" name="audio" accept="audio/*" required>
+      <button type="submit" class="btn light">🎤 {{ _('إرسال مقطع صوتي') }}</button>
+    </form>
+  </div>
+
+  <h3>{{ _('بانتظار اعتمادك') }} ({{ pending|length }})</h3>
+  {% if not pending %}
+  <p style="color:#888;">{{ _('لا توجد مسودات معلَّقة حالياً.') }}</p>
+  {% endif %}
+  {% for d in pending %}
+  <div class="card" style="background:var(--card2, var(--card)); margin-bottom:10px;">
+    <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+      <div>
+        <div style="font-weight:600;">{{ d.summary_ar or d.raw_text }}</div>
+        <div style="color:var(--muted); font-size:12.5px; margin-top:4px;">
+          "{{ d.raw_text }}" — {{ d.created_by.name if d.created_by else '-' }} — {{ d.created_at.strftime('%Y-%m-%d %H:%M') if d.created_at else '' }}
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <form method="post" action="{{ url_for('assistant.drafts_confirm', draft_id=d.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn" style="padding:7px 14px;">✅ {{ _('اعتماد') }}</button>
+        </form>
+        <form method="post" action="{{ url_for('assistant.drafts_reject', draft_id=d.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn light" style="padding:7px 14px;">✖ {{ _('رفض') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <h3 style="margin-top:26px;">{{ _('آخر القرارات') }}</h3>
+  <div class="table-scroll">
+    <table class="compact-table">
+      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النص الأصلي') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('السبب/المعتمِد') }}</th></tr>
+      {% for d in history %}
+      <tr>
+        <td>{{ d.created_at.date() if d.created_at else '-' }}</td>
+        <td style="max-width:280px; white-space:pre-wrap;">{{ d.raw_text }}</td>
+        <td>
+          {% if d.status == 'confirmed' %}<span class="badge on">✅ {{ _('معتمَدة') }}</span>
+          {% elif d.status == 'rejected' %}<span class="badge off">✖ {{ _('مرفوضة') }}</span>
+          {% elif d.status == 'expired' %}<span class="badge off">⏳ {{ _('منتهية بدون قرار') }}</span>
+          {% else %}<span class="badge off">🚫 {{ _('رفض تلقائي') }}</span>
+          {% endif %}
+        </td>
+        <td>{{ d.rejection_reason or (d.confirmed_by.name if d.confirmed_by else '-') }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد سجل بعد.') }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-29 02:35+0300\n"
+"POT-Creation-Date: 2026-08-29 02:54+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1495,6 +1495,7 @@ msgstr "ጾታ"
 #: app/templates/animal_detail.html:403 app/templates/animal_detail.html:418
 #: app/templates/animal_detail.html:428 app/templates/animal_detail.html:458
 #: app/templates/animal_workflow.html:154
+#: app/templates/assistant/drafts_list.html:61
 #: app/templates/assistant/farm_notes_list.html:35
 #: app/templates/bulk_action_form.html:63
 #: app/templates/bulk_action_form.html:246
@@ -1863,7 +1864,7 @@ msgid "تنبيهاتي"
 msgstr "ማንቂያዎቼ"
 
 #: app/templates/alerts_list.html:5 app/templates/animals_list.html:92
-#: app/templates/assistant/chat.html:57
+#: app/templates/assistant/chat.html:60
 msgid "التنبيهات"
 msgstr "ማንቂያዎች"
 
@@ -2348,6 +2349,7 @@ msgstr "ክብደት"
 #: app/templates/animal_detail.html:236 app/templates/animal_detail.html:282
 #: app/templates/animal_detail.html:305 app/templates/animal_workflow.html:154
 #: app/templates/animals_list.html:92
+#: app/templates/assistant/drafts_list.html:61
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
 #: app/templates/finance/lots_list.html:17
@@ -3465,6 +3467,7 @@ msgid "صفحة اليوم"
 msgstr "የዛሬ ገጽ"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:25
+#: app/templates/assistant/drafts_list.html:7
 #: app/templates/assistant/farm_notes_list.html:7 app/templates/base.html:554
 #: app/templates/home.html:119
 msgid "المساعد الذكي"
@@ -5198,53 +5201,130 @@ msgstr "የተመደቡልህን ተግባራት ተመልከት እና አጠ�
 msgid "دفتر الملاحظات"
 msgstr "ማስታወሻ ደብተር"
 
-#: app/templates/assistant/chat.html:30
+#: app/templates/assistant/chat.html:31
+msgid "الإدخال الذكي"
+msgstr "ብልህ ግቤት"
+
+#: app/templates/assistant/chat.html:33
 msgid "مسح كل المحادثة؟"
 msgstr "ሙሉ ውይይቱ ይጥፋ?"
 
-#: app/templates/assistant/chat.html:32
+#: app/templates/assistant/chat.html:35
 msgid "مسح المحادثة"
 msgstr "ውይይት አጥፋ"
 
-#: app/templates/assistant/chat.html:40
+#: app/templates/assistant/chat.html:43
 msgid "اسألني عن حالة القطيع، الحمل، الحاضنات، الأعلاف، التنبيهات، أو أي إرشاد تشغيلي عن المزرعة."
 msgstr "ስለ መንጋው ሁኔታ፣ እርግዝና፣ መታቀፊያዎች፣ መኖ፣ ማንቂያዎች፣ ወይም ማንኛውም የእርሻ አሠራር መመሪያ ይጠይቁኝ።"
 
-#: app/templates/assistant/chat.html:53
+#: app/templates/assistant/chat.html:56
 msgid "كم عدد الحيوانات؟"
 msgstr "ስንት እንስሳት አሉ?"
 
-#: app/templates/assistant/chat.html:54
+#: app/templates/assistant/chat.html:57
 msgid "كم حوامل؟"
 msgstr "ስንት እርጉዞች አሉ?"
 
-#: app/templates/assistant/chat.html:55
+#: app/templates/assistant/chat.html:58
 msgid "حالة الحاضنات"
 msgstr "የመታቀፊያ ሁኔታ"
 
-#: app/templates/assistant/chat.html:56
+#: app/templates/assistant/chat.html:59
 msgid "تكلفة العلف"
 msgstr "የመኖ ወጪ"
 
-#: app/templates/assistant/chat.html:61
+#: app/templates/assistant/chat.html:64
 msgid "اكتب سؤالك هنا..."
 msgstr "ጥያቄዎን እዚህ ይጻፉ..."
 
-#: app/templates/assistant/chat.html:62
+#: app/templates/assistant/chat.html:65
 msgid "إرسال"
 msgstr "ላክ"
 
-#: app/templates/assistant/chat.html:102
+#: app/templates/assistant/chat.html:105
 msgid "المساعد يكتب..."
 msgstr "ረዳቱ እየጻፈ ነው..."
 
-#: app/templates/assistant/chat.html:116
+#: app/templates/assistant/chat.html:119
 msgid "صار خطأ:"
 msgstr "ስህተት ተከስቷል:"
 
-#: app/templates/assistant/chat.html:122
+#: app/templates/assistant/chat.html:125
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr "ከረዳቱ ጋር መገናኘት አልተቻለም። እንደገና ይሞክሩ።"
+
+#: app/templates/assistant/drafts_list.html:2
+#: app/templates/assistant/drafts_list.html:6
+msgid "الإدخال الذكي — مسودات بانتظار الاعتماد"
+msgstr "ብልህ ግቤት — ማጽደቅ የሚጠብቁ ረቂቆች"
+
+#: app/templates/assistant/drafts_list.html:10
+msgid "اكتب أو سجّل صوتياً حدثاً صار فعلاً بالمزرعة (مثال: \"سجلت ولادة اليوم لشاة رقم 405\") — المساعد يقترح مسودة، وما ينفَّذ أي شي بقاعدة البيانات إلا بعد ما تضغط \"اعتماد\" بنفسك."
+msgstr "በእርሻው ላይ በእውነት የተከሰተ ክስተት ይጻፉ ወይም በድምጽ ይቅረጹ (ምሳሌ፦ \"ዛሬ ለበግ ቁጥር 405 ልደት መዝግቤያለሁ\") — ረዳቱ ረቂቅ ያቀርባል፣ እርስዎ \"አጽድቅ\" ሳይጫኑ ምንም ነገር ወደ የመረጃ ቋቱ አይጻፍም።"
+
+#: app/templates/assistant/drafts_list.html:14
+msgid "هذي الميزة تحتاج GEMINI_API_KEY مفعَّل — بدونه كل محاولة تُرفض تلقائياً كـ\"غير مفهومة\"."
+msgstr "ይህ ባህሪ የነቃ GEMINI_API_KEY ያስፈልገዋል — ያለ እሱ እያንዳንዱ ሙከራ በራስ-ሰር \"ያልተረዳ\" ተብሎ ውድቅ ይደረጋል።"
+
+#: app/templates/assistant/drafts_list.html:21
+msgid "مثال: سجلت ولادة اليوم لشاة رقم 405"
+msgstr "ምሳሌ፦ ዛሬ ለበግ ቁጥር 405 ልደት መዝግቤያለሁ"
+
+#: app/templates/assistant/drafts_list.html:22
+msgid "إرسال نص"
+msgstr "ጽሑፍ ላክ"
+
+#: app/templates/assistant/drafts_list.html:27
+msgid "إرسال مقطع صوتي"
+msgstr "የድምጽ ቅንጭብ ላክ"
+
+#: app/templates/assistant/drafts_list.html:31
+msgid "بانتظار اعتمادك"
+msgstr "ማጽደቅዎን የሚጠብቁ"
+
+#: app/templates/assistant/drafts_list.html:33
+msgid "لا توجد مسودات معلَّقة حالياً."
+msgstr "አሁን ምንም ተንጠልጣይ ረቂቅ የለም።"
+
+#: app/templates/assistant/drafts_list.html:47
+msgid "اعتماد"
+msgstr "አጽድቅ"
+
+#: app/templates/assistant/drafts_list.html:51
+msgid "رفض"
+msgstr "ውድቅ አድርግ"
+
+#: app/templates/assistant/drafts_list.html:58
+msgid "آخر القرارات"
+msgstr "የቅርብ ጊዜ ውሳኔዎች"
+
+#: app/templates/assistant/drafts_list.html:61
+msgid "النص الأصلي"
+msgstr "የመጀመሪያ ጽሑፍ"
+
+#: app/templates/assistant/drafts_list.html:61
+msgid "السبب/المعتمِد"
+msgstr "ምክንያት/አጽዳቂ"
+
+#: app/templates/assistant/drafts_list.html:67
+msgid "معتمَدة"
+msgstr "ጸድቋል"
+
+#: app/templates/assistant/drafts_list.html:68
+msgid "مرفوضة"
+msgstr "ውድቅ ተደርጓል"
+
+#: app/templates/assistant/drafts_list.html:69
+msgid "منتهية بدون قرار"
+msgstr "ያለ ውሳኔ ጊዜው አልፏል"
+
+#: app/templates/assistant/drafts_list.html:70
+msgid "رفض تلقائي"
+msgstr "በራስ-ሰር ውድቅ"
+
+#: app/templates/assistant/drafts_list.html:76
+msgid "لا يوجد سجل بعد."
+msgstr "እስካሁን ምንም ታሪክ የለም።"
 
 #: app/templates/assistant/farm_notes_list.html:2
 #: app/templates/assistant/farm_notes_list.html:6

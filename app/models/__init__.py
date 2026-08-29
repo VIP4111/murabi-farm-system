@@ -41,6 +41,7 @@ from app.models.sales_lot import SalesLot, SalesLotItem
 from app.models.asset import Asset, AssetMaintenanceLog, UtilityReading
 from app.models.inventory_count import InventoryCount
 from app.models.farm_note import FarmNote, FarmNoteEmbedding
+from app.models.assistant_draft_action import AssistantDraftAction
 
 __all__ = [
     "Role", "Permission", "role_permissions",
@@ -71,4 +72,5 @@ __all__ = [
     "SalesLot", "SalesLotItem",
     "InventoryCount",
     "FarmNote", "FarmNoteEmbedding",
+    "AssistantDraftAction",
 ]

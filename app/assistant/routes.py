@@ -3,10 +3,10 @@ from flask_login import login_required, current_user
 
 from app.assistant import assistant_bp
 from app.assistant import nlu_service as svc
-from app.assistant import farm_note_service
+from app.assistant import farm_note_service, draft_action_service
 from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
-from app.models import AssistantMessage, FarmNote, Barn, Animal
+from app.models import AssistantMessage, FarmNote, Barn, Animal, AssistantDraftAction
 
 HISTORY_LIMIT = 50
 
@@ -96,3 +96,78 @@ def farm_notes_new():
     )
     flash("تمت إضافة الملاحظة.", "success")
     return redirect(url_for("assistant.farm_notes_list"))
+
+
+# ============================================================
+# بند إضافي 299 — المرحلة ٤ (الأخيرة): الإدخال الذكي بالنص/الصوت.
+# ============================================================
+
+@assistant_bp.route("/drafts")
+@login_required
+@require_permission("assistant.draft_actions.confirm")
+def drafts_list():
+    # خط دفاع ثانٍ (كسول، عند فتح الشاشة) بجانب الـCron الفعلي —
+    # نفس نمط `catch_up_daily_tasks_before_request` بالضبط (بند 89).
+    draft_action_service.expire_stale_drafts()
+    pending = (AssistantDraftAction.query.filter_by(status="pending")
+               .order_by(AssistantDraftAction.created_at.asc()).all())
+    history = (AssistantDraftAction.query.filter(AssistantDraftAction.status != "pending")
+               .order_by(AssistantDraftAction.created_at.desc()).limit(30).all())
+    return render_template("assistant/drafts_list.html", pending=pending, history=history,
+                            gemini_configured=svc.llm_bridge.is_gemini_configured())
+
+
+@assistant_bp.route("/drafts/new-text", methods=["POST"])
+@login_required
+@require_permission("assistant.draft_actions.confirm")
+@rate_limited("draft_action_propose", max_calls=20, window_seconds=300)
+def drafts_new_text():
+    raw_text = request.form.get("raw_text", "").strip()
+    if not raw_text:
+        flash("اكتب وصف الحدث أولاً.", "error")
+        return redirect(url_for("assistant.drafts_list"))
+    draft_action_service.propose_from_text(raw_text, created_by=current_user)
+    flash("تمت معالجة النص — راجع النتيجة أدناه.", "success")
+    return redirect(url_for("assistant.drafts_list"))
+
+
+@assistant_bp.route("/drafts/new-voice", methods=["POST"])
+@login_required
+@require_permission("assistant.draft_actions.confirm")
+@rate_limited("draft_action_propose", max_calls=20, window_seconds=300)
+def drafts_new_voice():
+    audio_file = request.files.get("audio")
+    if not audio_file or not audio_file.filename:
+        flash("لازم ترفع مقطع صوتي.", "error")
+        return redirect(url_for("assistant.drafts_list"))
+    draft_action_service.propose_from_audio(
+        audio_file.read(), audio_file.mimetype or "audio/mpeg", created_by=current_user,
+    )
+    flash("تمت معالجة المقطع الصوتي — راجع النتيجة أدناه.", "success")
+    return redirect(url_for("assistant.drafts_list"))
+
+
+@assistant_bp.route("/drafts/<int:draft_id>/confirm", methods=["POST"])
+@login_required
+@require_permission("assistant.draft_actions.confirm")
+def drafts_confirm(draft_id):
+    draft = AssistantDraftAction.query.get_or_404(draft_id)
+    try:
+        draft_action_service.confirm_draft(draft, actor=current_user)
+        flash("تم اعتماد المسودة وتنفيذها فعلياً.", "success")
+    except ValueError as e:
+        flash(f"تعذّر التنفيذ: {e}", "error")
+    return redirect(url_for("assistant.drafts_list"))
+
+
+@assistant_bp.route("/drafts/<int:draft_id>/reject", methods=["POST"])
+@login_required
+@require_permission("assistant.draft_actions.confirm")
+def drafts_reject(draft_id):
+    draft = AssistantDraftAction.query.get_or_404(draft_id)
+    try:
+        draft_action_service.reject_draft(draft, actor=current_user)
+        flash("تم رفض المسودة.", "success")
+    except ValueError as e:
+        flash(str(e), "error")
+    return redirect(url_for("assistant.drafts_list"))

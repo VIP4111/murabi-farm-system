@@ -67,6 +67,17 @@ def _run_daily_tasks_job(app):
         _generate_if_needed_today()
 
 
+def _run_expire_stale_drafts_job(app):
+    """بند إضافي 299 — تحسينك الثالث المعتمد: تنظيف دوري حقيقي للمسودات
+    المعلَّقة اللي تجاوز عمرها 48 ساعة. **نفس ملاحظة Render أعلاه تنطبق
+    هنا** (العملية قد تكون نايمة وقت موعد الـCron) — لهذا `assistant.
+    drafts_list` تستدعي نفس دالة التنظيف بشكل كسول عند فتح الشاشة
+    كخط دفاع ثانٍ، تماماً كنمط `catch_up_daily_tasks_before_request` أدناه."""
+    with app.app_context():
+        from app.assistant import draft_action_service
+        draft_action_service.expire_stale_drafts()
+
+
 def catch_up_daily_tasks_before_request():
     """بند إضافي 89، نقطة 6 (نقد ذاتي على بند 78) — Render المجاني يطفي
     العملية بعد ~15 دقيقة خمول ويشغّلها من جديد عند أول طلب وارد.
@@ -98,6 +109,12 @@ def init_scheduler(app):
     _scheduler.add_job(
         _run_daily_tasks_job, "cron", hour=3, minute=0,
         args=[app], id="daily_husbandry_tasks", replace_existing=True,
+    )
+    # بند إضافي 299 — كل ساعة كافٍ تماماً لعتبة 48 ساعة (لا حاجة لدقة
+    # أعلى من هذا لتنظيف مسودات معلَّقة).
+    _scheduler.add_job(
+        _run_expire_stale_drafts_job, "cron", minute=0,
+        args=[app], id="expire_stale_draft_actions", replace_existing=True,
     )
     _scheduler.start()
     return _scheduler
