@@ -1089,6 +1089,16 @@ def animal_detail(animal_id):
     withdrawal_until = animal_under_withdrawal(animal.id)
     breed_row = Breed.query.filter_by(name=animal.breed).first() if animal.breed else None
     animal_alerts = alerts_service.alerts_for_animal(animal.id) if current_user.has_permission("animals.view") else []
+
+    doctors = []
+    checkup_item_presets = []
+    if current_user.has_permission("tasks.assign_any"):
+        from app.models import User
+        from app.team import task_service as tsvc
+        doctors = (User.query.join(Role).filter(Role.name.in_(("doctor", "nurse")))
+                   .order_by(User.name).all())
+        checkup_item_presets = tsvc.ANIMAL_CHECKUP_ITEM_PRESETS
+
     return render_template(
         "animal_detail.html", wf=wf,
         withdrawal_until=withdrawal_until,
@@ -1096,8 +1106,35 @@ def animal_detail(animal_id):
         today=date.today().isoformat(),
         breed_care_notes=breed_row.care_notes if breed_row else None,
         animal_alerts=animal_alerts,
+        doctors=doctors, checkup_item_presets=checkup_item_presets,
         **profile,
     )
+
+
+@core_bp.route("/animals/<int:animal_id>/checkup-request", methods=["POST"])
+@login_required
+@require_permission("tasks.assign_any")
+def animal_checkup_request(animal_id):
+    """طلب فحص شامل لرأس واحد (بند إضافي 301) — يولّد مهمة مستقلة لكل
+    بند فحص تختاره، كلها مجمَّعة كدفعة واحدة بشاشة تفاصيل المهمة."""
+    from app.team import task_service as tsvc
+
+    animal = Animal.query.get_or_404(animal_id)
+    items = request.form.getlist("items")
+    custom_item = request.form.get("custom_item", "").strip()
+    if custom_item:
+        items.append(custom_item)
+    assignee_id = request.form.get("assignee_id", type=int) or None
+
+    try:
+        tasks = tsvc.assign_animal_checkup(
+            actor=current_user, animal=animal, items=items,
+            assignee_id=assignee_id, target_role=None if assignee_id else "doctor",
+        )
+        flash(f"تم توزيع {len(tasks)} مهمة فحص للرأس {animal.animal_no}.", "success")
+    except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
+        flash(str(e), "error")
+    return redirect(url_for("core.animal_detail", animal_id=animal_id))
 
 
 @core_bp.route("/weights/new-simple")

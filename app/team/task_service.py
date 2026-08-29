@@ -209,6 +209,55 @@ def owner_delete_task_final(task: Task, *, actor) -> None:
     db.session.commit()
 
 
+# طلب فحص شامل لرأس واحد (بند إضافي 301) — طلبك: "ابيك تعطيني مهام
+# يومية لنعجة مختارة من نظام مهام مضاعفة مثل افحص نعجة رقم خمس ورفع
+# تقرير". قائمة بنود جاهزة تختار منها (بدل كتابة كل بند من الصفر كل
+# مرة)، + إمكانية إضافة بند مخصَّص حر.
+ANIMAL_CHECKUP_ITEM_PRESETS = [
+    "فحص الحرارة والنبض",
+    "فحص الجلد والصوف (طفيليات خارجية)",
+    "فحص العين والأنف",
+    "فحص الخف/الحافر",
+    "فحص الخراجات أو الكتل الظاهرة",
+    "فحص الشهية والحالة العامة",
+    "رفع تقرير حالة الرأس",
+]
+
+
+def assign_animal_checkup(*, actor, animal, items: list[str], assignee_id=None,
+                           target_role=None, due_date=None) -> list[Task]:
+    """يولّد مهمة مستقلة لكل بند فحص، كلهم مربوطين ببعض بنفس آلية
+    "الدفعة" الموجودة أصلاً (`source_type`/`source_id`، بند 50) — صفر
+    جدول جديد. الدكتور يشوفهم كمجموعة واحدة بشاشة تفاصيل أي مهمة منهم
+    (`task_rich_context`/`batch_siblings` تشتغلان بدون أي تعديل)،
+    وإنجاز كل بند بملاحظته الخاصة هو فعلياً "التقرير" اللي طلبته —
+    بدون نموذج تقرير منفصل يحتاج بناء وصيانة زيادة."""
+    if not actor.has_permission("tasks.assign_any"):
+        raise TaskPermissionError("ما تملك صلاحية توزيع المهام.")
+    items = [i.strip() for i in items if i and i.strip()]
+    if not items:
+        raise TaskStateError("لازم تختار بند فحص واحد على الأقل.")
+
+    due_date = due_date or (date.today() + timedelta(days=1))
+    tasks: list[Task] = []
+    source_id = None
+    for item in items:
+        task = Task(
+            title=f"{item} — {animal.animal_no}", task_type="animal_checkup", status="pending",
+            assignee_id=assignee_id, animal_id=animal.id, barn_id=animal.barn_id,
+            due_date=due_date, target_role=target_role or None,
+            created_by_id=actor.id, source_type="AnimalCheckupRequest",
+        )
+        db.session.add(task)
+        db.session.flush()  # نحتاج task.id فوراً — أول مهمة بالدفعة تصير هوية الدفعة نفسها
+        if source_id is None:
+            source_id = task.id
+        task.source_id = source_id
+        tasks.append(task)
+    db.session.commit()
+    return tasks
+
+
 def batch_siblings(task: Task) -> list[Task]:
     """كل المهام اللي تشترك بنفس (source_type, source_id) — بقرارك
     الصريح (بند إضافي 50)، هذا اللي يمثّل "الدفعة" بالواجهة بدون نموذج

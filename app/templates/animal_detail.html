@@ -63,6 +63,29 @@
 </div>
 {% endif %}
 
+{% if current_user.has_permission('tasks.assign_any') %}
+<div class="card">
+  <h3 style="font-size:15px; margin:0 0 10px;">📋 {{ _('طلب فحص شامل لهذا الرأس') }}</h3>
+  <p style="color:var(--muted); font-size:12.5px; margin:0 0 10px;">{{ _('اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها بملاحظة هو تقريره.') }}</p>
+  <form method="post" action="{{ url_for('core.animal_checkup_request', animal_id=animal.id) }}" style="display:grid; gap:10px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      {% for item in checkup_item_presets %}
+      <label style="display:flex; gap:8px; align-items:center; font-size:13.5px;">
+        <input type="checkbox" name="items" value="{{ item }}"> {{ item }}
+      </label>
+      {% endfor %}
+    </div>
+    <input type="text" name="custom_item" placeholder="{{ _('بند فحص إضافي مخصَّص (اختياري)') }}">
+    <select name="assignee_id">
+      <option value="">{{ _('أي دكتور متاح (بدون تعيين شخص محدَّد)') }}</option>
+      {% for d in doctors %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
+    </select>
+    <button type="submit" class="btn" style="justify-self:start;">📤 {{ _('توزيع مهام الفحص') }}</button>
+  </form>
+</div>
+{% endif %}
+
 <div class="card" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
   {% if animal.species == 'ostrich' %}
   <div class="stat"><b>{{ _('نعام') }}</b><span>{{ _('الفصيلة — بدون دورة إنتاج (مجترات فقط)') }}</span></div>
