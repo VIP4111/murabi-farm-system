@@ -546,12 +546,15 @@
       {%- elif name == 'system' %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a7.9 7.9 0 000-2l2-1.6-2-3.4-2.4 1a8 8 0 00-1.7-1L15 3h-4l-.3 2.5a8 8 0 00-1.7 1l-2.4-1-2 3.4L6.6 11a7.9 7.9 0 000 2l-2 1.6 2 3.4 2.4-1c.5.4 1.1.8 1.7 1L11 21h4l.3-2.5c.6-.2 1.2-.6 1.7-1l2.4 1 2-3.4-2-1.6z"/></svg>
       {%- endif %}</span>{% endmacro %}
 
-      <details class="drawer-group" {{ 'open' if request.endpoint in ['core.home', 'core.today', 'assistant.chat'] else '' }}>
+      {% set _assistant_endpoints = ['core.home', 'core.today', 'assistant.chat', 'assistant.farm_notes_list', 'assistant.drafts_list'] %}
+      <details class="drawer-group" {{ 'open' if request.endpoint in _assistant_endpoints else '' }}>
         <summary>{{ nav_icon('home') }}{{ _('الرئيسية') }}</summary>
         <div class="drawer-grid">
         <a class="drawer-link" href="{{ url_for('core.home') }}"><span class="drawer-text"><b>{{ _('الرئيسية') }}</b></span></a>
         <a class="drawer-link" href="{{ url_for('core.today') }}"><span class="drawer-text"><b>{{ _('صفحة اليوم') }}</b></span></a>
         {% if current_user.has_permission('assistant.use') %}<a class="drawer-link" href="{{ url_for('assistant.chat') }}"><span class="drawer-text"><b>{{ _('المساعد الذكي') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('farm_notes.manage') %}<a class="drawer-link" href="{{ url_for('assistant.farm_notes_list') }}"><span class="drawer-text"><b>{{ _('دفتر الملاحظات') }}</b></span></a>{% endif %}
+        {% if current_user.has_permission('assistant.draft_actions.confirm') %}<a class="drawer-link" href="{{ url_for('assistant.drafts_list') }}"><span class="drawer-text"><b>{{ _('الإدخال الذكي') }}</b></span></a>{% endif %}
         </div>
       </details>
 
