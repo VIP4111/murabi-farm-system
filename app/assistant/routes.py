@@ -133,10 +133,22 @@ def drafts_list():
     # خط دفاع ثانٍ (كسول، عند فتح الشاشة) بجانب الـCron الفعلي —
     # نفس نمط `catch_up_daily_tasks_before_request` بالضبط (بند 89).
     draft_action_service.expire_stale_drafts()
-    pending = (AssistantDraftAction.query.filter_by(status="pending")
-               .order_by(AssistantDraftAction.created_at.asc()).all())
-    history = (AssistantDraftAction.query.filter(AssistantDraftAction.status != "pending")
-               .order_by(AssistantDraftAction.created_at.desc()).limit(30).all())
+
+    pending_q = AssistantDraftAction.query.filter_by(status="pending")
+    history_q = AssistantDraftAction.query.filter(AssistantDraftAction.status != "pending")
+    # بند إضافي 315 (فجوة تدقيق حقيقية) — الشاشة كانت تعرض مسودات كل
+    # المزرعة (رقم/تفاصيل رأس بكل مسودة) لأي حامل `assistant.draft_
+    # actions.confirm` — صلاحية "تقدر تستخدم الإدخال الذكي"، مو "تقدر
+    # تشوف بيانات كل الحيوانات" (`animals.view`). عامل بدون animals.view
+    # (منح افتراضي فعلي، بند 299) كان يشوف مسودات كل حيوان بالمزرعة عبر
+    # هذي الشاشة، متجاوزاً نفس التقييد اللي يحميه بشاشة الحيوانات
+    # العادية. لو المستخدم ما يملك animals.view، يشوف مسوداته هو بس.
+    if not current_user.has_permission("animals.view"):
+        pending_q = pending_q.filter_by(created_by_id=current_user.id)
+        history_q = history_q.filter_by(created_by_id=current_user.id)
+
+    pending = pending_q.order_by(AssistantDraftAction.created_at.asc()).all()
+    history = history_q.order_by(AssistantDraftAction.created_at.desc()).limit(30).all()
     return render_template("assistant/drafts_list.html", pending=pending, history=history,
                             gemini_configured=svc.llm_bridge.is_gemini_configured())
 
