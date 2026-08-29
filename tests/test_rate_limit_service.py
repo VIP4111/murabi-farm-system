@@ -68,6 +68,17 @@ def test_assistant_send_route_enforces_limit(app, logged_in_client):
     assert blocked.status_code == 429
 
 
+def test_farm_notes_new_route_enforces_limit(app, logged_in_client):
+    """بند إضافي 314 — نفس فئة فجوة بند 313: كل ملاحظة جديدة تستدعي
+    Gemini فعلياً (embed_text عبر create_note)، بس المسار كان بلا حد."""
+    for i in range(20):
+        resp = logged_in_client.post("/assistant/farm-notes/new", data={"body": f"ملاحظة {i}"})
+        assert resp.status_code == 302
+
+    blocked = logged_in_client.post("/assistant/farm-notes/new", data={"body": "ملاحظة 21"}, follow_redirects=True)
+    assert "طلبات كثيرة" in blocked.data.decode()
+
+
 def test_animal_checkup_suggest_route_enforces_limit(app, logged_in_client):
     """بند إضافي 313 — فجوة تدقيق حقيقية: كانت الوحيدة بين كل مسارات
     استدعاء Gemini بالمشروع بدون أي حد لمعدل الطلبات (ثغرة استنزاف حصة/

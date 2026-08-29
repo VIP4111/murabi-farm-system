@@ -91,7 +91,12 @@ def farm_notes_list():
 @assistant_bp.route("/farm-notes/new", methods=["POST"])
 @login_required
 @require_permission("farm_notes.manage")
+@rate_limited("farm_notes_new", max_calls=20, window_seconds=300)
 def farm_notes_new():
+    # بند إضافي 314 (فجوة تدقيق حقيقية) — كل ملاحظة جديدة تستدعي
+    # Gemini فعلياً (`farm_note_service.create_note` → `embed_note` →
+    # `llm_bridge.embed_text`)، بس هذا المسار كان بلا أي `rate_limited`
+    # — نفس فئة فجوة بند 313 بالضبط، بمكان ثانٍ ما راجعناه.
     body = request.form.get("body", "").strip()
     if not body:
         flash("لازم تكتب نص الملاحظة.", "error")
