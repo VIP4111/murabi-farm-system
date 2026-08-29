@@ -68,7 +68,13 @@ GEMINI_SYSTEM_PROMPT_TEMPLATE = """أنت المساعد الذكي لنظام "
 - لو السؤال خارج نطاق إدارة المزرعة تماماً، وضّح بأدب أنك مختص بشؤون المزرعة فقط.
 """
 
-DEFAULT_GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+# بند إضافي 300 — "gemini-2.5-flash" (القيمة الأصلية ببند 297) صار
+# موقوفاً لمستخدمين جدد (404 NOT_FOUND فعلي على الإنتاج، 2026-08-29 —
+# نفس فئة خطأ اسم النموذج القديم ببند 84 مع Claude، بس هذي المرة
+# اكتُشف بسرعة بسبب تسجيل `current_app.logger.warning` بدل الابتلاع
+# الصامت). "gemini-3.6-flash" هو البديل الرسمي المذكور برسالة الخطأ
+# نفسها من Google.
+DEFAULT_GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 
 
 def is_gemini_configured() -> bool:
