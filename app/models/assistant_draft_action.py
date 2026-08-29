@@ -24,6 +24,11 @@ class AssistantDraftAction(db.Model):
 
     raw_text = db.Column(db.Text, nullable=False)
     input_source = db.Column(db.String(16), nullable=False, default="text")  # text / voice
+    # بند إضافي 312 — فجوة تدقيق حقيقية: مسودة الصورة (بند 305) تحفظ
+    # رابط دائم للصورة (`AssistantMessage.image_url`)، بينما مسودة
+    # الصوت (بند 299) كانت تحلّل المقطع وترميه — صفر أثر دائم يقدر
+    # المستخدم يرجع له لاحقاً يتأكد وش قال بالضبط. نفس مستوى التوثيق.
+    audio_url = db.Column(db.String(500), nullable=True)
 
     parsed_action_type = db.Column(db.String(64))
     parsed_payload_json = db.Column(db.Text)

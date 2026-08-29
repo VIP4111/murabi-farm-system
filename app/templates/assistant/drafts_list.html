@@ -40,6 +40,7 @@
         <div style="color:var(--muted); font-size:12.5px; margin-top:4px;">
           "{{ d.raw_text }}" — {{ d.created_by.name if d.created_by else '-' }} — {{ d.created_at.strftime('%Y-%m-%d %H:%M') if d.created_at else '' }}
         </div>
+        {% if d.audio_url %}<audio controls src="{{ d.audio_url }}" style="height:32px; margin-top:6px;"></audio>{% endif %}
       </div>
       <div style="display:flex; gap:8px; align-items:center;">
         <form method="post" action="{{ url_for('assistant.drafts_confirm', draft_id=d.id) }}">

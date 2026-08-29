@@ -159,8 +159,19 @@ def drafts_new_voice():
     if not audio_file or not audio_file.filename:
         flash("لازم ترفع مقطع صوتي.", "error")
         return redirect(url_for("assistant.drafts_list"))
+
+    # بند إضافي 312 — نفس فحص مسار الصورة (بند 305): نقرأ البايتات
+    # الخام أولاً للتحليل، ثم نحفظ رابطاً دائماً للمقطع نفسه (نفس
+    # `report_service.save_voice_note` الموجودة أصلاً لملاحظات
+    # البلاغات الصوتية) عشان تقدر ترجع تسمعه لاحقاً.
+    from app.team.report_service import save_voice_note
+    audio_file.stream.seek(0)
+    audio_bytes = audio_file.stream.read()
+    audio_file.stream.seek(0)
+    audio_url = save_voice_note(audio_file)
+
     draft_action_service.propose_from_audio(
-        audio_file.read(), audio_file.mimetype or "audio/mpeg", created_by=current_user,
+        audio_bytes, audio_file.mimetype or "audio/mpeg", created_by=current_user, audio_url=audio_url,
     )
     flash("تمت معالجة المقطع الصوتي — راجع النتيجة أدناه.", "success")
     return redirect(url_for("assistant.drafts_list"))

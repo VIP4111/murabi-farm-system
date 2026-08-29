@@ -86,19 +86,24 @@ def propose_from_text(raw_text: str, *, created_by) -> AssistantDraftAction:
     return _save_proposal(raw_text, parsed, created_by=created_by, input_source="text")
 
 
-def propose_from_audio(audio_bytes: bytes, mime_type: str, *, created_by) -> AssistantDraftAction:
+def propose_from_audio(audio_bytes: bytes, mime_type: str, *, created_by, audio_url: str | None = None) -> AssistantDraftAction:
+    """`audio_url` (بند إضافي 312) — رابط دائم اختياري للمقطع نفسه
+    (نفس آلية `report_service.save_voice_note` الموجودة أصلاً)، عشان
+    مسودة الصوت توثَّق بنفس مستوى مسودة الصورة (بند 305) — تقدر ترجع
+    تسمع وش قلت بالضبط، مو بس النص المستخرَج منه."""
     parsed = llm_bridge.parse_draft_action_from_audio(audio_bytes, mime_type)
-    return _save_proposal("(مقطع صوتي)", parsed, created_by=created_by, input_source="voice")
+    return _save_proposal("(مقطع صوتي)", parsed, created_by=created_by, input_source="voice", audio_url=audio_url)
 
 
-def _save_proposal(raw_text: str, parsed: dict | None, *, created_by, input_source: str) -> AssistantDraftAction:
+def _save_proposal(raw_text: str, parsed: dict | None, *, created_by, input_source: str,
+                    audio_url: str | None = None) -> AssistantDraftAction:
     if not parsed:
         # النموذج ما تعرّف على إجراء مدعوم (أو Gemini غير مفعَّل/فشل) —
         # نسجّلها بالتوثيق بس، بدون أي محاولة تنفيذ.
         draft = AssistantDraftAction(
             raw_text=raw_text, input_source=input_source, status="auto_rejected",
             rejection_reason="ما قدر النموذج يحوّل هذا النص/الصوت لإجراء مدعوم تلقائياً.",
-            created_by_id=created_by.id if created_by else None,
+            created_by_id=created_by.id if created_by else None, audio_url=audio_url,
         )
         db.session.add(draft)
         db.session.commit()
@@ -115,7 +120,7 @@ def _save_proposal(raw_text: str, parsed: dict | None, *, created_by, input_sour
         summary_ar=parsed.get("summary_ar"),
         created_by_id=created_by.id if created_by else None,
         status="auto_rejected" if reason else "pending",
-        rejection_reason=reason,
+        rejection_reason=reason, audio_url=audio_url,
     )
     db.session.add(draft)
     db.session.commit()
