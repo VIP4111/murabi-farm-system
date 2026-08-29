@@ -123,6 +123,17 @@ def test_search_farm_notes_not_found_message(app, monkeypatch):
     assert result["status"] == "not_found"
 
 
+def test_search_farm_notes_ambiguous_barn_name_asks_for_clarification(app):
+    """بند إضافي 309 — فجوة حقيقية: كانت تاخذ أول حظيرة تطابق جزئياً
+    بصمت (نفس فئة التخمين اللي search_animal_or_barn بُنيت أصلاً
+    (بند 297) عشان تمنعها). لازم تتوقف وتطلب توضيح مثلها بالضبط."""
+    make_barn(barn_no="B-1", barn_name="حظيرة الحوامل الشرقية")
+    make_barn(barn_no="B-2", barn_name="حظيرة الحوامل الغربية")
+    result = agent_tools.search_farm_notes("سؤال", barn_name="حظيرة الحوامل")
+    assert result["status"] == "ambiguous"
+    assert len(result["candidates"]) == 2
+
+
 # ---- صلاحية كتابة الملاحظة (الشاشة) ----
 
 def test_farm_notes_route_requires_permission(app, client):

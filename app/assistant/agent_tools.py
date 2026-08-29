@@ -172,8 +172,19 @@ def search_farm_notes(query: str, barn_name: str | None = None, animal_no: str |
     """
     barn_id = None
     if barn_name:
-        barn = Barn.query.filter(Barn.barn_name.ilike(f"%{barn_name}%")).first()
-        barn_id = barn.id if barn else None
+        # بند إضافي 309 — فجوة تدقيق حقيقية: كانت تاخذ أول تطابق جزئي
+        # صامتاً (نفس فئة "التخمين بدل التوضيح" اللي `search_animal_or_
+        # barn` بُنيت أصلاً بند 297 عشان تمنعها). لو تعددت الحظائر
+        # المطابقة، نوقف ونطلب توضيح — بدل ما نربط الملاحظات المسترجَعة
+        # بحظيرة خاطئة بصمت.
+        matches = Barn.query.filter(Barn.barn_name.ilike(f"%{barn_name}%")).limit(6).all()
+        if len(matches) > 1:
+            return {
+                "status": "ambiguous",
+                "message": "تعددت الحظائر المطابقة لهذا الاسم — حدّد أي حظيرة بالضبط قبل البحث.",
+                "candidates": [{"barn_no": b.barn_no, "barn_name": b.barn_name} for b in matches],
+            }
+        barn_id = matches[0].id if matches else None
     animal_id = None
     if animal_no:
         animal = Animal.query.filter_by(animal_no=animal_no).first()
