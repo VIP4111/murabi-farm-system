@@ -16,7 +16,7 @@ from app.core import alerts_service
 from app.core import backup_service
 from app.core import readiness_service
 from app.core import isolation_service
-from app.auth.decorators import require_permission
+from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
 from app.models import Animal, Barn, BarnFeedingSchedule, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
 from app.models import SpeciesType, Breed, AnimalColor, Task, Report
@@ -1120,11 +1120,18 @@ def animal_detail(animal_id):
 @core_bp.route("/animals/<int:animal_id>/checkup-suggest", methods=["POST"])
 @login_required
 @require_permission("tasks.assign_any")
+@rate_limited("animal_checkup_suggest", max_calls=20, window_seconds=300)
 def animal_checkup_suggest(animal_id):
     """اقتراح ذكي لبنود الفحص (بند إضافي 302) — طلبك الصريح: "ابي
     اذكى اصناعي يقترح عليه المهام ودكتور يرفع تقرير". الاقتراح بس —
     ما ينفّذ أي شي، يرجّعك لنفس الصفحة مع البنود المقترحة محدَّدة
-    مسبقاً بالتشيك بوكس، وأنت تراجع/تعدّل قبل الضغط على "توزيع"."""
+    مسبقاً بالتشيك بوكس، وأنت تراجع/تعدّل قبل الضغط على "توزيع".
+
+    بند إضافي 313 (فجوة تدقيق حقيقية) — كانت الوحيدة بين كل مسارات
+    استدعاء Gemini بالمشروع (`/assistant/send`، `/assistant/drafts/
+    new-text`، `/assistant/drafts/new-voice`) بدون أي `rate_limited` —
+    ثغرة استنزاف حصة/تكلفة API حقيقية، عالجناها بنفس الحد المستخدم
+    لمسارات المسودات (20 كل 5 دقائق)."""
     from app.assistant import agent_tools, llm_bridge
     from app.team import task_service as tsvc
 

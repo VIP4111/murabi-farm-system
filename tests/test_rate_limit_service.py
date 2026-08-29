@@ -66,3 +66,18 @@ def test_assistant_send_route_enforces_limit(app, logged_in_client):
 
     blocked = logged_in_client.post("/assistant/send", json={"message": "سؤال 31"})
     assert blocked.status_code == 429
+
+
+def test_animal_checkup_suggest_route_enforces_limit(app, logged_in_client):
+    """بند إضافي 313 — فجوة تدقيق حقيقية: كانت الوحيدة بين كل مسارات
+    استدعاء Gemini بالمشروع بدون أي حد لمعدل الطلبات (ثغرة استنزاف حصة/
+    تكلفة API)."""
+    from factories import make_animal
+    animal = make_animal(animal_no="950")
+
+    for i in range(20):
+        resp = logged_in_client.post(f"/animals/{animal.id}/checkup-suggest")
+        assert resp.status_code == 302
+
+    blocked = logged_in_client.post(f"/animals/{animal.id}/checkup-suggest", follow_redirects=True)
+    assert "طلبات كثيرة" in blocked.data.decode()
