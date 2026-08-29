@@ -159,7 +159,7 @@ def embed_text(text: str) -> list[float] | None:
 # نفس القائمة بالضبط لازم تطابق `draft_action_service.ALLOWED_ACTION_TYPES`
 # (فحص تطابق موجود باختبار مخصَّص). أي نوع إجراء مو بهذي القائمة يُرفض
 # قطعياً، بغض النظر عمّا يحاول النموذج يقترحه.
-ALLOWED_DRAFT_ACTION_TYPES = ("register_birth", "record_weight")
+ALLOWED_DRAFT_ACTION_TYPES = ("register_birth", "record_weight", "assign_task")
 
 # بند إضافي 299، تحسينك الرابع المعتمد — حاجز صلب صريح، مستقل تماماً عن
 # تعليمات النظام النصية للنموذج (اللي ممكن يُخترق أو يُتجاوَز بصياغة
@@ -188,10 +188,13 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
 
 DRAFT_ACTION_TOOL_NAME = "propose_draft_action"
 
-DRAFT_ACTION_SYSTEM_PROMPT = """أنت مساعد استخراج بيانات بس لنظام "مربي" لإدارة مزرعة. المستخدم يوصف حدث صار فعلاً بالمزرعة (بالعربي، بصيغة عامية أحياناً)، ومهمتك تحوّله لإجراء منظَّم عبر أداة propose_draft_action — لا تنفّذ أي شي بنفسك، فقط استخرج البيانات.
+DRAFT_ACTION_SYSTEM_PROMPT = """أنت مساعد استخراج بيانات بس لنظام "مربي" لإدارة مزرعة. المستخدم يوصف حدث صار فعلاً بالمزرعة أو يطلب توزيع مهمة (بالعربي، بصيغة عامية أحياناً)، ومهمتك تحوّله لإجراء منظَّم عبر أداة propose_draft_action — لا تنفّذ أي شي بنفسك، فقط استخرج البيانات.
 
 قواعد صارمة:
-- استخدم الأداة propose_draft_action فقط لو الجملة تصف بوضوح أحد نوعين: "register_birth" (ولادة مولود جديد لأم معروفة رقمها) أو "record_weight" (تسجيل وزن رأس معروف رقمه).
+- استخدم الأداة propose_draft_action فقط لو الجملة تصف بوضوح أحد ثلاث أنواع:
+  1. "register_birth" — ولادة مولود جديد لأم معروفة رقمها.
+  2. "record_weight" — تسجيل وزن رأس معروف رقمه.
+  3. "assign_task" — طلب توزيع مهمة على عضو فريق (دكتور/عامل/ممرض). استخرج `task_title` (نص المهمة نفسها بوضوح) و`due_date` لو مذكور (YYYY-MM-DD)، و`target_animal_no` لو المهمة تخص رأساً معيّناً (وإلا اتركه فاضي). **ممنوع قطعياً تحدد أو تخمّن اسم الشخص المكلَّف بنفسك** — هذا قرار بشري صريح يصير لاحقاً بواجهة الاعتماد، مهما ذكر المستخدم اسماً بالجملة تجاهله ولا تضعه بالـpayload.
 - لو الجملة تخص أي شي ثاني (دواء، جرعة، حذف، بيع، تحصين...) لا تستخدم الأداة إطلاقاً — فقط اكتب رداً نصياً يوضّح إن هذا النوع من الإجراءات ما يدعم الإدخال التلقائي حالياً ويحتاج تسجيل يدوي بالشاشة المخصَّصة.
 - استخرج رقم الحيوان بالضبط كما ذُكر بالجملة، بدون تخمين أو تصحيح.
 - لو معلومة مطلوبة ناقصة (مثال: جنس المولود)، اتركها فاضية بالـpayload بدل ما تخمّنها.
@@ -436,6 +439,52 @@ def ask_with_image(question: str, image_bytes: bytes, mime_type: str, lang: str 
         try:
             from flask import current_app
             current_app.logger.warning("llm_bridge.ask_with_image failed: %s", e)
+        except Exception:
+            pass
+        return None
+
+
+# ============================================================
+# بند إضافي 316 — طلبك الصريح: "احتاج منه يترجم للغة العضو بالفريق"
+# قبل ما نبني توزيع مهمة عبر الإدخال الذكي. المهمة تُسجَّل بلغتك
+# (العربي) دايماً، وتُترجَم فقط لعرضها على العضو المكلَّف — الترجمة
+# تصير بعد ما تختار الشخص بنفسك بواجهة الاعتماد (تحسينك: "أخاف يحول
+# أو يتخذ اتجاه غير مرغوب فيه لو ما اخترت بنفسي")، أبداً قبل ذلك.
+# ============================================================
+
+_TARGET_LANG_NAMES = {"ar": "العربية", "en": "English", "am": "አማርኛ", "hi": "हिन्दी"}
+
+TRANSLATE_SYSTEM_PROMPT = "أنت مترجم دقيق لمصطلحات مزارع الأغنام/الماعز. ترجم النص المرفق حرفياً بمعناه لهذي اللغة: {target_lang_name}. رجّع الترجمة بس، بدون أي شرح أو مقدمة إضافية."
+
+
+def translate_text(text: str, target_lang: str) -> str | None:
+    """يرجع ترجمة `text` للغة `target_lang`، أو None عند أي فشل/غياب
+    مفتاح — المتصل (`draft_action_service`) يتراجع للنص الأصلي بدون
+    ترجمة بدل ما يفشل توزيع المهمة كلياً. لو `target_lang` عربي أصلاً
+    أو غير مدعومة، يرجع None فوراً (صفر استدعاء شبكة غير ضروري)."""
+    if target_lang == "ar" or target_lang not in _TARGET_LANG_NAMES or not text:
+        return None
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL, contents=text,
+            config=types.GenerateContentConfig(
+                system_instruction=TRANSLATE_SYSTEM_PROMPT.format(target_lang_name=_TARGET_LANG_NAMES[target_lang]),
+            ),
+        )
+        translated = (response.text or "").strip()
+        return translated or None
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.translate_text failed: %s", e)
         except Exception:
             pass
         return None

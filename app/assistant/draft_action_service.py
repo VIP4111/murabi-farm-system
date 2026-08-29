@@ -12,7 +12,7 @@
 from datetime import date, datetime, timezone, timedelta
 
 from app.extensions import db
-from app.models import AssistantDraftAction, Animal
+from app.models import AssistantDraftAction, Animal, User
 from app.assistant import llm_bridge
 from app.core import animal_service
 
@@ -23,7 +23,7 @@ def _now():
     return datetime.now(timezone.utc)
 
 
-def _execute_register_birth(payload: dict, *, actor):
+def _execute_register_birth(payload: dict, *, actor, assignee_id=None):
     mother_no = payload.get("target_animal_no")
     mother = Animal.query.filter_by(animal_no=mother_no).first()
     if not mother:
@@ -38,7 +38,7 @@ def _execute_register_birth(payload: dict, *, actor):
     )
 
 
-def _execute_record_weight(payload: dict, *, actor):
+def _execute_record_weight(payload: dict, *, actor, assignee_id=None):
     animal_no = payload.get("target_animal_no")
     animal = Animal.query.filter_by(animal_no=animal_no).first()
     if not animal:
@@ -57,6 +57,52 @@ def _execute_record_weight(payload: dict, *, actor):
     from app.core import cycle_engine
     cycle_engine.evaluate(animal)
     return record
+
+
+def _execute_assign_task(payload: dict, *, actor, assignee_id=None):
+    """بند إضافي 316 — طلبك الصريح: "احتاج منه يترجم للغة العضو
+    بالفريق"، وقبلها: "أخاف يحول أو يتخذ اتجاه غير مرغوب فيه لو ما
+    اخترت بنفسي". لهذا `assignee_id` هنا **إلزامي** ويجي حصراً من
+    اختيارك الصريح بواجهة الاعتماد (قائمة منسدلة بأسماء حقيقية) — النص
+    الحر يوصف المهمة بس، أبداً ما يحدد المكلَّف. المهمة تُسجَّل بلغتك
+    (عربي) دايماً بالـnotes، والعنوان (title) يُترجَم للغة الشخص
+    المختار لو مختلفة — نفس منطق ترجمة ردود المساعد (بند 275)، بس
+    للمهام هذي المرة."""
+    if not assignee_id:
+        raise ValueError("لازم تختار عضو الفريق المكلَّف قبل الاعتماد.")
+    assignee = User.query.get(assignee_id)
+    if not assignee:
+        raise ValueError("عضو الفريق المختار غير موجود.")
+
+    title = (payload.get("task_title") or "").strip()
+    if not title:
+        raise ValueError("نص المهمة غير محدَّد بالملاحظة — عدّلها ووزّع المهمة يدوياً.")
+
+    animal_id = None
+    animal_no = payload.get("target_animal_no")
+    if animal_no:
+        animal = Animal.query.filter_by(animal_no=animal_no).first()
+        if not animal:
+            raise ValueError(f"ما فيه حيوان برقم \"{animal_no}\".")
+        animal_id = animal.id
+
+    due_date = None
+    due_date_raw = payload.get("due_date")
+    if due_date_raw:
+        try:
+            due_date = date.fromisoformat(due_date_raw)
+        except ValueError:
+            due_date = None
+
+    translated_title = llm_bridge.translate_text(title, assignee.language or "ar")
+    final_title = translated_title or title
+    notes = f"النص الأصلي (كما كتبه {actor.name}): {title}" if translated_title else None
+
+    from app.team import task_service
+    return task_service.assign_task(
+        actor=actor, title=final_title, assignee_id=assignee.id,
+        animal_id=animal_id, due_date=due_date, notes=notes,
+    )
 
 
 # **مصدر الحقيقة الوحيد لما يُنفَّذ فعلياً** — لازم يطابق
@@ -78,6 +124,8 @@ ALLOWED_ACTION_TYPES = {
                         "required_permission": "animals.manage"},
     "record_weight": {"label": "تسجيل وزن", "execute": _execute_record_weight,
                        "required_permission": "animals.manage"},
+    "assign_task": {"label": "توزيع مهمة", "execute": _execute_assign_task,
+                     "required_permission": "tasks.assign_any"},
 }
 
 
@@ -127,18 +175,20 @@ def _save_proposal(raw_text: str, parsed: dict | None, *, created_by, input_sour
     return draft
 
 
-def confirm_draft(draft: AssistantDraftAction, *, actor):
+def confirm_draft(draft: AssistantDraftAction, *, actor, assignee_id=None):
     """ينفّذ الإجراء الحقيقي فقط الآن — وحيد نقطة بالنظام كله تكتب
     بقاعدة بيانات المزرعة بناءً على مسودة مساعد ذكي. يرجّع الاستثناء
     كما هو للمتصل (الراوت) بدل ابتلاعه — تعديل بيانات فعلي، الفشل يجب
-    يكون واضحاً ومرئياً، مو صامتاً."""
+    يكون واضحاً ومرئياً، مو صامتاً. `assignee_id` (بند إضافي 316) —
+    اختيارك الصريح بواجهة الاعتماد لعضو الفريق المكلَّف؛ يُستخدم بس
+    لمسودات `assign_task`، الأنواع الثانية تتجاهله."""
     if draft.status != "pending":
         raise ValueError("هذي المسودة مو بانتظار الاعتماد.")
     action_def = ALLOWED_ACTION_TYPES[draft.parsed_action_type]
     required_permission = action_def["required_permission"]
     if not actor.has_permission(required_permission):
         raise PermissionError(f"تحتاج صلاحية \"{required_permission}\" لاعتماد هذا النوع من المسودات.")
-    result = action_def["execute"](draft.get_payload(), actor=actor)
+    result = action_def["execute"](draft.get_payload(), actor=actor, assignee_id=assignee_id)
     draft.status = "confirmed"
     draft.confirmed_by_id = actor.id
     draft.decided_at = _now()

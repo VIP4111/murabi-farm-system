@@ -42,9 +42,15 @@
         </div>
         {% if d.audio_url %}<audio controls src="{{ d.audio_url }}" style="height:32px; margin-top:6px;"></audio>{% endif %}
       </div>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <form method="post" action="{{ url_for('assistant.drafts_confirm', draft_id=d.id) }}">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <form method="post" action="{{ url_for('assistant.drafts_confirm', draft_id=d.id) }}" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          {% if d.parsed_action_type == 'assign_task' %}
+          <select name="assignee_id" required>
+            <option value="">{{ _('اختر عضو الفريق المكلَّف...') }}</option>
+            {% for u in assignable_users %}<option value="{{ u.id }}">{{ u.name }}{% if u.role %} — {{ u.role.display_name }}{% endif %}</option>{% endfor %}
+          </select>
+          {% endif %}
           <button type="submit" class="btn" style="padding:7px 14px;">✅ {{ _('اعتماد') }}</button>
         </form>
         <form method="post" action="{{ url_for('assistant.drafts_reject', draft_id=d.id) }}">

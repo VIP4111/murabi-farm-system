@@ -149,7 +149,15 @@ def drafts_list():
 
     pending = pending_q.order_by(AssistantDraftAction.created_at.asc()).all()
     history = history_q.order_by(AssistantDraftAction.created_at.desc()).limit(30).all()
+
+    # بند إضافي 316 — قائمة اختيار المكلَّف لمسودات "توزيع مهمة"، نفس
+    # قائمة شاشة توزيع المهمة اليدوية بالضبط (team/task_form.html —
+    # كل الأعضاء الفعّالين، بدون فلترة دور).
+    from app.models import User
+    assignable_users = User.query.filter_by(is_active_account=True).order_by(User.name).all()
+
     return render_template("assistant/drafts_list.html", pending=pending, history=history,
+                            assignable_users=assignable_users,
                             gemini_configured=svc.llm_bridge.is_gemini_configured())
 
 
@@ -199,8 +207,12 @@ def drafts_new_voice():
 @require_permission("assistant.draft_actions.confirm")
 def drafts_confirm(draft_id):
     draft = AssistantDraftAction.query.get_or_404(draft_id)
+    # بند إضافي 316 — لازم يجي من قائمة منسدلة صريحة بواجهة الاعتماد
+    # (تحسينك: "أخاف يحول أو يتخذ اتجاه غير مرغوب فيه لو ما اخترت
+    # بنفسي") — الحقل فاضي لغير مسودات assign_task، بلا أي أثر.
+    assignee_id = request.form.get("assignee_id", type=int)
     try:
-        draft_action_service.confirm_draft(draft, actor=current_user)
+        draft_action_service.confirm_draft(draft, actor=current_user, assignee_id=assignee_id)
         flash("تم اعتماد المسودة وتنفيذها فعلياً.", "success")
     except PermissionError as e:
         flash(str(e), "error")
