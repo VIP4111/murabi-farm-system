@@ -196,6 +196,55 @@ def search_farm_notes(query: str, barn_name: str | None = None, animal_no: str |
     return {"status": "found", "notes": results}
 
 
+# بند إضافي 311 — طلبك: "هل المساعد الذكي مربوط بكل الأقسام؟ إذا لا
+# حاول تربطه". فحصت: النيات المحلية (`nlu_service.INTENTS`) أصلاً
+# تغطي أقسام أكثر بكثير من أدوات Gemini (5 بس قبل هذا). أي سؤال حر ما
+# يطابق نية محلية كان يوصل لـGemini بأدوات قراءة ضيقة — يعرف القطيع
+# والمالية بس، ما يقدر يجاوب حر عن الصحة/التحصينات/العلف/النعام/
+# التنبيهات/مهامك رغم إن كل هذي البيانات محسوبة أصلاً بـ`context_
+# service.py` (نفس الدوال اللي تغذّي النيات المحلية). أضفت 6 أدوات
+# جديدة تلف نفس دوال `context_service.py` الموجودة حرفياً — صفر منطق
+# جديد، بس نفس البيانات صارت متاحة لـGemini للأسئلة الحرة اللي ما
+# تطابق صيغة نية محلية بالضبط.
+
+def disease_summary() -> dict:
+    """ملخص الأمراض المفتوحة حالياً: العدد وقائمة (رقم الرأس، اسم
+    المرض، عدد أيام الفتح) لأهم 10 حالات."""
+    return context_service.disease_summary()
+
+
+def vaccinations_due_summary() -> dict:
+    """التحصينات المستحقة أو المتأخرة حالياً: العدد الكلي، عدد المتأخر
+    فعلياً، وأهم 10 حالات بتفصيلها."""
+    return context_service.vaccinations_due_summary()
+
+
+def feed_status_summary() -> dict:
+    """حالة تغذية القطيع الحالية: التكلفة اليومية/الشهرية التقديرية
+    للعلف، وتفصيل حسب كل حظيرة عندها خطة تغذية فعّالة."""
+    return context_service.feed_cost_summary()
+
+
+def ostrich_status_summary() -> dict:
+    """حالة الحاضنات والبيض حالياً: عدد الحاضنات الفعّالة والمشغولة،
+    سعتها الإجمالية، وعدد البيض (قيد الحضانة/فقس/فشل)."""
+    return context_service.ostrich_summary()
+
+
+def alerts_summary(limit: int = 5) -> dict:
+    """أهم التنبيهات النشطة حالياً بكل المزرعة: العدد الكلي، عدد
+    المستعجل، وتفصيل أهم التنبيهات."""
+    return context_service.alerts_summary(limit=limit)
+
+
+def _bind_my_tasks_summary(user):
+    def my_tasks_summary() -> dict:
+        """مهام المستخدم الحالي المفتوحة حالياً: العدد، عدد المقفلة
+        بانتظار مهمة سابقة، وتفصيل أهم 10 مهام."""
+        return context_service.my_tasks_summary(user)
+    return my_tasks_summary
+
+
 # خريطة كل أداة لصلاحية الوصول المطلوبة — نفس فلسفة `nlu_service.INTENTS`
 # (فحص الصلاحية قبل الاستدعاء، مو بعده). الأداة ما تُعرَض على Gemini
 # أصلاً لمستخدم ما يملك صلاحيتها.
@@ -205,10 +254,20 @@ _TOOL_PERMISSIONS = {
     animal_history: "animals.view",
     finance_summary: "finance.full.manage",
     search_farm_notes: "animals.view",
+    disease_summary: "health.view",
+    vaccinations_due_summary: "health.view",
+    feed_status_summary: "feed.view",
+    ostrich_status_summary: "repro.view",
+    alerts_summary: "animals.view",
 }
 
 
 def build_tools_for_user(user) -> list:
     """قائمة الأدوات المسموح بها لهذا المستخدم تحديداً — تُمرَّر مباشرة
-    لـ Gemini كدوال بايثون (استدعاء تلقائي عبر SDK)."""
-    return [fn for fn, permission in _TOOL_PERMISSIONS.items() if user.has_permission(permission)]
+    لـ Gemini كدوال بايثون (استدعاء تلقائي عبر SDK). `my_tasks_summary`
+    مربوطة بالمستخدم الحالي تحديداً (بند 311)، فتُبنى هنا كل مرة بدل ما
+    تكون بقائمة `_TOOL_PERMISSIONS` الثابتة."""
+    tools = [fn for fn, permission in _TOOL_PERMISSIONS.items() if user.has_permission(permission)]
+    if user.has_permission("tasks.view_own"):
+        tools.append(_bind_my_tasks_summary(user))
+    return tools
