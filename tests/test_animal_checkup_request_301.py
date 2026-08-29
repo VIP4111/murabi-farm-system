@@ -2,10 +2,12 @@
 مثل افحص نعجة رقم خمس ورفع تقرير". كل بند فحص تختاره يصير مهمة مستقلة
 مربوطة ببعض بنفس آلية الدفعة الموجودة أصلاً (source_type/source_id)،
 بدون أي جدول جديد."""
+from unittest.mock import patch
+
 from app.extensions import db
 from app.team import task_service
-from app.models import Role, User, Task
-from factories import make_animal
+from app.models import Role, User, Task, AuditLog
+from factories import make_animal, make_barn
 
 
 def _make_doctor(phone="0599999210"):
@@ -54,6 +56,51 @@ def test_no_assignee_uses_target_role_doctor(app, owner):
     )
     assert tasks[0].assignee_id is None
     assert tasks[0].target_role == "doctor"
+
+
+def test_target_role_doctor_not_overridden_by_barn_responsible_worker(app, owner):
+    """بند إضافي 308 — فجوة اكتُشفت بالتدقيق: `assign_animal_checkup`
+    بعد إعادة استخدام `assign_task()` (لاستعادة سجل AuditLog وإشعار
+    تيليجرام الفائتين) لازم تبقى تحترم "أي دكتور متاح" (target_role)
+    ولا تسقط بالغلط لعامل الحظيرة المسؤول العادي (اللي غالباً مو دكتور)
+    — نفس منطق `assign_task`'s barn fallback يشتغل بس لو `assignee_id`
+    فاضي و`barn_id` معبّى، وهذا بالضبط سيناريو طلب فحص بدون تعيين شخص."""
+    worker_role = Role.query.filter_by(name="worker").first()
+    barn_worker = User(name="عامل الحظيرة", phone="0599999220", role_id=worker_role.id)
+    barn_worker.set_password("pass1234")
+    db.session.add(barn_worker)
+    db.session.commit()
+
+    barn = make_barn(barn_no="B-CHECKUP", responsible_worker_id=barn_worker.id)
+    animal = make_animal(animal_no="415", barn_id=barn.id)
+
+    tasks = task_service.assign_animal_checkup(
+        actor=owner, animal=animal, items=["فحص العين والأنف"], target_role="doctor",
+    )
+    assert tasks[0].assignee_id != barn_worker.id
+    assert tasks[0].assignee_id is None
+    assert tasks[0].target_role == "doctor"
+
+
+def test_checkup_tasks_are_audited_and_notify_assignee(app, owner):
+    """بند إضافي 308 — النسخة الأصلية كانت تبني صفوف Task يدوياً بدل
+    استدعاء assign_task()، وفوّتت بالغلط سجل AuditLog وإشعار تيليجرام
+    الفوري اللي كل مهمة ثانية بالنظام تحصل عليها تلقائياً."""
+    doctor = _make_doctor(phone="0599999221")
+    doctor.telegram_chat_id = "555"
+    db.session.commit()
+    animal = make_animal(animal_no="416")
+
+    with patch("app.core.telegram_service.notify_user") as mock_notify:
+        tasks = task_service.assign_animal_checkup(
+            actor=owner, animal=animal, items=["فحص الشهية والحالة العامة"], assignee_id=doctor.id,
+        )
+
+    audit_rows = AuditLog.query.filter_by(action="task.assign", entity_type="Task", entity_id=tasks[0].id).all()
+    assert len(audit_rows) == 1
+    assert audit_rows[0].actor_user_id == owner.id
+    mock_notify.assert_called_once()
+    assert mock_notify.call_args[0][0].id == doctor.id
 
 
 def test_rejects_empty_item_list(app, owner):

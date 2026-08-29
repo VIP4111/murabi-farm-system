@@ -231,27 +231,37 @@ def assign_animal_checkup(*, actor, animal, items: list[str], assignee_id=None,
     جدول جديد. الدكتور يشوفهم كمجموعة واحدة بشاشة تفاصيل أي مهمة منهم
     (`task_rich_context`/`batch_siblings` تشتغلان بدون أي تعديل)،
     وإنجاز كل بند بملاحظته الخاصة هو فعلياً "التقرير" اللي طلبته —
-    بدون نموذج تقرير منفصل يحتاج بناء وصيانة زيادة."""
-    if not actor.has_permission("tasks.assign_any"):
-        raise TaskPermissionError("ما تملك صلاحية توزيع المهام.")
+    بدون نموذج تقرير منفصل يحتاج بناء وصيانة زيادة.
+
+    **بند إضافي 308 (فجوة تدقيق حقيقية)**: النسخة الأصلية كانت تبني
+    صفوف `Task` يدوياً بدل تستدعي `assign_task()` — فوّتت بالغلط سجل
+    `AuditLog` (كل دالة ثانية بهذا الملف تسجّله، `assign_task`/`fail_task`/
+    `complete_task`...) **وإشعار تيليجرام الفوري للمكلَّف** اللي
+    `assign_task()` تبعثه تلقائياً. صارت تستدعي `assign_task()` لكل بند
+    (نفس الفحص/التوثيق/الإشعار المعياري)، وبعدها بس تربط الدفعة."""
     items = [i.strip() for i in items if i and i.strip()]
     if not items:
         raise TaskStateError("لازم تختار بند فحص واحد على الأقل.")
 
     due_date = due_date or (date.today() + timedelta(days=1))
+    # بند إضافي 308 — لو ما فيه assignee_id صريح، ما نمرّر barn_id لـ
+    # assign_task() عمداً: فرعها الداخلي "بدون معيَّن + فيه حظيرة" يعيّن
+    # عامل الحظيرة المسؤول تلقائياً (منطق صحيح لمهام عادية)، بس هنا
+    # يكسر "أي دكتور متاح" (target_role) — عامل الحظيرة غالباً مو دكتور.
+    # نحط barn_id على صف المهمة يدوياً بعدين، بدون ما نفعّل ذاك الفرع.
+    assign_barn_id = animal.barn_id if assignee_id else None
     tasks: list[Task] = []
     source_id = None
     for item in items:
-        task = Task(
-            title=f"{item} — {animal.animal_no}", task_type="animal_checkup", status="pending",
-            assignee_id=assignee_id, animal_id=animal.id, barn_id=animal.barn_id,
-            due_date=due_date, target_role=target_role or None,
-            created_by_id=actor.id, source_type="AnimalCheckupRequest",
+        task = assign_task(
+            actor=actor, title=f"{item} — {animal.animal_no}", task_type="animal_checkup",
+            assignee_id=assignee_id, animal_id=animal.id, barn_id=assign_barn_id,
+            due_date=due_date, target_role=target_role,
         )
-        db.session.add(task)
-        db.session.flush()  # نحتاج task.id فوراً — أول مهمة بالدفعة تصير هوية الدفعة نفسها
+        task.barn_id = animal.barn_id
         if source_id is None:
             source_id = task.id
+        task.source_type = "AnimalCheckupRequest"
         task.source_id = source_id
         tasks.append(task)
     db.session.commit()
