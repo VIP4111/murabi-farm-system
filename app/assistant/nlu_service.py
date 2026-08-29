@@ -365,7 +365,7 @@ def answer_with_image(user, message_text: str, image_bytes: bytes, mime_type: st
     if reply:
         return {"reply": reply, "intent_code": None, "answered_by": "llm_vision"}
     return {
-        "reply": "تحليل الصور يحتاج تفعيل GEMINI_API_KEY حالياً — رفعت صورتك بنجاح، بس ما قدرت أحلّلها. جرّب بعد شوي أو اسأل نصياً.",
+        "reply": tr("vision_unavailable", lang),
         "intent_code": None, "answered_by": "local",
     }
 

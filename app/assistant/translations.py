@@ -310,6 +310,15 @@ T: dict[str, dict[str, str]] = {
         "am": " — የትርፍ መቶኛ: {percent}%",
         "hi": " — लाभ प्रतिशत: {percent}%",
     },
+    # بند إضافي 306 — فجوة حقيقية: `answer_with_image` (بند 305) كانت
+    # تحسب `lang` بدون ما تستخدمه فعلياً — رسالة ثابتة عربية دائماً،
+    # عكس مبدأ هذا الملف نفسه (بند 275).
+    "vision_unavailable": {
+        "ar": "تحليل الصور يحتاج تفعيل GEMINI_API_KEY حالياً — رفعت صورتك بنجاح، بس ما قدرت أحلّلها. جرّب بعد شوي أو اسأل نصياً.",
+        "en": "Image analysis needs GEMINI_API_KEY to be enabled right now — your image was uploaded successfully, but I couldn't analyze it. Try again shortly or ask in text.",
+        "am": "የምስል ትንተና አሁን የነቃ GEMINI_API_KEY ያስፈልገዋል — ምስልዎ በተሳካ ሁኔታ ተጭኗል፣ ግን መተንተን አልቻልኩም። ትንሽ ቆይተው ይሞክሩ ወይም በጽሑፍ ይጠይቁ።",
+        "hi": "छवि विश्लेषण के लिए अभी GEMINI_API_KEY सक्रिय होना ज़रूरी है — आपकी छवि सफलतापूर्वक अपलोड हो गई, पर मैं उसका विश्लेषण नहीं कर सका। थोड़ी देर बाद कोशिश करें या टेक्स्ट में पूछें।",
+    },
     "finance_debt": {
         "ar": "دين مستحق حالياً: {debt}",
         "en": "Currently outstanding debt: {debt}",
