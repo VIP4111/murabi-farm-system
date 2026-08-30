@@ -68,3 +68,34 @@ def test_dose_rules_json_includes_default_dose_ml_fallback(app, logged_in_client
     resp = logged_in_client.get(f"/health/pharmacy/{item.id}/dose-rules")
     assert resp.status_code == 200
     assert resp.get_json()["default_dose_ml"] == 3
+
+
+# ---- بند إضافي (2026-08-30) — طلبك الصريح بعد شاشة الصلاحيات: "نفس
+# الحركه ضيفها في من داخل اضافة دوا... دواعي الاستعمال" — دليل فئة
+# الدواء (زر "ℹ️ دليل الدواء") صار يعرض ترجمة إنجليزية جنب العربي.
+
+def test_medicine_class_guide_en_matches_arabic_classes_exactly():
+    """كل فئة دواء عربية لازم يكون لها ترجمة إنجليزية مطابقة — صفر
+    فئة ناقصة وصفر فئة زايدة، بنفس أسلوب فحص PERMISSIONS_EN."""
+    from app.health.health_service import MEDICINE_CLASS_GUIDE, MEDICINE_CLASS_GUIDE_EN
+    ar_keys = set(MEDICINE_CLASS_GUIDE.keys())
+    en_keys = set(MEDICINE_CLASS_GUIDE_EN.keys())
+    assert ar_keys == en_keys
+    for key, guide in MEDICINE_CLASS_GUIDE_EN.items():
+        assert guide.get("title") and guide.get("notes")
+
+
+def test_pharmacy_new_page_ships_english_guide_dict_to_js(app, logged_in_client):
+    resp = logged_in_client.get("/health/pharmacy/new")
+    assert resp.status_code == 200
+    assert b"MEDICINE_CLASS_GUIDE_EN" in resp.data
+    assert b"Vaccine / immunization" in resp.data
+
+
+def test_pharmacy_edit_page_ships_english_guide_dict_to_js(app, logged_in_client):
+    item = Pharmacy(name="لقاح اختبار ترجمة", medicine_class="vaccine", status="active")
+    db.session.add(item)
+    db.session.commit()
+    resp = logged_in_client.get(f"/health/pharmacy/{item.id}/edit")
+    assert resp.status_code == 200
+    assert b"MEDICINE_CLASS_GUIDE_EN" in resp.data

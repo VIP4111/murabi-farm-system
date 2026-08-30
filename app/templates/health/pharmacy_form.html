@@ -162,6 +162,7 @@
   // دليل فئات الدواء (بند إضافي 62) — نفس نمط دليل الحقن الميداني: نص
   // ثابت كتبه إنسان، يُعرض بس حسب الفئة المختارة، صفر تشخيص/توصية لدواء بعينه.
   var MEDICINE_CLASS_GUIDE = {{ (medicine_class_guide or {}) | tojson }};
+  var MEDICINE_CLASS_GUIDE_EN = {{ (medicine_class_guide_en or {}) | tojson }};
   var CHOOSE_CLASS_MSG = {{ _('اختر فئة الدواء أولاً لعرض دليلها.')|tojson }};
   var classSelect = document.getElementById('medicineClassSelect');
   var nameSelect = document.getElementById('drugNameSelect');
@@ -221,8 +222,13 @@
         guideBox.textContent = CHOOSE_CLASS_MSG;
         return;
       }
+      var guideEn = MEDICINE_CLASS_GUIDE_EN[classSelect.value];
+      var html = '<b>' + guide.title + '</b><br>' + guide.notes;
+      if (guideEn) {
+        html += '<br><span style="color:var(--muted); font-size:12px; direction:ltr; display:inline-block; margin-top:6px;"><b>' + guideEn.title + '</b><br>' + guideEn.notes + '</span>';
+      }
       guideBox.style.display = guideBox.style.display === 'block' ? 'none' : 'block';
-      guideBox.innerHTML = '<b>' + guide.title + '</b><br>' + guide.notes;
+      guideBox.innerHTML = html;
     });
   }
 })();

@@ -146,6 +146,44 @@ def medicine_class_guide_for(medicine_class: str | None) -> dict | None:
     return MEDICINE_CLASS_GUIDE.get(medicine_class) if medicine_class else None
 
 
+# ترجمة إنجليزية لدليل فئات الدواء (بند إضافي، طلبك الصريح بعد شاشة
+# الصلاحيات: "نفس الحركه ضيفها في من داخل اضافة دوا... دواعي
+# الاستعمال") — تُعرض جنب النص العربي بزر "ℹ️ دليل الدواء"، مو بدلاً
+# عنه، بنفس مبدأ عرض الصلاحيات (عربي + إنجليزي مع بعض دائماً). نص ثابت
+# مطابق بالمعنى للعربي أعلاه بـMEDICINE_CLASS_GUIDE، بدون أي تغيير على
+# ذاك القاموس نفسه.
+MEDICINE_CLASS_GUIDE_EN = {
+    "vaccine": {
+        "title": "Vaccine / immunization",
+        "notes": "Given preventively before exposure to build the body's immunity against a disease — not used to treat an existing illness. Usually needs a booster dose after a certain period (the protection duration) to keep the immunity up.",
+    },
+    "antibiotic": {
+        "title": "Antibiotic",
+        "notes": "Used to treat an actual, existing bacterial infection, after the vet's diagnosis — usually has a withdrawal period before selling/milking the animal. Has no effect on viruses.",
+    },
+    "antiparasitic": {
+        "title": "Antiparasitic / dewormer",
+        "notes": "Given periodically per the farm's program to control internal/external parasites — dosing it too close together without real need may reduce its effectiveness later (same 30-day re-dose guard used in the system).",
+    },
+    "supplement": {
+        "title": "Vitamins and supplements",
+        "notes": "Supports general nutrition or fills a specific nutritional gap (e.g. selenium) — not a treatment for an existing disease, and most have no withdrawal period.",
+    },
+    "topical_disinfectant": {
+        "title": "Disinfectants and topical treatments",
+        "notes": "Used directly on the skin/wound surface (disinfection, healing, external parasites) — usually less systemic absorption than injection/oral routes.",
+    },
+    "other": {
+        "title": "Other",
+        "notes": "A general category for anything that doesn't fit the other classes — check the reference dose note written on the medicine itself.",
+    },
+}
+
+
+def medicine_class_guide_en_for(medicine_class: str | None) -> dict | None:
+    return MEDICINE_CLASS_GUIDE_EN.get(medicine_class) if medicine_class else None
+
+
 # دليل الأعراض الميداني السريع (بند إضافي، خطوات إسعاف أولية عامة
 # لحين وصول الطبيب) — بنفس مبدأ INJECTION_GUIDE/MEDICINE_CLASS_GUIDE
 # بالضبط: مرجع عام ثابت (إجراءات تشغيلية قياسية شائعة بأدلة تربية
