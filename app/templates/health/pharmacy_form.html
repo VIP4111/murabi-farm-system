@@ -5,6 +5,28 @@
   {% if item %}
   <p><a class="btn light" href="{{ url_for('health.pharmacy_purchase', pharmacy_id=item.id) }}">📦 {{ _('تسجيل عملية شراء (دفعة بتاريخها الخاص)') }}</a></p>
   {% endif %}
+  {% if not item %}
+  <p>
+    <button type="button" class="btn light" id="openPrescriptionModalBtn">📷 {{ _('تعبئة من صورة روشتة (مساعدة ذكية)') }}</button>
+  </p>
+  {% if prefill %}
+  <div class="notice">{{ _('البيانات تحت مُعبَّأة من صورة رفعتها — راجع كل حقل وصحّحه قبل ما تضغط "حفظ".') }}</div>
+  {% endif %}
+
+  <div class="modal-overlay" id="prescriptionModal">
+    <div class="modal-card">
+      <button type="button" class="modal-close" id="closePrescriptionModalBtn">✕</button>
+      <h2>📷 {{ _('تعبئة من صورة روشتة') }}</h2>
+      <p style="color:var(--muted); font-size:13px;">{{ _('ارفع صورة واضحة للروشتة أو عبوة الدواء — المساعد يحاول يقرأ منها الاسم والفئة وفترات السحب وتاريخ الانتهاء لو ظاهرة، ويعبّي الحقول تلقائياً. راجع كل حقل بنفسك قبل الحفظ — المساعد ما يخترع أي رقم غير مكتوب فعلياً بالصورة.') }}</p>
+      <form method="post" action="{{ url_for('health.pharmacy_prescription_image') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>{{ _('صورة الروشتة/العبوة') }}</label>
+        <input type="file" name="image" accept="image/*" required>
+        <button class="btn" type="submit" style="margin-top:10px;">✨ {{ _('حلّل واملأ الحقول') }}</button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
@@ -13,7 +35,7 @@
     <select name="medicine_class" id="medicineClassSelect">
       <option value="">-</option>
       {% for code in medicine_classes %}
-      <option value="{{ code }}" {{ 'selected' if item and item.medicine_class == code }}>{{ medicine_class_labels[code] }}{% if medicine_class_labels_en and medicine_class_labels_en.get(code) %} ({{ medicine_class_labels_en[code] }}){% endif %}</option>
+      <option value="{{ code }}" {{ 'selected' if (item and item.medicine_class == code) or (not item and prefill.get('medicine_class') == code) }}>{{ medicine_class_labels[code] }}{% if medicine_class_labels_en and medicine_class_labels_en.get(code) %} ({{ medicine_class_labels_en[code] }}){% endif %}</option>
       {% endfor %}
     </select>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تحديد "مضاد طفيليات/ديدان" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية "اسم الدواء" والحقول الشرطية تحت.') }}</p>
@@ -23,10 +45,13 @@
       <select name="name" id="drugNameSelect" required style="flex:1;">
         <option value="">{{ _('اختر اسم دواء') }}</option>
         {% for e in drug_catalog %}
-        <option value="{{ e.name }}" data-class="{{ e.medicine_class or '' }}" {{ 'selected' if item and item.name == e.name }}>{{ e.name }}</option>
+        <option value="{{ e.name }}" data-class="{{ e.medicine_class or '' }}" {{ 'selected' if (item and item.name == e.name) or (not item and prefill.get('name') == e.name) }}>{{ e.name }}</option>
         {% endfor %}
         {% if item and item.name not in drug_catalog|map(attribute='name')|list %}
         <option value="{{ item.name }}" selected>{{ item.name }}</option>
+        {% endif %}
+        {% if not item and prefill.get('name') and prefill.get('name') not in drug_catalog|map(attribute='name')|list %}
+        <option value="{{ prefill['name'] }}" selected>{{ prefill['name'] }} ({{ _('من الصورة') }})</option>
         {% endif %}
       </select>
       <a class="btn light" id="drugCatalogAddBtn" href="{{ url_for('health.drug_catalog_new') }}" title="{{ _('إضافة اسم دواء جديد') }}" target="_blank">➕</a>
@@ -39,17 +64,17 @@
       <select name="usage_method" style="flex:1;">
         <option value="">-</option>
         {% for r in usage_routes %}
-        <option value="{{ r.name }}" {{ 'selected' if item and item.usage_method == r.name }}>{{ r.name }}{% if usage_route_labels_en and usage_route_labels_en.get(r.name) %} ({{ usage_route_labels_en[r.name] }}){% endif %}</option>
+        <option value="{{ r.name }}" {{ 'selected' if (item and item.usage_method == r.name) or (not item and prefill.get('usage_method') == r.name) }}>{{ r.name }}{% if usage_route_labels_en and usage_route_labels_en.get(r.name) %} ({{ usage_route_labels_en[r.name] }}){% endif %}</option>
         {% endfor %}
       </select>
       <a class="btn light" href="{{ url_for('health.usage_routes_new') }}" title="{{ _('إضافة طريقة استخدام جديدة') }}" target="_blank">➕</a>
     </div>
     <label>{{ _('ملاحظة الجرعة المرجعية (اختياري)') }}</label>
-    <textarea name="standard_dosage_note" rows="2" placeholder="{{ _('مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة') }}">{{ item.standard_dosage_note if item else '' }}</textarea>
+    <textarea name="standard_dosage_note" rows="2" placeholder="{{ _('مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة') }}">{{ item.standard_dosage_note if item else prefill.get('standard_dosage_note', '') }}</textarea>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً.') }}</p>
 
     <div class="form-section-title">{{ _('الصلاحية والتخزين') }}</div>
-    <label>{{ _('تاريخ انتهاء الصلاحية (اختياري)') }}</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else '' }}">
+    <label>{{ _('تاريخ انتهاء الصلاحية (اختياري)') }}</label><input name="expiry_date" id="expiryDateInput" type="date" value="{{ item.expiry_date if item and item.expiry_date else (prefill.get('expiry_date', '') if not item else '') }}">
     <p id="expiryBadge" style="font-size:12px; margin:-6px 0 10px; font-weight:bold;"></p>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن "فترة السحب" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء.') }}</p>
 
@@ -63,10 +88,10 @@
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي.') }}</p>
 
     <div id="withdrawalGroup" style="display:none;">
-      <label>{{ _('فترة سحب اللحم/الذبح (بالأيام)') }}</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
+      <label>{{ _('فترة سحب اللحم/الذبح (بالأيام)') }}</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else prefill.get('withdrawal_days', 0) }}">
       <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تذبحه — النظام يحسبها تلقائياً ويمنع البيع خلالها.') }}</p>
 
-      <label>{{ _('فترة سحب الحليب (بالأيام، اختياري)') }}</label><input name="withdrawal_days_milk" type="number" value="{{ item.withdrawal_days_milk if item else 0 }}">
+      <label>{{ _('فترة سحب الحليب (بالأيام، اختياري)') }}</label><input name="withdrawal_days_milk" type="number" value="{{ item.withdrawal_days_milk if item else prefill.get('withdrawal_days_milk', 0) }}">
       <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('مستقلة عن فترة سحب اللحم أعلاه — كثير أدوية فترة سحب الحليب فيها تختلف (غالباً أقصر). اتركها 0 لو الدواء ما له فترة سحب حليب منفصلة.') }}</p>
     </div>
 
@@ -233,6 +258,18 @@
       guideBox.style.display = guideBox.style.display === 'block' ? 'none' : 'block';
       guideBox.innerHTML = html;
     });
+  }
+
+  // نافذة "تعبئة من صورة روشتة" (بند إضافي، 2026-08-30) — نفس نمط
+  // النوافذ المنبثقة الموجود أصلاً بـbase.html (بند 318).
+  var openPrescriptionBtn = document.getElementById('openPrescriptionModalBtn');
+  var closePrescriptionBtn = document.getElementById('closePrescriptionModalBtn');
+  var prescriptionModal = document.getElementById('prescriptionModal');
+  if (openPrescriptionBtn && prescriptionModal) {
+    openPrescriptionBtn.addEventListener('click', function(){ prescriptionModal.classList.add('open'); });
+  }
+  if (closePrescriptionBtn && prescriptionModal) {
+    closePrescriptionBtn.addEventListener('click', function(){ prescriptionModal.classList.remove('open'); });
   }
 })();
 </script>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 13:24+0300\n"
+"POT-Creation-Date: 2026-08-30 13:41+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1745,7 +1745,7 @@ msgstr "Suggested purchase quantity"
 
 #: app/reports/report_service.py:478 app/templates/equipment/item_form.html:12
 #: app/templates/feed/item_form.html:29
-#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_form.html:128
 msgid "الوحدة"
 msgstr "Unit"
 
@@ -2101,7 +2101,7 @@ msgstr "Milk"
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
 #: app/templates/health/disease_types_list.html:23
-#: app/templates/health/pharmacy_form.html:113
+#: app/templates/health/pharmacy_form.html:138
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/isolation_exit_form.html:25
@@ -2290,7 +2290,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:9
 #: app/templates/health/doctor_form.html:17
-#: app/templates/health/pharmacy_form.html:114
+#: app/templates/health/pharmacy_form.html:139
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/ostrich/egg_form.html:25
@@ -2867,7 +2867,7 @@ msgstr "Required — unless the source is \"born on farm\" without a tag ready y
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/drug_catalog_form.html:7
-#: app/templates/health/pharmacy_form.html:21
+#: app/templates/health/pharmacy_form.html:43
 #: app/templates/health/pharmacy_list.html:13
 #: app/templates/health/pharmacy_shortages.html:14
 #: app/templates/health/protocol_form.html:7
@@ -5847,12 +5847,12 @@ msgstr "Currently available quantity"
 
 #: app/templates/equipment/item_form.html:14
 #: app/templates/feed/item_form.html:38
-#: app/templates/health/pharmacy_form.html:104
+#: app/templates/health/pharmacy_form.html:129
 msgid "الحد الأدنى للتنبيه"
 msgstr "Minimum stock alert threshold"
 
 #: app/templates/equipment/item_form.html:15
-#: app/templates/health/pharmacy_form.html:106
+#: app/templates/health/pharmacy_form.html:131
 #: app/templates/health/pharmacy_purchase_form.html:18
 msgid "سعر الوحدة (اختياري)"
 msgstr "Unit price (optional)"
@@ -6468,7 +6468,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr "Contains high copper (salt blocks/mineral supplements)"
 
 #: app/templates/feed/item_form.html:23
-#: app/templates/health/pharmacy_form.html:111
+#: app/templates/health/pharmacy_form.html:136
 msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
 msgstr "Enables an explicit programmatic block on its use for any Naeemi-breed animal (item 51) — no override option."
 
@@ -6513,7 +6513,7 @@ msgid "مفيد للوحدات اللي وزنها مو ثابت (ربطة، ك�
 msgstr "Useful for units whose weight isn't fixed (bale, bag) — a reference for you only, not used in any automatic calculation."
 
 #: app/templates/feed/item_form.html:37
-#: app/templates/health/pharmacy_form.html:102
+#: app/templates/health/pharmacy_form.html:127
 msgid "الكمية المتوفرة"
 msgstr "Available quantity"
 
@@ -6535,7 +6535,7 @@ msgid "نفاد متوقع"
 msgstr "Expected stockout"
 
 #: app/templates/feed/items_list.html:16
-#: app/templates/health/pharmacy_form.html:110
+#: app/templates/health/pharmacy_form.html:135
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "Contains high copper"
@@ -6546,7 +6546,7 @@ msgstr "kg/"
 
 #: app/templates/feed/items_list.html:27
 #: app/templates/health/disease_form.html:37
-#: app/templates/health/pharmacy_form.html:145
+#: app/templates/health/pharmacy_form.html:170
 #: app/templates/health/pharmacy_list.html:20
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:21
@@ -7875,7 +7875,7 @@ msgid "لا يوجد أطباء مسجّلين بعد."
 msgstr "No doctors registered yet."
 
 #: app/templates/health/drug_catalog_form.html:4
-#: app/templates/health/pharmacy_form.html:32
+#: app/templates/health/pharmacy_form.html:57
 msgid "إضافة اسم دواء جديد"
 msgstr "Add a new medicine name"
 
@@ -7966,166 +7966,194 @@ msgstr "New medicine"
 msgid "تسجيل عملية شراء (دفعة بتاريخها الخاص)"
 msgstr "Record a purchase (a batch with its own date)"
 
-#: app/templates/health/pharmacy_form.html:11
+#: app/templates/health/pharmacy_form.html:10
+msgid "تعبئة من صورة روشتة (مساعدة ذكية)"
+msgstr "Fill from a prescription photo (AI assist)"
+
+#: app/templates/health/pharmacy_form.html:13
+msgid "البيانات تحت مُعبَّأة من صورة رفعتها — راجع كل حقل وصحّحه قبل ما تضغط \"حفظ\"."
+msgstr "The fields below were filled from a photo you uploaded — review and correct every field before clicking \"Save\"."
+
+#: app/templates/health/pharmacy_form.html:19
+msgid "تعبئة من صورة روشتة"
+msgstr "Fill from a prescription photo"
+
+#: app/templates/health/pharmacy_form.html:20
+msgid "ارفع صورة واضحة للروشتة أو عبوة الدواء — المساعد يحاول يقرأ منها الاسم والفئة وفترات السحب وتاريخ الانتهاء لو ظاهرة، ويعبّي الحقول تلقائياً. راجع كل حقل بنفسك قبل الحفظ — المساعد ما يخترع أي رقم غير مكتوب فعلياً بالصورة."
+msgstr "Upload a clear photo of the prescription or medicine package — the assistant tries to read the name, class, withdrawal periods, and expiry date if visible, and fills the fields automatically. Review every field yourself before saving — the assistant never invents a number that isn't actually written on the image."
+
+#: app/templates/health/pharmacy_form.html:23
+msgid "صورة الروشتة/العبوة"
+msgstr "Prescription/package photo"
+
+#: app/templates/health/pharmacy_form.html:25
+msgid "حلّل واملأ الحقول"
+msgstr "Analyze and fill fields"
+
+#: app/templates/health/pharmacy_form.html:33
 msgid "بيانات الدواء الأساسية"
 msgstr "Basic medicine data"
 
-#: app/templates/health/pharmacy_form.html:12
+#: app/templates/health/pharmacy_form.html:34
 #: app/templates/health/pharmacy_list.html:13
 msgid "فئة الدواء"
 msgstr "Medicine class"
 
-#: app/templates/health/pharmacy_form.html:19
+#: app/templates/health/pharmacy_form.html:41
 msgid "تحديد \"مضاد طفيليات/ديدان\" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية \"اسم الدواء\" والحقول الشرطية تحت."
 msgstr "Selecting \"Antiparasitic/dewormer\" here specifically is what enables the 30-day dose-repeat guard — it's also the basis for filtering \"Medicine name\" and the conditional fields below."
 
-#: app/templates/health/pharmacy_form.html:24
+#: app/templates/health/pharmacy_form.html:46
 msgid "اختر اسم دواء"
 msgstr "Choose a medicine name"
 
-#: app/templates/health/pharmacy_form.html:33
+#: app/templates/health/pharmacy_form.html:54
+msgid "من الصورة"
+msgstr "from photo"
+
+#: app/templates/health/pharmacy_form.html:58
 msgid "دليل الدواء"
 msgstr "Medicine guide"
 
-#: app/templates/health/pharmacy_form.html:37
+#: app/templates/health/pharmacy_form.html:62
 msgid "طريقة الاستخدام (اختياري)"
 msgstr "Usage method (optional)"
 
-#: app/templates/health/pharmacy_form.html:45
+#: app/templates/health/pharmacy_form.html:70
 msgid "إضافة طريقة استخدام جديدة"
 msgstr "Add a new usage method"
 
-#: app/templates/health/pharmacy_form.html:47
+#: app/templates/health/pharmacy_form.html:72
 msgid "ملاحظة الجرعة المرجعية (اختياري)"
 msgstr "Reference dosage note (optional)"
 
-#: app/templates/health/pharmacy_form.html:48
+#: app/templates/health/pharmacy_form.html:73
 msgid "مثال: 5 مل لكل 50 كجم وزن حي — حسب نشرة الشركة المصنّعة"
 msgstr "Example: 5 ml per 50 kg live weight — per the manufacturer's leaflet"
 
-#: app/templates/health/pharmacy_form.html:49
+#: app/templates/health/pharmacy_form.html:74
 msgid "مرجع وصفي تكتبه أنت مرة وحدة — يظهر بعدها بالقوائم لتسريع الإدخال، والنظام ما يحسب ولا يقترح أي جرعة تلقائياً."
 msgstr "A descriptive reference you write once — it then appears in lists to speed up entry, and the system never calculates or suggests any dose automatically."
 
-#: app/templates/health/pharmacy_form.html:51
+#: app/templates/health/pharmacy_form.html:76
 msgid "الصلاحية والتخزين"
 msgstr "Expiry and storage"
 
-#: app/templates/health/pharmacy_form.html:52
+#: app/templates/health/pharmacy_form.html:77
 msgid "تاريخ انتهاء الصلاحية (اختياري)"
 msgstr "Expiry date (optional)"
 
-#: app/templates/health/pharmacy_form.html:54
+#: app/templates/health/pharmacy_form.html:79
 msgid "تاريخ انتهاء صلاحية الدواء نفسه المطبوع على العلبة — مختلف تماماً عن \"فترة السحب\" تحت، اللي هي مدة منع بيع/حلب الحيوان بعد ما يُعطى له الدواء."
 msgstr "The medicine's own expiry date printed on the box — entirely different from the \"withdrawal period\" below, which is the duration preventing selling/milking the animal after it's given the medicine."
 
-#: app/templates/health/pharmacy_form.html:56
+#: app/templates/health/pharmacy_form.html:81
 msgid "ظروف التخزين (اختياري)"
 msgstr "Storage conditions (optional)"
 
-#: app/templates/health/pharmacy_form.html:63
+#: app/templates/health/pharmacy_form.html:88
 msgid "وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي."
 msgstr "Descriptive only — tells the worker where to actually store the medicine, doesn't trigger any automatic alert."
 
-#: app/templates/health/pharmacy_form.html:66
+#: app/templates/health/pharmacy_form.html:91
 msgid "فترة سحب اللحم/الذبح (بالأيام)"
 msgstr "Meat/slaughter withdrawal period (days)"
 
-#: app/templates/health/pharmacy_form.html:67
+#: app/templates/health/pharmacy_form.html:92
 msgid "عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تذبحه — النظام يحسبها تلقائياً ويمنع البيع خلالها."
 msgstr "The number of days you must wait after giving this medicine to an animal before you can sell or slaughter it — the system calculates this automatically and blocks the sale during that period."
 
-#: app/templates/health/pharmacy_form.html:69
+#: app/templates/health/pharmacy_form.html:94
 msgid "فترة سحب الحليب (بالأيام، اختياري)"
 msgstr "Milk withdrawal period (days, optional)"
 
-#: app/templates/health/pharmacy_form.html:70
+#: app/templates/health/pharmacy_form.html:95
 msgid "مستقلة عن فترة سحب اللحم أعلاه — كثير أدوية فترة سحب الحليب فيها تختلف (غالباً أقصر). اتركها 0 لو الدواء ما له فترة سحب حليب منفصلة."
 msgstr "Independent of the meat withdrawal period above — many medicines have a different (usually shorter) milk withdrawal period. Leave it 0 if this medicine has no separate milk withdrawal period."
 
-#: app/templates/health/pharmacy_form.html:74
+#: app/templates/health/pharmacy_form.html:99
 msgid "مدة الحماية بالأيام (للقاحات — اختياري)"
 msgstr "Protection duration in days (for vaccines — optional)"
 
-#: app/templates/health/pharmacy_form.html:76
+#: app/templates/health/pharmacy_form.html:101
 msgid "تُستخدم فقط لجدولة \"الموعد القادم\" تلقائياً بشاشة التحصين الجماعي (تاريخ التحصين + هذي المدة) — بدونها يبقى الموعد القادم يُدخَل يدوياً."
 msgstr "Used only to automatically schedule the \"next due date\" on the group vaccination screen (vaccination date + this duration) — without it, the next due date stays manually entered."
 
-#: app/templates/health/pharmacy_form.html:78
+#: app/templates/health/pharmacy_form.html:103
 msgid "الجرعة الافتراضية للرأس بالمل (اختياري)"
 msgstr "Default dose per head in ml (optional)"
 
-#: app/templates/health/pharmacy_form.html:80
+#: app/templates/health/pharmacy_form.html:105
 msgid "رقم ثابت تكتبه أنت — يظهر كقيمة احتياطية بشاشة التحصين الجماعي بس لو عمر الرأس ما طابق أي نطاق بجدول \"الجرعة حسب العمر\" تحت."
 msgstr "A fixed number you enter — appears as a fallback value on the group vaccination screen only if the animal's age doesn't match any range in the \"dose by age\" table below."
 
-#: app/templates/health/pharmacy_form.html:82
+#: app/templates/health/pharmacy_form.html:107
 msgid "الجرعة حسب العمر (اختياري)"
 msgstr "Dose by age (optional)"
 
-#: app/templates/health/pharmacy_form.html:83
+#: app/templates/health/pharmacy_form.html:108
 msgid "أنت تكتب الجرعة لكل نطاق عمري بنفسك مرة وحدة — النظام بعدها بس يطابق عمر كل رأس بشاشة التحصين الجماعي ويعرض جرعتك المسجَّلة هنا، وما يحسب ولا يخترع أي رقم جديد."
 msgstr "You write the dose for each age range yourself once — the system then just matches each animal's age on the group vaccination screen and shows the dose you recorded here, never calculating or inventing any new number."
 
-#: app/templates/health/pharmacy_form.html:87
-#: app/templates/health/pharmacy_form.html:93
-#: app/templates/health/pharmacy_form.html:122
+#: app/templates/health/pharmacy_form.html:112
+#: app/templates/health/pharmacy_form.html:118
+#: app/templates/health/pharmacy_form.html:147
 msgid "من عمر (يوم)"
 msgstr "From age (days)"
 
-#: app/templates/health/pharmacy_form.html:88
-#: app/templates/health/pharmacy_form.html:94
-#: app/templates/health/pharmacy_form.html:123
+#: app/templates/health/pharmacy_form.html:113
+#: app/templates/health/pharmacy_form.html:119
+#: app/templates/health/pharmacy_form.html:148
 msgid "إلى عمر (يوم)"
 msgstr "To age (days)"
 
-#: app/templates/health/pharmacy_form.html:89
-#: app/templates/health/pharmacy_form.html:95
-#: app/templates/health/pharmacy_form.html:124
+#: app/templates/health/pharmacy_form.html:114
+#: app/templates/health/pharmacy_form.html:120
+#: app/templates/health/pharmacy_form.html:149
 msgid "الجرعة (مل)"
 msgstr "Dose (ml)"
 
-#: app/templates/health/pharmacy_form.html:98
+#: app/templates/health/pharmacy_form.html:123
 msgid "إضافة عمر آخر"
 msgstr "Add another age range"
 
-#: app/templates/health/pharmacy_form.html:101
+#: app/templates/health/pharmacy_form.html:126
 msgid "المخزون والسعر"
 msgstr "Stock and price"
 
-#: app/templates/health/pharmacy_form.html:103
+#: app/templates/health/pharmacy_form.html:128
 msgid "مل / حبة / علبة"
 msgstr "ml / tablet / box"
 
-#: app/templates/health/pharmacy_form.html:105
+#: app/templates/health/pharmacy_form.html:130
 msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
 msgstr "Any medicine whose stock reaches this threshold or lower automatically appears in the \"Pharmacy shortages\" list — the same required purchases list."
 
-#: app/templates/health/pharmacy_form.html:106
+#: app/templates/health/pharmacy_form.html:131
 msgid "مثال: 2.5"
 msgstr "Example: 2.5"
 
-#: app/templates/health/pharmacy_form.html:107
+#: app/templates/health/pharmacy_form.html:132
 msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
 msgstr "The basis for automatically calculating treatment cost (quantity used × this price) on the visit/disease/vaccination screens — without it, cost stays manually entered as before."
 
-#: app/templates/health/pharmacy_form.html:109
+#: app/templates/health/pharmacy_form.html:134
 msgid "أمان إضافي وملاحظات"
 msgstr "Additional safety and notes"
 
-#: app/templates/health/pharmacy_form.html:142
+#: app/templates/health/pharmacy_form.html:167
 msgid "منتهي الصلاحية منذ"
 msgstr "Expired since"
 
-#: app/templates/health/pharmacy_form.html:143
+#: app/templates/health/pharmacy_form.html:168
 msgid "ينتهي خلال"
 msgstr "Expires within"
 
-#: app/templates/health/pharmacy_form.html:144
+#: app/templates/health/pharmacy_form.html:169
 msgid "متبقي"
 msgstr "Remaining"
 
-#: app/templates/health/pharmacy_form.html:169
+#: app/templates/health/pharmacy_form.html:194
 msgid "اختر فئة الدواء أولاً لعرض دليلها."
 msgstr "Choose a medicine class first to view its guide."
 

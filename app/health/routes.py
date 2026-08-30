@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 
 from app.health import health_bp
-from app.auth.decorators import require_permission
+from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db
 from app.models import (
     Pharmacy, PharmacyBatch, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
@@ -159,6 +159,50 @@ def _save_dose_rules(pharmacy_id: int) -> None:
         ))
 
 
+_PRESCRIPTION_PREFILL_FIELDS = (
+    "name", "medicine_class", "usage_method", "standard_dosage_note",
+    "expiry_date", "withdrawal_days", "withdrawal_days_milk",
+)
+
+
+@health_bp.route("/pharmacy/prescription-image", methods=["POST"])
+@login_required
+@require_permission("pharmacy.manage")
+@rate_limited("pharmacy_prescription_image", max_calls=20, window_seconds=300)
+def pharmacy_prescription_image():
+    """تعبئة مسبقة لفورم "دواء جديد" من صورة روشتة/عبوة (بند إضافي،
+    2026-08-30) — طلبك الصريح: "رفع روشتة دواء للمساعد الذكي وتعبئة
+    البيانات تلقائيًا. بعد ما يعبيها ارجع ادقق وحفضها." صفر كتابة
+    مباشرة لقاعدة البيانات هنا — الاستخراج يملأ فقط حقول الفورم
+    الحقيقي (query params)، وأنت من يراجع ويضغط "حفظ" بنفسك."""
+    image_file = request.files.get("image")
+    if not image_file or not image_file.filename:
+        flash("ارفع صورة أولاً", "error")
+        return redirect(url_for("health.pharmacy_new"))
+
+    ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
+    MAX_IMAGE_BYTES = 8 * 1024 * 1024
+    image_file.stream.seek(0)
+    image_bytes = image_file.stream.read()
+    image_file.stream.seek(0)
+    ext = (image_file.filename.rsplit(".", 1)[-1] or "").lower()
+    if not image_bytes or len(image_bytes) > MAX_IMAGE_BYTES or ext not in ALLOWED_IMAGE_EXTENSIONS:
+        flash("الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)", "error")
+        return redirect(url_for("health.pharmacy_new"))
+
+    from app.assistant import llm_bridge
+    extracted = llm_bridge.parse_pharmacy_prescription_image(image_bytes, image_file.mimetype or "image/jpeg")
+    if not extracted:
+        flash("تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً.", "error")
+        return redirect(url_for("health.pharmacy_new"))
+
+    prefill = {k: extracted.get(k) for k in _PRESCRIPTION_PREFILL_FIELDS if extracted.get(k) is not None}
+    if extracted.get("notes"):
+        flash(f'ملاحظة من التحليل: {extracted["notes"]} — راجع كل حقل قبل الحفظ.', "warning")
+    flash("تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ.", "success")
+    return redirect(url_for("health.pharmacy_new", **prefill))
+
+
 @health_bp.route("/pharmacy/new", methods=["GET", "POST"])
 @login_required
 @require_permission("pharmacy.manage")
@@ -189,6 +233,9 @@ def pharmacy_new():
         flash("تمت إضافة الدواء", "success")
         return redirect(url_for("health.pharmacy_list"))
     UsageRoute.seed_defaults()
+    # تعبئة مسبقة من صورة روشتة (بند إضافي، 2026-08-30) — راجع
+    # pharmacy_prescription_image أعلاه. فاضية دائماً بالوضع الطبيعي.
+    prefill = {k: request.args.get(k) for k in _PRESCRIPTION_PREFILL_FIELDS if request.args.get(k)}
     return render_template(
         "health/pharmacy_form.html",
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
@@ -202,6 +249,7 @@ def pharmacy_new():
         usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
         usage_route_labels_en=USAGE_ROUTE_LABELS_EN,
         drug_catalog=DrugCatalogEntry.query.order_by(DrugCatalogEntry.name).all(),
+        prefill=prefill,
     )
 
 

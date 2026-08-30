@@ -488,3 +488,95 @@ def translate_text(text: str, target_lang: str) -> str | None:
         except Exception:
             pass
         return None
+
+
+# ============================================================
+# بند إضافي (2026-08-30) — طلبك الصريح: "رفع روشتة دواء للمساعد الذكي
+# وتعبئة البيانات تلقائيًا. بعد ما يعبيها ارجع ادقق وحفضها." — تعبئة
+# مساعدة بس، صفر كتابة تلقائية لقاعدة البيانات. الصورة تُحلَّل وتُرجَّع
+# حقول تُستخدم كتعبئة مسبقة (prefill) لفورم "دواء جديد" الحقيقي —
+# صاحب الحلال/الدكتور يشوف كل حقل، يصحّحه لو غلط، ويضغط "حفظ" بنفسه.
+# نفس مبدأ "الاقتراح ثم الاعتماد البشري" المتكرر بكل مكان بهذا المشروع.
+# ============================================================
+
+PRESCRIPTION_IMAGE_SYSTEM_PROMPT = """أنت مساعد مساند لنظام "مربي" لإدارة مزرعة أغنام/ماعز. المستخدم رفع صورة روشتة/عبوة دواء بيطري، ومهمتك تستخرج منها بس المعلومات الظاهرة فعلياً بالصورة، لتعبئة نموذج إضافة دواء جديد مسبقاً — الإنسان يراجع كل حقل ويصحّحه قبل الحفظ.
+
+قواعد صارمة:
+- استخرج بس معلومات ظاهرة فعلياً بالصورة — ممنوع تخترع أو تخمّن رقماً أو اسماً غير مكتوب.
+- فئة الدواء (medicine_class) لازم تكون بالضبط وحدة من هذي القيم أو null: antiparasitic, antibiotic, vaccine, supplement, topical_disinfectant, other. لو مو واضح، رجّع null.
+- withdrawal_days (فترة سحب اللحم/الذبح) وwithdrawal_days_milk (فترة سحب الحليب) أرقام أيام لو مكتوبة صراحة بالعبوة/النشرة، وإلا null — ممنوع تخترع رقماً افتراضياً.
+- expiry_date لازم تكون بصيغة YYYY-MM-DD لو ظاهرة، وإلا null.
+- رجّع ردك **JSON صرف بس**، بدون أي نص قبله أو بعده، بالضبط بهذا الشكل:
+{"name": "..." أو null, "medicine_class": "..." أو null, "usage_method": "..." أو null, "standard_dosage_note": "..." أو null, "expiry_date": "YYYY-MM-DD" أو null, "withdrawal_days": رقم أو null, "withdrawal_days_milk": رقم أو null, "notes": "أي ملاحظة قصيرة عن جودة/وضوح الصورة أو معلومة غير مؤكدة"}
+"""
+
+_PHARMACY_VALID_MEDICINE_CLASSES = {
+    "antiparasitic", "antibiotic", "vaccine", "supplement", "topical_disinfectant", "other",
+}
+
+
+def parse_pharmacy_prescription_image(image_bytes: bytes, mime_type: str) -> dict | None:
+    """يرجّع dict حقول تعبئة مسبقة لفورم "دواء جديد"، أو None بصمت عند
+    أي فشل/غياب مفتاح (نفس فلسفة باقي دوال هذا الملف). **حاجز حقيقي**:
+    أي `medicine_class` مرجوعة مو من القيم المسموحة تُرفض هنا نفسها —
+    حتى لو النموذج تجاهل التعليمات، ما توصل أبداً كقيمة قابلة للتعبئة."""
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        import json
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL,
+            contents=[
+                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+                "استخرج بيانات هذا الدواء حسب التعليمات.",
+            ],
+            config=types.GenerateContentConfig(system_instruction=PRESCRIPTION_IMAGE_SYSTEM_PROMPT),
+        )
+        text = (response.text or "").strip()
+        text = text.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        data = json.loads(text)
+
+        medicine_class = data.get("medicine_class")
+        if medicine_class not in _PHARMACY_VALID_MEDICINE_CLASSES:
+            medicine_class = None
+
+        def _clean_int(v):
+            try:
+                n = int(v)
+                return n if n >= 0 else None
+            except (TypeError, ValueError):
+                return None
+
+        def _clean_date(v):
+            if not v:
+                return None
+            try:
+                from datetime import date as _date
+                _date.fromisoformat(v)
+                return v
+            except (TypeError, ValueError):
+                return None
+
+        return {
+            "name": (data.get("name") or "").strip() or None,
+            "medicine_class": medicine_class,
+            "usage_method": (data.get("usage_method") or "").strip() or None,
+            "standard_dosage_note": (data.get("standard_dosage_note") or "").strip() or None,
+            "expiry_date": _clean_date(data.get("expiry_date")),
+            "withdrawal_days": _clean_int(data.get("withdrawal_days")),
+            "withdrawal_days_milk": _clean_int(data.get("withdrawal_days_milk")),
+            "notes": (data.get("notes") or "").strip() or None,
+        }
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.parse_pharmacy_prescription_image failed: %s", e)
+        except Exception:
+            pass
+        return None
