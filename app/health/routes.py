@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.health import health_bp
@@ -67,7 +68,7 @@ def _complete_originating_task(task_id):
         return
     tsvc.complete_task_via_treatment(task, actor=current_user)
     tsvc.schedule_reweigh_followup(task, actor=current_user)
-    flash("تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن.", "success")
+    flash(_("تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."), "success")
 
 
 def _check_redose_guard(*, animal_id, pharmacy_id, override_reason, entity_type):
@@ -177,7 +178,7 @@ def pharmacy_prescription_image():
     الحقيقي (query params)، وأنت من يراجع ويضغط "حفظ" بنفسك."""
     image_file = request.files.get("image")
     if not image_file or not image_file.filename:
-        flash("ارفع صورة أولاً", "error")
+        flash(_("ارفع صورة أولاً"), "error")
         return redirect(url_for("health.pharmacy_new"))
 
     ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "heic", "heif"}
@@ -187,19 +188,19 @@ def pharmacy_prescription_image():
     image_file.stream.seek(0)
     ext = (image_file.filename.rsplit(".", 1)[-1] or "").lower()
     if not image_bytes or len(image_bytes) > MAX_IMAGE_BYTES or ext not in ALLOWED_IMAGE_EXTENSIONS:
-        flash("الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)", "error")
+        flash(_("الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"), "error")
         return redirect(url_for("health.pharmacy_new"))
 
     from app.assistant import llm_bridge
     extracted = llm_bridge.parse_pharmacy_prescription_image(image_bytes, image_file.mimetype or "image/jpeg")
     if not extracted:
-        flash("تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً.", "error")
+        flash(_("تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً."), "error")
         return redirect(url_for("health.pharmacy_new"))
 
     prefill = {k: extracted.get(k) for k in _PRESCRIPTION_PREFILL_FIELDS if extracted.get(k) is not None}
     if extracted.get("notes"):
         flash(f'ملاحظة من التحليل: {extracted["notes"]} — راجع كل حقل قبل الحفظ.', "warning")
-    flash("تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ.", "success")
+    flash(_("تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ."), "success")
     return redirect(url_for("health.pharmacy_new", **prefill))
 
 
@@ -230,7 +231,7 @@ def pharmacy_new():
         db.session.flush()
         _save_dose_rules(item.id)
         db.session.commit()
-        flash("تمت إضافة الدواء", "success")
+        flash(_("تمت إضافة الدواء"), "success")
         return redirect(url_for("health.pharmacy_list"))
     UsageRoute.seed_defaults()
     # تعبئة مسبقة من صورة روشتة (بند إضافي، 2026-08-30) — راجع
@@ -300,7 +301,7 @@ def pharmacy_edit(pharmacy_id):
         item.notes = request.form.get("notes")
         _save_dose_rules(item.id)
         db.session.commit()
-        flash("تم تحديث بيانات الدواء", "success")
+        flash(_("تم تحديث بيانات الدواء"), "success")
         return redirect(url_for("health.pharmacy_list"))
     UsageRoute.seed_defaults()
     return render_template(
@@ -338,7 +339,7 @@ def pharmacy_purchase(pharmacy_id):
         quantity = float(request.form["quantity"])
         unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None
         if unit_price is not None and not current_user.has_permission("finance.full.manage"):
-            flash("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية).", "error")
+            flash(_("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."), "error")
             return redirect(url_for("health.pharmacy_purchase", pharmacy_id=item.id))
 
         from app.core.stock_purchase_service import record_purchase
@@ -353,9 +354,9 @@ def pharmacy_purchase(pharmacy_id):
                                  details=f"+{quantity:g} {item.unit or ''}"))
         db.session.commit()
         if unit_price is None:
-            flash("تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية.", "warning")
+            flash(_("تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية."), "warning")
         else:
-            flash("تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً", "success")
+            flash(_("تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً"), "success")
         return redirect(url_for("health.pharmacy_edit", pharmacy_id=item.id))
     return render_template(
         "health/pharmacy_purchase_form.html", item=item, today=date.today().isoformat(),
@@ -372,14 +373,14 @@ def usage_routes_new():
     if request.method == "POST":
         name = request.form["name"].strip()
         if not name:
-            flash("اسم الطريقة مطلوب", "error")
+            flash(_("اسم الطريقة مطلوب"), "error")
             return redirect(url_for("health.usage_routes_new"))
         if UsageRoute.query.filter_by(name=name).first():
             flash(f'"{name}" موجودة بالقائمة أصلاً', "error")
             return redirect(url_for("health.usage_routes_new"))
         db.session.add(UsageRoute(name=name))
         db.session.commit()
-        flash("تمت إضافة طريقة الاستخدام", "success")
+        flash(_("تمت إضافة طريقة الاستخدام"), "success")
         return redirect(url_for("health.pharmacy_new"))
     return render_template("animal_option_form.html", title="إضافة طريقة استخدام جديدة",
                             back_endpoint="health.pharmacy_new")
@@ -396,14 +397,14 @@ def drug_catalog_new():
         name = request.form["name"].strip()
         medicine_class = request.form.get("medicine_class") or None
         if not name:
-            flash("اسم الدواء مطلوب", "error")
+            flash(_("اسم الدواء مطلوب"), "error")
             return redirect(url_for("health.drug_catalog_new", medicine_class=medicine_class or ""))
         if DrugCatalogEntry.query.filter_by(name=name).first():
             flash(f'"{name}" موجود بالكتالوج أصلاً', "error")
             return redirect(url_for("health.drug_catalog_new", medicine_class=medicine_class or ""))
         db.session.add(DrugCatalogEntry(name=name, medicine_class=medicine_class))
         db.session.commit()
-        flash("تمت إضافة الدواء للكتالوج", "success")
+        flash(_("تمت إضافة الدواء للكتالوج"), "success")
         return redirect(url_for("health.pharmacy_new"))
     return render_template(
         "health/drug_catalog_form.html",
@@ -434,7 +435,7 @@ def disease_types_new():
             return redirect(url_for("health.disease_types_new"))
         db.session.add(DiseaseType(name=name, notes=request.form.get("notes") or None))
         db.session.commit()
-        flash("تمت إضافة المرض للقائمة", "success")
+        flash(_("تمت إضافة المرض للقائمة"), "success")
         return redirect(url_for("health.disease_types_list"))
     return render_template("health/disease_type_form.html")
 
@@ -461,14 +462,14 @@ def symptoms_new():
     if request.method == "POST":
         name = request.form["name"].strip()
         if not name:
-            flash("اسم العرض مطلوب", "error")
+            flash(_("اسم العرض مطلوب"), "error")
             return redirect(url_for("health.symptoms_new"))
         if Symptom.query.filter_by(name=name).first():
             flash(f'"{name}" موجود بالقائمة أصلاً', "error")
             return redirect(url_for("health.symptoms_new"))
         db.session.add(Symptom(name=name, is_primary=bool(request.form.get("is_primary"))))
         db.session.commit()
-        flash("تمت إضافة العرض", "success")
+        flash(_("تمت إضافة العرض"), "success")
         return redirect(url_for("health.symptoms_list"))
     return render_template("health/symptom_form.html")
 
@@ -505,7 +506,7 @@ def link_wizard():
         disease = DiseaseType.query.get_or_404(request.form.get("disease_id", type=int))
         symptom_ids = [int(x) for x in request.form.getlist("symptom_ids")]
         if not symptom_ids:
-            flash("لازم تختار عرض واحد على الأقل", "error")
+            flash(_("لازم تختار عرض واحد على الأقل"), "error")
             return redirect(url_for("health.link_wizard"))
         weight = max(1, min(3, request.form.get("weight", type=int) or 2))
         is_required = bool(request.form.get("is_required"))
@@ -530,7 +531,8 @@ def link_wizard():
                                  entity_type="DiseaseType", entity_id=disease.id,
                                  details=f"{disease.name}: +{created} جديد، {updated} محدَّث"))
         db.session.commit()
-        flash(f"تم — {created} رابط جديد و{updated} تحديث لمرض {disease.name}", "success")
+        flash(_("تم — %(created)s رابط جديد و%(updated)s تحديث لمرض %(name)s",
+                created=created, updated=updated, name=disease.name), "success")
         return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
 
     return render_template(
@@ -547,10 +549,10 @@ def disease_symptom_link_new(disease_id):
     disease = DiseaseType.query.get_or_404(disease_id)
     symptom_id = request.form.get("symptom_id", type=int)
     if not symptom_id:
-        flash("لازم تختار عرض", "error")
+        flash(_("لازم تختار عرض"), "error")
         return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
     if DiseaseSymptomLink.query.filter_by(disease_type_id=disease.id, symptom_id=symptom_id).first():
-        flash("هذا العرض مربوط بهذا المرض أصلاً", "error")
+        flash(_("هذا العرض مربوط بهذا المرض أصلاً"), "error")
         return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
     symptom = Symptom.query.get_or_404(symptom_id)
     link = DiseaseSymptomLink(
@@ -564,7 +566,7 @@ def disease_symptom_link_new(disease_id):
     db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.create",
                              entity_type="DiseaseSymptomLink", details=f"{disease.name} + {symptom.name}"))
     db.session.commit()
-    flash("تمت إضافة الرابط", "success")
+    flash(_("تمت إضافة الرابط"), "success")
     return redirect(url_for("health.disease_type_detail", disease_id=disease.id))
 
 
@@ -580,7 +582,7 @@ def disease_symptom_link_update(link_id):
     db.session.add(AuditLog(actor_user_id=current_user.id, action="disease_symptom_link.update",
                              entity_type="DiseaseSymptomLink", entity_id=link.id))
     db.session.commit()
-    flash("تم تحديث الرابط", "success")
+    flash(_("تم تحديث الرابط"), "success")
     return redirect(url_for("health.disease_type_detail", disease_id=link.disease_type_id))
 
 
@@ -594,7 +596,7 @@ def disease_symptom_link_delete(link_id):
                              entity_type="DiseaseSymptomLink", entity_id=link.id))
     db.session.delete(link)
     db.session.commit()
-    flash("تم حذف الرابط", "success")
+    flash(_("تم حذف الرابط"), "success")
     return redirect(url_for("health.disease_type_detail", disease_id=disease_id))
 
 
@@ -626,10 +628,10 @@ def emergency_symptoms_new():
     differential = request.form.get("differential", "").strip()
     advice = request.form.get("advice", "").strip()
     if not symptom_id or not differential or not advice:
-        flash("لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية", "error")
+        flash(_("لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية"), "error")
         return redirect(url_for("health.emergency_symptoms_list"))
     if EmergencySymptom.query.filter_by(symptom_id=symptom_id).first():
-        flash("هذا العرض مسجَّل بقائمة الطوارئ أصلاً", "error")
+        flash(_("هذا العرض مسجَّل بقائمة الطوارئ أصلاً"), "error")
         return redirect(url_for("health.emergency_symptoms_list"))
     severity = request.form.get("severity") or EmergencySymptom.SEVERITY_CHOICES[-1]
     if severity not in EmergencySymptom.SEVERITY_CHOICES:
@@ -639,7 +641,7 @@ def emergency_symptoms_new():
     db.session.add(AuditLog(actor_user_id=current_user.id, action="emergency_symptom.create",
                              entity_type="EmergencySymptom"))
     db.session.commit()
-    flash("تمت إضافة عرض الطوارئ", "success")
+    flash(_("تمت إضافة عرض الطوارئ"), "success")
     return redirect(url_for("health.emergency_symptoms_list"))
 
 
@@ -652,7 +654,7 @@ def emergency_symptoms_delete(entry_id):
                              entity_type="EmergencySymptom", entity_id=entry.id))
     db.session.delete(entry)
     db.session.commit()
-    flash("تم حذف عرض الطوارئ", "success")
+    flash(_("تم حذف عرض الطوارئ"), "success")
     return redirect(url_for("health.emergency_symptoms_list"))
 
 
@@ -682,7 +684,7 @@ def doctors_new():
         )
         db.session.add(doctor)
         db.session.commit()
-        flash("تمت إضافة الطبيب", "success")
+        flash(_("تمت إضافة الطبيب"), "success")
         return redirect(url_for("health.doctors_list"))
     return render_template("health/doctor_form.html")
 
@@ -729,7 +731,7 @@ def vet_visits_new():
         except health_service.IncompleteRecordError as e:
             flash(str(e), "error")
             return redirect(url_for("health.vet_visits_new"))
-        flash("تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)", "success")
+        flash(_("تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"), "success")
         _complete_originating_task(request.form.get("task_id"))
         return redirect(url_for("health.vet_visits_list"))
 
@@ -800,7 +802,7 @@ def diseases_new():
         except health_service.IncompleteRecordError as e:
             flash(str(e), "error")
             return redirect(url_for("health.diseases_new"))
-        flash("تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)", "success")
+        flash(_("تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"), "success")
         _complete_originating_task(request.form.get("task_id"))
         return redirect(url_for("health.diseases_list"))
 
@@ -941,7 +943,7 @@ def disease_close(disease_id):
                   f"الدواء انتهت فعلاً ({disease.withdrawal_until}) قبل أي بيع أو ذبح.",
         )
 
-    flash("تم إغلاق السجل المرضي", "success")
+    flash(_("تم إغلاق السجل المرضي"), "success")
     return redirect(url_for("health.diseases_list"))
 
 
@@ -984,7 +986,7 @@ def vaccinations_new():
         except health_service.IncompleteRecordError as e:
             flash(str(e), "error")
             return redirect(url_for("health.vaccinations_new"))
-        flash("تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)", "success")
+        flash(_("تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"), "success")
         _complete_originating_task(request.form.get("task_id"))
         # تنبيه سياقي فوري (بند إضافي 230): لو حظيرة هذا الرأس فيها موعد
         # بجدول التحصينات مستحق قريباً، وجّه المستخدم لمراجعته فوراً.
@@ -1048,7 +1050,7 @@ def protocols_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="protocol.create",
                                  entity_type="TreatmentProtocol", entity_id=protocol.id))
         db.session.commit()
-        flash("تم إنشاء البروتوكول", "success")
+        flash(_("تم إنشاء البروتوكول"), "success")
         return redirect(url_for("health.protocols_list"))
     return render_template(
         "health/protocol_form.html",
@@ -1109,7 +1111,7 @@ def vaccination_schedule_new():
     if request.method == "POST":
         pharmacy = Pharmacy.query.get_or_404(int(request.form["pharmacy_id"]))
         if pharmacy.medicine_class != "vaccine":
-            flash("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)", "error")
+            flash(_("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"), "error")
             return redirect(url_for("health.vaccination_schedule_new"))
         # رؤوس مختارة يدوياً (بند إضافي 210) — لو ما اختار المستخدم
         # ولا رأس (ترك القائمة فاضية أو ضغط "الكل")، نخزّن فاضي عشان
@@ -1128,7 +1130,7 @@ def vaccination_schedule_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="vaccination_schedule.create",
                                  entity_type="VaccinationSchedule", details=f"barn={schedule.barn_id}"))
         db.session.commit()
-        flash("تمت جدولة التحصين", "success")
+        flash(_("تمت جدولة التحصين"), "success")
         return redirect(url_for("health.vaccination_schedule_list"))
     barns = Barn.query.order_by(Barn.barn_name).all()
     barn_animals = {
@@ -1153,7 +1155,7 @@ def vaccination_schedule_cancel(schedule_id):
     schedule = VaccinationSchedule.query.get_or_404(schedule_id)
     schedule.status = "cancelled"
     db.session.commit()
-    flash("تم إلغاء الجدولة", "success")
+    flash(_("تم إلغاء الجدولة"), "success")
     return redirect(url_for("health.vaccination_schedule_list"))
 
 
@@ -1169,5 +1171,5 @@ def vaccination_schedule_complete(schedule_id):
     schedule.status = "completed"
     schedule.completed_at = datetime.now(timezone.utc)
     db.session.commit()
-    flash("تم تعليم الجدولة كمكتملة", "success")
+    flash(_("تم تعليم الجدولة كمكتملة"), "success")
     return redirect(url_for("health.vaccination_schedule_list"))

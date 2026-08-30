@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 16:25+0300\n"
+"POT-Creation-Date: 2026-08-30 17:12+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1371,6 +1371,159 @@ msgstr "በጣም ወፍራም"
 #: app/health/health_service.py:301
 msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
 msgstr "በወፍራም የስብ ንብርብር ስር አከርካሪም ሆነ የጎድን አጥንት በጭራሽ አይሰማም፣ የጀርባ ቅርጽ ጠፍጣፋ ወይም የተጠጋጋ ነው። ለወሊድ እና እንቅስቃሴ አደጋ — የመመገቢያ ማስተካከያ ያስፈልጋል።"
+
+#: app/health/routes.py:71
+msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
+msgstr "የተያያዘው ተግባር በራስ-ሰር ተጠናቅቋል፣ የክብደት መከታተያ ተግባርም ተይዞልታል።"
+
+#: app/health/routes.py:181
+msgid "ارفع صورة أولاً"
+msgstr "መጀመሪያ ምስል ይስቀሉ"
+
+#: app/health/routes.py:191
+msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
+msgstr "ምስሉ ልክ ያልሆነ ወይም በጣም ትልቅ ነው (ገደብ 8 ሜጋ)"
+
+#: app/health/routes.py:197
+msgid "تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً."
+msgstr "ምስሉን መተንተን አልተቻለም — የAI ቁልፍ መንቃቱን እና ምስሉ ግልጽ መሆኑን ያረጋግጡ፣ መረጃውን በእጅ ይሙሉ።"
+
+#: app/health/routes.py:203
+msgid "تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ."
+msgstr "ከምስሉ ያለው መረጃ ተወስዷል — 'አስቀምጥ' ከመጫንዎ በፊት እያንዳንዱን መስክ ይገምግሙ እና ያስተካክሉ።"
+
+#: app/health/routes.py:234
+msgid "تمت إضافة الدواء"
+msgstr "መድሃኒቱ ታክሏል"
+
+#: app/health/routes.py:304
+msgid "تم تحديث بيانات الدواء"
+msgstr "የመድሃኒት መረጃ ተዘምኗል"
+
+#: app/health/routes.py:342
+msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."
+msgstr "በዋጋ ግዢ ለመመዝገብ (የገንዘብ ግብይት ስለሚፈጥር) የገንዘብ አስተዳደር ፈቃድም ያስፈልግዎታል።"
+
+#: app/health/routes.py:357
+msgid "تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية."
+msgstr "ግዢው በክምችት ውስጥ ብቻ ተመዝግቧል — ያለ ዋጋ፣ ምንም የገንዘብ ግብይት አልተመዘገበም።"
+
+#: app/health/routes.py:359
+msgid "تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً"
+msgstr "ግዢው ተመዝግቧል — ክምችቱ ጨምሯል እና የገንዘብ ግብይቱ አብሮ ተመዝግቧል"
+
+#: app/health/routes.py:376
+msgid "اسم الطريقة مطلوب"
+msgstr "የዘዴ ስም ያስፈልጋል"
+
+#: app/health/routes.py:383
+msgid "تمت إضافة طريقة الاستخدام"
+msgstr "የአጠቃቀም ዘዴው ታክሏል"
+
+#: app/health/routes.py:400
+msgid "اسم الدواء مطلوب"
+msgstr "የመድሃኒት ስም ያስፈልጋል"
+
+#: app/health/routes.py:407
+msgid "تمت إضافة الدواء للكتالوج"
+msgstr "መድሃኒቱ ወደ ካታሎግ ታክሏል"
+
+#: app/health/routes.py:438
+msgid "تمت إضافة المرض للقائمة"
+msgstr "በሽታው ወደ ዝርዝሩ ታክሏል"
+
+#: app/health/routes.py:465
+msgid "اسم العرض مطلوب"
+msgstr "የምልክት ስም ያስፈልጋል"
+
+#: app/health/routes.py:472
+msgid "تمت إضافة العرض"
+msgstr "ምልክቱ ታክሏል"
+
+#: app/health/routes.py:509
+msgid "لازم تختار عرض واحد على الأقل"
+msgstr "ቢያንስ አንድ ምልክት መምረጥ አለብዎት"
+
+#: app/health/routes.py:534
+#, python-format
+msgid "تم — %(created)s رابط جديد و%(updated)s تحديث لمرض %(name)s"
+msgstr "ተጠናቋል — %(created)s አዲስ አገናኝ(ዎች) እና %(updated)s ማዘመኛ(ዎች) ለ%(name)s"
+
+#: app/health/routes.py:552
+msgid "لازم تختار عرض"
+msgstr "ምልክት መምረጥ አለብዎት"
+
+#: app/health/routes.py:555
+msgid "هذا العرض مربوط بهذا المرض أصلاً"
+msgstr "ይህ ምልክት ቀድሞውኑ ከዚህ በሽታ ጋር ተያይዟል"
+
+#: app/health/routes.py:569
+msgid "تمت إضافة الرابط"
+msgstr "አገናኙ ታክሏል"
+
+#: app/health/routes.py:585
+msgid "تم تحديث الرابط"
+msgstr "አገናኙ ተዘምኗል"
+
+#: app/health/routes.py:599
+msgid "تم حذف الرابط"
+msgstr "አገናኙ ተሰርዟል"
+
+#: app/health/routes.py:631
+msgid "لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية"
+msgstr "ምልክቱን መምረጥ እና ልዩነት ምርመራውን እና ምክሩን መጻፍ አለብዎት"
+
+#: app/health/routes.py:634
+msgid "هذا العرض مسجَّل بقائمة الطوارئ أصلاً"
+msgstr "ይህ ምልክት ቀድሞውኑ በአስቸኳይ ዝርዝር ውስጥ ተመዝግቧል"
+
+#: app/health/routes.py:644
+msgid "تمت إضافة عرض الطوارئ"
+msgstr "የአስቸኳይ ምልክቱ ታክሏል"
+
+#: app/health/routes.py:657
+msgid "تم حذف عرض الطوارئ"
+msgstr "የአስቸኳይ ምልክቱ ተሰርዟል"
+
+#: app/health/routes.py:687
+msgid "تمت إضافة الطبيب"
+msgstr "ሐኪሙ ታክሏል"
+
+#: app/health/routes.py:734
+msgid "تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
+msgstr "ጉብኝቱ ተመዝግቧል (መድሃኒቱ የሚያስፈልገው ከሆነ ወጪው ከዩኒት ዋጋ በራስ-ሰር ተሰልቷል)"
+
+#: app/health/routes.py:805
+msgid "تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
+msgstr "የበሽታ ጉዳዩ ተመዝግቧል (መድሃኒቱ የሚያስፈልገው ከሆነ ወጪው ከዩኒት ዋጋ በራስ-ሰር ተሰልቷል)"
+
+#: app/health/routes.py:946
+msgid "تم إغلاق السجل المرضي"
+msgstr "የበሽታ መዝገብ ተዘግቷል"
+
+#: app/health/routes.py:989
+msgid "تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
+msgstr "ክትባቱ ተመዝግቧል (መድሃኒቱ የሚያስፈልገው ከሆነ ወጪው ከዩኒት ዋጋ በራስ-ሰር ተሰልቷል)"
+
+#: app/health/routes.py:1053
+msgid "تم إنشاء البروتوكول"
+msgstr "ፕሮቶኮሉ ተፈጥሯል"
+
+#: app/health/routes.py:1114
+msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
+msgstr "በፋርማሲው ውስጥ በ(ክትባት) ምድብ ውስጥ የተመዘገበ ትክክለኛ ክትባት መምረጥ አለብዎት"
+
+#: app/health/routes.py:1133
+msgid "تمت جدولة التحصين"
+msgstr "ክትባቱ ተመድቧል"
+
+#: app/health/routes.py:1158
+msgid "تم إلغاء الجدولة"
+msgstr "መርሃ ግብሩ ተሰርዟል"
+
+#: app/health/routes.py:1174
+msgid "تم تعليم الجدولة كمكتملة"
+msgstr "መርሃ ግብሩ እንደተጠናቀቀ ተምልክቷል"
 
 #: app/models/warehouse.py:24
 msgid "علف"
@@ -3616,6 +3769,7 @@ msgstr "የክትባት ቀን መቁጠሪያ"
 
 #: app/templates/base.html:676 app/templates/health/dashboard.html:89
 #: app/templates/health/diagnose_start.html:5
+#: app/templates/health/disease_form.html:7
 msgid "المساعد التشخيصي"
 msgstr "የምርመራ ረዳት"
 
@@ -7494,6 +7648,10 @@ msgstr "ምሳሌ: ላለፉት ሁለት ቀናት መብላት እምቢ ብ�
 #: app/templates/health/diagnose_start.html:57
 msgid "احسب الاحتمالات"
 msgstr "ዕድሎችን አስላ"
+
+#: app/templates/health/disease_form.html:10
+msgid "راجعه وعدّله قبل الحفظ لو يلزم."
+msgstr "ካስፈለገ ከማስቀመጥዎ በፊት ይገምግሙት እና ያስተካክሉት።"
 
 #: app/templates/health/disease_form.html:13
 #: app/templates/health/vaccination_form.html:7

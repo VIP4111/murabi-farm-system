@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 16:25+0300\n"
+"POT-Creation-Date: 2026-08-30 17:12+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1371,6 +1371,159 @@ msgstr "Very fat"
 #: app/health/health_service.py:301
 msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
 msgstr "Neither vertebrae nor ribs can be felt at all under a thick fat layer, the back looks flat or rounded. A risk for birthing and movement — needs a feeding adjustment."
+
+#: app/health/routes.py:71
+msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
+msgstr "The linked task was completed automatically, and a reweigh follow-up task was scheduled."
+
+#: app/health/routes.py:181
+msgid "ارفع صورة أولاً"
+msgstr "Upload an image first"
+
+#: app/health/routes.py:191
+msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
+msgstr "The image is invalid or too large (limit 8 MB)"
+
+#: app/health/routes.py:197
+msgid "تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً."
+msgstr "Couldn't analyze the image — make sure the AI key is enabled and the image is clear, and fill in the data manually."
+
+#: app/health/routes.py:203
+msgid "تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ."
+msgstr "The available data was extracted from the image — review and correct every field before you click save."
+
+#: app/health/routes.py:234
+msgid "تمت إضافة الدواء"
+msgstr "The medicine has been added"
+
+#: app/health/routes.py:304
+msgid "تم تحديث بيانات الدواء"
+msgstr "The medicine's data has been updated"
+
+#: app/health/routes.py:342
+msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."
+msgstr "You also need finance-management permission to record a purchase with a price (it creates a finance entry)."
+
+#: app/health/routes.py:357
+msgid "تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية."
+msgstr "The purchase was recorded in stock only — with no price, no finance entry was created."
+
+#: app/health/routes.py:359
+msgid "تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً"
+msgstr "The purchase has been recorded — stock increased and the finance entry was recorded together"
+
+#: app/health/routes.py:376
+msgid "اسم الطريقة مطلوب"
+msgstr "Method name is required"
+
+#: app/health/routes.py:383
+msgid "تمت إضافة طريقة الاستخدام"
+msgstr "The usage method has been added"
+
+#: app/health/routes.py:400
+msgid "اسم الدواء مطلوب"
+msgstr "Medicine name is required"
+
+#: app/health/routes.py:407
+msgid "تمت إضافة الدواء للكتالوج"
+msgstr "The medicine has been added to the catalog"
+
+#: app/health/routes.py:438
+msgid "تمت إضافة المرض للقائمة"
+msgstr "The disease has been added to the list"
+
+#: app/health/routes.py:465
+msgid "اسم العرض مطلوب"
+msgstr "Symptom name is required"
+
+#: app/health/routes.py:472
+msgid "تمت إضافة العرض"
+msgstr "The symptom has been added"
+
+#: app/health/routes.py:509
+msgid "لازم تختار عرض واحد على الأقل"
+msgstr "You must select at least one symptom"
+
+#: app/health/routes.py:534
+#, python-format
+msgid "تم — %(created)s رابط جديد و%(updated)s تحديث لمرض %(name)s"
+msgstr "Done — %(created)s new link(s) and %(updated)s update(s) for %(name)s"
+
+#: app/health/routes.py:552
+msgid "لازم تختار عرض"
+msgstr "You must select a symptom"
+
+#: app/health/routes.py:555
+msgid "هذا العرض مربوط بهذا المرض أصلاً"
+msgstr "This symptom is already linked to this disease"
+
+#: app/health/routes.py:569
+msgid "تمت إضافة الرابط"
+msgstr "The link has been added"
+
+#: app/health/routes.py:585
+msgid "تم تحديث الرابط"
+msgstr "The link has been updated"
+
+#: app/health/routes.py:599
+msgid "تم حذف الرابط"
+msgstr "The link has been deleted"
+
+#: app/health/routes.py:631
+msgid "لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية"
+msgstr "You must select the symptom and write the differential diagnosis and recommendation"
+
+#: app/health/routes.py:634
+msgid "هذا العرض مسجَّل بقائمة الطوارئ أصلاً"
+msgstr "This symptom is already registered in the emergency list"
+
+#: app/health/routes.py:644
+msgid "تمت إضافة عرض الطوارئ"
+msgstr "The emergency symptom has been added"
+
+#: app/health/routes.py:657
+msgid "تم حذف عرض الطوارئ"
+msgstr "The emergency symptom has been deleted"
+
+#: app/health/routes.py:687
+msgid "تمت إضافة الطبيب"
+msgstr "The doctor has been added"
+
+#: app/health/routes.py:734
+msgid "تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
+msgstr "The visit has been recorded (cost was calculated automatically from the unit price, if the medicine requires it)"
+
+#: app/health/routes.py:805
+msgid "تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
+msgstr "The medical case has been recorded (cost was calculated automatically from the unit price, if the medicine requires it)"
+
+#: app/health/routes.py:946
+msgid "تم إغلاق السجل المرضي"
+msgstr "The medical record has been closed"
+
+#: app/health/routes.py:989
+msgid "تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
+msgstr "The vaccination has been recorded (cost was calculated automatically from the unit price, if the medicine requires it)"
+
+#: app/health/routes.py:1053
+msgid "تم إنشاء البروتوكول"
+msgstr "The protocol has been created"
+
+#: app/health/routes.py:1114
+msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
+msgstr "You must select an actual vaccine registered in the pharmacy under the (vaccine) class"
+
+#: app/health/routes.py:1133
+msgid "تمت جدولة التحصين"
+msgstr "The vaccination has been scheduled"
+
+#: app/health/routes.py:1158
+msgid "تم إلغاء الجدولة"
+msgstr "The schedule has been cancelled"
+
+#: app/health/routes.py:1174
+msgid "تم تعليم الجدولة كمكتملة"
+msgstr "The schedule has been marked as completed"
 
 #: app/models/warehouse.py:24
 msgid "علف"
@@ -3616,6 +3769,7 @@ msgstr "Vaccination calendar"
 
 #: app/templates/base.html:676 app/templates/health/dashboard.html:89
 #: app/templates/health/diagnose_start.html:5
+#: app/templates/health/disease_form.html:7
 msgid "المساعد التشخيصي"
 msgstr "Diagnostic assistant"
 
@@ -7494,6 +7648,10 @@ msgstr "Example: has refused food for two days..."
 #: app/templates/health/diagnose_start.html:57
 msgid "احسب الاحتمالات"
 msgstr "Calculate probabilities"
+
+#: app/templates/health/disease_form.html:10
+msgid "راجعه وعدّله قبل الحفظ لو يلزم."
+msgstr "Review and edit it before saving if needed."
 
 #: app/templates/health/disease_form.html:13
 #: app/templates/health/vaccination_form.html:7

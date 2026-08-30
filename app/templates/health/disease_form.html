@@ -4,10 +4,10 @@
 <div class="card" style="max-width:460px;">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>{{ _('تسجيل حالة مرضية') }}</h2>
-    <a class="btn light" href="{{ url_for('health.diagnose_start') }}" style="font-size:13px; padding:6px 12px;">🩺 المساعد التشخيصي</a>
+    <a class="btn light" href="{{ url_for('health.diagnose_start') }}" style="font-size:13px; padding:6px 12px;">🩺 {{ _('المساعد التشخيصي') }}</a>
   </div>
   {% if prefill_note %}
-  <div class="notice">ℹ️ {{ prefill_note }} — راجعه وعدّله قبل الحفظ لو يلزم.</div>
+  <div class="notice">ℹ️ {{ prefill_note }} — {{ _('راجعه وعدّله قبل الحفظ لو يلزم.') }}</div>
   {% endif %}
   {% if prefill_task_id %}
   <div class="notice">ℹ️ {{ _('تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز المهمة تلقائياً.') }}</div>

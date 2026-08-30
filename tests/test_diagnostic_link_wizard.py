@@ -54,6 +54,26 @@ def test_link_wizard_post_without_symptoms_rejected(app, client):
     assert "لازم تختار عرض واحد على الأقل" in resp.data.decode()
 
 
+# ---- بند إضافي (2026-08-30) — طلبك: "بحث عن فجوات في الترجمة في حساب
+# الدكتور" — رسائل flash بملف health/routes.py كانت نصاً عربياً ثابتاً
+# غير مغلَّف بـ_(), فتبقى عربية حتى لو حساب الدكتور إنجليزي.
+
+def test_flash_message_translates_for_english_doctor(app, client):
+    """فحص طرف-لطرف حقيقي: دكتور لغته إنجليزي يرسل نفس الطلب الفاشل —
+    الرسالة تطلع إنجليزية فعلياً، مو عربية خام."""
+    doctor = _make_doctor(phone="0599999143")
+    doctor.language = "en"
+    db.session.commit()
+    disease = make_disease_type("مرض اختبار ترجمة الرسائل")
+    client.post("/login", data={"phone": doctor.phone, "password": "test1234"})
+
+    resp = client.post("/health/disease-types/link-wizard", data={"disease_id": str(disease.id)},
+                        follow_redirects=True)
+    body = resp.data.decode()
+    assert "لازم تختار عرض واحد على الأقل" not in body
+    assert "You must select at least one symptom" in body
+
+
 def test_disease_library_v2_seed_is_idempotent_and_clamps_weight(app):
     from app.models import DiseaseType
 
