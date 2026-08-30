@@ -197,6 +197,37 @@ def create_app(config_class=Config):
     def ar_task_type(value):
         return TASK_TYPE_LABELS_AR.get(value, value)
 
+    # بند إضافي (2026-08-30) — طلبك الصريح بعد بلاغك: "التنبيهات والمهام
+    # طلعت عند الدكتور بالعربي" (الدكتور مسجَّل إنجليزي بحسابه). السبب
+    # الجذري: عنوان المهمة (`Task.title`) نص عربي كامل يُبنى ويُخزَّن
+    # حرفياً وقت الإنشاء بعشرات الأماكن بالكود (isolation_service،
+    # protocol_service، animal_service، batch_service، daily_task_service،
+    # pregnancy_care_service، climate_service، core.routes، task_service)
+    # — تعديل كل هذي الأماكن لتخزين نص قابل للترجمة كان شغلاً ضخماً
+    # وخطراً حقيقياً (احتمال نسيان مكان). الحل الأسلم المكافئ: نعيد بناء
+    # العنوان المعروض **وقت العرض** من حقول موجودة أصلاً ودائماً مضبوطة
+    # صح بغض النظر عن نص `title` الخام — `task_type` (له ترجمة جاهزة
+    # بـTASK_TYPE_LABELS_AR فوق) + رقم الحيوان/اسم الحظيرة المرتبطة
+    # (بيانات محايدة لغوياً أو من اختيار المستخدم نفسه، مو نص نظام).
+    # المهام "العامة" (custom) نص حر كتبه إنسان بنفسه — نتركها كما هي،
+    # نفس منطق عدم ترجمة اسم الحظيرة/الحيوان. "daily_husbandry" استثناء
+    # مهم مماثل: كل قواعد المهام اليومية (`DailyTaskTemplate`، قابلة
+    # للتعديل من الواجهة بواسطة صاحب الحلال) تشترك بنفس task_type
+    # الواحد هذا — التمييز الحقيقي بينها (تنظيف/سقاية/فحص...) موجود
+    # بـ`title` نفسه فقط، فاستبداله بترجمة عامة واحدة "رعاية يومية" كان
+    # يفقد المعلومة الفعلية بدل ما يترجمها (خلل حقيقي لقيناه أثناء
+    # الاختبار، صحّحناه هنا).
+    _RAW_TITLE_TASK_TYPES = {"custom", "daily_husbandry"}
+
+    def task_display_title(task):
+        if not task or task.task_type in _RAW_TITLE_TASK_TYPES or task.task_type not in TASK_TYPE_LABELS_AR:
+            return task.title if task else ""
+        label = str(TASK_TYPE_LABELS_AR[task.task_type])
+        ref = task.animal.animal_no if task.animal else (task.barn.barn_name if task.barn else None)
+        return f"{label} — {ref}" if ref else label
+
+    app.jinja_env.globals["task_display_title"] = task_display_title
+
     # أنواع بلاغ معروفة (بند إضافي 74) — نفس القيم الفعلية المستخدمة عبر
     # WORKER_REPORT_CATEGORIES (app/team/routes.py) وقائمة report_form.html
     # الافتراضية. القيمة المخزّنة بـReport.report_type تبقى عربي دايماً؛

@@ -53,7 +53,7 @@
   <h3 style="font-size:14px; color:var(--danger,#c0392b);">⚠️ {{ _('ملاحظات ضعف — %(name)s', name=row.user.name) }}</h3>
   {% for w in row.weak_notes %}
   <div style="padding:6px 0; border-top:1px solid var(--line);">
-    <b>{{ w.task.title }}</b>
+    <b>{{ task_display_title(w.task) }}</b>
     <div style="color:var(--muted); font-size:13px;">{{ w.note }}</div>
   </div>
   {% endfor %}

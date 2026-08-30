@@ -51,6 +51,18 @@ def test_lockout_expires_after_window(client, owner):
     assert resp.status_code == 302  # دخول ناجح
 
 
+def test_lockout_message_reflects_actual_configured_minutes(client, owner):
+    """بند إضافي (2026-08-30) — طلبك الصريح: "طلب منه الانتظار ١٥ دقيقه
+    اريد جعلها دقيقه واحده". الرسالة كانت تقول "15 دقيقة" ثابتة بغض
+    النظر عن LOCKOUT_MINUTES الفعلية — صارت تقرأ القيمة الحقيقية."""
+    for _ in range(User.LOCKOUT_THRESHOLD):
+        _fail_login(client, owner.phone)
+
+    resp = client.post("/login", data={"phone": owner.phone, "password": "pass1234"}, follow_redirects=True)
+    assert f"بعد {User.LOCKOUT_MINUTES} دقيقة".encode() in resp.data
+    assert User.LOCKOUT_MINUTES == 1
+
+
 def test_unknown_phone_number_does_not_error(client):
     resp = _fail_login(client, "0599999999")
     assert resp.status_code == 200

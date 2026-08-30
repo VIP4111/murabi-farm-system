@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <h2>{{ task.title }}</h2>
+    <h2>{{ task_display_title(task) }}</h2>
     <a class="btn light" href="{{ url_for('team.tasks_list') }}">← {{ _('رجوع للمهام') }}</a>
   </div>
   <p><b>{{ _('الحالة:') }}</b> {{ task.status|ar_status }}{% if task.due_date %} — <b>{{ _('الموعد:') }}</b> {{ task.due_date }}{% if task.due_time %} {{ task.due_time.strftime('%H:%M') }}{% endif %}{% if task.due_date < today %} <span class="badge off">⏰ {{ _('متأخرة') }}</span>{% endif %}{% endif %}</p>

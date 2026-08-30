@@ -29,7 +29,7 @@
   {% set locked = t.depends_on_task_id and t.depends_on and t.depends_on.status != 'done' %}
   <div class="timeline-row">
     <div class="timeline-body" style="flex:1;">
-      <b>{{ t.title }}</b>
+      <b>{{ task_display_title(t) }}</b>
       <small>{{ t.barn.barn_name if t.barn else '' }}{{ ' — ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ (_('الموعد:') + ' ' + t.due_date|string) if t.due_date else '' }}</small>
     </div>
     {% if locked %}

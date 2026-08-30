@@ -62,7 +62,13 @@ def test_old_done_task_not_shown(app, logged_in_client, worker):
 
 
 def test_unassigned_role_matching_task_appears(app, logged_in_client):
-    t = Task(title="مهمة عامة اختبار", task_type="daily_husbandry", status="pending",
+    # بند إضافي (2026-08-30) — task_type="custom" هنا عمداً (بدل نوع
+    # نظامي زي daily_husbandry): بعد إصلاح ترجمة عناوين المهام،
+    # task_display_title() يستبدل عنوان أي نوع نظامي معروف بترجمته
+    # الرسمية (هنا "رعاية يومية") بدل النص الحر — النوع الوحيد اللي
+    # يبقى نصه الحر كما كتبه المستخدم هو "custom"، وهذا الفحص أصلاً
+    # يتحقق من منطق "مطابقة الدور المستهدف"، مو من نص العنوان بالذات.
+    t = Task(title="مهمة عامة اختبار", task_type="custom", status="pending",
               due_date=date.today(), target_role="worker")
     db.session.add(t)
     db.session.commit()

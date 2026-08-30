@@ -13,7 +13,7 @@
   <div style="padding:12px 0; border-top:1px solid var(--line);">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
       <div>
-        <b>{{ t.title }}</b>
+        <b>{{ task_display_title(t) }}</b>
         <div style="color:var(--muted); font-size:12.5px; margin-top:2px;">
           {{ _('العامل:') }} {{ t.accepted_by.name if t.accepted_by else (t.assignee.name if t.assignee else '-') }}
           · {{ _('أُنجزت:') }} {{ t.completed_at.strftime('%H:%M') if t.completed_at }}

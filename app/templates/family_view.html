@@ -118,7 +118,7 @@
     <div class="task-row">
       {% if t.status == 'done' %}<span class="badge badge-ok">🔒 {{ _('قفل المهمة') }}</span>{% else %}<span class="badge badge-bad">⚠️ {{ _('ما قدر') }}</span>{% endif %}
       <div>
-        <div class="task-title">{{ t.title }}</div>
+        <div class="task-title">{{ task_display_title(t) }}</div>
         {% if t.completion_note %}<div class="task-note">{{ t.completion_note }}</div>{% endif %}
         {% if t.failure_reason %}<div class="task-note">{{ _('السبب:') }} {{ t.failure_reason }}</div>{% endif %}
       </div>
@@ -128,7 +128,7 @@
     <div class="task-row">
       <span class="badge badge-wait">⏳ {{ _('باقي') }}</span>
       <div>
-        <div class="task-title">{{ t.title }}</div>
+        <div class="task-title">{{ task_display_title(t) }}</div>
         {% if t.due_date %}<div class="task-note">{{ _('الموعد:') }} {{ t.due_date }}</div>{% endif %}
         <div class="task-actions">
           <form method="post" action="{{ url_for('team.task_postpone_active', task_id=t.id) }}">

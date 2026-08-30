@@ -37,7 +37,7 @@
 <label>{{ _('مهمة سابقة (اختياري — تسلسل المهام)') }}</label>
 <select name="depends_on_task_id">
   <option value="">{{ _('بدون تسلسل — تُبدأ فوراً') }}</option>
-  {% for t in open_tasks %}<option value="{{ t.id }}">{{ t.title }} ({{ t.assignee.name if t.assignee else _('غير معيّنة') }})</option>{% endfor %}
+  {% for t in open_tasks %}<option value="{{ t.id }}">{{ task_display_title(t) }} ({{ t.assignee.name if t.assignee else _('غير معيّنة') }})</option>{% endfor %}
 </select>
 <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('لو حدّدت مهمة سابقة، هذي المهمة تبقى مقفلة على العامل لين المهمة السابقة تصير "منجزة".') }}</p>
 <label><input name="requires_photo" type="checkbox" style="width:auto; display:inline-block;"> {{ _('يتطلب إرفاق صورة عند الإنجاز') }}</label>

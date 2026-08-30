@@ -148,7 +148,7 @@
     <tbody>
     {% for t in approved_tasks %}
     <tr>
-      <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a></td>
+      <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ task_display_title(t) }}</a></td>
       <td>{{ t.assignee.name if t.assignee else _('بدون تعيين') }}</td>
       <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
       <td>{{ t.due_date or '-' }}</td>
@@ -169,7 +169,7 @@
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
     <tbody>
     {% for t in assigned_by_me %}
-    <tr><td>{{ t.title }}</td><td>{{ t.assignee.name if t.assignee else '-' }}</td><td>{{ t.due_date or '-' }}</td><td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td></tr>
+    <tr><td>{{ task_display_title(t) }}</td><td>{{ t.assignee.name if t.assignee else '-' }}</td><td>{{ t.due_date or '-' }}</td><td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td></tr>
     {% else %}
     <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد.') }}</td></tr>
     {% endfor %}
@@ -188,7 +188,7 @@
     <tbody>
     {% for t in review_box %}
     <tr>
-      <td>{{ t.title }}</td>
+      <td>{{ task_display_title(t) }}</td>
       <td>{{ t.notes or '-' }}</td>
       <td class="actions-col">
         <form method="post" action="{{ url_for('team.task_restore', task_id=t.id) }}">

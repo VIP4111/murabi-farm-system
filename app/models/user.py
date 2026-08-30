@@ -40,7 +40,8 @@ class User(UserMixin, db.Model):
 
     # قفل بعد محاولات دخول فاشلة متكررة (بند إضافي 86، 2026-08-02) —
     # ما فيه أي حد سابق لعدد المحاولات، يعني أي حد يقدر يجرّب كلمات مرور
-    # بلا نهاية على أي رقم جوال. 5 محاولات فاشلة متتالية = قفل 15 دقيقة.
+    # بلا نهاية على أي رقم جوال. 5 محاولات فاشلة متتالية = قفل (راجع
+    # LOCKOUT_MINUTES تحت للمدة الفعلية الحالية).
     # يُصفَّر عند أول دخول ناجح.
     failed_login_attempts = db.Column(db.Integer, default=0, nullable=False)
     locked_until = db.Column(db.DateTime, nullable=True)
@@ -92,7 +93,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, raw_password)
 
     LOCKOUT_THRESHOLD = 5
-    LOCKOUT_MINUTES = 15
+    # بند إضافي (2026-08-30) — طلبك الصريح: عامل أخطأ بكلمة المرور
+    # وانتظر ١٥ دقيقة، تبيها دقيقة وحدة بدلها.
+    LOCKOUT_MINUTES = 1
 
     @staticmethod
     def _now_naive_utc():
