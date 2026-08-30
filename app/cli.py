@@ -305,14 +305,25 @@ def register_cli(app):
         db.session.flush()
 
         # 2) الأدوار الافتراضية
+        # بند إضافي (2026-08-31) — خلل حقيقي كان يمحو أي تعديل يدوي
+        # لصلاحيات دور جاهز: `flask seed` يشتغل تلقائياً بكل نشر على
+        # Render (Procfile: `release: flask db upgrade && flask seed`)،
+        # وكان يعيد تعيين `role.permissions` من `DEFAULT_ROLES` بدون
+        # قيد حتى لو الدور موجود مسبقاً ومُعدَّل يدوياً بشاشة "تعديل
+        # صلاحيات الدور". الحل: `Role.permissions_customized` — بمجرد
+        # أول حفظ يدوي فعلي (`role_edit()`)، الدور يصير محصَّناً ضد أي
+        # إعادة كتابة تلقائية هنا مستقبلاً؛ يبقى فقط دور "ما لُمس بعد"
+        # يتزامن تلقائياً مع أي صلاحية جديدة تُضاف مستقبلاً بالكود.
         owner_role = None
         for name, cfg in DEFAULT_ROLES.items():
             role = Role.query.filter_by(name=name).first()
-            if not role:
+            is_new = role is None
+            if is_new:
                 role = Role(name=name, display_name=cfg["display_name"], is_system=cfg["is_system"])
                 db.session.add(role)
                 db.session.flush()
-            role.permissions = [code_to_permission[c] for c in cfg["permissions"]]
+            if is_new or not role.permissions_customized:
+                role.permissions = [code_to_permission[c] for c in cfg["permissions"]]
             if name == "owner":
                 owner_role = role
         db.session.commit()

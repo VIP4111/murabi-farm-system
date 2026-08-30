@@ -43,6 +43,17 @@ class Role(db.Model):
     display_name = db.Column(db.String(120), nullable=False)
     # الأدوار الجاهزة (مالك/دكتور/عامل) is_system=True، ما تنحذف بالغلط
     is_system = db.Column(db.Boolean, default=False, nullable=False)
+    # بند إضافي (2026-08-31) — خلل حقيقي: `flask seed` (يشتغل تلقائياً
+    # بكل نشر على Render عبر Procfile's `release: flask db upgrade &&
+    # flask seed`) كان يعيد كتابة `role.permissions` لكل الأدوار
+    # الجاهزة (owner/doctor/worker/nurse/accountant/viewer) من
+    # `DEFAULT_ROLES` بدون قيد — أي تعديل يدوي فعله صاحب الحلال بشاشة
+    # "تعديل صلاحيات الدور" كان يُمحى بصمت عند أول نشر تالٍ. هذا العلم
+    # يصير True تلقائياً بمجرد أول حفظ يدوي فعلي من `role_edit()`،
+    # وseed() بعدها يتخطى إعادة الكتابة لأي دور علّمه True — يبقى
+    # يزامن الأدوار اللي ما لمسها صاحب الحلال بعد مع أي صلاحية جديدة
+    # تُضاف مستقبلاً بالكود.
+    permissions_customized = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=_now)
 
     permissions = db.relationship(

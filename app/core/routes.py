@@ -1846,6 +1846,9 @@ def role_edit(role_id):
         role.display_name = request.form.get("display_name", role.display_name).strip()
         selected_codes = set(request.form.getlist("permissions"))
         role.permissions = Permission.query.filter(Permission.code.in_(selected_codes)).all()
+        # بند إضافي (2026-08-31) — أول حفظ يدوي فعلي يقفل هذا الدور
+        # ضد إعادة الكتابة التلقائية من `flask seed` بأي نشر تالٍ.
+        role.permissions_customized = True
         db.session.add(AuditLog(actor_user_id=current_user.id, action="role.update_permissions",
                                  entity_type="Role", entity_id=role.id,
                                  details=f"{len(selected_codes)} permissions"))
