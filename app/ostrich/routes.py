@@ -1,5 +1,6 @@
 from datetime import date
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.ostrich import ostrich_bp
@@ -39,7 +40,7 @@ def eggs_new():
             weight_grams=float(request.form["weight_grams"]) if request.form.get("weight_grams") else None,
             notes=request.form.get("notes") or None,
         )
-        flash("تم تسجيل البيضة", "success")
+        flash(_("تم تسجيل البيضة"), "success")
         return redirect(url_for("ostrich.eggs_list"))
     mothers = Animal.query.filter_by(species="ostrich", gender="أنثى", status="active").order_by(Animal.animal_no).all()
     return render_template("ostrich/egg_form.html", mothers=mothers, today=date.today().isoformat())
@@ -54,7 +55,7 @@ def eggs_place(egg_id):
         egg, incubator_id=int(request.form["incubator_id"]),
         incubation_start_date=date.fromisoformat(request.form["incubation_start_date"]),
     )
-    flash("تم إدخال البيضة للحاضنة", "success")
+    flash(_("تم إدخال البيضة للحاضنة"), "success")
     return redirect(url_for("ostrich.eggs_list"))
 
 
@@ -75,14 +76,14 @@ def eggs_hatch(egg_id):
                     weight=float(request.form["weight"]) if request.form.get("weight") else None,
                     actor_user_id=current_user.id,
                 )
-                flash("تم تسجيل الفقس وإضافة الفرخ كرأس جديد", "success")
+                flash(_("تم تسجيل الفقس وإضافة الفرخ كرأس جديد"), "success")
             except Exception as e:
                 db.session.rollback()
-                flash(f"تعذّر تسجيل الفقس: {e}", "error")
+                flash(_("تعذّر تسجيل الفقس: %(err)s", err=e), "error")
                 return redirect(url_for("ostrich.eggs_hatch", egg_id=egg.id))
         else:
             svc.record_hatch_failure(egg, fail_reason=request.form.get("fail_reason") or "-", actor_user_id=current_user.id)
-            flash("تم تسجيل فشل الفقس", "success")
+            flash(_("تم تسجيل فشل الفقس"), "success")
         return redirect(url_for("ostrich.eggs_list"))
     fs = FarmSettings.get()
     return render_template(
@@ -112,6 +113,6 @@ def incubators_new():
             capacity=int(request.form["capacity"]) if request.form.get("capacity") else None,
             notes=request.form.get("notes") or None,
         )
-        flash("تمت إضافة الحاضنة", "success")
+        flash(_("تمت إضافة الحاضنة"), "success")
         return redirect(url_for("ostrich.incubators_list"))
     return render_template("ostrich/incubator_form.html")

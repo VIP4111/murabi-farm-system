@@ -1,5 +1,6 @@
 from datetime import date
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.finance import finance_bp
@@ -168,11 +169,11 @@ def lots_new():
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         if not name:
-            flash("اسم الدفعة مطلوب", "error")
+            flash(_("اسم الدفعة مطلوب"), "error")
             return redirect(url_for("finance.lots_new"))
         animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
         if not animal_ids:
-            flash("لازم تختار رأساً واحداً على الأقل", "error")
+            flash(_("لازم تختار رأساً واحداً على الأقل"), "error")
             return redirect(url_for("finance.lots_new"))
 
         lot = SalesLot(
@@ -187,7 +188,7 @@ def lots_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="sales_lot.create",
                                  entity_type="SalesLot", entity_id=lot.id, details=name))
         db.session.commit()
-        flash("تم إنشاء دفعة البيع", "success")
+        flash(_("تم إنشاء دفعة البيع"), "success")
         return redirect(url_for("finance.lot_detail", lot_id=lot.id))
 
     target_amount = request.args.get("target_amount", type=float)
@@ -239,7 +240,7 @@ def lot_delete(lot_id):
                              entity_type="SalesLot", entity_id=lot.id, details=lot.name))
     db.session.delete(lot)
     db.session.commit()
-    flash("تم حذف الدفعة", "success")
+    flash(_("تم حذف الدفعة"), "success")
     return redirect(url_for("finance.lots_list"))
 
 
@@ -309,7 +310,7 @@ def finance_new():
                         f"{row.category} — {anomaly['amount']:.0f} ({anomaly['direction']} بـ{abs(anomaly['deviation_pct'])}% عن المعتاد {anomaly['average']:.0f})",
                     )
 
-        flash("تمت إضافة العملية المالية", "success")
+        flash(_("تمت إضافة العملية المالية"), "success")
         return redirect(url_for("finance.finance_list"))
 
     return render_template("finance/form.html", animals=Animal.query.order_by(Animal.animal_no).all())
@@ -331,5 +332,5 @@ def finance_cancel(row_id):
         from app.core.cycle_engine import restore_animal_after_sale_cancel
         restore_animal_after_sale_cancel(row.related_animal, actor_user_id=current_user.id)
 
-    flash("تم إلغاء العملية (السجل باقٍ للتدقيق)", "success")
+    flash(_("تم إلغاء العملية (السجل باقٍ للتدقيق)"), "success")
     return redirect(url_for("finance.finance_list"))

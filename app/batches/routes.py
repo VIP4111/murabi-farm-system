@@ -1,5 +1,6 @@
 from datetime import date
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.batches import batches_bp
@@ -37,7 +38,7 @@ def batches_new():
                 "breed": request.form.get(f"breed_{i}") or None,
             })
         if not entries:
-            flash("لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف.", "error")
+            flash(_("لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف."), "error")
             return redirect(url_for("batches.batches_new"))
         try:
             batch = batch_service.create_batch(
@@ -88,7 +89,7 @@ def batch_advance(batch_id):
     except ValueError as e:
         flash(str(e), "error")
         return redirect(url_for("batches.batch_detail", batch_id=batch.id))
-    flash(f"تقدّمت الدفعة لمرحلة الترقيم/الفحص — تولّدت {len(created)} مهمة فحص فردي.", "success")
+    flash(_("تقدّمت الدفعة لمرحلة الترقيم/الفحص — تولّدت %(n)s مهمة فحص فردي.", n=len(created)), "success")
     return redirect(url_for("batches.batch_detail", batch_id=batch.id))
 
 
@@ -107,7 +108,7 @@ def batch_distribute(batch_id):
     except ValueError as e:
         flash(str(e), "error")
         return redirect(url_for("batches.batch_detail", batch_id=batch.id))
-    flash(f"تم توزيع {len(created)} رأس على حظائرها الدائمة.", "success")
+    flash(_("تم توزيع %(n)s رأس على حظائرها الدائمة.", n=len(created)), "success")
     return redirect(url_for("batches.batch_detail", batch_id=batch.id))
 
 
@@ -121,7 +122,7 @@ def animal_hold(animal_id):
     except ValueError as e:
         flash(str(e), "error")
         return redirect(url_for("batches.batch_detail", batch_id=animal.batch_id))
-    flash(f"استُبعدت {animal.animal_no} من التقدّم الجماعي التالي.", "success")
+    flash(_("استُبعدت %(no)s من التقدّم الجماعي التالي.", no=animal.animal_no), "success")
     return redirect(url_for("batches.batch_detail", batch_id=animal.batch_id))
 
 
@@ -135,7 +136,7 @@ def animal_release(animal_id):
     except ValueError as e:
         flash(str(e), "error")
         return redirect(url_for("batches.batch_detail", batch_id=animal.batch_id))
-    flash(f"تم تحرير استبعاد {animal.animal_no}.", "success")
+    flash(_("تم تحرير استبعاد %(no)s.", no=animal.animal_no), "success")
     return redirect(url_for("batches.batch_detail", batch_id=animal.batch_id))
 
 
@@ -146,7 +147,7 @@ def animal_catch_up(animal_id):
     animal = Animal.query.get_or_404(animal_id)
     batch = AnimalBatch.query.get_or_404(animal.batch_id) if animal.batch_id else None
     if not batch:
-        flash("هذا الرأس مو ضمن أي دفعة.", "error")
+        flash(_("هذا الرأس مو ضمن أي دفعة."), "error")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
     barn_id = request.form.get("barn_id")
     try:
@@ -157,5 +158,5 @@ def animal_catch_up(animal_id):
     except ValueError as e:
         flash(str(e), "error")
         return redirect(url_for("batches.batch_detail", batch_id=batch.id))
-    flash(f"لحقت {animal.animal_no} بمرحلة الدفعة الحالية.", "success")
+    flash(_("لحقت %(no)s بمرحلة الدفعة الحالية.", no=animal.animal_no), "success")
     return redirect(url_for("batches.batch_detail", batch_id=batch.id))

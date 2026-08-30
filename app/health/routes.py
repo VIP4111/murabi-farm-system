@@ -81,7 +81,7 @@ def _check_redose_guard(*, animal_id, pharmacy_id, override_reason, entity_type)
     if not guard:
         return True, None
     if not override_reason:
-        flash(guard["message"] + " اكتب سبب التجاوز بالحقل المخصص لو متأكد من الحاجة للتكرار.", "warning")
+        flash(_("%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد من الحاجة للتكرار.", msg=guard["message"]), "warning")
         return False, None
     db.session.add(AuditLog(actor_user_id=current_user.id, action="health.redose_override",
                              entity_type=entity_type, details=override_reason))

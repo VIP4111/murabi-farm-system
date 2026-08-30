@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.equipment import equipment_bp
@@ -39,7 +40,7 @@ def items_new():
         )
         db.session.add(item)
         db.session.commit()
-        flash("تمت إضافة الصنف", "success")
+        flash(_("تمت إضافة الصنف"), "success")
         return redirect(url_for("equipment.items_list"))
     return render_template("equipment/item_form.html")
 
@@ -65,7 +66,7 @@ def items_edit(item_id):
         if new_photo:
             item.photo_url = new_photo
         db.session.commit()
-        flash("تم تحديث الصنف", "success")
+        flash(_("تم تحديث الصنف"), "success")
         return redirect(url_for("equipment.items_list"))
     return render_template("equipment/item_form.html", item=item)
 
@@ -77,7 +78,7 @@ def purchase_new():
     """شراء معدات موحّد (بند إضافي 203) — نفس فكرة `feed.purchase_new`
     بالضبط: يزيد المخزون ويسجّل العملية المالية بضغطة وحدة."""
     if not current_user.has_permission("finance.full.manage"):
-        flash("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية).", "error")
+        flash(_("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."), "error")
         return redirect(url_for("equipment.items_list"))
     if request.method == "POST":
         item = Equipment.query.get_or_404(int(request.form["equipment_id"]))
@@ -94,7 +95,7 @@ def purchase_new():
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("equipment.purchase_new"))
-        flash("تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً", "success")
+        flash(_("تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"), "success")
         return redirect(url_for("equipment.items_list"))
     return render_template(
         "equipment/purchase_form.html",
@@ -111,7 +112,7 @@ def items_movement(item_id):
         movement_type = request.form["movement_type"]
         # بند إضافي 276 — طلبك الصريح: كل صرف لازم يُسجَّل مين استلمه.
         if movement_type == "out" and not request.form.get("borrowed_by_id"):
-            flash("لازم تحدد مين يستلم القطعة قبل تسجيل الصرف.", "error")
+            flash(_("لازم تحدد مين يستلم القطعة قبل تسجيل الصرف."), "error")
             return redirect(url_for("equipment.items_movement", item_id=item.id))
         try:
             svc.record_movement(
@@ -123,7 +124,7 @@ def items_movement(item_id):
                 no_return_expected=request.form.get("no_return_expected") == "1",
                 condition_at_handout=request.form.get("condition_at_handout") or None,
             )
-            flash("تم تسجيل الحركة", "success")
+            flash(_("تم تسجيل الحركة"), "success")
         except ValueError as e:
             flash(str(e), "error")
         return redirect(url_for("equipment.items_movement", item_id=item.id))
@@ -176,7 +177,7 @@ def items_take(item_id):
             created_by_id=current_user.id, borrowed_by_id=current_user.id,
             condition_at_handout=condition,
         )
-        flash("تم تسجيل أخذك للقطعة", "success")
+        flash(_("تم تسجيل أخذك للقطعة"), "success")
     except ValueError as e:
         flash(str(e), "error")
     return redirect(url_for("equipment.items_mine"))
@@ -191,12 +192,12 @@ def items_return_mine(item_id):
     item = Equipment.query.get_or_404(item_id)
     mine = svc.my_borrow(item, current_user.id)
     if not mine:
-        flash("ما فيه استعارة قائمة لك بهذي القطعة", "error")
+        flash(_("ما فيه استعارة قائمة لك بهذي القطعة"), "error")
         return redirect(url_for("equipment.items_mine"))
     condition = request.form.get("condition_at_return") or "good"
     try:
         svc.return_item(mine, condition_at_return=condition)
-        flash("تم تسجيل استرجاع القطعة", "success")
+        flash(_("تم تسجيل استرجاع القطعة"), "success")
     except ValueError as e:
         flash(str(e), "error")
     return redirect(url_for("equipment.items_mine"))
@@ -211,7 +212,7 @@ def movement_return(movement_id):
     condition = request.form.get("condition_at_return") or "good"
     try:
         svc.return_item(movement, condition_at_return=condition)
-        flash("تم تسجيل استرجاع القطعة", "success")
+        flash(_("تم تسجيل استرجاع القطعة"), "success")
     except ValueError as e:
         flash(str(e), "error")
     return redirect(url_for("equipment.items_movement", item_id=movement.equipment_id))
@@ -250,7 +251,7 @@ def assets_new():
         )
         db.session.add(asset)
         db.session.commit()
-        flash("تمت إضافة الأصل", "success")
+        flash(_("تمت إضافة الأصل"), "success")
         return redirect(url_for("equipment.assets_list"))
     return render_template("equipment/asset_form.html", barns=Barn.query.order_by(Barn.barn_name).all())
 
@@ -270,7 +271,7 @@ def asset_maintenance(asset_id):
         ))
         asset.last_maintenance_date = maintenance_date
         db.session.commit()
-        flash("تم تسجيل الصيانة", "success")
+        flash(_("تم تسجيل الصيانة"), "success")
         return redirect(url_for("equipment.asset_maintenance", asset_id=asset.id))
     logs = AssetMaintenanceLog.query.filter_by(asset_id=asset.id).order_by(AssetMaintenanceLog.date.desc()).all()
     return render_template("equipment/asset_maintenance.html", asset=asset, logs=logs, today=date.today().isoformat())
@@ -301,6 +302,6 @@ def utilities_new():
             cost=cost, notes=request.form.get("notes"), finance_id=finance_id,
         ))
         db.session.commit()
-        flash("تم تسجيل القراءة", "success")
+        flash(_("تم تسجيل القراءة"), "success")
         return redirect(url_for("equipment.utilities_list"))
     return render_template("equipment/utility_form.html", today=date.today().isoformat())

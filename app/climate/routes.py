@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.climate import climate_bp
@@ -51,7 +52,7 @@ def settings():
             if not (-90 <= lat <= 90) or not (-180 <= lon <= 180):
                 raise ValueError
         except (KeyError, ValueError):
-            flash("إحداثيات غير صالحة.", "error")
+            flash(_("إحداثيات غير صالحة."), "error")
             return redirect(url_for("climate.settings"))
 
         fs.farm_latitude = lat
@@ -61,7 +62,7 @@ def settings():
         fs.thi_severe = float(request.form.get("thi_severe") or fs.thi_severe)
         fs.thi_emergency = float(request.form.get("thi_emergency") or fs.thi_emergency)
         db.session.commit()
-        flash("تم حفظ إعدادات رادار المناخ.", "success")
+        flash(_("تم حفظ إعدادات رادار المناخ."), "success")
         return redirect(url_for("climate.dashboard"))
 
     return render_template("climate/settings.html", fs=fs)
@@ -73,7 +74,7 @@ def settings():
 def refresh():
     forecast = svc.get_forecast(force_refresh=True)
     if forecast["error"]:
-        flash(f"تعذّر تحديث الطقس: {forecast['error']}", "error")
+        flash(_("تعذّر تحديث الطقس: %(err)s", err=forecast["error"]), "error")
     else:
-        flash("تم تحديث توقعات الطقس.", "success")
+        flash(_("تم تحديث توقعات الطقس."), "success")
     return redirect(url_for("climate.dashboard"))

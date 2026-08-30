@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.onboarding import onboarding_bp
@@ -17,7 +18,7 @@ def welcome():
         current_user.is_beginner = request.form.get("is_beginner") == "1"
         current_user.onboarding_completed_at = datetime.now(timezone.utc)
         db.session.commit()
-        flash("تم — دليلك اليومي جاهز بالصفحة الرئيسية", "success")
+        flash(_("تم — دليلك اليومي جاهز بالصفحة الرئيسية"), "success")
         return redirect(url_for("core.home"))
     steps = checklist_service.onboarding_steps_for(current_user)
     return render_template("onboarding/welcome.html", steps=steps)

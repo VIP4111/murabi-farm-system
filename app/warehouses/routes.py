@@ -1,5 +1,6 @@
 from datetime import date
 from flask import render_template, request, redirect, url_for, flash, abort
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.warehouses import warehouses_bp
@@ -85,7 +86,7 @@ def item_transfer(kind, item_id):
     except ValueError as e:
         flash(str(e), "error")
         return redirect(url_for("warehouses.item_breakdown", kind=kind, item_id=item_id))
-    flash("تم التحويل بين المستودعين.", "success")
+    flash(_("تم التحويل بين المستودعين."), "success")
     return redirect(url_for("warehouses.item_breakdown", kind=kind, item_id=item_id))
 
 
@@ -111,11 +112,11 @@ def item_count(kind, item_id):
             flash(str(e), "error")
             return redirect(url_for("warehouses.item_count", kind=kind, item_id=item_id))
         if rec.diff_qty < 0:
-            flash(f"تم تسجيل الجرد — نقص {abs(rec.diff_qty)} احتُسب هالك بقيمة {rec.diff_value} ريال.", "error")
+            flash(_("تم تسجيل الجرد — نقص %(qty)s احتُسب هالك بقيمة %(val)s ريال.", qty=abs(rec.diff_qty), val=rec.diff_value), "error")
         elif rec.diff_qty > 0:
-            flash(f"تم تسجيل الجرد — زيادة {rec.diff_qty} أُضيفت للمخزون.", "success")
+            flash(_("تم تسجيل الجرد — زيادة %(qty)s أُضيفت للمخزون.", qty=rec.diff_qty), "success")
         else:
-            flash("تم تسجيل الجرد — الرصيد مطابق تماماً.", "success")
+            flash(_("تم تسجيل الجرد — الرصيد مطابق تماماً."), "success")
         return redirect(url_for("warehouses.inventory_counts_list"))
     return render_template(
         "warehouses/item_count_form.html", item=item, kind=kind,

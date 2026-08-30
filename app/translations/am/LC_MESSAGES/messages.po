@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:43+0300\n"
+"POT-Creation-Date: 2026-08-30 17:59+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -689,6 +689,56 @@ msgstr "የክትባት መርሃ ግብር"
 msgid "مستودع"
 msgstr "መጋዘን"
 
+#: app/assistant/routes.py:70
+msgid "اكتب سؤالك أولاً"
+msgstr "መጀመሪያ ጥያቄዎን ይጻፉ"
+
+#: app/assistant/routes.py:108
+msgid "تم مسح المحادثة"
+msgstr "ውይይቱ ተጠርጓል"
+
+#: app/assistant/routes.py:132
+msgid "لازم تكتب نص الملاحظة."
+msgstr "የማስታወሻውን ጽሑፍ መጻፍ አለብዎት።"
+
+#: app/assistant/routes.py:141
+#, python-format
+msgid "ما فيه حيوان برقم \"%(no)s\"."
+msgstr "\"%(no)s\" ቁጥር ያለው እንስሳ የለም።"
+
+#: app/assistant/routes.py:151
+msgid "تمت إضافة الملاحظة."
+msgstr "ማስታወሻው ታክሏል።"
+
+#: app/assistant/routes.py:174
+msgid "اكتب وصف الحدث أولاً."
+msgstr "መጀመሪያ የክስተቱን መግለጫ ይጻፉ።"
+
+#: app/assistant/routes.py:177
+msgid "تمت معالجة النص — راجع النتيجة أدناه."
+msgstr "ጽሑፉ ተስተናግዷል — ከታች ያለውን ውጤት ይመልከቱ።"
+
+#: app/assistant/routes.py:188
+msgid "لازم ترفع مقطع صوتي."
+msgstr "የድምጽ ቅንጭብ መስቀል አለብዎት።"
+
+#: app/assistant/routes.py:204
+msgid "تمت معالجة المقطع الصوتي — راجع النتيجة أدناه."
+msgstr "የድምጽ ቅንጭብ ተስተናግዷል — ከታች ያለውን ውጤት ይመልከቱ።"
+
+#: app/assistant/routes.py:219
+msgid "تم اعتماد المسودة وتنفيذها فعلياً."
+msgstr "ረቂቁ ጸድቆ በትክክል ተፈጽሟል።"
+
+#: app/assistant/routes.py:223
+#, python-format
+msgid "تعذّر التنفيذ: %(err)s"
+msgstr "ማስፈጸም አልተቻለም፡ %(err)s"
+
+#: app/assistant/routes.py:234
+msgid "تم رفض المسودة."
+msgstr "ረቂቁ ውድቅ ተደርጓል።"
+
 #: app/auth/routes.py:49
 #, python-format
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد %(n)s دقيقة."
@@ -697,6 +747,39 @@ msgstr "በተደጋጋሚ የተሳሳተ የመግቢያ ሙከራ ምክን�
 #: app/auth/routes.py:78
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "የስልክ ቁጥር ወይም የይለፍ ቃል ትክክል አይደለም"
+
+#: app/batches/routes.py:41
+msgid "لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف."
+msgstr "በስብስቡ ውስጥ ቢያንስ አንድ ራስ ያስፈልጋል — ለእያንዳንዱ ረድፍ ቢያንስ ጾታውን ይግለጹ።"
+
+#: app/batches/routes.py:92
+#, python-format
+msgid "تقدّمت الدفعة لمرحلة الترقيم/الفحص — تولّدت %(n)s مهمة فحص فردي."
+msgstr "ስብስቡ ወደ ምልክት ማድረግ/ምርመራ ደረጃ ገፍቷል — %(n)s የግለሰብ ምርመራ ተግባር(ተግባራት) ተፈጥረዋል።"
+
+#: app/batches/routes.py:111
+#, python-format
+msgid "تم توزيع %(n)s رأس على حظائرها الدائمة."
+msgstr "%(n)s ራስ(ራሶች) ወደ ቋሚ በረቶቻቸው ተመድበዋል።"
+
+#: app/batches/routes.py:125
+#, python-format
+msgid "استُبعدت %(no)s من التقدّم الجماعي التالي."
+msgstr "%(no)s ከቀጣዩ የጅምላ ግስጋሴ ተገልላለች።"
+
+#: app/batches/routes.py:139
+#, python-format
+msgid "تم تحرير استبعاد %(no)s."
+msgstr "የ%(no)s መገለል ተፈትቷል።"
+
+#: app/batches/routes.py:150
+msgid "هذا الرأس مو ضمن أي دفعة."
+msgstr "ይህ ራስ በምንም ስብስብ ውስጥ የለም።"
+
+#: app/batches/routes.py:161
+#, python-format
+msgid "لحقت %(no)s بمرحلة الدفعة الحالية."
+msgstr "%(no)s ከስብስቡ የአሁኑ ደረጃ ጋር ተገናኝታለች።"
 
 #: app/climate/climate_service.py:27
 msgid "طبيعي"
@@ -717,6 +800,23 @@ msgstr "ከባድ ውጥረት"
 #: app/climate/climate_service.py:31
 msgid "إجهاد طارئ"
 msgstr "የአደጋ ጊዜ ውጥረት"
+
+#: app/climate/routes.py:55
+msgid "إحداثيات غير صالحة."
+msgstr "ልክ ያልሆኑ መጋጠሚያዎች።"
+
+#: app/climate/routes.py:65
+msgid "تم حفظ إعدادات رادار المناخ."
+msgstr "የአየር ንብረት ራዳር ቅንብሮች ተቀምጠዋል።"
+
+#: app/climate/routes.py:77
+#, python-format
+msgid "تعذّر تحديث الطقس: %(err)s"
+msgstr "የአየር ሁኔታ ማዘመን አልተቻለም፡ %(err)s"
+
+#: app/climate/routes.py:79
+msgid "تم تحديث توقعات الطقس."
+msgstr "የአየር ሁኔታ ትንበያ ተዘምኗል።"
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
@@ -1446,6 +1546,107 @@ msgstr "የአሁኑ የትርፍ ህዳግ %(margin)s%% ≥ ግቡ %(target)s%%
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "የሽያጭ ምልክቶች የሉም — አምራች ሴት፣ ማቆየት ይመረጣል"
 
+#: app/equipment/routes.py:43
+msgid "تمت إضافة الصنف"
+msgstr "ንጥሉ ታክሏል"
+
+#: app/equipment/routes.py:69
+msgid "تم تحديث الصنف"
+msgstr "ንጥሉ ተዘምኗል"
+
+#: app/equipment/routes.py:81 app/feed/routes.py:220
+msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."
+msgstr "ግዢ ለመመዝገብ (የገንዘብ ግብይት ስለሚፈጥር) የገንዘብ አስተዳደር ፈቃድም ያስፈልግዎታል።"
+
+#: app/equipment/routes.py:98 app/feed/routes.py:237
+msgid "تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"
+msgstr "ግዢው ተመዝግቧል — ክምችቱ ጨምሯል እና የገንዘብ ግብይቱ አብሮ ተመዝግቧል"
+
+#: app/equipment/routes.py:115
+msgid "لازم تحدد مين يستلم القطعة قبل تسجيل الصرف."
+msgstr "ስርጭቱን ከመመዝገብዎ በፊት ንጥሉን የሚቀበለውን መግለጽ አለብዎት።"
+
+#: app/equipment/routes.py:127
+msgid "تم تسجيل الحركة"
+msgstr "እንቅስቃሴው ተመዝግቧል"
+
+#: app/equipment/routes.py:180
+msgid "تم تسجيل أخذك للقطعة"
+msgstr "የእርስዎ የንጥሉ መውሰድ ተመዝግቧል"
+
+#: app/equipment/routes.py:195
+msgid "ما فيه استعارة قائمة لك بهذي القطعة"
+msgstr "ለዚህ ንጥል ንቁ ብድር የለዎትም"
+
+#: app/equipment/routes.py:200 app/equipment/routes.py:215
+msgid "تم تسجيل استرجاع القطعة"
+msgstr "የንጥሉ መመለስ ተመዝግቧል"
+
+#: app/equipment/routes.py:254
+msgid "تمت إضافة الأصل"
+msgstr "ንብረቱ ታክሏል"
+
+#: app/equipment/routes.py:274
+msgid "تم تسجيل الصيانة"
+msgstr "ጥገናው ተመዝግቧል"
+
+#: app/equipment/routes.py:305
+msgid "تم تسجيل القراءة"
+msgstr "ንባቡ ተመዝግቧል"
+
+#: app/feed/routes.py:52
+msgid "تمت إضافة مكوّن العلف"
+msgstr "የመኖ ንጥረ ነገሩ ታክሏል"
+
+#: app/feed/routes.py:82
+msgid "تم تحديث مكوّن العلف"
+msgstr "የመኖ ንጥረ ነገሩ ተዘምኗል"
+
+#: app/feed/routes.py:126 app/feed/routes.py:182
+#, python-format
+msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد."
+msgstr "%(msg)s እርግጠኛ ከሆኑ የመተላለፊያ ምክንያቱን በተዘጋጀው መስክ ይጻፉ።"
+
+#: app/feed/routes.py:138
+msgid "تمت إضافة الوصفة"
+msgstr "የምግብ አዘገጃጀቱ ታክሏል"
+
+#: app/feed/routes.py:200
+msgid "تمت إضافة خطة التغذية"
+msgstr "የመመገቢያ እቅዱ ታክሏል"
+
+#: app/feed/routes.py:270
+msgid "تم تسجيل حركة المخزون"
+msgstr "የክምችት እንቅስቃሴ ተመዝግቧል"
+
+#: app/feed/routes.py:340 app/feed/routes.py:377
+msgid "الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"
+msgstr "የተመረጠው እንስሳ የተመዘገበ ክብደት የለውም — በእጅ ክብደት ያስገቡ"
+
+#: app/finance/routes.py:172
+msgid "اسم الدفعة مطلوب"
+msgstr "የስብስቡ ስም ያስፈልጋል"
+
+#: app/finance/routes.py:176
+msgid "لازم تختار رأساً واحداً على الأقل"
+msgstr "ቢያንስ አንድ ራስ መምረጥ አለብዎት"
+
+#: app/finance/routes.py:191
+msgid "تم إنشاء دفعة البيع"
+msgstr "የሽያጭ ስብስቡ ተፈጥሯል"
+
+#: app/finance/routes.py:243
+msgid "تم حذف الدفعة"
+msgstr "ስብስቡ ተሰርዟል"
+
+#: app/finance/routes.py:313
+msgid "تمت إضافة العملية المالية"
+msgstr "የገንዘብ ግብይቱ ታክሏል"
+
+#: app/finance/routes.py:335
+msgid "تم إلغاء العملية (السجل باقٍ للتدقيق)"
+msgstr "ግብይቱ ተሰርዟል (መዝገቡ ለምርመራ ይቆያል)"
+
 #: app/health/health_service.py:82
 msgid "حقن عضل (IM)"
 msgstr "የጡንቻ ውስጥ መርፌ (IM)"
@@ -1698,6 +1899,11 @@ msgstr "በወፍራም የስብ ንብርብር ስር አከርካሪም ሆ�
 msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
 msgstr "የተያያዘው ተግባር በራስ-ሰር ተጠናቅቋል፣ የክብደት መከታተያ ተግባርም ተይዞልታል።"
 
+#: app/health/routes.py:84
+#, python-format
+msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد من الحاجة للتكرار."
+msgstr "%(msg)s እርግጠኛ ከሆኑ የመተላለፊያ ምክንያቱን በተዘጋጀው መስክ ይጻፉ።"
+
 #: app/health/routes.py:181
 msgid "ارفع صورة أولاً"
 msgstr "መጀመሪያ ምስል ይስቀሉ"
@@ -1854,6 +2060,35 @@ msgstr "ፋርማሲ"
 #: app/models/warehouse.py:24
 msgid "مختلط"
 msgstr "የተደባለቀ"
+
+#: app/onboarding/routes.py:21
+msgid "تم — دليلك اليومي جاهز بالصفحة الرئيسية"
+msgstr "ተጠናቋል — የዕለት መመሪያዎ በዋናው ገጽ ላይ ዝግጁ ነው"
+
+#: app/ostrich/routes.py:43
+msgid "تم تسجيل البيضة"
+msgstr "እንቁላሉ ተመዝግቧል"
+
+#: app/ostrich/routes.py:58
+msgid "تم إدخال البيضة للحاضنة"
+msgstr "እንቁላሉ ወደ ማብቀያው ገብቷል"
+
+#: app/ostrich/routes.py:79
+msgid "تم تسجيل الفقس وإضافة الفرخ كرأس جديد"
+msgstr "መፈልፈሉ ተመዝግቧል እና ጫጩቱ እንደ አዲስ ራስ ታክሏል"
+
+#: app/ostrich/routes.py:82
+#, python-format
+msgid "تعذّر تسجيل الفقس: %(err)s"
+msgstr "መፈልፈልን መመዝገብ አልተቻለም፡ %(err)s"
+
+#: app/ostrich/routes.py:86
+msgid "تم تسجيل فشل الفقس"
+msgstr "ያልተሳካው መፈልፈል ተመዝግቧል"
+
+#: app/ostrich/routes.py:116
+msgid "تمت إضافة الحاضنة"
+msgstr "ማብቀያው ታክሏል"
 
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
@@ -11509,6 +11744,24 @@ msgstr "የአካባቢ ማስታወሻ"
 #: app/templates/warehouses/warehouses_list.html:19
 msgid "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي."
 msgstr "እስካሁን ተጨማሪ የተሰየመ መጋዘን የለም — ሁሉም ክምችት በነባሪ ዋና መጋዘን ውስጥ ነው።"
+
+#: app/warehouses/routes.py:89
+msgid "تم التحويل بين المستودعين."
+msgstr "በሁለቱ መጋዘኖች መካከል ዝውውር ተፈጽሟል።"
+
+#: app/warehouses/routes.py:115
+#, python-format
+msgid "تم تسجيل الجرد — نقص %(qty)s احتُسب هالك بقيمة %(val)s ريال."
+msgstr "ቆጠራው ተመዝግቧል — %(qty)s ጉድለት በ%(val)s ሪያል ኪሳራ ተቆጥሯል።"
+
+#: app/warehouses/routes.py:117
+#, python-format
+msgid "تم تسجيل الجرد — زيادة %(qty)s أُضيفت للمخزون."
+msgstr "ቆጠራው ተመዝግቧል — %(qty)s ትርፍ ወደ ክምችት ታክሏል።"
+
+#: app/warehouses/routes.py:119
+msgid "تم تسجيل الجرد — الرصيد مطابق تماماً."
+msgstr "ቆጠራው ተመዝግቧል — ቀሪው ሂሳብ በትክክል ይዛመዳል።"
 
 #~ msgid "التكاثر"
 #~ msgstr "መራባት"

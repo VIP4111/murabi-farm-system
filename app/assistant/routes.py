@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.assistant import assistant_bp
@@ -66,7 +67,7 @@ def send():
     if not message_text and not (image_file and image_file.filename):
         if request.is_json:
             return jsonify({"error": "الرسالة فاضية"}), 400
-        flash("اكتب سؤالك أولاً", "error")
+        flash(_("اكتب سؤالك أولاً"), "error")
         return redirect(url_for("assistant.chat"))
 
     if image_file and image_file.filename:
@@ -104,7 +105,7 @@ def send():
 def clear():
     AssistantMessage.query.filter_by(user_id=current_user.id).delete()
     db.session.commit()
-    flash("تم مسح المحادثة", "success")
+    flash(_("تم مسح المحادثة"), "success")
     return redirect(url_for("assistant.chat"))
 
 
@@ -128,7 +129,7 @@ def farm_notes_list():
 def farm_notes_new():
     body = request.form.get("body", "").strip()
     if not body:
-        flash("لازم تكتب نص الملاحظة.", "error")
+        flash(_("لازم تكتب نص الملاحظة."), "error")
         return redirect(url_for("assistant.chat", tab="notes"))
 
     barn_id = request.form.get("barn_id", type=int) or None
@@ -137,7 +138,7 @@ def farm_notes_new():
     if animal_no:
         animal = Animal.query.filter_by(animal_no=animal_no).first()
         if not animal:
-            flash(f"ما فيه حيوان برقم \"{animal_no}\".", "error")
+            flash(_("ما فيه حيوان برقم \"%(no)s\".", no=animal_no), "error")
             return redirect(url_for("assistant.chat", tab="notes"))
         animal_id = animal.id
 
@@ -147,7 +148,7 @@ def farm_notes_new():
         tag=request.form.get("tag", "").strip() or None,
         barn_id=barn_id, animal_id=animal_id,
     )
-    flash("تمت إضافة الملاحظة.", "success")
+    flash(_("تمت إضافة الملاحظة."), "success")
     return redirect(url_for("assistant.chat", tab="notes"))
 
 
@@ -170,10 +171,10 @@ def drafts_list():
 def drafts_new_text():
     raw_text = request.form.get("raw_text", "").strip()
     if not raw_text:
-        flash("اكتب وصف الحدث أولاً.", "error")
+        flash(_("اكتب وصف الحدث أولاً."), "error")
         return redirect(url_for("assistant.chat", tab="drafts"))
     draft_action_service.propose_from_text(raw_text, created_by=current_user)
-    flash("تمت معالجة النص — راجع النتيجة أدناه.", "success")
+    flash(_("تمت معالجة النص — راجع النتيجة أدناه."), "success")
     return redirect(url_for("assistant.chat", tab="drafts"))
 
 
@@ -184,7 +185,7 @@ def drafts_new_text():
 def drafts_new_voice():
     audio_file = request.files.get("audio")
     if not audio_file or not audio_file.filename:
-        flash("لازم ترفع مقطع صوتي.", "error")
+        flash(_("لازم ترفع مقطع صوتي."), "error")
         return redirect(url_for("assistant.chat", tab="drafts"))
 
     # بند إضافي 312 — نفس فحص مسار الصورة (بند 305): نقرأ البايتات
@@ -200,7 +201,7 @@ def drafts_new_voice():
     draft_action_service.propose_from_audio(
         audio_bytes, audio_file.mimetype or "audio/mpeg", created_by=current_user, audio_url=audio_url,
     )
-    flash("تمت معالجة المقطع الصوتي — راجع النتيجة أدناه.", "success")
+    flash(_("تمت معالجة المقطع الصوتي — راجع النتيجة أدناه."), "success")
     return redirect(url_for("assistant.chat", tab="drafts"))
 
 
@@ -215,11 +216,11 @@ def drafts_confirm(draft_id):
     assignee_id = request.form.get("assignee_id", type=int)
     try:
         draft_action_service.confirm_draft(draft, actor=current_user, assignee_id=assignee_id)
-        flash("تم اعتماد المسودة وتنفيذها فعلياً.", "success")
+        flash(_("تم اعتماد المسودة وتنفيذها فعلياً."), "success")
     except PermissionError as e:
         flash(str(e), "error")
     except ValueError as e:
-        flash(f"تعذّر التنفيذ: {e}", "error")
+        flash(_("تعذّر التنفيذ: %(err)s", err=e), "error")
     return redirect(url_for("assistant.chat", tab="drafts"))
 
 
@@ -230,7 +231,7 @@ def drafts_reject(draft_id):
     draft = AssistantDraftAction.query.get_or_404(draft_id)
     try:
         draft_action_service.reject_draft(draft, actor=current_user)
-        flash("تم رفض المسودة.", "success")
+        flash(_("تم رفض المسودة."), "success")
     except ValueError as e:
         flash(str(e), "error")
     return redirect(url_for("assistant.chat", tab="drafts"))

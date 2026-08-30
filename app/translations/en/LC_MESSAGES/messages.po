@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:43+0300\n"
+"POT-Creation-Date: 2026-08-30 17:59+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -689,6 +689,56 @@ msgstr "Vaccination schedule"
 msgid "مستودع"
 msgstr "Warehouse"
 
+#: app/assistant/routes.py:70
+msgid "اكتب سؤالك أولاً"
+msgstr "Write your question first"
+
+#: app/assistant/routes.py:108
+msgid "تم مسح المحادثة"
+msgstr "The conversation has been cleared"
+
+#: app/assistant/routes.py:132
+msgid "لازم تكتب نص الملاحظة."
+msgstr "You must write the note text."
+
+#: app/assistant/routes.py:141
+#, python-format
+msgid "ما فيه حيوان برقم \"%(no)s\"."
+msgstr "There is no animal with number \"%(no)s\"."
+
+#: app/assistant/routes.py:151
+msgid "تمت إضافة الملاحظة."
+msgstr "The note has been added."
+
+#: app/assistant/routes.py:174
+msgid "اكتب وصف الحدث أولاً."
+msgstr "Write the event description first."
+
+#: app/assistant/routes.py:177
+msgid "تمت معالجة النص — راجع النتيجة أدناه."
+msgstr "The text has been processed — check the result below."
+
+#: app/assistant/routes.py:188
+msgid "لازم ترفع مقطع صوتي."
+msgstr "You must upload an audio clip."
+
+#: app/assistant/routes.py:204
+msgid "تمت معالجة المقطع الصوتي — راجع النتيجة أدناه."
+msgstr "The audio clip has been processed — check the result below."
+
+#: app/assistant/routes.py:219
+msgid "تم اعتماد المسودة وتنفيذها فعلياً."
+msgstr "The draft has been approved and actually executed."
+
+#: app/assistant/routes.py:223
+#, python-format
+msgid "تعذّر التنفيذ: %(err)s"
+msgstr "Couldn't execute: %(err)s"
+
+#: app/assistant/routes.py:234
+msgid "تم رفض المسودة."
+msgstr "The draft has been rejected."
+
 #: app/auth/routes.py:49
 #, python-format
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد %(n)s دقيقة."
@@ -697,6 +747,39 @@ msgstr "The account is temporarily locked due to repeated failed login attempts 
 #: app/auth/routes.py:78
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "Incorrect phone number or password"
+
+#: app/batches/routes.py:41
+msgid "لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف."
+msgstr "At least one animal is required in the batch — specify at least the gender for each row."
+
+#: app/batches/routes.py:92
+#, python-format
+msgid "تقدّمت الدفعة لمرحلة الترقيم/الفحص — تولّدت %(n)s مهمة فحص فردي."
+msgstr "The batch has advanced to the tagging/checkup stage — %(n)s individual checkup task(s) were generated."
+
+#: app/batches/routes.py:111
+#, python-format
+msgid "تم توزيع %(n)s رأس على حظائرها الدائمة."
+msgstr "%(n)s animal(s) have been distributed to their permanent barns."
+
+#: app/batches/routes.py:125
+#, python-format
+msgid "استُبعدت %(no)s من التقدّم الجماعي التالي."
+msgstr "%(no)s has been excluded from the next bulk advance."
+
+#: app/batches/routes.py:139
+#, python-format
+msgid "تم تحرير استبعاد %(no)s."
+msgstr "%(no)s's exclusion has been released."
+
+#: app/batches/routes.py:150
+msgid "هذا الرأس مو ضمن أي دفعة."
+msgstr "This animal isn't part of any batch."
+
+#: app/batches/routes.py:161
+#, python-format
+msgid "لحقت %(no)s بمرحلة الدفعة الحالية."
+msgstr "%(no)s has caught up with the batch's current stage."
 
 #: app/climate/climate_service.py:27
 msgid "طبيعي"
@@ -717,6 +800,23 @@ msgstr "Severe stress"
 #: app/climate/climate_service.py:31
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
+
+#: app/climate/routes.py:55
+msgid "إحداثيات غير صالحة."
+msgstr "Invalid coordinates."
+
+#: app/climate/routes.py:65
+msgid "تم حفظ إعدادات رادار المناخ."
+msgstr "The climate-radar settings have been saved."
+
+#: app/climate/routes.py:77
+#, python-format
+msgid "تعذّر تحديث الطقس: %(err)s"
+msgstr "Couldn't update the weather: %(err)s"
+
+#: app/climate/routes.py:79
+msgid "تم تحديث توقعات الطقس."
+msgstr "The weather forecast has been updated."
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
@@ -1446,6 +1546,107 @@ msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%%"
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "No sale flags — a productive female, best kept"
 
+#: app/equipment/routes.py:43
+msgid "تمت إضافة الصنف"
+msgstr "The item has been added"
+
+#: app/equipment/routes.py:69
+msgid "تم تحديث الصنف"
+msgstr "The item has been updated"
+
+#: app/equipment/routes.py:81 app/feed/routes.py:220
+msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."
+msgstr "You also need finance-management permission to record a purchase (it creates a finance entry)."
+
+#: app/equipment/routes.py:98 app/feed/routes.py:237
+msgid "تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"
+msgstr "The purchase has been recorded — stock increased and the finance entry was recorded together"
+
+#: app/equipment/routes.py:115
+msgid "لازم تحدد مين يستلم القطعة قبل تسجيل الصرف."
+msgstr "You must specify who is receiving the item before recording the issue."
+
+#: app/equipment/routes.py:127
+msgid "تم تسجيل الحركة"
+msgstr "The movement has been recorded"
+
+#: app/equipment/routes.py:180
+msgid "تم تسجيل أخذك للقطعة"
+msgstr "Your taking of the item has been recorded"
+
+#: app/equipment/routes.py:195
+msgid "ما فيه استعارة قائمة لك بهذي القطعة"
+msgstr "You have no active loan for this item"
+
+#: app/equipment/routes.py:200 app/equipment/routes.py:215
+msgid "تم تسجيل استرجاع القطعة"
+msgstr "The item's return has been recorded"
+
+#: app/equipment/routes.py:254
+msgid "تمت إضافة الأصل"
+msgstr "The asset has been added"
+
+#: app/equipment/routes.py:274
+msgid "تم تسجيل الصيانة"
+msgstr "The maintenance has been recorded"
+
+#: app/equipment/routes.py:305
+msgid "تم تسجيل القراءة"
+msgstr "The reading has been recorded"
+
+#: app/feed/routes.py:52
+msgid "تمت إضافة مكوّن العلف"
+msgstr "The feed ingredient has been added"
+
+#: app/feed/routes.py:82
+msgid "تم تحديث مكوّن العلف"
+msgstr "The feed ingredient has been updated"
+
+#: app/feed/routes.py:126 app/feed/routes.py:182
+#, python-format
+msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد."
+msgstr "%(msg)s Write the override reason in the dedicated field if you're sure."
+
+#: app/feed/routes.py:138
+msgid "تمت إضافة الوصفة"
+msgstr "The recipe has been added"
+
+#: app/feed/routes.py:200
+msgid "تمت إضافة خطة التغذية"
+msgstr "The feeding plan has been added"
+
+#: app/feed/routes.py:270
+msgid "تم تسجيل حركة المخزون"
+msgstr "The stock movement has been recorded"
+
+#: app/feed/routes.py:340 app/feed/routes.py:377
+msgid "الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"
+msgstr "The selected animal has no recorded weight — enter a manual weight"
+
+#: app/finance/routes.py:172
+msgid "اسم الدفعة مطلوب"
+msgstr "The batch name is required"
+
+#: app/finance/routes.py:176
+msgid "لازم تختار رأساً واحداً على الأقل"
+msgstr "You must select at least one animal"
+
+#: app/finance/routes.py:191
+msgid "تم إنشاء دفعة البيع"
+msgstr "The sale batch has been created"
+
+#: app/finance/routes.py:243
+msgid "تم حذف الدفعة"
+msgstr "The batch has been deleted"
+
+#: app/finance/routes.py:313
+msgid "تمت إضافة العملية المالية"
+msgstr "The finance entry has been added"
+
+#: app/finance/routes.py:335
+msgid "تم إلغاء العملية (السجل باقٍ للتدقيق)"
+msgstr "The operation has been cancelled (the record remains for auditing)"
+
 #: app/health/health_service.py:82
 msgid "حقن عضل (IM)"
 msgstr "Intramuscular injection (IM)"
@@ -1698,6 +1899,11 @@ msgstr "Neither vertebrae nor ribs can be felt at all under a thick fat layer, t
 msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
 msgstr "The linked task was completed automatically, and a reweigh follow-up task was scheduled."
 
+#: app/health/routes.py:84
+#, python-format
+msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد من الحاجة للتكرار."
+msgstr "%(msg)s Write the override reason in the dedicated field if you're sure you need to repeat it."
+
 #: app/health/routes.py:181
 msgid "ارفع صورة أولاً"
 msgstr "Upload an image first"
@@ -1854,6 +2060,35 @@ msgstr "Pharmacy"
 #: app/models/warehouse.py:24
 msgid "مختلط"
 msgstr "Mixed"
+
+#: app/onboarding/routes.py:21
+msgid "تم — دليلك اليومي جاهز بالصفحة الرئيسية"
+msgstr "Done — your daily guide is ready on the home page"
+
+#: app/ostrich/routes.py:43
+msgid "تم تسجيل البيضة"
+msgstr "The egg has been recorded"
+
+#: app/ostrich/routes.py:58
+msgid "تم إدخال البيضة للحاضنة"
+msgstr "The egg has been placed in the incubator"
+
+#: app/ostrich/routes.py:79
+msgid "تم تسجيل الفقس وإضافة الفرخ كرأس جديد"
+msgstr "The hatching has been recorded and the chick added as a new animal"
+
+#: app/ostrich/routes.py:82
+#, python-format
+msgid "تعذّر تسجيل الفقس: %(err)s"
+msgstr "Couldn't record the hatching: %(err)s"
+
+#: app/ostrich/routes.py:86
+msgid "تم تسجيل فشل الفقس"
+msgstr "The failed hatching has been recorded"
+
+#: app/ostrich/routes.py:116
+msgid "تمت إضافة الحاضنة"
+msgstr "The incubator has been added"
 
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
@@ -11509,6 +11744,24 @@ msgstr "Location note"
 #: app/templates/warehouses/warehouses_list.html:19
 msgid "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي."
 msgstr "No additional named warehouses yet — all stock is in the default main warehouse."
+
+#: app/warehouses/routes.py:89
+msgid "تم التحويل بين المستودعين."
+msgstr "The transfer between the two warehouses has been completed."
+
+#: app/warehouses/routes.py:115
+#, python-format
+msgid "تم تسجيل الجرد — نقص %(qty)s احتُسب هالك بقيمة %(val)s ريال."
+msgstr "The stock count has been recorded — a shortage of %(qty)s was counted as a loss worth %(val)s SAR."
+
+#: app/warehouses/routes.py:117
+#, python-format
+msgid "تم تسجيل الجرد — زيادة %(qty)s أُضيفت للمخزون."
+msgstr "The stock count has been recorded — a surplus of %(qty)s was added to stock."
+
+#: app/warehouses/routes.py:119
+msgid "تم تسجيل الجرد — الرصيد مطابق تماماً."
+msgstr "The stock count has been recorded — the balance matches exactly."
 
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"

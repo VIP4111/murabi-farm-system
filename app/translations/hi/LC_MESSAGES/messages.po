@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:43+0300\n"
+"POT-Creation-Date: 2026-08-30 17:59+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -689,6 +689,56 @@ msgstr "टीकाकरण अनुसूची"
 msgid "مستودع"
 msgstr "गोदाम"
 
+#: app/assistant/routes.py:70
+msgid "اكتب سؤالك أولاً"
+msgstr "पहले अपना प्रश्न लिखें"
+
+#: app/assistant/routes.py:108
+msgid "تم مسح المحادثة"
+msgstr "बातचीत साफ़ कर दी गई है"
+
+#: app/assistant/routes.py:132
+msgid "لازم تكتب نص الملاحظة."
+msgstr "आपको नोट का टेक्स्ट लिखना होगा।"
+
+#: app/assistant/routes.py:141
+#, python-format
+msgid "ما فيه حيوان برقم \"%(no)s\"."
+msgstr "नंबर \"%(no)s\" वाला कोई जानवर नहीं है।"
+
+#: app/assistant/routes.py:151
+msgid "تمت إضافة الملاحظة."
+msgstr "नोट जोड़ दिया गया है।"
+
+#: app/assistant/routes.py:174
+msgid "اكتب وصف الحدث أولاً."
+msgstr "पहले घटना का विवरण लिखें।"
+
+#: app/assistant/routes.py:177
+msgid "تمت معالجة النص — راجع النتيجة أدناه."
+msgstr "टेक्स्ट संसाधित हो गया — नीचे परिणाम देखें।"
+
+#: app/assistant/routes.py:188
+msgid "لازم ترفع مقطع صوتي."
+msgstr "आपको एक ऑडियो क्लिप अपलोड करनी होगी।"
+
+#: app/assistant/routes.py:204
+msgid "تمت معالجة المقطع الصوتي — راجع النتيجة أدناه."
+msgstr "ऑडियो क्लिप संसाधित हो गई — नीचे परिणाम देखें।"
+
+#: app/assistant/routes.py:219
+msgid "تم اعتماد المسودة وتنفيذها فعلياً."
+msgstr "ड्राफ्ट स्वीकृत होकर वास्तव में क्रियान्वित हो गया है।"
+
+#: app/assistant/routes.py:223
+#, python-format
+msgid "تعذّر التنفيذ: %(err)s"
+msgstr "क्रियान्वयन नहीं हो सका: %(err)s"
+
+#: app/assistant/routes.py:234
+msgid "تم رفض المسودة."
+msgstr "ड्राफ्ट अस्वीकार कर दिया गया है।"
+
 #: app/auth/routes.py:49
 #, python-format
 msgid "الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد %(n)s دقيقة."
@@ -697,6 +747,39 @@ msgstr "बार-बार गलत लॉगिन प्रयासों �
 #: app/auth/routes.py:78
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "फ़ोन नंबर या पासवर्ड गलत है"
+
+#: app/batches/routes.py:41
+msgid "لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف."
+msgstr "बैच में कम से कम एक जानवर आवश्यक है — हर पंक्ति के लिए कम से कम लिंग निर्दिष्ट करें।"
+
+#: app/batches/routes.py:92
+#, python-format
+msgid "تقدّمت الدفعة لمرحلة الترقيم/الفحص — تولّدت %(n)s مهمة فحص فردي."
+msgstr "बैच टैगिंग/जांच चरण में आगे बढ़ गया — %(n)s व्यक्तिगत जांच कार्य बने।"
+
+#: app/batches/routes.py:111
+#, python-format
+msgid "تم توزيع %(n)s رأس على حظائرها الدائمة."
+msgstr "%(n)s जानवर(ओं) को उनके स्थायी बाड़ों में वितरित किया गया है।"
+
+#: app/batches/routes.py:125
+#, python-format
+msgid "استُبعدت %(no)s من التقدّم الجماعي التالي."
+msgstr "%(no)s को अगली बल्क प्रगति से बाहर रखा गया है।"
+
+#: app/batches/routes.py:139
+#, python-format
+msgid "تم تحرير استبعاد %(no)s."
+msgstr "%(no)s का बहिष्करण हटा दिया गया है।"
+
+#: app/batches/routes.py:150
+msgid "هذا الرأس مو ضمن أي دفعة."
+msgstr "यह जानवर किसी बैच का हिस्सा नहीं है।"
+
+#: app/batches/routes.py:161
+#, python-format
+msgid "لحقت %(no)s بمرحلة الدفعة الحالية."
+msgstr "%(no)s बैच के मौजूदा चरण के साथ जुड़ गया है।"
 
 #: app/climate/climate_service.py:27
 msgid "طبيعي"
@@ -717,6 +800,23 @@ msgstr "गंभीर तनाव"
 #: app/climate/climate_service.py:31
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
+
+#: app/climate/routes.py:55
+msgid "إحداثيات غير صالحة."
+msgstr "अमान्य निर्देशांक।"
+
+#: app/climate/routes.py:65
+msgid "تم حفظ إعدادات رادار المناخ."
+msgstr "जलवायु-रडार सेटिंग्स सेव कर दी गई हैं।"
+
+#: app/climate/routes.py:77
+#, python-format
+msgid "تعذّر تحديث الطقس: %(err)s"
+msgstr "मौसम अपडेट नहीं हो सका: %(err)s"
+
+#: app/climate/routes.py:79
+msgid "تم تحديث توقعات الطقس."
+msgstr "मौसम पूर्वानुमान अपडेट कर दिया गया है।"
 
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
@@ -1446,6 +1546,107 @@ msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ �
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "कोई बिक्री संकेत नहीं — उत्पादक मादा, रखना बेहतर"
 
+#: app/equipment/routes.py:43
+msgid "تمت إضافة الصنف"
+msgstr "आइटम जोड़ दिया गया है"
+
+#: app/equipment/routes.py:69
+msgid "تم تحديث الصنف"
+msgstr "आइटम अपडेट कर दिया गया है"
+
+#: app/equipment/routes.py:81 app/feed/routes.py:220
+msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."
+msgstr "खरीद दर्ज करने के लिए (जो एक वित्तीय लेनदेन बनाता है) आपको वित्त प्रबंधन अनुमति भी चाहिए।"
+
+#: app/equipment/routes.py:98 app/feed/routes.py:237
+msgid "تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"
+msgstr "खरीद दर्ज कर दी गई — स्टॉक बढ़ा और वित्तीय लेनदेन भी साथ में दर्ज हो गया"
+
+#: app/equipment/routes.py:115
+msgid "لازم تحدد مين يستلم القطعة قبل تسجيل الصرف."
+msgstr "जारी करने से पहले यह तय करना जरूरी है कि आइटम किसे मिलेगा।"
+
+#: app/equipment/routes.py:127
+msgid "تم تسجيل الحركة"
+msgstr "गतिविधि दर्ज कर दी गई है"
+
+#: app/equipment/routes.py:180
+msgid "تم تسجيل أخذك للقطعة"
+msgstr "आपका आइटम लेना दर्ज कर दिया गया है"
+
+#: app/equipment/routes.py:195
+msgid "ما فيه استعارة قائمة لك بهذي القطعة"
+msgstr "इस आइटम के लिए आपका कोई सक्रिय उधार नहीं है"
+
+#: app/equipment/routes.py:200 app/equipment/routes.py:215
+msgid "تم تسجيل استرجاع القطعة"
+msgstr "आइटम की वापसी दर्ज कर दी गई है"
+
+#: app/equipment/routes.py:254
+msgid "تمت إضافة الأصل"
+msgstr "संपत्ति जोड़ दी गई है"
+
+#: app/equipment/routes.py:274
+msgid "تم تسجيل الصيانة"
+msgstr "रखरखाव दर्ज कर दिया गया है"
+
+#: app/equipment/routes.py:305
+msgid "تم تسجيل القراءة"
+msgstr "रीडिंग दर्ज कर दी गई है"
+
+#: app/feed/routes.py:52
+msgid "تمت إضافة مكوّن العلف"
+msgstr "चारा घटक जोड़ दिया गया है"
+
+#: app/feed/routes.py:82
+msgid "تم تحديث مكوّن العلف"
+msgstr "चारा घटक अपडेट कर दिया गया है"
+
+#: app/feed/routes.py:126 app/feed/routes.py:182
+#, python-format
+msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد."
+msgstr "%(msg)s यदि निश्चित हों तो निर्धारित फ़ील्ड में ओवरराइड कारण लिखें।"
+
+#: app/feed/routes.py:138
+msgid "تمت إضافة الوصفة"
+msgstr "नुस्खा जोड़ दिया गया है"
+
+#: app/feed/routes.py:200
+msgid "تمت إضافة خطة التغذية"
+msgstr "आहार योजना जोड़ दी गई है"
+
+#: app/feed/routes.py:270
+msgid "تم تسجيل حركة المخزون"
+msgstr "स्टॉक गतिविधि दर्ज कर दी गई है"
+
+#: app/feed/routes.py:340 app/feed/routes.py:377
+msgid "الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"
+msgstr "चयनित जानवर का कोई दर्ज वजन नहीं है — मैन्युअल वजन दर्ज करें"
+
+#: app/finance/routes.py:172
+msgid "اسم الدفعة مطلوب"
+msgstr "बैच का नाम आवश्यक है"
+
+#: app/finance/routes.py:176
+msgid "لازم تختار رأساً واحداً على الأقل"
+msgstr "आपको कम से कम एक जानवर चुनना होगा"
+
+#: app/finance/routes.py:191
+msgid "تم إنشاء دفعة البيع"
+msgstr "बिक्री बैच बना दिया गया है"
+
+#: app/finance/routes.py:243
+msgid "تم حذف الدفعة"
+msgstr "बैच हटा दिया गया है"
+
+#: app/finance/routes.py:313
+msgid "تمت إضافة العملية المالية"
+msgstr "वित्तीय लेनदेन जोड़ दिया गया है"
+
+#: app/finance/routes.py:335
+msgid "تم إلغاء العملية (السجل باقٍ للتدقيق)"
+msgstr "लेनदेन रद्द कर दिया गया है (रिकॉर्ड ऑडिट के लिए रहता है)"
+
 #: app/health/health_service.py:82
 msgid "حقن عضل (IM)"
 msgstr "पेशीय इंजेक्शन (IM)"
@@ -1698,6 +1899,11 @@ msgstr "मोटी वसा परत के नीचे न कशेरु
 msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
 msgstr "जुड़ा हुआ कार्य अपने आप पूरा हो गया, और वजन दोबारा जांचने का फॉलो-अप कार्य शेड्यूल कर दिया गया।"
 
+#: app/health/routes.py:84
+#, python-format
+msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد من الحاجة للتكرار."
+msgstr "%(msg)s यदि आपको यकीन है कि दोहराना जरूरी है तो निर्धारित फ़ील्ड में ओवरराइड कारण लिखें।"
+
 #: app/health/routes.py:181
 msgid "ارفع صورة أولاً"
 msgstr "पहले एक तस्वीर अपलोड करें"
@@ -1854,6 +2060,35 @@ msgstr "फार्मेसी"
 #: app/models/warehouse.py:24
 msgid "مختلط"
 msgstr "मिश्रित"
+
+#: app/onboarding/routes.py:21
+msgid "تم — دليلك اليومي جاهز بالصفحة الرئيسية"
+msgstr "पूर्ण — आपकी दैनिक गाइड होम पेज पर तैयार है"
+
+#: app/ostrich/routes.py:43
+msgid "تم تسجيل البيضة"
+msgstr "अंडा दर्ज कर दिया गया है"
+
+#: app/ostrich/routes.py:58
+msgid "تم إدخال البيضة للحاضنة"
+msgstr "अंडा इनक्यूबेटर में डाल दिया गया है"
+
+#: app/ostrich/routes.py:79
+msgid "تم تسجيل الفقس وإضافة الفرخ كرأس جديد"
+msgstr "हैचिंग दर्ज कर दी गई और चूजे को नए जानवर के रूप में जोड़ा गया"
+
+#: app/ostrich/routes.py:82
+#, python-format
+msgid "تعذّر تسجيل الفقس: %(err)s"
+msgstr "हैचिंग दर्ज नहीं हो सकी: %(err)s"
+
+#: app/ostrich/routes.py:86
+msgid "تم تسجيل فشل الفقس"
+msgstr "असफल हैचिंग दर्ज कर दी गई है"
+
+#: app/ostrich/routes.py:116
+msgid "تمت إضافة الحاضنة"
+msgstr "इनक्यूबेटर जोड़ दिया गया है"
 
 #: app/reports/report_service.py:27
 #: app/templates/health/vaccination_schedule_list.html:22
@@ -11509,6 +11744,24 @@ msgstr "स्थान टिप्पणी"
 #: app/templates/warehouses/warehouses_list.html:19
 msgid "لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي."
 msgstr "अभी तक कोई अतिरिक्त नामित गोदाम नहीं है — सारा स्टॉक डिफ़ॉल्ट मुख्य गोदाम में है।"
+
+#: app/warehouses/routes.py:89
+msgid "تم التحويل بين المستودعين."
+msgstr "दोनों गोदामों के बीच स्थानांतरण पूरा हो गया है।"
+
+#: app/warehouses/routes.py:115
+#, python-format
+msgid "تم تسجيل الجرد — نقص %(qty)s احتُسب هالك بقيمة %(val)s ريال."
+msgstr "स्टॉक गणना दर्ज कर दी गई — %(qty)s की कमी को %(val)s रियाल के नुकसान के रूप में गिना गया।"
+
+#: app/warehouses/routes.py:117
+#, python-format
+msgid "تم تسجيل الجرد — زيادة %(qty)s أُضيفت للمخزون."
+msgstr "स्टॉक गणना दर्ज कर दी गई — %(qty)s अतिरिक्त स्टॉक में जोड़ा गया।"
+
+#: app/warehouses/routes.py:119
+msgid "تم تسجيل الجرد — الرصيد مطابق تماماً."
+msgstr "स्टॉक गणना दर्ज कर दी गई — शेष बिल्कुल मेल खाता है।"
 
 #~ msgid "التكاثر"
 #~ msgstr "प्रजनन"

@@ -1,5 +1,6 @@
 from datetime import date
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.feed import feed_bp
@@ -48,7 +49,7 @@ def items_new():
         )
         db.session.add(item)
         db.session.commit()
-        flash("تمت إضافة مكوّن العلف", "success")
+        flash(_("تمت إضافة مكوّن العلف"), "success")
         return redirect(url_for("feed.items_list"))
     return render_template(
         "feed/item_form.html",
@@ -78,7 +79,7 @@ def items_edit(item_id):
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.notes = request.form.get("notes")
         db.session.commit()
-        flash("تم تحديث مكوّن العلف", "success")
+        flash(_("تم تحديث مكوّن العلف"), "success")
         return redirect(url_for("feed.items_list"))
     return render_template(
         "feed/item_form.html", item=item,
@@ -122,7 +123,7 @@ def rations_new():
         ratio_warning = svc.ca_phosphorus_warning(svc.ration_profile(ration), FarmSettings.get()) if ration.items else None
         if ratio_warning and not override_reason:
             db.session.rollback()
-            flash(ratio_warning["message"] + " اكتب سبب التجاوز بالحقل المخصص لو متأكد.", "warning")
+            flash(_("%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد.", msg=ratio_warning["message"]), "warning")
             return redirect(url_for("feed.rations_new"))
         if ratio_warning and override_reason:
             db.session.add(AuditLog(
@@ -134,7 +135,7 @@ def rations_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="feed_ration.create",
                                  entity_type="FeedRation", entity_id=ration.id))
         db.session.commit()
-        flash("تمت إضافة الوصفة", "success")
+        flash(_("تمت إضافة الوصفة"), "success")
         return redirect(url_for("feed.ration_detail", ration_id=ration.id))
     return render_template(
         "feed/ration_form.html",
@@ -178,7 +179,7 @@ def barn_plans_new():
             barn_id=barn_id, new_ration=ration, new_start_date=start_date_, fs=FarmSettings.get(),
         )
         if warning and not override_reason:
-            flash(warning["message"] + " اكتب سبب التجاوز بالحقل المخصص لو متأكد.", "warning")
+            flash(_("%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد.", msg=warning["message"]), "warning")
             return redirect(url_for("feed.barn_plans_new"))
         if warning and override_reason:
             db.session.add(AuditLog(
@@ -196,7 +197,7 @@ def barn_plans_new():
         )
         db.session.add(plan)
         db.session.commit()
-        flash("تمت إضافة خطة التغذية", "success")
+        flash(_("تمت إضافة خطة التغذية"), "success")
         return redirect(url_for("feed.barn_plans_list"))
     return render_template(
         "feed/barn_plan_form.html",
@@ -216,7 +217,7 @@ def purchase_new():
     مرة لحالها. يحتاج صلاحية إدارة العلف **و** المالية معاً — أي زيادة
     مخزون مربوطة هنا بمبلغ فعلي يخرج من حساب المزرعة."""
     if not current_user.has_permission("finance.full.manage"):
-        flash("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية).", "error")
+        flash(_("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."), "error")
         return redirect(url_for("feed.items_list"))
     if request.method == "POST":
         feed = Feed.query.get_or_404(int(request.form["feed_id"]))
@@ -233,7 +234,7 @@ def purchase_new():
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("feed.purchase_new"))
-        flash("تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً", "success")
+        flash(_("تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"), "success")
         return redirect(url_for("feed.items_list"))
     return render_template(
         "feed/purchase_form.html",
@@ -266,7 +267,7 @@ def movements_new():
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("feed.movements_new"))
-        flash("تم تسجيل حركة المخزون", "success")
+        flash(_("تم تسجيل حركة المخزون"), "success")
         return redirect(url_for("feed.movements_list"))
     return render_template(
         "feed/movement_form.html",
@@ -336,7 +337,7 @@ def optimizer():
             if current_daily_cost is not None and result and result.get("feasible"):
                 daily_savings = round(current_daily_cost - result["total_daily_cost"], 3)
         else:
-            flash("الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي", "error")
+            flash(_("الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"), "error")
 
     return render_template(
         "feed/optimizer.html",
@@ -373,7 +374,7 @@ def calculator():
             result = svc.daily_requirement(weight_kg=weight, state=state, age_days=age_days)
             recommendations = svc.recommend_rations(requirement=result)
         else:
-            flash("الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي", "error")
+            flash(_("الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"), "error")
 
     return render_template(
         "feed/calculator.html",
