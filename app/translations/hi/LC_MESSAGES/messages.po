@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:59+0300\n"
+"POT-Creation-Date: 2026-08-30 18:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -50,7 +50,7 @@ msgstr "बंद"
 msgid "محذوف/مؤرشف"
 msgstr "हटाया/संग्रहीत"
 
-#: app/__init__.py:133
+#: app/__init__.py:133 app/core/alerts_service.py:158
 msgid "ترتيب غير منتظم"
 msgstr "अनियमित क्रम"
 
@@ -617,7 +617,7 @@ msgstr "रोग के मामले"
 msgid "زيارة بيطرية"
 msgstr "पशु चिकित्सा यात्रा"
 
-#: app/__init__.py:338
+#: app/__init__.py:338 app/core/alerts_service.py:61
 msgid "تحصين"
 msgstr "टीकाकरण"
 
@@ -818,6 +818,396 @@ msgstr "मौसम अपडेट नहीं हो सका: %(err)s"
 msgid "تم تحديث توقعات الطقس."
 msgstr "मौसम पूर्वानुमान अपडेट कर दिया गया है।"
 
+#: app/core/alerts_service.py:62
+#, python-format
+msgid "%(no)s — %(vaccine)s"
+msgstr "%(no)s — %(vaccine)s"
+
+#: app/core/alerts_service.py:63 app/core/alerts_service.py:132
+#, python-format
+msgid "متأخر منذ %(d)s"
+msgstr "%(d)s से विलंबित"
+
+#: app/core/alerts_service.py:64
+#, python-format
+msgid "مستحق بتاريخ %(d)s"
+msgstr "%(d)s को देय"
+
+#: app/core/alerts_service.py:82 app/templates/animals_list.html:92
+msgid "فترة سحب"
+msgstr "निकासी अवधि"
+
+#: app/core/alerts_service.py:83
+#, python-format
+msgid "%(no)s — تصير آمنة للبيع/الذبح بتاريخ %(d)s"
+msgstr "%(no)s — %(d)s को बिक्री/वध के लिए सुरक्षित हो जाएगा"
+
+#: app/core/alerts_service.py:99
+msgid "فترة سحب حليب"
+msgstr "दूध निकासी अवधि"
+
+#: app/core/alerts_service.py:100
+#, python-format
+msgid "%(no)s — يصير حليبها آمناً بتاريخ %(d)s"
+msgstr "%(no)s — इसका दूध %(d)s को सुरक्षित हो जाएगा"
+
+#: app/core/alerts_service.py:110
+msgid "ولادة متوقعة"
+msgstr "अपेक्षित जन्म"
+
+#: app/core/alerts_service.py:111
+#, python-format
+msgid "%(no)s — ولادة متوقعة قريباً"
+msgstr "%(no)s — जल्द ही जन्म की उम्मीद है"
+
+#: app/core/alerts_service.py:130
+msgid "جهاز تكاثر"
+msgstr "प्रजनन उपकरण"
+
+#: app/core/alerts_service.py:131
+#, python-format
+msgid "%(no)s — إزالة %(device)s"
+msgstr "%(no)s — %(device)s हटाना"
+
+#: app/core/alerts_service.py:133
+#, python-format
+msgid "موعد الإزالة %(d)s"
+msgstr "हटाने की तारीख: %(d)s"
+
+#: app/core/alerts_service.py:145
+msgid "مرض مفتوح"
+msgstr "खुली बीमारी"
+
+#: app/core/alerts_service.py:146
+#, python-format
+msgid "%(no)s — %(name)s"
+msgstr "%(no)s — %(name)s"
+
+#: app/core/alerts_service.py:147
+#, python-format
+msgid "مفتوح منذ %(d)s بدون إغلاق"
+msgstr "%(d)s से बिना बंद हुए खुला"
+
+#: app/core/alerts_service.py:159
+#, python-format
+msgid "%(no)s — دورة الإنتاج بترتيب غير منتظم"
+msgstr "%(no)s — उत्पादन चक्र अनियमित क्रम में है"
+
+#: app/core/alerts_service.py:187
+msgid "توقّف بدورة الإنتاج"
+msgstr "उत्पादन चक्र में रुका हुआ"
+
+#: app/core/alerts_service.py:188
+#, python-format
+msgid "%(no)s — واقف بمرحلة '%(stage)s' منذ %(days)s يوم"
+msgstr "%(no)s — %(days)s दिन से '%(stage)s' चरण पर अटका है"
+
+#: app/core/alerts_service.py:203
+msgid "بلاغ منتظر"
+msgstr "लंबित रिपोर्ट"
+
+#: app/core/alerts_service.py:204
+#, python-format
+msgid "بلاغ #%(id)s من %(name)s — بانتظار الاستلام"
+msgstr "रिपोर्ट #%(id)s %(name)s से — प्राप्ति की प्रतीक्षा में"
+
+#: app/core/alerts_service.py:219
+msgid "جاهز للبيع"
+msgstr "बिक्री के लिए तैयार"
+
+#: app/core/alerts_service.py:220
+#, python-format
+msgid "%(no)s — %(label)s (درجة %(score)s)"
+msgstr "%(no)s — %(label)s (स्कोर %(score)s)"
+
+#: app/core/alerts_service.py:242
+msgid "تأخر شياع"
+msgstr "विलंबित मद"
+
+#: app/core/alerts_service.py:243
+#, python-format
+msgid "%(no)s — تأخر حملها أكثر من %(days)s يوم"
+msgstr "%(no)s — इसकी गर्भावस्था %(days)s दिन से अधिक विलंबित है"
+
+#: app/core/alerts_service.py:244
+msgid "بدون تقريع/حمل جديد منذ آخر ولادة أو تلقيح مسجَّل"
+msgstr "अंतिम दर्ज जन्म या गर्भाधान के बाद से कोई नया प्रजनन/गर्भावस्था नहीं"
+
+#: app/core/alerts_service.py:266 app/core/alerts_service.py:604
+msgid "بيانات ناقصة"
+msgstr "अधूरा डेटा"
+
+#: app/core/alerts_service.py:267
+#, python-format
+msgid "%(no)s — ناقص: %(field)s"
+msgstr "%(no)s — कमी: %(field)s"
+
+#: app/core/alerts_service.py:268
+msgid "أكمّل هذا الحقل من شاشة تعديل الحيوان."
+msgstr "इस फ़ील्ड को जानवर संपादन स्क्रीन से पूरा करें।"
+
+#: app/core/alerts_service.py:282
+msgid "حظيرة بدون مسؤول"
+msgstr "बिना जिम्मेदार वाला बाड़ा"
+
+#: app/core/alerts_service.py:283
+#, python-format
+msgid "حظيرة %(no)s (%(name)s) — بدون عامل مسؤول"
+msgstr "बाड़ा %(no)s (%(name)s) — कोई जिम्मेदार कर्मचारी नहीं"
+
+#: app/core/alerts_service.py:284
+msgid "المهام والتنبيهات التلقائية لهذي الحظيرة ما توجّه لأحد لين تحدد مسؤولاً."
+msgstr "जब तक आप एक जिम्मेदार व्यक्ति निर्धारित नहीं करते, इस बाड़े के स्वचालित कार्य और अलर्ट किसी को नहीं भेजे जाएंगे।"
+
+#: app/core/alerts_service.py:311
+#, python-format
+msgid "%(barn)s — %(pharmacy)s (بعد %(days)s يوم)"
+msgstr "%(barn)s — %(pharmacy)s (%(days)s दिन में)"
+
+#: app/core/alerts_service.py:320
+msgid "نقص مخزون تحصين مجدول"
+msgstr "निर्धारित टीकाकरण स्टॉक की कमी"
+
+#: app/core/alerts_service.py:322
+#, python-format
+msgid "الاحتياج المتوقع %(needed).2f %(unit)s لـ%(head)s رأس، والمتوفر %(available)g %(unit)s فقط — يوصى بشراء %(shortage).2f %(unit)s إضافية على الأقل قبل الموعد."
+msgstr "%(head)s जानवरों के लिए अपेक्षित आवश्यकता %(needed).2f %(unit)s है, और केवल %(available)g %(unit)s उपलब्ध है — तारीख से पहले कम से कम %(shortage).2f %(unit)s अतिरिक्त खरीदने की सिफारिश की जाती है।"
+
+#: app/core/alerts_service.py:330 app/core/alerts_service.py:338
+msgid "تذكير تحصين مجدول"
+msgstr "निर्धारित टीकाकरण अनुस्मारक"
+
+#: app/core/alerts_service.py:332
+#, python-format
+msgid "المخزون كافٍ (%(available)g %(unit)s) لـ%(head)s رأس — جهّز الحظيرة بالموعد."
+msgstr "%(head)s जानवरों के लिए स्टॉक पर्याप्त है (%(available)g %(unit)s) — तारीख तक बाड़ा तैयार करें।"
+
+#: app/core/alerts_service.py:340
+#, python-format
+msgid "%(head)s رأس بالحظيرة حالياً — سجّل جرعة افتراضية على الدواء لمقارنة المخزون تلقائياً."
+msgstr "बाड़े में अभी %(head)s जानवर हैं — स्टॉक की अपने आप तुलना करने के लिए दवा पर डिफ़ॉल्ट खुराक दर्ज करें।"
+
+#: app/core/alerts_service.py:366 app/templates/animal_detail.html:167
+#: app/templates/animal_detail.html:179 app/templates/animal_detail.html:180
+#: app/templates/animal_detail.html:181 app/templates/animal_detail.html:182
+#: app/templates/animal_detail.html:207 app/templates/animal_detail.html:217
+#: app/templates/animal_detail.html:218 app/templates/ostrich/egg_form.html:17
+msgid "غير محدد"
+msgstr "अनिर्दिष्ट"
+
+#: app/core/alerts_service.py:368
+msgid "مهمة أُنجزت متأخرة عن موعدها"
+msgstr "देर से पूरा हुआ कार्य"
+
+#: app/core/alerts_service.py:369
+#, python-format
+msgid "%(title)s — أُنجزت الساعة %(time)s"
+msgstr "%(title)s — %(time)s बजे पूरा हुआ"
+
+#: app/core/alerts_service.py:370
+#, python-format
+msgid "موعدها كان %(due)s — نفّذها: %(who)s."
+msgstr "यह %(due)s पर देय था — इसे %(who)s ने पूरा किया।"
+
+#: app/core/alerts_service.py:375 app/templates/team/task_detail.html:10
+msgid "بدون عامل مكلَّف"
+msgstr "कोई नियुक्त कर्मचारी नहीं"
+
+#: app/core/alerts_service.py:377
+msgid "مهمة متأخرة عن موعدها"
+msgstr "विलंबित कार्य"
+
+#: app/core/alerts_service.py:378
+#, python-format
+msgid "%(title)s — لسا ما انجزت"
+msgstr "%(title)s — अभी पूरा नहीं हुआ"
+
+#: app/core/alerts_service.py:379
+#, python-format
+msgid "موعدها كان %(due)s — العامل المكلَّف: %(who)s."
+msgstr "यह %(due)s पर देय था — सौंपा गया कर्मचारी: %(who)s।"
+
+#: app/core/alerts_service.py:403
+#, python-format
+msgid "آخر من استعملها: %(who)s"
+msgstr "आखिरी बार इस्तेमाल करने वाला: %(who)s"
+
+#: app/core/alerts_service.py:403
+msgid "راجع شاشة حركة الصنف لمعرفة آخر من استعملها."
+msgstr "यह जानने के लिए कि इसे आखिरी बार किसने इस्तेमाल किया, आइटम मूवमेंट स्क्रीन देखें।"
+
+#: app/core/alerts_service.py:405
+msgid "معدة تحتاج صيانة"
+msgstr "रखरखाव की जरूरत वाला उपकरण"
+
+#: app/core/alerts_service.py:406
+#, python-format
+msgid "%(name)s — تحتاج صيانة"
+msgstr "%(name)s — रखरखाव की जरूरत है"
+
+#: app/core/alerts_service.py:478
+#, python-format
+msgid "فيه مسودة راتب محفوظة عليها خصومات بقيمة %(amount).2f — راجعها قبل التأكيد."
+msgstr "%(amount).2f की कटौती वाला एक सहेजा गया वेतन ड्राफ्ट है — पुष्टि करने से पहले इसकी समीक्षा करें।"
+
+#: app/core/alerts_service.py:481
+msgid "لسا ما تجهَّز راتب هذا الشهر له."
+msgstr "इस महीने का वेतन अभी तक उनके लिए तैयार नहीं हुआ है।"
+
+#: app/core/alerts_service.py:483
+msgid "راتب شهر سابق ما تأكَّد بعد — متأخر، راجعه بأقرب فرصة."
+msgstr "पिछले महीने का वेतन अभी तक पुष्ट नहीं हुआ है — यह विलंबित है, जल्द से जल्द इसकी समीक्षा करें।"
+
+#: app/core/alerts_service.py:485
+msgid "تذكير رواتب نهاية الشهر"
+msgstr "माह-अंत वेतन अनुस्मारक"
+
+#: app/core/alerts_service.py:486
+#, python-format
+msgid "راتب %(name)s — %(m)s/%(y)s"
+msgstr "%(name)s का वेतन — %(m)s/%(y)s"
+
+#: app/core/alerts_service.py:530
+msgid "قرب انتهاء صلاحية دواء"
+msgstr "दवा की समाप्ति निकट"
+
+#: app/core/alerts_service.py:531
+#, python-format
+msgid "%(name)s — %(qty)g %(unit)s"
+msgstr "%(name)s — %(qty)g %(unit)s"
+
+#: app/core/alerts_service.py:532
+#, python-format
+msgid "منتهي الصلاحية منذ %(d)s"
+msgstr "%(d)s से समाप्त"
+
+#: app/core/alerts_service.py:533
+#, python-format
+msgid "تنتهي صلاحيته بتاريخ %(d)s"
+msgstr "%(d)s को समाप्त होता है"
+
+#: app/core/alerts_service.py:567 app/core/alerts_service.py:580
+msgid "حظيرة هدف ناقصة"
+msgstr "लक्ष्य बाड़ा गायब"
+
+#: app/core/alerts_service.py:568
+#, python-format
+msgid "%(n)s رأس بحاجة حظيرة \"%(type)s\" — ما أنشأتها بعد"
+msgstr "%(n)s जानवरों को \"%(type)s\" बाड़े की जरूरत है — आपने अभी तक इसे नहीं बनाया"
+
+#: app/core/alerts_service.py:569
+#, python-format
+msgid "أنشئ حظيرة بنوع \"%(type)s\" من شاشة الحظائر، عشان النظام يقدر يقترح نقل هالرؤوس تلقائياً (بانتظار موافقة الدكتور دائماً)."
+msgstr "बाड़ा स्क्रीन से \"%(type)s\" प्रकार का बाड़ा बनाएं, ताकि सिस्टम इन जानवरों को अपने आप स्थानांतरित करने का सुझाव दे सके (हमेशा डॉक्टर की मंजूरी की प्रतीक्षा में)।"
+
+#: app/core/alerts_service.py:581
+#, python-format
+msgid "%(n)s مهمة \"نقل لحظيرة الحوامل\" بانتظار حظيرة \"حوامل\" غير موجودة"
+msgstr "%(n)s \"गर्भवती बाड़े में स्थानांतरण\" कार्य एक गैर-मौजूद \"गर्भवती\" बाड़े का इंतज़ार कर रहे हैं"
+
+#: app/core/alerts_service.py:582
+msgid "أنشئ حظيرة بنوع \"حوامل\" من شاشة الحظائر — بدونها المهمة ما تقدر تنقل الرأس فعلياً لما تُنجَز (تقدر تختار حظيرة بديلة يدوياً وقت الإنجاز لو ما تبي تنشئ هذا النوع)."
+msgstr "बाड़ा स्क्रीन से \"गर्भवती\" प्रकार का बाड़ा बनाएं — इसके बिना कार्य पूरा होने पर वास्तव में जानवर को स्थानांतरित नहीं कर सकता (यदि आप यह प्रकार नहीं बनाना चाहते तो पूरा होने के समय वैकल्पिक बाड़ा मैन्युअल रूप से चुन सकते हैं)।"
+
+#: app/core/alerts_service.py:605
+#, python-format
+msgid "%(n)s رأس ما راح يدخل جدولة الأوزان المتأخرة إطلاقاً"
+msgstr "%(n)s जानवर कभी भी विलंबित वजन शेड्यूल में शामिल नहीं होंगे"
+
+#: app/core/alerts_service.py:606
+msgid "ما عندها وزن مسجَّل ولا تاريخ ولادة/شراء/دخول — بدون أي تاريخ مرجعي، النظام ما يقدر يحسب \"من متى ما اتوزنت\"، فتنبيه الوزن المتأخر ما يشتغل لها أبداً. أكمّل تاريخ الشراء/الدخول أو سجّل وزناً أول من شاشة تعديل الحيوان."
+msgstr "इसका कोई दर्ज वजन नहीं है और न ही जन्म/खरीद/प्रवेश तिथि है — बिना किसी संदर्भ तिथि के, सिस्टम यह हिसाब नहीं लगा सकता कि \"इसे आखिरी बार कब तौला गया\", इसलिए विलंबित-वजन अलर्ट इसके लिए कभी काम नहीं करता। खरीद/प्रवेश तिथि पूरी करें या जानवर संपादन स्क्रीन से पहला वजन दर्ज करें।"
+
+#: app/core/alerts_service.py:630 app/core/alerts_service.py:650
+msgid "عزل بدون حظيرة مصنّفة"
+msgstr "बिना वर्गीकृत बाड़े के आइसोलेशन"
+
+#: app/core/alerts_service.py:631
+#, python-format
+msgid "%(n)s رأس بمهام عزل بدون حظيرة عزل فعلية"
+msgstr "%(n)s जानवर आइसोलेशन कार्यों के साथ बिना वास्तविक आइसोलेशन बाड़े के"
+
+#: app/core/alerts_service.py:632
+msgid "ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من شاشة الحظائر عشان العزل التلقائي يشتغل صح للولادات الجاية."
+msgstr "सिस्टम में कोई \"आइसोलेशन\" बाड़ा नहीं है — माँ और नवजात वास्तव में बाकी झुंड से अलग आइसोलेशन बाड़े में नहीं गए हैं। आने वाले जन्मों के लिए स्वचालित आइसोलेशन सही से काम करने के लिए बाड़ा स्क्रीन से एक नया \"आइसोलेशन\" बाड़ा बनाएं।"
+
+#: app/core/alerts_service.py:651
+#, python-format
+msgid "%(n)s رأس أجهض بدون عزل فعلي — ما فيه حظيرة عزل"
+msgstr "%(n)s जानवर बिना वास्तविक आइसोलेशन के गर्भपात हुए — कोई आइसोलेशन बाड़ा नहीं है"
+
+#: app/core/alerts_service.py:652
+msgid "ما فيه حظيرة بنوع \"عزل\" بالنظام — الرأس المُجهِض ما انتقل لعزل طبي منفصل ولسا يخالط باقي القطيع رغم احتمال عدوى. أنشئ حظيرة بنوع \"عزل\" من شاشة الحظائر ثم انقل الرأس يدوياً."
+msgstr "सिस्टम में कोई \"आइसोलेशन\" बाड़ा नहीं है — गर्भपात वाला जानवर अलग मेडिकल आइसोलेशन में नहीं गया और संक्रमण की संभावना के बावजूद बाकी झुंड के साथ मिल रहा है। बाड़ा स्क्रीन से एक \"आइसोलेशन\" बाड़ा बनाएं फिर जानवर को मैन्युअल रूप से स्थानांतरित करें।"
+
+#: app/core/alerts_service.py:680
+msgid "توزيع علف ناقص"
+msgstr "अधूरा चारा वितरण"
+
+#: app/core/alerts_service.py:681
+#, python-format
+msgid "%(title)s — العلف ما اتوزّع بالكامل"
+msgstr "%(title)s — चारा पूरी तरह वितरित नहीं हुआ"
+
+#: app/core/alerts_service.py:737
+msgid "توقّع نفاد علف"
+msgstr "चारा समाप्ति पूर्वानुमान"
+
+#: app/core/alerts_service.py:738
+#, python-format
+msgid "%(name)s — يتوقّع نفاده خلال %(days).1f يوم"
+msgstr "%(name)s — %(days).1f दिन में खत्म होने की उम्मीद है"
+
+#: app/core/alerts_service.py:739
+#, python-format
+msgid "المتبقي %(available).1f %(unit)s، بمعدل استهلاك %(rate).1f %(unit)s/يوم آخر %(span)s يوم — يوصى بطلب شراء الآن."
+msgstr "%(available).1f %(unit)s शेष है, पिछले %(span)s दिनों में %(rate).1f %(unit)s/दिन की खपत दर पर — अभी खरीद ऑर्डर देने की सिफारिश की जाती है।"
+
+#: app/core/alerts_service.py:766
+msgid "مهمة متعذّرة بانتظار المراجعة"
+msgstr "समीक्षा की प्रतीक्षा में विफल कार्य"
+
+#: app/core/alerts_service.py:767
+#, python-format
+msgid "%(title)s — %(reason)s"
+msgstr "%(title)s — %(reason)s"
+
+#: app/core/alerts_service.py:768
+msgid "بدون ملاحظة إضافية من العامل."
+msgstr "कर्मचारी से कोई अतिरिक्त नोट नहीं।"
+
+#: app/core/alerts_service.py:793
+msgid "مهمة مقترحة بانتظار الاعتماد"
+msgstr "स्वीकृति की प्रतीक्षा में सुझाया गया कार्य"
+
+#: app/core/alerts_service.py:794
+#, python-format
+msgid "%(title)s — بانتظار اعتمادك من قبل %(d)s"
+msgstr "%(title)s — %(d)s से आपकी स्वीकृति का इंतज़ार"
+
+#: app/core/alerts_service.py:795
+msgid "افتح شاشة \"مهام مقترحة بانتظار الاعتماد\" واعتمدها أو أجّلها أو احذفها."
+msgstr "\"स्वीकृति की प्रतीक्षा में सुझाए गए कार्य\" स्क्रीन खोलें और इसे स्वीकृत करें, स्थगित करें, या हटाएं।"
+
+#: app/core/alerts_service.py:864
+msgid "تباطؤ نمو مشبوه"
+msgstr "संदिग्ध वृद्धि मंदी"
+
+#: app/core/alerts_service.py:865
+#, python-format
+msgid "%(no)s — معدل نموه %(rate).2f كجم/يوم"
+msgstr "%(no)s — इसकी वृद्धि दर %(rate).2f किग्रा/दिन है"
+
+#: app/core/alerts_service.py:866
+#, python-format
+msgid "ينقص وزنه فعلياً (متوسط حظيرته %(avg).2f كجم/يوم) — يوصى بفحص صحي عاجل"
+msgstr "इसका वजन वास्तव में घट रहा है (इसके बाड़े का औसत %(avg).2f किग्रा/दिन है) — तत्काल स्वास्थ्य जांच की सिफारिश की जाती है"
+
+#: app/core/alerts_service.py:868
+#, python-format
+msgid "أبطأ بوضوح من متوسط حظيرته (%(avg).2f كجم/يوم) — يوصى بفحص صحي"
+msgstr "अपने बाड़े के औसत (%(avg).2f किग्रा/दिन) से स्पष्ट रूप से धीमा — स्वास्थ्य जांच की सिफारिश की जाती है"
+
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
@@ -869,6 +1259,35 @@ msgstr "संगमन के लिए तैयार"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "शुतुरमुर्ग"
+
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
+#: app/reports/report_service.py:211 app/templates/animal_detail.html:131
+#: app/templates/animal_detail.html:355 app/templates/animal_form.html:85
+#: app/templates/animals_bulk_purchase.html:37
+#: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
+msgid "الجنس"
+msgstr "लिंग"
+
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:211
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "भार"
+
+#: app/core/data_completeness_service.py:31
+msgid "الغرض (تربية/تسمين/بيع)"
+msgstr "उद्देश्य (प्रजनन/मोटा करना/बिक्री)"
+
+#: app/core/data_completeness_service.py:32
+#: app/templates/animal_detail.html:140 app/templates/animal_workflow.html:128
+msgid "السعر"
+msgstr "मूल्य"
+
+#: app/core/data_completeness_service.py:32
+#: app/templates/animal_detail.html:132 app/templates/animal_form.html:19
+#: app/templates/animals_bulk_purchase.html:37
+msgid "اللون"
+msgstr "रंग"
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -2183,15 +2602,6 @@ msgstr "कुल मृत्यु मामले"
 msgid "الرقم"
 msgstr "क्रमांक"
 
-#: app/reports/report_service.py:166 app/reports/report_service.py:211
-#: app/templates/animal_detail.html:131 app/templates/animal_detail.html:355
-#: app/templates/animal_form.html:85
-#: app/templates/animals_bulk_purchase.html:37
-#: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
-#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
-msgid "الجنس"
-msgstr "लिंग"
-
 #: app/reports/report_service.py:166 app/reports/report_service.py:253
 #: app/reports/report_service.py:296 app/reports/report_service.py:378
 #: app/templates/animal_detail.html:257 app/templates/animal_detail.html:271
@@ -2278,11 +2688,6 @@ msgstr "जन्म तिथि"
 #: app/templates/ostrich/eggs_list.html:23
 msgid "الأم"
 msgstr "मां"
-
-#: app/reports/report_service.py:211
-#: app/templates/health/disease_type_detail.html:59
-msgid "الوزن"
-msgstr "भार"
 
 #: app/reports/report_service.py:244
 msgid "عدد عمليات البيع"
@@ -3139,11 +3544,6 @@ msgstr "वित्त"
 msgid "بيانات أساسية"
 msgstr "मूल डेटा"
 
-#: app/templates/animal_detail.html:132 app/templates/animal_form.html:19
-#: app/templates/animals_bulk_purchase.html:37
-msgid "اللون"
-msgstr "रंग"
-
 #: app/templates/animal_detail.html:133 app/templates/feed/ration_detail.html:7
 #: app/templates/feed/ration_form.html:8
 #: app/templates/feed/rations_list.html:10
@@ -3180,10 +3580,6 @@ msgstr "फार्म प्रवेश तिथि"
 msgid "الحظيرة"
 msgstr "बाड़ा"
 
-#: app/templates/animal_detail.html:140 app/templates/animal_workflow.html:128
-msgid "السعر"
-msgstr "मूल्य"
-
 #: app/templates/animal_detail.html:145
 #, python-format
 msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
@@ -3216,14 +3612,6 @@ msgstr "कोलोस्ट्रम प्राप्त किया"
 #: app/templates/animal_detail.html:162 app/templates/animal_detail.html:182
 msgid "تعقيم السرة"
 msgstr "नाभि उपचारित"
-
-#: app/templates/animal_detail.html:167 app/templates/animal_detail.html:179
-#: app/templates/animal_detail.html:180 app/templates/animal_detail.html:181
-#: app/templates/animal_detail.html:182 app/templates/animal_detail.html:207
-#: app/templates/animal_detail.html:217 app/templates/animal_detail.html:218
-#: app/templates/ostrich/egg_form.html:17
-msgid "غير محدد"
-msgstr "अनिर्दिष्ट"
 
 #: app/templates/animal_detail.html:168 app/templates/animal_detail.html:179
 #: app/templates/animal_detail.html:180 app/templates/animal_detail.html:181
@@ -4307,10 +4695,6 @@ msgstr "नई खेप प्राप्त करें"
 #: app/templates/animals_list.html:85
 msgid "متابعة الإجراء الجماعي"
 msgstr "सामूहिक कार्रवाई जारी रखें"
-
-#: app/templates/animals_list.html:92
-msgid "فترة سحب"
-msgstr "निकासी अवधि"
 
 #: app/templates/animals_list.html:103
 msgid "نعام — بدون دورة"
@@ -11292,10 +11676,6 @@ msgstr "कार्यों पर वापस जाएं"
 #: app/templates/team/task_detail.html:10
 msgid "العامل المكلَّف:"
 msgstr "नियुक्त कर्मचारी:"
-
-#: app/templates/team/task_detail.html:10
-msgid "بدون عامل مكلَّف"
-msgstr "कोई नियुक्त कर्मचारी नहीं"
 
 #: app/templates/team/task_detail.html:14
 msgid "تفصيل المهمة"

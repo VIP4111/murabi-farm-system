@@ -9,6 +9,7 @@
 """
 import zlib
 from datetime import date, datetime
+from flask_babel import lazy_gettext as _l
 
 from app.models import Animal, Task
 from app.models.animal import AnimalSource
@@ -23,9 +24,12 @@ REQUIRED_FIELDS_BY_SOURCE = {
     AnimalSource.OPENING_BALANCE: ["price"],
 }
 
+# بند إضافي (2026-08-30) — طلبك: "ابحث عن فجوات في الترجمة في حساب
+# الدكتور". كانت هذي القيم نصاً عربياً خاماً غير قابل للترجمة —
+# صارت _l() (نفس نمط TASK_TYPE_LABELS_AR بـapp/__init__.py).
 FIELD_LABELS_AR = {
-    "gender": "الجنس", "weight": "الوزن", "purpose": "الغرض (تربية/تسمين/بيع)", "price": "السعر",
-    "color": "اللون",
+    "gender": _l("الجنس"), "weight": _l("الوزن"), "purpose": _l("الغرض (تربية/تسمين/بيع)"),
+    "price": _l("السعر"), "color": _l("اللون"),
 }
 
 
@@ -61,7 +65,7 @@ def generate_completion_tasks(*, now: datetime | None = None) -> list:
         ).first()
         if existing:
             continue
-        missing_labels = "، ".join(FIELD_LABELS_AR[f] for f in missing)
+        missing_labels = "، ".join(str(FIELD_LABELS_AR[f]) for f in missing)
         task = task_service.create_suggested_task(
             title=f"📋 أكمل بيانات {animal.animal_no} — ناقصها: {missing_labels}",
             task_type="animal_data_completion",

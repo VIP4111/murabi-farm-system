@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:59+0300\n"
+"POT-Creation-Date: 2026-08-30 18:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -50,7 +50,7 @@ msgstr "የተዘጋ"
 msgid "محذوف/مؤرشف"
 msgstr "የተሰረዘ/የተመዘገበ"
 
-#: app/__init__.py:133
+#: app/__init__.py:133 app/core/alerts_service.py:158
 msgid "ترتيب غير منتظم"
 msgstr "ቅደም ተከተል ያልተስተካከለ"
 
@@ -617,7 +617,7 @@ msgstr "የበሽታ ጉዳዮች"
 msgid "زيارة بيطرية"
 msgstr "የእንስሳት ሐኪም ጉብኝት"
 
-#: app/__init__.py:338
+#: app/__init__.py:338 app/core/alerts_service.py:61
 msgid "تحصين"
 msgstr "ክትባት"
 
@@ -818,6 +818,396 @@ msgstr "የአየር ሁኔታ ማዘመን አልተቻለም፡ %(err)s"
 msgid "تم تحديث توقعات الطقس."
 msgstr "የአየር ሁኔታ ትንበያ ተዘምኗል።"
 
+#: app/core/alerts_service.py:62
+#, python-format
+msgid "%(no)s — %(vaccine)s"
+msgstr "%(no)s — %(vaccine)s"
+
+#: app/core/alerts_service.py:63 app/core/alerts_service.py:132
+#, python-format
+msgid "متأخر منذ %(d)s"
+msgstr "ከ%(d)s ጀምሮ ዘግይቷል"
+
+#: app/core/alerts_service.py:64
+#, python-format
+msgid "مستحق بتاريخ %(d)s"
+msgstr "በ%(d)s ይጠበቃል"
+
+#: app/core/alerts_service.py:82 app/templates/animals_list.html:92
+msgid "فترة سحب"
+msgstr "የመውጫ ጊዜ"
+
+#: app/core/alerts_service.py:83
+#, python-format
+msgid "%(no)s — تصير آمنة للبيع/الذبح بتاريخ %(d)s"
+msgstr "%(no)s — በ%(d)s ለሽያጭ/እርድ ደህንነቱ የተጠበቀ ይሆናል"
+
+#: app/core/alerts_service.py:99
+msgid "فترة سحب حليب"
+msgstr "የወተት መታቀብ ጊዜ"
+
+#: app/core/alerts_service.py:100
+#, python-format
+msgid "%(no)s — يصير حليبها آمناً بتاريخ %(d)s"
+msgstr "%(no)s — ወተቷ በ%(d)s ደህንነቱ የተጠበቀ ይሆናል"
+
+#: app/core/alerts_service.py:110
+msgid "ولادة متوقعة"
+msgstr "የሚጠበቅ ወሊድ"
+
+#: app/core/alerts_service.py:111
+#, python-format
+msgid "%(no)s — ولادة متوقعة قريباً"
+msgstr "%(no)s — ወሊድ በቅርቡ ይጠበቃል"
+
+#: app/core/alerts_service.py:130
+msgid "جهاز تكاثر"
+msgstr "የመራቢያ መሳሪያ"
+
+#: app/core/alerts_service.py:131
+#, python-format
+msgid "%(no)s — إزالة %(device)s"
+msgstr "%(no)s — %(device)s ማስወገድ"
+
+#: app/core/alerts_service.py:133
+#, python-format
+msgid "موعد الإزالة %(d)s"
+msgstr "የማስወገጃ ቀጠሮ፡ %(d)s"
+
+#: app/core/alerts_service.py:145
+msgid "مرض مفتوح"
+msgstr "ክፍት በሽታ"
+
+#: app/core/alerts_service.py:146
+#, python-format
+msgid "%(no)s — %(name)s"
+msgstr "%(no)s — %(name)s"
+
+#: app/core/alerts_service.py:147
+#, python-format
+msgid "مفتوح منذ %(d)s بدون إغلاق"
+msgstr "ከ%(d)s ጀምሮ ሳይዘጋ ክፍት ነው"
+
+#: app/core/alerts_service.py:159
+#, python-format
+msgid "%(no)s — دورة الإنتاج بترتيب غير منتظم"
+msgstr "%(no)s — የምርት ዑደት ባልተስተካከለ ቅደም ተከተል"
+
+#: app/core/alerts_service.py:187
+msgid "توقّف بدورة الإنتاج"
+msgstr "በምርት ዑደት ውስጥ ቆሟል"
+
+#: app/core/alerts_service.py:188
+#, python-format
+msgid "%(no)s — واقف بمرحلة '%(stage)s' منذ %(days)s يوم"
+msgstr "%(no)s — ላለፉት %(days)s ቀናት በ'%(stage)s' ደረጃ ላይ ቆሟል"
+
+#: app/core/alerts_service.py:203
+msgid "بلاغ منتظر"
+msgstr "የሚጠበቅ ሪፖርት"
+
+#: app/core/alerts_service.py:204
+#, python-format
+msgid "بلاغ #%(id)s من %(name)s — بانتظار الاستلام"
+msgstr "ሪፖርት #%(id)s ከ%(name)s — መቀበልን በመጠበቅ ላይ"
+
+#: app/core/alerts_service.py:219
+msgid "جاهز للبيع"
+msgstr "ለሽያጭ ዝግጁ"
+
+#: app/core/alerts_service.py:220
+#, python-format
+msgid "%(no)s — %(label)s (درجة %(score)s)"
+msgstr "%(no)s — %(label)s (ውጤት %(score)s)"
+
+#: app/core/alerts_service.py:242
+msgid "تأخر شياع"
+msgstr "የዘገየ ግልፍታ"
+
+#: app/core/alerts_service.py:243
+#, python-format
+msgid "%(no)s — تأخر حملها أكثر من %(days)s يوم"
+msgstr "%(no)s — እርግዝናዋ ከ%(days)s ቀናት በላይ ዘግይቷል"
+
+#: app/core/alerts_service.py:244
+msgid "بدون تقريع/حمل جديد منذ آخر ولادة أو تلقيح مسجَّل"
+msgstr "ከመጨረሻው የተመዘገበ ወሊድ ወይም ማዳቀል ጀምሮ አዲስ ማዳቀል/እርግዝና የለም"
+
+#: app/core/alerts_service.py:266 app/core/alerts_service.py:604
+msgid "بيانات ناقصة"
+msgstr "የጎደለ መረጃ"
+
+#: app/core/alerts_service.py:267
+#, python-format
+msgid "%(no)s — ناقص: %(field)s"
+msgstr "%(no)s — የጎደለው፡ %(field)s"
+
+#: app/core/alerts_service.py:268
+msgid "أكمّل هذا الحقل من شاشة تعديل الحيوان."
+msgstr "ይህን መስክ ከእንስሳ አርትዖት ገጽ ይሙሉ።"
+
+#: app/core/alerts_service.py:282
+msgid "حظيرة بدون مسؤول"
+msgstr "ያለ ኃላፊ በረት"
+
+#: app/core/alerts_service.py:283
+#, python-format
+msgid "حظيرة %(no)s (%(name)s) — بدون عامل مسؤول"
+msgstr "በረት %(no)s (%(name)s) — ያለ ኃላፊ ሠራተኛ"
+
+#: app/core/alerts_service.py:284
+msgid "المهام والتنبيهات التلقائية لهذي الحظيرة ما توجّه لأحد لين تحدد مسؤولاً."
+msgstr "የዚህ በረት ራስ-ሰር ተግባራት እና ማንቂያዎች ኃላፊ እስከሚያዘጋጁ ድረስ ለማንም አይመሩም።"
+
+#: app/core/alerts_service.py:311
+#, python-format
+msgid "%(barn)s — %(pharmacy)s (بعد %(days)s يوم)"
+msgstr "%(barn)s — %(pharmacy)s (በ%(days)s ቀናት ውስጥ)"
+
+#: app/core/alerts_service.py:320
+msgid "نقص مخزون تحصين مجدول"
+msgstr "የታቀደ የክትባት ክምችት እጥረት"
+
+#: app/core/alerts_service.py:322
+#, python-format
+msgid "الاحتياج المتوقع %(needed).2f %(unit)s لـ%(head)s رأس، والمتوفر %(available)g %(unit)s فقط — يوصى بشراء %(shortage).2f %(unit)s إضافية على الأقل قبل الموعد."
+msgstr "የሚጠበቀው ፍላጎት ለ%(head)s ራስ(ራሶች) %(needed).2f %(unit)s ነው፣ የሚገኘው ደግሞ %(available)g %(unit)s ብቻ ነው — ከቀጠሮው በፊት ቢያንስ %(shortage).2f %(unit)s ተጨማሪ መግዛት ይመከራል።"
+
+#: app/core/alerts_service.py:330 app/core/alerts_service.py:338
+msgid "تذكير تحصين مجدول"
+msgstr "የታቀደ ክትባት ማስታወሻ"
+
+#: app/core/alerts_service.py:332
+#, python-format
+msgid "المخزون كافٍ (%(available)g %(unit)s) لـ%(head)s رأس — جهّز الحظيرة بالموعد."
+msgstr "ክምችቱ ለ%(head)s ራስ(ራሶች) በቂ ነው (%(available)g %(unit)s) — በረቱን በቀጠሮው ያዘጋጁ።"
+
+#: app/core/alerts_service.py:340
+#, python-format
+msgid "%(head)s رأس بالحظيرة حالياً — سجّل جرعة افتراضية على الدواء لمقارنة المخزون تلقائياً."
+msgstr "በበረቱ ውስጥ በአሁኑ ጊዜ %(head)s ራስ(ራሶች) — ክምችቱን በራስ-ሰር ለማወዳደር በመድሃኒቱ ላይ ነባሪ መጠን ይመዝግቡ።"
+
+#: app/core/alerts_service.py:366 app/templates/animal_detail.html:167
+#: app/templates/animal_detail.html:179 app/templates/animal_detail.html:180
+#: app/templates/animal_detail.html:181 app/templates/animal_detail.html:182
+#: app/templates/animal_detail.html:207 app/templates/animal_detail.html:217
+#: app/templates/animal_detail.html:218 app/templates/ostrich/egg_form.html:17
+msgid "غير محدد"
+msgstr "ያልተገለጸ"
+
+#: app/core/alerts_service.py:368
+msgid "مهمة أُنجزت متأخرة عن موعدها"
+msgstr "ዘግይቶ የተጠናቀቀ ተግባር"
+
+#: app/core/alerts_service.py:369
+#, python-format
+msgid "%(title)s — أُنجزت الساعة %(time)s"
+msgstr "%(title)s — በ%(time)s ተጠናቋል"
+
+#: app/core/alerts_service.py:370
+#, python-format
+msgid "موعدها كان %(due)s — نفّذها: %(who)s."
+msgstr "ቀጠሮው %(due)s ነበር — የፈጸመው፡ %(who)s።"
+
+#: app/core/alerts_service.py:375 app/templates/team/task_detail.html:10
+msgid "بدون عامل مكلَّف"
+msgstr "ያለ የተመደበ ሰራተኛ"
+
+#: app/core/alerts_service.py:377
+msgid "مهمة متأخرة عن موعدها"
+msgstr "ጊዜው ያለፈበት ተግባር"
+
+#: app/core/alerts_service.py:378
+#, python-format
+msgid "%(title)s — لسا ما انجزت"
+msgstr "%(title)s — እስካሁን አልተጠናቀቀም"
+
+#: app/core/alerts_service.py:379
+#, python-format
+msgid "موعدها كان %(due)s — العامل المكلَّف: %(who)s."
+msgstr "ቀጠሮው %(due)s ነበር — የተመደበው ሠራተኛ፡ %(who)s።"
+
+#: app/core/alerts_service.py:403
+#, python-format
+msgid "آخر من استعملها: %(who)s"
+msgstr "መጨረሻ የተጠቀመው፡ %(who)s"
+
+#: app/core/alerts_service.py:403
+msgid "راجع شاشة حركة الصنف لمعرفة آخر من استعملها."
+msgstr "ማን መጨረሻ እንደተጠቀመ ለማወቅ የንጥሉን እንቅስቃሴ ገጽ ይመልከቱ።"
+
+#: app/core/alerts_service.py:405
+msgid "معدة تحتاج صيانة"
+msgstr "ጥገና የሚያስፈልገው መሳሪያ"
+
+#: app/core/alerts_service.py:406
+#, python-format
+msgid "%(name)s — تحتاج صيانة"
+msgstr "%(name)s — ጥገና ያስፈልገዋል"
+
+#: app/core/alerts_service.py:478
+#, python-format
+msgid "فيه مسودة راتب محفوظة عليها خصومات بقيمة %(amount).2f — راجعها قبل التأكيد."
+msgstr "%(amount).2f ቅናሽ ያለበት የተቀመጠ የደመወዝ ረቂቅ አለ — ከማረጋገጥዎ በፊት ይገምግሙት።"
+
+#: app/core/alerts_service.py:481
+msgid "لسا ما تجهَّز راتب هذا الشهر له."
+msgstr "የዚህ ወር ደመወዝ ገና አልተዘጋጀም።"
+
+#: app/core/alerts_service.py:483
+msgid "راتب شهر سابق ما تأكَّد بعد — متأخر، راجعه بأقرب فرصة."
+msgstr "የቀድሞ ወር ደመወዝ እስካሁን አልተረጋገጠም — ዘግይቷል፣ በተቻለ ፍጥነት ይገምግሙት።"
+
+#: app/core/alerts_service.py:485
+msgid "تذكير رواتب نهاية الشهر"
+msgstr "የወር መጨረሻ ደመወዝ ማስታወሻ"
+
+#: app/core/alerts_service.py:486
+#, python-format
+msgid "راتب %(name)s — %(m)s/%(y)s"
+msgstr "የ%(name)s ደመወዝ — %(m)s/%(y)s"
+
+#: app/core/alerts_service.py:530
+msgid "قرب انتهاء صلاحية دواء"
+msgstr "የመድሃኒት ጊዜ ማብቂያ እየተቃረበ"
+
+#: app/core/alerts_service.py:531
+#, python-format
+msgid "%(name)s — %(qty)g %(unit)s"
+msgstr "%(name)s — %(qty)g %(unit)s"
+
+#: app/core/alerts_service.py:532
+#, python-format
+msgid "منتهي الصلاحية منذ %(d)s"
+msgstr "ከ%(d)s ጀምሮ ጊዜው አልፏል"
+
+#: app/core/alerts_service.py:533
+#, python-format
+msgid "تنتهي صلاحيته بتاريخ %(d)s"
+msgstr "በ%(d)s ያበቃል"
+
+#: app/core/alerts_service.py:567 app/core/alerts_service.py:580
+msgid "حظيرة هدف ناقصة"
+msgstr "የጎደለ ዒላማ በረት"
+
+#: app/core/alerts_service.py:568
+#, python-format
+msgid "%(n)s رأس بحاجة حظيرة \"%(type)s\" — ما أنشأتها بعد"
+msgstr "%(n)s ራስ(ራሶች) \"%(type)s\" በረት ያስፈልጋቸዋል — እስካሁን አልፈጠሩትም"
+
+#: app/core/alerts_service.py:569
+#, python-format
+msgid "أنشئ حظيرة بنوع \"%(type)s\" من شاشة الحظائر، عشان النظام يقدر يقترح نقل هالرؤوس تلقائياً (بانتظار موافقة الدكتور دائماً)."
+msgstr "\"%(type)s\" አይነት በረት ከበረቶች ገጽ ይፍጠሩ፣ ስርዓቱ እነዚህን እንስሳት በራስ-ሰር ለማዛወር እንዲጠቁም (ሁልጊዜ የሐኪም ማጽደቅን በመጠበቅ)።"
+
+#: app/core/alerts_service.py:581
+#, python-format
+msgid "%(n)s مهمة \"نقل لحظيرة الحوامل\" بانتظار حظيرة \"حوامل\" غير موجودة"
+msgstr "%(n)s \"ወደ ነፍሰ ጡር በረት ማዛወር\" ተግባር(ተግባራት) የሌለ \"ነፍሰ ጡር\" በረት በመጠበቅ ላይ"
+
+#: app/core/alerts_service.py:582
+msgid "أنشئ حظيرة بنوع \"حوامل\" من شاشة الحظائر — بدونها المهمة ما تقدر تنقل الرأس فعلياً لما تُنجَز (تقدر تختار حظيرة بديلة يدوياً وقت الإنجاز لو ما تبي تنشئ هذا النوع)."
+msgstr "\"ነፍሰ ጡር\" አይነት በረት ከበረቶች ገጽ ይፍጠሩ — ያለ እሱ ተግባሩ ሲጠናቀቅ ራሱን በትክክል ማዛወር አይችልም (ይህን አይነት መፍጠር ካልፈለጉ በማጠናቀቂያ ጊዜ አማራጭ በረት በእጅ መምረጥ ይችላሉ)።"
+
+#: app/core/alerts_service.py:605
+#, python-format
+msgid "%(n)s رأس ما راح يدخل جدولة الأوزان المتأخرة إطلاقاً"
+msgstr "%(n)s ራስ(ራሶች) በጭራሽ ወደ የዘገየ ክብደት መርሃ ግብር አይገቡም"
+
+#: app/core/alerts_service.py:606
+msgid "ما عندها وزن مسجَّل ولا تاريخ ولادة/شراء/دخول — بدون أي تاريخ مرجعي، النظام ما يقدر يحسب \"من متى ما اتوزنت\"، فتنبيه الوزن المتأخر ما يشتغل لها أبداً. أكمّل تاريخ الشراء/الدخول أو سجّل وزناً أول من شاشة تعديل الحيوان."
+msgstr "የተመዘገበ ክብደት ወይም የልደት/ግዢ/መግቢያ ቀን የላትም — ምንም መነሻ ቀን ከሌለ ስርዓቱ \"ከመቼ ጀምሮ አልተመዘነችም\" ማስላት አይችልም፣ ስለዚህ የዘገየ ክብደት ማንቂያ ለእሷ በጭራሽ አይሰራም። የግዢ/መግቢያ ቀንን ያጠናቅቁ ወይም ከእንስሳ አርትዖት ገጽ የመጀመሪያ ክብደት ይመዝግቡ።"
+
+#: app/core/alerts_service.py:630 app/core/alerts_service.py:650
+msgid "عزل بدون حظيرة مصنّفة"
+msgstr "ያለ ተመድቦ በረት መታቀብ"
+
+#: app/core/alerts_service.py:631
+#, python-format
+msgid "%(n)s رأس بمهام عزل بدون حظيرة عزل فعلية"
+msgstr "%(n)s ራስ(ራሶች) የመታቀብ ተግባራት ያሏቸው ያለ ትክክለኛ የመታቀብ በረት"
+
+#: app/core/alerts_service.py:632
+msgid "ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من شاشة الحظائر عشان العزل التلقائي يشتغل صح للولادات الجاية."
+msgstr "በስርዓቱ ውስጥ \"መታቀብ\" አይነት በረት የለም — እናትና ልጅ ከቀሪው መንጋ ተለይተው ወደ መታቀቢያ በረት በትክክል አልተዛወሩም። ለሚመጡ ወሊዶች ራስ-ሰር መታቀብ በትክክል እንዲሰራ አዲስ \"መታቀብ\" አይነት በረት ከበረቶች ገጽ ይፍጠሩ።"
+
+#: app/core/alerts_service.py:651
+#, python-format
+msgid "%(n)s رأس أجهض بدون عزل فعلي — ما فيه حظيرة عزل"
+msgstr "%(n)s ራስ(ራሶች) ያለ ትክክለኛ መታቀብ ፅንስ አጨንግፈዋል — የመታቀቢያ በረት የለም"
+
+#: app/core/alerts_service.py:652
+msgid "ما فيه حظيرة بنوع \"عزل\" بالنظام — الرأس المُجهِض ما انتقل لعزل طبي منفصل ولسا يخالط باقي القطيع رغم احتمال عدوى. أنشئ حظيرة بنوع \"عزل\" من شاشة الحظائر ثم انقل الرأس يدوياً."
+msgstr "በስርዓቱ ውስጥ \"መታቀብ\" አይነት በረት የለም — ፅንስ ያጨናገፈው ራስ ወደ ተለየ የህክምና መታቀብ አልተዛወረም እና የመያዝ እድል ቢኖርም ከቀሪው መንጋ ጋር እየተቀላቀለ ነው። \"መታቀብ\" አይነት በረት ከበረቶች ገጽ ይፍጠሩ ከዚያም ራሱን በእጅ ያዛውሩ።"
+
+#: app/core/alerts_service.py:680
+msgid "توزيع علف ناقص"
+msgstr "ያልተሟላ የመኖ ስርጭት"
+
+#: app/core/alerts_service.py:681
+#, python-format
+msgid "%(title)s — العلف ما اتوزّع بالكامل"
+msgstr "%(title)s — መኖ ሙሉ በሙሉ አልተከፋፈለም"
+
+#: app/core/alerts_service.py:737
+msgid "توقّع نفاد علف"
+msgstr "የመኖ መጨረሻ ትንበያ"
+
+#: app/core/alerts_service.py:738
+#, python-format
+msgid "%(name)s — يتوقّع نفاده خلال %(days).1f يوم"
+msgstr "%(name)s — በ%(days).1f ቀናት ውስጥ እንደሚያልቅ ይጠበቃል"
+
+#: app/core/alerts_service.py:739
+#, python-format
+msgid "المتبقي %(available).1f %(unit)s، بمعدل استهلاك %(rate).1f %(unit)s/يوم آخر %(span)s يوم — يوصى بطلب شراء الآن."
+msgstr "የቀረው %(available).1f %(unit)s ነው፣ ላለፉት %(span)s ቀናት በ%(rate).1f %(unit)s/ቀን የፍጆታ መጠን — አሁን የግዢ ትዕዛዝ ማስቀመጥ ይመከራል።"
+
+#: app/core/alerts_service.py:766
+msgid "مهمة متعذّرة بانتظار المراجعة"
+msgstr "ግምገማ በመጠበቅ ላይ ያለ ያልተሳካ ተግባር"
+
+#: app/core/alerts_service.py:767
+#, python-format
+msgid "%(title)s — %(reason)s"
+msgstr "%(title)s — %(reason)s"
+
+#: app/core/alerts_service.py:768
+msgid "بدون ملاحظة إضافية من العامل."
+msgstr "ከሠራተኛው ተጨማሪ ማስታወሻ የለም።"
+
+#: app/core/alerts_service.py:793
+msgid "مهمة مقترحة بانتظار الاعتماد"
+msgstr "ማጽደቅ በመጠበቅ ላይ ያለ የተጠቆመ ተግባር"
+
+#: app/core/alerts_service.py:794
+#, python-format
+msgid "%(title)s — بانتظار اعتمادك من قبل %(d)s"
+msgstr "%(title)s — ከ%(d)s ጀምሮ ማጽደቅዎን በመጠበቅ ላይ"
+
+#: app/core/alerts_service.py:795
+msgid "افتح شاشة \"مهام مقترحة بانتظار الاعتماد\" واعتمدها أو أجّلها أو احذفها."
+msgstr "\"የፀደቀ ውሳኔ በመጠበቅ ላይ ያሉ የተጠቆሙ ተግባራት\" ገጽን ይክፈቱ እና ያጽድቁ ወይም ያራዝሙ ወይም ይሰርዙ።"
+
+#: app/core/alerts_service.py:864
+msgid "تباطؤ نمو مشبوه"
+msgstr "አጠራጣሪ የእድገት መቀነስ"
+
+#: app/core/alerts_service.py:865
+#, python-format
+msgid "%(no)s — معدل نموه %(rate).2f كجم/يوم"
+msgstr "%(no)s — የእድገት መጠኑ %(rate).2f ኪግ/ቀን ነው"
+
+#: app/core/alerts_service.py:866
+#, python-format
+msgid "ينقص وزنه فعلياً (متوسط حظيرته %(avg).2f كجم/يوم) — يوصى بفحص صحي عاجل"
+msgstr "በእውነት ክብደት እያጣ ነው (የበረቱ አማካይ %(avg).2f ኪግ/ቀን ነው) — አስቸኳይ የጤና ምርመራ ይመከራል"
+
+#: app/core/alerts_service.py:868
+#, python-format
+msgid "أبطأ بوضوح من متوسط حظيرته (%(avg).2f كجم/يوم) — يوصى بفحص صحي"
+msgstr "ከበረቱ አማካይ (%(avg).2f ኪግ/ቀን) በግልጽ ቀርፋፋ ነው — የጤና ምርመራ ይመከራል"
+
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
@@ -869,6 +1259,35 @@ msgstr "ለማዳቀል ዝግጁ"
 #: app/core/animal_filters_service.py:192
 msgid "النعام"
 msgstr "ሰጎኖች"
+
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
+#: app/reports/report_service.py:211 app/templates/animal_detail.html:131
+#: app/templates/animal_detail.html:355 app/templates/animal_form.html:85
+#: app/templates/animals_bulk_purchase.html:37
+#: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
+msgid "الجنس"
+msgstr "ጾታ"
+
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:211
+#: app/templates/health/disease_type_detail.html:59
+msgid "الوزن"
+msgstr "ክብደት"
+
+#: app/core/data_completeness_service.py:31
+msgid "الغرض (تربية/تسمين/بيع)"
+msgstr "ዓላማ (ዘር ማራባት/ማድለብ/ሽያጭ)"
+
+#: app/core/data_completeness_service.py:32
+#: app/templates/animal_detail.html:140 app/templates/animal_workflow.html:128
+msgid "السعر"
+msgstr "ዋጋ"
+
+#: app/core/data_completeness_service.py:32
+#: app/templates/animal_detail.html:132 app/templates/animal_form.html:19
+#: app/templates/animals_bulk_purchase.html:37
+msgid "اللون"
+msgstr "ቀለም"
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -2183,15 +2602,6 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 msgid "الرقم"
 msgstr "ቁጥር"
 
-#: app/reports/report_service.py:166 app/reports/report_service.py:211
-#: app/templates/animal_detail.html:131 app/templates/animal_detail.html:355
-#: app/templates/animal_form.html:85
-#: app/templates/animals_bulk_purchase.html:37
-#: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:32
-#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
-msgid "الجنس"
-msgstr "ጾታ"
-
 #: app/reports/report_service.py:166 app/reports/report_service.py:253
 #: app/reports/report_service.py:296 app/reports/report_service.py:378
 #: app/templates/animal_detail.html:257 app/templates/animal_detail.html:271
@@ -2278,11 +2688,6 @@ msgstr "የልደት ቀን"
 #: app/templates/ostrich/eggs_list.html:23
 msgid "الأم"
 msgstr "እናት"
-
-#: app/reports/report_service.py:211
-#: app/templates/health/disease_type_detail.html:59
-msgid "الوزن"
-msgstr "ክብደት"
 
 #: app/reports/report_service.py:244
 msgid "عدد عمليات البيع"
@@ -3139,11 +3544,6 @@ msgstr "ፋይናንስ"
 msgid "بيانات أساسية"
 msgstr "መሠረታዊ መረጃ"
 
-#: app/templates/animal_detail.html:132 app/templates/animal_form.html:19
-#: app/templates/animals_bulk_purchase.html:37
-msgid "اللون"
-msgstr "ቀለም"
-
 #: app/templates/animal_detail.html:133 app/templates/feed/ration_detail.html:7
 #: app/templates/feed/ration_form.html:8
 #: app/templates/feed/rations_list.html:10
@@ -3180,10 +3580,6 @@ msgstr "የእርሻ መግቢያ ቀን"
 msgid "الحظيرة"
 msgstr "በረት"
 
-#: app/templates/animal_detail.html:140 app/templates/animal_workflow.html:128
-msgid "السعر"
-msgstr "ዋጋ"
-
 #: app/templates/animal_detail.html:145
 #, python-format
 msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
@@ -3216,14 +3612,6 @@ msgstr "ኮሎስትረም ተቀብሏል"
 #: app/templates/animal_detail.html:162 app/templates/animal_detail.html:182
 msgid "تعقيم السرة"
 msgstr "እትብት ታክሟል"
-
-#: app/templates/animal_detail.html:167 app/templates/animal_detail.html:179
-#: app/templates/animal_detail.html:180 app/templates/animal_detail.html:181
-#: app/templates/animal_detail.html:182 app/templates/animal_detail.html:207
-#: app/templates/animal_detail.html:217 app/templates/animal_detail.html:218
-#: app/templates/ostrich/egg_form.html:17
-msgid "غير محدد"
-msgstr "ያልተገለጸ"
 
 #: app/templates/animal_detail.html:168 app/templates/animal_detail.html:179
 #: app/templates/animal_detail.html:180 app/templates/animal_detail.html:181
@@ -4307,10 +4695,6 @@ msgstr "አዲስ ጭነት ተቀበል"
 #: app/templates/animals_list.html:85
 msgid "متابعة الإجراء الجماعي"
 msgstr "የቡድን እርምጃን ቀጥል"
-
-#: app/templates/animals_list.html:92
-msgid "فترة سحب"
-msgstr "የመውጫ ጊዜ"
 
 #: app/templates/animals_list.html:103
 msgid "نعام — بدون دورة"
@@ -11292,10 +11676,6 @@ msgstr "ወደ ተግባራት ተመለስ"
 #: app/templates/team/task_detail.html:10
 msgid "العامل المكلَّف:"
 msgstr "የተመደበ ሰራተኛ፦"
-
-#: app/templates/team/task_detail.html:10
-msgid "بدون عامل مكلَّف"
-msgstr "ያለ የተመደበ ሰራተኛ"
 
 #: app/templates/team/task_detail.html:14
 msgid "تفصيل المهمة"
