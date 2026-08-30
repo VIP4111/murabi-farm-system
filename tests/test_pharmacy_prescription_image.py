@@ -44,9 +44,20 @@ def test_prescription_image_analysis_failure_shows_clear_error(app, logged_in_cl
     assert "تعذّر تحليل الصورة".encode() in resp.data
 
 
-def test_prescription_image_rejects_invalid_medicine_class_from_model():
+def test_prescription_image_rejects_invalid_medicine_class_from_model(monkeypatch):
     """حاجز حقيقي: لو الموديل رجّع فئة دواء مو من القائمة المغلقة
-    المسموحة، نرفضها هنا بدل ما توصل كخيار قابل للتعبئة."""
+    المسموحة، نرفضها هنا بدل ما توصل كخيار قابل للتعبئة.
+
+    **إصلاح (2026-08-31)** — كانت تعيّن `os.environ["GEMINI_API_KEY"]`
+    مباشرة بدون `monkeypatch`، فيبقى المفتاح الوهمي مضبوطاً بالعملية
+    لبقية اختبارات الحزمة الكاملة كلها (لا يوجد تراجع تلقائي). أي
+    اختبار لاحق يفترض `is_gemini_configured()` تكون False (مفتاح غير
+    مضبوط) كان يفاجأ بمفتاح وهمي "fake-key" فعلياً موجوداً، ويحاول
+    اتصالاً حقيقياً بخوادم Gemini (يعلّق طويلاً بانتظار SSL handshake
+    بدل ما يفشل فوراً) — سبب تعليق حقيقي لاحظناه بتشغيل الحزمة الكاملة
+    عند test_rate_limit_service.py::test_assistant_send_route_enforces_limit
+    (31 طلباً حقيقياً لـ/assistant/send). `monkeypatch.setenv` يتراجع
+    تلقائياً بنهاية هذا الاختبار بالضبط، بدون أي أثر جانبي على غيره."""
     fake_json = '{"name": "دواء", "medicine_class": "اختراع_غير_موجود", "usage_method": null, ' \
                 '"standard_dosage_note": null, "expiry_date": null, "withdrawal_days": null, ' \
                 '"withdrawal_days_milk": null, "notes": null}'
@@ -62,8 +73,7 @@ def test_prescription_image_rejects_invalid_medicine_class_from_model():
         def __init__(self, api_key):
             self.models = FakeModels()
 
-    import os
-    os.environ["GEMINI_API_KEY"] = "fake-key"
+    monkeypatch.setenv("GEMINI_API_KEY", "fake-key")
     with patch("google.genai.Client", FakeClient):
         result = llm_bridge.parse_pharmacy_prescription_image(b"bytes", "image/jpeg")
     assert result is not None
