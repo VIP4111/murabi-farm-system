@@ -1,5 +1,6 @@
 from datetime import date
 from flask import render_template, request, redirect, url_for, flash
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.repro import repro_bp
@@ -136,7 +137,7 @@ def matings_new():
         # ضمن قائمة الفحول المسموحة (عمر كافٍ)، حتى لو حاول أحد يرسل
         # male_id مباشرة بدون المرور بالقائمة المفلترة بالفورم.
         if male_id and male_id not in {m.id for m in _males()}:
-            flash("هذا الفحل غير متاح للتقريع (عمره أقل من الحد الأدنى المسموح)", "error")
+            flash(_("هذا الفحل غير متاح للتقريع (عمره أقل من الحد الأدنى المسموح)"), "error")
             return render_template(
                 "repro/mating_form.html",
                 females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
@@ -149,7 +150,7 @@ def matings_new():
         from app.core import lineage_service
         relation = lineage_service.relationship_warning(female_id, male_id) if male_id else None
         if relation and request.form.get("confirm_relation") != "1":
-            flash("⚠️ تحذير قرابة وراثية — راجع التفاصيل تحت قبل ما تأكد", "error")
+            flash(_("⚠️ تحذير قرابة وراثية — راجع التفاصيل تحت قبل ما تأكد"), "error")
             return render_template(
                 "repro/mating_form.html",
                 females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
@@ -165,7 +166,7 @@ def matings_new():
         if relation and not current_user.has_permission("repro.override_close_relation"):
             reason = (request.form.get("override_reason") or "").strip()
             if not reason:
-                flash("⚠️ لازم تكتب سبب طلب التجاوز قبل الإرسال", "error")
+                flash(_("⚠️ لازم تكتب سبب طلب التجاوز قبل الإرسال"), "error")
                 return render_template(
                     "repro/mating_form.html",
                     females=_females(), males=_males(), barns=Barn.query.order_by(Barn.barn_name).all(),
@@ -176,7 +177,7 @@ def matings_new():
                 date_=request.form["date"], male_note=request.form.get("male_note"),
                 barn_id=request.form.get("barn_id"), notes=request.form.get("notes"),
             )
-            flash("تم إرسال طلب التجاوز لصاحب الحلال للتأكيد — بينتظر رده قبل ما يتسجّل التقريع", "success")
+            flash(_("تم إرسال طلب التجاوز لصاحب الحلال للتأكيد — بينتظر رده قبل ما يتسجّل التقريع"), "success")
             return redirect(url_for("repro.matings_list"))
 
         row = Mating(
@@ -196,7 +197,7 @@ def matings_new():
         from app.core.cycle_engine import record_cycle_event
         record_cycle_event(row.female, "mating", source_type="Mating", source_id=row.id, event_date=row.date)
 
-        flash("تم تسجيل التقريع", "success")
+        flash(_("تم تسجيل التقريع"), "success")
         return redirect(url_for("repro.matings_list"))
 
     # تعبئة مسبقة من رابط طلب التجاوز (بند إضافي 231) — صاحب الحلال
@@ -275,7 +276,7 @@ def pregnancies_new():
         from app.core.cycle_engine import record_cycle_event
         record_cycle_event(row.female, "pregnancy", source_type="Pregnancy", source_id=row.id, event_date=row.date)
 
-        flash("تم تسجيل تشخيص الحمل", "success")
+        flash(_("تم تسجيل تشخيص الحمل"), "success")
         return redirect(url_for("repro.pregnancies_list"))
     return render_template(
         "repro/pregnancy_form.html",
@@ -295,7 +296,7 @@ def pregnancies_abort(pregnancy_id):
 
     pregnancy = Pregnancy.query.get_or_404(pregnancy_id)
     if pregnancy.outcome:
-        flash("هذا الحمل مسجَّل له نتيجة إجهاض مسبقاً.", "error")
+        flash(_("هذا الحمل مسجَّل له نتيجة إجهاض مسبقاً."), "error")
         return redirect(url_for("repro.pregnancies_list"))
 
     result = record_abortion(
@@ -325,15 +326,15 @@ def pregnancies_confirm(pregnancy_id):
     confirmed=True حصراً) — تأكيده هنا هو اللي يُدخله فعلياً بالعدّاد."""
     pregnancy = Pregnancy.query.get_or_404(pregnancy_id)
     if pregnancy.confirmed:
-        flash("هذا الحمل مؤكَّد أصلاً.", "error")
+        flash(_("هذا الحمل مؤكَّد أصلاً."), "error")
         return redirect(url_for("repro.pregnancies_list"))
     if pregnancy.outcome:
-        flash("هذا الحمل مسجَّل له نتيجة إجهاض — ما ينفع يُأكَّد.", "error")
+        flash(_("هذا الحمل مسجَّل له نتيجة إجهاض — ما ينفع يُأكَّد."), "error")
         return redirect(url_for("repro.pregnancies_list"))
     pregnancy.confirmed = True
     _log("pregnancy.confirm", "Pregnancy", pregnancy.id)
     db.session.commit()
-    flash(f"تم تأكيد حمل {pregnancy.female.animal_no} — صارت تظهر ضمن عدد الحوامل.", "success")
+    flash(_("تم تأكيد حمل %(no)s — صارت تظهر ضمن عدد الحوامل.", no=pregnancy.female.animal_no), "success")
     return redirect(url_for("repro.pregnancies_list"))
 
 
@@ -384,7 +385,7 @@ def sonar_new():
                 notes=f"نتيجة الفحص السابق ({row.exam_date}): {row.result or 'غير محدد'}.",
             )
 
-        flash("تم تسجيل فحص السونار", "success")
+        flash(_("تم تسجيل فحص السونار"), "success")
         return redirect(url_for("repro.sonar_list"))
     return render_template(
         "repro/sonar_form.html",
@@ -428,7 +429,7 @@ def programs_new():
         db.session.flush()
         _log("twin_estrus_program.create", "TwinEstrusProgram", row.id)
         db.session.commit()
-        flash("تم إنشاء برنامج الشياع التوأمي", "success")
+        flash(_("تم إنشاء برنامج الشياع التوأمي"), "success")
         return redirect(url_for("repro.program_detail", program_id=row.id))
     return render_template(
         "repro/program_form.html",
@@ -469,7 +470,7 @@ def program_attempt_new(program_id):
         record_cycle_event(program.ewe, "twin_estrus_attempt", source_type="TwinEstrusAttempt",
                             source_id=row.id, event_date=row.mating_date)
 
-        flash("تم تسجيل محاولة التقريع", "success")
+        flash(_("تم تسجيل محاولة التقريع"), "success")
         return redirect(url_for("repro.program_detail", program_id=program.id))
     return render_template("repro/attempt_form.html", program=program, males=_males())
 
@@ -498,7 +499,7 @@ def program_device_new(program_id):
         record_cycle_event(program.ewe, "repro_device", source_type="ReproDevice",
                             source_id=row.id, event_date=row.inserted_at)
 
-        flash("تم تسجيل جهاز التكاثر", "success")
+        flash(_("تم تسجيل جهاز التكاثر"), "success")
         return redirect(url_for("repro.program_detail", program_id=program.id))
     return render_template("repro/device_form.html", program=program)
 
@@ -512,7 +513,7 @@ def program_device_remove(program_id, device_id):
     device.early_loss = bool(request.form.get("early_loss"))
     _log("repro_device.remove", "ReproDevice", device.id, f"program={program_id}")
     db.session.commit()
-    flash("تم تسجيل إزالة الجهاز", "success")
+    flash(_("تم تسجيل إزالة الجهاز"), "success")
     return redirect(url_for("repro.program_detail", program_id=program_id))
 
 
@@ -542,7 +543,7 @@ def program_injection_new(program_id):
         record_cycle_event(program.ewe, "hormone_injection", source_type="HormoneInjection",
                             source_id=row.id, event_date=row.actual_at or row.planned_at or date.today())
 
-        flash("تم تسجيل الحقنة الهرمونية", "success")
+        flash(_("تم تسجيل الحقنة الهرمونية"), "success")
         return redirect(url_for("repro.program_detail", program_id=program.id))
     return render_template("repro/injection_form.html", program=program)
 
@@ -555,5 +556,5 @@ def program_set_status(program_id):
     program.status = request.form["status"]
     _log("twin_estrus_program.status", "TwinEstrusProgram", program.id, program.status)
     db.session.commit()
-    flash("تم تحديث حالة البرنامج", "success")
+    flash(_("تم تحديث حالة البرنامج"), "success")
     return redirect(url_for("repro.program_detail", program_id=program.id))

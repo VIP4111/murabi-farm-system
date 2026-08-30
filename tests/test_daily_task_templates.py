@@ -65,6 +65,19 @@ def test_daily_template_toggle_route(app, logged_in_client):
     assert t.is_active is False
 
 
+def test_daily_template_toggle_flash_message_not_garbled(app, logged_in_client):
+    """بند إضافي (2026-08-30) — خلل حقيقي لقيناه أثناء ترجمة رسائل flash:
+    رسالة هذا الراوت كانت مبنية بصيغة ternary داخل flash("..." if x else
+    "...") — الغلاف الآلي بـ_() دمج النصين بمسج واحد غير صحيح للاستخراج.
+    صُحِّح لاستدعاءين منفصلين لـ_()، وهذا الفحص يتأكد الرسالة الظاهرة
+    فعلياً واضحة ومطابقة (مو نصين ملتصقين)."""
+    t = DailyTaskTemplate.query.first()
+    resp = logged_in_client.post(f"/team/tasks/daily-templates/{t.id}/toggle", follow_redirects=True)
+    body = resp.data.decode()
+    assert "تم إيقاف المهمة اليومية" in body
+    assert "تم تفعيل المهمة اليومية" not in body
+
+
 def test_daily_template_create_route(app, logged_in_client):
     resp = logged_in_client.post("/team/tasks/daily-templates", data={
         "title": "🌾 فحص مخزون العلف", "notes": "تأكد الكمية كافية لليوم",

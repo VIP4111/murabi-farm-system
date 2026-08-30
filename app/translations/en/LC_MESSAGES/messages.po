@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:12+0300\n"
+"POT-Creation-Date: 2026-08-30 17:28+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -112,15 +112,15 @@ msgstr "Confirmed"
 msgid "فشلت"
 msgstr "Failed"
 
-#: app/__init__.py:161 app/team/routes.py:751
+#: app/__init__.py:161 app/team/routes.py:752
 msgid "مهمة عامة"
 msgstr "General task"
 
-#: app/__init__.py:162 app/team/routes.py:752
+#: app/__init__.py:162 app/team/routes.py:753
 msgid "فحص عزل"
 msgstr "Isolation check"
 
-#: app/__init__.py:163 app/team/routes.py:756
+#: app/__init__.py:163 app/team/routes.py:757
 msgid "مراجعة الدكتور"
 msgstr "Doctor review"
 
@@ -136,15 +136,15 @@ msgstr "Selenium dose"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "Colostrum/nursing follow-up"
 
-#: app/__init__.py:167 app/team/routes.py:753
+#: app/__init__.py:167 app/team/routes.py:754
 msgid "وزن"
 msgstr "Weighing"
 
-#: app/__init__.py:168 app/team/routes.py:754
+#: app/__init__.py:168 app/team/routes.py:755
 msgid "تحصين مستحق"
 msgstr "Vaccination due"
 
-#: app/__init__.py:169 app/team/routes.py:755
+#: app/__init__.py:169 app/team/routes.py:756
 msgid "تبديل علف"
 msgstr "Feed switch"
 
@@ -244,7 +244,7 @@ msgstr "Barn move (physiological state)"
 msgid "إكمال بيانات حيوان"
 msgstr "Complete animal data"
 
-#: app/__init__.py:237 app/team/routes.py:31 app/templates/base.html:843
+#: app/__init__.py:237 app/team/routes.py:32 app/templates/base.html:843
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -257,7 +257,7 @@ msgstr "Health condition"
 msgid "نقل للعزل"
 msgstr "Transfer to isolation"
 
-#: app/__init__.py:240 app/team/routes.py:43 app/templates/simple_home.html:79
+#: app/__init__.py:240 app/team/routes.py:44 app/templates/simple_home.html:79
 #: app/templates/worker_home.html:92
 msgid "تغذية / عليقة"
 msgstr "Feeding / ration"
@@ -718,7 +718,7 @@ msgstr "Severe stress"
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:743
+#: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:14
@@ -1931,19 +1931,323 @@ msgstr "Daily activity report"
 msgid "تقرير طلب الشراء"
 msgstr "Purchase request report"
 
-#: app/team/routes.py:35 app/templates/simple_home.html:71
+#: app/repro/routes.py:140
+msgid "هذا الفحل غير متاح للتقريع (عمره أقل من الحد الأدنى المسموح)"
+msgstr "This male is not available for breeding (younger than the minimum allowed age)"
+
+#: app/repro/routes.py:153
+msgid "⚠️ تحذير قرابة وراثية — راجع التفاصيل تحت قبل ما تأكد"
+msgstr "⚠️ Genetic-relation warning — review the details below before confirming"
+
+#: app/repro/routes.py:169
+msgid "⚠️ لازم تكتب سبب طلب التجاوز قبل الإرسال"
+msgstr "⚠️ You must write a reason for the override request before submitting"
+
+#: app/repro/routes.py:180
+msgid "تم إرسال طلب التجاوز لصاحب الحلال للتأكيد — بينتظر رده قبل ما يتسجّل التقريع"
+msgstr "The override request has been sent to the owner for confirmation — waiting for their response before the mating is recorded"
+
+#: app/repro/routes.py:200
+msgid "تم تسجيل التقريع"
+msgstr "The mating has been recorded"
+
+#: app/repro/routes.py:279
+msgid "تم تسجيل تشخيص الحمل"
+msgstr "The pregnancy diagnosis has been recorded"
+
+#: app/repro/routes.py:299
+msgid "هذا الحمل مسجَّل له نتيجة إجهاض مسبقاً."
+msgstr "This pregnancy already has a recorded abortion outcome."
+
+#: app/repro/routes.py:329
+msgid "هذا الحمل مؤكَّد أصلاً."
+msgstr "This pregnancy is already confirmed."
+
+#: app/repro/routes.py:332
+msgid "هذا الحمل مسجَّل له نتيجة إجهاض — ما ينفع يُأكَّد."
+msgstr "This pregnancy already has a recorded abortion outcome — it cannot be confirmed."
+
+#: app/repro/routes.py:337
+#, python-format
+msgid "تم تأكيد حمل %(no)s — صارت تظهر ضمن عدد الحوامل."
+msgstr "%(no)s's pregnancy has been confirmed — it now appears in the pregnant-count."
+
+#: app/repro/routes.py:388
+msgid "تم تسجيل فحص السونار"
+msgstr "The ultrasound exam has been recorded"
+
+#: app/repro/routes.py:432
+msgid "تم إنشاء برنامج الشياع التوأمي"
+msgstr "The twinning-estrus program has been created"
+
+#: app/repro/routes.py:473
+msgid "تم تسجيل محاولة التقريع"
+msgstr "The breeding attempt has been recorded"
+
+#: app/repro/routes.py:502
+msgid "تم تسجيل جهاز التكاثر"
+msgstr "The breeding device has been recorded"
+
+#: app/repro/routes.py:516
+msgid "تم تسجيل إزالة الجهاز"
+msgstr "The device removal has been recorded"
+
+#: app/repro/routes.py:546
+msgid "تم تسجيل الحقنة الهرمونية"
+msgstr "The hormone injection has been recorded"
+
+#: app/repro/routes.py:559
+msgid "تم تحديث حالة البرنامج"
+msgstr "The program status has been updated"
+
+#: app/team/routes.py:36 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
 msgstr "Checkup / Health status"
 
-#: app/team/routes.py:39 app/templates/simple_home.html:75
+#: app/team/routes.py:40 app/templates/simple_home.html:75
 #: app/templates/worker_home.html:88
 msgid "نقل إلى العزل"
 msgstr "Move to Isolation"
 
-#: app/team/routes.py:47 app/templates/worker_home.html:96
+#: app/team/routes.py:48 app/templates/worker_home.html:96
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
+
+#: app/team/routes.py:81
+msgid "تمت إضافة العضو"
+msgstr "The member has been added"
+
+#: app/team/routes.py:115
+msgid "تم تحديث بيانات العضو وكلمة المرور"
+msgstr "The member's data and password have been updated"
+
+#: app/team/routes.py:115
+msgid "تم تحديث بيانات العضو"
+msgstr "The member's data has been updated"
+
+#: app/team/routes.py:153
+msgid "تم حفظ بيانات صاحب الحلال"
+msgstr "The owner's data has been saved"
+
+#: app/team/routes.py:166
+msgid "قيمة راتب غير صحيحة"
+msgstr "Invalid salary value"
+
+#: app/team/routes.py:180
+msgid "تاريخ وصول غير صحيح"
+msgstr "Invalid arrival date"
+
+#: app/team/routes.py:187
+#, python-format
+msgid "تم تحديث بيانات راتب %(name)s"
+msgstr "%(name)s's salary data has been updated"
+
+#: app/team/routes.py:204
+#, python-format
+msgid "تم تسجيل عودة %(name)s من السفر"
+msgstr "%(name)s's return from travel has been recorded"
+
+#: app/team/routes.py:207
+#, python-format
+msgid "تم تسجيل %(name)s كمسافر — أيام السفر تُستبعد من راتبه"
+msgstr "%(name)s has been recorded as traveling — travel days are excluded from their salary"
+
+#: app/team/routes.py:239
+#, python-format
+msgid "تنبيه: هذا التغيير يخص شهر (أشهر) عندها راتب مؤكَّد بالفعل (%(periods)s) — المبلغ المؤكَّد ما يتغيَّر تلقائياً، عدّله يدوياً بشاشة الراتب لو احتجت."
+msgstr "Note: this change affects a month (or months) that already has a confirmed salary (%(periods)s) — the confirmed amount doesn't change automatically; edit it manually on the salary screen if needed."
+
+#: app/team/routes.py:255 app/team/routes.py:279
+msgid "تاريخ غير صحيح"
+msgstr "Invalid date"
+
+#: app/team/routes.py:258 app/team/routes.py:282
+msgid "تاريخ النهاية لازم يكون بعد تاريخ البداية"
+msgstr "The end date must be after the start date"
+
+#: app/team/routes.py:262
+msgid "تمت إضافة فترة السفر"
+msgstr "The travel period has been added"
+
+#: app/team/routes.py:288
+msgid "تم تعديل فترة السفر"
+msgstr "The travel period has been edited"
+
+#: app/team/routes.py:302
+msgid "تم حذف فترة السفر"
+msgstr "The travel period has been deleted"
+
+#: app/team/routes.py:336
+msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
+msgstr "This salary is already confirmed — it can't be edited."
+
+#: app/team/routes.py:342
+msgid "قيمة غير صحيحة بالراتب أو المكافأة"
+msgstr "Invalid value in the salary or bonus"
+
+#: app/team/routes.py:363
+#, python-format
+msgid "تم تأكيد راتب %(name)s — رحّل %(amount)s لسجل المالية."
+msgstr "%(name)s's salary has been confirmed — %(amount)s was posted to the finance record."
+
+#: app/team/routes.py:366
+msgid "تم حفظ المسودة"
+msgstr "The draft has been saved"
+
+#: app/team/routes.py:397
+msgid "لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع."
+msgstr "The salary must be confirmed first before uploading the signed receipt."
+
+#: app/team/routes.py:402
+msgid "تم رفع الوصل الموقَّع"
+msgstr "The signed receipt has been uploaded"
+
+#: app/team/routes.py:417
+msgid "هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع."
+msgstr "This salary hasn't been confirmed yet — there's no receipt to print."
+
+#: app/team/routes.py:461
+msgid "ما تقدر تعطّل حسابك أنت"
+msgstr "You can't deactivate your own account"
+
+#: app/team/routes.py:468
+msgid "تم تفعيل الحساب"
+msgstr "The account has been activated"
+
+#: app/team/routes.py:468
+msgid "تم تعطيل الحساب"
+msgstr "The account has been deactivated"
+
+#: app/team/routes.py:540
+#, python-format
+msgid "بلاغات كثيرة بوقت قصير — حاول بعد %(n)s ثانية."
+msgstr "Too many reports in a short time — try again after %(n)s seconds."
+
+#: app/team/routes.py:546
+msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل رفع البلاغ"
+msgstr "You must specify at least the animal or the barn before submitting the report"
+
+#: app/team/routes.py:561
+msgid "تم رفع البلاغ"
+msgstr "The report has been submitted"
+
+#: app/team/routes.py:588
+msgid "اسم نوع البلاغ مطلوب"
+msgstr "The report type name is required"
+
+#: app/team/routes.py:595
+msgid "تمت إضافة نوع البلاغ"
+msgstr "The report type has been added"
+
+#: app/team/routes.py:642
+msgid "تم قبول البلاغ — بدأ عدّاد الوقت"
+msgstr "The report has been accepted — the timer has started"
+
+#: app/team/routes.py:654
+msgid "تم تأجيل البلاغ"
+msgstr "The report has been postponed"
+
+#: app/team/routes.py:666
+msgid "رجع البلاغ لصندوق الوارد"
+msgstr "The report went back to the inbox"
+
+#: app/team/routes.py:678
+msgid "تم إلغاء البلاغ — انتقل لصاحب الحلال"
+msgstr "The report has been cancelled — moved to the owner"
+
+#: app/team/routes.py:691
+#, python-format
+msgid "تم تحويل البلاغ لـ %(name)s"
+msgstr "The report has been forwarded to %(name)s"
+
+#: app/team/routes.py:704
+msgid "تم تسجيل الإنجاز — رجع البلاغ للدكتور للمراجعة والإغلاق"
+msgstr "The completion has been recorded — the report went back to the doctor for review and closure"
+
+#: app/team/routes.py:716
+msgid "تم تنفيذ البلاغ وإغلاقه"
+msgstr "The report has been executed and closed"
+
+#: app/team/routes.py:728
+msgid "تم إغلاق البلاغ"
+msgstr "The report has been closed"
+
+#: app/team/routes.py:808
+msgid "قيمة تقييم غير صحيحة"
+msgstr "Invalid rating value"
+
+#: app/team/routes.py:817
+msgid "تم حفظ التقييم"
+msgstr "The rating has been saved"
+
+#: app/team/routes.py:965
+msgid "عنوان المهمة مطلوب"
+msgstr "The task title is required"
+
+#: app/team/routes.py:974
+msgid "تمت إضافة المهمة اليومية"
+msgstr "The daily task has been added"
+
+#: app/team/routes.py:990
+msgid "تم إيقاف المهمة اليومية"
+msgstr "The daily task has been paused"
+
+#: app/team/routes.py:990
+msgid "تم تفعيل المهمة اليومية"
+msgstr "The daily task has been activated"
+
+#: app/team/routes.py:1013
+msgid "تم توزيع المهمة"
+msgstr "The task has been assigned"
+
+#: app/team/routes.py:1043
+msgid "بدأت المهمة"
+msgstr "The task has started"
+
+#: app/team/routes.py:1063
+msgid "تم إنجاز المهمة"
+msgstr "The task has been completed"
+
+#: app/team/routes.py:1083
+msgid "تم تسجيل تعذّر المهمة"
+msgstr "The task failure has been recorded"
+
+#: app/team/routes.py:1100
+msgid "تم اعتماد المهمة — نزلت للعامل"
+msgstr "The task has been approved — sent to the worker"
+
+#: app/team/routes.py:1126 app/team/routes.py:1160
+msgid "تم تأجيل المهمة ليوم واحد"
+msgstr "The task has been postponed by one day"
+
+#: app/team/routes.py:1143
+msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
+msgstr "The task has been deleted — moved to the owner's review box"
+
+#: app/team/routes.py:1172
+msgid "تم إلغاء المهمة"
+msgstr "The task has been cancelled"
+
+#: app/team/routes.py:1184
+msgid "تم استرجاع المهمة"
+msgstr "The task has been restored"
+
+#: app/team/routes.py:1196
+msgid "تم حذف المهمة نهائياً"
+msgstr "The task has been permanently deleted"
+
+#: app/team/routes.py:1215
+msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
+msgstr "You must specify at least the animal or the barn before submitting"
+
+#: app/team/routes.py:1234
+msgid "تم رفع البلاغ — راح يوصل للدكتور"
+msgstr "The report has been submitted — it will reach the doctor"
+
+#: app/team/routes.py:1285
+msgid "تم حذف البلاغ نهائياً"
+msgstr "The report has been permanently deleted"
 
 #: app/team/task_service.py:34
 msgid "نقص الأدوات"
@@ -11088,4 +11392,7 @@ msgstr "No additional named warehouses yet — all stock is in the default main 
 
 #~ msgid "دفتر ملاحظات المزرعة"
 #~ msgstr "Farm Notes Journal"
+
+#~ msgid "تم إيقاف المهمة اليوميةتم تفعيل المهمة اليومية"
+#~ msgstr ""
 

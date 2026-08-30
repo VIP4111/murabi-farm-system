@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash, abort, jsonify
+from flask_babel import gettext as _
 from flask_login import login_required, current_user
 from flask_babel import lazy_gettext as _l
 from sqlalchemy.exc import IntegrityError
@@ -77,7 +78,7 @@ def members_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="user.create",
                                  entity_type="User", entity_id=user.id))
         db.session.commit()
-        flash("تمت إضافة العضو", "success")
+        flash(_("تمت إضافة العضو"), "success")
         return redirect(url_for("team.members_list"))
     return render_template("team/member_form.html", roles=Role.query.order_by(Role.id).all())
 
@@ -111,7 +112,7 @@ def members_edit(user_id):
             db.session.rollback()
             flash(f'رقم الجوال "{request.form["phone"]}" مستخدم من قبل', "error")
             return redirect(url_for("team.members_edit", user_id=user.id))
-        flash("تم تحديث بيانات العضو" + (" وكلمة المرور" if new_password else ""), "success")
+        flash(_("تم تحديث بيانات العضو وكلمة المرور") if new_password else _("تم تحديث بيانات العضو"), "success")
         return redirect(url_for("team.members_list"))
     return render_template("team/member_edit_form.html", member=user,
                             roles=Role.query.order_by(Role.id).all())
@@ -149,7 +150,7 @@ def salaries_owner_identity_update():
     fs.farm_phone = request.form.get("farm_phone") or None
     db.session.add(fs)
     db.session.commit()
-    flash("تم حفظ بيانات صاحب الحلال", "success")
+    flash(_("تم حفظ بيانات صاحب الحلال"), "success")
     return redirect(url_for("team.salaries_list"))
 
 
@@ -162,7 +163,7 @@ def salary_update(user_id):
     try:
         user.base_salary = float(raw) if raw else None
     except ValueError:
-        flash("قيمة راتب غير صحيحة", "error")
+        flash(_("قيمة راتب غير صحيحة"), "error")
         return redirect(url_for("team.salaries_list"))
     # بيانات هوية العامل لمسير الراتب (بند إضافي 243) — تُدخَل يدوياً
     # مرة وحدة هنا، تُستخدم تلقائياً بكل وصل راتب بعدها.
@@ -176,14 +177,14 @@ def salary_update(user_id):
         try:
             user.saudi_arrival_date = datetime.strptime(arrival_raw, "%Y-%m-%d").date()
         except ValueError:
-            flash("تاريخ وصول غير صحيح", "error")
+            flash(_("تاريخ وصول غير صحيح"), "error")
             return redirect(url_for("team.salaries_list"))
     else:
         user.saudi_arrival_date = None
     db.session.add(AuditLog(actor_user_id=current_user.id, action="user.salary_update",
                              entity_type="User", entity_id=user.id, details=raw or "cleared"))
     db.session.commit()
-    flash(f"تم تحديث بيانات راتب {user.name}", "success")
+    flash(_("تم تحديث بيانات راتب %(name)s", name=user.name), "success")
     return redirect(url_for("team.salaries_list"))
 
 
@@ -200,10 +201,10 @@ def salary_travel_toggle(user_id):
     user = User.query.get_or_404(user_id)
     if payroll_service.is_traveling(user):
         payroll_service.end_travel(user)
-        flash(f"تم تسجيل عودة {user.name} من السفر", "success")
+        flash(_("تم تسجيل عودة %(name)s من السفر", name=user.name), "success")
     else:
         payroll_service.start_travel(user)
-        flash(f"تم تسجيل {user.name} كمسافر — أيام السفر تُستبعد من راتبه", "success")
+        flash(_("تم تسجيل %(name)s كمسافر — أيام السفر تُستبعد من راتبه", name=user.name), "success")
     return redirect(url_for("team.salaries_list"))
 
 
@@ -235,8 +236,8 @@ def _warn_if_touches_confirmed_payroll(user_id, *ranges):
             touched += payroll_service.confirmed_payrolls_touched_by_period(user_id, start, end)
     if touched:
         periods_txt = "، ".join(f"{p.month}/{p.year}" for p in {(p.year, p.month): p for p in touched}.values())
-        flash(f"تنبيه: هذا التغيير يخص شهر (أشهر) عندها راتب مؤكَّد بالفعل ({periods_txt}) — "
-              f"المبلغ المؤكَّد ما يتغيَّر تلقائياً، عدّله يدوياً بشاشة الراتب لو احتجت.", "warning")
+        flash(_("تنبيه: هذا التغيير يخص شهر (أشهر) عندها راتب مؤكَّد بالفعل (%(periods)s) — "
+                "المبلغ المؤكَّد ما يتغيَّر تلقائياً، عدّله يدوياً بشاشة الراتب لو احتجت.", periods=periods_txt), "warning")
 
 
 @team_bp.route("/salaries/<int:user_id>/travel-history/add", methods=["POST"])
@@ -251,14 +252,14 @@ def travel_history_add(user_id):
         start = datetime.strptime(start_raw, "%Y-%m-%d").date()
         end = datetime.strptime(end_raw, "%Y-%m-%d").date() if end_raw else None
     except ValueError:
-        flash("تاريخ غير صحيح", "error")
+        flash(_("تاريخ غير صحيح"), "error")
         return redirect(url_for("team.travel_history", user_id=user.id))
     if end and end < start:
-        flash("تاريخ النهاية لازم يكون بعد تاريخ البداية", "error")
+        flash(_("تاريخ النهاية لازم يكون بعد تاريخ البداية"), "error")
         return redirect(url_for("team.travel_history", user_id=user.id))
     db.session.add(WorkerTravelPeriod(user_id=user.id, start_date=start, end_date=end))
     db.session.commit()
-    flash("تمت إضافة فترة السفر", "success")
+    flash(_("تمت إضافة فترة السفر"), "success")
     _warn_if_touches_confirmed_payroll(user.id, (start, end))
     return redirect(url_for("team.travel_history", user_id=user.id))
 
@@ -275,16 +276,16 @@ def travel_history_update(period_id):
         start = datetime.strptime(start_raw, "%Y-%m-%d").date()
         end = datetime.strptime(end_raw, "%Y-%m-%d").date() if end_raw else None
     except ValueError:
-        flash("تاريخ غير صحيح", "error")
+        flash(_("تاريخ غير صحيح"), "error")
         return redirect(url_for("team.travel_history", user_id=period.user_id))
     if end and end < start:
-        flash("تاريخ النهاية لازم يكون بعد تاريخ البداية", "error")
+        flash(_("تاريخ النهاية لازم يكون بعد تاريخ البداية"), "error")
         return redirect(url_for("team.travel_history", user_id=period.user_id))
     old_start, old_end, user_id = period.start_date, period.end_date, period.user_id
     period.start_date = start
     period.end_date = end
     db.session.commit()
-    flash("تم تعديل فترة السفر", "success")
+    flash(_("تم تعديل فترة السفر"), "success")
     _warn_if_touches_confirmed_payroll(user_id, (old_start, old_end), (start, end))
     return redirect(url_for("team.travel_history", user_id=period.user_id))
 
@@ -298,7 +299,7 @@ def travel_history_delete(period_id):
     user_id, old_start, old_end = period.user_id, period.start_date, period.end_date
     db.session.delete(period)
     db.session.commit()
-    flash("تم حذف فترة السفر", "success")
+    flash(_("تم حذف فترة السفر"), "success")
     _warn_if_touches_confirmed_payroll(user_id, (old_start, old_end))
     return redirect(url_for("team.travel_history", user_id=user_id))
 
@@ -332,13 +333,13 @@ def payroll_prepare(user_id):
 
     if request.method == "POST":
         if payroll.status == "confirmed":
-            flash("هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل.", "error")
+            flash(_("هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."), "error")
             return redirect(url_for("team.payroll_list", year=year, month=month))
         try:
             base_salary = float(request.form.get("base_salary") or 0)
             bonus_amount = float(request.form.get("bonus_amount") or 0)
         except ValueError:
-            flash("قيمة غير صحيحة بالراتب أو المكافأة", "error")
+            flash(_("قيمة غير صحيحة بالراتب أو المكافأة"), "error")
             return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
 
         amounts = request.form.getlist("deduction_amount")
@@ -359,10 +360,10 @@ def payroll_prepare(user_id):
 
         if request.form.get("action") == "confirm":
             payroll_service.confirm(payroll, actor=current_user)
-            flash(f"تم تأكيد راتب {user.name} — رحّل {payroll.net_amount:,.2f} لسجل المالية.", "success")
+            flash(_("تم تأكيد راتب %(name)s — رحّل %(amount)s لسجل المالية.", name=user.name, amount=f"{payroll.net_amount:,.2f}"), "success")
             return redirect(url_for("team.payroll_list", year=year, month=month))
 
-        flash("تم حفظ المسودة", "success")
+        flash(_("تم حفظ المسودة"), "success")
         return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
 
     # هل هذا العامل صاحب أعلى نقطة أداء الشهر الماضي؟ (بند إضافي 245 —
@@ -393,12 +394,12 @@ def payroll_upload_receipt(payroll_id):
     from app.team import payroll_service
     payroll = Payroll.query.get_or_404(payroll_id)
     if payroll.status != "confirmed":
-        flash("لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع.", "error")
+        flash(_("لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع."), "error")
         return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
 
     if request.method == "POST":
         payroll_service.attach_signed_receipt(payroll, request.files.get("receipt_file"))
-        flash("تم رفع الوصل الموقَّع", "success")
+        flash(_("تم رفع الوصل الموقَّع"), "success")
         return redirect(url_for("team.payroll_upload_receipt", payroll_id=payroll.id))
 
     return render_template("team/payroll_upload_receipt.html", payroll=payroll)
@@ -413,7 +414,7 @@ def payroll_receipt(payroll_id):
     from app.reports.export_service import build_payroll_receipt_pdf
     payroll = Payroll.query.get_or_404(payroll_id)
     if payroll.status != "confirmed":
-        flash("هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع.", "error")
+        flash(_("هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع."), "error")
         return redirect(url_for("team.payroll_list", year=payroll.year, month=payroll.month))
     buf = build_payroll_receipt_pdf(payroll, FarmSettings.get())
     return send_file(buf, mimetype="application/pdf", as_attachment=True,
@@ -457,14 +458,14 @@ def payroll_reports():
 def members_toggle(user_id):
     user = User.query.get_or_404(user_id)
     if user.id == current_user.id:
-        flash("ما تقدر تعطّل حسابك أنت", "error")
+        flash(_("ما تقدر تعطّل حسابك أنت"), "error")
         return redirect(url_for("team.members_list"))
     user.is_active_account = not user.is_active_account
     db.session.add(AuditLog(actor_user_id=current_user.id, action="user.toggle",
                              entity_type="User", entity_id=user.id,
                              details="enabled" if user.is_active_account else "disabled"))
     db.session.commit()
-    flash(f"تم {'تفعيل' if user.is_active_account else 'تعطيل'} الحساب", "success")
+    flash(_("تم تفعيل الحساب") if user.is_active_account else _("تم تعطيل الحساب"), "success")
     return redirect(url_for("team.members_list"))
 
 
@@ -536,13 +537,13 @@ def reports_new():
         try:
             check_and_record(user_id=current_user.id, key="report_submit", max_calls=10, window_seconds=300)
         except RateLimitExceeded as e:
-            flash(f"بلاغات كثيرة بوقت قصير — حاول بعد {e.retry_after_seconds} ثانية.", "error")
+            flash(_("بلاغات كثيرة بوقت قصير — حاول بعد %(n)s ثانية.", n=e.retry_after_seconds), "error")
             return redirect(url_for("team.reports_new"))
         # سلامة البيانات (بند إضافي، 2026-07-23): بلاغ بدون حيوان ولا حظيرة
         # يفقد تتبّعه — لازم واحد منهم على الأقل، حتى لو الفحص بالواجهة
         # (JS) تجاوَزه المستخدم أو أُرسل الطلب مباشرة للسيرفر.
         if not request.form.get("animal_id") and not request.form.get("barn_id"):
-            flash("لازم تحدد الحيوان أو الحظيرة على الأقل قبل رفع البلاغ", "error")
+            flash(_("لازم تحدد الحيوان أو الحظيرة على الأقل قبل رفع البلاغ"), "error")
             return redirect(url_for("team.reports_new"))
         scope_error = _validate_scoped_report(barn_ids, request.form.get("animal_id"), request.form.get("barn_id"))
         if scope_error:
@@ -557,7 +558,7 @@ def reports_new():
             evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
             evidence_audio_url=svc.save_voice_note(request.files.get("voice_note")),
         )
-        flash("تم رفع البلاغ", "success")
+        flash(_("تم رفع البلاغ"), "success")
         return redirect(url_for("team.report_detail", report_id=report.id))
 
     animals_query = Animal.query
@@ -584,14 +585,14 @@ def report_types_new():
     if request.method == "POST":
         name = request.form["name"].strip()
         if not name:
-            flash("اسم نوع البلاغ مطلوب", "error")
+            flash(_("اسم نوع البلاغ مطلوب"), "error")
             return redirect(url_for("team.report_types_new"))
         if ReportType.query.filter_by(name=name).first():
             flash(f'"{name}" موجود بالقائمة أصلاً', "error")
             return redirect(url_for("team.report_types_new"))
         db.session.add(ReportType(name=name))
         db.session.commit()
-        flash("تمت إضافة نوع البلاغ", "success")
+        flash(_("تمت إضافة نوع البلاغ"), "success")
         return redirect(url_for("team.reports_new"))
     return render_template("animal_option_form.html", title="إضافة نوع بلاغ جديد",
                             back_endpoint="team.reports_new")
@@ -638,7 +639,7 @@ def report_accept(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.accept_report(report, actor=current_user)
-        flash("تم قبول البلاغ — بدأ عدّاد الوقت", "success")
+        flash(_("تم قبول البلاغ — بدأ عدّاد الوقت"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -650,7 +651,7 @@ def report_postpone(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.postpone_report(report, actor=current_user, reason=request.form.get("reason", ""))
-        flash("تم تأجيل البلاغ", "success")
+        flash(_("تم تأجيل البلاغ"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -662,7 +663,7 @@ def report_resume(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.resume_postponed_report(report, actor=current_user)
-        flash("رجع البلاغ لصندوق الوارد", "success")
+        flash(_("رجع البلاغ لصندوق الوارد"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -674,7 +675,7 @@ def report_cancel(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.cancel_report(report, actor=current_user, reason=request.form.get("reason", ""))
-        flash("تم إلغاء البلاغ — انتقل لصاحب الحلال", "success")
+        flash(_("تم إلغاء البلاغ — انتقل لصاحب الحلال"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -687,7 +688,7 @@ def report_transfer(report_id):
     executor = User.query.get_or_404(int(request.form["executor_id"]))
     try:
         svc.transfer_report(report, actor=current_user, executor=executor, note=request.form.get("note", ""))
-        flash(f"تم تحويل البلاغ لـ {executor.name}", "success")
+        flash(_("تم تحويل البلاغ لـ %(name)s", name=executor.name), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -700,7 +701,7 @@ def report_execute(report_id):
     try:
         svc.executor_mark_done(report, actor=current_user, note=request.form.get("note"),
                                 evidence_image_url=request.form.get("evidence_image_url") or None)
-        flash("تم تسجيل الإنجاز — رجع البلاغ للدكتور للمراجعة والإغلاق", "success")
+        flash(_("تم تسجيل الإنجاز — رجع البلاغ للدكتور للمراجعة والإغلاق"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -712,7 +713,7 @@ def report_self_execute(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.self_execute_and_close(report, actor=current_user, note=request.form.get("note"))
-        flash("تم تنفيذ البلاغ وإغلاقه", "success")
+        flash(_("تم تنفيذ البلاغ وإغلاقه"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -724,7 +725,7 @@ def report_close(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.close_report(report, actor=current_user, note=request.form.get("note"))
-        flash("تم إغلاق البلاغ", "success")
+        flash(_("تم إغلاق البلاغ"), "success")
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
     return _redirect_back(report_id)
@@ -804,7 +805,7 @@ def task_quality_rate(task_id):
     task = Task.query.get_or_404(task_id)
     rating = request.form.get("quality_rating")
     if rating not in ("weak", "medium", "excellent"):
-        flash("قيمة تقييم غير صحيحة", "error")
+        flash(_("قيمة تقييم غير صحيحة"), "error")
         return redirect(url_for("team.todays_completed_tasks"))
     task.quality_rating = rating
     task.quality_rating_note = request.form.get("quality_rating_note") or None
@@ -813,7 +814,7 @@ def task_quality_rate(task_id):
     db.session.add(AuditLog(actor_user_id=current_user.id, action="task.quality_rate",
                              entity_type="Task", entity_id=task.id, details=rating))
     db.session.commit()
-    flash("تم حفظ التقييم", "success")
+    flash(_("تم حفظ التقييم"), "success")
     return redirect(url_for("team.todays_completed_tasks"))
 
 
@@ -961,7 +962,7 @@ def daily_templates_list():
     if request.method == "POST":
         title = request.form.get("title", "").strip()
         if not title:
-            flash("عنوان المهمة مطلوب", "error")
+            flash(_("عنوان المهمة مطلوب"), "error")
             return redirect(url_for("team.daily_templates_list"))
         max_order = db.session.query(db.func.coalesce(db.func.max(DailyTaskTemplate.sort_order), 0)).scalar()
         db.session.add(DailyTaskTemplate(
@@ -970,7 +971,7 @@ def daily_templates_list():
         ))
         db.session.add(AuditLog(actor_user_id=current_user.id, action="daily_task_template.create"))
         db.session.commit()
-        flash("تمت إضافة المهمة اليومية", "success")
+        flash(_("تمت إضافة المهمة اليومية"), "success")
         return redirect(url_for("team.daily_templates_list"))
     templates = DailyTaskTemplate.query.order_by(DailyTaskTemplate.sort_order).all()
     return render_template("team/daily_templates.html", templates=templates)
@@ -986,7 +987,7 @@ def daily_template_toggle(template_id):
                              action="daily_task_template.toggle", entity_type="DailyTaskTemplate",
                              entity_id=template.id, details=f"is_active={template.is_active}"))
     db.session.commit()
-    flash("تم إيقاف المهمة اليومية" if not template.is_active else "تم تفعيل المهمة اليومية", "success")
+    flash(_("تم إيقاف المهمة اليومية") if not template.is_active else _("تم تفعيل المهمة اليومية"), "success")
     return redirect(url_for("team.daily_templates_list"))
 
 
@@ -1009,7 +1010,7 @@ def tasks_new():
                 depends_on_task_id=request.form.get("depends_on_task_id") or None,
                 target_role=request.form.get("target_role") or None,
             )
-            flash("تم توزيع المهمة", "success")
+            flash(_("تم توزيع المهمة"), "success")
             return redirect(url_for("team.tasks_list"))
         except tsvc.TaskPermissionError as e:
             flash(str(e), "error")
@@ -1039,7 +1040,7 @@ def task_start(task_id):
         tsvc.start_task(task, actor=current_user)
         if is_ajax:
             return jsonify(ok=True)
-        flash("بدأت المهمة", "success")
+        flash(_("بدأت المهمة"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         if is_ajax:
             return jsonify(ok=False, error=str(e)), 400
@@ -1059,7 +1060,7 @@ def task_complete(task_id):
             voice_note_url=svc.save_voice_note(request.files.get("voice_note")),
             barn_id=request.form.get("barn_id", type=int),
         )
-        flash("تم إنجاز المهمة", "success")
+        flash(_("تم إنجاز المهمة"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(request.referrer or url_for("team.tasks_list"))
@@ -1079,7 +1080,7 @@ def task_fail(task_id):
             evidence_image_url=svc.save_evidence_image(request.files.get("evidence_image")),
             voice_note_url=svc.save_voice_note(request.files.get("voice_note")),
         )
-        flash("تم تسجيل تعذّر المهمة", "success")
+        flash(_("تم تسجيل تعذّر المهمة"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(request.referrer or url_for("team.tasks_list"))
@@ -1096,7 +1097,7 @@ def task_approve(task_id):
         tsvc.approve_suggested_task(task, actor=current_user)
         if is_ajax:
             return jsonify(ok=True)
-        flash("تم اعتماد المهمة — نزلت للعامل", "success")
+        flash(_("تم اعتماد المهمة — نزلت للعامل"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         if is_ajax:
             return jsonify(ok=False, error=str(e)), 400
@@ -1122,7 +1123,7 @@ def task_postpone(task_id):
         tsvc.postpone_suggested_task(task, actor=current_user, new_due_date=new_due_date)
         if is_ajax:
             return jsonify(ok=True)
-        flash("تم تأجيل المهمة ليوم واحد", "success")
+        flash(_("تم تأجيل المهمة ليوم واحد"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         if is_ajax:
             return jsonify(ok=False, error=str(e)), 400
@@ -1139,7 +1140,7 @@ def task_soft_delete(task_id):
         tsvc.soft_delete_suggested_task(task, actor=current_user, reason=request.form.get("reason"))
         if is_ajax:
             return jsonify(ok=True)
-        flash("تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال", "success")
+        flash(_("تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         if is_ajax:
             return jsonify(ok=False, error=str(e)), 400
@@ -1156,7 +1157,7 @@ def task_postpone_active(task_id):
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.postpone_active_task(task, actor=current_user)
-        flash("تم تأجيل المهمة ليوم واحد", "success")
+        flash(_("تم تأجيل المهمة ليوم واحد"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(request.referrer or url_for("core.family_view"))
@@ -1168,7 +1169,7 @@ def task_cancel_active(task_id):
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.cancel_active_task(task, actor=current_user)
-        flash("تم إلغاء المهمة", "success")
+        flash(_("تم إلغاء المهمة"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(request.referrer or url_for("core.family_view"))
@@ -1180,7 +1181,7 @@ def task_restore(task_id):
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.owner_restore_task(task, actor=current_user)
-        flash("تم استرجاع المهمة", "success")
+        flash(_("تم استرجاع المهمة"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
@@ -1192,7 +1193,7 @@ def task_delete_final(task_id):
     task = Task.query.get_or_404(task_id)
     try:
         tsvc.owner_delete_task_final(task, actor=current_user)
-        flash("تم حذف المهمة نهائياً", "success")
+        flash(_("تم حذف المهمة نهائياً"), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(url_for("team.tasks_list"))
@@ -1211,7 +1212,7 @@ def worker_quick_report(category):
         # سلامة البيانات (بند إضافي، 2026-07-23) — نفس قاعدة `reports_new`،
         # موثّقة هناك.
         if not request.form.get("animal_id") and not request.form.get("barn_id"):
-            flash("لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال", "error")
+            flash(_("لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"), "error")
             return redirect(url_for("team.worker_quick_report", category=category))
         scope_error = _validate_scoped_report(barn_ids, request.form.get("animal_id"), request.form.get("barn_id"))
         if scope_error:
@@ -1230,7 +1231,7 @@ def worker_quick_report(category):
             evidence_audio_url=svc.save_voice_note(request.files.get("voice_note")),
             urgent=bool(symptom_guide and symptom_guide["urgent"]),
         )
-        flash("تم رفع البلاغ — راح يوصل للدكتور", "success")
+        flash(_("تم رفع البلاغ — راح يوصل للدكتور"), "success")
         return redirect(url_for("core.home"))
 
     animals_query = Animal.query.filter_by(status="active")
@@ -1281,7 +1282,7 @@ def report_delete(report_id):
     report = Report.query.get_or_404(report_id)
     try:
         svc.delete_cancelled_report(report, actor=current_user)
-        flash("تم حذف البلاغ نهائياً", "success")
+        flash(_("تم حذف البلاغ نهائياً"), "success")
         return redirect(url_for("team.reports_list"))
     except (svc.ReportPermissionError, svc.ReportStateError) as e:
         flash(str(e), "error")
