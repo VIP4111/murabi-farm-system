@@ -10,6 +10,8 @@
 وكلمة المرور والاسم) عشان ما يُقفَل بره النظام بعد الحذف — بدون هذا،
 `seed()` كانت تنشئ حساب مالك جديد برقم الجوال الافتراضي من `.env`
 (`OWNER_PHONE`)، مختلف عن رقم المالك الفعلي غالباً."""
+from sqlalchemy import text
+
 from app.extensions import db
 from app.models import User
 
@@ -23,16 +25,43 @@ def _preserve_owner_snapshot(user: User) -> dict:
     }
 
 
+def _wipe_all_tables() -> dict:
+    """يمسح كل جدول بقاعدة البيانات، بدون أي commit (المستدعي يتكفّل بها).
+
+    **بند إضافي (2026-08-29) — إصلاح خلل حقيقي بالإنتاج**: الحذف جدول-جدول
+    بترتيب `reversed(sorted_tables)` كان يعتمد ضمنياً إن قاعدة البيانات ما
+    تفرض قيود المفاتيح الأجنبية بصرامة أثناء الحذف — SQLite (المستخدمة
+    باختبارات pytest) فعلاً متساهلة بهذا الخصوص بشكل افتراضي، فالاختبارات
+    كانت تنجح دايماً. لكن Postgres (المستخدمة فعلياً على Render) صارمة،
+    وفيها جداول بعلاقة ذاتية (مثل `animals.mother_id`/`father_id` تشير
+    لنفس جدول `animals`) قد ترفض ترتيب الحذف هذا وتوقف العملية بمنتصفها
+    بخطأ حقيقي — النتيجة: بعض البيانات (أو كلها) تبقى، مع خروج المستخدم
+    من الجلسة وكأن العملية نجحت. الحل: على Postgres نطلب من قاعدة
+    البيانات نفسها تمسح كل الجداول دفعة وحدة بأمر `TRUNCATE ... CASCADE`
+    (يتجاهل ترتيب الجداول تماماً، القاعدة تتولى حل الاعتماديات بنفسها).
+    SQLite (تطوير/اختبار) تبقى على المنطق القديم لأنها لا تدعم CASCADE
+    بنفس الطريقة."""
+    counts = {}
+    if db.engine.dialect.name == "postgresql":
+        table_names = [t.name for t in db.metadata.sorted_tables]
+        if table_names:
+            quoted = ", ".join(f'"{name}"' for name in table_names)
+            db.session.execute(text(f"TRUNCATE TABLE {quoted} RESTART IDENTITY CASCADE"))
+        counts = {name: None for name in table_names}
+    else:
+        for table in reversed(db.metadata.sorted_tables):
+            result = db.session.execute(table.delete())
+            if result.rowcount:
+                counts[table.name] = result.rowcount
+    return counts
+
+
 def factory_reset(*, current_user: User, app) -> dict:
     """يرجّع dict فيه عدد الصفوف المحذوفة لكل جدول. يستدعي أمر
     `flask seed` نفسه (عبر Click، بدون تكرار منطقه) داخل نفس الطلب."""
     snapshot = _preserve_owner_snapshot(current_user)
 
-    counts = {}
-    for table in reversed(db.metadata.sorted_tables):
-        result = db.session.execute(table.delete())
-        if result.rowcount:
-            counts[table.name] = result.rowcount
+    counts = _wipe_all_tables()
     db.session.commit()
 
     from click.testing import CliRunner

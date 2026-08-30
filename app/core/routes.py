@@ -1760,7 +1760,13 @@ def factory_reset():
     from app.core import factory_reset_service
     from flask import current_app
     from flask_login import logout_user
-    factory_reset_service.factory_reset(current_user=current_user, app=current_app._get_current_object())
+    try:
+        factory_reset_service.factory_reset(current_user=current_user, app=current_app._get_current_object())
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.exception("فشل ضبط المصنع")
+        flash(f"تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: {e}", "error")
+        return redirect(url_for("core.settings_home"))
     logout_user()
     flash("تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور.", "success")
     return redirect(url_for("auth.login"))
