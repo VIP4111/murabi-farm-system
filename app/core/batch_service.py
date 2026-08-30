@@ -13,6 +13,7 @@
 الاستبعاد ولحاقها فردياً عبر `advance_single_animal`.
 """
 from datetime import date
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models import AnimalBatch, Animal, Barn, AuditLog
 from app.models.animal import AnimalSource
@@ -34,17 +35,17 @@ def _quarantine_barn_id() -> int | None:
 def create_batch(*, source: str, arrival_date: date, notes: str | None,
                   actor_user_id: int, entries: list[dict]) -> AnimalBatch:
     if not entries:
-        raise ValueError("لازم رأس واحدة على الأقل بالدفعة.")
+        raise ValueError(_("لازم رأس واحدة على الأقل بالدفعة."))
     if source not in AnimalBatch.SOURCES:
-        raise ValueError(f'مصدر غير معروف: "{source}"')
+        raise ValueError(_('مصدر غير معروف: "%(src)s"', src=source))
     # بند إضافي 286 — طلبك الصريح: نفس قيد اللون الإلزامي بشاشتي "+
     # حيوان جديد" و"الاستقبال الجماعي" (بند 285)، مطبَّق هنا أيضاً —
     # قبل هذا البند كل رأس بهذي الشاشة كان يُسجَّل بلون فاضي دائماً
     # لأن الفورم نفسه ما فيه حقل لون إطلاقاً.
     for idx, entry in enumerate(entries, start=1):
         if not entry.get("color"):
-            label = entry.get("animal_no") or f"صف رقم {idx}"
-            raise ValueError(f"{label}: لازم تحدد اللون.")
+            label = entry.get("animal_no") or _("صف رقم %(idx)s", idx=idx)
+            raise ValueError(_("%(label)s: لازم تحدد اللون.", label=label))
 
     batch = AnimalBatch(
         batch_no=generate_batch_no(arrival_date), source=source,
@@ -122,7 +123,7 @@ def advance_batch_stage(batch: AnimalBatch, *, actor_user_id: int) -> list:
     النهائي (مرحلة 3) له دالة منفصلة (`distribute_batch`) لأنه يحتاج
     تحديد حظيرة فعلية لكل رأس، مو تقدّماً تلقائياً بالكامل."""
     if batch.stage != AnimalBatch.STAGE_QUARANTINE:
-        raise ValueError("التقدّم الجماعي التلقائي متاح فقط من مرحلة الحجر لمرحلة الترقيم.")
+        raise ValueError(_("التقدّم الجماعي التلقائي متاح فقط من مرحلة الحجر لمرحلة الترقيم."))
     members = _eligible_members(batch)
     created = [_apply_stage2_tagging(batch, a) for a in members]
     batch.stage = AnimalBatch.STAGE_TAGGING
@@ -142,7 +143,7 @@ def distribute_batch(batch: AnimalBatch, *, assignments: dict, actor_user_id: in
     مستبعدة أو غير موجودة بـ assignments تُستثنى وتبقى لحين تلحق فردياً
     عبر `advance_single_animal` بعد ما تُحرَّر أو تُحدَّد حظيرتها."""
     if batch.stage != AnimalBatch.STAGE_TAGGING:
-        raise ValueError("التوزيع النهائي متاح فقط من مرحلة الترقيم/الفحص.")
+        raise ValueError(_("التوزيع النهائي متاح فقط من مرحلة الترقيم/الفحص."))
     created = []
     distributed = 0
     for animal in _eligible_members(batch):
@@ -165,9 +166,9 @@ def hold_animal(animal: Animal, *, reason: str, actor_user_id: int) -> Animal:
     تبقى بمرحلتها الحالية (وحظيرتها الحالية، عادة العزل أصلاً) بينما
     تتقدّم بقية الدفعة السليمة."""
     if not animal.batch_id:
-        raise ValueError("هذا الرأس مو ضمن أي دفعة استقبال.")
+        raise ValueError(_("هذا الرأس مو ضمن أي دفعة استقبال."))
     if not reason:
-        raise ValueError("لازم سبب صريح للاستبعاد.")
+        raise ValueError(_("لازم سبب صريح للاستبعاد."))
     animal.batch_hold_reason = reason
     db.session.add(animal)
     db.session.add(AuditLog(actor_user_id=actor_user_id, action="batch.hold_animal",
@@ -178,7 +179,7 @@ def hold_animal(animal: Animal, *, reason: str, actor_user_id: int) -> Animal:
 
 def release_hold(animal: Animal, *, actor_user_id: int) -> Animal:
     if not animal.batch_hold_reason:
-        raise ValueError("هذا الرأس مو مستبعدة أصلاً.")
+        raise ValueError(_("هذا الرأس مو مستبعدة أصلاً."))
     animal.batch_hold_reason = None
     db.session.add(animal)
     db.session.add(AuditLog(actor_user_id=actor_user_id, action="batch.release_hold",
@@ -192,18 +193,18 @@ def advance_single_animal(batch: AnimalBatch, animal: Animal, *, actor_user_id: 
     الحالية — يطبّق فقط فعل المرحلة اللي فاتتها، بدون أي تأثير على بقية
     الدفعة."""
     if animal.batch_id != batch.id:
-        raise ValueError("هذا الرأس مو من هذي الدفعة.")
+        raise ValueError(_("هذا الرأس مو من هذي الدفعة."))
     if animal.batch_hold_reason:
-        raise ValueError("لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي.")
+        raise ValueError(_("لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي."))
 
     if batch.stage == AnimalBatch.STAGE_TAGGING:
         task = _apply_stage2_tagging(batch, animal)
     elif batch.stage == AnimalBatch.STAGE_DISTRIBUTED:
         if not barn_id:
-            raise ValueError("لازم تحدد حظيرة دائمة لهذا الرأس.")
+            raise ValueError(_("لازم تحدد حظيرة دائمة لهذا الرأس."))
         task = _apply_stage3_distribution(batch, animal, barn_id)
     else:
-        raise ValueError("الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً.")
+        raise ValueError(_("الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."))
 
     db.session.add(AuditLog(actor_user_id=actor_user_id, action="batch.advance_single_animal",
                              entity_type="Animal", entity_id=animal.id))

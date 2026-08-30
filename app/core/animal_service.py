@@ -7,6 +7,7 @@
 لجدول Animal.
 """
 from datetime import date, timedelta
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models.animal import Animal, AnimalSource
 from app.models.animal_log import AnimalWeight, AnimalNote
@@ -151,7 +152,7 @@ def create_animal(
     invoice_file_url: str | None = None,
 ) -> Animal:
     if source == AnimalSource.BIRTH and mother_id is None:
-        raise ValueError("الحيوان المولود لازم يكون مربوط بأم (mother_id)")
+        raise ValueError(_("الحيوان المولود لازم يكون مربوط بأم (mother_id)"))
 
     # معالجة السهو بالتواريخ (بند إضافي، 2026-07-23): كل مصدر له تاريخ
     # مرجعي لازم يُعبّى — لو نُسي بالواجهة (JS تجاوَزها المستخدم، أو طلب
@@ -166,20 +167,20 @@ def create_animal(
 
     if not animal_no:
         if source != AnimalSource.BIRTH or mother_id is None:
-            raise ValueError("رقم الحيوان مطلوب — الرقم المؤقت التلقائي مقصور على المواليد المربوطة بأم")
+            raise ValueError(_("رقم الحيوان مطلوب — الرقم المؤقت التلقائي مقصور على المواليد المربوطة بأم"))
         mother = Animal.query.get(mother_id)
         if not mother:
-            raise ValueError("الأم غير موجودة")
+            raise ValueError(_("الأم غير موجودة"))
         animal_no = generate_temp_animal_no(mother)
 
     # فحوصات سلامة إدخال (بند إضافي 187) — تمنع خطأ كتابة واضح قبل ما
     # يوصل قاعدة البيانات أصلاً (وزن/سعر غير منطقي، تاريخ بالمستقبل).
     from app.core import validation_service
     validation_service.validate_weight(weight, species=species)
-    validation_service.validate_price(price, field_label="السعر")
-    validation_service.validate_not_future_date(birth_date, field_label="تاريخ الولادة")
-    validation_service.validate_not_future_date(purchase_date, field_label="تاريخ الشراء")
-    validation_service.validate_not_future_date(entry_date, field_label="تاريخ الدخول")
+    validation_service.validate_price(price, field_label=_("السعر"))
+    validation_service.validate_not_future_date(birth_date, field_label=_("تاريخ الولادة"))
+    validation_service.validate_not_future_date(purchase_date, field_label=_("تاريخ الشراء"))
+    validation_service.validate_not_future_date(entry_date, field_label=_("تاريخ الدخول"))
 
     animal = Animal(
         animal_no=animal_no,
@@ -275,7 +276,7 @@ def add_weight_record(*, animal: Animal, record_date: date, weight: float,
     تعديل عليها."""
     from app.core import validation_service
     validation_service.validate_weight(weight, species=animal.species)
-    validation_service.validate_not_future_date(record_date, field_label="تاريخ الوزن")
+    validation_service.validate_not_future_date(record_date, field_label=_("تاريخ الوزن"))
 
     record = AnimalWeight(
         animal_id=animal.id, date=record_date, weight=weight,

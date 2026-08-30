@@ -268,8 +268,8 @@ def finance_new():
         # فحوصات سلامة إدخال (بند إضافي 187) — قبل أي حفظ فعلي.
         from app.core import validation_service
         try:
-            validation_service.validate_price(amount, field_label="المبلغ")
-            validation_service.validate_not_future_date(entry_date, field_label="تاريخ الحركة")
+            validation_service.validate_price(amount, field_label=_("المبلغ"))
+            validation_service.validate_not_future_date(entry_date, field_label=_("تاريخ الحركة"))
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("finance.finance_new"))

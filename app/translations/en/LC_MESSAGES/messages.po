@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 18:45+0300\n"
+"POT-Creation-Date: 2026-08-30 23:27+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -689,6 +689,42 @@ msgstr "Vaccination schedule"
 msgid "مستودع"
 msgstr "Warehouse"
 
+#: app/assistant/draft_action_service.py:31
+#, python-format
+msgid "ما فيه حيوان أم برقم \"%(no)s\"."
+msgstr "There's no mother animal with number \"%(no)s\"."
+
+#: app/assistant/draft_action_service.py:34
+msgid "جنس المولود غير محدَّد أو غير صحيح — عدّل الملاحظة وسجّل الولادة يدوياً."
+msgstr "The newborn's gender isn't specified or is invalid — edit the note and record the birth manually."
+
+#: app/assistant/draft_action_service.py:46
+#: app/assistant/draft_action_service.py:87 app/assistant/routes.py:141
+#, python-format
+msgid "ما فيه حيوان برقم \"%(no)s\"."
+msgstr "There is no animal with number \"%(no)s\"."
+
+#: app/assistant/draft_action_service.py:49
+msgid "الوزن غير محدَّد بالملاحظة — عدّلها وسجّل الوزن يدوياً."
+msgstr "The weight isn't specified in the note — edit it and record the weight manually."
+
+#: app/assistant/draft_action_service.py:73
+msgid "لازم تختار عضو الفريق المكلَّف قبل الاعتماد."
+msgstr "You must choose the assigned team member before approving."
+
+#: app/assistant/draft_action_service.py:76
+msgid "عضو الفريق المختار غير موجود."
+msgstr "The selected team member doesn't exist."
+
+#: app/assistant/draft_action_service.py:80
+msgid "نص المهمة غير محدَّد بالملاحظة — عدّلها ووزّع المهمة يدوياً."
+msgstr "The task text isn't specified in the note — edit it and assign the task manually."
+
+#: app/assistant/draft_action_service.py:187
+#: app/assistant/draft_action_service.py:202
+msgid "هذي المسودة مو بانتظار الاعتماد."
+msgstr "This draft isn't awaiting approval."
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "Write your question first"
@@ -700,11 +736,6 @@ msgstr "The conversation has been cleared"
 #: app/assistant/routes.py:132
 msgid "لازم تكتب نص الملاحظة."
 msgstr "You must write the note text."
-
-#: app/assistant/routes.py:141
-#, python-format
-msgid "ما فيه حيوان برقم \"%(no)s\"."
-msgstr "There is no animal with number \"%(no)s\"."
 
 #: app/assistant/routes.py:151
 msgid "تمت إضافة الملاحظة."
@@ -1260,6 +1291,99 @@ msgstr "Ready to mate"
 msgid "النعام"
 msgstr "Ostriches"
 
+#: app/core/animal_service.py:155
+msgid "الحيوان المولود لازم يكون مربوط بأم (mother_id)"
+msgstr "A newborn animal must be linked to a mother (mother_id)"
+
+#: app/core/animal_service.py:170
+msgid "رقم الحيوان مطلوب — الرقم المؤقت التلقائي مقصور على المواليد المربوطة بأم"
+msgstr "The animal number is required — the automatic temporary number is limited to newborns linked to a mother"
+
+#: app/core/animal_service.py:173
+msgid "الأم غير موجودة"
+msgstr "The mother doesn't exist"
+
+#: app/core/animal_service.py:180 app/core/data_completeness_service.py:32
+#: app/core/validation_service.py:35 app/templates/animal_detail.html:140
+#: app/templates/animal_workflow.html:128
+msgid "السعر"
+msgstr "Price"
+
+#: app/core/animal_service.py:181 app/reports/report_service.py:211
+#: app/templates/animal_detail.html:136 app/templates/animal_form.html:131
+msgid "تاريخ الولادة"
+msgstr "Birth date"
+
+#: app/core/animal_service.py:182 app/templates/animal_detail.html:137
+#: app/templates/animal_form.html:135
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:33
+msgid "تاريخ الشراء"
+msgstr "Purchase date"
+
+#: app/core/animal_service.py:183 app/templates/animal_form.html:141
+msgid "تاريخ الدخول"
+msgstr "Entry date"
+
+#: app/core/animal_service.py:279
+msgid "تاريخ الوزن"
+msgstr "Weighing date"
+
+#: app/core/batch_service.py:38
+msgid "لازم رأس واحدة على الأقل بالدفعة."
+msgstr "At least one animal is required in the batch."
+
+#: app/core/batch_service.py:40
+#, python-format
+msgid "مصدر غير معروف: \"%(src)s\""
+msgstr "Unknown source: \"%(src)s\""
+
+#: app/core/batch_service.py:47
+#, python-format
+msgid "صف رقم %(idx)s"
+msgstr "Row %(idx)s"
+
+#: app/core/batch_service.py:48
+#, python-format
+msgid "%(label)s: لازم تحدد اللون."
+msgstr "%(label)s: you must specify the color."
+
+#: app/core/batch_service.py:126
+msgid "التقدّم الجماعي التلقائي متاح فقط من مرحلة الحجر لمرحلة الترقيم."
+msgstr "Automatic bulk advance is only available from the quarantine stage to the tagging stage."
+
+#: app/core/batch_service.py:146
+msgid "التوزيع النهائي متاح فقط من مرحلة الترقيم/الفحص."
+msgstr "Final distribution is only available from the tagging/checkup stage."
+
+#: app/core/batch_service.py:169
+msgid "هذا الرأس مو ضمن أي دفعة استقبال."
+msgstr "This animal isn't part of any intake batch."
+
+#: app/core/batch_service.py:171
+msgid "لازم سبب صريح للاستبعاد."
+msgstr "An explicit reason for the exclusion is required."
+
+#: app/core/batch_service.py:182
+msgid "هذا الرأس مو مستبعدة أصلاً."
+msgstr "This animal isn't excluded in the first place."
+
+#: app/core/batch_service.py:196
+msgid "هذا الرأس مو من هذي الدفعة."
+msgstr "This animal isn't from this batch."
+
+#: app/core/batch_service.py:198
+msgid "لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي."
+msgstr "You must release the exclusion first before an individual advance."
+
+#: app/core/batch_service.py:204
+msgid "لازم تحدد حظيرة دائمة لهذا الرأس."
+msgstr "You must specify a permanent barn for this animal."
+
+#: app/core/batch_service.py:207
+msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
+msgstr "The batch is still at the quarantine stage — no additional individual action is required right now."
+
 #: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:131
 #: app/templates/animal_detail.html:355 app/templates/animal_form.html:85
@@ -1279,15 +1403,22 @@ msgid "الغرض (تربية/تسمين/بيع)"
 msgstr "Purpose (breeding/fattening/sale)"
 
 #: app/core/data_completeness_service.py:32
-#: app/templates/animal_detail.html:140 app/templates/animal_workflow.html:128
-msgid "السعر"
-msgstr "Price"
-
-#: app/core/data_completeness_service.py:32
 #: app/templates/animal_detail.html:132 app/templates/animal_form.html:19
 #: app/templates/animals_bulk_purchase.html:37
 msgid "اللون"
 msgstr "Color"
+
+#: app/core/isolation_service.py:31 app/core/isolation_service.py:65
+msgid "الرأس غير موجود"
+msgstr "The animal doesn't exist"
+
+#: app/core/isolation_service.py:35
+msgid "ما فيه حظيرة عزل معرَّفة بالنظام"
+msgstr "No isolation barn is defined in the system"
+
+#: app/core/isolation_service.py:68
+msgid "الحظيرة الهدف غير موجودة"
+msgstr "The target barn doesn't exist"
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -1965,6 +2096,109 @@ msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%%"
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "No sale flags — a productive female, best kept"
 
+#: app/core/validation_service.py:22
+msgid "الوزن لازم يكون رقماً موجباً أكبر من صفر."
+msgstr "The weight must be a positive number greater than zero."
+
+#: app/core/validation_service.py:26
+#, python-format
+msgid "وزن %(weight)s كجم غير منطقي — أعلى من الحد المتوقع (%(max)s كجم). تأكد من الرقم قبل الحفظ."
+msgstr "A weight of %(weight)s kg is unrealistic — above the expected limit (%(max)s kg). Double-check the number before saving."
+
+#: app/core/validation_service.py:37
+#, python-format
+msgid "%(field)s ما يقدر يكون رقماً سالباً."
+msgstr "%(field)s can't be a negative number."
+
+#: app/core/validation_service.py:44 app/reports/report_service.py:166
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/reports/report_service.py:378 app/templates/animal_detail.html:257
+#: app/templates/animal_detail.html:271 app/templates/animal_detail.html:288
+#: app/templates/animal_detail.html:302 app/templates/animal_detail.html:317
+#: app/templates/animal_detail.html:328 app/templates/animal_detail.html:355
+#: app/templates/animal_detail.html:375 app/templates/animal_detail.html:407
+#: app/templates/animal_detail.html:422 app/templates/animal_detail.html:438
+#: app/templates/animal_detail.html:453 app/templates/animal_detail.html:463
+#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:154
+#: app/templates/assistant/chat.html:103 app/templates/assistant/chat.html:201
+#: app/templates/bulk_action_form.html:63
+#: app/templates/bulk_action_form.html:246
+#: app/templates/bulk_action_form.html:353
+#: app/templates/bulk_action_form.html:383
+#: app/templates/climate/dashboard.html:42
+#: app/templates/equipment/asset_maintenance.html:13
+#: app/templates/equipment/asset_maintenance.html:24
+#: app/templates/equipment/item_movement.html:70
+#: app/templates/equipment/purchase_form.html:15
+#: app/templates/equipment/utilities_list.html:15
+#: app/templates/equipment/utility_form.html:12
+#: app/templates/feed/movements_list.html:10
+#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
+#: app/templates/health/dashboard.html:22
+#: app/templates/health/disease_form.html:18
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vaccinations_list.html:10
+#: app/templates/health/vet_visit_form.html:12
+#: app/templates/health/vet_visits_list.html:10
+#: app/templates/isolation_enter_form.html:8
+#: app/templates/isolation_exit_form.html:16
+#: app/templates/repro/mating_form.html:24
+#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/pregnancy_form.html:8
+#: app/templates/repro/program_detail.html:93
+#: app/templates/repro/program_detail.html:115
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
+#: app/templates/warehouses/inventory_counts_list.html:9
+msgid "التاريخ"
+msgstr "Date"
+
+#: app/core/validation_service.py:46
+#, python-format
+msgid "%(field)s ما يقدر يكون بالمستقبل."
+msgstr "%(field)s can't be in the future."
+
+#: app/core/warehouse_service.py:28
+#, python-format
+msgid "نوع مخزون غير معروف: \"%(kind)s\""
+msgstr "Unknown stock type: \"%(kind)s\""
+
+#: app/core/warehouse_service.py:87
+msgid "الصنف غير موجود."
+msgstr "The item doesn't exist."
+
+#: app/core/warehouse_service.py:99
+msgid "الكمية لازم تكون أكبر من صفر."
+msgstr "The quantity must be greater than zero."
+
+#: app/core/warehouse_service.py:101
+msgid "لازم يكون المصدر والوجهة مستودعين مختلفين."
+msgstr "The source and destination must be two different warehouses."
+
+#: app/core/warehouse_service.py:108
+msgid "مستودع المصدر غير معروف لهذا الصنف."
+msgstr "The source warehouse is unknown for this item."
+
+#: app/core/warehouse_service.py:112
+#, python-format
+msgid "الكمية المطلوب تحويلها (%(qty)s) أكبر من المتوفر فعلياً بمستودع \"%(wh)s\" (%(available)s)."
+msgstr "The quantity requested for transfer (%(qty)s) is more than what's actually available in warehouse \"%(wh)s\" (%(available)s)."
+
+#: app/core/warehouse_service.py:125
+msgid "مستودع الوجهة غير موجود."
+msgstr "The destination warehouse doesn't exist."
+
+#: app/equipment/equipment_service.py:105
+msgid "هذي الحركة مو استعارة أصلاً."
+msgstr "This movement isn't a loan in the first place."
+
+#: app/equipment/equipment_service.py:107
+msgid "هذي القطعة مسجَّلة راجعة من قبل."
+msgstr "This item is already recorded as returned."
+
 #: app/equipment/routes.py:43
 msgid "تمت إضافة الصنف"
 msgstr "The item has been added"
@@ -2057,6 +2291,19 @@ msgstr "The sale batch has been created"
 #: app/finance/routes.py:243
 msgid "تم حذف الدفعة"
 msgstr "The batch has been deleted"
+
+#: app/finance/routes.py:271 app/reports/report_service.py:253
+#: app/reports/report_service.py:296 app/templates/animal_detail.html:493
+#: app/templates/finance/form.html:33 app/templates/finance/list.html:20
+#: app/templates/finance/list.html:69
+#: app/templates/team/payroll_prepare.html:44
+#: app/templates/team/payroll_prepare.html:78
+msgid "المبلغ"
+msgstr "Amount"
+
+#: app/finance/routes.py:272
+msgid "تاريخ الحركة"
+msgstr "Movement date"
 
 #: app/finance/routes.py:313
 msgid "تمت إضافة العملية المالية"
@@ -2602,51 +2849,6 @@ msgstr "Total mortality cases"
 msgid "الرقم"
 msgstr "Number"
 
-#: app/reports/report_service.py:166 app/reports/report_service.py:253
-#: app/reports/report_service.py:296 app/reports/report_service.py:378
-#: app/templates/animal_detail.html:257 app/templates/animal_detail.html:271
-#: app/templates/animal_detail.html:288 app/templates/animal_detail.html:302
-#: app/templates/animal_detail.html:317 app/templates/animal_detail.html:328
-#: app/templates/animal_detail.html:355 app/templates/animal_detail.html:375
-#: app/templates/animal_detail.html:407 app/templates/animal_detail.html:422
-#: app/templates/animal_detail.html:438 app/templates/animal_detail.html:453
-#: app/templates/animal_detail.html:463 app/templates/animal_detail.html:493
-#: app/templates/animal_workflow.html:154 app/templates/assistant/chat.html:103
-#: app/templates/assistant/chat.html:201 app/templates/bulk_action_form.html:63
-#: app/templates/bulk_action_form.html:246
-#: app/templates/bulk_action_form.html:353
-#: app/templates/bulk_action_form.html:383
-#: app/templates/climate/dashboard.html:42
-#: app/templates/equipment/asset_maintenance.html:13
-#: app/templates/equipment/asset_maintenance.html:24
-#: app/templates/equipment/item_movement.html:70
-#: app/templates/equipment/purchase_form.html:15
-#: app/templates/equipment/utilities_list.html:15
-#: app/templates/equipment/utility_form.html:12
-#: app/templates/feed/movements_list.html:10
-#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
-#: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
-#: app/templates/health/dashboard.html:22
-#: app/templates/health/disease_form.html:18
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:12
-#: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:12
-#: app/templates/health/vet_visits_list.html:10
-#: app/templates/isolation_enter_form.html:8
-#: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:24
-#: app/templates/repro/matings_list.html:14
-#: app/templates/repro/pregnancies_list.html:10
-#: app/templates/repro/pregnancy_form.html:8
-#: app/templates/repro/program_detail.html:93
-#: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
-#: app/templates/warehouses/inventory_counts_list.html:9
-msgid "التاريخ"
-msgstr "Date"
-
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
 #: app/templates/smart_sale_report.html:17
 #: app/templates/team/tasks_list.html:187
@@ -2676,11 +2878,6 @@ msgstr "Confirmed pregnancies in period"
 #: app/reports/report_service.py:207
 msgid "نسبة نجاح التقريع→حمل"
 msgstr "Mating→pregnancy success rate"
-
-#: app/reports/report_service.py:211 app/templates/animal_detail.html:136
-#: app/templates/animal_form.html:131
-msgid "تاريخ الولادة"
-msgstr "Birth date"
 
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:134
 #: app/templates/ostrich/egg_form.html:10
@@ -2737,14 +2934,6 @@ msgstr "Item"
 #: app/templates/team/report_detail.html:13
 msgid "الحيوان"
 msgstr "Animal"
-
-#: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/animal_detail.html:493 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:20 app/templates/finance/list.html:69
-#: app/templates/team/payroll_prepare.html:44
-#: app/templates/team/payroll_prepare.html:78
-msgid "المبلغ"
-msgstr "Amount"
 
 #: app/reports/report_service.py:287
 msgid "عدد عمليات الشراء/المصروف"
@@ -2958,6 +3147,10 @@ msgstr "The hormone injection has been recorded"
 msgid "تم تحديث حالة البرنامج"
 msgstr "The program status has been updated"
 
+#: app/team/payroll_service.py:140 app/team/routes.py:336
+msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
+msgstr "This salary is already confirmed — it can't be edited."
+
 #: app/team/routes.py:36 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
@@ -3035,10 +3228,6 @@ msgstr "The travel period has been edited"
 #: app/team/routes.py:302
 msgid "تم حذف فترة السفر"
 msgstr "The travel period has been deleted"
-
-#: app/team/routes.py:336
-msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
-msgstr "This salary is already confirmed — it can't be edited."
 
 #: app/team/routes.py:342
 msgid "قيمة غير صحيحة بالراتب أو المكافأة"
@@ -3553,12 +3742,6 @@ msgstr "Purpose"
 #: app/templates/animal_detail.html:135
 msgid "الأب"
 msgstr "Father"
-
-#: app/templates/animal_detail.html:137 app/templates/animal_form.html:135
-#: app/templates/health/pharmacy_purchase_form.html:9
-#: app/templates/health/pharmacy_purchase_form.html:33
-msgid "تاريخ الشراء"
-msgstr "Purchase date"
 
 #: app/templates/animal_detail.html:138
 msgid "تاريخ الدخول للمزرعة"
@@ -4212,10 +4395,6 @@ msgstr "Father (optional, if known and recorded in the system)"
 #: app/templates/animal_form.html:136
 msgid "إرفاق فاتورة الشراء (إن وجدت)"
 msgstr "Attach purchase invoice (if any)"
-
-#: app/templates/animal_form.html:141
-msgid "تاريخ الدخول"
-msgstr "Entry date"
 
 #: app/templates/animal_form.html:144
 msgid "تاريخ الولادة (لو المصدر ولادة)"

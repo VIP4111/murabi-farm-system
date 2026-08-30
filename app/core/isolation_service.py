@@ -7,6 +7,7 @@ app/core/animal_service.create_animal() عند تسجيل مولود جديد �
 الإعدادات بدون أي تعديل كود) — مو ثابتة بالكود.
 """
 from datetime import date, timedelta
+from flask_babel import gettext as _
 from app.extensions import db
 from app.team import task_service
 
@@ -27,11 +28,11 @@ def enter_isolation(*, animal_id: int, reason: str | None, note_date: date,
 
     animal = Animal.query.get(animal_id)
     if not animal:
-        raise ValueError("الرأس غير موجود")
+        raise ValueError(_("الرأس غير موجود"))
 
     target = Barn.query.get(barn_id) if barn_id else Barn.query.filter_by(barn_type="عزل").order_by(Barn.id).first()
     if not target:
-        raise ValueError("ما فيه حظيرة عزل معرَّفة بالنظام")
+        raise ValueError(_("ما فيه حظيرة عزل معرَّفة بالنظام"))
 
     old_barn = animal.barn_id
     animal.barn_id = target.id
@@ -61,10 +62,10 @@ def exit_isolation(*, animal_id: int, target_barn_id: int, note_date: date, acto
 
     animal = Animal.query.get(animal_id)
     if not animal:
-        raise ValueError("الرأس غير موجود")
+        raise ValueError(_("الرأس غير موجود"))
     target = Barn.query.get(target_barn_id)
     if not target:
-        raise ValueError("الحظيرة الهدف غير موجودة")
+        raise ValueError(_("الحظيرة الهدف غير موجودة"))
 
     settings = FarmSettings.get()
     days_in = (note_date - animal.isolation_started_at).days if animal.isolation_started_at else None

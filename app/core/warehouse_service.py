@@ -12,6 +12,7 @@ available_qty` يبقيان المرجع الصحيح دائماً بلا أي �
 المسمّاة الأخرى تتغيّر فقط عبر `transfer_stock` الصريح (خصم من A +
 إضافة B بعملية واحدة)، وهي بالتعريف لا تُغيّر الإجمالي — مجرد نقل مكان.
 """
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models import AuditLog, Feed, FeedWarehouseStock, Pharmacy, PharmacyWarehouseStock, Warehouse
 
@@ -24,7 +25,7 @@ _MODELS = {
 
 def _model_and_fk(kind: str):
     if kind not in _MODELS:
-        raise ValueError(f'نوع مخزون غير معروف: "{kind}"')
+        raise ValueError(_('نوع مخزون غير معروف: "%(kind)s"', kind=kind))
     return _MODELS[kind]
 
 
@@ -83,7 +84,7 @@ def _item_for(kind: str, item_id: int):
     Model = Feed if kind == "feed" else Pharmacy
     item = Model.query.get(item_id)
     if not item:
-        raise ValueError("الصنف غير موجود.")
+        raise ValueError(_("الصنف غير موجود."))
     return item
 
 
@@ -95,22 +96,23 @@ def transfer_stock(*, kind: str, item_id: int, from_warehouse_id: int, to_wareho
     يُخزَّن له (رصيده محسوب بالطرح تلقائياً — تحويل منه أو له بس يغيّر
     الطرف الآخر المسمّى)."""
     if qty is None or qty <= 0:
-        raise ValueError("الكمية لازم تكون أكبر من صفر.")
+        raise ValueError(_("الكمية لازم تكون أكبر من صفر."))
     if from_warehouse_id == to_warehouse_id:
-        raise ValueError("لازم يكون المصدر والوجهة مستودعين مختلفين.")
+        raise ValueError(_("لازم يكون المصدر والوجهة مستودعين مختلفين."))
 
     item = _item_for(kind, item_id)
     default_wh = get_or_create_default_warehouse(kind)
     breakdown = {e["warehouse"].id: e for e in warehouse_breakdown(item, kind)}
 
     if from_warehouse_id not in breakdown:
-        raise ValueError("مستودع المصدر غير معروف لهذا الصنف.")
+        raise ValueError(_("مستودع المصدر غير معروف لهذا الصنف."))
     available = breakdown[from_warehouse_id]["qty"]
     if qty > available:
-        raise ValueError(
-            f'الكمية المطلوب تحويلها ({qty}) أكبر من المتوفر فعلياً بمستودع '
-            f'"{breakdown[from_warehouse_id]["warehouse"].name}" ({available}).'
-        )
+        raise ValueError(_(
+            'الكمية المطلوب تحويلها (%(qty)s) أكبر من المتوفر فعلياً بمستودع '
+            '"%(wh)s" (%(available)s).',
+            qty=qty, wh=breakdown[from_warehouse_id]["warehouse"].name, available=available,
+        ))
 
     if from_warehouse_id != default_wh.id:
         from_row = _get_or_create_named_row(item, kind, breakdown[from_warehouse_id]["warehouse"])
@@ -120,7 +122,7 @@ def transfer_stock(*, kind: str, item_id: int, from_warehouse_id: int, to_wareho
     if to_warehouse_id != default_wh.id:
         to_warehouse = Warehouse.query.get(to_warehouse_id)
         if not to_warehouse:
-            raise ValueError("مستودع الوجهة غير موجود.")
+            raise ValueError(_("مستودع الوجهة غير موجود."))
         to_row = _get_or_create_named_row(item, kind, to_warehouse)
         to_row.qty = (to_row.qty or 0) + qty
         db.session.add(to_row)

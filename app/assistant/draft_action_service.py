@@ -10,6 +10,7 @@
 الخطوة الأخيرة.
 """
 from datetime import date, datetime, timezone, timedelta
+from flask_babel import gettext as _
 
 from app.extensions import db
 from app.models import AssistantDraftAction, Animal, User
@@ -27,10 +28,10 @@ def _execute_register_birth(payload: dict, *, actor, assignee_id=None):
     mother_no = payload.get("target_animal_no")
     mother = Animal.query.filter_by(animal_no=mother_no).first()
     if not mother:
-        raise ValueError(f"ما فيه حيوان أم برقم \"{mother_no}\".")
+        raise ValueError(_("ما فيه حيوان أم برقم \"%(no)s\".", no=mother_no))
     gender = payload.get("newborn_gender") or payload.get("gender")
     if gender not in ("ذكر", "أنثى"):
-        raise ValueError("جنس المولود غير محدَّد أو غير صحيح — عدّل الملاحظة وسجّل الولادة يدوياً.")
+        raise ValueError(_("جنس المولود غير محدَّد أو غير صحيح — عدّل الملاحظة وسجّل الولادة يدوياً."))
     weight = payload.get("newborn_weight") or payload.get("weight")
     return animal_service.register_birth(
         mother=mother, gender=gender,
@@ -42,10 +43,10 @@ def _execute_record_weight(payload: dict, *, actor, assignee_id=None):
     animal_no = payload.get("target_animal_no")
     animal = Animal.query.filter_by(animal_no=animal_no).first()
     if not animal:
-        raise ValueError(f"ما فيه حيوان برقم \"{animal_no}\".")
+        raise ValueError(_("ما فيه حيوان برقم \"%(no)s\".", no=animal_no))
     weight = payload.get("weight")
     if weight in (None, ""):
-        raise ValueError("الوزن غير محدَّد بالملاحظة — عدّلها وسجّل الوزن يدوياً.")
+        raise ValueError(_("الوزن غير محدَّد بالملاحظة — عدّلها وسجّل الوزن يدوياً."))
     record = animal_service.add_weight_record(
         animal=animal, record_date=date.today(), weight=float(weight), recorded_by_id=actor.id,
     )
@@ -69,21 +70,21 @@ def _execute_assign_task(payload: dict, *, actor, assignee_id=None):
     المختار لو مختلفة — نفس منطق ترجمة ردود المساعد (بند 275)، بس
     للمهام هذي المرة."""
     if not assignee_id:
-        raise ValueError("لازم تختار عضو الفريق المكلَّف قبل الاعتماد.")
+        raise ValueError(_("لازم تختار عضو الفريق المكلَّف قبل الاعتماد."))
     assignee = User.query.get(assignee_id)
     if not assignee:
-        raise ValueError("عضو الفريق المختار غير موجود.")
+        raise ValueError(_("عضو الفريق المختار غير موجود."))
 
     title = (payload.get("task_title") or "").strip()
     if not title:
-        raise ValueError("نص المهمة غير محدَّد بالملاحظة — عدّلها ووزّع المهمة يدوياً.")
+        raise ValueError(_("نص المهمة غير محدَّد بالملاحظة — عدّلها ووزّع المهمة يدوياً."))
 
     animal_id = None
     animal_no = payload.get("target_animal_no")
     if animal_no:
         animal = Animal.query.filter_by(animal_no=animal_no).first()
         if not animal:
-            raise ValueError(f"ما فيه حيوان برقم \"{animal_no}\".")
+            raise ValueError(_("ما فيه حيوان برقم \"%(no)s\".", no=animal_no))
         animal_id = animal.id
 
     due_date = None
@@ -183,7 +184,7 @@ def confirm_draft(draft: AssistantDraftAction, *, actor, assignee_id=None):
     اختيارك الصريح بواجهة الاعتماد لعضو الفريق المكلَّف؛ يُستخدم بس
     لمسودات `assign_task`، الأنواع الثانية تتجاهله."""
     if draft.status != "pending":
-        raise ValueError("هذي المسودة مو بانتظار الاعتماد.")
+        raise ValueError(_("هذي المسودة مو بانتظار الاعتماد."))
     action_def = ALLOWED_ACTION_TYPES[draft.parsed_action_type]
     required_permission = action_def["required_permission"]
     if not actor.has_permission(required_permission):
@@ -198,7 +199,7 @@ def confirm_draft(draft: AssistantDraftAction, *, actor, assignee_id=None):
 
 def reject_draft(draft: AssistantDraftAction, *, actor):
     if draft.status != "pending":
-        raise ValueError("هذي المسودة مو بانتظار الاعتماد.")
+        raise ValueError(_("هذي المسودة مو بانتظار الاعتماد."))
     draft.status = "rejected"
     draft.confirmed_by_id = actor.id
     draft.decided_at = _now()

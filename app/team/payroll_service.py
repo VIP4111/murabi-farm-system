@@ -4,6 +4,7 @@
 للتعديل قبل التأكيد النهائي."""
 import calendar
 from datetime import date, timedelta
+from flask_babel import gettext as _
 
 from app.extensions import db
 from app.models import Payroll, PayrollDeduction, Finance, WorkerTravelPeriod
@@ -136,7 +137,7 @@ def save_draft(payroll: Payroll, *, base_salary: float, bonus_amount: float,
     تتبّع تعديل/حذف صف فردي، والفورم أصلاً يرسل القائمة كاملة كل مرة
     (بند إضافي 242، زر "+ إضافة خصم" بالواجهة)."""
     if payroll.status == "confirmed":
-        raise ValueError("هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل.")
+        raise ValueError(_("هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."))
     payroll.base_salary = base_salary
     payroll.bonus_amount = bonus_amount
     payroll.recipient_name = (recipient_name or "").strip() or None

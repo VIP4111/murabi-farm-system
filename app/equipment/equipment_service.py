@@ -1,6 +1,7 @@
 """مستودع المعدات (بند إضافي 108) — نفس بنية `feed_service.record_movement`
 بالضبط، بدون منطق نحاس/نبأت (ما ينطبق على معدات)."""
 from datetime import date, datetime, timedelta, timezone
+from flask_babel import gettext as _
 
 from app.extensions import db
 from app.models import Equipment, EquipmentMovement
@@ -101,9 +102,9 @@ def return_item(movement: EquipmentMovement, *, condition_at_return=None) -> Equ
     `condition_at_return` (بند إضافي 276) — حالة القطعة وقت الاستلام
     منه؛ لو 'needs_maintenance' يرفع علم الصنف عشان يظهر بالتنبيهات."""
     if not movement.borrowed_by_id:
-        raise ValueError("هذي الحركة مو استعارة أصلاً.")
+        raise ValueError(_("هذي الحركة مو استعارة أصلاً."))
     if movement.returned_at:
-        raise ValueError("هذي القطعة مسجَّلة راجعة من قبل.")
+        raise ValueError(_("هذي القطعة مسجَّلة راجعة من قبل."))
     movement.returned_at = _now()
     movement.condition_at_return = condition_at_return
     movement.equipment.add_stock(movement.quantity)

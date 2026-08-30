@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 18:45+0300\n"
+"POT-Creation-Date: 2026-08-30 23:27+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -689,6 +689,42 @@ msgstr "टीकाकरण अनुसूची"
 msgid "مستودع"
 msgstr "गोदाम"
 
+#: app/assistant/draft_action_service.py:31
+#, python-format
+msgid "ما فيه حيوان أم برقم \"%(no)s\"."
+msgstr "नंबर \"%(no)s\" वाली कोई माँ जानवर नहीं है।"
+
+#: app/assistant/draft_action_service.py:34
+msgid "جنس المولود غير محدَّد أو غير صحيح — عدّل الملاحظة وسجّل الولادة يدوياً."
+msgstr "नवजात का लिंग निर्दिष्ट नहीं है या अमान्य है — नोट संपादित करें और जन्म मैन्युअल रूप से दर्ज करें।"
+
+#: app/assistant/draft_action_service.py:46
+#: app/assistant/draft_action_service.py:87 app/assistant/routes.py:141
+#, python-format
+msgid "ما فيه حيوان برقم \"%(no)s\"."
+msgstr "नंबर \"%(no)s\" वाला कोई जानवर नहीं है।"
+
+#: app/assistant/draft_action_service.py:49
+msgid "الوزن غير محدَّد بالملاحظة — عدّلها وسجّل الوزن يدوياً."
+msgstr "नोट में वजन निर्दिष्ट नहीं है — इसे संपादित करें और वजन मैन्युअल रूप से दर्ज करें।"
+
+#: app/assistant/draft_action_service.py:73
+msgid "لازم تختار عضو الفريق المكلَّف قبل الاعتماد."
+msgstr "स्वीकृति से पहले आपको सौंपा गया टीम सदस्य चुनना होगा।"
+
+#: app/assistant/draft_action_service.py:76
+msgid "عضو الفريق المختار غير موجود."
+msgstr "चयनित टीम सदस्य मौजूद नहीं है।"
+
+#: app/assistant/draft_action_service.py:80
+msgid "نص المهمة غير محدَّد بالملاحظة — عدّلها ووزّع المهمة يدوياً."
+msgstr "नोट में कार्य का टेक्स्ट निर्दिष्ट नहीं है — इसे संपादित करें और कार्य मैन्युअल रूप से सौंपें।"
+
+#: app/assistant/draft_action_service.py:187
+#: app/assistant/draft_action_service.py:202
+msgid "هذي المسودة مو بانتظار الاعتماد."
+msgstr "यह ड्राफ्ट स्वीकृति की प्रतीक्षा में नहीं है।"
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "पहले अपना प्रश्न लिखें"
@@ -700,11 +736,6 @@ msgstr "बातचीत साफ़ कर दी गई है"
 #: app/assistant/routes.py:132
 msgid "لازم تكتب نص الملاحظة."
 msgstr "आपको नोट का टेक्स्ट लिखना होगा।"
-
-#: app/assistant/routes.py:141
-#, python-format
-msgid "ما فيه حيوان برقم \"%(no)s\"."
-msgstr "नंबर \"%(no)s\" वाला कोई जानवर नहीं है।"
 
 #: app/assistant/routes.py:151
 msgid "تمت إضافة الملاحظة."
@@ -1260,6 +1291,99 @@ msgstr "संगमन के लिए तैयार"
 msgid "النعام"
 msgstr "शुतुरमुर्ग"
 
+#: app/core/animal_service.py:155
+msgid "الحيوان المولود لازم يكون مربوط بأم (mother_id)"
+msgstr "एक नवजात जानवर को माँ से जुड़ा होना चाहिए (mother_id)"
+
+#: app/core/animal_service.py:170
+msgid "رقم الحيوان مطلوب — الرقم المؤقت التلقائي مقصور على المواليد المربوطة بأم"
+msgstr "जानवर का नंबर आवश्यक है — स्वचालित अस्थायी नंबर केवल माँ से जुड़े नवजातों तक सीमित है"
+
+#: app/core/animal_service.py:173
+msgid "الأم غير موجودة"
+msgstr "माँ मौजूद नहीं है"
+
+#: app/core/animal_service.py:180 app/core/data_completeness_service.py:32
+#: app/core/validation_service.py:35 app/templates/animal_detail.html:140
+#: app/templates/animal_workflow.html:128
+msgid "السعر"
+msgstr "मूल्य"
+
+#: app/core/animal_service.py:181 app/reports/report_service.py:211
+#: app/templates/animal_detail.html:136 app/templates/animal_form.html:131
+msgid "تاريخ الولادة"
+msgstr "जन्म तिथि"
+
+#: app/core/animal_service.py:182 app/templates/animal_detail.html:137
+#: app/templates/animal_form.html:135
+#: app/templates/health/pharmacy_purchase_form.html:9
+#: app/templates/health/pharmacy_purchase_form.html:33
+msgid "تاريخ الشراء"
+msgstr "खरीद तिथि"
+
+#: app/core/animal_service.py:183 app/templates/animal_form.html:141
+msgid "تاريخ الدخول"
+msgstr "प्रवेश तिथि"
+
+#: app/core/animal_service.py:279
+msgid "تاريخ الوزن"
+msgstr "वजन तिथि"
+
+#: app/core/batch_service.py:38
+msgid "لازم رأس واحدة على الأقل بالدفعة."
+msgstr "बैच में कम से कम एक जानवर आवश्यक है।"
+
+#: app/core/batch_service.py:40
+#, python-format
+msgid "مصدر غير معروف: \"%(src)s\""
+msgstr "अज्ञात स्रोत: \"%(src)s\""
+
+#: app/core/batch_service.py:47
+#, python-format
+msgid "صف رقم %(idx)s"
+msgstr "पंक्ति संख्या %(idx)s"
+
+#: app/core/batch_service.py:48
+#, python-format
+msgid "%(label)s: لازم تحدد اللون."
+msgstr "%(label)s: आपको रंग निर्दिष्ट करना होगा।"
+
+#: app/core/batch_service.py:126
+msgid "التقدّم الجماعي التلقائي متاح فقط من مرحلة الحجر لمرحلة الترقيم."
+msgstr "स्वचालित बल्क प्रगति केवल क्वारंटीन चरण से टैगिंग चरण तक उपलब्ध है।"
+
+#: app/core/batch_service.py:146
+msgid "التوزيع النهائي متاح فقط من مرحلة الترقيم/الفحص."
+msgstr "अंतिम वितरण केवल टैगिंग/जांच चरण से उपलब्ध है।"
+
+#: app/core/batch_service.py:169
+msgid "هذا الرأس مو ضمن أي دفعة استقبال."
+msgstr "यह जानवर किसी इनटेक बैच का हिस्सा नहीं है।"
+
+#: app/core/batch_service.py:171
+msgid "لازم سبب صريح للاستبعاد."
+msgstr "बहिष्करण के लिए स्पष्ट कारण आवश्यक है।"
+
+#: app/core/batch_service.py:182
+msgid "هذا الرأس مو مستبعدة أصلاً."
+msgstr "यह जानवर वैसे भी बाहर नहीं रखा गया है।"
+
+#: app/core/batch_service.py:196
+msgid "هذا الرأس مو من هذي الدفعة."
+msgstr "यह जानवर इस बैच से नहीं है।"
+
+#: app/core/batch_service.py:198
+msgid "لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي."
+msgstr "व्यक्तिगत प्रगति से पहले आपको बहिष्करण हटाना होगा।"
+
+#: app/core/batch_service.py:204
+msgid "لازم تحدد حظيرة دائمة لهذا الرأس."
+msgstr "आपको इस जानवर के लिए एक स्थायी बाड़ा निर्दिष्ट करना होगा।"
+
+#: app/core/batch_service.py:207
+msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
+msgstr "बैच अभी भी क्वारंटीन चरण में है — अभी कोई अतिरिक्त व्यक्तिगत कार्रवाई आवश्यक नहीं है।"
+
 #: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:131
 #: app/templates/animal_detail.html:355 app/templates/animal_form.html:85
@@ -1279,15 +1403,22 @@ msgid "الغرض (تربية/تسمين/بيع)"
 msgstr "उद्देश्य (प्रजनन/मोटा करना/बिक्री)"
 
 #: app/core/data_completeness_service.py:32
-#: app/templates/animal_detail.html:140 app/templates/animal_workflow.html:128
-msgid "السعر"
-msgstr "मूल्य"
-
-#: app/core/data_completeness_service.py:32
 #: app/templates/animal_detail.html:132 app/templates/animal_form.html:19
 #: app/templates/animals_bulk_purchase.html:37
 msgid "اللون"
 msgstr "रंग"
+
+#: app/core/isolation_service.py:31 app/core/isolation_service.py:65
+msgid "الرأس غير موجود"
+msgstr "जानवर मौजूद नहीं है"
+
+#: app/core/isolation_service.py:35
+msgid "ما فيه حظيرة عزل معرَّفة بالنظام"
+msgstr "सिस्टम में कोई आइसोलेशन बाड़ा परिभाषित नहीं है"
+
+#: app/core/isolation_service.py:68
+msgid "الحظيرة الهدف غير موجودة"
+msgstr "लक्ष्य बाड़ा मौजूद नहीं है"
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -1965,6 +2096,109 @@ msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ �
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "कोई बिक्री संकेत नहीं — उत्पादक मादा, रखना बेहतर"
 
+#: app/core/validation_service.py:22
+msgid "الوزن لازم يكون رقماً موجباً أكبر من صفر."
+msgstr "वजन शून्य से अधिक धनात्मक संख्या होना चाहिए।"
+
+#: app/core/validation_service.py:26
+#, python-format
+msgid "وزن %(weight)s كجم غير منطقي — أعلى من الحد المتوقع (%(max)s كجم). تأكد من الرقم قبل الحفظ."
+msgstr "%(weight)s किग्रा वजन अवास्तविक है — अपेक्षित सीमा (%(max)s किग्रा) से ऊपर। सेव करने से पहले नंबर जांचें।"
+
+#: app/core/validation_service.py:37
+#, python-format
+msgid "%(field)s ما يقدر يكون رقماً سالباً."
+msgstr "%(field)s नकारात्मक संख्या नहीं हो सकता।"
+
+#: app/core/validation_service.py:44 app/reports/report_service.py:166
+#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/reports/report_service.py:378 app/templates/animal_detail.html:257
+#: app/templates/animal_detail.html:271 app/templates/animal_detail.html:288
+#: app/templates/animal_detail.html:302 app/templates/animal_detail.html:317
+#: app/templates/animal_detail.html:328 app/templates/animal_detail.html:355
+#: app/templates/animal_detail.html:375 app/templates/animal_detail.html:407
+#: app/templates/animal_detail.html:422 app/templates/animal_detail.html:438
+#: app/templates/animal_detail.html:453 app/templates/animal_detail.html:463
+#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:154
+#: app/templates/assistant/chat.html:103 app/templates/assistant/chat.html:201
+#: app/templates/bulk_action_form.html:63
+#: app/templates/bulk_action_form.html:246
+#: app/templates/bulk_action_form.html:353
+#: app/templates/bulk_action_form.html:383
+#: app/templates/climate/dashboard.html:42
+#: app/templates/equipment/asset_maintenance.html:13
+#: app/templates/equipment/asset_maintenance.html:24
+#: app/templates/equipment/item_movement.html:70
+#: app/templates/equipment/purchase_form.html:15
+#: app/templates/equipment/utilities_list.html:15
+#: app/templates/equipment/utility_form.html:12
+#: app/templates/feed/movements_list.html:10
+#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
+#: app/templates/finance/health_view.html:14
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
+#: app/templates/health/dashboard.html:22
+#: app/templates/health/disease_form.html:18
+#: app/templates/health/diseases_list.html:14
+#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vaccinations_list.html:10
+#: app/templates/health/vet_visit_form.html:12
+#: app/templates/health/vet_visits_list.html:10
+#: app/templates/isolation_enter_form.html:8
+#: app/templates/isolation_exit_form.html:16
+#: app/templates/repro/mating_form.html:24
+#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/pregnancies_list.html:10
+#: app/templates/repro/pregnancy_form.html:8
+#: app/templates/repro/program_detail.html:93
+#: app/templates/repro/program_detail.html:115
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
+#: app/templates/warehouses/inventory_counts_list.html:9
+msgid "التاريخ"
+msgstr "तारीख़"
+
+#: app/core/validation_service.py:46
+#, python-format
+msgid "%(field)s ما يقدر يكون بالمستقبل."
+msgstr "%(field)s भविष्य में नहीं हो सकता।"
+
+#: app/core/warehouse_service.py:28
+#, python-format
+msgid "نوع مخزون غير معروف: \"%(kind)s\""
+msgstr "अज्ञात स्टॉक प्रकार: \"%(kind)s\""
+
+#: app/core/warehouse_service.py:87
+msgid "الصنف غير موجود."
+msgstr "आइटम मौजूद नहीं है।"
+
+#: app/core/warehouse_service.py:99
+msgid "الكمية لازم تكون أكبر من صفر."
+msgstr "मात्रा शून्य से अधिक होनी चाहिए।"
+
+#: app/core/warehouse_service.py:101
+msgid "لازم يكون المصدر والوجهة مستودعين مختلفين."
+msgstr "स्रोत और गंतव्य दो अलग-अलग गोदाम होने चाहिए।"
+
+#: app/core/warehouse_service.py:108
+msgid "مستودع المصدر غير معروف لهذا الصنف."
+msgstr "इस आइटम के लिए स्रोत गोदाम अज्ञात है।"
+
+#: app/core/warehouse_service.py:112
+#, python-format
+msgid "الكمية المطلوب تحويلها (%(qty)s) أكبر من المتوفر فعلياً بمستودع \"%(wh)s\" (%(available)s)."
+msgstr "स्थानांतरण के लिए अनुरोधित मात्रा (%(qty)s) गोदाम \"%(wh)s\" में वास्तव में उपलब्ध (%(available)s) से अधिक है।"
+
+#: app/core/warehouse_service.py:125
+msgid "مستودع الوجهة غير موجود."
+msgstr "गंतव्य गोदाम मौजूद नहीं है।"
+
+#: app/equipment/equipment_service.py:105
+msgid "هذي الحركة مو استعارة أصلاً."
+msgstr "यह गतिविधि वैसे भी उधार नहीं है।"
+
+#: app/equipment/equipment_service.py:107
+msgid "هذي القطعة مسجَّلة راجعة من قبل."
+msgstr "यह आइटम पहले से ही वापस दर्ज है।"
+
 #: app/equipment/routes.py:43
 msgid "تمت إضافة الصنف"
 msgstr "आइटम जोड़ दिया गया है"
@@ -2057,6 +2291,19 @@ msgstr "बिक्री बैच बना दिया गया है"
 #: app/finance/routes.py:243
 msgid "تم حذف الدفعة"
 msgstr "बैच हटा दिया गया है"
+
+#: app/finance/routes.py:271 app/reports/report_service.py:253
+#: app/reports/report_service.py:296 app/templates/animal_detail.html:493
+#: app/templates/finance/form.html:33 app/templates/finance/list.html:20
+#: app/templates/finance/list.html:69
+#: app/templates/team/payroll_prepare.html:44
+#: app/templates/team/payroll_prepare.html:78
+msgid "المبلغ"
+msgstr "राशि"
+
+#: app/finance/routes.py:272
+msgid "تاريخ الحركة"
+msgstr "गतिविधि तिथि"
 
 #: app/finance/routes.py:313
 msgid "تمت إضافة العملية المالية"
@@ -2602,51 +2849,6 @@ msgstr "कुल मृत्यु मामले"
 msgid "الرقم"
 msgstr "क्रमांक"
 
-#: app/reports/report_service.py:166 app/reports/report_service.py:253
-#: app/reports/report_service.py:296 app/reports/report_service.py:378
-#: app/templates/animal_detail.html:257 app/templates/animal_detail.html:271
-#: app/templates/animal_detail.html:288 app/templates/animal_detail.html:302
-#: app/templates/animal_detail.html:317 app/templates/animal_detail.html:328
-#: app/templates/animal_detail.html:355 app/templates/animal_detail.html:375
-#: app/templates/animal_detail.html:407 app/templates/animal_detail.html:422
-#: app/templates/animal_detail.html:438 app/templates/animal_detail.html:453
-#: app/templates/animal_detail.html:463 app/templates/animal_detail.html:493
-#: app/templates/animal_workflow.html:154 app/templates/assistant/chat.html:103
-#: app/templates/assistant/chat.html:201 app/templates/bulk_action_form.html:63
-#: app/templates/bulk_action_form.html:246
-#: app/templates/bulk_action_form.html:353
-#: app/templates/bulk_action_form.html:383
-#: app/templates/climate/dashboard.html:42
-#: app/templates/equipment/asset_maintenance.html:13
-#: app/templates/equipment/asset_maintenance.html:24
-#: app/templates/equipment/item_movement.html:70
-#: app/templates/equipment/purchase_form.html:15
-#: app/templates/equipment/utilities_list.html:15
-#: app/templates/equipment/utility_form.html:12
-#: app/templates/feed/movements_list.html:10
-#: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:7
-#: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
-#: app/templates/health/dashboard.html:22
-#: app/templates/health/disease_form.html:18
-#: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:12
-#: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:12
-#: app/templates/health/vet_visits_list.html:10
-#: app/templates/isolation_enter_form.html:8
-#: app/templates/isolation_exit_form.html:16
-#: app/templates/repro/mating_form.html:24
-#: app/templates/repro/matings_list.html:14
-#: app/templates/repro/pregnancies_list.html:10
-#: app/templates/repro/pregnancy_form.html:8
-#: app/templates/repro/program_detail.html:93
-#: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
-#: app/templates/warehouses/inventory_counts_list.html:9
-msgid "التاريخ"
-msgstr "तारीख़"
-
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
 #: app/templates/smart_sale_report.html:17
 #: app/templates/team/tasks_list.html:187
@@ -2676,11 +2878,6 @@ msgstr "अवधि में पुष्टित गर्भावस्थ
 #: app/reports/report_service.py:207
 msgid "نسبة نجاح التقريع→حمل"
 msgstr "संगमन→गर्भावस्था सफलता दर"
-
-#: app/reports/report_service.py:211 app/templates/animal_detail.html:136
-#: app/templates/animal_form.html:131
-msgid "تاريخ الولادة"
-msgstr "जन्म तिथि"
 
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:134
 #: app/templates/ostrich/egg_form.html:10
@@ -2737,14 +2934,6 @@ msgstr "मद"
 #: app/templates/team/report_detail.html:13
 msgid "الحيوان"
 msgstr "जानवर"
-
-#: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/templates/animal_detail.html:493 app/templates/finance/form.html:33
-#: app/templates/finance/list.html:20 app/templates/finance/list.html:69
-#: app/templates/team/payroll_prepare.html:44
-#: app/templates/team/payroll_prepare.html:78
-msgid "المبلغ"
-msgstr "राशि"
 
 #: app/reports/report_service.py:287
 msgid "عدد عمليات الشراء/المصروف"
@@ -2958,6 +3147,10 @@ msgstr "हार्मोन इंजेक्शन दर्ज कर द�
 msgid "تم تحديث حالة البرنامج"
 msgstr "कार्यक्रम की स्थिति अपडेट कर दी गई है"
 
+#: app/team/payroll_service.py:140 app/team/routes.py:336
+msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
+msgstr "यह वेतन पहले से पुष्ट है — इसे संपादित नहीं किया जा सकता।"
+
 #: app/team/routes.py:36 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
@@ -3035,10 +3228,6 @@ msgstr "यात्रा अवधि संपादित कर दी ग�
 #: app/team/routes.py:302
 msgid "تم حذف فترة السفر"
 msgstr "यात्रा अवधि हटा दी गई है"
-
-#: app/team/routes.py:336
-msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
-msgstr "यह वेतन पहले से पुष्ट है — इसे संपादित नहीं किया जा सकता।"
 
 #: app/team/routes.py:342
 msgid "قيمة غير صحيحة بالراتب أو المكافأة"
@@ -3553,12 +3742,6 @@ msgstr "उद्देश्य"
 #: app/templates/animal_detail.html:135
 msgid "الأب"
 msgstr "पिता"
-
-#: app/templates/animal_detail.html:137 app/templates/animal_form.html:135
-#: app/templates/health/pharmacy_purchase_form.html:9
-#: app/templates/health/pharmacy_purchase_form.html:33
-msgid "تاريخ الشراء"
-msgstr "खरीद तिथि"
 
 #: app/templates/animal_detail.html:138
 msgid "تاريخ الدخول للمزرعة"
@@ -4212,10 +4395,6 @@ msgstr "पिता (वैकल्पिक, यदि ज्ञात हो
 #: app/templates/animal_form.html:136
 msgid "إرفاق فاتورة الشراء (إن وجدت)"
 msgstr "खरीद चालान संलग्न करें (यदि हो)"
-
-#: app/templates/animal_form.html:141
-msgid "تاريخ الدخول"
-msgstr "प्रवेश तिथि"
 
 #: app/templates/animal_form.html:144
 msgid "تاريخ الولادة (لو المصدر ولادة)"
