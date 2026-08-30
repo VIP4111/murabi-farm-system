@@ -13,6 +13,8 @@
 import os
 from datetime import date
 
+from flask_babel import gettext as _, get_locale
+
 from app.extensions import db
 from app.core import email_service
 
@@ -92,27 +94,28 @@ def build_report_email() -> tuple[str, str, str]:
     def _link(a):
         return _alert_link(a, _abs)
 
-    subject = f"📊 تقرير مراح بو علي اليومي — {today}"
+    subject = _("📊 تقرير مراح بو علي اليومي — %(date)s", date=today)
 
     # ---- نص عادي (fallback) ----
     text_lines = [
         subject, "",
-        "موجز الحالة اليومية:",
-        f"🐑 إجمالي القطيع النشط: {total_animals} رأس",
-        f"🚨 تنبيهات مستعجلة: {len(urgent_alerts)} من أصل {len(alerts)}",
-        f"⚠️ مهام متأخرة فعلاً: {tasks['overdue']}  |  مستحقة اليوم: {tasks['due_today']}  |  بدون تاريخ: {tasks['no_date']}",
-        f"📋 بلاغات مفتوحة: {open_reports}",
+        _("موجز الحالة اليومية:"),
+        _("🐑 إجمالي القطيع النشط: %(n)s رأس", n=total_animals),
+        _("🚨 تنبيهات مستعجلة: %(urgent)s من أصل %(total)s", urgent=len(urgent_alerts), total=len(alerts)),
+        _("⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة اليوم: %(due_today)s  |  بدون تاريخ: %(no_date)s",
+          overdue=tasks['overdue'], due_today=tasks['due_today'], no_date=tasks['no_date']),
+        _("📋 بلاغات مفتوحة: %(n)s", n=open_reports),
     ]
     if top_alerts:
-        text_lines += ["", "أهم ما يحتاج إجراء اليوم:"]
+        text_lines += ["", _("أهم ما يحتاج إجراء اليوم:")]
         for a in top_alerts:
             link = _link(a)
             text_lines.append(f"- {a['icon']} {a['label']} — {a.get('detail', '')}" + (f" ← {link}" if link else ""))
     text_lines += [
-        "", "روابط سريعة:",
-        f"- كل التنبيهات ({len(alerts)}): {_abs('/alerts')}",
-        f"- المهام ({tasks['total']}): {_abs('/team/tasks')}",
-        f"- المساعد الذكي: {_abs('/assistant/')}",
+        "", _("روابط سريعة:"),
+        _("- كل التنبيهات (%(n)s): %(url)s", n=len(alerts), url=_abs('/alerts')),
+        _("- المهام (%(n)s): %(url)s", n=tasks['total'], url=_abs('/team/tasks')),
+        _("- المساعد الذكي: %(url)s", url=_abs('/assistant/')),
     ]
     text_body = "\n".join(text_lines)
 
@@ -122,36 +125,38 @@ def build_report_email() -> tuple[str, str, str]:
         return f'<tr><td style="padding:6px 10px; color:#555;">{label}</td><td style="padding:6px 10px; {style}">{value}</td></tr>'
 
     summary_rows = [
-        _row("🐑 إجمالي القطيع النشط", f"{total_animals} رأس"),
-        _row("🚨 تنبيهات مستعجلة", f"{len(urgent_alerts)} من أصل {len(alerts)}",
+        _row(_("🐑 إجمالي القطيع النشط"), _("%(n)s رأس", n=total_animals)),
+        _row(_("🚨 تنبيهات مستعجلة"), _("%(urgent)s من أصل %(total)s", urgent=len(urgent_alerts), total=len(alerts)),
              "#c0392b" if urgent_alerts else "#2e7d32"),
-        _row("⏰ مهام متأخرة فعلاً", tasks["overdue"], "#c0392b" if tasks["overdue"] else "#2e7d32"),
-        _row("📅 مهام مستحقة اليوم", tasks["due_today"]),
-        _row("🗂️ مهام بدون تاريخ محدَّد", tasks["no_date"], "#888"),
-        _row("📋 بلاغات مفتوحة", open_reports),
+        _row(_("⏰ مهام متأخرة فعلاً"), tasks["overdue"], "#c0392b" if tasks["overdue"] else "#2e7d32"),
+        _row(_("📅 مهام مستحقة اليوم"), tasks["due_today"]),
+        _row(_("🗂️ مهام بدون تاريخ محدَّد"), tasks["no_date"], "#888"),
+        _row(_("📋 بلاغات مفتوحة"), open_reports),
     ]
 
     alert_items_html = ""
     for a in top_alerts:
         link = _alert_link(a)
-        cta = f'<a href="{link}" style="color:#fff; background:#c0392b; padding:4px 10px; border-radius:6px; text-decoration:none; font-size:12.5px; margin-inline-start:8px;">حل المشكلة ◀</a>' if link else ""
+        cta = f'<a href="{link}" style="color:#fff; background:#c0392b; padding:4px 10px; border-radius:6px; text-decoration:none; font-size:12.5px; margin-inline-start:8px;">{_("حل المشكلة ◀")}</a>' if link else ""
         alert_items_html += (
             f'<li style="margin-bottom:8px;"><b>{a["icon"]} {a["label"]}</b>'
             f'<div style="color:#666; font-size:13px;">{a.get("detail", "")}</div>{cta}</li>'
         )
 
+    dirn = "rtl" if str(get_locale()) == "ar" else "ltr"
+    align = "right" if dirn == "rtl" else "left"
     html_body = f"""
-    <div style="font-family:Tahoma,Arial,sans-serif; direction:rtl; text-align:right; max-width:560px; margin:0 auto;">
-      <h2 style="margin:0 0 14px;">📊 تقرير مراح بو علي اليومي — {today}</h2>
+    <div style="font-family:Tahoma,Arial,sans-serif; direction:{dirn}; text-align:{align}; max-width:560px; margin:0 auto;">
+      <h2 style="margin:0 0 14px;">{subject}</h2>
       <table style="width:100%; border-collapse:collapse; background:#f7f7f7; border-radius:8px; margin-bottom:18px;">
         {''.join(summary_rows)}
       </table>
-      {f'<h3 style="margin:0 0 8px;">أهم ما يحتاج إجراء اليوم:</h3><ul style="padding-inline-start:18px;">{alert_items_html}</ul>' if top_alerts else ''}
-      <h3 style="margin:18px 0 8px;">🔗 روابط سريعة</h3>
+      {f'<h3 style="margin:0 0 8px;">{_("أهم ما يحتاج إجراء اليوم:")}</h3><ul style="padding-inline-start:18px;">{alert_items_html}</ul>' if top_alerts else ''}
+      <h3 style="margin:18px 0 8px;">{_("🔗 روابط سريعة")}</h3>
       <p style="line-height:2;">
-        <a href="{_abs('/alerts')}" style="color:#1a5276;">عرض كل التنبيهات ({len(alerts)})</a><br>
-        <a href="{_abs('/team/tasks')}" style="color:#1a5276;">مراجعة المهام ({tasks['total']})</a><br>
-        <a href="{_abs('/assistant/')}" style="color:#1a5276;">فتح المساعد الذكي</a>
+        <a href="{_abs('/alerts')}" style="color:#1a5276;">{_("عرض كل التنبيهات (%(n)s)", n=len(alerts))}</a><br>
+        <a href="{_abs('/team/tasks')}" style="color:#1a5276;">{_("مراجعة المهام (%(n)s)", n=tasks['total'])}</a><br>
+        <a href="{_abs('/assistant/')}" style="color:#1a5276;">{_("فتح المساعد الذكي")}</a>
       </p>
     </div>
     """
@@ -162,13 +167,27 @@ def build_report_email() -> tuple[str, str, str]:
 def send_daily_report_now() -> int:
     """يبعث التقرير الآن لكل مستخدم فعّال يملك بريد مسجَّل وصلاحية
     `reports.manage` (نفس نطاق إشعارات البلاغات، بند 159) — يرجّع عدد
-    الرسائل اللي نجح إرسالها فعلياً."""
+    الرسائل اللي نجح إرسالها فعلياً.
+
+    **بند إضافي (2026-08-30)** — التقرير كان يُبنى مرة واحدة بالعربي
+    ويُرسل لكل المستخدمين بغض النظر عن لغة حسابه، لأن هذا كود خلفية
+    (Cron) بلا طلب HTTP حقيقي، و`select_locale` يرجع عربي افتراضياً
+    بدون سياق طلب. الحل: نبني نسخة منفصلة لكل لغة موجودة فعلاً بين
+    المستلمين (`force_locale`)، مو نسخة واحدة للجميع."""
+    from flask_babel import force_locale
     from app.models import User
-    subject, text_body, html_body = build_report_email()
+
+    recipients = [
+        u for u in User.query.filter(User.email.isnot(None), User.is_active_account.is_(True)).all()
+        if u.has_permission("reports.manage")
+    ]
     sent = 0
-    for user in User.query.filter(User.email.isnot(None), User.is_active_account.is_(True)).all():
-        if user.has_permission("reports.manage") and email_service.notify_user(user, subject, text_body, html=html_body):
-            sent += 1
+    for lang in {u.language or "ar" for u in recipients}:
+        with force_locale(lang):
+            subject, text_body, html_body = build_report_email()
+        for user in recipients:
+            if (user.language or "ar") == lang and email_service.notify_user(user, subject, text_body, html=html_body):
+                sent += 1
     return sent
 
 

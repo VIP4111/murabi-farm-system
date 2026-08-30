@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 23:27+0300\n"
+"POT-Creation-Date: 2026-08-30 23:48+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1383,6 +1383,130 @@ msgstr "You must specify a permanent barn for this animal."
 #: app/core/batch_service.py:207
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "The batch is still at the quarantine stage — no additional individual action is required right now."
+
+#: app/core/daily_email_report_service.py:97
+#, python-format
+msgid "📊 تقرير مراح بو علي اليومي — %(date)s"
+msgstr "📊 Murabi Bu Ali daily report — %(date)s"
+
+#: app/core/daily_email_report_service.py:102
+msgid "موجز الحالة اليومية:"
+msgstr "Today's status summary:"
+
+#: app/core/daily_email_report_service.py:103
+#, python-format
+msgid "🐑 إجمالي القطيع النشط: %(n)s رأس"
+msgstr "🐑 Total active herd: %(n)s head"
+
+#: app/core/daily_email_report_service.py:104
+#, python-format
+msgid "🚨 تنبيهات مستعجلة: %(urgent)s من أصل %(total)s"
+msgstr "🚨 Urgent alerts: %(urgent)s of %(total)s"
+
+#: app/core/daily_email_report_service.py:105
+#, python-format
+msgid "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة اليوم: %(due_today)s  |  بدون تاريخ: %(no_date)s"
+msgstr "⚠️ Actually overdue: %(overdue)s  |  Due today: %(due_today)s  |  No date: %(no_date)s"
+
+#: app/core/daily_email_report_service.py:107
+#, python-format
+msgid "📋 بلاغات مفتوحة: %(n)s"
+msgstr "📋 Open reports: %(n)s"
+
+#: app/core/daily_email_report_service.py:110
+#: app/core/daily_email_report_service.py:154
+msgid "أهم ما يحتاج إجراء اليوم:"
+msgstr "Today's top priorities:"
+
+#: app/core/daily_email_report_service.py:115
+msgid "روابط سريعة:"
+msgstr "Quick links:"
+
+#: app/core/daily_email_report_service.py:116
+#, python-format
+msgid "- كل التنبيهات (%(n)s): %(url)s"
+msgstr "- All alerts (%(n)s): %(url)s"
+
+#: app/core/daily_email_report_service.py:117
+#, python-format
+msgid "- المهام (%(n)s): %(url)s"
+msgstr "- Tasks (%(n)s): %(url)s"
+
+#: app/core/daily_email_report_service.py:118
+#, python-format
+msgid "- المساعد الذكي: %(url)s"
+msgstr "- Smart assistant: %(url)s"
+
+#: app/core/daily_email_report_service.py:128
+msgid "🐑 إجمالي القطيع النشط"
+msgstr "🐑 Total active herd"
+
+#: app/core/daily_email_report_service.py:128
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "%(n)s رأس"
+msgstr "%(n)s animals"
+
+#: app/core/daily_email_report_service.py:129
+msgid "🚨 تنبيهات مستعجلة"
+msgstr "🚨 Urgent alerts"
+
+#: app/core/daily_email_report_service.py:129
+#, python-format
+msgid "%(urgent)s من أصل %(total)s"
+msgstr "%(urgent)s of %(total)s"
+
+#: app/core/daily_email_report_service.py:131
+msgid "⏰ مهام متأخرة فعلاً"
+msgstr "⏰ Actually overdue tasks"
+
+#: app/core/daily_email_report_service.py:132
+msgid "📅 مهام مستحقة اليوم"
+msgstr "📅 Tasks due today"
+
+#: app/core/daily_email_report_service.py:133
+msgid "🗂️ مهام بدون تاريخ محدَّد"
+msgstr "🗂️ Tasks without a set date"
+
+#: app/core/daily_email_report_service.py:134
+msgid "📋 بلاغات مفتوحة"
+msgstr "📋 Open reports"
+
+#: app/core/daily_email_report_service.py:140
+msgid "حل المشكلة ◀"
+msgstr "Fix it ◀"
+
+#: app/core/daily_email_report_service.py:155
+msgid "🔗 روابط سريعة"
+msgstr "🔗 Quick links"
+
+#: app/core/daily_email_report_service.py:157
+#, python-format
+msgid "عرض كل التنبيهات (%(n)s)"
+msgstr "View all alerts (%(n)s)"
+
+#: app/core/daily_email_report_service.py:158
+#, python-format
+msgid "مراجعة المهام (%(n)s)"
+msgstr "Review tasks (%(n)s)"
+
+#: app/core/daily_email_report_service.py:159
+msgid "فتح المساعد الذكي"
+msgstr "Open the smart assistant"
+
+#: app/core/daily_telegram_report_service.py:52
+#, python-format
+msgid "🚨 عرض التنبيهات (%(n)s)"
+msgstr "🚨 View alerts (%(n)s)"
+
+#: app/core/daily_telegram_report_service.py:53
+#, python-format
+msgid "📋 مراجعة المهام (%(n)s)"
+msgstr "📋 Review tasks (%(n)s)"
+
+#: app/core/daily_telegram_report_service.py:54
+msgid "💬 فتح المساعد الذكي"
+msgstr "💬 Open the smart assistant"
 
 #: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:131
@@ -7052,11 +7176,6 @@ msgstr "Batch"
 #, python-format
 msgid "وصلت %(date)s"
 msgstr "Arrived %(date)s"
-
-#: app/templates/batches/batch_detail.html:10
-#, python-format
-msgid "%(n)s رأس"
-msgstr "%(n)s animals"
 
 #: app/templates/batches/batch_detail.html:21
 msgid "تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)"

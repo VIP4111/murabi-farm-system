@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 23:27+0300\n"
+"POT-Creation-Date: 2026-08-30 23:48+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1383,6 +1383,130 @@ msgstr "ለዚህ ራስ ቋሚ በረት መግለጽ አለብዎት።"
 #: app/core/batch_service.py:207
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "ስብስቡ አሁንም በለይቶ ማቆያ ደረጃ ላይ ነው — በአሁኑ ጊዜ ተጨማሪ የግለሰብ እርምጃ አያስፈልግም።"
+
+#: app/core/daily_email_report_service.py:97
+#, python-format
+msgid "📊 تقرير مراح بو علي اليومي — %(date)s"
+msgstr "📊 የመራቢ ቡ ዓሊ ዕለታዊ ሪፖርት — %(date)s"
+
+#: app/core/daily_email_report_service.py:102
+msgid "موجز الحالة اليومية:"
+msgstr "የዛሬ ሁኔታ ማጠቃለያ:"
+
+#: app/core/daily_email_report_service.py:103
+#, python-format
+msgid "🐑 إجمالي القطيع النشط: %(n)s رأس"
+msgstr "🐑 አጠቃላይ ንቁ መንጋ: %(n)s ራስ"
+
+#: app/core/daily_email_report_service.py:104
+#, python-format
+msgid "🚨 تنبيهات مستعجلة: %(urgent)s من أصل %(total)s"
+msgstr "🚨 አስቸኳይ ማንቂያዎች: %(urgent)s ከ%(total)s"
+
+#: app/core/daily_email_report_service.py:105
+#, python-format
+msgid "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة اليوم: %(due_today)s  |  بدون تاريخ: %(no_date)s"
+msgstr "⚠️ በእውነት የዘገዩ: %(overdue)s  |  ዛሬ የሚጠበቁ: %(due_today)s  |  ቀን የሌላቸው: %(no_date)s"
+
+#: app/core/daily_email_report_service.py:107
+#, python-format
+msgid "📋 بلاغات مفتوحة: %(n)s"
+msgstr "📋 ክፍት ሪፖርቶች: %(n)s"
+
+#: app/core/daily_email_report_service.py:110
+#: app/core/daily_email_report_service.py:154
+msgid "أهم ما يحتاج إجراء اليوم:"
+msgstr "ዛሬ ትኩረት የሚያስፈልጋቸው ዋና ጉዳዮች:"
+
+#: app/core/daily_email_report_service.py:115
+msgid "روابط سريعة:"
+msgstr "ፈጣን አገናኞች:"
+
+#: app/core/daily_email_report_service.py:116
+#, python-format
+msgid "- كل التنبيهات (%(n)s): %(url)s"
+msgstr "- ሁሉም ማንቂያዎች (%(n)s): %(url)s"
+
+#: app/core/daily_email_report_service.py:117
+#, python-format
+msgid "- المهام (%(n)s): %(url)s"
+msgstr "- ተግባራት (%(n)s): %(url)s"
+
+#: app/core/daily_email_report_service.py:118
+#, python-format
+msgid "- المساعد الذكي: %(url)s"
+msgstr "- ብልህ ረዳት: %(url)s"
+
+#: app/core/daily_email_report_service.py:128
+msgid "🐑 إجمالي القطيع النشط"
+msgstr "🐑 አጠቃላይ ንቁ መንጋ"
+
+#: app/core/daily_email_report_service.py:128
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "%(n)s رأس"
+msgstr "%(n)s እንስሳት"
+
+#: app/core/daily_email_report_service.py:129
+msgid "🚨 تنبيهات مستعجلة"
+msgstr "🚨 አስቸኳይ ማንቂያዎች"
+
+#: app/core/daily_email_report_service.py:129
+#, python-format
+msgid "%(urgent)s من أصل %(total)s"
+msgstr "%(urgent)s ከ%(total)s"
+
+#: app/core/daily_email_report_service.py:131
+msgid "⏰ مهام متأخرة فعلاً"
+msgstr "⏰ በእውነት የዘገዩ ተግባራት"
+
+#: app/core/daily_email_report_service.py:132
+msgid "📅 مهام مستحقة اليوم"
+msgstr "📅 ዛሬ የሚጠበቁ ተግባራት"
+
+#: app/core/daily_email_report_service.py:133
+msgid "🗂️ مهام بدون تاريخ محدَّد"
+msgstr "🗂️ ቀን ያልተወሰነላቸው ተግባራት"
+
+#: app/core/daily_email_report_service.py:134
+msgid "📋 بلاغات مفتوحة"
+msgstr "📋 ክፍት ሪፖርቶች"
+
+#: app/core/daily_email_report_service.py:140
+msgid "حل المشكلة ◀"
+msgstr "ፍታ ◀"
+
+#: app/core/daily_email_report_service.py:155
+msgid "🔗 روابط سريعة"
+msgstr "🔗 ፈጣን አገናኞች"
+
+#: app/core/daily_email_report_service.py:157
+#, python-format
+msgid "عرض كل التنبيهات (%(n)s)"
+msgstr "ሁሉንም ማንቂያዎች ይመልከቱ (%(n)s)"
+
+#: app/core/daily_email_report_service.py:158
+#, python-format
+msgid "مراجعة المهام (%(n)s)"
+msgstr "ተግባራትን ይገምግሙ (%(n)s)"
+
+#: app/core/daily_email_report_service.py:159
+msgid "فتح المساعد الذكي"
+msgstr "ብልህ ረዳትን ይክፈቱ"
+
+#: app/core/daily_telegram_report_service.py:52
+#, python-format
+msgid "🚨 عرض التنبيهات (%(n)s)"
+msgstr "🚨 ማንቂያዎችን ይመልከቱ (%(n)s)"
+
+#: app/core/daily_telegram_report_service.py:53
+#, python-format
+msgid "📋 مراجعة المهام (%(n)s)"
+msgstr "📋 ተግባራትን ይገምግሙ (%(n)s)"
+
+#: app/core/daily_telegram_report_service.py:54
+msgid "💬 فتح المساعد الذكي"
+msgstr "💬 ብልህ ረዳትን ይክፈቱ"
 
 #: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:131
@@ -7052,11 +7176,6 @@ msgstr "ጭነት"
 #, python-format
 msgid "وصلت %(date)s"
 msgstr "%(date)s ደርሷል"
-
-#: app/templates/batches/batch_detail.html:10
-#, python-format
-msgid "%(n)s رأس"
-msgstr "%(n)s እንስሳት"
 
 #: app/templates/batches/batch_detail.html:21
 msgid "تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)"

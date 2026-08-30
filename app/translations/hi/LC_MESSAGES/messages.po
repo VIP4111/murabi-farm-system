@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 23:27+0300\n"
+"POT-Creation-Date: 2026-08-30 23:48+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1383,6 +1383,130 @@ msgstr "आपको इस जानवर के लिए एक स्था
 #: app/core/batch_service.py:207
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "बैच अभी भी क्वारंटीन चरण में है — अभी कोई अतिरिक्त व्यक्तिगत कार्रवाई आवश्यक नहीं है।"
+
+#: app/core/daily_email_report_service.py:97
+#, python-format
+msgid "📊 تقرير مراح بو علي اليومي — %(date)s"
+msgstr "📊 मुराबी बू अली दैनिक रिपोर्ट — %(date)s"
+
+#: app/core/daily_email_report_service.py:102
+msgid "موجز الحالة اليومية:"
+msgstr "आज की स्थिति सारांश:"
+
+#: app/core/daily_email_report_service.py:103
+#, python-format
+msgid "🐑 إجمالي القطيع النشط: %(n)s رأس"
+msgstr "🐑 कुल सक्रिय झुंड: %(n)s सिर"
+
+#: app/core/daily_email_report_service.py:104
+#, python-format
+msgid "🚨 تنبيهات مستعجلة: %(urgent)s من أصل %(total)s"
+msgstr "🚨 तत्काल अलर्ट: %(total)s में से %(urgent)s"
+
+#: app/core/daily_email_report_service.py:105
+#, python-format
+msgid "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة اليوم: %(due_today)s  |  بدون تاريخ: %(no_date)s"
+msgstr "⚠️ वास्तव में विलंबित: %(overdue)s  |  आज देय: %(due_today)s  |  बिना तारीख: %(no_date)s"
+
+#: app/core/daily_email_report_service.py:107
+#, python-format
+msgid "📋 بلاغات مفتوحة: %(n)s"
+msgstr "📋 खुली रिपोर्टें: %(n)s"
+
+#: app/core/daily_email_report_service.py:110
+#: app/core/daily_email_report_service.py:154
+msgid "أهم ما يحتاج إجراء اليوم:"
+msgstr "आज की सबसे ज़रूरी प्राथमिकताएं:"
+
+#: app/core/daily_email_report_service.py:115
+msgid "روابط سريعة:"
+msgstr "त्वरित लिंक:"
+
+#: app/core/daily_email_report_service.py:116
+#, python-format
+msgid "- كل التنبيهات (%(n)s): %(url)s"
+msgstr "- सभी अलर्ट (%(n)s): %(url)s"
+
+#: app/core/daily_email_report_service.py:117
+#, python-format
+msgid "- المهام (%(n)s): %(url)s"
+msgstr "- कार्य (%(n)s): %(url)s"
+
+#: app/core/daily_email_report_service.py:118
+#, python-format
+msgid "- المساعد الذكي: %(url)s"
+msgstr "- स्मार्ट सहायक: %(url)s"
+
+#: app/core/daily_email_report_service.py:128
+msgid "🐑 إجمالي القطيع النشط"
+msgstr "🐑 कुल सक्रिय झुंड"
+
+#: app/core/daily_email_report_service.py:128
+#: app/templates/batches/batch_detail.html:10
+#, python-format
+msgid "%(n)s رأس"
+msgstr "%(n)s पशु"
+
+#: app/core/daily_email_report_service.py:129
+msgid "🚨 تنبيهات مستعجلة"
+msgstr "🚨 तत्काल अलर्ट"
+
+#: app/core/daily_email_report_service.py:129
+#, python-format
+msgid "%(urgent)s من أصل %(total)s"
+msgstr "%(total)s में से %(urgent)s"
+
+#: app/core/daily_email_report_service.py:131
+msgid "⏰ مهام متأخرة فعلاً"
+msgstr "⏰ वास्तव में विलंबित कार्य"
+
+#: app/core/daily_email_report_service.py:132
+msgid "📅 مهام مستحقة اليوم"
+msgstr "📅 आज देय कार्य"
+
+#: app/core/daily_email_report_service.py:133
+msgid "🗂️ مهام بدون تاريخ محدَّد"
+msgstr "🗂️ बिना तारीख वाले कार्य"
+
+#: app/core/daily_email_report_service.py:134
+msgid "📋 بلاغات مفتوحة"
+msgstr "📋 खुली रिपोर्टें"
+
+#: app/core/daily_email_report_service.py:140
+msgid "حل المشكلة ◀"
+msgstr "ठीक करें ◀"
+
+#: app/core/daily_email_report_service.py:155
+msgid "🔗 روابط سريعة"
+msgstr "🔗 त्वरित लिंक"
+
+#: app/core/daily_email_report_service.py:157
+#, python-format
+msgid "عرض كل التنبيهات (%(n)s)"
+msgstr "सभी अलर्ट देखें (%(n)s)"
+
+#: app/core/daily_email_report_service.py:158
+#, python-format
+msgid "مراجعة المهام (%(n)s)"
+msgstr "कार्यों की समीक्षा करें (%(n)s)"
+
+#: app/core/daily_email_report_service.py:159
+msgid "فتح المساعد الذكي"
+msgstr "स्मार्ट सहायक खोलें"
+
+#: app/core/daily_telegram_report_service.py:52
+#, python-format
+msgid "🚨 عرض التنبيهات (%(n)s)"
+msgstr "🚨 अलर्ट देखें (%(n)s)"
+
+#: app/core/daily_telegram_report_service.py:53
+#, python-format
+msgid "📋 مراجعة المهام (%(n)s)"
+msgstr "📋 कार्यों की समीक्षा करें (%(n)s)"
+
+#: app/core/daily_telegram_report_service.py:54
+msgid "💬 فتح المساعد الذكي"
+msgstr "💬 स्मार्ट सहायक खोलें"
 
 #: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:131
@@ -7052,11 +7176,6 @@ msgstr "खेप"
 #, python-format
 msgid "وصلت %(date)s"
 msgstr "%(date)s को पहुंची"
-
-#: app/templates/batches/batch_detail.html:10
-#, python-format
-msgid "%(n)s رأس"
-msgstr "%(n)s पशु"
 
 #: app/templates/batches/batch_detail.html:21
 msgid "تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)"

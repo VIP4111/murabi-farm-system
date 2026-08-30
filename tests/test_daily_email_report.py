@@ -94,6 +94,41 @@ def test_send_daily_report_now_skips_users_without_email(app, owner):
     mock_send.assert_not_called()
 
 
+def test_send_daily_report_now_translates_per_recipient_language(app, owner):
+    """بند إضافي (2026-08-30) — التقرير كان يُبنى مرة واحدة بالعربي
+    ويُرسل للجميع بغض النظر عن لغة كل حساب (كود خلفية بلا طلب HTTP،
+    فـ`select_locale` يرجع عربي افتراضياً بدون `force_locale` صريح).
+    يتأكد هذا الاختبار إن مستخدماً إنجليزياً يستلم فعلياً نسخة إنجليزية،
+    ومستخدماً عربياً بنفس الإرسال يستلم نسخة عربية — بمكالمة واحدة."""
+    from app.models import Role, User
+
+    owner.email = "owner-ar@example.com"
+    role = Role.query.filter_by(name="owner").first()
+    en_user = User(name="EN Owner", phone="0500000099", role_id=role.id,
+                   language="en", email="owner-en@example.com")
+    en_user.set_password("pass1234")
+    db.session.add(en_user)
+    db.session.commit()
+
+    sent_bodies = {}
+
+    def _fake_notify(user, subject, text_body, html=None):
+        sent_bodies[user.email] = (subject, text_body)
+        return True
+
+    with patch("app.core.email_service.notify_user", side_effect=_fake_notify):
+        sent = send_daily_report_now()
+
+    assert sent == 2
+    ar_subject, ar_text = sent_bodies["owner-ar@example.com"]
+    en_subject, en_text = sent_bodies["owner-en@example.com"]
+    assert "تقرير مراح بو علي" in ar_subject
+    assert "القطيع النشط" in ar_text
+    assert "Murabi Bu Ali daily report" in en_subject
+    assert "Total active herd" in en_text
+    assert "القطيع النشط" not in en_text
+
+
 def test_generate_daily_email_report_guards_against_duplicate_same_day(app, owner):
     owner.email = "owner@example.com"
     db.session.commit()
