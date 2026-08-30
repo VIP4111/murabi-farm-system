@@ -66,6 +66,9 @@ def _vaccinations_due(fs: FarmSettings) -> list[dict]:
 
 
 def _withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
+    """فترة سحب اللحم/الذبح — تنتهي البيع فقط. لفترة سحب الحليب انظر
+    `_milk_withdrawal_ending_soon()` تحت (بند إضافي، 2026-08-30: طلبك
+    الصريح إن التحريمين مستقلان)."""
     from app.health.health_service import animal_under_withdrawal
     today = date.today()
     window_end = today + timedelta(days=fs.alert_before_days)
@@ -75,7 +78,24 @@ def _withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
         if until and until <= window_end:
             alerts.append({
                 "category": "فترة سحب", "icon": "⏳",
-                "label": f"{a.animal_no} — تصير آمنة للبيع بتاريخ {until}",
+                "label": f"{a.animal_no} — تصير آمنة للبيع/الذبح بتاريخ {until}",
+                "detail": "", "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
+            })
+    return alerts
+
+
+def _milk_withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
+    """فترة سحب الحليب المستقلة (بند إضافي، 2026-08-30)."""
+    from app.health.health_service import animal_under_milk_withdrawal
+    today = date.today()
+    window_end = today + timedelta(days=fs.alert_before_days)
+    alerts = []
+    for a in Animal.query.filter_by(status="active").all():
+        until = animal_under_milk_withdrawal(a.id)
+        if until and until <= window_end:
+            alerts.append({
+                "category": "فترة سحب حليب", "icon": "🥛",
+                "label": f"{a.animal_no} — يصير حليبها آمناً بتاريخ {until}",
                 "detail": "", "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
             })
     return alerts
@@ -905,7 +925,7 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
     outbreak_service.detect_barn_clusters()
 
     alerts = (
-        _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _near_births()
+        _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _milk_withdrawal_ending_soon(fs) + _near_births()
         + _device_removal_due(fs) + _stale_open_diseases(fs) + _out_of_order_animals()
         + _stale_new_reports(fs) + _ready_to_sell_now() + _delayed_estrus(fs)
         + _barns_without_responsible_worker() + _upcoming_vaccination_stock_shortage(fs)

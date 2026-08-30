@@ -36,6 +36,16 @@ def test_monthly_cost_per_head_splits_evenly_across_active_heads(app):
     assert rows[0]["cost_per_head"] == 100
 
 
+def test_monthly_cost_uses_numeric_month_label_not_arabic_name(app):
+    """بند إضافي (2026-08-30) — طلبك الصريح: اسم الشهر كان عربياً ثابتاً
+    بالكود وما يتحول لو بدّلت لغة الواجهة. الحل: رقم الشهر بصيغة
+    MM/YYYY بدل الاسم — يبقى صحيح بأي لغة."""
+    today = date.today()
+    rows = monthly_cost_per_head(months=1)
+    assert rows[0]["month_label"] == f"{today.month:02d}/{today.year}"
+    assert "month_name" not in rows[0]
+
+
 def test_monthly_cost_excludes_sale_and_debt_rows(app):
     make_animal(animal_no="F-03")
     _add_expense(100)

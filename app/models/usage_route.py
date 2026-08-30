@@ -27,3 +27,19 @@ class UsageRoute(db.Model):
         for n in ("حقن عضل", "حقن وريدي", "حقن تحت الجلد", "فموي", "موضعي", "رذاذ/استنشاق", "أخرى"):
             db.session.add(cls(name=n))
         db.session.commit()
+
+
+# ترجمة إنجليزية للأسماء السبعة المبذورة افتراضياً بس (بند إضافي، طلبك
+# الصريح: "بنسبه للخيارات نفس الحكايه ابيها عربي انجليزي") — أي اسم
+# طريقة استخدام يضيفه صاحب الحلال لاحقاً بنفسه (زر "+ إضافة") نص حر
+# بدون كود ثابت، فما له ترجمة تلقائية — نفس القيد المنطقي المطبَّق على
+# DiseaseType/Breed/AnimalColor.
+USAGE_ROUTE_LABELS_EN = {
+    "حقن عضل": "Intramuscular injection",
+    "حقن وريدي": "Intravenous injection",
+    "حقن تحت الجلد": "Subcutaneous injection",
+    "فموي": "Oral",
+    "موضعي": "Topical",
+    "رذاذ/استنشاق": "Spray / inhalation",
+    "أخرى": "Other",
+}

@@ -304,8 +304,17 @@ BODY_CONDITION_SCALE = [
 
 
 def _withdrawal_until(event_date: date, pharmacy: Pharmacy | None) -> date | None:
+    """فترة سحب اللحم/الذبح."""
     if pharmacy and pharmacy.withdrawal_days:
         return event_date + timedelta(days=pharmacy.withdrawal_days)
+    return None
+
+
+def _withdrawal_until_milk(event_date: date, pharmacy: Pharmacy | None) -> date | None:
+    """فترة سحب الحليب (بند إضافي، 2026-08-30) — منفصلة عمداً عن فترة
+    سحب اللحم أعلاه، نفس فلسفة الحساب بالضبط."""
+    if pharmacy and pharmacy.withdrawal_days_milk:
+        return event_date + timedelta(days=pharmacy.withdrawal_days_milk)
     return None
 
 
@@ -405,7 +414,8 @@ def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
         animal_id=animal_id, doctor_id=doctor_id, date=date_, diagnosis=diagnosis,
         pharmacy_id=pharmacy_id, quantity_used=quantity_used,
         cost=final_cost, notes=notes,
-        withdrawal_until=_withdrawal_until(date_, pharmacy), finance_id=finance_id,
+        withdrawal_until=_withdrawal_until(date_, pharmacy),
+        withdrawal_until_milk=_withdrawal_until_milk(date_, pharmacy), finance_id=finance_id,
     )
     _deduct_if_used(pharmacy, quantity_used)
     db.session.add(visit)
@@ -433,7 +443,8 @@ def record_disease(*, actor_user_id, animal_id, disease_name, date_, severity,
         animal_id=animal_id, disease_name=disease_name, date=date_, severity=severity,
         pharmacy_id=pharmacy_id, quantity_used=quantity_used,
         treatment_cost=final_cost,
-        withdrawal_until=_withdrawal_until(date_, pharmacy), finance_id=finance_id,
+        withdrawal_until=_withdrawal_until(date_, pharmacy),
+        withdrawal_until_milk=_withdrawal_until_milk(date_, pharmacy), finance_id=finance_id,
     )
     _deduct_if_used(pharmacy, quantity_used)
     db.session.add(disease)
@@ -455,6 +466,7 @@ def record_vaccination(*, actor_user_id, animal_id, vaccine_name, date_, next_du
         pharmacy_id=pharmacy_id, quantity_used=quantity_used,
         cost=_computed_cost(pharmacy, quantity_used, 0),
         withdrawal_until=_withdrawal_until(date_, pharmacy),
+        withdrawal_until_milk=_withdrawal_until_milk(date_, pharmacy),
     )
     _deduct_if_used(pharmacy, quantity_used)
     db.session.add(vacc)
@@ -684,8 +696,14 @@ def check_emergency_symptoms(*, animal_id, symptom_names: list[str], actor_user_
 
 
 def animal_under_withdrawal(animal_id) -> date | None:
-    """أقرب تاريخ 'يصير آمن بعده البيع/الحليب' لو الحيوان تحت فترة سحب حالياً حالياً.
-    تُستخدم لاحقاً كبوابة حقيقية تمنع البيع أثناء فترة السحب (مرحلة 3)."""
+    """أقرب تاريخ 'يصير آمن بعده البيع/الذبح' لو الحيوان تحت فترة سحب لحم حالياً.
+    تُستخدم كبوابة حقيقية تمنع البيع أثناء فترة السحب (مرحلة 3).
+
+    **بند إضافي (2026-08-30)**: هذي الدالة لفترة سحب اللحم/الذبح تحديداً
+    (تبوّب البيع بـcycle_engine) — لفترة سحب الحليب استخدم
+    `animal_under_milk_withdrawal()` تحت، منفصلة عمداً لأن مدتيهما
+    تختلفان طبياً حسب الدواء (طلبك الصريح: "عندي تحريم رضاعة الحليب
+    وتحريم فترة الذبح")."""
     today = date.today()
     candidates = []
     for model in (VetVisit, Disease, Vaccination):
@@ -695,4 +713,21 @@ def animal_under_withdrawal(animal_id) -> date | None:
                .first())
         if row:
             candidates.append(row.withdrawal_until)
+    return max(candidates) if candidates else None
+
+
+def animal_under_milk_withdrawal(animal_id) -> date | None:
+    """نفس منطق `animal_under_withdrawal()` بالضبط، بس لفترة سحب الحليب
+    المستقلة (بند إضافي، 2026-08-30) — تُستخدم لتنبيه تسجيل الحليب،
+    منفصلة عن فترة سحب اللحم/الذبح."""
+    today = date.today()
+    candidates = []
+    for model in (VetVisit, Disease, Vaccination):
+        row = (model.query
+               .filter(model.animal_id == animal_id, model.withdrawal_until_milk.isnot(None),
+                       model.withdrawal_until_milk >= today)
+               .order_by(model.withdrawal_until_milk.desc())
+               .first())
+        if row:
+            candidates.append(row.withdrawal_until_milk)
     return max(candidates) if candidates else None

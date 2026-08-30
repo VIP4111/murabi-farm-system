@@ -21,10 +21,11 @@ from datetime import date
 from calendar import monthrange
 from app.models import Finance, Animal, CycleEvent
 
-MONTH_NAMES_AR = [
-    "", "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
-    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
-]
+# بند إضافي (2026-08-30) — طلبك الصريح: أسماء الأشهر كانت عربية ثابتة
+# بالكود، فلو بدّلت لغة الواجهة لإنجليزي كان اسم الشهر يبقى عربي (ما
+# يتحول). الحل: رقم الشهر بدل الاسم — يبقى صحيح بأي لغة بدون أي منطق
+# ترجمة إضافي. أُبقيت MONTH_NAMES_AR فارغة الاستخدام محذوفة كليّاً
+# ليتضح أنها لم تعد مصدر أي عرض بالواجهة.
 
 _EXIT_EVENT_TYPES = ("sale", "death", "archive")
 
@@ -118,7 +119,7 @@ def monthly_cost_per_head(*, months: int = 12) -> list[dict]:
         )
         head_count = _head_count_for_month(start, end, entries, exits)
         results.append({
-            "year": yy, "month": mm, "month_name": MONTH_NAMES_AR[mm],
+            "year": yy, "month": mm, "month_label": f"{mm:02d}/{yy}",
             "total_cost": total_cost, "head_count": head_count,
             "cost_per_head": (total_cost / head_count) if head_count else None,
         })

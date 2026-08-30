@@ -10,7 +10,7 @@
   </div>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('فئة الدواء') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('نفاد متوقع') }}</th><th>{{ _('سعر الوحدة') }}</th><th>{{ _('تاريخ الانتهاء') }}</th><th>{{ _('فترة السحب (يوم)') }}</th><th>{{ _('طريقة الاستخدام') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('فئة الدواء') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('نفاد متوقع') }}</th><th>{{ _('سعر الوحدة') }}</th><th>{{ _('تاريخ الانتهاء') }}</th><th>{{ _('سحب لحم/ذبح (يوم)') }}</th><th>{{ _('سحب حليب (يوم)') }}</th><th>{{ _('طريقة الاستخدام') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
     {% for i in items %}
     <tr>
       <td>{{ i.name }}{% if (i.available_qty or 0) <= (i.min_stock_qty or 0) %} <span class="badge off" title="{{ _('وصل للحد الأدنى أو أقل') }}">❗ {{ _('ناقص') }}</span>{% endif %}{% if i.contains_high_copper %} <span class="badge off" title="{{ _('يحتوي نحاساً مرتفعاً') }}">⚠️Cu</span>{% endif %}</td>
@@ -21,6 +21,7 @@
       <td>{{ i.unit_price if i.unit_price is not none else '-' }}</td>
       <td>{{ i.expiry_date if i.expiry_date else '-' }}{% if i.expiry_date and i.expiry_date <= today %} <span class="badge off" title="{{ _('منتهي الصلاحية') }}">⛔ {{ _('منتهي') }}</span>{% endif %}</td>
       <td>{{ i.withdrawal_days }}</td>
+      <td>{{ i.withdrawal_days_milk }}</td>
       <td>{{ i.usage_method or '-' }}{% if i.standard_dosage_note %} <span title="{{ i.standard_dosage_note }}">ℹ️</span>{% endif %}</td>
       <td>{{ i.status|ar_status }}</td>
       <td>

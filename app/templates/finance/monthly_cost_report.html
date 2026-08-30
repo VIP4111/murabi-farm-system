@@ -27,7 +27,7 @@
     <tr><th>{{ _('الشهر') }}</th><th>{{ _('إجمالي التكلفة') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('تكلفة الرأس') }}</th></tr>
     {% for r in rows %}
     <tr>
-      <td>{{ r.month_name }} {{ r.year }}</td>
+      <td>{{ r.month_label }}</td>
       <td>{{ "%.2f"|format(r.total_cost) }}</td>
       <td>{{ r.head_count }}</td>
       <td>{{ "%.2f"|format(r.cost_per_head) if r.cost_per_head is not none else '-' }}</td>

@@ -24,6 +24,17 @@ class Pharmacy(db.Model):
         "topical_disinfectant": "مطهرات وعلاجات موضعية",
         "other": "أخرى",
     }
+    # ترجمة إنجليزية (بند إضافي، طلبك الصريح: "بنسبه للخيارات نفس
+    # الحكايه ابيها عربي انجليزي") — تُعرض جنب العربي بقائمة "فئة الدواء"
+    # المنسدلة، بنفس مبدأ PERMISSIONS_EN/MEDICINE_CLASS_GUIDE_EN.
+    MEDICINE_CLASS_LABELS_EN = {
+        "antiparasitic": "Antiparasitic / dewormer",
+        "antibiotic": "Antibiotic",
+        "vaccine": "Vaccine / immunization",
+        "supplement": "Vitamins and supplements",
+        "topical_disinfectant": "Disinfectants and topical treatments",
+        "other": "Other",
+    }
 
     # ظروف التخزين (بند إضافي 61، 2026-07-28) — وصفي بس، ما يشغّل أي منطق
     # آلي (لا تنبيه ولا حظر) — يظهر بفورم الدواء عشان العامل يعرف وين
@@ -33,6 +44,11 @@ class Pharmacy(db.Model):
         "refrigerated": "مبرّد (2-8° مئوية)",
         "dry_dark": "مكان جاف ومظلم (أقل من 25° مئوية)",
         "frozen": "مجمَّد",
+    }
+    STORAGE_CONDITION_LABELS_EN = {
+        "refrigerated": "Refrigerated (2-8°C)",
+        "dry_dark": "Dry, dark place (under 25°C)",
+        "frozen": "Frozen",
     }
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +62,17 @@ class Pharmacy(db.Model):
     expiry_date = db.Column(db.Date)
     available_qty = db.Column(db.Float, default=0)
     unit = db.Column(db.String(32))
+    # فترة سحب اللحم/الذبح — الاسم القديم `withdrawal_days` أُبقي كما هو
+    # (بدون تغيير المعنى للبيانات الموجودة أصلاً) عشان صفر خطر ترحيل؛
+    # فقط وضّحنا بالتعليق إنه تحديداً للحم لا الحليب.
     withdrawal_days = db.Column(db.Integer, default=0, nullable=False)
+    # فترة سحب الحليب (بند إضافي، 2026-08-30) — طلبك الصريح: "عندي
+    # تحريم رضاعة الحليب وتحريم فترة الذبح [منفصلين]". قبل هذا البند
+    # كان فيه حقل واحد بس يُستخدم لمنع البيع والحليب مع بعض بنفس المدة
+    # — غير دقيق طبياً، لأن كثير أدوية بيطرية فترة سحب الحليب تختلف
+    # (غالباً أقصر) عن فترة سحب اللحم. صفر لو الدواء ما له فترة سحب
+    # حليب مستقلة (يبقى السلوك القديم كما هو لو تُرك 0).
+    withdrawal_days_milk = db.Column(db.Integer, default=0, nullable=False)
 
     # الحد الأدنى للتنبيه (بند إضافي، 2026-07-24) — نفس حقل Feed.min_stock_qty
     # بالضبط. أي دواء وصل مخزونه له أو أقل يظهر بقائمة "نواقص الصيدلية"

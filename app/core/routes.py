@@ -1079,7 +1079,7 @@ def animal_quick_info(animal_id):
 @login_required
 @require_permission("animals.view")
 def animal_detail(animal_id):
-    from app.health.health_service import animal_under_withdrawal
+    from app.health.health_service import animal_under_withdrawal, animal_under_milk_withdrawal
 
     animal = Animal.query.get_or_404(animal_id)
     profile = animal_profile_service.get_profile(animal)
@@ -1087,6 +1087,8 @@ def animal_detail(animal_id):
     # المجترات فقط (تقريع/حمل/فطام)، فما ننشئ له صف ProductionWorkflow.
     wf = cycle_engine.get_or_create_workflow(animal) if animal.species == "sheep_goat" else None
     withdrawal_until = animal_under_withdrawal(animal.id)
+    # فترة سحب الحليب مستقلة عن فترة سحب اللحم أعلاه (بند إضافي، 2026-08-30).
+    withdrawal_until_milk = animal_under_milk_withdrawal(animal.id)
     breed_row = Breed.query.filter_by(name=animal.breed).first() if animal.breed else None
     animal_alerts = alerts_service.alerts_for_animal(animal.id) if current_user.has_permission("animals.view") else []
 
@@ -1108,6 +1110,8 @@ def animal_detail(animal_id):
         "animal_detail.html", wf=wf,
         withdrawal_until=withdrawal_until,
         withdrawal_days_left=(withdrawal_until - date.today()).days if withdrawal_until else None,
+        withdrawal_until_milk=withdrawal_until_milk,
+        withdrawal_milk_days_left=(withdrawal_until_milk - date.today()).days if withdrawal_until_milk else None,
         today=date.today().isoformat(),
         breed_care_notes=breed_row.care_notes if breed_row else None,
         suggested_items=suggested_items, suggested_reason=suggested_reason,
@@ -1314,7 +1318,7 @@ def animal_isolation_exit(animal_id):
 @login_required
 @require_permission("animals.manage")
 def animal_milk_new(animal_id):
-    from app.health.health_service import animal_under_withdrawal
+    from app.health.health_service import animal_under_milk_withdrawal
 
     animal = Animal.query.get_or_404(animal_id)
     add_milk_record(
@@ -1328,11 +1332,14 @@ def animal_milk_new(animal_id):
     flash("تم تسجيل الحليب", "success")
     # تنبيه فترة التحريم (بند إضافي، 2026-07-23) — تسجيل تحذيري بس (مو
     # منع)، عشان يبقى القرار للمالك/الدكتور لو الحليب يُستخدم للاستهلاك
-    # المنزلي بدل البيع مثلاً. الحقل موجود أصلاً (`animal_under_withdrawal`)
-    # وكان يُعرض بس بصفحة تفاصيل الرأس، بدون أي تنبيه فعلي وقت التسجيل.
-    until = animal_under_withdrawal(animal.id)
+    # المنزلي بدل البيع مثلاً.
+    # بند إضافي (2026-08-30) — طلبك الصريح: كان هذا التنبيه يتحقق من
+    # فترة سحب اللحم/الذبح (`animal_under_withdrawal`) بالغلط، مع إن
+    # فترة سحب الحليب مستقلة وغالباً مختلفة المدة. صار يتحقق من
+    # `animal_under_milk_withdrawal()` المخصَّصة للحليب تحديداً.
+    until = animal_under_milk_withdrawal(animal.id)
     if until:
-        flash(f'تنبيه: {animal.animal_no} تحت فترة تحريم دواء حتى {until} — الحليب المسجَّل الآن قد يكون غير آمن للبيع/الاستهلاك.', "warning")
+        flash(f'تنبيه: {animal.animal_no} تحت فترة تحريم حليب حتى {until} — الحليب المسجَّل الآن قد يكون غير آمن للبيع/الاستهلاك.', "warning")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="milk"))
 
 

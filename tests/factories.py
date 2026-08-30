@@ -28,9 +28,10 @@ def make_animal(animal_no="A-01", gender="أنثى", source=AnimalSource.PURCHAS
 
 
 def make_pharmacy(name="دواء اختبار", available_qty=10, unit_price=None, withdrawal_days=0,
-                   medicine_class=None, contains_high_copper=False):
+                   withdrawal_days_milk=0, medicine_class=None, contains_high_copper=False):
     item = Pharmacy(name=name, available_qty=available_qty, unit_price=unit_price,
-                     withdrawal_days=withdrawal_days, medicine_class=medicine_class,
+                     withdrawal_days=withdrawal_days, withdrawal_days_milk=withdrawal_days_milk,
+                     medicine_class=medicine_class,
                      contains_high_copper=contains_high_copper, status="active")
     db.session.add(item)
     db.session.commit()

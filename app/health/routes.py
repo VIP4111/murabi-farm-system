@@ -11,6 +11,7 @@ from app.models import (
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
     ProtocolApplication, DiseaseSymptomLink, EmergencySymptom,
 )
+from app.models.usage_route import USAGE_ROUTE_LABELS_EN
 from app.health import health_service
 from app.team import task_service as tsvc
 from app.core import protocol_service
@@ -173,6 +174,7 @@ def pharmacy_new():
             unit_price=float(request.form["unit_price"]) if request.form.get("unit_price") else None,
             expiry_date=date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None,
             withdrawal_days=int(request.form.get("withdrawal_days") or 0),
+            withdrawal_days_milk=int(request.form.get("withdrawal_days_milk") or 0),
             usage_method=request.form.get("usage_method") or None,
             standard_dosage_note=request.form.get("standard_dosage_note") or None,
             protection_days=int(request.form["protection_days"]) if request.form.get("protection_days") else None,
@@ -191,11 +193,14 @@ def pharmacy_new():
         "health/pharmacy_form.html",
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_labels_en=Pharmacy.MEDICINE_CLASS_LABELS_EN,
         medicine_class_guide=health_service.MEDICINE_CLASS_GUIDE,
         medicine_class_guide_en=health_service.MEDICINE_CLASS_GUIDE_EN,
         storage_conditions=Pharmacy.STORAGE_CONDITIONS,
         storage_condition_labels=Pharmacy.STORAGE_CONDITION_LABELS_AR,
+        storage_condition_labels_en=Pharmacy.STORAGE_CONDITION_LABELS_EN,
         usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
+        usage_route_labels_en=USAGE_ROUTE_LABELS_EN,
         drug_catalog=DrugCatalogEntry.query.order_by(DrugCatalogEntry.name).all(),
     )
 
@@ -238,6 +243,7 @@ def pharmacy_edit(pharmacy_id):
         item.unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None
         item.expiry_date = date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None
         item.withdrawal_days = int(request.form.get("withdrawal_days") or 0)
+        item.withdrawal_days_milk = int(request.form.get("withdrawal_days_milk") or 0)
         item.usage_method = request.form.get("usage_method") or None
         item.standard_dosage_note = request.form.get("standard_dosage_note") or None
         item.protection_days = int(request.form["protection_days"]) if request.form.get("protection_days") else None
@@ -253,11 +259,14 @@ def pharmacy_edit(pharmacy_id):
         "health/pharmacy_form.html", item=item,
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
         medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_labels_en=Pharmacy.MEDICINE_CLASS_LABELS_EN,
         medicine_class_guide=health_service.MEDICINE_CLASS_GUIDE,
         medicine_class_guide_en=health_service.MEDICINE_CLASS_GUIDE_EN,
         storage_conditions=Pharmacy.STORAGE_CONDITIONS,
         storage_condition_labels=Pharmacy.STORAGE_CONDITION_LABELS_AR,
+        storage_condition_labels_en=Pharmacy.STORAGE_CONDITION_LABELS_EN,
         usage_routes=UsageRoute.query.order_by(UsageRoute.name).all(),
+        usage_route_labels_en=USAGE_ROUTE_LABELS_EN,
         drug_catalog=DrugCatalogEntry.query.order_by(DrugCatalogEntry.name).all(),
         dose_rules=item.dose_rules,
     )

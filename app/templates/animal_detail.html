@@ -23,7 +23,8 @@
         <span class="badge">{{ animal.gender or '-' }}</span>
         <span class="badge">{{ source_labels.get(animal.source.value, animal.source.value) }}</span>
         <span class="badge">{{ animal.barn.barn_name if animal.barn else _('بدون حظيرة') }}</span>
-        {% if withdrawal_until %}<span class="badge off" title="{{ _('ممنوع البيع/الذبح — يُرفع تلقائياً') }}">🚫 {{ _('فترة سحب حتى %(date)s (باقي %(n)s يوم)', date=withdrawal_until, n=withdrawal_days_left) }}</span>{% endif %}
+        {% if withdrawal_until %}<span class="badge off" title="{{ _('ممنوع البيع/الذبح — يُرفع تلقائياً') }}">🚫 {{ _('فترة سحب لحم/ذبح حتى %(date)s (باقي %(n)s يوم)', date=withdrawal_until, n=withdrawal_days_left) }}</span>{% endif %}
+        {% if withdrawal_until_milk %}<span class="badge off" title="{{ _('ممنوع بيع/استهلاك الحليب — يُرفع تلقائياً') }}">🥛 {{ _('فترة سحب حليب حتى %(date)s (باقي %(n)s يوم)', date=withdrawal_until_milk, n=withdrawal_milk_days_left) }}</span>{% endif %}
       </div>
     </div>
     <div style="flex:0 0 auto; display:flex; flex-direction:column; gap:8px;">

@@ -13,7 +13,7 @@
     <select name="medicine_class" id="medicineClassSelect">
       <option value="">-</option>
       {% for code in medicine_classes %}
-      <option value="{{ code }}" {{ 'selected' if item and item.medicine_class == code }}>{{ medicine_class_labels[code] }}</option>
+      <option value="{{ code }}" {{ 'selected' if item and item.medicine_class == code }}>{{ medicine_class_labels[code] }}{% if medicine_class_labels_en and medicine_class_labels_en.get(code) %} ({{ medicine_class_labels_en[code] }}){% endif %}</option>
       {% endfor %}
     </select>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تحديد "مضاد طفيليات/ديدان" هنا تحديداً هو اللي يفعّل حارس منع تكرار الجرعة خلال 30 يوماً — وهي أيضاً أساس تصفية "اسم الدواء" والحقول الشرطية تحت.') }}</p>
@@ -39,7 +39,7 @@
       <select name="usage_method" style="flex:1;">
         <option value="">-</option>
         {% for r in usage_routes %}
-        <option value="{{ r.name }}" {{ 'selected' if item and item.usage_method == r.name }}>{{ r.name }}</option>
+        <option value="{{ r.name }}" {{ 'selected' if item and item.usage_method == r.name }}>{{ r.name }}{% if usage_route_labels_en and usage_route_labels_en.get(r.name) %} ({{ usage_route_labels_en[r.name] }}){% endif %}</option>
         {% endfor %}
       </select>
       <a class="btn light" href="{{ url_for('health.usage_routes_new') }}" title="{{ _('إضافة طريقة استخدام جديدة') }}" target="_blank">➕</a>
@@ -57,14 +57,17 @@
     <select name="storage_condition">
       <option value="">-</option>
       {% for code in storage_conditions %}
-      <option value="{{ code }}" {{ 'selected' if item and item.storage_condition == code }}>{{ storage_condition_labels[code] }}</option>
+      <option value="{{ code }}" {{ 'selected' if item and item.storage_condition == code }}>{{ storage_condition_labels[code] }}{% if storage_condition_labels_en and storage_condition_labels_en.get(code) %} ({{ storage_condition_labels_en[code] }}){% endif %}</option>
       {% endfor %}
     </select>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('وصفي بس — يخبر العامل وين يحفظ الدواء فعلياً، ما يشغّل أي تنبيه آلي.') }}</p>
 
     <div id="withdrawalGroup" style="display:none;">
-      <label>{{ _('فترة السحب (بالأيام)') }}</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
-      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تستخدم حليبه — النظام يحسبها تلقائياً ويمنع البيع خلالها.') }}</p>
+      <label>{{ _('فترة سحب اللحم/الذبح (بالأيام)') }}</label><input name="withdrawal_days" type="number" value="{{ item.withdrawal_days if item else 0 }}">
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('عدد الأيام اللي لازم تنتظرها بعد إعطاء هذا الدواء لأي رأس قبل ما تقدر تبيعه أو تذبحه — النظام يحسبها تلقائياً ويمنع البيع خلالها.') }}</p>
+
+      <label>{{ _('فترة سحب الحليب (بالأيام، اختياري)') }}</label><input name="withdrawal_days_milk" type="number" value="{{ item.withdrawal_days_milk if item else 0 }}">
+      <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('مستقلة عن فترة سحب اللحم أعلاه — كثير أدوية فترة سحب الحليب فيها تختلف (غالباً أقصر). اتركها 0 لو الدواء ما له فترة سحب حليب منفصلة.') }}</p>
     </div>
 
     <div id="vaccineGroup" style="display:none;">

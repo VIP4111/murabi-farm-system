@@ -116,6 +116,9 @@ class VetVisit(db.Model):
 
     # فترة السحب المحسوبة تلقائياً من دواء الصيدلية (انظر health_service.py)
     withdrawal_until = db.Column(db.Date, nullable=True)
+    # فترة سحب الحليب المحسوبة تلقائياً (بند إضافي، 2026-08-30) — منفصلة
+    # عمداً عن withdrawal_until (اللحم/الذبح) أعلاه.
+    withdrawal_until_milk = db.Column(db.Date, nullable=True)
 
     # ربط بعملية مالية حقيقية (بند إضافي 261) — قبل هذا البند، `cost`
     # كان يُخزَّن هنا بس، بدون أي أثر بسجل "المالية" العام (إجمالي
@@ -155,6 +158,9 @@ class Disease(db.Model):
     closed_by = db.relationship("User")
 
     withdrawal_until = db.Column(db.Date, nullable=True)
+    # فترة سحب الحليب المحسوبة تلقائياً (بند إضافي، 2026-08-30) — منفصلة
+    # عمداً عن withdrawal_until (اللحم/الذبح) أعلاه.
+    withdrawal_until_milk = db.Column(db.Date, nullable=True)
 
     # ربط بعملية مالية حقيقية (بند إضافي 261) — نفس مبدأ VetVisit.finance_id
     # أعلاه، بس لتكلفة علاج المرض (`treatment_cost`).
@@ -183,4 +189,7 @@ class Vaccination(db.Model):
     cost = db.Column(db.Float, default=0)
 
     withdrawal_until = db.Column(db.Date, nullable=True)
+    # فترة سحب الحليب المحسوبة تلقائياً (بند إضافي، 2026-08-30) — منفصلة
+    # عمداً عن withdrawal_until (اللحم/الذبح) أعلاه.
+    withdrawal_until_milk = db.Column(db.Date, nullable=True)
     created_at = db.Column(db.DateTime, default=_now)
