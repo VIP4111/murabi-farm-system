@@ -90,6 +90,61 @@ PERMISSIONS = [
 
 PERMISSION_CODES = {code for code, _ in PERMISSIONS}
 
+# ترجمة إنجليزية لعرضها جنب الوصف العربي بشاشة "تعديل صلاحيات الدور"
+# فقط (بند إضافي، طلبك الصريح: "عندك في اصلحيات خليها عربي انجليزي" —
+# صلاحيات الدكتور/العامل/بقية أعضاء الفريق). لا تُستخدم بمكان ثانٍ —
+# الوصف العربي بـPERMISSIONS أعلاه يبقى هو المخزَّن بعمود
+# Permission.description بقاعدة البيانات كما كان، بدون أي تغيير.
+PERMISSIONS_EN = {
+    "settings.manage": "Manage system settings, enable/disable services",
+    "roles.manage": "Create and edit job roles and their permissions",
+    "users.manage": "Add/edit/deactivate user accounts",
+    "team.manage_salary": "Edit a team member's base salary (only, not the rest of their account)",
+    "audit.view": "View the full audit log",
+    "system.factory_reset": "Factory reset the system (permanently deletes all data)",
+
+    "animals.view": "View the animal records",
+    "animals.manage": "Add/edit/sell/record death of an animal",
+    "sales.override_withdrawal": "Sell an animal during its medicine withdrawal period, with a documented reason",
+    "barns.manage": "Manage barns",
+
+    "health.view": "View health records and vet visits",
+    "health.manage": "Record a diagnosis/treatment/vaccination",
+    "pharmacy.manage": "Manage the pharmacy stock",
+    "medical_options.manage": "Add new medical options (symptoms, drugs, protocols)",
+    "gates.approve": "Approve critical exit gates (leaving isolation, advancing a stage)",
+
+    "repro.view": "View reproduction data (breeding, pregnancy, ultrasound, estrus programs)",
+    "repro.manage": "Record breeding/pregnancy diagnosis/ultrasound and manage twinning-estrus programs",
+    "repro.override_close_relation": "Override the close-relation genetic warning at direct breeding",
+
+    "finance.health.view": "View only the finance linked to health and treatment",
+    "finance.full.manage": "Manage all finance (sales, purchases, debts)",
+
+    "tasks.view_own": "View only my own tasks",
+    "tasks.assign_any": "Assign a task to any worker",
+    "tasks.review_daily": "Review the auto-suggested daily tasks (approve/postpone/delete)",
+    "tasks.delete_final": "Permanently delete a task (owner only)",
+    "reports.submit": "Submit a report",
+    "reports.manage": "Receive/forward/close reports",
+    "reports.delete_final": "Permanently delete a cancelled report (owner only)",
+
+    "feed.view": "View feed data and stock",
+    "feed.manage": "Manage feed, rations, and feeding plans",
+
+    "equipment.view": "View equipment stock",
+    "equipment.manage": "Manage equipment stock (add/purchase/issue)",
+
+    "analytics.view": "View analytics reports (overview, deaths, births, sales) and export",
+
+    "assistant.use": "Use the interactive AI assistant and chat with it",
+    "farm_notes.manage": "Add/edit farm notebook notes (the assistant's memory source)",
+    "assistant.draft_actions.confirm": "Approve or reject action drafts suggested by the AI assistant (text/voice)",
+
+    "climate.view": "View weather forecasts and the heat-stress index",
+    "climate.manage": "Set the farm location and heat-stress index thresholds",
+}
+
 # التركيبة الافتراضية لثلاثة أدوار جاهزة عند أول تشغيل للنظام.
 # هذي بس بيانات ابتدائية — صاحب الحلال يقدر يعدلها أو يضيف أدوار جديدة
 # من واجهة الإعدادات بعد كذا بدون أي تعديل كود.

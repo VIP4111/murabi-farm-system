@@ -21,7 +21,7 @@ from app.extensions import db
 from app.models import Animal, Barn, BarnFeedingSchedule, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
 from app.models import SpeciesType, Breed, AnimalColor, Task, Report
 from app.models.animal import AnimalSource
-from app.permissions_registry import PERMISSIONS
+from app.permissions_registry import PERMISSIONS, PERMISSIONS_EN
 
 
 @core_bp.route("/settings/language", methods=["POST"])
@@ -1836,6 +1836,7 @@ def role_edit(role_id):
     current_codes = {p.code for p in role.permissions}
     return render_template(
         "role_edit.html", role=role, all_permissions=PERMISSIONS, current_codes=current_codes,
+        permissions_en=PERMISSIONS_EN,
     )
 
 
