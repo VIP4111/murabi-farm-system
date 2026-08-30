@@ -4,9 +4,13 @@
   <h2>{{ _('عضو فريق جديد') }}</h2>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label>{{ _('الاسم') }}</label><input name="name" required>
-    <label>{{ _('رقم الجوال (لتسجيل الدخول)') }}</label><input name="phone" required>
-    <label>{{ _('كلمة المرور') }}</label><input name="password" type="password" required>
+    <label>{{ _('الاسم') }}</label><input name="name" id="memberNameInput" required>
+    <label>{{ _('رقم الجوال (لتسجيل الدخول)') }}</label><input name="phone" id="memberPhoneInput" required>
+    <label>{{ _('كلمة المرور') }}</label><input name="password" id="memberPasswordInput" type="password" required>
+    <p>
+      <button type="button" class="btn light" id="copyLoginInfoBtn">📋 {{ _('نسخ بيانات الدخول') }}</button>
+    </p>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تنسخ رقم الجوال وكلمة المرور اللي كتبتهم فوق كنص جاهز لإرساله للعضو (واتساب/تيليجرام) — تأكد إنك عبّيت الحقول أولاً.') }}</p>
     <label>{{ _('الدور') }}</label>
     <select name="role_id" required>
       {% for r in roles %}<option value="{{ r.id }}">{{ r.display_name }}</option>{% endfor %}
@@ -21,4 +25,44 @@
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
+<script>
+(function(){
+  // بند إضافي (2026-08-30) — طلبك الصريح: "حط لي زر نسخ معلومات
+  // تسجيل الدخول علشان انسخها وارسلها لأعضاء الفريق". نسخ من الحقول
+  // مباشرة (بدون أي حفظ بالخادم) — أسلم مكان ممكن، لأنه اللحظة
+  // الوحيدة اللي كلمة المرور نص صريح فيها أصلاً (تُشفَّر فور الحفظ
+  // وما ترجع تُقرأ ثانية أبداً).
+  var btn = document.getElementById('copyLoginInfoBtn');
+  if (!btn) return;
+  var LABEL_DEFAULT = btn.textContent;
+  var LABEL_COPIED = {{ _('✅ انتسخت!')|tojson }};
+  var LABEL_EMPTY = {{ _('⚠️ عبّي الجوال وكلمة المرور أولاً')|tojson }};
+  var MSG_TEMPLATE = {{ _('بيانات الدخول لنظام "مراح بو علي":\nالاسم: {name}\nرقم الجوال: {phone}\nكلمة المرور: {password}\nرابط الدخول: {url}')|tojson }};
+
+  btn.addEventListener('click', function(){
+    var name = document.getElementById('memberNameInput').value.trim() || '-';
+    var phone = document.getElementById('memberPhoneInput').value.trim();
+    var password = document.getElementById('memberPasswordInput').value;
+    if (!phone || !password) {
+      btn.textContent = LABEL_EMPTY;
+      setTimeout(function(){ btn.textContent = LABEL_DEFAULT; }, 2500);
+      return;
+    }
+    var text = MSG_TEMPLATE
+      .replace('{name}', name).replace('{phone}', phone)
+      .replace('{password}', password).replace('{url}', window.location.origin + '/login');
+    var done = function(){
+      btn.textContent = LABEL_COPIED;
+      setTimeout(function(){ btn.textContent = LABEL_DEFAULT; }, 2500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function(){
+        window.prompt({{ _('انسخ النص يدوياً:')|tojson }}, text);
+      });
+    } else {
+      window.prompt({{ _('انسخ النص يدوياً:')|tojson }}, text);
+    }
+  });
+})();
+</script>
 {% endblock %}
