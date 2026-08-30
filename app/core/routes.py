@@ -76,9 +76,9 @@ def send_test_email_report():
     from app.core.daily_email_report_service import send_daily_report_now
     sent = send_daily_report_now()
     if sent:
-        flash(f"تم إرسال التقرير فعلياً لعدد {sent} من المستخدمين.", "success")
+        flash(_("تم إرسال التقرير فعلياً لعدد %(n)s من المستخدمين.", n=sent), "success")
     else:
-        flash("ما نجح أي إرسال — تأكد إن بريدك مسجَّل وإن متغيرات Resend مضبوطة صحيح.", "error")
+        flash(_("ما نجح أي إرسال — تأكد إن بريدك مسجَّل وإن متغيرات Resend مضبوطة صحيح."), "error")
     return redirect(request.referrer or url_for("core.home"))
 
 
@@ -93,9 +93,9 @@ def send_test_telegram_report():
     from app.core.daily_telegram_report_service import send_daily_report_now
     sent = send_daily_report_now()
     if sent:
-        flash(f"تم إرسال الملخص فعلياً لعدد {sent} من المستخدمين.", "success")
+        flash(_("تم إرسال الملخص فعلياً لعدد %(n)s من المستخدمين.", n=sent), "success")
     else:
-        flash("ما نجح أي إرسال — تأكد إن Chat ID مسجَّل لك وإن توكن تيليجرام مضبوط صحيح (راجع تشخيص بوت تيليجرام بالإعدادات).", "error")
+        flash(_("ما نجح أي إرسال — تأكد إن Chat ID مسجَّل لك وإن توكن تيليجرام مضبوط صحيح (راجع تشخيص بوت تيليجرام بالإعدادات)."), "error")
     return redirect(request.referrer or url_for("core.home"))
 
 
@@ -139,7 +139,7 @@ def regenerate_catalog_token():
     import secrets
     fs.sales_catalog_token = secrets.token_urlsafe(24)
     db.session.commit()
-    flash("تم توليد رابط كتالوج جديد — الرابط القديم ما عاد يشتغل", "success")
+    flash(_("تم توليد رابط كتالوج جديد — الرابط القديم ما عاد يشتغل"), "success")
     return redirect(url_for("core.settings_home"))
 
 
@@ -391,7 +391,7 @@ def animal_repro_flags_save(animal_id):
     animal.udder_damaged = _bool("udder_damaged")
     db.session.add(animal)
     db.session.commit()
-    flash("تم حفظ علامات البيع", "success")
+    flash(_("تم حفظ علامات البيع"), "success")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="summary"))
 
 
@@ -425,10 +425,10 @@ def animals_bulk_select():
 
     animal_ids = [int(x) for x in request.form.getlist("animal_ids")]
     if not animal_ids:
-        flash("لازم تحدد رأس واحد على الأقل", "error")
+        flash(_("لازم تحدد رأس واحد على الأقل"), "error")
         return redirect(url_for("core.animals_bulk_home"))
     if action not in BULK_ACTIONS:
-        flash("إجراء جماعي غير معروف", "error")
+        flash(_("إجراء جماعي غير معروف"), "error")
         return redirect(url_for("core.animals_bulk_home"))
 
     from app.health.health_service import seed_default_vaccine_catalog
@@ -471,7 +471,7 @@ def animals_bulk_apply_weight():
         weights_by_id=weights_by_id, notes_by_id=notes_by_id, actor_user_id=current_user.id,
     )
     done = sum(1 for r in results.values() if r.startswith("تم"))
-    flash(f"وزن جماعي: {done} من {len(animal_ids)} تم تسجيلهم", "success")
+    flash(_("وزن جماعي: %(done)s من %(total)s تم تسجيلهم", done=done, total=len(animal_ids)), "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -494,7 +494,7 @@ def animals_bulk_apply_vaccination():
             continue
         pharmacy = Pharmacy.query.get(int(pharmacy_id))
         if not pharmacy or pharmacy.medicine_class != "vaccine":
-            flash("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)", "error")
+            flash(_("لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"), "error")
             return redirect(url_for("core.animals_bulk_home"))
         doses = {}
         for animal_id in animal_ids:
@@ -506,17 +506,17 @@ def animals_bulk_apply_vaccination():
             vaccine_slots.append({"pharmacy_id": pharmacy.id, "doses": doses})
 
     if not vaccine_slots:
-        flash("لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه", "error")
+        flash(_("لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه"), "error")
         return redirect(url_for("core.animals_bulk_home"))
 
     results = bulk_service.apply_bulk_vaccination(
         record_date=record_date, actor_user_id=current_user.id, vaccine_slots=vaccine_slots,
     )
     done = sum(1 for r in results.values() if r == "تم")
-    flash(f"تحصين جماعي: {done} تسجيل ناجح", "success")
+    flash(_("تحصين جماعي: %(n)s تسجيل ناجح", n=done), "success")
     for (pharmacy_id, animal_id), r in results.items():
         if r.startswith("مرفوض"):
-            flash(f"رأس #{animal_id}: {r}", "error")
+            flash(_("رأس #%(id)s: %(msg)s", id=animal_id, msg=r), "error")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -535,7 +535,7 @@ def animals_bulk_apply_note():
         note_date=date.fromisoformat(request.form["date"]) if request.form.get("date") else date.today(),
         extra_notes_by_id=extra_notes_by_id, actor_user_id=current_user.id,
     )
-    flash(f"ملاحظة جماعية: أُضيفت لـ{len(results)} رأس", "success")
+    flash(_("ملاحظة جماعية: أُضيفت لـ%(n)s رأس", n=len(results)), "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -547,7 +547,7 @@ def animals_bulk_apply_barn_move():
     results = bulk_service.apply_bulk_barn_move(
         animal_ids=animal_ids, barn_id=int(request.form["barn_id"]), actor_user_id=current_user.id,
     )
-    flash(f"نقل حظيرة جماعي: تم نقل {len(results)} رأس", "success")
+    flash(_("نقل حظيرة جماعي: تم نقل %(n)s رأس", n=len(results)), "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -559,7 +559,7 @@ def animals_bulk_apply_purpose():
     results = bulk_service.apply_bulk_purpose(
         animal_ids=animal_ids, purpose=request.form["purpose"], actor_user_id=current_user.id,
     )
-    flash(f"تحديد الغرض جماعياً: تم تحديد {len(results)} رأس", "success")
+    flash(_("تحديد الغرض جماعياً: تم تحديد %(n)s رأس", n=len(results)), "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -579,12 +579,12 @@ def animals_bulk_apply_sale():
         notes=request.form.get("notes") or None, actor_user_id=current_user.id,
     )
     done = sum(1 for r in results.values() if r.startswith("تم"))
-    flash(f"بيع جماعي: {done} من {len(animal_ids)} تم بيعهم — راجع التفاصيل أدناه لو فيه رؤوس مرفوضة", "success")
+    flash(_("بيع جماعي: %(done)s من %(total)s تم بيعهم — راجع التفاصيل أدناه لو فيه رؤوس مرفوضة", done=done, total=len(animal_ids)), "success")
     for animal_id, r in results.items():
         if r.startswith("مرفوض"):
-            flash(f"رأس #{animal_id}: {r}", "error")
+            flash(_("رأس #%(id)s: %(msg)s", id=animal_id, msg=r), "error")
         elif "تنبيه" in r:
-            flash(f"رأس #{animal_id}: {r.split('— تنبيه: ')[-1]}", "warning")
+            flash(_("رأس #%(id)s: %(msg)s", id=animal_id, msg=r.split('— تنبيه: ')[-1]), "warning")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -598,7 +598,7 @@ def animals_bulk_apply_mark_dead():
         death_date=date.fromisoformat(request.form["date"]) if request.form.get("date") else date.today(),
         reason=request.form.get("reason") or None, actor_user_id=current_user.id,
     )
-    flash(f"تسجيل نفوق جماعي: تم تسجيله لـ{len(results)} رأس (بدون شرط اكتمال الدورة)", "success")
+    flash(_("تسجيل نفوق جماعي: تم تسجيله لـ%(n)s رأس (بدون شرط اكتمال الدورة)", n=len(results)), "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -617,10 +617,10 @@ def animals_bulk_apply_disease():
         actor_user_id=current_user.id,
     )
     done = sum(1 for r in results.values() if r.startswith("تم"))
-    flash(f"علاج/مرض جماعي: {done} من {len(animal_ids)} تم تسجيلهم", "success")
+    flash(_("علاج/مرض جماعي: %(done)s من %(total)s تم تسجيلهم", done=done, total=len(animal_ids)), "success")
     for animal_id, r in results.items():
         if r.startswith("مرفوض"):
-            flash(f"رأس #{animal_id}: {r}", "error")
+            flash(_("رأس #%(id)s: %(msg)s", id=animal_id, msg=r), "error")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -665,7 +665,7 @@ def animals_bulk_apply_treatment_plan():
             t.source_id = batch_id
         db.session.commit()
 
-    flash(f"تم إنشاء خطة علاج لـ {len(created)} رأس — بانتظار مراجعة الدكتور وتأكيد التنفيذ لكل رأس.", "success")
+    flash(_("تم إنشاء خطة علاج لـ %(n)s رأس — بانتظار مراجعة الدكتور وتأكيد التنفيذ لكل رأس.", n=len(created)), "success")
     return redirect(url_for("team.tasks_list"))
 
 
@@ -681,7 +681,7 @@ def animals_bulk_apply_isolation():
     )
     done = sum(1 for r in results.values() if r.startswith("تم"))
     if done:
-        flash(f"عزل جماعي: {done} من {len(animal_ids)} تم عزلهم", "success")
+        flash(_("عزل جماعي: %(done)s من %(total)s تم عزلهم", done=done, total=len(animal_ids)), "success")
     for animal_id, r in results.items():
         if r.startswith("مرفوض"):
             flash(r, "error")
@@ -708,7 +708,7 @@ def animals_bulk_apply_sonar():
         result_by_id=result_by_id, embryo_count_by_id=embryo_count_by_id,
         doctor_id=request.form.get("doctor_id") or None, actor_user_id=current_user.id,
     )
-    flash(f"فحص سونار جماعي: تم تسجيله لـ{len(results)} رأس", "success")
+    flash(_("فحص سونار جماعي: تم تسجيله لـ%(n)s رأس", n=len(results)), "success")
     return redirect(url_for("core.animals_bulk_home"))
 
 
@@ -731,7 +731,7 @@ def animals_bulk_purchase():
                 "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
             })
         if not rows:
-            flash("لازم رأس واحد على الأقل برقم صحيح", "error")
+            flash(_("لازم رأس واحد على الأقل برقم صحيح"), "error")
             return redirect(url_for("core.animals_bulk_purchase"))
         results = bulk_service.apply_bulk_purchase(
             rows=rows, barn_id=request.form.get("barn_id") or None,
@@ -739,10 +739,10 @@ def animals_bulk_purchase():
             species=request.form.get("species") or "sheep_goat", actor_user_id=current_user.id,
         )
         done = sum(1 for r in results.values() if r.startswith("تمت"))
-        flash(f"شراء دفعة جديدة: {done} من {len(rows)} أُضيفوا بنجاح", "success")
+        flash(_("شراء دفعة جديدة: %(done)s من %(total)s أُضيفوا بنجاح", done=done, total=len(rows)), "success")
         for animal_no, r in results.items():
             if r.startswith("مرفوض"):
-                flash(f"{animal_no}: {r}", "error")
+                flash(_("%(no)s: %(msg)s", no=animal_no, msg=r), "error")
         return redirect(url_for("core.animals_bulk_home"))
 
     from app.models import AnimalColor
@@ -801,14 +801,14 @@ def species_types_new():
     if request.method == "POST":
         value = request.form["name"].strip()
         if not value:
-            flash("اسم الفصيلة مطلوب", "error")
+            flash(_("اسم الفصيلة مطلوب"), "error")
             return redirect(url_for("core.species_types_new"))
         if SpeciesType.query.filter_by(code=value).first():
             flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
             return redirect(url_for("core.species_types_new"))
         db.session.add(SpeciesType(code=value, label_ar=value))
         db.session.commit()
-        flash("تمت إضافة الفصيلة", "success")
+        flash(_("تمت إضافة الفصيلة"), "success")
         return redirect(url_for("core.animals_new"))
     return render_template("animal_option_form.html", title=_("إضافة فصيلة جديدة"),
                             back_endpoint="core.animals_new",
@@ -822,14 +822,14 @@ def breeds_new():
     if request.method == "POST":
         value = request.form["name"].strip()
         if not value:
-            flash("اسم السلالة مطلوب", "error")
+            flash(_("اسم السلالة مطلوب"), "error")
             return redirect(url_for("core.breeds_new"))
         if Breed.query.filter_by(name=value).first():
             flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
             return redirect(url_for("core.breeds_new"))
         db.session.add(Breed(name=value))
         db.session.commit()
-        flash("تمت إضافة السلالة", "success")
+        flash(_("تمت إضافة السلالة"), "success")
         return redirect(url_for("core.animals_new"))
     return render_template("animal_option_form.html", title=_("إضافة سلالة جديدة"),
                             back_endpoint="core.animals_new")
@@ -854,7 +854,7 @@ def breed_edit(breed_id):
     if request.method == "POST":
         breed.care_notes = request.form.get("care_notes", "").strip() or None
         db.session.commit()
-        flash("تم حفظ ملاحظات السلالة", "success")
+        flash(_("تم حفظ ملاحظات السلالة"), "success")
         return redirect(url_for("core.breeds_list"))
     return render_template("breed_edit_form.html", breed=breed)
 
@@ -866,14 +866,14 @@ def colors_new():
     if request.method == "POST":
         value = request.form["name"].strip()
         if not value:
-            flash("اسم اللون مطلوب", "error")
+            flash(_("اسم اللون مطلوب"), "error")
             return redirect(url_for("core.colors_new"))
         if AnimalColor.query.filter_by(name=value).first():
             flash(f'"{value}" موجود بالقائمة أصلاً', "error")
             return redirect(url_for("core.colors_new"))
         db.session.add(AnimalColor(name=value))
         db.session.commit()
-        flash("تمت إضافة اللون", "success")
+        flash(_("تمت إضافة اللون"), "success")
         return redirect(url_for("core.animals_new"))
     return render_template("animal_option_form.html", title=_("إضافة لون جديد"),
                             back_endpoint="core.animals_new")
@@ -901,10 +901,10 @@ def animals_new():
         # الحظيرة إلزامية (بند إضافي، 2026-07-28) — ما فيه خيار "بدون
         # حظيرة" بالواجهة، بس نتحقق هنا كمان لو الطلب وصل مباشر للسيرفر.
         if not request.form.get("barn_id"):
-            flash("الحظيرة مطلوبة", "error")
+            flash(_("الحظيرة مطلوبة"), "error")
             return redirect(url_for("core.animals_new"))
         if not request.form.get("color"):
-            flash("اللون مطلوب", "error")
+            flash(_("اللون مطلوب"), "error")
             return redirect(url_for("core.animals_new"))
         from app.finance.finance_service import save_invoice_file
         try:
@@ -934,7 +934,7 @@ def animals_new():
             return redirect(url_for("core.animals_new"))
         except IntegrityError:
             db.session.rollback()
-            flash(f"رقم الحيوان \"{request.form.get('animal_no', '')}\" مستخدم من قبل", "error")
+            flash(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=request.form.get('animal_no', '')), "error")
             return redirect(url_for("core.animals_new"))
 
         db.session.add(AuditLog(
@@ -945,7 +945,7 @@ def animals_new():
             details=f"source={source}",
         ))
         db.session.commit()
-        flash("تمت إضافة الحيوان", "success")
+        flash(_("تمت إضافة الحيوان"), "success")
         isolation_warning = getattr(animal, "_isolation_barn_warning", None)
         if isolation_warning:
             flash(isolation_warning, "warning")
@@ -997,13 +997,13 @@ def animals_edit(animal_id):
     if request.method == "POST":
         new_no = request.form.get("animal_no", "").strip()
         if not new_no:
-            flash("رقم الحيوان مطلوب", "error")
+            flash(_("رقم الحيوان مطلوب"), "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
         if not request.form.get("barn_id"):
-            flash("الحظيرة مطلوبة", "error")
+            flash(_("الحظيرة مطلوبة"), "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
         if not request.form.get("color"):
-            flash("اللون مطلوب", "error")
+            flash(_("اللون مطلوب"), "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
         animal.animal_no = new_no
         animal.name = request.form.get("name") or None
@@ -1027,9 +1027,9 @@ def animals_edit(animal_id):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            flash(f"رقم الحيوان \"{new_no}\" مستخدم من قبل", "error")
+            flash(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=new_no), "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
-        flash("تم تحديث بيانات الحيوان", "success")
+        flash(_("تم تحديث بيانات الحيوان"), "success")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
 
     _seed_system_barns()
@@ -1166,7 +1166,7 @@ def animal_checkup_suggest(animal_id):
         "\n".join(context_lines), tsvc.ANIMAL_CHECKUP_ITEM_PRESETS,
     )
     if not result:
-        flash("الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل.", "error")
+        flash(_("الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."), "error")
         return redirect(url_for("core.animal_detail", animal_id=animal_id))
 
     return redirect(url_for(
@@ -1195,7 +1195,7 @@ def animal_checkup_request(animal_id):
             actor=current_user, animal=animal, items=items,
             assignee_id=assignee_id, target_role=None if assignee_id else "doctor",
         )
-        flash(f"تم توزيع {len(tasks)} مهمة فحص للرأس {animal.animal_no}.", "success")
+        flash(_("تم توزيع %(n)s مهمة فحص للرأس %(no)s.", n=len(tasks), no=animal.animal_no), "success")
     except (tsvc.TaskPermissionError, tsvc.TaskStateError) as e:
         flash(str(e), "error")
     return redirect(url_for("core.animal_detail", animal_id=animal_id))
@@ -1235,7 +1235,7 @@ def animal_weight_new(animal_id):
         return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="weights"))
     cycle_engine.evaluate(animal)
     db.session.commit()
-    flash("تم تسجيل الوزن", "success")
+    flash(_("تم تسجيل الوزن"), "success")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="weights"))
 
 
@@ -1262,7 +1262,7 @@ def animal_birth_record_save(animal_id):
     record.recorded_by_id = current_user.id
     db.session.add(record)
     db.session.commit()
-    flash("تم حفظ قائمة تحقق الولادة", "success")
+    flash(_("تم حفظ قائمة تحقق الولادة"), "success")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="summary"))
 
 
@@ -1282,7 +1282,7 @@ def animal_isolation_enter(animal_id):
             actor_user_id=current_user.id,
             barn_id=int(request.form["barn_id"]) if request.form.get("barn_id") else None,
         )
-        flash(f"تم نقل {animal.animal_no} للعزل", "success")
+        flash(_("تم نقل %(no)s للعزل", no=animal.animal_no), "success")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
     return render_template(
         "isolation_enter_form.html", animal=animal, isolation_barns=isolation_barns,
@@ -1318,7 +1318,7 @@ def animal_isolation_exit(animal_id):
         except isolation_service.IsolationExitBlocked as e:
             flash(str(e), "error")
             return redirect(url_for("core.animal_isolation_exit", animal_id=animal.id))
-        flash(f"تم إخراج {animal.animal_no} من العزل", "success")
+        flash(_("تم إخراج %(no)s من العزل", no=animal.animal_no), "success")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
     return render_template(
         "isolation_exit_form.html", animal=animal, target_barns=target_barns,
@@ -1342,7 +1342,7 @@ def animal_milk_new(animal_id):
         notes=request.form.get("notes") or None,
         recorded_by_id=current_user.id,
     )
-    flash("تم تسجيل الحليب", "success")
+    flash(_("تم تسجيل الحليب"), "success")
     # تنبيه فترة التحريم (بند إضافي، 2026-07-23) — تسجيل تحذيري بس (مو
     # منع)، عشان يبقى القرار للمالك/الدكتور لو الحليب يُستخدم للاستهلاك
     # المنزلي بدل البيع مثلاً.
@@ -1367,7 +1367,7 @@ def animal_note_new(animal_id):
         note=request.form["note"].strip(),
         created_by_id=current_user.id,
     )
-    flash("تمت إضافة الملاحظة", "success")
+    flash(_("تمت إضافة الملاحظة"), "success")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="notes"))
 
 
@@ -1405,10 +1405,10 @@ def _missing_item_action(item_text: str, animal_id: int):
 def animal_workflow(animal_id):
     animal = Animal.query.get_or_404(animal_id)
     if animal.species == "ostrich":
-        flash("النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس).", "error")
+        flash(_("النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."), "error")
         return redirect(url_for("ostrich.eggs_list"))
     if animal.species != "sheep_goat":
-        flash("هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد.", "error")
+        flash(_("هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد."), "error")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
     wf = cycle_engine.get_or_create_workflow(animal)
     cycle_engine.evaluate(animal)
@@ -1452,10 +1452,10 @@ def animal_sale_invoice(animal_id):
            .filter_by(related_animal_id=animal.id, operation_type="sale", is_cancelled=False)
            .order_by(Finance.id.desc()).first())
     if not fin:
-        flash("ما فيه عملية بيع مسجّلة لهذا الحيوان.", "error")
+        flash(_("ما فيه عملية بيع مسجّلة لهذا الحيوان."), "error")
         return redirect(url_for("core.animal_workflow", animal_id=animal.id))
     if fin.no_invoice:
-        flash("هذا البيع مسجَّل بدون فاتورة.", "error")
+        flash(_("هذا البيع مسجَّل بدون فاتورة."), "error")
         return redirect(url_for("core.animal_workflow", animal_id=animal.id))
     fin = issue_sale_invoice(fin)
     buf = build_invoice_pdf(fin, animal, FarmSettings.get())
@@ -1477,7 +1477,7 @@ def animal_workflow_plan(animal_id):
     db.session.commit()
     cycle_engine.evaluate(animal)
     db.session.commit()
-    flash("تم تحديث بيانات التخطيط", "success")
+    flash(_("تم تحديث بيانات التخطيط"), "success")
     return redirect(url_for("core.animal_workflow", animal_id=animal.id))
 
 
@@ -1501,7 +1501,7 @@ def animal_sell(animal_id):
             no_invoice=bool(request.form.get("no_invoice")),
             withdrawal_override_reason=override_reason,
         )
-        flash("تم تسجيل البيع", "success")
+        flash(_("تم تسجيل البيع"), "success")
 
         # إشعار تيليجرام فوري بالبيع (بند إضافي 231) — حدث مالي مهم،
         # نفس نمط إشعار الولادة فوق. أصحاب صلاحية finance.full.manage
@@ -1527,7 +1527,7 @@ def animal_send_to_market(animal_id):
     animal = Animal.query.get_or_404(animal_id)
     try:
         cycle_engine.send_to_market(animal, actor_user_id=current_user.id, note=request.form.get("note"))
-        flash("تم تسجيل خروج الرأس للسوق", "success")
+        flash(_("تم تسجيل خروج الرأس للسوق"), "success")
     except cycle_engine.CycleExitBlocked as e:
         flash(str(e), "error")
     return redirect(url_for("core.animal_workflow", animal_id=animal.id))
@@ -1539,7 +1539,7 @@ def animal_send_to_market(animal_id):
 def animal_return_from_market(animal_id):
     animal = Animal.query.get_or_404(animal_id)
     cycle_engine.return_from_market(animal, actor_user_id=current_user.id, note=request.form.get("note"))
-    flash("تم تسجيل رجوع الرأس للمزرعة بدون بيع", "success")
+    flash(_("تم تسجيل رجوع الرأس للمزرعة بدون بيع"), "success")
     return redirect(url_for("core.animal_workflow", animal_id=animal.id))
 
 
@@ -1554,7 +1554,7 @@ def animal_mark_dead(animal_id):
         reason=request.form.get("reason"),
         death_date=date.fromisoformat(request.form["death_date"]) if request.form.get("death_date") else None,
     )
-    flash("تم تسجيل النفوق (بدون شرط اكتمال الدورة)", "success")
+    flash(_("تم تسجيل النفوق (بدون شرط اكتمال الدورة)"), "success")
     return redirect(url_for("core.animal_workflow", animal_id=animal.id))
 
 
@@ -1570,7 +1570,7 @@ def animal_archive(animal_id):
             force=bool(request.form.get("force")),
             reason=request.form.get("reason"),
         )
-        flash("تم أرشفة الحيوان", "success")
+        flash(_("تم أرشفة الحيوان"), "success")
     except cycle_engine.CycleExitBlocked as e:
         flash(str(e), "error")
     return redirect(url_for("core.animal_workflow", animal_id=animal.id))
@@ -1623,7 +1623,7 @@ def barns_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.create",
                                  entity_type="Barn", entity_id=barn.id))
         db.session.commit()
-        flash("تمت إضافة الحظيرة", "success")
+        flash(_("تمت إضافة الحظيرة"), "success")
         return redirect(url_for("core.barns_list"))
     return render_template("barn_form.html", workers=User.query.filter_by(is_active_account=True).order_by(User.name).all())
 
@@ -1657,7 +1657,7 @@ def barns_edit(barn_id):
         db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.update",
                                  entity_type="Barn", entity_id=barn.id))
         db.session.commit()
-        flash("تم تحديث الحظيرة", "success")
+        flash(_("تم تحديث الحظيرة"), "success")
         return redirect(url_for("core.barns_list"))
     return render_template(
         "barn_form.html", barn=barn,
@@ -1737,7 +1737,7 @@ def farm_settings_save():
     fs.ca_phosphorus_tolerance = float(request.form["ca_phosphorus_tolerance"])
     db.session.add(fs)
     db.session.commit()
-    flash("تم حفظ الإعدادات الزمنية", "success")
+    flash(_("تم حفظ الإعدادات الزمنية"), "success")
     return redirect(url_for("core.settings_home"))
 
 
@@ -1751,7 +1751,7 @@ def intake_medicine_settings_save():
     fs.default_intake_spray_pharmacy_id = request.form.get("default_intake_spray_pharmacy_id") or None
     fs.default_intake_vaccine_pharmacy_id = request.form.get("default_intake_vaccine_pharmacy_id") or None
     db.session.commit()
-    flash("تم حفظ إعدادات دواء الاستقبال", "success")
+    flash(_("تم حفظ إعدادات دواء الاستقبال"), "success")
     return redirect(url_for("core.settings_home"))
 
 
@@ -1774,7 +1774,7 @@ def factory_reset():
         flash(f'لازم تكتب عبارة التأكيد بالضبط: "{FACTORY_RESET_CONFIRM_PHRASE}"', "error")
         return redirect(url_for("core.settings_home"))
     if not current_user.check_password(password):
-        flash("كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع.", "error")
+        flash(_("كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."), "error")
         return redirect(url_for("core.settings_home"))
 
     from app.core import factory_reset_service
@@ -1785,10 +1785,10 @@ def factory_reset():
     except Exception as e:
         db.session.rollback()
         current_app.logger.exception("فشل ضبط المصنع")
-        flash(f"تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: {e}", "error")
+        flash(_("تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s", err=e), "error")
         return redirect(url_for("core.settings_home"))
     logout_user()
-    flash("تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور.", "success")
+    flash(_("تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."), "success")
     return redirect(url_for("auth.login"))
 
 
@@ -1807,7 +1807,7 @@ def farm_identity_save():
     fs.owner_national_id = request.form.get("owner_national_id") or None
     db.session.add(fs)
     db.session.commit()
-    flash("تم حفظ بيانات المزرعة", "success")
+    flash(_("تم حفظ بيانات المزرعة"), "success")
     return redirect(url_for("core.settings_home"))
 
 
@@ -1829,7 +1829,7 @@ def role_new():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="role.create",
                                  entity_type="Role", entity_id=role.id, details=display_name))
         db.session.commit()
-        flash("تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته", "success")
+        flash(_("تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"), "success")
         return redirect(url_for("core.role_edit", role_id=role.id))
     return render_template("role_form.html")
 
@@ -1841,7 +1841,7 @@ def role_edit(role_id):
     role = Role.query.get_or_404(role_id)
     if request.method == "POST":
         if role.is_system and role.name == "owner":
-            flash("ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً", "error")
+            flash(_("ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"), "error")
             return redirect(url_for("core.role_edit", role_id=role.id))
         role.display_name = request.form.get("display_name", role.display_name).strip()
         selected_codes = set(request.form.getlist("permissions"))
@@ -1850,7 +1850,7 @@ def role_edit(role_id):
                                  entity_type="Role", entity_id=role.id,
                                  details=f"{len(selected_codes)} permissions"))
         db.session.commit()
-        flash("تم تحديث صلاحيات الدور", "success")
+        flash(_("تم تحديث صلاحيات الدور"), "success")
         return redirect(url_for("core.settings_home"))
 
     current_codes = {p.code for p in role.permissions}
@@ -1874,7 +1874,7 @@ def toggle_service(service_id):
         details=f"{service.key} -> {'enabled' if service.is_enabled else 'disabled'}",
     ))
     db.session.commit()
-    flash(f"تم {'تفعيل' if service.is_enabled else 'تعطيل'} خدمة {service.name}", "success")
+    flash((_("تم تفعيل خدمة %(name)s") if service.is_enabled else _("تم تعطيل خدمة %(name)s")) % {"name": service.name}, "success")
     return redirect(url_for("core.settings_home"))
 
 
@@ -1900,7 +1900,7 @@ def backup_create():
         db.session.add(AuditLog(actor_user_id=current_user.id, action="backup.create",
                                  entity_type="Backup", details=filename))
         db.session.commit()
-        flash(f"تم إنشاء نسخة احتياطية: {filename}", "success")
+        flash(_("تم إنشاء نسخة احتياطية: %(name)s", name=filename), "success")
     except RuntimeError as e:
         flash(str(e), "error")
     return redirect(url_for("core.backup_list"))
@@ -1981,7 +1981,7 @@ def simulation_data_purge():
     result = None
     if request.method == "POST":
         if request.form.get("confirm_phrase") != "حذف بيانات المحاكاة" or request.form.get("confirm_check") != "1":
-            flash("لازم تكتب العبارة بالضبط وتؤشّر على التأكيد.", "error")
+            flash(_("لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."), "error")
         else:
             result = svc.purge_simulation_data()
             db.session.add(AuditLog(
@@ -1989,7 +1989,7 @@ def simulation_data_purge():
                 entity_type="Animal", details=str(result),
             ))
             db.session.commit()
-            flash("تم حذف بيانات المحاكاة.", "success")
+            flash(_("تم حذف بيانات المحاكاة."), "success")
     preview = svc.preview_simulation_data()
     return render_template("settings_simulation_data.html", preview=preview, result=result)
 
@@ -2011,7 +2011,7 @@ def simulation_data_run():
     if current_user.role.name != "owner":
         abort(403)
     if request.form.get("confirm_check") != "1":
-        flash("لازم تؤشّر على مربّع التأكيد.", "error")
+        flash(_("لازم تؤشّر على مربّع التأكيد."), "error")
         return redirect(url_for("core.simulation_data_purge"))
 
     from app.core.simulation_service import run_farm_month_simulation
@@ -2032,9 +2032,10 @@ def simulation_data_run():
         entity_type="Animal", details=str(result["counters"]),
     ))
     db.session.commit()
-    flash(f"تم تشغيل العرض التجريبي ({days} يوم) — {result['counters']['animals_purchased']} رأس، "
-          f"{result['counters']['matings']} تقريع، {result['counters']['diseases_opened']} حالة مرضية. "
-          f"تقدر تحذفها لاحقاً من نفس الصفحة.", "success")
+    flash(_("تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، "
+                "%(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة.",
+                days=days, animals=result['counters']['animals_purchased'],
+                matings=result['counters']['matings'], diseases=result['counters']['diseases_opened']), "success")
     return redirect(url_for("core.simulation_data_purge"))
 
 

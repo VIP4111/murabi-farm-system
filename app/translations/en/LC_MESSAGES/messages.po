@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:28+0300\n"
+"POT-Creation-Date: 2026-08-30 17:43+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -951,6 +951,32 @@ msgstr "At least one backup exists (item 34)."
 msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
 msgstr "No backup taken yet — check \"Backup\" in the settings screen (item 34)."
 
+#: app/core/routes.py:79
+#, python-format
+msgid "تم إرسال التقرير فعلياً لعدد %(n)s من المستخدمين."
+msgstr "The report was actually sent to %(n)s user(s)."
+
+#: app/core/routes.py:81
+msgid "ما نجح أي إرسال — تأكد إن بريدك مسجَّل وإن متغيرات Resend مضبوطة صحيح."
+msgstr "No message was sent successfully — make sure your email is registered and the Resend variables are set up correctly."
+
+#: app/core/routes.py:96
+#, python-format
+msgid "تم إرسال الملخص فعلياً لعدد %(n)s من المستخدمين."
+msgstr "The summary was actually sent to %(n)s user(s)."
+
+#: app/core/routes.py:98
+msgid "ما نجح أي إرسال — تأكد إن Chat ID مسجَّل لك وإن توكن تيليجرام مضبوط صحيح (راجع تشخيص بوت تيليجرام بالإعدادات)."
+msgstr "No message was sent successfully — make sure your Chat ID is registered and the Telegram token is set up correctly (check the Telegram bot diagnostics in settings)."
+
+#: app/core/routes.py:142
+msgid "تم توليد رابط كتالوج جديد — الرابط القديم ما عاد يشتغل"
+msgstr "A new catalog link has been generated — the old link no longer works"
+
+#: app/core/routes.py:394
+msgid "تم حفظ علامات البيع"
+msgstr "The sale flags have been saved"
+
 #: app/core/routes.py:399 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "Bulk weighing"
@@ -991,6 +1017,105 @@ msgstr "Bulk sonar exam"
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "Planned treatment plan (awaiting execution confirmation)"
 
+#: app/core/routes.py:428
+msgid "لازم تحدد رأس واحد على الأقل"
+msgstr "You must select at least one animal"
+
+#: app/core/routes.py:431
+msgid "إجراء جماعي غير معروف"
+msgstr "Unknown bulk action"
+
+#: app/core/routes.py:474
+#, python-format
+msgid "وزن جماعي: %(done)s من %(total)s تم تسجيلهم"
+msgstr "Bulk weighing: %(done)s of %(total)s were recorded"
+
+#: app/core/routes.py:497 app/health/routes.py:1114
+msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
+msgstr "You must select an actual vaccine registered in the pharmacy under the (vaccine) class"
+
+#: app/core/routes.py:509
+msgid "لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه"
+msgstr "You must select at least one vaccine and check at least one animal for it"
+
+#: app/core/routes.py:516
+#, python-format
+msgid "تحصين جماعي: %(n)s تسجيل ناجح"
+msgstr "Bulk vaccination: %(n)s successful record(s)"
+
+#: app/core/routes.py:519 app/core/routes.py:585 app/core/routes.py:587
+#: app/core/routes.py:623
+#, python-format
+msgid "رأس #%(id)s: %(msg)s"
+msgstr "Animal #%(id)s: %(msg)s"
+
+#: app/core/routes.py:538
+#, python-format
+msgid "ملاحظة جماعية: أُضيفت لـ%(n)s رأس"
+msgstr "Bulk note: added to %(n)s animal(s)"
+
+#: app/core/routes.py:550
+#, python-format
+msgid "نقل حظيرة جماعي: تم نقل %(n)s رأس"
+msgstr "Bulk barn transfer: %(n)s animal(s) transferred"
+
+#: app/core/routes.py:562
+#, python-format
+msgid "تحديد الغرض جماعياً: تم تحديد %(n)s رأس"
+msgstr "Bulk purpose set: %(n)s animal(s) set"
+
+#: app/core/routes.py:582
+#, python-format
+msgid "بيع جماعي: %(done)s من %(total)s تم بيعهم — راجع التفاصيل أدناه لو فيه رؤوس مرفوضة"
+msgstr "Bulk sale: %(done)s of %(total)s were sold — check the details below if any animals were rejected"
+
+#: app/core/routes.py:601
+#, python-format
+msgid "تسجيل نفوق جماعي: تم تسجيله لـ%(n)s رأس (بدون شرط اكتمال الدورة)"
+msgstr "Bulk death recording: recorded for %(n)s animal(s) (without the cycle-completion requirement)"
+
+#: app/core/routes.py:620
+#, python-format
+msgid "علاج/مرض جماعي: %(done)s من %(total)s تم تسجيلهم"
+msgstr "Bulk treatment/disease: %(done)s of %(total)s were recorded"
+
+#: app/core/routes.py:668
+#, python-format
+msgid "تم إنشاء خطة علاج لـ %(n)s رأس — بانتظار مراجعة الدكتور وتأكيد التنفيذ لكل رأس."
+msgstr "A treatment plan has been created for %(n)s animal(s) — awaiting the doctor's review and execution confirmation for each animal."
+
+#: app/core/routes.py:684
+#, python-format
+msgid "عزل جماعي: %(done)s من %(total)s تم عزلهم"
+msgstr "Bulk isolation: %(done)s of %(total)s were isolated"
+
+#: app/core/routes.py:711
+#, python-format
+msgid "فحص سونار جماعي: تم تسجيله لـ%(n)s رأس"
+msgstr "Bulk ultrasound exam: recorded for %(n)s animal(s)"
+
+#: app/core/routes.py:734
+msgid "لازم رأس واحد على الأقل برقم صحيح"
+msgstr "At least one animal with a valid number is required"
+
+#: app/core/routes.py:742
+#, python-format
+msgid "شراء دفعة جديدة: %(done)s من %(total)s أُضيفوا بنجاح"
+msgstr "New batch purchase: %(done)s of %(total)s were added successfully"
+
+#: app/core/routes.py:745
+#, python-format
+msgid "%(no)s: %(msg)s"
+msgstr "%(no)s: %(msg)s"
+
+#: app/core/routes.py:804
+msgid "اسم الفصيلة مطلوب"
+msgstr "Species name is required"
+
+#: app/core/routes.py:811
+msgid "تمت إضافة الفصيلة"
+msgstr "The species has been added"
+
 #: app/core/routes.py:813 app/templates/animal_form.html:58
 msgid "إضافة فصيلة جديدة"
 msgstr "Add new species"
@@ -999,13 +1124,210 @@ msgstr "Add new species"
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "A new species doesn't automatically enter the production cycle engine (mating/pregnancy/weaning) — it's handled safely like ostriches until a dedicated system is built for it."
 
+#: app/core/routes.py:825
+msgid "اسم السلالة مطلوب"
+msgstr "Breed name is required"
+
+#: app/core/routes.py:832
+msgid "تمت إضافة السلالة"
+msgstr "The breed has been added"
+
 #: app/core/routes.py:834 app/templates/animal_form.html:68
 msgid "إضافة سلالة جديدة"
 msgstr "Add new breed"
 
+#: app/core/routes.py:857
+msgid "تم حفظ ملاحظات السلالة"
+msgstr "The breed notes have been saved"
+
+#: app/core/routes.py:869
+msgid "اسم اللون مطلوب"
+msgstr "Color name is required"
+
+#: app/core/routes.py:876
+msgid "تمت إضافة اللون"
+msgstr "The color has been added"
+
 #: app/core/routes.py:878 app/templates/animal_form.html:26
 msgid "إضافة لون جديد"
 msgstr "Add new color"
+
+#: app/core/routes.py:904 app/core/routes.py:1003
+msgid "الحظيرة مطلوبة"
+msgstr "The barn is required"
+
+#: app/core/routes.py:907 app/core/routes.py:1006
+msgid "اللون مطلوب"
+msgstr "The color is required"
+
+#: app/core/routes.py:937 app/core/routes.py:1030
+#, python-format
+msgid "رقم الحيوان \"%(no)s\" مستخدم من قبل"
+msgstr "Animal number \"%(no)s\" is already in use"
+
+#: app/core/routes.py:948
+msgid "تمت إضافة الحيوان"
+msgstr "The animal has been added"
+
+#: app/core/routes.py:1000
+msgid "رقم الحيوان مطلوب"
+msgstr "The animal number is required"
+
+#: app/core/routes.py:1032
+msgid "تم تحديث بيانات الحيوان"
+msgstr "The animal's data has been updated"
+
+#: app/core/routes.py:1169
+msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
+msgstr "Smart suggestion isn't available right now (make sure GEMINI_API_KEY is enabled) — pick the items manually below."
+
+#: app/core/routes.py:1198
+#, python-format
+msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
+msgstr "%(n)s checkup task(s) have been assigned for animal %(no)s."
+
+#: app/core/routes.py:1238
+msgid "تم تسجيل الوزن"
+msgstr "The weight has been recorded"
+
+#: app/core/routes.py:1265
+msgid "تم حفظ قائمة تحقق الولادة"
+msgstr "The birth checklist has been saved"
+
+#: app/core/routes.py:1285
+#, python-format
+msgid "تم نقل %(no)s للعزل"
+msgstr "%(no)s has been moved to isolation"
+
+#: app/core/routes.py:1321
+#, python-format
+msgid "تم إخراج %(no)s من العزل"
+msgstr "%(no)s has been taken out of isolation"
+
+#: app/core/routes.py:1345
+msgid "تم تسجيل الحليب"
+msgstr "The milk has been recorded"
+
+#: app/core/routes.py:1370
+msgid "تمت إضافة الملاحظة"
+msgstr "The note has been added"
+
+#: app/core/routes.py:1408
+msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
+msgstr "Ostriches don't enter the production cycle — check the ostrich record (eggs/hatching)."
+
+#: app/core/routes.py:1411
+msgid "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد."
+msgstr "This species doesn't enter the production-cycle engine (built for livestock biology only) — there's no dedicated cycle system for it yet."
+
+#: app/core/routes.py:1455
+msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
+msgstr "There's no recorded sale for this animal."
+
+#: app/core/routes.py:1458
+msgid "هذا البيع مسجَّل بدون فاتورة."
+msgstr "This sale was recorded without an invoice."
+
+#: app/core/routes.py:1480
+msgid "تم تحديث بيانات التخطيط"
+msgstr "The planning data has been updated"
+
+#: app/core/routes.py:1504
+msgid "تم تسجيل البيع"
+msgstr "The sale has been recorded"
+
+#: app/core/routes.py:1530
+msgid "تم تسجيل خروج الرأس للسوق"
+msgstr "The animal's departure to the market has been recorded"
+
+#: app/core/routes.py:1542
+msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
+msgstr "The animal's return to the farm without a sale has been recorded"
+
+#: app/core/routes.py:1557
+msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
+msgstr "The death has been recorded (without the cycle-completion requirement)"
+
+#: app/core/routes.py:1573
+msgid "تم أرشفة الحيوان"
+msgstr "The animal has been archived"
+
+#: app/core/routes.py:1626
+msgid "تمت إضافة الحظيرة"
+msgstr "The barn has been added"
+
+#: app/core/routes.py:1660
+msgid "تم تحديث الحظيرة"
+msgstr "The barn has been updated"
+
+#: app/core/routes.py:1740
+msgid "تم حفظ الإعدادات الزمنية"
+msgstr "The time settings have been saved"
+
+#: app/core/routes.py:1754
+msgid "تم حفظ إعدادات دواء الاستقبال"
+msgstr "The intake-medicine settings have been saved"
+
+#: app/core/routes.py:1777
+msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
+msgstr "Incorrect password — the factory reset was not performed."
+
+#: app/core/routes.py:1788
+#, python-format
+msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
+msgstr "Couldn't perform the factory reset, nothing was deleted (rolled back automatically). Error: %(err)s"
+
+#: app/core/routes.py:1791
+msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
+msgstr "The factory reset succeeded — all farm data has been deleted. Log in again with the same phone number and password."
+
+#: app/core/routes.py:1810
+msgid "تم حفظ بيانات المزرعة"
+msgstr "The farm's data has been saved"
+
+#: app/core/routes.py:1832
+msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
+msgstr "The job role has been created — now set its permissions"
+
+#: app/core/routes.py:1844
+msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
+msgstr "You can't edit the owner role's permissions — it always has all permissions"
+
+#: app/core/routes.py:1853
+msgid "تم تحديث صلاحيات الدور"
+msgstr "The role's permissions have been updated"
+
+#: app/core/routes.py:1877
+#, python-format
+msgid "تم تفعيل خدمة %(name)s"
+msgstr "The %(name)s service has been enabled"
+
+#: app/core/routes.py:1877
+#, python-format
+msgid "تم تعطيل خدمة %(name)s"
+msgstr "The %(name)s service has been disabled"
+
+#: app/core/routes.py:1903
+#, python-format
+msgid "تم إنشاء نسخة احتياطية: %(name)s"
+msgstr "A backup has been created: %(name)s"
+
+#: app/core/routes.py:1984
+msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
+msgstr "You must type the exact phrase and check the confirmation box."
+
+#: app/core/routes.py:1992
+msgid "تم حذف بيانات المحاكاة."
+msgstr "The simulation data has been deleted."
+
+#: app/core/routes.py:2014
+msgid "لازم تؤشّر على مربّع التأكيد."
+msgstr "You must check the confirmation box."
+
+#: app/core/routes.py:2035
+#, python-format
+msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
+msgstr "The demo simulation has run (%(days)s day(s)) — %(animals)s animal(s), %(matings)s mating(s), %(diseases)s medical case(s). You can delete it later from the same page."
 
 #: app/core/setup_checklist_service.py:14
 msgid "أضف أول حظيرة"
@@ -1508,10 +1830,6 @@ msgstr "The vaccination has been recorded (cost was calculated automatically fro
 #: app/health/routes.py:1053
 msgid "تم إنشاء البروتوكول"
 msgstr "The protocol has been created"
-
-#: app/health/routes.py:1114
-msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
-msgstr "You must select an actual vaccine registered in the pharmacy under the (vaccine) class"
 
 #: app/health/routes.py:1133
 msgid "تمت جدولة التحصين"

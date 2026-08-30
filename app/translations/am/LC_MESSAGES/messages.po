@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 17:28+0300\n"
+"POT-Creation-Date: 2026-08-30 17:43+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -951,6 +951,32 @@ msgstr "ቢያንስ አንድ መጠባበቂያ አለ (ንጥል 34)።"
 msgid "ما أخذت أي نسخة احتياطية بعد — راجع \"النسخ الاحتياطي\" بشاشة الإعدادات (بند 34)."
 msgstr "እስካሁን መጠባበቂያ አልወሰዱም — በቅንብሮች ማያ ገጽ ላይ \"መጠባበቂያ\" ይመልከቱ (ንጥል 34)።"
 
+#: app/core/routes.py:79
+#, python-format
+msgid "تم إرسال التقرير فعلياً لعدد %(n)s من المستخدمين."
+msgstr "ሪፖርቱ በትክክል ለ%(n)s ተጠቃሚ(ዎች) ተልኳል።"
+
+#: app/core/routes.py:81
+msgid "ما نجح أي إرسال — تأكد إن بريدك مسجَّل وإن متغيرات Resend مضبوطة صحيح."
+msgstr "ምንም መልእክት በተሳካ ሁኔታ አልተላከም — ኢሜይልዎ መመዝገቡን እና የResend ተለዋዋጮች በትክክል መዘጋጀታቸውን ያረጋግጡ።"
+
+#: app/core/routes.py:96
+#, python-format
+msgid "تم إرسال الملخص فعلياً لعدد %(n)s من المستخدمين."
+msgstr "ማጠቃለያው በትክክል ለ%(n)s ተጠቃሚ(ዎች) ተልኳል።"
+
+#: app/core/routes.py:98
+msgid "ما نجح أي إرسال — تأكد إن Chat ID مسجَّل لك وإن توكن تيليجرام مضبوط صحيح (راجع تشخيص بوت تيليجرام بالإعدادات)."
+msgstr "ምንም መልእክት በተሳካ ሁኔታ አልተላከም — የChat ID መመዝገቡን እና የቴሌግራም ቶከን በትክክል መዘጋጀቱን ያረጋግጡ (በቅንብሮች ውስጥ የቴሌግራም ቦት ምርመራን ይመልከቱ)።"
+
+#: app/core/routes.py:142
+msgid "تم توليد رابط كتالوج جديد — الرابط القديم ما عاد يشتغل"
+msgstr "አዲስ የካታሎግ አገናኝ ተፈጥሯል — የድሮው አገናኝ ከአሁን በኋላ አይሰራም"
+
+#: app/core/routes.py:394
+msgid "تم حفظ علامات البيع"
+msgstr "የሽያጭ ምልክቶች ተቀምጠዋል"
+
 #: app/core/routes.py:399 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "የቡድን ክብደት"
@@ -991,6 +1017,105 @@ msgstr "የቡድን ሶናር ምርመራ"
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "የታቀደ የሕክምና ዕቅድ (የማስፈጸም ማረጋገጫ በመጠበቅ ላይ)"
 
+#: app/core/routes.py:428
+msgid "لازم تحدد رأس واحد على الأقل"
+msgstr "ቢያንስ አንድ ራስ መምረጥ አለብዎት"
+
+#: app/core/routes.py:431
+msgid "إجراء جماعي غير معروف"
+msgstr "ያልታወቀ የጅምላ እርምጃ"
+
+#: app/core/routes.py:474
+#, python-format
+msgid "وزن جماعي: %(done)s من %(total)s تم تسجيلهم"
+msgstr "የጅምላ ክብደት፡ ከ%(total)s ውስጥ %(done)s ተመዝግበዋል"
+
+#: app/core/routes.py:497 app/health/routes.py:1114
+msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
+msgstr "በፋርማሲው ውስጥ በ(ክትባት) ምድብ ውስጥ የተመዘገበ ትክክለኛ ክትባት መምረጥ አለብዎት"
+
+#: app/core/routes.py:509
+msgid "لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه"
+msgstr "ቢያንስ አንድ ክትባት መምረጥ እና ውስጡ ላይ ቢያንስ አንድ ራስ ማመልከት አለብዎት"
+
+#: app/core/routes.py:516
+#, python-format
+msgid "تحصين جماعي: %(n)s تسجيل ناجح"
+msgstr "የጅምላ ክትባት፡ %(n)s ስኬታማ ምዝገባ"
+
+#: app/core/routes.py:519 app/core/routes.py:585 app/core/routes.py:587
+#: app/core/routes.py:623
+#, python-format
+msgid "رأس #%(id)s: %(msg)s"
+msgstr "ራስ #%(id)s: %(msg)s"
+
+#: app/core/routes.py:538
+#, python-format
+msgid "ملاحظة جماعية: أُضيفت لـ%(n)s رأس"
+msgstr "የጅምላ ማስታወሻ፡ ለ%(n)s ራስ(ራሶች) ታክሏል"
+
+#: app/core/routes.py:550
+#, python-format
+msgid "نقل حظيرة جماعي: تم نقل %(n)s رأس"
+msgstr "የጅምላ በረት ዝውውር፡ %(n)s ራስ(ራሶች) ተዛውረዋል"
+
+#: app/core/routes.py:562
+#, python-format
+msgid "تحديد الغرض جماعياً: تم تحديد %(n)s رأس"
+msgstr "የጅምላ ዓላማ ማዘጋጀት፡ %(n)s ራስ(ራሶች) ተዘጋጅተዋል"
+
+#: app/core/routes.py:582
+#, python-format
+msgid "بيع جماعي: %(done)s من %(total)s تم بيعهم — راجع التفاصيل أدناه لو فيه رؤوس مرفوضة"
+msgstr "የጅምላ ሽያጭ፡ ከ%(total)s ውስጥ %(done)s ተሽጠዋል — ውድቅ የተደረጉ ካሉ ከታች ያለውን ዝርዝር ይመልከቱ"
+
+#: app/core/routes.py:601
+#, python-format
+msgid "تسجيل نفوق جماعي: تم تسجيله لـ%(n)s رأس (بدون شرط اكتمال الدورة)"
+msgstr "የጅምላ ሞት ምዝገባ፡ ለ%(n)s ራስ(ራሶች) ተመዝግቧል (የዑደት ማጠናቀቅ ሁኔታ ሳይኖር)"
+
+#: app/core/routes.py:620
+#, python-format
+msgid "علاج/مرض جماعي: %(done)s من %(total)s تم تسجيلهم"
+msgstr "የጅምላ ህክምና/በሽታ፡ ከ%(total)s ውስጥ %(done)s ተመዝግበዋል"
+
+#: app/core/routes.py:668
+#, python-format
+msgid "تم إنشاء خطة علاج لـ %(n)s رأس — بانتظار مراجعة الدكتور وتأكيد التنفيذ لكل رأس."
+msgstr "ለ%(n)s ራስ(ራሶች) የህክምና እቅድ ተፈጥሯል — የሐኪም ግምገማ እና ለእያንዳንዱ ራስ የማስፈጸም ማረጋገጫ በመጠበቅ ላይ።"
+
+#: app/core/routes.py:684
+#, python-format
+msgid "عزل جماعي: %(done)s من %(total)s تم عزلهم"
+msgstr "የጅምላ መታቀብ፡ ከ%(total)s ውስጥ %(done)s ተለይተዋል"
+
+#: app/core/routes.py:711
+#, python-format
+msgid "فحص سونار جماعي: تم تسجيله لـ%(n)s رأس"
+msgstr "የጅምላ አልትራሳውንድ ምርመራ፡ ለ%(n)s ራስ(ራሶች) ተመዝግቧል"
+
+#: app/core/routes.py:734
+msgid "لازم رأس واحد على الأقل برقم صحيح"
+msgstr "ቢያንስ በትክክለኛ ቁጥር አንድ ራስ ያስፈልጋል"
+
+#: app/core/routes.py:742
+#, python-format
+msgid "شراء دفعة جديدة: %(done)s من %(total)s أُضيفوا بنجاح"
+msgstr "አዲስ ስብስብ ግዢ፡ ከ%(total)s ውስጥ %(done)s በተሳካ ሁኔታ ታክለዋል"
+
+#: app/core/routes.py:745
+#, python-format
+msgid "%(no)s: %(msg)s"
+msgstr "%(no)s: %(msg)s"
+
+#: app/core/routes.py:804
+msgid "اسم الفصيلة مطلوب"
+msgstr "የፍጥረት ስም ያስፈልጋል"
+
+#: app/core/routes.py:811
+msgid "تمت إضافة الفصيلة"
+msgstr "ፍጥረቱ ታክሏል"
+
 #: app/core/routes.py:813 app/templates/animal_form.html:58
 msgid "إضافة فصيلة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
@@ -999,13 +1124,210 @@ msgstr "አዲስ ዝርያ ያክሉ"
 msgid "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل بأمان مثل النعام لين يُبنى لها نظام مخصّص."
 msgstr "አዲስ ዝርያ በራስ-ሰር ወደ ምርት ዑደት ሞተር (ማዳቀል/እርግዝና/ጡት ማስጣት) አይገባም — ለእሱ ልዩ ስርዓት እስኪገነባ ድረስ እንደ ሰጎን በደህንነት ይያዛል።"
 
+#: app/core/routes.py:825
+msgid "اسم السلالة مطلوب"
+msgstr "የዝርያ ስም ያስፈልጋል"
+
+#: app/core/routes.py:832
+msgid "تمت إضافة السلالة"
+msgstr "ዝርያው ታክሏል"
+
 #: app/core/routes.py:834 app/templates/animal_form.html:68
 msgid "إضافة سلالة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
+#: app/core/routes.py:857
+msgid "تم حفظ ملاحظات السلالة"
+msgstr "የዝርያ ማስታወሻዎች ተቀምጠዋል"
+
+#: app/core/routes.py:869
+msgid "اسم اللون مطلوب"
+msgstr "የቀለም ስም ያስፈልጋል"
+
+#: app/core/routes.py:876
+msgid "تمت إضافة اللون"
+msgstr "ቀለሙ ታክሏል"
+
 #: app/core/routes.py:878 app/templates/animal_form.html:26
 msgid "إضافة لون جديد"
 msgstr "አዲስ ቀለም ያክሉ"
+
+#: app/core/routes.py:904 app/core/routes.py:1003
+msgid "الحظيرة مطلوبة"
+msgstr "በረቱ ያስፈልጋል"
+
+#: app/core/routes.py:907 app/core/routes.py:1006
+msgid "اللون مطلوب"
+msgstr "ቀለሙ ያስፈልጋል"
+
+#: app/core/routes.py:937 app/core/routes.py:1030
+#, python-format
+msgid "رقم الحيوان \"%(no)s\" مستخدم من قبل"
+msgstr "የእንስሳ ቁጥር \"%(no)s\" አስቀድሞ ጥቅም ላይ ውሏል"
+
+#: app/core/routes.py:948
+msgid "تمت إضافة الحيوان"
+msgstr "እንስሳው ታክሏል"
+
+#: app/core/routes.py:1000
+msgid "رقم الحيوان مطلوب"
+msgstr "የእንስሳ ቁጥር ያስፈልጋል"
+
+#: app/core/routes.py:1032
+msgid "تم تحديث بيانات الحيوان"
+msgstr "የእንስሳው መረጃ ተዘምኗል"
+
+#: app/core/routes.py:1169
+msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
+msgstr "ብልህ ጥቆማ አሁን አይገኝም (GEMINI_API_KEY መንቃቱን ያረጋግጡ) — ከታች ያሉትን ንጥሎች በእጅ ይምረጡ።"
+
+#: app/core/routes.py:1198
+#, python-format
+msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
+msgstr "ለ%(no)s ራስ %(n)s የፍተሻ ተግባር(ተግባራት) ተመድቧል/ተመድበዋል።"
+
+#: app/core/routes.py:1238
+msgid "تم تسجيل الوزن"
+msgstr "ክብደቱ ተመዝግቧል"
+
+#: app/core/routes.py:1265
+msgid "تم حفظ قائمة تحقق الولادة"
+msgstr "የወሊድ ማረጋገጫ ዝርዝር ተቀምጧል"
+
+#: app/core/routes.py:1285
+#, python-format
+msgid "تم نقل %(no)s للعزل"
+msgstr "%(no)s ወደ መታቀብ ተዛውሯል"
+
+#: app/core/routes.py:1321
+#, python-format
+msgid "تم إخراج %(no)s من العزل"
+msgstr "%(no)s ከመታቀብ ወጥቷል"
+
+#: app/core/routes.py:1345
+msgid "تم تسجيل الحليب"
+msgstr "ወተቱ ተመዝግቧል"
+
+#: app/core/routes.py:1370
+msgid "تمت إضافة الملاحظة"
+msgstr "ማስታወሻው ታክሏል"
+
+#: app/core/routes.py:1408
+msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
+msgstr "ሰጎኖች ወደ ምርት ዑደት አይገቡም — የሰጎን መዝገብ ይመልከቱ (እንቁላል/መፈልፈል)።"
+
+#: app/core/routes.py:1411
+msgid "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد."
+msgstr "ይህ ፍጥረት ወደ ምርት ዑደት ሞተር አይገባም (ለከብት ባዮሎጂ ብቻ የተገነባ) — እስካሁን ለእሱ የተለየ የዑደት ስርዓት የለም።"
+
+#: app/core/routes.py:1455
+msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
+msgstr "ለዚህ እንስሳ የተመዘገበ ሽያጭ የለም።"
+
+#: app/core/routes.py:1458
+msgid "هذا البيع مسجَّل بدون فاتورة."
+msgstr "ይህ ሽያጭ ያለ ደረሰኝ ተመዝግቧል።"
+
+#: app/core/routes.py:1480
+msgid "تم تحديث بيانات التخطيط"
+msgstr "የእቅድ መረጃ ተዘምኗል"
+
+#: app/core/routes.py:1504
+msgid "تم تسجيل البيع"
+msgstr "ሽያጩ ተመዝግቧል"
+
+#: app/core/routes.py:1530
+msgid "تم تسجيل خروج الرأس للسوق"
+msgstr "ወደ ገበያ የመውጣት መዝገብ ተመዝግቧል"
+
+#: app/core/routes.py:1542
+msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
+msgstr "ያለ ሽያጭ ወደ እርሻ የመመለስ መዝገብ ተመዝግቧል"
+
+#: app/core/routes.py:1557
+msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
+msgstr "ሞቱ ተመዝግቧል (የዑደት ማጠናቀቅ ሁኔታ ሳይኖር)"
+
+#: app/core/routes.py:1573
+msgid "تم أرشفة الحيوان"
+msgstr "እንስሳው ተመዝግቧል"
+
+#: app/core/routes.py:1626
+msgid "تمت إضافة الحظيرة"
+msgstr "በረቱ ታክሏል"
+
+#: app/core/routes.py:1660
+msgid "تم تحديث الحظيرة"
+msgstr "በረቱ ተዘምኗል"
+
+#: app/core/routes.py:1740
+msgid "تم حفظ الإعدادات الزمنية"
+msgstr "የጊዜ ቅንብሮች ተቀምጠዋል"
+
+#: app/core/routes.py:1754
+msgid "تم حفظ إعدادات دواء الاستقبال"
+msgstr "የመቀበያ መድሃኒት ቅንብሮች ተቀምጠዋል"
+
+#: app/core/routes.py:1777
+msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
+msgstr "የይለፍ ቃል የተሳሳተ ነው — የፋብሪካ ዳግም ማስጀመር አልተፈጸመም።"
+
+#: app/core/routes.py:1788
+#, python-format
+msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
+msgstr "የፋብሪካ ዳግም ማስጀመር አልተቻለም፣ ምንም አልተሰረዘም (በራስ-ሰር ተመልሷል)። ስህተት፡ %(err)s"
+
+#: app/core/routes.py:1791
+msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
+msgstr "የፋብሪካ ዳግም ማስጀመር ተሳክቷል — ሁሉም የእርሻ መረጃ ተሰርዟል። በተመሳሳይ ስልክ ቁጥር እና የይለፍ ቃል እንደገና ይግቡ።"
+
+#: app/core/routes.py:1810
+msgid "تم حفظ بيانات المزرعة"
+msgstr "የእርሻው መረጃ ተቀምጧል"
+
+#: app/core/routes.py:1832
+msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
+msgstr "የስራ መደቡ ተፈጥሯል — አሁን ፈቃዶቹን ይግለጹ"
+
+#: app/core/routes.py:1844
+msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
+msgstr "የባለቤቱን ሚና ፈቃዶች ማስተካከል አይችሉም — ሁልጊዜ ሁሉንም ፈቃዶች አለው"
+
+#: app/core/routes.py:1853
+msgid "تم تحديث صلاحيات الدور"
+msgstr "የሚና ፈቃዶች ተዘምነዋል"
+
+#: app/core/routes.py:1877
+#, python-format
+msgid "تم تفعيل خدمة %(name)s"
+msgstr "የ%(name)s አገልግሎት ነቅቷል"
+
+#: app/core/routes.py:1877
+#, python-format
+msgid "تم تعطيل خدمة %(name)s"
+msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
+
+#: app/core/routes.py:1903
+#, python-format
+msgid "تم إنشاء نسخة احتياطية: %(name)s"
+msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
+
+#: app/core/routes.py:1984
+msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
+msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
+
+#: app/core/routes.py:1992
+msgid "تم حذف بيانات المحاكاة."
+msgstr "የማስመሰያ መረጃ ተሰርዟል።"
+
+#: app/core/routes.py:2014
+msgid "لازم تؤشّر على مربّع التأكيد."
+msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
+
+#: app/core/routes.py:2035
+#, python-format
+msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
+msgstr "የማሳያ ማስመሰያ ተሰርቷል (%(days)s ቀናት) — %(animals)s ራስ(ራሶች)፣ %(matings)s ማዳቀል፣ %(diseases)s የበሽታ ጉዳይ(ዎች)። ከዚህ ገጽ በኋላ ሊሰርዙት ይችላሉ።"
 
 #: app/core/setup_checklist_service.py:14
 msgid "أضف أول حظيرة"
@@ -1508,10 +1830,6 @@ msgstr "ክትባቱ ተመዝግቧል (መድሃኒቱ የሚያስፈልገ�
 #: app/health/routes.py:1053
 msgid "تم إنشاء البروتوكول"
 msgstr "ፕሮቶኮሉ ተፈጥሯል"
-
-#: app/health/routes.py:1114
-msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
-msgstr "በፋርማሲው ውስጥ በ(ክትባት) ምድብ ውስጥ የተመዘገበ ትክክለኛ ክትባት መምረጥ አለብዎት"
 
 #: app/health/routes.py:1133
 msgid "تمت جدولة التحصين"
