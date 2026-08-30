@@ -20,7 +20,7 @@
 
   var COLOR_HEX = {
     'أبيض': '#ffffff', 'أسود': '#1a1a1a', 'أحمر': '#b3402a',
-    'بني': '#8b5e34', 'رمادي': '#9ca3af',
+    'بني': '#8b5e34', 'رمادي': '#9ca3af', 'أصفر': '#e8c545',
     'مبرقش': 'conic-gradient(#ffffff 0deg 90deg, #1a1a1a 90deg 180deg, #ffffff 180deg 270deg, #1a1a1a 270deg 360deg)',
   };
   var UNKNOWN_COLOR_HEX = '#d1d5db';

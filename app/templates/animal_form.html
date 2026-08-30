@@ -12,6 +12,7 @@
     {% else %}
     <label>{{ _('الرقم') }}</label>
     <input name="animal_no" id="animalNoInput" placeholder="{{ _('مثال: BR-2026-001') }}">
+    <p id="animalNoDupWarning" style="display:none; color:var(--danger); font-size:12px; font-weight:bold; margin:-6px 0 6px;">⚠️ {{ _('هذا الرقم مستخدم من قبل لحيوان ثانٍ') }}</p>
     <p id="animalNoHint" style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('إلزامي — إلا لو المصدر "ولادة بالمزرعة" بدون رقعة جاهزة بعد، وقتها يُولَّد رقم مؤقت تلقائياً.') }}</p>
     {% endif %}
 
@@ -201,6 +202,49 @@
   updateAnimalNoRequired();
   updatePregnancySection();
   updateSourceGroups();
+
+  // فحص فوري لتكرار رقم الحيوان أثناء الكتابة (بند إضافي، 2026-08-30)
+  // — طلبك الصريح: "لو دخلت رقم خطأ يرفض من أول ما ادخله يقولي الرقم
+  // موجود"، بدل ما ينتظر لحد ما يضغط حفظ ويطلع له خطأ بعد التحميل.
+  var animalNoDupWarning = document.getElementById('animalNoDupWarning');
+  var animalForm = document.getElementById('animalForm');
+  var dupCheckTimer = null;
+  var isDuplicate = false;
+
+  function checkAnimalNoDuplicate(){
+    var value = animalNoInput.value.trim();
+    if (!value) {
+      isDuplicate = false;
+      animalNoDupWarning.style.display = 'none';
+      return;
+    }
+    fetch('{{ url_for("core.animals_check_number") }}?animal_no=' + encodeURIComponent(value))
+      .then(function(res){ return res.ok ? res.json() : null; })
+      .then(function(data){
+        if (!data) return;
+        // تجاهل الرد لو المستخدم غيّر القيمة أثناء انتظار الرد
+        if (animalNoInput.value.trim() !== value) return;
+        isDuplicate = !!data.exists;
+        animalNoDupWarning.style.display = isDuplicate ? 'block' : 'none';
+      })
+      .catch(function(){ /* فشل الشبكة — ما نمنع الحفظ، فحص الخادم وقت الإرسال يبقى الحاجز الحقيقي */ });
+  }
+
+  if (animalNoInput && animalNoDupWarning) {
+    animalNoInput.addEventListener('input', function(){
+      clearTimeout(dupCheckTimer);
+      dupCheckTimer = setTimeout(checkAnimalNoDuplicate, 400);
+    });
+  }
+  if (animalForm) {
+    animalForm.addEventListener('submit', function(e){
+      if (isDuplicate) {
+        e.preventDefault();
+        animalNoInput.scrollIntoView({behavior: 'smooth', block: 'center'});
+        animalNoInput.focus();
+      }
+    });
+  }
 })();
 </script>
 {% endif %}

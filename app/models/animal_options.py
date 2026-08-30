@@ -72,8 +72,12 @@ class AnimalColor(db.Model):
 
     @classmethod
     def seed_defaults(cls) -> None:
-        if cls.query.count() > 0:
-            return
-        for n in ("أبيض", "أسود", "أحمر", "بني", "رمادي", "مبرقش"):
-            db.session.add(cls(name=n))
+        """idempotent لكل اسم على حدة (نفس تصحيح `Breed.seed_defaults`
+        أعلاه، بند إضافي 289) — عشان مزرعة شغّالة أصلاً تلتقط أي لون
+        افتراضي جديد أُضيف بالكود لاحقاً (زي "أصفر" هنا، طلبك الصريح)
+        بمجرّد إعادة تشغيل `flask seed`، بدل ما يوقفها الحارس القديم
+        (`count() > 0`) لمجرد وجود لون واحد من قبل."""
+        for n in ("أبيض", "أسود", "أحمر", "بني", "رمادي", "أصفر", "مبرقش"):
+            if not cls.query.filter_by(name=n).first():
+                db.session.add(cls(name=n))
         db.session.commit()

@@ -879,6 +879,19 @@ def colors_new():
                             back_endpoint="core.animals_new")
 
 
+@core_bp.route("/animals/check-number")
+@login_required
+@require_permission("animals.manage")
+def animals_check_number():
+    """فحص فوري لرقم الحيوان أثناء الكتابة (بند إضافي، 2026-08-30) —
+    طلبك الصريح: "لو دخلت رقم خطأ يرفض من أول ما ادخله يقولي الرقم
+    موجود" — بدل ما ينتظر لحد ما يضغط حفظ ويرجع له خطأ IntegrityError.
+    استعلام قراءة بس، صفر كتابة."""
+    animal_no = (request.args.get("animal_no") or "").strip()
+    exists = bool(animal_no) and Animal.query.filter_by(animal_no=animal_no).first() is not None
+    return jsonify({"exists": exists})
+
+
 @core_bp.route("/animals/new", methods=["GET", "POST"])
 @login_required
 @require_permission("animals.manage")
