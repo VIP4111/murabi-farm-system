@@ -15,3 +15,11 @@
 {% macro status_badge(state, label) %}
 <span class="badge" data-state="{{ state }}">{{ label }}</span>
 {%- endmacro %}
+
+{# تلميح مساعد مصغّر (بند إضافي 2026-08-31، طلبك المباشر: "تلميحات
+   مساعدة سريعة... أيقونة (؟) بجانب المصطلحات غير الواضحة") — استخدام
+   نموذجي بجانب أي label: {{ macros.tip(_('نص شرح مبسّط قصير')) }}
+   يعتمد على .info-tip/.info-tip-bubble CSS + معالج النقر بـbase.html. #}
+{% macro tip(text) %}
+<span class="info-tip" tabindex="0">؟<span class="info-tip-bubble">{{ text }}</span></span>
+{%- endmacro %}

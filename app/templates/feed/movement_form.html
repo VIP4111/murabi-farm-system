@@ -8,10 +8,15 @@
     <select name="feed_id" required>
       {% for f in feeds %}<option value="{{ f.id }}">{{ f.name }} ({{ f.available_qty }} {{ f.unit }})</option>{% endfor %}
     </select>
+    {# بند إضافي (2026-08-31، طلبك المباشر: "نماذج سريعة... تقلل عدد
+       الحقول/الخطوات") — الاستخدام اليومي الفعلي لهذي الشاشة هو
+       تسجيل "صادر" (استهلاك علف)؛ "وارد" (شراء) له شاشة مخصَّصة منفصلة
+       (شراء علف) أصلاً — نجعل "صادر" الاختيار الافتراضي بدل ما يضطر
+       المستخدم يبدّله كل مرة. #}
     <label>{{ _('النوع') }}</label>
     <select name="movement_type" required>
+      <option value="out" selected>{{ _('صادر (توزيع فعلي)') }}</option>
       <option value="in">{{ _('وارد (شراء/تعبئة)') }}</option>
-      <option value="out">{{ _('صادر (توزيع فعلي)') }}</option>
     </select>
     <label>{{ _('الكمية') }}</label><input name="quantity" type="number" step="0.01" required>
     <label>{{ _('الحظيرة (إلزامي لحركة "صادر" — عشان تنحسب التكلفة اليومية للحظيرة صح)') }}</label>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "health/_medicine_widget.html" import medicine_option_attrs, medicine_info_widget with context %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:460px;">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -25,7 +26,7 @@
     <datalist id="diseaseTypesList">
       {% for t in disease_types %}<option value="{{ t.name }}">{{ t.display_label() }}</option>{% endfor %}
     </datalist>
-    <label>{{ _('الشدة') }}</label>
+    <label>{{ _('الشدة') }} {{ tip(_('تقييمك الشخصي لحالة الرأس الآن — يفيد لاحقاً بمراجعة تاريخه الطبي، بدون أي تأثير حسابي تلقائي.')) }}</label>
     <select name="severity">
       <option value="light">{{ _('بسيطة') }}</option>
       <option value="medium">{{ _('متوسطة') }}</option>
@@ -36,12 +37,16 @@
       <option value="">{{ _('بدون دواء') }}</option>
       {% for m in medicines %}<option value="{{ m.id }}" {{ medicine_option_attrs(m) }} {{ 'selected' if prefill_pharmacy_id == m.id }}>{{ m.name }}{{ ' — ' + m.usage_method if m.usage_method }} ({{ _('سحب:') }} {{ m.withdrawal_days }} {{ _('يوم') }})</option>{% endfor %}
     </select>
-    <label>{{ _('الكمية المستخدمة') }}</label><input name="quantity_used" id="quantityUsed" type="number" step="0.01" value="{{ prefill_quantity_used or '' }}">
+    <label>{{ _('الكمية المستخدمة') }} {{ tip(_('كمية الدواء اللي أُعطيت فعلياً بهذي الجرعة — بنفس وحدة الدواء نفسه (مل/حبة/جرام حسب تسجيله بالصيدلية). يُخصَم تلقائياً من المخزون.')) }}</label>
+    <input name="quantity_used" id="quantityUsed" type="number" step="0.01" value="{{ prefill_quantity_used or '' }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">* {{ _('إلزامية لو اخترت دواء أعلاه.') }}</p>
     <label>{{ _('تكلفة العلاج') }}</label><input name="treatment_cost" id="costInput" type="number" step="0.01" value="0">
     {{ medicine_info_widget('pharmacySelect', 'quantityUsed', 'costInput') }}
-    <label>{{ _('سبب التجاوز (لو ظهر تحذير تكرار جرعة الطفيليات)') }}</label>
-    <textarea name="redose_override_reason" rows="2" placeholder="{{ _('املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار') }}"></textarea>
+    <details class="drawer-group">
+      <summary>{{ _('سبب تجاوز (نادر الاستخدام)') }}</summary>
+      <p style="color:var(--muted); font-size:12px; margin:4px 0 8px;">{{ _('اتركه فاضياً بالحالات العادية — يلزم بس لو رجعت الشاشة بتحذير "تكرار جرعة طفيليات مبكّر".') }}</p>
+      <textarea name="redose_override_reason" rows="2" placeholder="{{ _('اكتب السبب الطبي للتكرار') }}"></textarea>
+    </details>
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>

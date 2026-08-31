@@ -985,6 +985,13 @@ def animals_new():
         breeds=Breed.query.order_by(Breed.name).all(),
         species_types=SpeciesType.query.order_by(SpeciesType.label_ar).all(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
+        # بند إضافي (2026-08-31، طلبك المباشر: "تسهيل شاشات الإدخال
+        # اليومي... نماذج سريعة وبسيطة تقلل عدد الحقول") — رابط اختصار
+        # "تسجيل مولود جديد" بالرئيسية يفتح نفس الفورم بـ?source=birth،
+        # فيثبّت المصدر تلقائياً بدل ما يختاره المستخدم يدوياً (خطوة
+        # أقل)، والفورم يبدأ مباشرة بحقول الولادة (الأم/الأب/التاريخ)
+        # بدل قائمة مصادر عامة.
+        prefill_source=request.args.get("source") if request.args.get("source") in {"birth", "purchase", "gift", "opening_balance"} else None,
     )
 
 

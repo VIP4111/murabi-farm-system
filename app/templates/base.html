@@ -386,6 +386,26 @@
     .date-picker-foot{display:flex; justify-content:space-between; margin-top:8px; padding-top:8px; border-top:1px solid var(--line);}
     .date-picker-foot button{background:none; border:none; font-size:12.5px; color:var(--primary); cursor:pointer; font-weight:700;}
 
+    /* تلميح مساعد مصغّر (بند إضافي 2026-08-31، طلبك المباشر: "تلميحات
+       مساعدة سريعة (Tooltips)... أيقونة (؟) بجانب المصطلحات غير
+       الواضحة") — دائرة "؟" صغيرة تفتح فقاعة نص قصير بالضغط عليها
+       (مو hover بس — الجوال ما فيه مؤشر فأر، فلازم تشتغل باللمس).
+       مكوّن عام — استورد macros.tip من _macros.html واستخدمه هكذا:
+       label نص الحقل و macros.tip(نص شرح مبسّط) جنبه مباشرة. */
+    .info-tip{
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      width:16px; height:16px; border-radius:50%; background:var(--bg); border:1px solid var(--line);
+      color:var(--muted); font-size:10.5px; font-weight:900; cursor:pointer; margin-inline-start:4px;
+      vertical-align:middle; line-height:1; flex:0 0 auto;
+    }
+    .info-tip-bubble{
+      display:none; position:absolute; z-index:70; bottom:calc(100% + 6px); inset-inline-start:0;
+      background:var(--text); color:var(--card); font-weight:400; font-size:12px; line-height:1.5;
+      padding:8px 10px; border-radius:10px; width:220px; white-space:normal; cursor:auto;
+      box-shadow:var(--shadow);
+    }
+    .info-tip.open .info-tip-bubble{display:block;}
+
     /* عمود إجراءات مستقل بنهاية كل سطر (بند إضافي 66) — الأزرار
        (موافقة/تأجيل/حذف...) تترتّب عمودياً بعرض ثابت بدل ما تتزاحم
        أفقياً وتتداخل مع بقية أعمدة الجدول. */
@@ -776,6 +796,17 @@
         });
       }).observe(document.body, {childList: true, subtree: true});
     })();
+
+    // تلميح مساعد مصغّر (راجع .info-tip CSS أعلاه) — يفتح/يقفل
+    // بالضغط (مو hover)، عشان يشتغل صح باللمس بالجوال. ضغطة برّا أي
+    // تلميح مفتوح تقفله.
+    document.addEventListener('click', function(e){
+      var tip = e.target.closest('.info-tip');
+      document.querySelectorAll('.info-tip.open').forEach(function(t){
+        if (t !== tip) t.classList.remove('open');
+      });
+      if (tip) tip.classList.toggle('open');
+    });
   </script>
 </head>
 <body>

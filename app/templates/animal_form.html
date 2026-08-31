@@ -1,7 +1,12 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:460px;">
-  <h2>{{ _('تعديل بيانات الحيوان') if animal else _('تسجيل حيوان جديد') }}</h2>
+  <h2>
+    {% if animal %}{{ _('تعديل بيانات الحيوان') }}
+    {% elif prefill_source == 'birth' %}🐣 {{ _('تسجيل مولود جديد') }}
+    {% else %}{{ _('تسجيل حيوان جديد') }}{% endif %}
+  </h2>
   <form method="post" enctype="multipart/form-data" data-offline id="animalForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     {% if animal %}
@@ -48,8 +53,6 @@
     </script>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">{{ _('الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين.') }}</p>
 
-    <label>{{ _('الاسم (اختياري)') }}</label><input name="name" value="{{ animal.name or '' if animal }}">
-
     <label>{{ _('الفصيلة') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="species" id="speciesSelect" {{ 'disabled' if animal }} style="flex:1; margin-bottom:0;">
@@ -73,13 +76,23 @@
     <input value="{{ {'purchase':_('شراء'),'birth':_('ولادة بالمزرعة'),'gift':_('هدية/دعم عيني'),'opening_balance':_('رصيد افتتاحي')}.get(animal.source.value, animal.source.value) }}" disabled>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('المصدر لا يتغيّر بعد الإنشاء (مرتبط بحركة مالية وحدث دورة إنتاج تسجّلا أصلاً) — لو أُدخل غلط، الأصح أرشفة هذا الرأس وإضافة رأس جديد صحيح.') }}</p>
     {% else %}
-    <label>{{ _('المصدر') }}</label>
-    <select name="source" id="sourceSelect" required>
-      <option value="purchase">{{ _('شراء') }}</option>
-      <option value="birth">{{ _('ولادة بالمزرعة') }}</option>
-      <option value="gift">{{ _('هدية / دعم عيني') }}</option>
-      <option value="opening_balance">{{ _('رصيد افتتاحي (موجود أصلاً بالقطيع)') }}</option>
-    </select>
+    {# بند إضافي (2026-08-31، طلبك المباشر: نماذج سريعة تقلل عدد
+       الحقول) — لو جاء المستخدم من اختصار مباشر ("تسجيل مولود جديد"
+       بالرئيسية مثلاً)، المصدر معروف مسبقاً — نعرضه كبطاقة مختصرة
+       بدل قائمة اختيار كاملة، مع رابط "تغيير" لمن يبي فعلاً يبدّله. #}
+    <div id="sourcePrefillBanner" style="{{ 'display:none;' if not prefill_source }} background:var(--bg); border-radius:12px; padding:10px 12px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
+      <span>{{ _('المصدر:') }} <b>{{ {'purchase':_('شراء'),'birth':_('ولادة بالمزرعة'),'gift':_('هدية/دعم عيني'),'opening_balance':_('رصيد افتتاحي')}.get(prefill_source, '') }}</b></span>
+      <a href="#" id="changeSourceLink" style="font-size:12.5px; flex:0 0 auto;">{{ _('تغيير') }}</a>
+    </div>
+    <div id="sourceSelectWrap" style="{{ 'display:none;' if prefill_source }}">
+      <label>{{ _('المصدر') }}</label>
+      <select name="source" id="sourceSelect" required>
+        <option value="purchase" {{ 'selected' if prefill_source == 'purchase' }}>{{ _('شراء') }}</option>
+        <option value="birth" {{ 'selected' if prefill_source == 'birth' }}>{{ _('ولادة بالمزرعة') }}</option>
+        <option value="gift" {{ 'selected' if prefill_source == 'gift' }}>{{ _('هدية / دعم عيني') }}</option>
+        <option value="opening_balance" {{ 'selected' if prefill_source == 'opening_balance' }}>{{ _('رصيد افتتاحي (موجود أصلاً بالقطيع)') }}</option>
+      </select>
+    </div>
     {% endif %}
 
     <label>{{ _('الجنس') }}</label>
@@ -99,7 +112,7 @@
     </div>
     {% endif %}
 
-    <label>{{ _('الغرض (يحدّد مسار دورة الإنتاج لاحقاً)') }}</label>
+    <label>{{ _('الغرض') }} {{ tip(_('"تربية": يدخل دورة التقريع/الحمل. "تسمين": يُتابَع وزنه لبيعه لاحقاً. "بيع سريع": مخصَّص للبيع القريب من الآن. تقدر تتركه "غير محدد" وتحدده لاحقاً.')) }}</label>
     <select name="purpose">
       <option value="" {{ 'selected' if animal and not animal.purpose }}>{{ _('غير محدد بعد') }}</option>
       <option value="تربية" {{ 'selected' if animal and animal.purpose == 'تربية' }}>{{ _('تربية') }}</option>
@@ -146,9 +159,21 @@
     <label>{{ _('تاريخ الدخول (لو المصدر هدية أو رصيد افتتاحي)') }}</label><input name="entry_date" type="date" value="{{ animal.entry_date.isoformat() if animal.entry_date }}">
     {% endif %}
 
-    <label>{{ _('الوزن (كجم)') }}</label><input name="weight" type="number" step="0.01" value="{{ animal.weight if animal }}">
-    <label>{{ _('السعر / القيمة التقديرية') }}</label><input name="price" type="number" step="0.01" value="{{ animal.price if animal }}">
-    <label>{{ _('رابط الصورة (اختياري)') }}</label><input name="image_url" placeholder="https://..." value="{{ animal.image_url or '' if animal }}">
+    {# بند إضافي (2026-08-31، طلبك المباشر: "نماذج سريعة وبسيطة تقلل
+       عدد الحقول") — حقول ثانوية بحتة (اسم/وزن/سعر/صورة) تُطوى بقسم
+       اختياري بدل ما تطول الفورم الأساسي دايماً — أي مستخدم يحتاجها
+       يفتحها بضغطة، وأي مستخدم مستعجل (تسجيل مولود سريع مثلاً) يحفظ
+       بدونها مباشرة. القيم الحالية (وضع التعديل) تفتح القسم تلقائياً
+       لو معبّاة، عشان ما تختفي بدون تنبيه. #}
+    <details class="drawer-group" {{ 'open' if animal and (animal.name or animal.weight or animal.price or animal.image_url) }}>
+      <summary>{{ _('تفاصيل إضافية (اختياري)') }}</summary>
+      <label>{{ _('الاسم') }} {{ tip(_('اسم مستعار للرأس (زي حيوان أليف) — مو رقمه الرسمي. غالباً يُترك فاضياً.')) }}</label>
+      <input name="name" value="{{ animal.name or '' if animal }}">
+      <label>{{ _('الوزن (كجم)') }}</label><input name="weight" type="number" step="0.01" value="{{ animal.weight if animal }}">
+      <label>{{ _('السعر / القيمة التقديرية') }} {{ tip(_('قيمة تقديرية للرأس الآن — تُستخدم بحساب تكلفة القطيع الإجمالية. تقدر تتركها فاضية وتعبّيها لاحقاً.')) }}</label>
+      <input name="price" type="number" step="0.01" value="{{ animal.price if animal }}">
+      <label>{{ _('رابط الصورة') }}</label><input name="image_url" placeholder="https://..." value="{{ animal.image_url or '' if animal }}">
+    </details>
 
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
@@ -162,6 +187,16 @@
   var genderSelect = document.getElementById('genderSelect');
   var pregnancySection = document.getElementById('pregnancySection');
   var sourceGroups = document.querySelectorAll('[data-source-group]');
+  var sourcePrefillBanner = document.getElementById('sourcePrefillBanner');
+  var sourceSelectWrap = document.getElementById('sourceSelectWrap');
+  var changeSourceLink = document.getElementById('changeSourceLink');
+  if (changeSourceLink) {
+    changeSourceLink.addEventListener('click', function(e){
+      e.preventDefault();
+      sourcePrefillBanner.style.display = 'none';
+      sourceSelectWrap.style.display = 'block';
+    });
+  }
   var HINT_OPTIONAL_BIRTH = {{ _('اختياري لو ولادة بدون رقعة جاهزة بعد — يُولَّد رقم مؤقت تلقائياً.')|tojson }};
   var HINT_REQUIRED = {{ _('إلزامي — إلا لو المصدر "ولادة بالمزرعة" بدون رقعة جاهزة بعد.')|tojson }};
 
