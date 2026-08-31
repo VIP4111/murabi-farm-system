@@ -5,7 +5,7 @@
 يكتب صف بجدول Tasks مباشرة.
 """
 from datetime import date, datetime, timedelta, timezone
-from flask_babel import lazy_gettext as _l
+from flask_babel import lazy_gettext as _l, gettext as _
 from app.extensions import db
 from app.models import Task, AuditLog
 
@@ -55,7 +55,7 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
                  depends_on_task_id=None, target_role=None) -> Task:
     """تعيين مهمة مباشر من الدكتور/المالك — بدون مرحلة اقتراح."""
     if not actor.has_permission("tasks.assign_any"):
-        raise TaskPermissionError("ما تملك صلاحية توزيع المهام.")
+        raise TaskPermissionError(_("ما تملك صلاحية توزيع المهام."))
     if not assignee_id and barn_id:
         from app.models import Barn
         barn = Barn.query.get(barn_id)
@@ -116,9 +116,9 @@ def approve_suggested_task(task: Task, *, actor) -> Task:
     وقت الإنشاء من مسؤول الحظيرة، `create_suggested_task`)، يوصله
     إشعار فوري بمجرد الاعتماد."""
     if not actor.has_permission("tasks.review_daily"):
-        raise TaskPermissionError("ما تملك صلاحية مراجعة المهام اليومية.")
+        raise TaskPermissionError(_("ما تملك صلاحية مراجعة المهام اليومية."))
     if task.status != "suggested":
-        raise TaskStateError("هذي المهمة مو بحالة اقتراح.")
+        raise TaskStateError(_("هذي المهمة مو بحالة اقتراح."))
     task.status = "pending"
     task.reviewed_by_id = actor.id
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.approve",
@@ -135,9 +135,9 @@ def approve_suggested_task(task: Task, *, actor) -> Task:
 
 def postpone_suggested_task(task: Task, *, actor, new_due_date) -> Task:
     if not actor.has_permission("tasks.review_daily"):
-        raise TaskPermissionError("ما تملك صلاحية مراجعة المهام اليومية.")
+        raise TaskPermissionError(_("ما تملك صلاحية مراجعة المهام اليومية."))
     if task.status != "suggested":
-        raise TaskStateError("هذي المهمة مو بحالة اقتراح.")
+        raise TaskStateError(_("هذي المهمة مو بحالة اقتراح."))
     task.due_date = new_due_date
     task.reviewed_by_id = actor.id
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.postpone",
@@ -149,9 +149,9 @@ def postpone_suggested_task(task: Task, *, actor, new_due_date) -> Task:
 def soft_delete_suggested_task(task: Task, *, actor, reason=None) -> Task:
     """حذف من الدكتور — مو نهائي، يتحوّل لصندوق مراجعة صاحب الحلال."""
     if not actor.has_permission("tasks.review_daily"):
-        raise TaskPermissionError("ما تملك صلاحية مراجعة المهام اليومية.")
+        raise TaskPermissionError(_("ما تملك صلاحية مراجعة المهام اليومية."))
     if task.status != "suggested":
-        raise TaskStateError("هذي المهمة مو بحالة اقتراح.")
+        raise TaskStateError(_("هذي المهمة مو بحالة اقتراح."))
     task.status = "deleted_pending_review"
     task.reviewed_by_id = actor.id
     task.notes = ((task.notes + " | ") if task.notes else "") + (reason or "")
@@ -188,9 +188,9 @@ def expire_stale_suggested_tasks(*, today: date | None = None) -> list[Task]:
 
 def owner_restore_task(task: Task, *, actor) -> Task:
     if not actor.has_permission("tasks.delete_final"):
-        raise TaskPermissionError("الاسترجاع حصري لصاحب الحلال.")
+        raise TaskPermissionError(_("الاسترجاع حصري لصاحب الحلال."))
     if task.status != "deleted_pending_review":
-        raise TaskStateError("هذي المهمة مو بصندوق المراجعة.")
+        raise TaskStateError(_("هذي المهمة مو بصندوق المراجعة."))
     task.status = "suggested"
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.owner_restore",
                              entity_type="Task", entity_id=task.id))
@@ -200,9 +200,9 @@ def owner_restore_task(task: Task, *, actor) -> Task:
 
 def owner_delete_task_final(task: Task, *, actor) -> None:
     if not actor.has_permission("tasks.delete_final"):
-        raise TaskPermissionError("الحذف النهائي حصري لصاحب الحلال.")
+        raise TaskPermissionError(_("الحذف النهائي حصري لصاحب الحلال."))
     if task.status != "deleted_pending_review":
-        raise TaskStateError("الحذف النهائي بس للمهام اللي بصندوق المراجعة.")
+        raise TaskStateError(_("الحذف النهائي بس للمهام اللي بصندوق المراجعة."))
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.delete_final",
                              entity_type="Task", entity_id=task.id))
     db.session.delete(task)
@@ -241,7 +241,7 @@ def assign_animal_checkup(*, actor, animal, items: list[str], assignee_id=None,
     (نفس الفحص/التوثيق/الإشعار المعياري)، وبعدها بس تربط الدفعة."""
     items = [i.strip() for i in items if i and i.strip()]
     if not items:
-        raise TaskStateError("لازم تختار بند فحص واحد على الأقل.")
+        raise TaskStateError(_("لازم تختار بند فحص واحد على الأقل."))
 
     due_date = due_date or (date.today() + timedelta(days=1))
     # بند إضافي 308 — لو ما فيه assignee_id صريح، ما نمرّر barn_id لـ
@@ -365,7 +365,7 @@ def _check_not_locked(task: Task) -> None:
     """تسلسل المهام (بند 21) — مهمة عندها 'مهمة سابقة' ما تُبدأ ولا تُنجز
     لين السابقة تصير status=done."""
     if task.depends_on_task_id and task.depends_on and task.depends_on.status != "done":
-        raise TaskStateError(f"لازم تكمل المهمة السابقة أولاً: \"{task.depends_on.title}\"")
+        raise TaskStateError(_('لازم تكمل المهمة السابقة أولاً: "%(title)s"', title=task.depends_on.title))
 
 
 def _duration_minutes_since_start(task: Task, end_time) -> int | None:
@@ -391,9 +391,9 @@ def _claim_if_unassigned(task: Task, actor) -> None:
 def start_task(task: Task, *, actor) -> Task:
     _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
-        raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
+        raise TaskPermissionError(_("هذي المهمة مو معيّنة لك."))
     if task.status != "pending":
-        raise TaskStateError("المهمة مو جاهزة للبدء.")
+        raise TaskStateError(_("المهمة مو جاهزة للبدء."))
     _check_not_locked(task)
     task.status = "in_progress"
     task.started_at = _now()
@@ -407,12 +407,12 @@ def complete_task(task: Task, *, actor, note=None, evidence_image_url=None, voic
                    barn_id=None) -> Task:
     _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
-        raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
+        raise TaskPermissionError(_("هذي المهمة مو معيّنة لك."))
     if task.status not in ("pending", "in_progress"):
-        raise TaskStateError("المهمة مو جاهزة للإنجاز.")
+        raise TaskStateError(_("المهمة مو جاهزة للإنجاز."))
     _check_not_locked(task)
     if task.requires_photo and not evidence_image_url:
-        raise TaskStateError("هذي المهمة تتطلب إرفاق صورة.")
+        raise TaskStateError(_("هذي المهمة تتطلب إرفاق صورة."))
     now = _now()
     task.status = "done"
     task.completed_at = now
@@ -541,10 +541,10 @@ def _move_to_pregnant_barn(task: Task, *, chosen_barn_id=None) -> None:
 
     barn = Barn.query.filter_by(barn_type="حوامل").order_by(Barn.id).first()
     if not barn:
-        raise TaskStateError(
+        raise TaskStateError(_(
             'ما فيه حظيرة بنوع "حوامل" بالنظام — أنشئها من شاشة الحظائر '
             "أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
-        )
+        ))
     task.animal.barn_id = barn.id
     db.session.add(task.animal)
 
@@ -575,17 +575,18 @@ def _move_barn_physiology(task: Task, *, chosen_barn_id=None) -> None:
             task.animal.barn_id = barn.id
             db.session.add(task.animal)
             return
-        raise TaskStateError("الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك.")
+        raise TaskStateError(_("الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك."))
 
     if not task.source_type or ":" not in task.source_type:
-        raise TaskStateError("تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم الفني.")
+        raise TaskStateError(_("تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم الفني."))
     target_barn_type = task.source_type.split(":", 1)[1]
     barn = Barn.query.filter_by(barn_type=target_barn_type).order_by(Barn.id).first()
     if not barn:
-        raise TaskStateError(
-            f'ما فيه حظيرة بنوع "{target_barn_type}" بالنظام — أنشئها من شاشة الحظائر '
-            "أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
-        )
+        raise TaskStateError(_(
+            'ما فيه حظيرة بنوع "%(type)s" بالنظام — أنشئها من شاشة الحظائر '
+            "أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة.",
+            type=target_barn_type,
+        ))
     task.animal.barn_id = barn.id
     db.session.add(task.animal)
 
@@ -634,12 +635,12 @@ def fail_task(task: Task, *, actor, reason, note=None, evidence_image_url=None, 
     قائمة مقفلة (`FAILURE_REASONS`) عشان تصير قابلة للمتابعة والتحليل."""
     _claim_if_unassigned(task, actor)
     if task.assignee_id != actor.id:
-        raise TaskPermissionError("هذي المهمة مو معيّنة لك.")
+        raise TaskPermissionError(_("هذي المهمة مو معيّنة لك."))
     if task.status not in ("pending", "in_progress"):
-        raise TaskStateError("المهمة مو بحالة تسمح بتسجيل التعذّر.")
+        raise TaskStateError(_("المهمة مو بحالة تسمح بتسجيل التعذّر."))
     _check_not_locked(task)
     if reason not in FAILURE_REASONS:
-        raise TaskStateError("سبب التعذّر غير معروف.")
+        raise TaskStateError(_("سبب التعذّر غير معروف."))
     now = _now()
     task.status = "failed"
     task.failed_at = now
@@ -668,9 +669,9 @@ def postpone_active_task(task: Task, *, actor, new_due_date=None) -> Task:
     واحد افتراضياً لو ما انبعث تاريخ صريح — نفس منطق زر "تأجيل" بضغطة
     وحدة (بند 72)."""
     if not actor.has_permission("tasks.assign_any"):
-        raise TaskPermissionError("ما تملك صلاحية تأجيل المهام.")
+        raise TaskPermissionError(_("ما تملك صلاحية تأجيل المهام."))
     if task.status not in ("pending", "in_progress"):
-        raise TaskStateError("هذي المهمة مو بحالة تسمح بالتأجيل.")
+        raise TaskStateError(_("هذي المهمة مو بحالة تسمح بالتأجيل."))
     task.due_date = new_due_date or ((task.due_date or date.today()) + timedelta(days=1))
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.postpone_active",
                              entity_type="Task", entity_id=task.id))
@@ -683,9 +684,9 @@ def cancel_active_task(task: Task, *, actor, reason=None) -> Task:
     المستخدمة تلقائياً ببند 98 (بيع/نفوق رأس)، بس هنا بقرار يدوي صريح
     من صاحب صلاحية توزيع المهام."""
     if not actor.has_permission("tasks.assign_any"):
-        raise TaskPermissionError("ما تملك صلاحية إلغاء المهام.")
+        raise TaskPermissionError(_("ما تملك صلاحية إلغاء المهام."))
     if task.status not in ("pending", "in_progress"):
-        raise TaskStateError("هذي المهمة مو بحالة تسمح بالإلغاء.")
+        raise TaskStateError(_("هذي المهمة مو بحالة تسمح بالإلغاء."))
     task.status = "cancelled"
     task.notes = (task.notes + " | " if task.notes else "") + (reason or "أُلغيت يدوياً")
     db.session.add(AuditLog(actor_user_id=actor.id, action="task.cancel_active",

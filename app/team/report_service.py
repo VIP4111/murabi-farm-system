@@ -6,6 +6,7 @@
 لنفس الشخص اللي استلم البلاغ (manager_id)، مو لأي حامل صلاحية.
 """
 from datetime import datetime, timezone
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models import Report, AuditLog
 from app.core.cloud_storage_service import save_upload
@@ -86,13 +87,13 @@ def submit_report(*, reporter, description, report_type=None, animal_id=None, ba
 
 def _require_manage(actor):
     if not actor.has_permission("reports.manage"):
-        raise ReportPermissionError("ما تملك صلاحية إدارة البلاغات.")
+        raise ReportPermissionError(_("ما تملك صلاحية إدارة البلاغات."))
 
 
 def accept_report(report: Report, *, actor) -> Report:
     _require_manage(actor)
     if report.status != "new":
-        raise ReportStateError("البلاغ مو بحالة \"جديد\".")
+        raise ReportStateError(_('البلاغ مو بحالة "جديد".'))
     report.status = "accepted"
     report.manager_id = actor.id
     report.accepted_at = _now()
@@ -105,9 +106,9 @@ def accept_report(report: Report, *, actor) -> Report:
 def postpone_report(report: Report, *, actor, reason: str) -> Report:
     _require_manage(actor)
     if report.status not in ("new", "accepted"):
-        raise ReportStateError("لا يمكن تأجيل بلاغ بهذي الحالة.")
+        raise ReportStateError(_("لا يمكن تأجيل بلاغ بهذي الحالة."))
     if report.manager_id and report.manager_id != actor.id:
-        raise ReportPermissionError("هذا البلاغ مستلم من دكتور ثاني.")
+        raise ReportPermissionError(_("هذا البلاغ مستلم من دكتور ثاني."))
     report.status = "postponed"
     report.postpone_reason = reason
     db.session.add(AuditLog(actor_user_id=actor.id, action="report.postpone",
@@ -120,7 +121,7 @@ def resume_postponed_report(report: Report, *, actor) -> Report:
     """يرجّع بلاغ مؤجَّل لصندوق الوارد (حالة "جديد") ليُعاد التعامل معه."""
     _require_manage(actor)
     if report.status != "postponed":
-        raise ReportStateError("البلاغ مو مؤجَّل.")
+        raise ReportStateError(_("البلاغ مو مؤجَّل."))
     report.status = "new"
     report.manager_id = None
     db.session.add(AuditLog(actor_user_id=actor.id, action="report.resume",
@@ -131,12 +132,12 @@ def resume_postponed_report(report: Report, *, actor) -> Report:
 
 def cancel_report(report: Report, *, actor, reason: str) -> Report:
     if not reason or not reason.strip():
-        raise ReportStateError("سبب الإلغاء إلزامي.")
+        raise ReportStateError(_("سبب الإلغاء إلزامي."))
     _require_manage(actor)
     if report.status not in ("new", "accepted"):
-        raise ReportStateError("لا يمكن إلغاء بلاغ بهذي الحالة.")
+        raise ReportStateError(_("لا يمكن إلغاء بلاغ بهذي الحالة."))
     if report.manager_id and report.manager_id != actor.id:
-        raise ReportPermissionError("هذا البلاغ مستلم من دكتور ثاني.")
+        raise ReportPermissionError(_("هذا البلاغ مستلم من دكتور ثاني."))
     report.status = "cancelled"
     report.cancel_reason = reason
     report.manager_id = actor.id
@@ -148,14 +149,14 @@ def cancel_report(report: Report, *, actor, reason: str) -> Report:
 
 def transfer_report(report: Report, *, actor, executor, note: str) -> Report:
     if not note or not note.strip():
-        raise ReportStateError("ملاحظة التنفيذ إلزامية عند التحويل.")
+        raise ReportStateError(_("ملاحظة التنفيذ إلزامية عند التحويل."))
     _require_manage(actor)
     if report.status != "accepted":
-        raise ReportStateError("لازم تُقبل التذكرة قبل تحويلها.")
+        raise ReportStateError(_("لازم تُقبل التذكرة قبل تحويلها."))
     if report.manager_id != actor.id:
-        raise ReportPermissionError("هذا البلاغ مستلم من دكتور ثاني — بس هو يقدر يحوّله.")
+        raise ReportPermissionError(_("هذا البلاغ مستلم من دكتور ثاني — بس هو يقدر يحوّله."))
     if not executor.is_active_account:
-        raise ReportStateError("لا يمكن التحويل لحساب معطّل.")
+        raise ReportStateError(_("لا يمكن التحويل لحساب معطّل."))
 
     report.executor_id = executor.id
     report.transfer_note = note
@@ -179,9 +180,9 @@ def transfer_report(report: Report, *, actor, executor, note: str) -> Report:
 
 def executor_mark_done(report: Report, *, actor, note=None, evidence_image_url=None, evidence_audio_url=None) -> Report:
     if report.executor_id != actor.id:
-        raise ReportPermissionError("أنت مو المنفّذ المحوَّل له هذا البلاغ.")
+        raise ReportPermissionError(_("أنت مو المنفّذ المحوَّل له هذا البلاغ."))
     if report.status != "accepted" or not report.executor_id:
-        raise ReportStateError("هذا البلاغ مو محوَّل لك حالياً.")
+        raise ReportStateError(_("هذا البلاغ مو محوَّل لك حالياً."))
     report.status = "executed_pending_review"
     report.execution_note = note
     report.execution_evidence_image_url = evidence_image_url
@@ -198,9 +199,9 @@ def close_report(report: Report, *, actor, note=None) -> Report:
     النظام: لا يقدر يغيّر closer أو يضغط زر الإغلاق أي حساب غير الدكتور
     اللي استلم البلاغ أصلاً، بغض النظر عن صلاحياته الأخرى."""
     if report.manager_id != actor.id:
-        raise ReportPermissionError("الإغلاق حصري لمن استلم البلاغ أصلاً.")
+        raise ReportPermissionError(_("الإغلاق حصري لمن استلم البلاغ أصلاً."))
     if report.status not in ("accepted", "executed_pending_review"):
-        raise ReportStateError("البلاغ مو جاهز للإغلاق.")
+        raise ReportStateError(_("البلاغ مو جاهز للإغلاق."))
     report.status = "closed"
     report.closer_id = actor.id
     report.closed_at = _now()
@@ -216,9 +217,9 @@ def self_execute_and_close(report: Report, *, actor, note=None, evidence_image_u
     """الدكتور ينفّذ البلاغ بنفسه بدون تحويل — يغلقه مباشرة."""
     _require_manage(actor)
     if report.manager_id != actor.id:
-        raise ReportPermissionError("هذا البلاغ مستلم من دكتور ثاني.")
+        raise ReportPermissionError(_("هذا البلاغ مستلم من دكتور ثاني."))
     if report.status != "accepted":
-        raise ReportStateError("البلاغ مو بحالة مقبولة.")
+        raise ReportStateError(_("البلاغ مو بحالة مقبولة."))
     report.execution_note = note
     report.execution_evidence_image_url = evidence_image_url
     report.executed_at = _now()
@@ -228,9 +229,9 @@ def self_execute_and_close(report: Report, *, actor, note=None, evidence_image_u
 def delete_cancelled_report(report: Report, *, actor) -> None:
     """حذف نهائي — حصري لصاحب الحلال، وبس للبلاغات الملغاة."""
     if not actor.has_permission("reports.delete_final"):
-        raise ReportPermissionError("الحذف النهائي حصري لصاحب الحلال.")
+        raise ReportPermissionError(_("الحذف النهائي حصري لصاحب الحلال."))
     if report.status != "cancelled":
-        raise ReportStateError("الحذف النهائي بس للبلاغات الملغاة.")
+        raise ReportStateError(_("الحذف النهائي بس للبلاغات الملغاة."))
     db.session.add(AuditLog(actor_user_id=actor.id, action="report.delete_final",
                              entity_type="Report", entity_id=report.id))
     db.session.delete(report)

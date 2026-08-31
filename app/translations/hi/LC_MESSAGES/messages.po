@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 03:06+0300\n"
+"POT-Creation-Date: 2026-08-31 03:42+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -3482,6 +3482,79 @@ msgstr "कार्यक्रम की स्थिति अपडेट �
 msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
 msgstr "यह वेतन पहले से पुष्ट है — इसे संपादित नहीं किया जा सकता।"
 
+#: app/team/report_service.py:90
+msgid "ما تملك صلاحية إدارة البلاغات."
+msgstr "आपके पास रिपोर्ट प्रबंधन अनुमति नहीं है।"
+
+#: app/team/report_service.py:96
+msgid "البلاغ مو بحالة \"جديد\"."
+msgstr "रिपोर्ट \"नई\" स्थिति में नहीं है।"
+
+#: app/team/report_service.py:109
+msgid "لا يمكن تأجيل بلاغ بهذي الحالة."
+msgstr "इस स्थिति में रिपोर्ट स्थगित नहीं की जा सकती।"
+
+#: app/team/report_service.py:111 app/team/report_service.py:140
+#: app/team/report_service.py:220
+msgid "هذا البلاغ مستلم من دكتور ثاني."
+msgstr "यह रिपोर्ट किसी अन्य डॉक्टर द्वारा प्राप्त की गई है।"
+
+#: app/team/report_service.py:124
+msgid "البلاغ مو مؤجَّل."
+msgstr "रिपोर्ट स्थगित नहीं है।"
+
+#: app/team/report_service.py:135
+msgid "سبب الإلغاء إلزامي."
+msgstr "रद्द करने का कारण आवश्यक है।"
+
+#: app/team/report_service.py:138
+msgid "لا يمكن إلغاء بلاغ بهذي الحالة."
+msgstr "इस स्थिति में रिपोर्ट रद्द नहीं की जा सकती।"
+
+#: app/team/report_service.py:152
+msgid "ملاحظة التنفيذ إلزامية عند التحويل."
+msgstr "स्थानांतरण के समय निष्पादन नोट आवश्यक है।"
+
+#: app/team/report_service.py:155
+msgid "لازم تُقبل التذكرة قبل تحويلها."
+msgstr "स्थानांतरण से पहले टिकट स्वीकार किया जाना चाहिए।"
+
+#: app/team/report_service.py:157
+msgid "هذا البلاغ مستلم من دكتور ثاني — بس هو يقدر يحوّله."
+msgstr "यह रिपोर्ट किसी अन्य डॉक्टर द्वारा प्राप्त की गई है — केवल वही इसे स्थानांतरित कर सकता है।"
+
+#: app/team/report_service.py:159
+msgid "لا يمكن التحويل لحساب معطّل."
+msgstr "निष्क्रिय खाते में स्थानांतरण नहीं किया जा सकता।"
+
+#: app/team/report_service.py:183
+msgid "أنت مو المنفّذ المحوَّل له هذا البلاغ."
+msgstr "आप वह निष्पादक नहीं हैं जिसे यह रिपोर्ट स्थानांतरित की गई थी।"
+
+#: app/team/report_service.py:185
+msgid "هذا البلاغ مو محوَّل لك حالياً."
+msgstr "यह रिपोर्ट फिलहाल आपको स्थानांतरित नहीं है।"
+
+#: app/team/report_service.py:202
+msgid "الإغلاق حصري لمن استلم البلاغ أصلاً."
+msgstr "बंद करना केवल उसी के लिए है जिसने मूल रूप से रिपोर्ट प्राप्त की थी।"
+
+#: app/team/report_service.py:204
+msgid "البلاغ مو جاهز للإغلاق."
+msgstr "रिपोर्ट बंद करने के लिए तैयार नहीं है।"
+
+#: app/team/report_service.py:222
+msgid "البلاغ مو بحالة مقبولة."
+msgstr "रिपोर्ट स्वीकृत स्थिति में नहीं है।"
+
+#: app/team/report_service.py:232 app/team/task_service.py:203
+msgid "الحذف النهائي حصري لصاحب الحلال."
+msgstr "स्थायी विलोपन केवल मालिक के लिए है।"
+
+#: app/team/report_service.py:234
+msgid "الحذف النهائي بس للبلاغات الملغاة."
+msgstr "स्थायी विलोपन केवल रद्द की गई रिपोर्टों के लिए है।"
+
 #: app/team/routes.py:36 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
@@ -3758,6 +3831,99 @@ msgstr "एक और तत्काल कार्य"
 #: app/team/task_service.py:41
 msgid "سبب آخر"
 msgstr "अन्य कारण"
+
+#: app/team/task_service.py:58
+msgid "ما تملك صلاحية توزيع المهام."
+msgstr "आपके पास कार्य असाइन करने की अनुमति नहीं है।"
+
+#: app/team/task_service.py:119 app/team/task_service.py:138
+#: app/team/task_service.py:152
+msgid "ما تملك صلاحية مراجعة المهام اليومية."
+msgstr "आपके पास दैनिक कार्यों की समीक्षा करने की अनुमति नहीं है।"
+
+#: app/team/task_service.py:121 app/team/task_service.py:140
+#: app/team/task_service.py:154
+msgid "هذي المهمة مو بحالة اقتراح."
+msgstr "यह कार्य सुझाई गई स्थिति में नहीं है।"
+
+#: app/team/task_service.py:191
+msgid "الاسترجاع حصري لصاحب الحلال."
+msgstr "पुनर्स्थापना केवल मालिक के लिए है।"
+
+#: app/team/task_service.py:193
+msgid "هذي المهمة مو بصندوق المراجعة."
+msgstr "यह कार्य समीक्षा बॉक्स में नहीं है।"
+
+#: app/team/task_service.py:205
+msgid "الحذف النهائي بس للمهام اللي بصندوق المراجعة."
+msgstr "स्थायी विलोपन केवल समीक्षा बॉक्स में मौजूद कार्यों के लिए है।"
+
+#: app/team/task_service.py:244
+msgid "لازم تختار بند فحص واحد على الأقل."
+msgstr "आपको कम से कम एक जांच आइटम चुनना होगा।"
+
+#: app/team/task_service.py:368
+#, python-format
+msgid "لازم تكمل المهمة السابقة أولاً: \"%(title)s\""
+msgstr "पहले पिछला कार्य पूरा करना होगा: \"%(title)s\""
+
+#: app/team/task_service.py:394 app/team/task_service.py:410
+#: app/team/task_service.py:638
+msgid "هذي المهمة مو معيّنة لك."
+msgstr "यह कार्य आपको सौंपा नहीं गया है।"
+
+#: app/team/task_service.py:396
+msgid "المهمة مو جاهزة للبدء."
+msgstr "कार्य शुरू करने के लिए तैयार नहीं है।"
+
+#: app/team/task_service.py:412
+msgid "المهمة مو جاهزة للإنجاز."
+msgstr "कार्य पूरा करने के लिए तैयार नहीं है।"
+
+#: app/team/task_service.py:415
+msgid "هذي المهمة تتطلب إرفاق صورة."
+msgstr "इस कार्य के लिए फोटो संलग्न करना आवश्यक है।"
+
+#: app/team/task_service.py:545
+msgid "ما فيه حظيرة بنوع \"حوامل\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+msgstr "सिस्टम में \"गर्भवती\" प्रकार का कोई बाड़ा नहीं है — पहले बाड़े स्क्रीन से इसे बनाएं, या कार्य-पूर्णता फ़ॉर्म से एक वैकल्पिक बाड़ा चुनें।"
+
+#: app/team/task_service.py:578
+msgid "الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك."
+msgstr "आपके द्वारा चुना गया बाड़ा मौजूद नहीं है — कृपया अपना चयन जांचें।"
+
+#: app/team/task_service.py:581
+msgid "تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم الفني."
+msgstr "इस कार्य के लिए लक्ष्य बाड़ा निर्धारित नहीं किया जा सका (स्रोत डेटा गुम है) — सहायता से संपर्क करें।"
+
+#: app/team/task_service.py:586
+#, python-format
+msgid "ما فيه حظيرة بنوع \"%(type)s\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+msgstr "सिस्टम में \"%(type)s\" प्रकार का कोई बाड़ा नहीं है — पहले बाड़े स्क्रीन से इसे बनाएं, या कार्य-पूर्णता फ़ॉर्म से एक वैकल्पिक बाड़ा चुनें।"
+
+#: app/team/task_service.py:640
+msgid "المهمة مو بحالة تسمح بتسجيل التعذّر."
+msgstr "कार्य ऐसी स्थिति में नहीं है जो विफलता दर्ज करने की अनुमति देती हो।"
+
+#: app/team/task_service.py:643
+msgid "سبب التعذّر غير معروف."
+msgstr "अज्ञात विफलता कारण।"
+
+#: app/team/task_service.py:672
+msgid "ما تملك صلاحية تأجيل المهام."
+msgstr "आपके पास कार्य स्थगित करने की अनुमति नहीं है।"
+
+#: app/team/task_service.py:674
+msgid "هذي المهمة مو بحالة تسمح بالتأجيل."
+msgstr "यह कार्य ऐसी स्थिति में नहीं है जो स्थगन की अनुमति देती हो।"
+
+#: app/team/task_service.py:687
+msgid "ما تملك صلاحية إلغاء المهام."
+msgstr "आपके पास कार्य रद्द करने की अनुमति नहीं है।"
+
+#: app/team/task_service.py:689
+msgid "هذي المهمة مو بحالة تسمح بالإلغاء."
+msgstr "यह कार्य ऐसी स्थिति में नहीं है जो रद्द करने की अनुमति देती हो।"
 
 #: app/templates/_offline_widgets.html:7
 msgid "غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."

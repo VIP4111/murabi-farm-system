@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 03:06+0300\n"
+"POT-Creation-Date: 2026-08-31 03:42+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -3482,6 +3482,79 @@ msgstr "የፕሮግራሙ ሁኔታ ተዘምኗል"
 msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
 msgstr "ይህ ደመወዝ ቀድሞውኑ ተረጋግጧል — ሊስተካከል አይችልም።"
 
+#: app/team/report_service.py:90
+msgid "ما تملك صلاحية إدارة البلاغات."
+msgstr "ሪፖርቶችን የማስተዳደር ፈቃድ የለዎትም።"
+
+#: app/team/report_service.py:96
+msgid "البلاغ مو بحالة \"جديد\"."
+msgstr "ሪፖርቱ \"አዲስ\" ሁኔታ ውስጥ አይደለም።"
+
+#: app/team/report_service.py:109
+msgid "لا يمكن تأجيل بلاغ بهذي الحالة."
+msgstr "በዚህ ሁኔታ ያለ ሪፖርት ማራዘም አይቻልም።"
+
+#: app/team/report_service.py:111 app/team/report_service.py:140
+#: app/team/report_service.py:220
+msgid "هذا البلاغ مستلم من دكتور ثاني."
+msgstr "ይህ ሪፖርት በሌላ ዶክተር ተቀብሏል።"
+
+#: app/team/report_service.py:124
+msgid "البلاغ مو مؤجَّل."
+msgstr "ሪፖርቱ አልተራዘመም።"
+
+#: app/team/report_service.py:135
+msgid "سبب الإلغاء إلزامي."
+msgstr "የመሰረዝ ምክንያት አስፈላጊ ነው።"
+
+#: app/team/report_service.py:138
+msgid "لا يمكن إلغاء بلاغ بهذي الحالة."
+msgstr "በዚህ ሁኔታ ያለ ሪፖርት መሰረዝ አይቻልም።"
+
+#: app/team/report_service.py:152
+msgid "ملاحظة التنفيذ إلزامية عند التحويل."
+msgstr "ሲተላለፍ የአፈጻጸም ማስታወሻ አስፈላጊ ነው።"
+
+#: app/team/report_service.py:155
+msgid "لازم تُقبل التذكرة قبل تحويلها."
+msgstr "ትኬቱ ከመተላለፉ በፊት መቀበል አለበት።"
+
+#: app/team/report_service.py:157
+msgid "هذا البلاغ مستلم من دكتور ثاني — بس هو يقدر يحوّله."
+msgstr "ይህ ሪፖርት በሌላ ዶክተር ተቀብሏል — እሱ ብቻ ሊያስተላልፈው ይችላል።"
+
+#: app/team/report_service.py:159
+msgid "لا يمكن التحويل لحساب معطّل."
+msgstr "ወደ ቦዘነ መለያ ማስተላለፍ አይቻልም።"
+
+#: app/team/report_service.py:183
+msgid "أنت مو المنفّذ المحوَّل له هذا البلاغ."
+msgstr "ይህ ሪፖርት ወደ እርስዎ ያልተላለፈ ፈጻሚ ነዎት።"
+
+#: app/team/report_service.py:185
+msgid "هذا البلاغ مو محوَّل لك حالياً."
+msgstr "ይህ ሪፖርት በአሁኑ ጊዜ ወደ እርስዎ አልተላለፈም።"
+
+#: app/team/report_service.py:202
+msgid "الإغلاق حصري لمن استلم البلاغ أصلاً."
+msgstr "መዝጋት ሪፖርቱን በመጀመሪያ ለተቀበለው ብቻ የተወሰነ ነው።"
+
+#: app/team/report_service.py:204
+msgid "البلاغ مو جاهز للإغلاق."
+msgstr "ሪፖርቱ ለመዘጋት ዝግጁ አይደለም።"
+
+#: app/team/report_service.py:222
+msgid "البلاغ مو بحالة مقبولة."
+msgstr "ሪፖርቱ ተቀባይነት ባገኘ ሁኔታ ውስጥ አይደለም።"
+
+#: app/team/report_service.py:232 app/team/task_service.py:203
+msgid "الحذف النهائي حصري لصاحب الحلال."
+msgstr "የመጨረሻ ማጥፋት ለባለቤቱ ብቻ የተወሰነ ነው።"
+
+#: app/team/report_service.py:234
+msgid "الحذف النهائي بس للبلاغات الملغاة."
+msgstr "የመጨረሻ ማጥፋት ለተሰረዙ ሪፖርቶች ብቻ ነው።"
+
 #: app/team/routes.py:36 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
@@ -3758,6 +3831,99 @@ msgstr "ሌላ አስቸኳይ ተግባር"
 #: app/team/task_service.py:41
 msgid "سبب آخر"
 msgstr "ሌላ ምክንያት"
+
+#: app/team/task_service.py:58
+msgid "ما تملك صلاحية توزيع المهام."
+msgstr "ተግባር የመመደብ ፈቃድ የለዎትም።"
+
+#: app/team/task_service.py:119 app/team/task_service.py:138
+#: app/team/task_service.py:152
+msgid "ما تملك صلاحية مراجعة المهام اليومية."
+msgstr "ዕለታዊ ተግባራትን የመገምገም ፈቃድ የለዎትም።"
+
+#: app/team/task_service.py:121 app/team/task_service.py:140
+#: app/team/task_service.py:154
+msgid "هذي المهمة مو بحالة اقتراح."
+msgstr "ይህ ተግባር በአስተያየት ሁኔታ ውስጥ አይደለም።"
+
+#: app/team/task_service.py:191
+msgid "الاسترجاع حصري لصاحب الحلال."
+msgstr "መመለስ ለባለቤቱ ብቻ የተወሰነ ነው።"
+
+#: app/team/task_service.py:193
+msgid "هذي المهمة مو بصندوق المراجعة."
+msgstr "ይህ ተግባር በግምገማ ሳጥን ውስጥ አይደለም።"
+
+#: app/team/task_service.py:205
+msgid "الحذف النهائي بس للمهام اللي بصندوق المراجعة."
+msgstr "የመጨረሻ ማጥፋት በግምገማ ሳጥን ውስጥ ላሉ ተግባራት ብቻ ነው።"
+
+#: app/team/task_service.py:244
+msgid "لازم تختار بند فحص واحد على الأقل."
+msgstr "ቢያንስ አንድ የምርመራ ንጥል መምረጥ አለብዎት።"
+
+#: app/team/task_service.py:368
+#, python-format
+msgid "لازم تكمل المهمة السابقة أولاً: \"%(title)s\""
+msgstr "መጀመሪያ ቀደም ያለውን ተግባር ማጠናቀቅ አለብዎት: \"%(title)s\""
+
+#: app/team/task_service.py:394 app/team/task_service.py:410
+#: app/team/task_service.py:638
+msgid "هذي المهمة مو معيّنة لك."
+msgstr "ይህ ተግባር ለእርስዎ አልተመደበም።"
+
+#: app/team/task_service.py:396
+msgid "المهمة مو جاهزة للبدء."
+msgstr "ተግባሩ ለመጀመር ዝግጁ አይደለም።"
+
+#: app/team/task_service.py:412
+msgid "المهمة مو جاهزة للإنجاز."
+msgstr "ተግባሩ ለማጠናቀቅ ዝግጁ አይደለም።"
+
+#: app/team/task_service.py:415
+msgid "هذي المهمة تتطلب إرفاق صورة."
+msgstr "ይህ ተግባር ፎቶ ማያያዝ ይፈልጋል።"
+
+#: app/team/task_service.py:545
+msgid "ما فيه حظيرة بنوع \"حوامل\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+msgstr "በስርዓቱ ውስጥ \"እርጉዝ\" ዓይነት በረት የለም — መጀመሪያ ከበረቶች ማያ ገጽ ይፍጠሩት፣ ወይም ከተግባር ማጠናቀቂያ ቅጽ አማራጭ በረት ይምረጡ።"
+
+#: app/team/task_service.py:578
+msgid "الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك."
+msgstr "የመረጡት በረት የለም — ምርጫዎን ያረጋግጡ።"
+
+#: app/team/task_service.py:581
+msgid "تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم الفني."
+msgstr "ለዚህ ተግባር የታለመውን በረት መወሰን አልተቻለም (የምንጭ መረጃ ጎድሏል) — ድጋፍን ያነጋግሩ።"
+
+#: app/team/task_service.py:586
+#, python-format
+msgid "ما فيه حظيرة بنوع \"%(type)s\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+msgstr "በስርዓቱ ውስጥ \"%(type)s\" ዓይነት በረት የለም — መጀመሪያ ከበረቶች ማያ ገጽ ይፍጠሩት፣ ወይም ከተግባር ማጠናቀቂያ ቅጽ አማራጭ በረት ይምረጡ።"
+
+#: app/team/task_service.py:640
+msgid "المهمة مو بحالة تسمح بتسجيل التعذّر."
+msgstr "ተግባሩ ውድቀት ለመመዝገብ በሚፈቅድ ሁኔታ ውስጥ አይደለም።"
+
+#: app/team/task_service.py:643
+msgid "سبب التعذّر غير معروف."
+msgstr "ያልታወቀ የውድቀት ምክንያት።"
+
+#: app/team/task_service.py:672
+msgid "ما تملك صلاحية تأجيل المهام."
+msgstr "ተግባራትን የማራዘም ፈቃድ የለዎትም።"
+
+#: app/team/task_service.py:674
+msgid "هذي المهمة مو بحالة تسمح بالتأجيل."
+msgstr "ይህ ተግባር ማራዘም በሚፈቅድ ሁኔታ ውስጥ አይደለም።"
+
+#: app/team/task_service.py:687
+msgid "ما تملك صلاحية إلغاء المهام."
+msgstr "ተግባራትን የመሰረዝ ፈቃድ የለዎትም።"
+
+#: app/team/task_service.py:689
+msgid "هذي المهمة مو بحالة تسمح بالإلغاء."
+msgstr "ይህ ተግባር መሰረዝ በሚፈቅድ ሁኔታ ውስጥ አይደለም።"
 
 #: app/templates/_offline_widgets.html:7
 msgid "غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."

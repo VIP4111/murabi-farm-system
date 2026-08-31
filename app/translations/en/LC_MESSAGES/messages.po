@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 03:06+0300\n"
+"POT-Creation-Date: 2026-08-31 03:42+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -3482,6 +3482,79 @@ msgstr "The program status has been updated"
 msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
 msgstr "This salary is already confirmed — it can't be edited."
 
+#: app/team/report_service.py:90
+msgid "ما تملك صلاحية إدارة البلاغات."
+msgstr "You don't have the manage-reports permission."
+
+#: app/team/report_service.py:96
+msgid "البلاغ مو بحالة \"جديد\"."
+msgstr "The report is not in \"new\" status."
+
+#: app/team/report_service.py:109
+msgid "لا يمكن تأجيل بلاغ بهذي الحالة."
+msgstr "A report in this status cannot be postponed."
+
+#: app/team/report_service.py:111 app/team/report_service.py:140
+#: app/team/report_service.py:220
+msgid "هذا البلاغ مستلم من دكتور ثاني."
+msgstr "This report was received by another doctor."
+
+#: app/team/report_service.py:124
+msgid "البلاغ مو مؤجَّل."
+msgstr "The report is not postponed."
+
+#: app/team/report_service.py:135
+msgid "سبب الإلغاء إلزامي."
+msgstr "A cancellation reason is required."
+
+#: app/team/report_service.py:138
+msgid "لا يمكن إلغاء بلاغ بهذي الحالة."
+msgstr "A report in this status cannot be cancelled."
+
+#: app/team/report_service.py:152
+msgid "ملاحظة التنفيذ إلزامية عند التحويل."
+msgstr "An execution note is required when transferring."
+
+#: app/team/report_service.py:155
+msgid "لازم تُقبل التذكرة قبل تحويلها."
+msgstr "The ticket must be accepted before it can be transferred."
+
+#: app/team/report_service.py:157
+msgid "هذا البلاغ مستلم من دكتور ثاني — بس هو يقدر يحوّله."
+msgstr "This report was received by another doctor — only they can transfer it."
+
+#: app/team/report_service.py:159
+msgid "لا يمكن التحويل لحساب معطّل."
+msgstr "Cannot transfer to a deactivated account."
+
+#: app/team/report_service.py:183
+msgid "أنت مو المنفّذ المحوَّل له هذا البلاغ."
+msgstr "You are not the executor this report was transferred to."
+
+#: app/team/report_service.py:185
+msgid "هذا البلاغ مو محوَّل لك حالياً."
+msgstr "This report is not currently transferred to you."
+
+#: app/team/report_service.py:202
+msgid "الإغلاق حصري لمن استلم البلاغ أصلاً."
+msgstr "Only whoever originally received the report can close it."
+
+#: app/team/report_service.py:204
+msgid "البلاغ مو جاهز للإغلاق."
+msgstr "The report is not ready to be closed."
+
+#: app/team/report_service.py:222
+msgid "البلاغ مو بحالة مقبولة."
+msgstr "The report is not in accepted status."
+
+#: app/team/report_service.py:232 app/team/task_service.py:203
+msgid "الحذف النهائي حصري لصاحب الحلال."
+msgstr "Permanent deletion is exclusive to the owner."
+
+#: app/team/report_service.py:234
+msgid "الحذف النهائي بس للبلاغات الملغاة."
+msgstr "Permanent deletion is only for cancelled reports."
+
 #: app/team/routes.py:36 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
@@ -3758,6 +3831,99 @@ msgstr "Another urgent task"
 #: app/team/task_service.py:41
 msgid "سبب آخر"
 msgstr "Other reason"
+
+#: app/team/task_service.py:58
+msgid "ما تملك صلاحية توزيع المهام."
+msgstr "You don't have the assign-task permission."
+
+#: app/team/task_service.py:119 app/team/task_service.py:138
+#: app/team/task_service.py:152
+msgid "ما تملك صلاحية مراجعة المهام اليومية."
+msgstr "You don't have the review-daily-tasks permission."
+
+#: app/team/task_service.py:121 app/team/task_service.py:140
+#: app/team/task_service.py:154
+msgid "هذي المهمة مو بحالة اقتراح."
+msgstr "This task is not in suggested status."
+
+#: app/team/task_service.py:191
+msgid "الاسترجاع حصري لصاحب الحلال."
+msgstr "Restoring is exclusive to the owner."
+
+#: app/team/task_service.py:193
+msgid "هذي المهمة مو بصندوق المراجعة."
+msgstr "This task is not in the review box."
+
+#: app/team/task_service.py:205
+msgid "الحذف النهائي بس للمهام اللي بصندوق المراجعة."
+msgstr "Permanent deletion is only for tasks in the review box."
+
+#: app/team/task_service.py:244
+msgid "لازم تختار بند فحص واحد على الأقل."
+msgstr "You must select at least one check item."
+
+#: app/team/task_service.py:368
+#, python-format
+msgid "لازم تكمل المهمة السابقة أولاً: \"%(title)s\""
+msgstr "You must finish the previous task first: \"%(title)s\""
+
+#: app/team/task_service.py:394 app/team/task_service.py:410
+#: app/team/task_service.py:638
+msgid "هذي المهمة مو معيّنة لك."
+msgstr "This task is not assigned to you."
+
+#: app/team/task_service.py:396
+msgid "المهمة مو جاهزة للبدء."
+msgstr "The task is not ready to be started."
+
+#: app/team/task_service.py:412
+msgid "المهمة مو جاهزة للإنجاز."
+msgstr "The task is not ready to be completed."
+
+#: app/team/task_service.py:415
+msgid "هذي المهمة تتطلب إرفاق صورة."
+msgstr "This task requires attaching a photo."
+
+#: app/team/task_service.py:545
+msgid "ما فيه حظيرة بنوع \"حوامل\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+msgstr "There is no \"pregnant\" barn type in the system — create one from the barns screen first, or choose an alternative barn on the task-completion form."
+
+#: app/team/task_service.py:578
+msgid "الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك."
+msgstr "The barn you chose does not exist — please check your selection."
+
+#: app/team/task_service.py:581
+msgid "تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم الفني."
+msgstr "Could not determine the target barn for this task (missing source data) — contact support."
+
+#: app/team/task_service.py:586
+#, python-format
+msgid "ما فيه حظيرة بنوع \"%(type)s\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو اختر حظيرة بديلة من فورم إنجاز المهمة."
+msgstr "There is no \"%(type)s\" barn type in the system — create one from the barns screen first, or choose an alternative barn on the task-completion form."
+
+#: app/team/task_service.py:640
+msgid "المهمة مو بحالة تسمح بتسجيل التعذّر."
+msgstr "The task is not in a status that allows recording a failure."
+
+#: app/team/task_service.py:643
+msgid "سبب التعذّر غير معروف."
+msgstr "Unknown failure reason."
+
+#: app/team/task_service.py:672
+msgid "ما تملك صلاحية تأجيل المهام."
+msgstr "You don't have the postpone-tasks permission."
+
+#: app/team/task_service.py:674
+msgid "هذي المهمة مو بحالة تسمح بالتأجيل."
+msgstr "This task is not in a status that allows postponing."
+
+#: app/team/task_service.py:687
+msgid "ما تملك صلاحية إلغاء المهام."
+msgstr "You don't have the cancel-tasks permission."
+
+#: app/team/task_service.py:689
+msgid "هذي المهمة مو بحالة تسمح بالإلغاء."
+msgstr "This task is not in a status that allows cancelling."
 
 #: app/templates/_offline_widgets.html:7
 msgid "غير متصل بالإنترنت الآن — أي بيانات تُدخلها بهذي الصفحة تُحفظ محلياً وتُرفع تلقائياً أول ما يرجع الاتصال، بدون ما تحتاج تسوي أي شي."
