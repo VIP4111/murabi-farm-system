@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 08:46+0300\n"
+"POT-Creation-Date: 2026-08-31 10:30+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -484,7 +484,7 @@ msgstr "रिपोर्ट स्थगित करें"
 msgid "استئناف بلاغ"
 msgstr "रिपोर्ट फिर से शुरू करें"
 
-#: app/__init__.py:310
+#: app/__init__.py:310 app/core/checklist_service.py:285
 msgid "رفع بلاغ"
 msgstr "रिपोर्ट दर्ज करें"
 
@@ -1537,6 +1537,336 @@ msgstr ""
 "बैच अभी भी क्वारंटीन चरण में है — अभी कोई अतिरिक्त व्यक्तिगत कार्रवाई "
 "आवश्यक नहीं है।"
 
+#: app/core/checklist_service.py:166
+msgid "الصفحة الرئيسية و«صفحة اليوم»"
+msgstr "होम और «आज का पेज»"
+
+#: app/core/checklist_service.py:168
+msgid ""
+"الصفحة الرئيسية تعرض «إجراءات سريعة» لأكثر الشاشات استخداماً حسب "
+"صلاحياتك، وتنبيهات فورية لو فيه شي يحتاج انتباهك."
+msgstr ""
+"होम पेज आपकी अनुमतियों के अनुसार सबसे ज़्यादा इस्तेमाल होने वाली स्क्रीन "
+"के लिए «त्वरित कार्रवाइयाँ» दिखाता है, और अगर किसी चीज़ पर ध्यान देना "
+"ज़रूरी हो तो तुरंत अलर्ट भी देता है।"
+
+#: app/core/checklist_service.py:169
+msgid ""
+"«صفحة اليوم» (من الرئيسية) تجمع مهامك المفتوحة وتنبيهاتك وبلاغاتك بشاشة "
+"وحدة بدل ما تتنقّل بين عدة شاشات كل صباح."
+msgstr ""
+"«आज का पेज» (होम से) आपके खुले कार्य, अलर्ट और रिपोर्ट को एक ही स्क्रीन "
+"में इकट्ठा करता है, हर सुबह कई स्क्रीन के बीच जाने के बजाय।"
+
+#: app/core/checklist_service.py:176 app/templates/animals_list.html:5
+msgid "سجل الحيوانات"
+msgstr "पशु रजिस्ट्री"
+
+#: app/core/checklist_service.py:178
+msgid ""
+"كل رأس بالقطيع له سجل مستقل: رقمه، فصيلته، سلالته، عمره، حظيرته، وحالته "
+"الحالية (نشط/مباع/نافق/معزول)."
+msgstr ""
+"झुंड के हर पशु का अपना अलग रिकॉर्ड है: उसका नंबर, प्रजाति, नस्ल, उम्र, "
+"बाड़ा, और वर्तमान स्थिति (सक्रिय/बिका/मृत/पृथक)।"
+
+#: app/core/checklist_service.py:179
+msgid ""
+"كل شاشة ثانية بالنظام (الصحة، التكاثر، العلف، التقارير) مبنية على وجود "
+"سجل حيوان أولاً."
+msgstr ""
+"सिस्टम की हर दूसरी स्क्रीन (स्वास्थ्य, प्रजनन, चारा, रिपोर्ट) पहले पशु "
+"रिकॉर्ड के मौजूद होने पर बनी है।"
+
+#: app/core/checklist_service.py:186
+msgid "إضافة/تعديل/بيع حيوان"
+msgstr "पशु जोड़ें/संपादित करें/बेचें"
+
+#: app/core/checklist_service.py:188
+msgid ""
+"تقدر تسجّل حيوان جديد (واحد أو دفعة شراء كاملة)، تعدّل بياناته، تسجّل "
+"بيعه أو نفوقه."
+msgstr ""
+"आप नया पशु दर्ज कर सकते हैं (एक या पूरा खरीद बैच), उसका डेटा संपादित कर "
+"सकते हैं, और उसकी बिक्री या मृत्यु दर्ज कर सकते हैं।"
+
+#: app/core/checklist_service.py:189
+msgid ""
+"بيع حيوان أثناء فترة سحب دواء يحتاج سبباً موثَّقاً — النظام يمنع البيع "
+"العادي تلقائياً بهذي الحالة حماية للمستهلك."
+msgstr ""
+"दवा वापसी अवधि के दौरान पशु बेचने के लिए एक दस्तावेज़ी कारण चाहिए — "
+"सिस्टम उपभोक्ता की सुरक्षा के लिए इस स्थिति में सामान्य बिक्री को अपने आप"
+" रोक देता है।"
+
+#: app/core/checklist_service.py:195
+msgid "إدارة الحظائر"
+msgstr "बाड़ा प्रबंधन"
+
+#: app/core/checklist_service.py:197
+msgid "أنشئ حظائرك وحدد نوعها (عادية/عزل/نفاس...) وسعتها والعامل المسؤول عنها."
+msgstr ""
+"अपने बाड़े बनाएँ और उनका प्रकार (सामान्य/पृथक्करण/प्रसव...), क्षमता और "
+"ज़िम्मेदार कर्मचारी तय करें।"
+
+#: app/core/checklist_service.py:198
+msgid ""
+"حظيرة العزل ضرورية — العزل التلقائي بعد الولادة أو وصول حيوان جديد يحتاج "
+"حظيرة عزل موجودة فعلاً."
+msgstr ""
+"पृथक्करण बाड़ा ज़रूरी है — जन्म के बाद या नए पशु के आने पर स्वचालित "
+"पृथक्करण के लिए वास्तव में एक पृथक्करण बाड़े का मौजूद होना ज़रूरी है।"
+
+#: app/core/checklist_service.py:205
+msgid "السجل الصحي والزيارات البيطرية"
+msgstr "स्वास्थ्य रिकॉर्ड और पशु चिकित्सक विज़िट"
+
+#: app/core/checklist_service.py:207
+msgid ""
+"تاريخ كل حالة مرضية، تشخيص، علاج، وتحصين لكل رأس — بما فيها المساعد "
+"التشخيصي اللي يقترح احتمالات مرضية من الأعراض المُدخَلة."
+msgstr ""
+"हर पशु के लिए हर बीमारी, निदान, इलाज और टीकाकरण का इतिहास — जिसमें वह "
+"निदान सहायक भी शामिल है जो दर्ज लक्षणों से संभावित बीमारियाँ सुझाता है।"
+
+#: app/core/checklist_service.py:214
+msgid "تسجيل تشخيص/علاج/تحصين"
+msgstr "निदान/इलाज/टीकाकरण दर्ज करें"
+
+#: app/core/checklist_service.py:216
+msgid ""
+"سجّل حالة مرضية جديدة، طبّق بروتوكول علاج جاهز، أو سجّل تحصيناً — كل "
+"إجراء يخصم تلقائياً من مخزون الصيدلية ويُحسب ماليته."
+msgstr ""
+"नई बीमारी दर्ज करें, तैयार इलाज प्रोटोकॉल लागू करें, या टीकाकरण दर्ज करें"
+" — हर कार्रवाई अपने आप फार्मेसी स्टॉक से घटती है और उसकी लागत गिनी जाती "
+"है।"
+
+#: app/core/checklist_service.py:217
+msgid ""
+"تنبيه: النظام يساعدك تنظّم وتتذكّر، لكنه ما يشخّص ولا يعالج — القرار "
+"الطبي النهائي يبقى للطبيب البيطري دائماً."
+msgstr ""
+"ध्यान दें: सिस्टम आपको व्यवस्थित करने और याद रखने में मदद करता है, लेकिन "
+"यह निदान या इलाज नहीं करता — अंतिम चिकित्सा निर्णय हमेशा पशु चिकित्सक का "
+"ही रहता है।"
+
+#: app/core/checklist_service.py:223
+msgid "إدارة مخزون الصيدلية"
+msgstr "फार्मेसी स्टॉक प्रबंधन"
+
+#: app/core/checklist_service.py:225
+msgid ""
+"سجّل الأدوية بكمياتها (عدد العلب × كمية العلبة يحسب الإجمالي تلقائياً)، "
+"وتابع تنبيهات نفاد المخزون."
+msgstr ""
+"दवाओं को उनकी मात्रा के साथ दर्ज करें (बॉक्स की संख्या × प्रति बॉक्स "
+"मात्रा से कुल अपने आप निकलता है), और स्टॉक खत्म होने के अलर्ट देखें।"
+
+#: app/core/checklist_service.py:232
+msgid "التكاثر: تلقيح، حمل، ولادة"
+msgstr "प्रजनन: गर्भाधान, गर्भावस्था, प्रसव"
+
+#: app/core/checklist_service.py:234
+msgid ""
+"تابع دورة كل أنثى — من التقريع إلى تشخيص الحمل (فحص يدوي أو سونار) إلى "
+"الولادة — وتاريخ الولادة المتوقع يُحسب تلقائياً."
+msgstr ""
+"हर मादा का चक्र देखें — गर्भाधान से, गर्भावस्था निदान (मैन्युअल जाँच या "
+"अल्ट्रासाउंड) से, प्रसव तक — अपेक्षित प्रसव तिथि अपने आप निकाली जाती है।"
+
+#: app/core/checklist_service.py:241
+msgid "تسجيل تقريع وبرامج شياع"
+msgstr "गर्भाधान और मद (एस्ट्रस) कार्यक्रम दर्ज करें"
+
+#: app/core/checklist_service.py:243
+msgid ""
+"سجّل محاولة تقريع بين أنثى وفحل — النظام يحذّرك تلقائياً لو فيه قرابة "
+"وراثية قريبة بينهما قبل ما تحفظ."
+msgstr ""
+"मादा और नर के बीच गर्भाधान प्रयास दर्ज करें — सेव करने से पहले, अगर दोनों"
+" में करीबी आनुवंशिक रिश्तेदारी हो तो सिस्टम अपने आप चेतावनी देता है।"
+
+#: app/core/checklist_service.py:249
+msgid "المالية المرتبطة بالصحة"
+msgstr "स्वास्थ्य से जुड़ा वित्त"
+
+#: app/core/checklist_service.py:251
+msgid ""
+"تكلفة كل علاج/تحصين/زيارة بيطرية تُسجَّل مالياً تلقائياً — تقدر تراجعها "
+"من هنا بدون صلاحية المالية الكاملة."
+msgstr ""
+"हर इलाज/टीकाकरण/पशु चिकित्सक विज़िट की लागत अपने आप वित्तीय रूप से दर्ज "
+"होती है — आप पूर्ण वित्त अनुमति के बिना यहाँ से इसे देख सकते हैं।"
+
+#: app/core/checklist_service.py:257
+msgid "المالية الكاملة"
+msgstr "पूर्ण वित्त"
+
+#: app/core/checklist_service.py:259
+msgid ""
+"كل حركة مالية بالمزرعة: مبيعات، مشتريات، ديون، فواتير — من هنا تدير كامل "
+"الجانب المالي."
+msgstr ""
+"फार्म का हर वित्तीय लेन-देन: बिक्री, खरीद, कर्ज़, बिल — यहाँ से आप पूरा "
+"वित्तीय पक्ष प्रबंधित करते हैं।"
+
+#: app/core/checklist_service.py:266
+msgid "توزيع ومراجعة المهام"
+msgstr "कार्य सौंपें और समीक्षा करें"
+
+#: app/core/checklist_service.py:268
+msgid ""
+"النظام يقترح مهاماً يومية تلقائياً حسب حالة القطيع (فحص عزل، متابعة "
+"حمل...)، وتقدر توزّع مهاماً يدوية على أي عامل."
+msgstr ""
+"सिस्टम झुंड की स्थिति के अनुसार अपने आप दैनिक कार्य सुझाता है (पृथक्करण "
+"जाँच, गर्भावस्था अनुवर्तन...), और आप किसी भी कर्मचारी को मैन्युअल कार्य "
+"सौंप सकते हैं।"
+
+#: app/core/checklist_service.py:269
+msgid ""
+"قسم «مهام مقترحة بانتظار الاعتماد» يحتاج موافقتك (أو تأجيل/حذف) قبل ما "
+"تنزل فعلياً للعامل."
+msgstr ""
+"«स्वीकृति की प्रतीक्षा में सुझाए गए कार्य» सेक्शन को कर्मचारी तक पहुँचने "
+"से पहले आपकी मंज़ूरी (या स्थगन/हटाना) चाहिए।"
+
+#: app/core/checklist_service.py:276 app/templates/simple_home.html:56
+#: app/templates/team/tasks_list.html:56
+msgid "مهامي"
+msgstr "मेरे कार्य"
+
+#: app/core/checklist_service.py:278
+msgid ""
+"قائمة مهامك الشخصية المفتوحة — ابدأ المهمة، أنجزها (مع صورة/ملاحظة إثبات "
+"لو مطلوبة)، أو سجّل تعذّر تنفيذها بسبب واضح."
+msgstr ""
+"आपके अपने खुले कार्यों की सूची — कार्य शुरू करें, पूरा करें (ज़रूरत पड़ने"
+" पर सबूत फोटो/नोट के साथ), या स्पष्ट कारण के साथ न कर पाने को दर्ज करें।"
+
+#: app/core/checklist_service.py:287
+msgid ""
+"لاحظت شي غير طبيعي بالحظيرة؟ ارفع بلاغاً فورياً (نص أو ملاحظة صوتية) يوصل"
+" للمسؤول مباشرة."
+msgstr ""
+"बाड़े में कुछ असामान्य देखा? तुरंत एक रिपोर्ट (टेक्स्ट या वॉइस नोट) भेजें"
+" जो सीधे ज़िम्मेदार व्यक्ति तक पहुँचे।"
+
+#: app/core/checklist_service.py:293
+msgid "استلام وإدارة البلاغات"
+msgstr "रिपोर्ट प्राप्त करें और प्रबंधित करें"
+
+#: app/core/checklist_service.py:295
+msgid "استلم بلاغات الفريق، حوّلها لعامل ثاني لو يلزم، أو أغلقها بعد المعالجة."
+msgstr ""
+"टीम की रिपोर्ट प्राप्त करें, ज़रूरत पड़ने पर किसी दूसरे कर्मचारी को "
+"स्थानांतरित करें, या निपटाने के बाद बंद करें।"
+
+#: app/core/checklist_service.py:302
+msgid "العلف والمخزون"
+msgstr "चारा और स्टॉक"
+
+#: app/core/checklist_service.py:304
+msgid ""
+"تابع أصناف العلف المتوفرة، خطط التغذية لكل حظيرة، ومعدل تحويل العلف (FCR)"
+" لتسمين القطعان."
+msgstr ""
+"उपलब्ध चारा किस्मों, हर बाड़े की आहार योजनाओं, और मोटा करने वाले झुंडों "
+"के चारा रूपांतरण दर (FCR) पर नज़र रखें।"
+
+#: app/core/checklist_service.py:311
+msgid "إدارة العلف والوصفات"
+msgstr "चारा और नुस्खा प्रबंधन"
+
+#: app/core/checklist_service.py:313
+msgid ""
+"أضف أصناف علف جديدة، سجّل مشتريات، وابنِ وصفات علف موزونة (موازن العليقة "
+"يقترح أرخص تركيبة تحقق احتياج البروتين/الطاقة)."
+msgstr ""
+"नई चारा किस्में जोड़ें, खरीद दर्ज करें, और संतुलित चारा मिश्रण बनाएँ "
+"(राशन ऑप्टिमाइज़र प्रोटीन/ऊर्जा ज़रूरत पूरी करने वाला सबसे सस्ता मिश्रण "
+"सुझाता है)।"
+
+#: app/core/checklist_service.py:319
+msgid "مخزون المعدات"
+msgstr "उपकरण स्टॉक"
+
+#: app/core/checklist_service.py:321
+msgid "تابع معدات المزرعة وأدواتها — المتوفر منها ومين مسحوب عنده حالياً."
+msgstr ""
+"फार्म के उपकरणों और औज़ारों पर नज़र रखें — कौन-कौन उपलब्ध है और अभी किसके"
+" पास है।"
+
+#: app/core/checklist_service.py:328 app/templates/base.html:793
+msgid "التقارير التحليلية"
+msgstr "विश्लेषण रिपोर्टें"
+
+#: app/core/checklist_service.py:330
+msgid ""
+"تقارير شاملة: نفوق، ولادات، مبيعات، أداء القطيع — قابلة للتصدير لمشاركتها"
+" أو أرشفتها."
+msgstr ""
+"व्यापक रिपोर्ट: मृत्यु, जन्म, बिक्री, झुंड प्रदर्शन — साझा करने या "
+"संग्रहीत करने के लिए निर्यात योग्य।"
+
+#: app/core/checklist_service.py:337 app/templates/home.html:119
+msgid "المساعد الذكي"
+msgstr "स्मार्ट सहायक"
+
+#: app/core/checklist_service.py:339
+msgid ""
+"اسأله أي سؤال تشغيلي عام (تحصينات، عزل، فترات سحب...) أو اطلب منه معلومة "
+"عن حيوان معيّن — يجاوب من بيانات مزرعتك الفعلية."
+msgstr ""
+"इससे कोई भी सामान्य परिचालन प्रश्न पूछें (टीकाकरण, पृथक्करण, वापसी "
+"अवधि...) या किसी खास पशु की जानकारी माँगें — यह आपके फार्म के वास्तविक "
+"डेटा से जवाब देता है।"
+
+#: app/core/checklist_service.py:340
+msgid ""
+"تنبيه: مساعد قرار مساعد لك، مو طبيباً بيطرياً — القرار الطبي النهائي يبقى"
+" للطبيب دائماً."
+msgstr ""
+"ध्यान दें: यह एक निर्णय-सहायक है, पशु चिकित्सक नहीं — अंतिम चिकित्सा "
+"निर्णय हमेशा डॉक्टर का ही रहता है।"
+
+#: app/core/checklist_service.py:347 app/templates/base.html:711
+#: app/templates/climate/dashboard.html:5
+msgid "رادار المناخ والإجهاد الحراري"
+msgstr "जलवायु और गर्मी तनाव रडार"
+
+#: app/core/checklist_service.py:349
+msgid ""
+"توقعات الطقس ومؤشر الإجهاد الحراري لموقع مزرعتك — يساعدك تتوقع أيام الخطر"
+" وتجهّز التبريد/التهوية مسبقاً."
+msgstr ""
+"आपके फार्म के स्थान के लिए मौसम पूर्वानुमान और ताप-तनाव सूचकांक — जोखिम "
+"भरे दिनों का पहले से अंदाज़ा लगाने और कूलिंग/वेंटिलेशन पहले से तैयार करने"
+" में मदद करता है।"
+
+#: app/core/checklist_service.py:356
+msgid "إدارة المسمّيات الوظيفية والصلاحيات"
+msgstr "भूमिकाएँ और अनुमतियाँ प्रबंधित करें"
+
+#: app/core/checklist_service.py:358
+msgid ""
+"أنشئ مسمّيات وظيفية جديدة أو عدّل صلاحيات أي دور موجود من شاشة الإعدادات "
+"— بدون أي حاجة لتعديل برمجي."
+msgstr ""
+"सेटिंग्स स्क्रीन से नई भूमिकाएँ बनाएँ या किसी मौजूदा भूमिका की अनुमतियाँ "
+"संपादित करें — बिना किसी कोड बदलाव के।"
+
+#: app/core/checklist_service.py:365
+msgid "إدارة حسابات الفريق"
+msgstr "टीम खाते प्रबंधित करें"
+
+#: app/core/checklist_service.py:367
+msgid "أضف أعضاء فريق جدد، عطّل حساباً، أو عدّل بياناتهم من شاشة «الفريق»."
+msgstr ""
+"«टीम» स्क्रीन से नए टीम सदस्य जोड़ें, कोई खाता निष्क्रिय करें, या उनका "
+"डेटा संपादित करें।"
+
 #: app/core/cycle_engine.py:436
 #, python-format
 msgid ""
@@ -1967,7 +2297,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "इसमें दर्ज दवाएं हैं।"
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:179 app/templates/settings_backup.html:5
+#: app/templates/settings.html:185 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "बैकअप"
 
@@ -2406,16 +2736,16 @@ msgstr "समय सेटिंग्स सेव कर दी गई है
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "इनटेक-दवा सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1791
+#: app/core/routes.py:1799
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "आपको पुष्टिकरण वाक्यांश बिल्कुल ऐसे लिखना होगा: \"%(phrase)s\""
 
-#: app/core/routes.py:1794
+#: app/core/routes.py:1802
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "पासवर्ड गलत है — फैक्टरी रीसेट नहीं किया गया।"
 
-#: app/core/routes.py:1805
+#: app/core/routes.py:1813
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2424,7 +2754,7 @@ msgstr ""
 "फैक्टरी रीसेट नहीं हो सका, कुछ भी नहीं हटाया गया (अपने आप वापस कर दिया "
 "गया)। त्रुटि: %(err)s"
 
-#: app/core/routes.py:1808
+#: app/core/routes.py:1816
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2432,57 +2762,57 @@ msgstr ""
 "फैक्टरी रीसेट सफल रहा — फार्म का सारा डेटा हटा दिया गया है। उसी फोन नंबर "
 "और पासवर्ड से फिर से लॉगिन करें।"
 
-#: app/core/routes.py:1827
+#: app/core/routes.py:1835
 msgid "تم حفظ بيانات المزرعة"
 msgstr "फार्म का डेटा सेव कर दिया गया है"
 
-#: app/core/routes.py:1844
+#: app/core/routes.py:1852
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "भूमिका का नाम \"%(slug)s\" पहले से उपयोग में है"
 
-#: app/core/routes.py:1849
+#: app/core/routes.py:1857
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "पद बना दिया गया है — अब उसकी अनुमतियां तय करें"
 
-#: app/core/routes.py:1861
+#: app/core/routes.py:1869
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "आप मालिक की भूमिका की अनुमतियां संपादित नहीं कर सकते — इसके पास हमेशा सभी"
 " अनुमतियां होती हैं"
 
-#: app/core/routes.py:1873
+#: app/core/routes.py:1887
 msgid "تم تحديث صلاحيات الدور"
 msgstr "भूमिका की अनुमतियां अपडेट कर दी गई हैं"
 
-#: app/core/routes.py:1897
+#: app/core/routes.py:1914
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "%(name)s सेवा सक्रिय कर दी गई है"
 
-#: app/core/routes.py:1897
+#: app/core/routes.py:1914
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "%(name)s सेवा निष्क्रिय कर दी गई है"
 
-#: app/core/routes.py:1923
+#: app/core/routes.py:1940
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "बैकअप बना दिया गया है: %(name)s"
 
-#: app/core/routes.py:2004
+#: app/core/routes.py:2021
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "आपको सटीक वाक्यांश लिखना होगा और पुष्टि चेक करनी होगी।"
 
-#: app/core/routes.py:2012
+#: app/core/routes.py:2029
 msgid "تم حذف بيانات المحاكاة."
 msgstr "सिमुलेशन डेटा हटा दिया गया है।"
 
-#: app/core/routes.py:2034
+#: app/core/routes.py:2051
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "आपको पुष्टि बॉक्स चेक करना होगा।"
 
-#: app/core/routes.py:2055
+#: app/core/routes.py:2072
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -5230,7 +5560,7 @@ msgstr ""
 #: app/templates/repro/mating_form.html:61
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
-#: app/templates/repro/sonar_form.html:36 app/templates/settings.html:33
+#: app/templates/repro/sonar_form.html:36 app/templates/settings.html:39
 #: app/templates/team/member_edit_form.html:46
 #: app/templates/team/member_form.html:28
 #: app/templates/team/salaries_list.html:19
@@ -5855,7 +6185,7 @@ msgstr "अनिवार्य — जब तक स्रोत \"फार�
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:153 app/templates/team/member_edit_form.html:16
+#: app/templates/settings.html:159 app/templates/team/member_edit_form.html:16
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
@@ -6231,10 +6561,6 @@ msgstr "पूरी खेप सहेजें"
 msgid "الإجراء الجماعي"
 msgstr "थोक कार्रवाई"
 
-#: app/templates/animals_list.html:5
-msgid "سجل الحيوانات"
-msgstr "पशु रजिस्ट्री"
-
 #: app/templates/animals_list.html:8
 msgid "متابعة الحجر الصحي"
 msgstr "संगरोध अनुवर्ती"
@@ -6382,7 +6708,7 @@ msgstr "जानवर"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "अभी तक कोई जानवर दर्ज नहीं है।"
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:181
+#: app/templates/audit_log.html:5 app/templates/settings.html:187
 msgid "سجل التدقيق"
 msgstr "ऑडिट लॉग"
 
@@ -6653,10 +6979,6 @@ msgstr "मेरे उपकरण"
 msgid "المناخ"
 msgstr "जलवायु"
 
-#: app/templates/base.html:711 app/templates/climate/dashboard.html:5
-msgid "رادار المناخ والإجهاد الحراري"
-msgstr "जलवायु और गर्मी तनाव रडार"
-
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:26
 #: app/templates/base.html:720
 msgid "مركز الذكاء الاصطناعي"
@@ -6751,10 +7073,6 @@ msgstr "वित्त और बिक्री"
 #: app/templates/base.html:792 app/templates/home.html:105
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
-
-#: app/templates/base.html:793
-msgid "التقارير التحليلية"
-msgstr "विश्लेषण रिपोर्टें"
 
 #: app/templates/base.html:800 app/templates/home.html:116
 msgid "النظام"
@@ -7483,10 +7801,6 @@ msgstr "चारा"
 msgid "التقارير"
 msgstr "रिपोर्टें"
 
-#: app/templates/home.html:119
-msgid "المساعد الذكي"
-msgstr "स्मार्ट सहायक"
-
 #: app/templates/isolation_enter_form.html:5
 msgid ""
 "ينقل الرأس لحظيرة عزل ويبدأ عداد أيام العزل (لو ما كان بالعزل أصلاً). أي "
@@ -7648,36 +7962,53 @@ msgid "حفظ ثم تحديد الصلاحيات"
 msgstr "सहेजें फिर अनुमतियां निर्धारित करें"
 
 #: app/templates/settings.html:4
+msgid "الجولة التعريفية"
+msgstr "परिचय दौरा"
+
+#: app/templates/settings.html:5
+msgid ""
+"شرح مكثّف لكل شاشة تقدر تستخدمها حسب صلاحياتك الحالية — تفيدك تراجعها بعد"
+" أي تغيير بصلاحياتك."
+msgstr ""
+"आपकी वर्तमान अनुमतियों के आधार पर उपयोग की जा सकने वाली हर स्क्रीन की गहन"
+" व्याख्या — आपकी अनुमतियों में किसी भी बदलाव के बाद इसे फिर देखना उपयोगी "
+"है।"
+
+#: app/templates/settings.html:6
+msgid "افتح الجولة"
+msgstr "दौरा खोलें"
+
+#: app/templates/settings.html:10
 msgid "بيانات المزرعة"
 msgstr "फार्म डेटा"
 
-#: app/templates/settings.html:5
+#: app/templates/settings.html:11
 msgid "تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية."
 msgstr "बिक्री चालान के शीर्षलेख में दिखता है (मद 75) — सभी वैकल्पिक।"
 
-#: app/templates/settings.html:8
+#: app/templates/settings.html:14
 msgid "اسم المزرعة"
 msgstr "फार्म का नाम"
 
-#: app/templates/settings.html:9
+#: app/templates/settings.html:15
 msgid "جوال المزرعة"
 msgstr "फार्म का फोन"
 
-#: app/templates/settings.html:10
+#: app/templates/settings.html:16
 msgid "عنوان المزرعة"
 msgstr "फार्म का पता"
 
-#: app/templates/settings.html:11
+#: app/templates/settings.html:17
 msgid "الرقم الضريبي (اختياري)"
 msgstr "वैट संख्या (वैकल्पिक)"
 
-#: app/templates/settings.html:12
+#: app/templates/settings.html:18
 msgid "رقم هوية صاحب العمل (اختياري — يظهر بمسير الراتب)"
 msgstr ""
 "नियोक्ता की राष्ट्रीय पहचान संख्या (वैकल्पिक — वेतन पर्ची पर दिखाई देती "
 "है)"
 
-#: app/templates/settings.html:13
+#: app/templates/settings.html:19
 msgid ""
 "لو عبّيته، فواتير البيع تضيف تلقائياً رمز QR مبسّط بأسلوب \"فاتورة\" "
 "(المرحلة الأولى بس — راجع محاسبك قبل اعتمادها فاتورة ضريبية رسمية)."
@@ -7686,15 +8017,15 @@ msgstr ""
 "जोड़ते हैं (केवल चरण 1 — इसे आधिकारिक कर चालान मानने से पहले अपने "
 "अकाउंटेंट से जांच करें)।"
 
-#: app/templates/settings.html:14
+#: app/templates/settings.html:20
 msgid "حفظ بيانات المزرعة"
 msgstr "फार्म डेटा सहेजें"
 
-#: app/templates/settings.html:19
+#: app/templates/settings.html:25
 msgid "دواء استقبال الرأس الجديد (بند إضافي 283)"
 msgstr "नई आगमन दवा"
 
-#: app/templates/settings.html:20
+#: app/templates/settings.html:26
 msgid ""
 "لو حدّدت دواء هنا، مهام \"رش وقائي\" و\"تحصين مبدئي\" اللي تفتح تلقائياً "
 "عند شراء رأس جديد ووضعه بحظيرة العزل تصير مربوطة فعلياً بهذا الدواء — "
@@ -7707,23 +8038,23 @@ msgstr ""
 "क्रियान्वयन पर स्टॉक की जांच और कटौती होती है। खाली = कार्य बिना किसी "
 "विशिष्ट दवा लिंक के सामान्य अनुस्मारक बना रहता है।"
 
-#: app/templates/settings.html:23
+#: app/templates/settings.html:29
 msgid "دواء الرش الوقائي الافتراضي"
 msgstr "डिफ़ॉल्ट निवारक स्प्रे दवा"
 
-#: app/templates/settings.html:25 app/templates/settings.html:30
+#: app/templates/settings.html:31 app/templates/settings.html:36
 msgid "بدون ربط (تذكير عام بس)"
 msgstr "कोई लिंक नहीं (केवल सामान्य अनुस्मारक)"
 
-#: app/templates/settings.html:28
+#: app/templates/settings.html:34
 msgid "لقاح التحصين المبدئي الافتراضي"
 msgstr "डिफ़ॉल्ट प्रारंभिक टीकाकरण"
 
-#: app/templates/settings.html:38
+#: app/templates/settings.html:44
 msgid "كتالوج المبيعات العام"
 msgstr "सार्वजनिक बिक्री सूची"
 
-#: app/templates/settings.html:39
+#: app/templates/settings.html:45
 msgid ""
 "رابط عام (بدون تسجيل دخول) يعرض الرؤوس الجاهزة للبيع فقط — شاركه مع "
 "المشترين المحتملين."
@@ -7731,21 +8062,21 @@ msgstr ""
 "एक सार्वजनिक लिंक (बिना लॉगिन) केवल बिक्री के लिए तैयार पशु दिखाता है — "
 "इसे संभावित खरीदारों के साथ साझा करें।"
 
-#: app/templates/settings.html:41
+#: app/templates/settings.html:47
 msgid "توليد رابط جديد يلغي الرابط الحالي فوراً — متأكد؟"
 msgstr ""
 "नया लिंक बनाने से मौजूदा लिंक तुरंत अमान्य हो जाता है — क्या आप निश्चित "
 "हैं?"
 
-#: app/templates/settings.html:43
+#: app/templates/settings.html:49
 msgid "توليد رابط جديد"
 msgstr "नया लिंक बनाएं"
 
-#: app/templates/settings.html:48
+#: app/templates/settings.html:54
 msgid "الإعدادات الزمنية"
 msgstr "समय सेटिंग्स"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:55
 msgid ""
 "تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، "
 "تنبيهات...)."
@@ -7753,298 +8084,298 @@ msgstr ""
 "सिस्टम में सभी तिथियों और स्वचालित कार्यों को नियंत्रित करता है (अलगाव, "
 "टीकाकरण, दूध छुड़ाना, अलर्ट...)।"
 
-#: app/templates/settings.html:52
+#: app/templates/settings.html:58
 msgid "مدة الحمل (يوم)"
 msgstr "गर्भधारण अवधि (दिन)"
 
-#: app/templates/settings.html:53
+#: app/templates/settings.html:59
 msgid "مدة الإسفنجة (يوم)"
 msgstr "स्पंज अवधि (दिन)"
 
-#: app/templates/settings.html:54
+#: app/templates/settings.html:60
 msgid "دخول الفحل بعد إزالة الإسفنجة (يوم)"
 msgstr "स्पंज हटाने के बाद नर का प्रवेश (दिन)"
 
-#: app/templates/settings.html:55
+#: app/templates/settings.html:61
 msgid "تغيير علف الحامل قبل الولادة (يوم)"
 msgstr "प्रसव से पहले गर्भवती चारा परिवर्तन (दिन)"
 
-#: app/templates/settings.html:56
+#: app/templates/settings.html:62
 msgid "علف الأم بعد الولادة (يوم)"
 msgstr "प्रसव के बाद माँ का चारा (दिन)"
 
-#: app/templates/settings.html:57
+#: app/templates/settings.html:63
 msgid "بيع الذكر بعد الولادة (يوم)"
 msgstr "जन्म के बाद नर की बिक्री (दिन)"
 
-#: app/templates/settings.html:58
+#: app/templates/settings.html:64
 msgid "التنبيه قبل الموعد (يوم)"
 msgstr "नियत तिथि से पहले अलर्ट (दिन)"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:65
 msgid "مهلة إنذار المهام حسّاسة الوقت (دقيقة) — مثل وجبات العلف المجدولة"
 msgstr "समय-संवेदनशील कार्यों की अलर्ट छूट अवधि (मिनट) — जैसे निर्धारित चारा समय"
 
-#: app/templates/settings.html:60
+#: app/templates/settings.html:66
 msgid "تكرار التحصينات الدورية (يوم)"
 msgstr "नियमित टीकाकरण दोहराव (दिन)"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:67
 msgid "مدة عزل المولود والأم (يوم)"
 msgstr "संतान और माँ की अलगाव अवधि (दिन)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:68
 msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
 msgstr "जन्म के बाद अनिवार्य डॉक्टर जांच (घंटे)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:69
 msgid "تحصين الأم بعد الولادة (يوم)"
 msgstr "जन्म के बाद माँ का टीकाकरण (दिन)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:70
 msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "पहले संगमन के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:71
 msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
 msgstr "नर के प्रजनन में शामिल होने की न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:66
+#: app/templates/settings.html:72
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "पुनः संगमन से पहले जन्म के बाद न्यूनतम आराम अवधि (दिन)"
 
-#: app/templates/settings.html:69
+#: app/templates/settings.html:75
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "उत्पादन चक्र इंजन आयु सीमाएं"
 
-#: app/templates/settings.html:71
+#: app/templates/settings.html:77
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "चक्र में \"नवजात\" वर्गीकृत अधिकतम आयु (दिन)"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:78
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "नर के लिए प्रजनन क्षमता जांच छोड़ने की वैकल्पिक आयु (दिन)"
 
-#: app/templates/settings.html:73
+#: app/templates/settings.html:79
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "दूध छुड़ाने के चरण के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:74
+#: app/templates/settings.html:80
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "दूध छुड़ाने की तिथि दर्ज करना छोड़ने की वैकल्पिक आयु (दिन)"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:85
 msgid "البيع الذكي"
 msgstr "स्मार्ट बिक्री"
 
-#: app/templates/settings.html:81
+#: app/templates/settings.html:87
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "लक्षित लाभ मार्जिन (%%)"
 
-#: app/templates/settings.html:82
+#: app/templates/settings.html:88
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "नर के लिए नियमित बिक्री आयु (दिन)"
 
-#: app/templates/settings.html:83
+#: app/templates/settings.html:89
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "बलि बिक्री के लिए न्यूनतम आयु (दिन)"
 
-#: app/templates/settings.html:84
+#: app/templates/settings.html:90
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr "बिक्री सिफारिश से पहले मादा के लिए स्वीकार्य अधिकतम गर्भधारण देरी (दिन)"
 
-#: app/templates/settings.html:85
+#: app/templates/settings.html:91
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "अलर्ट से पहले नई रिपोर्ट के लिए अधिकतम प्रतीक्षा (घंटे)"
 
-#: app/templates/settings.html:86
+#: app/templates/settings.html:92
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "सिर उत्पादन चक्र के एक ही चरण में अटका (सूचना से पहले दिन)"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:93
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "शुतुरमुर्ग अंडा इनक्यूबेशन अवधि (दिन)"
 
-#: app/templates/settings.html:92
+#: app/templates/settings.html:98
 msgid "الصحة والتغذية"
 msgstr "स्वास्थ्य और पोषण"
 
-#: app/templates/settings.html:94
+#: app/templates/settings.html:100
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "मिश्रण से पहले नए पशु का संगरोध (दिन)"
 
-#: app/templates/settings.html:95
+#: app/templates/settings.html:101
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "उपचार के बाद पुनः वजन अनुस्मारक (दिन)"
 
-#: app/templates/settings.html:96
+#: app/templates/settings.html:102
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr "\"विलंबित वजन\" अलर्ट से पहले दो वजन के बीच अधिकतम अवधि (दिन)"
 
-#: app/templates/settings.html:97
+#: app/templates/settings.html:103
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "दो कृमिनाशक खुराक के बीच न्यूनतम अंतराल (दिन)"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:104
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "सांद्रण के लिए अधिकतम साप्ताहिक वृद्धि (%%)"
 
-#: app/templates/settings.html:99
+#: app/templates/settings.html:105
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "सांद्रण वृद्धि माप विंडो (दिन)"
 
-#: app/templates/settings.html:100
+#: app/templates/settings.html:106
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "लक्षित कैल्शियम/फॉस्फोरस अनुपात"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:107
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "कैल्शियम/फॉस्फोरस अनुपात सहनशीलता मार्जिन"
 
-#: app/templates/settings.html:102
+#: app/templates/settings.html:108
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "गर्भपात के बाद बाड़ा निगरानी (दिन)"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:109
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "ठोस चारे का दूध छुड़ाई उम्र (दिन)"
 
-#: app/templates/settings.html:104
+#: app/templates/settings.html:110
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "मेढ़े की सक्रिय प्रजनन-मौसम खिड़की (दिन)"
 
-#: app/templates/settings.html:105
+#: app/templates/settings.html:111
 msgid "بداية التغذية التأسيسية للمولود (يوم)"
 msgstr "नवजात के लिए क्रीप फीडिंग शुरू करने की आयु (दिन)"
 
-#: app/templates/settings.html:106
+#: app/templates/settings.html:112
 msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
 msgstr "पूर्ण दूध छुड़ाने पर लक्षित दैनिक स्टार्टर फ़ीड (ग्राम)"
 
-#: app/templates/settings.html:107
+#: app/templates/settings.html:113
 msgid "نافذة عودة الأنثى للفحل (يوم) — لكشف الحمل الضمني"
 msgstr ""
 "नर के पास वापसी की खिड़की (दिन) — अंतर्निहित गर्भावस्था का पता लगाने के "
 "लिए"
 
-#: app/templates/settings.html:108
+#: app/templates/settings.html:114
 msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
 msgstr "संभोग के बाद स्वचालित सोनार जांच (दिन) — संभावित गर्भावस्था के लिए"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:115
 msgid "تنبيه مخزون قبل النفاد المتوقَّع بـ (يوم)"
 msgstr "अपेक्षित स्टॉक समाप्ति से पहले सूचना (दिन)"
 
-#: app/templates/settings.html:114
+#: app/templates/settings.html:120
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "नवजात और माँ का प्रसवोत्तर प्रोटोकॉल"
 
-#: app/templates/settings.html:116
+#: app/templates/settings.html:122
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "कोलोस्ट्रम पिलाने की पुष्टि विंडो (घंटे)"
 
-#: app/templates/settings.html:117
+#: app/templates/settings.html:123
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "अपरा निकलने की निगरानी विंडो (घंटे)"
 
-#: app/templates/settings.html:118
+#: app/templates/settings.html:124
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "माँ की दैनिक प्रसवोत्तर निगरानी अवधि (दिन)"
 
-#: app/templates/settings.html:122
+#: app/templates/settings.html:128
 msgid "حفظ الإعدادات"
 msgstr "सेटिंग्स सहेजें"
 
-#: app/templates/settings.html:127
+#: app/templates/settings.html:133
 msgid "الخدمات"
 msgstr "सेवाएं"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:134
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr ""
 "केवल जो आवश्यक हो उसे सक्षम करें — निष्क्रिय सेवा सभी स्क्रीन से पूरी तरह"
 " गायब हो जाती है।"
 
-#: app/templates/settings.html:136
+#: app/templates/settings.html:142
 msgid "مفعّل"
 msgstr "सक्षम"
 
-#: app/templates/settings.html:136
+#: app/templates/settings.html:142
 msgid "غير مفعّل"
 msgstr "अक्षम"
 
-#: app/templates/settings.html:139 app/templates/team/members_list.html:30
+#: app/templates/settings.html:145 app/templates/team/members_list.html:30
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
-#: app/templates/settings.html:139 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:145 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:30
 msgid "تفعيل"
 msgstr "सक्रिय करें"
 
-#: app/templates/settings.html:148
+#: app/templates/settings.html:154
 msgid "المسميات الوظيفية"
 msgstr "पद"
 
-#: app/templates/settings.html:149
+#: app/templates/settings.html:155
 msgid "مسمّى جديد"
 msgstr "नया पद"
 
-#: app/templates/settings.html:153
+#: app/templates/settings.html:159
 msgid "عدد الصلاحيات"
 msgstr "अनुमतियों की संख्या"
 
-#: app/templates/settings.html:153
+#: app/templates/settings.html:159
 msgid "نوع"
 msgstr "प्रकार"
 
-#: app/templates/settings.html:158
+#: app/templates/settings.html:164
 msgid "جاهز افتراضياً"
 msgstr "अंतर्निहित डिफ़ॉल्ट"
 
-#: app/templates/settings.html:158
+#: app/templates/settings.html:164
 msgid "مضاف من المالك"
 msgstr "मालिक द्वारा जोड़ा गया"
 
-#: app/templates/settings.html:161
+#: app/templates/settings.html:167
 msgid "تعديل الصلاحيات"
 msgstr "अनुमतियां संपादित करें"
 
-#: app/templates/settings.html:171
+#: app/templates/settings.html:177
 msgid "النظام والصيانة"
 msgstr "सिस्टम और रखरखाव"
 
-#: app/templates/settings.html:173 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:179 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "तैनाती से पहले तत्परता जांच"
 
-#: app/templates/settings.html:174 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:180 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "डेटा अखंडता जांच"
 
-#: app/templates/settings.html:175 app/templates/telegram_status.html:4
+#: app/templates/settings.html:181 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "टेलीग्राम बॉट निदान"
 
-#: app/templates/settings.html:177
+#: app/templates/settings.html:183
 msgid "وضع عرض تجريبي"
 msgstr "डेमो मोड"
 
-#: app/templates/settings.html:184
+#: app/templates/settings.html:190
 msgid "شاشة متابعة مبسّطة"
 msgstr "सरलीकृत अनुवर्ती स्क्रीन"
 
-#: app/templates/settings.html:186
+#: app/templates/settings.html:192
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "नस्ल गाइड और देखभाल टिप्पणियां"
 
-#: app/templates/settings.html:192
+#: app/templates/settings.html:198
 msgid "منطقة الخطر"
 msgstr "खतरे का क्षेत्र"
 
-#: app/templates/settings.html:193
+#: app/templates/settings.html:199
 msgid ""
 "ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، "
 "المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة "
@@ -8055,39 +8386,39 @@ msgstr ""
 "में लौटा देता है। आपका खाता (वही फ़ोन और पासवर्ड) उसके बाद भी काम करता "
 "रहेगा।"
 
-#: app/templates/settings.html:194
+#: app/templates/settings.html:200
 msgid "ضبط المصنع"
 msgstr "फ़ैक्टरी रीसेट"
 
-#: app/templates/settings.html:200
+#: app/templates/settings.html:206
 msgid "تأكيد ضبط المصنع"
 msgstr "फ़ैक्टरी रीसेट की पुष्टि करें"
 
-#: app/templates/settings.html:201
+#: app/templates/settings.html:207
 msgid "هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً."
 msgstr ""
 "यह क्रिया स्थायी और अपरिवर्तनीय है। सभी वर्तमान फार्म डेटा पूरी तरह से "
 "हटा दिया जाएगा।"
 
-#: app/templates/settings.html:204
+#: app/templates/settings.html:210
 msgid "اكتب عبارة التأكيد بالضبط: \"ضبط المصنع\""
 msgstr ""
 "पुष्टिकरण वाक्यांश बिल्कुल वैसे ही लिखें जैसा दिखाया गया है (अरबी में): "
 "\"ضبط المصنع\""
 
-#: app/templates/settings.html:206
+#: app/templates/settings.html:212
 msgid "كلمة مرورك الحالية"
 msgstr "आपका वर्तमान पासवर्ड"
 
-#: app/templates/settings.html:208
+#: app/templates/settings.html:214
 msgid "احذف كل شي نهائياً"
 msgstr "सब कुछ स्थायी रूप से हटाएं"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:227
+#: app/templates/reports/overview.html:18 app/templates/settings.html:233
 msgid "جدول المؤشرات"
 msgstr "संकेतक तालिका"
 
-#: app/templates/settings.html:228
+#: app/templates/settings.html:234
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "मौजूदा महीने की शुरुआत से आज तक — वही इंजन जो रिपोर्ट स्क्रीन में है।"
 
@@ -8326,10 +8657,6 @@ msgstr "अपने सभी जानवर देखें"
 #: app/templates/simple_home.html:51
 msgid "أخذ أو استرجاع معدة"
 msgstr "उपकरण लें या वापस करें"
-
-#: app/templates/simple_home.html:56 app/templates/team/tasks_list.html:56
-msgid "مهامي"
-msgstr "मेरे कार्य"
 
 #: app/templates/simple_home.html:56
 msgid "شوف وأنجز مهامك"
@@ -12366,10 +12693,26 @@ msgid "لا، عندي خبرة"
 msgstr "नहीं, मुझे अनुभव है"
 
 #: app/templates/onboarding/welcome.html:24
-msgid "نبذة سريعة عن التطبيق"
-msgstr "ऐप का त्वरित परिचय"
+msgid "خطوات أولى موصى بها"
+msgstr "अनुशंसित पहले कदम"
 
-#: app/templates/onboarding/welcome.html:35
+#: app/templates/onboarding/welcome.html:39
+msgid "جولة مكثّفة — وش تقدر تسوي بالضبط"
+msgstr "गहन दौरा — आप बिल्कुल क्या कर सकते हैं"
+
+#: app/templates/onboarding/welcome.html:40
+msgid ""
+"حسب صلاحياتك الحالية بالضبط — لو تغيّرت صلاحياتك لاحقاً، ارجع لنفس الشاشة"
+" من الإعدادات لتحديث الجولة."
+msgstr ""
+"बिल्कुल आपकी वर्तमान अनुमतियों के आधार पर — अगर आपकी अनुमतियाँ बाद में "
+"बदलें, तो दौरे को अपडेट करने के लिए सेटिंग्स से इसी स्क्रीन पर वापस आएँ।"
+
+#: app/templates/onboarding/welcome.html:48
+msgid "افتح الشاشة"
+msgstr "स्क्रीन खोलें"
+
+#: app/templates/onboarding/welcome.html:55
 msgid ""
 "تنبيه صادق: هذا التطبيق نظام إدارة وتتبّع يساعدك تنظّم شغلك وما تنسى "
 "موعداً — مو بديل عن طبيب بيطري ولا عن تعلّم أساسيات تربية القطيع. راجع "
@@ -12380,7 +12723,7 @@ msgstr ""
 "पशुपालन की बुनियादी बातें सीखने का विकल्प नहीं है। चिकित्सा निर्णयों के "
 "लिए हमेशा अपने डॉक्टर से सलाह लें।"
 
-#: app/templates/onboarding/welcome.html:36
+#: app/templates/onboarding/welcome.html:56
 msgid "ابدأ استخدام التطبيق"
 msgstr "ऐप का उपयोग शुरू करें"
 
@@ -15095,4 +15438,7 @@ msgstr "स्टॉक गणना दर्ज कर दी गई — श�
 
 #~ msgid "تم إيقاف المهمة اليوميةتم تفعيل المهمة اليومية"
 #~ msgstr ""
+
+#~ msgid "نبذة سريعة عن التطبيق"
+#~ msgstr "ऐप का त्वरित परिचय"
 

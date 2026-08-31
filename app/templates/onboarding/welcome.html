@@ -21,7 +21,7 @@
 
   {% if steps %}
   <div class="card">
-    <h3 style="font-size:15px;">{{ _('نبذة سريعة عن التطبيق') }}</h3>
+    <h3 style="font-size:15px;">{{ _('خطوات أولى موصى بها') }}</h3>
     {% for s in steps %}
     <div style="padding:8px 0; border-top:1px solid var(--line);">
       <b>{{ s.title }}</b>
@@ -30,6 +30,26 @@
     {% endfor %}
   </div>
   {% endif %}
+
+  {# جولة مكثّفة أول دخول (بند إضافي 2026-08-31، طلبك المباشر) — قسم
+     لكل صلاحية تملكها فعلياً بس (permission_tour_sections بالراوت)،
+     مو حسب اسم الدور — تشتغل صح حتى لو صاحب الحلال خصّص صلاحيات دور
+     معيّن يدوياً. #}
+  <div class="card">
+    <h3 style="font-size:15px;">📖 {{ _('جولة مكثّفة — وش تقدر تسوي بالضبط') }}</h3>
+    <p style="color:var(--muted); font-size:12.5px; margin:-4px 0 12px;">{{ _('حسب صلاحياتك الحالية بالضبط — لو تغيّرت صلاحياتك لاحقاً، ارجع لنفس الشاشة من الإعدادات لتحديث الجولة.') }}</p>
+    {% for section in tour_sections %}
+    <div style="padding:10px 0; border-top:1px solid var(--line);">
+      <b>{{ section.icon }} {{ section.title }}</b>
+      <ul style="margin:6px 0 0; padding-inline-start:18px; color:var(--muted); font-size:13px;">
+        {% for point in section.points %}<li style="margin-bottom:4px;">{{ point }}</li>{% endfor %}
+      </ul>
+      {% if section.link_endpoint %}
+      <a href="{{ url_for(section.link_endpoint) }}" style="font-size:12.5px;">{{ _('افتح الشاشة') }} ←</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
 
   <div class="card">
     <p style="color:var(--muted); font-size:12px; margin-top:-4px;">{{ _('تنبيه صادق: هذا التطبيق نظام إدارة وتتبّع يساعدك تنظّم شغلك وما تنسى موعداً — مو بديل عن طبيب بيطري ولا عن تعلّم أساسيات تربية القطيع. راجع طبيبك دائماً للقرارات الطبية.') }}</p>

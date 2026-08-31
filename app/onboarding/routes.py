@@ -21,7 +21,8 @@ def welcome():
         flash(_("تم — دليلك اليومي جاهز بالصفحة الرئيسية"), "success")
         return redirect(url_for("core.home"))
     steps = checklist_service.onboarding_steps_for(current_user)
-    return render_template("onboarding/welcome.html", steps=steps)
+    tour_sections = checklist_service.permission_tour_sections(current_user)
+    return render_template("onboarding/welcome.html", steps=steps, tour_sections=tour_sections)
 
 
 @onboarding_bp.route("/skip", methods=["POST"])

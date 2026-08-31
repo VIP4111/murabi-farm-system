@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
+  <h2>📖 {{ _('الجولة التعريفية') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('شرح مكثّف لكل شاشة تقدر تستخدمها حسب صلاحياتك الحالية — تفيدك تراجعها بعد أي تغيير بصلاحياتك.') }}</p>
+  <a class="btn light" href="{{ url_for('onboarding.welcome') }}">{{ _('افتح الجولة') }} ←</a>
+</div>
+
+<div class="card">
   <h2>{{ _('بيانات المزرعة') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية.') }}</p>
   <form method="post" action="{{ url_for('core.farm_identity_save') }}">
