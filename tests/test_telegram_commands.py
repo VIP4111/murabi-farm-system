@@ -207,3 +207,29 @@ def test_mark_done_with_nothing_open_returns_clear_message(app):
     worker = _make_role_user("worker", "0599999175", telegram_chat_id="14")
     reply = svc._dispatch("تم", worker)
     assert "ما فيه مهمة أو بلاغ" in reply
+
+
+def test_webhook_replies_in_english_for_english_user(app, client):
+    """بند إضافي (2026-08-31) — نفس فجوة التقرير اليومي بالضبط: هذا
+    Webhook حقيقي بلا جلسة تسجيل دخول (`current_user` غير مصادَق)، فبدون
+    `force_locale` بـ`handle_update` كان الرد يطلع عربياً دايماً بغض
+    النظر عن لغة صاحب الحساب المطابق لـ`telegram_chat_id`. فحص طرف-لطرف
+    حقيقي عبر مسار الـwebhook الفعلي، لا `_dispatch` مباشرة."""
+    role = Role.query.filter_by(name="owner").first()
+    user = User(name="EN Owner TG", phone="0599999280", role_id=role.id,
+                language="en", telegram_chat_id="99")
+    user.set_password("test1234")
+    db.session.add(user)
+    db.session.commit()
+
+    with patch("app.core.telegram_service.webhook_secret", return_value="s3cr3t"), \
+         patch("app.core.telegram_service.send_message") as mock_send:
+        resp = client.post(
+            "/telegram/webhook",
+            json={"message": {"chat": {"id": 99}, "text": "/مهامي"}},
+            headers={"X-Telegram-Bot-Api-Secret-Token": "s3cr3t"},
+        )
+    assert resp.status_code == 200
+    reply_text = mock_send.call_args[0][1]
+    assert "You have no open tasks right now" in reply_text
+    assert "لا توجد مهام مفتوحة" not in reply_text

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 23:48+0300\n"
+"POT-Creation-Date: 2026-08-31 03:06+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -54,7 +54,7 @@ msgstr "Deleted/archived"
 msgid "ترتيب غير منتظم"
 msgstr "Out of order"
 
-#: app/__init__.py:134
+#: app/__init__.py:134 app/core/telegram_commands_service.py:162
 msgid "جديد"
 msgstr "New"
 
@@ -1409,6 +1409,7 @@ msgid "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة ا�
 msgstr "⚠️ Actually overdue: %(overdue)s  |  Due today: %(due_today)s  |  No date: %(no_date)s"
 
 #: app/core/daily_email_report_service.py:107
+#: app/core/telegram_commands_service.py:165
 #, python-format
 msgid "📋 بلاغات مفتوحة: %(n)s"
 msgstr "📋 Open reports: %(n)s"
@@ -2067,38 +2068,38 @@ msgstr "The job role has been created — now set its permissions"
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "You can't edit the owner role's permissions — it always has all permissions"
 
-#: app/core/routes.py:1853
+#: app/core/routes.py:1856
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:1877
+#: app/core/routes.py:1880
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:1877
+#: app/core/routes.py:1880
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:1903
+#: app/core/routes.py:1906
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:1984
+#: app/core/routes.py:1987
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:1992
+#: app/core/routes.py:1995
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2014
+#: app/core/routes.py:2017
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2035
+#: app/core/routes.py:2038
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "The demo simulation has run (%(days)s day(s)) — %(animals)s animal(s), %(matings)s mating(s), %(diseases)s medical case(s). You can delete it later from the same page."
@@ -2219,6 +2220,212 @@ msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%%"
 #: app/core/smart_sale_service.py:228
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "No sale flags — a productive female, best kept"
+
+#: app/core/telegram_commands_service.py:72
+msgid "هذا الأمر خاص بصاحب الحلال فقط."
+msgstr "This command is only for the owner."
+
+#: app/core/telegram_commands_service.py:87
+msgid "هذا الأمر يحتاج صلاحية عرض السجل الصحي."
+msgstr "This command requires the health-record view permission."
+
+#: app/core/telegram_commands_service.py:96
+msgid "هذا الأمر يحتاج صلاحية رفع بلاغ."
+msgstr "This command requires the submit-report permission."
+
+#: app/core/telegram_commands_service.py:127
+msgid "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم"
+msgstr "Unknown command. Available commands: /مهامي, تم"
+
+#: app/core/telegram_commands_service.py:139
+msgid "لا توجد مهام مفتوحة عليك حالياً. 👍"
+msgstr "You have no open tasks right now. 👍"
+
+#: app/core/telegram_commands_service.py:140
+#, python-format
+msgid " (موعدها %(d)s)"
+msgstr " (due %(d)s)"
+
+#: app/core/telegram_commands_service.py:141
+#, python-format
+msgid "✅ مهامك المفتوحة (%(n)s):"
+msgstr "✅ Your open tasks (%(n)s):"
+
+#: app/core/telegram_commands_service.py:148
+msgid "لا توجد تنبيهات حالياً. ✅"
+msgstr "No alerts right now. ✅"
+
+#: app/core/telegram_commands_service.py:152
+#, python-format
+msgid "🔔 عدد التنبيهات: %(total)s (منها %(urgent)s مستعجل)"
+msgstr "🔔 Alert count: %(total)s (%(urgent)s urgent)"
+
+#: app/core/telegram_commands_service.py:161
+msgid "لا توجد بلاغات مفتوحة حالياً. ✅"
+msgstr "No open reports right now. ✅"
+
+#: app/core/telegram_commands_service.py:162
+#: app/core/telegram_commands_service.py:210
+msgid "مقبول"
+msgstr "Accepted"
+
+#: app/core/telegram_commands_service.py:162
+#: app/core/telegram_commands_service.py:210
+msgid "بانتظار المراجعة"
+msgstr "Pending review"
+
+#: app/core/telegram_commands_service.py:166
+#, python-format
+msgid "أحدثها (#%(id)s, %(status)s): %(desc)s"
+msgstr "Latest (#%(id)s, %(status)s): %(desc)s"
+
+#: app/core/telegram_commands_service.py:186
+#, python-format
+msgid "📊 تقرير اليوم (%(date)s):"
+msgstr "📊 Today's report (%(date)s):"
+
+#: app/core/telegram_commands_service.py:187
+#, python-format
+msgid "🐑 إجمالي الرؤوس النشطة: %(n)s"
+msgstr "🐑 Total active head: %(n)s"
+
+#: app/core/telegram_commands_service.py:188
+#, python-format
+msgid "✅ مهام مفتوحة/متأخرة: %(n)s"
+msgstr "✅ Open/overdue tasks: %(n)s"
+
+#: app/core/telegram_commands_service.py:189
+#, python-format
+msgid "📋 بلاغات جديدة اليوم: %(n)s"
+msgstr "📋 New reports today: %(n)s"
+
+#: app/core/telegram_commands_service.py:190
+#, python-format
+msgid "🔔 تنبيهات مستعجلة: %(n)s"
+msgstr "🔔 Urgent alerts: %(n)s"
+
+#: app/core/telegram_commands_service.py:209
+msgid "لا توجد بلاغات مستلمة عليك حالياً. 👍"
+msgstr "You have no received reports right now. 👍"
+
+#: app/core/telegram_commands_service.py:212
+#, python-format
+msgid "📋 بلاغاتك المستلمة (%(n)s):"
+msgstr "📋 Your received reports (%(n)s):"
+
+#: app/core/telegram_commands_service.py:223
+msgid "لا توجد حالات معزولة حالياً. ✅"
+msgstr "No isolated cases right now. ✅"
+
+#: app/core/telegram_commands_service.py:224
+#, python-format
+msgid "🚨 عدد الرؤوس المعزولة حالياً: %(n)s"
+msgstr "🚨 Currently isolated head: %(n)s"
+
+#: app/core/telegram_commands_service.py:231
+msgid "افتح التطبيق ← البلاغات ← بلاغ جديد."
+msgstr "Open the app ← Reports ← New report."
+
+#: app/core/telegram_commands_service.py:232
+msgid "📋 رفع بلاغ جديد:"
+msgstr "📋 Submit a new report:"
+
+#: app/core/telegram_commands_service.py:244
+msgid "هذا الأمر يحتاج صلاحية إدارة البلاغات."
+msgstr "This command requires the manage-reports permission."
+
+#: app/core/telegram_commands_service.py:246
+msgid "الصيغة: /قبول رقم_البلاغ"
+msgstr "Format: /قبول report_number"
+
+#: app/core/telegram_commands_service.py:249
+#: app/core/telegram_commands_service.py:263
+#, python-format
+msgid "لا يوجد بلاغ برقم %(id)s."
+msgstr "No report with number %(id)s."
+
+#: app/core/telegram_commands_service.py:253
+#, python-format
+msgid "✅ تم قبول البلاغ #%(id)s."
+msgstr "✅ Report #%(id)s accepted."
+
+#: app/core/telegram_commands_service.py:260
+msgid "الصيغة: /إغلاق رقم_البلاغ"
+msgstr "Format: /إغلاق report_number"
+
+#: app/core/telegram_commands_service.py:267
+#, python-format
+msgid "✅ تم إغلاق البلاغ #%(id)s."
+msgstr "✅ Report #%(id)s closed."
+
+#: app/core/telegram_commands_service.py:274
+msgid "هذا الأمر يحتاج صلاحية توزيع المهام."
+msgstr "This command requires the assign-task permission."
+
+#: app/core/telegram_commands_service.py:276
+msgid "الصيغة: /مهمة جوال_العضو نص_المهمة"
+msgstr "Format: /مهمة member_phone task_text"
+
+#: app/core/telegram_commands_service.py:281
+#, python-format
+msgid "لا يوجد عضو فعّال بجوال %(phone)s."
+msgstr "No active member with phone %(phone)s."
+
+#: app/core/telegram_commands_service.py:284
+#, python-format
+msgid "✅ تم توزيع مهمة على %(name)s:"
+msgstr "✅ Task assigned to %(name)s:"
+
+#: app/core/telegram_commands_service.py:298
+#: app/core/telegram_commands_service.py:311
+msgid "تم الإنجاز عبر تيليجرام"
+msgstr "Completed via Telegram"
+
+#: app/core/telegram_commands_service.py:299
+#, python-format
+msgid "✅ تم إنجاز المهمة: %(title)s"
+msgstr "✅ Task completed: %(title)s"
+
+#: app/core/telegram_commands_service.py:312
+#, python-format
+msgid "✅ تم تسجيل تنفيذ البلاغ #%(id)s."
+msgstr "✅ Report #%(id)s marked as executed."
+
+#: app/core/telegram_commands_service.py:316
+msgid "ما فيه مهمة أو بلاغ مفتوح عليك حالياً."
+msgstr "You have no open task or report right now."
+
+#: app/core/telegram_service.py:121
+msgid "TELEGRAM_BOT_TOKEN غير مضبوط بمتغيرات البيئة — هذا سبب التوقف الأرجح."
+msgstr "TELEGRAM_BOT_TOKEN is not set in the environment variables — this is the most likely cause of the outage."
+
+#: app/core/telegram_service.py:128
+#, python-format
+msgid "فشل الاتصال بـtelegram API أصلاً: %(error)s"
+msgstr "Could not even connect to the Telegram API: %(error)s"
+
+#: app/core/telegram_service.py:134
+#, python-format
+msgid "التوكن غير صالح (تيليجرام رد: %(description)s) — غالباً انسحب/اتغيّر من BotFather."
+msgstr "The token is invalid (Telegram replied: %(description)s) — it was likely revoked/changed via BotFather."
+
+#: app/core/telegram_service.py:143
+#, python-format
+msgid "التوكن سليم بس تعذّر فحص الـwebhook: %(error)s"
+msgstr "The token is valid but the webhook check failed: %(error)s"
+
+#: app/core/telegram_service.py:153
+msgid "التوكن سليم بس ما فيه webhook مسجَّل حالياً — الأوامر التفاعلية (قبول/إغلاق مهمة) بس تتأثر، الإرسال (send_message) يبقى شغّال."
+msgstr "The token is valid but no webhook is registered — only interactive commands (accept/close/task) are affected; sending messages still works."
+
+#: app/core/telegram_service.py:156
+#, python-format
+msgid "webhook مسجَّل، بس آخر محاولة وصول لنا فشلت: %(error)s"
+msgstr "A webhook is registered, but the last delivery attempt to us failed: %(error)s"
+
+#: app/core/telegram_service.py:159
+msgid "التوكن سليم والـwebhook شغّال بدون أخطاء مسجَّلة — لو الرسائل لسا متوقفة، السبب على الأغلب Chat ID فردي (عضو حظر البوت أو بدّل حسابه)، مو مشكلة عامة."
+msgstr "The token is valid and the webhook works with no recorded errors — if messages are still not arriving, the cause is most likely an individual Chat ID (a member blocked the bot or changed their account), not a general issue."
 
 #: app/core/validation_service.py:22
 msgid "الوزن لازم يكون رقماً موجباً أكبر من صفر."
@@ -6832,6 +7039,14 @@ msgstr "A direct check for why Telegram notifications may have stopped — no Sh
 #: app/templates/telegram_status.html:9
 msgid "التوكن مضبوط؟"
 msgstr "Token set?"
+
+#: app/templates/telegram_status.html:9 app/templates/telegram_status.html:11
+msgid "نعم ✅"
+msgstr "Yes ✅"
+
+#: app/templates/telegram_status.html:9 app/templates/telegram_status.html:11
+msgid "لا ❌"
+msgstr "No ❌"
 
 #: app/templates/telegram_status.html:11
 msgid "التوكن صالح؟"

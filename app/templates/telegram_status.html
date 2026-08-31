@@ -6,9 +6,9 @@
 
   <div class="table-scroll">
   <table class="compact-table">
-    <tr><td>{{ _('التوكن مضبوط؟') }}</td><td><b>{{ 'نعم ✅' if info.token_set else 'لا ❌' }}</b></td></tr>
+    <tr><td>{{ _('التوكن مضبوط؟') }}</td><td><b>{{ _('نعم ✅') if info.token_set else _('لا ❌') }}</b></td></tr>
     {% if info.token_valid is not none %}
-    <tr><td>{{ _('التوكن صالح؟') }}</td><td><b>{{ 'نعم ✅' if info.token_valid else 'لا ❌' }}</b></td></tr>
+    <tr><td>{{ _('التوكن صالح؟') }}</td><td><b>{{ _('نعم ✅') if info.token_valid else _('لا ❌') }}</b></td></tr>
     {% endif %}
     {% if info.bot_username %}
     <tr><td>{{ _('اسم البوت') }}</td><td>@{{ info.bot_username }}</td></tr>

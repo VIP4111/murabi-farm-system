@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 23:48+0300\n"
+"POT-Creation-Date: 2026-08-31 03:06+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -54,7 +54,7 @@ msgstr "የተሰረዘ/የተመዘገበ"
 msgid "ترتيب غير منتظم"
 msgstr "ቅደም ተከተል ያልተስተካከለ"
 
-#: app/__init__.py:134
+#: app/__init__.py:134 app/core/telegram_commands_service.py:162
 msgid "جديد"
 msgstr "አዲስ"
 
@@ -1409,6 +1409,7 @@ msgid "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة ا�
 msgstr "⚠️ በእውነት የዘገዩ: %(overdue)s  |  ዛሬ የሚጠበቁ: %(due_today)s  |  ቀን የሌላቸው: %(no_date)s"
 
 #: app/core/daily_email_report_service.py:107
+#: app/core/telegram_commands_service.py:165
 #, python-format
 msgid "📋 بلاغات مفتوحة: %(n)s"
 msgstr "📋 ክፍት ሪፖርቶች: %(n)s"
@@ -2067,38 +2068,38 @@ msgstr "የስራ መደቡ ተፈጥሯል — አሁን ፈቃዶቹን ይግ
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "የባለቤቱን ሚና ፈቃዶች ማስተካከል አይችሉም — ሁልጊዜ ሁሉንም ፈቃዶች አለው"
 
-#: app/core/routes.py:1853
+#: app/core/routes.py:1856
 msgid "تم تحديث صلاحيات الدور"
 msgstr "የሚና ፈቃዶች ተዘምነዋል"
 
-#: app/core/routes.py:1877
+#: app/core/routes.py:1880
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ነቅቷል"
 
-#: app/core/routes.py:1877
+#: app/core/routes.py:1880
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
 
-#: app/core/routes.py:1903
+#: app/core/routes.py:1906
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
 
-#: app/core/routes.py:1984
+#: app/core/routes.py:1987
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:1992
+#: app/core/routes.py:1995
 msgid "تم حذف بيانات المحاكاة."
 msgstr "የማስመሰያ መረጃ ተሰርዟል።"
 
-#: app/core/routes.py:2014
+#: app/core/routes.py:2017
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2035
+#: app/core/routes.py:2038
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "የማሳያ ማስመሰያ ተሰርቷል (%(days)s ቀናት) — %(animals)s ራስ(ራሶች)፣ %(matings)s ማዳቀል፣ %(diseases)s የበሽታ ጉዳይ(ዎች)። ከዚህ ገጽ በኋላ ሊሰርዙት ይችላሉ።"
@@ -2219,6 +2220,212 @@ msgstr "የአሁኑ የትርፍ ህዳግ %(margin)s%% ≥ ግቡ %(target)s%%
 #: app/core/smart_sale_service.py:228
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "የሽያጭ ምልክቶች የሉም — አምራች ሴት፣ ማቆየት ይመረጣል"
+
+#: app/core/telegram_commands_service.py:72
+msgid "هذا الأمر خاص بصاحب الحلال فقط."
+msgstr "ይህ ትዕዛዝ ለባለቤቱ ብቻ ነው።"
+
+#: app/core/telegram_commands_service.py:87
+msgid "هذا الأمر يحتاج صلاحية عرض السجل الصحي."
+msgstr "ይህ ትዕዛዝ የጤና መዝገብ ማየት ፈቃድ ይፈልጋል።"
+
+#: app/core/telegram_commands_service.py:96
+msgid "هذا الأمر يحتاج صلاحية رفع بلاغ."
+msgstr "ይህ ትዕዛዝ ሪፖርት የማስገባት ፈቃድ ይፈልጋል።"
+
+#: app/core/telegram_commands_service.py:127
+msgid "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم"
+msgstr "ያልታወቀ ትዕዛዝ። ያሉ ትዕዛዞች: /مهامي, تم"
+
+#: app/core/telegram_commands_service.py:139
+msgid "لا توجد مهام مفتوحة عليك حالياً. 👍"
+msgstr "በአሁኑ ጊዜ ክፍት ተግባር የለብዎትም። 👍"
+
+#: app/core/telegram_commands_service.py:140
+#, python-format
+msgid " (موعدها %(d)s)"
+msgstr " (የሚጠበቀው %(d)s)"
+
+#: app/core/telegram_commands_service.py:141
+#, python-format
+msgid "✅ مهامك المفتوحة (%(n)s):"
+msgstr "✅ ክፍት ተግባሮችዎ (%(n)s):"
+
+#: app/core/telegram_commands_service.py:148
+msgid "لا توجد تنبيهات حالياً. ✅"
+msgstr "በአሁኑ ጊዜ ማንቂያዎች የሉም። ✅"
+
+#: app/core/telegram_commands_service.py:152
+#, python-format
+msgid "🔔 عدد التنبيهات: %(total)s (منها %(urgent)s مستعجل)"
+msgstr "🔔 የማንቂያ ብዛት: %(total)s (%(urgent)s አስቸኳይ)"
+
+#: app/core/telegram_commands_service.py:161
+msgid "لا توجد بلاغات مفتوحة حالياً. ✅"
+msgstr "በአሁኑ ጊዜ ክፍት ሪፖርቶች የሉም። ✅"
+
+#: app/core/telegram_commands_service.py:162
+#: app/core/telegram_commands_service.py:210
+msgid "مقبول"
+msgstr "ተቀባይነት ያገኘ"
+
+#: app/core/telegram_commands_service.py:162
+#: app/core/telegram_commands_service.py:210
+msgid "بانتظار المراجعة"
+msgstr "ግምገማ በመጠባበቅ ላይ"
+
+#: app/core/telegram_commands_service.py:166
+#, python-format
+msgid "أحدثها (#%(id)s, %(status)s): %(desc)s"
+msgstr "የቅርብ ጊዜው (#%(id)s, %(status)s): %(desc)s"
+
+#: app/core/telegram_commands_service.py:186
+#, python-format
+msgid "📊 تقرير اليوم (%(date)s):"
+msgstr "📊 የዛሬ ሪፖርት (%(date)s):"
+
+#: app/core/telegram_commands_service.py:187
+#, python-format
+msgid "🐑 إجمالي الرؤوس النشطة: %(n)s"
+msgstr "🐑 አጠቃላይ ንቁ ራሶች: %(n)s"
+
+#: app/core/telegram_commands_service.py:188
+#, python-format
+msgid "✅ مهام مفتوحة/متأخرة: %(n)s"
+msgstr "✅ ክፍት/የዘገዩ ተግባራት: %(n)s"
+
+#: app/core/telegram_commands_service.py:189
+#, python-format
+msgid "📋 بلاغات جديدة اليوم: %(n)s"
+msgstr "📋 ዛሬ አዲስ ሪፖርቶች: %(n)s"
+
+#: app/core/telegram_commands_service.py:190
+#, python-format
+msgid "🔔 تنبيهات مستعجلة: %(n)s"
+msgstr "🔔 አስቸኳይ ማንቂያዎች: %(n)s"
+
+#: app/core/telegram_commands_service.py:209
+msgid "لا توجد بلاغات مستلمة عليك حالياً. 👍"
+msgstr "በአሁኑ ጊዜ የደረሱ ሪፖርቶች የሉዎትም። 👍"
+
+#: app/core/telegram_commands_service.py:212
+#, python-format
+msgid "📋 بلاغاتك المستلمة (%(n)s):"
+msgstr "📋 የደረሱዎት ሪፖርቶች (%(n)s):"
+
+#: app/core/telegram_commands_service.py:223
+msgid "لا توجد حالات معزولة حالياً. ✅"
+msgstr "በአሁኑ ጊዜ የተነጠሉ ጉዳዮች የሉም። ✅"
+
+#: app/core/telegram_commands_service.py:224
+#, python-format
+msgid "🚨 عدد الرؤوس المعزولة حالياً: %(n)s"
+msgstr "🚨 በአሁኑ ጊዜ የተነጠሉ ራሶች: %(n)s"
+
+#: app/core/telegram_commands_service.py:231
+msgid "افتح التطبيق ← البلاغات ← بلاغ جديد."
+msgstr "መተግበሪያውን ይክፈቱ ← ሪፖርቶች ← አዲስ ሪፖርት።"
+
+#: app/core/telegram_commands_service.py:232
+msgid "📋 رفع بلاغ جديد:"
+msgstr "📋 አዲስ ሪፖርት ማስገባት:"
+
+#: app/core/telegram_commands_service.py:244
+msgid "هذا الأمر يحتاج صلاحية إدارة البلاغات."
+msgstr "ይህ ትዕዛዝ ሪፖርቶችን የማስተዳደር ፈቃድ ይፈልጋል።"
+
+#: app/core/telegram_commands_service.py:246
+msgid "الصيغة: /قبول رقم_البلاغ"
+msgstr "ቅርጸት: /قبول የሪፖርት_ቁጥር"
+
+#: app/core/telegram_commands_service.py:249
+#: app/core/telegram_commands_service.py:263
+#, python-format
+msgid "لا يوجد بلاغ برقم %(id)s."
+msgstr "ቁጥር %(id)s ያለው ሪፖርት የለም።"
+
+#: app/core/telegram_commands_service.py:253
+#, python-format
+msgid "✅ تم قبول البلاغ #%(id)s."
+msgstr "✅ ሪፖርት #%(id)s ተቀባይነት አግኝቷል።"
+
+#: app/core/telegram_commands_service.py:260
+msgid "الصيغة: /إغلاق رقم_البلاغ"
+msgstr "ቅርጸት: /إغلاق የሪፖርት_ቁጥር"
+
+#: app/core/telegram_commands_service.py:267
+#, python-format
+msgid "✅ تم إغلاق البلاغ #%(id)s."
+msgstr "✅ ሪፖርት #%(id)s ተዘግቷል።"
+
+#: app/core/telegram_commands_service.py:274
+msgid "هذا الأمر يحتاج صلاحية توزيع المهام."
+msgstr "ይህ ትዕዛዝ ተግባር የመመደብ ፈቃድ ይፈልጋል።"
+
+#: app/core/telegram_commands_service.py:276
+msgid "الصيغة: /مهمة جوال_العضو نص_المهمة"
+msgstr "ቅርጸት: /مهمة የአባል_ስልክ የተግባር_ጽሁፍ"
+
+#: app/core/telegram_commands_service.py:281
+#, python-format
+msgid "لا يوجد عضو فعّال بجوال %(phone)s."
+msgstr "ስልክ %(phone)s ያለው ንቁ አባል የለም።"
+
+#: app/core/telegram_commands_service.py:284
+#, python-format
+msgid "✅ تم توزيع مهمة على %(name)s:"
+msgstr "✅ ተግባር ለ%(name)s ተመድቧል:"
+
+#: app/core/telegram_commands_service.py:298
+#: app/core/telegram_commands_service.py:311
+msgid "تم الإنجاز عبر تيليجرام"
+msgstr "በቴሌግራም ተጠናቋል"
+
+#: app/core/telegram_commands_service.py:299
+#, python-format
+msgid "✅ تم إنجاز المهمة: %(title)s"
+msgstr "✅ ተግባር ተጠናቋል: %(title)s"
+
+#: app/core/telegram_commands_service.py:312
+#, python-format
+msgid "✅ تم تسجيل تنفيذ البلاغ #%(id)s."
+msgstr "✅ ሪፖርት #%(id)s እንደተፈጸመ ተመዝግቧል።"
+
+#: app/core/telegram_commands_service.py:316
+msgid "ما فيه مهمة أو بلاغ مفتوح عليك حالياً."
+msgstr "በአሁኑ ጊዜ ክፍት ተግባር ወይም ሪፖርት የለብዎትም።"
+
+#: app/core/telegram_service.py:121
+msgid "TELEGRAM_BOT_TOKEN غير مضبوط بمتغيرات البيئة — هذا سبب التوقف الأرجح."
+msgstr "TELEGRAM_BOT_TOKEN በአካባቢ ተለዋዋጮች ውስጥ አልተዘጋጀም — ይህ የመቆሙ በጣም ሊሆን የሚችል ምክንያት ነው።"
+
+#: app/core/telegram_service.py:128
+#, python-format
+msgid "فشل الاتصال بـtelegram API أصلاً: %(error)s"
+msgstr "ከቴሌግራም API ጋር መገናኘት ጨርሶ አልተሳካም: %(error)s"
+
+#: app/core/telegram_service.py:134
+#, python-format
+msgid "التوكن غير صالح (تيليجرام رد: %(description)s) — غالباً انسحب/اتغيّر من BotFather."
+msgstr "ቶከኑ ልክ ያልሆነ ነው (ቴሌግራም መልስ: %(description)s) — ምናልባት ከBotFather ተነስቷል/ተቀይሯል።"
+
+#: app/core/telegram_service.py:143
+#, python-format
+msgid "التوكن سليم بس تعذّر فحص الـwebhook: %(error)s"
+msgstr "ቶከኑ ትክክል ነው ግን webhook ማረጋገጥ አልተቻለም: %(error)s"
+
+#: app/core/telegram_service.py:153
+msgid "التوكن سليم بس ما فيه webhook مسجَّل حالياً — الأوامر التفاعلية (قبول/إغلاق مهمة) بس تتأثر، الإرسال (send_message) يبقى شغّال."
+msgstr "ቶከኑ ትክክል ነው ግን በአሁኑ ጊዜ የተመዘገበ webhook የለም — መስተጋብራዊ ትዕዛዞች ብቻ (መቀበል/መዝጋት) ይጎዳሉ፣ መላክ (send_message) ይሰራል።"
+
+#: app/core/telegram_service.py:156
+#, python-format
+msgid "webhook مسجَّل، بس آخر محاولة وصول لنا فشلت: %(error)s"
+msgstr "webhook ተመዝግቧል፣ ግን የመጨረሻው ወደ እኛ የመድረስ ሙከራ አልተሳካም: %(error)s"
+
+#: app/core/telegram_service.py:159
+msgid "التوكن سليم والـwebhook شغّال بدون أخطاء مسجَّلة — لو الرسائل لسا متوقفة، السبب على الأغلب Chat ID فردي (عضو حظر البوت أو بدّل حسابه)، مو مشكلة عامة."
+msgstr "ቶከኑ ትክክል ነው እና webhook ያለ ምንም የተመዘገበ ስህተት ይሰራል — መልዕክቶች አሁንም ካልደረሱ፣ ምክንያቱ ምናልባት የግል Chat ID ነው (አባል ቦቱን አግዷል ወይም መለያውን ቀይሯል)፣ አጠቃላይ ችግር አይደለም።"
 
 #: app/core/validation_service.py:22
 msgid "الوزن لازم يكون رقماً موجباً أكبر من صفر."
@@ -6832,6 +7039,14 @@ msgstr "የቴሌግራም ማሳወቂያዎች ለምን እንደቆሙ ቀ�
 #: app/templates/telegram_status.html:9
 msgid "التوكن مضبوط؟"
 msgstr "ቶከን ተዘጋጅቷል?"
+
+#: app/templates/telegram_status.html:9 app/templates/telegram_status.html:11
+msgid "نعم ✅"
+msgstr "አዎ ✅"
+
+#: app/templates/telegram_status.html:9 app/templates/telegram_status.html:11
+msgid "لا ❌"
+msgstr "የለም ❌"
 
 #: app/templates/telegram_status.html:11
 msgid "التوكن صالح؟"

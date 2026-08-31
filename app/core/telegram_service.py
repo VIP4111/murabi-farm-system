@@ -20,6 +20,8 @@ import hashlib
 import os
 import requests
 
+from flask_babel import gettext as _
+
 
 def _bot_token() -> str | None:
     return os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -116,26 +118,29 @@ def diagnose() -> dict:
     token = _bot_token()
     result = {"token_set": bool(token)}
     if not token:
-        result["diagnosis"] = "TELEGRAM_BOT_TOKEN غير مضبوط بمتغيرات البيئة — هذا سبب التوقف الأرجح."
+        result["diagnosis"] = _("TELEGRAM_BOT_TOKEN غير مضبوط بمتغيرات البيئة — هذا سبب التوقف الأرجح.")
         return result
 
     try:
         me = requests.get(f"https://api.telegram.org/bot{token}/getMe", timeout=5).json()
     except requests.RequestException as e:
         result["token_valid"] = False
-        result["diagnosis"] = f"فشل الاتصال بـtelegram API أصلاً: {e}"
+        result["diagnosis"] = _("فشل الاتصال بـtelegram API أصلاً: %(error)s", error=e)
         return result
 
     result["token_valid"] = bool(me.get("ok"))
     if not result["token_valid"]:
-        result["diagnosis"] = f"التوكن غير صالح (تيليجرام رد: {me.get('description')}) — غالباً انسحب/اتغيّر من BotFather."
+        result["diagnosis"] = _(
+            "التوكن غير صالح (تيليجرام رد: %(description)s) — غالباً انسحب/اتغيّر من BotFather.",
+            description=me.get('description'),
+        )
         return result
     result["bot_username"] = me.get("result", {}).get("username")
 
     try:
         wh = requests.get(f"https://api.telegram.org/bot{token}/getWebhookInfo", timeout=5).json().get("result", {})
     except requests.RequestException as e:
-        result["diagnosis"] = f"التوكن سليم بس تعذّر فحص الـwebhook: {e}"
+        result["diagnosis"] = _("التوكن سليم بس تعذّر فحص الـwebhook: %(error)s", error=e)
         return result
 
     result["webhook_url"] = wh.get("url") or None
@@ -144,11 +149,15 @@ def diagnose() -> dict:
     result["last_error_date"] = wh.get("last_error_date")
 
     if not wh.get("url"):
-        result["diagnosis"] = "التوكن سليم بس ما فيه webhook مسجَّل حالياً — الأوامر التفاعلية (قبول/إغلاق مهمة) بس تتأثر، الإرسال (send_message) يبقى شغّال."
+        result["diagnosis"] = _(
+            "التوكن سليم بس ما فيه webhook مسجَّل حالياً — الأوامر التفاعلية (قبول/إغلاق مهمة) بس تتأثر، الإرسال (send_message) يبقى شغّال."
+        )
     elif wh.get("last_error_message"):
-        result["diagnosis"] = f"webhook مسجَّل، بس آخر محاولة وصول لنا فشلت: {wh['last_error_message']}"
+        result["diagnosis"] = _("webhook مسجَّل، بس آخر محاولة وصول لنا فشلت: %(error)s", error=wh['last_error_message'])
     else:
-        result["diagnosis"] = "التوكن سليم والـwebhook شغّال بدون أخطاء مسجَّلة — لو الرسائل لسا متوقفة، السبب على الأغلب Chat ID فردي (عضو حظر البوت أو بدّل حسابه)، مو مشكلة عامة."
+        result["diagnosis"] = _(
+            "التوكن سليم والـwebhook شغّال بدون أخطاء مسجَّلة — لو الرسائل لسا متوقفة، السبب على الأغلب Chat ID فردي (عضو حظر البوت أو بدّل حسابه)، مو مشكلة عامة."
+        )
     return result
 
 
