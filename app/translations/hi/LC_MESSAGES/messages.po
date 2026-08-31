@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 05:40+0300\n"
+"POT-Creation-Date: 2026-08-31 06:21+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -18,19 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:125 app/templates/team/members_list.html:24
+#: app/__init__.py:125 app/core/routes.py:1054
+#: app/templates/team/members_list.html:24
 msgid "نشط"
 msgstr "सक्रिय"
 
-#: app/__init__.py:126
+#: app/__init__.py:126 app/core/routes.py:1054
 msgid "غير نشط"
 msgstr "निष्क्रिय"
 
-#: app/__init__.py:127
+#: app/__init__.py:127 app/core/routes.py:1054
 msgid "مباع"
 msgstr "बेचा गया"
 
-#: app/__init__.py:128
+#: app/__init__.py:128 app/core/routes.py:1054
 msgid "نافق"
 msgstr "मृत"
 
@@ -2062,164 +2063,192 @@ msgstr "जानवर का नंबर आवश्यक है"
 msgid "تم تحديث بيانات الحيوان"
 msgstr "जानवर का डेटा अपडेट कर दिया गया है"
 
-#: app/core/routes.py:1091 app/templates/animal_detail.html:25
+#: app/core/routes.py:1052 app/models/animal_options.py:30
+#: app/templates/animals_bulk_purchase.html:22
+#: app/templates/team/report_detail.html:17
+msgid "حلال (ضأن/ماعز)"
+msgstr "पशुधन (भेड़/बकरी)"
+
+#: app/core/routes.py:1052 app/models/animal_options.py:31
+#: app/templates/animal_detail.html:103
+#: app/templates/animals_bulk_purchase.html:23
+#: app/templates/team/report_detail.html:17
+msgid "نعام"
+msgstr "शुतुरमुर्ग"
+
+#: app/core/routes.py:1063 app/templates/health/dashboard.html:29
+#, python-format
+msgid "%(n)s يوم"
+msgstr "%(n)s दिन"
+
+#: app/core/routes.py:1065
+#, python-format
+msgid "%(n)s شهر"
+msgstr "%(n)s महीने"
+
+#: app/core/routes.py:1066
+#, python-format
+msgid "%(n)s سنة"
+msgstr "%(n)s वर्ष"
+
+#: app/core/routes.py:1093 app/templates/animal_detail.html:25
 #: app/templates/animals_bulk_purchase.html:29
 msgid "بدون حظيرة"
 msgstr "बिना बाड़े के"
 
-#: app/core/routes.py:1175
+#: app/core/routes.py:1177
 msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
 msgstr "स्मार्ट सुझाव अभी उपलब्ध नहीं है (सुनिश्चित करें कि GEMINI_API_KEY सक्षम है) — नीचे आइटम मैन्युअल रूप से चुनें।"
 
-#: app/core/routes.py:1204
+#: app/core/routes.py:1206
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr "जानवर %(no)s के लिए %(n)s जांच कार्य सौंपे गए हैं।"
 
-#: app/core/routes.py:1244
+#: app/core/routes.py:1246
 msgid "تم تسجيل الوزن"
 msgstr "वजन दर्ज कर दिया गया है"
 
-#: app/core/routes.py:1271
+#: app/core/routes.py:1273
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr "जन्म चेकलिस्ट सेव कर दी गई है"
 
-#: app/core/routes.py:1291
+#: app/core/routes.py:1293
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr "%(no)s को आइसोलेशन में ले जाया गया है"
 
-#: app/core/routes.py:1327
+#: app/core/routes.py:1329
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s को आइसोलेशन से बाहर निकाला गया है"
 
-#: app/core/routes.py:1351
+#: app/core/routes.py:1353
 msgid "تم تسجيل الحليب"
 msgstr "दूध दर्ज कर दिया गया है"
 
-#: app/core/routes.py:1376
+#: app/core/routes.py:1378
 msgid "تمت إضافة الملاحظة"
 msgstr "नोट जोड़ दिया गया है"
 
-#: app/core/routes.py:1414
+#: app/core/routes.py:1416
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr "शुतुरमुर्ग उत्पादन चक्र में शामिल नहीं होते — शुतुरमुर्ग रिकॉर्ड देखें (अंडे/हैचिंग)।"
 
-#: app/core/routes.py:1417
+#: app/core/routes.py:1419
 msgid "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد."
 msgstr "यह प्रजाति उत्पादन-चक्र इंजन में शामिल नहीं होती (केवल पशुधन जीव विज्ञान के लिए बना) — इसके लिए अभी कोई समर्पित चक्र प्रणाली नहीं है।"
 
-#: app/core/routes.py:1461
+#: app/core/routes.py:1463
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "इस जानवर के लिए कोई दर्ज बिक्री नहीं है।"
 
-#: app/core/routes.py:1464
+#: app/core/routes.py:1466
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "यह बिक्री बिना इनवॉइस के दर्ज है।"
 
-#: app/core/routes.py:1486
+#: app/core/routes.py:1488
 msgid "تم تحديث بيانات التخطيط"
 msgstr "योजना डेटा अपडेट कर दिया गया है"
 
-#: app/core/routes.py:1510
+#: app/core/routes.py:1512
 msgid "تم تسجيل البيع"
 msgstr "बिक्री दर्ज कर दी गई है"
 
-#: app/core/routes.py:1524
+#: app/core/routes.py:1526
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 पशु बेचा गया — %(no)s, %(price)s में"
 
-#: app/core/routes.py:1542
+#: app/core/routes.py:1544
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "बाज़ार के लिए जानवर का निकलना दर्ज कर दिया गया है"
 
-#: app/core/routes.py:1554
+#: app/core/routes.py:1556
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "बिना बिक्री के जानवर का फार्म वापस आना दर्ज कर दिया गया है"
 
-#: app/core/routes.py:1569
+#: app/core/routes.py:1571
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "मृत्यु दर्ज कर दी गई है (चक्र-पूर्णता शर्त के बिना)"
 
-#: app/core/routes.py:1585
+#: app/core/routes.py:1587
 msgid "تم أرشفة الحيوان"
 msgstr "जानवर आर्काइव कर दिया गया है"
 
-#: app/core/routes.py:1639
+#: app/core/routes.py:1641
 msgid "تمت إضافة الحظيرة"
 msgstr "बाड़ा जोड़ दिया गया है"
 
-#: app/core/routes.py:1674
+#: app/core/routes.py:1676
 msgid "تم تحديث الحظيرة"
 msgstr "बाड़ा अपडेट कर दिया गया है"
 
-#: app/core/routes.py:1754
+#: app/core/routes.py:1756
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "समय सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1768
+#: app/core/routes.py:1770
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "इनटेक-दवा सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1791
+#: app/core/routes.py:1793
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "पासवर्ड गलत है — फैक्टरी रीसेट नहीं किया गया।"
 
-#: app/core/routes.py:1802
+#: app/core/routes.py:1804
 #, python-format
 msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
 msgstr "फैक्टरी रीसेट नहीं हो सका, कुछ भी नहीं हटाया गया (अपने आप वापस कर दिया गया)। त्रुटि: %(err)s"
 
-#: app/core/routes.py:1805
+#: app/core/routes.py:1807
 msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
 msgstr "फैक्टरी रीसेट सफल रहा — फार्म का सारा डेटा हटा दिया गया है। उसी फोन नंबर और पासवर्ड से फिर से लॉगिन करें।"
 
-#: app/core/routes.py:1824
+#: app/core/routes.py:1826
 msgid "تم حفظ بيانات المزرعة"
 msgstr "फार्म का डेटा सेव कर दिया गया है"
 
-#: app/core/routes.py:1846
+#: app/core/routes.py:1848
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "पद बना दिया गया है — अब उसकी अनुमतियां तय करें"
 
-#: app/core/routes.py:1858
+#: app/core/routes.py:1860
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "आप मालिक की भूमिका की अनुमतियां संपादित नहीं कर सकते — इसके पास हमेशा सभी अनुमतियां होती हैं"
 
-#: app/core/routes.py:1870
+#: app/core/routes.py:1872
 msgid "تم تحديث صلاحيات الدور"
 msgstr "भूमिका की अनुमतियां अपडेट कर दी गई हैं"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1896
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "%(name)s सेवा सक्रिय कर दी गई है"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1896
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "%(name)s सेवा निष्क्रिय कर दी गई है"
 
-#: app/core/routes.py:1920
+#: app/core/routes.py:1922
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "बैकअप बना दिया गया है: %(name)s"
 
-#: app/core/routes.py:2001
+#: app/core/routes.py:2003
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "आपको सटीक वाक्यांश लिखना होगा और पुष्टि चेक करनी होगी।"
 
-#: app/core/routes.py:2009
+#: app/core/routes.py:2011
 msgid "تم حذف بيانات المحاكاة."
 msgstr "सिमुलेशन डेटा हटा दिया गया है।"
 
-#: app/core/routes.py:2031
+#: app/core/routes.py:2033
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "आपको पुष्टि बॉक्स चेक करना होगा।"
 
-#: app/core/routes.py:2052
+#: app/core/routes.py:2054
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "डेमो सिमुलेशन चला दिया गया (%(days)s दिन) — %(animals)s जानवर, %(matings)s प्रजनन, %(diseases)s मेडिकल केस। आप इसे बाद में इसी पेज से हटा सकते हैं।"
@@ -4342,12 +4371,6 @@ msgid "توزيع مهام الفحص"
 msgstr "जांच कार्य सौंपें"
 
 #: app/templates/animal_detail.html:103
-#: app/templates/animals_bulk_purchase.html:23
-#: app/templates/team/report_detail.html:17
-msgid "نعام"
-msgstr "शुतुरमुर्ग"
-
-#: app/templates/animal_detail.html:103
 msgid "الفصيلة — بدون دورة إنتاج (مجترات فقط)"
 msgstr "प्रजाति — उत्पादन चक्र नहीं (केवल जुगाली करने वाले)"
 
@@ -5463,11 +5486,6 @@ msgstr "एक साथ कई खरीदे गए पशु जोड़े
 #: app/templates/animals_bulk_purchase.html:16
 msgid "تاريخ الشراء (لكل الدفعة)"
 msgstr "खरीद तिथि (पूरी खेप के लिए)"
-
-#: app/templates/animals_bulk_purchase.html:22
-#: app/templates/team/report_detail.html:17
-msgid "حلال (ضأن/ماعز)"
-msgstr "पशुधन (भेड़/बकरी)"
 
 #: app/templates/animals_bulk_purchase.html:27
 msgid "الحظيرة (لكل الدفعة)"
@@ -9585,11 +9603,6 @@ msgstr "पूर्ण लॉग"
 #: app/templates/health/dashboard.html:22
 msgid "منذ"
 msgstr "से"
-
-#: app/templates/health/dashboard.html:29
-#, python-format
-msgid "%(n)s يوم"
-msgstr "%(n)s दिन"
 
 #: app/templates/health/dashboard.html:32
 msgid "لا يوجد حالات مرضية نشطة حالياً."

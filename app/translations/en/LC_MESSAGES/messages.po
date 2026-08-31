@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 05:40+0300\n"
+"POT-Creation-Date: 2026-08-31 06:21+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,19 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:125 app/templates/team/members_list.html:24
+#: app/__init__.py:125 app/core/routes.py:1054
+#: app/templates/team/members_list.html:24
 msgid "نشط"
 msgstr "Active"
 
-#: app/__init__.py:126
+#: app/__init__.py:126 app/core/routes.py:1054
 msgid "غير نشط"
 msgstr "Inactive"
 
-#: app/__init__.py:127
+#: app/__init__.py:127 app/core/routes.py:1054
 msgid "مباع"
 msgstr "Sold"
 
-#: app/__init__.py:128
+#: app/__init__.py:128 app/core/routes.py:1054
 msgid "نافق"
 msgstr "Deceased"
 
@@ -2062,164 +2063,192 @@ msgstr "The animal number is required"
 msgid "تم تحديث بيانات الحيوان"
 msgstr "The animal's data has been updated"
 
-#: app/core/routes.py:1091 app/templates/animal_detail.html:25
+#: app/core/routes.py:1052 app/models/animal_options.py:30
+#: app/templates/animals_bulk_purchase.html:22
+#: app/templates/team/report_detail.html:17
+msgid "حلال (ضأن/ماعز)"
+msgstr "Livestock (sheep/goat)"
+
+#: app/core/routes.py:1052 app/models/animal_options.py:31
+#: app/templates/animal_detail.html:103
+#: app/templates/animals_bulk_purchase.html:23
+#: app/templates/team/report_detail.html:17
+msgid "نعام"
+msgstr "Ostrich"
+
+#: app/core/routes.py:1063 app/templates/health/dashboard.html:29
+#, python-format
+msgid "%(n)s يوم"
+msgstr "%(n)s days"
+
+#: app/core/routes.py:1065
+#, python-format
+msgid "%(n)s شهر"
+msgstr "%(n)s month(s)"
+
+#: app/core/routes.py:1066
+#, python-format
+msgid "%(n)s سنة"
+msgstr "%(n)s year(s)"
+
+#: app/core/routes.py:1093 app/templates/animal_detail.html:25
 #: app/templates/animals_bulk_purchase.html:29
 msgid "بدون حظيرة"
 msgstr "No barn"
 
-#: app/core/routes.py:1175
+#: app/core/routes.py:1177
 msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
 msgstr "Smart suggestion isn't available right now (make sure GEMINI_API_KEY is enabled) — pick the items manually below."
 
-#: app/core/routes.py:1204
+#: app/core/routes.py:1206
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr "%(n)s checkup task(s) have been assigned for animal %(no)s."
 
-#: app/core/routes.py:1244
+#: app/core/routes.py:1246
 msgid "تم تسجيل الوزن"
 msgstr "The weight has been recorded"
 
-#: app/core/routes.py:1271
+#: app/core/routes.py:1273
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr "The birth checklist has been saved"
 
-#: app/core/routes.py:1291
+#: app/core/routes.py:1293
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr "%(no)s has been moved to isolation"
 
-#: app/core/routes.py:1327
+#: app/core/routes.py:1329
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s has been taken out of isolation"
 
-#: app/core/routes.py:1351
+#: app/core/routes.py:1353
 msgid "تم تسجيل الحليب"
 msgstr "The milk has been recorded"
 
-#: app/core/routes.py:1376
+#: app/core/routes.py:1378
 msgid "تمت إضافة الملاحظة"
 msgstr "The note has been added"
 
-#: app/core/routes.py:1414
+#: app/core/routes.py:1416
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr "Ostriches don't enter the production cycle — check the ostrich record (eggs/hatching)."
 
-#: app/core/routes.py:1417
+#: app/core/routes.py:1419
 msgid "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد."
 msgstr "This species doesn't enter the production-cycle engine (built for livestock biology only) — there's no dedicated cycle system for it yet."
 
-#: app/core/routes.py:1461
+#: app/core/routes.py:1463
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "There's no recorded sale for this animal."
 
-#: app/core/routes.py:1464
+#: app/core/routes.py:1466
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "This sale was recorded without an invoice."
 
-#: app/core/routes.py:1486
+#: app/core/routes.py:1488
 msgid "تم تحديث بيانات التخطيط"
 msgstr "The planning data has been updated"
 
-#: app/core/routes.py:1510
+#: app/core/routes.py:1512
 msgid "تم تسجيل البيع"
 msgstr "The sale has been recorded"
 
-#: app/core/routes.py:1524
+#: app/core/routes.py:1526
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 Animal sold — %(no)s for %(price)s"
 
-#: app/core/routes.py:1542
+#: app/core/routes.py:1544
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "The animal's departure to the market has been recorded"
 
-#: app/core/routes.py:1554
+#: app/core/routes.py:1556
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "The animal's return to the farm without a sale has been recorded"
 
-#: app/core/routes.py:1569
+#: app/core/routes.py:1571
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "The death has been recorded (without the cycle-completion requirement)"
 
-#: app/core/routes.py:1585
+#: app/core/routes.py:1587
 msgid "تم أرشفة الحيوان"
 msgstr "The animal has been archived"
 
-#: app/core/routes.py:1639
+#: app/core/routes.py:1641
 msgid "تمت إضافة الحظيرة"
 msgstr "The barn has been added"
 
-#: app/core/routes.py:1674
+#: app/core/routes.py:1676
 msgid "تم تحديث الحظيرة"
 msgstr "The barn has been updated"
 
-#: app/core/routes.py:1754
+#: app/core/routes.py:1756
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "The time settings have been saved"
 
-#: app/core/routes.py:1768
+#: app/core/routes.py:1770
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "The intake-medicine settings have been saved"
 
-#: app/core/routes.py:1791
+#: app/core/routes.py:1793
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "Incorrect password — the factory reset was not performed."
 
-#: app/core/routes.py:1802
+#: app/core/routes.py:1804
 #, python-format
 msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
 msgstr "Couldn't perform the factory reset, nothing was deleted (rolled back automatically). Error: %(err)s"
 
-#: app/core/routes.py:1805
+#: app/core/routes.py:1807
 msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
 msgstr "The factory reset succeeded — all farm data has been deleted. Log in again with the same phone number and password."
 
-#: app/core/routes.py:1824
+#: app/core/routes.py:1826
 msgid "تم حفظ بيانات المزرعة"
 msgstr "The farm's data has been saved"
 
-#: app/core/routes.py:1846
+#: app/core/routes.py:1848
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "The job role has been created — now set its permissions"
 
-#: app/core/routes.py:1858
+#: app/core/routes.py:1860
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "You can't edit the owner role's permissions — it always has all permissions"
 
-#: app/core/routes.py:1870
+#: app/core/routes.py:1872
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1896
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1896
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:1920
+#: app/core/routes.py:1922
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:2001
+#: app/core/routes.py:2003
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:2009
+#: app/core/routes.py:2011
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2031
+#: app/core/routes.py:2033
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2052
+#: app/core/routes.py:2054
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "The demo simulation has run (%(days)s day(s)) — %(animals)s animal(s), %(matings)s mating(s), %(diseases)s medical case(s). You can delete it later from the same page."
@@ -4342,12 +4371,6 @@ msgid "توزيع مهام الفحص"
 msgstr "Assign Checkup Tasks"
 
 #: app/templates/animal_detail.html:103
-#: app/templates/animals_bulk_purchase.html:23
-#: app/templates/team/report_detail.html:17
-msgid "نعام"
-msgstr "Ostrich"
-
-#: app/templates/animal_detail.html:103
 msgid "الفصيلة — بدون دورة إنتاج (مجترات فقط)"
 msgstr "Species — no production cycle (ruminants only)"
 
@@ -5463,11 +5486,6 @@ msgstr "Add several purchased animals at once — each row goes through the same
 #: app/templates/animals_bulk_purchase.html:16
 msgid "تاريخ الشراء (لكل الدفعة)"
 msgstr "Purchase date (for the whole batch)"
-
-#: app/templates/animals_bulk_purchase.html:22
-#: app/templates/team/report_detail.html:17
-msgid "حلال (ضأن/ماعز)"
-msgstr "Livestock (sheep/goat)"
 
 #: app/templates/animals_bulk_purchase.html:27
 msgid "الحظيرة (لكل الدفعة)"
@@ -9585,11 +9603,6 @@ msgstr "Full log"
 #: app/templates/health/dashboard.html:22
 msgid "منذ"
 msgstr "Since"
-
-#: app/templates/health/dashboard.html:29
-#, python-format
-msgid "%(n)s يوم"
-msgstr "%(n)s days"
 
 #: app/templates/health/dashboard.html:32
 msgid "لا يوجد حالات مرضية نشطة حالياً."

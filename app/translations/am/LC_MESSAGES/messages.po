@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 05:40+0300\n"
+"POT-Creation-Date: 2026-08-31 06:21+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -18,19 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:125 app/templates/team/members_list.html:24
+#: app/__init__.py:125 app/core/routes.py:1054
+#: app/templates/team/members_list.html:24
 msgid "نشط"
 msgstr "ንቁ"
 
-#: app/__init__.py:126
+#: app/__init__.py:126 app/core/routes.py:1054
 msgid "غير نشط"
 msgstr "ንቁ ያልሆነ"
 
-#: app/__init__.py:127
+#: app/__init__.py:127 app/core/routes.py:1054
 msgid "مباع"
 msgstr "የተሸጠ"
 
-#: app/__init__.py:128
+#: app/__init__.py:128 app/core/routes.py:1054
 msgid "نافق"
 msgstr "የሞተ"
 
@@ -2062,164 +2063,192 @@ msgstr "የእንስሳ ቁጥር ያስፈልጋል"
 msgid "تم تحديث بيانات الحيوان"
 msgstr "የእንስሳው መረጃ ተዘምኗል"
 
-#: app/core/routes.py:1091 app/templates/animal_detail.html:25
+#: app/core/routes.py:1052 app/models/animal_options.py:30
+#: app/templates/animals_bulk_purchase.html:22
+#: app/templates/team/report_detail.html:17
+msgid "حلال (ضأن/ماعز)"
+msgstr "እንስሳት (በግ/ፍየል)"
+
+#: app/core/routes.py:1052 app/models/animal_options.py:31
+#: app/templates/animal_detail.html:103
+#: app/templates/animals_bulk_purchase.html:23
+#: app/templates/team/report_detail.html:17
+msgid "نعام"
+msgstr "ሰጎን"
+
+#: app/core/routes.py:1063 app/templates/health/dashboard.html:29
+#, python-format
+msgid "%(n)s يوم"
+msgstr "%(n)s ቀናት"
+
+#: app/core/routes.py:1065
+#, python-format
+msgid "%(n)s شهر"
+msgstr "%(n)s ወር"
+
+#: app/core/routes.py:1066
+#, python-format
+msgid "%(n)s سنة"
+msgstr "%(n)s ዓመት"
+
+#: app/core/routes.py:1093 app/templates/animal_detail.html:25
 #: app/templates/animals_bulk_purchase.html:29
 msgid "بدون حظيرة"
 msgstr "ያለ በረት"
 
-#: app/core/routes.py:1175
+#: app/core/routes.py:1177
 msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
 msgstr "ብልህ ጥቆማ አሁን አይገኝም (GEMINI_API_KEY መንቃቱን ያረጋግጡ) — ከታች ያሉትን ንጥሎች በእጅ ይምረጡ።"
 
-#: app/core/routes.py:1204
+#: app/core/routes.py:1206
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr "ለ%(no)s ራስ %(n)s የፍተሻ ተግባር(ተግባራት) ተመድቧል/ተመድበዋል።"
 
-#: app/core/routes.py:1244
+#: app/core/routes.py:1246
 msgid "تم تسجيل الوزن"
 msgstr "ክብደቱ ተመዝግቧል"
 
-#: app/core/routes.py:1271
+#: app/core/routes.py:1273
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr "የወሊድ ማረጋገጫ ዝርዝር ተቀምጧል"
 
-#: app/core/routes.py:1291
+#: app/core/routes.py:1293
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr "%(no)s ወደ መታቀብ ተዛውሯል"
 
-#: app/core/routes.py:1327
+#: app/core/routes.py:1329
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s ከመታቀብ ወጥቷል"
 
-#: app/core/routes.py:1351
+#: app/core/routes.py:1353
 msgid "تم تسجيل الحليب"
 msgstr "ወተቱ ተመዝግቧል"
 
-#: app/core/routes.py:1376
+#: app/core/routes.py:1378
 msgid "تمت إضافة الملاحظة"
 msgstr "ማስታወሻው ታክሏል"
 
-#: app/core/routes.py:1414
+#: app/core/routes.py:1416
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr "ሰጎኖች ወደ ምርት ዑደት አይገቡም — የሰጎን መዝገብ ይመልከቱ (እንቁላል/መፈልፈል)።"
 
-#: app/core/routes.py:1417
+#: app/core/routes.py:1419
 msgid "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا يوجد نظام دورة مخصّص لها بعد."
 msgstr "ይህ ፍጥረት ወደ ምርት ዑደት ሞተር አይገባም (ለከብት ባዮሎጂ ብቻ የተገነባ) — እስካሁን ለእሱ የተለየ የዑደት ስርዓት የለም።"
 
-#: app/core/routes.py:1461
+#: app/core/routes.py:1463
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "ለዚህ እንስሳ የተመዘገበ ሽያጭ የለም።"
 
-#: app/core/routes.py:1464
+#: app/core/routes.py:1466
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "ይህ ሽያጭ ያለ ደረሰኝ ተመዝግቧል።"
 
-#: app/core/routes.py:1486
+#: app/core/routes.py:1488
 msgid "تم تحديث بيانات التخطيط"
 msgstr "የእቅድ መረጃ ተዘምኗል"
 
-#: app/core/routes.py:1510
+#: app/core/routes.py:1512
 msgid "تم تسجيل البيع"
 msgstr "ሽያጩ ተመዝግቧል"
 
-#: app/core/routes.py:1524
+#: app/core/routes.py:1526
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 እንስሳ ተሽጧል — %(no)s በ%(price)s"
 
-#: app/core/routes.py:1542
+#: app/core/routes.py:1544
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "ወደ ገበያ የመውጣት መዝገብ ተመዝግቧል"
 
-#: app/core/routes.py:1554
+#: app/core/routes.py:1556
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "ያለ ሽያጭ ወደ እርሻ የመመለስ መዝገብ ተመዝግቧል"
 
-#: app/core/routes.py:1569
+#: app/core/routes.py:1571
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "ሞቱ ተመዝግቧል (የዑደት ማጠናቀቅ ሁኔታ ሳይኖር)"
 
-#: app/core/routes.py:1585
+#: app/core/routes.py:1587
 msgid "تم أرشفة الحيوان"
 msgstr "እንስሳው ተመዝግቧል"
 
-#: app/core/routes.py:1639
+#: app/core/routes.py:1641
 msgid "تمت إضافة الحظيرة"
 msgstr "በረቱ ታክሏል"
 
-#: app/core/routes.py:1674
+#: app/core/routes.py:1676
 msgid "تم تحديث الحظيرة"
 msgstr "በረቱ ተዘምኗል"
 
-#: app/core/routes.py:1754
+#: app/core/routes.py:1756
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "የጊዜ ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1768
+#: app/core/routes.py:1770
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "የመቀበያ መድሃኒት ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1791
+#: app/core/routes.py:1793
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "የይለፍ ቃል የተሳሳተ ነው — የፋብሪካ ዳግም ማስጀመር አልተፈጸመም።"
 
-#: app/core/routes.py:1802
+#: app/core/routes.py:1804
 #, python-format
 msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
 msgstr "የፋብሪካ ዳግም ማስጀመር አልተቻለም፣ ምንም አልተሰረዘም (በራስ-ሰር ተመልሷል)። ስህተት፡ %(err)s"
 
-#: app/core/routes.py:1805
+#: app/core/routes.py:1807
 msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
 msgstr "የፋብሪካ ዳግም ማስጀመር ተሳክቷል — ሁሉም የእርሻ መረጃ ተሰርዟል። በተመሳሳይ ስልክ ቁጥር እና የይለፍ ቃል እንደገና ይግቡ።"
 
-#: app/core/routes.py:1824
+#: app/core/routes.py:1826
 msgid "تم حفظ بيانات المزرعة"
 msgstr "የእርሻው መረጃ ተቀምጧል"
 
-#: app/core/routes.py:1846
+#: app/core/routes.py:1848
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "የስራ መደቡ ተፈጥሯል — አሁን ፈቃዶቹን ይግለጹ"
 
-#: app/core/routes.py:1858
+#: app/core/routes.py:1860
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "የባለቤቱን ሚና ፈቃዶች ማስተካከል አይችሉም — ሁልጊዜ ሁሉንም ፈቃዶች አለው"
 
-#: app/core/routes.py:1870
+#: app/core/routes.py:1872
 msgid "تم تحديث صلاحيات الدور"
 msgstr "የሚና ፈቃዶች ተዘምነዋል"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1896
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ነቅቷል"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1896
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
 
-#: app/core/routes.py:1920
+#: app/core/routes.py:1922
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
 
-#: app/core/routes.py:2001
+#: app/core/routes.py:2003
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2009
+#: app/core/routes.py:2011
 msgid "تم حذف بيانات المحاكاة."
 msgstr "የማስመሰያ መረጃ ተሰርዟል።"
 
-#: app/core/routes.py:2031
+#: app/core/routes.py:2033
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2052
+#: app/core/routes.py:2054
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "የማሳያ ማስመሰያ ተሰርቷል (%(days)s ቀናት) — %(animals)s ራስ(ራሶች)፣ %(matings)s ማዳቀል፣ %(diseases)s የበሽታ ጉዳይ(ዎች)። ከዚህ ገጽ በኋላ ሊሰርዙት ይችላሉ።"
@@ -4342,12 +4371,6 @@ msgid "توزيع مهام الفحص"
 msgstr "የምርመራ ተግባራትን መድብ"
 
 #: app/templates/animal_detail.html:103
-#: app/templates/animals_bulk_purchase.html:23
-#: app/templates/team/report_detail.html:17
-msgid "نعام"
-msgstr "ሰጎን"
-
-#: app/templates/animal_detail.html:103
 msgid "الفصيلة — بدون دورة إنتاج (مجترات فقط)"
 msgstr "ዝርያ — የምርት ዑደት የለም (አኝኪዎች ብቻ)"
 
@@ -5463,11 +5486,6 @@ msgstr "በአንድ ጊዜ የተገዙ በርካታ እንስሳትን ጨም�
 #: app/templates/animals_bulk_purchase.html:16
 msgid "تاريخ الشراء (لكل الدفعة)"
 msgstr "የግዢ ቀን (ለጠቅላላው ጭነት)"
-
-#: app/templates/animals_bulk_purchase.html:22
-#: app/templates/team/report_detail.html:17
-msgid "حلال (ضأن/ماعز)"
-msgstr "እንስሳት (በግ/ፍየል)"
 
 #: app/templates/animals_bulk_purchase.html:27
 msgid "الحظيرة (لكل الدفعة)"
@@ -9585,11 +9603,6 @@ msgstr "ሙሉ መዝገብ"
 #: app/templates/health/dashboard.html:22
 msgid "منذ"
 msgstr "ከ"
-
-#: app/templates/health/dashboard.html:29
-#, python-format
-msgid "%(n)s يوم"
-msgstr "%(n)s ቀናት"
 
 #: app/templates/health/dashboard.html:32
 msgid "لا يوجد حالات مرضية نشطة حالياً."

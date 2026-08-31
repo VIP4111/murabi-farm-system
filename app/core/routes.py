@@ -1049,8 +1049,10 @@ def animals_edit(animal_id):
     )
 
 
-_SPECIES_LABELS_AR = {"sheep_goat": "حلال (ضأن/ماعز)", "ostrich": "نعام"}
-_ANIMAL_STATUS_LABELS_AR = {"active": "نشط", "sold": "مباع", "dead": "نافق", "inactive": "غير نشط"}
+_SPECIES_LABELS_AR = {"sheep_goat": _l("حلال (ضأن/ماعز)"), "ostrich": _l("نعام")}
+_ANIMAL_STATUS_LABELS_AR = {
+    "active": _l("نشط"), "sold": _l("مباع"), "dead": _l("نافق"), "inactive": _l("غير نشط"),
+}
 
 
 def _animal_age_label(animal: Animal) -> str | None:
@@ -1058,10 +1060,10 @@ def _animal_age_label(animal: Animal) -> str | None:
         return None
     days = (date.today() - animal.birth_date).days
     if days < 60:
-        return f"{days} يوم"
+        return _("%(n)s يوم", n=days)
     if days < 730:
-        return f"{days // 30} شهر"
-    return f"{days // 365} سنة"
+        return _("%(n)s شهر", n=days // 30)
+    return _("%(n)s سنة", n=days // 365)
 
 
 @core_bp.route("/animals/<int:animal_id>/quick-info")
@@ -1085,11 +1087,11 @@ def animal_quick_info(animal_id):
     animal = Animal.query.get_or_404(animal_id)
     return jsonify({
         "animal_no": animal.animal_no,
-        "species_label": _SPECIES_LABELS_AR.get(animal.species, animal.species),
+        "species_label": str(_SPECIES_LABELS_AR.get(animal.species, animal.species)),
         "gender": animal.gender or "-",
         "age_label": _animal_age_label(animal) or "-",
         "barn_name": animal.barn.display_name() if animal.barn else _("بدون حظيرة"),
-        "status_label": _ANIMAL_STATUS_LABELS_AR.get(animal.status, animal.status),
+        "status_label": str(_ANIMAL_STATUS_LABELS_AR.get(animal.status, animal.status)),
         "image_url": animal.image_url,
     })
 

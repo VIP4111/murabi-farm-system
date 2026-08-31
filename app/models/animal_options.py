@@ -12,11 +12,24 @@
 `Disease.disease_name`؛ هذي الجداول مرجع اقتراحات فقط.
 """
 from datetime import datetime, timezone
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 
 
 def _now():
     return datetime.now(timezone.utc)
+
+
+# بند إضافي (2026-08-31) — طلبك المباشر بعد صورة شاشة تسجيل حيوان:
+# خيارَي الفصيلة الافتراضيَين ("حلال (ضأن/ماعز)"/"نعام") كانا يطلعان
+# عربياً خاماً بقائمة اختيار الفصيلة حتى لحساب إنجليزي بالكامل. `code`
+# قيمة ثابتة معروفة (`sheep_goat`/`ostrich`)، فترجمتها ممكنة بأمان —
+# عكس أي فصيلة يضيفها المستخدم لاحقاً بزر "+" (نص حر، مو نص نظام،
+# نفس مبدأ عدم ترجمة أسماء الحيوانات/الحظائر المخصَّصة).
+_KNOWN_SPECIES_LABELS = {
+    "sheep_goat": _l("حلال (ضأن/ماعز)"),
+    "ostrich": _l("نعام"),
+}
 
 
 class SpeciesType(db.Model):
@@ -26,6 +39,13 @@ class SpeciesType(db.Model):
     code = db.Column(db.String(20), unique=True, nullable=False)
     label_ar = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.DateTime, default=_now)
+
+    def display_label(self) -> str:
+        """اسم الفصيلة المترجَم لو كان أحد الاثنين الافتراضيَين
+        المعروفَين، وإلا الاسم العربي الأصلي كما كتبه المستخدم (فصيلة
+        مخصَّصة أضافها بنفسه — بيانات حرة، مو نص نظام)."""
+        known = _KNOWN_SPECIES_LABELS.get(self.code)
+        return str(known) if known is not None else self.label_ar
 
     @classmethod
     def seed_defaults(cls) -> None:
