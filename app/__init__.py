@@ -191,6 +191,11 @@ def create_app(config_class=Config):
         "feeding_schedule": _l("وجبة علف مجدولة"),
         "barn_physiology_move": _l("نقل حظيرة (حالة فسيولوجية)"),
         "animal_data_completion": _l("إكمال بيانات حيوان"),
+        # بند إضافي (2026-08-31) — لُقِطت أثناء الفحص: outbreak_review
+        # (app/core/outbreak_service.py) كانت الوحيدة الناقصة من هذا
+        # القاموس بين كل أنواع المهام المسجَّلة — عنوانها كان يبقى
+        # عربياً خاماً دايماً بغض النظر عن لغة المشاهد.
+        "outbreak_review": _l("مراجعة احتمال عدوى منتشرة"),
     }
 
     @app.template_filter("ar_task_type")

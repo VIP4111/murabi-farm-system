@@ -8,6 +8,7 @@
 نتطلّب حد أدنى من العمليات التاريخية (`MIN_HISTORY`) قبل أي مقارنة —
 أول عملية بفئة جديدة ما إلها تاريخ تُقارن فيه، فما تُعتبر شذوذاً
 تلقائياً (تفادي إنذارات كاذبة عند تسجيل صنف جديد لأول مرة)."""
+from flask_babel import lazy_gettext as _l
 from app.models import Finance
 
 MIN_HISTORY = 3
@@ -43,5 +44,5 @@ def detect_anomaly(entry: Finance) -> dict | None:
         "average": avg,
         "amount": entry.amount,
         "deviation_pct": round(deviation * 100),
-        "direction": "أعلى" if deviation > 0 else "أقل",
+        "direction": _l("أعلى") if deviation > 0 else _l("أقل"),
     }

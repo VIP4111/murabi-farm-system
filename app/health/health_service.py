@@ -678,15 +678,21 @@ def check_emergency_symptoms(*, animal_id, symptom_names: list[str], actor_user_
 
     # إشعار فوري مجاني عبر تيليجرام لكل دكتور/مالك مسجَّل (بند إضافي
     # 157) — حالة طوارئ فعلية لازم تصل لحظياً، ما تنتظر فتح التطبيق.
+    from flask_babel import force_locale
     from app.core import telegram_service
     from app.models import Animal, User
     animal = Animal.query.get(animal_id)
     animal_no = animal.animal_no if animal else animal_id
-    for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
-        if user.has_permission("health.manage"):
-            telegram_service.notify_user(
-                user, f"🚨 حالة طوارئ — الرأس {animal_no}\n{reason}",
-            )
+    recipients = [
+        u for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all()
+        if u.has_permission("health.manage")
+    ]
+    for lang in {u.language or "ar" for u in recipients}:
+        with force_locale(lang):
+            text = _("🚨 حالة طوارئ — الرأس %(no)s", no=animal_no) + f"\n{reason}"
+        for user in recipients:
+            if (user.language or "ar") == lang:
+                telegram_service.notify_user(user, text)
 
     return {
         "isolation_result": results.get(animal_id, "-"),

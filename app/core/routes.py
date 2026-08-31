@@ -955,16 +955,22 @@ def animals_new():
         # مو حدث بحجم البيع أهمية. نفس نمط إشعارات نقص المخزون
         # (`stock_alert_service.py`): كل من يملك health.manage.
         if source == "birth":
+            from flask_babel import force_locale
             from app.core import telegram_service
             from app.models import User
             mother = Animal.query.get(request.form.get("mother_id")) if request.form.get("mother_id") else None
-            for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
-                if u.has_permission("health.manage"):
-                    telegram_service.notify_user(
-                        u,
-                        f"🍼 ولادة جديدة — {animal.animal_no}"
-                        + (f" (الأم {mother.animal_no})" if mother else ""),
-                    )
+            recipients = [
+                u for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all()
+                if u.has_permission("health.manage")
+            ]
+            for lang in {u.language or "ar" for u in recipients}:
+                with force_locale(lang):
+                    text = _("🍼 ولادة جديدة — %(no)s", no=animal.animal_no)
+                    if mother:
+                        text += " " + _("(الأم %(no)s)", no=mother.animal_no)
+                for u in recipients:
+                    if (u.language or "ar") == lang:
+                        telegram_service.notify_user(u, text)
         return redirect(url_for("core.animals_list"))
 
     _seed_system_barns()
@@ -1506,13 +1512,19 @@ def animal_sell(animal_id):
         # إشعار تيليجرام فوري بالبيع (بند إضافي 231) — حدث مالي مهم،
         # نفس نمط إشعار الولادة فوق. أصحاب صلاحية finance.full.manage
         # (صاحب الحلال + المحاسب افتراضياً).
+        from flask_babel import force_locale
         from app.core import telegram_service
         from app.models import User
-        for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
-            if u.has_permission("finance.full.manage"):
-                telegram_service.notify_user(
-                    u, f"💰 بيع رأس — {animal.animal_no} بسعر {request.form['sale_price']}",
-                )
+        recipients = [
+            u for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all()
+            if u.has_permission("finance.full.manage")
+        ]
+        for lang in {u.language or "ar" for u in recipients}:
+            with force_locale(lang):
+                text = _("💰 بيع رأس — %(no)s بسعر %(price)s", no=animal.animal_no, price=request.form['sale_price'])
+            for u in recipients:
+                if (u.language or "ar") == lang:
+                    telegram_service.notify_user(u, text)
     except cycle_engine.CycleExitBlocked as e:
         # يشمل الآن حظر فترة التحريم أيضاً (بند إضافي 50) — كان تحذيراً
         # بعد البيع، صار رفضاً حقيقياً قبله.

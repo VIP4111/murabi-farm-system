@@ -8,10 +8,11 @@
 ثابت). نفس نقطة الاستدعاء بالضبط (بعد أي `deduct_stock()` فعلي)، بس
 الآن نفحص الاثنين معاً: هل تحت الحد الأدنى، أو هل باقي أيام أقل من
 `predictive_stock_alert_days` حسب معدل الاستهلاك الفعلي؟"""
+from flask_babel import gettext as _, force_locale
 from app.core import telegram_service
 
 
-def _notify(kind_label: str, icon: str, item, permission_code: str, days_until_stockout: float | None) -> None:
+def _notify(kind_label, icon: str, item, permission_code: str, days_until_stockout: float | None) -> None:
     from app.models import FarmSettings
     fs = FarmSettings.get()
     min_qty = item.min_stock_qty or 0
@@ -24,18 +25,30 @@ def _notify(kind_label: str, icon: str, item, permission_code: str, days_until_s
     if not under_min and not running_out_soon:
         return
 
-    if under_min:
-        reason = f"متبقي {available} {item.unit or ''} (الحد الأدنى {min_qty} {item.unit or ''})"
-    else:
-        reason = (
-            f"متبقي {available} {item.unit or ''} — على معدل الاستهلاك الأخير، "
-            f"يكفي ~{days_until_stockout} يوم بس (أقل من {fs.predictive_stock_alert_days} يوم)"
-        )
-
+    # بند إضافي (2026-08-31) — نفس فجوة "تعدد المستلمين بلغات مختلفة"
+    # المعالَجة بالتقرير اليومي — نص منفصل لكل لغة موجودة فعلياً بين
+    # المستلمين، بدل نسخة واحدة (كانت بالعربي دايماً، بلا سياق طلب هنا).
     from app.models import User
-    for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
-        if user.has_permission(permission_code):
-            telegram_service.notify_user(user, f"📦 نقص مخزون {kind_label} {icon}\n{item.name}: {reason}")
+    recipients = [
+        u for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all()
+        if u.has_permission(permission_code)
+    ]
+    for lang in {u.language or "ar" for u in recipients}:
+        with force_locale(lang):
+            if under_min:
+                reason = _("متبقي %(available)s %(unit)s (الحد الأدنى %(min)s %(unit)s)",
+                           available=available, unit=item.unit or "", min=min_qty)
+            else:
+                reason = _(
+                    "متبقي %(available)s %(unit)s — على معدل الاستهلاك الأخير، "
+                    "يكفي ~%(days)s يوم بس (أقل من %(threshold)s يوم)",
+                    available=available, unit=item.unit or "",
+                    days=days_until_stockout, threshold=fs.predictive_stock_alert_days,
+                )
+            text = _("📦 نقص مخزون %(kind)s %(icon)s", kind=_(kind_label), icon=icon) + f"\n{item.name}: {reason}"
+        for user in recipients:
+            if (user.language or "ar") == lang:
+                telegram_service.notify_user(user, text)
 
 
 def check_pharmacy_stock(pharmacy) -> None:

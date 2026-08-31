@@ -70,17 +70,32 @@ def submit_report(*, reporter, description, report_type=None, animal_id=None, ba
     # لحظياً، مو بس عند فتح التطبيق. `urgent` (بند إضافي — دليل الأعراض
     # الميداني) يبقى نفس القناتين لكل البلاغات، بس يغيّر شكل النص
     # ليكون واضحاً إنها حالة تستدعي انتباهاً فورياً.
+    #
+    # بند إضافي (2026-08-31) — فجوة "تعدد المستلمين بلغات مختلفة" نفسها
+    # المعالَجة بالتقرير اليومي (`daily_email_report_service.py`):
+    # النص كان يُبنى مرة واحدة بلغة مُقدِّم البلاغ (لغة الطلب الحالي)
+    # ويُرسل حرفياً لكل مستلم — دكتور إنجليزي يستلم إشعار بلاغ عربي لو
+    # مقدّم البلاغ حسابه عربي. الحل: نبني نسخة نص منفصلة لكل لغة موجودة
+    # فعلياً بين المستلمين عبر `force_locale`، بدل نسخة واحدة للجميع.
+    from flask_babel import force_locale
     from app.core import telegram_service, email_service
     from app.models import User
-    prefix = "🚨 بلاغ عاجل" if urgent else "📋 بلاغ جديد"
-    text = f"{prefix} من {reporter.name}\n{description}"
-    for user in User.query.filter(User.is_active_account.is_(True)).all():
-        if user.id == reporter.id or not user.has_permission("reports.manage"):
-            continue
-        if user.telegram_chat_id:
-            telegram_service.notify_user(user, text)
-        if user.email:
-            email_service.notify_user(user, prefix, text)
+
+    recipients = [
+        u for u in User.query.filter(User.is_active_account.is_(True)).all()
+        if u.id != reporter.id and u.has_permission("reports.manage")
+    ]
+    for lang in {u.language or "ar" for u in recipients}:
+        with force_locale(lang):
+            prefix = _("🚨 بلاغ عاجل") if urgent else _("📋 بلاغ جديد")
+            text = _("%(prefix)s من %(name)s", prefix=prefix, name=reporter.name) + f"\n{description}"
+        for user in recipients:
+            if (user.language or "ar") != lang:
+                continue
+            if user.telegram_chat_id:
+                telegram_service.notify_user(user, text)
+            if user.email:
+                email_service.notify_user(user, prefix, text)
 
     return report
 

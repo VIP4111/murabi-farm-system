@@ -9,6 +9,7 @@
 from datetime import date, timedelta
 import zlib
 
+from flask_babel import gettext as _, force_locale
 from app.models import Disease, Barn, Task
 from app.team import task_service
 
@@ -54,6 +55,7 @@ def detect_barn_clusters(*, today: date | None = None) -> list:
         if existing:
             continue
         barn = Barn.query.get(barn_id)
+        barn_label = barn.display_name() if barn else barn_id
         task = task_service.create_suggested_task(
             title=f"🦠 مراجعة احتمال عدوى منتشرة — حظيرة {barn.barn_name if barn else barn_id}",
             task_type="outbreak_review", barn_id=barn_id,
@@ -65,16 +67,29 @@ def detect_barn_clusters(*, today: date | None = None) -> list:
         )
         created.append(task)
 
+        # بند إضافي (2026-08-31) — نفس فجوة "تعدد المستلمين بلغات
+        # مختلفة" المعالَجة بالتقرير اليومي و submit_report: نص منفصل
+        # مبني بلغة كل مستلم فعلياً، بدل نسخة واحدة بلغة مين فتح شاشة
+        # التنبيهات (اللي استدعت هذي الدالة، مو المستلمين أنفسهم).
         from app.core import telegram_service, email_service
         from app.models import User
-        subject = f"🦠 احتمال عدوى منتشرة — حظيرة {barn.barn_name if barn else barn_id}"
-        text = f"{subject}\n{len(animal_ids)} رأس مختلف بنفس الحظيرة بحالة مرضية مفتوحة خلال آخر {CLUSTER_WINDOW_DAYS} يوم."
-        for user in User.query.filter(User.is_active_account.is_(True)).all():
-            if not user.has_permission("health.manage"):
-                continue
-            if user.telegram_chat_id:
-                telegram_service.notify_user(user, text)
-            if user.email:
-                email_service.notify_user(user, subject, text)
+        recipients = [
+            u for u in User.query.filter(User.is_active_account.is_(True)).all()
+            if u.has_permission("health.manage")
+        ]
+        for lang in {u.language or "ar" for u in recipients}:
+            with force_locale(lang):
+                subject = _("🦠 احتمال عدوى منتشرة — حظيرة %(barn)s", barn=barn_label)
+                text = subject + "\n" + _(
+                    "%(n)s رأس مختلف بنفس الحظيرة بحالة مرضية مفتوحة خلال آخر %(days)s يوم.",
+                    n=len(animal_ids), days=CLUSTER_WINDOW_DAYS,
+                )
+            for user in recipients:
+                if (user.language or "ar") != lang:
+                    continue
+                if user.telegram_chat_id:
+                    telegram_service.notify_user(user, text)
+                if user.email:
+                    email_service.notify_user(user, subject, text)
 
     return created

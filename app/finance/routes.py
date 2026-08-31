@@ -294,21 +294,33 @@ def finance_new():
         from app.core.finance_anomaly_service import detect_anomaly
         anomaly = detect_anomaly(row)
         if anomaly:
-            flash(
-                f"⚠️ تنبيه: هذا المبلغ ({anomaly['amount']:.0f}) {anomaly['direction']} "
-                f"بنسبة {abs(anomaly['deviation_pct'])}% من متوسط عمليات \"{row.category}\" "
-                f"السابقة ({anomaly['average']:.0f}).", "error",
-            )
+            flash(_(
+                'تنبيه: هذا المبلغ (%(amount)s) %(direction)s بنسبة %(pct)s%% من متوسط عمليات "%(category)s" '
+                "السابقة (%(average)s).",
+                amount=f"{anomaly['amount']:.0f}", direction=anomaly['direction'],
+                pct=abs(anomaly['deviation_pct']), category=row.category, average=f"{anomaly['average']:.0f}",
+            ), "error")
+            from flask_babel import force_locale
             from app.core import telegram_service
             from app.models import User
-            op_labels = {"sale": "بيع", "purchase": "شراء", "expense": "مصروف"}
-            for user in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all():
-                if user.has_permission("finance.full.manage"):
-                    telegram_service.notify_user(
-                        user,
-                        f"⚠️ عملية {op_labels.get(row.operation_type, row.operation_type)} غير معتادة\n"
-                        f"{row.category} — {anomaly['amount']:.0f} ({anomaly['direction']} بـ{abs(anomaly['deviation_pct'])}% عن المعتاد {anomaly['average']:.0f})",
+            op_labels_ar = {"sale": "بيع", "purchase": "شراء", "expense": "مصروف"}
+            recipients = [
+                u for u in User.query.filter(User.telegram_chat_id.isnot(None), User.is_active_account.is_(True)).all()
+                if u.has_permission("finance.full.manage")
+            ]
+            for lang in {u.language or "ar" for u in recipients}:
+                with force_locale(lang):
+                    op_label = _(op_labels_ar.get(row.operation_type, row.operation_type))
+                    text = (
+                        _("⚠️ عملية %(op)s غير معتادة", op=op_label) + "\n" +
+                        _("%(category)s — %(amount)s (%(direction)s بـ%(pct)s%% عن المعتاد %(average)s)",
+                          category=row.category, amount=f"{anomaly['amount']:.0f}",
+                          direction=anomaly['direction'], pct=abs(anomaly['deviation_pct']),
+                          average=f"{anomaly['average']:.0f}")
                     )
+                for user in recipients:
+                    if (user.language or "ar") == lang:
+                        telegram_service.notify_user(user, text)
 
         flash(_("تمت إضافة العملية المالية"), "success")
         return redirect(url_for("finance.finance_list"))

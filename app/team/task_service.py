@@ -75,11 +75,16 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
 
     # إشعار فوري مجاني عبر تيليجرام (بند إضافي 157) — يتجاهل بصمت لو
     # العامل ما سجّل Chat ID أو البوت غير مفعَّل (صفر كسر بالتوزيع نفسه).
+    # بند إضافي (2026-08-31) — النص يُبنى بلغة العامل المكلَّف نفسه
+    # (`force_locale`)، مو لغة الفاعل (الدكتور) اللي وزّع المهمة.
     if task.assignee_id:
+        from flask_babel import force_locale
         from app.core import telegram_service
-        telegram_service.notify_user(
-            task.assignee, f"📋 مهمة جديدة: {task.title}" + (f"\nالموعد: {task.due_date}" if task.due_date else ""),
-        )
+        with force_locale(task.assignee.language or "ar"):
+            text = _("📋 مهمة جديدة: %(title)s", title=task.title)
+            if task.due_date:
+                text += "\n" + _("الموعد: %(date)s", date=task.due_date)
+        telegram_service.notify_user(task.assignee, text)
     return task
 
 
@@ -126,10 +131,13 @@ def approve_suggested_task(task: Task, *, actor) -> Task:
     db.session.commit()
 
     if task.assignee_id:
+        from flask_babel import force_locale
         from app.core import telegram_service
-        telegram_service.notify_user(
-            task.assignee, f"📋 مهمة جديدة: {task.title}" + (f"\nالموعد: {task.due_date}" if task.due_date else ""),
-        )
+        with force_locale(task.assignee.language or "ar"):
+            text = _("📋 مهمة جديدة: %(title)s", title=task.title)
+            if task.due_date:
+                text += "\n" + _("الموعد: %(date)s", date=task.due_date)
+        telegram_service.notify_user(task.assignee, text)
     return task
 
 

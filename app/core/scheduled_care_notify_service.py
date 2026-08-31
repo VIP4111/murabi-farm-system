@@ -11,6 +11,7 @@
 `INJECTION_GUIDE` (طريقة الحقن الاسترشادية) الموجودَين أصلاً بشاشة
 الصيدلية — نص عام ثابت، مو جرعة أو قرار خاص بهذا الرأس، بنفس مبدأ
 "المساعد قرار مو طبيب" المطبَّق بكل النظام."""
+from flask_babel import gettext as _, force_locale
 from app.core import telegram_service, email_service
 
 
@@ -48,12 +49,27 @@ def notify_new_care_tasks(tasks: list) -> None:
     ]
     if not users:
         return
-    lines = [f"- {t.title}{_vaccination_guidance(t)}" for t in tasks[:10]]
-    more = f"\n(+{len(tasks) - 10} أكثر)" if len(tasks) > 10 else ""
-    subject = f"🗓️ {len(tasks)} مهمة رعاية جديدة مستحقة"
-    text = subject + ":\n" + "\n".join(lines) + more
-    for user in users:
-        if user.telegram_chat_id:
-            telegram_service.notify_user(user, text)
-        if user.email:
-            email_service.notify_user(user, subject, text)
+    # بند إضافي (2026-08-31) — نفس فجوة "تعدد المستلمين بلغات مختلفة"
+    # المعالَجة بالتقرير اليومي. **ملاحظتان صادقتان تبقيان بعد هذا
+    # الإصلاح**: (1) `t.title` يبقى النص الخام المخزَّن بقاعدة البيانات
+    # عمداً — استبداله بـ`task_display_title()` جُرِّب وسبَّب فقداناً
+    # حقيقياً لمعلومة (مثلاً اسم اللقاح الفعلي بمهمة "تحصين مستحق" غير
+    # موجود بالحقول القابلة لإعادة البناء، بس مخزَّن بالعنوان الخام
+    # نفسه) — رصده اختبار حقيقي فشل، فرُجِع للعنوان الخام كما كان.
+    # (2) نص الإرشاد المرفق (`_vaccination_guidance` — فئة الدواء
+    # وطريقة الحقن) يبقى عربياً دايماً، لأن `medicine_class_guide_for`/
+    # `injection_guide_for` (health_service.py) يرجعان القاموس العربي
+    # فقط — فجوة فرعية منفصلة، تحتاج بند مستقل لو أردناها.
+    for lang in {u.language or "ar" for u in users}:
+        with force_locale(lang):
+            lines = [f"- {t.title}{_vaccination_guidance(t)}" for t in tasks[:10]]
+            more = _("\n(+%(n)s أكثر)", n=len(tasks) - 10) if len(tasks) > 10 else ""
+            subject = _("🗓️ %(n)s مهمة رعاية جديدة مستحقة", n=len(tasks))
+            text = subject + ":\n" + "\n".join(lines) + more
+        for user in users:
+            if (user.language or "ar") != lang:
+                continue
+            if user.telegram_chat_id:
+                telegram_service.notify_user(user, text)
+            if user.email:
+                email_service.notify_user(user, subject, text)

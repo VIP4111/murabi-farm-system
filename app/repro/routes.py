@@ -47,6 +47,7 @@ def _send_override_request(*, female_id, male_id, relation, reason, date_, male_
     `repro.override_close_relation` (صاحب الحلال افتراضياً): إشعار
     تيليجرام فيه رابط جاهز يفتح نفس الفورم معبّى، ومهمة متابعة بحسابه —
     نفس نمط إشعارات نقص المخزون (`stock_alert_service.py`)."""
+    from flask_babel import force_locale
     from app.models import User, Task
     from app.core import telegram_service
 
@@ -57,17 +58,23 @@ def _send_override_request(*, female_id, male_id, relation, reason, date_, male_
         male_note=male_note or "", barn_id=barn_id or "", notes=notes or "",
         confirm_relation="1", override_reason=reason, _external=True,
     )
-    message = (
-        f"⚠️ طلب تجاوز قرابة وراثية من {current_user.name}\n"
-        f"{female.animal_no if female else '-'} × {male.animal_no if male else '-'} "
-        f"({relation['label']} — {relation['relation_type']})\n"
-        f"السبب: {reason}\n"
-        f"للمراجعة والتأكيد: {link}"
-    )
-    for user in User.query.filter(User.is_active_account.is_(True)).all():
-        if not user.has_permission("repro.override_close_relation"):
-            continue
-        telegram_service.notify_user(user, message)
+    recipients = [
+        u for u in User.query.filter(User.is_active_account.is_(True)).all()
+        if u.has_permission("repro.override_close_relation")
+    ]
+    for lang in {u.language or "ar" for u in recipients}:
+        with force_locale(lang):
+            message = (
+                _("⚠️ طلب تجاوز قرابة وراثية من %(name)s", name=current_user.name) + "\n"
+                f"{female.animal_no if female else '-'} × {male.animal_no if male else '-'} "
+                f"({relation['label']} — {relation['relation_type']})\n"
+                + _("السبب: %(reason)s", reason=reason) + "\n"
+                + _("للمراجعة والتأكيد: %(link)s", link=link)
+            )
+        for user in recipients:
+            if (user.language or "ar") == lang:
+                telegram_service.notify_user(user, message)
+    for user in recipients:
         task = Task(
             title=f"طلب تجاوز قرابة وراثية — {female.animal_no if female else '-'} × {male.animal_no if male else '-'}",
             task_type="custom", status="pending", assignee_id=user.id,
