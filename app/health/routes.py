@@ -204,16 +204,34 @@ def pharmacy_prescription_image():
     return redirect(url_for("health.pharmacy_new", **prefill))
 
 
+def _resolve_pharmacy_quantity(form) -> tuple[int | None, float | None, float]:
+    """بند إضافي (2026-08-31) — طلبك الصريح: تسجيل الكمية بمصطلحات
+    العبوة (عدد العلب × كمية العلبة) بدل رقم إجمالي مجرَّد. لو الحقلان
+    متعبَّيان، `available_qty` تُحسب تلقائياً (عدد العلب × كمية العلبة)
+    — يتجاوز أي رقم كُتب مباشرة بحقل الكمية الإجمالية (JS بالواجهة
+    يزامنهم فعلياً، هذا تأكيد خادم احتياطي لو تعطّل الجافاسكربت). لو
+    أحد الحقلين فاضٍ، نرجع لسلوك الإدخال المباشر القديم بدون تغيير."""
+    box_count_raw = (form.get("box_count") or "").strip()
+    box_quantity_raw = (form.get("box_quantity") or "").strip()
+    box_count = int(box_count_raw) if box_count_raw else None
+    box_quantity = float(box_quantity_raw) if box_quantity_raw else None
+    if box_count is not None and box_quantity is not None:
+        return box_count, box_quantity, box_count * box_quantity
+    return box_count, box_quantity, float(form.get("available_qty") or 0)
+
+
 @health_bp.route("/pharmacy/new", methods=["GET", "POST"])
 @login_required
 @require_permission("pharmacy.manage")
 def pharmacy_new():
     if request.method == "POST":
+        box_count, box_quantity, available_qty = _resolve_pharmacy_quantity(request.form)
         item = Pharmacy(
             name=request.form["name"],
             medicine_class=request.form.get("medicine_class") or None,
             contains_high_copper=bool(request.form.get("contains_high_copper")),
-            available_qty=float(request.form.get("available_qty") or 0),
+            box_count=box_count, box_quantity=box_quantity,
+            available_qty=available_qty,
             min_stock_qty=float(request.form.get("min_stock_qty") or 0),
             unit=request.form.get("unit"),
             unit_price=float(request.form["unit_price"]) if request.form.get("unit_price") else None,
@@ -286,7 +304,7 @@ def pharmacy_edit(pharmacy_id):
         item.name = request.form["name"]
         item.medicine_class = request.form.get("medicine_class") or None
         item.contains_high_copper = bool(request.form.get("contains_high_copper"))
-        item.available_qty = float(request.form.get("available_qty") or 0)
+        item.box_count, item.box_quantity, item.available_qty = _resolve_pharmacy_quantity(request.form)
         item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
         item.unit = request.form.get("unit")
         item.unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None

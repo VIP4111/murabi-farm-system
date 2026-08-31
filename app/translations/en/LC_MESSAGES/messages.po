@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 07:12+0300\n"
+"POT-Creation-Date: 2026-08-31 07:28+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1911,7 +1911,7 @@ msgstr "Unknown bulk action"
 msgid "وزن جماعي: %(done)s من %(total)s تم تسجيلهم"
 msgstr "Bulk weighing: %(done)s of %(total)s were recorded"
 
-#: app/core/routes.py:497 app/health/routes.py:1118
+#: app/core/routes.py:497 app/health/routes.py:1136
 msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
 msgstr "You must select an actual vaccine registered in the pharmacy under the (vaccine) class"
 
@@ -3160,160 +3160,160 @@ msgstr "Note from the analysis: %(notes)s — review every field before saving."
 msgid "تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ."
 msgstr "The available data was extracted from the image — review and correct every field before you click save."
 
-#: app/health/routes.py:234
+#: app/health/routes.py:252
 msgid "تمت إضافة الدواء"
 msgstr "The medicine has been added"
 
-#: app/health/routes.py:304
+#: app/health/routes.py:322
 msgid "تم تحديث بيانات الدواء"
 msgstr "The medicine's data has been updated"
 
-#: app/health/routes.py:342
+#: app/health/routes.py:360
 msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."
 msgstr "You also need finance-management permission to record a purchase with a price (it creates a finance entry)."
 
-#: app/health/routes.py:357
+#: app/health/routes.py:375
 msgid "تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية."
 msgstr "The purchase was recorded in stock only — with no price, no finance entry was created."
 
-#: app/health/routes.py:359
+#: app/health/routes.py:377
 msgid "تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً"
 msgstr "The purchase has been recorded — stock increased and the finance entry was recorded together"
 
-#: app/health/routes.py:376
+#: app/health/routes.py:394
 msgid "اسم الطريقة مطلوب"
 msgstr "Method name is required"
 
-#: app/health/routes.py:379
+#: app/health/routes.py:397
 #, python-format
 msgid "\"%(name)s\" موجودة بالقائمة أصلاً"
 msgstr "\"%(name)s\" is already in the list"
 
-#: app/health/routes.py:383
+#: app/health/routes.py:401
 msgid "تمت إضافة طريقة الاستخدام"
 msgstr "The usage method has been added"
 
-#: app/health/routes.py:385 app/templates/health/pharmacy_form.html:70
+#: app/health/routes.py:403 app/templates/health/pharmacy_form.html:70
 msgid "إضافة طريقة استخدام جديدة"
 msgstr "Add a new usage method"
 
-#: app/health/routes.py:400
+#: app/health/routes.py:418
 msgid "اسم الدواء مطلوب"
 msgstr "Medicine name is required"
 
-#: app/health/routes.py:403
+#: app/health/routes.py:421
 #, python-format
 msgid "\"%(name)s\" موجود بالكتالوج أصلاً"
 msgstr "\"%(name)s\" is already in the catalog"
 
-#: app/health/routes.py:407
+#: app/health/routes.py:425
 msgid "تمت إضافة الدواء للكتالوج"
 msgstr "The medicine has been added to the catalog"
 
-#: app/health/routes.py:434 app/health/routes.py:471 app/team/routes.py:609
+#: app/health/routes.py:452 app/health/routes.py:489 app/team/routes.py:609
 #, python-format
 msgid "\"%(name)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(name)s\" is already in the list"
 
-#: app/health/routes.py:441
+#: app/health/routes.py:459
 msgid "تمت إضافة المرض للقائمة"
 msgstr "The disease has been added to the list"
 
-#: app/health/routes.py:468
+#: app/health/routes.py:486
 msgid "اسم العرض مطلوب"
 msgstr "Symptom name is required"
 
-#: app/health/routes.py:475
+#: app/health/routes.py:493
 msgid "تمت إضافة العرض"
 msgstr "The symptom has been added"
 
-#: app/health/routes.py:512
+#: app/health/routes.py:530
 msgid "لازم تختار عرض واحد على الأقل"
 msgstr "You must select at least one symptom"
 
-#: app/health/routes.py:537
+#: app/health/routes.py:555
 #, python-format
 msgid "تم — %(created)s رابط جديد و%(updated)s تحديث لمرض %(name)s"
 msgstr "Done — %(created)s new link(s) and %(updated)s update(s) for %(name)s"
 
-#: app/health/routes.py:555
+#: app/health/routes.py:573
 msgid "لازم تختار عرض"
 msgstr "You must select a symptom"
 
-#: app/health/routes.py:558
+#: app/health/routes.py:576
 msgid "هذا العرض مربوط بهذا المرض أصلاً"
 msgstr "This symptom is already linked to this disease"
 
-#: app/health/routes.py:572
+#: app/health/routes.py:590
 msgid "تمت إضافة الرابط"
 msgstr "The link has been added"
 
-#: app/health/routes.py:588
+#: app/health/routes.py:606
 msgid "تم تحديث الرابط"
 msgstr "The link has been updated"
 
-#: app/health/routes.py:602
+#: app/health/routes.py:620
 msgid "تم حذف الرابط"
 msgstr "The link has been deleted"
 
-#: app/health/routes.py:634
+#: app/health/routes.py:652
 msgid "لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية"
 msgstr "You must select the symptom and write the differential diagnosis and recommendation"
 
-#: app/health/routes.py:637
+#: app/health/routes.py:655
 msgid "هذا العرض مسجَّل بقائمة الطوارئ أصلاً"
 msgstr "This symptom is already registered in the emergency list"
 
-#: app/health/routes.py:647
+#: app/health/routes.py:665
 msgid "تمت إضافة عرض الطوارئ"
 msgstr "The emergency symptom has been added"
 
-#: app/health/routes.py:660
+#: app/health/routes.py:678
 msgid "تم حذف عرض الطوارئ"
 msgstr "The emergency symptom has been deleted"
 
-#: app/health/routes.py:690
+#: app/health/routes.py:708
 msgid "تمت إضافة الطبيب"
 msgstr "The doctor has been added"
 
-#: app/health/routes.py:737
+#: app/health/routes.py:755
 msgid "تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
 msgstr "The visit has been recorded (cost was calculated automatically from the unit price, if the medicine requires it)"
 
-#: app/health/routes.py:808
+#: app/health/routes.py:826
 msgid "تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
 msgstr "The medical case has been recorded (cost was calculated automatically from the unit price, if the medicine requires it)"
 
-#: app/health/routes.py:949
+#: app/health/routes.py:967
 msgid "تم إغلاق السجل المرضي"
 msgstr "The medical record has been closed"
 
-#: app/health/routes.py:992
+#: app/health/routes.py:1010
 msgid "تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
 msgstr "The vaccination has been recorded (cost was calculated automatically from the unit price, if the medicine requires it)"
 
-#: app/health/routes.py:1056
+#: app/health/routes.py:1074
 msgid "تم إنشاء البروتوكول"
 msgstr "The protocol has been created"
 
-#: app/health/routes.py:1078
+#: app/health/routes.py:1096
 #, python-format
 msgid "تم تطبيق البروتوكول \"%(name)s\" — تولّدت %(n)s مهمة علاج مخطَّطة بانتظار مراجعة الدكتور."
 msgstr "Protocol \"%(name)s\" applied — %(n)s planned treatment task(s) were generated, pending the doctor's review."
 
-#: app/health/routes.py:1137
+#: app/health/routes.py:1155
 msgid "تمت جدولة التحصين"
 msgstr "The vaccination has been scheduled"
 
-#: app/health/routes.py:1162
+#: app/health/routes.py:1180
 msgid "تم إلغاء الجدولة"
 msgstr "The schedule has been cancelled"
 
-#: app/health/routes.py:1178
+#: app/health/routes.py:1196
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "The schedule has been marked as completed"
 
-#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:123
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:135
 #, python-format
 msgid "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" (%(available)s) — حدّث المخزون أولاً أو قلّل الكمية."
 msgstr "The requested quantity (%(qty)s) is greater than what is actually available of \"%(name)s\" (%(available)s) — update the stock first or reduce the quantity."
@@ -3649,7 +3649,7 @@ msgstr "Suggested purchase quantity"
 
 #: app/reports/report_service.py:478 app/templates/equipment/item_form.html:12
 #: app/templates/feed/item_form.html:29
-#: app/templates/health/pharmacy_form.html:128
+#: app/templates/health/pharmacy_form.html:127
 msgid "الوحدة"
 msgstr "Unit"
 
@@ -4508,7 +4508,7 @@ msgstr "Milk"
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
 #: app/templates/health/disease_types_list.html:23
-#: app/templates/health/pharmacy_form.html:138
+#: app/templates/health/pharmacy_form.html:147
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/isolation_exit_form.html:25
@@ -4674,7 +4674,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:12
 #: app/templates/health/doctor_form.html:17
-#: app/templates/health/pharmacy_form.html:139
+#: app/templates/health/pharmacy_form.html:148
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/ostrich/egg_form.html:25
@@ -8236,12 +8236,12 @@ msgstr "Currently available quantity"
 
 #: app/templates/equipment/item_form.html:14
 #: app/templates/feed/item_form.html:38
-#: app/templates/health/pharmacy_form.html:129
+#: app/templates/health/pharmacy_form.html:138
 msgid "الحد الأدنى للتنبيه"
 msgstr "Minimum stock alert threshold"
 
 #: app/templates/equipment/item_form.html:15
-#: app/templates/health/pharmacy_form.html:131
+#: app/templates/health/pharmacy_form.html:140
 #: app/templates/health/pharmacy_purchase_form.html:18
 msgid "سعر الوحدة (اختياري)"
 msgstr "Unit price (optional)"
@@ -8857,7 +8857,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr "Contains high copper (salt blocks/mineral supplements)"
 
 #: app/templates/feed/item_form.html:23
-#: app/templates/health/pharmacy_form.html:136
+#: app/templates/health/pharmacy_form.html:145
 msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
 msgstr "Enables an explicit programmatic block on its use for any Naeemi-breed animal (item 51) — no override option."
 
@@ -8902,7 +8902,6 @@ msgid "مفيد للوحدات اللي وزنها مو ثابت (ربطة، ك�
 msgstr "Useful for units whose weight isn't fixed (bale, bag) — a reference for you only, not used in any automatic calculation."
 
 #: app/templates/feed/item_form.html:37
-#: app/templates/health/pharmacy_form.html:127
 msgid "الكمية المتوفرة"
 msgstr "Available quantity"
 
@@ -8924,7 +8923,7 @@ msgid "نفاد متوقع"
 msgstr "Expected stockout"
 
 #: app/templates/feed/items_list.html:16
-#: app/templates/health/pharmacy_form.html:135
+#: app/templates/health/pharmacy_form.html:144
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "Contains high copper"
@@ -8935,7 +8934,7 @@ msgstr "kg/"
 
 #: app/templates/feed/items_list.html:27
 #: app/templates/health/disease_form.html:37
-#: app/templates/health/pharmacy_form.html:170
+#: app/templates/health/pharmacy_form.html:216
 #: app/templates/health/pharmacy_list.html:20
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:21
@@ -10481,19 +10480,19 @@ msgstr "You write the dose for each age range yourself once — the system then 
 
 #: app/templates/health/pharmacy_form.html:112
 #: app/templates/health/pharmacy_form.html:118
-#: app/templates/health/pharmacy_form.html:147
+#: app/templates/health/pharmacy_form.html:193
 msgid "من عمر (يوم)"
 msgstr "From age (days)"
 
 #: app/templates/health/pharmacy_form.html:113
 #: app/templates/health/pharmacy_form.html:119
-#: app/templates/health/pharmacy_form.html:148
+#: app/templates/health/pharmacy_form.html:194
 msgid "إلى عمر (يوم)"
 msgstr "To age (days)"
 
 #: app/templates/health/pharmacy_form.html:114
 #: app/templates/health/pharmacy_form.html:120
-#: app/templates/health/pharmacy_form.html:149
+#: app/templates/health/pharmacy_form.html:195
 msgid "الجرعة (مل)"
 msgstr "Dose (ml)"
 
@@ -10505,39 +10504,60 @@ msgstr "Add another age range"
 msgid "المخزون والسعر"
 msgstr "Stock and price"
 
-#: app/templates/health/pharmacy_form.html:128
+#: app/templates/health/pharmacy_form.html:127
 msgid "مل / حبة / علبة"
 msgstr "ml / tablet / box"
 
-#: app/templates/health/pharmacy_form.html:130
+#: app/templates/health/pharmacy_form.html:129
+msgid "عدد العلب (اختياري)"
+msgstr "Number of boxes (optional)"
+
+#: app/templates/health/pharmacy_form.html:131
+msgid "كمية العلبة الواحدة (اختياري)"
+msgstr "Quantity per box (optional)"
+
+#: app/templates/health/pharmacy_form.html:133
+msgid "لو عبّيت الحقلين، الكمية الإجمالية تُحسب تلقائياً (عدد العلب × كمية العلبة) — اتركهما فاضيين لو تبي تكتب الإجمالي مباشرة."
+msgstr "If you fill in both fields, the total quantity is calculated automatically (number of boxes × quantity per box) — leave them empty if you'd rather enter the total directly."
+
+#: app/templates/health/pharmacy_form.html:135
+msgid "الكمية المتوفرة (الإجمالي)"
+msgstr "Available quantity (total)"
+
+#: app/templates/health/pharmacy_form.html:139
 msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
 msgstr "Any medicine whose stock reaches this threshold or lower automatically appears in the \"Pharmacy shortages\" list — the same required purchases list."
 
-#: app/templates/health/pharmacy_form.html:131
+#: app/templates/health/pharmacy_form.html:140
 msgid "مثال: 2.5"
 msgstr "Example: 2.5"
 
-#: app/templates/health/pharmacy_form.html:132
+#: app/templates/health/pharmacy_form.html:141
 msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
 msgstr "The basis for automatically calculating treatment cost (quantity used × this price) on the visit/disease/vaccination screens — without it, cost stays manually entered as before."
 
-#: app/templates/health/pharmacy_form.html:134
+#: app/templates/health/pharmacy_form.html:143
 msgid "أمان إضافي وملاحظات"
 msgstr "Additional safety and notes"
 
-#: app/templates/health/pharmacy_form.html:167
+#: app/templates/health/pharmacy_form.html:163
+#, python-brace-format
+msgid "= {count} × {qty} {unit}"
+msgstr "= {count} × {qty} {unit}"
+
+#: app/templates/health/pharmacy_form.html:213
 msgid "منتهي الصلاحية منذ"
 msgstr "Expired since"
 
-#: app/templates/health/pharmacy_form.html:168
+#: app/templates/health/pharmacy_form.html:214
 msgid "ينتهي خلال"
 msgstr "Expires within"
 
-#: app/templates/health/pharmacy_form.html:169
+#: app/templates/health/pharmacy_form.html:215
 msgid "متبقي"
 msgstr "Remaining"
 
-#: app/templates/health/pharmacy_form.html:194
+#: app/templates/health/pharmacy_form.html:240
 msgid "اختر فئة الدواء أولاً لعرض دليلها."
 msgstr "Choose a medicine class first to view its guide."
 

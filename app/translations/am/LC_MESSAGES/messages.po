@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 07:12+0300\n"
+"POT-Creation-Date: 2026-08-31 07:28+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1911,7 +1911,7 @@ msgstr "ያልታወቀ የጅምላ እርምጃ"
 msgid "وزن جماعي: %(done)s من %(total)s تم تسجيلهم"
 msgstr "የጅምላ ክብደት፡ ከ%(total)s ውስጥ %(done)s ተመዝግበዋል"
 
-#: app/core/routes.py:497 app/health/routes.py:1118
+#: app/core/routes.py:497 app/health/routes.py:1136
 msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
 msgstr "በፋርማሲው ውስጥ በ(ክትባት) ምድብ ውስጥ የተመዘገበ ትክክለኛ ክትባት መምረጥ አለብዎት"
 
@@ -3160,160 +3160,160 @@ msgstr "ከትንተናው የተገኘ ማስታወሻ: %(notes)s — ከማስ
 msgid "تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ."
 msgstr "ከምስሉ ያለው መረጃ ተወስዷል — 'አስቀምጥ' ከመጫንዎ በፊት እያንዳንዱን መስክ ይገምግሙ እና ያስተካክሉ።"
 
-#: app/health/routes.py:234
+#: app/health/routes.py:252
 msgid "تمت إضافة الدواء"
 msgstr "መድሃኒቱ ታክሏል"
 
-#: app/health/routes.py:304
+#: app/health/routes.py:322
 msgid "تم تحديث بيانات الدواء"
 msgstr "የመድሃኒት መረጃ ተዘምኗል"
 
-#: app/health/routes.py:342
+#: app/health/routes.py:360
 msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."
 msgstr "በዋጋ ግዢ ለመመዝገብ (የገንዘብ ግብይት ስለሚፈጥር) የገንዘብ አስተዳደር ፈቃድም ያስፈልግዎታል።"
 
-#: app/health/routes.py:357
+#: app/health/routes.py:375
 msgid "تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية."
 msgstr "ግዢው በክምችት ውስጥ ብቻ ተመዝግቧል — ያለ ዋጋ፣ ምንም የገንዘብ ግብይት አልተመዘገበም።"
 
-#: app/health/routes.py:359
+#: app/health/routes.py:377
 msgid "تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً"
 msgstr "ግዢው ተመዝግቧል — ክምችቱ ጨምሯል እና የገንዘብ ግብይቱ አብሮ ተመዝግቧል"
 
-#: app/health/routes.py:376
+#: app/health/routes.py:394
 msgid "اسم الطريقة مطلوب"
 msgstr "የዘዴ ስም ያስፈልጋል"
 
-#: app/health/routes.py:379
+#: app/health/routes.py:397
 #, python-format
 msgid "\"%(name)s\" موجودة بالقائمة أصلاً"
 msgstr "\"%(name)s\" አስቀድሞ በዝርዝሩ ውስጥ አለ"
 
-#: app/health/routes.py:383
+#: app/health/routes.py:401
 msgid "تمت إضافة طريقة الاستخدام"
 msgstr "የአጠቃቀም ዘዴው ታክሏል"
 
-#: app/health/routes.py:385 app/templates/health/pharmacy_form.html:70
+#: app/health/routes.py:403 app/templates/health/pharmacy_form.html:70
 msgid "إضافة طريقة استخدام جديدة"
 msgstr "አዲስ የአጠቃቀም ዘዴ ያክሉ"
 
-#: app/health/routes.py:400
+#: app/health/routes.py:418
 msgid "اسم الدواء مطلوب"
 msgstr "የመድሃኒት ስም ያስፈልጋል"
 
-#: app/health/routes.py:403
+#: app/health/routes.py:421
 #, python-format
 msgid "\"%(name)s\" موجود بالكتالوج أصلاً"
 msgstr "\"%(name)s\" አስቀድሞ በካታሎጉ ውስጥ አለ"
 
-#: app/health/routes.py:407
+#: app/health/routes.py:425
 msgid "تمت إضافة الدواء للكتالوج"
 msgstr "መድሃኒቱ ወደ ካታሎግ ታክሏል"
 
-#: app/health/routes.py:434 app/health/routes.py:471 app/team/routes.py:609
+#: app/health/routes.py:452 app/health/routes.py:489 app/team/routes.py:609
 #, python-format
 msgid "\"%(name)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(name)s\" አስቀድሞ በዝርዝሩ ውስጥ አለ"
 
-#: app/health/routes.py:441
+#: app/health/routes.py:459
 msgid "تمت إضافة المرض للقائمة"
 msgstr "በሽታው ወደ ዝርዝሩ ታክሏል"
 
-#: app/health/routes.py:468
+#: app/health/routes.py:486
 msgid "اسم العرض مطلوب"
 msgstr "የምልክት ስም ያስፈልጋል"
 
-#: app/health/routes.py:475
+#: app/health/routes.py:493
 msgid "تمت إضافة العرض"
 msgstr "ምልክቱ ታክሏል"
 
-#: app/health/routes.py:512
+#: app/health/routes.py:530
 msgid "لازم تختار عرض واحد على الأقل"
 msgstr "ቢያንስ አንድ ምልክት መምረጥ አለብዎት"
 
-#: app/health/routes.py:537
+#: app/health/routes.py:555
 #, python-format
 msgid "تم — %(created)s رابط جديد و%(updated)s تحديث لمرض %(name)s"
 msgstr "ተጠናቋል — %(created)s አዲስ አገናኝ(ዎች) እና %(updated)s ማዘመኛ(ዎች) ለ%(name)s"
 
-#: app/health/routes.py:555
+#: app/health/routes.py:573
 msgid "لازم تختار عرض"
 msgstr "ምልክት መምረጥ አለብዎት"
 
-#: app/health/routes.py:558
+#: app/health/routes.py:576
 msgid "هذا العرض مربوط بهذا المرض أصلاً"
 msgstr "ይህ ምልክት ቀድሞውኑ ከዚህ በሽታ ጋር ተያይዟል"
 
-#: app/health/routes.py:572
+#: app/health/routes.py:590
 msgid "تمت إضافة الرابط"
 msgstr "አገናኙ ታክሏል"
 
-#: app/health/routes.py:588
+#: app/health/routes.py:606
 msgid "تم تحديث الرابط"
 msgstr "አገናኙ ተዘምኗል"
 
-#: app/health/routes.py:602
+#: app/health/routes.py:620
 msgid "تم حذف الرابط"
 msgstr "አገናኙ ተሰርዟል"
 
-#: app/health/routes.py:634
+#: app/health/routes.py:652
 msgid "لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية"
 msgstr "ምልክቱን መምረጥ እና ልዩነት ምርመራውን እና ምክሩን መጻፍ አለብዎት"
 
-#: app/health/routes.py:637
+#: app/health/routes.py:655
 msgid "هذا العرض مسجَّل بقائمة الطوارئ أصلاً"
 msgstr "ይህ ምልክት ቀድሞውኑ በአስቸኳይ ዝርዝር ውስጥ ተመዝግቧል"
 
-#: app/health/routes.py:647
+#: app/health/routes.py:665
 msgid "تمت إضافة عرض الطوارئ"
 msgstr "የአስቸኳይ ምልክቱ ታክሏል"
 
-#: app/health/routes.py:660
+#: app/health/routes.py:678
 msgid "تم حذف عرض الطوارئ"
 msgstr "የአስቸኳይ ምልክቱ ተሰርዟል"
 
-#: app/health/routes.py:690
+#: app/health/routes.py:708
 msgid "تمت إضافة الطبيب"
 msgstr "ሐኪሙ ታክሏል"
 
-#: app/health/routes.py:737
+#: app/health/routes.py:755
 msgid "تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
 msgstr "ጉብኝቱ ተመዝግቧል (መድሃኒቱ የሚያስፈልገው ከሆነ ወጪው ከዩኒት ዋጋ በራስ-ሰር ተሰልቷል)"
 
-#: app/health/routes.py:808
+#: app/health/routes.py:826
 msgid "تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
 msgstr "የበሽታ ጉዳዩ ተመዝግቧል (መድሃኒቱ የሚያስፈልገው ከሆነ ወጪው ከዩኒት ዋጋ በራስ-ሰር ተሰልቷል)"
 
-#: app/health/routes.py:949
+#: app/health/routes.py:967
 msgid "تم إغلاق السجل المرضي"
 msgstr "የበሽታ መዝገብ ተዘግቷል"
 
-#: app/health/routes.py:992
+#: app/health/routes.py:1010
 msgid "تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء يتطلبها)"
 msgstr "ክትባቱ ተመዝግቧል (መድሃኒቱ የሚያስፈልገው ከሆነ ወጪው ከዩኒት ዋጋ በራስ-ሰር ተሰልቷል)"
 
-#: app/health/routes.py:1056
+#: app/health/routes.py:1074
 msgid "تم إنشاء البروتوكول"
 msgstr "ፕሮቶኮሉ ተፈጥሯል"
 
-#: app/health/routes.py:1078
+#: app/health/routes.py:1096
 #, python-format
 msgid "تم تطبيق البروتوكول \"%(name)s\" — تولّدت %(n)s مهمة علاج مخطَّطة بانتظار مراجعة الدكتور."
 msgstr "ፕሮቶኮል \"%(name)s\" ተግባራዊ ሆኗል — %(n)s የታቀዱ የሕክምና ተግባራት ተፈጥረዋል፣ የዶክተር ግምገማ በመጠባበቅ ላይ።"
 
-#: app/health/routes.py:1137
+#: app/health/routes.py:1155
 msgid "تمت جدولة التحصين"
 msgstr "ክትባቱ ተመድቧል"
 
-#: app/health/routes.py:1162
+#: app/health/routes.py:1180
 msgid "تم إلغاء الجدولة"
 msgstr "መርሃ ግብሩ ተሰርዟል"
 
-#: app/health/routes.py:1178
+#: app/health/routes.py:1196
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "መርሃ ግብሩ እንደተጠናቀቀ ተምልክቷል"
 
-#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:123
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:135
 #, python-format
 msgid "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" (%(available)s) — حدّث المخزون أولاً أو قلّل الكمية."
 msgstr "የተጠየቀው መጠን (%(qty)s) ከ\"%(name)s\" ላይ ካለው ትክክለኛ ክምችት (%(available)s) ይበልጣል — መጀመሪያ ክምችቱን ያድሱ ወይም መጠኑን ይቀንሱ።"
@@ -3649,7 +3649,7 @@ msgstr "የቀረበ የግዢ መጠን"
 
 #: app/reports/report_service.py:478 app/templates/equipment/item_form.html:12
 #: app/templates/feed/item_form.html:29
-#: app/templates/health/pharmacy_form.html:128
+#: app/templates/health/pharmacy_form.html:127
 msgid "الوحدة"
 msgstr "አሃድ"
 
@@ -4508,7 +4508,7 @@ msgstr "ወተት"
 #: app/templates/feed/ration_form.html:30
 #: app/templates/finance/lot_form.html:26
 #: app/templates/health/disease_types_list.html:23
-#: app/templates/health/pharmacy_form.html:138
+#: app/templates/health/pharmacy_form.html:147
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vet_visit_form.html:33
 #: app/templates/isolation_exit_form.html:25
@@ -4674,7 +4674,7 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:12
 #: app/templates/health/doctor_form.html:17
-#: app/templates/health/pharmacy_form.html:139
+#: app/templates/health/pharmacy_form.html:148
 #: app/templates/health/vaccination_form.html:29
 #: app/templates/health/vet_visit_form.html:34
 #: app/templates/ostrich/egg_form.html:25
@@ -8236,12 +8236,12 @@ msgstr "በአሁኑ ጊዜ ያለ መጠን"
 
 #: app/templates/equipment/item_form.html:14
 #: app/templates/feed/item_form.html:38
-#: app/templates/health/pharmacy_form.html:129
+#: app/templates/health/pharmacy_form.html:138
 msgid "الحد الأدنى للتنبيه"
 msgstr "ዝቅተኛ የማስጠንቀቂያ ገደብ"
 
 #: app/templates/equipment/item_form.html:15
-#: app/templates/health/pharmacy_form.html:131
+#: app/templates/health/pharmacy_form.html:140
 #: app/templates/health/pharmacy_purchase_form.html:18
 msgid "سعر الوحدة (اختياري)"
 msgstr "የአሃድ ዋጋ (አማራጭ)"
@@ -8857,7 +8857,7 @@ msgid "يحتوي نحاساً مرتفعاً (قوالب أملاح/إضافا�
 msgstr "ከፍተኛ መዳብ ይዟል (የጨው ብሎኮች/ማዕድን ተጨማሪዎች)"
 
 #: app/templates/feed/item_form.html:23
-#: app/templates/health/pharmacy_form.html:136
+#: app/templates/health/pharmacy_form.html:145
 msgid "يفعّل حظراً برمجياً صريحاً على استخدامه لأي رأس سلالته \"نعيمي\" (بند إضافي 51) — بلا خيار تجاوز."
 msgstr "ለ\"ነዒሚ\" ዝርያ ለሆነ ማንኛውም እንስሳ አጠቃቀሙ ላይ ግልጽ የፕሮግራም እገዳ ያንቀሳቅሳል (ንጥል 51) — የመተላለፍ አማራጭ የለም።"
 
@@ -8902,7 +8902,6 @@ msgid "مفيد للوحدات اللي وزنها مو ثابت (ربطة، ك�
 msgstr "ክብደታቸው ቋሚ ላልሆኑ ክፍሎች (እሽግ፣ ከረጢት) ጠቃሚ — ለእርስዎ ማጣቀሻ ብቻ፣ በራስ-ሰር ስሌት ውስጥ አይካተትም።"
 
 #: app/templates/feed/item_form.html:37
-#: app/templates/health/pharmacy_form.html:127
 msgid "الكمية المتوفرة"
 msgstr "ያለ መጠን"
 
@@ -8924,7 +8923,7 @@ msgid "نفاد متوقع"
 msgstr "የሚጠበቅ ማለቅ"
 
 #: app/templates/feed/items_list.html:16
-#: app/templates/health/pharmacy_form.html:135
+#: app/templates/health/pharmacy_form.html:144
 #: app/templates/health/pharmacy_list.html:16
 msgid "يحتوي نحاساً مرتفعاً"
 msgstr "ከፍተኛ መዳብ ይዟል"
@@ -8935,7 +8934,7 @@ msgstr "ኪግ/"
 
 #: app/templates/feed/items_list.html:27
 #: app/templates/health/disease_form.html:37
-#: app/templates/health/pharmacy_form.html:170
+#: app/templates/health/pharmacy_form.html:216
 #: app/templates/health/pharmacy_list.html:20
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:21
@@ -10481,19 +10480,19 @@ msgstr "እርስዎ ራስዎ አንድ ጊዜ ለእያንዳንዱ የዕድ�
 
 #: app/templates/health/pharmacy_form.html:112
 #: app/templates/health/pharmacy_form.html:118
-#: app/templates/health/pharmacy_form.html:147
+#: app/templates/health/pharmacy_form.html:193
 msgid "من عمر (يوم)"
 msgstr "ከዕድሜ (ቀናት)"
 
 #: app/templates/health/pharmacy_form.html:113
 #: app/templates/health/pharmacy_form.html:119
-#: app/templates/health/pharmacy_form.html:148
+#: app/templates/health/pharmacy_form.html:194
 msgid "إلى عمر (يوم)"
 msgstr "እስከ ዕድሜ (ቀናት)"
 
 #: app/templates/health/pharmacy_form.html:114
 #: app/templates/health/pharmacy_form.html:120
-#: app/templates/health/pharmacy_form.html:149
+#: app/templates/health/pharmacy_form.html:195
 msgid "الجرعة (مل)"
 msgstr "መጠን (ሚሊ)"
 
@@ -10505,39 +10504,60 @@ msgstr "ሌላ የዕድሜ ክልል ያክሉ"
 msgid "المخزون والسعر"
 msgstr "ክምችት እና ዋጋ"
 
-#: app/templates/health/pharmacy_form.html:128
+#: app/templates/health/pharmacy_form.html:127
 msgid "مل / حبة / علبة"
 msgstr "ሚሊ / ኪኒን / ሳጥን"
 
-#: app/templates/health/pharmacy_form.html:130
+#: app/templates/health/pharmacy_form.html:129
+msgid "عدد العلب (اختياري)"
+msgstr "የሳጥኖች ብዛት (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:131
+msgid "كمية العلبة الواحدة (اختياري)"
+msgstr "የአንድ ሳጥን መጠን (አማራጭ)"
+
+#: app/templates/health/pharmacy_form.html:133
+msgid "لو عبّيت الحقلين، الكمية الإجمالية تُحسب تلقائياً (عدد العلب × كمية العلبة) — اتركهما فاضيين لو تبي تكتب الإجمالي مباشرة."
+msgstr "ሁለቱንም መስኮች ከሞሉ፣ አጠቃላይ መጠኑ በራስ-ሰር ይሰላል (የሳጥኖች ብዛት × የሳጥን መጠን) — በቀጥታ ጠቅላላውን መጻፍ ከፈለጉ ባዶ ይተውዋቸው።"
+
+#: app/templates/health/pharmacy_form.html:135
+msgid "الكمية المتوفرة (الإجمالي)"
+msgstr "ያለው መጠን (ጠቅላላ)"
+
+#: app/templates/health/pharmacy_form.html:139
 msgid "أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة \"نواقص الصيدلية\" — نفس قائمة المشتريات المطلوبة."
 msgstr "ክምችቱ ወደዚህ ገደብ ወይም ከዚያ በታች የደረሰ ማንኛውም መድሃኒት በራስ-ሰር በ\"የፋርማሲ እጥረቶች\" ዝርዝር ውስጥ ይታያል — ተመሳሳይ የሚያስፈልግ ግዢ ዝርዝር።"
 
-#: app/templates/health/pharmacy_form.html:131
+#: app/templates/health/pharmacy_form.html:140
 msgid "مثال: 2.5"
 msgstr "ምሳሌ: 2.5"
 
-#: app/templates/health/pharmacy_form.html:132
+#: app/templates/health/pharmacy_form.html:141
 msgid "أساس حساب تكلفة العلاج تلقائياً (الكمية المستخدمة × هذا السعر) بشاشات الزيارة/المرض/التطعيم — بدونه تبقى التكلفة تُدخَل يدوياً كالسابق."
 msgstr "በጉብኝት/በሽታ/ክትባት ገጾች ላይ የሕክምና ወጪን በራስ-ሰር ለማስላት መሠረት (የተጠቀሙት መጠን × ይህ ዋጋ) — ያለ እሱ ወጪው እንደበፊቱ በእጅ ይገባል።"
 
-#: app/templates/health/pharmacy_form.html:134
+#: app/templates/health/pharmacy_form.html:143
 msgid "أمان إضافي وملاحظات"
 msgstr "ተጨማሪ ደህንነት እና ማስታወሻዎች"
 
-#: app/templates/health/pharmacy_form.html:167
+#: app/templates/health/pharmacy_form.html:163
+#, python-brace-format
+msgid "= {count} × {qty} {unit}"
+msgstr "= {count} × {qty} {unit}"
+
+#: app/templates/health/pharmacy_form.html:213
 msgid "منتهي الصلاحية منذ"
 msgstr "ካለፈ ጀምሮ"
 
-#: app/templates/health/pharmacy_form.html:168
+#: app/templates/health/pharmacy_form.html:214
 msgid "ينتهي خلال"
 msgstr "በዚህ ጊዜ ውስጥ ያበቃል"
 
-#: app/templates/health/pharmacy_form.html:169
+#: app/templates/health/pharmacy_form.html:215
 msgid "متبقي"
 msgstr "የቀረ"
 
-#: app/templates/health/pharmacy_form.html:194
+#: app/templates/health/pharmacy_form.html:240
 msgid "اختر فئة الدواء أولاً لعرض دليلها."
 msgstr "መመሪያውን ለማየት መጀመሪያ የመድሃኒት ክፍል ይምረጡ።"
 

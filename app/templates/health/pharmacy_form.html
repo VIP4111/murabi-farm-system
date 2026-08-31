@@ -124,8 +124,17 @@
     </div>
 
     <div class="form-section-title">{{ _('المخزون والسعر') }}</div>
-    <label>{{ _('الكمية المتوفرة') }}</label><input name="available_qty" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
-    <label>{{ _('الوحدة') }}</label><input name="unit" placeholder="{{ _('مل / حبة / علبة') }}" value="{{ item.unit if item else '' }}">
+    <label>{{ _('الوحدة') }}</label><input name="unit" id="unitInput" placeholder="{{ _('مل / حبة / علبة') }}" value="{{ item.unit if item else '' }}">
+
+    <label>{{ _('عدد العلب (اختياري)') }}</label>
+    <input name="box_count" id="boxCountInput" type="number" step="1" min="0" value="{{ item.box_count if item and item.box_count is not none else '' }}">
+    <label>{{ _('كمية العلبة الواحدة (اختياري)') }}</label>
+    <input name="box_quantity" id="boxQuantityInput" type="number" step="0.01" min="0" value="{{ item.box_quantity if item and item.box_quantity is not none else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('لو عبّيت الحقلين، الكمية الإجمالية تُحسب تلقائياً (عدد العلب × كمية العلبة) — اتركهما فاضيين لو تبي تكتب الإجمالي مباشرة.') }}</p>
+
+    <label>{{ _('الكمية المتوفرة (الإجمالي)') }}</label>
+    <input name="available_qty" id="availableQtyInput" type="number" step="0.01" value="{{ item.available_qty if item else 0 }}">
+    <p id="boxCalcHint" style="color:var(--muted); font-size:12px; margin:-6px 0 10px;"></p>
     <label>{{ _('الحد الأدنى للتنبيه') }}</label><input name="min_stock_qty" type="number" step="0.01" value="{{ item.min_stock_qty if item else 0 }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('أي دواء يوصل مخزونه لهذا الحد أو أقل يظهر تلقائياً بقائمة "نواقص الصيدلية" — نفس قائمة المشتريات المطلوبة.') }}</p>
     <label>{{ _('سعر الوحدة (اختياري)') }}</label><input name="unit_price" type="number" step="0.01" placeholder="{{ _('مثال: 2.5') }}" value="{{ item.unit_price if item and item.unit_price is not none else '' }}">
@@ -139,6 +148,43 @@
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>
+<script>
+(function(){
+  // حساب الكمية الإجمالية تلقائياً من عدد العلب × كمية العلبة (بند
+  // إضافي، طلبك الصريح) — يعمل فقط لو الحقلان متعبَّيان معاً؛ لو أحدهما
+  // فاضٍ، حقل "الكمية المتوفرة" يرجع قابلاً للتعديل يدوياً كالسابق.
+  var boxCount = document.getElementById('boxCountInput');
+  var boxQty = document.getElementById('boxQuantityInput');
+  var totalQty = document.getElementById('availableQtyInput');
+  var hint = document.getElementById('boxCalcHint');
+  var unitInput = document.getElementById('unitInput');
+  if (!boxCount || !boxQty || !totalQty) { /* عناصر الصفحة غير متوقَّعة */ }
+  else {
+    var CALC_HINT = {{ _('= {count} × {qty} {unit}')|tojson }};
+    function recalc(){
+      var c = parseFloat(boxCount.value);
+      var q = parseFloat(boxQty.value);
+      if (!isNaN(c) && !isNaN(q) && c >= 0 && q >= 0) {
+        var total = c * q;
+        totalQty.value = total;
+        totalQty.readOnly = true;
+        totalQty.style.background = 'var(--bg)';
+        hint.textContent = CALC_HINT
+          .replace('{count}', c).replace('{qty}', q)
+          .replace('{unit}', unitInput ? (unitInput.value || '') : '');
+      } else {
+        totalQty.readOnly = false;
+        totalQty.style.background = '';
+        hint.textContent = '';
+      }
+    }
+    boxCount.addEventListener('input', recalc);
+    boxQty.addEventListener('input', recalc);
+    if (unitInput) unitInput.addEventListener('input', recalc);
+    recalc();
+  }
+})();
+</script>
 <script>
 (function(){
   var btn = document.getElementById('addDoseRowBtn');
