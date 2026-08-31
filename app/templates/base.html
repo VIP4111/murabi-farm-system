@@ -344,6 +344,48 @@
     }
     .file-input-name{color:var(--muted); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
+    /* تقويم مخصَّص بالكامل بدل حقل input[type=date] الأصلي (بند إضافي
+       2026-08-31، طلبك المباشر بصورة شاشة حقيقية: التقويم المنبثق
+       الأصلي بآيباد كان يطلع بأرقام عربية (١٢٣) واسم شهر عربي حتى
+       بحساب إنجليزي بالكامل — سلوك نظام تشغيل الجهاز نفسه (Safari)،
+       ما نقدر نتحكم فيه عبر lang الصفحة، ولا يوجد حل نصي بسيط زي زر
+       "Choose File". الحل الوحيد الفعلي: تقويم JS كامل مبني بالتطبيق،
+       صفر اعتماد على أي عنصر تقويم من المتصفح/النظام — أرقام لاتينية
+       دائماً، بدون اسم شهر منطوق إطلاقاً (رقم شهر/سنة بالهيدر بس، حسب
+       طلبك الصريح). الحقل الأصلي input[type=date] يبقى موجوداً بالـDOM
+       (مخفي) يحمل القيمة الفعلية اللي يُرسَل بها الفورم — صفر تغيير
+       على أي منطق حفظ/تحقّق موجود بأي مكان بالمشروع. */
+    .date-input-wrap{position:relative; display:block; width:100%; margin-bottom:10px;}
+    .date-input-wrap input[type="date"]{position:absolute; opacity:0; pointer-events:none; width:1px; height:1px;}
+    .date-input-display{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+      border:1px solid var(--line); border-radius:16px; padding:9px 12px;
+      background:var(--card); cursor:pointer; font-variant-numeric:tabular-nums;
+      font-size:14px; color:var(--text);
+    }
+    .date-input-display.placeholder{color:var(--muted);}
+    .date-input-display .cal-icon{flex:none; opacity:.6;}
+    .date-picker-popup{
+      display:none; position:absolute; z-index:60; top:calc(100% + 4px); inset-inline-start:0;
+      background:var(--card); border:1px solid var(--line); border-radius:16px;
+      box-shadow:var(--shadow); padding:12px; width:264px; font-variant-numeric:tabular-nums;
+    }
+    .date-picker-popup.open{display:block;}
+    .date-picker-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;}
+    .date-picker-head button{background:none; border:none; font-size:18px; padding:4px 10px; cursor:pointer; color:var(--text); border-radius:8px;}
+    .date-picker-head button:hover{background:var(--bg);}
+    .date-picker-monthyear{font-weight:800; font-size:14px;}
+    .date-picker-grid{display:grid; grid-template-columns:repeat(7, 1fr); gap:3px;}
+    .date-picker-day{
+      text-align:center; padding:7px 0; border-radius:8px; cursor:pointer; font-size:13px; background:none; border:none; color:var(--text);
+    }
+    .date-picker-day:hover{background:var(--bg);}
+    .date-picker-day.today{font-weight:900; color:var(--primary);}
+    .date-picker-day.selected{background:var(--primary); color:#fff;}
+    .date-picker-day:disabled{visibility:hidden; cursor:default;}
+    .date-picker-foot{display:flex; justify-content:space-between; margin-top:8px; padding-top:8px; border-top:1px solid var(--line);}
+    .date-picker-foot button{background:none; border:none; font-size:12.5px; color:var(--primary); cursor:pointer; font-weight:700;}
+
     /* عمود إجراءات مستقل بنهاية كل سطر (بند إضافي 66) — الأزرار
        (موافقة/تأجيل/حذف...) تترتّب عمودياً بعرض ثابت بدل ما تتزاحم
        أفقياً وتتداخل مع بقية أعمدة الجدول. */
@@ -574,6 +616,166 @@
         });
       });
     });
+
+    // تقويم مخصَّص بالكامل بدل input[type=date] الأصلي (راجع تعليق
+    // .date-input-wrap CSS أعلاه للسبب الكامل) — أرقام لاتينية دائماً،
+    // بدون اسم شهر منطوق (رقم شهر/سنة بالهيدر بس). الحقل الأصلي يبقى
+    // بالـDOM (مخفي بصرياً) يحمل القيمة الحقيقية اللي يُرسَل بها
+    // الفورم، فصفر تغيير على أي منطق حفظ/تحقّق حالي بأي مكان بالمشروع.
+    (function(){
+      var SELECT_LABEL = {{ _('اختر تاريخ')|tojson }};
+      var TODAY_LABEL = {{ _('اليوم')|tojson }};
+      var CLEAR_LABEL = {{ _('مسح')|tojson }};
+      var pad2 = function(n){ return n < 10 ? '0' + n : '' + n; };
+
+      function formatDisplay(iso){
+        if (!iso) return null;
+        var parts = iso.split('-');
+        if (parts.length !== 3) return null;
+        return pad2(+parts[2]) + '/' + pad2(+parts[1]) + '/' + parts[0];
+      }
+
+      function closeAllPopups(except){
+        document.querySelectorAll('.date-picker-popup.open').forEach(function(p){
+          if (p !== except) p.classList.remove('open');
+        });
+      }
+      document.addEventListener('click', function(e){
+        if (!e.target.closest('.date-input-wrap')) closeAllPopups(null);
+      });
+
+      function buildPopup(input, display){
+        var popup = document.createElement('div');
+        popup.className = 'date-picker-popup';
+        var head = document.createElement('div');
+        head.className = 'date-picker-head';
+        var prevBtn = document.createElement('button');
+        prevBtn.type = 'button'; prevBtn.textContent = '‹';
+        var monthYear = document.createElement('span');
+        monthYear.className = 'date-picker-monthyear';
+        var nextBtn = document.createElement('button');
+        nextBtn.type = 'button'; nextBtn.textContent = '›';
+        head.appendChild(prevBtn); head.appendChild(monthYear); head.appendChild(nextBtn);
+        var grid = document.createElement('div');
+        grid.className = 'date-picker-grid';
+        var foot = document.createElement('div');
+        foot.className = 'date-picker-foot';
+        var todayBtn = document.createElement('button');
+        todayBtn.type = 'button'; todayBtn.textContent = TODAY_LABEL;
+        var clearBtn = document.createElement('button');
+        clearBtn.type = 'button'; clearBtn.textContent = CLEAR_LABEL;
+        foot.appendChild(todayBtn); foot.appendChild(clearBtn);
+        popup.appendChild(head); popup.appendChild(grid); popup.appendChild(foot);
+
+        var view = {year: 0, month: 0}; // month: 0-11
+
+        function setValue(iso){
+          input.value = iso || '';
+          input.dispatchEvent(new Event('change', {bubbles: true}));
+          input.dispatchEvent(new Event('input', {bubbles: true}));
+          var f = formatDisplay(iso);
+          display.textContent = f || SELECT_LABEL;
+          display.classList.toggle('placeholder', !f);
+        }
+
+        function render(){
+          monthYear.textContent = pad2(view.month + 1) + '/' + view.year;
+          grid.innerHTML = '';
+          var firstDow = new Date(view.year, view.month, 1).getDay();
+          var daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
+          var todayIso = new Date();
+          var todayStr = todayIso.getFullYear() + '-' + pad2(todayIso.getMonth() + 1) + '-' + pad2(todayIso.getDate());
+          var selectedIso = input.value;
+          for (var i = 0; i < firstDow; i++){
+            var blank = document.createElement('button');
+            blank.className = 'date-picker-day'; blank.disabled = true; blank.type = 'button';
+            grid.appendChild(blank);
+          }
+          for (var d = 1; d <= daysInMonth; d++){
+            var iso = view.year + '-' + pad2(view.month + 1) + '-' + pad2(d);
+            var cell = document.createElement('button');
+            cell.type = 'button';
+            cell.className = 'date-picker-day' + (iso === todayStr ? ' today' : '') + (iso === selectedIso ? ' selected' : '');
+            cell.textContent = d;
+            cell.addEventListener('click', function(dayIso){
+              return function(){ setValue(dayIso); popup.classList.remove('open'); };
+            }(iso));
+            grid.appendChild(cell);
+          }
+        }
+
+        prevBtn.addEventListener('click', function(){
+          view.month--; if (view.month < 0){ view.month = 11; view.year--; }
+          render();
+        });
+        nextBtn.addEventListener('click', function(){
+          view.month++; if (view.month > 11){ view.month = 0; view.year++; }
+          render();
+        });
+        todayBtn.addEventListener('click', function(){
+          var t = new Date();
+          setValue(t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate()));
+          view.year = t.getFullYear(); view.month = t.getMonth();
+          popup.classList.remove('open');
+        });
+        clearBtn.addEventListener('click', function(){
+          setValue('');
+          popup.classList.remove('open');
+        });
+
+        popup._openAt = function(){
+          var base = input.value ? input.value.split('-') : null;
+          var now = new Date();
+          view.year = base ? +base[0] : now.getFullYear();
+          view.month = base ? (+base[1] - 1) : now.getMonth();
+          render();
+          closeAllPopups(popup);
+          popup.classList.add('open');
+        };
+        return popup;
+      }
+
+      function enhanceDateInputs(root){
+        (root || document).querySelectorAll('input[type="date"]').forEach(function(input){
+          if (input.dataset.dateWrapped || input.closest('.date-input-wrap')) return;
+          input.dataset.dateWrapped = '1';
+          var wrap = document.createElement('div');
+          wrap.className = 'date-input-wrap';
+          input.parentNode.insertBefore(wrap, input);
+          wrap.appendChild(input);
+          var display = document.createElement('div');
+          var initial = formatDisplay(input.value);
+          display.className = 'date-input-display' + (initial ? '' : ' placeholder');
+          display.textContent = initial || SELECT_LABEL;
+          var icon = document.createElement('span');
+          icon.className = 'cal-icon'; icon.textContent = '📅';
+          display.appendChild(icon);
+          wrap.appendChild(display);
+          var popup = buildPopup(input, display);
+          wrap.appendChild(popup);
+          display.addEventListener('click', function(e){
+            e.stopPropagation();
+            if (popup.classList.contains('open')) { popup.classList.remove('open'); return; }
+            popup._openAt();
+          });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){ enhanceDateInputs(document); });
+      // بعض الفورمات (شراء دفعة، إجراء جماعي...) تضيف صفوف حيوانات
+      // جديدة ديناميكياً بعد تحميل الصفحة — كل صف جديد يجيب معه حقل
+      // تاريخ جديد يحتاج نفس التغليف. مراقب DOM عام بدل تعديل كل زر
+      // "إضافة صف" بكل قالب على حدة.
+      new MutationObserver(function(mutations){
+        mutations.forEach(function(m){
+          m.addedNodes.forEach(function(node){
+            if (node.nodeType !== 1) return;
+            if (node.matches && node.matches('input[type="date"]')) enhanceDateInputs(node.parentNode);
+            else if (node.querySelectorAll) enhanceDateInputs(node);
+          });
+        });
+      }).observe(document.body, {childList: true, subtree: true});
+    })();
   </script>
 </head>
 <body>
