@@ -128,7 +128,7 @@ def members_edit(user_id):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            flash(f'رقم الجوال "{request.form["phone"]}" مستخدم من قبل', "error")
+            flash(_('رقم الجوال "%(phone)s" مستخدم من قبل', phone=request.form["phone"]), "error")
             return redirect(url_for("team.members_edit", user_id=user.id))
         flash(_("تم تحديث بيانات العضو وكلمة المرور") if new_password else _("تم تحديث بيانات العضو"), "success")
         return redirect(url_for("team.members_list"))
@@ -606,7 +606,7 @@ def report_types_new():
             flash(_("اسم نوع البلاغ مطلوب"), "error")
             return redirect(url_for("team.report_types_new"))
         if ReportType.query.filter_by(name=name).first():
-            flash(f'"{name}" موجود بالقائمة أصلاً', "error")
+            flash(_('"%(name)s" موجود بالقائمة أصلاً', name=name), "error")
             return redirect(url_for("team.report_types_new"))
         db.session.add(ReportType(name=name))
         db.session.commit()

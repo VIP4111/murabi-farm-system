@@ -50,7 +50,8 @@ def batches_new():
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("batches.batches_new"))
-        flash(f'تم تسجيل الدفعة "{batch.batch_no}" ({len(entries)} رأس) وعزلها بحظيرة الحجر الصحي.', "success")
+        flash(_('تم تسجيل الدفعة "%(no)s" (%(n)s رأس) وعزلها بحظيرة الحجر الصحي.',
+                no=batch.batch_no, n=len(entries)), "success")
         return redirect(url_for("batches.batch_detail", batch_id=batch.id))
     # بند إضافي 291 — طلبك الصريح "ابدأ" بعد ما لقينا فجوة حقيقية:
     # هذي الشاشة كانت تقرأ قائمة سلالات ثابتة بالكود (`Animal.BREEDS`

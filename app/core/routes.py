@@ -804,7 +804,7 @@ def species_types_new():
             flash(_("اسم الفصيلة مطلوب"), "error")
             return redirect(url_for("core.species_types_new"))
         if SpeciesType.query.filter_by(code=value).first():
-            flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
+            flash(_('"%(value)s" موجودة بالقائمة أصلاً', value=value), "error")
             return redirect(url_for("core.species_types_new"))
         db.session.add(SpeciesType(code=value, label_ar=value))
         db.session.commit()
@@ -825,7 +825,7 @@ def breeds_new():
             flash(_("اسم السلالة مطلوب"), "error")
             return redirect(url_for("core.breeds_new"))
         if Breed.query.filter_by(name=value).first():
-            flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
+            flash(_('"%(value)s" موجودة بالقائمة أصلاً', value=value), "error")
             return redirect(url_for("core.breeds_new"))
         db.session.add(Breed(name=value, name_en=(request.form.get("name_en") or "").strip() or None))
         db.session.commit()
@@ -869,7 +869,7 @@ def colors_new():
             flash(_("اسم اللون مطلوب"), "error")
             return redirect(url_for("core.colors_new"))
         if AnimalColor.query.filter_by(name=value).first():
-            flash(f'"{value}" موجود بالقائمة أصلاً', "error")
+            flash(_('"%(value)s" موجود بالقائمة أصلاً', value=value), "error")
             return redirect(url_for("core.colors_new"))
         db.session.add(AnimalColor(name=value, name_en=(request.form.get("name_en") or "").strip() or None))
         db.session.commit()
@@ -1360,7 +1360,8 @@ def animal_milk_new(animal_id):
     # `animal_under_milk_withdrawal()` المخصَّصة للحليب تحديداً.
     until = animal_under_milk_withdrawal(animal.id)
     if until:
-        flash(f'تنبيه: {animal.animal_no} تحت فترة تحريم حليب حتى {until} — الحليب المسجَّل الآن قد يكون غير آمن للبيع/الاستهلاك.', "warning")
+        flash(_('تنبيه: %(no)s تحت فترة تحريم حليب حتى %(until)s — الحليب المسجَّل الآن قد يكون غير آمن للبيع/الاستهلاك.',
+                no=animal.animal_no, until=until), "warning")
     return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="milk"))
 
 
@@ -1632,7 +1633,7 @@ def barns_new():
             db.session.flush()
         except IntegrityError:
             db.session.rollback()
-            flash(f'رقم الحظيرة "{request.form["barn_no"]}" مستخدم من قبل', "error")
+            flash(_('رقم الحظيرة "%(no)s" مستخدم من قبل', no=request.form["barn_no"]), "error")
             return redirect(url_for("core.barns_new"))
         _save_feeding_schedule(barn.id)
         db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.create",
@@ -1667,7 +1668,7 @@ def barns_edit(barn_id):
             db.session.flush()
         except IntegrityError:
             db.session.rollback()
-            flash(f'رقم الحظيرة "{request.form["barn_no"]}" مستخدم من قبل', "error")
+            flash(_('رقم الحظيرة "%(no)s" مستخدم من قبل', no=request.form["barn_no"]), "error")
             return redirect(url_for("core.barns_edit", barn_id=barn.id))
         _save_feeding_schedule(barn.id)
         db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.update",
@@ -1787,7 +1788,7 @@ def factory_reset():
     password = request.form.get("password") or ""
 
     if typed_phrase != FACTORY_RESET_CONFIRM_PHRASE:
-        flash(f'لازم تكتب عبارة التأكيد بالضبط: "{FACTORY_RESET_CONFIRM_PHRASE}"', "error")
+        flash(_('لازم تكتب عبارة التأكيد بالضبط: "%(phrase)s"', phrase=FACTORY_RESET_CONFIRM_PHRASE), "error")
         return redirect(url_for("core.settings_home"))
     if not current_user.check_password(password):
         flash(_("كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."), "error")
@@ -1840,7 +1841,7 @@ def role_new():
             db.session.flush()
         except IntegrityError:
             db.session.rollback()
-            flash(f'اسم الدور "{slug}" مستخدم من قبل', "error")
+            flash(_('اسم الدور "%(slug)s" مستخدم من قبل', slug=slug), "error")
             return redirect(url_for("core.role_new"))
         db.session.add(AuditLog(actor_user_id=current_user.id, action="role.create",
                                  entity_type="Role", entity_id=role.id, details=display_name))

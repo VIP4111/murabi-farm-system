@@ -47,7 +47,7 @@ def warehouses_new():
         from app.extensions import db
         db.session.add(warehouse)
         db.session.commit()
-        flash(f'تم إنشاء مستودع "{warehouse.name}"', "success")
+        flash(_('تم إنشاء مستودع "%(name)s"', name=warehouse.name), "success")
         return redirect(url_for("warehouses.warehouses_list"))
     return render_template(
         "warehouses/warehouse_form.html", types=Warehouse.WAREHOUSE_TYPES,

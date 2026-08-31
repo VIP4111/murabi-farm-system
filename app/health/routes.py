@@ -199,7 +199,7 @@ def pharmacy_prescription_image():
 
     prefill = {k: extracted.get(k) for k in _PRESCRIPTION_PREFILL_FIELDS if extracted.get(k) is not None}
     if extracted.get("notes"):
-        flash(f'ملاحظة من التحليل: {extracted["notes"]} — راجع كل حقل قبل الحفظ.', "warning")
+        flash(_('ملاحظة من التحليل: %(notes)s — راجع كل حقل قبل الحفظ.', notes=extracted["notes"]), "warning")
     flash(_("تم استخراج البيانات المتاحة من الصورة — راجع كل حقل وصحّحه قبل ما تضغط حفظ."), "success")
     return redirect(url_for("health.pharmacy_new", **prefill))
 
@@ -376,13 +376,13 @@ def usage_routes_new():
             flash(_("اسم الطريقة مطلوب"), "error")
             return redirect(url_for("health.usage_routes_new"))
         if UsageRoute.query.filter_by(name=name).first():
-            flash(f'"{name}" موجودة بالقائمة أصلاً', "error")
+            flash(_('"%(name)s" موجودة بالقائمة أصلاً', name=name), "error")
             return redirect(url_for("health.usage_routes_new"))
         db.session.add(UsageRoute(name=name))
         db.session.commit()
         flash(_("تمت إضافة طريقة الاستخدام"), "success")
         return redirect(url_for("health.pharmacy_new"))
-    return render_template("animal_option_form.html", title="إضافة طريقة استخدام جديدة",
+    return render_template("animal_option_form.html", title=_("إضافة طريقة استخدام جديدة"),
                             back_endpoint="health.pharmacy_new")
 
 
@@ -400,7 +400,7 @@ def drug_catalog_new():
             flash(_("اسم الدواء مطلوب"), "error")
             return redirect(url_for("health.drug_catalog_new", medicine_class=medicine_class or ""))
         if DrugCatalogEntry.query.filter_by(name=name).first():
-            flash(f'"{name}" موجود بالكتالوج أصلاً', "error")
+            flash(_('"%(name)s" موجود بالكتالوج أصلاً', name=name), "error")
             return redirect(url_for("health.drug_catalog_new", medicine_class=medicine_class or ""))
         db.session.add(DrugCatalogEntry(name=name, medicine_class=medicine_class))
         db.session.commit()
@@ -431,7 +431,7 @@ def disease_types_new():
     if request.method == "POST":
         name = request.form["name"].strip()
         if DiseaseType.query.filter_by(name=name).first():
-            flash(f'"{name}" موجود بالقائمة أصلاً', "error")
+            flash(_('"%(name)s" موجود بالقائمة أصلاً', name=name), "error")
             return redirect(url_for("health.disease_types_new"))
         db.session.add(DiseaseType(
             name=name, name_en=(request.form.get("name_en") or "").strip() or None,
@@ -468,7 +468,7 @@ def symptoms_new():
             flash(_("اسم العرض مطلوب"), "error")
             return redirect(url_for("health.symptoms_new"))
         if Symptom.query.filter_by(name=name).first():
-            flash(f'"{name}" موجود بالقائمة أصلاً', "error")
+            flash(_('"%(name)s" موجود بالقائمة أصلاً', name=name), "error")
             return redirect(url_for("health.symptoms_new"))
         db.session.add(Symptom(name=name, is_primary=bool(request.form.get("is_primary"))))
         db.session.commit()
@@ -1075,7 +1075,8 @@ def protocols_apply(protocol_id):
             start_date=date.fromisoformat(request.form["start_date"]),
             actor_user_id=current_user.id,
         )
-        flash(f'تم تطبيق البروتوكول "{protocol.name}" — تولّدت {len(protocol.steps)} مهمة علاج مخطَّطة بانتظار مراجعة الدكتور.', "success")
+        flash(_('تم تطبيق البروتوكول "%(name)s" — تولّدت %(n)s مهمة علاج مخطَّطة بانتظار مراجعة الدكتور.',
+                name=protocol.name, n=len(protocol.steps)), "success")
         return redirect(url_for("core.animal_detail", animal_id=application.animal_id, tab="vet"))
     return render_template(
         "health/protocol_apply_form.html", protocol=protocol,
