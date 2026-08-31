@@ -23,7 +23,7 @@
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('ملاحظات') }}</th><th></th></tr>
     {% for t in types %}
     <tr>
-      <td>{{ t.name }}</td><td>{{ t.notes or '-' }}</td>
+      <td>{{ t.display_label() }}</td><td>{{ t.notes or '-' }}</td>
       <td><a class="btn light" style="padding:4px 10px; font-size:12px;" href="{{ url_for('health.disease_type_detail', disease_id=t.id) }}">{{ _('إدارة الأعراض') }} ←</a></td>
     </tr>
     {% else %}

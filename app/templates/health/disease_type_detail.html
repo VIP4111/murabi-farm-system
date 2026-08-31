@@ -2,7 +2,7 @@
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ disease.name }}</h2>
+    <h2>{{ disease.display_label() }}</h2>
     <div style="display:flex; gap:8px;">
       {% if current_user.has_permission('medical_options.manage') %}
       <a class="btn light" href="{{ url_for('health.link_wizard') }}">🧭 {{ _('المعالج التفاعلي') }}</a>

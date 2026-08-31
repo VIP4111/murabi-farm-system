@@ -40,7 +40,7 @@
       <label>{{ _('وش المرض؟') }}</label>
       <select id="diseaseSelect" required>
         <option value="">{{ _('اختر مرض') }}</option>
-        {% for d in diseases %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
+        {% for d in diseases %}<option value="{{ d.id }}">{{ d.display_label() }}</option>{% endfor %}
       </select>
       <div class="wiz-nav" style="justify-content:flex-end;">
         <button type="button" class="btn" data-next="2">{{ _('التالي') }} ←</button>

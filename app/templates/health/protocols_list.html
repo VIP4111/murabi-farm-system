@@ -16,7 +16,7 @@
     {% for p in protocols %}
     <tr>
       <td>{{ p.name }}</td>
-      <td>{{ p.disease_type.name if p.disease_type else '-' }}</td>
+      <td>{{ p.disease_type.display_label() if p.disease_type else '-' }}</td>
       <td>{{ p.steps|length }}</td>
       <td><span class="badge {{ 'on' if p.status == 'active' else 'off' }}">{{ p.status|ar_status }}</span></td>
       <td>

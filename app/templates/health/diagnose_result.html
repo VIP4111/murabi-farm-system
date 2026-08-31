@@ -41,7 +41,7 @@
     {% for r in results %}
     <tr>
       <td>
-        {{ r.disease_type.name }}
+        {{ r.disease_type.display_label() }}
         {% if r.context_boosted %}<span class="badge on" style="font-size:10px;" title="{{ _('حرارة مرتفعة رفعت الاحتمال') }}">🌡️ {{ _('سياق') }}</span>{% endif %}
       </td>
       <td>
