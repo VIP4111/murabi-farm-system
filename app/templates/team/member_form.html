@@ -6,6 +6,7 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('الصورة الشخصية (اختياري)') }}</label>
     <input name="photo" type="file" accept="image/*">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('بجوالك يعطيك خيار التصوير مباشرة بالكاميرا، أو اختيار صورة من المعرض.') }}</p>
     <label>{{ _('الاسم') }}</label><input name="name" id="memberNameInput" required>
     <label>{{ _('رقم الجوال (لتسجيل الدخول)') }}</label><input name="phone" id="memberPhoneInput" required>
     <label>{{ _('كلمة المرور') }}</label><input name="password" id="memberPasswordInput" type="password" required>

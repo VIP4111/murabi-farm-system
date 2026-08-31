@@ -12,6 +12,7 @@
     </label>
     {% endif %}
     <input name="photo" type="file" accept="image/*">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('بجوالك يعطيك خيار التصوير مباشرة بالكاميرا، أو اختيار صورة من المعرض.') }}</p>
     <label>{{ _('الاسم') }}</label><input name="name" id="memberNameInput" required value="{{ member.name }}">
     <label>{{ _('رقم الجوال (لتسجيل الدخول)') }}</label><input name="phone" id="memberPhoneInput" required value="{{ member.phone }}">
     <label>{{ _('الدور') }}</label>

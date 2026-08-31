@@ -508,11 +508,27 @@
       btn.dataset.originalHtml = btn.innerHTML;
       btn.innerHTML = '⏳ ' + btn.innerHTML;
     }, false);
+
+    // بند إضافي (2026-08-31) — طلبك الصريح: زر "رجوع" بكل صفحة. يستخدم
+    // سجل تصفّح المتصفح (history.back()) لو موجود فعلاً بنفس التبويب
+    // (يرجّعك لآخر صفحة زرتها بالضبط، حتى لو كانت برة الموقع)، وإلا
+    // (مثلاً فتحت رابطاً مباشراً بتبويب جديد بلا أي سجل سابق) يرجّعك
+    // للرئيسية بدل ما يبقى بلا أثر.
+    function goBackOrHome(){
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = {{ url_for('core.home')|tojson }};
+      }
+    }
   </script>
 </head>
 <body>
   <div class="top">
     {% if current_user.is_authenticated %}<button class="icon-btn" onclick="openDrawer()">☰</button>{% endif %}
+    {% if current_user.is_authenticated and request.endpoint != 'core.home' %}
+    <button class="icon-btn" onclick="goBackOrHome()" title="{{ _('رجوع') }}" aria-label="{{ _('رجوع') }}">{{ '→' if html_dir == 'rtl' else '←' }}</button>
+    {% endif %}
     <div class="brand">
       <div class="logo"><img src="{{ url_for('static', filename='icons/icon-96.png') }}" alt="{{ _('مراح بو علي') }}"></div>
       <h1>{{ _('مراح بو علي') }}</h1>
