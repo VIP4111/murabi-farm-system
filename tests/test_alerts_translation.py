@@ -33,6 +33,21 @@ def test_barn_without_worker_alert_translates_for_english_doctor(app, client):
     assert "Barn without a responsible worker" in body
 
 
+def test_barn_without_worker_alert_shows_open_button_for_doctor(app, client):
+    """بند إضافي (2026-08-31) — طلبك المباشر بعد صورة شاشة: الزر
+    "فتح" لتنبيه "حظيرة بدون عامل مسؤول" كان موجوداً بالكود أصلاً، بس
+    مقيَّداً بصلاحية barns.manage اللي دور الدكتور ما يملكها افتراضياً
+    — يطلعله التنبيه بلا زر ولا توضيح. صار الدكتور يملكها افتراضياً."""
+    barn = make_barn(barn_no="Q-BTN", barn_name="حظيرة اختبار الزر")
+    doctor = _make_doctor(phone="0599999263")
+    client.post("/login", data={"phone": doctor.phone, "password": "pass1234"})
+
+    resp = client.get("/alerts")
+    assert resp.status_code == 200
+    body = resp.data.decode()
+    assert f'/barns/{barn.id}/edit' in body
+
+
 def test_alerts_stay_arabic_for_arabic_doctor(app, client):
     make_barn(barn_no="Q-NEW2", barn_name="حظيرة اختبار عربي")
     doctor = _make_doctor(phone="0599999261", language="ar")
