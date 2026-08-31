@@ -68,29 +68,27 @@ def test_worker_without_animals_manage_cannot_confirm_via_route(app, client, own
 
 
 def test_doctor_with_animals_manage_can_confirm(app, owner):
-    """فحص عكسي — دور فعلاً يملك animals.manage (الدكتور) يستمر يشتغل
-    طبيعياً، الإصلاح ما يمنع الاستخدام الصحيح."""
+    """فحص عكسي — دور فعلاً يملك animals.manage يستمر يشتغل طبيعياً،
+    الإصلاح ما يمنع الاستخدام الصحيح.
+
+    بند إضافي (2026-08-31) — دور "الدكتور" الافتراضي صار يملك
+    animals.manage فعلاً (طلبك المباشر: يبيع/يعدّل حيوان مباشرة، بعد ما
+    اكتشفنا إن sales.override_withdrawal بلا فايدة بدونها) — فصار
+    الدكتور نفسه يمثّل سيناريو "عامل موثوق" بدل ما نبني دوراً مخصَّصاً
+    له بالاختبار."""
     role = Role.query.filter_by(name="doctor").first()
-    assert role.has_permission("animals.manage") is False  # الدكتور الافتراضي ما يملكها أصلاً كمان!
+    assert role.has_permission("animals.manage") is True
+    assert role.has_permission("assistant.draft_actions.confirm") is True
 
-    # نبني دوراً مخصَّصاً فعلياً يملك الصلاحيتين معاً — سيناريو "عامل موثوق"
-    from app.models import Permission
-    perms = Permission.query.filter(Permission.code.in_(
-        ["assistant.draft_actions.confirm", "animals.manage"])).all()
-    trusted_role = Role(name="عامل موثوق", display_name="عامل موثوق", is_system=False)
-    trusted_role.permissions = perms
-    db.session.add(trusted_role)
-    db.session.commit()
-
-    trusted_worker = User(name="عامل موثوق فعلاً", phone="0599999231", role_id=trusted_role.id)
-    trusted_worker.set_password("pass1234")
-    db.session.add(trusted_worker)
+    doctor = User(name="دكتور موثوق فعلاً", phone="0599999231", role_id=role.id)
+    doctor.set_password("pass1234")
+    db.session.add(doctor)
     db.session.commit()
 
     animal = make_animal(animal_no="922")
     draft = _pending_weight_draft(animal, owner)
 
-    draft_action_service.confirm_draft(draft, actor=trusted_worker)
+    draft_action_service.confirm_draft(draft, actor=doctor)
 
     db.session.refresh(draft)
     assert draft.status == "confirmed"
