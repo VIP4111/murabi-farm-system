@@ -17,7 +17,7 @@
     <label>{{ _('رقم الجوال (لتسجيل الدخول)') }}</label><input name="phone" id="memberPhoneInput" required value="{{ member.phone }}">
     <label>{{ _('الدور') }}</label>
     <select name="role_id" required>
-      {% for r in roles %}<option value="{{ r.id }}" {{ 'selected' if member.role_id == r.id }}>{{ r.display_name }}</option>{% endfor %}
+      {% for r in roles %}<option value="{{ r.id }}" {{ 'selected' if member.role_id == r.id }}>{{ r.display_label() }}</option>{% endfor %}
     </select>
     <label>{{ _('اللغة') }}</label>
     <select name="language">

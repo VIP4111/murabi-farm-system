@@ -16,7 +16,7 @@
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تنسخ رقم الجوال وكلمة المرور اللي كتبتهم فوق كنص جاهز لإرساله للعضو (واتساب/تيليجرام) — تأكد إنك عبّيت الحقول أولاً.') }}</p>
     <label>{{ _('الدور') }}</label>
     <select name="role_id" required>
-      {% for r in roles %}<option value="{{ r.id }}">{{ r.display_name }}</option>{% endfor %}
+      {% for r in roles %}<option value="{{ r.id }}">{{ r.display_label() }}</option>{% endfor %}
     </select>
     <label>{{ _('اللغة') }}</label>
     <select name="language">

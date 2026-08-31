@@ -181,7 +181,7 @@
           {% if d.parsed_action_type == 'assign_task' %}
           <select name="assignee_id" required>
             <option value="">{{ _('اختر عضو الفريق المكلَّف...') }}</option>
-            {% for u in assignable_users %}<option value="{{ u.id }}">{{ u.name }}{% if u.role %} — {{ u.role.display_name }}{% endif %}</option>{% endfor %}
+            {% for u in assignable_users %}<option value="{{ u.id }}">{{ u.name }}{% if u.role %} — {{ u.role.display_label() }}{% endif %}</option>{% endfor %}
           </select>
           {% endif %}
           <button type="submit" class="btn" style="padding:7px 14px;">✅ {{ _('اعتماد') }}</button>

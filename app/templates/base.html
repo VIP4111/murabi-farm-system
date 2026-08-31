@@ -322,6 +322,28 @@
        LTR على الحقل نفسه بس (النص المحيط والليبل يبقيان RTL عادي). */
     input[type="date"]{direction:ltr; text-align:right;}
 
+    /* بند إضافي (2026-08-31) — طلبك بعد صورة شاشة: زر "Choose File"
+       الأصلي لحقول رفع الملف نص متصفح ثابت (يتبع لغة نظام التشغيل،
+       مو لغة الصفحة) — ما نقدر نترجمه مباشرة. الحل: نغلّف كل حقل
+       type=file بطبقة عرض مخصَّصة (زر + اسم الملف) بلغة الصفحة
+       فعلياً، والحقل الأصلي يبقى شغّالاً تماماً (شفاف فوق الطبقة،
+       يستقبل كل الضغطات/السحب) — صفر تغيير على أي منطق رفع موجود.
+       التفعيل تلقائي بجافاسكربت (goBackOrHome سكربت head) على كل
+       حقل type=file بالصفحة، بدون حاجة لتعديل أي قالب فورم يدوياً. */
+    .file-input-wrap{position:relative; display:block; width:100%; margin-bottom:10px;}
+    .file-input-wrap input[type="file"]{
+      position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; margin:0;
+    }
+    .file-input-display{
+      display:flex; align-items:center; gap:10px; border:1px solid var(--line);
+      border-radius:16px; padding:9px 12px; background:var(--card); overflow:hidden;
+    }
+    .file-input-btn{
+      flex:none; background:var(--primary); color:#fff; padding:6px 12px;
+      border-radius:10px; font-size:12.5px; font-weight:800; white-space:nowrap;
+    }
+    .file-input-name{color:var(--muted); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
     /* عمود إجراءات مستقل بنهاية كل سطر (بند إضافي 66) — الأزرار
        (موافقة/تأجيل/حذف...) تترتّب عمودياً بعرض ثابت بدل ما تتزاحم
        أفقياً وتتداخل مع بقية أعمدة الجدول. */
@@ -521,6 +543,37 @@
         window.location.href = {{ url_for('core.home')|tojson }};
       }
     }
+
+    // بند إضافي (2026-08-31) — يغلّف كل حقل type=file بالصفحة بطبقة
+    // عرض مترجَمة (راجع .file-input-wrap CSS أعلاه) — الحقل الأصلي
+    // يبقى الوحيد المسؤول فعلياً عن الرفع، هذا مجرد عرض بديل لنصه
+    // الثابت غير القابل للترجمة (زر المتصفح الأصلي "Choose File").
+    document.addEventListener('DOMContentLoaded', function(){
+      var CHOOSE_LABEL = {{ _('اختر ملف')|tojson }};
+      var NONE_LABEL = {{ _('لم يتم اختيار أي ملف')|tojson }};
+      document.querySelectorAll('input[type="file"]').forEach(function(input){
+        if (input.dataset.fileWrapped || input.closest('.file-input-wrap')) return;
+        input.dataset.fileWrapped = '1';
+        var wrap = document.createElement('div');
+        wrap.className = 'file-input-wrap';
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+        var display = document.createElement('div');
+        display.className = 'file-input-display';
+        var btn = document.createElement('span');
+        btn.className = 'file-input-btn';
+        btn.textContent = CHOOSE_LABEL;
+        var nameSpan = document.createElement('span');
+        nameSpan.className = 'file-input-name';
+        nameSpan.textContent = NONE_LABEL;
+        display.appendChild(btn);
+        display.appendChild(nameSpan);
+        wrap.appendChild(display);
+        input.addEventListener('change', function(){
+          nameSpan.textContent = input.files && input.files.length ? input.files[0].name : NONE_LABEL;
+        });
+      });
+    });
   </script>
 </head>
 <body>
@@ -548,7 +601,7 @@
           {% endif %}
           <div>
             <b>{{ current_user.name }}</b>
-            <small>{{ current_user.role.display_name }}</small>
+            <small>{{ current_user.role.display_label() }}</small>
           </div>
         </div>
         <button class="x" onclick="closeDrawer()">✕</button>

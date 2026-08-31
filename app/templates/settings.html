@@ -153,7 +153,7 @@
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('عدد الصلاحيات') }}</th><th>{{ _('نوع') }}</th><th></th></tr>
     {% for r in roles %}
     <tr>
-      <td>{{ r.display_name }}</td>
+      <td>{{ r.display_label() }}</td>
       <td>{{ r.permissions|length }}</td>
       <td>{{ _('جاهز افتراضياً') if r.is_system else _('مضاف من المالك') }}</td>
       <td>

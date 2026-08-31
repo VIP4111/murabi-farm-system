@@ -8,11 +8,30 @@ role_permissions: جدول ربط many-to-many بين الاثنين — هذا 
             الصلاحيات "بيانات" مو "كود مكتوب"، فتقدر تتغيّر وقت التشغيل.
 """
 from datetime import datetime, timezone
+from flask_babel import lazy_gettext as _l, get_locale
 from app.extensions import db
 
 
 def _now():
     return datetime.now(timezone.utc)
+
+
+# بند إضافي (2026-08-31) — طلبك المباشر بعد صورة شاشة "تعديل عضو":
+# قائمة اختيار "الدور" كانت تعرض display_name الخام (عربي دايماً) حتى
+# لحساب إنجليزي بالكامل. نفس معمارية SpeciesType بالضبط: name عمود
+# داخلي ثابت (owner/doctor/worker/...) للأدوار الجاهزة الستة، فترجمته
+# ممكنة بأمان — بشرط واحد إضافي هنا (مو موجود بـSpeciesType): لو صاحب
+# الحلال غيّر display_name يدوياً من شاشة "تعديل صلاحيات الدور" (حقل
+# قابل للتعديل حتى للأدوار الجاهزة)، التعديل اليدوي يبقى الأولوية —
+# صفر ترجمة تلقائية تتجاوز اسماً كتبه المستخدم بنفسه.
+_KNOWN_ROLE_LABELS = {
+    "owner": (_l("صاحب الحلال"), "صاحب الحلال"),
+    "doctor": (_l("الدكتور"), "الدكتور"),
+    "worker": (_l("العامل"), "العامل"),
+    "nurse": (_l("الممرض"), "الممرض"),
+    "accountant": (_l("المحاسب"), "المحاسب"),
+    "viewer": (_l("مشاهد"), "مشاهد"),
+}
 
 
 role_permissions = db.Table(
@@ -63,6 +82,16 @@ class Role(db.Model):
 
     def has_permission(self, code: str) -> bool:
         return any(p.code == code for p in self.permissions)
+
+    def display_label(self) -> str:
+        """اسم الدور المترجَم لو كان أحد الأدوار الجاهزة الستة المعروفة
+        ولسا بمسمّاه الافتراضي (ما عدَّله صاحب الحلال يدوياً)، وإلا
+        display_name الأصلي كما هو — بيانات حرة، صفر ترجمة تلقائية
+        تتجاوز اسماً كتبه المستخدم بنفسه."""
+        known = _KNOWN_ROLE_LABELS.get(self.name)
+        if known and self.display_name == known[1]:
+            return str(known[0])
+        return self.display_name
 
     def __repr__(self):
         return f"<Role {self.name}>"

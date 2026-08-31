@@ -23,7 +23,7 @@
 {% for m in members %}
 <div class="card">
   <h3 style="font-size:15px; margin:0 0 4px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-    {{ m.name }} <span style="color:var(--muted); font-weight:normal; font-size:12.5px;">({{ m.role.display_name if m.role else '-' }})</span>
+    {{ m.name }} <span style="color:var(--muted); font-weight:normal; font-size:12.5px;">({{ m.role.display_label() if m.role else '-' }})</span>
     {% if m.id in traveling_ids %}<span class="badge off">🛫 {{ _('مسافر حالياً') }}</span>{% endif %}
   </h3>
   <form method="post" action="{{ url_for('team.salary_update', user_id=m.id) }}" style="margin-top:8px;" data-offline>
