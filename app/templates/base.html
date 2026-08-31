@@ -724,9 +724,9 @@
 
       {% if current_user.has_permission('settings.manage') %}
       <details class="drawer-group" {{ 'open' if request.endpoint == 'core.settings_home' else '' }}>
-        <summary>{{ nav_icon('system') }}النظام</summary>
+        <summary>{{ nav_icon('system') }}{{ _('النظام') }}</summary>
         <div class="drawer-grid">
-        <a class="drawer-link" href="{{ url_for('core.settings_home') }}"><span class="drawer-text"><b>الإعدادات</b></span></a>
+        <a class="drawer-link" href="{{ url_for('core.settings_home') }}"><span class="drawer-text"><b>{{ _('الإعدادات') }}</b></span></a>
         </div>
       </details>
       {% endif %}

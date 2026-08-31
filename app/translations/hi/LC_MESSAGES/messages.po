@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 04:34+0300\n"
+"POT-Creation-Date: 2026-08-31 05:05+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -731,9 +731,17 @@ msgstr "यह ड्राफ्ट स्वीकृति की प्र�
 msgid "تحتاج صلاحية \"%(perm)s\" لاعتماد هذا النوع من المسودات."
 msgstr "इस प्रकार के ड्राफ्ट को स्वीकृत करने के लिए आपको \"%(perm)s\" अनुमति चाहिए।"
 
+#: app/assistant/routes.py:69
+msgid "الرسالة فاضية"
+msgstr "संदेश खाली है"
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "पहले अपना प्रश्न लिखें"
+
+#: app/assistant/routes.py:85 app/health/routes.py:191
+msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
+msgstr "तस्वीर अमान्य है या बहुत बड़ी है (सीमा 8 MB)"
 
 #: app/assistant/routes.py:108
 msgid "تم مسح المحادثة"
@@ -2989,10 +2997,6 @@ msgstr "%(msg)s यदि आपको यकीन है कि दोहर�
 msgid "ارفع صورة أولاً"
 msgstr "पहले एक तस्वीर अपलोड करें"
 
-#: app/health/routes.py:191
-msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
-msgstr "तस्वीर अमान्य है या बहुत बड़ी है (सीमा 8 MB)"
-
 #: app/health/routes.py:197
 msgid "تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً."
 msgstr "तस्वीर का विश्लेषण नहीं हो सका — सुनिश्चित करें कि AI कुंजी सक्षम है और तस्वीर स्पष्ट है, और डेटा मैन्युअल रूप से भरें।"
@@ -4073,7 +4077,8 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "सिस्टम डेटा से सीधे बना लाइव व्यू — देय टीकाकरण, समाप्त होने वाली प्रतीक्षा अवधि, आगामी अपेक्षित प्रसव, प्रजनन उपकरण अनुस्मारक, लंबे समय से खुली बीमारियाँ, अनियमित क्रम वाले पशु, लंबित रिपोर्टें, अभी बिक्री के लिए तैयार पशु, बिना ज़िम्मेदार कर्मचारी के बाड़े, और आगामी निर्धारित टीकाकरण के लिए अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से आती है"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:122 app/templates/settings_backup.html:4
+#: app/templates/base.html:729 app/templates/home.html:122
+#: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
 #: app/templates/settings_simulation_data.html:4
@@ -5847,6 +5852,10 @@ msgstr "स्वास्थ्य वित्त"
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
+#: app/templates/base.html:727 app/templates/home.html:116
+msgid "النظام"
+msgstr "सिस्टम"
+
 #: app/templates/base.html:735
 msgid "المظهر"
 msgstr "दिखावट"
@@ -6494,10 +6503,6 @@ msgstr "चारा"
 #: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
 msgid "التقارير"
 msgstr "रिपोर्टें"
-
-#: app/templates/home.html:116
-msgid "النظام"
-msgstr "सिस्टम"
 
 #: app/templates/home.html:119
 msgid "المساعد الذكي"

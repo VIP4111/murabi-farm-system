@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 04:34+0300\n"
+"POT-Creation-Date: 2026-08-31 05:05+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -731,9 +731,17 @@ msgstr "ይህ ረቂቅ ማጽደቅ አይጠብቅም።"
 msgid "تحتاج صلاحية \"%(perm)s\" لاعتماد هذا النوع من المسودات."
 msgstr "ይህን አይነት ረቂቅ ለማጽደቅ \"%(perm)s\" ፈቃድ ያስፈልግዎታል።"
 
+#: app/assistant/routes.py:69
+msgid "الرسالة فاضية"
+msgstr "መልእክቱ ባዶ ነው"
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "መጀመሪያ ጥያቄዎን ይጻፉ"
+
+#: app/assistant/routes.py:85 app/health/routes.py:191
+msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
+msgstr "ምስሉ ልክ ያልሆነ ወይም በጣም ትልቅ ነው (ገደብ 8 ሜጋ)"
 
 #: app/assistant/routes.py:108
 msgid "تم مسح المحادثة"
@@ -2989,10 +2997,6 @@ msgstr "%(msg)s እርግጠኛ ከሆኑ የመተላለፊያ ምክንያቱ�
 msgid "ارفع صورة أولاً"
 msgstr "መጀመሪያ ምስል ይስቀሉ"
 
-#: app/health/routes.py:191
-msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
-msgstr "ምስሉ ልክ ያልሆነ ወይም በጣም ትልቅ ነው (ገደብ 8 ሜጋ)"
-
 #: app/health/routes.py:197
 msgid "تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً."
 msgstr "ምስሉን መተንተን አልተቻለም — የAI ቁልፍ መንቃቱን እና ምስሉ ግልጽ መሆኑን ያረጋግጡ፣ መረጃውን በእጅ ይሙሉ።"
@@ -4073,7 +4077,8 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "በቀጥታ ከሲስተም ውሂብ የተገኘ የቀጥታ እይታ — የደረሱ ክትባቶች፣ ሊያልቁ የተቃረቡ የመታቀብ ወቅቶች፣ ቅርብ ጊዜ የሚጠበቁ ልደቶች፣ የመራቢያ መሳሪያ ቀጠሮዎች፣ ለረጅም ጊዜ ክፍት የሆኑ በሽታዎች፣ ቅደም ተከተላቸው ያልተስተካከሉ እንስሳት፣ በመጠባበቅ ላይ ያሉ ሪፖርቶች፣ አሁን ለሽያጭ ዝግጁ የሆኑ እንስሳት፣ ኃላፊ ሠራተኛ የሌላቸው በረቶች፣ እና ለተያዙ ክትባቶች የሚጠበቅ የክምችት እጥረት (የክትባት ቀን መቁጠሪያ)። የጊዜ መስኮቱ ከ"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:122 app/templates/settings_backup.html:4
+#: app/templates/base.html:729 app/templates/home.html:122
+#: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
 #: app/templates/settings_simulation_data.html:4
@@ -5847,6 +5852,10 @@ msgstr "የጤና ፋይናንስ"
 msgid "التقارير التحليلية"
 msgstr "የትንተና ሪፖርቶች"
 
+#: app/templates/base.html:727 app/templates/home.html:116
+msgid "النظام"
+msgstr "ሲስተም"
+
 #: app/templates/base.html:735
 msgid "المظهر"
 msgstr "ገጽታ"
@@ -6494,10 +6503,6 @@ msgstr "መኖ"
 #: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
 msgid "التقارير"
 msgstr "ሪፖርቶች"
-
-#: app/templates/home.html:116
-msgid "النظام"
-msgstr "ሲስተም"
 
 #: app/templates/home.html:119
 msgid "المساعد الذكي"

@@ -66,7 +66,7 @@ def send():
 
     if not message_text and not (image_file and image_file.filename):
         if request.is_json:
-            return jsonify({"error": "الرسالة فاضية"}), 400
+            return jsonify({"error": _("الرسالة فاضية")}), 400
         flash(_("اكتب سؤالك أولاً"), "error")
         return redirect(url_for("assistant.chat"))
 
@@ -82,7 +82,7 @@ def send():
         image_url = save_upload(image_file, subfolder="assistant_chat",
                                  allowed_extensions=ALLOWED_IMAGE_EXTENSIONS, max_bytes=MAX_IMAGE_BYTES)
         if not image_bytes or len(image_bytes) > MAX_IMAGE_BYTES:
-            return jsonify({"error": "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"}), 400
+            return jsonify({"error": _("الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)")}), 400
         reply = svc.ask_and_record_with_image(
             current_user, message_text, image_bytes, image_file.mimetype or "image/jpeg", image_url,
         )

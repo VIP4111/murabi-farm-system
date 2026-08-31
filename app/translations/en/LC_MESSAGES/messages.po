@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 04:34+0300\n"
+"POT-Creation-Date: 2026-08-31 05:05+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -731,9 +731,17 @@ msgstr "This draft isn't awaiting approval."
 msgid "تحتاج صلاحية \"%(perm)s\" لاعتماد هذا النوع من المسودات."
 msgstr "You need the \"%(perm)s\" permission to approve this type of draft."
 
+#: app/assistant/routes.py:69
+msgid "الرسالة فاضية"
+msgstr "The message is empty"
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "Write your question first"
+
+#: app/assistant/routes.py:85 app/health/routes.py:191
+msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
+msgstr "The image is invalid or too large (limit 8 MB)"
 
 #: app/assistant/routes.py:108
 msgid "تم مسح المحادثة"
@@ -2989,10 +2997,6 @@ msgstr "%(msg)s Write the override reason in the dedicated field if you're sure 
 msgid "ارفع صورة أولاً"
 msgstr "Upload an image first"
 
-#: app/health/routes.py:191
-msgid "الصورة غير صالحة أو حجمها كبير جداً (الحد 8 ميجا)"
-msgstr "The image is invalid or too large (limit 8 MB)"
-
 #: app/health/routes.py:197
 msgid "تعذّر تحليل الصورة — تأكد إن مفتاح الذكاء الاصطناعي مفعَّل والصورة واضحة، وعبّي البيانات يدوياً."
 msgstr "Couldn't analyze the image — make sure the AI key is enabled and the image is clear, and fill in the data manually."
@@ -4073,7 +4077,8 @@ msgid "عرض حي يُشتق من بيانات النظام مباشرة — ت
 msgstr "A live view derived directly from system data — vaccinations due, withdrawal periods ending soon, upcoming expected births, breeding-device reminders, long-open diseases, out-of-order animals, pending reports, animals ready for sale now, barns with no responsible worker, and expected stock shortages for upcoming scheduled vaccinations (vaccination calendar). The time window comes from"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/home.html:122 app/templates/settings_backup.html:4
+#: app/templates/base.html:729 app/templates/home.html:122
+#: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
 #: app/templates/settings_simulation_data.html:4
@@ -5847,6 +5852,10 @@ msgstr "Health finance"
 msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
+#: app/templates/base.html:727 app/templates/home.html:116
+msgid "النظام"
+msgstr "System"
+
 #: app/templates/base.html:735
 msgid "المظهر"
 msgstr "Appearance"
@@ -6494,10 +6503,6 @@ msgstr "Feed"
 #: app/templates/reports/purchases.html:4 app/templates/reports/sales.html:4
 msgid "التقارير"
 msgstr "Reports"
-
-#: app/templates/home.html:116
-msgid "النظام"
-msgstr "System"
 
 #: app/templates/home.html:119
 msgid "المساعد الذكي"
