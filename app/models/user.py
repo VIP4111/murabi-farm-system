@@ -86,6 +86,13 @@ class User(UserMixin, db.Model):
     is_beginner = db.Column(db.Boolean, default=False, nullable=False)
     onboarding_completed_at = db.Column(db.DateTime, nullable=True)
 
+    # صورة شخصية اختيارية لعضو الفريق (بند إضافي، طلبك الصريح) — نفس
+    # نمط `telegram_chat_id`/`email` بالضبط: اختياري تماماً، فاضي يعني
+    # بدون صورة (تظهر أيقونة افتراضية بالواجهة). رابط سحابي (Cloudinary
+    # لو مضبوط، وإلا محلي) عبر نفس `cloud_storage_service.save_upload`
+    # الموحَّد المستخدَم أصلاً لصور البلاغات/الدردشة.
+    photo_url = db.Column(db.String(500), nullable=True)
+
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)
 

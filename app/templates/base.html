@@ -525,7 +525,11 @@
     <div class="side-menu">
       <div class="side-menu-head">
         <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+          {% if current_user.photo_url %}
+          <img src="{{ current_user.photo_url }}" alt="" style="width:40px; height:40px; border-radius:50%; object-fit:cover; flex:none;">
+          {% else %}
           <div class="logo"><img src="{{ url_for('static', filename='icons/icon-96.png') }}" alt="{{ _('مراح بو علي') }}"></div>
+          {% endif %}
           <div>
             <b>{{ current_user.name }}</b>
             <small>{{ current_user.role.display_name }}</small>

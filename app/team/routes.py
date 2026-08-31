@@ -61,6 +61,15 @@ def members_list():
     return render_template("team/members_list.html", members=members)
 
 
+def _save_member_photo(file_storage):
+    """صورة شخصية اختيارية لعضو الفريق (بند إضافي، طلبك الصريح) — نفس
+    قيود صورة دليل البلاغ بالضبط (`report_service.ALLOWED_IMAGE_EXTENSIONS`/
+    `MAX_IMAGE_BYTES`)، بمجلد سحابي مستقل عشان ما تختلط الصور ببعض."""
+    from app.core.cloud_storage_service import save_upload
+    return save_upload(file_storage, subfolder="team_photos",
+                        allowed_extensions=svc.ALLOWED_IMAGE_EXTENSIONS, max_bytes=svc.MAX_IMAGE_BYTES)
+
+
 @team_bp.route("/members/new", methods=["GET", "POST"])
 @login_required
 @require_permission("users.manage")
@@ -71,6 +80,7 @@ def members_new():
             phone=request.form["phone"].strip(),
             role_id=int(request.form["role_id"]),
             language=request.form.get("language") or "ar",
+            photo_url=_save_member_photo(request.files.get("photo")),
         )
         user.set_password(request.form["password"])
         db.session.add(user)
@@ -99,6 +109,14 @@ def members_edit(user_id):
         user.language = request.form.get("language") or "ar"
         user.telegram_chat_id = request.form.get("telegram_chat_id", "").strip() or None
         user.email = request.form.get("email", "").strip() or None
+        # صورة شخصية (بند إضافي) — رفع صورة جديدة يستبدل القديمة، وزر
+        # "إزالة الصورة" منفصل يمسحها بدون رفع صورة بديلة (checkbox
+        # `remove_photo`، نفس نمط أي حقل اختياري ثانٍ بالنظام).
+        new_photo_url = _save_member_photo(request.files.get("photo"))
+        if new_photo_url:
+            user.photo_url = new_photo_url
+        elif request.form.get("remove_photo") == "1":
+            user.photo_url = None
         new_password = request.form.get("new_password", "").strip()
         if new_password:
             user.set_password(new_password)

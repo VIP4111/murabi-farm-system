@@ -7,9 +7,16 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('الدور') }}</th><th>{{ _('اللغة') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
+    <tr><th></th><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('الدور') }}</th><th>{{ _('اللغة') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
     {% for m in members %}
     <tr>
+      <td>
+        {% if m.photo_url %}
+        <img src="{{ m.photo_url }}" alt="" style="width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;">
+        {% else %}
+        <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--border); color:var(--muted); font-size:13px;">{{ m.name[0] if m.name else '?' }}</span>
+        {% endif %}
+      </td>
       <td>{{ m.name }}</td>
       <td>{{ m.phone }}</td>
       <td>{{ m.role.display_name if m.role else '-' }}</td>
@@ -26,7 +33,7 @@
       </td>
     </tr>
     {% else %}
-    <tr><td colspan="6" style="color:#888;">{{ _('لا يوجد أعضاء بعد.') }}</td></tr>
+    <tr><td colspan="7" style="color:#888;">{{ _('لا يوجد أعضاء بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>
