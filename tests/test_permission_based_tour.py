@@ -82,3 +82,30 @@ def test_settings_page_links_to_welcome_tour(app, logged_in_client):
     resp = logged_in_client.get("/settings")
     assert resp.status_code == 200
     assert '/onboarding/welcome' in resp.data.decode()
+
+
+def test_tour_grouped_by_category_preserves_intended_order_not_alphabetical(app):
+    """بند إضافي (تعزيز الجولة) — التجميع يدوي بترتيب الإدراج الأصلي،
+    مو Jinja groupby (يفرز أبجدياً حسب النص المترجَم، فيغيّر ترتيب
+    الفئات حسب لغة الحساب). "عام" لازم يبقى أول فئة دائماً، بغض النظر
+    عن ترتيبها الأبجدي بأي لغة."""
+    owner = Role.query.filter_by(name="owner").first()
+    u = User(name="Owner Group Order Test", phone="0599999280", role_id=owner.id)
+    u.set_password("pass1234")
+    db.session.add(u)
+    db.session.commit()
+
+    groups = checklist_service.permission_tour_grouped(u)
+    assert len(groups) >= 2
+    assert str(groups[0]["category"]) == "عام"
+    # صفر تكرار لنفس الفئة بمكانين مختلفين (يعني التجميع فعلياً متجاور)
+    seen = [str(g["category"]) for g in groups]
+    assert len(seen) == len(set(seen))
+
+
+def test_welcome_page_shows_grouped_categories(app, logged_in_client):
+    resp = logged_in_client.get("/onboarding/welcome")
+    body = resp.data.decode()
+    assert resp.status_code == 200
+    assert "drawer-group" in body
+    assert "عام" in body

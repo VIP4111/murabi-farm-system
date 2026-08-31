@@ -34,20 +34,32 @@
   {# جولة مكثّفة أول دخول (بند إضافي 2026-08-31، طلبك المباشر) — قسم
      لكل صلاحية تملكها فعلياً بس (permission_tour_sections بالراوت)،
      مو حسب اسم الدور — تشتغل صح حتى لو صاحب الحلال خصّص صلاحيات دور
-     معيّن يدوياً. #}
+     معيّن يدوياً.
+
+     مجمَّعة بعناوين فئات (بند إضافي، طلبك: "تعزيز الجولة التعريفية")
+     بدل قائمة مسطّحة من 20+ قسم متتالي — أسهل مسحاً بصرياً خصوصاً
+     لصاحب الحلال اللي يشوف الجولة كاملة (كل الصلاحيات). كل فئة تُطوى
+     مفتوحة افتراضياً بأول فتح (details/summary أصلي، بدون جافاسكربت
+     إضافي) — نفس عنصر details.drawer-group الموجود أصلاً بالقائمة
+     الجانبية (بند 198). #}
   <div class="card">
     <h3 style="font-size:15px;">📖 {{ _('جولة مكثّفة — وش تقدر تسوي بالضبط') }}</h3>
     <p style="color:var(--muted); font-size:12.5px; margin:-4px 0 12px;">{{ _('حسب صلاحياتك الحالية بالضبط — لو تغيّرت صلاحياتك لاحقاً، ارجع لنفس الشاشة من الإعدادات لتحديث الجولة.') }}</p>
-    {% for section in tour_sections %}
-    <div style="padding:10px 0; border-top:1px solid var(--line);">
-      <b>{{ section.icon }} {{ section.title }}</b>
-      <ul style="margin:6px 0 0; padding-inline-start:18px; color:var(--muted); font-size:13px;">
-        {% for point in section.points %}<li style="margin-bottom:4px;">{{ point }}</li>{% endfor %}
-      </ul>
-      {% if section.link_endpoint %}
-      <a href="{{ url_for(section.link_endpoint) }}" style="font-size:12.5px;">{{ _('افتح الشاشة') }} ←</a>
-      {% endif %}
-    </div>
+    {% for group in tour_groups %}
+    <details class="drawer-group" open>
+      <summary>{{ group.category }}</summary>
+      {% for section in group.sections %}
+      <div style="padding:10px 0; border-top:1px solid var(--line);">
+        <b>{{ section.icon }} {{ section.title }}</b>
+        <ul style="margin:6px 0 0; padding-inline-start:18px; color:var(--muted); font-size:13px;">
+          {% for point in section.points %}<li style="margin-bottom:4px;">{{ point }}</li>{% endfor %}
+        </ul>
+        {% if section.link_endpoint %}
+        <a href="{{ url_for(section.link_endpoint) }}" style="font-size:12.5px;">{{ _('افتح الشاشة') }} ←</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </details>
     {% endfor %}
   </div>
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 11:49+0300\n"
+"POT-Creation-Date: 2026-08-31 16:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -484,7 +484,7 @@ msgstr "रिपोर्ट स्थगित करें"
 msgid "استئناف بلاغ"
 msgstr "रिपोर्ट फिर से शुरू करें"
 
-#: app/__init__.py:310 app/core/checklist_service.py:285
+#: app/__init__.py:310 app/core/checklist_service.py:317
 msgid "رفع بلاغ"
 msgstr "रिपोर्ट दर्ज करें"
 
@@ -1537,11 +1537,66 @@ msgstr ""
 "बैच अभी भी क्वारंटीन चरण में है — अभी कोई अतिरिक्त व्यक्तिगत कार्रवाई "
 "आवश्यक नहीं है।"
 
-#: app/core/checklist_service.py:166
+#: app/core/checklist_service.py:167 app/templates/onboarding/checklist.html:11
+msgid "عام"
+msgstr "सामान्य"
+
+#: app/core/checklist_service.py:168
+msgid "الحيوانات والحظائر"
+msgstr "पशु और बाड़े"
+
+#: app/core/checklist_service.py:169
+msgid "الصحة والصيدلية"
+msgstr "स्वास्थ्य और फार्मेसी"
+
+#: app/core/checklist_service.py:170 app/templates/animal_detail.html:118
+#: app/templates/home.html:85
+msgid "التكاثر"
+msgstr "प्रजनन"
+
+#: app/core/checklist_service.py:171 app/templates/animal_detail.html:123
+#: app/templates/base.html:993 app/templates/finance/list.html:56
+#: app/templates/home.html:103
+msgid "المالية"
+msgstr "वित्त"
+
+#: app/core/checklist_service.py:172
+msgid "المهام والبلاغات"
+msgstr "कार्य और रिपोर्ट"
+
+#: app/core/checklist_service.py:173 app/templates/home.html:100
+msgid "العلف"
+msgstr "चारा"
+
+#: app/core/checklist_service.py:174 app/templates/base.html:900
+#: app/templates/equipment/items_mine.html:17
+#: app/templates/family_view.html:159 app/templates/family_view.html:194
+msgid "المعدات"
+msgstr "उपकरण"
+
+#: app/core/checklist_service.py:175 app/core/checklist_service.py:365
+#: app/templates/base.html:995
+msgid "التقارير التحليلية"
+msgstr "विश्लेषण रिपोर्टें"
+
+#: app/core/checklist_service.py:176 app/core/checklist_service.py:375
+#: app/templates/home.html:119
+msgid "المساعد الذكي"
+msgstr "स्मार्ट सहायक"
+
+#: app/core/checklist_service.py:177 app/templates/base.html:911
+msgid "المناخ"
+msgstr "जलवायु"
+
+#: app/core/checklist_service.py:178
+msgid "الفريق والصلاحيات"
+msgstr "टीम और अनुमतियाँ"
+
+#: app/core/checklist_service.py:185
 msgid "الصفحة الرئيسية و«صفحة اليوم»"
 msgstr "होम और «आज का पेज»"
 
-#: app/core/checklist_service.py:168
+#: app/core/checklist_service.py:187
 msgid ""
 "الصفحة الرئيسية تعرض «إجراءات سريعة» لأكثر الشاشات استخداماً حسب "
 "صلاحياتك، وتنبيهات فورية لو فيه شي يحتاج انتباهك."
@@ -1550,7 +1605,7 @@ msgstr ""
 "के लिए «त्वरित कार्रवाइयाँ» दिखाता है, और अगर किसी चीज़ पर ध्यान देना "
 "ज़रूरी हो तो तुरंत अलर्ट भी देता है।"
 
-#: app/core/checklist_service.py:169
+#: app/core/checklist_service.py:188
 msgid ""
 "«صفحة اليوم» (من الرئيسية) تجمع مهامك المفتوحة وتنبيهاتك وبلاغاتك بشاشة "
 "وحدة بدل ما تتنقّل بين عدة شاشات كل صباح."
@@ -1558,11 +1613,11 @@ msgstr ""
 "«आज का पेज» (होम से) आपके खुले कार्य, अलर्ट और रिपोर्ट को एक ही स्क्रीन "
 "में इकट्ठा करता है, हर सुबह कई स्क्रीन के बीच जाने के बजाय।"
 
-#: app/core/checklist_service.py:176 app/templates/animals_list.html:5
+#: app/core/checklist_service.py:196 app/templates/animals_list.html:5
 msgid "سجل الحيوانات"
 msgstr "पशु रजिस्ट्री"
 
-#: app/core/checklist_service.py:178
+#: app/core/checklist_service.py:198
 msgid ""
 "كل رأس بالقطيع له سجل مستقل: رقمه، فصيلته، سلالته، عمره، حظيرته، وحالته "
 "الحالية (نشط/مباع/نافق/معزول)."
@@ -1570,7 +1625,7 @@ msgstr ""
 "झुंड के हर पशु का अपना अलग रिकॉर्ड है: उसका नंबर, प्रजाति, नस्ल, उम्र, "
 "बाड़ा, और वर्तमान स्थिति (सक्रिय/बिका/मृत/पृथक)।"
 
-#: app/core/checklist_service.py:179
+#: app/core/checklist_service.py:199
 msgid ""
 "كل شاشة ثانية بالنظام (الصحة، التكاثر، العلف، التقارير) مبنية على وجود "
 "سجل حيوان أولاً."
@@ -1578,11 +1633,11 @@ msgstr ""
 "सिस्टम की हर दूसरी स्क्रीन (स्वास्थ्य, प्रजनन, चारा, रिपोर्ट) पहले पशु "
 "रिकॉर्ड के मौजूद होने पर बनी है।"
 
-#: app/core/checklist_service.py:186
+#: app/core/checklist_service.py:207
 msgid "إضافة/تعديل/بيع حيوان"
 msgstr "पशु जोड़ें/संपादित करें/बेचें"
 
-#: app/core/checklist_service.py:188
+#: app/core/checklist_service.py:209
 msgid ""
 "تقدر تسجّل حيوان جديد (واحد أو دفعة شراء كاملة)، تعدّل بياناته، تسجّل "
 "بيعه أو نفوقه."
@@ -1590,7 +1645,7 @@ msgstr ""
 "आप नया पशु दर्ज कर सकते हैं (एक या पूरा खरीद बैच), उसका डेटा संपादित कर "
 "सकते हैं, और उसकी बिक्री या मृत्यु दर्ज कर सकते हैं।"
 
-#: app/core/checklist_service.py:189
+#: app/core/checklist_service.py:210
 msgid ""
 "بيع حيوان أثناء فترة سحب دواء يحتاج سبباً موثَّقاً — النظام يمنع البيع "
 "العادي تلقائياً بهذي الحالة حماية للمستهلك."
@@ -1599,17 +1654,17 @@ msgstr ""
 "सिस्टम उपभोक्ता की सुरक्षा के लिए इस स्थिति में सामान्य बिक्री को अपने आप"
 " रोक देता है।"
 
-#: app/core/checklist_service.py:195
+#: app/core/checklist_service.py:217
 msgid "إدارة الحظائر"
 msgstr "बाड़ा प्रबंधन"
 
-#: app/core/checklist_service.py:197
+#: app/core/checklist_service.py:219
 msgid "أنشئ حظائرك وحدد نوعها (عادية/عزل/نفاس...) وسعتها والعامل المسؤول عنها."
 msgstr ""
 "अपने बाड़े बनाएँ और उनका प्रकार (सामान्य/पृथक्करण/प्रसव...), क्षमता और "
 "ज़िम्मेदार कर्मचारी तय करें।"
 
-#: app/core/checklist_service.py:198
+#: app/core/checklist_service.py:220
 msgid ""
 "حظيرة العزل ضرورية — العزل التلقائي بعد الولادة أو وصول حيوان جديد يحتاج "
 "حظيرة عزل موجودة فعلاً."
@@ -1617,11 +1672,11 @@ msgstr ""
 "पृथक्करण बाड़ा ज़रूरी है — जन्म के बाद या नए पशु के आने पर स्वचालित "
 "पृथक्करण के लिए वास्तव में एक पृथक्करण बाड़े का मौजूद होना ज़रूरी है।"
 
-#: app/core/checklist_service.py:205
+#: app/core/checklist_service.py:228
 msgid "السجل الصحي والزيارات البيطرية"
 msgstr "स्वास्थ्य रिकॉर्ड और पशु चिकित्सक विज़िट"
 
-#: app/core/checklist_service.py:207
+#: app/core/checklist_service.py:230
 msgid ""
 "تاريخ كل حالة مرضية، تشخيص، علاج، وتحصين لكل رأس — بما فيها المساعد "
 "التشخيصي اللي يقترح احتمالات مرضية من الأعراض المُدخَلة."
@@ -1629,11 +1684,11 @@ msgstr ""
 "हर पशु के लिए हर बीमारी, निदान, इलाज और टीकाकरण का इतिहास — जिसमें वह "
 "निदान सहायक भी शामिल है जो दर्ज लक्षणों से संभावित बीमारियाँ सुझाता है।"
 
-#: app/core/checklist_service.py:214
+#: app/core/checklist_service.py:238
 msgid "تسجيل تشخيص/علاج/تحصين"
 msgstr "निदान/इलाज/टीकाकरण दर्ज करें"
 
-#: app/core/checklist_service.py:216
+#: app/core/checklist_service.py:240
 msgid ""
 "سجّل حالة مرضية جديدة، طبّق بروتوكول علاج جاهز، أو سجّل تحصيناً — كل "
 "إجراء يخصم تلقائياً من مخزون الصيدلية ويُحسب ماليته."
@@ -1642,7 +1697,7 @@ msgstr ""
 " — हर कार्रवाई अपने आप फार्मेसी स्टॉक से घटती है और उसकी लागत गिनी जाती "
 "है।"
 
-#: app/core/checklist_service.py:217
+#: app/core/checklist_service.py:241
 msgid ""
 "تنبيه: النظام يساعدك تنظّم وتتذكّر، لكنه ما يشخّص ولا يعالج — القرار "
 "الطبي النهائي يبقى للطبيب البيطري دائماً."
@@ -1651,11 +1706,11 @@ msgstr ""
 "यह निदान या इलाज नहीं करता — अंतिम चिकित्सा निर्णय हमेशा पशु चिकित्सक का "
 "ही रहता है।"
 
-#: app/core/checklist_service.py:223
+#: app/core/checklist_service.py:248
 msgid "إدارة مخزون الصيدلية"
 msgstr "फार्मेसी स्टॉक प्रबंधन"
 
-#: app/core/checklist_service.py:225
+#: app/core/checklist_service.py:250
 msgid ""
 "سجّل الأدوية بكمياتها (عدد العلب × كمية العلبة يحسب الإجمالي تلقائياً)، "
 "وتابع تنبيهات نفاد المخزون."
@@ -1663,11 +1718,11 @@ msgstr ""
 "दवाओं को उनकी मात्रा के साथ दर्ज करें (बॉक्स की संख्या × प्रति बॉक्स "
 "मात्रा से कुल अपने आप निकलता है), और स्टॉक खत्म होने के अलर्ट देखें।"
 
-#: app/core/checklist_service.py:232
+#: app/core/checklist_service.py:258
 msgid "التكاثر: تلقيح، حمل، ولادة"
 msgstr "प्रजनन: गर्भाधान, गर्भावस्था, प्रसव"
 
-#: app/core/checklist_service.py:234
+#: app/core/checklist_service.py:260
 msgid ""
 "تابع دورة كل أنثى — من التقريع إلى تشخيص الحمل (فحص يدوي أو سونار) إلى "
 "الولادة — وتاريخ الولادة المتوقع يُحسب تلقائياً."
@@ -1675,11 +1730,11 @@ msgstr ""
 "हर मादा का चक्र देखें — गर्भाधान से, गर्भावस्था निदान (मैन्युअल जाँच या "
 "अल्ट्रासाउंड) से, प्रसव तक — अपेक्षित प्रसव तिथि अपने आप निकाली जाती है।"
 
-#: app/core/checklist_service.py:241
+#: app/core/checklist_service.py:268
 msgid "تسجيل تقريع وبرامج شياع"
 msgstr "गर्भाधान और मद (एस्ट्रस) कार्यक्रम दर्ज करें"
 
-#: app/core/checklist_service.py:243
+#: app/core/checklist_service.py:270
 msgid ""
 "سجّل محاولة تقريع بين أنثى وفحل — النظام يحذّرك تلقائياً لو فيه قرابة "
 "وراثية قريبة بينهما قبل ما تحفظ."
@@ -1687,11 +1742,11 @@ msgstr ""
 "मादा और नर के बीच गर्भाधान प्रयास दर्ज करें — सेव करने से पहले, अगर दोनों"
 " में करीबी आनुवंशिक रिश्तेदारी हो तो सिस्टम अपने आप चेतावनी देता है।"
 
-#: app/core/checklist_service.py:249
+#: app/core/checklist_service.py:277
 msgid "المالية المرتبطة بالصحة"
 msgstr "स्वास्थ्य से जुड़ा वित्त"
 
-#: app/core/checklist_service.py:251
+#: app/core/checklist_service.py:279
 msgid ""
 "تكلفة كل علاج/تحصين/زيارة بيطرية تُسجَّل مالياً تلقائياً — تقدر تراجعها "
 "من هنا بدون صلاحية المالية الكاملة."
@@ -1699,11 +1754,11 @@ msgstr ""
 "हर इलाज/टीकाकरण/पशु चिकित्सक विज़िट की लागत अपने आप वित्तीय रूप से दर्ज "
 "होती है — आप पूर्ण वित्त अनुमति के बिना यहाँ से इसे देख सकते हैं।"
 
-#: app/core/checklist_service.py:257
+#: app/core/checklist_service.py:286
 msgid "المالية الكاملة"
 msgstr "पूर्ण वित्त"
 
-#: app/core/checklist_service.py:259
+#: app/core/checklist_service.py:288
 msgid ""
 "كل حركة مالية بالمزرعة: مبيعات، مشتريات، ديون، فواتير — من هنا تدير كامل "
 "الجانب المالي."
@@ -1711,11 +1766,11 @@ msgstr ""
 "फार्म का हर वित्तीय लेन-देन: बिक्री, खरीद, कर्ज़, बिल — यहाँ से आप पूरा "
 "वित्तीय पक्ष प्रबंधित करते हैं।"
 
-#: app/core/checklist_service.py:266
+#: app/core/checklist_service.py:296
 msgid "توزيع ومراجعة المهام"
 msgstr "कार्य सौंपें और समीक्षा करें"
 
-#: app/core/checklist_service.py:268
+#: app/core/checklist_service.py:298
 msgid ""
 "النظام يقترح مهاماً يومية تلقائياً حسب حالة القطيع (فحص عزل، متابعة "
 "حمل...)، وتقدر توزّع مهاماً يدوية على أي عامل."
@@ -1724,7 +1779,7 @@ msgstr ""
 "जाँच, गर्भावस्था अनुवर्तन...), और आप किसी भी कर्मचारी को मैन्युअल कार्य "
 "सौंप सकते हैं।"
 
-#: app/core/checklist_service.py:269
+#: app/core/checklist_service.py:299
 msgid ""
 "قسم «مهام مقترحة بانتظار الاعتماد» يحتاج موافقتك (أو تأجيل/حذف) قبل ما "
 "تنزل فعلياً للعامل."
@@ -1732,12 +1787,12 @@ msgstr ""
 "«स्वीकृति की प्रतीक्षा में सुझाए गए कार्य» सेक्शन को कर्मचारी तक पहुँचने "
 "से पहले आपकी मंज़ूरी (या स्थगन/हटाना) चाहिए।"
 
-#: app/core/checklist_service.py:276 app/templates/simple_home.html:56
+#: app/core/checklist_service.py:307 app/templates/simple_home.html:56
 #: app/templates/team/tasks_list.html:56
 msgid "مهامي"
 msgstr "मेरे कार्य"
 
-#: app/core/checklist_service.py:278
+#: app/core/checklist_service.py:309
 msgid ""
 "قائمة مهامك الشخصية المفتوحة — ابدأ المهمة، أنجزها (مع صورة/ملاحظة إثبات "
 "لو مطلوبة)، أو سجّل تعذّر تنفيذها بسبب واضح."
@@ -1745,7 +1800,7 @@ msgstr ""
 "आपके अपने खुले कार्यों की सूची — कार्य शुरू करें, पूरा करें (ज़रूरत पड़ने"
 " पर सबूत फोटो/नोट के साथ), या स्पष्ट कारण के साथ न कर पाने को दर्ज करें।"
 
-#: app/core/checklist_service.py:287
+#: app/core/checklist_service.py:319
 msgid ""
 "لاحظت شي غير طبيعي بالحظيرة؟ ارفع بلاغاً فورياً (نص أو ملاحظة صوتية) يوصل"
 " للمسؤول مباشرة."
@@ -1753,21 +1808,21 @@ msgstr ""
 "बाड़े में कुछ असामान्य देखा? तुरंत एक रिपोर्ट (टेक्स्ट या वॉइस नोट) भेजें"
 " जो सीधे ज़िम्मेदार व्यक्ति तक पहुँचे।"
 
-#: app/core/checklist_service.py:293
+#: app/core/checklist_service.py:326
 msgid "استلام وإدارة البلاغات"
 msgstr "रिपोर्ट प्राप्त करें और प्रबंधित करें"
 
-#: app/core/checklist_service.py:295
+#: app/core/checklist_service.py:328
 msgid "استلم بلاغات الفريق، حوّلها لعامل ثاني لو يلزم، أو أغلقها بعد المعالجة."
 msgstr ""
 "टीम की रिपोर्ट प्राप्त करें, ज़रूरत पड़ने पर किसी दूसरे कर्मचारी को "
 "स्थानांतरित करें, या निपटाने के बाद बंद करें।"
 
-#: app/core/checklist_service.py:302
+#: app/core/checklist_service.py:336
 msgid "العلف والمخزون"
 msgstr "चारा और स्टॉक"
 
-#: app/core/checklist_service.py:304
+#: app/core/checklist_service.py:338
 msgid ""
 "تابع أصناف العلف المتوفرة، خطط التغذية لكل حظيرة، ومعدل تحويل العلف (FCR)"
 " لتسمين القطعان."
@@ -1775,11 +1830,11 @@ msgstr ""
 "उपलब्ध चारा किस्मों, हर बाड़े की आहार योजनाओं, और मोटा करने वाले झुंडों "
 "के चारा रूपांतरण दर (FCR) पर नज़र रखें।"
 
-#: app/core/checklist_service.py:311
+#: app/core/checklist_service.py:346
 msgid "إدارة العلف والوصفات"
 msgstr "चारा और नुस्खा प्रबंधन"
 
-#: app/core/checklist_service.py:313
+#: app/core/checklist_service.py:348
 msgid ""
 "أضف أصناف علف جديدة، سجّل مشتريات، وابنِ وصفات علف موزونة (موازن العليقة "
 "يقترح أرخص تركيبة تحقق احتياج البروتين/الطاقة)."
@@ -1788,21 +1843,17 @@ msgstr ""
 "(राशन ऑप्टिमाइज़र प्रोटीन/ऊर्जा ज़रूरत पूरी करने वाला सबसे सस्ता मिश्रण "
 "सुझाता है)।"
 
-#: app/core/checklist_service.py:319
+#: app/core/checklist_service.py:355
 msgid "مخزون المعدات"
 msgstr "उपकरण स्टॉक"
 
-#: app/core/checklist_service.py:321
+#: app/core/checklist_service.py:357
 msgid "تابع معدات المزرعة وأدواتها — المتوفر منها ومين مسحوب عنده حالياً."
 msgstr ""
 "फार्म के उपकरणों और औज़ारों पर नज़र रखें — कौन-कौन उपलब्ध है और अभी किसके"
 " पास है।"
 
-#: app/core/checklist_service.py:328 app/templates/base.html:995
-msgid "التقارير التحليلية"
-msgstr "विश्लेषण रिपोर्टें"
-
-#: app/core/checklist_service.py:330
+#: app/core/checklist_service.py:367
 msgid ""
 "تقارير شاملة: نفوق، ولادات، مبيعات، أداء القطيع — قابلة للتصدير لمشاركتها"
 " أو أرشفتها."
@@ -1810,11 +1861,7 @@ msgstr ""
 "व्यापक रिपोर्ट: मृत्यु, जन्म, बिक्री, झुंड प्रदर्शन — साझा करने या "
 "संग्रहीत करने के लिए निर्यात योग्य।"
 
-#: app/core/checklist_service.py:337 app/templates/home.html:119
-msgid "المساعد الذكي"
-msgstr "स्मार्ट सहायक"
-
-#: app/core/checklist_service.py:339
+#: app/core/checklist_service.py:377
 msgid ""
 "اسأله أي سؤال تشغيلي عام (تحصينات، عزل، فترات سحب...) أو اطلب منه معلومة "
 "عن حيوان معيّن — يجاوب من بيانات مزرعتك الفعلية."
@@ -1823,7 +1870,7 @@ msgstr ""
 "अवधि...) या किसी खास पशु की जानकारी माँगें — यह आपके फार्म के वास्तविक "
 "डेटा से जवाब देता है।"
 
-#: app/core/checklist_service.py:340
+#: app/core/checklist_service.py:378
 msgid ""
 "تنبيه: مساعد قرار مساعد لك، مو طبيباً بيطرياً — القرار الطبي النهائي يبقى"
 " للطبيب دائماً."
@@ -1831,12 +1878,12 @@ msgstr ""
 "ध्यान दें: यह एक निर्णय-सहायक है, पशु चिकित्सक नहीं — अंतिम चिकित्सा "
 "निर्णय हमेशा डॉक्टर का ही रहता है।"
 
-#: app/core/checklist_service.py:347 app/templates/base.html:913
+#: app/core/checklist_service.py:386 app/templates/base.html:913
 #: app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "जलवायु और गर्मी तनाव रडार"
 
-#: app/core/checklist_service.py:349
+#: app/core/checklist_service.py:388
 msgid ""
 "توقعات الطقس ومؤشر الإجهاد الحراري لموقع مزرعتك — يساعدك تتوقع أيام الخطر"
 " وتجهّز التبريد/التهوية مسبقاً."
@@ -1845,11 +1892,11 @@ msgstr ""
 "भरे दिनों का पहले से अंदाज़ा लगाने और कूलिंग/वेंटिलेशन पहले से तैयार करने"
 " में मदद करता है।"
 
-#: app/core/checklist_service.py:356
+#: app/core/checklist_service.py:396
 msgid "إدارة المسمّيات الوظيفية والصلاحيات"
 msgstr "भूमिकाएँ और अनुमतियाँ प्रबंधित करें"
 
-#: app/core/checklist_service.py:358
+#: app/core/checklist_service.py:398
 msgid ""
 "أنشئ مسمّيات وظيفية جديدة أو عدّل صلاحيات أي دور موجود من شاشة الإعدادات "
 "— بدون أي حاجة لتعديل برمجي."
@@ -1857,11 +1904,11 @@ msgstr ""
 "सेटिंग्स स्क्रीन से नई भूमिकाएँ बनाएँ या किसी मौजूदा भूमिका की अनुमतियाँ "
 "संपादित करें — बिना किसी कोड बदलाव के।"
 
-#: app/core/checklist_service.py:365
+#: app/core/checklist_service.py:406
 msgid "إدارة حسابات الفريق"
 msgstr "टीम खाते प्रबंधित करें"
 
-#: app/core/checklist_service.py:367
+#: app/core/checklist_service.py:408
 msgid "أضف أعضاء فريق جدد، عطّل حساباً، أو عدّل بياناتهم من شاشة «الفريق»."
 msgstr ""
 "«टीम» स्क्रीन से नए टीम सदस्य जोड़ें, कोई खाता निष्क्रिय करें, या उनका "
@@ -5349,10 +5396,6 @@ msgstr "बीमारियाँ"
 msgid "التحصينات"
 msgstr "टीकाकरण"
 
-#: app/templates/animal_detail.html:118 app/templates/home.html:85
-msgid "التكاثر"
-msgstr "प्रजनन"
-
 #: app/templates/animal_detail.html:119 app/templates/animal_detail.html:352
 msgid "الولادات"
 msgstr "जन्म"
@@ -5396,11 +5439,6 @@ msgstr "दूध"
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
-
-#: app/templates/animal_detail.html:123 app/templates/base.html:993
-#: app/templates/finance/list.html:56 app/templates/home.html:103
-msgid "المالية"
-msgstr "वित्त"
 
 #: app/templates/animal_detail.html:128
 msgid "بيانات أساسية"
@@ -6969,11 +7007,6 @@ msgstr "आज के कार्यों की समीक्षा कर�
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
-#: app/templates/base.html:900 app/templates/equipment/items_mine.html:17
-#: app/templates/family_view.html:159 app/templates/family_view.html:194
-msgid "المعدات"
-msgstr "उपकरण"
-
 #: app/templates/base.html:903 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
@@ -6982,10 +7015,6 @@ msgstr "उपकरण गोदाम"
 #: app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr "मेरे उपकरण"
-
-#: app/templates/base.html:911
-msgid "المناخ"
-msgstr "जलवायु"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:26
 #: app/templates/base.html:922
@@ -7796,10 +7825,6 @@ msgstr "जुड़वां मद-चक्र कार्यक्रम"
 #: app/templates/home.html:97
 msgid "العلف والمالية والتقارير"
 msgstr "चारा, वित्त और रिपोर्ट"
-
-#: app/templates/home.html:100
-msgid "العلف"
-msgstr "चारा"
 
 #: app/templates/home.html:108 app/templates/reports/activity.html:4
 #: app/templates/reports/births.html:4 app/templates/reports/mortality.html:4
@@ -12636,10 +12661,6 @@ msgstr ""
 "है — जो भी पूरा किया हो उसे चेक करें।"
 
 #: app/templates/onboarding/checklist.html:11
-msgid "عام"
-msgstr "सामान्य"
-
-#: app/templates/onboarding/checklist.html:11
 msgid "تجهيز"
 msgstr "तैयारी"
 
@@ -12704,11 +12725,11 @@ msgstr "नहीं, मुझे अनुभव है"
 msgid "خطوات أولى موصى بها"
 msgstr "अनुशंसित पहले कदम"
 
-#: app/templates/onboarding/welcome.html:39
+#: app/templates/onboarding/welcome.html:46
 msgid "جولة مكثّفة — وش تقدر تسوي بالضبط"
 msgstr "गहन दौरा — आप बिल्कुल क्या कर सकते हैं"
 
-#: app/templates/onboarding/welcome.html:40
+#: app/templates/onboarding/welcome.html:47
 msgid ""
 "حسب صلاحياتك الحالية بالضبط — لو تغيّرت صلاحياتك لاحقاً، ارجع لنفس الشاشة"
 " من الإعدادات لتحديث الجولة."
@@ -12716,11 +12737,11 @@ msgstr ""
 "बिल्कुल आपकी वर्तमान अनुमतियों के आधार पर — अगर आपकी अनुमतियाँ बाद में "
 "बदलें, तो दौरे को अपडेट करने के लिए सेटिंग्स से इसी स्क्रीन पर वापस आएँ।"
 
-#: app/templates/onboarding/welcome.html:48
+#: app/templates/onboarding/welcome.html:58
 msgid "افتح الشاشة"
 msgstr "स्क्रीन खोलें"
 
-#: app/templates/onboarding/welcome.html:55
+#: app/templates/onboarding/welcome.html:67
 msgid ""
 "تنبيه صادق: هذا التطبيق نظام إدارة وتتبّع يساعدك تنظّم شغلك وما تنسى "
 "موعداً — مو بديل عن طبيب بيطري ولا عن تعلّم أساسيات تربية القطيع. راجع "
@@ -12731,7 +12752,7 @@ msgstr ""
 "पशुपालन की बुनियादी बातें सीखने का विकल्प नहीं है। चिकित्सा निर्णयों के "
 "लिए हमेशा अपने डॉक्टर से सलाह लें।"
 
-#: app/templates/onboarding/welcome.html:56
+#: app/templates/onboarding/welcome.html:68
 msgid "ابدأ استخدام التطبيق"
 msgstr "ऐप का उपयोग शुरू करें"
 

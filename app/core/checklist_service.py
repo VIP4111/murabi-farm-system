@@ -159,9 +159,28 @@ def toggle_completion(user, item_id: int, today: date | None = None) -> bool:
 # ما يطابق "owner/doctor/worker" بالاسم، لكن يملك تركيبة صلاحيات
 # حقيقية). كل نص مغلَّف بـ_l() فيُترجم فعلياً حسب لغة الحساب — مصدر
 # واحد بالكود (مو بيانات قاعدة بيانات تحتاج عمود ترجمة منفصل لكل لغة).
+# بند إضافي (2026-08-31، طلبك المباشر: "تعزيز الجولة التعريفية") —
+# فئات لتجميع الأقسام بعناوين فرعية بالشاشة، بدل قائمة مسطّحة من 20+
+# قسم متتالي بلا تصنيف (صعبة المسح البصري خصوصاً لصاحب الحلال اللي
+# يملك كل الصلاحيات ويشوف الجولة كاملة). ترتيب الفئات نفسه ترتيب أهم
+# استخدام يومي أولاً (عام → حيوانات → صحة → تكاثر...).
+_CAT_GENERAL = _l("عام")
+_CAT_ANIMALS = _l("الحيوانات والحظائر")
+_CAT_HEALTH = _l("الصحة والصيدلية")
+_CAT_REPRO = _l("التكاثر")
+_CAT_FINANCE = _l("المالية")
+_CAT_TASKS = _l("المهام والبلاغات")
+_CAT_FEED = _l("العلف")
+_CAT_EQUIPMENT = _l("المعدات")
+_CAT_ANALYTICS = _l("التقارير التحليلية")
+_CAT_ASSISTANT = _l("المساعد الذكي")
+_CAT_CLIMATE = _l("المناخ")
+_CAT_ADMIN = _l("الفريق والصلاحيات")
+
 _TOUR_SECTIONS = [
     {
         "permission": None,  # قسم عام — يظهر لأي مستخدم مسجّل دخول بغض النظر عن صلاحياته
+        "category": _CAT_GENERAL,
         "icon": "🏠",
         "title": _l("الصفحة الرئيسية و«صفحة اليوم»"),
         "points": [
@@ -172,6 +191,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "animals.view",
+        "category": _CAT_ANIMALS,
         "icon": "🐑",
         "title": _l("سجل الحيوانات"),
         "points": [
@@ -182,6 +202,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "animals.manage",
+        "category": _CAT_ANIMALS,
         "icon": "➕",
         "title": _l("إضافة/تعديل/بيع حيوان"),
         "points": [
@@ -191,6 +212,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "barns.manage",
+        "category": _CAT_ANIMALS,
         "icon": "🏚️",
         "title": _l("إدارة الحظائر"),
         "points": [
@@ -201,6 +223,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "health.view",
+        "category": _CAT_HEALTH,
         "icon": "🩺",
         "title": _l("السجل الصحي والزيارات البيطرية"),
         "points": [
@@ -210,6 +233,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "health.manage",
+        "category": _CAT_HEALTH,
         "icon": "💉",
         "title": _l("تسجيل تشخيص/علاج/تحصين"),
         "points": [
@@ -219,6 +243,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "pharmacy.manage",
+        "category": _CAT_HEALTH,
         "icon": "💊",
         "title": _l("إدارة مخزون الصيدلية"),
         "points": [
@@ -228,6 +253,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "repro.view",
+        "category": _CAT_REPRO,
         "icon": "👶",
         "title": _l("التكاثر: تلقيح، حمل، ولادة"),
         "points": [
@@ -237,6 +263,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "repro.manage",
+        "category": _CAT_REPRO,
         "icon": "🐏",
         "title": _l("تسجيل تقريع وبرامج شياع"),
         "points": [
@@ -245,6 +272,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "finance.health.view",
+        "category": _CAT_FINANCE,
         "icon": "💰",
         "title": _l("المالية المرتبطة بالصحة"),
         "points": [
@@ -253,6 +281,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "finance.full.manage",
+        "category": _CAT_FINANCE,
         "icon": "📊",
         "title": _l("المالية الكاملة"),
         "points": [
@@ -262,6 +291,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "tasks.assign_any",
+        "category": _CAT_TASKS,
         "icon": "📋",
         "title": _l("توزيع ومراجعة المهام"),
         "points": [
@@ -272,6 +302,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "tasks.view_own",
+        "category": _CAT_TASKS,
         "icon": "✅",
         "title": _l("مهامي"),
         "points": [
@@ -281,6 +312,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "reports.submit",
+        "category": _CAT_TASKS,
         "icon": "📢",
         "title": _l("رفع بلاغ"),
         "points": [
@@ -289,6 +321,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "reports.manage",
+        "category": _CAT_TASKS,
         "icon": "📥",
         "title": _l("استلام وإدارة البلاغات"),
         "points": [
@@ -298,6 +331,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "feed.view",
+        "category": _CAT_FEED,
         "icon": "🌾",
         "title": _l("العلف والمخزون"),
         "points": [
@@ -307,6 +341,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "feed.manage",
+        "category": _CAT_FEED,
         "icon": "🧮",
         "title": _l("إدارة العلف والوصفات"),
         "points": [
@@ -315,6 +350,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "equipment.view",
+        "category": _CAT_EQUIPMENT,
         "icon": "🧰",
         "title": _l("مخزون المعدات"),
         "points": [
@@ -324,6 +360,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "analytics.view",
+        "category": _CAT_ANALYTICS,
         "icon": "📈",
         "title": _l("التقارير التحليلية"),
         "points": [
@@ -333,6 +370,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "assistant.use",
+        "category": _CAT_ASSISTANT,
         "icon": "🤖",
         "title": _l("المساعد الذكي"),
         "points": [
@@ -343,6 +381,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "climate.view",
+        "category": _CAT_CLIMATE,
         "icon": "🌡️",
         "title": _l("رادار المناخ والإجهاد الحراري"),
         "points": [
@@ -352,6 +391,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "roles.manage",
+        "category": _CAT_ADMIN,
         "icon": "🔑",
         "title": _l("إدارة المسمّيات الوظيفية والصلاحيات"),
         "points": [
@@ -361,6 +401,7 @@ _TOUR_SECTIONS = [
     },
     {
         "permission": "users.manage",
+        "category": _CAT_ADMIN,
         "icon": "👥",
         "title": _l("إدارة حسابات الفريق"),
         "points": [
@@ -379,6 +420,21 @@ def permission_tour_sections(user) -> list[dict]:
         s for s in _TOUR_SECTIONS
         if s["permission"] is None or user.has_permission(s["permission"])
     ]
+
+
+def permission_tour_grouped(user) -> list[dict]:
+    """نفس permission_tour_sections بس مجمَّعة بفئات ({"category",
+    "sections"}) — تجميع يدوي بترتيب الإدراج الأصلي (مو Jinja groupby،
+    اللي يفرز الفئات أبجدياً حسب النص المترجَم الحالي، فيغيّر ترتيب
+    الفئات حسب لغة الحساب بدل ترتيب الأهمية/الاستخدام المقصود)."""
+    sections = permission_tour_sections(user)
+    groups: list[dict] = []
+    for s in sections:
+        if groups and groups[-1]["category"] == s["category"]:
+            groups[-1]["sections"].append(s)
+        else:
+            groups.append({"category": s["category"], "sections": [s]})
+    return groups
 
 
 def onboarding_steps_for(user) -> list[ChecklistItem]:

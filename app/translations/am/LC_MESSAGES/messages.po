@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 11:49+0300\n"
+"POT-Creation-Date: 2026-08-31 16:25+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -484,7 +484,7 @@ msgstr "ሪፖርት አዘግይ"
 msgid "استئناف بلاغ"
 msgstr "ሪፖርት ቀጥል"
 
-#: app/__init__.py:310 app/core/checklist_service.py:285
+#: app/__init__.py:310 app/core/checklist_service.py:317
 msgid "رفع بلاغ"
 msgstr "ሪፖርት አስገባ"
 
@@ -1491,11 +1491,66 @@ msgstr "ለዚህ ራስ ቋሚ በረት መግለጽ አለብዎት።"
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "ስብስቡ አሁንም በለይቶ ማቆያ ደረጃ ላይ ነው — በአሁኑ ጊዜ ተጨማሪ የግለሰብ እርምጃ አያስፈልግም።"
 
-#: app/core/checklist_service.py:166
+#: app/core/checklist_service.py:167 app/templates/onboarding/checklist.html:11
+msgid "عام"
+msgstr "አጠቃላይ"
+
+#: app/core/checklist_service.py:168
+msgid "الحيوانات والحظائر"
+msgstr "እንስሳት እና ጋጣዎች"
+
+#: app/core/checklist_service.py:169
+msgid "الصحة والصيدلية"
+msgstr "ጤና እና ፋርማሲ"
+
+#: app/core/checklist_service.py:170 app/templates/animal_detail.html:118
+#: app/templates/home.html:85
+msgid "التكاثر"
+msgstr "መራቢያ"
+
+#: app/core/checklist_service.py:171 app/templates/animal_detail.html:123
+#: app/templates/base.html:993 app/templates/finance/list.html:56
+#: app/templates/home.html:103
+msgid "المالية"
+msgstr "ፋይናንስ"
+
+#: app/core/checklist_service.py:172
+msgid "المهام والبلاغات"
+msgstr "ስራዎች እና ሪፖርቶች"
+
+#: app/core/checklist_service.py:173 app/templates/home.html:100
+msgid "العلف"
+msgstr "መኖ"
+
+#: app/core/checklist_service.py:174 app/templates/base.html:900
+#: app/templates/equipment/items_mine.html:17
+#: app/templates/family_view.html:159 app/templates/family_view.html:194
+msgid "المعدات"
+msgstr "መሣሪያዎች"
+
+#: app/core/checklist_service.py:175 app/core/checklist_service.py:365
+#: app/templates/base.html:995
+msgid "التقارير التحليلية"
+msgstr "የትንተና ሪፖርቶች"
+
+#: app/core/checklist_service.py:176 app/core/checklist_service.py:375
+#: app/templates/home.html:119
+msgid "المساعد الذكي"
+msgstr "ብልህ ረዳት"
+
+#: app/core/checklist_service.py:177 app/templates/base.html:911
+msgid "المناخ"
+msgstr "የአየር ንብረት"
+
+#: app/core/checklist_service.py:178
+msgid "الفريق والصلاحيات"
+msgstr "ቡድን እና ፍቃዶች"
+
+#: app/core/checklist_service.py:185
 msgid "الصفحة الرئيسية و«صفحة اليوم»"
 msgstr "መነሻ ገጽ እና «የዛሬ ገጽ»"
 
-#: app/core/checklist_service.py:168
+#: app/core/checklist_service.py:187
 msgid ""
 "الصفحة الرئيسية تعرض «إجراءات سريعة» لأكثر الشاشات استخداماً حسب "
 "صلاحياتك، وتنبيهات فورية لو فيه شي يحتاج انتباهك."
@@ -1503,7 +1558,7 @@ msgstr ""
 "መነሻ ገጹ በፍቃዶችህ መሠረት በብዛት ለምትጠቀምባቸው ገጾች «ፈጣን እርምጃዎችን» ያሳያል፣ ትኩረት የሚያስፈልገው "
 "ነገር ካለ ደግሞ ፈጣን ማንቂያዎችን ይሰጣል።"
 
-#: app/core/checklist_service.py:169
+#: app/core/checklist_service.py:188
 msgid ""
 "«صفحة اليوم» (من الرئيسية) تجمع مهامك المفتوحة وتنبيهاتك وبلاغاتك بشاشة "
 "وحدة بدل ما تتنقّل بين عدة شاشات كل صباح."
@@ -1511,11 +1566,11 @@ msgstr ""
 "«የዛሬ ገጽ» (ከመነሻ) ክፍት ስራዎችህን፣ ማንቂያዎችህን እና ሪፖርቶችህን በአንድ ገጽ ላይ ያሰባስባል፣ በየጠዋቱ "
 "በበርካታ ገጾች መካከል ከመዘዋወር ይልቅ።"
 
-#: app/core/checklist_service.py:176 app/templates/animals_list.html:5
+#: app/core/checklist_service.py:196 app/templates/animals_list.html:5
 msgid "سجل الحيوانات"
 msgstr "የእንስሳት መዝገብ"
 
-#: app/core/checklist_service.py:178
+#: app/core/checklist_service.py:198
 msgid ""
 "كل رأس بالقطيع له سجل مستقل: رقمه، فصيلته، سلالته، عمره، حظيرته، وحالته "
 "الحالية (نشط/مباع/نافق/معزول)."
@@ -1523,7 +1578,7 @@ msgstr ""
 "በመንጋው ውስጥ ያለ እያንዳንዱ እንስሳ የራሱ መዝገብ አለው፦ ቁጥሩ፣ ዝርያው፣ ዘሩ፣ ዕድሜው፣ ጋጣው እና የአሁኑ "
 "ሁኔታው (ንቁ/የተሸጠ/የሞተ/የተገለለ)።"
 
-#: app/core/checklist_service.py:179
+#: app/core/checklist_service.py:199
 msgid ""
 "كل شاشة ثانية بالنظام (الصحة، التكاثر، العلف، التقارير) مبنية على وجود "
 "سجل حيوان أولاً."
@@ -1531,11 +1586,11 @@ msgstr ""
 "በስርዓቱ ውስጥ ያለ ሌላ ማንኛውም ገጽ (ጤና፣ መራባት፣ መኖ፣ ሪፖርቶች) መጀመሪያ የእንስሳ መዝገብ በመኖሩ ላይ "
 "የተመሠረተ ነው።"
 
-#: app/core/checklist_service.py:186
+#: app/core/checklist_service.py:207
 msgid "إضافة/تعديل/بيع حيوان"
 msgstr "እንስሳ መጨመር/ማስተካከል/መሸጥ"
 
-#: app/core/checklist_service.py:188
+#: app/core/checklist_service.py:209
 msgid ""
 "تقدر تسجّل حيوان جديد (واحد أو دفعة شراء كاملة)، تعدّل بياناته، تسجّل "
 "بيعه أو نفوقه."
@@ -1543,7 +1598,7 @@ msgstr ""
 "አዲስ እንስሳ (አንድ ወይም ሙሉ የግዢ ስብስብ) መመዝገብ፣ መረጃውን ማስተካከል፣ ሽያጩን ወይም ሞቱን መመዝገብ "
 "ትችላለህ።"
 
-#: app/core/checklist_service.py:189
+#: app/core/checklist_service.py:210
 msgid ""
 "بيع حيوان أثناء فترة سحب دواء يحتاج سبباً موثَّقاً — النظام يمنع البيع "
 "العادي تلقائياً بهذي الحالة حماية للمستهلك."
@@ -1551,15 +1606,15 @@ msgstr ""
 "በመድሃኒት መውጫ ጊዜ ውስጥ እንስሳ መሸጥ የተመዘገበ ምክንያት ይፈልጋል — ስርዓቱ ተጠቃሚውን ለመጠበቅ በዚህ ሁኔታ"
 " መደበኛ ሽያጭን በራስ-ሰር ይከለክላል።"
 
-#: app/core/checklist_service.py:195
+#: app/core/checklist_service.py:217
 msgid "إدارة الحظائر"
 msgstr "የጋጣ አስተዳደር"
 
-#: app/core/checklist_service.py:197
+#: app/core/checklist_service.py:219
 msgid "أنشئ حظائرك وحدد نوعها (عادية/عزل/نفاس...) وسعتها والعامل المسؤول عنها."
 msgstr "ጋጣዎችህን ፍጠር እና ዓይነታቸውን (መደበኛ/ማግለያ/ወሊድ...)፣ አቅማቸውን እና ኃላፊውን ሰራተኛ ወስን።"
 
-#: app/core/checklist_service.py:198
+#: app/core/checklist_service.py:220
 msgid ""
 "حظيرة العزل ضرورية — العزل التلقائي بعد الولادة أو وصول حيوان جديد يحتاج "
 "حظيرة عزل موجودة فعلاً."
@@ -1567,11 +1622,11 @@ msgstr ""
 "የማግለያ ጋጣ አስፈላጊ ነው — ከወሊድ በኋላ ወይም አዲስ እንስሳ ሲመጣ በራስ-ሰር የሚደረግ ማግለል በእውነት ያለ "
 "የማግለያ ጋጣ ይፈልጋል።"
 
-#: app/core/checklist_service.py:205
+#: app/core/checklist_service.py:228
 msgid "السجل الصحي والزيارات البيطرية"
 msgstr "የጤና መዝገብ እና የእንስሳት ሕክምና ጉብኝቶች"
 
-#: app/core/checklist_service.py:207
+#: app/core/checklist_service.py:230
 msgid ""
 "تاريخ كل حالة مرضية، تشخيص، علاج، وتحصين لكل رأس — بما فيها المساعد "
 "التشخيصي اللي يقترح احتمالات مرضية من الأعراض المُدخَلة."
@@ -1579,11 +1634,11 @@ msgstr ""
 "ለእያንዳንዱ እንስሳ የበሽታ ሁኔታ፣ ምርመራ፣ ሕክምና እና ክትባት ታሪክ — ከገባቸው ምልክቶች የበሽታ እድሎችን "
 "የሚጠቁም የምርመራ ረዳትን ጨምሮ።"
 
-#: app/core/checklist_service.py:214
+#: app/core/checklist_service.py:238
 msgid "تسجيل تشخيص/علاج/تحصين"
 msgstr "ምርመራ/ሕክምና/ክትባት መመዝገብ"
 
-#: app/core/checklist_service.py:216
+#: app/core/checklist_service.py:240
 msgid ""
 "سجّل حالة مرضية جديدة، طبّق بروتوكول علاج جاهز، أو سجّل تحصيناً — كل "
 "إجراء يخصم تلقائياً من مخزون الصيدلية ويُحسب ماليته."
@@ -1591,7 +1646,7 @@ msgstr ""
 "አዲስ የበሽታ ሁኔታ መዝግብ፣ ዝግጁ የሕክምና ፕሮቶኮል ተግብር፣ ወይም ክትባት መዝግብ — እያንዳንዱ እርምጃ "
 "ከመድሃኒት ክምችት በራስ-ሰር ይቀነሳል፣ ወጪውም ይሰላል።"
 
-#: app/core/checklist_service.py:217
+#: app/core/checklist_service.py:241
 msgid ""
 "تنبيه: النظام يساعدك تنظّم وتتذكّر، لكنه ما يشخّص ولا يعالج — القرار "
 "الطبي النهائي يبقى للطبيب البيطري دائماً."
@@ -1599,11 +1654,11 @@ msgstr ""
 "ማሳሰቢያ፦ ስርዓቱ እንድታደራጅና እንድታስታውስ ይረዳል፣ ግን አይመረምርም አያክምም — የመጨረሻው የሕክምና ውሳኔ "
 "ሁልጊዜ የእንስሳት ሐኪም ነው።"
 
-#: app/core/checklist_service.py:223
+#: app/core/checklist_service.py:248
 msgid "إدارة مخزون الصيدلية"
 msgstr "የፋርማሲ ክምችት አስተዳደር"
 
-#: app/core/checklist_service.py:225
+#: app/core/checklist_service.py:250
 msgid ""
 "سجّل الأدوية بكمياتها (عدد العلب × كمية العلبة يحسب الإجمالي تلقائياً)، "
 "وتابع تنبيهات نفاد المخزون."
@@ -1611,11 +1666,11 @@ msgstr ""
 "መድሃኒቶችን ከመጠናቸው ጋር መዝግብ (የሳጥን ብዛት × የሳጥን መጠን ጠቅላላውን በራስ-ሰር ያሰላል)፣ የክምችት "
 "ማለቅ ማንቂያዎችንም ተከታተል።"
 
-#: app/core/checklist_service.py:232
+#: app/core/checklist_service.py:258
 msgid "التكاثر: تلقيح، حمل، ولادة"
 msgstr "መራባት፦ ማዳቀል፣ እርግዝና፣ ወሊድ"
 
-#: app/core/checklist_service.py:234
+#: app/core/checklist_service.py:260
 msgid ""
 "تابع دورة كل أنثى — من التقريع إلى تشخيص الحمل (فحص يدوي أو سونار) إلى "
 "الولادة — وتاريخ الولادة المتوقع يُحسب تلقائياً."
@@ -1623,11 +1678,11 @@ msgstr ""
 "የእያንዳንዷን ሴት ዑደት ተከታተል — ከማዳቀል፣ ወደ እርግዝና ምርመራ (በእጅ ወይም በአልትራሳውንድ)፣ እስከ ወሊድ"
 " — የሚጠበቀው የወሊድ ቀን በራስ-ሰር ይሰላል።"
 
-#: app/core/checklist_service.py:241
+#: app/core/checklist_service.py:268
 msgid "تسجيل تقريع وبرامج شياع"
 msgstr "ማዳቀል እና የፍትወት ፕሮግራሞችን መመዝገብ"
 
-#: app/core/checklist_service.py:243
+#: app/core/checklist_service.py:270
 msgid ""
 "سجّل محاولة تقريع بين أنثى وفحل — النظام يحذّرك تلقائياً لو فيه قرابة "
 "وراثية قريبة بينهما قبل ما تحفظ."
@@ -1635,11 +1690,11 @@ msgstr ""
 "በሴት እና በወንድ መካከል የማዳቀል ሙከራ መዝግብ — ከመቆጠብህ በፊት በመካከላቸው የቅርብ የዘር ዝምድና ካለ "
 "ስርዓቱ በራስ-ሰር ያስጠነቅቅሃል።"
 
-#: app/core/checklist_service.py:249
+#: app/core/checklist_service.py:277
 msgid "المالية المرتبطة بالصحة"
 msgstr "ከጤና ጋር የተያያዘ ገንዘብ"
 
-#: app/core/checklist_service.py:251
+#: app/core/checklist_service.py:279
 msgid ""
 "تكلفة كل علاج/تحصين/زيارة بيطرية تُسجَّل مالياً تلقائياً — تقدر تراجعها "
 "من هنا بدون صلاحية المالية الكاملة."
@@ -1647,11 +1702,11 @@ msgstr ""
 "የእያንዳንዱ ሕክምና/ክትባት/የእንስሳት ሐኪም ጉብኝት ወጪ በራስ-ሰር በገንዘብ ይመዘገባል — ሙሉ የገንዘብ ፍቃድ "
 "ሳይኖርህ ከዚህ መከለስ ትችላለህ።"
 
-#: app/core/checklist_service.py:257
+#: app/core/checklist_service.py:286
 msgid "المالية الكاملة"
 msgstr "ሙሉ ገንዘብ"
 
-#: app/core/checklist_service.py:259
+#: app/core/checklist_service.py:288
 msgid ""
 "كل حركة مالية بالمزرعة: مبيعات، مشتريات، ديون، فواتير — من هنا تدير كامل "
 "الجانب المالي."
@@ -1659,11 +1714,11 @@ msgstr ""
 "በእርሻው ውስጥ ያለ እያንዳንዱ የገንዘብ እንቅስቃሴ፦ ሽያጭ፣ ግዢ፣ ዕዳ፣ ደረሰኞች — ከዚህ ሙሉ የገንዘብ ጎኑን "
 "ታስተዳድራለህ።"
 
-#: app/core/checklist_service.py:266
+#: app/core/checklist_service.py:296
 msgid "توزيع ومراجعة المهام"
 msgstr "ስራዎችን ማከፋፈል እና መከለስ"
 
-#: app/core/checklist_service.py:268
+#: app/core/checklist_service.py:298
 msgid ""
 "النظام يقترح مهاماً يومية تلقائياً حسب حالة القطيع (فحص عزل، متابعة "
 "حمل...)، وتقدر توزّع مهاماً يدوية على أي عامل."
@@ -1671,7 +1726,7 @@ msgstr ""
 "ስርዓቱ በመንጋው ሁኔታ መሠረት (የማግለያ ምርመራ፣ የእርግዝና ክትትል...) በራስ-ሰር ዕለታዊ ስራዎችን ይጠቁማል፣"
 " በእጅ ስራዎችንም ለማንኛውም ሰራተኛ ማከፋፈል ትችላለህ።"
 
-#: app/core/checklist_service.py:269
+#: app/core/checklist_service.py:299
 msgid ""
 "قسم «مهام مقترحة بانتظار الاعتماد» يحتاج موافقتك (أو تأجيل/حذف) قبل ما "
 "تنزل فعلياً للعامل."
@@ -1679,12 +1734,12 @@ msgstr ""
 "«ማጽደቅ በመጠባበቅ ላይ ያሉ የተጠቆሙ ስራዎች» ክፍል ወደ ሰራተኛው ከመድረሱ በፊት ማጽደቅህን (ወይም "
 "ማዘግየት/መሰረዝ) ይፈልጋል።"
 
-#: app/core/checklist_service.py:276 app/templates/simple_home.html:56
+#: app/core/checklist_service.py:307 app/templates/simple_home.html:56
 #: app/templates/team/tasks_list.html:56
 msgid "مهامي"
 msgstr "ተግባሮቼ"
 
-#: app/core/checklist_service.py:278
+#: app/core/checklist_service.py:309
 msgid ""
 "قائمة مهامك الشخصية المفتوحة — ابدأ المهمة، أنجزها (مع صورة/ملاحظة إثبات "
 "لو مطلوبة)، أو سجّل تعذّر تنفيذها بسبب واضح."
@@ -1692,7 +1747,7 @@ msgstr ""
 "የግል ክፍት ስራዎችህ ዝርዝር — ስራውን ጀምር፣ አጠናቅቅ (ካስፈለገ ማረጋገጫ ፎቶ/ማስታወሻ ጋር)፣ ወይም ግልጽ "
 "ምክንያት ጋር ማከናወን አለመቻልን መዝግብ።"
 
-#: app/core/checklist_service.py:287
+#: app/core/checklist_service.py:319
 msgid ""
 "لاحظت شي غير طبيعي بالحظيرة؟ ارفع بلاغاً فورياً (نص أو ملاحظة صوتية) يوصل"
 " للمسؤول مباشرة."
@@ -1700,19 +1755,19 @@ msgstr ""
 "በጋጣው ውስጥ ያልተለመደ ነገር አስተዋልክ? ወዲያውኑ ወደ ኃላፊው በቀጥታ የሚደርስ ሪፖርት (ጽሑፍ ወይም የድምጽ "
 "ማስታወሻ) አስገባ።"
 
-#: app/core/checklist_service.py:293
+#: app/core/checklist_service.py:326
 msgid "استلام وإدارة البلاغات"
 msgstr "ሪፖርቶችን መቀበል እና ማስተዳደር"
 
-#: app/core/checklist_service.py:295
+#: app/core/checklist_service.py:328
 msgid "استلم بلاغات الفريق، حوّلها لعامل ثاني لو يلزم، أو أغلقها بعد المعالجة."
 msgstr "የቡድኑን ሪፖርቶች ተቀበል፣ ካስፈለገ ወደ ሌላ ሰራተኛ አስተላልፍ፣ ወይም ከተያዘ በኋላ ዝጋቸው።"
 
-#: app/core/checklist_service.py:302
+#: app/core/checklist_service.py:336
 msgid "العلف والمخزون"
 msgstr "መኖ እና ክምችት"
 
-#: app/core/checklist_service.py:304
+#: app/core/checklist_service.py:338
 msgid ""
 "تابع أصناف العلف المتوفرة، خطط التغذية لكل حظيرة، ومعدل تحويل العلف (FCR)"
 " لتسمين القطعان."
@@ -1720,11 +1775,11 @@ msgstr ""
 "የሚገኙ የመኖ ዓይነቶችን፣ ለእያንዳንዱ ጋጣ የመመገቢያ እቅዶችን፣ እና ለማድለብ የመንጎች የመኖ መቀየሪያ መጠን "
 "(FCR) ተከታተል።"
 
-#: app/core/checklist_service.py:311
+#: app/core/checklist_service.py:346
 msgid "إدارة العلف والوصفات"
 msgstr "የመኖ እና የመግቢያ አስተዳደር"
 
-#: app/core/checklist_service.py:313
+#: app/core/checklist_service.py:348
 msgid ""
 "أضف أصناف علف جديدة، سجّل مشتريات، وابنِ وصفات علف موزونة (موازن العليقة "
 "يقترح أرخص تركيبة تحقق احتياج البروتين/الطاقة)."
@@ -1732,29 +1787,21 @@ msgstr ""
 "አዲስ የመኖ ዓይነቶችን ጨምር፣ ግዢዎችን መዝግብ፣ እና የተመዘነ የመኖ ውህድ ገንባ (የመኖ አመጣጣኝ "
 "የፕሮቲን/የኃይል ፍላጎትን የሚያሟላ ርካሽ ውህድ ይጠቁማል)።"
 
-#: app/core/checklist_service.py:319
+#: app/core/checklist_service.py:355
 msgid "مخزون المعدات"
 msgstr "የመሳሪያ ክምችት"
 
-#: app/core/checklist_service.py:321
+#: app/core/checklist_service.py:357
 msgid "تابع معدات المزرعة وأدواتها — المتوفر منها ومين مسحوب عنده حالياً."
 msgstr "የእርሻውን መሳሪያዎችና ዕቃዎችን ተከታተል — የሚገኙትን እና በአሁኑ ጊዜ ማን እንደወሰደ።"
 
-#: app/core/checklist_service.py:328 app/templates/base.html:995
-msgid "التقارير التحليلية"
-msgstr "የትንተና ሪፖርቶች"
-
-#: app/core/checklist_service.py:330
+#: app/core/checklist_service.py:367
 msgid ""
 "تقارير شاملة: نفوق، ولادات، مبيعات، أداء القطيع — قابلة للتصدير لمشاركتها"
 " أو أرشفتها."
 msgstr "ሁሉን አቀፍ ሪፖርቶች፦ ሞት፣ ወሊድ፣ ሽያጭ፣ የመንጎች አፈጻጸም — ለማጋራት ወይም ለማህደር ማውጣት የሚቻል።"
 
-#: app/core/checklist_service.py:337 app/templates/home.html:119
-msgid "المساعد الذكي"
-msgstr "ብልህ ረዳት"
-
-#: app/core/checklist_service.py:339
+#: app/core/checklist_service.py:377
 msgid ""
 "اسأله أي سؤال تشغيلي عام (تحصينات، عزل، فترات سحب...) أو اطلب منه معلومة "
 "عن حيوان معيّن — يجاوب من بيانات مزرعتك الفعلية."
@@ -1762,18 +1809,18 @@ msgstr ""
 "ማንኛውንም አጠቃላይ የስራ ጥያቄ (ክትባቶች፣ ማግለል፣ የመውጫ ጊዜያት...) ጠይቀው ወይም ስለ አንድ የተወሰነ "
 "እንስሳ መረጃ ጠይቀው — ከእውነተኛው የእርሻ መረጃህ ይመልስልሃል።"
 
-#: app/core/checklist_service.py:340
+#: app/core/checklist_service.py:378
 msgid ""
 "تنبيه: مساعد قرار مساعد لك، مو طبيباً بيطرياً — القرار الطبي النهائي يبقى"
 " للطبيب دائماً."
 msgstr "ማሳሰቢያ፦ የውሳኔ ድጋፍ ረዳት ነው፣ የእንስሳት ሐኪም አይደለም — የመጨረሻው የሕክምና ውሳኔ ሁልጊዜ የሐኪሙ ነው።"
 
-#: app/core/checklist_service.py:347 app/templates/base.html:913
+#: app/core/checklist_service.py:386 app/templates/base.html:913
 #: app/templates/climate/dashboard.html:5
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "የአየር ንብረት እና የሙቀት ጭንቀት ራዳር"
 
-#: app/core/checklist_service.py:349
+#: app/core/checklist_service.py:388
 msgid ""
 "توقعات الطقس ومؤشر الإجهاد الحراري لموقع مزرعتك — يساعدك تتوقع أيام الخطر"
 " وتجهّز التبريد/التهوية مسبقاً."
@@ -1781,11 +1828,11 @@ msgstr ""
 "ለእርሻህ ቦታ የአየር ሁኔታ ትንበያ እና የሙቀት ጭንቀት መለኪያ — አደገኛ ቀናትን አስቀድመህ እንድትገምት እና "
 "ማቀዝቀዣ/አየር ማናፈሻ አስቀድመህ እንድታዘጋጅ ይረዳሃል።"
 
-#: app/core/checklist_service.py:356
+#: app/core/checklist_service.py:396
 msgid "إدارة المسمّيات الوظيفية والصلاحيات"
 msgstr "የስራ መደቦችን እና ፍቃዶችን ማስተዳደር"
 
-#: app/core/checklist_service.py:358
+#: app/core/checklist_service.py:398
 msgid ""
 "أنشئ مسمّيات وظيفية جديدة أو عدّل صلاحيات أي دور موجود من شاشة الإعدادات "
 "— بدون أي حاجة لتعديل برمجي."
@@ -1793,11 +1840,11 @@ msgstr ""
 "አዲስ የስራ መደቦችን ፍጠር ወይም ማንኛውንም ያለ ሚና ፍቃድ ከቅንብሮች ገጽ አስተካክል — ምንም የኮድ ለውጥ "
 "ሳያስፈልግ።"
 
-#: app/core/checklist_service.py:365
+#: app/core/checklist_service.py:406
 msgid "إدارة حسابات الفريق"
 msgstr "የቡድን መለያዎችን ማስተዳደር"
 
-#: app/core/checklist_service.py:367
+#: app/core/checklist_service.py:408
 msgid "أضف أعضاء فريق جدد، عطّل حساباً، أو عدّل بياناتهم من شاشة «الفريق»."
 msgstr "አዲስ የቡድን አባላትን ጨምር፣ መለያ አሰናክል፣ ወይም ከ«ቡድን» ገጽ መረጃቸውን አስተካክል።"
 
@@ -5168,10 +5215,6 @@ msgstr "በሽታዎች"
 msgid "التحصينات"
 msgstr "ክትባቶች"
 
-#: app/templates/animal_detail.html:118 app/templates/home.html:85
-msgid "التكاثر"
-msgstr "መራቢያ"
-
 #: app/templates/animal_detail.html:119 app/templates/animal_detail.html:352
 msgid "الولادات"
 msgstr "ልደቶች"
@@ -5215,11 +5258,6 @@ msgstr "ወተት"
 #: app/templates/repro/sonar_form.html:34
 msgid "ملاحظات"
 msgstr "ማስታወሻዎች"
-
-#: app/templates/animal_detail.html:123 app/templates/base.html:993
-#: app/templates/finance/list.html:56 app/templates/home.html:103
-msgid "المالية"
-msgstr "ፋይናንስ"
 
 #: app/templates/animal_detail.html:128
 msgid "بيانات أساسية"
@@ -6759,11 +6797,6 @@ msgstr "የዛሬ ስራዎችን ገምግም"
 msgid "تقرير أداء الفريق"
 msgstr "የቡድን አፈጻጸም ሪፖርት"
 
-#: app/templates/base.html:900 app/templates/equipment/items_mine.html:17
-#: app/templates/family_view.html:159 app/templates/family_view.html:194
-msgid "المعدات"
-msgstr "መሣሪያዎች"
-
 #: app/templates/base.html:903 app/templates/equipment/items_list.html:5
 msgid "مستودع المعدات"
 msgstr "የመሣሪያ መጋዘን"
@@ -6772,10 +6805,6 @@ msgstr "የመሣሪያ መጋዘን"
 #: app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr "የእኔ መሳሪያዎች"
-
-#: app/templates/base.html:911
-msgid "المناخ"
-msgstr "የአየር ንብረት"
 
 #: app/templates/assistant/chat.html:2 app/templates/assistant/chat.html:26
 #: app/templates/base.html:922
@@ -7562,10 +7591,6 @@ msgstr "የመንታ ማራቢያ ፕሮግራሞች"
 #: app/templates/home.html:97
 msgid "العلف والمالية والتقارير"
 msgstr "መኖ፣ ፋይናንስ እና ሪፖርቶች"
-
-#: app/templates/home.html:100
-msgid "العلف"
-msgstr "መኖ"
 
 #: app/templates/home.html:108 app/templates/reports/activity.html:4
 #: app/templates/reports/births.html:4 app/templates/reports/mortality.html:4
@@ -12256,10 +12281,6 @@ msgstr ""
 "ምልክት ያድርጉ።"
 
 #: app/templates/onboarding/checklist.html:11
-msgid "عام"
-msgstr "አጠቃላይ"
-
-#: app/templates/onboarding/checklist.html:11
 msgid "تجهيز"
 msgstr "ዝግጅት"
 
@@ -12320,21 +12341,21 @@ msgstr "አይ፣ ልምድ አለኝ"
 msgid "خطوات أولى موصى بها"
 msgstr "የሚመከሩ የመጀመሪያ እርምጃዎች"
 
-#: app/templates/onboarding/welcome.html:39
+#: app/templates/onboarding/welcome.html:46
 msgid "جولة مكثّفة — وش تقدر تسوي بالضبط"
 msgstr "ጥልቅ ጉብኝት — በትክክል ምን ማድረግ እንደምትችል"
 
-#: app/templates/onboarding/welcome.html:40
+#: app/templates/onboarding/welcome.html:47
 msgid ""
 "حسب صلاحياتك الحالية بالضبط — لو تغيّرت صلاحياتك لاحقاً، ارجع لنفس الشاشة"
 " من الإعدادات لتحديث الجولة."
 msgstr "በትክክል በአሁኑ ፍቃዶችህ መሠረት — ፍቃዶችህ ወደፊት ከተለወጡ፣ ጉብኝቱን ለማደስ ከቅንብሮች ወደዚህ ገጽ ተመለስ።"
 
-#: app/templates/onboarding/welcome.html:48
+#: app/templates/onboarding/welcome.html:58
 msgid "افتح الشاشة"
 msgstr "ገጹን ክፈት"
 
-#: app/templates/onboarding/welcome.html:55
+#: app/templates/onboarding/welcome.html:67
 msgid ""
 "تنبيه صادق: هذا التطبيق نظام إدارة وتتبّع يساعدك تنظّم شغلك وما تنسى "
 "موعداً — مو بديل عن طبيب بيطري ولا عن تعلّم أساسيات تربية القطيع. راجع "
@@ -12344,7 +12365,7 @@ msgstr ""
 "ክትትል ሲስተም ነው — ለእንስሳት ሐኪም ወይም የመንጋ እርባታ መሠረታዊ ነገሮችን ለመማር ምትክ አይደለም። ለሕክምና"
 " ውሳኔዎች ሁልጊዜ ሐኪምዎን ያማክሩ።"
 
-#: app/templates/onboarding/welcome.html:56
+#: app/templates/onboarding/welcome.html:68
 msgid "ابدأ استخدام التطبيق"
 msgstr "መተግበሪያውን መጠቀም ጀምር"
 
