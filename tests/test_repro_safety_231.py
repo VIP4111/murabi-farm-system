@@ -6,7 +6,7 @@
 from datetime import date, timedelta
 
 from app.extensions import db
-from app.models import FarmSettings, Role, User, Mating, Task
+from app.models import FarmSettings, Permission, Role, User, Mating, Task
 from tests.factories import make_animal, make_barn
 
 
@@ -18,6 +18,27 @@ def _set_age(animal, days):
 def _doctor_client(client, app):
     role = Role.query.filter_by(name="doctor").first()
     u = User(name="دكتور اختبار", phone="0500099001", role_id=role.id, language="ar")
+    u.set_password("pass1234")
+    db.session.add(u)
+    db.session.commit()
+    client.post("/login", data={"phone": u.phone, "password": "pass1234"})
+    return u
+
+
+def _repro_manager_without_override_client(client, app, phone="0500099002"):
+    """دكتور صار (بند إضافي 2026-08-31) يملك repro.override_close_relation
+    افتراضياً، فما عاد يصلح لاختبار سيناريو "بدون صلاحية التجاوز". هذا
+    دور مخصَّص للاختبار بس: repro.manage بدون override — نفس آلية أي
+    مسمى وظيفي يقدر صاحب الحلال ينشئه فعلياً بشاشة الإعدادات."""
+    role = Role.query.filter_by(name="__test_repro_manager_no_override__").first()
+    if not role:
+        role = Role(name="__test_repro_manager_no_override__", display_name="اختبار: تكاثر بدون تجاوز")
+        role.permissions = Permission.query.filter(
+            Permission.code.in_(["repro.view", "repro.manage"])
+        ).all()
+        db.session.add(role)
+        db.session.commit()
+    u = User(name="فني تكاثر اختبار", phone=phone, role_id=role.id, language="ar")
     u.set_password("pass1234")
     db.session.add(u)
     db.session.commit()
@@ -78,8 +99,28 @@ def test_owner_can_override_relation_directly(app, logged_in_client):
     assert Mating.query.count() == 1
 
 
-def test_doctor_without_permission_creates_override_request_not_mating(app, client, owner):
+def test_doctor_can_now_override_relation_directly(app, client):
+    """بند إضافي (2026-08-31) — الدكتور صار يملك
+    repro.override_close_relation افتراضياً، فيقدر يتجاوز التحذير
+    مباشرة (نفس مسار صاحب الحلال) بدون ما يحتاج يكتب سبب/ينتظر مهمة
+    اعتماد."""
     _doctor_client(client, app)
+    mother = make_animal(animal_no="MOM-04", gender="أنثى")
+    son = make_animal(animal_no="SON-04", gender="ذكر", price=None)
+    son.mother_id = mother.id
+    db.session.commit()
+    _set_age(son, 300)
+
+    resp = client.post("/repro/matings/new", data={
+        "date": date.today().isoformat(), "female_id": str(mother.id), "male_id": str(son.id),
+        "confirm_relation": "1",
+    }, follow_redirects=True)
+    assert resp.status_code == 200
+    assert Mating.query.count() == 1
+
+
+def test_doctor_without_permission_creates_override_request_not_mating(app, client, owner):
+    _repro_manager_without_override_client(client, app)
     mother = make_animal(animal_no="MOM-02", gender="أنثى")
     son = make_animal(animal_no="SON-02", gender="ذكر")
     son.mother_id = mother.id
@@ -96,7 +137,7 @@ def test_doctor_without_permission_creates_override_request_not_mating(app, clie
 
 
 def test_doctor_without_reason_is_blocked(app, client):
-    _doctor_client(client, app)
+    _repro_manager_without_override_client(client, app)
     mother = make_animal(animal_no="MOM-03", gender="أنثى")
     son = make_animal(animal_no="SON-03", gender="ذكر")
     son.mother_id = mother.id
