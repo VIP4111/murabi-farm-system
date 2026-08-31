@@ -46,8 +46,8 @@
       <div class="s-title">🌡️ {{ _('شنو المشكلة؟') }}</div>
       <div class="s-grid">
         {% for t in disease_types %}
-        <div class="s-card" data-value="{{ t.name }}" onclick="pick(2,'{{ t.name }}','{{ t.name }}')">
-          <span class="s-emoji">🌡️</span>{{ t.name }}
+        <div class="s-card" data-value="{{ t.name }}" onclick="pick(2,'{{ t.name }}','{{ t.display_label() }}')">
+          <span class="s-emoji">🌡️</span>{{ t.display_label() }}
         </div>
         {% endfor %}
         <div class="s-card" data-value="__other__" onclick="pickOther()">

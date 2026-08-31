@@ -7,6 +7,11 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('الاسم') }}</label>
     <input name="name" required autofocus>
+    {% if show_name_en %}
+    <label>{{ _('الاسم بالإنجليزي (اختياري)') }}</label>
+    <input name="name_en" dir="ltr">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('يظهر بدل الاسم العربي فقط لمستخدم لغته غير عربية — لو فاضي، يبقى الاسم العربي يظهر للجميع كما هو.') }}</p>
+    {% endif %}
     <button class="btn" type="submit">{{ _('إضافة') }}</button>
     <a class="btn light" href="{{ url_for(back_endpoint) }}">{{ _('إلغاء') }}</a>
   </form>

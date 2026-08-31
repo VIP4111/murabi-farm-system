@@ -12,7 +12,7 @@
 `Disease.disease_name`؛ هذي الجداول مرجع اقتراحات فقط.
 """
 from datetime import datetime, timezone
-from flask_babel import lazy_gettext as _l
+from flask_babel import lazy_gettext as _l, get_locale
 from app.extensions import db
 
 
@@ -61,6 +61,13 @@ class Breed(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    # بند إضافي (2026-08-31) — طلبك المباشر بعد إصلاح قائمة الفصيلة:
+    # اسم إنجليزي اختياري لكل سلالة، نفس نمط `Barn.barn_name_en`
+    # بالضبط. `name` نص حر يضيفه المستخدم بزر "+" — عكس `SpeciesType`
+    # ما فيه "قيم افتراضية معروفة" بكود ثابت، فكل سلالة (حتى المزروعة
+    # افتراضياً بـ`seed_defaults`) تُعامَل نفس معاملة أي إدخال مخصَّص:
+    # تترجم فقط لو المستخدم كتب لها اسماً إنجليزياً بنفسه.
+    name_en = db.Column(db.String(60), nullable=True)
     # ملاحظات رعاية خاصة بالسلالة (بند إضافي 174) — يكتبها صاحب
     # الحلال أو الطبيب بأنفسهم بناءً على خبرتهم الفعلية بهذي السلالة
     # بمنطقتهم/مناخهم — النظام عمداً **ما يخترع** أي معلومة سلالة/مناخ
@@ -82,13 +89,26 @@ class Breed(db.Model):
                 db.session.add(cls(name=n))
         db.session.commit()
 
+    def display_label(self) -> str:
+        """اسم السلالة بالإنجليزي لو مضبوط والمستخدم لغته غير عربية،
+        وإلا الاسم العربي كما هو (سلوك قديم محفوظ بدون كسر)."""
+        if self.name_en and str(get_locale()) != "ar":
+            return self.name_en
+        return self.name
+
 
 class AnimalColor(db.Model):
     __tablename__ = "animal_colors"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    name_en = db.Column(db.String(60), nullable=True)
     created_at = db.Column(db.DateTime, default=_now)
+
+    def display_label(self) -> str:
+        if self.name_en and str(get_locale()) != "ar":
+            return self.name_en
+        return self.name
 
     @classmethod
     def seed_defaults(cls) -> None:

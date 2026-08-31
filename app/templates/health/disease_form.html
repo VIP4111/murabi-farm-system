@@ -23,7 +23,7 @@
     <label>{{ _('اسم المرض') }}</label>
     <input name="disease_name" required list="diseaseTypesList" value="{{ prefill_disease_name or '' }}" placeholder="{{ _('اختر من القائمة أو اكتب اسماً جديداً') }}">
     <datalist id="diseaseTypesList">
-      {% for t in disease_types %}<option value="{{ t.name }}">{% endfor %}
+      {% for t in disease_types %}<option value="{{ t.name }}">{{ t.display_label() }}</option>{% endfor %}
     </datalist>
     <label>{{ _('الشدة') }}</label>
     <select name="severity">

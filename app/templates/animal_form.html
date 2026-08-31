@@ -19,8 +19,8 @@
     <label>{{ _('اللون') }}</label>
     <div id="colorChips" class="colorChips" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
       {% for c in colors %}
-      <button type="button" class="colorChip" data-color="{{ c.name }}" title="{{ c.name }}"
-              aria-label="{{ c.name }}"
+      <button type="button" class="colorChip" data-color="{{ c.name }}" title="{{ c.display_label() }}"
+              aria-label="{{ c.display_label() }}"
               style="width:36px; height:36px; border-radius:50%; border:2px solid var(--line); cursor:pointer; padding:0; flex:0 0 auto;"></button>
       {% endfor %}
       <a class="btn light" href="{{ url_for('core.colors_new') }}" title="{{ _('إضافة لون جديد') }}" style="width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0; font-size:16px; flex:0 0 auto;">➕</a>
@@ -63,7 +63,7 @@
     <label>{{ _('السلالة') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="breed" style="flex:1; margin-bottom:0;">
-        {% for b in breeds %}<option value="{{ b.name }}" {{ 'selected' if (animal.breed if animal else 'عام/غير محدد') == b.name }}>{{ b.name }}</option>{% endfor %}
+        {% for b in breeds %}<option value="{{ b.name }}" {{ 'selected' if (animal.breed if animal else 'عام/غير محدد') == b.name }}>{{ b.display_label() }}</option>{% endfor %}
       </select>
       <a class="btn light" href="{{ url_for('core.breeds_new') }}" title="{{ _('إضافة سلالة جديدة') }}" style="padding:6px 10px; font-size:16px; line-height:1; flex:0 0 auto;">➕</a>
     </div>

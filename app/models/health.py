@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from flask_babel import get_locale
 from app.extensions import db
 
 
@@ -19,8 +20,16 @@ class DiseaseType(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(160), unique=True, nullable=False)
+    # بند إضافي (2026-08-31) — اسم إنجليزي اختياري، نفس نمط
+    # `Breed.name_en`/`Barn.barn_name_en` بالضبط.
+    name_en = db.Column(db.String(160), nullable=True)
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
+
+    def display_label(self) -> str:
+        if self.name_en and str(get_locale()) != "ar":
+            return self.name_en
+        return self.name
 
 
 class Symptom(db.Model):

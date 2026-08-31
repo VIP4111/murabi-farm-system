@@ -433,7 +433,10 @@ def disease_types_new():
         if DiseaseType.query.filter_by(name=name).first():
             flash(f'"{name}" موجود بالقائمة أصلاً', "error")
             return redirect(url_for("health.disease_types_new"))
-        db.session.add(DiseaseType(name=name, notes=request.form.get("notes") or None))
+        db.session.add(DiseaseType(
+            name=name, name_en=(request.form.get("name_en") or "").strip() or None,
+            notes=request.form.get("notes") or None,
+        ))
         db.session.commit()
         flash(_("تمت إضافة المرض للقائمة"), "success")
         return redirect(url_for("health.disease_types_list"))

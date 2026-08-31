@@ -827,12 +827,12 @@ def breeds_new():
         if Breed.query.filter_by(name=value).first():
             flash(f'"{value}" موجودة بالقائمة أصلاً', "error")
             return redirect(url_for("core.breeds_new"))
-        db.session.add(Breed(name=value))
+        db.session.add(Breed(name=value, name_en=(request.form.get("name_en") or "").strip() or None))
         db.session.commit()
         flash(_("تمت إضافة السلالة"), "success")
         return redirect(url_for("core.animals_new"))
     return render_template("animal_option_form.html", title=_("إضافة سلالة جديدة"),
-                            back_endpoint="core.animals_new")
+                            back_endpoint="core.animals_new", show_name_en=True)
 
 
 @core_bp.route("/breeds")
@@ -871,12 +871,12 @@ def colors_new():
         if AnimalColor.query.filter_by(name=value).first():
             flash(f'"{value}" موجود بالقائمة أصلاً', "error")
             return redirect(url_for("core.colors_new"))
-        db.session.add(AnimalColor(name=value))
+        db.session.add(AnimalColor(name=value, name_en=(request.form.get("name_en") or "").strip() or None))
         db.session.commit()
         flash(_("تمت إضافة اللون"), "success")
         return redirect(url_for("core.animals_new"))
     return render_template("animal_option_form.html", title=_("إضافة لون جديد"),
-                            back_endpoint="core.animals_new")
+                            back_endpoint="core.animals_new", show_name_en=True)
 
 
 @core_bp.route("/animals/check-number")
