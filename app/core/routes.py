@@ -1783,7 +1783,15 @@ def factory_reset():
     حصري لصاحب الحلال (`system.factory_reset` ما تُمنح لأي دور افتراضي
     ثانٍ)، ومحمي بتأكيد مزدوج: كتابة عبارة التأكيد بالضبط + كلمة المرور
     الحالية — عشان ضغطة غلط أو جلسة مفتوحة بدون مراقبة ما تمسح المزرعة
-    كاملة بالغلط."""
+    كاملة بالغلط.
+
+    دفاع بعمق (بند إضافي 2026-08-31) — حصري لصاحب الحلال بفحص الدور
+    مباشرة، مو بس بصلاحية system.factory_reset. الصلاحية وحدها ما تكفي
+    لأن صاحب الحلال يقدر يؤشّرها بالغلط لدور ثاني بشاشة "تعديل صلاحيات
+    الدور" (رغم إننا صرنا نحذفها من القائمة هناك) — لو صار هذا فعلاً،
+    الفحص هنا يمنع التنفيذ الفعلي بغض النظر."""
+    if current_user.role.name != "owner":
+        abort(403)
     typed_phrase = (request.form.get("confirm_phrase") or "").strip()
     password = request.form.get("password") or ""
 
@@ -1862,6 +1870,12 @@ def role_edit(role_id):
             return redirect(url_for("core.role_edit", role_id=role.id))
         role.display_name = request.form.get("display_name", role.display_name).strip()
         selected_codes = set(request.form.getlist("permissions"))
+        # بند إضافي (2026-08-31، طلبك المباشر) — "ضبط المصنع" (حذف كل
+        # بيانات المزرعة نهائياً) حصرية لصاحب الحلال دائماً، بغض النظر
+        # عن أي مربّع يُؤشَّر بهذي الشاشة — دفاع بعمق: حتى لو أُرسل الكود
+        # بالفورم يدوياً (أدوات مطوّر بالمتصفح مثلاً)، نتجاهله هنا قبل
+        # الحفظ.
+        selected_codes.discard("system.factory_reset")
         role.permissions = Permission.query.filter(Permission.code.in_(selected_codes)).all()
         # بند إضافي (2026-08-31) — أول حفظ يدوي فعلي يقفل هذا الدور
         # ضد إعادة الكتابة التلقائية من `flask seed` بأي نشر تالٍ.
@@ -1874,8 +1888,11 @@ def role_edit(role_id):
         return redirect(url_for("core.settings_home"))
 
     current_codes = {p.code for p in role.permissions}
+    # "ضبط المصنع" ما تظهر بقائمة الاختيار من الأساس — حصرية لصاحب
+    # الحلال دائماً (نفس التعليق أعلاه بمسار POST).
+    editable_permissions = [(code, desc) for code, desc in PERMISSIONS if code != "system.factory_reset"]
     return render_template(
-        "role_edit.html", role=role, all_permissions=PERMISSIONS, current_codes=current_codes,
+        "role_edit.html", role=role, all_permissions=editable_permissions, current_codes=current_codes,
         permissions_en=PERMISSIONS_EN,
     )
 
