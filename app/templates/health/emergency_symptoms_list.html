@@ -15,7 +15,7 @@
     {% for e in entries %}
     <tr>
       <td>{{ e.symptom.name }}</td>
-      <td><span class="badge {{ 'off' if e.severity == 'حرجة' else 'on' }}">{{ e.severity }}</span></td>
+      <td><span class="badge {{ 'off' if e.severity == 'حرجة' else 'on' }}">{{ _('حرجة') if e.severity == 'حرجة' else (_('شديدة') if e.severity == 'شديدة' else e.severity) }}</span></td>
       <td style="font-size:12.5px;">{{ e.differential }}</td>
       <td style="font-size:12.5px;">{{ e.advice }}</td>
       <td>
@@ -48,7 +48,7 @@
 
     <label>{{ _('درجة الخطورة') }}</label>
     <select name="severity">
-      {% for choice in severity_choices %}<option value="{{ choice }}" {{ 'selected' if choice == 'شديدة' }}>{{ choice }}</option>{% endfor %}
+      {% for choice in severity_choices %}<option value="{{ choice }}" {{ 'selected' if choice == 'شديدة' }}>{{ _('حرجة') if choice == 'حرجة' else (_('شديدة') if choice == 'شديدة' else choice) }}</option>{% endfor %}
     </select>
 
     <label>{{ _('التشخيص التفريقي (يظهر بشاشة النتيجة)') }}</label>

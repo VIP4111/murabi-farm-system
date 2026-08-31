@@ -926,6 +926,7 @@ def diagnose_result():
         emergency=emergency,
         temperature=temperature,
         temperature_note=health_service.classify_temperature(temperature),
+        temperature_label=health_service.temperature_label,
         animal_age=health_service.animal_age_label(animal),
         protocols_by_disease=protocols_by_disease,
     )

@@ -12,6 +12,7 @@ import random
 from datetime import date, timedelta
 
 from flask import current_app
+from flask_babel import gettext as _
 
 from app.extensions import db
 from app.models import User, Barn, SpeciesType, Breed, AnimalColor, Animal, Mating, Disease
@@ -30,7 +31,7 @@ def run_farm_month_simulation(days: int = 30, *, send_email: bool = True) -> dic
 
     owner = User.query.filter_by(phone=current_app.config["OWNER_PHONE"]).first()
     if not owner:
-        return {"ok": False, "message": "ما فيه حساب مالك — شغّل `flask seed` أولاً.", "body": "", "counters": {}, "sent": None}
+        return {"ok": False, "message": _("ما فيه حساب مالك — شغّل `flask seed` أولاً."), "body": "", "counters": {}, "sent": None}
 
     barn = Barn.query.first()
     if not barn:
@@ -46,7 +47,7 @@ def run_farm_month_simulation(days: int = 30, *, send_email: bool = True) -> dic
     breed = Breed.query.first()
     color = AnimalColor.query.first()
     if not species or not breed or not color:
-        return {"ok": False, "message": "تعذّر تجهيز القوائم المرجعية (فصيلة/سلالة/لون).", "body": "", "counters": {}, "sent": None}
+        return {"ok": False, "message": _("تعذّر تجهيز القوائم المرجعية (فصيلة/سلالة/لون)."), "body": "", "counters": {}, "sent": None}
 
     today = date.today()
     start_date = today - timedelta(days=days)

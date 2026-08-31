@@ -18,10 +18,13 @@ def _make_doctor(phone="0599999144"):
 
 
 def test_classify_temperature_ranges():
+    # بند إضافي (2026-08-31) — classify_temperature() صارت ترجّع رمزاً
+    # داخلياً ثابتاً (low/high/normal) بدل نص عربي مباشر، عشان تسميته
+    # المعروضة تُترجم فعلياً لحساب غير عربي (temperature_label()).
     assert health_service.classify_temperature(None) is None
-    assert health_service.classify_temperature(37.5) == "منخفضة عن الطبيعي"
-    assert health_service.classify_temperature(39.0) == "ضمن النطاق الطبيعي"
-    assert health_service.classify_temperature(41.0) == "مرتفعة عن الطبيعي (حمى محتملة)"
+    assert health_service.classify_temperature(37.5) == "low"
+    assert health_service.classify_temperature(39.0) == "normal"
+    assert health_service.classify_temperature(41.0) == "high"
 
 
 def test_animal_age_label_from_birth_date(app):

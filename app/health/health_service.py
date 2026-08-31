@@ -487,18 +487,34 @@ def record_vaccination(*, actor_user_id, animal_id, vaccine_name, date_, next_du
 NORMAL_TEMP_RANGE_C = (38.5, 40.0)
 
 
+_TEMPERATURE_LABELS = {
+    "low": _l("منخفضة عن الطبيعي"),
+    "high": _l("مرتفعة عن الطبيعي (حمى محتملة)"),
+    "normal": _l("ضمن النطاق الطبيعي"),
+}
+
+
 def classify_temperature(temp_c: float | None) -> str | None:
-    """تصنيف نصي بسيط لدرجة حرارة مُدخَلة — عرض توجيهي بشاشة نتيجة
-    التشخيص بس، لا يدخل بحساب الاحتمالات حالياً (مؤجَّل للمرحلة 3
-    "معادلة الوزن الموزونة" حسب الخطة المتفَق عليها)."""
+    """تصنيف رمزي بسيط لدرجة حرارة مُدخَلة (low/high/normal) — عرض
+    توجيهي بشاشة نتيجة التشخيص بس، لا يدخل بحساب الاحتمالات حالياً
+    (مؤجَّل للمرحلة 3 "معادلة الوزن الموزونة" حسب الخطة المتفَق عليها).
+    يرجّع رمزاً داخلياً ثابتاً (بند إضافي، 2026-08-31) بدل نص عربي مباشر
+    — عشان تسميته المعروضة تُترجم فعلياً لحساب غير عربي، ومقارنة الحالة
+    (بشاشة العرض) تبقى صحيحة بأي لغة."""
     if temp_c is None:
         return None
     low, high = NORMAL_TEMP_RANGE_C
     if temp_c < low:
-        return "منخفضة عن الطبيعي"
+        return "low"
     if temp_c > high:
-        return "مرتفعة عن الطبيعي (حمى محتملة)"
-    return "ضمن النطاق الطبيعي"
+        return "high"
+    return "normal"
+
+
+def temperature_label(code: str | None) -> str:
+    if not code:
+        return ""
+    return str(_TEMPERATURE_LABELS.get(code, code))
 
 
 def animal_age_label(animal) -> str | None:
@@ -571,7 +587,7 @@ def score_diagnoses(*, symptom_ids: list[int], temperature: float | None = None)
         links_by_disease.setdefault(link.disease_type_id, []).append(link)
 
     context_multiplier = 1.0
-    if temperature is not None and classify_temperature(temperature) == "مرتفعة عن الطبيعي (حمى محتملة)":
+    if temperature is not None and classify_temperature(temperature) == "high":
         context_multiplier = FEVER_CONTEXT_MULTIPLIER
 
     results = []
