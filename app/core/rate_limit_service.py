@@ -3,6 +3,7 @@
 ملفات) قبل هذا البند؛ عامل مغرور أو حساب مخترَق يقدر يرسل عدد غير
 محدود من البلاغات/الملفات بلا أي كبح."""
 from datetime import datetime, timedelta, timezone
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models import RateLimitHit
 
@@ -10,7 +11,7 @@ from app.models import RateLimitHit
 class RateLimitExceeded(Exception):
     def __init__(self, retry_after_seconds: int):
         self.retry_after_seconds = retry_after_seconds
-        super().__init__(f"تجاوزت الحد المسموح — حاول بعد {retry_after_seconds} ثانية.")
+        super().__init__(_("تجاوزت الحد المسموح — حاول بعد %(seconds)s ثانية.", seconds=retry_after_seconds))
 
 
 def check_and_record(*, user_id: int, key: str, max_calls: int, window_seconds: int) -> None:

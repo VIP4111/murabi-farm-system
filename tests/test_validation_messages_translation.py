@@ -3,6 +3,8 @@
 `flash(str(e), "error")` بالراوتات — الترجمة الصحيحة تصير عند مصدر
 الرفع (`raise ValueError(_("..."))`) مو عند نقطة العرض، لأن `str(e)`
 يجمّد النص وقت الرفع."""
+from datetime import date
+
 from app.extensions import db
 from app.models import Role, User
 from factories import make_barn
@@ -70,6 +72,48 @@ def test_report_accept_permission_error_translates_for_english_user(app, client)
     body = resp.data.decode()
     assert "ما تملك صلاحية إدارة البلاغات" not in body
     assert "manage-reports permission" in body
+
+
+def test_sale_blocked_by_early_lifecycle_stage_translates_for_english_user(app, client):
+    """بند إضافي (2026-08-31) — فحص أوسع لشاشة الدكتور: CycleExitBlocked
+    (app/core/cycle_engine.py) كان استثناءً مخصَّصاً ثالثاً ما شمله أي
+    بحث سابق (بعد ValueError وTaskStateError/ReportStateError) — يحجب
+    بيع رأس لسا بمرحلة مبكرة من دورة الإنتاج."""
+    from factories import make_animal
+
+    owner = _make_owner_en(phone="0599999275")
+    animal = make_animal(animal_no="VAL-SALE-1", price=500)
+    client.post("/login", data={"phone": owner.phone, "password": "pass1234"})
+
+    resp = client.post(f"/animals/{animal.id}/sell", data={
+        "sale_price": "600", "sale_date": "", "notes": "",
+    }, follow_redirects=True)
+    assert resp.status_code == 200
+    body = resp.data.decode()
+    assert "لازم يوصل لمرحلة" not in body
+    assert "must reach" in body or "before selling" in body
+
+
+def test_isolation_exit_blocked_translates_for_english_user(app, client):
+    """نفس الفئة، بس IsolationExitBlocked (app/core/isolation_service.py)."""
+    from factories import make_animal, make_barn
+    from app.core import isolation_service
+
+    owner = _make_owner_en(phone="0599999276")
+    isolation_barn = make_barn(barn_no="ISO-EN-1", barn_name="حظيرة عزل", barn_type="عزل")
+    target_barn = make_barn(barn_no="TGT-EN-1", barn_name="حظيرة عادية")
+    animal = make_animal(animal_no="VAL-ISO-1", barn_id=isolation_barn.id)
+    animal.isolation_started_at = date.today()
+    db.session.commit()
+
+    client.post("/login", data={"phone": owner.phone, "password": "pass1234"})
+    resp = client.post(f"/animals/{animal.id}/isolation/exit", data={
+        "barn_id": str(target_barn.id), "date": date.today().isoformat(),
+    }, follow_redirects=True)
+    assert resp.status_code == 200
+    body = resp.data.decode()
+    assert "خروج مبكر من العزل" not in body
+    assert "Early exit from isolation" in body or "early exit" in body.lower()
 
 
 def test_task_start_not_assigned_error_translates_for_english_user(app, client, owner):

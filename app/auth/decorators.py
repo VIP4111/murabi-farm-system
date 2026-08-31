@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import abort, flash, redirect, request, jsonify
 from flask_login import current_user
+from flask_babel import gettext as _
 
 
 def require_permission(code: str):
@@ -35,7 +36,7 @@ def rate_limited(key: str, max_calls: int, window_seconds: int):
                 check_and_record(user_id=current_user.id, key=key,
                                   max_calls=max_calls, window_seconds=window_seconds)
             except RateLimitExceeded as e:
-                message = f"طلبات كثيرة بوقت قصير — حاول بعد {e.retry_after_seconds} ثانية."
+                message = _("طلبات كثيرة بوقت قصير — حاول بعد %(seconds)s ثانية.", seconds=e.retry_after_seconds)
                 if request.is_json or request.headers.get("X-Requested-With") == "XMLHttpRequest":
                     return jsonify(ok=False, error=message), 429
                 flash(message, "error")

@@ -11,6 +11,7 @@
 `seed()` كانت تنشئ حساب مالك جديد برقم الجوال الافتراضي من `.env`
 (`OWNER_PHONE`)، مختلف عن رقم المالك الفعلي غالباً."""
 from sqlalchemy import text
+from flask_babel import gettext as _
 
 from app.extensions import db
 from app.models import User
@@ -69,7 +70,7 @@ def factory_reset(*, current_user: User, app) -> dict:
     if result.exception:
         # ما نبتلع الخطأ — بعد حذف كل البيانات، فشل إعادة التهيئة يعني
         # نظام فاضي بلا حتى حساب دخول واحد، لازم يوصل واضح للمستخدم.
-        raise RuntimeError(f"فشلت إعادة التهيئة بعد الحذف: {result.exception}") from result.exception
+        raise RuntimeError(_("فشلت إعادة التهيئة بعد الحذف: %(error)s", error=result.exception)) from result.exception
 
     owner = User.query.filter_by(phone=app.config["OWNER_PHONE"]).first()
     if owner:

@@ -12,7 +12,7 @@
 from datetime import date, datetime, timedelta, timezone
 
 import requests
-from flask_babel import lazy_gettext as _l
+from flask_babel import lazy_gettext as _l, gettext as _
 
 from app.extensions import db
 from app.models import Barn, FarmSettings, Task, WeatherReading
@@ -81,7 +81,7 @@ def _fetch_raw_hourly(lat: float, lon: float) -> dict:
         resp.raise_for_status()
         return resp.json()
     except requests.RequestException as exc:
-        raise WeatherFetchError(f"تعذّر الاتصال بخدمة الطقس: {exc}") from exc
+        raise WeatherFetchError(_("تعذّر الاتصال بخدمة الطقس: %(error)s", error=exc)) from exc
 
 
 def _daily_peak_readings(raw: dict) -> dict:
@@ -107,12 +107,12 @@ def fetch_and_store_forecast() -> list[WeatherReading]:
     الشاشة تتعامل معه بعرض آخر بيانات مخزّنة بدل الانهيار."""
     settings = FarmSettings.get()
     if not is_configured():
-        raise WeatherFetchError("موقع المزرعة غير مضبوط بعد — اضبطه من إعدادات رادار المناخ.")
+        raise WeatherFetchError(_("موقع المزرعة غير مضبوط بعد — اضبطه من إعدادات رادار المناخ."))
 
     raw = _fetch_raw_hourly(settings.farm_latitude, settings.farm_longitude)
     per_day = _daily_peak_readings(raw)
     if not per_day:
-        raise WeatherFetchError("رد خدمة الطقس ما فيه بيانات صالحة.")
+        raise WeatherFetchError(_("رد خدمة الطقس ما فيه بيانات صالحة."))
 
     saved = []
     for d, (temp_max, humidity) in sorted(per_day.items()):

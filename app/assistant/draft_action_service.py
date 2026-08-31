@@ -188,7 +188,7 @@ def confirm_draft(draft: AssistantDraftAction, *, actor, assignee_id=None):
     action_def = ALLOWED_ACTION_TYPES[draft.parsed_action_type]
     required_permission = action_def["required_permission"]
     if not actor.has_permission(required_permission):
-        raise PermissionError(f"تحتاج صلاحية \"{required_permission}\" لاعتماد هذا النوع من المسودات.")
+        raise PermissionError(_('تحتاج صلاحية "%(perm)s" لاعتماد هذا النوع من المسودات.', perm=required_permission))
     result = action_def["execute"](draft.get_payload(), actor=actor, assignee_id=assignee_id)
     draft.status = "confirmed"
     draft.confirmed_by_id = actor.id

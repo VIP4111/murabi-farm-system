@@ -13,6 +13,7 @@ import os
 import shutil
 from datetime import datetime, timezone
 from flask import current_app
+from flask_babel import gettext as _
 
 
 def _sqlite_db_path() -> str | None:
@@ -41,10 +42,10 @@ def _backup_dir() -> str:
 def create_backup() -> str:
     db_path = _sqlite_db_path()
     if not db_path or not os.path.exists(db_path):
-        raise RuntimeError(
+        raise RuntimeError(_(
             "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. "
             "راجع تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
-        )
+        ))
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     filename = f"farm_system_{stamp}.db"
     shutil.copyfile(db_path, os.path.join(_backup_dir(), filename))

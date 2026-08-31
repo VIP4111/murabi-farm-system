@@ -12,6 +12,7 @@
 لو انعدّل حقل بعد إكمال مراحل فعلية.
 """
 from datetime import date
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models.animal import Animal, AnimalSource
 from app.models.cycle import ProductionWorkflow, CycleEvent
@@ -431,9 +432,10 @@ def assert_exit_allowed(animal: Animal, *, withdrawal_override_reason: str | Non
     evaluate(animal)
     wf = animal.workflow
     if wf.current_stage < 10 or wf.status == "out_of_order":
-        raise CycleExitBlocked(
-            f'الحيوان لسا بمرحلة "{wf.stage_name}" — لازم يوصل لمرحلة "قرار المصير" قبل البيع أو الأرشفة.'
-        )
+        raise CycleExitBlocked(_(
+            'الحيوان لسا بمرحلة "%(stage)s" — لازم يوصل لمرحلة "قرار المصير" قبل البيع أو الأرشفة.',
+            stage=wf.stage_name,
+        ))
 
     # حظر آلي على البيع/الذبح أثناء فترة تحريم دواء (بند إضافي 50) —
     # كانت تحذيراً بس بعد البيع (بند 46)، صارت بوابة حقيقية قبله. نقطة
@@ -458,10 +460,11 @@ def assert_exit_allowed(animal: Animal, *, withdrawal_override_reason: str | Non
             ))
             return
         days_left = (until - date.today()).days
-        raise CycleExitBlocked(
-            f'"{animal.animal_no}" تحت فترة تحريم دواء حتى {until} (باقي {days_left} يوم) — '
-            "ممنوع البيع أو الذبح لين تنتهي الفترة كاملة."
-        )
+        raise CycleExitBlocked(_(
+            '"%(no)s" تحت فترة تحريم دواء حتى %(until)s (باقي %(days)s يوم) — '
+            "ممنوع البيع أو الذبح لين تنتهي الفترة كاملة.",
+            no=animal.animal_no, until=until, days=days_left,
+        ))
 
 
 def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_date=None, notes=None,
@@ -577,7 +580,7 @@ def delete_animal(animal: Animal, *, actor_user_id: int, force: bool = False, re
     assert_exit_allowed(animal)
     active_finance = Finance.query.filter_by(related_animal_id=animal.id, is_cancelled=False).count()
     if active_finance and not force:
-        raise CycleExitBlocked('يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل "تجاوز" لو متأكد إنك تبي تكمل.')
+        raise CycleExitBlocked(_('يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل "تجاوز" لو متأكد إنك تبي تكمل.'))
 
     wf = animal.workflow
     animal.status = "deleted"

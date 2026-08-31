@@ -74,13 +74,13 @@ def exit_isolation(*, animal_id: int, target_barn_id: int, note_date: date, acto
     if is_early and not (vet_checked and vaccinated):
         missing = []
         if not vet_checked:
-            missing.append("فحص بيطري موثّق")
+            missing.append(_("فحص بيطري موثّق"))
         if not vaccinated:
-            missing.append("تحصين")
-        raise IsolationExitBlocked(
-            f"خروج مبكر من العزل (باقي {settings.isolation_days - days_in} يوم من المدة الأدنى) — "
-            f"يحتاج تأكيد: {'، '.join(missing)}."
-        )
+            missing.append(_("تحصين"))
+        raise IsolationExitBlocked(_(
+            "خروج مبكر من العزل (باقي %(days)s يوم من المدة الأدنى) — يحتاج تأكيد: %(missing)s.",
+            days=settings.isolation_days - days_in, missing="، ".join(str(m) for m in missing),
+        ))
 
     old_barn = animal.barn_id
     animal.barn_id = target.id

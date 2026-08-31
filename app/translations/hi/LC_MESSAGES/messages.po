@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 04:14+0300\n"
+"POT-Creation-Date: 2026-08-31 04:34+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -618,6 +618,7 @@ msgid "زيارة بيطرية"
 msgstr "पशु चिकित्सा यात्रा"
 
 #: app/__init__.py:338 app/core/alerts_service.py:61
+#: app/core/isolation_service.py:79
 msgid "تحصين"
 msgstr "टीकाकरण"
 
@@ -725,6 +726,11 @@ msgstr "नोट में कार्य का टेक्स्ट नि�
 msgid "هذي المسودة مو بانتظار الاعتماد."
 msgstr "यह ड्राफ्ट स्वीकृति की प्रतीक्षा में नहीं है।"
 
+#: app/assistant/draft_action_service.py:191
+#, python-format
+msgid "تحتاج صلاحية \"%(perm)s\" لاعتماد هذا النوع من المسودات."
+msgstr "इस प्रकार के ड्राफ्ट को स्वीकृत करने के लिए आपको \"%(perm)s\" अनुमति चाहिए।"
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "पहले अपना प्रश्न लिखें"
@@ -769,6 +775,11 @@ msgstr "क्रियान्वयन नहीं हो सका: %(err)s
 #: app/assistant/routes.py:234
 msgid "تم رفض المسودة."
 msgstr "ड्राफ्ट अस्वीकार कर दिया गया है।"
+
+#: app/auth/decorators.py:39
+#, python-format
+msgid "طلبات كثيرة بوقت قصير — حاول بعد %(seconds)s ثانية."
+msgstr "कम समय में बहुत सारे अनुरोध — %(seconds)s सेकंड बाद पुनः प्रयास करें।"
 
 #: app/auth/routes.py:49
 #, python-format
@@ -831,6 +842,19 @@ msgstr "गंभीर तनाव"
 #: app/climate/climate_service.py:31
 msgid "إجهاد طارئ"
 msgstr "आपातकालीन तनाव"
+
+#: app/climate/climate_service.py:84
+#, python-format
+msgid "تعذّر الاتصال بخدمة الطقس: %(error)s"
+msgstr "मौसम सेवा से कनेक्ट नहीं हो सका: %(error)s"
+
+#: app/climate/climate_service.py:110
+msgid "موقع المزرعة غير مضبوط بعد — اضبطه من إعدادات رادار المناخ."
+msgstr "फार्म का स्थान अभी सेट नहीं है — इसे जलवायु रडार सेटिंग्स से सेट करें।"
+
+#: app/climate/climate_service.py:115
+msgid "رد خدمة الطقس ما فيه بيانات صالحة."
+msgstr "मौसम सेवा की प्रतिक्रिया में कोई मान्य डेटा नहीं है।"
 
 #: app/climate/routes.py:55
 msgid "إحداثيات غير صالحة."
@@ -1338,6 +1362,10 @@ msgstr "प्रवेश तिथि"
 msgid "تاريخ الوزن"
 msgstr "वजन तिथि"
 
+#: app/core/backup_service.py:46
+msgid "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
+msgstr "इस वातावरण में बैकअप समर्थित नहीं है — डेटाबेस स्थानीय SQLite फ़ाइल नहीं है। उचित उत्पादन बैकअप योजना के लिए सेटिंग्स में आइटम 34 की सूचना देखें।"
+
 #: app/core/batch_service.py:38
 msgid "لازم رأس واحدة على الأقل بالدفعة."
 msgstr "बैच में कम से कम एक जानवर आवश्यक है।"
@@ -1392,6 +1420,20 @@ msgstr "आपको इस जानवर के लिए एक स्था
 #: app/core/batch_service.py:207
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "बैच अभी भी क्वारंटीन चरण में है — अभी कोई अतिरिक्त व्यक्तिगत कार्रवाई आवश्यक नहीं है।"
+
+#: app/core/cycle_engine.py:436
+#, python-format
+msgid "الحيوان لسا بمرحلة \"%(stage)s\" — لازم يوصل لمرحلة \"قرار المصير\" قبل البيع أو الأرشفة."
+msgstr "पशु अभी भी \"%(stage)s\" चरण में है — बेचने या संग्रहित करने से पहले उसे \"भाग्य निर्णय\" चरण तक पहुंचना होगा।"
+
+#: app/core/cycle_engine.py:464
+#, python-format
+msgid "\"%(no)s\" تحت فترة تحريم دواء حتى %(until)s (باقي %(days)s يوم) — ممنوع البيع أو الذبح لين تنتهي الفترة كاملة."
+msgstr "\"%(no)s\" %(until)s तक दवा प्रतिबंध अवधि में है (%(days)s दिन शेष) — अवधि पूरी तरह समाप्त होने तक बेचना या वध करना प्रतिबंधित है।"
+
+#: app/core/cycle_engine.py:583
+msgid "يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل \"تجاوز\" لو متأكد إنك تبي تكمل."
+msgstr "इस पशु से जुड़े वित्तीय लेनदेन मौजूद हैं — यदि आप जारी रखना चाहते हैं तो \"ओवरराइड\" सक्षम करें।"
 
 #: app/core/daily_email_report_service.py:97
 #, python-format
@@ -1542,6 +1584,11 @@ msgstr "उद्देश्य (प्रजनन/मोटा करना/�
 msgid "اللون"
 msgstr "रंग"
 
+#: app/core/factory_reset_service.py:73
+#, python-format
+msgid "فشلت إعادة التهيئة بعد الحذف: %(error)s"
+msgstr "हटाने के बाद पुनः आरंभीकरण विफल रहा: %(error)s"
+
 #: app/core/isolation_service.py:31 app/core/isolation_service.py:65
 msgid "الرأس غير موجود"
 msgstr "जानवर मौजूद नहीं है"
@@ -1553,6 +1600,15 @@ msgstr "सिस्टम में कोई आइसोलेशन बा�
 #: app/core/isolation_service.py:68
 msgid "الحظيرة الهدف غير موجودة"
 msgstr "लक्ष्य बाड़ा मौजूद नहीं है"
+
+#: app/core/isolation_service.py:77
+msgid "فحص بيطري موثّق"
+msgstr "दर्ज पशु चिकित्सक जांच"
+
+#: app/core/isolation_service.py:81
+#, python-format
+msgid "خروج مبكر من العزل (باقي %(days)s يوم من المدة الأدنى) — يحتاج تأكيد: %(missing)s."
+msgstr "पृथकवास से जल्दी निकासी (न्यूनतम अवधि के %(days)s दिन शेष) — पुष्टि आवश्यक है: %(missing)s."
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -1589,6 +1645,11 @@ msgstr "दादी/पोता"
 #: app/core/lineage_service.py:90
 msgid "عم/عمة أو خال/خالة"
 msgstr "चाचा/मामा संबंध"
+
+#: app/core/rate_limit_service.py:14
+#, python-format
+msgid "تجاوزت الحد المسموح — حاول بعد %(seconds)s ثانية."
+msgstr "आपने अनुमत सीमा पार कर ली है — %(seconds)s सेकंड बाद पुनः प्रयास करें।"
 
 #: app/core/readiness_service.py:21
 msgid "كلمة مرور المالك الافتراضية"
@@ -2592,6 +2653,10 @@ msgstr "रखरखाव दर्ज कर दिया गया है"
 msgid "تم تسجيل القراءة"
 msgstr "रीडिंग दर्ज कर दी गई है"
 
+#: app/feed/feed_service.py:286
+msgid "حركة الصادر (الاستهلاك) لازم تُربَط بحظيرة — بدونها ما تنحسب التكلفة اليومية صح."
+msgstr "बाहर जाने वाली (खपत) गतिविधि को एक बाड़े से जोड़ा जाना चाहिए — इसके बिना दैनिक लागत सही ढंग से नहीं गणना की जा सकती।"
+
 #: app/feed/routes.py:52
 msgid "تمت إضافة مكوّن العلف"
 msgstr "चारा घटक जोड़ दिया गया है"
@@ -2906,6 +2971,11 @@ msgstr "बहुत मोटा"
 msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
 msgstr "मोटी वसा परत के नीचे न कशेरुकाएं महसूस होती हैं न पसलियां, पीठ का आकार समतल या गोलाकार। प्रसव और गति के लिए जोखिम — आहार समायोजन की आवश्यकता है।"
 
+#: app/health/health_service.py:360
+#, python-format
+msgid "اخترت دواء (\"%(name)s\") بدون تحديد الكمية المستخدمة — لازم تحدد الجرعة عشان يصح حساب التكلفة وخصم المخزون."
+msgstr "आपने एक दवा (\"%(name)s\") चुनी बिना उपयोग की गई मात्रा बताए — लागत और स्टॉक कटौती सही ढंग से गणना होने के लिए आपको खुराक निर्दिष्ट करनी होगी।"
+
 #: app/health/routes.py:71
 msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
 msgstr "जुड़ा हुआ कार्य अपने आप पूरा हो गया, और वजन दोबारा जांचने का फॉलो-अप कार्य शेड्यूल कर दिया गया।"
@@ -3059,6 +3129,11 @@ msgstr "शेड्यूल रद्द कर दिया गया है"
 #: app/health/routes.py:1174
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "शेड्यूल को पूर्ण के रूप में चिह्नित कर दिया गया है"
+
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:123
+#, python-format
+msgid "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" (%(available)s) — حدّث المخزون أولاً أو قلّل الكمية."
+msgstr "अनुरोधित मात्रा (%(qty)s) \"%(name)s\" से वास्तव में उपलब्ध (%(available)s) से अधिक है — पहले स्टॉक अपडेट करें या मात्रा कम करें।"
 
 #: app/models/warehouse.py:24
 msgid "علف"

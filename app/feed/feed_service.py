@@ -7,6 +7,7 @@
 توصية طبيبك أو مرجع تغذية معتمد قبل ما تعتمد عليها فعلياً بقرارات شراء.
 """
 from datetime import date, timedelta
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models import Feed, FeedRation, FeedMovement, FeedBarnPlan
 
@@ -282,7 +283,7 @@ def record_movement(*, feed: Feed, movement_type: str, quantity: float, barn_id=
     # كلاهما يعتمدان على ربط الاستهلاك بحظيرة). الوارد (شراء) ما يحتاج
     # حظيرة أصلاً — يدخل المخزون العام قبل التوزيع.
     if movement_type == "out" and not barn_id:
-        raise ValueError('حركة الصادر (الاستهلاك) لازم تُربَط بحظيرة — بدونها ما تنحسب التكلفة اليومية صح.')
+        raise ValueError(_('حركة الصادر (الاستهلاك) لازم تُربَط بحظيرة — بدونها ما تنحسب التكلفة اليومية صح.'))
 
     before = feed.available_qty or 0
     if movement_type == "in":

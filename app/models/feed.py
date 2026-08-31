@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from flask_babel import gettext as _
 from app.extensions import db
 
 
@@ -66,10 +67,11 @@ class Feed(db.Model):
         كان يُقصّ عند الصفر بصمت فيسجّل استهلاك أكبر من المخزون الفعلي."""
         available = self.available_qty or 0
         if qty > available:
-            raise ValueError(
-                f'الكمية المطلوبة ({qty}) أكبر من المتوفر فعلياً من "{self.name}" '
-                f'({available}) — حدّث المخزون أولاً أو قلّل الكمية.'
-            )
+            raise ValueError(_(
+                'الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من "%(name)s" '
+                '(%(available)s) — حدّث المخزون أولاً أو قلّل الكمية.',
+                qty=qty, name=self.name, available=available,
+            ))
         self.available_qty = available - qty
 
     def add_stock(self, qty: float) -> None:

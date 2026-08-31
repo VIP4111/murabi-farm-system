@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 04:14+0300\n"
+"POT-Creation-Date: 2026-08-31 04:34+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -618,6 +618,7 @@ msgid "زيارة بيطرية"
 msgstr "Vet visit"
 
 #: app/__init__.py:338 app/core/alerts_service.py:61
+#: app/core/isolation_service.py:79
 msgid "تحصين"
 msgstr "Vaccination"
 
@@ -725,6 +726,11 @@ msgstr "The task text isn't specified in the note — edit it and assign the tas
 msgid "هذي المسودة مو بانتظار الاعتماد."
 msgstr "This draft isn't awaiting approval."
 
+#: app/assistant/draft_action_service.py:191
+#, python-format
+msgid "تحتاج صلاحية \"%(perm)s\" لاعتماد هذا النوع من المسودات."
+msgstr "You need the \"%(perm)s\" permission to approve this type of draft."
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "Write your question first"
@@ -769,6 +775,11 @@ msgstr "Couldn't execute: %(err)s"
 #: app/assistant/routes.py:234
 msgid "تم رفض المسودة."
 msgstr "The draft has been rejected."
+
+#: app/auth/decorators.py:39
+#, python-format
+msgid "طلبات كثيرة بوقت قصير — حاول بعد %(seconds)s ثانية."
+msgstr "Too many requests in a short time — try again in %(seconds)s seconds."
 
 #: app/auth/routes.py:49
 #, python-format
@@ -831,6 +842,19 @@ msgstr "Severe stress"
 #: app/climate/climate_service.py:31
 msgid "إجهاد طارئ"
 msgstr "Emergency stress"
+
+#: app/climate/climate_service.py:84
+#, python-format
+msgid "تعذّر الاتصال بخدمة الطقس: %(error)s"
+msgstr "Could not connect to the weather service: %(error)s"
+
+#: app/climate/climate_service.py:110
+msgid "موقع المزرعة غير مضبوط بعد — اضبطه من إعدادات رادار المناخ."
+msgstr "The farm's location is not set yet — set it from the climate radar settings."
+
+#: app/climate/climate_service.py:115
+msgid "رد خدمة الطقس ما فيه بيانات صالحة."
+msgstr "The weather service response has no valid data."
 
 #: app/climate/routes.py:55
 msgid "إحداثيات غير صالحة."
@@ -1338,6 +1362,10 @@ msgstr "Entry date"
 msgid "تاريخ الوزن"
 msgstr "Weighing date"
 
+#: app/core/backup_service.py:46
+msgid "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
+msgstr "Backup is not supported in this environment — the database is not a local SQLite file. See the item-34 notice in settings for the appropriate production backup plan."
+
 #: app/core/batch_service.py:38
 msgid "لازم رأس واحدة على الأقل بالدفعة."
 msgstr "At least one animal is required in the batch."
@@ -1392,6 +1420,20 @@ msgstr "You must specify a permanent barn for this animal."
 #: app/core/batch_service.py:207
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "The batch is still at the quarantine stage — no additional individual action is required right now."
+
+#: app/core/cycle_engine.py:436
+#, python-format
+msgid "الحيوان لسا بمرحلة \"%(stage)s\" — لازم يوصل لمرحلة \"قرار المصير\" قبل البيع أو الأرشفة."
+msgstr "The animal is still at the \"%(stage)s\" stage — it must reach the \"fate decision\" stage before selling or archiving."
+
+#: app/core/cycle_engine.py:464
+#, python-format
+msgid "\"%(no)s\" تحت فترة تحريم دواء حتى %(until)s (باقي %(days)s يوم) — ممنوع البيع أو الذبح لين تنتهي الفترة كاملة."
+msgstr "\"%(no)s\" is under a medicine withdrawal period until %(until)s (%(days)s day(s) left) — selling or slaughtering is not allowed before the period fully ends."
+
+#: app/core/cycle_engine.py:583
+msgid "يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل \"تجاوز\" لو متأكد إنك تبي تكمل."
+msgstr "There are financial transactions linked to this animal — enable \"override\" if you are sure you want to continue."
 
 #: app/core/daily_email_report_service.py:97
 #, python-format
@@ -1542,6 +1584,11 @@ msgstr "Purpose (breeding/fattening/sale)"
 msgid "اللون"
 msgstr "Color"
 
+#: app/core/factory_reset_service.py:73
+#, python-format
+msgid "فشلت إعادة التهيئة بعد الحذف: %(error)s"
+msgstr "Re-initialization failed after deletion: %(error)s"
+
 #: app/core/isolation_service.py:31 app/core/isolation_service.py:65
 msgid "الرأس غير موجود"
 msgstr "The animal doesn't exist"
@@ -1553,6 +1600,15 @@ msgstr "No isolation barn is defined in the system"
 #: app/core/isolation_service.py:68
 msgid "الحظيرة الهدف غير موجودة"
 msgstr "The target barn doesn't exist"
+
+#: app/core/isolation_service.py:77
+msgid "فحص بيطري موثّق"
+msgstr "Documented vet checkup"
+
+#: app/core/isolation_service.py:81
+#, python-format
+msgid "خروج مبكر من العزل (باقي %(days)s يوم من المدة الأدنى) — يحتاج تأكيد: %(missing)s."
+msgstr "Early exit from isolation (%(days)s day(s) left of the minimum period) — needs confirmation: %(missing)s."
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -1589,6 +1645,11 @@ msgstr "Grandmother/grandson"
 #: app/core/lineage_service.py:90
 msgid "عم/عمة أو خال/خالة"
 msgstr "Uncle/aunt relation"
+
+#: app/core/rate_limit_service.py:14
+#, python-format
+msgid "تجاوزت الحد المسموح — حاول بعد %(seconds)s ثانية."
+msgstr "You exceeded the allowed limit — try again in %(seconds)s seconds."
 
 #: app/core/readiness_service.py:21
 msgid "كلمة مرور المالك الافتراضية"
@@ -2592,6 +2653,10 @@ msgstr "The maintenance has been recorded"
 msgid "تم تسجيل القراءة"
 msgstr "The reading has been recorded"
 
+#: app/feed/feed_service.py:286
+msgid "حركة الصادر (الاستهلاك) لازم تُربَط بحظيرة — بدونها ما تنحسب التكلفة اليومية صح."
+msgstr "An outgoing (consumption) movement must be linked to a barn — without one, the daily cost cannot be calculated correctly."
+
 #: app/feed/routes.py:52
 msgid "تمت إضافة مكوّن العلف"
 msgstr "The feed ingredient has been added"
@@ -2906,6 +2971,11 @@ msgstr "Very fat"
 msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
 msgstr "Neither vertebrae nor ribs can be felt at all under a thick fat layer, the back looks flat or rounded. A risk for birthing and movement — needs a feeding adjustment."
 
+#: app/health/health_service.py:360
+#, python-format
+msgid "اخترت دواء (\"%(name)s\") بدون تحديد الكمية المستخدمة — لازم تحدد الجرعة عشان يصح حساب التكلفة وخصم المخزون."
+msgstr "You selected a medicine (\"%(name)s\") without specifying the quantity used — you must specify the dose for the cost and stock deduction to be calculated correctly."
+
 #: app/health/routes.py:71
 msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
 msgstr "The linked task was completed automatically, and a reweigh follow-up task was scheduled."
@@ -3059,6 +3129,11 @@ msgstr "The schedule has been cancelled"
 #: app/health/routes.py:1174
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "The schedule has been marked as completed"
+
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:123
+#, python-format
+msgid "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" (%(available)s) — حدّث المخزون أولاً أو قلّل الكمية."
+msgstr "The requested quantity (%(qty)s) is greater than what is actually available of \"%(name)s\" (%(available)s) — update the stock first or reduce the quantity."
 
 #: app/models/warehouse.py:24
 msgid "علف"

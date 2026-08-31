@@ -3,7 +3,7 @@
 تلقائياً من بيانات الدواء بالصيدلية (بدل ما تُحسب يدوياً أو تُنسى).
 """
 from datetime import date, timedelta
-from flask_babel import lazy_gettext as _l
+from flask_babel import lazy_gettext as _l, gettext as _
 from app.extensions import db
 from app.models import Pharmacy, VetVisit, Disease, Vaccination, AuditLog, Symptom, DiseaseSymptomLink, DiseaseType, EmergencySymptom
 
@@ -356,10 +356,11 @@ def _deduct_if_used(pharmacy: Pharmacy | None, quantity_used: float | None) -> N
 
 def _require_quantity_if_medicine(pharmacy: Pharmacy | None, quantity_used: float | None) -> None:
     if pharmacy and not quantity_used:
-        raise IncompleteRecordError(
-            f'اخترت دواء ("{pharmacy.name}") بدون تحديد الكمية المستخدمة — '
-            "لازم تحدد الجرعة عشان يصح حساب التكلفة وخصم المخزون."
-        )
+        raise IncompleteRecordError(_(
+            'اخترت دواء ("%(name)s") بدون تحديد الكمية المستخدمة — '
+            "لازم تحدد الجرعة عشان يصح حساب التكلفة وخصم المخزون.",
+            name=pharmacy.name,
+        ))
 
 
 def _computed_cost(pharmacy: Pharmacy | None, quantity_used: float | None, manual_cost: float) -> float:

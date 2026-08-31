@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 04:14+0300\n"
+"POT-Creation-Date: 2026-08-31 04:34+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -618,6 +618,7 @@ msgid "زيارة بيطرية"
 msgstr "የእንስሳት ሐኪም ጉብኝት"
 
 #: app/__init__.py:338 app/core/alerts_service.py:61
+#: app/core/isolation_service.py:79
 msgid "تحصين"
 msgstr "ክትባት"
 
@@ -725,6 +726,11 @@ msgstr "የተግባሩ ጽሑፍ በማስታወሻው ላይ አልተገለ�
 msgid "هذي المسودة مو بانتظار الاعتماد."
 msgstr "ይህ ረቂቅ ማጽደቅ አይጠብቅም።"
 
+#: app/assistant/draft_action_service.py:191
+#, python-format
+msgid "تحتاج صلاحية \"%(perm)s\" لاعتماد هذا النوع من المسودات."
+msgstr "ይህን አይነት ረቂቅ ለማጽደቅ \"%(perm)s\" ፈቃድ ያስፈልግዎታል።"
+
 #: app/assistant/routes.py:70
 msgid "اكتب سؤالك أولاً"
 msgstr "መጀመሪያ ጥያቄዎን ይጻፉ"
@@ -769,6 +775,11 @@ msgstr "ማስፈጸም አልተቻለም፡ %(err)s"
 #: app/assistant/routes.py:234
 msgid "تم رفض المسودة."
 msgstr "ረቂቁ ውድቅ ተደርጓል።"
+
+#: app/auth/decorators.py:39
+#, python-format
+msgid "طلبات كثيرة بوقت قصير — حاول بعد %(seconds)s ثانية."
+msgstr "በአጭር ጊዜ ውስጥ በጣም ብዙ ጥያቄዎች — ከ%(seconds)s ሰከንድ በኋላ ይሞክሩ።"
 
 #: app/auth/routes.py:49
 #, python-format
@@ -831,6 +842,19 @@ msgstr "ከባድ ውጥረት"
 #: app/climate/climate_service.py:31
 msgid "إجهاد طارئ"
 msgstr "የአደጋ ጊዜ ውጥረት"
+
+#: app/climate/climate_service.py:84
+#, python-format
+msgid "تعذّر الاتصال بخدمة الطقس: %(error)s"
+msgstr "ከአየር ሁኔታ አገልግሎት ጋር መገናኘት አልተቻለም: %(error)s"
+
+#: app/climate/climate_service.py:110
+msgid "موقع المزرعة غير مضبوط بعد — اضبطه من إعدادات رادار المناخ."
+msgstr "የእርሻው አካባቢ ገና አልተዘጋጀም — ከአየር ንብረት ራዳር ቅንብሮች ያዘጋጁት።"
+
+#: app/climate/climate_service.py:115
+msgid "رد خدمة الطقس ما فيه بيانات صالحة."
+msgstr "የአየር ሁኔታ አገልግሎት ምላሽ ትክክለኛ መረጃ የለውም።"
 
 #: app/climate/routes.py:55
 msgid "إحداثيات غير صالحة."
@@ -1338,6 +1362,10 @@ msgstr "የመግቢያ ቀን"
 msgid "تاريخ الوزن"
 msgstr "የመመዘኛ ቀን"
 
+#: app/core/backup_service.py:46
+msgid "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
+msgstr "ምትኬ በዚህ አካባቢ አይደገፍም — ዳታቤዙ የአካባቢ SQLite ፋይል አይደለም። ለተገቢ የምርት ምትኬ እቅድ በቅንብሮች ውስጥ ያለውን የንጥል 34 ማሳወቂያ ይመልከቱ።"
+
 #: app/core/batch_service.py:38
 msgid "لازم رأس واحدة على الأقل بالدفعة."
 msgstr "በስብስቡ ውስጥ ቢያንስ አንድ ራስ ያስፈልጋል።"
@@ -1392,6 +1420,20 @@ msgstr "ለዚህ ራስ ቋሚ በረት መግለጽ አለብዎት።"
 #: app/core/batch_service.py:207
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr "ስብስቡ አሁንም በለይቶ ማቆያ ደረጃ ላይ ነው — በአሁኑ ጊዜ ተጨማሪ የግለሰብ እርምጃ አያስፈልግም።"
+
+#: app/core/cycle_engine.py:436
+#, python-format
+msgid "الحيوان لسا بمرحلة \"%(stage)s\" — لازم يوصل لمرحلة \"قرار المصير\" قبل البيع أو الأرشفة."
+msgstr "እንስሳው አሁንም በ\"%(stage)s\" ደረጃ ላይ ነው — ከመሸጥ ወይም ከማህደር በፊት \"የዕጣ ፈንታ ውሳኔ\" ደረጃ ላይ መድረስ አለበት።"
+
+#: app/core/cycle_engine.py:464
+#, python-format
+msgid "\"%(no)s\" تحت فترة تحريم دواء حتى %(until)s (باقي %(days)s يوم) — ممنوع البيع أو الذبح لين تنتهي الفترة كاملة."
+msgstr "\"%(no)s\" እስከ %(until)s ድረስ በመድሃኒት እገዳ ጊዜ ውስጥ ነው (%(days)s ቀናት ቀርተዋል) — ጊዜው ሙሉ በሙሉ እስኪያልቅ ድረስ መሸጥ ወይም ማረድ አይፈቀድም።"
+
+#: app/core/cycle_engine.py:583
+msgid "يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل \"تجاوز\" لو متأكد إنك تبي تكمل."
+msgstr "ከዚህ እንስሳ ጋር የተያያዙ የገንዘብ ግብይቶች አሉ — መቀጠል እንደሚፈልጉ እርግጠኛ ከሆኑ \"ማለፍ\"ን ያንቁ።"
 
 #: app/core/daily_email_report_service.py:97
 #, python-format
@@ -1542,6 +1584,11 @@ msgstr "ዓላማ (ዘር ማራባት/ማድለብ/ሽያጭ)"
 msgid "اللون"
 msgstr "ቀለም"
 
+#: app/core/factory_reset_service.py:73
+#, python-format
+msgid "فشلت إعادة التهيئة بعد الحذف: %(error)s"
+msgstr "ከመሰረዝ በኋላ እንደገና ማስጀመር አልተሳካም: %(error)s"
+
 #: app/core/isolation_service.py:31 app/core/isolation_service.py:65
 msgid "الرأس غير موجود"
 msgstr "ራሱ የለም"
@@ -1553,6 +1600,15 @@ msgstr "በስርዓቱ ውስጥ የተገለጸ የመታቀብ በረት የ�
 #: app/core/isolation_service.py:68
 msgid "الحظيرة الهدف غير موجودة"
 msgstr "የዒላማ በረት የለም"
+
+#: app/core/isolation_service.py:77
+msgid "فحص بيطري موثّق"
+msgstr "የተመዘገበ የእንስሳት ሐኪም ምርመራ"
+
+#: app/core/isolation_service.py:81
+#, python-format
+msgid "خروج مبكر من العزل (باقي %(days)s يوم من المدة الأدنى) — يحتاج تأكيد: %(missing)s."
+msgstr "ከመነጠል ቀደም ብሎ መውጣት (ከዝቅተኛው ጊዜ %(days)s ቀናት ቀርተዋል) — ማረጋገጫ ይፈልጋል: %(missing)s."
 
 #: app/core/lineage_service.py:19
 msgid "علاقة درجة أولى"
@@ -1589,6 +1645,11 @@ msgstr "አያት (ሴት)/የልጅ ልጅ (ወንድ)"
 #: app/core/lineage_service.py:90
 msgid "عم/عمة أو خال/خالة"
 msgstr "አጎት/አክስት ዝምድና"
+
+#: app/core/rate_limit_service.py:14
+#, python-format
+msgid "تجاوزت الحد المسموح — حاول بعد %(seconds)s ثانية."
+msgstr "የተፈቀደውን ገደብ አልፈዋል — ከ%(seconds)s ሰከንድ በኋላ ይሞክሩ።"
 
 #: app/core/readiness_service.py:21
 msgid "كلمة مرور المالك الافتراضية"
@@ -2592,6 +2653,10 @@ msgstr "ጥገናው ተመዝግቧል"
 msgid "تم تسجيل القراءة"
 msgstr "ንባቡ ተመዝግቧል"
 
+#: app/feed/feed_service.py:286
+msgid "حركة الصادر (الاستهلاك) لازم تُربَط بحظيرة — بدونها ما تنحسب التكلفة اليومية صح."
+msgstr "የመውጫ (የፍጆታ) እንቅስቃሴ ከበረት ጋር መያያዝ አለበት — ያለሱ ዕለታዊ ወጪ በትክክል ሊሰላ አይችልም።"
+
 #: app/feed/routes.py:52
 msgid "تمت إضافة مكوّن العلف"
 msgstr "የመኖ ንጥረ ነገሩ ታክሏል"
@@ -2906,6 +2971,11 @@ msgstr "በጣም ወፍራም"
 msgid "ما تُحس الفقرات ولا الأضلاع إطلاقاً تحت طبقة دهن سميكة، شكل الظهر مستوٍ أو مقبَّب. خطر على الولادة والحركة — يحتاج تعديل تغذية."
 msgstr "በወፍራም የስብ ንብርብር ስር አከርካሪም ሆነ የጎድን አጥንት በጭራሽ አይሰማም፣ የጀርባ ቅርጽ ጠፍጣፋ ወይም የተጠጋጋ ነው። ለወሊድ እና እንቅስቃሴ አደጋ — የመመገቢያ ማስተካከያ ያስፈልጋል።"
 
+#: app/health/health_service.py:360
+#, python-format
+msgid "اخترت دواء (\"%(name)s\") بدون تحديد الكمية المستخدمة — لازم تحدد الجرعة عشان يصح حساب التكلفة وخصم المخزون."
+msgstr "መድሃኒት (\"%(name)s\") መርጠዋል ያለ ጥቅም ላይ የዋለውን መጠን ሳይገልጹ — ወጪውና የክምችት ቅናሽ በትክክል እንዲሰላ መጠኑን መግለጽ አለብዎት።"
+
 #: app/health/routes.py:71
 msgid "تم إنجاز المهمة المرتبطة تلقائياً، وجُدولت مهمة متابعة إعادة وزن."
 msgstr "የተያያዘው ተግባር በራስ-ሰር ተጠናቅቋል፣ የክብደት መከታተያ ተግባርም ተይዞልታል።"
@@ -3059,6 +3129,11 @@ msgstr "መርሃ ግብሩ ተሰርዟል"
 #: app/health/routes.py:1174
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "መርሃ ግብሩ እንደተጠናቀቀ ተምልክቷል"
+
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:123
+#, python-format
+msgid "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" (%(available)s) — حدّث المخزون أولاً أو قلّل الكمية."
+msgstr "የተጠየቀው መጠን (%(qty)s) ከ\"%(name)s\" ላይ ካለው ትክክለኛ ክምችት (%(available)s) ይበልጣል — መጀመሪያ ክምችቱን ያድሱ ወይም መጠኑን ይቀንሱ።"
 
 #: app/models/warehouse.py:24
 msgid "علف"
