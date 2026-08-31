@@ -1082,7 +1082,7 @@ def animal_quick_info(animal_id):
         "species_label": _SPECIES_LABELS_AR.get(animal.species, animal.species),
         "gender": animal.gender or "-",
         "age_label": _animal_age_label(animal) or "-",
-        "barn_name": animal.barn.barn_name if animal.barn else "بدون حظيرة",
+        "barn_name": animal.barn.display_name() if animal.barn else _("بدون حظيرة"),
         "status_label": _ANIMAL_STATUS_LABELS_AR.get(animal.status, animal.status),
         "image_url": animal.image_url,
     })
@@ -1607,6 +1607,7 @@ def barns_new():
         barn = Barn(
             barn_no=request.form["barn_no"].strip(),
             barn_name=request.form["barn_name"].strip(),
+            barn_name_en=(request.form.get("barn_name_en") or "").strip() or None,
             barn_type=request.form.get("barn_type") or None,
             capacity=int(request.form["capacity"]) if request.form.get("capacity") else None,
             responsible_worker_id=request.form.get("responsible_worker_id") or None,
@@ -1643,6 +1644,7 @@ def barns_edit(barn_id):
     if request.method == "POST":
         barn.barn_no = request.form["barn_no"].strip()
         barn.barn_name = request.form["barn_name"].strip()
+        barn.barn_name_en = (request.form.get("barn_name_en") or "").strip() or None
         barn.barn_type = request.form.get("barn_type") or None
         barn.capacity = int(request.form["capacity"]) if request.form.get("capacity") else None
         barn.responsible_worker_id = request.form.get("responsible_worker_id") or None

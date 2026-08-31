@@ -26,7 +26,7 @@
 <label>{{ _('الحظيرة (اختياري — يعيّن العامل المسؤول تلقائياً لو ما حددت مكلَّف)') }}</label>
 <select name="barn_id">
   <option value="">-</option>
-  {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+  {% for b in barns %}<option value="{{ b.id }}">{{ b.display_name() }}</option>{% endfor %}
 </select>
 <label>{{ _('الحيوان (اختياري)') }}</label>
 <select name="animal_id">

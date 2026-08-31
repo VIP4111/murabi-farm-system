@@ -22,7 +22,7 @@
         <span class="badge {{ 'on' if animal.status == 'active' else 'off' }}">{{ animal.status|ar_status }}</span>
         <span class="badge">{{ animal.gender or '-' }}</span>
         <span class="badge">{{ source_labels.get(animal.source.value, animal.source.value) }}</span>
-        <span class="badge">{{ animal.barn.barn_name if animal.barn else _('بدون حظيرة') }}</span>
+        <span class="badge">{{ animal.barn.display_name() if animal.barn else _('بدون حظيرة') }}</span>
         {% if withdrawal_until %}<span class="badge off" title="{{ _('ممنوع البيع/الذبح — يُرفع تلقائياً') }}">🚫 {{ _('فترة سحب لحم/ذبح حتى %(date)s (باقي %(n)s يوم)', date=withdrawal_until, n=withdrawal_days_left) }}</span>{% endif %}
         {% if withdrawal_until_milk %}<span class="badge off" title="{{ _('ممنوع بيع/استهلاك الحليب — يُرفع تلقائياً') }}">🥛 {{ _('فترة سحب حليب حتى %(date)s (باقي %(n)s يوم)', date=withdrawal_until_milk, n=withdrawal_milk_days_left) }}</span>{% endif %}
       </div>
@@ -136,7 +136,7 @@
       <tr><td>{{ _('تاريخ الولادة') }}</td><td>{{ animal.birth_date or '-' }}</td></tr>
       <tr><td>{{ _('تاريخ الشراء') }}</td><td>{{ animal.purchase_date or '-' }}</td></tr>
       <tr><td>{{ _('تاريخ الدخول للمزرعة') }}</td><td>{{ animal.entry_date or '-' }}</td></tr>
-      <tr><td>{{ _('الحظيرة') }}</td><td>{{ animal.barn.barn_name if animal.barn else '-' }}</td></tr>
+      <tr><td>{{ _('الحظيرة') }}</td><td>{{ animal.barn.display_name() if animal.barn else '-' }}</td></tr>
       <tr><td>{{ _('السعر') }}</td><td>{{ animal.price or '-' }}</td></tr>
     </table>
 </div>

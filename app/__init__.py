@@ -223,7 +223,7 @@ def create_app(config_class=Config):
         if not task or task.task_type in _RAW_TITLE_TASK_TYPES or task.task_type not in TASK_TYPE_LABELS_AR:
             return task.title if task else ""
         label = str(TASK_TYPE_LABELS_AR[task.task_type])
-        ref = task.animal.animal_no if task.animal else (task.barn.barn_name if task.barn else None)
+        ref = task.animal.animal_no if task.animal else (task.barn.display_name() if task.barn else None)
         return f"{label} — {ref}" if ref else label
 
     app.jinja_env.globals["task_display_title"] = task_display_title

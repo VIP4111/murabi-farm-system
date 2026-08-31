@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 03:42+0300\n"
+"POT-Creation-Date: 2026-08-31 04:14+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1239,6 +1239,15 @@ msgstr "በእውነት ክብደት እያጣ ነው (የበረቱ አማካይ
 msgid "أبطأ بوضوح من متوسط حظيرته (%(avg).2f كجم/يوم) — يوصى بفحص صحي"
 msgstr "ከበረቱ አማካይ (%(avg).2f ኪግ/ቀን) በግልጽ ቀርፋፋ ነው — የጤና ምርመራ ይመከራል"
 
+#: app/core/alerts_service.py:1050
+#, python-format
+msgid "فيه موعد تحصين مجدول لحظيرة %(barn)s بتاريخ %(date)s — تبي تراجع جدول التحصينات؟"
+msgstr "ለ%(barn)s በ%(date)s የታቀደ ክትባት አለ — የክትባት መርሃ ግብሩን መከለስ ይፈልጋሉ?"
+
+#: app/core/alerts_service.py:1054
+msgid "افتح جدول التحصينات ←"
+msgstr "የክትባት መርሃ ግብር ይክፈቱ ←"
+
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
@@ -1952,6 +1961,11 @@ msgstr "የእንስሳ ቁጥር ያስፈልጋል"
 msgid "تم تحديث بيانات الحيوان"
 msgstr "የእንስሳው መረጃ ተዘምኗል"
 
+#: app/core/routes.py:1085 app/templates/animal_detail.html:25
+#: app/templates/animals_bulk_purchase.html:29
+msgid "بدون حظيرة"
+msgstr "ያለ በረት"
+
 #: app/core/routes.py:1169
 msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
 msgstr "ብልህ ጥቆማ አሁን አይገኝም (GEMINI_API_KEY መንቃቱን ያረጋግጡ) — ከታች ያሉትን ንጥሎች በእጅ ይምረጡ።"
@@ -2027,79 +2041,79 @@ msgstr "ሞቱ ተመዝግቧል (የዑደት ማጠናቀቅ ሁኔታ ሳይ
 msgid "تم أرشفة الحيوان"
 msgstr "እንስሳው ተመዝግቧል"
 
-#: app/core/routes.py:1626
+#: app/core/routes.py:1627
 msgid "تمت إضافة الحظيرة"
 msgstr "በረቱ ታክሏል"
 
-#: app/core/routes.py:1660
+#: app/core/routes.py:1662
 msgid "تم تحديث الحظيرة"
 msgstr "በረቱ ተዘምኗል"
 
-#: app/core/routes.py:1740
+#: app/core/routes.py:1742
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "የጊዜ ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1754
+#: app/core/routes.py:1756
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "የመቀበያ መድሃኒት ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1777
+#: app/core/routes.py:1779
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "የይለፍ ቃል የተሳሳተ ነው — የፋብሪካ ዳግም ማስጀመር አልተፈጸመም።"
 
-#: app/core/routes.py:1788
+#: app/core/routes.py:1790
 #, python-format
 msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
 msgstr "የፋብሪካ ዳግም ማስጀመር አልተቻለም፣ ምንም አልተሰረዘም (በራስ-ሰር ተመልሷል)። ስህተት፡ %(err)s"
 
-#: app/core/routes.py:1791
+#: app/core/routes.py:1793
 msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
 msgstr "የፋብሪካ ዳግም ማስጀመር ተሳክቷል — ሁሉም የእርሻ መረጃ ተሰርዟል። በተመሳሳይ ስልክ ቁጥር እና የይለፍ ቃል እንደገና ይግቡ።"
 
-#: app/core/routes.py:1810
+#: app/core/routes.py:1812
 msgid "تم حفظ بيانات المزرعة"
 msgstr "የእርሻው መረጃ ተቀምጧል"
 
-#: app/core/routes.py:1832
+#: app/core/routes.py:1834
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "የስራ መደቡ ተፈጥሯል — አሁን ፈቃዶቹን ይግለጹ"
 
-#: app/core/routes.py:1844
+#: app/core/routes.py:1846
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "የባለቤቱን ሚና ፈቃዶች ማስተካከል አይችሉም — ሁልጊዜ ሁሉንም ፈቃዶች አለው"
 
-#: app/core/routes.py:1856
+#: app/core/routes.py:1858
 msgid "تم تحديث صلاحيات الدور"
 msgstr "የሚና ፈቃዶች ተዘምነዋል"
 
-#: app/core/routes.py:1880
+#: app/core/routes.py:1882
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ነቅቷል"
 
-#: app/core/routes.py:1880
+#: app/core/routes.py:1882
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
 
-#: app/core/routes.py:1906
+#: app/core/routes.py:1908
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
 
-#: app/core/routes.py:1987
+#: app/core/routes.py:1989
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:1995
+#: app/core/routes.py:1997
 msgid "تم حذف بيانات المحاكاة."
 msgstr "የማስመሰያ መረጃ ተሰርዟል።"
 
-#: app/core/routes.py:2017
+#: app/core/routes.py:2019
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2038
+#: app/core/routes.py:2040
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "የማሳያ ማስመሰያ ተሰርቷል (%(days)s ቀናት) — %(animals)s ራስ(ራሶች)፣ %(matings)s ማዳቀል፣ %(diseases)s የበሽታ ጉዳይ(ዎች)። ከዚህ ገጽ በኋላ ሊሰርዙት ይችላሉ።"
@@ -3329,7 +3343,7 @@ msgid "فترة قياس الاستهلاك (أيام)"
 msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 
 #: app/reports/report_service.py:477 app/templates/animal_detail.html:493
-#: app/templates/barn_form.html:9 app/templates/barns_list.html:10
+#: app/templates/barn_form.html:12 app/templates/barns_list.html:10
 #: app/templates/equipment/asset_form.html:8
 #: app/templates/equipment/assets_list.html:14
 #: app/templates/equipment/item_movement.html:70
@@ -4044,11 +4058,6 @@ msgstr "ቁጥር"
 msgid "العمر"
 msgstr "ዕድሜ"
 
-#: app/templates/animal_detail.html:25
-#: app/templates/animals_bulk_purchase.html:29
-msgid "بدون حظيرة"
-msgstr "ያለ በረት"
-
 #: app/templates/animal_detail.html:26
 msgid "ممنوع البيع/الذبح — يُرفع تلقائياً"
 msgstr "ሽያጭ/ማረድ የተከለከለ — በራስ-ሰር ይነሳል"
@@ -4192,7 +4201,7 @@ msgstr "ወተት"
 #: app/templates/animal_detail.html:122 app/templates/animal_detail.html:377
 #: app/templates/animal_detail.html:407 app/templates/animal_detail.html:429
 #: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:94
-#: app/templates/barn_form.html:27 app/templates/equipment/asset_form.html:23
+#: app/templates/barn_form.html:30 app/templates/equipment/asset_form.html:23
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
@@ -4352,7 +4361,7 @@ msgstr "እዚህ ማንኛውም \"አዎ\" ምልክት ከሌሎች ምክን
 #: app/templates/animal_detail.html:430 app/templates/animal_detail.html:455
 #: app/templates/animal_form.html:153
 #: app/templates/animal_weight_new_simple.html:44
-#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:41
+#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:44
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
@@ -5489,60 +5498,68 @@ msgstr "አዲስ በረት"
 msgid "مثال: B-01"
 msgstr "ምሳሌ: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:751
+#: app/templates/barn_form.html:9
+msgid "الاسم بالإنجليزي (اختياري)"
+msgstr "የእንግሊዝኛ ስም (አማራጭ)"
+
+#: app/templates/barn_form.html:11
+msgid "يظهر بدل الاسم العربي فقط لمستخدم لغته غير عربية — لو فاضي، يبقى الاسم العربي يظهر للجميع كما هو."
+msgstr "ቋንቋው ዓረብኛ ላልሆነ ተጠቃሚ ብቻ ከዓረብኛው ስም ይልቅ ይታያል — ባዶ ከሆነ፣ የዓረብኛው ስም ለሁሉም እንደተለመደው መታየቱን ይቀጥላል።"
+
+#: app/templates/barn_form.html:14 app/templates/base.html:751
 msgid "عادية"
 msgstr "መደበኛ"
 
-#: app/templates/barn_form.html:12
+#: app/templates/barn_form.html:15
 msgid "عزل"
 msgstr "መገለል"
 
-#: app/templates/barn_form.html:13 app/templates/feed/ration_form.html:12
+#: app/templates/barn_form.html:16 app/templates/feed/ration_form.html:12
 msgid "نفاس"
 msgstr "ድህረ ወሊድ"
 
-#: app/templates/barn_form.html:14 app/templates/feed/ration_form.html:11
+#: app/templates/barn_form.html:17 app/templates/feed/ration_form.html:11
 msgid "نمو"
 msgstr "እድገት"
 
-#: app/templates/barn_form.html:15
+#: app/templates/barn_form.html:18
 msgid "حامل - الشهور الأخيرة"
 msgstr "እርጉዝ - የመጨረሻ ወራት"
 
-#: app/templates/barn_form.html:16
+#: app/templates/barn_form.html:19
 msgid "رضاعة"
 msgstr "ማጥባት"
 
-#: app/templates/barn_form.html:17
+#: app/templates/barn_form.html:20
 msgid "عام (مختلط — بدون فحص تلقائي)"
 msgstr "አጠቃላይ (የተቀላቀለ — ያለ ራስ-ሰር ምርመራ)"
 
-#: app/templates/barn_form.html:19
+#: app/templates/barn_form.html:22
 msgid "تحديد \"حامل - الشهور الأخيرة\" أو \"رضاعة\" (بند إضافي 133) يفعّل فحصاً تلقائياً: أي رأس وصل هذي الحالة فعلياً وما زال بحظيرة ثانية، تتولّد له مهمة مقترحة تنقله هنا. \"نمو\" و\"عام\" بدون أي فحص إلزامي."
 msgstr "\"እርጉዝ - የመጨረሻ ወራት\" ወይም \"ማጥባት\" (ንጥል 133) መምረጥ ራስ-ሰር ምርመራን ያንቃል፦ ወደዚህ ሁኔታ በትክክል የደረሰ እና አሁንም በሌላ በረት ውስጥ ያለ ማንኛውም እንስሳ ወደዚህ የሚያዛውረው የቀረበ ተግባር ይፈጠርለታል። \"እድገት\" እና \"አጠቃላይ\" ምንም አስገዳጅ ምርመራ የላቸውም።"
 
-#: app/templates/barn_form.html:20 app/templates/barns_list.html:10
+#: app/templates/barn_form.html:23 app/templates/barns_list.html:10
 #: app/templates/ostrich/incubators_list.html:13
 msgid "السعة"
 msgstr "አቅም"
 
-#: app/templates/barn_form.html:21
+#: app/templates/barn_form.html:24
 msgid "العامل المسؤول"
 msgstr "ኃላፊ ሠራተኛ"
 
-#: app/templates/barn_form.html:26
+#: app/templates/barn_form.html:29
 msgid "توجّه له تلقائياً المهام (بند 27) والتنبيهات (\"تنبيهاتي\" — بند إضافي) الخاصة بهذي الحظيرة."
 msgstr "ለዚህ በረት ተግባራት (ንጥል 27) እና ማንቂያዎች (\"ማንቂያዎቼ\" — ተጨማሪ ንጥል) በራስ-ሰር ወደ እነሱ ይመራሉ።"
 
-#: app/templates/barn_form.html:29
+#: app/templates/barn_form.html:32
 msgid "مواعيد وجبات العلف"
 msgstr "የመኖ ምግብ ሰዓቶች"
 
-#: app/templates/barn_form.html:30
+#: app/templates/barn_form.html:33
 msgid "إعداد مستقل لكل حظيرة — أضف موعد لكل وجبة تبي تعطيها لهذي الحظيرة يومياً. عند وصول الموعد، تنولّد تلقائياً مهمة واحدة (توزيع علف + تنظيف معالف + تغيير ماء) للعامل المسؤول عن الحظيرة أعلاه."
 msgstr "ለእያንዳንዱ በረት ገለልተኛ ቅንብር — በየቀኑ ለዚህ በረት ሊሰጡት ለሚፈልጉት እያንዳንዱ ምግብ ሰዓት ያክሉ። ሰዓቱ ሲደርስ፣ ከላይ ላለው የበረቱ ኃላፊ ሠራተኛ አንድ ተግባር (የመኖ ስርጭት + የመኖ ገንዳ ማጽዳት + ውሃ መቀየር) በራስ-ሰር ይፈጠራል።"
 
-#: app/templates/barn_form.html:39
+#: app/templates/barn_form.html:42
 msgid "إضافة موعد وجبة"
 msgstr "የምግብ ሰዓት ያክሉ"
 

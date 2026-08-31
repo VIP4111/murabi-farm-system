@@ -17,7 +17,7 @@
         <div style="color:var(--muted); font-size:12.5px; margin-top:2px;">
           {{ _('العامل:') }} {{ t.accepted_by.name if t.accepted_by else (t.assignee.name if t.assignee else '-') }}
           · {{ _('أُنجزت:') }} {{ t.completed_at.strftime('%H:%M') if t.completed_at }}
-          {% if t.barn %} · {{ t.barn.barn_name }}{% endif %}
+          {% if t.barn %} · {{ t.barn.display_name() }}{% endif %}
           {% if t.animal %} · {{ t.animal.animal_no }}{% endif %}
         </div>
         {% if t.completion_note %}<div style="font-size:13px; margin-top:4px;">💬 {{ t.completion_note }}</div>{% endif %}

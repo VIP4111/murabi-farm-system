@@ -6,6 +6,9 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('الرقم') }}</label><input name="barn_no" required placeholder="{{ _('مثال: B-01') }}" value="{{ barn.barn_no if barn }}">
     <label>{{ _('الاسم') }}</label><input name="barn_name" required value="{{ barn.barn_name if barn }}">
+    <label>{{ _('الاسم بالإنجليزي (اختياري)') }}</label>
+    <input name="barn_name_en" dir="ltr" placeholder="e.g. Isolation Barn" value="{{ barn.barn_name_en if barn else '' }}">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('يظهر بدل الاسم العربي فقط لمستخدم لغته غير عربية — لو فاضي، يبقى الاسم العربي يظهر للجميع كما هو.') }}</p>
     <label>{{ _('النوع') }}</label>
     <select name="barn_type">
       <option value="عادية" {{ 'selected' if barn and barn.barn_type == 'عادية' }}>{{ _('عادية') }}</option>

@@ -28,7 +28,7 @@
     <label style="margin:0; white-space:nowrap;">{{ _('فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)') }}</label>
     <select name="barn_id" onchange="this.form.submit()" style="width:auto; margin:0;">
       <option value="">{{ _('كل الحظائر') }}</option>
-      {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if active_barn_id == b.id }}>{{ b.barn_name }}</option>{% endfor %}
+      {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if active_barn_id == b.id }}>{{ b.display_name() }}</option>{% endfor %}
     </select>
   </form>
   {% if active_barn_id %}<a class="btn light" href="{{ url_for('core.animals_list', filter=active_filter) }}" style="padding:6px 12px; font-size:13px;">{{ _('إلغاء فلترة الحظيرة') }} ✕</a>{% endif %}
@@ -98,7 +98,7 @@
         <td><a class="btn" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
         <td>{{ a.name or '-' }}</td>
         <td>{{ source_labels.get(a.source.value, a.source.value) }}</td>
-        <td>{{ a.barn.barn_name if a.barn else '-' }}</td>
+        <td>{{ a.barn.display_name() if a.barn else '-' }}</td>
         <td>{{ a.status|ar_status }}</td>
         <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">{{ _('نعام — بدون دورة') }}</span>{% else %}<a class="btn green" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
         <td>

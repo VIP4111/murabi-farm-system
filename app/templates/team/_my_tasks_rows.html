@@ -12,7 +12,7 @@
 <tr class="{{ 'row-danger' if overdue }}">
   <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ task_display_title(t) }}</a>{% if overdue %} <span class="badge off" title="{{ _('فات موعدها') }}">⏰ {{ _('متأخرة') }}</span>{% endif %}</td>
   <td>{{ t.task_type|ar_task_type }}</td>
-  <td>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
+  <td>{{ t.barn.display_name() if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
   <td>{{ t.due_date or '-' }}</td>
   <td>{{ status_badge(t.status|status_badge_state, t.status|ar_status) }}</td>
   <td class="actions-col">

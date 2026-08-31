@@ -30,7 +30,7 @@
   <div class="timeline-row">
     <div class="timeline-body" style="flex:1;">
       <b>{{ task_display_title(t) }}</b>
-      <small>{{ t.barn.barn_name if t.barn else '' }}{{ ' — ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ (_('الموعد:') + ' ' + t.due_date|string) if t.due_date else '' }}</small>
+      <small>{{ t.barn.display_name() if t.barn else '' }}{{ ' — ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}{{ (_('الموعد:') + ' ' + t.due_date|string) if t.due_date else '' }}</small>
     </div>
     {% if locked %}
     <span class="badge off" title="{{ _('بانتظار:') }} {{ t.depends_on.title }}">🔒 {{ _('مقفلة') }}</span>
@@ -81,7 +81,7 @@
     <label>{{ _('الحظيرة') }}</label>
     <select name="barn_id" id="barnSelect">
       <option value="">-</option>
-      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+      {% for b in barns %}<option value="{{ b.id }}">{{ b.display_name() }}</option>{% endfor %}
     </select>
     <label>{{ _('الملاحظة / التفاصيل') }}</label>
     <textarea name="description" rows="4" required placeholder="{{ _('اكتب وش لاحظت هنا...') }}"></textarea>

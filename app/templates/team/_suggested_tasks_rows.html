@@ -9,7 +9,7 @@
 <tr>
   <td><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ task_display_title(t) }}</a></td>
   <td>{{ t.task_type|ar_task_type }}</td>
-  <td>{{ t.barn.barn_name if t.barn else '' }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
+  <td>{{ t.barn.display_name() if t.barn else '' }}{{ t.animal.animal_no if t.animal else '' }}{{ '-' if not t.barn and not t.animal }}</td>
   <td>{{ t.due_date or '-' }}</td>
   <td class="actions-col">
     <form method="post" action="{{ url_for('team.task_approve', task_id=t.id) }}" class="js-task-suggested-form">

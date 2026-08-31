@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 03:42+0300\n"
+"POT-Creation-Date: 2026-08-31 04:14+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1239,6 +1239,15 @@ msgstr "It's actually losing weight (its barn's average is %(avg).2f kg/day) —
 msgid "أبطأ بوضوح من متوسط حظيرته (%(avg).2f كجم/يوم) — يوصى بفحص صحي"
 msgstr "Clearly slower than its barn's average (%(avg).2f kg/day) — a health check is recommended"
 
+#: app/core/alerts_service.py:1050
+#, python-format
+msgid "فيه موعد تحصين مجدول لحظيرة %(barn)s بتاريخ %(date)s — تبي تراجع جدول التحصينات؟"
+msgstr "There is a scheduled vaccination for %(barn)s on %(date)s — want to review the vaccination schedule?"
+
+#: app/core/alerts_service.py:1054
+msgid "افتح جدول التحصينات ←"
+msgstr "Open the vaccination schedule ←"
+
 #: app/core/animal_filters_service.py:181 app/team/routes.py:744
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
@@ -1952,6 +1961,11 @@ msgstr "The animal number is required"
 msgid "تم تحديث بيانات الحيوان"
 msgstr "The animal's data has been updated"
 
+#: app/core/routes.py:1085 app/templates/animal_detail.html:25
+#: app/templates/animals_bulk_purchase.html:29
+msgid "بدون حظيرة"
+msgstr "No barn"
+
 #: app/core/routes.py:1169
 msgid "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."
 msgstr "Smart suggestion isn't available right now (make sure GEMINI_API_KEY is enabled) — pick the items manually below."
@@ -2027,79 +2041,79 @@ msgstr "The death has been recorded (without the cycle-completion requirement)"
 msgid "تم أرشفة الحيوان"
 msgstr "The animal has been archived"
 
-#: app/core/routes.py:1626
+#: app/core/routes.py:1627
 msgid "تمت إضافة الحظيرة"
 msgstr "The barn has been added"
 
-#: app/core/routes.py:1660
+#: app/core/routes.py:1662
 msgid "تم تحديث الحظيرة"
 msgstr "The barn has been updated"
 
-#: app/core/routes.py:1740
+#: app/core/routes.py:1742
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "The time settings have been saved"
 
-#: app/core/routes.py:1754
+#: app/core/routes.py:1756
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "The intake-medicine settings have been saved"
 
-#: app/core/routes.py:1777
+#: app/core/routes.py:1779
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "Incorrect password — the factory reset was not performed."
 
-#: app/core/routes.py:1788
+#: app/core/routes.py:1790
 #, python-format
 msgid "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: %(err)s"
 msgstr "Couldn't perform the factory reset, nothing was deleted (rolled back automatically). Error: %(err)s"
 
-#: app/core/routes.py:1791
+#: app/core/routes.py:1793
 msgid "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس رقم الجوال وكلمة المرور."
 msgstr "The factory reset succeeded — all farm data has been deleted. Log in again with the same phone number and password."
 
-#: app/core/routes.py:1810
+#: app/core/routes.py:1812
 msgid "تم حفظ بيانات المزرعة"
 msgstr "The farm's data has been saved"
 
-#: app/core/routes.py:1832
+#: app/core/routes.py:1834
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "The job role has been created — now set its permissions"
 
-#: app/core/routes.py:1844
+#: app/core/routes.py:1846
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "You can't edit the owner role's permissions — it always has all permissions"
 
-#: app/core/routes.py:1856
+#: app/core/routes.py:1858
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:1880
+#: app/core/routes.py:1882
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:1880
+#: app/core/routes.py:1882
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:1906
+#: app/core/routes.py:1908
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:1987
+#: app/core/routes.py:1989
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:1995
+#: app/core/routes.py:1997
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2017
+#: app/core/routes.py:2019
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2038
+#: app/core/routes.py:2040
 #, python-format
 msgid "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s تقريع، %(diseases)s حالة مرضية. تقدر تحذفها لاحقاً من نفس الصفحة."
 msgstr "The demo simulation has run (%(days)s day(s)) — %(animals)s animal(s), %(matings)s mating(s), %(diseases)s medical case(s). You can delete it later from the same page."
@@ -3329,7 +3343,7 @@ msgid "فترة قياس الاستهلاك (أيام)"
 msgstr "Consumption measurement period (days)"
 
 #: app/reports/report_service.py:477 app/templates/animal_detail.html:493
-#: app/templates/barn_form.html:9 app/templates/barns_list.html:10
+#: app/templates/barn_form.html:12 app/templates/barns_list.html:10
 #: app/templates/equipment/asset_form.html:8
 #: app/templates/equipment/assets_list.html:14
 #: app/templates/equipment/item_movement.html:70
@@ -4044,11 +4058,6 @@ msgstr "Number"
 msgid "العمر"
 msgstr "Age"
 
-#: app/templates/animal_detail.html:25
-#: app/templates/animals_bulk_purchase.html:29
-msgid "بدون حظيرة"
-msgstr "No barn"
-
 #: app/templates/animal_detail.html:26
 msgid "ممنوع البيع/الذبح — يُرفع تلقائياً"
 msgstr "Selling/slaughter forbidden — lifted automatically"
@@ -4192,7 +4201,7 @@ msgstr "Milk"
 #: app/templates/animal_detail.html:122 app/templates/animal_detail.html:377
 #: app/templates/animal_detail.html:407 app/templates/animal_detail.html:429
 #: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:94
-#: app/templates/barn_form.html:27 app/templates/equipment/asset_form.html:23
+#: app/templates/barn_form.html:30 app/templates/equipment/asset_form.html:23
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
@@ -4352,7 +4361,7 @@ msgstr "Any \"yes\" flag here means an immediate sale recommendation from the sm
 #: app/templates/animal_detail.html:430 app/templates/animal_detail.html:455
 #: app/templates/animal_form.html:153
 #: app/templates/animal_weight_new_simple.html:44
-#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:41
+#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:44
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
@@ -5489,60 +5498,68 @@ msgstr "New barn"
 msgid "مثال: B-01"
 msgstr "Example: B-01"
 
-#: app/templates/barn_form.html:11 app/templates/base.html:751
+#: app/templates/barn_form.html:9
+msgid "الاسم بالإنجليزي (اختياري)"
+msgstr "English name (optional)"
+
+#: app/templates/barn_form.html:11
+msgid "يظهر بدل الاسم العربي فقط لمستخدم لغته غير عربية — لو فاضي، يبقى الاسم العربي يظهر للجميع كما هو."
+msgstr "Shown instead of the Arabic name only to a non-Arabic-language user — if left blank, the Arabic name keeps showing to everyone as usual."
+
+#: app/templates/barn_form.html:14 app/templates/base.html:751
 msgid "عادية"
 msgstr "Regular"
 
-#: app/templates/barn_form.html:12
+#: app/templates/barn_form.html:15
 msgid "عزل"
 msgstr "Isolation"
 
-#: app/templates/barn_form.html:13 app/templates/feed/ration_form.html:12
+#: app/templates/barn_form.html:16 app/templates/feed/ration_form.html:12
 msgid "نفاس"
 msgstr "Postpartum"
 
-#: app/templates/barn_form.html:14 app/templates/feed/ration_form.html:11
+#: app/templates/barn_form.html:17 app/templates/feed/ration_form.html:11
 msgid "نمو"
 msgstr "Growth"
 
-#: app/templates/barn_form.html:15
+#: app/templates/barn_form.html:18
 msgid "حامل - الشهور الأخيرة"
 msgstr "Pregnant - final months"
 
-#: app/templates/barn_form.html:16
+#: app/templates/barn_form.html:19
 msgid "رضاعة"
 msgstr "Nursing"
 
-#: app/templates/barn_form.html:17
+#: app/templates/barn_form.html:20
 msgid "عام (مختلط — بدون فحص تلقائي)"
 msgstr "General (mixed — no automatic check)"
 
-#: app/templates/barn_form.html:19
+#: app/templates/barn_form.html:22
 msgid "تحديد \"حامل - الشهور الأخيرة\" أو \"رضاعة\" (بند إضافي 133) يفعّل فحصاً تلقائياً: أي رأس وصل هذي الحالة فعلياً وما زال بحظيرة ثانية، تتولّد له مهمة مقترحة تنقله هنا. \"نمو\" و\"عام\" بدون أي فحص إلزامي."
 msgstr "Selecting \"Pregnant - final months\" or \"Nursing\" (item 133) enables an automatic check: any animal that has actually reached this state and is still in another barn gets a suggested task to move it here. \"Growth\" and \"General\" have no mandatory check."
 
-#: app/templates/barn_form.html:20 app/templates/barns_list.html:10
+#: app/templates/barn_form.html:23 app/templates/barns_list.html:10
 #: app/templates/ostrich/incubators_list.html:13
 msgid "السعة"
 msgstr "Capacity"
 
-#: app/templates/barn_form.html:21
+#: app/templates/barn_form.html:24
 msgid "العامل المسؤول"
 msgstr "Responsible worker"
 
-#: app/templates/barn_form.html:26
+#: app/templates/barn_form.html:29
 msgid "توجّه له تلقائياً المهام (بند 27) والتنبيهات (\"تنبيهاتي\" — بند إضافي) الخاصة بهذي الحظيرة."
 msgstr "Tasks (item 27) and alerts (\"My Alerts\" — additional item) for this barn are automatically directed to them."
 
-#: app/templates/barn_form.html:29
+#: app/templates/barn_form.html:32
 msgid "مواعيد وجبات العلف"
 msgstr "Feed meal times"
 
-#: app/templates/barn_form.html:30
+#: app/templates/barn_form.html:33
 msgid "إعداد مستقل لكل حظيرة — أضف موعد لكل وجبة تبي تعطيها لهذي الحظيرة يومياً. عند وصول الموعد، تنولّد تلقائياً مهمة واحدة (توزيع علف + تنظيف معالف + تغيير ماء) للعامل المسؤول عن الحظيرة أعلاه."
 msgstr "An independent setting per barn — add a time for each meal you want to give this barn daily. When the time arrives, one task (feed distribution + trough cleaning + water change) is automatically generated for the barn's responsible worker above."
 
-#: app/templates/barn_form.html:39
+#: app/templates/barn_form.html:42
 msgid "إضافة موعد وجبة"
 msgstr "Add meal time"
 

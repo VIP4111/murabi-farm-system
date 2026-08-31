@@ -17,11 +17,11 @@
         — {{ _('نعام') if r.animal.species == 'ostrich' else _('حلال (ضأن/ماعز)') }}
         {% if r.animal.gender %} — {{ r.animal.gender }}{% endif %}
         — {{ r.animal.status|ar_status }}
-        {% if r.animal.barn %} — {{ _('حظيرة') }} {{ r.animal.barn.barn_name }}{% endif %}
+        {% if r.animal.barn %} — {{ _('حظيرة') }} {{ r.animal.barn.display_name() }}{% endif %}
       </span>
       {% else %}-{% endif %}
     </td></tr>
-    <tr><td>{{ _('الحظيرة') }}</td><td>{{ r.barn.barn_name if r.barn else '-' }}</td></tr>
+    <tr><td>{{ _('الحظيرة') }}</td><td>{{ r.barn.display_name() if r.barn else '-' }}</td></tr>
     <tr><td>{{ _('الوصف') }}</td><td>{{ r.description }}</td></tr>
     {% if r.evidence_image_url %}<tr><td>{{ _('صورة مرفقة') }}</td><td><a href="{{ r.evidence_image_url }}" target="_blank">{{ _('عرض الصورة') }}</a></td></tr>{% endif %}
     {% if r.evidence_audio_url %}<tr><td>{{ _('ملاحظة صوتية') }}</td><td><audio controls src="{{ r.evidence_audio_url }}" style="height:32px; max-width:260px;"></audio></td></tr>{% endif %}

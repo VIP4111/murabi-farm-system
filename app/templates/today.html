@@ -21,7 +21,7 @@
     <div class="timeline-row {{ 'urgent' if overdue }}">
       <div class="timeline-body">
         <b>{{ task_display_title(t) }}</b>
-        <small>{{ t.barn.barn_name if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}</small>
+        <small>{{ t.barn.display_name() if t.barn else '' }}{{ ' / ' if t.barn and t.animal }}{{ t.animal.animal_no if t.animal else '' }}</small>
       </div>
       {{ status_badge(t.status|status_badge_state, t.status|ar_status) }}
       <a class="btn light" href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ _('فتح') }}</a>

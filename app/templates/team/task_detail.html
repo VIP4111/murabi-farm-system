@@ -13,7 +13,7 @@
 <div class="card">
   <h3 style="font-size:15px;">📋 {{ _('تفصيل المهمة') }}</h3>
   <p><b>{{ _('السبب/الدافع:') }}</b> {{ ctx.reason or '-' }}</p>
-  <p><b>{{ _('الحظيرة:') }}</b> {{ ctx.barn.barn_name if ctx.barn else '-' }} — <b>{{ _('عدد الرؤوس بالدفعة:') }}</b> {{ ctx.head_count }}</p>
+  <p><b>{{ _('الحظيرة:') }}</b> {{ ctx.barn.display_name() if ctx.barn else '-' }} — <b>{{ _('عدد الرؤوس بالدفعة:') }}</b> {{ ctx.head_count }}</p>
   {% if ctx.head_count > 1 %}
   <details>
     <summary style="cursor:pointer; color:var(--muted); font-size:13px;">{{ _('عرض كل رؤوس الدفعة') }} ({{ ctx.head_count }})</summary>
@@ -100,7 +100,7 @@
     <label>{{ _('أي حظيرة نقلته لها فعلياً؟') }}</label>
     <select name="barn_id">
       {% for b in barns %}
-      <option value="{{ b.id }}" {{ 'selected' if b.id == suggested_barn_id else '' }}>{{ b.barn_name }}{{ ' (' + b.barn_type + ')' if b.barn_type else '' }}</option>
+      <option value="{{ b.id }}" {{ 'selected' if b.id == suggested_barn_id else '' }}>{{ b.display_name() }}{{ ' (' + b.barn_type + ')' if b.barn_type else '' }}</option>
       {% endfor %}
     </select>
     <p class="notice" style="font-size:12px;">{{ _('محدَّدة الحظيرة المقترحة بالمهمة افتراضياً — غيّرها لو نقلته فعلياً لحظيرة ثانية.') }}</p>

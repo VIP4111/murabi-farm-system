@@ -24,7 +24,7 @@
     <label>{{ _('الحظيرة') }}</label>
     <select name="barn_id" id="barnSelect">
       <option value="">-</option>
-      {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
+      {% for b in barns %}<option value="{{ b.id }}">{{ b.display_name() }}</option>{% endfor %}
     </select>
     <label>{{ _('وصف البلاغ') }}</label><textarea name="description" rows="4" required></textarea>
     {{ voice_note_widget() }}

@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from flask_babel import get_locale
 from app.extensions import db
 
 
@@ -12,6 +13,14 @@ class Barn(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     barn_no = db.Column(db.String(32), unique=True, nullable=False)
     barn_name = db.Column(db.String(120), nullable=False)
+    # بند إضافي (2026-08-31) — طلبك الصريح بعد ما لاحظت اسم الحظيرة
+    # يبقى عربياً بشاشة الدكتور الإنجليزية رغم ترجمة كل النص النظامي
+    # حوله: اسم الحظيرة بيانات حرة كتبها المستخدم، ما يقدر النظام
+    # "يترجمها" تلقائياً بدقة (نفس مبدأ عدم ترجمة أسماء الحيوانات/
+    # العمال). الحل: حقل اختياري ثانٍ يكتبه صاحب الحلال بنفسه — لو
+    # فاضي، يبقى الاسم العربي الأصلي يظهر للجميع كما كان (سلوك قديم
+    # محفوظ بدون كسر).
+    barn_name_en = db.Column(db.String(120))
     barn_type = db.Column(db.String(64))  # عادية / عزل / نفاس ... إلخ
     capacity = db.Column(db.Integer)
 
@@ -21,6 +30,15 @@ class Barn(db.Model):
 
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
+
+    def display_name(self) -> str:
+        """اسم الحظيرة المعروض حسب لغة المستخدم الحالي — يرجع
+        `barn_name_en` لو مضبوط والمستخدم لغته غير عربية، وإلا الاسم
+        العربي الأصلي (سلوك ما قبل هذا البند، محفوظ بدون كسر لمن ما
+        أضاف اسماً إنجليزياً بعد)."""
+        if self.barn_name_en and str(get_locale()) != "ar":
+            return self.barn_name_en
+        return self.barn_name
 
     animals = db.relationship("Animal", back_populates="barn")
     feeding_schedules = db.relationship(

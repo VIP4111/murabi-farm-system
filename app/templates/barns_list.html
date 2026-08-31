@@ -11,7 +11,7 @@
     {% for b in barns %}
     <tr>
       <td>{{ b.barn_no }}</td>
-      <td>{{ b.barn_name }}</td>
+      <td>{{ b.display_name() }}</td>
       <td>{{ b.barn_type or '-' }}</td>
       <td>{{ b.capacity or '-' }}</td>
       <td>{{ b.responsible_worker.name if b.responsible_worker else '-' }}</td>

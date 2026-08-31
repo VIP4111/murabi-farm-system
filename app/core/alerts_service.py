@@ -280,7 +280,7 @@ def _barns_without_responsible_worker() -> list[dict]:
     return [
         {
             "category": _("حظيرة بدون مسؤول"), "icon": "👷",
-            "label": _("حظيرة %(no)s (%(name)s) — بدون عامل مسؤول", no=b.barn_no, name=b.barn_name),
+            "label": _("حظيرة %(no)s (%(name)s) — بدون عامل مسؤول", no=b.barn_no, name=b.display_name()),
             "detail": _("المهام والتنبيهات التلقائية لهذي الحظيرة ما توجّه لأحد لين تحدد مسؤولاً."),
             "urgent": False, "animal_id": None, "barn_id": b.id,
         }
@@ -309,7 +309,7 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
         head_count = s.live_head_count()
         days_left = (s.planned_date - today).days
         label = _("%(barn)s — %(pharmacy)s (بعد %(days)s يوم)",
-                  barn=s.barn.barn_name, pharmacy=s.pharmacy.name, days=days_left)
+                  barn=s.barn.display_name(), pharmacy=s.pharmacy.name, days=days_left)
         unit = s.pharmacy.unit or ""
         if s.pharmacy.default_dose_ml and head_count:
             needed = head_count * s.pharmacy.default_dose_ml
@@ -1047,8 +1047,9 @@ def vaccination_followup_toast(animal_id: int) -> dict | None:
     if not upcoming:
         return None
     return {
-        "message": f"فيه موعد تحصين مجدول لحظيرة {animal.barn.barn_name} بتاريخ {upcoming.planned_date} — تبي تراجع جدول التحصينات؟",
+        "message": _("فيه موعد تحصين مجدول لحظيرة %(barn)s بتاريخ %(date)s — تبي تراجع جدول التحصينات؟",
+                      barn=animal.barn.display_name(), date=upcoming.planned_date),
         "url_endpoint": "health.vaccination_schedule_list",
         "url_kwargs": {},
-        "button_text": "افتح جدول التحصينات ←",
+        "button_text": _("افتح جدول التحصينات ←"),
     }
