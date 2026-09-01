@@ -8,12 +8,24 @@
 البيانات (`pg_dump`، WAL archiving، لقطات مزوّد الاستضافة المُدارة)
 خارج نطاق أي زر بالتطبيق نفسه. `is_backup_supported()` تكشف هذي الحالة
 وتعرض تنبيهاً واضحاً بالواجهة بدل ما تعطي إحساس أمان زائف.
-"""
+
+بند إضافي (2026-09-01) — حادثة حقيقية: قاعدة PostgreSQL المجانية على
+Render انتهت صلاحيتها تلقائياً (سياسة 90 يوم) وانقطع الوصول لكل
+البيانات، وما كان فيه أي نسخة احتياطية فعلية لأن الزر أعلاه معطَّل
+عمداً على PostgreSQL. الحل الدائم: `export_all_tables_json()` — تصدير
+عام يشتغل على أي قاعدة بيانات (SQLite محلياً أو PostgreSQL بالإنتاج)
+بدون أي فرق، ويُرسَل مباشرة لجهاز المستخدم (تنزيل فوري، صفر تخزين
+بالسيرفر) — عشان يقدر يحفظه بنفسه بأي وقت، بغض النظر عن نوع القاعدة
+أو مصير حسابها لاحقاً."""
+import io
+import json
 import os
 import shutil
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone, time
+from decimal import Decimal
 from flask import current_app
 from flask_babel import gettext as _
+from app.extensions import db
 
 
 def _sqlite_db_path() -> str | None:
@@ -77,3 +89,42 @@ def resolve_backup_path(filename: str) -> str | None:
     if not candidate.startswith(backups_dir + os.sep) or not os.path.isfile(candidate):
         return None
     return candidate
+
+
+def _json_safe(value):
+    """تحويل قيم SQLAlchemy الشائعة (تاريخ/وقت/Decimal/bytes) لصيغة
+    JSON قابلة للتخزين — نفس القيمة الأصلية تُستنتَج عكسياً وقت
+    الاستيراد لاحقاً (تواريخ/أوقات بصيغة ISO قياسية)."""
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, (datetime, date, time)):
+        return value.isoformat()
+    if isinstance(value, Decimal):
+        return float(value)
+    if isinstance(value, (bytes, bytearray)):
+        return value.decode("utf-8", errors="replace")
+    return str(value)
+
+
+def export_all_tables_json() -> io.BytesIO:
+    """تصدير كل جدول بقاعدة البيانات الحالية لملف JSON وحيد — يشتغل
+    بأي محرّك قاعدة بيانات (SQLite أو PostgreSQL) بدون أي فرق، لأنه
+    يعتمد على SQLAlchemy Core مباشرة (`db.metadata`) مو أدوات خاصة
+    بمحرّك معيّن. يُبنى بالكامل بالذاكرة ويُرجَّع مباشرة للتنزيل —
+    صفر تخزين بملفات السيرفر (بيئات الاستضافة المُدارة زي Render غالباً
+    تمسح أي ملف محلي عند كل إعادة نشر، فتخزين محلي هنا كان بلا فايدة
+    فعلية أصلاً)."""
+    payload = {
+        "exported_at": datetime.now(timezone.utc).isoformat(),
+        "app": "مراح بو علي",
+        "tables": {},
+    }
+    with db.engine.connect() as conn:
+        for table in db.metadata.sorted_tables:
+            rows = conn.execute(table.select()).mappings().all()
+            payload["tables"][table.name] = [
+                {col: _json_safe(val) for col, val in row.items()} for row in rows
+            ]
+    buf = io.BytesIO(json.dumps(payload, ensure_ascii=False, indent=1).encode("utf-8"))
+    buf.seek(0)
+    return buf

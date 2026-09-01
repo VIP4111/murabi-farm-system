@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 17:10+0300\n"
+"POT-Creation-Date: 2026-09-01 07:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1428,7 +1428,7 @@ msgstr "የመግቢያ ቀን"
 msgid "تاريخ الوزن"
 msgstr "የመመዘኛ ቀን"
 
-#: app/core/backup_service.py:46
+#: app/core/backup_service.py:58
 msgid ""
 "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع "
 "تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
@@ -2754,19 +2754,19 @@ msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
 
-#: app/core/routes.py:2028
+#: app/core/routes.py:2047
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2036
+#: app/core/routes.py:2055
 msgid "تم حذف بيانات المحاكاة."
 msgstr "የማስመሰያ መረጃ ተሰርዟል።"
 
-#: app/core/routes.py:2058
+#: app/core/routes.py:2077
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2079
+#: app/core/routes.py:2098
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -3218,7 +3218,7 @@ msgstr "%(field)s አሉታዊ ቁጥር ሊሆን አይችልም።"
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:38
 #: app/templates/warehouses/inventory_counts_list.html:9
 msgid "التاريخ"
 msgstr "ቀን"
@@ -8223,51 +8223,70 @@ msgstr "የጠቋሚዎች ሠንጠረዥ"
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr "ከአሁኑ ወር መጀመሪያ እስከ ዛሬ — ልክ እንደ ሪፖርቶች ገፅ ተመሳሳይ ሞተር።"
 
-#: app/templates/settings_backup.html:9
-msgid ""
-"⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات "
-"الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي "
-"حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL "
-"archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق "
-"نفسه."
-msgstr ""
-"⚠️ ከዚህ ቁልፍ የሚደረግ መጠባበቂያ በዚህ አካባቢ አይደገፍም — የአሁኑ የውሂብ ጎታ የአካባቢ SQLite ፋይል "
-"አይደለም (ምናልባት በምርት ውስጥ PostgreSQL)። ትክክለኛ የምርት የውሂብ ጎታ መጠባበቂያ የውሂብ ጎታ-ደረጃ "
-"መሳሪያዎችን ይፈልጋል (pg_dump፣ WAL archiving፣ ወይም የተያዘ ማስተናገጃ አቅራቢ ቅጽበታዊ ገጽ "
-"እይታዎች) — ይህ በራሱ መተግበሪያ ውስጥ ካለው ማንኛውም ቁልፍ ወሰን ውጭ ነው።"
+#: app/templates/settings_backup.html:14
+msgid "نسخة احتياطية كاملة — تنزيل فوري"
+msgstr "ሙሉ ምትኬ — ፈጣን ማውረድ"
 
-#: app/templates/settings_backup.html:13
+#: app/templates/settings_backup.html:15
+msgid ""
+"يصدّر كل بيانات مزرعتك (حيوانات، صحة، مالية، فريق، كل شي) لملف واحد على "
+"جهازك مباشرة — يشتغل بأي نوع قاعدة بيانات، بدون أي تخزين بالسيرفر. احفظه "
+"بمكان آمن بانتظام (أسبوعياً مثلاً) — لو صار أي عطل بقاعدة البيانات، هذا "
+"الملف هو ضمانتك الوحيدة."
+msgstr ""
+"የእርሻዎን ሁሉንም መረጃ (እንስሳት፣ ጤና፣ ገንዘብ፣ ቡድን፣ ሁሉንም) ወደ አንድ ፋይል በቀጥታ ወደ መሣሪያዎ "
+"ይልካል — በማንኛውም የመረጃ-ቋት አይነት ይሠራል፣ በሰርቨር ላይ ምንም ማከማቻ ሳይኖር። አዘውትረው (ለምሳሌ "
+"በየሳምንቱ) በደህና ቦታ ያስቀምጡት — በመረጃ-ቋቱ ላይ ማንኛውም ችግር ቢፈጠር፣ ይህ ፋይል ብቸኛ ዋስትናዎ ነው።"
+
+#: app/templates/settings_backup.html:16
+msgid "تنزيل نسخة احتياطية كاملة الآن"
+msgstr "አሁን ሙሉ ምትኬ ያውርዱ"
+
+#: app/templates/settings_backup.html:21
+msgid ""
+"⚠️ زر \"إنشاء نسخة احتياطية\" تحت (النسخة القديمة المحفوظة بالسيرفر) غير "
+"مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (PostgreSQL"
+" بالإنتاج). استخدم زر التنزيل الفوري أعلاه بدلاً منه — يشتغل دائماً بغض "
+"النظر عن نوع القاعدة."
+msgstr ""
+"⚠️ ከታች ያለው «ምትኬ ፍጠር» ቁልፍ (አሮጌው በሰርቨር የተከማቸ ስሪት) በዚህ አካባቢ አይደገፍም — የአሁኑ "
+"የመረጃ-ቋት የአካባቢ SQLite ፋይል አይደለም (በምርት ላይ PostgreSQL)። ከዚያ ይልቅ ከላይ ያለውን ፈጣን"
+" ማውረጃ ቁልፍ ይጠቀሙ — የመረጃ-ቋቱ አይነት ምንም ይሁን ሁልጊዜ ይሠራል።"
+
+#: app/templates/settings_backup.html:25
 msgid ""
 "نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد "
 "instance/backups/. مناسب لبيئة SQLite الحالية (تطوير/مزرعة واحدة صغيرة) —"
-" راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً."
+" لكن بيئات الاستضافة المُدارة غالباً تمسح هذي الملفات عند كل إعادة نشر، "
+"فزر التنزيل الفوري أعلاه أضمن."
 msgstr ""
-"የአሁኑ የውሂብ ጎታ ፋይል ሙሉ ቅጂ፣ በአካባቢ instance/backups/ አቃፊ ውስጥ ይቀመጣል። ለአሁኑ "
-"SQLite አካባቢ ተስማሚ (ልማት/ነጠላ ትንሽ እርሻ) — በኋላ ወደ PostgreSQL ምርት ከተዛወሩ ከላይ ያለውን"
-" ማስጠንቀቂያ ይመልከቱ።"
+"ከአሁኑ የመረጃ-ቋት ፋይል ሙሉ ቅጂ፣ በ instance/backups/ አቃፊ ውስጥ በአካባቢ ይቀመጣል። ለአሁኑ "
+"SQLite አካባቢ (ልማት/አንድ ትንሽ እርሻ) ተስማሚ ነው — ግን የተያዙ ማስተናገጃ አካባቢዎች እነዚህን ፋይሎች "
+"በእያንዳንዱ አዲስ ማሰማራት ላይ ብዙ ጊዜ ያጠፋሉ፣ ስለዚህ ከላይ ያለው ፈጣን ማውረጃ ቁልፍ የበለጠ አስተማማኝ "
+"ነው።"
 
-#: app/templates/settings_backup.html:17
-msgid "إنشاء نسخة احتياطية الآن"
-msgstr "አሁን መጠባበቂያ ፍጠር"
+#: app/templates/settings_backup.html:29
+msgid "إنشاء نسخة احتياطية بالسيرفر (SQLite بس)"
+msgstr "በሰርቨር ላይ ምትኬ ፍጠር (SQLite ብቻ)"
 
-#: app/templates/settings_backup.html:23
+#: app/templates/settings_backup.html:35
 #, python-format
 msgid "النسخ المحفوظة (%(n)s)"
 msgstr "የተቀመጡ መጠባበቂያዎች (%(n)s)"
 
-#: app/templates/settings_backup.html:26
+#: app/templates/settings_backup.html:38
 msgid "الملف"
 msgstr "ፋይል"
 
-#: app/templates/settings_backup.html:26
+#: app/templates/settings_backup.html:38
 msgid "الحجم"
 msgstr "መጠን"
 
-#: app/templates/settings_backup.html:32
+#: app/templates/settings_backup.html:44
 msgid "تنزيل"
 msgstr "አውርድ"
 
-#: app/templates/settings_backup.html:35
+#: app/templates/settings_backup.html:47
 msgid "ما فيه أي نسخة احتياطية بعد."
 msgstr "እስካሁን መጠባበቂያ የለም።"
 
@@ -15053,4 +15072,23 @@ msgstr "ቆጠራው ተመዝግቧል — ቀሪው ሂሳብ በትክክል 
 
 #~ msgid "رابط الصورة (اختياري)"
 #~ msgstr "የምስል አገናኝ (አማራጭ)"
+
+#~ msgid ""
+#~ "⚠️ النسخ الاحتياطي من هذا الزر غير"
+#~ " مدعوم بهذي البيئة — قاعدة البيانات"
+#~ " الحالية مو ملف SQLite محلي (غالباً"
+#~ " PostgreSQL بالإنتاج). نسخ احتياطي حقيقي"
+#~ " لقاعدة إنتاج يحتاج أدوات مستوى قاعدة"
+#~ " البيانات (pg_dump، WAL archiving، أو "
+#~ "لقطات مزوّد الاستضافة المُدارة) — خارج"
+#~ " نطاق أي زر بالتطبيق نفسه."
+#~ msgstr ""
+#~ "⚠️ ከዚህ ቁልፍ የሚደረግ መጠባበቂያ በዚህ አካባቢ"
+#~ " አይደገፍም — የአሁኑ የውሂብ ጎታ የአካባቢ "
+#~ "SQLite ፋይል አይደለም (ምናልባት በምርት ውስጥ "
+#~ "PostgreSQL)። ትክክለኛ የምርት የውሂብ ጎታ መጠባበቂያ"
+#~ " የውሂብ ጎታ-ደረጃ መሳሪያዎችን ይፈልጋል (pg_dump፣ "
+#~ "WAL archiving፣ ወይም የተያዘ ማስተናገጃ አቅራቢ "
+#~ "ቅጽበታዊ ገጽ እይታዎች) — ይህ በራሱ መተግበሪያ"
+#~ " ውስጥ ካለው ማንኛውም ቁልፍ ወሰን ውጭ ነው።"
 

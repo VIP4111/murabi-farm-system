@@ -1960,6 +1960,25 @@ def backup_download(filename):
     return send_file(path, as_attachment=True)
 
 
+@core_bp.route("/settings/backup/export-now")
+@login_required
+@require_permission("settings.manage")
+def backup_export_now():
+    """تصدير فوري لكل بيانات المزرعة كملف JSON — يشتغل بأي قاعدة بيانات
+    (SQLite أو PostgreSQL بالإنتاج)، بدون أي تخزين بالسيرفر (بيئات
+    الاستضافة المُدارة تمسح الملفات المحلية عند كل إعادة نشر أصلاً).
+    بند إضافي (2026-09-01) بعد حادثة حقيقية: قاعدة PostgreSQL مجانية
+    انتهت صلاحيتها تلقائياً بدون أي نسخة احتياطية متاحة."""
+    from datetime import datetime, timezone
+    buf = backup_service.export_all_tables_json()
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="backup.export_json",
+                             entity_type="Backup", details=f"farm_backup_{stamp}.json"))
+    db.session.commit()
+    return send_file(buf, as_attachment=True, download_name=f"farm_backup_{stamp}.json",
+                      mimetype="application/json")
+
+
 # ---------- سجل التدقيق (بند 34) ----------
 
 @core_bp.route("/settings/audit")

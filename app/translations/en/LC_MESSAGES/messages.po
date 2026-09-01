@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 17:10+0300\n"
+"POT-Creation-Date: 2026-09-01 07:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1474,7 +1474,7 @@ msgstr "Entry date"
 msgid "تاريخ الوزن"
 msgstr "Weighing date"
 
-#: app/core/backup_service.py:46
+#: app/core/backup_service.py:58
 msgid ""
 "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع "
 "تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
@@ -2855,19 +2855,19 @@ msgstr "The %(name)s service has been disabled"
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:2028
+#: app/core/routes.py:2047
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:2036
+#: app/core/routes.py:2055
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2058
+#: app/core/routes.py:2077
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2079
+#: app/core/routes.py:2098
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -3330,7 +3330,7 @@ msgstr "%(field)s can't be a negative number."
 #: app/templates/repro/pregnancy_form.html:8
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:26
+#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:38
 #: app/templates/warehouses/inventory_counts_list.html:9
 msgid "التاريخ"
 msgstr "Date"
@@ -8538,53 +8538,74 @@ msgstr ""
 "From the start of the current month to today — same engine as the reports"
 " screen."
 
-#: app/templates/settings_backup.html:9
-msgid ""
-"⚠️ النسخ الاحتياطي من هذا الزر غير مدعوم بهذي البيئة — قاعدة البيانات "
-"الحالية مو ملف SQLite محلي (غالباً PostgreSQL بالإنتاج). نسخ احتياطي "
-"حقيقي لقاعدة إنتاج يحتاج أدوات مستوى قاعدة البيانات (pg_dump، WAL "
-"archiving، أو لقطات مزوّد الاستضافة المُدارة) — خارج نطاق أي زر بالتطبيق "
-"نفسه."
-msgstr ""
-"⚠️ Backup from this button isn't supported in this environment — the "
-"current database isn't a local SQLite file (likely PostgreSQL in "
-"production). A real production database backup needs database-level tools"
-" (pg_dump, WAL archiving, or managed hosting provider snapshots) — "
-"outside the scope of any button in the app itself."
+#: app/templates/settings_backup.html:14
+msgid "نسخة احتياطية كاملة — تنزيل فوري"
+msgstr "Full backup — instant download"
 
-#: app/templates/settings_backup.html:13
+#: app/templates/settings_backup.html:15
+msgid ""
+"يصدّر كل بيانات مزرعتك (حيوانات، صحة، مالية، فريق، كل شي) لملف واحد على "
+"جهازك مباشرة — يشتغل بأي نوع قاعدة بيانات، بدون أي تخزين بالسيرفر. احفظه "
+"بمكان آمن بانتظام (أسبوعياً مثلاً) — لو صار أي عطل بقاعدة البيانات، هذا "
+"الملف هو ضمانتك الوحيدة."
+msgstr ""
+"Exports all your farm's data (animals, health, finance, team, everything)"
+" into a single file straight to your device — works with any database "
+"type, with no storage on the server. Save it somewhere safe regularly "
+"(weekly, for example) — if anything goes wrong with the database, this "
+"file is your only guarantee."
+
+#: app/templates/settings_backup.html:16
+msgid "تنزيل نسخة احتياطية كاملة الآن"
+msgstr "Download a full backup now"
+
+#: app/templates/settings_backup.html:21
+msgid ""
+"⚠️ زر \"إنشاء نسخة احتياطية\" تحت (النسخة القديمة المحفوظة بالسيرفر) غير "
+"مدعوم بهذي البيئة — قاعدة البيانات الحالية مو ملف SQLite محلي (PostgreSQL"
+" بالإنتاج). استخدم زر التنزيل الفوري أعلاه بدلاً منه — يشتغل دائماً بغض "
+"النظر عن نوع القاعدة."
+msgstr ""
+"⚠️ The \"Create backup\" button below (the old server-stored version) is "
+"not supported in this environment — the current database isn't a local "
+"SQLite file (PostgreSQL in production). Use the instant-download button "
+"above instead — it always works regardless of the database type."
+
+#: app/templates/settings_backup.html:25
 msgid ""
 "نسخة كاملة من ملف قاعدة البيانات الحالي، تُحفظ محلياً بمجلد "
 "instance/backups/. مناسب لبيئة SQLite الحالية (تطوير/مزرعة واحدة صغيرة) —"
-" راجع التنبيه أعلاه لو انتقلت لإنتاج PostgreSQL لاحقاً."
+" لكن بيئات الاستضافة المُدارة غالباً تمسح هذي الملفات عند كل إعادة نشر، "
+"فزر التنزيل الفوري أعلاه أضمن."
 msgstr ""
 "A full copy of the current database file, saved locally in the "
 "instance/backups/ folder. Suitable for the current SQLite environment "
-"(development/single small farm) — check the notice above if you later "
-"move to PostgreSQL production."
+"(development/a small single farm) — but managed hosting environments "
+"usually wipe these files on every redeploy, so the instant-download "
+"button above is more reliable."
 
-#: app/templates/settings_backup.html:17
-msgid "إنشاء نسخة احتياطية الآن"
-msgstr "Create a backup now"
+#: app/templates/settings_backup.html:29
+msgid "إنشاء نسخة احتياطية بالسيرفر (SQLite بس)"
+msgstr "Create a server-side backup (SQLite only)"
 
-#: app/templates/settings_backup.html:23
+#: app/templates/settings_backup.html:35
 #, python-format
 msgid "النسخ المحفوظة (%(n)s)"
 msgstr "Saved backups (%(n)s)"
 
-#: app/templates/settings_backup.html:26
+#: app/templates/settings_backup.html:38
 msgid "الملف"
 msgstr "File"
 
-#: app/templates/settings_backup.html:26
+#: app/templates/settings_backup.html:38
 msgid "الحجم"
 msgstr "Size"
 
-#: app/templates/settings_backup.html:32
+#: app/templates/settings_backup.html:44
 msgid "تنزيل"
 msgstr "Download"
 
-#: app/templates/settings_backup.html:35
+#: app/templates/settings_backup.html:47
 msgid "ما فيه أي نسخة احتياطية بعد."
 msgstr "No backup yet."
 
@@ -15610,4 +15631,24 @@ msgstr "The stock count has been recorded — the balance matches exactly."
 
 #~ msgid "رابط الصورة (اختياري)"
 #~ msgstr "Image link (optional)"
+
+#~ msgid ""
+#~ "⚠️ النسخ الاحتياطي من هذا الزر غير"
+#~ " مدعوم بهذي البيئة — قاعدة البيانات"
+#~ " الحالية مو ملف SQLite محلي (غالباً"
+#~ " PostgreSQL بالإنتاج). نسخ احتياطي حقيقي"
+#~ " لقاعدة إنتاج يحتاج أدوات مستوى قاعدة"
+#~ " البيانات (pg_dump، WAL archiving، أو "
+#~ "لقطات مزوّد الاستضافة المُدارة) — خارج"
+#~ " نطاق أي زر بالتطبيق نفسه."
+#~ msgstr ""
+#~ "⚠️ Backup from this button isn't "
+#~ "supported in this environment — the "
+#~ "current database isn't a local SQLite"
+#~ " file (likely PostgreSQL in production)."
+#~ " A real production database backup "
+#~ "needs database-level tools (pg_dump, WAL"
+#~ " archiving, or managed hosting provider "
+#~ "snapshots) — outside the scope of "
+#~ "any button in the app itself."
 
