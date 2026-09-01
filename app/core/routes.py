@@ -194,12 +194,22 @@ def home():
     if current_user.has_permission("animals.view"):
         animals_alerts_count = sum(alerts_service.alert_counts_by_animal().values())
 
+    # تشيك-ليست تهيئة النظام (بند إضافي 2026-09-01) — تظهر لصاحب الحلال
+    # فقط (settings.manage)، وتختفي لو ضغط "تجاهل" (نفس بند 2026-07-27
+    # الأصلي) أو اكتملت كل بنودها فعلاً.
+    show_setup_checklist_banner = False
+    if current_user.has_permission("settings.manage") and not FarmSettings.get().setup_checklist_dismissed:
+        from app.core import setup_checklist_service
+        pending_items = setup_checklist_service.get_setup_checklist_items(current_user)
+        show_setup_checklist_banner = not setup_checklist_service.all_done(pending_items)
+
     return render_template(
         "home.html", user=current_user,
         today_tasks_count=today_tasks_count, today_alerts_count=today_alerts_count,
         vaccinations_overdue_count=vaccinations_overdue_count,
         vaccinations_upcoming_count=vaccinations_upcoming_count,
         animals_alerts_count=animals_alerts_count,
+        show_setup_checklist_banner=show_setup_checklist_banner,
     )
 
 

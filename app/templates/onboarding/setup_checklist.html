@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ _('أساسيات بداية إنشاء المزرعة') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>🏁 {{ _('أساسيات بداية إنشاء المزرعة') }}</h2>
+  <p style="color:var(--muted); font-size:14px;">{{ _('كل بند ناقص جنبه زر يوديك مباشرة للشاشة اللي تكمّله فيها — رتّبناها بالترتيب المنطقي اللي تحتاجه فعلياً.') }}</p>
+</div>
+
+{% if all_done %}
+<div class="card" style="background:var(--green); color:#fff; text-align:center;">
+  <h2 style="color:#fff; margin-bottom:6px;">🎉 {{ _('مزرعتك جاهزة!') }}</h2>
+  <p style="color:rgba(255,255,255,.9); margin:0 0 14px;">{{ _('كل الأساسيات مكتملة — تقدر تبدأ استخدام النظام فعلياً الآن.') }}</p>
+  <a class="btn light" href="{{ url_for('core.home') }}">{{ _('ابدأ الآن') }} ←</a>
+</div>
+{% else %}
+{% set done_count = items|selectattr('done')|list|length %}
+<div class="card">
+  <p style="color:var(--muted); font-size:13px; margin:0;">{{ _('%(done)s من %(total)s مكتمل', done=done_count, total=items|length) }}</p>
+  <div style="background:var(--bg); border-radius:99px; height:8px; margin-top:8px; overflow:hidden;">
+    <div style="background:var(--green); height:100%; width:{{ (done_count / items|length * 100)|round|int }}%;"></div>
+  </div>
+</div>
+{% endif %}
+
+<div class="card">
+  {% for item in items %}
+  <div style="display:flex; align-items:center; gap:12px; padding:12px 0; {{ '' if loop.first else 'border-top:1px solid var(--line);' }}">
+    <span style="font-size:22px; flex:0 0 auto;">{{ '✅' if item.done else item.icon }}</span>
+    <div style="flex:1;">
+      <b style="{{ 'color:var(--muted); text-decoration:line-through;' if item.done }}">{{ item.label }}</b>
+      <p style="color:var(--muted); font-size:12.5px; margin:2px 0 0;">{{ item.description }}</p>
+    </div>
+    {% if not item.done %}
+    <a class="btn light" style="flex:0 0 auto; font-size:12.5px; padding:6px 12px; white-space:nowrap;" href="{{ item.url }}">{{ _('سوّها الآن') }} ←</a>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

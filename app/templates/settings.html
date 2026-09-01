@@ -7,6 +7,12 @@
 </div>
 
 <div class="card">
+  <h2>🏁 {{ _('أساسيات بداية إنشاء المزرعة') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('قائمة نواقص التشغيل الأساسية مرتبة، مع زر مباشر لإكمال كل بند.') }}</p>
+  <a class="btn light" href="{{ url_for('onboarding.setup_checklist_page') }}">{{ _('افتح القائمة') }} ←</a>
+</div>
+
+<div class="card">
   <h2>{{ _('بيانات المزرعة') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية.') }}</p>
   <form method="post" action="{{ url_for('core.farm_identity_save') }}">

@@ -9,6 +9,28 @@
 </div>
 {% endif %}
 
+{# بند إضافي (2026-09-01، طلبك المباشر: "احتاج صفحة خاصة فيها أساسيات
+   بداية إنشاء المزرعة") — بانر يظهر لصاحب الحلال بس، لما فيه بند ناقص
+   بأساسيات التشغيل. يختفي تلقائياً بعد اكتمال كل البنود، أو بضغطة
+   "تجاهل" الدائمة. #}
+{% if show_setup_checklist_banner %}
+<div class="card" style="background:var(--bg); border:2px solid var(--primary);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+    <div>
+      <h3 style="margin:0;">🏁 {{ _('أساسيات بداية إنشاء المزرعة') }}</h3>
+      <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('فيه بنود ناقصة لسا — كل بند له زر يوديك مباشرة لإكماله.') }}</p>
+    </div>
+    <div style="display:flex; gap:8px; flex:0 0 auto;">
+      <a class="btn" href="{{ url_for('onboarding.setup_checklist_page') }}">{{ _('افتح القائمة') }} ←</a>
+      <form method="post" action="{{ url_for('core.setup_checklist_dismiss') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn light" type="submit" style="font-size:12.5px;">{{ _('تجاهل') }}</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 {% if user.has_permission('tasks.view_own') or user.has_permission('animals.view') %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">

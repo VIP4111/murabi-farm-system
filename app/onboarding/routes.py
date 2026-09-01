@@ -4,7 +4,7 @@ from flask_babel import gettext as _
 from flask_login import login_required, current_user
 
 from app.onboarding import onboarding_bp
-from app.core import checklist_service
+from app.core import checklist_service, setup_checklist_service
 from app.extensions import db
 
 
@@ -46,3 +46,15 @@ def toggle(item_id):
     checklist_service.toggle_completion(current_user, item_id)
     next_url = request.form.get("next") or url_for("onboarding.checklist")
     return redirect(next_url)
+
+
+@onboarding_bp.route("/setup-checklist")
+@login_required
+def setup_checklist_page():
+    """شاشة "أساسيات بداية إنشاء المزرعة" (بند إضافي 2026-09-01، طلبك
+    المباشر) — قائمة نواقص مرتبة، كل بند له زر إجراء مباشر يوديك لنفس
+    الشاشة اللي تكمّل فيها الناقص. لما تكتمل كلها، تظهر رسالة "مزرعتك
+    جاهزة" بدل القائمة."""
+    items = setup_checklist_service.get_setup_checklist_items_with_urls(current_user)
+    return render_template("onboarding/setup_checklist.html", items=items,
+                            all_done=setup_checklist_service.all_done(items))

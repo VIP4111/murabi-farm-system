@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 07:40+0300\n"
+"POT-Creation-Date: 2026-09-01 08:36+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,20 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:125 app/core/routes.py:1061
+#: app/__init__.py:125 app/core/routes.py:1071
 #: app/templates/team/members_list.html:24
 msgid "نشط"
 msgstr "Active"
 
-#: app/__init__.py:126 app/core/routes.py:1061
+#: app/__init__.py:126 app/core/routes.py:1071
 msgid "غير نشط"
 msgstr "Inactive"
 
-#: app/__init__.py:127 app/core/routes.py:1061
+#: app/__init__.py:127 app/core/routes.py:1071
 msgid "مباع"
 msgstr "Sold"
 
-#: app/__init__.py:128 app/core/routes.py:1061
+#: app/__init__.py:128 app/core/routes.py:1071
 msgid "نافق"
 msgstr "Deceased"
 
@@ -294,7 +294,7 @@ msgstr "Other"
 msgid "نقل حظائر جماعي"
 msgstr "Bulk barn transfer"
 
-#: app/__init__.py:263 app/core/routes.py:407
+#: app/__init__.py:263 app/core/routes.py:417
 #: app/templates/animals_list.html:78
 msgid "عزل جماعي"
 msgstr "Bulk isolation"
@@ -1555,13 +1555,13 @@ msgid "الصحة والصيدلية"
 msgstr "Health & Pharmacy"
 
 #: app/core/checklist_service.py:170 app/templates/animal_detail.html:118
-#: app/templates/home.html:91
+#: app/templates/home.html:109
 msgid "التكاثر"
 msgstr "Reproduction"
 
 #: app/core/checklist_service.py:171 app/templates/animal_detail.html:123
 #: app/templates/base.html:1024 app/templates/finance/list.html:56
-#: app/templates/home.html:109
+#: app/templates/home.html:127
 msgid "المالية"
 msgstr "Finance"
 
@@ -1569,7 +1569,7 @@ msgstr "Finance"
 msgid "المهام والبلاغات"
 msgstr "Tasks & Reports"
 
-#: app/core/checklist_service.py:173 app/templates/home.html:106
+#: app/core/checklist_service.py:173 app/templates/home.html:124
 msgid "العلف"
 msgstr "Feed"
 
@@ -1585,7 +1585,7 @@ msgid "التقارير التحليلية"
 msgstr "Analytics reports"
 
 #: app/core/checklist_service.py:176 app/core/checklist_service.py:375
-#: app/templates/home.html:125
+#: app/templates/home.html:143
 msgid "المساعد الذكي"
 msgstr "Smart Assistant"
 
@@ -2341,7 +2341,7 @@ msgstr "%(n)s active accounts."
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
 #: app/templates/base.html:976 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:5
-#: app/templates/home.html:84
+#: app/templates/home.html:102
 msgid "الصيدلية"
 msgstr "Pharmacy"
 
@@ -2354,7 +2354,7 @@ msgid "فيها أدوية مسجّلة."
 msgstr "Has registered medicines."
 
 #: app/core/readiness_service.py:91 app/core/readiness_service.py:94
-#: app/templates/settings.html:185 app/templates/settings_backup.html:5
+#: app/templates/settings.html:191 app/templates/settings_backup.html:5
 msgid "النسخ الاحتياطي"
 msgstr "Backup"
 
@@ -2397,100 +2397,100 @@ msgstr ""
 msgid "تم توليد رابط كتالوج جديد — الرابط القديم ما عاد يشتغل"
 msgstr "A new catalog link has been generated — the old link no longer works"
 
-#: app/core/routes.py:394
+#: app/core/routes.py:404
 msgid "تم حفظ علامات البيع"
 msgstr "The sale flags have been saved"
 
-#: app/core/routes.py:399 app/templates/animals_list.html:67
+#: app/core/routes.py:409 app/templates/animals_list.html:67
 msgid "وزن جماعي"
 msgstr "Bulk weighing"
 
-#: app/core/routes.py:400 app/templates/animals_list.html:76
+#: app/core/routes.py:410 app/templates/animals_list.html:76
 msgid "تحصين جماعي"
 msgstr "Bulk vaccination"
 
-#: app/core/routes.py:401 app/templates/animals_list.html:68
+#: app/core/routes.py:411 app/templates/animals_list.html:68
 msgid "ملاحظة جماعية"
 msgstr "Bulk note"
 
-#: app/core/routes.py:402 app/templates/animals_list.html:69
+#: app/core/routes.py:412 app/templates/animals_list.html:69
 msgid "نقل حظيرة جماعي"
 msgstr "Bulk barn transfer"
 
-#: app/core/routes.py:403 app/templates/animals_list.html:70
+#: app/core/routes.py:413 app/templates/animals_list.html:70
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr "Bulk purpose assignment (breeding/fattening/sale)"
 
-#: app/core/routes.py:404 app/templates/animals_list.html:71
+#: app/core/routes.py:414 app/templates/animals_list.html:71
 msgid "بيع جماعي"
 msgstr "Bulk sale"
 
-#: app/core/routes.py:405 app/templates/animals_list.html:72
+#: app/core/routes.py:415 app/templates/animals_list.html:72
 msgid "تسجيل نفوق جماعي"
 msgstr "Bulk mortality recording"
 
-#: app/core/routes.py:406 app/templates/animals_list.html:77
+#: app/core/routes.py:416 app/templates/animals_list.html:77
 msgid "علاج/مرض جماعي"
 msgstr "Bulk treatment/disease"
 
-#: app/core/routes.py:408 app/templates/animals_list.html:82
+#: app/core/routes.py:418 app/templates/animals_list.html:82
 msgid "فحص سونار جماعي"
 msgstr "Bulk sonar exam"
 
-#: app/core/routes.py:409 app/templates/animals_list.html:79
+#: app/core/routes.py:419 app/templates/animals_list.html:79
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "Planned treatment plan (awaiting execution confirmation)"
 
-#: app/core/routes.py:428
+#: app/core/routes.py:438
 msgid "لازم تحدد رأس واحد على الأقل"
 msgstr "You must select at least one animal"
 
-#: app/core/routes.py:431
+#: app/core/routes.py:441
 msgid "إجراء جماعي غير معروف"
 msgstr "Unknown bulk action"
 
-#: app/core/routes.py:474
+#: app/core/routes.py:484
 #, python-format
 msgid "وزن جماعي: %(done)s من %(total)s تم تسجيلهم"
 msgstr "Bulk weighing: %(done)s of %(total)s were recorded"
 
-#: app/core/routes.py:497 app/health/routes.py:1137
+#: app/core/routes.py:507 app/health/routes.py:1137
 msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
 msgstr ""
 "You must select an actual vaccine registered in the pharmacy under the "
 "(vaccine) class"
 
-#: app/core/routes.py:509
+#: app/core/routes.py:519
 msgid "لازم تختار لقاحاً واحداً على الأقل وتؤشر على رأس واحد فيه"
 msgstr "You must select at least one vaccine and check at least one animal for it"
 
-#: app/core/routes.py:516
+#: app/core/routes.py:526
 #, python-format
 msgid "تحصين جماعي: %(n)s تسجيل ناجح"
 msgstr "Bulk vaccination: %(n)s successful record(s)"
 
-#: app/core/routes.py:519 app/core/routes.py:585 app/core/routes.py:587
-#: app/core/routes.py:623
+#: app/core/routes.py:529 app/core/routes.py:595 app/core/routes.py:597
+#: app/core/routes.py:633
 #, python-format
 msgid "رأس #%(id)s: %(msg)s"
 msgstr "Animal #%(id)s: %(msg)s"
 
-#: app/core/routes.py:538
+#: app/core/routes.py:548
 #, python-format
 msgid "ملاحظة جماعية: أُضيفت لـ%(n)s رأس"
 msgstr "Bulk note: added to %(n)s animal(s)"
 
-#: app/core/routes.py:550
+#: app/core/routes.py:560
 #, python-format
 msgid "نقل حظيرة جماعي: تم نقل %(n)s رأس"
 msgstr "Bulk barn transfer: %(n)s animal(s) transferred"
 
-#: app/core/routes.py:562
+#: app/core/routes.py:572
 #, python-format
 msgid "تحديد الغرض جماعياً: تم تحديد %(n)s رأس"
 msgstr "Bulk purpose set: %(n)s animal(s) set"
 
-#: app/core/routes.py:582
+#: app/core/routes.py:592
 #, python-format
 msgid ""
 "بيع جماعي: %(done)s من %(total)s تم بيعهم — راجع التفاصيل أدناه لو فيه "
@@ -2499,19 +2499,19 @@ msgstr ""
 "Bulk sale: %(done)s of %(total)s were sold — check the details below if "
 "any animals were rejected"
 
-#: app/core/routes.py:601
+#: app/core/routes.py:611
 #, python-format
 msgid "تسجيل نفوق جماعي: تم تسجيله لـ%(n)s رأس (بدون شرط اكتمال الدورة)"
 msgstr ""
 "Bulk death recording: recorded for %(n)s animal(s) (without the cycle-"
 "completion requirement)"
 
-#: app/core/routes.py:620
+#: app/core/routes.py:630
 #, python-format
 msgid "علاج/مرض جماعي: %(done)s من %(total)s تم تسجيلهم"
 msgstr "Bulk treatment/disease: %(done)s of %(total)s were recorded"
 
-#: app/core/routes.py:668
+#: app/core/routes.py:678
 #, python-format
 msgid ""
 "تم إنشاء خطة علاج لـ %(n)s رأس — بانتظار مراجعة الدكتور وتأكيد التنفيذ "
@@ -2520,48 +2520,48 @@ msgstr ""
 "A treatment plan has been created for %(n)s animal(s) — awaiting the "
 "doctor's review and execution confirmation for each animal."
 
-#: app/core/routes.py:684
+#: app/core/routes.py:694
 #, python-format
 msgid "عزل جماعي: %(done)s من %(total)s تم عزلهم"
 msgstr "Bulk isolation: %(done)s of %(total)s were isolated"
 
-#: app/core/routes.py:711
+#: app/core/routes.py:721
 #, python-format
 msgid "فحص سونار جماعي: تم تسجيله لـ%(n)s رأس"
 msgstr "Bulk ultrasound exam: recorded for %(n)s animal(s)"
 
-#: app/core/routes.py:734
+#: app/core/routes.py:744
 msgid "لازم رأس واحد على الأقل برقم صحيح"
 msgstr "At least one animal with a valid number is required"
 
-#: app/core/routes.py:742
+#: app/core/routes.py:752
 #, python-format
 msgid "شراء دفعة جديدة: %(done)s من %(total)s أُضيفوا بنجاح"
 msgstr "New batch purchase: %(done)s of %(total)s were added successfully"
 
-#: app/core/routes.py:745
+#: app/core/routes.py:755
 #, python-format
 msgid "%(no)s: %(msg)s"
 msgstr "%(no)s: %(msg)s"
 
-#: app/core/routes.py:804
+#: app/core/routes.py:814
 msgid "اسم الفصيلة مطلوب"
 msgstr "Species name is required"
 
-#: app/core/routes.py:807 app/core/routes.py:828
+#: app/core/routes.py:817 app/core/routes.py:838
 #, python-format
 msgid "\"%(value)s\" موجودة بالقائمة أصلاً"
 msgstr "\"%(value)s\" is already in the list"
 
-#: app/core/routes.py:811
+#: app/core/routes.py:821
 msgid "تمت إضافة الفصيلة"
 msgstr "The species has been added"
 
-#: app/core/routes.py:813 app/templates/animal_form.html:61
+#: app/core/routes.py:823 app/templates/animal_form.html:61
 msgid "إضافة فصيلة جديدة"
 msgstr "Add new species"
 
-#: app/core/routes.py:815
+#: app/core/routes.py:825
 msgid ""
 "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل"
 " بأمان مثل النعام لين يُبنى لها نظام مخصّص."
@@ -2570,108 +2570,108 @@ msgstr ""
 "(mating/pregnancy/weaning) — it's handled safely like ostriches until a "
 "dedicated system is built for it."
 
-#: app/core/routes.py:825
+#: app/core/routes.py:835
 msgid "اسم السلالة مطلوب"
 msgstr "Breed name is required"
 
-#: app/core/routes.py:832
+#: app/core/routes.py:842
 msgid "تمت إضافة السلالة"
 msgstr "The breed has been added"
 
-#: app/core/routes.py:834 app/templates/animal_form.html:71
+#: app/core/routes.py:844 app/templates/animal_form.html:71
 msgid "إضافة سلالة جديدة"
 msgstr "Add new breed"
 
-#: app/core/routes.py:857
+#: app/core/routes.py:867
 msgid "تم حفظ ملاحظات السلالة"
 msgstr "The breed notes have been saved"
 
-#: app/core/routes.py:869
+#: app/core/routes.py:879
 msgid "اسم اللون مطلوب"
 msgstr "Color name is required"
 
-#: app/core/routes.py:872
+#: app/core/routes.py:882
 #, python-format
 msgid "\"%(value)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(value)s\" is already in the list"
 
-#: app/core/routes.py:876
+#: app/core/routes.py:886
 msgid "تمت إضافة اللون"
 msgstr "The color has been added"
 
-#: app/core/routes.py:878 app/templates/animal_form.html:31
+#: app/core/routes.py:888 app/templates/animal_form.html:31
 msgid "إضافة لون جديد"
 msgstr "Add new color"
 
-#: app/core/routes.py:904 app/core/routes.py:1016
+#: app/core/routes.py:914 app/core/routes.py:1026
 msgid "الحظيرة مطلوبة"
 msgstr "The barn is required"
 
-#: app/core/routes.py:907 app/core/routes.py:1019
+#: app/core/routes.py:917 app/core/routes.py:1029
 msgid "اللون مطلوب"
 msgstr "The color is required"
 
-#: app/core/routes.py:937 app/core/routes.py:1043
+#: app/core/routes.py:947 app/core/routes.py:1053
 #, python-format
 msgid "رقم الحيوان \"%(no)s\" مستخدم من قبل"
 msgstr "Animal number \"%(no)s\" is already in use"
 
-#: app/core/routes.py:948
+#: app/core/routes.py:958
 msgid "تمت إضافة الحيوان"
 msgstr "The animal has been added"
 
-#: app/core/routes.py:968
+#: app/core/routes.py:978
 #, python-format
 msgid "🍼 ولادة جديدة — %(no)s"
 msgstr "🍼 New birth — %(no)s"
 
-#: app/core/routes.py:970
+#: app/core/routes.py:980
 #, python-format
 msgid "(الأم %(no)s)"
 msgstr "(mother %(no)s)"
 
-#: app/core/routes.py:1013
+#: app/core/routes.py:1023
 msgid "رقم الحيوان مطلوب"
 msgstr "The animal number is required"
 
-#: app/core/routes.py:1045
+#: app/core/routes.py:1055
 msgid "تم تحديث بيانات الحيوان"
 msgstr "The animal's data has been updated"
 
-#: app/core/routes.py:1059 app/models/animal_options.py:30
+#: app/core/routes.py:1069 app/models/animal_options.py:30
 #: app/templates/animals_bulk_purchase.html:22
 #: app/templates/team/report_detail.html:17
 msgid "حلال (ضأن/ماعز)"
 msgstr "Livestock (sheep/goat)"
 
-#: app/core/routes.py:1059 app/models/animal_options.py:31
+#: app/core/routes.py:1069 app/models/animal_options.py:31
 #: app/templates/animal_detail.html:103
 #: app/templates/animals_bulk_purchase.html:23
 #: app/templates/team/report_detail.html:17
 msgid "نعام"
 msgstr "Ostrich"
 
-#: app/core/routes.py:1070 app/templates/health/dashboard.html:29
+#: app/core/routes.py:1080 app/templates/health/dashboard.html:29
 #, python-format
 msgid "%(n)s يوم"
 msgstr "%(n)s days"
 
-#: app/core/routes.py:1072
+#: app/core/routes.py:1082
 #, python-format
 msgid "%(n)s شهر"
 msgstr "%(n)s month(s)"
 
-#: app/core/routes.py:1073
+#: app/core/routes.py:1083
 #, python-format
 msgid "%(n)s سنة"
 msgstr "%(n)s year(s)"
 
-#: app/core/routes.py:1100 app/templates/animal_detail.html:25
+#: app/core/routes.py:1110 app/templates/animal_detail.html:25
 #: app/templates/animals_bulk_purchase.html:29
 msgid "بدون حظيرة"
 msgstr "No barn"
 
-#: app/core/routes.py:1184
+#: app/core/routes.py:1194
 msgid ""
 "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر "
 "البنود يدوياً بالأسفل."
@@ -2679,34 +2679,34 @@ msgstr ""
 "Smart suggestion isn't available right now (make sure GEMINI_API_KEY is "
 "enabled) — pick the items manually below."
 
-#: app/core/routes.py:1213
+#: app/core/routes.py:1223
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr "%(n)s checkup task(s) have been assigned for animal %(no)s."
 
-#: app/core/routes.py:1253
+#: app/core/routes.py:1263
 msgid "تم تسجيل الوزن"
 msgstr "The weight has been recorded"
 
-#: app/core/routes.py:1280
+#: app/core/routes.py:1290
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr "The birth checklist has been saved"
 
-#: app/core/routes.py:1300
+#: app/core/routes.py:1310
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr "%(no)s has been moved to isolation"
 
-#: app/core/routes.py:1336
+#: app/core/routes.py:1346
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s has been taken out of isolation"
 
-#: app/core/routes.py:1360
+#: app/core/routes.py:1370
 msgid "تم تسجيل الحليب"
 msgstr "The milk has been recorded"
 
-#: app/core/routes.py:1370
+#: app/core/routes.py:1380
 #, python-format
 msgid ""
 "تنبيه: %(no)s تحت فترة تحريم حليب حتى %(until)s — الحليب المسجَّل الآن قد"
@@ -2715,17 +2715,17 @@ msgstr ""
 "Warning: %(no)s is under a milk withdrawal period until %(until)s — milk "
 "recorded now may be unsafe to sell or consume."
 
-#: app/core/routes.py:1386
+#: app/core/routes.py:1396
 msgid "تمت إضافة الملاحظة"
 msgstr "The note has been added"
 
-#: app/core/routes.py:1424
+#: app/core/routes.py:1434
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr ""
 "Ostriches don't enter the production cycle — check the ostrich record "
 "(eggs/hatching)."
 
-#: app/core/routes.py:1427
+#: app/core/routes.py:1437
 msgid ""
 "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا"
 " يوجد نظام دورة مخصّص لها بعد."
@@ -2733,74 +2733,74 @@ msgstr ""
 "This species doesn't enter the production-cycle engine (built for "
 "livestock biology only) — there's no dedicated cycle system for it yet."
 
-#: app/core/routes.py:1471
+#: app/core/routes.py:1481
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "There's no recorded sale for this animal."
 
-#: app/core/routes.py:1474
+#: app/core/routes.py:1484
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "This sale was recorded without an invoice."
 
-#: app/core/routes.py:1496
+#: app/core/routes.py:1506
 msgid "تم تحديث بيانات التخطيط"
 msgstr "The planning data has been updated"
 
-#: app/core/routes.py:1520
+#: app/core/routes.py:1530
 msgid "تم تسجيل البيع"
 msgstr "The sale has been recorded"
 
-#: app/core/routes.py:1534
+#: app/core/routes.py:1544
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 Animal sold — %(no)s for %(price)s"
 
-#: app/core/routes.py:1552
+#: app/core/routes.py:1562
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "The animal's departure to the market has been recorded"
 
-#: app/core/routes.py:1564
+#: app/core/routes.py:1574
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "The animal's return to the farm without a sale has been recorded"
 
-#: app/core/routes.py:1579
+#: app/core/routes.py:1589
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "The death has been recorded (without the cycle-completion requirement)"
 
-#: app/core/routes.py:1595
+#: app/core/routes.py:1605
 msgid "تم أرشفة الحيوان"
 msgstr "The animal has been archived"
 
-#: app/core/routes.py:1643 app/core/routes.py:1678
+#: app/core/routes.py:1653 app/core/routes.py:1688
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr "Barn number \"%(no)s\" is already in use"
 
-#: app/core/routes.py:1649
+#: app/core/routes.py:1659
 msgid "تمت إضافة الحظيرة"
 msgstr "The barn has been added"
 
-#: app/core/routes.py:1684
+#: app/core/routes.py:1694
 msgid "تم تحديث الحظيرة"
 msgstr "The barn has been updated"
 
-#: app/core/routes.py:1764
+#: app/core/routes.py:1774
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "The time settings have been saved"
 
-#: app/core/routes.py:1778
+#: app/core/routes.py:1788
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "The intake-medicine settings have been saved"
 
-#: app/core/routes.py:1806
+#: app/core/routes.py:1816
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "You must type the confirmation phrase exactly: \"%(phrase)s\""
 
-#: app/core/routes.py:1809
+#: app/core/routes.py:1819
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "Incorrect password — the factory reset was not performed."
 
-#: app/core/routes.py:1820
+#: app/core/routes.py:1830
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2809,7 +2809,7 @@ msgstr ""
 "Couldn't perform the factory reset, nothing was deleted (rolled back "
 "automatically). Error: %(err)s"
 
-#: app/core/routes.py:1823
+#: app/core/routes.py:1833
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2817,57 +2817,57 @@ msgstr ""
 "The factory reset succeeded — all farm data has been deleted. Log in "
 "again with the same phone number and password."
 
-#: app/core/routes.py:1842
+#: app/core/routes.py:1852
 msgid "تم حفظ بيانات المزرعة"
 msgstr "The farm's data has been saved"
 
-#: app/core/routes.py:1859
+#: app/core/routes.py:1869
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "The role name \"%(slug)s\" is already in use"
 
-#: app/core/routes.py:1864
+#: app/core/routes.py:1874
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "The job role has been created — now set its permissions"
 
-#: app/core/routes.py:1876
+#: app/core/routes.py:1886
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "You can't edit the owner role's permissions — it always has all "
 "permissions"
 
-#: app/core/routes.py:1894
+#: app/core/routes.py:1904
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:1921
+#: app/core/routes.py:1931
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:1921
+#: app/core/routes.py:1931
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:1947
+#: app/core/routes.py:1957
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:2047
+#: app/core/routes.py:2057
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:2055
+#: app/core/routes.py:2065
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2077
+#: app/core/routes.py:2087
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2098
+#: app/core/routes.py:2108
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -2891,25 +2891,81 @@ msgstr ""
 msgid "🗓️ %(n)s مهمة رعاية جديدة مستحقة"
 msgstr "🗓️ %(n)s new care task(s) due"
 
-#: app/core/setup_checklist_service.py:14
+#: app/core/setup_checklist_service.py:24
+msgid "غيّر كلمة مرور حسابك"
+msgstr "Change your account password"
+
+#: app/core/setup_checklist_service.py:25
+msgid "لسا مستخدم كلمة المرور الافتراضية — أول شي غيّرها قبل أي استخدام فعلي."
+msgstr ""
+"You're still using the default password — change it first before any real"
+" use."
+
+#: app/core/setup_checklist_service.py:35
+msgid "عبّي بيانات مزرعتك الأساسية"
+msgstr "Fill in your farm's basic details"
+
+#: app/core/setup_checklist_service.py:36
+msgid "اسم المزرعة وجوالها وعنوانها — تظهر برأس فاتورة البيع لاحقاً."
+msgstr ""
+"The farm's name, phone number, and address — they appear at the top of "
+"sale invoices later."
+
+#: app/core/setup_checklist_service.py:45
 msgid "أضف أول حظيرة"
 msgstr "Add your first barn"
 
-#: app/core/setup_checklist_service.py:15
+#: app/core/setup_checklist_service.py:46
+msgid ""
+"خصوصاً حظيرة عزل واحدة — العزل التلقائي بعد الولادة أو وصول حيوان جديد "
+"يحتاجها."
+msgstr ""
+"Especially one isolation barn — automatic isolation after birth or a new "
+"arrival needs it."
+
+#: app/core/setup_checklist_service.py:53
 msgid "أضف أول رأس"
 msgstr "Add your first animal"
 
-#: app/core/setup_checklist_service.py:16
+#: app/core/setup_checklist_service.py:54
+msgid "رأس واحد على الأقل — أو استورد قطيعك الحالي دفعة وحدة."
+msgstr "At least one animal — or import your current herd in a single batch."
+
+#: app/core/setup_checklist_service.py:61
 msgid "أضف عضو فريق (عامل/دكتور)"
 msgstr "Add a team member (worker/doctor)"
 
-#: app/core/setup_checklist_service.py:17
+#: app/core/setup_checklist_service.py:62
+msgid "كل عضو فريق يحتاج حساب مستقل — يقدر يسجّل ملاحظاته ومهامه بنفسه."
+msgstr ""
+"Every team member needs their own account — so they can log their own "
+"notes and tasks."
+
+#: app/core/setup_checklist_service.py:69
 msgid "أضف أول دواء بالصيدلية"
 msgstr "Add your first medicine to the pharmacy"
 
-#: app/core/setup_checklist_service.py:18
+#: app/core/setup_checklist_service.py:70
+msgid "يفعّل خصم المخزون التلقائي وتنبيهات النفاد لاحقاً."
+msgstr "Enables automatic stock deduction and low-stock alerts later."
+
+#: app/core/setup_checklist_service.py:77
 msgid "أضف أول صنف علف"
 msgstr "Add your first feed item"
+
+#: app/core/setup_checklist_service.py:78
+msgid "يفعّل خطط التغذية وحساب استهلاك العلف لكل حظيرة."
+msgstr "Enables feeding plans and feed consumption calculations for each barn."
+
+#: app/core/setup_checklist_service.py:85
+msgid "خذ نسخة احتياطية أول مرة"
+msgstr "Take a backup for the first time"
+
+#: app/core/setup_checklist_service.py:86
+msgid "عادة بسيطة تحميك من فقدان بياناتك بالكامل لو صار أي عطل بقاعدة البيانات."
+msgstr ""
+"A simple habit that protects you from losing all your data if anything "
+"goes wrong with the database."
 
 #: app/core/simulation_service.py:34
 msgid "ما فيه حساب مالك — شغّل `flask seed` أولاً."
@@ -5235,7 +5291,7 @@ msgstr ""
 " calendar). The time window comes from"
 
 #: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
-#: app/templates/base.html:1035 app/templates/home.html:128
+#: app/templates/base.html:1035 app/templates/home.html:146
 #: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
@@ -5244,8 +5300,8 @@ msgid "الإعدادات"
 msgstr "Settings"
 
 #: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
-#: app/templates/finance/lots_list.html:24 app/templates/home.html:30
-#: app/templates/home.html:42 app/templates/today.html:27
+#: app/templates/finance/lots_list.html:24 app/templates/home.html:48
+#: app/templates/home.html:60 app/templates/today.html:27
 #: app/templates/today.html:51 app/templates/today.html:52
 #: app/templates/today.html:74 app/templates/worker_home.html:63
 msgid "فتح"
@@ -5419,7 +5475,7 @@ msgstr "Vet record"
 
 #: app/templates/animal_detail.html:116 app/templates/animal_detail.html:268
 #: app/templates/base.html:978 app/templates/health/diseases_list.html:6
-#: app/templates/home.html:83
+#: app/templates/home.html:101
 msgid "الأمراض"
 msgstr "Diseases"
 
@@ -5630,7 +5686,7 @@ msgstr ""
 #: app/templates/repro/mating_form.html:61
 #: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_form.html:37
-#: app/templates/repro/sonar_form.html:36 app/templates/settings.html:39
+#: app/templates/repro/sonar_form.html:36 app/templates/settings.html:45
 #: app/templates/team/member_edit_form.html:46
 #: app/templates/team/member_form.html:28
 #: app/templates/team/salaries_list.html:19
@@ -5757,7 +5813,7 @@ msgid "لا يوجد تحصينات مسجّلة."
 msgstr "No vaccinations recorded."
 
 #: app/templates/animal_detail.html:299 app/templates/base.html:905
-#: app/templates/home.html:93 app/templates/repro/matings_list.html:5
+#: app/templates/home.html:111 app/templates/repro/matings_list.html:5
 msgid "التقريع"
 msgstr "Mating"
 
@@ -5789,7 +5845,7 @@ msgid "لا يوجد تقريع مسجّل."
 msgstr "No mating recorded."
 
 #: app/templates/animal_detail.html:314 app/templates/base.html:906
-#: app/templates/home.html:94 app/templates/repro/pregnancies_list.html:5
+#: app/templates/home.html:112 app/templates/repro/pregnancies_list.html:5
 msgid "تشخيص الحمل"
 msgstr "Pregnancy diagnosis"
 
@@ -6257,7 +6313,7 @@ msgstr "Additional details (optional)"
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:13
-#: app/templates/settings.html:159 app/templates/team/member_edit_form.html:16
+#: app/templates/settings.html:165 app/templates/team/member_edit_form.html:16
 #: app/templates/team/member_form.html:10
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
@@ -6673,7 +6729,7 @@ msgstr "Quarantine follow-up"
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "Smart sale and loss avoidance"
 
-#: app/templates/animals_list.html:12 app/templates/home.html:62
+#: app/templates/animals_list.html:12 app/templates/home.html:80
 msgid "حيوان جديد"
 msgstr "New animal"
 
@@ -6808,7 +6864,7 @@ msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "No animals recorded yet."
 
 #: app/templates/animals_list_simple.html:20 app/templates/base.html:901
-#: app/templates/home.html:58 app/templates/simple_home.html:45
+#: app/templates/home.html:76 app/templates/simple_home.html:45
 msgid "الحيوانات"
 msgstr "Animals"
 
@@ -6816,7 +6872,7 @@ msgstr "Animals"
 msgid "ما فيه حيوانات مسجَّلة بعد."
 msgstr "No animals registered yet."
 
-#: app/templates/audit_log.html:5 app/templates/settings.html:187
+#: app/templates/audit_log.html:5 app/templates/settings.html:193
 msgid "سجل التدقيق"
 msgstr "Audit log"
 
@@ -7014,7 +7070,7 @@ msgstr "مراح بو علي"
 msgid "الرئيسية والقطيع"
 msgstr "Home & Herd"
 
-#: app/templates/base.html:895 app/templates/home.html:20
+#: app/templates/base.html:895 app/templates/home.html:38
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
 msgid "صفحة اليوم"
@@ -7024,7 +7080,7 @@ msgstr "Today's page"
 msgid "الحلال"
 msgstr "Livestock"
 
-#: app/templates/base.html:907 app/templates/home.html:95
+#: app/templates/base.html:907 app/templates/home.html:113
 msgid "فحص السونار"
 msgstr "Sonar exam"
 
@@ -7041,12 +7097,12 @@ msgid "الفريق"
 msgstr "Team"
 
 #: app/templates/base.html:916 app/templates/family_view.html:97
-#: app/templates/family_view.html:104 app/templates/home.html:54
+#: app/templates/family_view.html:104 app/templates/home.html:72
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "Tasks"
 
-#: app/templates/base.html:917 app/templates/home.html:53
+#: app/templates/base.html:917 app/templates/home.html:71
 #: app/templates/team/performance_report.html:22
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
@@ -7100,12 +7156,12 @@ msgid "الصحة والتحصين"
 msgstr "Health & Vaccination"
 
 #: app/templates/base.html:975 app/templates/health/dashboard.html:3
-#: app/templates/health/dashboard.html:6 app/templates/home.html:39
+#: app/templates/health/dashboard.html:6 app/templates/home.html:57
 msgid "مركز الطبيب"
 msgstr "Vet center"
 
 #: app/templates/base.html:979 app/templates/health/vaccinations_list.html:5
-#: app/templates/home.html:81
+#: app/templates/home.html:99
 msgid "التطعيمات"
 msgstr "Vaccinations"
 
@@ -7177,11 +7233,11 @@ msgstr "Warehouses"
 msgid "المالية والمبيعات"
 msgstr "Finance & Sales"
 
-#: app/templates/base.html:1025 app/templates/home.html:111
+#: app/templates/base.html:1025 app/templates/home.html:129
 msgid "مالية الصحة"
 msgstr "Health finance"
 
-#: app/templates/base.html:1033 app/templates/home.html:122
+#: app/templates/base.html:1033 app/templates/home.html:140
 msgid "النظام"
 msgstr "System"
 
@@ -7239,7 +7295,7 @@ msgstr "Language"
 msgid "خروج"
 msgstr "Logout"
 
-#: app/templates/base.html:1137
+#: app/templates/base.html:1137 app/templates/home.html:27
 msgid "تجاهل"
 msgstr "Dismiss"
 
@@ -7814,19 +7870,11 @@ msgstr "Currently borrowed:"
 msgid "ما فيه أصناف معدات مسجَّلة."
 msgstr "No equipment items registered."
 
-#: app/templates/home.html:4
-msgid "مرحباً،"
-msgstr "Hi,"
-
-#: app/templates/home.html:5
-msgid "مسمّاك الوظيفي:"
-msgstr "Your job title:"
-
-#: app/templates/home.html:10 app/templates/worker_home.html:34
+#: app/templates/home.html:6 app/templates/worker_home.html:34
 msgid "أول مرة تستخدم النظام؟"
 msgstr "First time using the system?"
 
-#: app/templates/home.html:11
+#: app/templates/home.html:7
 msgid ""
 "جولة سريعة (دقيقتين) تعرّفك على دليلك اليومي — يتغيّر تلقائياً حسب حالة "
 "قطيعك."
@@ -7834,78 +7882,94 @@ msgstr ""
 "A quick 2-minute tour of your daily guide — it changes automatically "
 "based on your herd's status."
 
-#: app/templates/home.html:12 app/templates/worker_home.html:36
+#: app/templates/home.html:8 app/templates/worker_home.html:36
 msgid "ابدأ الجولة"
 msgstr "Start the tour"
 
-#: app/templates/home.html:21 app/templates/worker_home.html:61
+#: app/templates/home.html:20 app/templates/onboarding/setup_checklist.html:2
+#: app/templates/onboarding/setup_checklist.html:5
+#: app/templates/settings.html:10
+msgid "أساسيات بداية إنشاء المزرعة"
+msgstr "Farm setup basics"
+
+#: app/templates/home.html:21
+msgid "فيه بنود ناقصة لسا — كل بند له زر يوديك مباشرة لإكماله."
+msgstr ""
+"There are still missing items — each one has a button that takes you "
+"directly to complete it."
+
+#: app/templates/home.html:24 app/templates/settings.html:12
+msgid "افتح القائمة"
+msgstr "Open the list"
+
+#: app/templates/home.html:39 app/templates/worker_home.html:61
 msgid "مهامك وتنبيهاتك وبلاغاتك المفتوحة بشاشة وحدة"
 msgstr "Your tasks, alerts, and open reports in one screen"
 
-#: app/templates/home.html:24
+#: app/templates/home.html:42
 #, python-format
 msgid "%(n)s مهمة مطلوبة"
 msgstr "%(n)s task(s) due"
 
-#: app/templates/home.html:25
+#: app/templates/home.html:43
 #, python-format
 msgid "%(n)s تنبيه"
 msgstr "%(n)s alert(s)"
 
-#: app/templates/home.html:26
+#: app/templates/home.html:44
 msgid "كل شي مضبوط اليوم"
 msgstr "Everything is fine today"
 
-#: app/templates/home.html:40
+#: app/templates/home.html:58
 msgid "سجل الحالات، التحصينات القادمة، والموسوعة المرجعية بصفحة وحدة"
 msgstr ""
 "Case log, upcoming vaccinations, and the reference encyclopedia in one "
 "screen"
 
-#: app/templates/home.html:48
+#: app/templates/home.html:66
 msgid "إجراءات سريعة"
 msgstr "Quick actions"
 
-#: app/templates/home.html:51
+#: app/templates/home.html:69
 msgid "الأكثر استخدامًا"
 msgstr "Most used"
 
-#: app/templates/home.html:57
+#: app/templates/home.html:75
 #, python-format
 msgid "%(n)s تنبيه على رؤوس مسجَّلة"
 msgstr "%(n)s alerts on registered animals"
 
-#: app/templates/home.html:68
+#: app/templates/home.html:86
 msgid "تسجيل مولود"
 msgstr "Register birth"
 
-#: app/templates/home.html:75
+#: app/templates/home.html:93
 msgid "الصحة"
 msgstr "Health"
 
-#: app/templates/home.html:77
+#: app/templates/home.html:95
 msgid "البيطرة"
 msgstr "Vet visits"
 
-#: app/templates/home.html:79
+#: app/templates/home.html:97
 #, python-format
 msgid "%(n)s متأخرة"
 msgstr "%(n)s overdue"
 
-#: app/templates/home.html:80
+#: app/templates/home.html:98
 #, python-format
 msgid "%(n)s قادمة لم يحن وقتها"
 msgstr "%(n)s upcoming, not due yet"
 
-#: app/templates/home.html:96
+#: app/templates/home.html:114
 msgid "برامج التزامن"
 msgstr "Twin estrus programs"
 
-#: app/templates/home.html:103
+#: app/templates/home.html:121
 msgid "العلف والمالية والتقارير"
 msgstr "Feed, finance & reports"
 
-#: app/templates/home.html:114 app/templates/reports/activity.html:4
+#: app/templates/home.html:132 app/templates/reports/activity.html:4
 #: app/templates/reports/births.html:4 app/templates/reports/mortality.html:4
 #: app/templates/reports/overview.html:4
 #: app/templates/reports/purchase_request.html:4
@@ -8092,35 +8156,41 @@ msgstr ""
 msgid "افتح الجولة"
 msgstr "Open the tour"
 
-#: app/templates/settings.html:10
+#: app/templates/settings.html:11
+msgid "قائمة نواقص التشغيل الأساسية مرتبة، مع زر مباشر لإكمال كل بند."
+msgstr ""
+"An ordered list of essential setup items, with a direct button to "
+"complete each one."
+
+#: app/templates/settings.html:16
 msgid "بيانات المزرعة"
 msgstr "Farm data"
 
-#: app/templates/settings.html:11
+#: app/templates/settings.html:17
 msgid "تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية."
 msgstr "Appears in the sale invoice header (item 75) — all optional."
 
-#: app/templates/settings.html:14
+#: app/templates/settings.html:20
 msgid "اسم المزرعة"
 msgstr "Farm name"
 
-#: app/templates/settings.html:15
+#: app/templates/settings.html:21
 msgid "جوال المزرعة"
 msgstr "Farm phone"
 
-#: app/templates/settings.html:16
+#: app/templates/settings.html:22
 msgid "عنوان المزرعة"
 msgstr "Farm address"
 
-#: app/templates/settings.html:17
+#: app/templates/settings.html:23
 msgid "الرقم الضريبي (اختياري)"
 msgstr "VAT number (optional)"
 
-#: app/templates/settings.html:18
+#: app/templates/settings.html:24
 msgid "رقم هوية صاحب العمل (اختياري — يظهر بمسير الراتب)"
 msgstr "Employer's national ID (optional — appears on payslips)"
 
-#: app/templates/settings.html:19
+#: app/templates/settings.html:25
 msgid ""
 "لو عبّيته، فواتير البيع تضيف تلقائياً رمز QR مبسّط بأسلوب \"فاتورة\" "
 "(المرحلة الأولى بس — راجع محاسبك قبل اعتمادها فاتورة ضريبية رسمية)."
@@ -8129,15 +8199,15 @@ msgstr ""
 "\"Fatoora\"-style QR code (Phase 1 only — check with your accountant "
 "before treating it as an official tax invoice)."
 
-#: app/templates/settings.html:20
+#: app/templates/settings.html:26
 msgid "حفظ بيانات المزرعة"
 msgstr "Save farm data"
 
-#: app/templates/settings.html:25
+#: app/templates/settings.html:31
 msgid "دواء استقبال الرأس الجديد (بند إضافي 283)"
 msgstr "New arrival intake medicine"
 
-#: app/templates/settings.html:26
+#: app/templates/settings.html:32
 msgid ""
 "لو حدّدت دواء هنا، مهام \"رش وقائي\" و\"تحصين مبدئي\" اللي تفتح تلقائياً "
 "عند شراء رأس جديد ووضعه بحظيرة العزل تصير مربوطة فعلياً بهذا الدواء — "
@@ -8150,23 +8220,23 @@ msgstr ""
 "checking and deducting stock on execution. Empty = the task stays a "
 "general reminder with no specific medicine link."
 
-#: app/templates/settings.html:29
+#: app/templates/settings.html:35
 msgid "دواء الرش الوقائي الافتراضي"
 msgstr "Default preventive spray medicine"
 
-#: app/templates/settings.html:31 app/templates/settings.html:36
+#: app/templates/settings.html:37 app/templates/settings.html:42
 msgid "بدون ربط (تذكير عام بس)"
 msgstr "No link (general reminder only)"
 
-#: app/templates/settings.html:34
+#: app/templates/settings.html:40
 msgid "لقاح التحصين المبدئي الافتراضي"
 msgstr "Default initial vaccination"
 
-#: app/templates/settings.html:44
+#: app/templates/settings.html:50
 msgid "كتالوج المبيعات العام"
 msgstr "Public sales catalog"
 
-#: app/templates/settings.html:45
+#: app/templates/settings.html:51
 msgid ""
 "رابط عام (بدون تسجيل دخول) يعرض الرؤوس الجاهزة للبيع فقط — شاركه مع "
 "المشترين المحتملين."
@@ -8174,21 +8244,21 @@ msgstr ""
 "A public link (no login) showing only the animals ready for sale — share "
 "it with potential buyers."
 
-#: app/templates/settings.html:47
+#: app/templates/settings.html:53
 msgid "توليد رابط جديد يلغي الرابط الحالي فوراً — متأكد؟"
 msgstr ""
 "Generating a new link immediately invalidates the current one — are you "
 "sure?"
 
-#: app/templates/settings.html:49
+#: app/templates/settings.html:55
 msgid "توليد رابط جديد"
 msgstr "Generate new link"
 
-#: app/templates/settings.html:54
+#: app/templates/settings.html:60
 msgid "الإعدادات الزمنية"
 msgstr "Time settings"
 
-#: app/templates/settings.html:55
+#: app/templates/settings.html:61
 msgid ""
 "تتحكم بكل التواريخ والمهام التلقائية بالنظام (عزل، تحصين، فطام، "
 "تنبيهات...)."
@@ -8196,302 +8266,302 @@ msgstr ""
 "Controls all dates and automatic tasks in the system (isolation, "
 "vaccination, weaning, alerts...)."
 
-#: app/templates/settings.html:58
+#: app/templates/settings.html:64
 msgid "مدة الحمل (يوم)"
 msgstr "Gestation duration (days)"
 
-#: app/templates/settings.html:59
+#: app/templates/settings.html:65
 msgid "مدة الإسفنجة (يوم)"
 msgstr "Sponge duration (days)"
 
-#: app/templates/settings.html:60
+#: app/templates/settings.html:66
 msgid "دخول الفحل بعد إزالة الإسفنجة (يوم)"
 msgstr "Ram entry after sponge removal (days)"
 
-#: app/templates/settings.html:61
+#: app/templates/settings.html:67
 msgid "تغيير علف الحامل قبل الولادة (يوم)"
 msgstr "Pregnant feed change before birth (days)"
 
-#: app/templates/settings.html:62
+#: app/templates/settings.html:68
 msgid "علف الأم بعد الولادة (يوم)"
 msgstr "Mother's feed after birth (days)"
 
-#: app/templates/settings.html:63
+#: app/templates/settings.html:69
 msgid "بيع الذكر بعد الولادة (يوم)"
 msgstr "Male sale after birth (days)"
 
-#: app/templates/settings.html:64
+#: app/templates/settings.html:70
 msgid "التنبيه قبل الموعد (يوم)"
 msgstr "Alert before due date (days)"
 
-#: app/templates/settings.html:65
+#: app/templates/settings.html:71
 msgid "مهلة إنذار المهام حسّاسة الوقت (دقيقة) — مثل وجبات العلف المجدولة"
 msgstr ""
 "Grace period before time-critical tasks alert (minutes) — e.g. scheduled "
 "feeding"
 
-#: app/templates/settings.html:66
+#: app/templates/settings.html:72
 msgid "تكرار التحصينات الدورية (يوم)"
 msgstr "Periodic vaccination repeat (days)"
 
-#: app/templates/settings.html:67
+#: app/templates/settings.html:73
 msgid "مدة عزل المولود والأم (يوم)"
 msgstr "Offspring and mother isolation duration (days)"
 
-#: app/templates/settings.html:68
+#: app/templates/settings.html:74
 msgid "فحص الدكتور الإلزامي بعد الولادة (ساعة)"
 msgstr "Mandatory doctor check after birth (hours)"
 
-#: app/templates/settings.html:69
+#: app/templates/settings.html:75
 msgid "تحصين الأم بعد الولادة (يوم)"
 msgstr "Mother's vaccination after birth (days)"
 
-#: app/templates/settings.html:70
+#: app/templates/settings.html:76
 msgid "أقل عمر للتقريع الأول (يوم)"
 msgstr "Minimum age for first mating (days)"
 
-#: app/templates/settings.html:71
+#: app/templates/settings.html:77
 msgid "أقل عمر للفحل عشان يدخل التقريع (يوم)"
 msgstr "Minimum age for a ram to enter mating (days)"
 
-#: app/templates/settings.html:72
+#: app/templates/settings.html:78
 msgid "أقل فترة راحة بعد الولادة قبل التقريع مجدداً (يوم)"
 msgstr "Minimum rest period after birth before remating (days)"
 
-#: app/templates/settings.html:75
+#: app/templates/settings.html:81
 msgid "عتبات أعمار محرك دورة الإنتاج"
 msgstr "Production cycle engine age thresholds"
 
-#: app/templates/settings.html:77
+#: app/templates/settings.html:83
 msgid "أقصى عمر يُصنَّف \"مولود\" بالدورة (يوم)"
 msgstr "Maximum age classified as \"newborn\" in the cycle (days)"
 
-#: app/templates/settings.html:78
+#: app/templates/settings.html:84
 msgid "عمر بديل لتجاوز فحص الخصوبة للفحول (يوم)"
 msgstr "Alternative age to skip fertility exam for males (days)"
 
-#: app/templates/settings.html:79
+#: app/templates/settings.html:85
 msgid "أقل عمر لمرحلة الفطام (يوم)"
 msgstr "Minimum age for weaning stage (days)"
 
-#: app/templates/settings.html:80
+#: app/templates/settings.html:86
 msgid "عمر بديل لتجاوز تسجيل تاريخ الفطام (يوم)"
 msgstr "Alternative age to skip recording weaning date (days)"
 
-#: app/templates/settings.html:85
+#: app/templates/settings.html:91
 msgid "البيع الذكي"
 msgstr "Smart sale"
 
-#: app/templates/settings.html:87
+#: app/templates/settings.html:93
 #, python-format
 msgid "هامش الربح المستهدف (%%)"
 msgstr "Target profit margin (%%)"
 
-#: app/templates/settings.html:88
+#: app/templates/settings.html:94
 msgid "سن البيع العادي للذكور (يوم)"
 msgstr "Regular sale age for males (days)"
 
-#: app/templates/settings.html:89
+#: app/templates/settings.html:95
 msgid "أقل سن لبيع الأضاحي (يوم)"
 msgstr "Minimum age for sacrifice sale (days)"
 
-#: app/templates/settings.html:90
+#: app/templates/settings.html:96
 msgid "أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)"
 msgstr ""
 "Maximum acceptable pregnancy delay for a female before sale "
 "recommendation (days)"
 
-#: app/templates/settings.html:91
+#: app/templates/settings.html:97
 msgid "أقصى انتظار للبلاغ الجديد قبل تنبيه (ساعة)"
 msgstr "Maximum wait for a new report before alert (hours)"
 
-#: app/templates/settings.html:92
+#: app/templates/settings.html:98
 msgid "رأس واقف بنفس مرحلة دورة الإنتاج قبل تنبيه (يوم)"
 msgstr "Head stalled at the same production cycle stage before alert (days)"
 
-#: app/templates/settings.html:93
+#: app/templates/settings.html:99
 msgid "مدة حضانة بيض النعام (يوم)"
 msgstr "Ostrich egg incubation duration (days)"
 
-#: app/templates/settings.html:98
+#: app/templates/settings.html:104
 msgid "الصحة والتغذية"
 msgstr "Health and nutrition"
 
-#: app/templates/settings.html:100
+#: app/templates/settings.html:106
 msgid "حجر الحيوان الوافد قبل الاختلاط (يوم)"
 msgstr "New animal quarantine before mixing (days)"
 
-#: app/templates/settings.html:101
+#: app/templates/settings.html:107
 msgid "تذكير إعادة الوزن بعد العلاج (يوم)"
 msgstr "Reweigh reminder after treatment (days)"
 
-#: app/templates/settings.html:102
+#: app/templates/settings.html:108
 msgid "أقصى فترة بين وزنتين قبل تنبيه \"وزن متأخر\" (يوم)"
 msgstr ""
 "Maximum period between two weighings before \"overdue weight\" alert "
 "(days)"
 
-#: app/templates/settings.html:103
+#: app/templates/settings.html:109
 msgid "أقل مدة بين جرعتين مضاد طفيليات (يوم)"
 msgstr "Minimum interval between two antiparasitic doses (days)"
 
-#: app/templates/settings.html:104
+#: app/templates/settings.html:110
 #, python-format
 msgid "أقصى زيادة أسبوعية للمركّزات (%%)"
 msgstr "Maximum weekly concentrate increase (%%)"
 
-#: app/templates/settings.html:105
+#: app/templates/settings.html:111
 msgid "نافذة قياس زيادة المركّزات (يوم)"
 msgstr "Concentrate increase measurement window (days)"
 
-#: app/templates/settings.html:106
+#: app/templates/settings.html:112
 msgid "نسبة الكالسيوم/الفوسفور المستهدفة"
 msgstr "Target calcium/phosphorus ratio"
 
-#: app/templates/settings.html:107
+#: app/templates/settings.html:113
 msgid "هامش تسامح نسبة الكالسيوم/الفوسفور"
 msgstr "Calcium/phosphorus ratio tolerance margin"
 
-#: app/templates/settings.html:108
+#: app/templates/settings.html:114
 msgid "مراقبة الحظيرة بعد إجهاض (يوم)"
 msgstr "Barn monitoring after abortion (days)"
 
-#: app/templates/settings.html:109
+#: app/templates/settings.html:115
 msgid "عمر فطام العلف الصلب (يوم)"
 msgstr "Solid-feed weaning age (days)"
 
-#: app/templates/settings.html:110
+#: app/templates/settings.html:116
 msgid "نافذة موسم التقريع الفعلي للفحل (يوم)"
 msgstr "Ram active breeding-season window (days)"
 
-#: app/templates/settings.html:111
+#: app/templates/settings.html:117
 msgid "بداية التغذية التأسيسية للمولود (يوم)"
 msgstr "Creep feeding start age for newborns (days)"
 
-#: app/templates/settings.html:112
+#: app/templates/settings.html:118
 msgid "هدف العلف البادئ اليومي عند اكتمال الفطام (جرام)"
 msgstr "Target daily starter feed at full weaning (grams)"
 
-#: app/templates/settings.html:113
+#: app/templates/settings.html:119
 msgid "نافذة عودة الأنثى للفحل (يوم) — لكشف الحمل الضمني"
 msgstr "Return-to-ram window (days) — for implicit pregnancy detection"
 
-#: app/templates/settings.html:114
+#: app/templates/settings.html:120
 msgid "فحص سونار تلقائي بعد التقريع (يوم) — للحمل المحتمل"
 msgstr "Automatic sonar check after mating (days) — for likely pregnancy"
 
-#: app/templates/settings.html:115
+#: app/templates/settings.html:121
 msgid "تنبيه مخزون قبل النفاد المتوقَّع بـ (يوم)"
 msgstr "Stock alert before expected stockout (days)"
 
-#: app/templates/settings.html:120
+#: app/templates/settings.html:126
 msgid "بروتوكول حديث الولادة وأمه"
 msgstr "Newborn & mother postpartum protocol"
 
-#: app/templates/settings.html:122
+#: app/templates/settings.html:128
 msgid "نافذة تأكيد رضاعة اللبأ (ساعة)"
 msgstr "Colostrum feeding confirmation window (hours)"
 
-#: app/templates/settings.html:123
+#: app/templates/settings.html:129
 msgid "نافذة متابعة نزول المشيمة (ساعة)"
 msgstr "Placenta passage follow-up window (hours)"
 
-#: app/templates/settings.html:124
+#: app/templates/settings.html:130
 msgid "مدة متابعة الأم اليومية بعد الولادة (يوم)"
 msgstr "Mother's daily postpartum follow-up duration (days)"
 
-#: app/templates/settings.html:128
+#: app/templates/settings.html:134
 msgid "حفظ الإعدادات"
 msgstr "Save settings"
 
-#: app/templates/settings.html:133
+#: app/templates/settings.html:139
 msgid "الخدمات"
 msgstr "Services"
 
-#: app/templates/settings.html:134
+#: app/templates/settings.html:140
 msgid "فعّل بس اللي تحتاجه — الخدمة الموقوفة تختفي تماماً من كل الواجهات."
 msgstr ""
 "Enable only what you need — a disabled service disappears completely from"
 " all screens."
 
-#: app/templates/settings.html:142
+#: app/templates/settings.html:148
 msgid "مفعّل"
 msgstr "Enabled"
 
-#: app/templates/settings.html:142
+#: app/templates/settings.html:148
 msgid "غير مفعّل"
 msgstr "Disabled"
 
-#: app/templates/settings.html:145 app/templates/team/members_list.html:30
+#: app/templates/settings.html:151 app/templates/team/members_list.html:30
 msgid "تعطيل"
 msgstr "Disable"
 
-#: app/templates/settings.html:145 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:151 app/templates/team/daily_templates.html:27
 #: app/templates/team/members_list.html:30
 msgid "تفعيل"
 msgstr "Activate"
 
-#: app/templates/settings.html:154
+#: app/templates/settings.html:160
 msgid "المسميات الوظيفية"
 msgstr "Job titles"
 
-#: app/templates/settings.html:155
+#: app/templates/settings.html:161
 msgid "مسمّى جديد"
 msgstr "New title"
 
-#: app/templates/settings.html:159
+#: app/templates/settings.html:165
 msgid "عدد الصلاحيات"
 msgstr "Number of permissions"
 
-#: app/templates/settings.html:159
+#: app/templates/settings.html:165
 msgid "نوع"
 msgstr "Type"
 
-#: app/templates/settings.html:164
+#: app/templates/settings.html:170
 msgid "جاهز افتراضياً"
 msgstr "Built-in default"
 
-#: app/templates/settings.html:164
+#: app/templates/settings.html:170
 msgid "مضاف من المالك"
 msgstr "Added by owner"
 
-#: app/templates/settings.html:167
+#: app/templates/settings.html:173
 msgid "تعديل الصلاحيات"
 msgstr "Edit permissions"
 
-#: app/templates/settings.html:177
+#: app/templates/settings.html:183
 msgid "النظام والصيانة"
 msgstr "System and maintenance"
 
-#: app/templates/settings.html:179 app/templates/settings_readiness.html:7
+#: app/templates/settings.html:185 app/templates/settings_readiness.html:7
 msgid "فحص الجاهزية قبل النشر"
 msgstr "Pre-deployment readiness check"
 
-#: app/templates/settings.html:180 app/templates/settings_data_integrity.html:5
+#: app/templates/settings.html:186 app/templates/settings_data_integrity.html:5
 msgid "فحص سلامة البيانات"
 msgstr "Data integrity check"
 
-#: app/templates/settings.html:181 app/templates/telegram_status.html:4
+#: app/templates/settings.html:187 app/templates/telegram_status.html:4
 msgid "تشخيص بوت تيليجرام"
 msgstr "Telegram Bot Diagnostics"
 
-#: app/templates/settings.html:183
+#: app/templates/settings.html:189
 msgid "وضع عرض تجريبي"
 msgstr "Demo mode"
 
-#: app/templates/settings.html:190
+#: app/templates/settings.html:196
 msgid "شاشة متابعة مبسّطة"
 msgstr "Simplified follow-up screen"
 
-#: app/templates/settings.html:192
+#: app/templates/settings.html:198
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr "Breed guide and care notes"
 
-#: app/templates/settings.html:198
+#: app/templates/settings.html:204
 msgid "منطقة الخطر"
 msgstr "Danger zone"
 
-#: app/templates/settings.html:199
+#: app/templates/settings.html:205
 msgid ""
 "ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، "
 "المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة "
@@ -8502,37 +8572,37 @@ msgstr ""
 "fresh state. Your account (same phone and password) keeps working "
 "afterward."
 
-#: app/templates/settings.html:200
+#: app/templates/settings.html:206
 msgid "ضبط المصنع"
 msgstr "Factory reset"
 
-#: app/templates/settings.html:206
+#: app/templates/settings.html:212
 msgid "تأكيد ضبط المصنع"
 msgstr "Confirm factory reset"
 
-#: app/templates/settings.html:207
+#: app/templates/settings.html:213
 msgid "هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً."
 msgstr ""
 "This action is permanent and irreversible. All current farm data will be "
 "completely deleted."
 
-#: app/templates/settings.html:210
+#: app/templates/settings.html:216
 msgid "اكتب عبارة التأكيد بالضبط: \"ضبط المصنع\""
 msgstr "Type the confirmation phrase exactly as shown (in Arabic): \"ضبط المصنع\""
 
-#: app/templates/settings.html:212
+#: app/templates/settings.html:218
 msgid "كلمة مرورك الحالية"
 msgstr "Your current password"
 
-#: app/templates/settings.html:214
+#: app/templates/settings.html:220
 msgid "احذف كل شي نهائياً"
 msgstr "Delete everything permanently"
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:233
+#: app/templates/reports/overview.html:18 app/templates/settings.html:239
 msgid "جدول المؤشرات"
 msgstr "Indicators table"
 
-#: app/templates/settings.html:234
+#: app/templates/settings.html:240
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr ""
 "From the start of the current month to today — same engine as the reports"
@@ -12841,6 +12911,36 @@ msgstr "Repeatedly ignored"
 msgid "ليش؟"
 msgstr "Why?"
 
+#: app/templates/onboarding/setup_checklist.html:6
+msgid ""
+"كل بند ناقص جنبه زر يوديك مباشرة للشاشة اللي تكمّله فيها — رتّبناها "
+"بالترتيب المنطقي اللي تحتاجه فعلياً."
+msgstr ""
+"Every missing item has a button next to it that takes you directly to the"
+" screen where you can complete it — we ordered them in the logical "
+"sequence you actually need."
+
+#: app/templates/onboarding/setup_checklist.html:11
+msgid "مزرعتك جاهزة!"
+msgstr "Your farm is ready!"
+
+#: app/templates/onboarding/setup_checklist.html:12
+msgid "كل الأساسيات مكتملة — تقدر تبدأ استخدام النظام فعلياً الآن."
+msgstr "All the basics are complete — you can start actually using the system now."
+
+#: app/templates/onboarding/setup_checklist.html:13
+msgid "ابدأ الآن"
+msgstr "Start now"
+
+#: app/templates/onboarding/setup_checklist.html:18
+#, python-format
+msgid "%(done)s من %(total)s مكتمل"
+msgstr "%(done)s of %(total)s complete"
+
+#: app/templates/onboarding/setup_checklist.html:34
+msgid "سوّها الآن"
+msgstr "Do it now"
+
 #: app/templates/onboarding/welcome.html:2
 msgid "أهلاً بك"
 msgstr "Welcome"
@@ -15405,7 +15505,7 @@ msgstr "The stock count has been recorded — the balance matches exactly."
 #~ msgstr "Health and nutrition (item 105 — was hidden without an edit screen)"
 
 #~ msgid "مرحباً،"
-#~ msgstr "Welcome,"
+#~ msgstr "Hi,"
 
 #~ msgid "مسمّاك الوظيفي:"
 #~ msgstr "Your job title:"
