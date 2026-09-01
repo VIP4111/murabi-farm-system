@@ -11,7 +11,7 @@
 بدل ما تبقى معطَّلة."""
 from flask import current_app, url_for
 from flask_babel import gettext as _
-from app.models import Animal, Barn, Pharmacy, Feed, User, FarmSettings
+from app.models import Animal, Barn, Pharmacy, User, FarmSettings, FeedMovement
 
 
 def get_setup_checklist_items(current_user=None) -> list[dict]:
@@ -74,10 +74,10 @@ def get_setup_checklist_items(current_user=None) -> list[dict]:
         {
             "code": "first_feed",
             "icon": "🌾",
-            "label": _("أضف أول صنف علف"),
-            "description": _("يفعّل خطط التغذية وحساب استهلاك العلف لكل حظيرة."),
-            "done": Feed.query.count() > 0,
-            "endpoint": "feed.items_new",
+            "label": _("سجّل أول حركة علف (شراء/استهلاك)"),
+            "description": _("مكتبة أصناف العلف معبّاة مسبقاً بأسماء شائعة — هذا البند يتحقق من إنك فعلاً سجّلت حركة علف حقيقية لمزرعتك (شراء أو صرف)، مو بس وجود القائمة المرجعية الجاهزة."),
+            "done": FeedMovement.query.first() is not None,
+            "endpoint": "feed.movements_new",
         },
         {
             "code": "first_backup",
