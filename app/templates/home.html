@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card">
-  <h2>{{ _('مرحباً،') }} {{ user.name }}</h2>
-  <p style="color:var(--muted);">{{ _('مسمّاك الوظيفي:') }} {{ user.role.display_label() }}</p>
-</div>
 
 {% if not user.onboarding_completed_at %}
 <div class="card" style="background:var(--primary); color:#fff;">
