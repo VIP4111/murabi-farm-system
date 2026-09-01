@@ -615,6 +615,14 @@
       var NONE_LABEL = {{ _('لم يتم اختيار أي ملف')|tojson }};
       document.querySelectorAll('input[type="file"]').forEach(function(input){
         if (input.dataset.fileWrapped || input.closest('.file-input-wrap')) return;
+        // بند إضافي (2026-09-01، حادثة حقيقية: شاشة المساعد الذكي —
+        // حقل إرفاق الصورة `chatImageInput` مخفي عمداً بـstyle="display:
+        // none" ويُفعَّل ببرمجة عبر زر 📷 مخصَّص أصلاً؛ التغليف كان
+        // يحقن صندوق "اختر ملف" ظاهر وسط صف الفورم (flex)، يكسر
+        // التخطيط ويخفي حقل الكتابة الفعلي تماماً. أي حقل مخفي عمداً
+        // (له واجهة مخصَّصة بديلة بالفعل) يُستثنى من التغليف كلياً —
+        // يبقى شغّالاً برمجياً بالضبط زي قبل، بدون أي عرض بديل مرئي.
+        if (input.style.display === 'none' || window.getComputedStyle(input).display === 'none') return;
         input.dataset.fileWrapped = '1';
         var wrap = document.createElement('div');
         wrap.className = 'file-input-wrap';
