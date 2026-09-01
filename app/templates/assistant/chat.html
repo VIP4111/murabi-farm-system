@@ -340,6 +340,15 @@
     }
     clearImage();
 
+    // بند إضافي (2026-09-01، حادثة حقيقية: السيرفر كان نايماً/بطيئاً
+    // بالرد، فحقل الكتابة تعلّق مقفولاً للأبد لأن fetch() ما كان يوصل
+    // .finally() إطلاقاً بدون رد) — حد أقصى 45 ثانية للانتظار، بعدها
+    // نفتح الحقل تلقائياً برسالة واضحة بدل تعليق دائم يحتاج تحديث
+    // الصفحة يدوياً.
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function(){ controller.abort(); }, 45000);
+    fetchOptions.signal = controller.signal;
+
     fetch(chatForm.action, fetchOptions).then(function(r){ return r.json(); }).then(function(data){
       typing.remove();
       if(data.error){
@@ -347,10 +356,14 @@
       } else {
         addBubble('assistant', data.reply, (data.created_at || '').slice(11,16));
       }
-    }).catch(function(){
+    }).catch(function(err){
       typing.remove();
-      addBubble('assistant', {{ _('تعذّر الاتصال بالمساعد. حاول مرة ثانية.')|tojson }}, '');
+      var msg = (err && err.name === 'AbortError')
+        ? {{ _('السيرفر تأخر بالرد أكثر من المتوقع (يمكن كان نايماً) — الحقل صار متاح، جرّب ترسل مرة ثانية.')|tojson }}
+        : {{ _('تعذّر الاتصال بالمساعد. حاول مرة ثانية.')|tojson }};
+      addBubble('assistant', msg, '');
     }).finally(function(){
+      clearTimeout(timeoutId);
       chatInput.disabled = false;
       chatInput.focus();
     });
