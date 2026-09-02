@@ -34,6 +34,7 @@ _KNOWN_ROLE_LABELS = {
     "farm_worker": (_l("عامل زراعي"), "عامل زراعي"),
     "construction_worker": (_l("عامل بناء"), "عامل بناء"),
     "farm_manager": (_l("مدير مزرعة"), "مدير مزرعة"),
+    "livestock_worker": (_l("عامل تربية مواشي"), "عامل تربية مواشي"),
 }
 
 

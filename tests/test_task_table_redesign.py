@@ -25,8 +25,12 @@ def test_suggested_task_row_has_thead_tbody_structure(app, logged_in_client):
     resp = logged_in_client.get("/team/tasks")
     body = resp.data.decode("utf-8")
     # يتأكد إن الهيدر (thead) يسبق صف المهمة (tbody) بترتيب صحيح بالـHTML
+    # بند إصلاح — نافذة بحث ثابتة الطول (1200 حرف) كانت تفشل بمجرد
+    # إضافة أدوار جديدة (كل دور يضيف زر تبويب يطوّل الصفحة قبل الجدول)
+    # — نافذة البحث حتى نهاية المحتوى بدل طول ثابت هش يمنع هذا التكرار.
     thead_idx = body.index("مهام مقترحة بانتظار الاعتماد")
-    window = body[thead_idx:thead_idx + 1200]
+    tbody_idx = body.index("<tbody", thead_idx)
+    window = body[thead_idx:tbody_idx + 10]
     assert "<thead>" in window
     assert "<tbody" in window
     assert window.index("<thead>") < window.index("<tbody")

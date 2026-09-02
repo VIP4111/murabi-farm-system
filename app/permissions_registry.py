@@ -223,6 +223,14 @@ DEFAULT_ROLES = {
         "is_system": False,
         "permissions": [],
     },
+    # بند إضافي — طلب صريح لتمييزه عن "عامل زراعي" (اللي ممكن يكون
+    # زراعة/أعلاف بس، بدون رعاية حيوان مباشرة): مسمّى وظيفي مخصَّص
+    # لمن يشتغل فعلياً برعاية القطيع اليومية (تنظيف، تغذية، فحص).
+    "livestock_worker": {
+        "display_name": "عامل تربية مواشي",
+        "is_system": False,
+        "permissions": [],
+    },
     "farm_manager": {
         "display_name": "مدير مزرعة",
         "is_system": False,
