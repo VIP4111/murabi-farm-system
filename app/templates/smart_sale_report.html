@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -14,7 +15,7 @@
 <div class="card">
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('الدرجة') }}</th><th>{{ _('التوصية') }}</th><th>{{ _('النافذة المقترحة') }}</th><th>{{ _('السبب') }}</th></tr>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('الدرجة') }} {{ tip(_('رقم من 0 إلى 100 يجمع كل عوامل التوصية (العمر، الوزن، علامات الأداء...) — كل ما ارتفع، كل ما كان البيع الآن أنسب من الانتظار.')) }}</th><th>{{ _('التوصية') }}</th><th>{{ _('النافذة المقترحة') }}</th><th>{{ _('السبب') }}</th></tr>
     {% for r in rows %}
     <tr>
       <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id) }}">{{ r.animal.animal_no }}</a></td>

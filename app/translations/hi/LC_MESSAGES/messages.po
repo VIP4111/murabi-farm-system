@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 11:40+0300\n"
+"POT-Creation-Date: 2026-09-02 11:50+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -75,7 +75,7 @@ msgstr "सुझाया गया"
 msgid "قيد التنفيذ"
 msgstr "प्रगति पर"
 
-#: app/__init__.py:139 app/templates/team/performance_report.html:21
+#: app/__init__.py:139 app/templates/team/performance_report.html:22
 msgid "منجزة"
 msgstr "पूर्ण"
 
@@ -1392,7 +1392,7 @@ msgid "البهم"
 msgstr "मेमने"
 
 #: app/core/animal_filters_service.py:183
-#: app/templates/smart_sale_report.html:9
+#: app/templates/smart_sale_report.html:10
 msgid "الذكور"
 msgstr "नर"
 
@@ -2074,7 +2074,7 @@ msgstr "💬 स्मार्ट सहायक खोलें"
 #: app/templates/animal_detail.html:355 app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
-#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:18
 msgid "الجنس"
 msgstr "लिंग"
 
@@ -4356,12 +4356,12 @@ msgstr "कुल मृत्यु मामले"
 #: app/templates/finance/culling_index.html:25
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "الرقم"
 msgstr "क्रमांक"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 #: app/templates/team/tasks_list.html:187
 msgid "السبب"
 msgstr "कारण"
@@ -6289,7 +6289,7 @@ msgstr "अतिरिक्त विवरण (वैकल्पिक)"
 #: app/templates/team/member_form.html:11
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
-#: app/templates/team/performance_report.html:20
+#: app/templates/team/performance_report.html:21
 #: app/templates/warehouses/warehouse_form.html:8
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -6697,7 +6697,7 @@ msgstr "थोक कार्रवाई"
 msgid "متابعة الحجر الصحي"
 msgstr "संगरोध अनुवर्ती"
 
-#: app/templates/animals_list.html:11 app/templates/smart_sale_report.html:5
+#: app/templates/animals_list.html:11 app/templates/smart_sale_report.html:6
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "स्मार्ट बिक्री और हानि से बचाव"
 
@@ -6873,14 +6873,14 @@ msgstr ""
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
-#: app/templates/team/performance_report.html:10
+#: app/templates/team/performance_report.html:11
 #: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "से"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
-#: app/templates/team/performance_report.html:11
+#: app/templates/team/performance_report.html:12
 #: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "तक"
@@ -7089,7 +7089,7 @@ msgid "المهام"
 msgstr "कार्य"
 
 #: app/templates/base.html:973 app/templates/home.html:71
-#: app/templates/team/performance_report.html:22
+#: app/templates/team/performance_report.html:23
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्ट्स"
@@ -7111,11 +7111,11 @@ msgstr "इस महीने का वेतन"
 msgid "تقارير الرواتب"
 msgstr "वेतन रिपोर्ट"
 
-#: app/templates/base.html:981 app/templates/team/performance_report.html:6
+#: app/templates/base.html:981 app/templates/team/performance_report.html:7
 msgid "مراجعة مهام اليوم"
 msgstr "आज के कार्यों की समीक्षा करें"
 
-#: app/templates/base.html:982 app/templates/team/performance_report.html:5
+#: app/templates/base.html:982 app/templates/team/performance_report.html:6
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
@@ -8892,11 +8892,11 @@ msgstr "तुरंत कार्रवाई चाहिए"
 msgid "رجّعني للواجهة العادية"
 msgstr "मुझे सामान्य इंटरफेस पर वापस ले जाएं"
 
-#: app/templates/smart_sale_report.html:6
+#: app/templates/smart_sale_report.html:7
 msgid "رجوع لسجل الحيوانات"
 msgstr "पशु रजिस्ट्री पर वापस जाएं"
 
-#: app/templates/smart_sale_report.html:9
+#: app/templates/smart_sale_report.html:10
 msgid ""
 "الأهم عمرهم — بيع عادي بعمر 6 أشهر، وبيع الأضاحي يحتاج عمر أعلى من 6 أشهر"
 " (سن الجذعة الشرعي)، والوزن الثانوي (لو متوقف/يتراجع، يستهلك علف بدون "
@@ -8906,11 +8906,11 @@ msgstr ""
 "बिक्री के लिए 6 महीने से अधिक उम्र चाहिए (शरई जज़ा आयु), वजन गौण है (यदि "
 "रुका/घट रहा हो, तो बिना लाभ के चारा खाता है)।"
 
-#: app/templates/smart_sale_report.html:10
+#: app/templates/smart_sale_report.html:11
 msgid "الإناث"
 msgstr "मादाएं"
 
-#: app/templates/smart_sale_report.html:10
+#: app/templates/smart_sale_report.html:11
 msgid ""
 "أي علامة من الأربع (تأخر حمل، ما حملت إطلاقاً، ترفض الرضاعة، الضرع تالف) "
 "= توصية بيع فورية بغض النظر عن باقي العوامل. القيم (الأعمار، هامش الربح، "
@@ -8920,24 +8920,33 @@ msgstr ""
 "पिलाने से इनकार, क्षतिग्रस्त थन) = अन्य कारकों की परवाह किए बिना तत्काल "
 "बिक्री सिफारिश। मान (आयु, लाभ मार्जिन, देरी अवधि) सभी समायोज्य हैं"
 
-#: app/templates/smart_sale_report.html:10
+#: app/templates/smart_sale_report.html:11
 msgid "شاشة الإعدادات"
 msgstr "सेटिंग्स स्क्रीन से"
 
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "الدرجة"
 msgstr "स्कोर"
 
+#: app/templates/smart_sale_report.html:18
+msgid ""
+"رقم من 0 إلى 100 يجمع كل عوامل التوصية (العمر، الوزن، علامات الأداء...) —"
+" كل ما ارتفع، كل ما كان البيع الآن أنسب من الانتظار."
+msgstr ""
+"0 से 100 तक की एक संख्या जो सभी सिफारिश कारकों (उम्र, वज़न, प्रदर्शन "
+"संकेतक...) को मिलाती है — यह जितनी अधिक हो, अभी बेचना इंतज़ार करने से "
+"उतना ही बेहतर है।"
+
 #: app/templates/health/emergency_symptoms_list.html:14
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "التوصية"
 msgstr "सिफारिश"
 
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "النافذة المقترحة"
 msgstr "सुझाई गई विंडो"
 
-#: app/templates/smart_sale_report.html:30
+#: app/templates/smart_sale_report.html:31
 msgid "لا يوجد حيوانات نشطة لتقييمها."
 msgstr "मूल्यांकन के लिए कोई सक्रिय पशु नहीं है।"
 
@@ -11262,7 +11271,7 @@ msgstr "जारी करें"
 #: app/templates/team/payroll_list.html:39
 #: app/templates/team/payroll_reports.html:13
 #: app/templates/team/payroll_reports.html:42
-#: app/templates/team/performance_report.html:12
+#: app/templates/team/performance_report.html:13
 msgid "عرض"
 msgstr "दिखाएं"
 
@@ -14820,7 +14829,7 @@ msgstr "अपलोड करें"
 msgid "رجوع لرواتب الشهر"
 msgstr "मासिक वेतन पर वापस जाएं"
 
-#: app/templates/team/performance_report.html:8
+#: app/templates/team/performance_report.html:9
 msgid ""
 "نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي "
 "رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة "
@@ -14830,43 +14839,51 @@ msgstr ""
 "कोई व्यक्तिगत राय नहीं। मैन्युअल गुणवत्ता रेटिंग (यदि कोई हो) अलग से "
 "दिखाई जाती है।"
 
-#: app/templates/team/performance_report.html:20
+#: app/templates/team/performance_report.html:21
 msgid "#"
 msgstr "#"
 
-#: app/templates/team/performance_report.html:20
+#: app/templates/team/performance_report.html:21
 msgid "النقطة"
 msgstr "स्कोर"
 
-#: app/templates/team/performance_report.html:21
+#: app/templates/team/performance_report.html:22
 msgid "متعذّرة"
 msgstr "विफल"
 
-#: app/templates/team/performance_report.html:21
+#: app/templates/team/performance_report.html:22
 msgid "نسبة الإنجاز"
 msgstr "पूर्णता दर"
 
-#: app/templates/team/performance_report.html:22
+#: app/templates/team/performance_report.html:23
 msgid "الالتزام بالوقت"
 msgstr "समय पर दर"
 
-#: app/templates/team/performance_report.html:22
+#: app/templates/team/performance_report.html:23
+msgid ""
+"نسبة المهام اللي أنجزها العامل قبل أو عند الموعد المستحق — تنزل لو أخّر "
+"مهامه بشكل متكرر."
+msgstr ""
+"उन कार्यों का प्रतिशत जो कर्मचारी ने नियत तारीख पर या उससे पहले पूरे किए "
+"— बार-बार देर करने पर यह घट जाता है।"
+
+#: app/templates/team/performance_report.html:23
 msgid "متوسط سرعة التنفيذ"
 msgstr "औसत पूर्णता समय"
 
-#: app/templates/team/performance_report.html:23
+#: app/templates/team/performance_report.html:24
 msgid "تقييمات الجودة"
 msgstr "गुणवत्ता रेटिंग"
 
-#: app/templates/team/performance_report.html:34
+#: app/templates/team/performance_report.html:35
 msgid "د"
 msgstr "मिनट"
 
-#: app/templates/team/performance_report.html:44
+#: app/templates/team/performance_report.html:45
 msgid "ما فيه أي مهمة محسومة بهذي الفترة."
 msgstr "इस अवधि में कोई तय किया गया कार्य नहीं है।"
 
-#: app/templates/team/performance_report.html:53
+#: app/templates/team/performance_report.html:54
 #, python-format
 msgid "ملاحظات ضعف — %(name)s"
 msgstr "कमज़ोरी नोट्स — %(name)s"

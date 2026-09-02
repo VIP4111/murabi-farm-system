@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -19,7 +20,7 @@
     <tr>
       <th>{{ _('#') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('النقطة') }}</th>
       <th>{{ _('منجزة') }}</th><th>{{ _('متعذّرة') }}</th><th>{{ _('نسبة الإنجاز') }}</th>
-      <th>{{ _('الالتزام بالوقت') }}</th><th>{{ _('متوسط سرعة التنفيذ') }}</th><th>{{ _('البلاغات') }}</th>
+      <th>{{ _('الالتزام بالوقت') }} {{ tip(_('نسبة المهام اللي أنجزها العامل قبل أو عند الموعد المستحق — تنزل لو أخّر مهامه بشكل متكرر.')) }}</th><th>{{ _('متوسط سرعة التنفيذ') }}</th><th>{{ _('البلاغات') }}</th>
       <th>{{ _('تقييمات الجودة') }}</th>
     </tr>
     {% for row in rows %}

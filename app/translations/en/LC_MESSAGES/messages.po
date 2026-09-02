@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 11:40+0300\n"
+"POT-Creation-Date: 2026-09-02 11:50+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -75,7 +75,7 @@ msgstr "Suggested"
 msgid "قيد التنفيذ"
 msgstr "In progress"
 
-#: app/__init__.py:139 app/templates/team/performance_report.html:21
+#: app/__init__.py:139 app/templates/team/performance_report.html:22
 msgid "منجزة"
 msgstr "Completed"
 
@@ -1394,7 +1394,7 @@ msgid "البهم"
 msgstr "Lambs"
 
 #: app/core/animal_filters_service.py:183
-#: app/templates/smart_sale_report.html:9
+#: app/templates/smart_sale_report.html:10
 msgid "الذكور"
 msgstr "Males"
 
@@ -2085,7 +2085,7 @@ msgstr "💬 Open the smart assistant"
 #: app/templates/animal_detail.html:355 app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
-#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:17
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:18
 msgid "الجنس"
 msgstr "Gender"
 
@@ -4385,12 +4385,12 @@ msgstr "Total mortality cases"
 #: app/templates/finance/culling_index.html:25
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "الرقم"
 msgstr "Number"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 #: app/templates/team/tasks_list.html:187
 msgid "السبب"
 msgstr "Reason"
@@ -6324,7 +6324,7 @@ msgstr "Additional details (optional)"
 #: app/templates/team/member_form.html:11
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
-#: app/templates/team/performance_report.html:20
+#: app/templates/team/performance_report.html:21
 #: app/templates/warehouses/warehouse_form.html:8
 #: app/templates/warehouses/warehouses_list.html:16
 msgid "الاسم"
@@ -6732,7 +6732,7 @@ msgstr "Bulk Action"
 msgid "متابعة الحجر الصحي"
 msgstr "Quarantine follow-up"
 
-#: app/templates/animals_list.html:11 app/templates/smart_sale_report.html:5
+#: app/templates/animals_list.html:11 app/templates/smart_sale_report.html:6
 msgid "البيع الذكي وتفادي الخسارة"
 msgstr "Smart sale and loss avoidance"
 
@@ -6911,14 +6911,14 @@ msgstr ""
 
 #: app/templates/audit_log.html:11 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:17
-#: app/templates/team/performance_report.html:10
+#: app/templates/team/performance_report.html:11
 #: app/templates/warehouses/item_breakdown.html:24
 msgid "من"
 msgstr "From"
 
 #: app/templates/audit_log.html:12 app/templates/feed/barn_plans_list.html:10
 #: app/templates/reports/_filter.html:18
-#: app/templates/team/performance_report.html:11
+#: app/templates/team/performance_report.html:12
 #: app/templates/warehouses/item_breakdown.html:28
 msgid "إلى"
 msgstr "To"
@@ -7127,7 +7127,7 @@ msgid "المهام"
 msgstr "Tasks"
 
 #: app/templates/base.html:973 app/templates/home.html:71
-#: app/templates/team/performance_report.html:22
+#: app/templates/team/performance_report.html:23
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "Reports"
@@ -7149,11 +7149,11 @@ msgstr "This Month's Payroll"
 msgid "تقارير الرواتب"
 msgstr "Payroll Reports"
 
-#: app/templates/base.html:981 app/templates/team/performance_report.html:6
+#: app/templates/base.html:981 app/templates/team/performance_report.html:7
 msgid "مراجعة مهام اليوم"
 msgstr "Review Today's Tasks"
 
-#: app/templates/base.html:982 app/templates/team/performance_report.html:5
+#: app/templates/base.html:982 app/templates/team/performance_report.html:6
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
@@ -8935,11 +8935,11 @@ msgstr "Needs urgent action"
 msgid "رجّعني للواجهة العادية"
 msgstr "Take me back to the normal interface"
 
-#: app/templates/smart_sale_report.html:6
+#: app/templates/smart_sale_report.html:7
 msgid "رجوع لسجل الحيوانات"
 msgstr "Back to animal registry"
 
-#: app/templates/smart_sale_report.html:9
+#: app/templates/smart_sale_report.html:10
 msgid ""
 "الأهم عمرهم — بيع عادي بعمر 6 أشهر، وبيع الأضاحي يحتاج عمر أعلى من 6 أشهر"
 " (سن الجذعة الشرعي)، والوزن الثانوي (لو متوقف/يتراجع، يستهلك علف بدون "
@@ -8949,11 +8949,11 @@ msgstr ""
 "age above 6 months (the sharia-required jaza'ah age), with weight as "
 "secondary (if stalled/dropping, it consumes feed without benefit)."
 
-#: app/templates/smart_sale_report.html:10
+#: app/templates/smart_sale_report.html:11
 msgid "الإناث"
 msgstr "Females"
 
-#: app/templates/smart_sale_report.html:10
+#: app/templates/smart_sale_report.html:11
 msgid ""
 "أي علامة من الأربع (تأخر حمل، ما حملت إطلاقاً، ترفض الرضاعة، الضرع تالف) "
 "= توصية بيع فورية بغض النظر عن باقي العوامل. القيم (الأعمار، هامش الربح، "
@@ -8964,24 +8964,33 @@ msgstr ""
 "other factors. The values (ages, profit margin, delay duration) are all "
 "adjustable from"
 
-#: app/templates/smart_sale_report.html:10
+#: app/templates/smart_sale_report.html:11
 msgid "شاشة الإعدادات"
 msgstr "the settings screen"
 
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "الدرجة"
 msgstr "Score"
 
+#: app/templates/smart_sale_report.html:18
+msgid ""
+"رقم من 0 إلى 100 يجمع كل عوامل التوصية (العمر، الوزن، علامات الأداء...) —"
+" كل ما ارتفع، كل ما كان البيع الآن أنسب من الانتظار."
+msgstr ""
+"A number from 0 to 100 combining all recommendation factors (age, weight,"
+" performance flags...) — the higher it is, the more selling now beats "
+"waiting."
+
 #: app/templates/health/emergency_symptoms_list.html:14
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "التوصية"
 msgstr "Recommendation"
 
-#: app/templates/smart_sale_report.html:17
+#: app/templates/smart_sale_report.html:18
 msgid "النافذة المقترحة"
 msgstr "Suggested window"
 
-#: app/templates/smart_sale_report.html:30
+#: app/templates/smart_sale_report.html:31
 msgid "لا يوجد حيوانات نشطة لتقييمها."
 msgstr "No active animals to evaluate."
 
@@ -11315,7 +11324,7 @@ msgstr "Issue"
 #: app/templates/team/payroll_list.html:39
 #: app/templates/team/payroll_reports.html:13
 #: app/templates/team/payroll_reports.html:42
-#: app/templates/team/performance_report.html:12
+#: app/templates/team/performance_report.html:13
 msgid "عرض"
 msgstr "Show"
 
@@ -14889,7 +14898,7 @@ msgstr "Upload"
 msgid "رجوع لرواتب الشهر"
 msgstr "Back to Monthly Payroll"
 
-#: app/templates/team/performance_report.html:8
+#: app/templates/team/performance_report.html:9
 msgid ""
 "نقطة تلقائية موضوعية = نسبة الإنجاز + الالتزام بالوقت (50/50) — بدون أي "
 "رأي شخصي بالرقم نفسه. تقييمات الجودة اليدوية (لو موجودة) تظهر منفصلة "
@@ -14899,43 +14908,51 @@ msgstr ""
 "personal opinion in the number itself. Manual quality ratings (if any) "
 "are shown separately next to it."
 
-#: app/templates/team/performance_report.html:20
+#: app/templates/team/performance_report.html:21
 msgid "#"
 msgstr "#"
 
-#: app/templates/team/performance_report.html:20
+#: app/templates/team/performance_report.html:21
 msgid "النقطة"
 msgstr "Score"
 
-#: app/templates/team/performance_report.html:21
+#: app/templates/team/performance_report.html:22
 msgid "متعذّرة"
 msgstr "Failed"
 
-#: app/templates/team/performance_report.html:21
+#: app/templates/team/performance_report.html:22
 msgid "نسبة الإنجاز"
 msgstr "Completion Rate"
 
-#: app/templates/team/performance_report.html:22
+#: app/templates/team/performance_report.html:23
 msgid "الالتزام بالوقت"
 msgstr "On-time Rate"
 
-#: app/templates/team/performance_report.html:22
+#: app/templates/team/performance_report.html:23
+msgid ""
+"نسبة المهام اللي أنجزها العامل قبل أو عند الموعد المستحق — تنزل لو أخّر "
+"مهامه بشكل متكرر."
+msgstr ""
+"The share of tasks the worker completed on or before their due date — "
+"drops if they repeatedly finish tasks late."
+
+#: app/templates/team/performance_report.html:23
 msgid "متوسط سرعة التنفيذ"
 msgstr "Avg. Completion Time"
 
-#: app/templates/team/performance_report.html:23
+#: app/templates/team/performance_report.html:24
 msgid "تقييمات الجودة"
 msgstr "Quality Ratings"
 
-#: app/templates/team/performance_report.html:34
+#: app/templates/team/performance_report.html:35
 msgid "د"
 msgstr "min"
 
-#: app/templates/team/performance_report.html:44
+#: app/templates/team/performance_report.html:45
 msgid "ما فيه أي مهمة محسومة بهذي الفترة."
 msgstr "No resolved tasks in this period."
 
-#: app/templates/team/performance_report.html:53
+#: app/templates/team/performance_report.html:54
 #, python-format
 msgid "ملاحظات ضعف — %(name)s"
 msgstr "Weak-rating notes — %(name)s"
