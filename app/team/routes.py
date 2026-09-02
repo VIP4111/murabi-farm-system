@@ -982,6 +982,17 @@ def daily_templates_list():
         if not title:
             flash(_("عنوان المهمة مطلوب"), "error")
             return redirect(url_for("team.daily_templates_list"))
+        # بند إصلاح — بلاغ مستخدم بصورة شاشة توضح نفس المهمة (تنظيف
+        # المعالف/فحص الماء/فحص القطيع) مكرَّرة مرتين بجدول المهام
+        # المعتمدة كل يوم. السبب: ما كان فيه أي منع لإضافة مهمة يومية
+        # بنفس عنوان مهمة فعّالة موجودة أصلاً — كل قالب مكرَّر يولّد
+        # مهمة منفصلة يومياً للأبد (idempotency بـ`daily_task_service`
+        # مبنية على معرّف القالب نفسه، فمهمتين بعنوان متطابق = مهمتين
+        # فعليتين). نمنع التكرار هنا صراحة بدل ما يصير سهواً.
+        duplicate = DailyTaskTemplate.query.filter_by(title=title, is_active=True).first()
+        if duplicate:
+            flash(_("فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها من القائمة وأضف وحدة جديدة."), "error")
+            return redirect(url_for("team.daily_templates_list"))
         max_order = db.session.query(db.func.coalesce(db.func.max(DailyTaskTemplate.sort_order), 0)).scalar()
         db.session.add(DailyTaskTemplate(
             title=title, notes=request.form.get("notes") or None,

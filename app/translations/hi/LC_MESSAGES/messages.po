@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:58+0300\n"
+"POT-Creation-Date: 2026-09-02 17:31+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4261,6 +4261,14 @@ msgstr "दर्शक"
 msgid "عامل زراعي"
 msgstr "कृषि श्रमिक"
 
+#: app/models/role.py:35
+msgid "عامل بناء"
+msgstr "निर्माण श्रमिक"
+
+#: app/models/role.py:36
+msgid "مدير مزرعة"
+msgstr "फार्म प्रबंधक"
+
 #: app/models/warehouse.py:24
 msgid "علف"
 msgstr "चारा"
@@ -5006,67 +5014,75 @@ msgstr "रेटिंग सेव कर दी गई है"
 msgid "عنوان المهمة مطلوب"
 msgstr "कार्य का शीर्षक आवश्यक है"
 
-#: app/team/routes.py:992
+#: app/team/routes.py:994
+msgid ""
+"فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها "
+"من القائمة وأضف وحدة جديدة."
+msgstr ""
+"इसी शीर्षक वाला एक सक्रिय दैनिक कार्य पहले से मौजूद है — इसके नोट्स बदलने"
+" के लिए सूची से इसे रोकें और इसकी जगह नया जोड़ें।"
+
+#: app/team/routes.py:1003
 msgid "تمت إضافة المهمة اليومية"
 msgstr "दैनिक कार्य जोड़ दिया गया है"
 
-#: app/team/routes.py:1008
+#: app/team/routes.py:1019
 msgid "تم إيقاف المهمة اليومية"
 msgstr "दैनिक कार्य रोक दिया गया है"
 
-#: app/team/routes.py:1008
+#: app/team/routes.py:1019
 msgid "تم تفعيل المهمة اليومية"
 msgstr "दैनिक कार्य सक्रिय कर दिया गया है"
 
-#: app/team/routes.py:1031
+#: app/team/routes.py:1042
 msgid "تم توزيع المهمة"
 msgstr "कार्य सौंप दिया गया है"
 
-#: app/team/routes.py:1061
+#: app/team/routes.py:1072
 msgid "بدأت المهمة"
 msgstr "कार्य शुरू हो गया है"
 
-#: app/team/routes.py:1081
+#: app/team/routes.py:1092
 msgid "تم إنجاز المهمة"
 msgstr "कार्य पूरा हो गया है"
 
-#: app/team/routes.py:1101
+#: app/team/routes.py:1112
 msgid "تم تسجيل تعذّر المهمة"
 msgstr "कार्य की विफलता दर्ज कर दी गई है"
 
-#: app/team/routes.py:1118
+#: app/team/routes.py:1129
 msgid "تم اعتماد المهمة — نزلت للعامل"
 msgstr "कार्य स्वीकृत हो गया — कर्मचारी को भेज दिया गया"
 
-#: app/team/routes.py:1144 app/team/routes.py:1178
+#: app/team/routes.py:1155 app/team/routes.py:1189
 msgid "تم تأجيل المهمة ليوم واحد"
 msgstr "कार्य एक दिन के लिए स्थगित कर दिया गया है"
 
-#: app/team/routes.py:1161
+#: app/team/routes.py:1172
 msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
 msgstr "कार्य हटा दिया गया — मालिक के समीक्षा बॉक्स में भेज दिया गया"
 
-#: app/team/routes.py:1190
+#: app/team/routes.py:1201
 msgid "تم إلغاء المهمة"
 msgstr "कार्य रद्द कर दिया गया है"
 
-#: app/team/routes.py:1202
+#: app/team/routes.py:1213
 msgid "تم استرجاع المهمة"
 msgstr "कार्य बहाल कर दिया गया है"
 
-#: app/team/routes.py:1214
+#: app/team/routes.py:1225
 msgid "تم حذف المهمة نهائياً"
 msgstr "कार्य स्थायी रूप से हटा दिया गया है"
 
-#: app/team/routes.py:1233
+#: app/team/routes.py:1244
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
 msgstr "भेजने से पहले कम से कम जानवर या बाड़े को निर्दिष्ट करना जरूरी है"
 
-#: app/team/routes.py:1252
+#: app/team/routes.py:1263
 msgid "تم رفع البلاغ — راح يوصل للدكتور"
 msgstr "रिपोर्ट सबमिट कर दी गई — यह डॉक्टर तक पहुंचेगी"
 
-#: app/team/routes.py:1303
+#: app/team/routes.py:1314
 msgid "تم حذف البلاغ نهائياً"
 msgstr "रिपोर्ट स्थायी रूप से हटा दी गई है"
 

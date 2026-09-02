@@ -218,6 +218,16 @@ DEFAULT_ROLES = {
         "is_system": False,
         "permissions": [],
     },
+    "construction_worker": {
+        "display_name": "عامل بناء",
+        "is_system": False,
+        "permissions": [],
+    },
+    "farm_manager": {
+        "display_name": "مدير مزرعة",
+        "is_system": False,
+        "permissions": [],
+    },
     "nurse": {
         "display_name": "الممرض",
         "is_system": True,

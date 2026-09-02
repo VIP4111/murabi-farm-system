@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:58+0300\n"
+"POT-Creation-Date: 2026-09-02 17:31+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -4290,6 +4290,14 @@ msgstr "Viewer"
 msgid "عامل زراعي"
 msgstr "Farm Worker"
 
+#: app/models/role.py:35
+msgid "عامل بناء"
+msgstr "Construction Worker"
+
+#: app/models/role.py:36
+msgid "مدير مزرعة"
+msgstr "Farm Manager"
+
 #: app/models/warehouse.py:24
 msgid "علف"
 msgstr "Feed"
@@ -5037,67 +5045,75 @@ msgstr "The rating has been saved"
 msgid "عنوان المهمة مطلوب"
 msgstr "The task title is required"
 
-#: app/team/routes.py:992
+#: app/team/routes.py:994
+msgid ""
+"فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها "
+"من القائمة وأضف وحدة جديدة."
+msgstr ""
+"There's already an active daily task with this exact title — to change "
+"its notes, stop it from the list and add a new one instead."
+
+#: app/team/routes.py:1003
 msgid "تمت إضافة المهمة اليومية"
 msgstr "The daily task has been added"
 
-#: app/team/routes.py:1008
+#: app/team/routes.py:1019
 msgid "تم إيقاف المهمة اليومية"
 msgstr "The daily task has been paused"
 
-#: app/team/routes.py:1008
+#: app/team/routes.py:1019
 msgid "تم تفعيل المهمة اليومية"
 msgstr "The daily task has been activated"
 
-#: app/team/routes.py:1031
+#: app/team/routes.py:1042
 msgid "تم توزيع المهمة"
 msgstr "The task has been assigned"
 
-#: app/team/routes.py:1061
+#: app/team/routes.py:1072
 msgid "بدأت المهمة"
 msgstr "The task has started"
 
-#: app/team/routes.py:1081
+#: app/team/routes.py:1092
 msgid "تم إنجاز المهمة"
 msgstr "The task has been completed"
 
-#: app/team/routes.py:1101
+#: app/team/routes.py:1112
 msgid "تم تسجيل تعذّر المهمة"
 msgstr "The task failure has been recorded"
 
-#: app/team/routes.py:1118
+#: app/team/routes.py:1129
 msgid "تم اعتماد المهمة — نزلت للعامل"
 msgstr "The task has been approved — sent to the worker"
 
-#: app/team/routes.py:1144 app/team/routes.py:1178
+#: app/team/routes.py:1155 app/team/routes.py:1189
 msgid "تم تأجيل المهمة ليوم واحد"
 msgstr "The task has been postponed by one day"
 
-#: app/team/routes.py:1161
+#: app/team/routes.py:1172
 msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
 msgstr "The task has been deleted — moved to the owner's review box"
 
-#: app/team/routes.py:1190
+#: app/team/routes.py:1201
 msgid "تم إلغاء المهمة"
 msgstr "The task has been cancelled"
 
-#: app/team/routes.py:1202
+#: app/team/routes.py:1213
 msgid "تم استرجاع المهمة"
 msgstr "The task has been restored"
 
-#: app/team/routes.py:1214
+#: app/team/routes.py:1225
 msgid "تم حذف المهمة نهائياً"
 msgstr "The task has been permanently deleted"
 
-#: app/team/routes.py:1233
+#: app/team/routes.py:1244
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
 msgstr "You must specify at least the animal or the barn before submitting"
 
-#: app/team/routes.py:1252
+#: app/team/routes.py:1263
 msgid "تم رفع البلاغ — راح يوصل للدكتور"
 msgstr "The report has been submitted — it will reach the doctor"
 
-#: app/team/routes.py:1303
+#: app/team/routes.py:1314
 msgid "تم حذف البلاغ نهائياً"
 msgstr "The report has been permanently deleted"
 

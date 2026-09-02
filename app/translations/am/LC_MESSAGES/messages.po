@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:58+0300\n"
+"POT-Creation-Date: 2026-09-02 17:31+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -4099,6 +4099,14 @@ msgstr "ተመልካች"
 msgid "عامل زراعي"
 msgstr "የእርሻ ሰራተኛ"
 
+#: app/models/role.py:35
+msgid "عامل بناء"
+msgstr "የግንባታ ሰራተኛ"
+
+#: app/models/role.py:36
+msgid "مدير مزرعة"
+msgstr "የእርሻ አስተዳዳሪ"
+
 #: app/models/warehouse.py:24
 msgid "علف"
 msgstr "መኖ"
@@ -4829,67 +4837,75 @@ msgstr "ደረጃው ተቀምጧል"
 msgid "عنوان المهمة مطلوب"
 msgstr "የተግባሩ ርዕስ ያስፈልጋል"
 
-#: app/team/routes.py:992
+#: app/team/routes.py:994
+msgid ""
+"فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها "
+"من القائمة وأضف وحدة جديدة."
+msgstr ""
+"በዚህ ትክክለኛ ርዕስ ንቁ ዕለታዊ ተግባር አስቀድሞ አለ — ማስታወሻዎቹን ለመቀየር ከዝርዝሩ ውስጥ አቁመው አዲስ "
+"አክል።"
+
+#: app/team/routes.py:1003
 msgid "تمت إضافة المهمة اليومية"
 msgstr "የዕለት ተግባሩ ታክሏል"
 
-#: app/team/routes.py:1008
+#: app/team/routes.py:1019
 msgid "تم إيقاف المهمة اليومية"
 msgstr "የዕለት ተግባሩ ቆሟል"
 
-#: app/team/routes.py:1008
+#: app/team/routes.py:1019
 msgid "تم تفعيل المهمة اليومية"
 msgstr "የዕለት ተግባሩ ነቅቷል"
 
-#: app/team/routes.py:1031
+#: app/team/routes.py:1042
 msgid "تم توزيع المهمة"
 msgstr "ተግባሩ ተመድቧል"
 
-#: app/team/routes.py:1061
+#: app/team/routes.py:1072
 msgid "بدأت المهمة"
 msgstr "ተግባሩ ተጀምሯል"
 
-#: app/team/routes.py:1081
+#: app/team/routes.py:1092
 msgid "تم إنجاز المهمة"
 msgstr "ተግባሩ ተጠናቅቋል"
 
-#: app/team/routes.py:1101
+#: app/team/routes.py:1112
 msgid "تم تسجيل تعذّر المهمة"
 msgstr "የተግባሩ ውድቀት ተመዝግቧል"
 
-#: app/team/routes.py:1118
+#: app/team/routes.py:1129
 msgid "تم اعتماد المهمة — نزلت للعامل"
 msgstr "ተግባሩ ጸድቋል — ለሠራተኛው ወርዷል"
 
-#: app/team/routes.py:1144 app/team/routes.py:1178
+#: app/team/routes.py:1155 app/team/routes.py:1189
 msgid "تم تأجيل المهمة ليوم واحد"
 msgstr "ተግባሩ ለአንድ ቀን ተራዝሟል"
 
-#: app/team/routes.py:1161
+#: app/team/routes.py:1172
 msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
 msgstr "ተግባሩ ተሰርዟል — ወደ ባለቤቱ ግምገማ ሳጥን ተዛውሯል"
 
-#: app/team/routes.py:1190
+#: app/team/routes.py:1201
 msgid "تم إلغاء المهمة"
 msgstr "ተግባሩ ተሰርዟል"
 
-#: app/team/routes.py:1202
+#: app/team/routes.py:1213
 msgid "تم استرجاع المهمة"
 msgstr "ተግባሩ ተመልሷል"
 
-#: app/team/routes.py:1214
+#: app/team/routes.py:1225
 msgid "تم حذف المهمة نهائياً"
 msgstr "ተግባሩ ሙሉ በሙሉ ተሰርዟል"
 
-#: app/team/routes.py:1233
+#: app/team/routes.py:1244
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
 msgstr "ከመላክዎ በፊት ቢያንስ እንስሳውን ወይም በረቱን መግለጽ አለብዎት"
 
-#: app/team/routes.py:1252
+#: app/team/routes.py:1263
 msgid "تم رفع البلاغ — راح يوصل للدكتور"
 msgstr "ሪፖርቱ ተልኳል — ለሐኪሙ ይደርሳል"
 
-#: app/team/routes.py:1303
+#: app/team/routes.py:1314
 msgid "تم حذف البلاغ نهائياً"
 msgstr "ሪፖርቱ ሙሉ በሙሉ ተሰርዟል"
 
