@@ -12,7 +12,7 @@
     <h3 style="margin:0; font-size:15px;">✅ {{ _('مهامي المفتوحة') }}</h3>
     <a class="btn light" href="{{ url_for('team.tasks_list') }}" style="display:flex; align-items:center; gap:6px;">
       <span class="badge {{ 'off' if my_tasks|length else 'on' }}">{{ my_tasks|length }}</span>
-      {{ _('كل المهام') }} ↗
+      {{ _('إدارة المهام') }} ↗
     </a>
   </div>
   <div class="timeline" style="margin-top:10px;">

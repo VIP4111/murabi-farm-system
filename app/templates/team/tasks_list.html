@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import status_badge %}
+{% from "_macros.html" import status_badge, tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -9,6 +9,11 @@
     <a class="btn light" href="{{ url_for('team.daily_templates_list') }}">⚙️ {{ _('مهام العامل التلقائية') }}</a>
     {% endif %}
   </div>
+  {% if current_user.has_permission('tasks.review_daily') %}
+  <p style="color:var(--muted); font-size:12px; margin:8px 0 0;">
+    {{ _('هذي الشاشة فيها 4 أقسام مرتّبة حسب الأولوية: قائمتك الشخصية أول شي، بعدها القسم اللي يحتاج اعتمادك (الأهم — راجعه أول شي)، وآخر قسمين للاطلاع بس على وضع المزرعة كاملة — مطويّان تحت لتقليل الزحمة، افتحهم لو تحتاجهم.') }}
+  </p>
+  {% endif %}
 </div>
 
 {% if current_user.has_permission('tasks.assign_any') %}
@@ -140,8 +145,9 @@
 </script>
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('جدول المهام المعتمدة') }}</h3>
-  <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">{{ _('كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها "تم الإنجاز".') }}</p>
+  <details class="drawer-group">
+    <summary>{{ _('جدول المهام المعتمدة') }} {{ tip(_('للاطلاع فقط — كل مهام المزرعة كاملة (مو بس مهامك)، تلقائية بعد الاعتماد أو مُعيَّنة يدوياً. مطويّة افتراضياً عشان ما تزاحم مهامك المباشرة فوق.')) }} <span style="color:var(--muted); font-weight:normal; font-size:12px;">({{ approved_tasks|length }})</span></summary>
+  <p style="color:var(--muted); font-size:12px; margin:8px 0 12px;">{{ _('كل المهام اللي اعتُمدت فعلاً (تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً) عبر المزرعة كاملة — بانتظار المكلَّف بها ينفّذها ويحدّدها "تم الإنجاز".') }}</p>
   <div class="table-scroll">
 <table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
@@ -160,11 +166,13 @@
     </tbody>
   </table>
 </div>
+  </details>
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('مهام وزّعتها (نشطة)') }}</h3>
-  <div class="table-scroll">
+  <details class="drawer-group">
+    <summary>{{ _('مهام وزّعتها (نشطة)') }} <span style="color:var(--muted); font-weight:normal; font-size:12px;">({{ assigned_by_me|length }})</span></summary>
+  <div class="table-scroll" style="margin-top:8px;">
 <table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
     <tbody>
@@ -176,6 +184,7 @@
     </tbody>
   </table>
 </div>
+  </details>
 </div>
 {% endif %}
 
