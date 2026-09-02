@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>{{ _('عملية مالية جديدة') }}</h2>
@@ -18,7 +19,8 @@
       {{ _('"دعم خارجي" = مبلغ استلمته من جهة خارجية لازم تُرجعه لاحقاً (دين عليك) — مو دخل حقيقي للحلال، ولا يُحسب مع إجمالي الداخل. اكتب اسم الجهة بحقل "البند" عشان تقدر تتابع الدين لكل جهة.') }}
     </p>
     </div>
-    <label>{{ _('التصنيف') }}</label><input name="category" placeholder="{{ _('أعلاف / أدوية / رواتب ...') }}">
+    <label>{{ _('التصنيف') }} {{ tip(_('نوع المصروف/الدخل العام (أعلاف، أدوية، رواتب...) — يفيدك لاحقاً بتحليل مصاريفك حسب البند بالتقارير.')) }}</label>
+    <input name="category" placeholder="{{ _('أعلاف / أدوية / رواتب ...') }}">
     <div id="indirectExpenseGroup">
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
       <input type="checkbox" name="is_indirect" value="1" style="width:auto; margin:0;">
@@ -28,7 +30,8 @@
       {{ _('يُوزَّع تلقائياً بالتساوي على عدد الرؤوس النشطة الحالي — يظهر بتقرير "تكلفة الرأس الشهرية/السنوية" وكنصيب فردي بصفحة تفاصيل كل رأس.') }}
     </p>
     </div>
-    <label>{{ _('البند') }}</label><input name="item">
+    <label>{{ _('البند') }} {{ tip(_('التفصيل الدقيق (مثلاً: "شعير 50 كيس"، أو اسم الجهة لو دعم خارجي) — يميّز هذي العملية عن غيرها بنفس التصنيف.')) }}</label>
+    <input name="item">
     <label>{{ _('الوصف') }}</label><textarea name="description" rows="2"></textarea>
     <label>{{ _('المبلغ') }}</label><input name="amount" type="number" step="0.01" required>
     <label>{{ _('طريقة الدفع') }}</label>

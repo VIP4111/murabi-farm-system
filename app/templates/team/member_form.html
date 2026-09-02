@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:420px;">
   <h2>{{ _('عضو فريق جديد') }}</h2>
@@ -14,11 +15,11 @@
       <button type="button" class="btn light" id="copyLoginInfoBtn">📋 {{ _('نسخ بيانات الدخول') }}</button>
     </p>
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('تنسخ رقم الجوال وكلمة المرور اللي كتبتهم فوق كنص جاهز لإرساله للعضو (واتساب/تيليجرام) — تأكد إنك عبّيت الحقول أولاً.') }}</p>
-    <label>{{ _('الدور') }}</label>
+    <label>{{ _('الدور') }} {{ tip(_('يحدّد وش يقدر هذا العضو يشوفه ويسويه بالنظام — كل دور له صلاحيات مختلفة (مثلاً الدكتور يدير الصحة، العامل ينفّذ المهام). تقدر تعدّل صلاحيات أي دور لاحقاً من الإعدادات.')) }}</label>
     <select name="role_id" required>
       {% for r in roles %}<option value="{{ r.id }}">{{ r.display_label() }}</option>{% endfor %}
     </select>
-    <label>{{ _('اللغة') }}</label>
+    <label>{{ _('اللغة') }} {{ tip(_('لغة واجهة هذا العضو — كل النصوص والأزرار تظهر له بهذي اللغة، بغض النظر عن لغتك أنت.')) }}</label>
     <select name="language">
       <option value="ar">العربية</option>
       <option value="en">English</option>

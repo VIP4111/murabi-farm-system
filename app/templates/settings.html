@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <h2>📖 {{ _('الجولة التعريفية') }}</h2>
@@ -20,7 +21,8 @@
     <label>{{ _('اسم المزرعة') }}</label><input name="farm_name" value="{{ fs.farm_name or '' }}">
     <label>{{ _('جوال المزرعة') }}</label><input name="farm_phone" value="{{ fs.farm_phone or '' }}">
     <label>{{ _('عنوان المزرعة') }}</label><input name="farm_address" value="{{ fs.farm_address or '' }}">
-    <label>{{ _('الرقم الضريبي (اختياري)') }}</label><input name="vat_number" value="{{ fs.vat_number or '' }}">
+    <label>{{ _('الرقم الضريبي (اختياري)') }} {{ tip(_('رقم التسجيل الضريبي لمزرعتك — لو عندك واحد، يظهر بفواتير البيع تلقائياً. اتركه فاضياً لو ما عندك تسجيل ضريبي.')) }}</label>
+    <input name="vat_number" value="{{ fs.vat_number or '' }}">
     <label>{{ _('رقم هوية صاحب العمل (اختياري — يظهر بمسير الراتب)') }}</label><input name="owner_national_id" value="{{ fs.owner_national_id or '' }}">
     <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('لو عبّيته، فواتير البيع تضيف تلقائياً رمز QR مبسّط بأسلوب "فاتورة" (المرحلة الأولى بس — راجع محاسبك قبل اعتمادها فاتورة ضريبية رسمية).') }}</p>
     <button class="btn" type="submit">{{ _('حفظ بيانات المزرعة') }}</button>
@@ -62,7 +64,8 @@
   <form method="post" action="{{ url_for('core.farm_settings_save') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('مدة الحمل (يوم)') }}</label><input name="gestation_days" type="number" value="{{ fs.gestation_days }}">
-    <label>{{ _('مدة الإسفنجة (يوم)') }}</label><input name="sponge_duration_days" type="number" value="{{ fs.sponge_duration_days }}">
+    <label>{{ _('مدة الإسفنجة (يوم)') }} {{ tip(_('برامج التزامن التوأمي تستخدم إسفنجة هرمونية بمدة ثابتة قبل إدخال الفحل — هذا الرقم هو تلك المدة الافتراضية.')) }}</label>
+    <input name="sponge_duration_days" type="number" value="{{ fs.sponge_duration_days }}">
     <label>{{ _('دخول الفحل بعد إزالة الإسفنجة (يوم)') }}</label><input name="ram_entry_after_sponge_days" type="number" value="{{ fs.ram_entry_after_sponge_days }}">
     <label>{{ _('تغيير علف الحامل قبل الولادة (يوم)') }}</label><input name="pre_birth_feed_change_days" type="number" value="{{ fs.pre_birth_feed_change_days }}">
     <label>{{ _('علف الأم بعد الولادة (يوم)') }}</label><input name="postpartum_feed_days" type="number" value="{{ fs.postpartum_feed_days }}">
@@ -90,7 +93,8 @@
     <details class="settings-advanced">
       <summary>⚙️ {{ _('البيع الذكي') }}</summary>
       <div class="settings-advanced-body">
-    <label>{{ _('هامش الربح المستهدف (%%)') }}</label><input name="target_profit_margin_percent" type="number" step="0.1" value="{{ fs.target_profit_margin_percent }}">
+    <label>{{ _('هامش الربح المستهدف (%%)') }} {{ tip(_('النسبة اللي تعتبرها "وقت مناسب للبيع" — النظام يقارنها بربح كل رأس فعلياً ويقترح لك البيع لما يوصلها أو يتجاوزها.')) }}</label>
+    <input name="target_profit_margin_percent" type="number" step="0.1" value="{{ fs.target_profit_margin_percent }}">
     <label>{{ _('سن البيع العادي للذكور (يوم)') }}</label><input name="regular_sale_age_days" type="number" value="{{ fs.regular_sale_age_days }}">
     <label>{{ _('أقل سن لبيع الأضاحي (يوم)') }}</label><input name="udhiyah_min_age_days" type="number" value="{{ fs.udhiyah_min_age_days }}">
     <label>{{ _('أقصى تأخر حمل مقبول للأنثى قبل توصية البيع (يوم)') }}</label><input name="female_delayed_conception_days" type="number" value="{{ fs.female_delayed_conception_days }}">
