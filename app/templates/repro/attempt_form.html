@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:420px;">
   <h2>{{ _('محاولة تقريع جديدة') }} — {{ _('برنامج #%(id)s (%(no)s)', id=program.id, no=program.ewe.animal_no) }}</h2>
@@ -11,7 +12,7 @@
       {% for m in males %}<option value="{{ m.id }}">{{ m.animal_no }}</option>{% endfor %}
     </select>
     <label>{{ _('وصف الفحل (لو خارجي)') }}</label><input name="ram_note">
-    <label>{{ _('حالة التأكيد') }}</label>
+    <label>{{ _('حالة التأكيد') }} {{ tip(_('علّمها "مؤكّدة" بعد ما تتأكد فعلياً إن التقريع نجح (ملاحظة سلوك أو فحص) — هذا يساعد بمتابعة نجاح البرنامج، ولا يمنع تسجيل حمل لاحقاً حتى لو تركتها "قيد الانتظار".')) }}</label>
     <select name="confirmation_status">
       <option value="pending">{{ _('قيد الانتظار') }}</option>
       <option value="confirmed">{{ _('مؤكّدة') }}</option>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -351,7 +352,7 @@
     <input name="disease_name" required list="diseaseTypesList" placeholder="{{ _('اختر من القائمة أو اكتب اسماً جديداً') }}">
     <datalist id="diseaseTypesList">{% for t in disease_types %}<option value="{{ t.name }}">{% endfor %}</datalist>
     <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">
-    <label>{{ _('الشدة') }}</label>
+    <label>{{ _('الشدة') }} {{ tip(_('تقييمك لخطورة الحالة على الرؤوس المحددة — يساعد بترتيب أولوية المتابعة والتقارير، وما يغيّر العلاج المسجَّل هنا.')) }}</label>
     <select name="severity">
       <option value="light">{{ _('بسيطة') }}</option>
       <option value="medium">{{ _('متوسطة') }}</option>

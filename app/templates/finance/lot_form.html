@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -11,7 +12,7 @@
 <div class="card">
   <form method="get" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
     <div>
-      <label style="margin:0 0 4px;">{{ _('المبلغ المستهدف (اختياري)') }}</label>
+      <label style="margin:0 0 4px;">{{ _('المبلغ المستهدف (اختياري)') }} {{ tip(_('حدّد مبلغاً تحب توصّله من هذا البيع، والنظام يقترح لك أقرب مجموعة رؤوس تحققه بأعلى ربحية تقريبية — اتركه فاضي لو تفضّل تختار الرؤوس بنفسك.')) }}</label>
       <input name="target_amount" type="number" step="0.01" value="{{ target_amount or '' }}" style="margin:0;">
     </div>
     <button class="btn light" type="submit" style="padding:10px 16px;">{{ _('اقترح لي أقرب مجموعة') }}</button>
