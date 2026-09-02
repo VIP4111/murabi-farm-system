@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory, request, abort
+from flask import Flask, send_from_directory, request, abort, render_template
 from flask_login import current_user
 from flask_babel import lazy_gettext as _l
 from app.config import Config
@@ -439,6 +439,28 @@ def create_app(config_class=Config):
         escaped = str(escape(value))
         formatted = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
         return Markup(formatted)
+
+    # بند إصلاح — بلاغ مستخدم بصورة شاشة: ضغط "الإعدادات" بحساب الدكتور
+    # (ما عنده صلاحية settings.manage افتراضياً — تصرف صحيح ومتعمَّد) طلعت
+    # له صفحة بيضا بنص إنجليزي خام من Flask ("Forbidden... read-protected")
+    # بدل رسالة عربية مفهومة توضّح السبب. صفحات 403/404 عربية بنفس هوية
+    # النظام البصرية، بدون أي تغيير بمنطق الصلاحيات نفسه — القيد يبقى
+    # صحيحاً، بس الرسالة تصير مفهومة بدل خطأ تقني خام يخوّف المستخدم.
+    @app.errorhandler(403)
+    def forbidden_error(e):
+        return render_template(
+            "error_page.html", icon="🚫",
+            title=_l("ما تملك صلاحية الوصول لهذي الشاشة"),
+            message=_l("هذي الشاشة محجوبة عن دورك الوظيفي الحالي — لو تحتاجها فعلياً، اطلب من صاحب الحلال يضيف الصلاحية المناسبة من (الإعدادات ← الأدوار والصلاحيات)."),
+        ), 403
+
+    @app.errorhandler(404)
+    def not_found_error(e):
+        return render_template(
+            "error_page.html", icon="🔍",
+            title=_l("الصفحة غير موجودة"),
+            message=_l("الرابط اللي فتحته غير صحيح أو الصفحة انحذفت — تأكد من الرابط أو ارجع للرئيسية."),
+        ), 404
 
     @app.route("/_healthz")
     def health():

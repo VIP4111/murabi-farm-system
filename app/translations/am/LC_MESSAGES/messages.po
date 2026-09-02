@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 21:24+0300\n"
+"POT-Creation-Date: 2026-09-02 21:59+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -725,6 +725,28 @@ msgstr "የክትባት መርሃ ግብር"
 #: app/__init__.py:384
 msgid "مستودع"
 msgstr "መጋዘን"
+
+#: app/__init__.py:453
+msgid "ما تملك صلاحية الوصول لهذي الشاشة"
+msgstr "ወደዚህ ማያ ገጽ የመድረስ ፍቃድ የለዎትም"
+
+#: app/__init__.py:454
+msgid ""
+"هذي الشاشة محجوبة عن دورك الوظيفي الحالي — لو تحتاجها فعلياً، اطلب من "
+"صاحب الحلال يضيف الصلاحية المناسبة من (الإعدادات ← الأدوار والصلاحيات)."
+msgstr ""
+"ይህ ማያ ገጽ ለአሁኑ ሚናዎ የተገደበ ነው — በእርግጥ ካስፈለገዎት፣ ትክክለኛውን ፍቃድ ከቅንብሮች ← ሚናዎችና "
+"ፍቃዶች እንዲጨምር የእርሻውን ባለቤት ይጠይቁ።"
+
+#: app/__init__.py:461
+msgid "الصفحة غير موجودة"
+msgstr "ገጹ አልተገኘም"
+
+#: app/__init__.py:462
+msgid ""
+"الرابط اللي فتحته غير صحيح أو الصفحة انحذفت — تأكد من الرابط أو ارجع "
+"للرئيسية."
+msgstr "የከፈቱት አገናኝ የተሳሳተ ነው ወይም ገጹ ተሰርዟል — አገናኙን ያረጋግጡ ወይም ወደ መነሻ ገጽ ይመለሱ።"
 
 #: app/assistant/draft_action_service.py:31
 #, python-format
@@ -6211,6 +6233,7 @@ msgstr "ሰርዝ"
 
 #: app/templates/animal_weight_new_simple.html:21
 #: app/templates/animals_list_simple.html:19 app/templates/base.html:964
+#: app/templates/error_page.html:7
 #: app/templates/health/disease_new_simple.html:22
 #: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
 #: app/templates/team/worker_report_form.html:6

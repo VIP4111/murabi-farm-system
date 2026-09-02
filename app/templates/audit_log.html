@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  {% if current_user.has_permission('settings.manage') %}<a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>{% endif %}
   <h2 style="margin-top:12px;">{{ _('سجل التدقيق') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('آخر %(n)s حدث حسّاس بالنظام (حذف، اعتماد صلاحيات، إغلاق بلاغ...) — الأحدث أولاً.', n=rows|length) }}</p>
 </div>

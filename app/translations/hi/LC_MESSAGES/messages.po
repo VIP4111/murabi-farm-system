@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 21:24+0300\n"
+"POT-Creation-Date: 2026-09-02 21:59+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -725,6 +725,31 @@ msgstr "टीकाकरण अनुसूची"
 #: app/__init__.py:384
 msgid "مستودع"
 msgstr "गोदाम"
+
+#: app/__init__.py:453
+msgid "ما تملك صلاحية الوصول لهذي الشاشة"
+msgstr "आपको इस स्क्रीन तक पहुंच की अनुमति नहीं है"
+
+#: app/__init__.py:454
+msgid ""
+"هذي الشاشة محجوبة عن دورك الوظيفي الحالي — لو تحتاجها فعلياً، اطلب من "
+"صاحب الحلال يضيف الصلاحية المناسبة من (الإعدادات ← الأدوار والصلاحيات)."
+msgstr ""
+"यह स्क्रीन आपकी वर्तमान भूमिका के लिए प्रतिबंधित है — अगर वाकई ज़रूरत है,"
+" तो फार्म मालिक से सेटिंग्स ← भूमिकाएँ और अनुमतियाँ से सही अनुमति जोड़ने "
+"को कहें।"
+
+#: app/__init__.py:461
+msgid "الصفحة غير موجودة"
+msgstr "पेज नहीं मिला"
+
+#: app/__init__.py:462
+msgid ""
+"الرابط اللي فتحته غير صحيح أو الصفحة انحذفت — تأكد من الرابط أو ارجع "
+"للرئيسية."
+msgstr ""
+"आपने जो लिंक खोला वह गलत है या पेज हटा दिया गया है — लिंक जांचें या होम "
+"पेज पर वापस जाएं।"
 
 #: app/assistant/draft_action_service.py:31
 #, python-format
@@ -6418,6 +6443,7 @@ msgstr "रद्द करें"
 
 #: app/templates/animal_weight_new_simple.html:21
 #: app/templates/animals_list_simple.html:19 app/templates/base.html:964
+#: app/templates/error_page.html:7
 #: app/templates/health/disease_new_simple.html:22
 #: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
 #: app/templates/team/worker_report_form.html:6
