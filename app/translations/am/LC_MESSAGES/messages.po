@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:04+0300\n"
+"POT-Creation-Date: 2026-09-02 16:18+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -121,585 +121,608 @@ msgstr "ክፍት"
 msgid "مؤرشفة"
 msgstr "የተመዘገበ"
 
-#: app/__init__.py:167 app/team/routes.py:770
+#: app/__init__.py:165 app/templates/bulk_action_form.html:357
+#: app/templates/health/disease_form.html:31
+#: app/templates/health/disease_new_simple.html:62
+#: app/templates/health/disease_new_simple.html:83
+msgid "بسيطة"
+msgstr "ቀላል"
+
+#: app/__init__.py:166 app/templates/bulk_action_form.html:358
+#: app/templates/health/disease_form.html:32
+#: app/templates/health/disease_new_simple.html:63
+#: app/templates/health/disease_new_simple.html:83
+msgid "متوسطة"
+msgstr "መካከለኛ"
+
+#: app/__init__.py:167 app/templates/bulk_action_form.html:359
+#: app/templates/health/disease_form.html:33
+#: app/templates/health/disease_new_simple.html:64
+#: app/templates/health/disease_new_simple.html:83
+#: app/templates/health/emergency_symptoms_list.html:18
+#: app/templates/health/emergency_symptoms_list.html:51
+msgid "شديدة"
+msgstr "ከባድ"
+
+#: app/__init__.py:185 app/team/routes.py:770
 msgid "مهمة عامة"
 msgstr "አጠቃላይ ተግባር"
 
-#: app/__init__.py:168 app/team/routes.py:771
+#: app/__init__.py:186 app/team/routes.py:771
 msgid "فحص عزل"
 msgstr "የመነጠል ምርመራ"
 
-#: app/__init__.py:169 app/team/routes.py:775
+#: app/__init__.py:187 app/team/routes.py:775
 msgid "مراجعة الدكتور"
 msgstr "የዶክተር ግምገማ"
 
-#: app/__init__.py:170
+#: app/__init__.py:188
 msgid "تعقيم السرّة"
 msgstr "የእምብርት ማጽዳት"
 
-#: app/__init__.py:171
+#: app/__init__.py:189
 msgid "جرعة سيلينيوم"
 msgstr "የሴሌኒየም መጠን"
 
-#: app/__init__.py:172
+#: app/__init__.py:190
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "የኮለስትረም/ጡት ማጥባት ክትትል"
 
-#: app/__init__.py:173 app/team/routes.py:772
+#: app/__init__.py:191 app/team/routes.py:772
 msgid "وزن"
 msgstr "ክብደት መለካት"
 
-#: app/__init__.py:174 app/team/routes.py:773
+#: app/__init__.py:192 app/team/routes.py:773
 msgid "تحصين مستحق"
 msgstr "የደረሰ ክትባት"
 
-#: app/__init__.py:175 app/team/routes.py:774
+#: app/__init__.py:193 app/team/routes.py:774
 msgid "تبديل علف"
 msgstr "የመኖ ለውጥ"
 
-#: app/__init__.py:176
+#: app/__init__.py:194
 msgid "أخذ عينات إجهاض"
 msgstr "የውርጃ ናሙና መውሰድ"
 
-#: app/__init__.py:177
+#: app/__init__.py:195
 msgid "مراقبة حظيرة بعد إجهاض"
 msgstr "ከውርጃ በኋላ በረት ክትትል"
 
-#: app/__init__.py:178
+#: app/__init__.py:196
 msgid "خطوة بروتوكول علاج"
 msgstr "የሕክምና ፕሮቶኮል ደረጃ"
 
-#: app/__init__.py:179
+#: app/__init__.py:197
 msgid "رش وقائي (دفعة)"
 msgstr "የመከላከያ ርጭት (ጭነት)"
 
-#: app/__init__.py:180
+#: app/__init__.py:198
 msgid "تحصين مبدئي (دفعة)"
 msgstr "የመጀመሪያ ክትባት (ጭነት)"
 
-#: app/__init__.py:181
+#: app/__init__.py:199
 msgid "نقل لحظيرة الحوامل"
 msgstr "ወደ እርጉዝ በረት ማዛወር"
 
-#: app/__init__.py:182
+#: app/__init__.py:200
 msgid "فحص ترقيم (دفعة)"
 msgstr "የመለያ ምርመራ (ጭነት)"
 
-#: app/__init__.py:183
+#: app/__init__.py:201
 msgid "ربط علف (دفعة)"
 msgstr "የመኖ ትስስር (ጭነት)"
 
-#: app/__init__.py:184
+#: app/__init__.py:202
 msgid "رعاية يومية"
 msgstr "ዕለታዊ እንክብካቤ"
 
-#: app/__init__.py:185
+#: app/__init__.py:203
 msgid "رعاية حمل متأخر"
 msgstr "የዘገየ እርግዝና እንክብካቤ"
 
-#: app/__init__.py:186
+#: app/__init__.py:204
 msgid "علاج مخطَّط"
 msgstr "የታቀደ ሕክምና"
 
-#: app/__init__.py:187
+#: app/__init__.py:205
 msgid "متابعة إعادة وزن"
 msgstr "እንደገና የክብደት ክትትል"
 
-#: app/__init__.py:188
+#: app/__init__.py:206
 msgid "تعديل توقيت العلف (إجهاد حراري)"
 msgstr "የመኖ ጊዜ ማስተካከያ (የሙቀት ጭንቀት)"
 
-#: app/__init__.py:189
+#: app/__init__.py:207
 msgid "إضافة ماء (إجهاد حراري)"
 msgstr "የውሃ ተጨማሪ (የሙቀት ጭንቀት)"
 
-#: app/__init__.py:190
+#: app/__init__.py:208
 msgid "فحص تهوية (إجهاد حراري)"
 msgstr "የአየር ማናፈሻ ምርመራ (የሙቀት ጭንቀት)"
 
-#: app/__init__.py:191
+#: app/__init__.py:209
 msgid "فحص تظليل (إجهاد حراري)"
 msgstr "የጥላ ምርመራ (የሙቀት ጭንቀት)"
 
-#: app/__init__.py:192
+#: app/__init__.py:210
 msgid "جزّ صوف"
 msgstr "የበግ ጠጉር መላጨት"
 
-#: app/__init__.py:193
+#: app/__init__.py:211
 msgid "إعادة فحص سونار"
 msgstr "ድጋሚ የሶናር ምርመራ"
 
-#: app/__init__.py:194
+#: app/__init__.py:212
 msgid "تقييم فعالية العلاج"
 msgstr "የህክምና ውጤታማነት ግምገማ"
 
-#: app/__init__.py:195
+#: app/__init__.py:213
 msgid "تأكيد انتهاء العزل"
 msgstr "የመለያየት ማብቂያ ማረጋገጫ"
 
-#: app/__init__.py:196
+#: app/__init__.py:214
 msgid "تذكير انتهاء فترة سحب الدواء"
 msgstr "የመታቀቢያ ጊዜ ማብቂያ ማስታወሻ"
 
-#: app/__init__.py:197
+#: app/__init__.py:215
 msgid "وجبة علف مجدولة"
 msgstr "የታቀደ ምግብ"
 
-#: app/__init__.py:198
+#: app/__init__.py:216
 msgid "نقل حظيرة (حالة فسيولوجية)"
 msgstr "በረት ማዛወር (የፊዚዮሎጂ ሁኔታ)"
 
-#: app/__init__.py:199
+#: app/__init__.py:217
 msgid "إكمال بيانات حيوان"
 msgstr "የእንስሳ መረጃ ማሟላት"
 
-#: app/__init__.py:204
+#: app/__init__.py:222
 msgid "مراجعة احتمال عدوى منتشرة"
 msgstr "ሊሆን የሚችል ወረርሽኝ ይገምግሙ"
 
-#: app/__init__.py:248 app/team/routes.py:32 app/templates/base.html:1205
+#: app/__init__.py:266 app/team/routes.py:32 app/templates/base.html:1205
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "አስቸኳይ ሁኔታ"
 
-#: app/__init__.py:249
+#: app/__init__.py:267
 msgid "حالة صحية"
 msgstr "የጤና ሁኔታ"
 
-#: app/__init__.py:250
+#: app/__init__.py:268
 msgid "نقل للعزل"
 msgstr "ወደ መነጠያ ማዛወር"
 
-#: app/__init__.py:251 app/team/routes.py:44 app/templates/simple_home.html:79
+#: app/__init__.py:269 app/team/routes.py:44 app/templates/simple_home.html:79
 #: app/templates/worker_home.html:92
 msgid "تغذية / عليقة"
 msgstr "መመገብ / ራሽን"
 
-#: app/__init__.py:252
+#: app/__init__.py:270
 msgid "بيض / حضانة نعام"
 msgstr "የሰጎን እንቁላል / እንክብካቤ"
 
-#: app/__init__.py:253
+#: app/__init__.py:271
 msgid "مرض"
 msgstr "በሽታ"
 
-#: app/__init__.py:254
+#: app/__init__.py:272
 msgid "مشكلة"
 msgstr "ችግር"
 
-#: app/__init__.py:255 app/templates/feed/ration_form.html:16
+#: app/__init__.py:273 app/templates/feed/ration_form.html:16
 msgid "صيانة"
 msgstr "ጥገና"
 
-#: app/__init__.py:256 app/health/health_service.py:139
+#: app/__init__.py:274 app/health/health_service.py:139
 #: app/templates/equipment/asset_form.html:15
 #: app/templates/equipment/assets_list.html:3
 #: app/templates/finance/form.html:41
 msgid "أخرى"
 msgstr "ሌላ"
 
-#: app/__init__.py:268
+#: app/__init__.py:286
 msgid "نقل حظائر جماعي"
 msgstr "የቡድን በረት ማዛወር"
 
-#: app/__init__.py:269 app/core/routes.py:417
+#: app/__init__.py:287 app/core/routes.py:417
 #: app/templates/animals_list.html:79
 msgid "عزل جماعي"
 msgstr "የቡድን መገለል"
 
-#: app/__init__.py:270
+#: app/__init__.py:288
 msgid "شراء دفعة جماعي"
 msgstr "የቡድን ጭነት ግዢ"
 
-#: app/__init__.py:271
+#: app/__init__.py:289
 msgid "تحديد غرض جماعي"
 msgstr "የቡድን ዓላማ መወሰን"
 
-#: app/__init__.py:272
+#: app/__init__.py:290
 msgid "إضافة حيوان"
 msgstr "እንስሳ ጨምር"
 
-#: app/__init__.py:273
+#: app/__init__.py:291
 msgid "تسجيل نفوق"
 msgstr "ሞት መዝግብ"
 
-#: app/__init__.py:274
+#: app/__init__.py:292
 msgid "حذف حيوان"
 msgstr "እንስሳ ሰርዝ"
 
-#: app/__init__.py:275
+#: app/__init__.py:293
 msgid "تعديل بيانات حيوان"
 msgstr "የእንስሳ መረጃ አርትዕ"
 
-#: app/__init__.py:276 app/templates/animal_detail.html:42
+#: app/__init__.py:294 app/templates/animal_detail.html:42
 #: app/templates/isolation_enter_form.html:4
 msgid "دخول عزل"
 msgstr "ወደ መገለል መግባት"
 
-#: app/__init__.py:277
+#: app/__init__.py:295
 msgid "خروج من عزل"
 msgstr "ከለይቶ ማቆያ መውጣት"
 
-#: app/__init__.py:278
+#: app/__init__.py:296
 msgid "استرجاع بيع ملغى"
 msgstr "የተሰረዘ ሽያጭ መልስ"
 
-#: app/__init__.py:279
+#: app/__init__.py:297
 msgid "بيع حيوان"
 msgstr "እንስሳ ሽጥ"
 
-#: app/__init__.py:280
+#: app/__init__.py:298
 msgid "إنشاء نسخة احتياطية"
 msgstr "መጠባበቂያ ፍጠር"
 
-#: app/__init__.py:281
+#: app/__init__.py:299
 msgid "إضافة حظيرة"
 msgstr "በረት ጨምር"
 
-#: app/__init__.py:282 app/templates/barn_form.html:4
+#: app/__init__.py:300 app/templates/barn_form.html:4
 msgid "تعديل حظيرة"
 msgstr "በረት አርትዕ"
 
-#: app/__init__.py:283
+#: app/__init__.py:301
 msgid "تقديم رأس بالدفعة"
 msgstr "በጭነት ውስጥ እንስሳ ወደፊት ውሰድ"
 
-#: app/__init__.py:284
+#: app/__init__.py:302
 msgid "تقديم مرحلة الدفعة"
 msgstr "የጭነት ደረጃ ወደፊት ውሰድ"
 
-#: app/__init__.py:285
+#: app/__init__.py:303
 msgid "إنشاء دفعة"
 msgstr "ጭነት ፍጠር"
 
-#: app/__init__.py:286
+#: app/__init__.py:304
 msgid "توزيع دفعة"
 msgstr "ጭነት አከፋፍል"
 
-#: app/__init__.py:287
+#: app/__init__.py:305
 msgid "إيقاف رأس بالدفعة"
 msgstr "በጭነት ውስጥ እንስሳ አቁም"
 
-#: app/__init__.py:288
+#: app/__init__.py:306
 msgid "فك إيقاف رأس بالدفعة"
 msgstr "በጭነት ውስጥ እንስሳ ማቆም አንሳ"
 
-#: app/__init__.py:289
+#: app/__init__.py:307
 msgid "إضافة قالب مهمة يومية"
 msgstr "የዕለት ተግባር አብነት ጨምር"
 
-#: app/__init__.py:290
+#: app/__init__.py:308
 msgid "تفعيل/إيقاف قالب مهمة يومية"
 msgstr "የዕለት ተግባር አብነት አንቃ/አሰናክል"
 
-#: app/__init__.py:291
+#: app/__init__.py:309
 msgid "إغلاق حالة مرضية"
 msgstr "የበሽታ ጉዳይ ዝጋ"
 
-#: app/__init__.py:292 app/templates/health/disease_form.html:7
+#: app/__init__.py:310 app/templates/health/disease_form.html:7
 msgid "تسجيل حالة مرضية"
 msgstr "የበሽታ ሁኔታ መዝግብ"
 
-#: app/__init__.py:293
+#: app/__init__.py:311
 msgid "ربط مرض بعرض"
 msgstr "በሽታን ከምልክት ጋር አገናኝ"
 
-#: app/__init__.py:294
+#: app/__init__.py:312
 msgid "حذف ربط مرض بعرض"
 msgstr "የበሽታ-ምልክት ግንኙነት ሰርዝ"
 
-#: app/__init__.py:295
+#: app/__init__.py:313
 msgid "تعديل ربط مرض بعرض"
 msgstr "የበሽታ-ምልክት ግንኙነት አርትዕ"
 
-#: app/__init__.py:296
+#: app/__init__.py:314
 msgid "ربط أعراض بمرض (دفعة)"
 msgstr "ምልክቶችን ከበሽታ ጋር አገናኝ (ስብስብ)"
 
-#: app/__init__.py:297
+#: app/__init__.py:315
 msgid "إضافة عرض طوارئ"
 msgstr "የአደጋ ጊዜ ምልክት ጨምር"
 
-#: app/__init__.py:298
+#: app/__init__.py:316
 msgid "حذف عرض طوارئ"
 msgstr "የአደጋ ጊዜ ምልክት ሰርዝ"
 
-#: app/__init__.py:299
+#: app/__init__.py:317
 msgid "تجاوز تحذير كالسيوم/فسفور"
 msgstr "የካልሲየም/ፎስፈረስ ማስጠንቀቂያ ችላ በል"
 
-#: app/__init__.py:300
+#: app/__init__.py:318
 msgid "تجاوز تحذير زيادة المركّزات"
 msgstr "የተከማቹ ምግቦች ጭማሪ ማስጠንቀቂያ ችላ በል"
 
-#: app/__init__.py:301
+#: app/__init__.py:319
 msgid "إضافة وصفة علف"
 msgstr "የመኖ ማዘዣ ጨምር"
 
-#: app/__init__.py:302
+#: app/__init__.py:320
 msgid "إلغاء حركة مالية"
 msgstr "የገንዘብ ግብይት ሰርዝ"
 
-#: app/__init__.py:303
+#: app/__init__.py:321
 msgid "تجاوز تحذير إعادة جرعة"
 msgstr "ዳግም መጠን ማስጠንቀቂያ ችላ በል"
 
-#: app/__init__.py:304
+#: app/__init__.py:322
 msgid "تسجيل فشل بيضة"
 msgstr "የእንቁላል ውድቀት መዝግብ"
 
-#: app/__init__.py:305
+#: app/__init__.py:323
 msgid "تسجيل فقس بيضة"
 msgstr "የእንቁላል መፈልፈል መዝግብ"
 
-#: app/__init__.py:306
+#: app/__init__.py:324
 msgid "شراء دواء"
 msgstr "መድሃኒት ግዛ"
 
-#: app/__init__.py:307 app/templates/repro/pregnancies_list.html:34
+#: app/__init__.py:325 app/templates/repro/pregnancies_list.html:34
 msgid "تسجيل إجهاض"
 msgstr "ፅንስ ማስወረድ መዝግብ"
 
-#: app/__init__.py:308
+#: app/__init__.py:326
 msgid "إنشاء بروتوكول علاج"
 msgstr "የሕክምና ፕሮቶኮል ፍጠር"
 
-#: app/__init__.py:309
+#: app/__init__.py:327
 msgid "قبول بلاغ"
 msgstr "ሪፖርት ተቀበል"
 
-#: app/__init__.py:310
+#: app/__init__.py:328
 msgid "إلغاء بلاغ"
 msgstr "ሪፖርት ሰርዝ"
 
-#: app/__init__.py:311
+#: app/__init__.py:329
 msgid "إغلاق بلاغ"
 msgstr "ሪፖርት ዝጋ"
 
-#: app/__init__.py:312
+#: app/__init__.py:330
 msgid "حذف بلاغ نهائي"
 msgstr "ሪፖርት በቋሚነት ሰርዝ"
 
-#: app/__init__.py:313
+#: app/__init__.py:331
 msgid "تنفيذ بلاغ"
 msgstr "ሪፖርት አስፈጽም"
 
-#: app/__init__.py:314
+#: app/__init__.py:332
 msgid "تأجيل بلاغ"
 msgstr "ሪፖርት አዘግይ"
 
-#: app/__init__.py:315
+#: app/__init__.py:333
 msgid "استئناف بلاغ"
 msgstr "ሪፖርት ቀጥል"
 
-#: app/__init__.py:316 app/core/checklist_service.py:317
+#: app/__init__.py:334 app/core/checklist_service.py:317
 msgid "رفع بلاغ"
 msgstr "ሪፖርት አስገባ"
 
-#: app/__init__.py:317
+#: app/__init__.py:335
 msgid "تحويل بلاغ"
 msgstr "ሪፖርት አዛውር"
 
-#: app/__init__.py:318
+#: app/__init__.py:336
 msgid "إنشاء مسمّى وظيفي"
 msgstr "የሥራ ማዕረግ ፍጠር"
 
-#: app/__init__.py:319
+#: app/__init__.py:337
 msgid "تعديل صلاحيات مسمّى وظيفي"
 msgstr "የሥራ ማዕረግ ፈቃዶች አርትዕ"
 
-#: app/__init__.py:320
+#: app/__init__.py:338
 msgid "إنشاء دفعة بيع"
 msgstr "የሽያጭ ጭነት ፍጠር"
 
-#: app/__init__.py:321
+#: app/__init__.py:339
 msgid "حذف دفعة بيع"
 msgstr "የሽያጭ ጭነት ሰርዝ"
 
-#: app/__init__.py:322
+#: app/__init__.py:340
 msgid "تفعيل/إيقاف خدمة"
 msgstr "አገልግሎት አንቃ/አሰናክል"
 
-#: app/__init__.py:323
+#: app/__init__.py:341
 msgid "حذف بيانات محاكاة"
 msgstr "የማስመሰያ ውሂብ ሰርዝ"
 
-#: app/__init__.py:324
+#: app/__init__.py:342
 msgid "تسجيل سونار جماعي"
 msgstr "የቡድን ሶናር ምርመራ"
 
-#: app/__init__.py:325
+#: app/__init__.py:343
 msgid "اعتماد مهمة مقترحة"
 msgstr "የተጠቆመ ተግባር አጽድቅ"
 
-#: app/__init__.py:326
+#: app/__init__.py:344
 msgid "تعيين مهمة"
 msgstr "ተግባር መድብ"
 
-#: app/__init__.py:327
+#: app/__init__.py:345
 msgid "إلغاء مهمة نشطة"
 msgstr "ንቁ ተግባር ሰርዝ"
 
-#: app/__init__.py:328
+#: app/__init__.py:346
 msgid "إنجاز مهمة"
 msgstr "ተግባር አጠናቅቅ"
 
-#: app/__init__.py:329
+#: app/__init__.py:347
 msgid "إنجاز مهمة عبر تنفيذ علاج"
 msgstr "በሕክምና አፈጻጸም በኩል ተግባር አጠናቅቅ"
 
-#: app/__init__.py:330
+#: app/__init__.py:348
 msgid "حذف مهمة نهائي"
 msgstr "ተግባር በቋሚነት ሰርዝ"
 
-#: app/__init__.py:331
+#: app/__init__.py:349
 msgid "تسجيل تعذّر مهمة"
 msgstr "የተግባር ውድቀት መዝግብ"
 
-#: app/__init__.py:332
+#: app/__init__.py:350
 msgid "استرجاع مهمة محذوفة"
 msgstr "የተሰረዘ ተግባር መልስ"
 
-#: app/__init__.py:333
+#: app/__init__.py:351
 msgid "تأجيل مهمة"
 msgstr "ተግባር አዘግይ"
 
-#: app/__init__.py:334
+#: app/__init__.py:352
 msgid "تأجيل مهمة نشطة"
 msgstr "ንቁ ተግባር አዘግይ"
 
-#: app/__init__.py:335
+#: app/__init__.py:353
 msgid "حذف مهمة (بانتظار مراجعة)"
 msgstr "ተግባር ሰርዝ (ግምገማ በመጠበቅ ላይ)"
 
-#: app/__init__.py:336
+#: app/__init__.py:354
 msgid "إضافة مستخدم"
 msgstr "ተጠቃሚ ጨምር"
 
-#: app/__init__.py:337
+#: app/__init__.py:355
 msgid "تعديل مستخدم"
 msgstr "ተጠቃሚ አርትዕ"
 
-#: app/__init__.py:338
+#: app/__init__.py:356
 msgid "تفعيل/إيقاف مستخدم"
 msgstr "ተጠቃሚ አንቃ/አሰናክል"
 
-#: app/__init__.py:339
+#: app/__init__.py:357
 msgid "تسجيل تحصين"
 msgstr "ክትባት መዝግብ"
 
-#: app/__init__.py:340
+#: app/__init__.py:358
 msgid "إضافة جدول تحصين"
 msgstr "የክትባት መርሃ ግብር ጨምር"
 
-#: app/__init__.py:341 app/templates/health/vet_visit_form.html:6
+#: app/__init__.py:359 app/templates/health/vet_visit_form.html:6
 msgid "تسجيل زيارة بيطرية"
 msgstr "የእንስሳት ሐኪም ጉብኝት መዝግብ"
 
-#: app/__init__.py:342 app/templates/warehouses/item_breakdown.html:21
+#: app/__init__.py:360 app/templates/warehouses/item_breakdown.html:21
 msgid "تحويل بين مستودعين"
 msgstr "በሁለት መጋዘኖች መካከል ማዛወር"
 
-#: app/__init__.py:343
+#: app/__init__.py:361
 msgid "تسجيل تقريع"
 msgstr "ማዳቀል መዝግብ"
 
-#: app/__init__.py:347
+#: app/__init__.py:365
 msgid "حيوان"
 msgstr "እንስሳ"
 
-#: app/__init__.py:347 app/templates/alerts_list.html:10
+#: app/__init__.py:365 app/templates/alerts_list.html:10
 #: app/templates/team/report_detail.html:20
 msgid "حظيرة"
 msgstr "በረት"
 
-#: app/__init__.py:347
+#: app/__init__.py:365
 msgid "مهمة"
 msgstr "ተግባር"
 
-#: app/__init__.py:348 app/templates/team/report_detail.html:6
+#: app/__init__.py:366 app/templates/team/report_detail.html:6
 msgid "بلاغ"
 msgstr "ሪፖርት"
 
-#: app/__init__.py:348 app/templates/settings_simulation_data.html:33
+#: app/__init__.py:366 app/templates/settings_simulation_data.html:33
 #: app/templates/simple_home.html:33
 msgid "حالة مرضية"
 msgstr "የበሽታ ጉዳዮች"
 
-#: app/__init__.py:348 app/templates/bulk_action_form.html:447
+#: app/__init__.py:366 app/templates/bulk_action_form.html:447
 msgid "زيارة بيطرية"
 msgstr "የእንስሳት ሐኪም ጉብኝት"
 
-#: app/__init__.py:349 app/core/alerts_service.py:61
+#: app/__init__.py:367 app/core/alerts_service.py:61
 #: app/core/isolation_service.py:79
 msgid "تحصين"
 msgstr "ክትባት"
 
-#: app/__init__.py:349 app/templates/settings_simulation_data.html:31
+#: app/__init__.py:367 app/templates/settings_simulation_data.html:31
 msgid "حركة مالية"
 msgstr "የገንዘብ ግብይቶች"
 
-#: app/__init__.py:349
+#: app/__init__.py:367
 msgid "مستخدم"
 msgstr "ተጠቃሚ"
 
-#: app/__init__.py:350
+#: app/__init__.py:368
 msgid "مسمّى وظيفي"
 msgstr "የሥራ ማዕረግ"
 
-#: app/__init__.py:350 app/templates/settings_simulation_data.html:32
+#: app/__init__.py:368 app/templates/settings_simulation_data.html:32
 msgid "تقريع"
 msgstr "ማዳቀል"
 
-#: app/__init__.py:350 app/templates/onboarding/checklist.html:12
+#: app/__init__.py:368 app/templates/onboarding/checklist.html:12
 msgid "حمل"
 msgstr "እርግዝና"
 
-#: app/__init__.py:351
+#: app/__init__.py:369
 msgid "دفعة حيوانات"
 msgstr "የእንስሳት ጭነት"
 
-#: app/__init__.py:351
+#: app/__init__.py:369
 msgid "دفعة بيع"
 msgstr "የሽያጭ ጭነት"
 
-#: app/__init__.py:352
+#: app/__init__.py:370
 msgid "وصفة علف"
 msgstr "የመኖ ማዘዣ"
 
-#: app/__init__.py:352
+#: app/__init__.py:370
 msgid "دواء"
 msgstr "መድሃኒት"
 
-#: app/__init__.py:352
+#: app/__init__.py:370
 msgid "بروتوكول علاج"
 msgstr "የሕክምና ፕሮቶኮል"
 
-#: app/__init__.py:353
+#: app/__init__.py:371
 msgid "بيضة نعام"
 msgstr "የሰጎን እንቁላል"
 
-#: app/__init__.py:353
+#: app/__init__.py:371
 msgid "خدمة"
 msgstr "አገልግሎት"
 
-#: app/__init__.py:353
+#: app/__init__.py:371
 msgid "عرض طوارئ"
 msgstr "የአደጋ ጊዜ ምልክት"
 
-#: app/__init__.py:354
+#: app/__init__.py:372
 msgid "ربط مرض-عرض"
 msgstr "የበሽታ-ምልክት ግንኙነት"
 
-#: app/__init__.py:354
+#: app/__init__.py:372
 msgid "قالب مهمة يومية"
 msgstr "የዕለት ተግባር አብነት"
 
-#: app/__init__.py:355
+#: app/__init__.py:373
 msgid "جدول تحصين"
 msgstr "የክትባት መርሃ ግብር"
 
-#: app/__init__.py:355
+#: app/__init__.py:373
 msgid "مستودع"
 msgstr "መጋዘን"
 
@@ -7364,29 +7387,6 @@ msgid ""
 msgstr ""
 "በተመረጡት ራሶች ላይ ስላለው ሁኔታ ክብደት ያለዎት ግምገማ — የክትትል ቅደም ተከተል እና ሪፖርቶችን ለማዘጋጀት "
 "ይረዳል፣ እዚህ የተመዘገበውን ህክምና አይቀይርም።"
-
-#: app/templates/bulk_action_form.html:357
-#: app/templates/health/disease_form.html:31
-#: app/templates/health/disease_new_simple.html:62
-#: app/templates/health/disease_new_simple.html:83
-msgid "بسيطة"
-msgstr "ቀላል"
-
-#: app/templates/bulk_action_form.html:358
-#: app/templates/health/disease_form.html:32
-#: app/templates/health/disease_new_simple.html:63
-#: app/templates/health/disease_new_simple.html:83
-msgid "متوسطة"
-msgstr "መካከለኛ"
-
-#: app/templates/bulk_action_form.html:359
-#: app/templates/health/disease_form.html:33
-#: app/templates/health/disease_new_simple.html:64
-#: app/templates/health/disease_new_simple.html:83
-#: app/templates/health/emergency_symptoms_list.html:18
-#: app/templates/health/emergency_symptoms_list.html:51
-msgid "شديدة"
-msgstr "ከባድ"
 
 #: app/templates/bulk_action_form.html:361
 msgid "الدواء من الصيدلية (اختياري)"

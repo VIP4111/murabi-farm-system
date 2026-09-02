@@ -153,6 +153,24 @@ def create_app(config_class=Config):
         "archived": _l("مؤرشفة"),
     }
 
+    # بند إصلاح — نفس فئة فجوة "open" بدفعات البيع: حقل "الشدة" بشاشة
+    # تسجيل مرض (health/disease_form.html وbulk_action_form.html، خيار
+    # 'disease') يخزّن قيمة إنجليزية ثابتة (light/medium/severe)
+    # كـ`Disease.severity`، وكذا شاشة تعرضها خام بدون ترجمة
+    # (health/diseases_list.html، health/dashboard.html، animal_detail.html).
+    # قاموس مستقل عن STATUS_LABELS_AR (مو مدموج فيه) لأن "light" تُستخدم
+    # أصلاً بقيمة ثانية غير مرتبطة (`User.theme`) — دمجهما بنفس القاموس
+    # يخاطر بتسريب ترجمة خاطئة لو "الوضع الفاتح" استُخدم يوماً مع نفس الفلتر.
+    DISEASE_SEVERITY_LABELS_AR = {
+        "light": _l("بسيطة"),
+        "medium": _l("متوسطة"),
+        "severe": _l("شديدة"),
+    }
+
+    @app.template_filter("ar_severity")
+    def ar_severity(value):
+        return DISEASE_SEVERITY_LABELS_AR.get(value, value)
+
     @app.template_filter("ar_status")
     def ar_status(value):
         return STATUS_LABELS_AR.get(value, value)

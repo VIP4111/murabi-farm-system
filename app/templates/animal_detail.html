@@ -271,7 +271,7 @@
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('الحالة') }}</th></tr>
       {% for d in diseases %}
       <tr>
-        <td>{{ d.date }}</td><td>{{ d.disease_name }}</td><td>{{ d.severity or '-' }}</td>
+        <td>{{ d.date }}</td><td>{{ d.disease_name }}</td><td>{{ d.severity|ar_severity if d.severity else '-' }}</td>
         <td><span class="badge {{ 'off' if d.status == 'active' else 'on' }}">{{ d.status|ar_status }}</span></td>
       </tr>
       {% else %}<tr><td colspan="4" style="color:#888;">{{ _('لا يوجد أمراض مسجّلة.') }}</td></tr>{% endfor %}

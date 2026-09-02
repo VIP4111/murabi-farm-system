@@ -25,7 +25,7 @@
       <td>{{ d.date }}</td>
       <td><a href="{{ url_for('core.animal_detail', animal_id=d.animal_id) }}">{{ d.animal.animal_no }}</a></td>
       <td>{{ d.disease_name }}</td>
-      <td>{{ d.severity or '-' }}</td>
+      <td>{{ d.severity|ar_severity if d.severity else '-' }}</td>
       <td>{{ _('%(n)s يوم', n=(today - d.date).days) }}</td>
     </tr>
     {% else %}
