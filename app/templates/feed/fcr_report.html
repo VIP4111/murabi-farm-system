@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -28,7 +29,7 @@
   <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
     <div class="stat"><b>{{ result.total_feed_kg }}</b><span>{{ _('إجمالي العلف المستهلك (كجم)') }}</span></div>
     <div class="stat"><b>{{ result.total_weight_gain_kg }}</b><span>{{ _('إجمالي زيادة الوزن (كجم)') }}</span></div>
-    <div class="stat"><b>{{ result.fcr if result.fcr is not none else '-' }}</b><span>{{ _('معدل التحويل الغذائي FCR') }}</span></div>
+    <div class="stat"><b>{{ result.fcr if result.fcr is not none else '-' }}</b><span>{{ _('معدل التحويل الغذائي FCR') }} {{ tip(_('كم كيلو علف يحتاج القطيع عشان يزيد كيلو وزن واحد — رقم أقل = كفاءة تحويل أعلى (نفس الزيادة بعلف أقل).')) }}</span></div>
     <div class="stat"><b>{{ result.cost_per_kg_gained if result.cost_per_kg_gained is not none else '-' }}</b><span>{{ _('تكلفة العلف لكل كجم زيادة') }}</span></div>
   </div>
   <p style="color:var(--muted); font-size:12px; margin-top:10px;">

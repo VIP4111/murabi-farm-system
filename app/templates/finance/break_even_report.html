@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -21,7 +22,7 @@
 <div class="card">
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الرقم') }}</th><th>{{ _('سعر التعادل') }}</th><th>{{ _('القيمة التقديرية') }}</th><th>{{ _('الهامش') }}</th></tr>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('سعر التعادل') }}</th><th>{{ _('القيمة التقديرية') }}</th><th>{{ _('الهامش') }} {{ tip(_('الفرق بين القيمة التقديرية وسعر التعادل — رقم سالب (بلون أحمر) يعني بيع هذا الرأس الآن بسعره التقديري يكون خسارة صافية.')) }}</th></tr>
     {% for r in rows %}
     <tr class="{{ 'row-danger' if r.at_risk }}">
       <td><a href="{{ url_for('core.animal_detail', animal_id=r.animal.id, tab='finance') }}">{{ r.animal.animal_no }}</a></td>

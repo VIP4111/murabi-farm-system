@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -89,7 +90,7 @@
 <table>
       <tr>
         {% if can_bulk %}<th><input type="checkbox" id="selectAll" style="width:auto; margin:0;"></th>{% endif %}
-        <th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('المصدر') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المرحلة') }}</th><th>{{ _('فترة سحب') }}</th><th>{{ _('التنبيهات') }}</th>
+        <th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('المصدر') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المرحلة') }} {{ tip(_('مرحلة الرأس الحالية بدورة الإنتاج (عزل، جاهزة للتقريع، حامل...) — اضغط عليها لعرض/تعديل مراحل دورة الحياة كاملة.')) }}</th><th>{{ _('فترة سحب') }} {{ tip(_('لو الرأس تحت فترة سحب دواء، ما يُسمح ببيعها أو ذبحها لحد ما تنتهي المدة — النظام يمنع البيع تلقائياً حماية للمستهلك.')) }}</th><th>{{ _('التنبيهات') }}</th>
       </tr>
       {% set source_labels = {'birth': _('مولود بالمزرعة'), 'purchase': _('شراء'), 'gift': _('هدية/دعم'), 'opening_balance': _('رصيد افتتاحي')} %}
       {% for a in animals %}

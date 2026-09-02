@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -39,7 +40,7 @@
   <div style="overflow-x:auto;">
     <div class="table-scroll">
 <table>
-      <thead><tr><th>{{ _('التاريخ') }}</th><th>{{ _('أعلى حرارة (°م)') }}</th><th>{{ _('الرطوبة عند الذروة (%%)') }}</th><th>THI</th><th>{{ _('مستوى الإجهاد') }}</th></tr></thead>
+      <thead><tr><th>{{ _('التاريخ') }}</th><th>{{ _('أعلى حرارة (°م)') }}</th><th>{{ _('الرطوبة عند الذروة (%%)') }}</th><th>THI {{ tip(_('مؤشر الحرارة-الرطوبة — رقم واحد يجمع الحرارة والرطوبة عشان يقيس إجهاد الحر الفعلي على الحيوان، أعلى من الحرارة لحالها مؤشر دقيق.')) }}</th><th>{{ _('مستوى الإجهاد') }}</th></tr></thead>
       <tbody>
         {% for r in forecast.readings %}
         <tr style="{% if r.stress_level == 'emergency' %}background:#fde2e1;{% elif r.stress_level == 'severe' %}background:#fde9d0;{% elif r.stress_level == 'moderate' %}background:#fff6d5;{% endif %}">
