@@ -62,7 +62,7 @@
     {% for m in messages %}
     <div class="bubble {{ m.role }}">
       {% if m.image_url %}<img src="{{ m.image_url }}" alt="" style="max-width:220px; border-radius:10px; display:block; margin-bottom:6px;">{% endif %}
-      {{ m.content }}
+      {{ m.content|chat_format }}
       <small>{{ m.created_at.strftime('%H:%M') if m.created_at else '' }}</small>
     </div>
     {% endfor %}
@@ -283,6 +283,17 @@
   function scrollToBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
   scrollToBottom();
 
+  // بند إصلاح — ردود المساعد الذكي أحياناً تحتوي **نجوم** ماركداون رغم
+  // تعليمات النظام له بعدم استخدامها؛ الواجهة ما كانت تفسّرها فتظهر
+  // حرفياً. نهرّب النص أولاً (أمان، نفس مبدأ فلتر chat_format بالسيرفر)
+  // ثم نحوّل **نص** لعريض حقيقي بدل تركه نجوم.
+  function formatChatText(text){
+    var div = document.createElement('div');
+    div.textContent = text;
+    var escaped = div.innerHTML;
+    return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
+
   function addBubble(role, text, time, imageDataUrl){
     if(chatEmpty){ chatEmpty.remove(); chatEmpty = null; }
     var div = document.createElement('div');
@@ -293,7 +304,9 @@
       img.style.cssText = 'max-width:220px; border-radius:10px; display:block; margin-bottom:6px;';
       div.appendChild(img);
     }
-    div.appendChild(document.createTextNode(text));
+    var textSpan = document.createElement('span');
+    textSpan.innerHTML = formatChatText(text);
+    div.appendChild(textSpan);
     var small = document.createElement('small');
     small.textContent = time || '';
     div.appendChild(small);

@@ -390,6 +390,21 @@ def create_app(config_class=Config):
         import json
         return json.loads(value)
 
+    @app.template_filter("chat_format")
+    def chat_format(value):
+        # المستخدم اشتكى إن ردود المساعد الذكي أحياناً تطلع فيها **نجوم**
+        # حرفية بدل تنسيق عريض — رغم تعليمات النظام لنماذج الذكاء
+        # الاصطناعي بعدم استخدام ماركداون، النماذج أحياناً تخالف
+        # التعليمة. هذا الفلتر طبقة حماية إضافية على مستوى العرض: يهرّب
+        # الـHTML أولاً (أمان)، ثم يحوّل **نص** لعريض حقيقي بدل تركه نجوم.
+        import re
+        from markupsafe import Markup, escape
+        if not value:
+            return Markup("")
+        escaped = str(escape(value))
+        formatted = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
+        return Markup(formatted)
+
     @app.route("/_healthz")
     def health():
         # فحص تقني بسيط لتشغيل السيرفر - غير مرتبط بوحدة الصحة البيطرية
