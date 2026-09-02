@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 21:59+0300\n"
+"POT-Creation-Date: 2026-09-02 22:46+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -2059,7 +2059,7 @@ msgstr "💬 ብልህ ረዳትን ይክፈቱ"
 #: app/templates/animal_detail.html:355 app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
-#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:18
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:19
 msgid "الجنس"
 msgstr "ጾታ"
 
@@ -4263,12 +4263,12 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 #: app/templates/finance/culling_index.html:25
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "الرقم"
 msgstr "ቁጥር"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 #: app/templates/team/tasks_list.html:196
 msgid "السبب"
 msgstr "ምክንያት"
@@ -5118,7 +5118,7 @@ msgstr "በቋሚነት ችላ በል"
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr "ይህን ግቤት ሳይሰቀል በቋሚነት ችላ ይባል?"
 
-#: app/templates/alerts_list.html:5 app/templates/today.html:37
+#: app/templates/alerts_list.html:5 app/templates/today.html:43
 #: app/templates/worker_home.html:69
 msgid "تنبيهاتي"
 msgstr "ማንቂያዎቼ"
@@ -5153,7 +5153,7 @@ msgstr ""
 "እንስሳት፣ በመጠባበቅ ላይ ያሉ ሪፖርቶች፣ አሁን ለሽያጭ ዝግጁ የሆኑ እንስሳት፣ ኃላፊ ሠራተኛ የሌላቸው በረቶች፣ "
 "እና ለተያዙ ክትባቶች የሚጠበቅ የክምችት እጥረት (የክትባት ቀን መቁጠሪያ)። የጊዜ መስኮቱ ከ"
 
-#: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
+#: app/templates/alerts_list.html:16 app/templates/audit_log.html:4
 #: app/templates/base.html:1105 app/templates/home.html:146
 #: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
@@ -5162,15 +5162,15 @@ msgstr ""
 msgid "الإعدادات"
 msgstr "ቅንብሮች"
 
-#: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
+#: app/templates/alerts_list.html:30 app/templates/alerts_list.html:31
 #: app/templates/finance/lots_list.html:24 app/templates/home.html:48
-#: app/templates/home.html:60 app/templates/today.html:27
-#: app/templates/today.html:51 app/templates/today.html:52
-#: app/templates/today.html:74 app/templates/worker_home.html:63
+#: app/templates/home.html:60 app/templates/today.html:33
+#: app/templates/today.html:63 app/templates/today.html:64
+#: app/templates/today.html:89 app/templates/worker_home.html:63
 msgid "فتح"
 msgstr "ክፈት"
 
-#: app/templates/alerts_list.html:33
+#: app/templates/alerts_list.html:34
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "አሁን ምንም ማንቂያ የለም — ሁሉም ነገር ደህና ነው።"
 
@@ -8681,15 +8681,15 @@ msgstr ""
 "ምክንያቶች ምንም ይሁኑ ወዲያውኑ የሽያጭ ምክር። ዋጋዎቹ (ዕድሜዎች፣ የትርፍ ህዳግ፣ የመዘግየት ጊዜ) ሁሉም "
 "ሊስተካከሉ የሚችሉ ናቸው ከ"
 
-#: app/templates/smart_sale_report.html:11
+#: app/templates/smart_sale_report.html:12
 msgid "شاشة الإعدادات"
 msgstr "የቅንብሮች ማያ ገጽ"
 
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "الدرجة"
 msgstr "ነጥብ"
 
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid ""
 "رقم من 0 إلى 100 يجمع كل عوامل التوصية (العمر، الوزن، علامات الأداء...) —"
 " كل ما ارتفع، كل ما كان البيع الآن أنسب من الانتظار."
@@ -8698,15 +8698,15 @@ msgstr ""
 "ከፍ ባለ መጠን፣ አሁን መሸጥ ከመጠበቅ የተሻለ ይሆናል።"
 
 #: app/templates/health/emergency_symptoms_list.html:14
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "التوصية"
 msgstr "ምክር"
 
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "النافذة المقترحة"
 msgstr "የተጠቆመ መስኮት"
 
-#: app/templates/smart_sale_report.html:31
+#: app/templates/smart_sale_report.html:32
 msgid "لا يوجد حيوانات نشطة لتقييمها."
 msgstr "ለመገምገም ንቁ እንስሳት የሉም።"
 
@@ -8770,27 +8770,105 @@ msgstr ""
 msgid "مهامي المفتوحة"
 msgstr "ክፍት ተግባሮቼ"
 
-#: app/templates/today.html:15
+#: app/templates/today.html:12
+msgid ""
+"المهام اللي وُزّعت عليك بالاسم فقط — تلقائية بعد اعتماد الدكتور، أو "
+"مُعيَّنة يدوياً. لو تحتاج تشوف مهام المزرعة كاملة أو توزّع مهمة، افتح "
+"\"إدارة المهام\"."
+msgstr ""
+"ለእርስዎ በስም ብቻ የተመደቡ ተግባራት — ከሀኪሙ ማጽደቅ በኋላ በራስ-ሰር፣ ወይም በእጅ የተመደቡ። የመላውን እርሻ"
+" ተግባራት ማየት ወይም ተግባር መመደብ ካስፈለገዎት፣ \"ተግባራትን ማስተዳደር\" ይክፈቱ።"
+
+#: app/templates/today.html:14
+msgid ""
+"يفتح شاشة إدارة المهام الكاملة — فيها مهامك، بالإضافة لقسم اعتماد المهام "
+"المقترحة، وجدول كل مهام المزرعة، ومهام وزّعتها (حسب صلاحياتك)."
+msgstr ""
+"ሙሉውን የተግባራት አስተዳደር ማያ ገጽ ይከፍታል — የእርስዎ ተግባራት፣ የቀረቡ ተግባራትን የማጽደቅ ክፍል፣ የመላው"
+" እርሻ ተግባራት ሠንጠረዥ፣ እና እርስዎ የመደቧቸው ተግባራት (እንደ ፍቃድዎ) ይዟል።"
+
+#: app/templates/today.html:17
 msgid "إدارة المهام"
 msgstr "ተግባራትን ማስተዳደር"
 
-#: app/templates/today.html:30
+#: app/templates/today.html:22
+msgid "الصف بخلفية حمراء = تجاوز موعده المستحق."
+msgstr "ቀይ ዳራ ያለው ረድፍ = የደረሰበትን ቀን አልፏል።"
+
+#: app/templates/today.html:22
+msgid ""
+"\"متأخرة\" هنا يعني تاريخ الاستحقاق مرّ ولسا ما أنجزتها — ما يوقف "
+"تنفيذها، بس يذكّرك تعطيها أولوية."
+msgstr ""
+"\"የዘገየ\" እዚህ ማለት የመጠናቀቂያ ቀኑ አልፏል እና ገና አልጨረሱትም ማለት ነው — እንዳይሠሩት አያግድም፣ "
+"ቅድሚያ እንዲሰጡት ብቻ ያስታውሶታል።"
+
+#: app/templates/today.html:36
 msgid "ما عندك مهام مفتوحة حالياً."
 msgstr "አሁን ምንም ክፍት ተግባር የለዎትም።"
 
-#: app/templates/today.html:40
+#: app/templates/today.html:43
+msgid ""
+"تُحسب لحظياً من بيانات النظام (تحصينات مستحقة، فترات سحب، ولادات قريبة، "
+"أمراض مفتوحة...) — لو أنت مسؤول عن حظائر محدَّدة تشوف تنبيهاتها بس، وإلا "
+"تشوف تنبيهات المزرعة كاملة."
+msgstr ""
+"ከስርዓት መረጃ በቅጽበት ይሰላል (የደረሱ ክትባቶች፣ የመውጫ ጊዜያት፣ ቅርብ ልደቶች፣ ክፍት በሽታዎች...) — "
+"ለተወሰኑ በረቶች ኃላፊነት ካለዎት የነሱን ማንቂያዎች ብቻ ያያሉ፣ ካልሆነ የመላውን እርሻ ማንቂያዎች ያያሉ።"
+
+#: app/templates/today.html:45
+msgid ""
+"يفتح سجل التنبيهات الكامل بجدول مفصَّل — نفس التنبيهات المعروضة هنا، بس "
+"بعرض أوسع وفلترة أسهل لو عددها كبير."
+msgstr ""
+"ሙሉውን የማንቂያ መዝገብ በዝርዝር ሠንጠረዥ ይከፍታል — እዚህ የታዩት ተመሳሳይ ማንቂያዎች፣ በሰፋ እይታ እና "
+"ቁጥራቸው ብዙ ከሆነ ቀላል ማጣሪያ።"
+
+#: app/templates/today.html:48
 msgid "كل التنبيهات"
 msgstr "ሁሉም ማንቂያዎች"
 
-#: app/templates/today.html:55
+#: app/templates/today.html:53
+msgid ""
+"الكلمة بين قوسين [ ] بأول كل تنبيه هي تصنيفه (تحصين، فترة سحب، ولادة "
+"متوقعة...) — تساعدك تفرز بسرعة أي نوع تنبيه من غير ما تقرأ كل سطر."
+msgstr ""
+"በእያንዳንዱ ማንቂያ መጀመሪያ ላይ ባለው ቅንፍ [ ] ውስጥ ያለው ቃል ምድቡ ነው (ክትባት፣ የመውጫ ጊዜ፣ የሚጠበቅ"
+" ልደት...) — እያንዳንዱን መስመር ሳያነቡ በፍጥነት የማንቂያ ዓይነቶችን እንዲለዩ ይረዳዎታል።"
+
+#: app/templates/today.html:53
+msgid "[التصنيف] بأول كل سطر يوضّح نوعه."
+msgstr "[ምድብ] በእያንዳንዱ መስመር መጀመሪያ ላይ ዓይነቱን ያሳያል።"
+
+#: app/templates/today.html:67
 msgid "ولا تنبيه حالياً."
 msgstr "አሁን ምንም ማንቂያ የለም።"
 
-#: app/templates/today.html:63
+#: app/templates/today.html:75
 msgid "بلاغاتي المفتوحة"
 msgstr "ክፍት ሪፖርቶቼ"
 
-#: app/templates/today.html:77
+#: app/templates/today.html:75
+msgid ""
+"بلاغات رفعتها بنفسك عن حالة أو مشكلة لاحظتها، ولسا ما تعالجت أو أُغلقت — "
+"مو مهام مُوزَّعة عليك. البلاغ يوصف شي لاحظته، والمهمة تكليف بإجراء."
+msgstr ""
+"እርስዎ ራስዎ ስላስተዋሉት ሁኔታ ወይም ችግር ያቀረቧቸው ሪፖርቶች፣ ገና ያልተስተናገዱ ወይም ያልተዘጉ — ለእርስዎ "
+"የተመደቡ ተግባራት አይደሉም። ሪፖርት ያስተዋሉትን ነገር ይገልጻል፣ ተግባር ደግሞ ለመፈጸም የተሰጠ መመሪያ ነው።"
+
+#: app/templates/today.html:79
+msgid ""
+"لون البادج بجانب كل بلاغ يوضّح حالته: أحمر = قيد الانتظار/مفتوح بعد، أخضر"
+" = تم التعامل معه. اضغط \"فتح\" لتفاصيل البلاغ الكاملة والردود عليه."
+msgstr ""
+"ከእያንዳንዱ ሪፖርት አጠገብ ያለው የባጅ ቀለም ሁኔታውን ያሳያል፦ ቀይ = በመጠባበቅ ላይ/ገና ክፍት፣ አረንጓዴ = "
+"ተስተናግዷል። ለሙሉ ሪፖርት ዝርዝሮችና ምላሾች \"ክፈት\" ይጫኑ።"
+
+#: app/templates/today.html:79
+msgid "لون الحالة يوضّح وضع كل بلاغ."
+msgstr "የሁኔታው ቀለም የእያንዳንዱን ሪፖርት አሁናዊ ሁኔታ ያሳያል።"
+
+#: app/templates/today.html:92
 msgid "ما عندك بلاغات مفتوحة حالياً."
 msgstr "አሁን ምንም ክፍት ሪፖርት የለዎትም።"
 

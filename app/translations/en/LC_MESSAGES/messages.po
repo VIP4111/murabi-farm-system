@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 21:59+0300\n"
+"POT-Creation-Date: 2026-09-02 22:46+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -2141,7 +2141,7 @@ msgstr "💬 Open the smart assistant"
 #: app/templates/animal_detail.html:355 app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
-#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:18
+#: app/templates/lot_public.html:17 app/templates/smart_sale_report.html:19
 msgid "الجنس"
 msgstr "Gender"
 
@@ -4457,12 +4457,12 @@ msgstr "Total mortality cases"
 #: app/templates/finance/culling_index.html:25
 #: app/templates/finance/lot_detail.html:34
 #: app/templates/finance/lot_form.html:33 app/templates/lot_public.html:17
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "الرقم"
 msgstr "Number"
 
 #: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 #: app/templates/team/tasks_list.html:196
 msgid "السبب"
 msgstr "Reason"
@@ -5338,7 +5338,7 @@ msgstr "Discard permanently"
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr "Discard this entry permanently without uploading it?"
 
-#: app/templates/alerts_list.html:5 app/templates/today.html:37
+#: app/templates/alerts_list.html:5 app/templates/today.html:43
 #: app/templates/worker_home.html:69
 msgid "تنبيهاتي"
 msgstr "My Alerts"
@@ -5377,7 +5377,7 @@ msgstr ""
 "expected stock shortages for upcoming scheduled vaccinations (vaccination"
 " calendar). The time window comes from"
 
-#: app/templates/alerts_list.html:15 app/templates/audit_log.html:4
+#: app/templates/alerts_list.html:16 app/templates/audit_log.html:4
 #: app/templates/base.html:1105 app/templates/home.html:146
 #: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
@@ -5386,15 +5386,15 @@ msgstr ""
 msgid "الإعدادات"
 msgstr "Settings"
 
-#: app/templates/alerts_list.html:29 app/templates/alerts_list.html:30
+#: app/templates/alerts_list.html:30 app/templates/alerts_list.html:31
 #: app/templates/finance/lots_list.html:24 app/templates/home.html:48
-#: app/templates/home.html:60 app/templates/today.html:27
-#: app/templates/today.html:51 app/templates/today.html:52
-#: app/templates/today.html:74 app/templates/worker_home.html:63
+#: app/templates/home.html:60 app/templates/today.html:33
+#: app/templates/today.html:63 app/templates/today.html:64
+#: app/templates/today.html:89 app/templates/worker_home.html:63
 msgid "فتح"
 msgstr "Open"
 
-#: app/templates/alerts_list.html:33
+#: app/templates/alerts_list.html:34
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "No alerts right now — all good."
 
@@ -9031,15 +9031,15 @@ msgstr ""
 "other factors. The values (ages, profit margin, delay duration) are all "
 "adjustable from"
 
-#: app/templates/smart_sale_report.html:11
+#: app/templates/smart_sale_report.html:12
 msgid "شاشة الإعدادات"
 msgstr "the settings screen"
 
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "الدرجة"
 msgstr "Score"
 
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid ""
 "رقم من 0 إلى 100 يجمع كل عوامل التوصية (العمر، الوزن، علامات الأداء...) —"
 " كل ما ارتفع، كل ما كان البيع الآن أنسب من الانتظار."
@@ -9049,15 +9049,15 @@ msgstr ""
 "waiting."
 
 #: app/templates/health/emergency_symptoms_list.html:14
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "التوصية"
 msgstr "Recommendation"
 
-#: app/templates/smart_sale_report.html:18
+#: app/templates/smart_sale_report.html:19
 msgid "النافذة المقترحة"
 msgstr "Suggested window"
 
-#: app/templates/smart_sale_report.html:31
+#: app/templates/smart_sale_report.html:32
 msgid "لا يوجد حيوانات نشطة لتقييمها."
 msgstr "No active animals to evaluate."
 
@@ -9123,27 +9123,113 @@ msgstr ""
 msgid "مهامي المفتوحة"
 msgstr "My open tasks"
 
-#: app/templates/today.html:15
+#: app/templates/today.html:12
+msgid ""
+"المهام اللي وُزّعت عليك بالاسم فقط — تلقائية بعد اعتماد الدكتور، أو "
+"مُعيَّنة يدوياً. لو تحتاج تشوف مهام المزرعة كاملة أو توزّع مهمة، افتح "
+"\"إدارة المهام\"."
+msgstr ""
+"Tasks assigned specifically to you by name — automatic after the doctor's"
+" approval, or manually assigned. If you need to see all the farm's tasks "
+"or assign one, open \"Manage Tasks\"."
+
+#: app/templates/today.html:14
+msgid ""
+"يفتح شاشة إدارة المهام الكاملة — فيها مهامك، بالإضافة لقسم اعتماد المهام "
+"المقترحة، وجدول كل مهام المزرعة، ومهام وزّعتها (حسب صلاحياتك)."
+msgstr ""
+"Opens the full task-management screen — it has your tasks, plus a section"
+" for approving suggested tasks, a table of all farm tasks, and tasks "
+"you've assigned (based on your permissions)."
+
+#: app/templates/today.html:17
 msgid "إدارة المهام"
 msgstr "Manage Tasks"
 
-#: app/templates/today.html:30
+#: app/templates/today.html:22
+msgid "الصف بخلفية حمراء = تجاوز موعده المستحق."
+msgstr "A row with a red background = past its due date."
+
+#: app/templates/today.html:22
+msgid ""
+"\"متأخرة\" هنا يعني تاريخ الاستحقاق مرّ ولسا ما أنجزتها — ما يوقف "
+"تنفيذها، بس يذكّرك تعطيها أولوية."
+msgstr ""
+"\"Late\" here means the due date has passed and you haven't finished it "
+"yet — it doesn't block you from doing it, it just reminds you to "
+"prioritize it."
+
+#: app/templates/today.html:36
 msgid "ما عندك مهام مفتوحة حالياً."
 msgstr "You have no open tasks right now."
 
-#: app/templates/today.html:40
+#: app/templates/today.html:43
+msgid ""
+"تُحسب لحظياً من بيانات النظام (تحصينات مستحقة، فترات سحب، ولادات قريبة، "
+"أمراض مفتوحة...) — لو أنت مسؤول عن حظائر محدَّدة تشوف تنبيهاتها بس، وإلا "
+"تشوف تنبيهات المزرعة كاملة."
+msgstr ""
+"Computed live from system data (due vaccinations, withdrawal periods, "
+"upcoming births, open diseases...) — if you're responsible for specific "
+"barns you only see their alerts, otherwise you see the whole farm's "
+"alerts."
+
+#: app/templates/today.html:45
+msgid ""
+"يفتح سجل التنبيهات الكامل بجدول مفصَّل — نفس التنبيهات المعروضة هنا، بس "
+"بعرض أوسع وفلترة أسهل لو عددها كبير."
+msgstr ""
+"Opens the full alerts log in a detailed table — the same alerts shown "
+"here, just with a wider view and easier filtering if there are many."
+
+#: app/templates/today.html:48
 msgid "كل التنبيهات"
 msgstr "All alerts"
 
-#: app/templates/today.html:55
+#: app/templates/today.html:53
+msgid ""
+"الكلمة بين قوسين [ ] بأول كل تنبيه هي تصنيفه (تحصين، فترة سحب، ولادة "
+"متوقعة...) — تساعدك تفرز بسرعة أي نوع تنبيه من غير ما تقرأ كل سطر."
+msgstr ""
+"The word in brackets [ ] at the start of each alert is its category "
+"(vaccination, withdrawal period, expected birth...) — it helps you "
+"quickly tell alert types apart without reading every line."
+
+#: app/templates/today.html:53
+msgid "[التصنيف] بأول كل سطر يوضّح نوعه."
+msgstr "[Category] at the start of each line shows its type."
+
+#: app/templates/today.html:67
 msgid "ولا تنبيه حالياً."
 msgstr "No alerts right now."
 
-#: app/templates/today.html:63
+#: app/templates/today.html:75
 msgid "بلاغاتي المفتوحة"
 msgstr "My open reports"
 
-#: app/templates/today.html:77
+#: app/templates/today.html:75
+msgid ""
+"بلاغات رفعتها بنفسك عن حالة أو مشكلة لاحظتها، ولسا ما تعالجت أو أُغلقت — "
+"مو مهام مُوزَّعة عليك. البلاغ يوصف شي لاحظته، والمهمة تكليف بإجراء."
+msgstr ""
+"Reports you submitted yourself about something you noticed, not yet "
+"handled or closed — not tasks assigned to you. A report describes "
+"something you observed, while a task is an instruction to act."
+
+#: app/templates/today.html:79
+msgid ""
+"لون البادج بجانب كل بلاغ يوضّح حالته: أحمر = قيد الانتظار/مفتوح بعد، أخضر"
+" = تم التعامل معه. اضغط \"فتح\" لتفاصيل البلاغ الكاملة والردود عليه."
+msgstr ""
+"The badge color next to each report shows its status: red = pending/still"
+" open, green = handled. Tap \"Open\" for the full report details and any "
+"replies."
+
+#: app/templates/today.html:79
+msgid "لون الحالة يوضّح وضع كل بلاغ."
+msgstr "The status color shows each report's current state."
+
+#: app/templates/today.html:92
 msgid "ما عندك بلاغات مفتوحة حالياً."
 msgstr "You have no open reports right now."
 
