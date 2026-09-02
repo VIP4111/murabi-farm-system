@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block title %}{{ _('مركز الذكاء الاصطناعي') }}{% endblock %}
 {% block content %}
 <style>
@@ -25,10 +26,17 @@
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
     <h2 style="margin:0;">🤖 {{ _('مركز الذكاء الاصطناعي') }}</h2>
   </div>
-  <div class="tabs" style="margin-top:12px; margin-bottom:0;">
+  <div class="tabs" style="margin-top:12px; margin-bottom:0; display:flex; align-items:center; flex-wrap:wrap; gap:2px;">
     <button type="button" class="tab-btn" data-tab="chat" onclick="showTab('chat')">💬 {{ _('المحادثة') }}</button>
-    {% if notes is not none %}<button type="button" class="tab-btn" data-tab="notes" onclick="showTab('notes')">📓 {{ _('دفتر الملاحظات') }}</button>{% endif %}
-    {% if pending is not none %}<button type="button" class="tab-btn" data-tab="drafts" onclick="showTab('drafts')">🎙️ {{ _('الإدخال الذكي') }}{% if pending|length %} ({{ pending|length }}){% endif %}</button>{% endif %}
+    {{ tip(_('اسأل المساعد أي سؤال بالكتابة (نص عادي) عن حالة مزرعتك — يجاوب من بياناتك الفعلية.')) }}
+    {% if notes is not none %}
+    <button type="button" class="tab-btn" data-tab="notes" onclick="showTab('notes')">📓 {{ _('دفتر الملاحظات') }}</button>
+    {{ tip(_('سجّل ملاحظات ميدانية حرة (سلوك حظيرة، حل جرّبته...) — تصير مرجعاً يستخدمه المساعد الذكي لاحقاً عند سؤال مشابه.')) }}
+    {% endif %}
+    {% if pending is not none %}
+    <button type="button" class="tab-btn" data-tab="drafts" onclick="showTab('drafts')">🎙️ {{ _('الإدخال الذكي') }}{% if pending|length %} ({{ pending|length }}){% endif %}</button>
+    {{ tip(_('قول أو اكتب جملة حرة عن حدث صار فعلاً (مثال: "سجلت ولادة اليوم لشاة 405") — المساعد يقترح مسودة إجراء، وما ينفَّذ شي بقاعدة البيانات إلا بعد ما تعتمدها بنفسك.')) }}
+    {% endif %}
   </div>
 </div>
 
@@ -37,9 +45,10 @@
 <div class="card chat-card">
   <div class="chat-head">
     <h2>💬 {{ _('المحادثة') }}</h2>
-    <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('{{ _('مسح كل المحادثة؟') }}');">
+    <form method="post" action="{{ url_for('assistant.clear') }}" onsubmit="return confirm('{{ _('مسح كل المحادثة؟') }}');" style="display:flex; align-items:center;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit" class="btn light" style="padding:7px 12px; font-size:12px;">{{ _('مسح المحادثة') }}</button>
+      {{ tip(_('يحذف كل الأسئلة والردود المعروضة نهائياً — بداية محادثة جديدة تماماً. لا يمكن التراجع بعدها.')) }}
     </form>
   </div>
 
@@ -59,6 +68,10 @@
   </div>
 
   <div class="chat-foot">
+    <div style="display:flex; align-items:center; gap:4px; margin:0 0 4px;">
+      <span style="color:var(--muted); font-size:11.5px;">{{ _('اقتراحات — اضغط أي وحد يُرسَل فوراً كسؤال') }}</span>
+      {{ tip(_('أسئلة جاهزة شائعة — اضغط أي وحدة وترسل مباشرة، نفس إنك كتبتها بنفسك بحقل الكتابة.')) }}
+    </div>
     <div class="chat-suggestions">
       <button type="button" onclick="askSuggestion('كم عدد الحيوانات بالمزرعة؟')">{{ _('كم عدد الحيوانات؟') }}</button>
       <button type="button" onclick="askSuggestion('كم رأس حوامل لدينا؟')">{{ _('كم حوامل؟') }}</button>
@@ -74,6 +87,7 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="file" id="chatImageInput" accept="image/*" style="display:none;">
       <button type="button" class="btn light" style="height:44px; padding:0 12px;" onclick="document.getElementById('chatImageInput').click();" title="{{ _('إرفاق صورة') }}">📷</button>
+      {{ tip(_('أرفق صورة (مرض جلدي، ملصق دواء، مشكلة بالحظيرة...) مع سؤالك — المساعد يحلّلها ضمن رده.')) }}
       <textarea id="chatInput" name="message" placeholder="{{ _('اكتب سؤالك هنا...') }}"></textarea>
       <button type="submit" class="btn">{{ _('إرسال') }}</button>
     </form>
@@ -87,7 +101,10 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2 style="margin:0;">📓 {{ _('دفتر الملاحظات') }}</h2>
-    <button type="button" class="btn" onclick="document.getElementById('newNoteModal').classList.add('open')">+ {{ _('إضافة الملاحظة') }}</button>
+    <span style="display:flex; align-items:center;">
+      <button type="button" class="btn" onclick="document.getElementById('newNoteModal').classList.add('open')">+ {{ _('إضافة الملاحظة') }}</button>
+      {{ tip(_('ملاحظة حرة تربطها اختيارياً بحظيرة أو رقم رأس — تصير مرجعاً للمساعد الذكي لاحقاً، مو سجلاً طبياً رسمياً.')) }}
+    </span>
   </div>
   <p style="color:var(--muted); font-size:13.5px;">
     {{ _('أي ملاحظة ميدانية حقيقية تكتبها هنا (سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته...) تصير خبرة يقدر المساعد الذكي يرجع لها مستقبلاً عند سؤال مشابه. ما تُستخدم كقاعدة طبية ثابتة — مجرد سياق مرجعي.') }}
@@ -147,9 +164,11 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2 style="margin:0;">🎙️ {{ _('الإدخال الذكي') }}</h2>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <div style="display:flex; gap:4px; align-items:center; flex-wrap:wrap;">
       <button type="button" class="btn" onclick="document.getElementById('newTextDraftModal').classList.add('open')">✍️ {{ _('إرسال نص') }}</button>
+      {{ tip(_('اكتب جملة حرة عن حدث صار فعلاً — المساعد يقترح إجراءً مناسباً (تسجيل ولادة/وزن/توزيع مهمة)، وينتظر اعتمادك قبل أي تنفيذ.')) }}
       <button type="button" class="btn light" onclick="document.getElementById('newVoiceDraftModal').classList.add('open')">🎤 {{ _('إرسال مقطع صوتي') }}</button>
+      {{ tip(_('نفس فكرة "إرسال نص" — بس تسجّل صوتك بدل ما تكتب، ومناسب لو يديك مشغولة بالحظيرة.')) }}
     </div>
   </div>
   <p style="color:var(--muted); font-size:13.5px;">
