@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, flash, session, current_app, abort
+from flask import render_template, redirect, url_for, request, flash, session, current_app, abort, make_response
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_babel import gettext as _
 
@@ -81,7 +81,7 @@ def login():
     if _quick_login_enabled():
         quick_login_accounts = (User.query.filter_by(is_active_account=True)
                                  .order_by(User.name).all())
-    return render_template("login.html", quick_login_accounts=quick_login_accounts)
+    return _no_cache_response(render_template("login.html", quick_login_accounts=quick_login_accounts))
 
 
 @auth_bp.route("/login/quick", methods=["POST"])
@@ -107,4 +107,20 @@ def quick_login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("auth.login"))
+    # بند إصلاح — بلاغ مستخدم: أحياناً بعد تسجيل خروج ودخول برقم/كلمة
+    # مرور حساب ثاني فعلياً، يفتح النظام حساب المستخدم السابق. السبب
+    # الأرجح على أجهزة/شبكات المزرعة الضعيفة: صفحة "تسجيل الدخول" تُخزَّن
+    # بذاكرة المتصفح (bfcache) مع الجلسة القديمة، وبعض المتصفحات تعيد
+    # عرضها من الذاكرة بدل طلب نسخة جديدة فعلياً من السيرفر. `session.clear()`
+    # هنا طبقة حماية إضافية فوق تنظيف Flask-Login التلقائي (يغطي أي
+    # مفتاح جلسة ثاني)، والرؤوس تحت (`no_cache_response`) تمنع أي طبقة
+    # تخزين (متصفح/بروكسي) من عرض نسخة قديمة من شاشة الدخول بعد الخروج.
+    session.clear()
+    return _no_cache_response(redirect(url_for("auth.login")))
+
+
+def _no_cache_response(response):
+    response = make_response(response)
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    return response
