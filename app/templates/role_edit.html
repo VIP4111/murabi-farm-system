@@ -8,14 +8,14 @@
     <label style="margin-top:10px; display:block;">{{ _('الصلاحيات') }}</label>
     <div style="max-height:400px; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding:10px;">
       {% for code, description in all_permissions %}
-      <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px; color:#333; margin-bottom:8px;">
+      <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--text); margin-bottom:8px;">
         <input type="checkbox" name="permissions" value="{{ code }}" style="width:auto; margin-top:3px;" {% if code in current_codes %}checked{% endif %}>
         <span>
           {{ description }}
           {% if permissions_en and permissions_en.get(code) %}
           <br><span style="color:var(--muted); font-size:12px; direction:ltr; display:inline-block;">{{ permissions_en[code] }}</span>
           {% endif %}
-          <code style="color:#999;">({{ code }})</code>
+          <code style="color:var(--muted);">({{ code }})</code>
         </span>
       </label>
       {% endfor %}
