@@ -145,6 +145,12 @@ def create_app(config_class=Config):
         "not_eligible": _l("غير مؤهّلة"),
         "confirmed": _l("مؤكّدة"),
         "failed": _l("فشلت"),
+        # بند إصلاح — دفعات البيع (SaleLot.status) كانت تطلع "open"
+        # حرفياً بالإنجليزي بشاشة "دفعات البيع" (finance/lots_list.html)
+        # بغض النظر عن لغة المستخدم، لأن القالب يطبع `lot.status` خام
+        # بدون فلتر `ar_status` أصلاً.
+        "open": _l("مفتوحة"),
+        "archived": _l("مؤرشفة"),
     }
 
     @app.template_filter("ar_status")

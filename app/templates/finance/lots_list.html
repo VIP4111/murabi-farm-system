@@ -19,7 +19,7 @@
     <tr>
       <td><a href="{{ url_for('finance.lot_detail', lot_id=lot.id) }}">{{ lot.name }}</a></td>
       <td>{{ lot.items|length }}</td>
-      <td><span class="badge {{ 'on' if lot.status == 'open' else 'off' }}">{{ lot.status }}</span></td>
+      <td><span class="badge {{ 'on' if lot.status == 'open' else 'off' }}">{{ lot.status|ar_status }}</span></td>
       <td>{{ lot.created_at.strftime('%Y-%m-%d') if lot.created_at else '-' }}</td>
       <td><a class="btn light" href="{{ url_for('finance.lot_detail', lot_id=lot.id) }}" style="padding:4px 10px; font-size:12px;">{{ _('فتح') }}</a></td>
     </tr>
