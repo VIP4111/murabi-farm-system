@@ -265,7 +265,7 @@ INTENTS: list[Intent] = [
                           "ክፍት በሽታ", "የታመሙ እንስሳት",
                           "खुला रोग", "बीमार जानवर"]],
            _handle_diseases, permission="health.view"),
-    Intent("vaccinations_due", [["تحصين مستحق", "تطعيم مستحق", "تحصينات مستحقة", "موعد تحصين", "تحصين متاخر",
+    Intent("vaccinations_due", [["تحصين مستحق", "تطعيم مستحق", "تحصينات مستحقة", "تحصين متاخر",
                                   "vaccination due", "overdue vaccination",
                                   "የደረሰ ክትባት", "የዘገየ ክትባት",
                                   "देय टीकाकरण", "विलंबित टीकाकरण"]],
