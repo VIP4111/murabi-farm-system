@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -12,7 +13,7 @@
 <table>
     <tr><td>{{ _('المسار') }}</td><td>{{ route_label }}</td></tr>
     <tr><td>{{ _('المرحلة الحالية') }}</td><td><strong>{{ wf.stage_name }}</strong> ({{ _('رقم %(n)s من 10', n=wf.current_stage) }})</td></tr>
-    <tr><td>{{ _('قرار المصير') }}</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
+    <tr><td>{{ _('قرار المصير') }} {{ tip(_('توجّه هذا الرأس النهائي بدورة الإنتاج (تربية، تسمين، بيع...) — يُحدَّد عادة بمرحلة "تخطيط السوق" ويوجّه أي متطلبات تلي تلك المرحلة.')) }}</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
     {% if wf.out_of_order_count %}<tr><td>{{ _('أحداث بترتيب غير منتظم') }}</td><td>{{ wf.out_of_order_count }}</td></tr>{% endif %}
   </table>
 </div>

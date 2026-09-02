@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 11:50+0300\n"
+"POT-Creation-Date: 2026-09-02 11:58+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1448,7 +1448,7 @@ msgstr "माँ मौजूद नहीं है"
 
 #: app/core/animal_service.py:180 app/core/data_completeness_service.py:32
 #: app/core/validation_service.py:35 app/templates/animal_detail.html:140
-#: app/templates/animal_workflow.html:128
+#: app/templates/animal_workflow.html:129
 msgid "السعر"
 msgstr "मूल्य"
 
@@ -3346,7 +3346,7 @@ msgstr "%(field)s नकारात्मक संख्या नहीं �
 #: app/templates/animal_detail.html:375 app/templates/animal_detail.html:407
 #: app/templates/animal_detail.html:422 app/templates/animal_detail.html:438
 #: app/templates/animal_detail.html:453 app/templates/animal_detail.html:463
-#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:154
+#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:155
 #: app/templates/assistant/chat.html:121 app/templates/assistant/chat.html:221
 #: app/templates/bulk_action_form.html:64
 #: app/templates/bulk_action_form.html:247
@@ -5349,7 +5349,7 @@ msgstr "दूध निकासी %(date)s तक (%(n)s दिन बाक�
 msgid "سجل النعام (بيض/تفقيس)"
 msgstr "शुतुरमुर्ग रिकॉर्ड (अंडे/सेने)"
 
-#: app/templates/animal_detail.html:34 app/templates/animal_workflow.html:5
+#: app/templates/animal_detail.html:34 app/templates/animal_workflow.html:6
 msgid "دورة الإنتاج"
 msgstr "उत्पादन चक्र"
 
@@ -5471,7 +5471,7 @@ msgstr "दूध"
 
 #: app/templates/animal_detail.html:122 app/templates/animal_detail.html:377
 #: app/templates/animal_detail.html:407 app/templates/animal_detail.html:429
-#: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:94
+#: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:95
 #: app/templates/barn_form.html:30 app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
@@ -5632,7 +5632,7 @@ msgstr ""
 #: app/templates/animal_detail.html:430 app/templates/animal_detail.html:455
 #: app/templates/animal_form.html:178
 #: app/templates/animal_weight_new_simple.html:44
-#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:44
+#: app/templates/animal_workflow.html:59 app/templates/barn_form.html:44
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:25
 #: app/templates/equipment/asset_maintenance.html:16
@@ -5739,7 +5739,7 @@ msgid "الشدة"
 msgstr "गंभीरता"
 
 #: app/templates/animal_detail.html:271 app/templates/animal_detail.html:317
-#: app/templates/animal_detail.html:340 app/templates/animal_workflow.html:154
+#: app/templates/animal_detail.html:340 app/templates/animal_workflow.html:155
 #: app/templates/animals_list.html:93 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
@@ -6384,40 +6384,49 @@ msgstr "कोई सक्रिय जानवर दर्ज नहीं�
 msgid "غيّر الحيوان"
 msgstr "जानवर बदलें"
 
-#: app/templates/animal_workflow.html:7
+#: app/templates/animal_workflow.html:8
 msgid "صفحة تفاصيل الرأس"
 msgstr "पशु विवरण पृष्ठ"
 
-#: app/templates/animal_workflow.html:13
+#: app/templates/animal_workflow.html:14
 msgid "المسار"
 msgstr "पथ"
 
-#: app/templates/animal_workflow.html:14
+#: app/templates/animal_workflow.html:15
 msgid "المرحلة الحالية"
 msgstr "वर्तमान चरण"
 
-#: app/templates/animal_workflow.html:14
+#: app/templates/animal_workflow.html:15
 #, python-format
 msgid "رقم %(n)s من 10"
 msgstr "क्रमांक %(n)s / 10"
 
-#: app/templates/animal_workflow.html:15
+#: app/templates/animal_workflow.html:16
 msgid "قرار المصير"
 msgstr "भाग्य निर्णय"
 
 #: app/templates/animal_workflow.html:16
+msgid ""
+"توجّه هذا الرأس النهائي بدورة الإنتاج (تربية، تسمين، بيع...) — يُحدَّد "
+"عادة بمرحلة \"تخطيط السوق\" ويوجّه أي متطلبات تلي تلك المرحلة."
+msgstr ""
+"उत्पादन चक्र में इस पशु की अंतिम दिशा (प्रजनन, मोटा करना, बिक्री...) — "
+"आमतौर पर \"बाज़ार योजना\" चरण में तय होती है, और उस चरण के बाद की किसी भी"
+" आवश्यकता का मार्गदर्शन करती है।"
+
+#: app/templates/animal_workflow.html:17
 msgid "أحداث بترتيب غير منتظم"
 msgstr "अनियमित क्रम की घटनाएं"
 
-#: app/templates/animal_workflow.html:21
+#: app/templates/animal_workflow.html:22
 msgid "متطلبات ناقصة للانتقال"
 msgstr "आगे बढ़ने के लिए अधूरी आवश्यकताएं"
 
-#: app/templates/animal_workflow.html:32
+#: app/templates/animal_workflow.html:33
 msgid "خط سير المراحل"
 msgstr "चरण समयरेखा"
 
-#: app/templates/animal_workflow.html:33
+#: app/templates/animal_workflow.html:34
 #, python-format
 msgid ""
 "يعرض بس المراحل المطلوبة فعلياً لمسار هذا الرأس (\"%(route)s\") — مسارات "
@@ -6429,55 +6438,55 @@ msgstr ""
 "चरणों को छोड़ देते हैं जो लागू नहीं होते, इसलिए चरण संख्या क्रमिक होना "
 "ज़रूरी नहीं।"
 
-#: app/templates/animal_workflow.html:38
+#: app/templates/animal_workflow.html:39
 #, python-format
 msgid "مرحلة %(n)s"
 msgstr "चरण %(n)s"
 
-#: app/templates/animal_workflow.html:40
+#: app/templates/animal_workflow.html:41
 #: app/templates/health/vaccination_schedule_list.html:62
 msgid "مكتملة"
 msgstr "पूर्ण"
 
-#: app/templates/animal_workflow.html:41
+#: app/templates/animal_workflow.html:42
 msgid "الحالية"
 msgstr "वर्तमान"
 
-#: app/templates/animal_workflow.html:42
+#: app/templates/animal_workflow.html:43
 msgid "لاحقة"
 msgstr "आगामी"
 
-#: app/templates/animal_workflow.html:51
+#: app/templates/animal_workflow.html:52
 msgid "بيانات تخطيط السوق (تدعم بوابة مرحلة \"تخطيط السوق\")"
 msgstr "बाजार योजना डेटा (\"बाजार योजना\" चरण द्वार का समर्थन करता है)"
 
-#: app/templates/animal_workflow.html:54
+#: app/templates/animal_workflow.html:55
 msgid "تاريخ بيع مستهدف"
 msgstr "लक्षित बिक्री तिथि"
 
-#: app/templates/animal_workflow.html:55
+#: app/templates/animal_workflow.html:56
 msgid "قيمة تقديرية"
 msgstr "अनुमानित मूल्य"
 
-#: app/templates/animal_workflow.html:56
+#: app/templates/animal_workflow.html:57
 #, python-format
 msgid "هامش ربح مستهدف (%%)"
 msgstr "लक्षित लाभ मार्जिन (%%)"
 
-#: app/templates/animal_workflow.html:57
+#: app/templates/animal_workflow.html:58
 msgid "تاريخ فطام (لو ينطبق)"
 msgstr "दूध छुड़ाने की तिथि (यदि लागू हो)"
 
-#: app/templates/animal_workflow.html:64
+#: app/templates/animal_workflow.html:65
 msgid "رحلة السوق"
 msgstr "बाज़ार यात्रा"
 
-#: app/templates/animal_workflow.html:67
+#: app/templates/animal_workflow.html:68
 #, python-format
 msgid "بالسوق منذ %(date)s"
 msgstr "%(date)s से बाज़ार में"
 
-#: app/templates/animal_workflow.html:70
+#: app/templates/animal_workflow.html:71
 msgid ""
 "لسا \"نشط\" بكل شاشات النظام (تغذية/مهام/صحة) — هذا مجرد تذكير إنه خارج "
 "المزرعة حالياً. لو انباع فعلاً سجّل البيع بالفورم تحت وينمسح هذا التنبيه "
@@ -6488,19 +6497,19 @@ msgstr ""
 " तो नीचे फॉर्म में बिक्री दर्ज करें, यह याद-दिलाना अपने आप हट जाएगा; बिना"
 " बिके वापस आए तो अगला बटन दबाएं।"
 
-#: app/templates/animal_workflow.html:73
+#: app/templates/animal_workflow.html:74
 msgid "رجع للمزرعة بدون بيع"
 msgstr "बिना बिके फार्म पर वापस आई"
 
-#: app/templates/animal_workflow.html:78
+#: app/templates/animal_workflow.html:79
 msgid "ملاحظة (اختياري — مثلاً اسم السوق أو الموعد)"
 msgstr "टिप्पणी (वैकल्पिक — जैसे बाज़ार का नाम या समय)"
 
-#: app/templates/animal_workflow.html:79
+#: app/templates/animal_workflow.html:80
 msgid "طلّعها للسوق"
 msgstr "बाज़ार भेजें"
 
-#: app/templates/animal_workflow.html:81
+#: app/templates/animal_workflow.html:82
 msgid ""
 "اختياري تماماً — بس تذكير مرئي إنها خارج المزرعة، لحد ما ترجع تسجّل تحت "
 "\"تم البيع\" أو \"رجعت بدون بيع\"."
@@ -6508,31 +6517,31 @@ msgstr ""
 "पूरी तरह वैकल्पिक — सिर्फ एक दृश्य याद-दिलाना कि वह फार्म से बाहर है, जब "
 "तक आप वापस आकर \"बिक गई\" या \"बिना बिके वापस आई\" दर्ज न करें।"
 
-#: app/templates/animal_workflow.html:86
+#: app/templates/animal_workflow.html:87
 msgid "قرار الخروج"
 msgstr "निकास निर्णय"
 
-#: app/templates/animal_workflow.html:90
+#: app/templates/animal_workflow.html:91
 msgid "بيع — السعر"
 msgstr "बिक्री — मूल्य"
 
-#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:129
+#: app/templates/animal_workflow.html:92 app/templates/animal_workflow.html:130
 msgid "تاريخ البيع"
 msgstr "बिक्री तिथि"
 
-#: app/templates/animal_workflow.html:92
+#: app/templates/animal_workflow.html:93
 msgid "اسم المشتري (اختياري — يظهر بالفاتورة)"
 msgstr "खरीदार का नाम (वैकल्पिक — चालान पर दिखता है)"
 
-#: app/templates/animal_workflow.html:93
+#: app/templates/animal_workflow.html:94
 msgid "جوال المشتري (اختياري)"
 msgstr "खरीदार का मोबाइल (वैकल्पिक)"
 
-#: app/templates/animal_workflow.html:97
+#: app/templates/animal_workflow.html:98
 msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
 msgstr "इस बिक्री का कोई चालान नहीं (अनौपचारिक नकद बिक्री)"
 
-#: app/templates/animal_workflow.html:101
+#: app/templates/animal_workflow.html:102
 #, python-format
 msgid ""
 "الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب "
@@ -6544,67 +6553,67 @@ msgstr ""
 "लिखें (जैसे आपातकालीन वध, या मानव उपभोग के लिए न होने वाले प्रजनन फार्म "
 "को बिक्री)।"
 
-#: app/templates/animal_workflow.html:102
+#: app/templates/animal_workflow.html:103
 msgid "سبب تجاوز فترة السحب"
 msgstr "वापसी अवधि को ओवरराइड करने का कारण"
 
-#: app/templates/animal_workflow.html:105
+#: app/templates/animal_workflow.html:106
 msgid "تسجيل البيع"
 msgstr "बिक्री दर्ज करें"
 
-#: app/templates/animal_workflow.html:109
+#: app/templates/animal_workflow.html:110
 msgid "نفوق — السبب"
 msgstr "मृत्यु — कारण"
 
-#: app/templates/animal_workflow.html:110
+#: app/templates/animal_workflow.html:111
 msgid "تاريخ النفوق"
 msgstr "मृत्यु तिथि"
 
-#: app/templates/animal_workflow.html:111
+#: app/templates/animal_workflow.html:112
 msgid "تسجيل النفوق"
 msgstr "मृत्यु दर्ज करें"
 
-#: app/templates/animal_workflow.html:113
+#: app/templates/animal_workflow.html:114
 msgid "تأكيد الأرشفة؟"
 msgstr "संग्रह की पुष्टि करें?"
 
-#: app/templates/animal_workflow.html:115
+#: app/templates/animal_workflow.html:116
 msgid "أرشفة — السبب"
 msgstr "संग्रह — कारण"
 
-#: app/templates/animal_workflow.html:116
+#: app/templates/animal_workflow.html:117
 msgid "تجاوز وجود عمليات مالية مرتبطة"
 msgstr "जुड़े वित्तीय लेनदेन को अनदेखा करें"
 
-#: app/templates/animal_workflow.html:117
+#: app/templates/animal_workflow.html:118
 msgid "أرشفة"
 msgstr "संग्रह"
 
-#: app/templates/animal_workflow.html:125
+#: app/templates/animal_workflow.html:126
 msgid "بيانات البيع"
 msgstr "बिक्री डेटा"
 
-#: app/templates/animal_workflow.html:130
+#: app/templates/animal_workflow.html:131
 msgid "المشتري"
 msgstr "खरीदार"
 
-#: app/templates/animal_workflow.html:131
+#: app/templates/animal_workflow.html:132
 msgid "رقم الفاتورة"
 msgstr "चालान संख्या"
 
-#: app/templates/animal_workflow.html:136
+#: app/templates/animal_workflow.html:137
 msgid "لا توجد فاتورة لهذا البيع"
 msgstr "इस बिक्री का कोई चालान नहीं"
 
-#: app/templates/animal_workflow.html:138
+#: app/templates/animal_workflow.html:139
 msgid "تنزيل الفاتورة"
 msgstr "चालान डाउनलोड करें"
 
-#: app/templates/animal_workflow.html:138
+#: app/templates/animal_workflow.html:139
 msgid "إصدار فاتورة"
 msgstr "चालान जारी करें"
 
-#: app/templates/animal_workflow.html:140
+#: app/templates/animal_workflow.html:141
 msgid ""
 "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل "
 "للتدقيق)."
@@ -6612,32 +6621,32 @@ msgstr ""
 "बिक्री पूर्ववत करें? पशु सक्रिय स्थिति में लौट आएगा और वित्तीय लेनदेन "
 "रद्द हो जाएगा (यह ऑडिट के लिए रिकॉर्ड में रहेगा)।"
 
-#: app/templates/animal_workflow.html:142
+#: app/templates/animal_workflow.html:143
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
 msgstr "उत्पादन चक्र पृष्ठ से बिक्री पूर्ववत करना"
 
-#: app/templates/animal_workflow.html:143
+#: app/templates/animal_workflow.html:144
 msgid "استرجاع البيع"
 msgstr "बिक्री पूर्ववत करें"
 
-#: app/templates/animal_workflow.html:151
+#: app/templates/animal_workflow.html:152
 msgid "سجل أحداث الدورة"
 msgstr "चक्र घटना लॉग"
 
-#: app/templates/animal_workflow.html:154
+#: app/templates/animal_workflow.html:155
 msgid "الحدث"
 msgstr "घटना"
 
-#: app/templates/animal_workflow.html:154 app/templates/animals_list.html:93
+#: app/templates/animal_workflow.html:155 app/templates/animals_list.html:93
 #: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "चरण"
 
-#: app/templates/animal_workflow.html:154
+#: app/templates/animal_workflow.html:155
 msgid "المتطلب التالي"
 msgstr "अगली आवश्यकता"
 
-#: app/templates/animal_workflow.html:164
+#: app/templates/animal_workflow.html:165
 msgid "لا يوجد أحداث مسجّلة بعد."
 msgstr "अभी तक कोई घटना दर्ज नहीं है।"
 

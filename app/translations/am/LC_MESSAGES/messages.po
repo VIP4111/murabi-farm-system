@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 11:50+0300\n"
+"POT-Creation-Date: 2026-09-02 11:58+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1404,7 +1404,7 @@ msgstr "እናትየው የለችም"
 
 #: app/core/animal_service.py:180 app/core/data_completeness_service.py:32
 #: app/core/validation_service.py:35 app/templates/animal_detail.html:140
-#: app/templates/animal_workflow.html:128
+#: app/templates/animal_workflow.html:129
 msgid "السعر"
 msgstr "ዋጋ"
 
@@ -3237,7 +3237,7 @@ msgstr "%(field)s አሉታዊ ቁጥር ሊሆን አይችልም።"
 #: app/templates/animal_detail.html:375 app/templates/animal_detail.html:407
 #: app/templates/animal_detail.html:422 app/templates/animal_detail.html:438
 #: app/templates/animal_detail.html:453 app/templates/animal_detail.html:463
-#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:154
+#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:155
 #: app/templates/assistant/chat.html:121 app/templates/assistant/chat.html:221
 #: app/templates/bulk_action_form.html:64
 #: app/templates/bulk_action_form.html:247
@@ -5161,7 +5161,7 @@ msgstr "የወተት መታቀብ እስከ %(date)s (%(n)s ቀናት ቀርተ�
 msgid "سجل النعام (بيض/تفقيس)"
 msgstr "የሰጎን መዝገብ (እንቁላል/መፈልፈል)"
 
-#: app/templates/animal_detail.html:34 app/templates/animal_workflow.html:5
+#: app/templates/animal_detail.html:34 app/templates/animal_workflow.html:6
 msgid "دورة الإنتاج"
 msgstr "የምርት ዑደት"
 
@@ -5281,7 +5281,7 @@ msgstr "ወተት"
 
 #: app/templates/animal_detail.html:122 app/templates/animal_detail.html:377
 #: app/templates/animal_detail.html:407 app/templates/animal_detail.html:429
-#: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:94
+#: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:95
 #: app/templates/barn_form.html:30 app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
@@ -5442,7 +5442,7 @@ msgstr ""
 #: app/templates/animal_detail.html:430 app/templates/animal_detail.html:455
 #: app/templates/animal_form.html:178
 #: app/templates/animal_weight_new_simple.html:44
-#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:44
+#: app/templates/animal_workflow.html:59 app/templates/barn_form.html:44
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:25
 #: app/templates/equipment/asset_maintenance.html:16
@@ -5549,7 +5549,7 @@ msgid "الشدة"
 msgstr "ክብደት"
 
 #: app/templates/animal_detail.html:271 app/templates/animal_detail.html:317
-#: app/templates/animal_detail.html:340 app/templates/animal_workflow.html:154
+#: app/templates/animal_detail.html:340 app/templates/animal_workflow.html:155
 #: app/templates/animals_list.html:93 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
@@ -6177,40 +6177,48 @@ msgstr "ንቁ እንስሳት አልተመዘገቡም።"
 msgid "غيّر الحيوان"
 msgstr "እንስሳ ቀይር"
 
-#: app/templates/animal_workflow.html:7
+#: app/templates/animal_workflow.html:8
 msgid "صفحة تفاصيل الرأس"
 msgstr "የእንስሳ ዝርዝር ገጽ"
 
-#: app/templates/animal_workflow.html:13
+#: app/templates/animal_workflow.html:14
 msgid "المسار"
 msgstr "መንገድ"
 
-#: app/templates/animal_workflow.html:14
+#: app/templates/animal_workflow.html:15
 msgid "المرحلة الحالية"
 msgstr "የአሁኑ ደረጃ"
 
-#: app/templates/animal_workflow.html:14
+#: app/templates/animal_workflow.html:15
 #, python-format
 msgid "رقم %(n)s من 10"
 msgstr "ቁጥር %(n)s ከ10"
 
-#: app/templates/animal_workflow.html:15
+#: app/templates/animal_workflow.html:16
 msgid "قرار المصير"
 msgstr "የዕጣ ፈንታ ውሳኔ"
 
 #: app/templates/animal_workflow.html:16
+msgid ""
+"توجّه هذا الرأس النهائي بدورة الإنتاج (تربية، تسمين، بيع...) — يُحدَّد "
+"عادة بمرحلة \"تخطيط السوق\" ويوجّه أي متطلبات تلي تلك المرحلة."
+msgstr ""
+"የዚህ ራስ የመጨረሻ አቅጣጫ በምርት ዑደት ውስጥ (ማራባት፣ ማወፈር፣ ሽያጭ...) — በተለምዶ በ\"የገበያ እቅድ\""
+" ደረጃ ይወሰናል፣ ከዚያ ደረጃ በኋላ ያሉ ማንኛውንም መስፈርቶች ይመራል።"
+
+#: app/templates/animal_workflow.html:17
 msgid "أحداث بترتيب غير منتظم"
 msgstr "ያልተስተካከለ ቅደም ተከተል ያላቸው ክስተቶች"
 
-#: app/templates/animal_workflow.html:21
+#: app/templates/animal_workflow.html:22
 msgid "متطلبات ناقصة للانتقال"
 msgstr "ለመሸጋገር የጎደሉ መስፈርቶች"
 
-#: app/templates/animal_workflow.html:32
+#: app/templates/animal_workflow.html:33
 msgid "خط سير المراحل"
 msgstr "የደረጃ የጊዜ መስመር"
 
-#: app/templates/animal_workflow.html:33
+#: app/templates/animal_workflow.html:34
 #, python-format
 msgid ""
 "يعرض بس المراحل المطلوبة فعلياً لمسار هذا الرأس (\"%(route)s\") — مسارات "
@@ -6221,55 +6229,55 @@ msgstr ""
 "(ማድለብ፣ ወንድ ዘር...) የማይመለከቷቸውን የመራቢያ/እርግዝና ደረጃዎች ይዘላሉ፣ ስለዚህ የደረጃ ቁጥር ግድ "
 "ተከታታይ አይደለም።"
 
-#: app/templates/animal_workflow.html:38
+#: app/templates/animal_workflow.html:39
 #, python-format
 msgid "مرحلة %(n)s"
 msgstr "ደረጃ %(n)s"
 
-#: app/templates/animal_workflow.html:40
+#: app/templates/animal_workflow.html:41
 #: app/templates/health/vaccination_schedule_list.html:62
 msgid "مكتملة"
 msgstr "ተጠናቋል"
 
-#: app/templates/animal_workflow.html:41
+#: app/templates/animal_workflow.html:42
 msgid "الحالية"
 msgstr "የአሁኑ"
 
-#: app/templates/animal_workflow.html:42
+#: app/templates/animal_workflow.html:43
 msgid "لاحقة"
 msgstr "ቀጣይ"
 
-#: app/templates/animal_workflow.html:51
+#: app/templates/animal_workflow.html:52
 msgid "بيانات تخطيط السوق (تدعم بوابة مرحلة \"تخطيط السوق\")"
 msgstr "የገበያ ዕቅድ መረጃ (\"የገበያ ዕቅድ\" የደረጃ በርን ይደግፋል)"
 
-#: app/templates/animal_workflow.html:54
+#: app/templates/animal_workflow.html:55
 msgid "تاريخ بيع مستهدف"
 msgstr "የታለመ የሽያጭ ቀን"
 
-#: app/templates/animal_workflow.html:55
+#: app/templates/animal_workflow.html:56
 msgid "قيمة تقديرية"
 msgstr "የተገመተ ዋጋ"
 
-#: app/templates/animal_workflow.html:56
+#: app/templates/animal_workflow.html:57
 #, python-format
 msgid "هامش ربح مستهدف (%%)"
 msgstr "የታለመ የትርፍ ህዳግ (%%)"
 
-#: app/templates/animal_workflow.html:57
+#: app/templates/animal_workflow.html:58
 msgid "تاريخ فطام (لو ينطبق)"
 msgstr "የጡት ማስጣል ቀን (የሚመለከት ከሆነ)"
 
-#: app/templates/animal_workflow.html:64
+#: app/templates/animal_workflow.html:65
 msgid "رحلة السوق"
 msgstr "የገበያ ጉዞ"
 
-#: app/templates/animal_workflow.html:67
+#: app/templates/animal_workflow.html:68
 #, python-format
 msgid "بالسوق منذ %(date)s"
 msgstr "ከ%(date)s ጀምሮ በገበያ ላይ"
 
-#: app/templates/animal_workflow.html:70
+#: app/templates/animal_workflow.html:71
 msgid ""
 "لسا \"نشط\" بكل شاشات النظام (تغذية/مهام/صحة) — هذا مجرد تذكير إنه خارج "
 "المزرعة حالياً. لو انباع فعلاً سجّل البيع بالفورم تحت وينمسح هذا التنبيه "
@@ -6279,19 +6287,19 @@ msgstr ""
 "ብቻ ነው። በትክክል ከተሸጠ ከታች ባለው ቅጽ ሽያጩን ይመዝግቡ፣ ይህ ማስታወሻ ራሱ በራሱ ይጠፋል፤ ካልተሸጠ ተመልሶ"
 " ከመጣ የሚቀጥለውን ቁልፍ ይጫኑ።"
 
-#: app/templates/animal_workflow.html:73
+#: app/templates/animal_workflow.html:74
 msgid "رجع للمزرعة بدون بيع"
 msgstr "ሳይሸጥ ወደ እርሻው ተመለሰ"
 
-#: app/templates/animal_workflow.html:78
+#: app/templates/animal_workflow.html:79
 msgid "ملاحظة (اختياري — مثلاً اسم السوق أو الموعد)"
 msgstr "ማስታወሻ (አማራጭ — ለምሳሌ የገበያ ስም ወይም ቀጠሮ)"
 
-#: app/templates/animal_workflow.html:79
+#: app/templates/animal_workflow.html:80
 msgid "طلّعها للسوق"
 msgstr "ወደ ገበያ ላክ"
 
-#: app/templates/animal_workflow.html:81
+#: app/templates/animal_workflow.html:82
 msgid ""
 "اختياري تماماً — بس تذكير مرئي إنها خارج المزرعة، لحد ما ترجع تسجّل تحت "
 "\"تم البيع\" أو \"رجعت بدون بيع\"."
@@ -6299,31 +6307,31 @@ msgstr ""
 "ሙሉ በሙሉ አማራጭ ነው — ከእርሻው ውጭ መሆኑን የሚያሳይ ማስታወሻ ብቻ ነው፣ እስክትመልሱ ድረስ \"ተሸጧል\" "
 "ወይም \"ሳይሸጥ ተመልሷል\" ብለው እስክትመዘግቡ ድረስ።"
 
-#: app/templates/animal_workflow.html:86
+#: app/templates/animal_workflow.html:87
 msgid "قرار الخروج"
 msgstr "የመውጫ ውሳኔ"
 
-#: app/templates/animal_workflow.html:90
+#: app/templates/animal_workflow.html:91
 msgid "بيع — السعر"
 msgstr "ሽያጭ — ዋጋ"
 
-#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:129
+#: app/templates/animal_workflow.html:92 app/templates/animal_workflow.html:130
 msgid "تاريخ البيع"
 msgstr "የሽያጭ ቀን"
 
-#: app/templates/animal_workflow.html:92
+#: app/templates/animal_workflow.html:93
 msgid "اسم المشتري (اختياري — يظهر بالفاتورة)"
 msgstr "የገዢ ስም (አማራጭ — በደረሰኝ ላይ ይታያል)"
 
-#: app/templates/animal_workflow.html:93
+#: app/templates/animal_workflow.html:94
 msgid "جوال المشتري (اختياري)"
 msgstr "የገዢ ስልክ (አማራጭ)"
 
-#: app/templates/animal_workflow.html:97
+#: app/templates/animal_workflow.html:98
 msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
 msgstr "ለዚህ ሽያጭ ደረሰኝ የለም (መደበኛ ያልሆነ የጥሬ ገንዘብ ሽያጭ)"
 
-#: app/templates/animal_workflow.html:101
+#: app/templates/animal_workflow.html:102
 #, python-format
 msgid ""
 "الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب "
@@ -6334,98 +6342,98 @@ msgstr ""
 "ከወሰኑ እዚህ የተመዘገበ ምክንያት ይጻፉ (ለምሳሌ የአስቸኳይ ጊዜ እርድ ወይም ለሰው ፍጆታ ላልታሰበ የእርባታ እርሻ"
 " ሽያጭ)።"
 
-#: app/templates/animal_workflow.html:102
+#: app/templates/animal_workflow.html:103
 msgid "سبب تجاوز فترة السحب"
 msgstr "የመንሳት ጊዜን የማለፍ ምክንያት"
 
-#: app/templates/animal_workflow.html:105
+#: app/templates/animal_workflow.html:106
 msgid "تسجيل البيع"
 msgstr "ሽያጭ መዝግብ"
 
-#: app/templates/animal_workflow.html:109
+#: app/templates/animal_workflow.html:110
 msgid "نفوق — السبب"
 msgstr "ሞት — ምክንያት"
 
-#: app/templates/animal_workflow.html:110
+#: app/templates/animal_workflow.html:111
 msgid "تاريخ النفوق"
 msgstr "የሞት ቀን"
 
-#: app/templates/animal_workflow.html:111
+#: app/templates/animal_workflow.html:112
 msgid "تسجيل النفوق"
 msgstr "ሞት መዝግብ"
 
-#: app/templates/animal_workflow.html:113
+#: app/templates/animal_workflow.html:114
 msgid "تأكيد الأرشفة؟"
 msgstr "ወደ ማህደር መውሰድን ያረጋግጡ?"
 
-#: app/templates/animal_workflow.html:115
+#: app/templates/animal_workflow.html:116
 msgid "أرشفة — السبب"
 msgstr "ማህደር — ምክንያት"
 
-#: app/templates/animal_workflow.html:116
+#: app/templates/animal_workflow.html:117
 msgid "تجاوز وجود عمليات مالية مرتبطة"
 msgstr "የተያያዙ የገንዘብ ግብይቶችን ችላ ይበሉ"
 
-#: app/templates/animal_workflow.html:117
+#: app/templates/animal_workflow.html:118
 msgid "أرشفة"
 msgstr "ማህደር"
 
-#: app/templates/animal_workflow.html:125
+#: app/templates/animal_workflow.html:126
 msgid "بيانات البيع"
 msgstr "የሽያጭ መረጃ"
 
-#: app/templates/animal_workflow.html:130
+#: app/templates/animal_workflow.html:131
 msgid "المشتري"
 msgstr "ገዢ"
 
-#: app/templates/animal_workflow.html:131
+#: app/templates/animal_workflow.html:132
 msgid "رقم الفاتورة"
 msgstr "የደረሰኝ ቁጥር"
 
-#: app/templates/animal_workflow.html:136
+#: app/templates/animal_workflow.html:137
 msgid "لا توجد فاتورة لهذا البيع"
 msgstr "ለዚህ ሽያጭ ደረሰኝ የለም"
 
-#: app/templates/animal_workflow.html:138
+#: app/templates/animal_workflow.html:139
 msgid "تنزيل الفاتورة"
 msgstr "ደረሰኝ አውርድ"
 
-#: app/templates/animal_workflow.html:138
+#: app/templates/animal_workflow.html:139
 msgid "إصدار فاتورة"
 msgstr "ደረሰኝ ስጥ"
 
-#: app/templates/animal_workflow.html:140
+#: app/templates/animal_workflow.html:141
 msgid ""
 "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل "
 "للتدقيق)."
 msgstr "ሽያጭን መልስ? እንስሳው ወደ ንቁ ሁኔታ ይመለሳል እና የገንዘብ ግብይቱ ይሰረዛል (ለኦዲት በመዝገብ ውስጥ ይቀራል)።"
 
-#: app/templates/animal_workflow.html:142
+#: app/templates/animal_workflow.html:143
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
 msgstr "ከምርት ዑደት ገጽ የሽያጭ መመለስ"
 
-#: app/templates/animal_workflow.html:143
+#: app/templates/animal_workflow.html:144
 msgid "استرجاع البيع"
 msgstr "ሽያጭ መልስ"
 
-#: app/templates/animal_workflow.html:151
+#: app/templates/animal_workflow.html:152
 msgid "سجل أحداث الدورة"
 msgstr "የዑደት ክስተት መዝገብ"
 
-#: app/templates/animal_workflow.html:154
+#: app/templates/animal_workflow.html:155
 msgid "الحدث"
 msgstr "ክስተት"
 
-#: app/templates/animal_workflow.html:154 app/templates/animals_list.html:93
+#: app/templates/animal_workflow.html:155 app/templates/animals_list.html:93
 #: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "ደረጃ"
 
-#: app/templates/animal_workflow.html:154
+#: app/templates/animal_workflow.html:155
 msgid "المتطلب التالي"
 msgstr "ቀጣይ መስፈርት"
 
-#: app/templates/animal_workflow.html:164
+#: app/templates/animal_workflow.html:165
 msgid "لا يوجد أحداث مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ ክስተት የለም።"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 11:50+0300\n"
+"POT-Creation-Date: 2026-09-02 11:58+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1450,7 +1450,7 @@ msgstr "The mother doesn't exist"
 
 #: app/core/animal_service.py:180 app/core/data_completeness_service.py:32
 #: app/core/validation_service.py:35 app/templates/animal_detail.html:140
-#: app/templates/animal_workflow.html:128
+#: app/templates/animal_workflow.html:129
 msgid "السعر"
 msgstr "Price"
 
@@ -3361,7 +3361,7 @@ msgstr "%(field)s can't be a negative number."
 #: app/templates/animal_detail.html:375 app/templates/animal_detail.html:407
 #: app/templates/animal_detail.html:422 app/templates/animal_detail.html:438
 #: app/templates/animal_detail.html:453 app/templates/animal_detail.html:463
-#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:154
+#: app/templates/animal_detail.html:493 app/templates/animal_workflow.html:155
 #: app/templates/assistant/chat.html:121 app/templates/assistant/chat.html:221
 #: app/templates/bulk_action_form.html:64
 #: app/templates/bulk_action_form.html:247
@@ -5382,7 +5382,7 @@ msgstr "Milk withdrawal until %(date)s (%(n)s days left)"
 msgid "سجل النعام (بيض/تفقيس)"
 msgstr "Ostrich record (eggs/hatching)"
 
-#: app/templates/animal_detail.html:34 app/templates/animal_workflow.html:5
+#: app/templates/animal_detail.html:34 app/templates/animal_workflow.html:6
 msgid "دورة الإنتاج"
 msgstr "Production cycle"
 
@@ -5504,7 +5504,7 @@ msgstr "Milk"
 
 #: app/templates/animal_detail.html:122 app/templates/animal_detail.html:377
 #: app/templates/animal_detail.html:407 app/templates/animal_detail.html:429
-#: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:94
+#: app/templates/animal_detail.html:438 app/templates/animal_workflow.html:95
 #: app/templates/barn_form.html:30 app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
@@ -5665,7 +5665,7 @@ msgstr ""
 #: app/templates/animal_detail.html:430 app/templates/animal_detail.html:455
 #: app/templates/animal_form.html:178
 #: app/templates/animal_weight_new_simple.html:44
-#: app/templates/animal_workflow.html:58 app/templates/barn_form.html:44
+#: app/templates/animal_workflow.html:59 app/templates/barn_form.html:44
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:25
 #: app/templates/equipment/asset_maintenance.html:16
@@ -5772,7 +5772,7 @@ msgid "الشدة"
 msgstr "Severity"
 
 #: app/templates/animal_detail.html:271 app/templates/animal_detail.html:317
-#: app/templates/animal_detail.html:340 app/templates/animal_workflow.html:154
+#: app/templates/animal_detail.html:340 app/templates/animal_workflow.html:155
 #: app/templates/animals_list.html:93 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
@@ -6419,40 +6419,49 @@ msgstr "No active animals registered."
 msgid "غيّر الحيوان"
 msgstr "Change animal"
 
-#: app/templates/animal_workflow.html:7
+#: app/templates/animal_workflow.html:8
 msgid "صفحة تفاصيل الرأس"
 msgstr "Animal detail page"
 
-#: app/templates/animal_workflow.html:13
+#: app/templates/animal_workflow.html:14
 msgid "المسار"
 msgstr "Path"
 
-#: app/templates/animal_workflow.html:14
+#: app/templates/animal_workflow.html:15
 msgid "المرحلة الحالية"
 msgstr "Current stage"
 
-#: app/templates/animal_workflow.html:14
+#: app/templates/animal_workflow.html:15
 #, python-format
 msgid "رقم %(n)s من 10"
 msgstr "Number %(n)s of 10"
 
-#: app/templates/animal_workflow.html:15
+#: app/templates/animal_workflow.html:16
 msgid "قرار المصير"
 msgstr "Fate decision"
 
 #: app/templates/animal_workflow.html:16
+msgid ""
+"توجّه هذا الرأس النهائي بدورة الإنتاج (تربية، تسمين، بيع...) — يُحدَّد "
+"عادة بمرحلة \"تخطيط السوق\" ويوجّه أي متطلبات تلي تلك المرحلة."
+msgstr ""
+"This animal's final direction in the production cycle (breeding, "
+"fattening, sale...) — usually set at the \"market planning\" stage, and "
+"guides any requirements after that stage."
+
+#: app/templates/animal_workflow.html:17
 msgid "أحداث بترتيب غير منتظم"
 msgstr "Out-of-order events"
 
-#: app/templates/animal_workflow.html:21
+#: app/templates/animal_workflow.html:22
 msgid "متطلبات ناقصة للانتقال"
 msgstr "Missing requirements to advance"
 
-#: app/templates/animal_workflow.html:32
+#: app/templates/animal_workflow.html:33
 msgid "خط سير المراحل"
 msgstr "Stage timeline"
 
-#: app/templates/animal_workflow.html:33
+#: app/templates/animal_workflow.html:34
 #, python-format
 msgid ""
 "يعرض بس المراحل المطلوبة فعلياً لمسار هذا الرأس (\"%(route)s\") — مسارات "
@@ -6464,55 +6473,55 @@ msgstr ""
 "breeding/pregnancy stages that don't apply, so the stage number isn't "
 "necessarily sequential."
 
-#: app/templates/animal_workflow.html:38
+#: app/templates/animal_workflow.html:39
 #, python-format
 msgid "مرحلة %(n)s"
 msgstr "Stage %(n)s"
 
-#: app/templates/animal_workflow.html:40
+#: app/templates/animal_workflow.html:41
 #: app/templates/health/vaccination_schedule_list.html:62
 msgid "مكتملة"
 msgstr "Completed"
 
-#: app/templates/animal_workflow.html:41
+#: app/templates/animal_workflow.html:42
 msgid "الحالية"
 msgstr "Current"
 
-#: app/templates/animal_workflow.html:42
+#: app/templates/animal_workflow.html:43
 msgid "لاحقة"
 msgstr "Upcoming"
 
-#: app/templates/animal_workflow.html:51
+#: app/templates/animal_workflow.html:52
 msgid "بيانات تخطيط السوق (تدعم بوابة مرحلة \"تخطيط السوق\")"
 msgstr "Market planning data (supports the \"market planning\" stage gate)"
 
-#: app/templates/animal_workflow.html:54
+#: app/templates/animal_workflow.html:55
 msgid "تاريخ بيع مستهدف"
 msgstr "Target sale date"
 
-#: app/templates/animal_workflow.html:55
+#: app/templates/animal_workflow.html:56
 msgid "قيمة تقديرية"
 msgstr "Estimated value"
 
-#: app/templates/animal_workflow.html:56
+#: app/templates/animal_workflow.html:57
 #, python-format
 msgid "هامش ربح مستهدف (%%)"
 msgstr "Target profit margin (%%)"
 
-#: app/templates/animal_workflow.html:57
+#: app/templates/animal_workflow.html:58
 msgid "تاريخ فطام (لو ينطبق)"
 msgstr "Weaning date (if applicable)"
 
-#: app/templates/animal_workflow.html:64
+#: app/templates/animal_workflow.html:65
 msgid "رحلة السوق"
 msgstr "Market trip"
 
-#: app/templates/animal_workflow.html:67
+#: app/templates/animal_workflow.html:68
 #, python-format
 msgid "بالسوق منذ %(date)s"
 msgstr "At market since %(date)s"
 
-#: app/templates/animal_workflow.html:70
+#: app/templates/animal_workflow.html:71
 msgid ""
 "لسا \"نشط\" بكل شاشات النظام (تغذية/مهام/صحة) — هذا مجرد تذكير إنه خارج "
 "المزرعة حالياً. لو انباع فعلاً سجّل البيع بالفورم تحت وينمسح هذا التنبيه "
@@ -6523,19 +6532,19 @@ msgstr ""
 " record the sale in the form below and this reminder clears "
 "automatically; if it comes back unsold, use the next button."
 
-#: app/templates/animal_workflow.html:73
+#: app/templates/animal_workflow.html:74
 msgid "رجع للمزرعة بدون بيع"
 msgstr "Returned to farm unsold"
 
-#: app/templates/animal_workflow.html:78
+#: app/templates/animal_workflow.html:79
 msgid "ملاحظة (اختياري — مثلاً اسم السوق أو الموعد)"
 msgstr "Note (optional — e.g. market name or appointment)"
 
-#: app/templates/animal_workflow.html:79
+#: app/templates/animal_workflow.html:80
 msgid "طلّعها للسوق"
 msgstr "Send to market"
 
-#: app/templates/animal_workflow.html:81
+#: app/templates/animal_workflow.html:82
 msgid ""
 "اختياري تماماً — بس تذكير مرئي إنها خارج المزرعة، لحد ما ترجع تسجّل تحت "
 "\"تم البيع\" أو \"رجعت بدون بيع\"."
@@ -6543,31 +6552,31 @@ msgstr ""
 "Completely optional — just a visual reminder it's off the farm, until you"
 " come back and record \"sold\" or \"returned unsold\"."
 
-#: app/templates/animal_workflow.html:86
+#: app/templates/animal_workflow.html:87
 msgid "قرار الخروج"
 msgstr "Exit decision"
 
-#: app/templates/animal_workflow.html:90
+#: app/templates/animal_workflow.html:91
 msgid "بيع — السعر"
 msgstr "Sale — price"
 
-#: app/templates/animal_workflow.html:91 app/templates/animal_workflow.html:129
+#: app/templates/animal_workflow.html:92 app/templates/animal_workflow.html:130
 msgid "تاريخ البيع"
 msgstr "Sale date"
 
-#: app/templates/animal_workflow.html:92
+#: app/templates/animal_workflow.html:93
 msgid "اسم المشتري (اختياري — يظهر بالفاتورة)"
 msgstr "Buyer name (optional — appears on the invoice)"
 
-#: app/templates/animal_workflow.html:93
+#: app/templates/animal_workflow.html:94
 msgid "جوال المشتري (اختياري)"
 msgstr "Buyer phone (optional)"
 
-#: app/templates/animal_workflow.html:97
+#: app/templates/animal_workflow.html:98
 msgid "لا توجد فاتورة لهذا البيع (بيع نقدي غير رسمي)"
 msgstr "No invoice for this sale (informal cash sale)"
 
-#: app/templates/animal_workflow.html:101
+#: app/templates/animal_workflow.html:102
 #, python-format
 msgid ""
 "الرأس تحت فترة سحب دواء حتى %(d)s — البيع ممنوع افتراضياً. اكتب سبب "
@@ -6579,67 +6588,67 @@ msgstr ""
 "(e.g. emergency slaughter, or sale to a breeding farm not intended for "
 "human consumption)."
 
-#: app/templates/animal_workflow.html:102
+#: app/templates/animal_workflow.html:103
 msgid "سبب تجاوز فترة السحب"
 msgstr "Reason for overriding the withdrawal period"
 
-#: app/templates/animal_workflow.html:105
+#: app/templates/animal_workflow.html:106
 msgid "تسجيل البيع"
 msgstr "Record sale"
 
-#: app/templates/animal_workflow.html:109
+#: app/templates/animal_workflow.html:110
 msgid "نفوق — السبب"
 msgstr "Death — reason"
 
-#: app/templates/animal_workflow.html:110
+#: app/templates/animal_workflow.html:111
 msgid "تاريخ النفوق"
 msgstr "Death date"
 
-#: app/templates/animal_workflow.html:111
+#: app/templates/animal_workflow.html:112
 msgid "تسجيل النفوق"
 msgstr "Record death"
 
-#: app/templates/animal_workflow.html:113
+#: app/templates/animal_workflow.html:114
 msgid "تأكيد الأرشفة؟"
 msgstr "Confirm archiving?"
 
-#: app/templates/animal_workflow.html:115
+#: app/templates/animal_workflow.html:116
 msgid "أرشفة — السبب"
 msgstr "Archive — reason"
 
-#: app/templates/animal_workflow.html:116
+#: app/templates/animal_workflow.html:117
 msgid "تجاوز وجود عمليات مالية مرتبطة"
 msgstr "Override existing linked financial transactions"
 
-#: app/templates/animal_workflow.html:117
+#: app/templates/animal_workflow.html:118
 msgid "أرشفة"
 msgstr "Archive"
 
-#: app/templates/animal_workflow.html:125
+#: app/templates/animal_workflow.html:126
 msgid "بيانات البيع"
 msgstr "Sale data"
 
-#: app/templates/animal_workflow.html:130
+#: app/templates/animal_workflow.html:131
 msgid "المشتري"
 msgstr "Buyer"
 
-#: app/templates/animal_workflow.html:131
+#: app/templates/animal_workflow.html:132
 msgid "رقم الفاتورة"
 msgstr "Invoice number"
 
-#: app/templates/animal_workflow.html:136
+#: app/templates/animal_workflow.html:137
 msgid "لا توجد فاتورة لهذا البيع"
 msgstr "No invoice for this sale"
 
-#: app/templates/animal_workflow.html:138
+#: app/templates/animal_workflow.html:139
 msgid "تنزيل الفاتورة"
 msgstr "Download invoice"
 
-#: app/templates/animal_workflow.html:138
+#: app/templates/animal_workflow.html:139
 msgid "إصدار فاتورة"
 msgstr "Issue invoice"
 
-#: app/templates/animal_workflow.html:140
+#: app/templates/animal_workflow.html:141
 msgid ""
 "استرجاع البيع؟ الحيوان يرجع نشط وتُلغى العملية المالية (تبقى بالسجل "
 "للتدقيق)."
@@ -6647,32 +6656,32 @@ msgstr ""
 "Undo the sale? The animal returns to active status and the financial "
 "transaction is cancelled (it stays in the record for auditing)."
 
-#: app/templates/animal_workflow.html:142
+#: app/templates/animal_workflow.html:143
 msgid "استرجاع بيع من صفحة دورة الإنتاج"
 msgstr "Sale reversal from the production cycle page"
 
-#: app/templates/animal_workflow.html:143
+#: app/templates/animal_workflow.html:144
 msgid "استرجاع البيع"
 msgstr "Undo sale"
 
-#: app/templates/animal_workflow.html:151
+#: app/templates/animal_workflow.html:152
 msgid "سجل أحداث الدورة"
 msgstr "Cycle events log"
 
-#: app/templates/animal_workflow.html:154
+#: app/templates/animal_workflow.html:155
 msgid "الحدث"
 msgstr "Event"
 
-#: app/templates/animal_workflow.html:154 app/templates/animals_list.html:93
+#: app/templates/animal_workflow.html:155 app/templates/animals_list.html:93
 #: app/templates/batches/batches_list.html:14
 msgid "المرحلة"
 msgstr "Stage"
 
-#: app/templates/animal_workflow.html:154
+#: app/templates/animal_workflow.html:155
 msgid "المتطلب التالي"
 msgstr "Next requirement"
 
-#: app/templates/animal_workflow.html:164
+#: app/templates/animal_workflow.html:165
 msgid "لا يوجد أحداث مسجّلة بعد."
 msgstr "No events recorded yet."
 
