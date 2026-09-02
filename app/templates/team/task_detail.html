@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "team/_report_widgets.html" import voice_note_widget %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -68,6 +69,7 @@
     {% set exec_endpoint = {'vet_visit': 'health.vet_visits_new', 'disease': 'health.diseases_new', 'vaccination': 'health.vaccinations_new'}.get(task.planned_treatment_kind) %}
     {% if exec_endpoint %}
     <a class="btn" href="{{ url_for(exec_endpoint, task_id=task.id, animal_id=task.animal_id, pharmacy_id=task.planned_pharmacy_id, quantity_used=task.planned_quantity) }}">🩺 {{ _('تأكيد التنفيذ') }}</a>
+    {{ tip(_('يفتح فورم التسجيل الطبي الفعلي (تحصين/زيارة بيطرية/مرض) معبّى مسبقاً ببيانات هذي المهمة — راجعها وعدّل لو تحتاج، وبالحفظ يُخصَم الدواء من المخزون فعلياً.')) }}
     {% endif %}
     {% endif %}
 
@@ -87,6 +89,7 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn" type="submit">{{ _('بدء') }}</button>
     </form>
+    {{ tip(_('يسجّل وقت بدء التنفيذ فعلياً (يُستخدم لحساب "متوسط سرعة التنفيذ" بتقرير الأداء) ويحوّل حالة المهمة لـ"قيد التنفيذ" — بعدها يطلع لك قسم "إنجاز المهمة" تحت.')) }}
     {% endif %}
   </div>
 </div>

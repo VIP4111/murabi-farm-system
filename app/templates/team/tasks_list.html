@@ -7,6 +7,7 @@
     {% if current_user.has_permission('tasks.assign_any') %}
     <button type="button" class="btn" id="openAssignTaskModalBtn">+ {{ _('توزيع مهمة') }}</button>
     <a class="btn light" href="{{ url_for('team.daily_templates_list') }}">⚙️ {{ _('مهام العامل التلقائية') }}</a>
+    {{ tip(_('"توزيع مهمة" لتكليف عضو محدَّد بأمر واحد الآن (مرة وحدة). "مهام العامل التلقائية" مختلف — قائمة مهام متكررة كل يوم تلقائياً (تنظيف، فحص...) تقدر تضيف/توقف منها.')) }}
     {% endif %}
   </div>
   {% if current_user.has_permission('tasks.review_daily') %}
@@ -58,10 +59,10 @@
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('مهامي') }}</h3>
+  <h3 style="font-size:15px;">{{ _('مهامي') }} {{ tip(_('المهام اللي وُزّعت عليك بالاسم فقط — تلقائية بعد الاعتماد، أو مُعيَّنة يدوياً. اضغط "بدء" لبدء التنفيذ، وبعدها تقدر تحدّدها "تم الإنجاز" من صفحة تفاصيلها.')) }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
-    <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
+    <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }} {{ tip(_('تصنيف عام للمهمة (رعاية يومية، تحصين مستحق، تعقيم السرّة...) — للفرز والتقارير بس، ما يغيّر طريقة تنفيذها.')) }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
     <tbody id="myTasksBody">
     {% include "team/_my_tasks_rows.html" %}
     </tbody>
@@ -100,6 +101,7 @@
 <div class="card" id="suggested-tasks">
   <h3 style="font-size:15px;">{{ _('مهام مقترحة بانتظار الاعتماد') }}</h3>
   <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">{{ _('مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً.') }}</p>
+  <p style="color:var(--muted); font-size:11.5px; margin:0 0 6px;">{{ tip(_('فلترة الجدول تحت حسب الدور المستهدَف بالمهمة — اضغط أي تبويب لتشوف بس المهام المقترحة لذاك الدور، أو "الكل" لعرضها جميعاً.')) }} {{ _('اختر تبويب لفلترة القائمة حسب الدور.') }}</p>
   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
     {% for key, label in role_tabs %}
     <a class="tab-btn {{ 'active' if key == active_role }}" href="{{ url_for('team.tasks_list', role=key) }}">{{ label }}</a>
@@ -107,7 +109,7 @@
   </div>
   <div class="table-scroll">
 <table class="compact-table">
-    <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
+    <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الإجراءات') }} {{ tip(_('"اعتماد وإرسال" يوصل المهمة فوراً للمكلَّف بها. "تأجيل" يؤخّرها يوم واحد بس (تظهر لك تاني بكرة). "حذف" يمسحها — لو حذفها الدكتور، تروح لصندوق مراجعة المالك بدل ما تختفي نهائياً.')) }}</th></tr></thead>
     <tbody id="suggestedTasksBody">
     {% include "team/_suggested_tasks_rows.html" %}
     </tbody>
@@ -171,7 +173,7 @@
 
 <div class="card">
   <details class="drawer-group">
-    <summary>{{ _('مهام وزّعتها (نشطة)') }} <span style="color:var(--muted); font-weight:normal; font-size:12px;">({{ assigned_by_me|length }})</span></summary>
+    <summary>{{ _('مهام وزّعتها (نشطة)') }} {{ tip(_('المهام اللي وزّعتها أنت بنفسك يدوياً على أعضاء الفريق (زر "توزيع مهمة") — بعد إنجازها أو إلغائها تختفي من هنا.')) }} <span style="color:var(--muted); font-weight:normal; font-size:12px;">({{ assigned_by_me|length }})</span></summary>
   <div class="table-scroll" style="margin-top:8px;">
 <table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('المكلَّف') }}</th><th>{{ _('الموعد') }}</th><th>{{ _('الحالة') }}</th></tr></thead>
@@ -190,7 +192,7 @@
 
 {% if current_user.has_permission('tasks.delete_final') %}
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('صندوق مراجعة المالك (مهام محذوفة من الدكتور)') }}</h3>
+  <h3 style="font-size:15px;">{{ _('صندوق مراجعة المالك (مهام محذوفة من الدكتور)') }} {{ tip(_('حماية إضافية — حذف مهمة من الدكتور ما يمسحها نهائياً مباشرة، يحطها هنا بانتظارك. تقدر "تسترجعها" لو تراجع الدكتور، أو "تحذفها نهائياً" لو متأكد إنها مو لازمة.')) }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
     <thead><tr><th>{{ _('العنوان') }}</th><th>{{ _('السبب') }}</th><th>{{ _('الإجراءات') }}</th></tr></thead>
