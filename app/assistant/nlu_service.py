@@ -38,6 +38,34 @@ class Intent:
         return all(any(kw in normalized_text for kw in group) for group in self.normalized_groups)
 
 
+# بند إصلاح — نفس فئة الفجوة اللي عولجت بالفعل مع "vaccinations_due"
+# (سؤال "هل اقدر اسوي تحصين جماعي" كان يُفهم غلط كسؤال عن المستحق
+# الآن): كذا نيات ثانية عندها كلمة مفتاحية عامة قصيرة (تنبيه/حامل/علف)
+# تطابق أي جملة تحتوي الكلمة، حتى لو السؤال أصلاً "كيف أسوي/أضيف/أعدّل
+# كذا" — سؤال إجراء/إعداد، مو استعلام عن الحالة الحية. بدل تصحيح كل
+# نية لحالها بكلمات إضافية هشة، نضيف حارس عام: لو الجملة فيها معلَم
+# سؤال "كيف/هل اقدر" **مع** فعل إجراء ("أضيف"، "أسجل"، "أعدّل"...)
+# **وفيه** بند فعلي بقاعدة المعرفة يطابقها، نفضّل قاعدة المعرفة على
+# النيات المحلية — الشرط الأخير (وجود تطابق KB فعلي) يضمن إننا ما نكسر
+# أي سؤال حالة حقيقي (زي "هل اقدر اعرف كم راس عندي") لأنه ببساطة ما
+# يطابق أي بند بقاعدة المعرفة أصلاً، فيرجع يمشي بمسار النيات العادي.
+_HOWTO_QUESTION_MARKERS = [
+    "كيف", "how do i", "how can i",
+    "هل اقدر", "هل أقدر", "وين اقدر", "وين أقدر", "طريقة",
+]
+_HOWTO_ACTION_VERBS = [
+    "اضيف", "أضيف", "اسجل", "أسجل", "اعدل", "أعدل", "أعدّل",
+    "انشئ", "أنشئ", "اسوي", "أسوي", "اعمل", "أعمل", "احدث", "أحدث",
+    "add", "create", "register", "edit", "update",
+]
+
+
+def _looks_like_howto_action_question(normalized_text: str) -> bool:
+    has_marker = any(m in normalized_text for m in _HOWTO_QUESTION_MARKERS)
+    has_action_verb = any(v in normalized_text for v in _HOWTO_ACTION_VERBS)
+    return has_marker and has_action_verb
+
+
 def PERMISSION_DENIED_MSG(lang="ar"):
     return tr("permission_denied", lang)
 
@@ -313,6 +341,18 @@ def answer(user, message_text: str, lang: str | None = None) -> dict:
     المستخدم أصلاً بـ8 شاشات ميدانية)، مقيّد بـ{ar, en, am, hi}."""
     lang = lang or lang_for(user)
     normalized = normalize(message_text)
+
+    # سؤال إجراء/إعداد ("كيف أسجل...؟"، "هل اقدر أضيف...؟") وفيه بند
+    # فعلي بقاعدة المعرفة يطابقه — نجاوب منه مباشرة قبل النيات المحلية،
+    # عشان ما يختطفه بالغلط نية استعلام حالة عندها كلمة مفتاحية عامة
+    # (نفس فجوة "vaccinations_due" المُصلَحة). لو ما فيه تطابق KB فعلي،
+    # نكمل عادي بمسار النيات (صفر تغيير سلوك لأي سؤال حالة حقيقي).
+    if _looks_like_howto_action_question(normalized):
+        kb_hits = knowledge_base.search(normalized, limit=1)
+        if kb_hits:
+            entry = kb_hits[0]
+            title, body = knowledge_base.localized_entry(entry, lang)
+            return {"reply": f"**{title}**\n\n{body}", "intent_code": f"kb:{entry.code}", "answered_by": "local"}
 
     for intent in INTENTS:
         if intent.matches(normalized):
