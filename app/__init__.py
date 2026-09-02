@@ -116,6 +116,17 @@ def create_app(config_class=Config):
                 catch_up_daily_tasks_before_request()
             except Exception as e:
                 app.logger.warning("catch_up_daily_tasks_before_request failed: %s", e)
+                # بند إصلاح — "Internal Server Error" بعد ما السيرفر
+                # ينام فترة (Render المجاني) ويرجع يفوق: أول اتصال
+                # لقاعدة البيانات بعد الخمول أحياناً يفشل (Neon يقفل
+                # الاتصالات الخاملة تلقائياً). الفشل هنا كان يُبتلع
+                # صمتاً بـ`except` فوق — بس بدون `rollback()`، جلسة
+                # SQLAlchemy تبقى "معطوبة" (PendingRollbackError) لبقية
+                # هذا الطلب نفسه، فأي استعلام حقيقي بعدها بنفس الطلب
+                # (بالشاشة اللي طلبها المستخدم فعلياً) يفشل بخطأ سيرفر
+                # عام، رغم إن هذا الفحص التداركي نفسه مفروض غير حرج.
+                from app.extensions import db
+                db.session.rollback()
 
     # قيم `_l()` بدل نص عربي خام (بند إضافي 74، 2026-07-31) — عشان
     # ar_status/ar_task_type تترجم فعلياً للأمهرية/الهندية/الإنجليزية

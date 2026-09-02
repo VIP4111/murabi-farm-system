@@ -24,7 +24,16 @@ def test_adding_duplicate_active_template_title_is_rejected(app, logged_in_clien
 def test_two_active_templates_with_same_title_would_generate_duplicate_tasks(app):
     """يوثّق السبب الجذري نفسه — لو صار (بيانات قديمة قبل الإصلاح)
     قالبان فعّالان بنفس العنوان، يتولّد فعلياً مهمتان منفصلتان بنفس
-    اليوم؛ هذا ما يثبت إن المنع أعلاه ضروري فعلياً مو تحسين تجميلي."""
+    اليوم؛ هذا ما يثبت إن المنع أعلاه ضروري فعلياً مو تحسين تجميلي.
+
+    بند إصلاح — الاختبار كان يعتمد على `datetime.now()` الفعلي بدون
+    تثبيته: `generate_daily_husbandry_tasks` تولّد مهام الغد كمان لو
+    الساعة الحالية >= 18 (معاينة مسائية)، فتشغيل الاختبار مساءً كان
+    يعطي 6 مهام (3 أيام) بدل 2 المفترضة صباحاً — فشل متقطّع حسب وقت
+    التشغيل، مو خلل حقيقي بالمنطق. تثبيت `now` بساعة صباحية يخلي
+    النتيجة حتمية بغض النظر عن وقت تشغيل الاختبار."""
+    from datetime import datetime, date
+
     with app.app_context():
         from app.extensions import db
         db.session.add(DailyTaskTemplate(title="مهمة اختبار مكررة", sort_order=1))
@@ -33,7 +42,9 @@ def test_two_active_templates_with_same_title_would_generate_duplicate_tasks(app
 
         # الدالة تولّد مهام اليوم وأمس معاً (تغطية أي يوم فات بدون
         # فتح الشاشة) — يعني قالبان فعّالان بنفس العنوان = 4 مهام
-        # (2 لكل تاريخ)، مو 2 فقط.
-        created = daily_task_service.generate_daily_husbandry_tasks()
+        # (2 لكل تاريخ)، مو 2 فقط. ساعة صباحية ثابتة (10 صباحاً) تمنع
+        # تفعيل مهام الغد المسائية وتخلي النتيجة حتمية.
+        morning_now = datetime.combine(date.today(), datetime.min.time()).replace(hour=10)
+        created = daily_task_service.generate_daily_husbandry_tasks(now=morning_now)
         titles = [t.title for t in created if t.title == "مهمة اختبار مكررة"]
         assert len(titles) == 4

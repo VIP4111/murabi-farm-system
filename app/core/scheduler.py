@@ -51,6 +51,12 @@ def _generate_if_needed_today():
         # يختفي بلا أثر إطلاقاً، حتى بسجلات السيرفر.
         from flask import current_app
         current_app.logger.warning("daily_email_report_service failed: %s", e)
+        # بند إصلاح — نفس فئة خلل PendingRollbackError المُصلَح بـ
+        # `catch_up_daily_tasks_before_request`: لو الفشل هنا كان
+        # اتصال قاعدة بيانات (سيرفر رجع من نوم Render)، لازم `rollback()`
+        # صريح قبل ما نكمل — وإلا الجلسة تبقى معطوبة لبقية هذي الدالة
+        # (توليد المهام أو تقرير تيليجرام تحت).
+        db.session.rollback()
 
     # ملخص يومي موحّد بتيليجرام (بند إضافي 238) — نفس الحارس والفلسفة،
     # قناة مستقلة عن البريد فوق (حارسها الخاص last_daily_telegram_report_sent).
@@ -60,6 +66,7 @@ def _generate_if_needed_today():
     except Exception as e:
         from flask import current_app
         current_app.logger.warning("daily_telegram_report_service failed: %s", e)
+        db.session.rollback()
 
 
 def _run_daily_tasks_job(app):
