@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:420px;">
   <h2>{{ _('أصل جديد') }}</h2>
@@ -18,7 +19,7 @@
       <option value="">-</option>
       {% for b in barns %}<option value="{{ b.id }}">{{ b.barn_name }}</option>{% endfor %}
     </select>
-    <label>{{ _('فترة الصيانة الدورية (يوم، اتركه فاضي لو ما فيه جدولة)') }}</label>
+    <label>{{ _('فترة الصيانة الدورية (يوم، اتركه فاضي لو ما فيه جدولة)') }} {{ tip(_('لو حدّدت رقماً، النظام يذكّرك تلقائياً بمهمة صيانة كل ما تمر هذي المدة من آخر صيانة مسجَّلة على هذا الأصل.')) }}</label>
     <input name="maintenance_interval_days" type="number" min="1" placeholder="{{ _('مثال: 90') }}">
     <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
     <button class="btn" type="submit">{{ _('حفظ') }}</button>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>{{ _('تسجيل بيضة نعام') }}</h2>
@@ -12,7 +13,7 @@
       {% for m in mothers %}<option value="{{ m.id }}">{{ m.animal_no }}{{ ' — ' + m.name if m.name }}</option>{% endfor %}
     </select>
     <label>{{ _('تاريخ البيض') }}</label><input name="lay_date" type="date" required value="{{ today }}">
-    <label>{{ _('الجودة') }}</label>
+    <label>{{ _('الجودة') }} {{ tip(_('تقييمك الشكلي للبيضة (النظافة، السلامة الظاهرية، الحجم) — يساعدك تقرر أي بيضة تدخل الحاضنة، وليس له علاقة بنجاح الفقس فعلياً.')) }}</label>
     <select name="quality">
       <option value="">{{ _('غير محدد') }}</option>
       <option value="ممتاز">{{ _('ممتاز') }}</option>
