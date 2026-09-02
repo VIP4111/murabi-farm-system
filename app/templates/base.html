@@ -789,20 +789,33 @@
         });
       }
 
-      document.addEventListener('DOMContentLoaded', function(){ enhanceDateInputs(document); });
-      // بعض الفورمات (شراء دفعة، إجراء جماعي...) تضيف صفوف حيوانات
-      // جديدة ديناميكياً بعد تحميل الصفحة — كل صف جديد يجيب معه حقل
-      // تاريخ جديد يحتاج نفس التغليف. مراقب DOM عام بدل تعديل كل زر
-      // "إضافة صف" بكل قالب على حدة.
-      new MutationObserver(function(mutations){
-        mutations.forEach(function(m){
-          m.addedNodes.forEach(function(node){
-            if (node.nodeType !== 1) return;
-            if (node.matches && node.matches('input[type="date"]')) enhanceDateInputs(node.parentNode);
-            else if (node.querySelectorAll) enhanceDateInputs(node);
+      document.addEventListener('DOMContentLoaded', function(){
+        enhanceDateInputs(document);
+        // بعض الفورمات (شراء دفعة، إجراء جماعي...) تضيف صفوف حيوانات
+        // جديدة ديناميكياً بعد تحميل الصفحة — كل صف جديد يجيب معه حقل
+        // تاريخ جديد يحتاج نفس التغليف. مراقب DOM عام بدل تعديل كل زر
+        // "إضافة صف" بكل قالب على حدة.
+        //
+        // بند إضافي (2026-09-02، حادثة حقيقية: "حصلت الفقعة لكن ما
+        // يطلع شرح منها بعد اضغط") — هذا السطر كان خارج DOMContentLoaded
+        // ويشتغل فوراً وقت تفسير السكربت بـ<head>، قبل ما <body> يوجد
+        // أصلاً بالـDOM — document.body يرجّع null بهذي اللحظة، فـ
+        // .observe(null, ...) يرمي خطأ فوري (TypeError). الخطأ يوقف
+        // تنفيذ باقي هذا الـ<script> بالكامل (مو بس هذا السطر) — يعني
+        // أي كود مكتوب بعده بنفس الوسم (زي معالج نقر التلميحات
+        // .info-tip بالأسفل) ما كان يوصله الدور إطلاقاً، بصمت تام
+        // بدون أي أثر ظاهر بالواجهة. النقل هنا لـDOMContentLoaded يضمن
+        // وجود document.body فعلياً وقت الاستدعاء.
+        new MutationObserver(function(mutations){
+          mutations.forEach(function(m){
+            m.addedNodes.forEach(function(node){
+              if (node.nodeType !== 1) return;
+              if (node.matches && node.matches('input[type="date"]')) enhanceDateInputs(node.parentNode);
+              else if (node.querySelectorAll) enhanceDateInputs(node);
+            });
           });
-        });
-      }).observe(document.body, {childList: true, subtree: true});
+        }).observe(document.body, {childList: true, subtree: true});
+      });
     })();
 
     // تلميح مساعد مصغّر (راجع .info-tip CSS أعلاه) — يفتح/يقفل
