@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:420px;">
   <h2>{{ _('تعديل صنف') if item else _('صنف معدات جديد') }}</h2>
@@ -11,7 +12,8 @@
     <label>{{ _('الفئة (اختياري)') }}</label><input name="category" value="{{ item.category if item else '' }}" placeholder="{{ _('مثال: أدوات يدوية، أجهزة، قطع غيار') }}">
     <label>{{ _('الوحدة') }}</label><input name="unit" value="{{ item.unit if item else 'قطعة' }}">
     <label>{{ _('الكمية المتوفرة حالياً') }}</label><input name="available_qty" type="number" step="any" value="{{ item.available_qty if item else 0 }}">
-    <label>{{ _('الحد الأدنى للتنبيه') }}</label><input name="min_stock_qty" type="number" step="any" value="{{ item.min_stock_qty if item else 0 }}">
+    <label>{{ _('الحد الأدنى للتنبيه') }} {{ tip(_('لما تنزل الكمية المتوفرة لهذا الرقم أو أقل، يطلعك تنبيه بحاجتك تجدّد المخزون قبل ما ينفد فعلياً.')) }}</label>
+    <input name="min_stock_qty" type="number" step="any" value="{{ item.min_stock_qty if item else 0 }}">
     <label>{{ _('سعر الوحدة (اختياري)') }}</label><input name="unit_price" type="number" step="any" value="{{ item.unit_price if item and item.unit_price else '' }}">
     <label>{{ _('ملاحظات (اختياري)') }}</label><textarea name="notes" rows="2">{{ item.notes if item else '' }}</textarea>
     {% if item and item.needs_maintenance %}

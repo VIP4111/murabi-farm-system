@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>{{ _('تشخيص حمل جديد') }}</h2>
@@ -16,6 +17,7 @@
       {% for m in matings %}<option value="{{ m.id }}">{{ m.female.animal_no }} — {{ m.date }}</option>{% endfor %}
     </select>
     <label><input name="confirmed" type="checkbox" style="width:auto; display:inline-block;"> {{ _('مؤكّد؟') }}</label>
+    {{ tip(_('أشّرها لو متأكد فعلياً من الحمل (فحص يدوي واضح أو سونار مؤكَّد) — هذا هو اللي يفعّل متابعة الحمل التلقائية. اتركها فاضية لو النتيجة لسا غير قاطعة.')) }}
     <label>{{ _('تاريخ السونار') }}</label><input name="sonar_date" type="date">
     <label>{{ _('عدد الأجنّة') }}</label><input name="embryo_count" type="number">
     <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>

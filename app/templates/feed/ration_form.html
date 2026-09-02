@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:500px;">
   <h2>{{ _('وصفة علف جديدة') }}</h2>
   <form method="post" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('الاسم') }}</label><input name="name" required placeholder="{{ _('مثال: علائق نفاس') }}">
-    <label>{{ _('الغرض') }}</label>
+    <label>{{ _('الغرض') }} {{ tip(_('المرحلة الفسيولوجية اللي بُنيت لها هذي الوصفة — يفيدك لاحقاً تلقى الوصفة المناسبة بسرعة لما تعبّي خطة تغذية حظيرة معيّنة.')) }}</label>
     <select name="purpose">
       <option value="">-</option>
       <option value="نمو">{{ _('نمو') }}</option>
@@ -15,7 +16,7 @@
       <option value="صيانة">{{ _('صيانة') }}</option>
     </select>
 
-    <h3 style="font-size:14px; margin-top:16px;">{{ _('المكوّنات (النسب من إجمالي وزن الوصفة)') }}</h3>
+    <h3 style="font-size:14px; margin-top:16px;">{{ _('المكوّنات (النسب من إجمالي وزن الوصفة)') }} {{ tip(_('كل صف = صنف علف ونسبته من إجمالي وزن الوجبة (مو الكمية بالكيلو). مجموع كل النسب المفروض يقارب 100%%.')) }}</h3>
     {% for i in slots %}
     <div style="display:flex; gap:8px; align-items:center;">
       <select name="feed_id_{{ i }}" style="flex:2;">
@@ -28,8 +29,11 @@
     <p style="font-size:12px; color:#888;">{{ _('اترك أي صف فاضي لو ما تحتاجه. مجموع النسب المفروض يقارب 100%%.') }}</p>
 
     <label>{{ _('ملاحظات') }}</label><textarea name="notes" rows="2"></textarea>
-    <label>{{ _('سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)') }}</label>
-    <textarea name="ratio_override_reason" rows="2" placeholder="{{ _('املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب') }}"></textarea>
+    <details class="drawer-group">
+      <summary>{{ _('سبب تجاوز (نادر الاستخدام)') }}</summary>
+      <p style="color:var(--muted); font-size:12px; margin:4px 0 8px;">{{ _('اتركه فاضياً بالحالات العادية — يلزم بس لو رجعت الشاشة بتحذير نسبة الكالسيوم:الفسفور.') }}</p>
+      <textarea name="ratio_override_reason" rows="2" placeholder="{{ _('اكتب السبب') }}"></textarea>
+    </details>
     <button class="btn" type="submit">{{ _('حفظ') }}</button>
   </form>
 </div>

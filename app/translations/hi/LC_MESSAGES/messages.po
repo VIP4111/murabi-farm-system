@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 09:58+0300\n"
+"POT-Creation-Date: 2026-09-02 11:03+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -279,7 +279,7 @@ msgstr "बीमारी"
 msgid "مشكلة"
 msgstr "समस्या"
 
-#: app/__init__.py:249 app/templates/feed/ration_form.html:15
+#: app/__init__.py:249 app/templates/feed/ration_form.html:16
 msgid "صيانة"
 msgstr "रखरखाव"
 
@@ -584,7 +584,7 @@ msgstr "टीकाकरण दर्ज करें"
 msgid "إضافة جدول تحصين"
 msgstr "टीकाकरण अनुसूची जोड़ें"
 
-#: app/__init__.py:335 app/templates/health/vet_visit_form.html:5
+#: app/__init__.py:335 app/templates/health/vet_visit_form.html:6
 msgid "تسجيل زيارة بيطرية"
 msgstr "पशु चिकित्सक यात्रा दर्ज करें"
 
@@ -3366,16 +3366,16 @@ msgstr "%(field)s नकारात्मक संख्या नहीं �
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:19
 #: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:12
+#: app/templates/health/vaccination_form.html:13
 #: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:12
+#: app/templates/health/vet_visit_form.html:13
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
 #: app/templates/repro/mating_form.html:24
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
-#: app/templates/repro/pregnancy_form.html:8
+#: app/templates/repro/pregnancy_form.html:9
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:38
@@ -4438,9 +4438,9 @@ msgstr "मद"
 #: app/templates/health/dashboard.html:64
 #: app/templates/health/disease_form.html:20
 #: app/templates/health/diseases_list.html:14
-#: app/templates/health/vaccination_form.html:13
+#: app/templates/health/vaccination_form.html:14
 #: app/templates/health/vaccinations_list.html:10
-#: app/templates/health/vet_visit_form.html:13
+#: app/templates/health/vet_visit_form.html:14
 #: app/templates/health/vet_visits_list.html:10
 #: app/templates/team/report_detail.html:13
 msgid "الحيوان"
@@ -4555,7 +4555,7 @@ msgstr "वर्तमान स्टॉक"
 msgid "الكمية المقترح شراؤها"
 msgstr "सुझाई गई खरीद मात्रा"
 
-#: app/reports/report_service.py:478 app/templates/equipment/item_form.html:12
+#: app/reports/report_service.py:478 app/templates/equipment/item_form.html:13
 #: app/templates/feed/item_form.html:29
 #: app/templates/health/pharmacy_form.html:127
 msgid "الوحدة"
@@ -5477,15 +5477,15 @@ msgstr "दूध"
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:16
-#: app/templates/feed/barn_plan_form.html:18
+#: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:39
 #: app/templates/feed/ration_detail.html:13
-#: app/templates/feed/ration_form.html:30
+#: app/templates/feed/ration_form.html:31
 #: app/templates/finance/lot_form.html:26
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/pharmacy_form.html:147
 #: app/templates/health/vaccination_schedule_list.html:13
-#: app/templates/health/vet_visit_form.html:33
+#: app/templates/health/vet_visit_form.html:38
 #: app/templates/isolation_exit_form.html:25
 #: app/templates/ostrich/egg_form.html:24
 #: app/templates/ostrich/incubator_form.html:10
@@ -5494,10 +5494,10 @@ msgstr "दूध"
 #: app/templates/repro/device_form.html:12
 #: app/templates/repro/injection_form.html:14
 #: app/templates/repro/mating_form.html:45
-#: app/templates/repro/pregnancy_form.html:21
+#: app/templates/repro/pregnancy_form.html:23
 #: app/templates/repro/program_detail.html:17
 #: app/templates/repro/program_form.html:35
-#: app/templates/repro/sonar_form.html:34
+#: app/templates/repro/sonar_form.html:36
 msgid "ملاحظات"
 msgstr "टिप्पणियां"
 
@@ -5507,7 +5507,7 @@ msgstr "मूल डेटा"
 
 #: app/templates/animal_detail.html:133 app/templates/animal_form.html:115
 #: app/templates/feed/ration_detail.html:7
-#: app/templates/feed/ration_form.html:8
+#: app/templates/feed/ration_form.html:9
 #: app/templates/feed/rations_list.html:10
 msgid "الغرض"
 msgstr "उद्देश्य"
@@ -5523,7 +5523,7 @@ msgstr "फार्म प्रवेश तिथि"
 #: app/templates/animal_detail.html:139 app/templates/animal_form.html:123
 #: app/templates/animals_list.html:92
 #: app/templates/equipment/assets_list.html:14
-#: app/templates/feed/barn_plan_form.html:7
+#: app/templates/feed/barn_plan_form.html:8
 #: app/templates/feed/barn_plans_list.html:10
 #: app/templates/feed/fcr_report.html:16
 #: app/templates/health/vaccination_schedule_form.html:7
@@ -5636,31 +5636,31 @@ msgstr ""
 #: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:16
-#: app/templates/equipment/item_form.html:23
+#: app/templates/equipment/item_form.html:25
 #: app/templates/equipment/purchase_form.html:21
 #: app/templates/equipment/utility_form.html:17
-#: app/templates/feed/barn_plan_form.html:21
+#: app/templates/feed/barn_plan_form.html:27
 #: app/templates/feed/item_form.html:40
 #: app/templates/feed/movement_form.html:33
 #: app/templates/feed/purchase_form.html:22
-#: app/templates/feed/ration_form.html:33 app/templates/finance/form.html:53
+#: app/templates/feed/ration_form.html:37 app/templates/finance/form.html:53
 #: app/templates/health/disease_form.html:50
 #: app/templates/health/disease_new_simple.html:75
 #: app/templates/health/disease_type_detail.html:41
 #: app/templates/health/disease_type_form.html:12
 #: app/templates/health/doctor_form.html:17
 #: app/templates/health/pharmacy_form.html:148
-#: app/templates/health/vaccination_form.html:29
-#: app/templates/health/vet_visit_form.html:34
+#: app/templates/health/vaccination_form.html:35
+#: app/templates/health/vet_visit_form.html:39
 #: app/templates/ostrich/egg_form.html:25
 #: app/templates/ostrich/incubator_form.html:11
 #: app/templates/repro/attempt_form.html:22
 #: app/templates/repro/device_form.html:13
 #: app/templates/repro/injection_form.html:15
 #: app/templates/repro/mating_form.html:61
-#: app/templates/repro/pregnancy_form.html:23
+#: app/templates/repro/pregnancy_form.html:25
 #: app/templates/repro/program_form.html:37
-#: app/templates/repro/sonar_form.html:36 app/templates/settings.html:47
+#: app/templates/repro/sonar_form.html:38 app/templates/settings.html:47
 #: app/templates/team/member_edit_form.html:46
 #: app/templates/team/member_form.html:29
 #: app/templates/team/salaries_list.html:19
@@ -5695,15 +5695,15 @@ msgstr "पशु चिकित्सक यात्राएं"
 
 #: app/templates/animal_detail.html:257
 #: app/templates/finance/health_view.html:14
-#: app/templates/health/vet_visit_form.html:17
+#: app/templates/health/vet_visit_form.html:18
 #: app/templates/health/vet_visits_list.html:10
-#: app/templates/repro/sonar_form.html:28
+#: app/templates/repro/sonar_form.html:30
 msgid "الطبيب"
 msgstr "डॉक्टर"
 
 #: app/templates/animal_detail.html:257
 #: app/templates/finance/health_view.html:14
-#: app/templates/health/vet_visit_form.html:21
+#: app/templates/health/vet_visit_form.html:22
 #: app/templates/health/vet_visits_list.html:10
 msgid "التشخيص"
 msgstr "निदान"
@@ -5714,7 +5714,7 @@ msgstr "निदान"
 #: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:49
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
-#: app/templates/health/vet_visit_form.html:29
+#: app/templates/health/vet_visit_form.html:31
 #: app/templates/health/vet_visits_list.html:10
 msgid "التكلفة"
 msgstr "लागत"
@@ -5850,7 +5850,7 @@ msgstr "सोनार जांचें"
 #: app/templates/feed/calculator.html:35
 #: app/templates/repro/pregnancies_list.html:10
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_form.html:19
+#: app/templates/repro/sonar_form.html:21
 #: app/templates/repro/sonar_list.html:10
 msgid "النتيجة"
 msgstr "परिणाम"
@@ -6204,7 +6204,7 @@ msgid "تربية"
 msgstr "प्रजनन"
 
 #: app/templates/animal_form.html:119 app/templates/bulk_action_form.html:288
-#: app/templates/feed/ration_form.html:14
+#: app/templates/feed/ration_form.html:15
 #: app/templates/onboarding/checklist.html:12
 msgid "تسمين"
 msgstr "मोटा करना"
@@ -6268,10 +6268,10 @@ msgstr "अतिरिक्त विवरण (वैकल्पिक)"
 #: app/templates/bulk_action_form.html:455
 #: app/templates/equipment/asset_form.html:7
 #: app/templates/equipment/assets_list.html:14
-#: app/templates/equipment/item_form.html:7
+#: app/templates/equipment/item_form.html:8
 #: app/templates/equipment/items_list.html:14
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:13
-#: app/templates/feed/ration_form.html:7
+#: app/templates/feed/ration_form.html:8
 #: app/templates/feed/rations_list.html:10
 #: app/templates/finance/lots_list.html:17
 #: app/templates/health/disease_types_list.html:23
@@ -6342,7 +6342,7 @@ msgstr ""
 " है — यदि खाली है, तो अरबी नाम हमेशा की तरह सभी को दिखता रहेगा।"
 
 #: app/templates/animal_option_form.html:15
-#: app/templates/equipment/item_form.html:23
+#: app/templates/equipment/item_form.html:25
 #: app/templates/health/drug_catalog_form.html:16
 #: app/templates/health/symptom_form.html:14
 #: app/templates/team/report_form.html:16
@@ -6923,11 +6923,11 @@ msgstr "सामान्य"
 msgid "عزل"
 msgstr "अलगाव"
 
-#: app/templates/barn_form.html:16 app/templates/feed/ration_form.html:12
+#: app/templates/barn_form.html:16 app/templates/feed/ration_form.html:13
 msgid "نفاس"
 msgstr "प्रसवोत्तर"
 
-#: app/templates/barn_form.html:17 app/templates/feed/ration_form.html:11
+#: app/templates/barn_form.html:17 app/templates/feed/ration_form.html:12
 msgid "نمو"
 msgstr "वृद्धि"
 
@@ -7591,7 +7591,7 @@ msgstr "फार्मेसी से दवा (वैकल्पिक)"
 
 #: app/templates/bulk_action_form.html:362
 #: app/templates/health/disease_form.html:37
-#: app/templates/health/vet_visit_form.html:24
+#: app/templates/health/vet_visit_form.html:26
 msgid "بدون دواء"
 msgstr "बिना दवा"
 
@@ -7642,12 +7642,12 @@ msgid "بدون تحديد"
 msgstr "अनिर्दिष्ट"
 
 #: app/templates/bulk_action_form.html:417
-#: app/templates/repro/sonar_form.html:22
+#: app/templates/repro/sonar_form.html:24
 msgid "حامل"
 msgstr "गर्भवती"
 
 #: app/templates/bulk_action_form.html:418
-#: app/templates/repro/sonar_form.html:23
+#: app/templates/repro/sonar_form.html:25
 msgid "غير حامل"
 msgstr "गर्भवती नहीं"
 
@@ -9475,7 +9475,7 @@ msgid "تاريخ الوصول"
 msgstr "आगमन तिथि"
 
 #: app/templates/batches/batch_form.html:17
-#: app/templates/equipment/item_form.html:16
+#: app/templates/equipment/item_form.html:18
 #: app/templates/health/disease_type_form.html:11
 #: app/templates/health/pharmacy_purchase_form.html:22
 #: app/templates/health/vaccination_schedule_form.html:40
@@ -9774,45 +9774,53 @@ msgstr "रखरखाव लॉग"
 msgid "ما فيه أصول مسجّلة بعد."
 msgstr "अभी तक कोई संपत्ति दर्ज नहीं है।"
 
-#: app/templates/equipment/item_form.html:4
+#: app/templates/equipment/item_form.html:5
 msgid "تعديل صنف"
 msgstr "वस्तु संपादित करें"
 
-#: app/templates/equipment/item_form.html:4
+#: app/templates/equipment/item_form.html:5
 msgid "صنف معدات جديد"
 msgstr "नई उपकरण वस्तु"
 
-#: app/templates/equipment/item_form.html:8
+#: app/templates/equipment/item_form.html:9
 msgid "صورة الصنف (اختياري) — تظهر بشاشة العامل عشان يميّزها بسهولة"
 msgstr ""
 "आइटम की तस्वीर (वैकल्पिक) — पहचानने में आसानी के लिए वर्कर स्क्रीन पर "
 "दिखती है"
 
-#: app/templates/equipment/item_form.html:11
+#: app/templates/equipment/item_form.html:12
 msgid "الفئة (اختياري)"
 msgstr "श्रेणी (वैकल्पिक)"
 
-#: app/templates/equipment/item_form.html:11
+#: app/templates/equipment/item_form.html:12
 msgid "مثال: أدوات يدوية، أجهزة، قطع غيار"
 msgstr "उदाहरण: हाथ के औजार, उपकरण, कल-पुर्जे"
 
-#: app/templates/equipment/item_form.html:13
+#: app/templates/equipment/item_form.html:14
 msgid "الكمية المتوفرة حالياً"
 msgstr "वर्तमान उपलब्ध मात्रा"
 
-#: app/templates/equipment/item_form.html:14
+#: app/templates/equipment/item_form.html:15
 #: app/templates/feed/item_form.html:38
 #: app/templates/health/pharmacy_form.html:138
 msgid "الحد الأدنى للتنبيه"
 msgstr "न्यूनतम स्टॉक चेतावनी सीमा"
 
 #: app/templates/equipment/item_form.html:15
+msgid ""
+"لما تنزل الكمية المتوفرة لهذا الرقم أو أقل، يطلعك تنبيه بحاجتك تجدّد "
+"المخزون قبل ما ينفد فعلياً."
+msgstr ""
+"जब उपलब्ध मात्रा इस संख्या या उससे कम हो जाए, तो आपको स्टॉक खत्म होने से "
+"पहले उसे फिर से भरने की ज़रूरत की चेतावनी मिलती है।"
+
+#: app/templates/equipment/item_form.html:17
 #: app/templates/health/pharmacy_form.html:140
 #: app/templates/health/pharmacy_purchase_form.html:18
 msgid "سعر الوحدة (اختياري)"
 msgstr "इकाई मूल्य (वैकल्पिक)"
 
-#: app/templates/equipment/item_form.html:20
+#: app/templates/equipment/item_form.html:22
 msgid "تحتاج صيانة (بيّن هذا الخيار فاضي بعد ما تصلحها فعلياً)"
 msgstr "मरम्मत चाहिए (वास्तव में ठीक होने के बाद इसे अनचेक करें)"
 
@@ -10099,37 +10107,65 @@ msgstr "इकाई (वैकल्पिक)"
 msgid "مثال: م³ أو ك.و.س"
 msgstr "उदाहरण: m³ या kWh"
 
-#: app/templates/feed/barn_plan_form.html:4
+#: app/templates/feed/barn_plan_form.html:5
 msgid "خطة تغذية جديدة"
 msgstr "नई आहार योजना"
 
-#: app/templates/feed/barn_plan_form.html:11
+#: app/templates/feed/barn_plan_form.html:12
 #: app/templates/feed/barn_plans_list.html:10
 #: app/templates/feed/calculator.html:50
 msgid "الوصفة"
 msgstr "राशन"
 
-#: app/templates/feed/barn_plan_form.html:15
+#: app/templates/feed/barn_plan_form.html:16
 msgid "الكمية اليومية لكل رأس (كجم)"
 msgstr "प्रति पशु दैनिक मात्रा (किग्रा)"
 
 #: app/templates/feed/barn_plan_form.html:16
+msgid ""
+"كمية العلف بالكيلو لرأس واحد باليوم — النظام يضربها بعدد رؤوس الحظيرة "
+"الفعلي عشان يحسب الاستهلاك الكلي اليومي."
+msgstr ""
+"एक पशु के लिए प्रतिदिन किलो में चारे की मात्रा — सिस्टम कुल दैनिक खपत की "
+"गणना के लिए इसे बाड़े की वास्तविक पशु संख्या से गुणा करता है।"
+
+#: app/templates/feed/barn_plan_form.html:18
 #: app/templates/team/travel_history.html:12
 msgid "تاريخ البداية"
 msgstr "आरंभ तिथि"
 
-#: app/templates/feed/barn_plan_form.html:17
+#: app/templates/feed/barn_plan_form.html:19
 msgid "تاريخ النهاية (اختياري)"
 msgstr "समाप्ति तिथि (वैकल्पिक)"
 
 #: app/templates/feed/barn_plan_form.html:19
-msgid "سبب التجاوز (لو ظهر تحذير زيادة مفاجئة بالمركزات)"
-msgstr "अधिलेखन कारण (यदि सांद्रण में अचानक वृद्धि की चेतावनी दिखे)"
+msgid ""
+"اتركه فاضياً لو الخطة مستمرة بدون تاريخ نهاية معروف — تقدر تنهيها لاحقاً "
+"بأي وقت."
+msgstr ""
+"यदि योजना बिना किसी ज्ञात समाप्ति तिथि के जारी है तो इसे खाली छोड़ें — आप"
+" इसे बाद में कभी भी समाप्त कर सकते हैं।"
 
-#: app/templates/feed/barn_plan_form.html:20
-#: app/templates/feed/ration_form.html:32
-msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب"
-msgstr "केवल तभी भरें जब स्क्रीन ने चेतावनी दी हो — कारण लिखें"
+#: app/templates/feed/barn_plan_form.html:23
+#: app/templates/feed/ration_form.html:33
+#: app/templates/health/disease_form.html:46
+#: app/templates/health/vaccination_form.html:31
+#: app/templates/health/vet_visit_form.html:34
+msgid "سبب تجاوز (نادر الاستخدام)"
+msgstr "अपवाद कारण (शायद ही उपयोग होता है)"
+
+#: app/templates/feed/barn_plan_form.html:24
+msgid ""
+"اتركه فاضياً بالحالات العادية — يلزم بس لو رجعت الشاشة بتحذير زيادة "
+"مفاجئة بالمركزات."
+msgstr ""
+"सामान्य स्थितियों में इसे खाली छोड़ें — केवल तभी ज़रूरी जब स्क्रीन ने "
+"अचानक सांद्रित चारा वृद्धि की चेतावनी दी हो।"
+
+#: app/templates/feed/barn_plan_form.html:25
+#: app/templates/feed/ration_form.html:35
+msgid "اكتب السبب"
+msgstr "कारण लिखें"
 
 #: app/templates/feed/barn_plans_list.html:6
 msgid "خطة جديدة"
@@ -10571,8 +10607,8 @@ msgstr "किग्रा/"
 #: app/templates/health/pharmacy_list.html:20
 #: app/templates/health/protocol_apply_form.html:7
 #: app/templates/health/protocol_form.html:21
-#: app/templates/health/vaccination_form.html:22
-#: app/templates/health/vet_visit_form.html:25
+#: app/templates/health/vaccination_form.html:24
+#: app/templates/health/vet_visit_form.html:27
 msgid "يوم"
 msgstr "दिन"
 
@@ -10725,32 +10761,53 @@ msgstr "प्रति किग्रा लागत"
 msgid "ما فيه مكوّنات."
 msgstr "कोई घटक नहीं है।"
 
-#: app/templates/feed/ration_form.html:4
+#: app/templates/feed/ration_form.html:5
 msgid "وصفة علف جديدة"
 msgstr "नया चारा राशन"
 
-#: app/templates/feed/ration_form.html:7
+#: app/templates/feed/ration_form.html:8
 msgid "مثال: علائق نفاس"
 msgstr "उदाहरण: प्रसवोत्तर राशन"
 
-#: app/templates/feed/ration_form.html:13
+#: app/templates/feed/ration_form.html:9
+msgid ""
+"المرحلة الفسيولوجية اللي بُنيت لها هذي الوصفة — يفيدك لاحقاً تلقى الوصفة "
+"المناسبة بسرعة لما تعبّي خطة تغذية حظيرة معيّنة."
+msgstr ""
+"वह शारीरिक अवस्था जिसके लिए यह राशन बनाया गया है — बाद में किसी खास बाड़े"
+" के लिए आहार योजना बनाते समय सही राशन जल्दी ढूँढने में मदद करता है।"
+
+#: app/templates/feed/ration_form.html:14
 msgid "حمل متأخر"
 msgstr "देर से गर्भावस्था"
 
-#: app/templates/feed/ration_form.html:18
+#: app/templates/feed/ration_form.html:19
 msgid "المكوّنات (النسب من إجمالي وزن الوصفة)"
 msgstr "सामग्री (राशन के कुल वजन का प्रतिशत)"
 
-#: app/templates/feed/ration_form.html:28
+#: app/templates/feed/ration_form.html:19
+#, python-format
+msgid ""
+"كل صف = صنف علف ونسبته من إجمالي وزن الوجبة (مو الكمية بالكيلو). مجموع كل"
+" النسب المفروض يقارب 100%%."
+msgstr ""
+"हर पंक्ति = एक चारा किस्म और कुल राशन वज़न में उसका प्रतिशत (किलो में "
+"मात्रा नहीं)। सभी प्रतिशतों का योग लगभग 100%% होना चाहिए।"
+
+#: app/templates/feed/ration_form.html:29
 #, python-format
 msgid "اترك أي صف فاضي لو ما تحتاجه. مجموع النسب المفروض يقارب 100%%."
 msgstr ""
 "जिस पंक्ति की ज़रूरत नहीं उसे खाली छोड़ें। कुल प्रतिशत लगभग 100%% होना "
 "चाहिए।"
 
-#: app/templates/feed/ration_form.html:31
-msgid "سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)"
-msgstr "अधिलेखन कारण (यदि कैल्शियम:फास्फोरस अनुपात की चेतावनी दिखे)"
+#: app/templates/feed/ration_form.html:34
+msgid ""
+"اتركه فاضياً بالحالات العادية — يلزم بس لو رجعت الشاشة بتحذير نسبة "
+"الكالسيوم:الفسفور."
+msgstr ""
+"सामान्य स्थितियों में इसे खाली छोड़ें — केवल तभी ज़रूरी जब स्क्रीन ने "
+"कैल्शियम:फॉस्फोरस अनुपात चेतावनी दी हो।"
 
 #: app/templates/feed/rations_list.html:5
 msgid "وصفات العلف"
@@ -10974,7 +11031,7 @@ msgid "مرتبطة بحيوان (اختياري)"
 msgstr "पशु से जुड़ा (वैकल्पिक)"
 
 #: app/templates/finance/form.html:45
-#: app/templates/health/vaccination_form.html:21
+#: app/templates/health/vaccination_form.html:23
 msgid "بدون ربط"
 msgstr "बिना लिंक"
 
@@ -11700,8 +11757,8 @@ msgid "راجعه وعدّله قبل الحفظ لو يلزم."
 msgstr "ज़रूरत हो तो सेव करने से पहले इसे जांचें और ठीक करें।"
 
 #: app/templates/health/disease_form.html:14
-#: app/templates/health/vaccination_form.html:7
-#: app/templates/health/vet_visit_form.html:7
+#: app/templates/health/vaccination_form.html:8
+#: app/templates/health/vet_visit_form.html:8
 msgid ""
 "تعبئة تلقائية من مهمة علاج مخطَّط — راجعها قبل الحفظ. الحفظ هنا يُنجز "
 "المهمة تلقائياً."
@@ -11718,19 +11775,19 @@ msgstr ""
 "इतिहास देखने में उपयोगी, किसी भी अपने-आप गणना पर कोई असर नहीं।"
 
 #: app/templates/health/disease_form.html:35
-#: app/templates/health/vet_visit_form.html:22
+#: app/templates/health/vet_visit_form.html:24
 msgid "الدواء المستخدم (اختياري)"
 msgstr "उपयोग की गई दवा (वैकल्पिक)"
 
 #: app/templates/health/disease_form.html:38
-#: app/templates/health/vaccination_form.html:22
-#: app/templates/health/vet_visit_form.html:25
+#: app/templates/health/vaccination_form.html:24
+#: app/templates/health/vet_visit_form.html:27
 msgid "سحب:"
 msgstr "निकासी अवधि:"
 
 #: app/templates/health/disease_form.html:40
-#: app/templates/health/vaccination_form.html:24
-#: app/templates/health/vet_visit_form.html:27
+#: app/templates/health/vaccination_form.html:26
+#: app/templates/health/vet_visit_form.html:29
 msgid "الكمية المستخدمة"
 msgstr "उपयोग की गई मात्रा"
 
@@ -11743,8 +11800,8 @@ msgstr ""
 "(मि.ली./गोली/ग्राम) में दर्ज है उसी में। यह अपने आप स्टॉक से घट जाती है।"
 
 #: app/templates/health/disease_form.html:42
-#: app/templates/health/vaccination_form.html:25
-#: app/templates/health/vet_visit_form.html:28
+#: app/templates/health/vaccination_form.html:28
+#: app/templates/health/vet_visit_form.html:30
 msgid "إلزامية لو اخترت دواء أعلاه."
 msgstr "यदि आपने ऊपर कोई दवा चुनी है तो आवश्यक है।"
 
@@ -11752,11 +11809,9 @@ msgstr "यदि आपने ऊपर कोई दवा चुनी है
 msgid "تكلفة العلاج"
 msgstr "उपचार लागत"
 
-#: app/templates/health/disease_form.html:46
-msgid "سبب تجاوز (نادر الاستخدام)"
-msgstr "अपवाद कारण (शायद ही उपयोग होता है)"
-
 #: app/templates/health/disease_form.html:47
+#: app/templates/health/vaccination_form.html:32
+#: app/templates/health/vet_visit_form.html:35
 msgid ""
 "اتركه فاضياً بالحالات العادية — يلزم بس لو رجعت الشاشة بتحذير \"تكرار "
 "جرعة طفيليات مبكّر\"."
@@ -11765,6 +11820,8 @@ msgstr ""
 "\"जल्दी परजीवी-रोधी खुराक दोहराव\" चेतावनी दी हो।"
 
 #: app/templates/health/disease_form.html:48
+#: app/templates/health/vaccination_form.html:33
+#: app/templates/health/vet_visit_form.html:36
 msgid "اكتب السبب الطبي للتكرار"
 msgstr "दोहराने का चिकित्सीय कारण लिखें"
 
@@ -12791,33 +12848,38 @@ msgstr ""
 msgid "متابعة"
 msgstr "अनुवर्ती"
 
-#: app/templates/health/vaccination_form.html:5
+#: app/templates/health/vaccination_form.html:6
 msgid "تسجيل تطعيم"
 msgstr "टीकाकरण दर्ज करें"
 
-#: app/templates/health/vaccination_form.html:17
+#: app/templates/health/vaccination_form.html:18
 msgid "اسم اللقاح"
 msgstr "टीके का नाम"
 
-#: app/templates/health/vaccination_form.html:18
+#: app/templates/health/vaccination_form.html:19
 msgid "الموعد القادم (اختياري)"
 msgstr "अगली तारीख़ (वैकल्पिक)"
 
 #: app/templates/health/vaccination_form.html:19
+msgid ""
+"لو هذا اللقاح يحتاج جرعة تذكيرية أو تكرار دوري، حدد تاريخه هنا — النظام "
+"ينبّهك قبله بالمدة المضبوطة بالإعدادات."
+msgstr ""
+"अगर इस टीके को बूस्टर या समय-समय पर दोहराने की ज़रूरत है, तो इसकी तारीख "
+"यहाँ तय करें — सिस्टम सेटिंग्स में तय अवधि के अनुसार पहले से आपको सूचित "
+"करता है।"
+
+#: app/templates/health/vaccination_form.html:21
 msgid "الدواء المستخدم من الصيدلية (اختياري)"
 msgstr "फार्मेसी से उपयोग की गई दवा (वैकल्पिक)"
 
-#: app/templates/health/vaccination_form.html:27
-#: app/templates/health/vet_visit_form.html:31
-msgid "سبب التجاوز (لو ظهر تحذير تكرار جرعة الطفيليات)"
-msgstr "ओवरराइड कारण (यदि परजीवी-रोधी खुराक दोहराव की चेतावनी दिखी हो)"
-
-#: app/templates/health/vaccination_form.html:28
-#: app/templates/health/vet_visit_form.html:32
-msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
+#: app/templates/health/vaccination_form.html:26
+msgid ""
+"كمية اللقاح اللي أُعطيت فعلياً — بنفس وحدة تسجيله بالصيدلية. يُخصَم "
+"تلقائياً من المخزون."
 msgstr ""
-"इसे केवल तभी भरें जब स्क्रीन ने चेतावनी दी हो — दोहराव का चिकित्सीय कारण "
-"लिखें।"
+"वास्तव में दी गई टीके की मात्रा — फार्मेसी में दर्ज की गई इकाई के अनुसार।"
+" यह अपने आप स्टॉक से घट जाती है।"
 
 #: app/templates/health/vaccination_schedule_form.html:4
 #: app/templates/health/vaccination_schedule_list.html:6
@@ -12944,6 +13006,14 @@ msgstr "अगली नियत तारीख"
 #: app/templates/health/vaccinations_list.html:14
 msgid "لا يوجد تطعيمات مسجّلة بعد."
 msgstr "अभी तक कोई टीकाकरण दर्ज नहीं है।"
+
+#: app/templates/health/vet_visit_form.html:22
+msgid ""
+"نص حر يكتبه الطبيب — رأيه المهني بالحالة. غير مرتبط بقائمة \"الأمراض "
+"الشائعة\" أو المساعد التشخيصي."
+msgstr ""
+"डॉक्टर द्वारा लिखा गया स्वतंत्र टेक्स्ट — मामले पर उनकी पेशेवर राय। यह "
+"\"सामान्य बीमारियों\" की सूची या निदान सहायक से जुड़ा नहीं है।"
 
 #: app/templates/health/vet_visits_list.html:6
 msgid "زيارة جديدة"
@@ -13524,10 +13594,11 @@ msgstr "इस कारण के साथ एक लंबित ओवरर
 #: app/templates/repro/mating_form.html:25
 #: app/templates/repro/matings_list.html:14
 #: app/templates/repro/pregnancies_list.html:10
-#: app/templates/repro/pregnancy_form.html:9
+#: app/templates/repro/pregnancy_form.html:10
 #: app/templates/repro/program_form.html:10
 #: app/templates/repro/programs_list.html:10
-#: app/templates/repro/sonar_form.html:9 app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_form.html:10
+#: app/templates/repro/sonar_list.html:10
 msgid "الأنثى"
 msgstr "मादा"
 
@@ -13616,14 +13687,14 @@ msgid "مؤكّد"
 msgstr "पुष्टित"
 
 #: app/templates/repro/pregnancies_list.html:10
-#: app/templates/repro/pregnancy_form.html:19
+#: app/templates/repro/pregnancy_form.html:21
 msgid "تاريخ السونار"
 msgstr "सोनार तिथि"
 
 #: app/templates/repro/pregnancies_list.html:10
-#: app/templates/repro/pregnancy_form.html:20
+#: app/templates/repro/pregnancy_form.html:22
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_form.html:26
+#: app/templates/repro/sonar_form.html:28
 #: app/templates/repro/sonar_list.html:10
 msgid "عدد الأجنّة"
 msgstr "भ्रूणों की संख्या"
@@ -13653,11 +13724,11 @@ msgstr ""
 msgid "لا يوجد تشخيصات حمل مسجّلة بعد."
 msgstr "अभी तक कोई गर्भावस्था निदान दर्ज नहीं है।"
 
-#: app/templates/repro/pregnancy_form.html:4
+#: app/templates/repro/pregnancy_form.html:5
 msgid "تشخيص حمل جديد"
 msgstr "नया गर्भावस्था निदान"
 
-#: app/templates/repro/pregnancy_form.html:5
+#: app/templates/repro/pregnancy_form.html:6
 msgid ""
 "سجّل هنا نتيجة تأكيد حمل أنثى (فحص يدوي أو سونار) بعد تقريع سابق — تأكيد "
 "الحمل هنا يفتح متابعة الحمل ورعاية الشهور الأخيرة تلقائياً."
@@ -13666,15 +13737,24 @@ msgstr ""
 "सोनार) दर्ज करें — यहां गर्भावस्था की पुष्टि स्वतः गर्भावस्था अनुवर्ती और"
 " अंतिम महीनों की देखभाल खोलती है।"
 
-#: app/templates/repro/pregnancy_form.html:13
+#: app/templates/repro/pregnancy_form.html:14
 msgid "التقريع المرتبط (اختياري)"
 msgstr "जुड़ा संगमन (वैकल्पिक)"
 
-#: app/templates/repro/pregnancy_form.html:18
+#: app/templates/repro/pregnancy_form.html:19
 msgid "مؤكّد؟"
 msgstr "पुष्टित?"
 
-#: app/templates/repro/pregnancy_form.html:22
+#: app/templates/repro/pregnancy_form.html:20
+msgid ""
+"أشّرها لو متأكد فعلياً من الحمل (فحص يدوي واضح أو سونار مؤكَّد) — هذا هو "
+"اللي يفعّل متابعة الحمل التلقائية. اتركها فاضية لو النتيجة لسا غير قاطعة."
+msgstr ""
+"यदि आप गर्भावस्था के बारे में वास्तव में निश्चित हैं (स्पष्ट मैनुअल जाँच "
+"या पुष्ट अल्ट्रासाउंड) तो इसे चेक करें — यही स्वचालित गर्भावस्था अनुवर्तन"
+" को सक्रिय करता है। यदि परिणाम अभी निर्णायक नहीं है तो इसे अनचेक छोड़ें।"
+
+#: app/templates/repro/pregnancy_form.html:24
 msgid ""
 "الخطوة الجاية بالدورة: لو أكّدت الحمل، الأنثى تدخل تلقائياً متابعة "
 "\"الحمل\" — بالثلث الأخير تنقل تلقائياً لحظيرة رعاية الحمل المتأخر، "
@@ -13971,11 +14051,11 @@ msgstr "%(n)s जांचों में से"
 msgid "ما فيه فحول عندها عمليات تقريع مسجّلة بعد."
 msgstr "अभी तक किसी नर के पास दर्ज संगमन नहीं है।"
 
-#: app/templates/repro/sonar_form.html:4
+#: app/templates/repro/sonar_form.html:5
 msgid "فحص سونار جديد"
 msgstr "नई सोनार जांच"
 
-#: app/templates/repro/sonar_form.html:5
+#: app/templates/repro/sonar_form.html:6
 msgid ""
 "سجّل هنا نتيجة فحص سونار لأنثى — يستخدم لتأكيد/نفي الحمل، تحديد عدد "
 "الأجنّة، أو متابعة برنامج شياع توأمي مرتبط."
@@ -13984,31 +14064,39 @@ msgstr ""
 "पुष्टि/खंडन, भ्रूण संख्या निर्धारित करने, या जुड़े हुए ट्विन-एस्ट्रस "
 "प्रोग्राम की फॉलो-अप के लिए उपयोग होता है।"
 
-#: app/templates/repro/sonar_form.html:8
+#: app/templates/repro/sonar_form.html:9
 msgid "تاريخ الفحص"
 msgstr "जांच की तारीख़"
 
-#: app/templates/repro/sonar_form.html:13
+#: app/templates/repro/sonar_form.html:14
 msgid "برنامج الشياع التوأمي المرتبط (اختياري)"
 msgstr "संबंधित ट्विन-एस्ट्रस कार्यक्रम (वैकल्पिक)"
 
-#: app/templates/repro/sonar_form.html:18
+#: app/templates/repro/sonar_form.html:19
 msgid "عمر الحمل (بالأيام)"
 msgstr "गर्भावस्था की उम्र (दिनों में)"
 
-#: app/templates/repro/sonar_form.html:24
+#: app/templates/repro/sonar_form.html:19
+msgid ""
+"تقدير الطبيب لعمر الجنين وقت الفحص (استناداً لحجمه بالسونار) — يساعد "
+"لاحقاً بحساب تاريخ ولادة أدق."
+msgstr ""
+"जाँच के समय भ्रूण की उम्र का डॉक्टर का अनुमान (अल्ट्रासाउंड पर उसके आकार "
+"के आधार पर) — बाद में अधिक सटीक जन्म तिथि की गणना में मदद करता है।"
+
+#: app/templates/repro/sonar_form.html:26
 msgid "غير مؤكد"
 msgstr "अपुष्ट"
 
-#: app/templates/repro/sonar_form.html:27
+#: app/templates/repro/sonar_form.html:29
 msgid "نبض واضح؟"
 msgstr "स्पष्ट धड़कन?"
 
-#: app/templates/repro/sonar_form.html:33
+#: app/templates/repro/sonar_form.html:35
 msgid "موعد إعادة الفحص"
 msgstr "पुनः जांच की तारीख़"
 
-#: app/templates/repro/sonar_form.html:35
+#: app/templates/repro/sonar_form.html:37
 msgid ""
 "الخطوة الجاية بالدورة: لو النتيجة \"حامل\" ولسا ما فيه تشخيص حمل مؤكّد "
 "مسجَّل، سجّله من \"التكاثر\" ← \"الحمل\" ← \"+ تشخيص حمل جديد\" عشان تدخل"
@@ -15849,4 +15937,22 @@ msgstr "स्टॉक गणना दर्ज कर दी गई — श�
 
 #~ msgid "يفعّل خطط التغذية وحساب استهلاك العلف لكل حظيرة."
 #~ msgstr "हर बाड़े के लिए आहार योजनाएँ और चारा खपत गणना सक्षम करता है।"
+
+#~ msgid "سبب التجاوز (لو ظهر تحذير زيادة مفاجئة بالمركزات)"
+#~ msgstr "अधिलेखन कारण (यदि सांद्रण में अचानक वृद्धि की चेतावनी दिखे)"
+
+#~ msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب"
+#~ msgstr "केवल तभी भरें जब स्क्रीन ने चेतावनी दी हो — कारण लिखें"
+
+#~ msgid "سبب التجاوز (لو ظهر تحذير نسبة الكالسيوم:الفسفور)"
+#~ msgstr "अधिलेखन कारण (यदि कैल्शियम:फास्फोरस अनुपात की चेतावनी दिखे)"
+
+#~ msgid "سبب التجاوز (لو ظهر تحذير تكرار جرعة الطفيليات)"
+#~ msgstr "ओवरराइड कारण (यदि परजीवी-रोधी खुराक दोहराव की चेतावनी दिखी हो)"
+
+#~ msgid "املأه فقط لو رجعت الشاشة بتحذير — اكتب السبب الطبي للتكرار"
+#~ msgstr ""
+#~ "इसे केवल तभी भरें जब स्क्रीन ने"
+#~ " चेतावनी दी हो — दोहराव का "
+#~ "चिकित्सीय कारण लिखें।"
 
