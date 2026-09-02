@@ -399,9 +399,9 @@
       vertical-align:middle; line-height:1; flex:0 0 auto;
     }
     .info-tip-bubble{
-      display:none; position:absolute; z-index:70; bottom:calc(100% + 6px); inset-inline-start:0;
+      display:none; position:fixed; z-index:9999;
       background:var(--text); color:var(--card); font-weight:400; font-size:12px; line-height:1.5;
-      padding:8px 10px; border-radius:10px; width:220px; white-space:normal; cursor:auto;
+      padding:8px 10px; border-radius:10px; width:220px; max-width:calc(100vw - 24px); white-space:normal; cursor:auto;
       box-shadow:var(--shadow);
     }
     .info-tip.open .info-tip-bubble{display:block;}
@@ -808,13 +808,48 @@
     // تلميح مساعد مصغّر (راجع .info-tip CSS أعلاه) — يفتح/يقفل
     // بالضغط (مو hover)، عشان يشتغل صح باللمس بالجوال. ضغطة برّا أي
     // تلميح مفتوح تقفله.
+    //
+    // بند إضافي (2026-09-01، بلّغ المستخدم: "حصلت الفقعة لكن ما يطلع
+    // شرح منها بعد اضغط") — الفقاعة كانت position:absolute نسبةً لأقرب
+    // عنصر أب position:relative، فأي حاوية أب فيها overflow:hidden
+    // (زي .chat-card بشاشة المساعد الذكي، لرؤوس البطاقة المستديرة)
+    // تقص الفقاعة تماماً حتى لو انفتحت فعلياً (class="open" تنضاف
+    // صح، بس العرض المرئي يُقصّ). الحل: position:fixed + إحداثيات
+    // تُحسب هنا بجافاسكربت وقت الفتح، تهرب من أي تقييد عرض بأي حاوية
+    // أب بالصفحة كاملة.
+    function positionTipBubble(tip){
+      var bubble = tip.querySelector('.info-tip-bubble');
+      if (!bubble) return;
+      var rect = tip.getBoundingClientRect();
+      var bubbleWidth = Math.min(220, window.innerWidth - 24);
+      var left = rect.left;
+      if (left + bubbleWidth > window.innerWidth - 12) left = window.innerWidth - bubbleWidth - 12;
+      if (left < 12) left = 12;
+      bubble.style.width = bubbleWidth + 'px';
+      bubble.style.left = left + 'px';
+      // فوق الأيقونة افتراضياً؛ لو ما فيه مساحة كافية فوق، تحت بدلها
+      var estimatedHeight = 70;
+      if (rect.top - estimatedHeight > 8) {
+        bubble.style.top = (rect.top - estimatedHeight - 6) + 'px';
+      } else {
+        bubble.style.top = (rect.bottom + 6) + 'px';
+      }
+    }
+
     document.addEventListener('click', function(e){
       var tip = e.target.closest('.info-tip');
       document.querySelectorAll('.info-tip.open').forEach(function(t){
         if (t !== tip) t.classList.remove('open');
       });
-      if (tip) tip.classList.toggle('open');
+      if (tip) {
+        tip.classList.toggle('open');
+        if (tip.classList.contains('open')) positionTipBubble(tip);
+      }
     });
+    window.addEventListener('scroll', function(){
+      var openTip = document.querySelector('.info-tip.open');
+      if (openTip) positionTipBubble(openTip);
+    }, true);
   </script>
 </head>
 <body>
