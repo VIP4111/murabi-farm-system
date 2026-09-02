@@ -37,8 +37,12 @@ def test_chat_image_input_stays_hidden_in_source():
 
 
 def test_report_voice_note_input_stays_hidden_in_source():
+    """بند إضافي (2026-09-02) — voice_note_widget() صارت تقبل field_name
+    اختياري (لإعادة استخدامها بشاشة المساعد الذكي باسم حقل "audio")،
+    فاسم الحقل نفسه صار متغيّراً {{ field_name }} بدل نص ثابت — نتأكد
+    من "id=" الثابت بدل "name=" المتغيّر."""
     with open("app/templates/team/_report_widgets.html", encoding="utf-8") as f:
         content = f.read()
-    m = re.search(r'<input type="file" name="voice_note"[^>]*>', content)
+    m = re.search(r'<input type="file" name="\{\{ field_name \}\}" id="voiceNoteInput"[^>]*>', content)
     assert m is not None
     assert 'display:none' in m.group(0)

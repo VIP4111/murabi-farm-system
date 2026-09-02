@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
+{% from "team/_report_widgets.html" import voice_note_widget %}
 {% block title %}{{ _('مركز الذكاء الاصطناعي') }}{% endblock %}
 {% block content %}
 <style>
@@ -259,7 +260,7 @@
     <h3 style="margin-top:0;">🎤 {{ _('إرسال مقطع صوتي') }}</h3>
     <form method="post" action="{{ url_for('assistant.drafts_new_voice') }}" enctype="multipart/form-data" style="display:grid; gap:8px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <input type="file" name="audio" accept="audio/*" required>
+      {{ voice_note_widget(field_name='audio') }}
       <button type="submit" class="btn light">🎤 {{ _('إرسال مقطع صوتي') }}</button>
     </form>
   </div>

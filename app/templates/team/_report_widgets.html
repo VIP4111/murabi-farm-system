@@ -27,14 +27,21 @@
 </script>
 {% endmacro %}
 
-{% macro voice_note_widget() %}
+{# بند إضافي (2026-09-02، طلبك المباشر: "ابيك تضيف ميكروفون او تفعل
+   الميكروفون" — مودال "إرسال مقطع صوتي" بالمساعد الذكي كان يعرض بس
+   حقل "اختر ملف" (رفع مقطع محفوظ مسبقاً)، بدون تسجيل مباشر بالمايك.
+   بدل ما نبني ودجت جديدة، وسّعنا هذي الموجودة أصلاً (نفس المسجّل
+   المستخدم بالبلاغات، مجرَّب فعلياً بما فيها توافق Safari/آيفون) —
+   `field_name` اختياري يسمح بإعادة استخدامها باسم حقل مختلف (المساعد
+   الذكي يتوقع "audio"، البلاغات تتوقع "voice_note" الافتراضي). #}
+{% macro voice_note_widget(field_name='voice_note') %}
 <label>{{ _('ملاحظة صوتية (اختياري — بديل عن الكتابة)') }}</label>
 <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
   <button type="button" id="voiceRecordBtn" class="btn light">🎙️ {{ _('تسجيل صوتي') }}</button>
   <span id="voiceStatus" style="font-size:12px; color:var(--muted);"></span>
 </div>
 <audio id="voicePreview" controls style="display:none; width:100%; margin-bottom:10px;"></audio>
-<input type="file" name="voice_note" id="voiceNoteInput" accept="audio/*" style="display:none">
+<input type="file" name="{{ field_name }}" id="voiceNoteInput" accept="audio/*" style="display:none">
 <script>
 (function(){
   var btn = document.getElementById('voiceRecordBtn');
