@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -17,7 +18,7 @@
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('الأعراض المرتبطة (%(n)s)', n=links|length) }}</h3>
+  <h3 style="font-size:15px;">{{ _('الأعراض المرتبطة (%(n)s)', n=links|length) }} {{ tip(_('"إجباري" = هذا العرض لازم يكون موجود عشان يُعتبر هذا المرض مرشَّح أصلاً. "استبعادي" = وجوده يستبعد هذا المرض من الاحتمالات فوراً. تأثيرهما الفعلي على حساب الاحتمالات مو مفعَّل بعد (يُخزَّن فقط لمرحلة قادمة).')) }}</h3>
   {% if current_user.has_permission('medical_options.manage') %}
   <div class="table-scroll">
   <table class="compact-table">

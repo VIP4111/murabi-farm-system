@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block title %}{{ animal.animal_no }} — {{ _('تفاصيل الرأس') }}{% endblock %}
 {% block content %}
 {% set source_labels = {'birth': _('مولود بالمزرعة'), 'purchase': _('شراء'), 'gift': _('هدية/دعم'), 'opening_balance': _('رصيد افتتاحي')} %}
@@ -102,7 +103,7 @@
   {% if animal.species == 'ostrich' %}
   <div class="stat"><b>{{ _('نعام') }}</b><span>{{ _('الفصيلة — بدون دورة إنتاج (مجترات فقط)') }}</span></div>
   {% else %}
-  <div class="stat"><b>{{ wf.stage_name or '-' }}</b><span>{{ _('مرحلة الدورة (%(n)s/10)', n=wf.current_stage) }}</span></div>
+  <div class="stat"><b>{{ wf.stage_name or '-' }}</b><span>{{ _('مرحلة الدورة (%(n)s/10)', n=wf.current_stage) }} {{ tip(_('دورة إنتاج الرأس من عشر مراحل ثابتة (استقبال ← تربية ← تكاثر ← ...) — تتقدَّم تلقائياً حسب أحداث مسجَّلة (ولادة، بيع...) أو يدوياً من "دورة الإنتاج".')) }}</span></div>
   {% endif %}
   <div class="stat"><b>{{ animal.weight or '-' }}</b><span>{{ _('آخر وزن مسجّل (كجم)') }}</span></div>
   <div class="stat"><b>{{ open_diseases_count }}</b><span>{{ _('أمراض مفتوحة حالياً') }}</span></div>

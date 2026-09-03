@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -22,7 +23,7 @@
   <div class="stat"><b>{{ stats.total_weight }}</b><span>{{ _('إجمالي الوزن (كجم)') }}</span></div>
   <div class="stat"><b>{{ stats.avg_weight }}</b><span>{{ _('متوسط الوزن (كجم)') }}</span></div>
   <div class="stat"><b>{{ stats.total_actual_cost }}</b><span>{{ _('إجمالي التكلفة الفعلية') }}</span></div>
-  <div class="stat"><b>{{ stats.total_estimated_value if stats.total_estimated_value is not none else '-' }}</b><span>{{ _('إجمالي القيمة التقديرية (%(n)s من %(total)s برأس مقدَّر)', n=stats.priced_count, total=stats.count) }}</span></div>
+  <div class="stat"><b>{{ stats.total_estimated_value if stats.total_estimated_value is not none else '-' }}</b><span>{{ _('إجمالي القيمة التقديرية (%(n)s من %(total)s برأس مقدَّر)', n=stats.priced_count, total=stats.count) }} {{ tip(_('يُحسب فقط من الرؤوس اللي أدخلت سعرها التقديري بشاشة تعديل بياناتها — الرؤوس بدون سعر مقدَّر ما تُحسب هنا (تظهر "-" بجدولها تحت).')) }}</span></div>
   <div class="stat" style="{{ 'background:var(--ok, #3a7d3a); color:#fff;' if stats.projected_margin and stats.projected_margin > 0 }}">
     <b>{{ stats.projected_margin if stats.projected_margin is not none else '-' }}</b><span>{{ _('هامش الربح المتوقع') }}</span>
   </div>

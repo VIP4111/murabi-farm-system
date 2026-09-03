@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
-  <h2>{{ _('توزيع المستودعات') }} — {{ item.name }}</h2>
+  <h2>{{ _('توزيع المستودعات') }} — {{ item.name }} {{ tip(_('يوضّح أين المخزون فعلياً موزَّع بين المستودعات المسمّاة — "غير متّسق" يعني الإجمالي الحالي (من حركات الشراء/الصرف) أصبح أقل من مجموع الموزَّع، غالباً بسبب صرف/تحويل لم يُسجَّل بشكل صحيح.')) }}</h2>
   <div style="color:var(--muted); font-size:13px; margin-bottom:10px;">{{ _('الإجمالي الحالي:') }} {{ item.available_qty }}</div>
   <div class="table-scroll">
 <table class="compact-table">

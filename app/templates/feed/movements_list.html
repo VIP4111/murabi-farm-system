@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -7,7 +8,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('المكوّن') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('قبل') }}</th><th>{{ _('بعد') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('المكوّن') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الكمية') }}</th><th>{{ _('قبل') }} {{ tip(_('رصيد المكوّن قبل وبعد هذي الحركة بالذات — يعطيك سجل تدقيق كامل، تقدر تتبّع أي تغيّر مفاجئ بالمخزون لحركته المسبِّبة.')) }}</th><th>{{ _('بعد') }}</th><th>{{ _('الحظيرة/الحيوان') }}</th></tr>
     {% for m in rows %}
     <tr>
       <td>{{ m.created_at.strftime('%Y-%m-%d') }}</td>

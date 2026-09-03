@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import status_badge %}
+{% from "_macros.html" import status_badge, tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -36,7 +36,7 @@
   </div>
   <div class="table-scroll">
   <table>
-    <tr><th>{{ _('النوع') }}</th><th>{{ _('الاسم التجاري') }}</th><th>{{ _('الإدخال') }}</th><th>{{ _('الإزالة المخطّطة') }}</th><th>{{ _('الإزالة الفعلية') }}</th><th>{{ _('فقدان مبكر') }}</th></tr>
+    <tr><th>{{ _('النوع') }}</th><th>{{ _('الاسم التجاري') }}</th><th>{{ _('الإدخال') }}</th><th>{{ _('الإزالة المخطّطة') }}</th><th>{{ _('الإزالة الفعلية') }}</th><th>{{ _('فقدان مبكر') }} {{ tip(_('علّم "نعم" لو لقيت الجهاز طالع أو ساقط قبل موعد إزالته المخطَّط — يؤثر على فعالية المزامنة الهرمونية المتوقَّعة لهذي الأنثى.')) }}</th></tr>
     {% for d in p.devices %}
     <tr>
       <td>{{ d.device_type }}</td><td>{{ d.trade_name or '-' }}</td>
