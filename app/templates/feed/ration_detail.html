@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <h2>{{ ration.name }}</h2>
@@ -6,7 +7,7 @@
 <table>
     <tr><td>{{ _('الغرض') }}</td><td>{{ ration.purpose or '-' }}</td></tr>
     {% if profile %}
-    <tr><td>{{ _('بروتين خام موزون') }}</td><td>{{ profile.protein_percent }}%</td></tr>
+    <tr><td>{{ _('بروتين خام موزون') }} {{ tip(_('متوسط بروتين كل مكوّنات الوصفة، موزون حسب نسبة كل مكوّن بالخلطة — يُحسب تلقائياً، مو رقماً تدخله يدوياً.')) }}</td><td>{{ profile.protein_percent }}%</td></tr>
     <tr><td>{{ _('طاقة ممثلة موزونة') }}</td><td>{{ profile.energy_kcal_per_kg }} {{ _('كيلوكالوري/كجم') }}</td></tr>
     <tr><td>{{ _('تكلفة الكيلو') }}</td><td>{{ profile.cost_per_kg }}</td></tr>
     {% endif %}

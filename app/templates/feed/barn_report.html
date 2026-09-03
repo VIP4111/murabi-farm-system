@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -26,7 +27,7 @@
 
 {% if result.breakdown %}
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('التفصيل حسب الفئة') }}</h3>
+  <h3 style="font-size:15px;">{{ _('التفصيل حسب الفئة') }} {{ tip(_('كل فئة (نمو، حمل متأخر، رضاعة...) لها احتياج غذائي مختلف فسيولوجياً — النظام يصنّف كل رأس تلقائياً حسب دورة إنتاجه الحالية ويحسب احتياج كل فئة على حدة، بدل رقم متوسط واحد يخفي الفروقات.')) }}</h3>
   <div class="table-scroll">
 <table>
     <tr><th>{{ _('الفئة') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('احتياج مادة جافة يومي') }}</th></tr>

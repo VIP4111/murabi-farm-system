@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 14:04+0300\n"
+"POT-Creation-Date: 2026-09-03 14:21+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -4382,7 +4382,7 @@ msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "በዚህ ጊዜ ውስጥ ምንም እንቅስቃሴ የለም"
 
 #: app/reports/report_service.py:378 app/templates/equipment/items_list.html:15
-#: app/templates/feed/barn_report.html:32 app/templates/feed/item_form.html:8
+#: app/templates/feed/barn_report.html:33 app/templates/feed/item_form.html:8
 #: app/templates/feed/items_list.html:14
 #: app/templates/health/pharmacy_list.html:14
 #: app/templates/health/pharmacy_shortages.html:15
@@ -5383,7 +5383,7 @@ msgstr "ወተት"
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:39
-#: app/templates/feed/ration_detail.html:13
+#: app/templates/feed/ration_detail.html:14
 #: app/templates/feed/ration_form.html:31
 #: app/templates/finance/lot_form.html:27
 #: app/templates/health/disease_types_list.html:23
@@ -5410,7 +5410,7 @@ msgid "بيانات أساسية"
 msgstr "መሠረታዊ መረጃ"
 
 #: app/templates/animal_detail.html:134 app/templates/animal_form.html:115
-#: app/templates/feed/ration_detail.html:7
+#: app/templates/feed/ration_detail.html:8
 #: app/templates/feed/ration_form.html:9
 #: app/templates/feed/rations_list.html:11
 msgid "الغرض"
@@ -5615,7 +5615,7 @@ msgstr "ምርመራ"
 #: app/templates/animal_detail.html:258
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
-#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:50
+#: app/templates/feed/barn_report.html:55 app/templates/feed/optimizer.html:50
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/vet_visit_form.html:31
@@ -7099,7 +7099,7 @@ msgstr "የመኖ ልወጣ መጠን (FCR)"
 msgid "موازِن العليقة التلقائي"
 msgstr "ራስ-ሰር የመኖ ማመጣጠኛ"
 
-#: app/templates/base.html:1078 app/templates/feed/barn_report.html:5
+#: app/templates/base.html:1078 app/templates/feed/barn_report.html:6
 msgid "تقرير علف الحظيرة"
 msgstr "የበረት መኖ ሪፖርት"
 
@@ -7636,7 +7636,7 @@ msgid "ما فيه استهلاك مسجَّل بعد لهذا الصنف."
 msgstr "ለዚህ ንጥል እስካሁን የተመዘገበ ፍጆታ የለም።"
 
 #: app/templates/family_view.html:98 app/templates/family_view.html:156
-#: app/templates/feed/barn_report.html:54
+#: app/templates/feed/barn_report.html:55
 msgid "المخزون"
 msgstr "ክምችት"
 
@@ -7927,7 +7927,7 @@ msgstr "በዚህ ጭነት ውስጥ እንስሳት የሉም።"
 msgid "صلاحيات:"
 msgstr "ፈቃዶች:"
 
-#: app/templates/role_edit.html:8 app/templates/role_form.html:7
+#: app/templates/role_edit.html:8 app/templates/role_form.html:8
 msgid "الاسم الظاهر بالواجهة"
 msgstr "በበይነገጹ ላይ የሚታይ ስም"
 
@@ -7947,23 +7947,31 @@ msgstr ""
 msgid "حفظ الصلاحيات"
 msgstr "ፈቃዶችን አስቀምጥ"
 
-#: app/templates/role_form.html:4
+#: app/templates/role_form.html:5
 msgid "مسمّى وظيفي جديد"
 msgstr "አዲስ የሥራ ማዕረግ"
 
-#: app/templates/role_form.html:7
+#: app/templates/role_form.html:8
 msgid "مثال: ممرض"
 msgstr "ምሳሌ: ነርስ"
 
-#: app/templates/role_form.html:8
+#: app/templates/role_form.html:9
 msgid "الاسم الداخلي (إنجليزي، بدون مسافات)"
 msgstr "የውስጥ ስም (እንግሊዝኛ፣ ያለ ክፍተት)"
 
-#: app/templates/role_form.html:8
+#: app/templates/role_form.html:9
+msgid ""
+"معرّف تقني ثابت يستخدمه الكود داخلياً — لا يظهر لأي مستخدم عادي. لو تركته"
+" فاضياً، يُستخدم الاسم الظاهر نفسه بدلاً منه."
+msgstr ""
+"በኮዱ ውስጥ በውስጥ ጥቅም ላይ የሚውል ቋሚ ቴክኒካዊ መለያ — ለማንኛውም መደበኛ ተጠቃሚ አይታይም። ባዶ ከቀረ፣ "
+"የሚታየው ስም ራሱ በምትኩ ጥቅም ላይ ይውላል።"
+
+#: app/templates/role_form.html:9
 msgid "مثال: nurse"
 msgstr "ምሳሌ: nurse"
 
-#: app/templates/role_form.html:9
+#: app/templates/role_form.html:10
 msgid "حفظ ثم تحديد الصلاحيات"
 msgstr "አስቀምጥ ከዚያ ፈቃዶችን ወስን"
 
@@ -9426,7 +9434,7 @@ msgid "رقم الدفعة"
 msgstr "የጭነት ቁጥር"
 
 #: app/templates/batches/batches_list.html:15
-#: app/templates/feed/barn_report.html:32 app/templates/feed/fcr_report.html:70
+#: app/templates/feed/barn_report.html:33 app/templates/feed/fcr_report.html:70
 #: app/templates/finance/lot_detail.html:22
 #: app/templates/finance/lots_list.html:18
 #: app/templates/finance/monthly_cost_report.html:27
@@ -9774,7 +9782,7 @@ msgstr "ማውጣት (ከክምችት መቀነስ)"
 #: app/templates/equipment/item_movement.html:71
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:14
-#: app/templates/feed/barn_report.html:54
+#: app/templates/feed/barn_report.html:55
 #: app/templates/feed/movement_form.html:21
 #: app/templates/feed/movements_list.html:11
 #: app/templates/health/pharmacy_list.html:14
@@ -9903,7 +9911,7 @@ msgstr "ያለ"
 
 #: app/templates/equipment/items_list.html:15
 #: app/templates/feed/items_list.html:14
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 msgid "السعر/وحدة"
 msgstr "ዋጋ/አሃድ"
 
@@ -10130,9 +10138,9 @@ msgid "كمية/رأس/يوم"
 msgstr "መጠን/እንስሳ/ቀን"
 
 #: app/templates/feed/barn_plans_list.html:15
-#: app/templates/feed/barn_report.html:37
-#: app/templates/feed/barn_report.html:51
-#: app/templates/feed/barn_report.html:58 app/templates/feed/calculator.html:22
+#: app/templates/feed/barn_report.html:38
+#: app/templates/feed/barn_report.html:52
+#: app/templates/feed/barn_report.html:59 app/templates/feed/calculator.html:22
 #: app/templates/feed/calculator.html:40 app/templates/feed/optimizer.html:17
 #: app/templates/feed/optimizer.html:34
 #: app/templates/feed/purchase_form.html:44
@@ -10143,11 +10151,11 @@ msgstr "ኪግ"
 msgid "لا يوجد خطط تغذية مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ የመኖ እቅድ የለም።"
 
-#: app/templates/feed/barn_report.html:6
+#: app/templates/feed/barn_report.html:7
 msgid "موازِن العليقة (رأس واحد)"
 msgstr "የመኖ ሚዛን አስተካካይ (አንድ እንስሳ)"
 
-#: app/templates/feed/barn_report.html:9
+#: app/templates/feed/barn_report.html:10
 msgid ""
 "احتياج الحظيرة مفصَّلاً حسب فئة كل رأس (نمو، حمل متأخر، رضاعة، فحل بخدمة "
 "فعلية، عادي) — بدل رقم إجمالي واحد يخفي التفاصيل. النسب والأعمار (فطام "
@@ -10157,28 +10165,38 @@ msgstr ""
 "በግ፣ መደበኛ) ተከፋፍሎ — ዝርዝሩን ከሚደብቅ አንድ ጠቅላላ ቁጥር ይልቅ። እድሜዎችና መስኮቶች (ጠንካራ መኖ "
 "መጥባት፣ የመራቢያ ወቅት መስኮት) ከቅንብሮች ሊስተካከሉ ይችላሉ።"
 
-#: app/templates/feed/barn_report.html:12
+#: app/templates/feed/barn_report.html:13
 #: app/templates/health/vaccination_schedule_form.html:9
 msgid "اختر حظيرة"
 msgstr "በረት ይምረጡ"
 
-#: app/templates/feed/barn_report.html:14
+#: app/templates/feed/barn_report.html:15
 msgid "اختر"
 msgstr "ምረጥ"
 
-#: app/templates/feed/barn_report.html:29
+#: app/templates/feed/barn_report.html:30
 msgid "التفصيل حسب الفئة"
 msgstr "በምድብ የተከፋፈለ"
 
-#: app/templates/feed/barn_report.html:32
+#: app/templates/feed/barn_report.html:30
+msgid ""
+"كل فئة (نمو، حمل متأخر، رضاعة...) لها احتياج غذائي مختلف فسيولوجياً — "
+"النظام يصنّف كل رأس تلقائياً حسب دورة إنتاجه الحالية ويحسب احتياج كل فئة "
+"على حدة، بدل رقم متوسط واحد يخفي الفروقات."
+msgstr ""
+"እያንዳንዱ ምድብ (እድገት፣ ዘግይቶ እርግዝና፣ ማጥባት...) በፊዚዮሎጂ የተለየ የአመጋገብ ፍላጎት አለው — ስርዓቱ"
+" እያንዳንዱን ራስ በአሁኑ የምርት ዑደቱ መሰረት በራስ-ሰር ይመድባል እና የእያንዳንዱን ምድብ ፍላጎት ለብቻ "
+"ያሰላል፣ ልዩነቶቹን ከሚደብቅ አንድ አማካይ ቁጥር ይልቅ።"
+
+#: app/templates/feed/barn_report.html:33
 msgid "احتياج مادة جافة يومي"
 msgstr "ዕለታዊ ደረቅ ንጥረ ነገር ፍላጎት"
 
-#: app/templates/feed/barn_report.html:37
+#: app/templates/feed/barn_report.html:38
 msgid "على حليب أمه — بدون علف صلب"
 msgstr "የእናቱን ወተት እየጠባ ነው — ያለ ጠንካራ መኖ"
 
-#: app/templates/feed/barn_report.html:43
+#: app/templates/feed/barn_report.html:44
 #, python-format
 msgid ""
 "%(n)s مولود مستثنى كلياً من الحساب أعلاه — يعتمد على حليب أمه لحد سن "
@@ -10187,50 +10205,50 @@ msgstr ""
 "%(n)s አዲስ የተወለዱ ከላይኛው ስሌት ሙሉ በሙሉ ተገልለዋል — አሁንም በቅንብሮች በተወሰነው የመጥባት እድሜ "
 "ድረስ በእናታቸው ወተት ላይ ናቸው።"
 
-#: app/templates/feed/barn_report.html:50
+#: app/templates/feed/barn_report.html:51
 msgid "الخلطة المقترحة لكل الحظيرة"
 msgstr "ለመላው በረት የተጠቆመ ድብልቅ"
 
-#: app/templates/feed/barn_report.html:51
+#: app/templates/feed/barn_report.html:52
 msgid "إجمالي مادة جافة يومياً:"
 msgstr "ጠቅላላ ዕለታዊ ደረቅ ንጥረ ነገር፦"
 
-#: app/templates/feed/barn_report.html:51
+#: app/templates/feed/barn_report.html:52
 msgid "عدد الرؤوس المحسوبة:"
 msgstr "የተካተቱ ራሶች፦"
 
-#: app/templates/feed/barn_report.html:51
+#: app/templates/feed/barn_report.html:52
 #, python-format
 msgid "%(n)s رأس بدون وزن مسجَّل استُبعد"
 msgstr "%(n)s ራስ ያለ የተመዘገበ ክብደት ተገለለ"
 
-#: app/templates/feed/barn_report.html:54
+#: app/templates/feed/barn_report.html:55
 #: app/templates/feed/movement_form.html:7
 #: app/templates/feed/movements_list.html:11
 #: app/templates/feed/optimizer.html:50 app/templates/feed/purchase_form.html:9
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/team/task_detail.html:45
 msgid "المكوّن"
 msgstr "ክፍል"
 
-#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:50
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/barn_report.html:55 app/templates/feed/optimizer.html:50
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/team/task_detail.html:45
 msgid "النسبة"
 msgstr "መቶኛ"
 
-#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:59
+#: app/templates/feed/barn_report.html:62 app/templates/feed/calculator.html:59
 #: app/templates/feed/optimizer.html:57
 msgid "كافٍ"
 msgstr "በቂ"
 
-#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:59
+#: app/templates/feed/barn_report.html:62 app/templates/feed/calculator.html:59
 #: app/templates/feed/optimizer.html:57
 #: app/templates/health/pharmacy_list.html:17
 msgid "ناقص"
 msgstr "እጥረት"
 
-#: app/templates/feed/barn_report.html:66
+#: app/templates/feed/barn_report.html:67
 msgid "إجمالي التكلفة اليومية للحظيرة:"
 msgstr "ጠቅላላ የበረት ዕለታዊ ወጪ፦"
 
@@ -10239,7 +10257,7 @@ msgid "حاسبة الاحتياج اليومي"
 msgstr "የዕለታዊ ፍላጎት ማስያ"
 
 #: app/templates/feed/calculator.html:8
-#: app/templates/feed/ration_detail.html:19
+#: app/templates/feed/ration_detail.html:20
 msgid "المكوّنات"
 msgstr "ንጥረ ነገሮች"
 
@@ -10304,7 +10322,7 @@ msgid "هدف طاقة ممثلة"
 msgstr "የተወካይ ኃይል ግብ"
 
 #: app/templates/feed/calculator.html:42 app/templates/feed/optimizer.html:36
-#: app/templates/feed/ration_detail.html:10
+#: app/templates/feed/ration_detail.html:11
 msgid "كيلوكالوري/كجم"
 msgstr "ኪሎካሎሪ/ኪግ"
 
@@ -10326,14 +10344,14 @@ msgstr ""
 "ተዛማጅነት ነው። የምግብ አዘገጃጀቶች መጀመሪያ በተዛማጅነት፣ ከዚያ በዝቅተኛ ዋጋ ይደረደራሉ።"
 
 #: app/templates/feed/calculator.html:51 app/templates/feed/items_list.html:14
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/feed/rations_list.html:11
 #, python-format
 msgid "بروتين%%"
 msgstr "ፕሮቲን%%"
 
 #: app/templates/feed/calculator.html:51
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/feed/rations_list.html:11
 msgid "طاقة"
 msgstr "ኃይል"
@@ -10745,19 +10763,27 @@ msgstr "ኪግ በ"
 msgid "إجمالي تقريبي:"
 msgstr "ግምታዊ ድምር:"
 
-#: app/templates/feed/ration_detail.html:9
+#: app/templates/feed/ration_detail.html:10
 msgid "بروتين خام موزون"
 msgstr "የተመዘነ ጥሬ ፕሮቲን"
 
 #: app/templates/feed/ration_detail.html:10
+msgid ""
+"متوسط بروتين كل مكوّنات الوصفة، موزون حسب نسبة كل مكوّن بالخلطة — يُحسب "
+"تلقائياً، مو رقماً تدخله يدوياً."
+msgstr ""
+"ከምግብ አዘገጃጀቱ ክፍሎች ሁሉ አማካይ ፕሮቲን፣ በድብልቁ ውስጥ በእያንዳንዱ ክፍል መጠን የተመዘነ — በራስ-ሰር "
+"ይሰላል፣ በእጅ የሚያስገቡት ቁጥር አይደለም።"
+
+#: app/templates/feed/ration_detail.html:11
 msgid "طاقة ممثلة موزونة"
 msgstr "የተመዘነ የተወካይ ኃይል"
 
-#: app/templates/feed/ration_detail.html:11
+#: app/templates/feed/ration_detail.html:12
 msgid "تكلفة الكيلو"
 msgstr "የኪግ ዋጋ"
 
-#: app/templates/feed/ration_detail.html:32
+#: app/templates/feed/ration_detail.html:33
 msgid "ما فيه مكوّنات."
 msgstr "ንጥረ ነገሮች የሉም።"
 

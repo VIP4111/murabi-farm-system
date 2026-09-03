@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 14:04+0300\n"
+"POT-Creation-Date: 2026-09-03 14:21+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4547,7 +4547,7 @@ msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "इस अवधि में कोई गतिविधि नहीं"
 
 #: app/reports/report_service.py:378 app/templates/equipment/items_list.html:15
-#: app/templates/feed/barn_report.html:32 app/templates/feed/item_form.html:8
+#: app/templates/feed/barn_report.html:33 app/templates/feed/item_form.html:8
 #: app/templates/feed/items_list.html:14
 #: app/templates/health/pharmacy_list.html:14
 #: app/templates/health/pharmacy_shortages.html:15
@@ -5578,7 +5578,7 @@ msgstr "दूध"
 #: app/templates/equipment/utility_form.html:17
 #: app/templates/feed/barn_plan_form.html:21
 #: app/templates/feed/item_form.html:39
-#: app/templates/feed/ration_detail.html:13
+#: app/templates/feed/ration_detail.html:14
 #: app/templates/feed/ration_form.html:31
 #: app/templates/finance/lot_form.html:27
 #: app/templates/health/disease_types_list.html:23
@@ -5605,7 +5605,7 @@ msgid "بيانات أساسية"
 msgstr "मूल डेटा"
 
 #: app/templates/animal_detail.html:134 app/templates/animal_form.html:115
-#: app/templates/feed/ration_detail.html:7
+#: app/templates/feed/ration_detail.html:8
 #: app/templates/feed/ration_form.html:9
 #: app/templates/feed/rations_list.html:11
 msgid "الغرض"
@@ -5810,7 +5810,7 @@ msgstr "निदान"
 #: app/templates/animal_detail.html:258
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
-#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:50
+#: app/templates/feed/barn_report.html:55 app/templates/feed/optimizer.html:50
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/vet_visit_form.html:31
@@ -7332,7 +7332,7 @@ msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
 msgid "موازِن العليقة التلقائي"
 msgstr "स्वचालित राशन संतुलक"
 
-#: app/templates/base.html:1078 app/templates/feed/barn_report.html:5
+#: app/templates/base.html:1078 app/templates/feed/barn_report.html:6
 msgid "تقرير علف الحظيرة"
 msgstr "बाड़े का चारा रिपोर्ट"
 
@@ -7891,7 +7891,7 @@ msgid "ما فيه استهلاك مسجَّل بعد لهذا الصنف."
 msgstr "इस आइटम के लिए अभी तक कोई खपत दर्ज नहीं हुई।"
 
 #: app/templates/family_view.html:98 app/templates/family_view.html:156
-#: app/templates/feed/barn_report.html:54
+#: app/templates/feed/barn_report.html:55
 msgid "المخزون"
 msgstr "इन्वेंट्री"
 
@@ -8198,7 +8198,7 @@ msgstr "इस खेप में कोई पशु नहीं है।"
 msgid "صلاحيات:"
 msgstr "अनुमतियां:"
 
-#: app/templates/role_edit.html:8 app/templates/role_form.html:7
+#: app/templates/role_edit.html:8 app/templates/role_form.html:8
 msgid "الاسم الظاهر بالواجهة"
 msgstr "इंटरफ़ेस में प्रदर्शित नाम"
 
@@ -8219,23 +8219,32 @@ msgstr ""
 msgid "حفظ الصلاحيات"
 msgstr "अनुमतियां सहेजें"
 
-#: app/templates/role_form.html:4
+#: app/templates/role_form.html:5
 msgid "مسمّى وظيفي جديد"
 msgstr "नया पद"
 
-#: app/templates/role_form.html:7
+#: app/templates/role_form.html:8
 msgid "مثال: ممرض"
 msgstr "उदाहरण: नर्स"
 
-#: app/templates/role_form.html:8
+#: app/templates/role_form.html:9
 msgid "الاسم الداخلي (إنجليزي، بدون مسافات)"
 msgstr "आंतरिक नाम (अंग्रेज़ी, बिना स्पेस)"
 
-#: app/templates/role_form.html:8
+#: app/templates/role_form.html:9
+msgid ""
+"معرّف تقني ثابت يستخدمه الكود داخلياً — لا يظهر لأي مستخدم عادي. لو تركته"
+" فاضياً، يُستخدم الاسم الظاهر نفسه بدلاً منه."
+msgstr ""
+"कोड द्वारा आंतरिक रूप से इस्तेमाल होने वाला एक स्थिर तकनीकी पहचानकर्ता — "
+"यह किसी सामान्य उपयोगकर्ता को नहीं दिखता। खाली छोड़ने पर, इसके बजाय दिखने"
+" वाला नाम ही इस्तेमाल होता है।"
+
+#: app/templates/role_form.html:9
 msgid "مثال: nurse"
 msgstr "उदाहरण: nurse"
 
-#: app/templates/role_form.html:9
+#: app/templates/role_form.html:10
 msgid "حفظ ثم تحديد الصلاحيات"
 msgstr "सहेजें फिर अनुमतियां निर्धारित करें"
 
@@ -9768,7 +9777,7 @@ msgid "رقم الدفعة"
 msgstr "खेप संख्या"
 
 #: app/templates/batches/batches_list.html:15
-#: app/templates/feed/barn_report.html:32 app/templates/feed/fcr_report.html:70
+#: app/templates/feed/barn_report.html:33 app/templates/feed/fcr_report.html:70
 #: app/templates/finance/lot_detail.html:22
 #: app/templates/finance/lots_list.html:18
 #: app/templates/finance/monthly_cost_report.html:27
@@ -10125,7 +10134,7 @@ msgstr "जारी करना (स्टॉक से हटाएं)"
 #: app/templates/equipment/item_movement.html:71
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/equipment/utility_form.html:14
-#: app/templates/feed/barn_report.html:54
+#: app/templates/feed/barn_report.html:55
 #: app/templates/feed/movement_form.html:21
 #: app/templates/feed/movements_list.html:11
 #: app/templates/health/pharmacy_list.html:14
@@ -10255,7 +10264,7 @@ msgstr "उपलब्ध"
 
 #: app/templates/equipment/items_list.html:15
 #: app/templates/feed/items_list.html:14
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 msgid "السعر/وحدة"
 msgstr "मूल्य/इकाई"
 
@@ -10488,9 +10497,9 @@ msgid "كمية/رأس/يوم"
 msgstr "मात्रा/पशु/दिन"
 
 #: app/templates/feed/barn_plans_list.html:15
-#: app/templates/feed/barn_report.html:37
-#: app/templates/feed/barn_report.html:51
-#: app/templates/feed/barn_report.html:58 app/templates/feed/calculator.html:22
+#: app/templates/feed/barn_report.html:38
+#: app/templates/feed/barn_report.html:52
+#: app/templates/feed/barn_report.html:59 app/templates/feed/calculator.html:22
 #: app/templates/feed/calculator.html:40 app/templates/feed/optimizer.html:17
 #: app/templates/feed/optimizer.html:34
 #: app/templates/feed/purchase_form.html:44
@@ -10501,11 +10510,11 @@ msgstr "किग्रा"
 msgid "لا يوجد خطط تغذية مسجّلة بعد."
 msgstr "अभी तक कोई आहार योजना दर्ज नहीं है।"
 
-#: app/templates/feed/barn_report.html:6
+#: app/templates/feed/barn_report.html:7
 msgid "موازِن العليقة (رأس واحد)"
 msgstr "राशन संतुलक (एक जानवर)"
 
-#: app/templates/feed/barn_report.html:9
+#: app/templates/feed/barn_report.html:10
 msgid ""
 "احتياج الحظيرة مفصَّلاً حسب فئة كل رأس (نمو، حمل متأخر، رضاعة، فحل بخدمة "
 "فعلية، عادي) — بدل رقم إجمالي واحد يخفي التفاصيل. النسب والأعمار (فطام "
@@ -10516,28 +10525,39 @@ msgstr ""
 " छुपाती है। उम्र और खिड़कियाँ (ठोस चारा दूध छुड़ाई, प्रजनन-मौसम खिड़की) "
 "सेटिंग्स से संपादन योग्य हैं।"
 
-#: app/templates/feed/barn_report.html:12
+#: app/templates/feed/barn_report.html:13
 #: app/templates/health/vaccination_schedule_form.html:9
 msgid "اختر حظيرة"
 msgstr "बाड़ा चुनें"
 
-#: app/templates/feed/barn_report.html:14
+#: app/templates/feed/barn_report.html:15
 msgid "اختر"
 msgstr "चुनें"
 
-#: app/templates/feed/barn_report.html:29
+#: app/templates/feed/barn_report.html:30
 msgid "التفصيل حسب الفئة"
 msgstr "श्रेणी अनुसार विवरण"
 
-#: app/templates/feed/barn_report.html:32
+#: app/templates/feed/barn_report.html:30
+msgid ""
+"كل فئة (نمو، حمل متأخر، رضاعة...) لها احتياج غذائي مختلف فسيولوجياً — "
+"النظام يصنّف كل رأس تلقائياً حسب دورة إنتاجه الحالية ويحسب احتياج كل فئة "
+"على حدة، بدل رقم متوسط واحد يخفي الفروقات."
+msgstr ""
+"हर श्रेणी (वृद्धि, देर से गर्भावस्था, स्तनपान...) की शारीरिक रूप से अलग "
+"पोषण आवश्यकता होती है — सिस्टम हर पशु को उसके वर्तमान उत्पादन चक्र के "
+"अनुसार अपने आप वर्गीकृत करता है और हर श्रेणी की आवश्यकता अलग से गणना करता"
+" है, अंतर छुपाने वाली एक औसत संख्या के बजाय।"
+
+#: app/templates/feed/barn_report.html:33
 msgid "احتياج مادة جافة يومي"
 msgstr "दैनिक शुष्क पदार्थ आवश्यकता"
 
-#: app/templates/feed/barn_report.html:37
+#: app/templates/feed/barn_report.html:38
 msgid "على حليب أمه — بدون علف صلب"
 msgstr "माँ का दूध पी रहा है — कोई ठोस चारा नहीं"
 
-#: app/templates/feed/barn_report.html:43
+#: app/templates/feed/barn_report.html:44
 #, python-format
 msgid ""
 "%(n)s مولود مستثنى كلياً من الحساب أعلاه — يعتمد على حليب أمه لحد سن "
@@ -10546,50 +10566,50 @@ msgstr ""
 "%(n)s नवजात ऊपर की गणना से पूरी तरह बाहर रखे गए — अभी भी माँ के दूध पर, "
 "सेटिंग्स में तय दूध छुड़ाई उम्र तक।"
 
-#: app/templates/feed/barn_report.html:50
+#: app/templates/feed/barn_report.html:51
 msgid "الخلطة المقترحة لكل الحظيرة"
 msgstr "पूरे बाड़े के लिए सुझाया गया मिश्रण"
 
-#: app/templates/feed/barn_report.html:51
+#: app/templates/feed/barn_report.html:52
 msgid "إجمالي مادة جافة يومياً:"
 msgstr "कुल दैनिक शुष्क पदार्थ:"
 
-#: app/templates/feed/barn_report.html:51
+#: app/templates/feed/barn_report.html:52
 msgid "عدد الرؤوس المحسوبة:"
 msgstr "शामिल सिर:"
 
-#: app/templates/feed/barn_report.html:51
+#: app/templates/feed/barn_report.html:52
 #, python-format
 msgid "%(n)s رأس بدون وزن مسجَّل استُبعد"
 msgstr "%(n)s सिर बिना दर्ज वजन के बाहर रखे गए"
 
-#: app/templates/feed/barn_report.html:54
+#: app/templates/feed/barn_report.html:55
 #: app/templates/feed/movement_form.html:7
 #: app/templates/feed/movements_list.html:11
 #: app/templates/feed/optimizer.html:50 app/templates/feed/purchase_form.html:9
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/team/task_detail.html:45
 msgid "المكوّن"
 msgstr "घटक"
 
-#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:50
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/barn_report.html:55 app/templates/feed/optimizer.html:50
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/team/task_detail.html:45
 msgid "النسبة"
 msgstr "प्रतिशत"
 
-#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:59
+#: app/templates/feed/barn_report.html:62 app/templates/feed/calculator.html:59
 #: app/templates/feed/optimizer.html:57
 msgid "كافٍ"
 msgstr "पर्याप्त"
 
-#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:59
+#: app/templates/feed/barn_report.html:62 app/templates/feed/calculator.html:59
 #: app/templates/feed/optimizer.html:57
 #: app/templates/health/pharmacy_list.html:17
 msgid "ناقص"
 msgstr "कम"
 
-#: app/templates/feed/barn_report.html:66
+#: app/templates/feed/barn_report.html:67
 msgid "إجمالي التكلفة اليومية للحظيرة:"
 msgstr "बाड़े की कुल दैनिक लागत:"
 
@@ -10598,7 +10618,7 @@ msgid "حاسبة الاحتياج اليومي"
 msgstr "दैनिक आवश्यकता कैलकुलेटर"
 
 #: app/templates/feed/calculator.html:8
-#: app/templates/feed/ration_detail.html:19
+#: app/templates/feed/ration_detail.html:20
 msgid "المكوّنات"
 msgstr "सामग्री"
 
@@ -10666,7 +10686,7 @@ msgid "هدف طاقة ممثلة"
 msgstr "उपापचय ऊर्जा लक्ष्य"
 
 #: app/templates/feed/calculator.html:42 app/templates/feed/optimizer.html:36
-#: app/templates/feed/ration_detail.html:10
+#: app/templates/feed/ration_detail.html:11
 msgid "كيلوكالوري/كجم"
 msgstr "किलोकैलोरी/किग्रा"
 
@@ -10689,14 +10709,14 @@ msgstr ""
 " हिसाब से क्रमबद्ध हैं।"
 
 #: app/templates/feed/calculator.html:51 app/templates/feed/items_list.html:14
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/feed/rations_list.html:11
 #, python-format
 msgid "بروتين%%"
 msgstr "प्रोटीन%%"
 
 #: app/templates/feed/calculator.html:51
-#: app/templates/feed/ration_detail.html:22
+#: app/templates/feed/ration_detail.html:23
 #: app/templates/feed/rations_list.html:11
 msgid "طاقة"
 msgstr "ऊर्जा"
@@ -11119,19 +11139,28 @@ msgstr "किग्रा प्रति"
 msgid "إجمالي تقريبي:"
 msgstr "अनुमानित कुल:"
 
-#: app/templates/feed/ration_detail.html:9
+#: app/templates/feed/ration_detail.html:10
 msgid "بروتين خام موزون"
 msgstr "भारित कच्चा प्रोटीन"
 
 #: app/templates/feed/ration_detail.html:10
+msgid ""
+"متوسط بروتين كل مكوّنات الوصفة، موزون حسب نسبة كل مكوّن بالخلطة — يُحسب "
+"تلقائياً، مو رقماً تدخله يدوياً."
+msgstr ""
+"रेसिपी के सभी घटकों का औसत प्रोटीन, मिश्रण में हर घटक के प्रतिशत के "
+"अनुसार भारित — अपने आप गणना होती है, यह मैन्युअल रूप से दर्ज की जाने वाली"
+" संख्या नहीं है।"
+
+#: app/templates/feed/ration_detail.html:11
 msgid "طاقة ممثلة موزونة"
 msgstr "भारित उपापचय ऊर्जा"
 
-#: app/templates/feed/ration_detail.html:11
+#: app/templates/feed/ration_detail.html:12
 msgid "تكلفة الكيلو"
 msgstr "प्रति किग्रा लागत"
 
-#: app/templates/feed/ration_detail.html:32
+#: app/templates/feed/ration_detail.html:33
 msgid "ما فيه مكوّنات."
 msgstr "कोई घटक नहीं है।"
 
