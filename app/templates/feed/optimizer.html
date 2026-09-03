@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -46,7 +47,7 @@
   <h3 style="font-size:15px;">{{ _('الخلطة المقترحة (الأرخص تكلفة)') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('المكوّن') }}</th><th>{{ _('الكمية (كجم/رأس/يوم)') }}</th><th>{{ _('النسبة') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
+    <tr><th>{{ _('المكوّن') }}</th><th>{{ _('الكمية (كجم/رأس/يوم)') }}</th><th>{{ _('النسبة') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('المخزون كافٍ؟') }} {{ tip(_('"ناقص" يعني مخزونك الحالي من هذا المكوّن ما يكفي لتطبيق الخلطة على كامل القطيع المستهدَف — راجع "مكوّنات العلف" لتوفيره قبل التطبيق الفعلي.')) }}</th></tr>
     {% for b in result.blend %}
     <tr>
       <td>{{ b.feed.name }}</td>

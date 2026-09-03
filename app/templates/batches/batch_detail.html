@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 {% set stage_labels = {1: _('حجر صحي وأوليات'), 2: _('ترقيم وفحص سلامة'), 3: _('موزَّعة (مكتملة)')} %}
 {% set source_labels = {'purchase': _('شراء'), 'gift': _('هدية/دعم')} %}
@@ -52,7 +53,7 @@
   <h3 style="font-size:15px;">{{ _('رؤوس الدفعة') }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الحظيرة الحالية') }}</th><th>{{ _('الاستبعاد الفردي') }}</th><th></th></tr>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الحظيرة الحالية') }}</th><th>{{ _('الاستبعاد الفردي') }} {{ tip(_('استبعاد رأس معيّن يوقفه عن التقدّم الجماعي مع باقي الدفعة (مثلاً مريض أو مشتبه به) — يبقى بمرحلته الحالية لحد ما "تحرّر" استبعاده يدوياً.')) }}</th><th></th></tr>
     {% for a in batch.animals %}
     <tr>
       <td><a href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:560px;">
   <h2>{{ _('صلاحيات:') }} {{ role.display_label() }}</h2>
   <form method="post">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('الاسم الظاهر بالواجهة') }}</label><input name="display_name" value="{{ role.display_name }}" required>
-    <label style="margin-top:10px; display:block;">{{ _('الصلاحيات') }}</label>
+    <label style="margin-top:10px; display:block;">{{ _('الصلاحيات') }} {{ tip(_('كل صلاحية تفتح شاشة أو زر معيّن بالنظام — علّم بس اللي فعلاً يحتاجه هذا الدور. الرمز بين قوسين ()  هو الاسم التقني المستخدم بالكود، للمرجعية بس.')) }}</label>
     <div style="max-height:400px; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding:10px;">
       {% for code, description in all_permissions %}
       <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--text); margin-bottom:8px;">

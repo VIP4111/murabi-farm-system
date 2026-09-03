@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -47,7 +48,7 @@
   <h3 style="font-size:15px;">{{ _('أقرب الوصفات (مرتّبة: تطابق ثم أرخص تكلفة)') }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الوصفة') }}</th><th>{{ _('تطابق') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/رأس/يوم') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
+    <tr><th>{{ _('الوصفة') }}</th><th>{{ _('تطابق') }} {{ tip(_('نسبة مدى تطابق بروتين/طاقة هذي الوصفة مع الاحتياج المستهدَف أعلاه — 100%% تطابق تام. الوصفات مرتَّبة تطابق أولاً، وبعده الأرخص تكلفة.')) }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/رأس/يوم') }}</th><th>{{ _('المخزون كافٍ؟') }}</th></tr>
     {% for r in recommendations %}
     <tr>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=r.ration.id) }}">{{ r.ration.name }}</a></td>

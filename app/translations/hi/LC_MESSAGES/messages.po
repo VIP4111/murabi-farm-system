@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 13:16+0300\n"
+"POT-Creation-Date: 2026-09-03 13:50+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -2059,7 +2059,7 @@ msgid "🐑 إجمالي القطيع النشط"
 msgstr "🐑 कुल सक्रिय झुंड"
 
 #: app/core/daily_email_report_service.py:128
-#: app/templates/batches/batch_detail.html:10
+#: app/templates/batches/batch_detail.html:11
 #, python-format
 msgid "%(n)s رأس"
 msgstr "%(n)s पशु"
@@ -4411,7 +4411,7 @@ msgstr "कुल मृत्यु मामले"
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
 #: app/templates/animal_form.html:13 app/templates/animal_form.html:18
 #: app/templates/animals_list.html:93 app/templates/barn_form.html:7
-#: app/templates/barns_list.html:11 app/templates/batches/batch_detail.html:55
+#: app/templates/barns_list.html:11 app/templates/batches/batch_detail.html:56
 #: app/templates/bulk_action_form.html:20
 #: app/templates/bulk_action_form.html:104
 #: app/templates/bulk_action_form.html:251
@@ -5385,7 +5385,7 @@ msgstr "फार्म पर जन्मा"
 #: app/templates/animal_detail.html:5 app/templates/animal_detail.html:495
 #: app/templates/animal_form.html:76 app/templates/animal_form.html:84
 #: app/templates/animal_form.html:90 app/templates/animals_list.html:95
-#: app/templates/batches/batch_detail.html:4
+#: app/templates/batches/batch_detail.html:5
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:5
 #: app/templates/equipment/items_list.html:9
@@ -5395,7 +5395,7 @@ msgid "شراء"
 msgstr "खरीद"
 
 #: app/templates/animal_detail.html:5 app/templates/animals_list.html:95
-#: app/templates/batches/batch_detail.html:4
+#: app/templates/batches/batch_detail.html:5
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:5
 msgid "هدية/دعم"
@@ -5810,7 +5810,7 @@ msgstr "निदान"
 #: app/templates/animal_detail.html:258
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
-#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:49
+#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:50
 #: app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/vet_visit_form.html:31
@@ -5946,7 +5946,7 @@ msgid "فحوصات السونار"
 msgstr "सोनार जांचें"
 
 #: app/templates/animal_detail.html:329 app/templates/bulk_action_form.html:410
-#: app/templates/feed/calculator.html:35
+#: app/templates/feed/calculator.html:36
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_form.html:21
@@ -7308,7 +7308,7 @@ msgid "التغذية والأعلاف"
 msgstr "चारा और पोषण"
 
 #: app/templates/base.html:1072 app/templates/feed/items_list.html:6
-#: app/templates/feed/optimizer.html:77
+#: app/templates/feed/optimizer.html:78
 msgid "مكوّنات العلف"
 msgstr "चारा घटक"
 
@@ -7328,7 +7328,7 @@ msgstr "चारा कैलकुलेटर"
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
 
-#: app/templates/base.html:1077 app/templates/feed/optimizer.html:5
+#: app/templates/base.html:1077 app/templates/feed/optimizer.html:6
 msgid "موازِن العليقة التلقائي"
 msgstr "स्वचालित राशन संतुलक"
 
@@ -7615,7 +7615,7 @@ msgstr "टिप्पणियां सहेजें"
 msgid "الحظيرة الجديدة"
 msgstr "नया बाड़ा"
 
-#: app/templates/batches/batch_detail.html:55
+#: app/templates/batches/batch_detail.html:56
 #: app/templates/bulk_action_form.html:273
 #: app/templates/bulk_action_form.html:388
 msgid "الحظيرة الحالية"
@@ -8194,19 +8194,28 @@ msgstr "%(n)s खुले मामले"
 msgid "ما فيه رؤوس بهذي الدفعة."
 msgstr "इस खेप में कोई पशु नहीं है।"
 
-#: app/templates/role_edit.html:4
+#: app/templates/role_edit.html:5
 msgid "صلاحيات:"
 msgstr "अनुमतियां:"
 
-#: app/templates/role_edit.html:7 app/templates/role_form.html:7
+#: app/templates/role_edit.html:8 app/templates/role_form.html:7
 msgid "الاسم الظاهر بالواجهة"
 msgstr "इंटरफ़ेस में प्रदर्शित नाम"
 
-#: app/templates/role_edit.html:8
+#: app/templates/role_edit.html:9
 msgid "الصلاحيات"
 msgstr "अनुमतियां"
 
-#: app/templates/role_edit.html:23
+#: app/templates/role_edit.html:9
+msgid ""
+"كل صلاحية تفتح شاشة أو زر معيّن بالنظام — علّم بس اللي فعلاً يحتاجه هذا "
+"الدور. الرمز بين قوسين ()  هو الاسم التقني المستخدم بالكود، للمرجعية بس."
+msgstr ""
+"हर अनुमति सिस्टम में एक विशेष स्क्रीन या बटन खोलती है — केवल वही चुनें जो"
+" इस भूमिका को वास्तव में चाहिए। कोष्ठक () में दिया कोड कोड में इस्तेमाल "
+"होने वाला तकनीकी नाम है, केवल संदर्भ के लिए।"
+
+#: app/templates/role_edit.html:24
 msgid "حفظ الصلاحيات"
 msgstr "अनुमतियां सहेजें"
 
@@ -9597,87 +9606,96 @@ msgstr ""
 msgid "تعذّر الاتصال بالمساعد. حاول مرة ثانية."
 msgstr "सहायक से संपर्क नहीं हो सका। दोबारा प्रयास करें।"
 
-#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batches_list.html:4
 msgid "حجر صحي وأوليات"
 msgstr "संगरोध और प्रारंभिक देखभाल"
 
-#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batches_list.html:4
 msgid "ترقيم وفحص سلامة"
 msgstr "टैगिंग और सुरक्षा जांच"
 
-#: app/templates/batches/batch_detail.html:3
+#: app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batches_list.html:4
 msgid "موزَّعة (مكتملة)"
 msgstr "वितरित (पूर्ण)"
 
-#: app/templates/batches/batch_detail.html:8
+#: app/templates/batches/batch_detail.html:9
 msgid "دفعة"
 msgstr "खेप"
 
-#: app/templates/batches/batch_detail.html:10
+#: app/templates/batches/batch_detail.html:11
 #, python-format
 msgid "وصلت %(date)s"
 msgstr "%(date)s को पहुंची"
 
-#: app/templates/batches/batch_detail.html:21
+#: app/templates/batches/batch_detail.html:22
 msgid "تقدّم جماعي لمرحلة الترقيم/الفحص (يستثني الرؤوس المستبعدة تلقائياً)"
 msgstr "टैगिंग/जांच चरण में सामूहिक बढ़त (रोके गए पशु स्वतः बाहर रहते हैं)"
 
-#: app/templates/batches/batch_detail.html:26
+#: app/templates/batches/batch_detail.html:27
 msgid "توزيع الدفعة على الحظائر الدائمة"
 msgstr "खेप को स्थायी बाड़ों में वितरित करें"
 
-#: app/templates/batches/batch_detail.html:29
+#: app/templates/batches/batch_detail.html:30
 #: app/templates/health/protocol_apply_form.html:15
 msgid "الرأس"
 msgstr "पशु"
 
-#: app/templates/batches/batch_detail.html:29
+#: app/templates/batches/batch_detail.html:30
 msgid "حظيرة دائمة"
 msgstr "स्थायी बाड़ा"
 
-#: app/templates/batches/batch_detail.html:45
+#: app/templates/batches/batch_detail.html:46
 msgid "توزيع الدفعة"
 msgstr "खेप वितरित करें"
 
-#: app/templates/batches/batch_detail.html:52
+#: app/templates/batches/batch_detail.html:53
 #: app/templates/batches/batch_form.html:20
 msgid "رؤوس الدفعة"
 msgstr "खेप के पशु"
 
-#: app/templates/batches/batch_detail.html:55
+#: app/templates/batches/batch_detail.html:56
 msgid "الاستبعاد الفردي"
 msgstr "व्यक्तिगत रोक"
 
-#: app/templates/batches/batch_detail.html:62
+#: app/templates/batches/batch_detail.html:56
+msgid ""
+"استبعاد رأس معيّن يوقفه عن التقدّم الجماعي مع باقي الدفعة (مثلاً مريض أو "
+"مشتبه به) — يبقى بمرحلته الحالية لحد ما \"تحرّر\" استبعاده يدوياً."
+msgstr ""
+"किसी खास पशु को बाहर करना उसे बाकी बैच के साथ सामूहिक रूप से आगे बढ़ने से"
+" रोक देता है (जैसे बीमार या संदिग्ध) — जब तक आप मैन्युअल रूप से उसका "
+"बहिष्करण \"मुक्त\" न करें, वह अपने वर्तमान चरण पर रहता है।"
+
+#: app/templates/batches/batch_detail.html:63
 msgid "مستبعدة:"
 msgstr "रोका गया:"
 
-#: app/templates/batches/batch_detail.html:70
+#: app/templates/batches/batch_detail.html:71
 msgid "تحرير الاستبعاد"
 msgstr "रोक हटाएं"
 
-#: app/templates/batches/batch_detail.html:75
+#: app/templates/batches/batch_detail.html:76
 msgid "سبب الاستبعاد"
 msgstr "रोक का कारण"
 
-#: app/templates/batches/batch_detail.html:76
+#: app/templates/batches/batch_detail.html:77
 msgid "استبعاد/عزل فردي"
 msgstr "व्यक्तिगत रोक/अलगाव"
 
-#: app/templates/batches/batch_detail.html:85
+#: app/templates/batches/batch_detail.html:86
 msgid "حظيرة -"
 msgstr "बाड़ा -"
 
-#: app/templates/batches/batch_detail.html:89
+#: app/templates/batches/batch_detail.html:90
 msgid "لو فاتتها التقدّم الجماعي، ينفّذ لها إجراء المرحلة الحالية بمفردها"
 msgstr ""
 "यदि यह सामूहिक बढ़त से छूट गया, तो यह अकेले उसके लिए वर्तमान चरण की "
 "कार्रवाई करता है"
 
-#: app/templates/batches/batch_detail.html:89
+#: app/templates/batches/batch_detail.html:90
 msgid "إلحاق بمرحلة الدفعة"
 msgstr "खेप के चरण में शामिल करें"
 
@@ -10398,7 +10416,7 @@ msgstr "नई आहार योजना"
 
 #: app/templates/feed/barn_plan_form.html:12
 #: app/templates/feed/barn_plans_list.html:10
-#: app/templates/feed/calculator.html:50
+#: app/templates/feed/calculator.html:51
 msgid "الوصفة"
 msgstr "राशन"
 
@@ -10463,9 +10481,9 @@ msgstr "मात्रा/पशु/दिन"
 #: app/templates/feed/barn_plans_list.html:15
 #: app/templates/feed/barn_report.html:37
 #: app/templates/feed/barn_report.html:51
-#: app/templates/feed/barn_report.html:58 app/templates/feed/calculator.html:21
-#: app/templates/feed/calculator.html:39 app/templates/feed/optimizer.html:16
-#: app/templates/feed/optimizer.html:33
+#: app/templates/feed/barn_report.html:58 app/templates/feed/calculator.html:22
+#: app/templates/feed/calculator.html:40 app/templates/feed/optimizer.html:17
+#: app/templates/feed/optimizer.html:34
 #: app/templates/feed/purchase_form.html:44
 msgid "كجم"
 msgstr "किग्रा"
@@ -10539,25 +10557,25 @@ msgstr "%(n)s सिर बिना दर्ज वजन के बाहर 
 #: app/templates/feed/barn_report.html:54
 #: app/templates/feed/movement_form.html:7
 #: app/templates/feed/movements_list.html:11
-#: app/templates/feed/optimizer.html:49 app/templates/feed/purchase_form.html:9
+#: app/templates/feed/optimizer.html:50 app/templates/feed/purchase_form.html:9
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/team/task_detail.html:45
 msgid "المكوّن"
 msgstr "घटक"
 
-#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:49
+#: app/templates/feed/barn_report.html:54 app/templates/feed/optimizer.html:50
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/team/task_detail.html:45
 msgid "النسبة"
 msgstr "प्रतिशत"
 
-#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:58
-#: app/templates/feed/optimizer.html:56
+#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:59
+#: app/templates/feed/optimizer.html:57
 msgid "كافٍ"
 msgstr "पर्याप्त"
 
-#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:58
-#: app/templates/feed/optimizer.html:56
+#: app/templates/feed/barn_report.html:61 app/templates/feed/calculator.html:59
+#: app/templates/feed/optimizer.html:57
 #: app/templates/health/pharmacy_list.html:17
 msgid "ناقص"
 msgstr "कम"
@@ -10566,28 +10584,28 @@ msgstr "कम"
 msgid "إجمالي التكلفة اليومية للحظيرة:"
 msgstr "बाड़े की कुल दैनिक लागत:"
 
-#: app/templates/feed/calculator.html:5
+#: app/templates/feed/calculator.html:6
 msgid "حاسبة الاحتياج اليومي"
 msgstr "दैनिक आवश्यकता कैलकुलेटर"
 
-#: app/templates/feed/calculator.html:7
+#: app/templates/feed/calculator.html:8
 #: app/templates/feed/ration_detail.html:19
 msgid "المكوّنات"
 msgstr "सामग्री"
 
-#: app/templates/feed/calculator.html:8
+#: app/templates/feed/calculator.html:9
 msgid "الوصفات"
 msgstr "राशन"
 
-#: app/templates/feed/calculator.html:9
+#: app/templates/feed/calculator.html:10
 msgid "خطط الحظائر"
 msgstr "बाड़ा योजनाएं"
 
-#: app/templates/feed/calculator.html:10
+#: app/templates/feed/calculator.html:11
 msgid "حركة المخزون"
 msgstr "स्टॉक गतिविधि"
 
-#: app/templates/feed/calculator.html:14
+#: app/templates/feed/calculator.html:15
 msgid ""
 "الأرقام هنا تقدير مبسّط للمجترات الصغيرة (مو توصية بيطرية معتمدة) — راجع "
 "طبيبك قبل ما تعتمد عليها بقرارات شراء فعلية."
@@ -10596,87 +10614,97 @@ msgstr ""
 "हैं (यह प्रमाणित पशु चिकित्सा सिफारिश नहीं है) — वास्तविक खरीद निर्णयों "
 "से पहले अपने डॉक्टर से सलाह लें।"
 
-#: app/templates/feed/calculator.html:18 app/templates/feed/optimizer.html:13
+#: app/templates/feed/calculator.html:19 app/templates/feed/optimizer.html:14
 msgid "اختر حيوان (يستخدم وزنه الفعلي)"
 msgstr "एक पशु चुनें (इसका वास्तविक वजन उपयोग होगा)"
 
-#: app/templates/feed/calculator.html:20 app/templates/feed/optimizer.html:15
+#: app/templates/feed/calculator.html:21 app/templates/feed/optimizer.html:16
 msgid "- أدخل وزن يدوي بدل ما تختار -"
 msgstr "- चुनने के बजाय मैन्युअल वजन दर्ज करें -"
 
-#: app/templates/feed/calculator.html:23 app/templates/feed/optimizer.html:18
+#: app/templates/feed/calculator.html:24 app/templates/feed/optimizer.html:19
 msgid "أو وزن يدوي (كجم)"
 msgstr "या मैन्युअल वजन (किग्रा)"
 
-#: app/templates/feed/calculator.html:24 app/templates/feed/optimizer.html:19
+#: app/templates/feed/calculator.html:25 app/templates/feed/optimizer.html:20
 msgid "الحالة الفسيولوجية (اتركه فاضي ليخمّنه النظام من دورة الإنتاج)"
 msgstr ""
 "शारीरिक स्थिति (सिस्टम को उत्पादन चक्र से अनुमान लगाने देने के लिए खाली "
 "छोड़ें)"
 
-#: app/templates/feed/calculator.html:26 app/templates/feed/optimizer.html:21
+#: app/templates/feed/calculator.html:27 app/templates/feed/optimizer.html:22
 msgid "تخمين تلقائي"
 msgstr "स्वतः पहचान"
 
-#: app/templates/feed/calculator.html:29 app/templates/feed/fcr_report.html:23
+#: app/templates/feed/calculator.html:30 app/templates/feed/fcr_report.html:23
 msgid "احسب"
 msgstr "गणना करें"
 
-#: app/templates/feed/calculator.html:38
+#: app/templates/feed/calculator.html:39
 msgid "الحالة المستخدمة"
 msgstr "उपयोग की गई स्थिति"
 
-#: app/templates/feed/calculator.html:39 app/templates/feed/optimizer.html:33
+#: app/templates/feed/calculator.html:40 app/templates/feed/optimizer.html:34
 msgid "احتياج المادة الجافة اليومي"
 msgstr "दैनिक शुष्क पदार्थ आवश्यकता"
 
-#: app/templates/feed/calculator.html:40 app/templates/feed/optimizer.html:34
+#: app/templates/feed/calculator.html:41 app/templates/feed/optimizer.html:35
 msgid "هدف بروتين خام"
 msgstr "कच्चे प्रोटीन का लक्ष्य"
 
-#: app/templates/feed/calculator.html:41 app/templates/feed/optimizer.html:35
+#: app/templates/feed/calculator.html:42 app/templates/feed/optimizer.html:36
 msgid "هدف طاقة ممثلة"
 msgstr "उपापचय ऊर्जा लक्ष्य"
 
-#: app/templates/feed/calculator.html:41 app/templates/feed/optimizer.html:35
+#: app/templates/feed/calculator.html:42 app/templates/feed/optimizer.html:36
 #: app/templates/feed/ration_detail.html:10
 msgid "كيلوكالوري/كجم"
 msgstr "किलोकैलोरी/किग्रा"
 
-#: app/templates/feed/calculator.html:47
+#: app/templates/feed/calculator.html:48
 msgid "أقرب الوصفات (مرتّبة: تطابق ثم أرخص تكلفة)"
 msgstr "निकटतम राशन (क्रमबद्ध: मिलान फिर सबसे सस्ता)"
 
-#: app/templates/feed/calculator.html:50
+#: app/templates/feed/calculator.html:51
 msgid "تطابق"
 msgstr "मिलान"
 
-#: app/templates/feed/calculator.html:50 app/templates/feed/items_list.html:14
+#: app/templates/feed/calculator.html:51
+#, python-format
+msgid ""
+"نسبة مدى تطابق بروتين/طاقة هذي الوصفة مع الاحتياج المستهدَف أعلاه — 100%%"
+" تطابق تام. الوصفات مرتَّبة تطابق أولاً، وبعده الأرخص تكلفة."
+msgstr ""
+"यह रेसिपी ऊपर दी गई लक्ष्य आवश्यकता से प्रोटीन/ऊर्जा में कितनी मेल खाती "
+"है — 100%% पूर्ण मेल है। रेसिपी पहले मेल के हिसाब से, फिर सबसे कम लागत के"
+" हिसाब से क्रमबद्ध हैं।"
+
+#: app/templates/feed/calculator.html:51 app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/feed/rations_list.html:11
 #, python-format
 msgid "بروتين%%"
 msgstr "प्रोटीन%%"
 
-#: app/templates/feed/calculator.html:50
+#: app/templates/feed/calculator.html:51
 #: app/templates/feed/ration_detail.html:22
 #: app/templates/feed/rations_list.html:11
 msgid "طاقة"
 msgstr "ऊर्जा"
 
-#: app/templates/feed/calculator.html:50
+#: app/templates/feed/calculator.html:51
 msgid "تكلفة/رأس/يوم"
 msgstr "लागत/पशु/दिन"
 
-#: app/templates/feed/calculator.html:50 app/templates/feed/optimizer.html:49
+#: app/templates/feed/calculator.html:51 app/templates/feed/optimizer.html:50
 msgid "المخزون كافٍ؟"
 msgstr "स्टॉक पर्याप्त है?"
 
-#: app/templates/feed/calculator.html:61
+#: app/templates/feed/calculator.html:62
 msgid "ما فيه وصفات مسجّلة بعد."
 msgstr "अभी तक कोई राशन दर्ज नहीं है।"
 
-#: app/templates/feed/fcr_report.html:7 app/templates/feed/optimizer.html:6
+#: app/templates/feed/fcr_report.html:7 app/templates/feed/optimizer.html:7
 msgid "رجوع لحاسبة العلف"
 msgstr "चारा कैलकुलेटर पर वापस जाएं"
 
@@ -10997,7 +11025,7 @@ msgstr "बाड़ा/पशु"
 msgid "لا يوجد حركات مسجّلة بعد."
 msgstr "अभी तक कोई गतिविधि दर्ज नहीं है।"
 
-#: app/templates/feed/optimizer.html:9
+#: app/templates/feed/optimizer.html:10
 msgid ""
 "يبني خلطة جديدة من الصفر من كل مكوّنات العلف الخام النشطة (برمجة خطية "
 "حقيقية، مو ترتيب وصفات جاهزة) بأقل تكلفة تحقق احتياج البروتين والطاقة — "
@@ -11008,39 +11036,48 @@ msgstr ""
 "प्रोटीन और ऊर्जा आवश्यकता पूरी करे — एक सरलीकृत अनुमान, किसी भी मिश्रण को"
 " वास्तव में अपनाने से पहले डॉक्टर/पोषण विशेषज्ञ से सलाह लें।"
 
-#: app/templates/feed/optimizer.html:24
+#: app/templates/feed/optimizer.html:25
 msgid "وازِن الخلطة"
 msgstr "मिश्रण संतुलित करें"
 
-#: app/templates/feed/optimizer.html:30
+#: app/templates/feed/optimizer.html:31
 msgid "الاحتياج المستهدف"
 msgstr "लक्षित आवश्यकता"
 
-#: app/templates/feed/optimizer.html:46
+#: app/templates/feed/optimizer.html:47
 msgid "الخلطة المقترحة (الأرخص تكلفة)"
 msgstr "सुझाया गया मिश्रण (सबसे सस्ता)"
 
-#: app/templates/feed/optimizer.html:49
+#: app/templates/feed/optimizer.html:50
 msgid "الكمية (كجم/رأس/يوم)"
 msgstr "मात्रा (किग्रा/पशु/दिन)"
 
-#: app/templates/feed/optimizer.html:61
+#: app/templates/feed/optimizer.html:50
+msgid ""
+"\"ناقص\" يعني مخزونك الحالي من هذا المكوّن ما يكفي لتطبيق الخلطة على كامل"
+" القطيع المستهدَف — راجع \"مكوّنات العلف\" لتوفيره قبل التطبيق الفعلي."
+msgstr ""
+"\"कमी\" का मतलब है कि इस घटक का आपका मौजूदा स्टॉक पूरे लक्षित झुंड पर "
+"मिश्रण लागू करने के लिए पर्याप्त नहीं है — वास्तव में लागू करने से पहले "
+"स्टॉक भरने के लिए \"चारा घटक\" देखें।"
+
+#: app/templates/feed/optimizer.html:62
 msgid "إجمالي التكلفة اليومية للرأس"
 msgstr "प्रति पशु कुल दैनिक लागत"
 
-#: app/templates/feed/optimizer.html:65
+#: app/templates/feed/optimizer.html:66
 msgid "التكلفة اليومية الحالية (من خطة الحظيرة الفعلية)"
 msgstr "वर्तमान दैनिक लागत (बाड़े की सक्रिय योजना से)"
 
-#: app/templates/feed/optimizer.html:68
+#: app/templates/feed/optimizer.html:69
 msgid "توفير يومي/رأس"
 msgstr "दैनिक बचत/पशु"
 
-#: app/templates/feed/optimizer.html:68
+#: app/templates/feed/optimizer.html:69
 msgid "زيادة تكلفة يومية/رأس (الخلطة الحالية أرخص فعلاً)"
 msgstr "दैनिक लागत वृद्धि/पशु (वर्तमान मिश्रण वास्तव में सस्ता है)"
 
-#: app/templates/feed/optimizer.html:72
+#: app/templates/feed/optimizer.html:73
 #, python-format
 msgid ""
 "يعني توفير تقديري %(monthly)s شهرياً لهذا الرأس لو طبّقت الخلطة المقترحة "
@@ -11049,7 +11086,7 @@ msgstr ""
 "इसका मतलब है कि यदि आप वर्तमान के बजाय सुझाए गए मिश्रण को अपनाते हैं तो "
 "इस पशु के लिए अनुमानित %(monthly)s मासिक बचत होगी।"
 
-#: app/templates/feed/optimizer.html:77
+#: app/templates/feed/optimizer.html:78
 msgid "مكوّن واحد أو أكثر بالخلطة مخزونه أقل من الكمية المطلوبة — راجع"
 msgstr "मिश्रण में एक या अधिक घटकों का स्टॉक आवश्यक मात्रा से कम है — देखें"
 
