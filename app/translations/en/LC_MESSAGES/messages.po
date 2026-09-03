@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 12:29+0300\n"
+"POT-Creation-Date: 2026-09-03 12:44+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 #: app/__init__.py:136 app/core/routes.py:1071
-#: app/templates/team/members_list.html:24
+#: app/templates/team/members_list.html:25
 msgid "نشط"
 msgstr "Active"
 
@@ -107,8 +107,8 @@ msgstr "Not eligible"
 msgid "مؤكّدة"
 msgstr "Confirmed"
 
-#: app/__init__.py:158 app/templates/ostrich/eggs_list.html:17
-#: app/templates/ostrich/eggs_list.html:35
+#: app/__init__.py:158 app/templates/ostrich/eggs_list.html:18
+#: app/templates/ostrich/eggs_list.html:36
 #: app/templates/repro/attempt_form.html:19
 msgid "فشلت"
 msgstr "Failed"
@@ -631,7 +631,7 @@ msgstr "Record mating"
 msgid "حيوان"
 msgstr "Animal"
 
-#: app/__init__.py:376 app/templates/alerts_list.html:10
+#: app/__init__.py:376 app/templates/alerts_list.html:11
 #: app/templates/team/report_detail.html:20
 msgid "حظيرة"
 msgstr "barn"
@@ -1441,7 +1441,7 @@ msgstr "Open the vaccination schedule ←"
 #: app/core/animal_filters_service.py:181 app/team/routes.py:762
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
-#: app/templates/ostrich/eggs_list.html:14
+#: app/templates/ostrich/eggs_list.html:15
 msgid "الكل"
 msgstr "All"
 
@@ -3444,12 +3444,12 @@ msgstr "%(field)s can't be a negative number."
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
 #: app/templates/repro/mating_form.html:24
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/pregnancy_form.html:9
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:38
+#: app/templates/repro/sonar_list.html:11 app/templates/settings_backup.html:38
 #: app/templates/warehouses/inventory_counts_list.html:10
 msgid "التاريخ"
 msgstr "Date"
@@ -4494,7 +4494,7 @@ msgstr "Mating→pregnancy success rate"
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:134
 #: app/templates/ostrich/egg_form.html:11
 #: app/templates/ostrich/egg_hatch_form.html:7
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الأم"
 msgstr "Mother"
 
@@ -4575,11 +4575,11 @@ msgstr "Attached invoice"
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "No activity in this period"
 
-#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:14
+#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:15
 #: app/templates/feed/barn_report.html:32 app/templates/feed/item_form.html:8
 #: app/templates/feed/items_list.html:14
 #: app/templates/health/pharmacy_list.html:14
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "الفئة"
 msgstr "Category"
 
@@ -5338,31 +5338,40 @@ msgstr "Discard permanently"
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr "Discard this entry permanently without uploading it?"
 
-#: app/templates/alerts_list.html:5 app/templates/today.html:43
+#: app/templates/alerts_list.html:6 app/templates/today.html:43
 #: app/templates/worker_home.html:69
 msgid "تنبيهاتي"
 msgstr "My Alerts"
 
-#: app/templates/alerts_list.html:5 app/templates/animals_list.html:93
+#: app/templates/alerts_list.html:6 app/templates/animals_list.html:93
 #: app/templates/assistant/chat.html:81
 msgid "التنبيهات"
 msgstr "Alerts"
 
-#: app/templates/alerts_list.html:6 app/templates/settings_readiness.html:26
+#: app/templates/alerts_list.html:6
+msgid ""
+"التصنيف بين قوسين [...] بكل تنبيه يوضّح نوعه (تحصين، فترة سحب، ولادة...)."
+" الصف بخلفية أحمر خفيف = عاجل يحتاج تصرّف قريب."
+msgstr ""
+"The category in brackets [...] on each alert shows its type (vaccination,"
+" withdrawal period, birth...). A light red row background = urgent, needs"
+" action soon."
+
+#: app/templates/alerts_list.html:7 app/templates/settings_readiness.html:26
 msgid "تنبيه"
 msgstr "Alert"
 
-#: app/templates/alerts_list.html:10
+#: app/templates/alerts_list.html:11
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr "Limited to the barns you're responsible for"
 
-#: app/templates/alerts_list.html:11
+#: app/templates/alerts_list.html:12
 msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
 msgstr ""
 "You're not responsible for any barn yet — ask the farm owner to assign "
 "you one."
 
-#: app/templates/alerts_list.html:15
+#: app/templates/alerts_list.html:16
 msgid ""
 "عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
 "تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
@@ -5377,7 +5386,7 @@ msgstr ""
 "expected stock shortages for upcoming scheduled vaccinations (vaccination"
 " calendar). The time window comes from"
 
-#: app/templates/alerts_list.html:16 app/templates/audit_log.html:4
+#: app/templates/alerts_list.html:17 app/templates/audit_log.html:4
 #: app/templates/base.html:1105 app/templates/home.html:146
 #: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
@@ -5386,15 +5395,15 @@ msgstr ""
 msgid "الإعدادات"
 msgstr "Settings"
 
-#: app/templates/alerts_list.html:30 app/templates/alerts_list.html:31
-#: app/templates/finance/lots_list.html:24 app/templates/home.html:48
+#: app/templates/alerts_list.html:31 app/templates/alerts_list.html:32
+#: app/templates/finance/lots_list.html:25 app/templates/home.html:48
 #: app/templates/home.html:60 app/templates/today.html:33
 #: app/templates/today.html:63 app/templates/today.html:64
 #: app/templates/today.html:89 app/templates/worker_home.html:63
 msgid "فتح"
 msgstr "Open"
 
-#: app/templates/alerts_list.html:34
+#: app/templates/alerts_list.html:35
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "No alerts right now — all good."
 
@@ -5412,7 +5421,7 @@ msgstr "Born on farm"
 #: app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4
-#: app/templates/equipment/items_list.html:8
+#: app/templates/equipment/items_list.html:9
 #: app/templates/feed/items_list.html:8 app/templates/finance/form.html:12
 #: app/templates/finance/list.html:73
 msgid "شراء"
@@ -5621,7 +5630,7 @@ msgstr "Basic data"
 #: app/templates/animal_detail.html:133 app/templates/animal_form.html:115
 #: app/templates/feed/ration_detail.html:7
 #: app/templates/feed/ration_form.html:9
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
 msgid "الغرض"
 msgstr "Purpose"
 
@@ -5642,7 +5651,7 @@ msgstr "Farm entry date"
 #: app/templates/health/vaccination_schedule_form.html:7
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:56
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:81
@@ -5655,10 +5664,10 @@ msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
 msgstr "Care note for the %(breed)s breed:"
 
 #: app/templates/animal_detail.html:146 app/templates/barns_list.html:19
-#: app/templates/equipment/items_list.html:33
+#: app/templates/equipment/items_list.html:34
 #: app/templates/feed/items_list.html:31
 #: app/templates/health/pharmacy_list.html:30
-#: app/templates/team/members_list.html:26
+#: app/templates/team/members_list.html:27
 msgid "تعديل"
 msgstr "Edit"
 
@@ -5693,7 +5702,7 @@ msgstr "Cord treated"
 #: app/templates/repro/pregnancies_list.html:16
 #: app/templates/repro/program_detail.html:53
 #: app/templates/repro/program_detail.html:120
-#: app/templates/repro/sonar_list.html:17
+#: app/templates/repro/sonar_list.html:18
 msgid "نعم"
 msgstr "Yes"
 
@@ -5856,19 +5865,19 @@ msgstr "Severity"
 #: app/templates/animals_list.html:93 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
-#: app/templates/finance/lots_list.html:17
+#: app/templates/finance/lots_list.html:18
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:14
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:56
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 #: app/templates/ostrich/incubators_list.html:14
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:11
 #: app/templates/settings_readiness.html:21
 #: app/templates/team/daily_templates.html:19
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 #: app/templates/team/payroll_list.html:23
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -5900,14 +5909,14 @@ msgid "لا يوجد تحصينات مسجّلة."
 msgstr "No vaccinations recorded."
 
 #: app/templates/animal_detail.html:299 app/templates/base.html:975
-#: app/templates/home.html:111 app/templates/repro/matings_list.html:5
+#: app/templates/home.html:111 app/templates/repro/matings_list.html:6
 msgid "التقريع"
 msgstr "Mating"
 
 #: app/templates/animal_detail.html:302
 #: app/templates/team/member_edit_form.html:19
 #: app/templates/team/member_form.html:18
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 msgid "الدور"
 msgstr "Role"
 
@@ -5955,7 +5964,7 @@ msgstr "No pregnancy diagnosis recorded."
 
 #: app/templates/animal_detail.html:325
 #: app/templates/repro/program_detail.html:110
-#: app/templates/repro/sonar_list.html:5
+#: app/templates/repro/sonar_list.html:6
 msgid "فحوصات السونار"
 msgstr "Sonar exams"
 
@@ -5964,7 +5973,7 @@ msgstr "Sonar exams"
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_form.html:21
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "النتيجة"
 msgstr "Result"
 
@@ -5977,7 +5986,7 @@ msgstr "No sonar exams recorded."
 msgid "برامج الشياع التوأمي"
 msgstr "Twin estrus programs"
 
-#: app/templates/animal_detail.html:340 app/templates/repro/sonar_list.html:10
+#: app/templates/animal_detail.html:340 app/templates/repro/sonar_list.html:11
 msgid "البرنامج"
 msgstr "Program"
 
@@ -6384,25 +6393,25 @@ msgstr "Additional details (optional)"
 #: app/templates/equipment/asset_form.html:8
 #: app/templates/equipment/assets_list.html:15
 #: app/templates/equipment/item_form.html:8
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_form.html:8
-#: app/templates/feed/rations_list.html:10
-#: app/templates/finance/lots_list.html:17
+#: app/templates/feed/rations_list.html:11
+#: app/templates/finance/lots_list.html:18
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/drug_catalog_form.html:8
 #: app/templates/health/pharmacy_form.html:43
 #: app/templates/health/pharmacy_list.html:14
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:14
 #: app/templates/settings.html:169 app/templates/team/member_edit_form.html:17
 #: app/templates/team/member_form.html:11
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 #: app/templates/team/payroll_list.html:23
 #: app/templates/team/performance_report.html:21
 #: app/templates/warehouses/warehouse_form.html:8
@@ -7222,7 +7231,7 @@ msgstr "Tasks"
 msgid "البلاغات"
 msgstr "Reports"
 
-#: app/templates/base.html:988 app/templates/team/members_list.html:5
+#: app/templates/base.html:988 app/templates/team/members_list.html:6
 msgid "أعضاء الفريق"
 msgstr "Team Members"
 
@@ -7247,7 +7256,7 @@ msgstr "Review Today's Tasks"
 msgid "تقرير أداء الفريق"
 msgstr "Team Performance Report"
 
-#: app/templates/base.html:1004 app/templates/equipment/items_list.html:5
+#: app/templates/base.html:1004 app/templates/equipment/items_list.html:6
 msgid "مستودع المعدات"
 msgstr "Equipment warehouse"
 
@@ -7402,7 +7411,7 @@ msgstr "Send test summary now"
 
 #: app/templates/base.html:1157 app/templates/team/member_edit_form.html:23
 #: app/templates/team/member_form.html:22
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 msgid "اللغة"
 msgstr "Language"
 
@@ -8618,12 +8627,12 @@ msgstr "Enabled"
 msgid "غير مفعّل"
 msgstr "Disabled"
 
-#: app/templates/settings.html:155 app/templates/team/members_list.html:30
+#: app/templates/settings.html:155 app/templates/team/members_list.html:31
 msgid "تعطيل"
 msgstr "Disable"
 
 #: app/templates/settings.html:155 app/templates/team/daily_templates.html:28
-#: app/templates/team/members_list.html:30
+#: app/templates/team/members_list.html:31
 msgid "تفعيل"
 msgstr "Activate"
 
@@ -9750,7 +9759,7 @@ msgid "دفعات استقبال قطيع جديد"
 msgstr "New herd receiving batches"
 
 #: app/templates/batches/batches_list.html:9
-#: app/templates/finance/lots_list.html:8
+#: app/templates/finance/lots_list.html:9
 msgid "دفعة جديدة"
 msgstr "New batch"
 
@@ -9761,7 +9770,7 @@ msgstr "Batch number"
 #: app/templates/batches/batches_list.html:14
 #: app/templates/feed/barn_report.html:32 app/templates/feed/fcr_report.html:70
 #: app/templates/finance/lot_detail.html:21
-#: app/templates/finance/lots_list.html:17
+#: app/templates/finance/lots_list.html:18
 #: app/templates/finance/monthly_cost_report.html:27
 msgid "عدد الرؤوس"
 msgstr "Head count"
@@ -9993,7 +10002,7 @@ msgid "لا يوجد صيانة مسجّلة بعد."
 msgstr "No maintenance recorded yet."
 
 #: app/templates/equipment/assets_list.html:7
-#: app/templates/equipment/items_list.html:7
+#: app/templates/equipment/items_list.html:8
 msgid "الأصول والصيانة الدورية"
 msgstr "Assets & periodic maintenance"
 
@@ -10145,7 +10154,7 @@ msgid "سليمة"
 msgstr "Good condition"
 
 #: app/templates/equipment/item_movement.html:37
-#: app/templates/equipment/items_list.html:19
+#: app/templates/equipment/items_list.html:20
 msgid "تحتاج صيانة"
 msgstr "Needs maintenance"
 
@@ -10217,43 +10226,52 @@ msgstr "Received damaged"
 msgid "ما فيه حركات مسجَّلة بعد."
 msgstr "No movements recorded yet."
 
-#: app/templates/equipment/items_list.html:9
+#: app/templates/equipment/items_list.html:10
 msgid "صنف جديد"
 msgstr "New item"
 
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 #: app/templates/feed/items_list.html:14
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "المتوفر"
 msgstr "Available"
 
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 #: app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_detail.html:22
 msgid "السعر/وحدة"
 msgstr "Price/unit"
 
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 msgid "آخر من أخذها"
 msgstr "Last taken by"
 
-#: app/templates/equipment/items_list.html:24
+#: app/templates/equipment/items_list.html:15
+msgid ""
+"آخر عضو فريق سجّل صرف هذي الأداة له عبر \"حركة (شراء/صرف)\" — للمتابعة لو"
+" ضاعت أو تأخر رجوعها، مو حجز فعلي يمنع غيره من الصرف."
+msgstr ""
+"The last team member this tool was recorded as issued to via \"movement "
+"(purchase/issue)\" — for follow-up if it gets lost or returned late, not "
+"an actual reservation that blocks anyone else from taking it."
+
+#: app/templates/equipment/items_list.html:25
 #: app/templates/feed/items_list.html:25
 msgid "منخفض"
 msgstr "Low"
 
-#: app/templates/equipment/items_list.html:34
+#: app/templates/equipment/items_list.html:35
 msgid "حركة (شراء/صرف)"
 msgstr "Movement (purchase/issue)"
 
-#: app/templates/equipment/items_list.html:35
+#: app/templates/equipment/items_list.html:36
 #: app/templates/feed/items_list.html:33
 #: app/templates/health/pharmacy_list.html:32
 #: app/templates/warehouses/item_count_form.html:4
 msgid "جرد"
 msgstr "Count"
 
-#: app/templates/equipment/items_list.html:40
+#: app/templates/equipment/items_list.html:41
 msgid "لا يوجد أصناف معدات مسجّلة بعد."
 msgstr "No equipment items registered yet."
 
@@ -10637,14 +10655,14 @@ msgstr "Match"
 
 #: app/templates/feed/calculator.html:50 app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
 #, python-format
 msgid "بروتين%%"
 msgstr "Protein%%"
 
 #: app/templates/feed/calculator.html:50
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
 msgid "طاقة"
 msgstr "Energy"
 
@@ -11118,19 +11136,44 @@ msgstr ""
 "Leave it blank in normal cases — only needed if the screen returned a "
 "calcium:phosphorus ratio warning."
 
-#: app/templates/feed/rations_list.html:5
+#: app/templates/feed/rations_list.html:6
 msgid "وصفات العلف"
 msgstr "Feed rations"
 
 #: app/templates/feed/rations_list.html:6
+msgid ""
+"خلطة من عدة مكوّنات علف بنسب محدَّدة — تُبنى مرة وحدة هنا، وتُستخدم "
+"لاحقاً بخطط تغذية الحظائر بدل ما تحسب النسب كل مرة يدوياً."
+msgstr ""
+"A mix of several feed components at set ratios — built once here, then "
+"used later in barn feeding plans instead of calculating ratios manually "
+"each time."
+
+#: app/templates/feed/rations_list.html:7
 msgid "وصفة جديدة"
 msgstr "New ration"
 
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
+msgid ""
+"نسبة البروتين بالخلطة النهائية — تُحسب تلقائياً من نسب ومكوّنات الوصفة، "
+"مو رقم تدخله يدوياً."
+msgstr ""
+"The protein percentage in the final mix — calculated automatically from "
+"the recipe's ratios and components, not a number you enter manually."
+
+#: app/templates/feed/rations_list.html:11
+msgid ""
+"الطاقة الممثَّلة بالكيلو كالوري لكل كيلوجرام من الخلطة — تُحسب تلقائياً "
+"من مكوّناتها."
+msgstr ""
+"Metabolizable energy in kilocalories per kilogram of the mix — calculated"
+" automatically from its components."
+
+#: app/templates/feed/rations_list.html:11
 msgid "تكلفة/كجم"
 msgstr "Cost/kg"
 
-#: app/templates/feed/rations_list.html:20
+#: app/templates/feed/rations_list.html:21
 msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "No rations recorded yet."
 
@@ -11141,13 +11184,13 @@ msgstr "Financial analysis and break-even"
 
 #: app/templates/finance/break_even_report.html:8
 #: app/templates/finance/list.html:63 app/templates/reports/_filter.html:11
-#: app/templates/repro/matings_list.html:8
+#: app/templates/repro/matings_list.html:9
 msgid "تصدير Excel"
 msgstr "Export Excel"
 
 #: app/templates/finance/break_even_report.html:9
 #: app/templates/finance/culling_index.html:6
-#: app/templates/finance/lots_list.html:7
+#: app/templates/finance/lots_list.html:8
 #: app/templates/finance/monthly_cost_report.html:6
 #: app/templates/finance/seasonal_price_analysis.html:6
 msgid "رجوع للمالية"
@@ -11474,7 +11517,7 @@ msgstr "Monthly cost-per-head report"
 msgid "موسمية أسعار البيع"
 msgstr "Sale Price Seasonality"
 
-#: app/templates/finance/list.html:62 app/templates/finance/lots_list.html:5
+#: app/templates/finance/list.html:62 app/templates/finance/lots_list.html:6
 msgid "دفعات البيع"
 msgstr "Sales lots"
 
@@ -11654,7 +11697,7 @@ msgstr ""
 msgid "إنشاء الدفعة"
 msgstr "Create lot"
 
-#: app/templates/finance/lots_list.html:11
+#: app/templates/finance/lots_list.html:12
 msgid ""
 "صانع مجموعات البيع الذكي — جمّع رؤوساً جاهزة بدفعة واحدة، شوف إحصائياتها "
 "الاستثمارية، وشارك بروفايلاً تجارياً احترافياً مع المشتري."
@@ -11662,11 +11705,19 @@ msgstr ""
 "Smart lot builder — group ready animals into one lot, see its investment "
 "stats, and share a professional commercial profile with the buyer."
 
-#: app/templates/finance/lots_list.html:17
+#: app/templates/finance/lots_list.html:18
+msgid ""
+"\"مفتوحة\" = لسا تقدر تضيف/تحذف رؤوس منها. \"مغلقة\" = الدفعة انتهت (بيعت"
+" أو أُلغيت) وما تتعدّل."
+msgstr ""
+"\"Open\" = you can still add/remove heads from it. \"Closed\" = the lot "
+"is finished (sold or cancelled) and cannot be edited."
+
+#: app/templates/finance/lots_list.html:18
 msgid "تاريخ الإنشاء"
 msgstr "Creation date"
 
-#: app/templates/finance/lots_list.html:27
+#: app/templates/finance/lots_list.html:28
 msgid "ما فيه دفعات بيع بعد."
 msgstr "No sales lots yet."
 
@@ -11850,6 +11901,15 @@ msgstr "Active disease cases"
 #: app/templates/health/dashboard.html:18
 msgid "السجل الكامل"
 msgstr "Full log"
+
+#: app/templates/health/dashboard.html:22
+msgid ""
+"تقديرك الشخصي لخطورة الحالة وقت التسجيل (خفيفة/متوسطة/شديدة) — يساعدك "
+"ترتّب أولوية المتابعة، مو تشخيص آلي."
+msgstr ""
+"Your personal assessment of case severity at recording time "
+"(mild/moderate/severe) — helps you prioritize follow-up, not an automated"
+" diagnosis."
 
 #: app/templates/health/dashboard.html:22
 msgid "منذ"
@@ -12455,9 +12515,27 @@ msgid "حالة جديدة"
 msgstr "New case"
 
 #: app/templates/health/diseases_list.html:14
+msgid ""
+"\"نشطة\" = الحالة لسا مفتوحة ومتابَعة. \"مغلقة\" = سُجِّل تعافيها "
+"(بملاحظة إلزامية) — لا تُحسب ضمن \"الحالات النشطة\" بمركز الطبيب."
+msgstr ""
+"\"Active\" = the case is still open and being followed up. \"Closed\" = "
+"its recovery was recorded (with a mandatory note) — not counted among "
+"\"active cases\" in the doctor's hub."
+
+#: app/templates/health/diseases_list.html:14
 #: app/templates/health/vet_visits_list.html:11
 msgid "فترة السحب حتى"
 msgstr "Withdrawal period until"
+
+#: app/templates/health/diseases_list.html:14
+msgid ""
+"ما تقدر تبيع أو تذبح هذا الرأس قبل هذا التاريخ لو الحالة تضمَّنت دواء له "
+"فترة سحب — النظام يمنع البيع تلقائياً."
+msgstr ""
+"You can't sell or slaughter this head before this date if the case "
+"included a drug with a withdrawal period — the system automatically "
+"blocks the sale."
 
 #: app/templates/health/diseases_list.html:22
 msgid "تأكيد إغلاق السجل المرضي؟"
@@ -12482,7 +12560,7 @@ msgstr "New doctor"
 
 #: app/templates/health/doctor_form.html:8
 #: app/templates/health/doctors_list.html:11
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 msgid "الجوال"
 msgstr "Phone"
 
@@ -12633,7 +12711,7 @@ msgid "إضافة للقائمة"
 msgstr "Add to list"
 
 #: app/templates/health/injection_guide.html:6
-#: app/templates/health/pharmacy_shortages.html:6
+#: app/templates/health/pharmacy_shortages.html:7
 msgid "رجوع للصيدلية"
 msgstr "Back to Pharmacy"
 
@@ -12950,7 +13028,7 @@ msgid "اختر فئة الدواء أولاً لعرض دليلها."
 msgstr "Choose a medicine class first to view its guide."
 
 #: app/templates/health/pharmacy_list.html:8
-#: app/templates/health/pharmacy_shortages.html:5
+#: app/templates/health/pharmacy_shortages.html:6
 msgid "نواقص الصيدلية"
 msgstr "Pharmacy shortages"
 
@@ -13061,7 +13139,7 @@ msgstr "Remaining of it"
 msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد."
 msgstr "No purchases recorded for this medicine yet."
 
-#: app/templates/health/pharmacy_shortages.html:8
+#: app/templates/health/pharmacy_shortages.html:9
 msgid ""
 "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "
 "\"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
@@ -13070,15 +13148,24 @@ msgstr ""
 "this screen is itself the \"required purchases list\", updated "
 "automatically whenever stock changes."
 
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "الحد الأدنى"
 msgstr "Minimum"
 
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "بدائل بنفس الفئة"
 msgstr "Alternatives in the same category"
 
-#: app/templates/health/pharmacy_shortages.html:27
+#: app/templates/health/pharmacy_shortages.html:15
+msgid ""
+"أدوية أخرى بنفس الفئة عندها مخزون كافٍ حالياً — تقدر تستخدمها مؤقتاً لحد "
+"ما توفّر الدواء الأساسي (قرارك الطبي أنت)."
+msgstr ""
+"Other medicines in the same category that currently have enough stock — "
+"you can use them temporarily until the main drug is restocked (the "
+"medical decision is yours)."
+
+#: app/templates/health/pharmacy_shortages.html:28
 msgid "لا يوجد نواقص حالياً"
 msgstr "No shortages right now"
 
@@ -13580,12 +13667,12 @@ msgstr "choose the \"ostrich\" species"
 
 #: app/templates/ostrich/egg_form.html:15
 #: app/templates/ostrich/egg_hatch_form.html:8
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "تاريخ البيض"
 msgstr "Lay date"
 
 #: app/templates/ostrich/egg_form.html:16
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الجودة"
 msgstr "Quality"
 
@@ -13621,22 +13708,22 @@ msgid "الوزن (جرام، اختياري)"
 msgstr "Weight (grams, optional)"
 
 #: app/templates/ostrich/egg_hatch_form.html:4
-#: app/templates/ostrich/eggs_list.html:51
+#: app/templates/ostrich/eggs_list.html:52
 msgid "تسجيل نتيجة الفقس"
 msgstr "Record hatch result"
 
 #: app/templates/ostrich/egg_hatch_form.html:9
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الحاضنة"
 msgstr "Incubator"
 
 #: app/templates/ostrich/egg_hatch_form.html:10
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "بداية الحضانة"
 msgstr "Incubation start"
 
 #: app/templates/ostrich/egg_hatch_form.html:11
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الفقس المتوقع"
 msgstr "Expected hatch"
 
@@ -13684,41 +13771,56 @@ msgstr "Example: unfertilized egg"
 msgid "تسجيل الفشل"
 msgstr "Record failure"
 
-#: app/templates/ostrich/eggs_list.html:5
+#: app/templates/ostrich/eggs_list.html:6
 msgid "سجل النعام — البيض والتفقيس"
 msgstr "Ostrich record — eggs and hatching"
 
-#: app/templates/ostrich/eggs_list.html:7
+#: app/templates/ostrich/eggs_list.html:8
 #: app/templates/ostrich/incubators_list.html:6
 msgid "الحاضنات"
 msgstr "Incubators"
 
-#: app/templates/ostrich/eggs_list.html:8
+#: app/templates/ostrich/eggs_list.html:9
 msgid "تسجيل بيضة"
 msgstr "Register egg"
 
-#: app/templates/ostrich/eggs_list.html:15
+#: app/templates/ostrich/eggs_list.html:16
 msgid "قيد الحضانة/الانتظار"
 msgstr "Incubating/pending"
 
-#: app/templates/ostrich/eggs_list.html:16
-#: app/templates/ostrich/eggs_list.html:34
+#: app/templates/ostrich/eggs_list.html:17
+#: app/templates/ostrich/eggs_list.html:35
 msgid "فقست"
 msgstr "Hatched"
 
-#: app/templates/ostrich/eggs_list.html:33
+#: app/templates/ostrich/eggs_list.html:24
+msgid ""
+"تقييمك الشخصي لمظهر البيضة (حجم/شكل/قشرة سليمة) وقت التسجيل — يساعدك "
+"تفضّل بيض الجودة الأعلى عند محدودية سعة الحاضنة."
+msgstr ""
+"Your personal assessment of the egg's appearance (size/shape/intact "
+"shell) at recording time — helps you prioritize higher-quality eggs when "
+"incubator capacity is limited."
+
+#: app/templates/ostrich/eggs_list.html:24
+msgid "يُحسب تلقائياً من تاريخ بداية الحضانة + مدة تفقيس بيض النعام القياسية."
+msgstr ""
+"Calculated automatically from the incubation start date + the standard "
+"ostrich egg hatching duration."
+
+#: app/templates/ostrich/eggs_list.html:34
 msgid "بانتظار"
 msgstr "Waiting"
 
-#: app/templates/ostrich/eggs_list.html:44
+#: app/templates/ostrich/eggs_list.html:45
 msgid "اختر حاضنة"
 msgstr "Choose incubator"
 
-#: app/templates/ostrich/eggs_list.html:48
+#: app/templates/ostrich/eggs_list.html:49
 msgid "إدخال حاضنة"
 msgstr "Place in incubator"
 
-#: app/templates/ostrich/eggs_list.html:57
+#: app/templates/ostrich/eggs_list.html:58
 msgid "لا يوجد بيض مسجّل بهذا الفلتر."
 msgstr "No eggs registered under this filter."
 
@@ -14002,7 +14104,7 @@ msgid "مين أعطاها"
 msgstr "Given by"
 
 #: app/templates/repro/mating_form.html:4
-#: app/templates/repro/matings_list.html:9
+#: app/templates/repro/matings_list.html:10
 msgid "تقريع جديد"
 msgstr "New mating"
 
@@ -14047,13 +14149,13 @@ msgid "فيه طلب تجاوز مُرسَل بهذا السبب:"
 msgstr "There is a pending override request with this reason:"
 
 #: app/templates/repro/mating_form.html:25
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/pregnancy_form.html:10
 #: app/templates/repro/program_form.html:10
 #: app/templates/repro/programs_list.html:11
 #: app/templates/repro/sonar_form.html:10
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "الأنثى"
 msgstr "Female"
 
@@ -14117,19 +14219,28 @@ msgstr ""
 msgid "اطلب تجاوز من صاحب الحلال"
 msgstr "Request override from the owner"
 
-#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/matings_list.html:6
+msgid ""
+"كل عملية تقريع مسجَّلة هنا. الخطوة اللي بعدها هي \"فحوصات السونار\" "
+"لتأكيد الحمل، وبعدين \"تشخيص الحمل\" لمتابعته لحد الولادة."
+msgstr ""
+"Every mating is recorded here. The next step is \"ultrasound checks\" to "
+"confirm pregnancy, then \"pregnancy diagnosis\" to follow it through to "
+"birth."
+
+#: app/templates/repro/matings_list.html:8
 #: app/templates/repro/sires_list.html:6
 msgid "تقييم أداء الفحول"
 msgstr "Sire performance evaluation"
 
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/repro/program_detail.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/sires_list.html:18
 msgid "الفحل"
 msgstr "Male"
 
-#: app/templates/repro/matings_list.html:23
+#: app/templates/repro/matings_list.html:24
 msgid "لا يوجد عمليات تقريع مسجّلة بعد."
 msgstr "No matings recorded yet."
 
@@ -14161,7 +14272,7 @@ msgstr "Sonar date"
 #: app/templates/repro/pregnancy_form.html:22
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_form.html:28
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "عدد الأجنّة"
 msgstr "Number of Fetuses"
 
@@ -14356,12 +14467,12 @@ msgid "لا يوجد محاولات مسجّلة."
 msgstr "No attempts recorded."
 
 #: app/templates/repro/program_detail.html:111
-#: app/templates/repro/sonar_list.html:6
+#: app/templates/repro/sonar_list.html:7
 msgid "فحص جديد"
 msgstr "New exam"
 
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "نبض"
 msgstr "Heartbeat"
 
@@ -14616,7 +14727,25 @@ msgstr ""
 "\"Pregnancy\" → \"+ New pregnancy diagnosis\" so the female automatically"
 " enters pregnancy follow-up and late-pregnancy care."
 
-#: app/templates/repro/sonar_list.html:21
+#: app/templates/repro/sonar_list.html:11
+msgid ""
+"نبض قلب مؤكَّد بالسونار — مؤشر إيجابي إضافي على استمرار الحمل، بس \"لا\" "
+"ما يعني بالضرورة فشل الحمل (ممكن يكون العمر الجنيني مبكر لسا)."
+msgstr ""
+"A heartbeat confirmed by ultrasound — an additional positive sign the "
+"pregnancy is continuing, but \"no\" doesn't necessarily mean the "
+"pregnancy has failed (the fetal age may still be too early)."
+
+#: app/templates/repro/sonar_list.html:11
+msgid ""
+"رقم برنامج المزامنة التوأمي اللي كانت الأنثى مسجَّلة فيه، لو كان الحمل "
+"ناتج عن برنامج مجدوَل — فاضي يعني تقريع عادي بدون برنامج."
+msgstr ""
+"The synchronization program number the female was enrolled in, if the "
+"pregnancy resulted from a scheduled program — empty means a regular "
+"mating without a program."
+
+#: app/templates/repro/sonar_list.html:22
 msgid "لا يوجد فحوصات سونار مسجّلة بعد."
 msgstr "No sonar exams recorded yet."
 
@@ -15051,15 +15180,24 @@ msgstr ""
 "Password: {password}\n"
 "Login link: {url}"
 
-#: app/templates/team/members_list.html:6
+#: app/templates/team/members_list.html:7
 msgid "عضو جديد"
 msgstr "New member"
 
-#: app/templates/team/members_list.html:24
+#: app/templates/team/members_list.html:11
+msgid ""
+"\"تعطيل\" يمنعه من تسجيل الدخول فوراً بدون حذف بياناته أو سجلاته "
+"التاريخية — استخدمها بدل الحذف لموظف ترك العمل، تقدر تعيد تفعيله لاحقاً."
+msgstr ""
+"\"Disable\" immediately blocks him from logging in without deleting his "
+"data or historical records — use it instead of deletion for an employee "
+"who has left, you can reactivate him later."
+
+#: app/templates/team/members_list.html:25
 msgid "معطّل"
 msgstr "Disabled"
 
-#: app/templates/team/members_list.html:36
+#: app/templates/team/members_list.html:37
 msgid "لا يوجد أعضاء بعد."
 msgstr "No members yet."
 

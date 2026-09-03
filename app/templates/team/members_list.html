@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -7,7 +8,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th></th><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('الدور') }}</th><th>{{ _('اللغة') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
+    <tr><th></th><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('الدور') }}</th><th>{{ _('اللغة') }}</th><th>{{ _('الحالة') }} {{ tip(_('"تعطيل" يمنعه من تسجيل الدخول فوراً بدون حذف بياناته أو سجلاته التاريخية — استخدمها بدل الحذف لموظف ترك العمل، تقدر تعيد تفعيله لاحقاً.')) }}</th><th></th></tr>
     {% for m in members %}
     <tr>
       <td>

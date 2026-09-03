@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -11,7 +12,7 @@
   </div>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th>{{ _('آخر من أخذها') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الفئة') }}</th><th>{{ _('المتوفر') }}</th><th>{{ _('السعر/وحدة') }}</th><th>{{ _('آخر من أخذها') }} {{ tip(_('آخر عضو فريق سجّل صرف هذي الأداة له عبر "حركة (شراء/صرف)" — للمتابعة لو ضاعت أو تأخر رجوعها، مو حجز فعلي يمنع غيره من الصرف.')) }}</th><th></th></tr>
     {% for i in items %}
     <tr>
       <td>

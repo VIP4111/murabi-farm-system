@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ _('وصفات العلف') }}</h2>
+    <h2>{{ _('وصفات العلف') }} {{ tip(_('خلطة من عدة مكوّنات علف بنسب محدَّدة — تُبنى مرة وحدة هنا، وتُستخدم لاحقاً بخطط تغذية الحظائر بدل ما تحسب النسب كل مرة يدوياً.')) }}</h2>
     {% if current_user.has_permission('feed.manage') %}<a class="btn" href="{{ url_for('feed.rations_new') }}">+ {{ _('وصفة جديدة') }}</a>{% endif %}
   </div>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الغرض') }}</th><th>{{ _('بروتين%%') }}</th><th>{{ _('طاقة') }}</th><th>{{ _('تكلفة/كجم') }}</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الغرض') }}</th><th>{{ _('بروتين%%') }} {{ tip(_('نسبة البروتين بالخلطة النهائية — تُحسب تلقائياً من نسب ومكوّنات الوصفة، مو رقم تدخله يدوياً.')) }}</th><th>{{ _('طاقة') }} {{ tip(_('الطاقة الممثَّلة بالكيلو كالوري لكل كيلوجرام من الخلطة — تُحسب تلقائياً من مكوّناتها.')) }}</th><th>{{ _('تكلفة/كجم') }}</th></tr>
     {% for r in rations %}
     <tr>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=r.id) }}">{{ r.name }}</a></td>

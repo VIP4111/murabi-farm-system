@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -14,7 +15,7 @@
 <div class="card">
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('تاريخ الإنشاء') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('عدد الرؤوس') }}</th><th>{{ _('الحالة') }} {{ tip(_('"مفتوحة" = لسا تقدر تضيف/تحذف رؤوس منها. "مغلقة" = الدفعة انتهت (بيعت أو أُلغيت) وما تتعدّل.')) }}</th><th>{{ _('تاريخ الإنشاء') }}</th><th></th></tr>
     {% for lot in lots %}
     <tr>
       <td><a href="{{ url_for('finance.lot_detail', lot_id=lot.id) }}">{{ lot.name }}</a></td>

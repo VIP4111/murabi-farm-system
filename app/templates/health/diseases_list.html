@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import status_badge %}
+{% from "_macros.html" import status_badge, tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -11,7 +11,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('فترة السحب حتى') }}</th><th></th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('الحالة') }} {{ tip(_('"نشطة" = الحالة لسا مفتوحة ومتابَعة. "مغلقة" = سُجِّل تعافيها (بملاحظة إلزامية) — لا تُحسب ضمن "الحالات النشطة" بمركز الطبيب.')) }}</th><th>{{ _('فترة السحب حتى') }} {{ tip(_('ما تقدر تبيع أو تذبح هذا الرأس قبل هذا التاريخ لو الحالة تضمَّنت دواء له فترة سحب — النظام يمنع البيع تلقائياً.')) }}</th><th></th></tr>
     {% for d in diseases %}
     <tr>
       <td>{{ d.date }}</td><td>{{ d.animal.animal_no }}</td><td>{{ d.disease_name }}</td>

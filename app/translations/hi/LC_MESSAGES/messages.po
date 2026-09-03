@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 12:29+0300\n"
+"POT-Creation-Date: 2026-09-03 12:44+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 #: app/__init__.py:136 app/core/routes.py:1071
-#: app/templates/team/members_list.html:24
+#: app/templates/team/members_list.html:25
 msgid "نشط"
 msgstr "सक्रिय"
 
@@ -107,8 +107,8 @@ msgstr "अपात्र"
 msgid "مؤكّدة"
 msgstr "पुष्टि की गई"
 
-#: app/__init__.py:158 app/templates/ostrich/eggs_list.html:17
-#: app/templates/ostrich/eggs_list.html:35
+#: app/__init__.py:158 app/templates/ostrich/eggs_list.html:18
+#: app/templates/ostrich/eggs_list.html:36
 #: app/templates/repro/attempt_form.html:19
 msgid "فشلت"
 msgstr "विफल"
@@ -631,7 +631,7 @@ msgstr "संगमन दर्ज करें"
 msgid "حيوان"
 msgstr "पशु"
 
-#: app/__init__.py:376 app/templates/alerts_list.html:10
+#: app/__init__.py:376 app/templates/alerts_list.html:11
 #: app/templates/team/report_detail.html:20
 msgid "حظيرة"
 msgstr "बाड़ा"
@@ -1439,7 +1439,7 @@ msgstr "टीकाकरण अनुसूची खोलें ←"
 #: app/core/animal_filters_service.py:181 app/team/routes.py:762
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
-#: app/templates/ostrich/eggs_list.html:14
+#: app/templates/ostrich/eggs_list.html:15
 msgid "الكل"
 msgstr "सभी"
 
@@ -3429,12 +3429,12 @@ msgstr "%(field)s नकारात्मक संख्या नहीं �
 #: app/templates/isolation_enter_form.html:8
 #: app/templates/isolation_exit_form.html:16
 #: app/templates/repro/mating_form.html:24
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/pregnancy_form.html:9
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10 app/templates/settings_backup.html:38
+#: app/templates/repro/sonar_list.html:11 app/templates/settings_backup.html:38
 #: app/templates/warehouses/inventory_counts_list.html:10
 msgid "التاريخ"
 msgstr "तारीख़"
@@ -4465,7 +4465,7 @@ msgstr "संगमन→गर्भावस्था सफलता दर"
 #: app/reports/report_service.py:211 app/templates/animal_detail.html:134
 #: app/templates/ostrich/egg_form.html:11
 #: app/templates/ostrich/egg_hatch_form.html:7
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الأم"
 msgstr "मां"
 
@@ -4546,11 +4546,11 @@ msgstr "संलग्न चालान"
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "इस अवधि में कोई गतिविधि नहीं"
 
-#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:14
+#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:15
 #: app/templates/feed/barn_report.html:32 app/templates/feed/item_form.html:8
 #: app/templates/feed/items_list.html:14
 #: app/templates/health/pharmacy_list.html:14
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "الفئة"
 msgstr "श्रेणी"
 
@@ -5305,31 +5305,40 @@ msgstr "स्थायी रूप से हटाएं"
 msgid "تجاهل هذا الإدخال نهائياً بدون رفعه؟"
 msgstr "इस प्रविष्टि को अपलोड किए बिना स्थायी रूप से हटाएं?"
 
-#: app/templates/alerts_list.html:5 app/templates/today.html:43
+#: app/templates/alerts_list.html:6 app/templates/today.html:43
 #: app/templates/worker_home.html:69
 msgid "تنبيهاتي"
 msgstr "मेरी सूचनाएं"
 
-#: app/templates/alerts_list.html:5 app/templates/animals_list.html:93
+#: app/templates/alerts_list.html:6 app/templates/animals_list.html:93
 #: app/templates/assistant/chat.html:81
 msgid "التنبيهات"
 msgstr "सूचनाएं"
 
-#: app/templates/alerts_list.html:6 app/templates/settings_readiness.html:26
+#: app/templates/alerts_list.html:6
+msgid ""
+"التصنيف بين قوسين [...] بكل تنبيه يوضّح نوعه (تحصين، فترة سحب، ولادة...)."
+" الصف بخلفية أحمر خفيف = عاجل يحتاج تصرّف قريب."
+msgstr ""
+"हर अलर्ट पर कोष्ठक [...] में दी गई श्रेणी उसका प्रकार दिखाती है (टीकाकरण,"
+" विथड्रॉल अवधि, जन्म...)। हल्की लाल पृष्ठभूमि वाली पंक्ति = तत्काल, जल्द "
+"कार्रवाई चाहिए।"
+
+#: app/templates/alerts_list.html:7 app/templates/settings_readiness.html:26
 msgid "تنبيه"
 msgstr "सूचना"
 
-#: app/templates/alerts_list.html:10
+#: app/templates/alerts_list.html:11
 msgid "مقصورة على الحظائر اللي أنت مسؤول عنها"
 msgstr "केवल उन बाड़ों तक सीमित जिनके आप ज़िम्मेदार हैं"
 
-#: app/templates/alerts_list.html:11
+#: app/templates/alerts_list.html:12
 msgid "ما عندك أي حظيرة مسؤول عنها حالياً — راجع صاحب الحلال لتعيينك على حظيرة."
 msgstr ""
 "अभी आपके ज़िम्मे कोई बाड़ा नहीं है — फार्म मालिक से बाड़ा असाइन करने को "
 "कहें।"
 
-#: app/templates/alerts_list.html:15
+#: app/templates/alerts_list.html:16
 msgid ""
 "عرض حي يُشتق من بيانات النظام مباشرة — تطعيمات مستحقة، فترات سحب قاربت "
 "تنتهي، ولادات متوقعة قريبة، مواعيد أجهزة تكاثر، أمراض مفتوحة من فترة، "
@@ -5344,7 +5353,7 @@ msgstr ""
 "टीकाकरण के लिए अपेक्षित स्टॉक की कमी (टीकाकरण कैलेंडर)। समय सीमा यहाँ से "
 "आती है"
 
-#: app/templates/alerts_list.html:16 app/templates/audit_log.html:4
+#: app/templates/alerts_list.html:17 app/templates/audit_log.html:4
 #: app/templates/base.html:1105 app/templates/home.html:146
 #: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
@@ -5353,15 +5362,15 @@ msgstr ""
 msgid "الإعدادات"
 msgstr "सेटिंग्स"
 
-#: app/templates/alerts_list.html:30 app/templates/alerts_list.html:31
-#: app/templates/finance/lots_list.html:24 app/templates/home.html:48
+#: app/templates/alerts_list.html:31 app/templates/alerts_list.html:32
+#: app/templates/finance/lots_list.html:25 app/templates/home.html:48
 #: app/templates/home.html:60 app/templates/today.html:33
 #: app/templates/today.html:63 app/templates/today.html:64
 #: app/templates/today.html:89 app/templates/worker_home.html:63
 msgid "فتح"
 msgstr "खोलें"
 
-#: app/templates/alerts_list.html:34
+#: app/templates/alerts_list.html:35
 msgid "ولا تنبيه حالياً — كل شي مضبوط."
 msgstr "अभी कोई सूचना नहीं।"
 
@@ -5379,7 +5388,7 @@ msgstr "फार्म पर जन्मा"
 #: app/templates/batches/batch_detail.html:4
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:4
-#: app/templates/equipment/items_list.html:8
+#: app/templates/equipment/items_list.html:9
 #: app/templates/feed/items_list.html:8 app/templates/finance/form.html:12
 #: app/templates/finance/list.html:73
 msgid "شراء"
@@ -5588,7 +5597,7 @@ msgstr "मूल डेटा"
 #: app/templates/animal_detail.html:133 app/templates/animal_form.html:115
 #: app/templates/feed/ration_detail.html:7
 #: app/templates/feed/ration_form.html:9
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
 msgid "الغرض"
 msgstr "उद्देश्य"
 
@@ -5609,7 +5618,7 @@ msgstr "फार्म प्रवेश तिथि"
 #: app/templates/health/vaccination_schedule_form.html:7
 #: app/templates/health/vaccination_schedule_list.html:13
 #: app/templates/health/vaccination_schedule_list.html:56
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/team/report_detail.html:24
 #: app/templates/team/report_form.html:24
 #: app/templates/team/worker_report_form.html:81
@@ -5622,10 +5631,10 @@ msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
 msgstr "%(breed)s नस्ल के लिए देखभाल टिप्पणी:"
 
 #: app/templates/animal_detail.html:146 app/templates/barns_list.html:19
-#: app/templates/equipment/items_list.html:33
+#: app/templates/equipment/items_list.html:34
 #: app/templates/feed/items_list.html:31
 #: app/templates/health/pharmacy_list.html:30
-#: app/templates/team/members_list.html:26
+#: app/templates/team/members_list.html:27
 msgid "تعديل"
 msgstr "संपादित करें"
 
@@ -5660,7 +5669,7 @@ msgstr "नाभि उपचारित"
 #: app/templates/repro/pregnancies_list.html:16
 #: app/templates/repro/program_detail.html:53
 #: app/templates/repro/program_detail.html:120
-#: app/templates/repro/sonar_list.html:17
+#: app/templates/repro/sonar_list.html:18
 msgid "نعم"
 msgstr "हाँ"
 
@@ -5823,19 +5832,19 @@ msgstr "गंभीरता"
 #: app/templates/animals_list.html:93 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:70
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
-#: app/templates/finance/lots_list.html:17
+#: app/templates/finance/lots_list.html:18
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/pharmacy_list.html:14
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/vaccination_schedule_list.html:56
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 #: app/templates/ostrich/incubators_list.html:14
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:11
 #: app/templates/settings_readiness.html:21
 #: app/templates/team/daily_templates.html:19
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 #: app/templates/team/payroll_list.html:23
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -5867,14 +5876,14 @@ msgid "لا يوجد تحصينات مسجّلة."
 msgstr "कोई दर्ज टीकाकरण नहीं है।"
 
 #: app/templates/animal_detail.html:299 app/templates/base.html:975
-#: app/templates/home.html:111 app/templates/repro/matings_list.html:5
+#: app/templates/home.html:111 app/templates/repro/matings_list.html:6
 msgid "التقريع"
 msgstr "प्रजनन"
 
 #: app/templates/animal_detail.html:302
 #: app/templates/team/member_edit_form.html:19
 #: app/templates/team/member_form.html:18
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 msgid "الدور"
 msgstr "भूमिका"
 
@@ -5922,7 +5931,7 @@ msgstr "कोई दर्ज गर्भावस्था निदान �
 
 #: app/templates/animal_detail.html:325
 #: app/templates/repro/program_detail.html:110
-#: app/templates/repro/sonar_list.html:5
+#: app/templates/repro/sonar_list.html:6
 msgid "فحوصات السونار"
 msgstr "सोनार जांचें"
 
@@ -5931,7 +5940,7 @@ msgstr "सोनार जांचें"
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_form.html:21
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "النتيجة"
 msgstr "परिणाम"
 
@@ -5944,7 +5953,7 @@ msgstr "कोई दर्ज सोनार जांच नहीं है�
 msgid "برامج الشياع التوأمي"
 msgstr "जुड़वां मद प्रजनन कार्यक्रम"
 
-#: app/templates/animal_detail.html:340 app/templates/repro/sonar_list.html:10
+#: app/templates/animal_detail.html:340 app/templates/repro/sonar_list.html:11
 msgid "البرنامج"
 msgstr "कार्यक्रम"
 
@@ -6349,25 +6358,25 @@ msgstr "अतिरिक्त विवरण (वैकल्पिक)"
 #: app/templates/equipment/asset_form.html:8
 #: app/templates/equipment/assets_list.html:15
 #: app/templates/equipment/item_form.html:8
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 #: app/templates/feed/item_form.html:7 app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_form.html:8
-#: app/templates/feed/rations_list.html:10
-#: app/templates/finance/lots_list.html:17
+#: app/templates/feed/rations_list.html:11
+#: app/templates/finance/lots_list.html:18
 #: app/templates/health/disease_types_list.html:23
 #: app/templates/health/doctor_form.html:7
 #: app/templates/health/doctors_list.html:11
 #: app/templates/health/drug_catalog_form.html:8
 #: app/templates/health/pharmacy_form.html:43
 #: app/templates/health/pharmacy_list.html:14
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 #: app/templates/health/protocol_form.html:7
 #: app/templates/health/protocols_list.html:15
 #: app/templates/health/symptoms_list.html:19
 #: app/templates/ostrich/incubators_list.html:14
 #: app/templates/settings.html:169 app/templates/team/member_edit_form.html:17
 #: app/templates/team/member_form.html:11
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 #: app/templates/team/payroll_list.html:23
 #: app/templates/team/performance_report.html:21
 #: app/templates/warehouses/warehouse_form.html:8
@@ -7184,7 +7193,7 @@ msgstr "कार्य"
 msgid "البلاغات"
 msgstr "रिपोर्ट्स"
 
-#: app/templates/base.html:988 app/templates/team/members_list.html:5
+#: app/templates/base.html:988 app/templates/team/members_list.html:6
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
@@ -7209,7 +7218,7 @@ msgstr "आज के कार्यों की समीक्षा कर�
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
-#: app/templates/base.html:1004 app/templates/equipment/items_list.html:5
+#: app/templates/base.html:1004 app/templates/equipment/items_list.html:6
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
@@ -7364,7 +7373,7 @@ msgstr "अभी परीक्षण सारांश भेजें"
 
 #: app/templates/base.html:1157 app/templates/team/member_edit_form.html:23
 #: app/templates/team/member_form.html:22
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 msgid "اللغة"
 msgstr "भाषा"
 
@@ -8570,12 +8579,12 @@ msgstr "सक्षम"
 msgid "غير مفعّل"
 msgstr "अक्षम"
 
-#: app/templates/settings.html:155 app/templates/team/members_list.html:30
+#: app/templates/settings.html:155 app/templates/team/members_list.html:31
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
 #: app/templates/settings.html:155 app/templates/team/daily_templates.html:28
-#: app/templates/team/members_list.html:30
+#: app/templates/team/members_list.html:31
 msgid "تفعيل"
 msgstr "सक्रिय करें"
 
@@ -9705,7 +9714,7 @@ msgid "دفعات استقبال قطيع جديد"
 msgstr "नई झुंड प्राप्ति खेपें"
 
 #: app/templates/batches/batches_list.html:9
-#: app/templates/finance/lots_list.html:8
+#: app/templates/finance/lots_list.html:9
 msgid "دفعة جديدة"
 msgstr "नई खेप"
 
@@ -9716,7 +9725,7 @@ msgstr "खेप संख्या"
 #: app/templates/batches/batches_list.html:14
 #: app/templates/feed/barn_report.html:32 app/templates/feed/fcr_report.html:70
 #: app/templates/finance/lot_detail.html:21
-#: app/templates/finance/lots_list.html:17
+#: app/templates/finance/lots_list.html:18
 #: app/templates/finance/monthly_cost_report.html:27
 msgid "عدد الرؤوس"
 msgstr "पशु संख्या"
@@ -9947,7 +9956,7 @@ msgid "لا يوجد صيانة مسجّلة بعد."
 msgstr "अभी तक कोई रखरखाव दर्ज नहीं है।"
 
 #: app/templates/equipment/assets_list.html:7
-#: app/templates/equipment/items_list.html:7
+#: app/templates/equipment/items_list.html:8
 msgid "الأصول والصيانة الدورية"
 msgstr "संपत्तियां और नियमित रखरखाव"
 
@@ -10099,7 +10108,7 @@ msgid "سليمة"
 msgstr "अच्छी स्थिति"
 
 #: app/templates/equipment/item_movement.html:37
-#: app/templates/equipment/items_list.html:19
+#: app/templates/equipment/items_list.html:20
 msgid "تحتاج صيانة"
 msgstr "मरम्मत चाहिए"
 
@@ -10171,43 +10180,52 @@ msgstr "क्षतिग्रस्त प्राप्त हुआ"
 msgid "ما فيه حركات مسجَّلة بعد."
 msgstr "अभी तक कोई गतिविधि दर्ज नहीं है।"
 
-#: app/templates/equipment/items_list.html:9
+#: app/templates/equipment/items_list.html:10
 msgid "صنف جديد"
 msgstr "नई वस्तु"
 
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 #: app/templates/feed/items_list.html:14
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "المتوفر"
 msgstr "उपलब्ध"
 
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 #: app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_detail.html:22
 msgid "السعر/وحدة"
 msgstr "मूल्य/इकाई"
 
-#: app/templates/equipment/items_list.html:14
+#: app/templates/equipment/items_list.html:15
 msgid "آخر من أخذها"
 msgstr "आखिरी बार किसने लिया"
 
-#: app/templates/equipment/items_list.html:24
+#: app/templates/equipment/items_list.html:15
+msgid ""
+"آخر عضو فريق سجّل صرف هذي الأداة له عبر \"حركة (شراء/صرف)\" — للمتابعة لو"
+" ضاعت أو تأخر رجوعها، مو حجز فعلي يمنع غيره من الصرف."
+msgstr ""
+"यह उपकरण \"मूवमेंट (खरीद/जारी)\" के ज़रिए जिस आखिरी टीम सदस्य को जारी हुआ"
+" दर्ज है — खो जाने या देर से वापसी की स्थिति में फॉलो-अप के लिए, यह किसी "
+"और को लेने से रोकने वाला वास्तविक आरक्षण नहीं है।"
+
+#: app/templates/equipment/items_list.html:25
 #: app/templates/feed/items_list.html:25
 msgid "منخفض"
 msgstr "कम"
 
-#: app/templates/equipment/items_list.html:34
+#: app/templates/equipment/items_list.html:35
 msgid "حركة (شراء/صرف)"
 msgstr "गतिविधि (खरीद/निर्गम)"
 
-#: app/templates/equipment/items_list.html:35
+#: app/templates/equipment/items_list.html:36
 #: app/templates/feed/items_list.html:33
 #: app/templates/health/pharmacy_list.html:32
 #: app/templates/warehouses/item_count_form.html:4
 msgid "جرد"
 msgstr "गणना"
 
-#: app/templates/equipment/items_list.html:40
+#: app/templates/equipment/items_list.html:41
 msgid "لا يوجد أصناف معدات مسجّلة بعد."
 msgstr "अभी तक कोई उपकरण वस्तु दर्ज नहीं है।"
 
@@ -10590,14 +10608,14 @@ msgstr "मिलान"
 
 #: app/templates/feed/calculator.html:50 app/templates/feed/items_list.html:14
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
 #, python-format
 msgid "بروتين%%"
 msgstr "प्रोटीन%%"
 
 #: app/templates/feed/calculator.html:50
 #: app/templates/feed/ration_detail.html:22
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
 msgid "طاقة"
 msgstr "ऊर्जा"
 
@@ -11065,19 +11083,44 @@ msgstr ""
 "सामान्य स्थितियों में इसे खाली छोड़ें — केवल तभी ज़रूरी जब स्क्रीन ने "
 "कैल्शियम:फॉस्फोरस अनुपात चेतावनी दी हो।"
 
-#: app/templates/feed/rations_list.html:5
+#: app/templates/feed/rations_list.html:6
 msgid "وصفات العلف"
 msgstr "चारा राशन"
 
 #: app/templates/feed/rations_list.html:6
+msgid ""
+"خلطة من عدة مكوّنات علف بنسب محدَّدة — تُبنى مرة وحدة هنا، وتُستخدم "
+"لاحقاً بخطط تغذية الحظائر بدل ما تحسب النسب كل مرة يدوياً."
+msgstr ""
+"तय अनुपात में कई चारा घटकों का मिश्रण — यहाँ एक बार बनाया जाता है, फिर "
+"बार-बार अनुपात मैन्युअल गिनने के बजाय बाड़ा फीडिंग योजनाओं में इस्तेमाल "
+"होता है।"
+
+#: app/templates/feed/rations_list.html:7
 msgid "وصفة جديدة"
 msgstr "नया राशन"
 
-#: app/templates/feed/rations_list.html:10
+#: app/templates/feed/rations_list.html:11
+msgid ""
+"نسبة البروتين بالخلطة النهائية — تُحسب تلقائياً من نسب ومكوّنات الوصفة، "
+"مو رقم تدخله يدوياً."
+msgstr ""
+"अंतिम मिश्रण में प्रोटीन प्रतिशत — रेसिपी के अनुपात और घटकों से अपने आप "
+"गणना होती है, यह मैन्युअल रूप से दर्ज की जाने वाली संख्या नहीं है।"
+
+#: app/templates/feed/rations_list.html:11
+msgid ""
+"الطاقة الممثَّلة بالكيلو كالوري لكل كيلوجرام من الخلطة — تُحسب تلقائياً "
+"من مكوّناتها."
+msgstr ""
+"मिश्रण के प्रति किलोग्राम ऊर्जा किलोकैलोरी में — इसके घटकों से अपने आप "
+"गणना होती है।"
+
+#: app/templates/feed/rations_list.html:11
 msgid "تكلفة/كجم"
 msgstr "लागत/किग्रा"
 
-#: app/templates/feed/rations_list.html:20
+#: app/templates/feed/rations_list.html:21
 msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "अभी तक कोई राशन दर्ज नहीं है।"
 
@@ -11088,13 +11131,13 @@ msgstr "वित्तीय विश्लेषण और ब्रेक-�
 
 #: app/templates/finance/break_even_report.html:8
 #: app/templates/finance/list.html:63 app/templates/reports/_filter.html:11
-#: app/templates/repro/matings_list.html:8
+#: app/templates/repro/matings_list.html:9
 msgid "تصدير Excel"
 msgstr "Excel निर्यात करें"
 
 #: app/templates/finance/break_even_report.html:9
 #: app/templates/finance/culling_index.html:6
-#: app/templates/finance/lots_list.html:7
+#: app/templates/finance/lots_list.html:8
 #: app/templates/finance/monthly_cost_report.html:6
 #: app/templates/finance/seasonal_price_analysis.html:6
 msgid "رجوع للمالية"
@@ -11421,7 +11464,7 @@ msgstr "मासिक प्रति पशु लागत रिपोर�
 msgid "موسمية أسعار البيع"
 msgstr "बिक्री मूल्य मौसमीता"
 
-#: app/templates/finance/list.html:62 app/templates/finance/lots_list.html:5
+#: app/templates/finance/list.html:62 app/templates/finance/lots_list.html:6
 msgid "دفعات البيع"
 msgstr "बिक्री खेप"
 
@@ -11600,7 +11643,7 @@ msgstr ""
 msgid "إنشاء الدفعة"
 msgstr "खेप बनाएं"
 
-#: app/templates/finance/lots_list.html:11
+#: app/templates/finance/lots_list.html:12
 msgid ""
 "صانع مجموعات البيع الذكي — جمّع رؤوساً جاهزة بدفعة واحدة، شوف إحصائياتها "
 "الاستثمارية، وشارك بروفايلاً تجارياً احترافياً مع المشتري."
@@ -11608,11 +11651,19 @@ msgstr ""
 "स्मार्ट लॉट बिल्डर — तैयार पशुओं को एक खेप में समूहित करें, इसके निवेश "
 "आंकड़े देखें, और खरीदार के साथ एक पेशेवर व्यावसायिक प्रोफ़ाइल साझा करें।"
 
-#: app/templates/finance/lots_list.html:17
+#: app/templates/finance/lots_list.html:18
+msgid ""
+"\"مفتوحة\" = لسا تقدر تضيف/تحذف رؤوس منها. \"مغلقة\" = الدفعة انتهت (بيعت"
+" أو أُلغيت) وما تتعدّل."
+msgstr ""
+"\"खुला\" = आप अभी भी इसमें पशु जोड़/हटा सकते हैं। \"बंद\" = लॉट पूरा हो "
+"चुका है (बिका या रद्द हुआ) और संपादित नहीं किया जा सकता।"
+
+#: app/templates/finance/lots_list.html:18
 msgid "تاريخ الإنشاء"
 msgstr "निर्माण तिथि"
 
-#: app/templates/finance/lots_list.html:27
+#: app/templates/finance/lots_list.html:28
 msgid "ما فيه دفعات بيع بعد."
 msgstr "अभी तक कोई बिक्री खेप नहीं है।"
 
@@ -11794,6 +11845,14 @@ msgstr "सक्रिय रोग मामले"
 #: app/templates/health/dashboard.html:18
 msgid "السجل الكامل"
 msgstr "पूर्ण लॉग"
+
+#: app/templates/health/dashboard.html:22
+msgid ""
+"تقديرك الشخصي لخطورة الحالة وقت التسجيل (خفيفة/متوسطة/شديدة) — يساعدك "
+"ترتّب أولوية المتابعة، مو تشخيص آلي."
+msgstr ""
+"दर्ज करते समय मामले की गंभीरता का आपका व्यक्तिगत आकलन (हल्का/मध्यम/गंभीर)"
+" — फॉलो-अप को प्राथमिकता देने में मदद करता है, यह स्वचालित निदान नहीं है।"
 
 #: app/templates/health/dashboard.html:22
 msgid "منذ"
@@ -12395,9 +12454,26 @@ msgid "حالة جديدة"
 msgstr "नया मामला"
 
 #: app/templates/health/diseases_list.html:14
+msgid ""
+"\"نشطة\" = الحالة لسا مفتوحة ومتابَعة. \"مغلقة\" = سُجِّل تعافيها "
+"(بملاحظة إلزامية) — لا تُحسب ضمن \"الحالات النشطة\" بمركز الطبيب."
+msgstr ""
+"\"सक्रिय\" = मामला अभी खुला है और फॉलो-अप में है। \"बंद\" = इसकी रिकवरी "
+"दर्ज हो चुकी है (अनिवार्य नोट के साथ) — डॉक्टर हब में \"सक्रिय मामलों\" "
+"में नहीं गिना जाता।"
+
+#: app/templates/health/diseases_list.html:14
 #: app/templates/health/vet_visits_list.html:11
 msgid "فترة السحب حتى"
 msgstr "निकासी अवधि तक"
+
+#: app/templates/health/diseases_list.html:14
+msgid ""
+"ما تقدر تبيع أو تذبح هذا الرأس قبل هذا التاريخ لو الحالة تضمَّنت دواء له "
+"فترة سحب — النظام يمنع البيع تلقائياً."
+msgstr ""
+"अगर मामले में विथड्रॉल अवधि वाली दवा शामिल थी, तो आप इस तारीख से पहले इस "
+"पशु को बेच या ज़बह नहीं कर सकते — सिस्टम बिक्री को अपने आप रोक देता है।"
 
 #: app/templates/health/diseases_list.html:22
 msgid "تأكيد إغلاق السجل المرضي؟"
@@ -12422,7 +12498,7 @@ msgstr "नया डॉक्टर"
 
 #: app/templates/health/doctor_form.html:8
 #: app/templates/health/doctors_list.html:11
-#: app/templates/team/members_list.html:10
+#: app/templates/team/members_list.html:11
 msgid "الجوال"
 msgstr "मोबाइल"
 
@@ -12570,7 +12646,7 @@ msgid "إضافة للقائمة"
 msgstr "सूची में जोड़ें"
 
 #: app/templates/health/injection_guide.html:6
-#: app/templates/health/pharmacy_shortages.html:6
+#: app/templates/health/pharmacy_shortages.html:7
 msgid "رجوع للصيدلية"
 msgstr "फार्मेसी पर वापस जाएं"
 
@@ -12884,7 +12960,7 @@ msgid "اختر فئة الدواء أولاً لعرض دليلها."
 msgstr "इसका गाइड देखने के लिए पहले दवा वर्ग चुनें।"
 
 #: app/templates/health/pharmacy_list.html:8
-#: app/templates/health/pharmacy_shortages.html:5
+#: app/templates/health/pharmacy_shortages.html:6
 msgid "نواقص الصيدلية"
 msgstr "फार्मेसी की कमी"
 
@@ -12993,7 +13069,7 @@ msgstr "उसमें से शेष"
 msgid "ما فيه عمليات شراء مسجَّلة لهذا الدواء بعد."
 msgstr "अभी तक इस दवा के लिए कोई खरीद दर्ज नहीं है।"
 
-#: app/templates/health/pharmacy_shortages.html:8
+#: app/templates/health/pharmacy_shortages.html:9
 msgid ""
 "كل دواء نشط وصل مخزونه للحد الأدنى المحدَّد له أو أقل — هذي الشاشة نفسها "
 "\"قائمة المشتريات المطلوبة\"، تُحدَّث تلقائياً كل ما تغيّر المخزون."
@@ -13002,15 +13078,24 @@ msgstr ""
 "— यह स्क्रीन स्वयं \"आवश्यक खरीद सूची\" है, स्टॉक बदलने पर स्वतः अपडेट "
 "होती है।"
 
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "الحد الأدنى"
 msgstr "न्यूनतम"
 
-#: app/templates/health/pharmacy_shortages.html:14
+#: app/templates/health/pharmacy_shortages.html:15
 msgid "بدائل بنفس الفئة"
 msgstr "उसी श्रेणी में विकल्प"
 
-#: app/templates/health/pharmacy_shortages.html:27
+#: app/templates/health/pharmacy_shortages.html:15
+msgid ""
+"أدوية أخرى بنفس الفئة عندها مخزون كافٍ حالياً — تقدر تستخدمها مؤقتاً لحد "
+"ما توفّر الدواء الأساسي (قرارك الطبي أنت)."
+msgstr ""
+"उसी श्रेणी की अन्य दवाएँ जिनका स्टॉक फिलहाल पर्याप्त है — मुख्य दवा "
+"दोबारा उपलब्ध होने तक आप इन्हें अस्थायी रूप से इस्तेमाल कर सकते हैं "
+"(चिकित्सीय निर्णय आपका है)।"
+
+#: app/templates/health/pharmacy_shortages.html:28
 msgid "لا يوجد نواقص حالياً"
 msgstr "फिलहाल कोई कमी नहीं है"
 
@@ -13511,12 +13596,12 @@ msgstr "\"शुतुरमुर्ग\" प्रजाति चुनें
 
 #: app/templates/ostrich/egg_form.html:15
 #: app/templates/ostrich/egg_hatch_form.html:8
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "تاريخ البيض"
 msgstr "अंडे की तिथि"
 
 #: app/templates/ostrich/egg_form.html:16
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الجودة"
 msgstr "गुणवत्ता"
 
@@ -13552,22 +13637,22 @@ msgid "الوزن (جرام، اختياري)"
 msgstr "वजन (ग्राम, वैकल्पिक)"
 
 #: app/templates/ostrich/egg_hatch_form.html:4
-#: app/templates/ostrich/eggs_list.html:51
+#: app/templates/ostrich/eggs_list.html:52
 msgid "تسجيل نتيجة الفقس"
 msgstr "अंडे सेने का परिणाम दर्ज करें"
 
 #: app/templates/ostrich/egg_hatch_form.html:9
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الحاضنة"
 msgstr "इनक्यूबेटर"
 
 #: app/templates/ostrich/egg_hatch_form.html:10
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "بداية الحضانة"
 msgstr "इनक्यूबेशन शुरुआत"
 
 #: app/templates/ostrich/egg_hatch_form.html:11
-#: app/templates/ostrich/eggs_list.html:23
+#: app/templates/ostrich/eggs_list.html:24
 msgid "الفقس المتوقع"
 msgstr "अपेक्षित सेने की तिथि"
 
@@ -13615,41 +13700,56 @@ msgstr "उदाहरण: अनिषेचित अंडा"
 msgid "تسجيل الفشل"
 msgstr "विफलता दर्ज करें"
 
-#: app/templates/ostrich/eggs_list.html:5
+#: app/templates/ostrich/eggs_list.html:6
 msgid "سجل النعام — البيض والتفقيس"
 msgstr "शुतुरमुर्ग रिकॉर्ड — अंडे और सेना"
 
-#: app/templates/ostrich/eggs_list.html:7
+#: app/templates/ostrich/eggs_list.html:8
 #: app/templates/ostrich/incubators_list.html:6
 msgid "الحاضنات"
 msgstr "इनक्यूबेटर"
 
-#: app/templates/ostrich/eggs_list.html:8
+#: app/templates/ostrich/eggs_list.html:9
 msgid "تسجيل بيضة"
 msgstr "अंडा दर्ज करें"
 
-#: app/templates/ostrich/eggs_list.html:15
+#: app/templates/ostrich/eggs_list.html:16
 msgid "قيد الحضانة/الانتظار"
 msgstr "इनक्यूबेशन/प्रतीक्षा में"
 
-#: app/templates/ostrich/eggs_list.html:16
-#: app/templates/ostrich/eggs_list.html:34
+#: app/templates/ostrich/eggs_list.html:17
+#: app/templates/ostrich/eggs_list.html:35
 msgid "فقست"
 msgstr "सेया"
 
-#: app/templates/ostrich/eggs_list.html:33
+#: app/templates/ostrich/eggs_list.html:24
+msgid ""
+"تقييمك الشخصي لمظهر البيضة (حجم/شكل/قشرة سليمة) وقت التسجيل — يساعدك "
+"تفضّل بيض الجودة الأعلى عند محدودية سعة الحاضنة."
+msgstr ""
+"दर्ज करते समय अंडे की बनावट का आपका व्यक्तिगत आकलन (आकार/शक्ल/सही खोल) — "
+"जब इनक्यूबेटर की क्षमता सीमित हो तो उच्च गुणवत्ता वाले अंडों को "
+"प्राथमिकता देने में मदद करता है।"
+
+#: app/templates/ostrich/eggs_list.html:24
+msgid "يُحسب تلقائياً من تاريخ بداية الحضانة + مدة تفقيس بيض النعام القياسية."
+msgstr ""
+"इनक्यूबेशन शुरुआत तिथि + शुतुरमुर्ग अंडे की मानक हैचिंग अवधि से अपने आप "
+"गणना होती है।"
+
+#: app/templates/ostrich/eggs_list.html:34
 msgid "بانتظار"
 msgstr "प्रतीक्षा में"
 
-#: app/templates/ostrich/eggs_list.html:44
+#: app/templates/ostrich/eggs_list.html:45
 msgid "اختر حاضنة"
 msgstr "इनक्यूबेटर चुनें"
 
-#: app/templates/ostrich/eggs_list.html:48
+#: app/templates/ostrich/eggs_list.html:49
 msgid "إدخال حاضنة"
 msgstr "इनक्यूबेटर में रखें"
 
-#: app/templates/ostrich/eggs_list.html:57
+#: app/templates/ostrich/eggs_list.html:58
 msgid "لا يوجد بيض مسجّل بهذا الفلتر."
 msgstr "इस फ़िल्टर में कोई अंडा दर्ज नहीं है।"
 
@@ -13933,7 +14033,7 @@ msgid "مين أعطاها"
 msgstr "किसने दी"
 
 #: app/templates/repro/mating_form.html:4
-#: app/templates/repro/matings_list.html:9
+#: app/templates/repro/matings_list.html:10
 msgid "تقريع جديد"
 msgstr "नया संगमन"
 
@@ -13979,13 +14079,13 @@ msgid "فيه طلب تجاوز مُرسَل بهذا السبب:"
 msgstr "इस कारण के साथ एक लंबित ओवरराइड अनुरोध है:"
 
 #: app/templates/repro/mating_form.html:25
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/pregnancy_form.html:10
 #: app/templates/repro/program_form.html:10
 #: app/templates/repro/programs_list.html:11
 #: app/templates/repro/sonar_form.html:10
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "الأنثى"
 msgstr "मादा"
 
@@ -14049,19 +14149,28 @@ msgstr ""
 msgid "اطلب تجاوز من صاحب الحلال"
 msgstr "मालिक से ओवरराइड का अनुरोध करें"
 
-#: app/templates/repro/matings_list.html:7
+#: app/templates/repro/matings_list.html:6
+msgid ""
+"كل عملية تقريع مسجَّلة هنا. الخطوة اللي بعدها هي \"فحوصات السونار\" "
+"لتأكيد الحمل، وبعدين \"تشخيص الحمل\" لمتابعته لحد الولادة."
+msgstr ""
+"हर संगम यहाँ दर्ज होता है। अगला कदम गर्भावस्था की पुष्टि के लिए "
+"\"अल्ट्रासाउंड जाँच\" है, फिर जन्म तक फॉलो करने के लिए \"गर्भावस्था "
+"निदान\"।"
+
+#: app/templates/repro/matings_list.html:8
 #: app/templates/repro/sires_list.html:6
 msgid "تقييم أداء الفحول"
 msgstr "नर प्रदर्शन मूल्यांकन"
 
-#: app/templates/repro/matings_list.html:14
+#: app/templates/repro/matings_list.html:15
 #: app/templates/repro/program_detail.html:13
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/sires_list.html:18
 msgid "الفحل"
 msgstr "नर"
 
-#: app/templates/repro/matings_list.html:23
+#: app/templates/repro/matings_list.html:24
 msgid "لا يوجد عمليات تقريع مسجّلة بعد."
 msgstr "अभी तक कोई संगमन दर्ज नहीं है।"
 
@@ -14092,7 +14201,7 @@ msgstr "सोनार तिथि"
 #: app/templates/repro/pregnancy_form.html:22
 #: app/templates/repro/program_detail.html:115
 #: app/templates/repro/sonar_form.html:28
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "عدد الأجنّة"
 msgstr "भ्रूणों की संख्या"
 
@@ -14286,12 +14395,12 @@ msgid "لا يوجد محاولات مسجّلة."
 msgstr "कोई प्रयास दर्ज नहीं है।"
 
 #: app/templates/repro/program_detail.html:111
-#: app/templates/repro/sonar_list.html:6
+#: app/templates/repro/sonar_list.html:7
 msgid "فحص جديد"
 msgstr "नई जांच"
 
 #: app/templates/repro/program_detail.html:115
-#: app/templates/repro/sonar_list.html:10
+#: app/templates/repro/sonar_list.html:11
 msgid "نبض"
 msgstr "धड़कन"
 
@@ -14544,7 +14653,25 @@ msgstr ""
 "गर्भावस्था निदान\" से दर्ज करें ताकि मादा स्वतः गर्भावस्था फॉलो-अप और "
 "अंतिम-चरण देखभाल में शामिल हो जाए।"
 
-#: app/templates/repro/sonar_list.html:21
+#: app/templates/repro/sonar_list.html:11
+msgid ""
+"نبض قلب مؤكَّد بالسونار — مؤشر إيجابي إضافي على استمرار الحمل، بس \"لا\" "
+"ما يعني بالضرورة فشل الحمل (ممكن يكون العمر الجنيني مبكر لسا)."
+msgstr ""
+"अल्ट्रासाउंड से पुष्ट दिल की धड़कन — गर्भावस्था जारी रहने का एक अतिरिक्त "
+"सकारात्मक संकेत, लेकिन \"नहीं\" का मतलब ज़रूरी नहीं कि गर्भावस्था विफल हो"
+" गई (भ्रूण की उम्र अभी भी बहुत कम हो सकती है)।"
+
+#: app/templates/repro/sonar_list.html:11
+msgid ""
+"رقم برنامج المزامنة التوأمي اللي كانت الأنثى مسجَّلة فيه، لو كان الحمل "
+"ناتج عن برنامج مجدوَل — فاضي يعني تقريع عادي بدون برنامج."
+msgstr ""
+"यदि गर्भावस्था किसी निर्धारित प्रोग्राम से हुई है तो जिस सिंक्रोनाइज़ेशन "
+"प्रोग्राम में मादा नामांकित थी उसका नंबर — खाली होने का मतलब है बिना "
+"प्रोग्राम के सामान्य संगम।"
+
+#: app/templates/repro/sonar_list.html:22
 msgid "لا يوجد فحوصات سونار مسجّلة بعد."
 msgstr "अभी तक कोई सोनार जांच दर्ज नहीं है।"
 
@@ -14978,15 +15105,24 @@ msgstr ""
 "पासवर्ड: {password}\n"
 "लॉगिन लिंक: {url}"
 
-#: app/templates/team/members_list.html:6
+#: app/templates/team/members_list.html:7
 msgid "عضو جديد"
 msgstr "नया सदस्य"
 
-#: app/templates/team/members_list.html:24
+#: app/templates/team/members_list.html:11
+msgid ""
+"\"تعطيل\" يمنعه من تسجيل الدخول فوراً بدون حذف بياناته أو سجلاته "
+"التاريخية — استخدمها بدل الحذف لموظف ترك العمل، تقدر تعيد تفعيله لاحقاً."
+msgstr ""
+"\"निष्क्रिय करें\" उसका डेटा या ऐतिहासिक रिकॉर्ड मिटाए बिना उसे तुरंत "
+"लॉगिन करने से रोकता है — नौकरी छोड़ चुके कर्मचारी के लिए हटाने के बजाय "
+"इसका उपयोग करें, आप उसे बाद में फिर से सक्रिय कर सकते हैं।"
+
+#: app/templates/team/members_list.html:25
 msgid "معطّل"
 msgstr "निष्क्रिय"
 
-#: app/templates/team/members_list.html:36
+#: app/templates/team/members_list.html:37
 msgid "لا يوجد أعضاء بعد."
 msgstr "अभी तक कोई सदस्य नहीं है।"
 

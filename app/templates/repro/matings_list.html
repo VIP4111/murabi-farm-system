@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ _('التقريع') }}</h2>
+    <h2>{{ _('التقريع') }} {{ tip(_('كل عملية تقريع مسجَّلة هنا. الخطوة اللي بعدها هي "فحوصات السونار" لتأكيد الحمل، وبعدين "تشخيص الحمل" لمتابعته لحد الولادة.')) }}</h2>
     <div style="display:flex; gap:8px;">
       <a class="btn light" href="{{ url_for('repro.sires_list') }}">🐏 {{ _('تقييم أداء الفحول') }}</a>
       <a class="btn light" href="{{ url_for('repro.matings_export') }}">📥 {{ _('تصدير Excel') }}</a>

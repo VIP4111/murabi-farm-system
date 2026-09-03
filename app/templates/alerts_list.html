@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ _('تنبيهاتي') if mine else _('التنبيهات') }}</h2>
+    <h2>{{ _('تنبيهاتي') if mine else _('التنبيهات') }} {{ tip(_('التصنيف بين قوسين [...] بكل تنبيه يوضّح نوعه (تحصين، فترة سحب، ولادة...). الصف بخلفية أحمر خفيف = عاجل يحتاج تصرّف قريب.')) }}</h2>
     <span class="badge {{ 'off' if alerts|length else 'on' }}">{{ alerts|length }} {{ _('تنبيه') }}</span>
   </div>
   {% if mine %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -20,7 +21,7 @@
 <div class="card">
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الأم') }}</th><th>{{ _('تاريخ البيض') }}</th><th>{{ _('الجودة') }}</th><th>{{ _('الحاضنة') }}</th><th>{{ _('بداية الحضانة') }}</th><th>{{ _('الفقس المتوقع') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
+    <tr><th>{{ _('الأم') }}</th><th>{{ _('تاريخ البيض') }}</th><th>{{ _('الجودة') }} {{ tip(_('تقييمك الشخصي لمظهر البيضة (حجم/شكل/قشرة سليمة) وقت التسجيل — يساعدك تفضّل بيض الجودة الأعلى عند محدودية سعة الحاضنة.')) }}</th><th>{{ _('الحاضنة') }}</th><th>{{ _('بداية الحضانة') }}</th><th>{{ _('الفقس المتوقع') }} {{ tip(_('يُحسب تلقائياً من تاريخ بداية الحضانة + مدة تفقيس بيض النعام القياسية.')) }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
     {% for e in eggs %}
     <tr>
       <td>{% if e.mother %}<a href="{{ url_for('core.animal_detail', animal_id=e.mother.id) }}">{{ e.mother.animal_no }}</a>{% else %}-{% endif %}</td>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import status_badge %}
+{% from "_macros.html" import status_badge, tip %}
 {% block title %}{{ _('مركز الطبيب') }}{% endblock %}
 {% block content %}
 <div class="card">
@@ -19,7 +19,7 @@
   </div>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }}</th><th>{{ _('منذ') }}</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('المرض') }}</th><th>{{ _('الشدة') }} {{ tip(_('تقديرك الشخصي لخطورة الحالة وقت التسجيل (خفيفة/متوسطة/شديدة) — يساعدك ترتّب أولوية المتابعة، مو تشخيص آلي.')) }}</th><th>{{ _('منذ') }}</th></tr>
     {% for d in active_cases %}
     <tr>
       <td>{{ d.date }}</td>
