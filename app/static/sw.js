@@ -20,7 +20,7 @@
  * مستقبلاً — أي صفحة جديدة تُبنى تدخل التغطية تلقائياً بدون أي تعديل
  * على هذا الملف.
  */
-const CACHE_NAME = "murabi-offline-v5";
+const CACHE_NAME = "murabi-offline-v6";
 
 // صفحات القوائم القديمة تبقى مُخزَّنة مسبقاً عند التثبيت (تجربة أول
 // استخدام أسرع، قبل حتى ما يزور المستخدم أي صفحة). التخزين الفعلي بعد
@@ -91,6 +91,24 @@ function raceNetworkWithTimeout(networkPromise, ms, timeoutFn) {
   return Promise.race([networkPromise, timeoutFn(ms)]);
 }
 
+// إصلاح — بلاغ مستخدم حقيقي: "حفظت الحيوان وسوا لي خروج" + "لو سويت
+// خروج يرجعني للرئيسية، ما يسوي خروج فعلياً". السبب: كنا نخزّن أي رد
+// ناجح لأي رابط بدون فحص وش هو فعلياً. لو صار مرة (جلسة منتهية، تسجيل
+// دخول لسا ما تم...) إن رابط داخلي زي "/animals/5" رجع فعلياً صفحة
+// تسجيل الدخول (بعد إعادة توجيه الخادم)، كانت تُخزَّن تحت مفتاح
+// "/animals/5" نفسه — وبعدين حتى بعد ما تسجّل دخول صح من جديد، أي مرة
+// الشبكة تتأخر أكثر من `NETWORK_TIMEOUT_MS` (وارد جداً بنت إنترنت ضعيف)،
+// تُعرض نسخة تسجيل الدخول القديمة المخزَّنة بالغلط بدل الصفحة الحقيقية
+// — يبان وكإنه "طلع من حسابه" رغم إن جلسته سليمة فعلياً والسيرفر ما شاف
+// هذا الطلب أصلاً. الحل: أي رد انتهى فعلياً بصفحة تسجيل الدخول ما
+// يُخزَّن إطلاقاً — يُعرض هذي المرة بس، بدون ما يلوّث الكاش لبقية
+// الزيارات. دالة صرفة (نفس نمط isCacheablePath/keysToEvict) عشان تصير
+// قابلة للاختبار بـNode.js.
+function shouldCacheResponse(res) {
+  if (!res || !res.ok) return false;
+  return res.url.indexOf("/login") === -1;
+}
+
 // تسجيل الأحداث محصور ببيئة Service Worker حقيقية بس (بند إضافي 83) —
 // `self.addEventListener` غير موجود بـNode.js، وهذا الشرط يخلي نفس
 // الملف قابل لـ`require()` وقت الاختبار بدون أي خطأ عند التحميل.
@@ -121,8 +139,10 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
 
     const networkFetch = fetch(req)
       .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy).then(() => trimCache(cache)));
+        if (shouldCacheResponse(res)) {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy).then(() => trimCache(cache)));
+        }
         return res;
       })
       .catch(() => null);
@@ -144,6 +164,6 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
-    raceNetworkWithTimeout, NETWORK_TIMEOUT_MS,
+    raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
   };
 }

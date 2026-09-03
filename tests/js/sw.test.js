@@ -6,7 +6,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const {
   isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
-  raceNetworkWithTimeout, NETWORK_TIMEOUT_MS,
+  raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
 } = require("../../app/static/sw.js");
 
 const ORIGIN = "https://murabi-farm-system.onrender.com";
@@ -68,4 +68,25 @@ test("raceNetworkWithTimeout: network that never resolves falls back to timeout 
 
 test("NETWORK_TIMEOUT_MS: a real, sane value (not accidentally 0 or absurdly long)", () => {
   assert.ok(NETWORK_TIMEOUT_MS > 0 && NETWORK_TIMEOUT_MS <= 10000);
+});
+
+// إصلاح — بلاغ مستخدم حقيقي: "حفظت الحيوان وسوا لي خروج" (يبان وكإنه
+// طلع من حسابه رغم إن جلسته سليمة) — السبب كان تخزين صفحة تسجيل الدخول
+// المُعاد توجيهها إليها تحت مفتاح الرابط الأصلي، فتُعرض بدل الصفحة
+// الحقيقية أي مرة الشبكة تتأخر وتُستخدم النسخة المخزَّنة.
+test("shouldCacheResponse: a normal successful page → cacheable", () => {
+  assert.equal(shouldCacheResponse({ ok: true, url: "https://x.test/animals/5" }), true);
+});
+
+test("shouldCacheResponse: a response that redirected to /login → never cached", () => {
+  assert.equal(shouldCacheResponse({ ok: true, url: "https://x.test/login?next=%2Fanimals%2F5" }), false);
+});
+
+test("shouldCacheResponse: a non-ok response (error page) → never cached", () => {
+  assert.equal(shouldCacheResponse({ ok: false, url: "https://x.test/animals/5" }), false);
+});
+
+test("shouldCacheResponse: null/undefined response → never cached, never throws", () => {
+  assert.equal(shouldCacheResponse(null), false);
+  assert.equal(shouldCacheResponse(undefined), false);
 });
