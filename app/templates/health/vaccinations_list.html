@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -7,7 +8,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الموعد القادم') }}</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الموعد القادم') }} {{ tip(_('يُحسب تلقائياً من تاريخ هذا التحصين + مدة الحماية المسجَّلة على اللقاح بالصيدلية — فاضي يعني اللقاح ما له مدة حماية محدَّدة.')) }}</th></tr>
     {% for r in rows %}
     <tr><td>{{ r.date }}</td><td>{{ r.animal.animal_no }}</td><td>{{ r.vaccine_name }}</td><td>{{ r.next_due_date or '-' }}</td></tr>
     {% else %}

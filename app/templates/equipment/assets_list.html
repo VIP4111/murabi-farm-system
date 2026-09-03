@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 {% set category_labels = {'shade': _('مظلة'), 'generator': _('مولّد'), 'waterer': _('سقاية آلية'), 'pump': _('مضخة مياه'), 'other': _('أخرى')} %}
 <div class="card">
@@ -11,7 +12,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('آخر صيانة') }}</th><th>{{ _('الصيانة القادمة') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('الحظيرة') }}</th><th>{{ _('آخر صيانة') }}</th><th>{{ _('الصيانة القادمة') }} {{ tip(_('تُحسب من آخر صيانة مسجَّلة + فترة الصيانة الدورية اللي حددتها وقت إضافة الأصل — الصف يتلوّن أحمر لو تجاوز موعده.')) }}</th><th></th></tr>
     {% for a in assets %}
     <tr class="{{ 'row-danger' if a.is_due }}">
       <td>{{ a.name }}</td>

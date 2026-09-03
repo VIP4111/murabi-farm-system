@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>{{ _('برامج الشياع التوأمي') }}</h2>
+    <h2>{{ _('برامج الشياع التوأمي') }} {{ tip(_('برنامج مزامنة هرمونية (جهاز + حقن) يهدف يخلّي عدة إناث تدخل شياع بنفس الفترة تقريباً — يسهّل تجميع التقريع بموسم ضيق ويرفع احتمال التوائم.')) }}</h2>
     {% if current_user.has_permission('repro.manage') %}<a class="btn" href="{{ url_for('repro.programs_new') }}">+ {{ _('برنامج جديد') }}</a>{% endif %}
   </div>
   <div class="table-scroll">

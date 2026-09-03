@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -7,7 +8,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('الطبيب') }}</th><th>{{ _('التشخيص') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('فترة السحب حتى') }}</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('الطبيب') }}</th><th>{{ _('التشخيص') }}</th><th>{{ _('التكلفة') }}</th><th>{{ _('فترة السحب حتى') }} {{ tip(_('ما تقدر تبيع أو تذبح هذا الرأس قبل هذا التاريخ لو الزيارة تضمَّنت دواء له فترة سحب — النظام يمنع البيع تلقائياً.')) }}</th></tr>
     {% for v in visits %}
     <tr>
       <td>{{ v.date }}</td><td>{{ v.animal.animal_no }}</td><td>{{ v.doctor.name }}</td>

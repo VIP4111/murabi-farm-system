@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -39,7 +40,7 @@
           <option value="تحويل بنكي" {{ 'selected' if m.payment_method == 'تحويل بنكي' }}>{{ _('تحويل بنكي') }}</option>
         </select>
       </div>
-      <div><label style="margin:0 0 4px;">{{ _('تاريخ الوصول للسعودية') }}</label><input type="date" name="saudi_arrival_date" value="{{ m.saudi_arrival_date.isoformat() if m.saudi_arrival_date else '' }}" style="width:150px; margin:0;"></div>
+      <div><label style="margin:0 0 4px;">{{ _('تاريخ الوصول للسعودية') }} {{ tip(_('لو عبّيته، الراتب يُحسب متناسباً حسب أيام حضوره الفعلية كل شهر (بند "تجهيز راتب") بدل الراتب الكامل تلقائياً — مهم لموظف جديد وصل منتصف الشهر.')) }}</label><input type="date" name="saudi_arrival_date" value="{{ m.saudi_arrival_date.isoformat() if m.saudi_arrival_date else '' }}" style="width:150px; margin:0;"></div>
     </div>
 
     <p style="color:var(--muted); font-size:11.5px; font-weight:700; margin:12px 0 4px;">🪪 {{ _('بيانات الهوية') }}</p>
@@ -61,6 +62,7 @@
       {% endif %}
     </form>
     <a class="btn light" href="{{ url_for('team.travel_history', user_id=m.id) }}" style="padding:6px 12px; font-size:12px;">📋 {{ _('سجل السفر') }}</a>
+    {{ tip(_('"تسجيل سفر" يوقف احتساب أيام حضوره بالراتب المتناسب لحد ما تسجّل "تسجيل عودة" — استخدمها وقت الإجازات الطويلة.')) }}
     {% if m.saudi_arrival_date %}
     <span style="color:var(--muted); font-size:12px;">{{ _('راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر.') }}</span>
     {% endif %}

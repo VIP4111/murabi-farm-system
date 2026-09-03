@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -10,7 +11,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الرمز') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('السعة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('ملاحظات') }}</th></tr>
+    <tr><th>{{ _('الرمز') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('السعة') }} {{ tip(_('أقصى عدد بيض تقدر الحاضنة تستوعبه بنفس الوقت — للتذكير بس، النظام ما يمنعك تدخل بيض أكثر منها.')) }}</th><th>{{ _('الحالة') }}</th><th>{{ _('ملاحظات') }}</th></tr>
     {% for inc in incubators %}
     <tr>
       <td>{{ inc.code }}</td>
