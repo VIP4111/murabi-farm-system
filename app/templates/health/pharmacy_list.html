@@ -25,7 +25,7 @@
       <td>{{ i.withdrawal_days_milk }}</td>
       <td>{{ i.usage_method or '-' }}{% if i.standard_dosage_note %} <span title="{{ i.standard_dosage_note }}">ℹ️</span>{% endif %}</td>
       <td>{{ i.status|ar_status }}</td>
-      <td>
+      <td class="actions-col">
         {% if current_user.has_permission('pharmacy.manage') %}
         <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
         <a href="{{ url_for('warehouses.item_breakdown', kind='pharmacy', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>

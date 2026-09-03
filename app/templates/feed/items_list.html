@@ -26,7 +26,7 @@
       </td>
       <td>{{ i.unit_price or '-' }}</td>
       <td>{% if stockout.get(i.id) %}~{{ stockout[i.id] }} {{ _('يوم') }}{% else %}-{% endif %}</td>
-      <td>
+      <td class="actions-col">
         {% if current_user.has_permission('feed.manage') %}
         <a href="{{ url_for('feed.items_edit', item_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
         <a href="{{ url_for('warehouses.item_breakdown', kind='feed', item_id=i.id) }}">🏬 {{ _('المستودعات') }}</a>
