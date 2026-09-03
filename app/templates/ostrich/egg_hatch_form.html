@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:460px;">
   <h2>{{ _('تسجيل نتيجة الفقس') }}</h2>
@@ -8,7 +9,7 @@
     <tr><td>{{ _('تاريخ البيض') }}</td><td>{{ egg.lay_date }}</td></tr>
     <tr><td>{{ _('الحاضنة') }}</td><td>{{ egg.incubator.code if egg.incubator else '-' }}</td></tr>
     <tr><td>{{ _('بداية الحضانة') }}</td><td>{{ egg.incubation_start_date or '-' }}</td></tr>
-    <tr><td>{{ _('الفقس المتوقع') }}</td><td>{{ expected or '-' }}</td></tr>
+    <tr><td>{{ _('الفقس المتوقع') }} {{ tip(_('يُحسب تلقائياً من تاريخ بداية الحضانة + مدة تفقيس بيض النعام القياسية.')) }}</td><td>{{ expected or '-' }}</td></tr>
   </table>
 </div>
 </div>
