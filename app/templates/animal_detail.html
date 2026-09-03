@@ -40,7 +40,7 @@
         {% if animal.isolation_started_at %}
         <a class="btn danger" href="{{ url_for('core.animal_isolation_exit', animal_id=animal.id) }}">{{ _('خروج من العزل') }}</a>
         {% else %}
-        <a class="btn light" href="{{ url_for('core.animal_isolation_enter', animal_id=animal.id) }}">🔒 {{ _('دخول عزل') }}</a>
+        <a class="btn light" href="{{ url_for('core.animal_isolation_enter', animal_id=animal.id) }}">🔒 {{ _('دخول عزل') }} {{ tip(_('ينقله لحظيرة عزل مخصَّصة ويبدأ عداد أيام العزل — استخدمه لأي حالة استثنائية (اشتباه مرض معدٍ، إصابة، رأس وافد جديد لسا ما اجتاز الحجر).')) }}</a>
         {% endif %}
       {% endif %}
     </div>
@@ -152,7 +152,7 @@
   {% if animal.mother_id %}
   {% set br = animal.birth_record %}
   <div class="card">
-    <h3 style="font-size:15px;">{{ _('قائمة تحقق الولادة') }}</h3>
+    <h3 style="font-size:15px;">{{ _('قائمة تحقق الولادة') }} {{ tip(_('فحوصات سلامة مبدئية بعد الولادة مباشرة — تسجيلها اختياري بس مهم لرصد أي مشكلة مبكراً (رفض إرضاع، مشاكل تنفّس...) قبل ما تتفاقم.')) }}</h3>
     {% if current_user.has_permission('health.manage') %}
     <form method="post" action="{{ url_for('core.animal_birth_record_save', animal_id=animal.id) }}" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -226,7 +226,7 @@
 
 <div class="tab-panel {{ 'active' if active_tab=='timeline' }}" data-tab="timeline">
   <div class="card">
-    <h3 style="font-size:15px;">{{ _('كل السجلات مرتبة بالتاريخ') }}</h3>
+    <h3 style="font-size:15px;">{{ _('كل السجلات مرتبة بالتاريخ') }} {{ tip(_('التصنيف بين قوسين [...] بكل حدث يوضّح نوعه (وزن، صحة، تحصين، تكاثر...) — نظرة سريعة على كل تاريخ هذا الرأس بدون التنقّل بين التبويبات.')) }}</h3>
     <div class="timeline">
       {% for e in timeline %}
       <div class="timeline-row">
@@ -286,7 +286,7 @@
     <h3 style="font-size:15px;">{{ _('التحصينات') }}</h3>
     <div class="table-scroll">
 <table class="compact-table">
-      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الجرعة القادمة') }}</th></tr>
+      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الجرعة القادمة') }} {{ tip(_('تُحسب تلقائياً من تاريخ التحصين + مدة الحماية المسجَّلة على اللقاح بالصيدلية — فاضي يعني اللقاح ما له مدة حماية محدَّدة.')) }}</th></tr>
       {% for vc in vaccinations %}
       <tr><td>{{ vc.date }}</td><td>{{ vc.vaccine_name }}</td><td>{{ vc.next_due_date or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">{{ _('لا يوجد تحصينات مسجّلة.') }}</td></tr>{% endfor %}
@@ -300,7 +300,7 @@
     <h3 style="font-size:15px;">{{ _('التقريع') }}</h3>
     <div class="table-scroll">
 <table class="compact-table">
-      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الدور') }}</th><th>{{ _('الطرف الآخر') }}</th></tr>
+      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الدور') }} {{ tip(_('هل هذا الرأس كان الأنثى أو الفحل بعملية التقريع.')) }}</th><th>{{ _('الطرف الآخر') }}</th></tr>
       {% for m in matings %}
       <tr>
         <td>{{ m.date }}</td>
@@ -315,7 +315,7 @@
     <h3 style="font-size:15px;">{{ _('تشخيص الحمل') }}</h3>
     <div class="table-scroll">
 <table class="compact-table">
-      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('عدد الأجنة') }}</th></tr>
+      <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحالة') }} {{ tip(_('"مؤكد" = متابعة الحمل التلقائية مفعّلة (نقل لحظيرة رعاية الحمل المتأخر، حساب الولادة المتوقعة...). "قيد الفحص" = لسا الحمل غير مؤكَّد قطعياً.')) }}</th><th>{{ _('عدد الأجنة') }}</th></tr>
       {% for p in pregnancies %}
       <tr><td>{{ p.date }}</td><td>{{ _('مؤكد') if p.confirmed else _('قيد الفحص') }}</td><td>{{ p.embryo_count or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">{{ _('لا يوجد تشخيص حمل مسجّل.') }}</td></tr>{% endfor %}
@@ -370,7 +370,7 @@
 <div class="tab-panel {{ 'active' if active_tab=='weights' }}" data-tab="weights">
   {% if current_user.has_permission('animals.manage') %}
   <div class="card">
-    <h3 style="font-size:15px;">{{ _('تسجيل وزن جديد') }}</h3>
+    <h3 style="font-size:15px;">{{ _('تسجيل وزن جديد') }} {{ tip(_('لو الوزن الجديد يختلف بنسبة كبيرة (40%% فأكثر) عن آخر وزن مسجَّل، النظام يطلب تأكيدك قبل الحفظ — حماية من خطأ كتابة رقم غلط بالغلط.')) }}</h3>
     <form method="post" action="{{ url_for('core.animal_weight_new', animal_id=animal.id) }}" data-offline id="weightForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label>{{ _('التاريخ') }}</label><input name="date" type="date" required value="{{ today }}">

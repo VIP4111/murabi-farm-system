@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 14:21+0300\n"
+"POT-Creation-Date: 2026-09-03 14:58+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -5487,6 +5487,15 @@ msgstr "Edit data"
 msgid "خروج من العزل"
 msgstr "Exit isolation"
 
+#: app/templates/animal_detail.html:43
+msgid ""
+"ينقله لحظيرة عزل مخصَّصة ويبدأ عداد أيام العزل — استخدمه لأي حالة "
+"استثنائية (اشتباه مرض معدٍ، إصابة، رأس وافد جديد لسا ما اجتاز الحجر)."
+msgstr ""
+"Moves it to a dedicated isolation pen and starts the isolation day "
+"counter — use it for any exceptional case (suspected contagious disease, "
+"injury, a new arrival that hasn't cleared quarantine yet)."
+
 #: app/templates/animal_detail.html:52
 #, python-format
 msgid "تنبيهات هذا الرأس (%(n)s)"
@@ -5685,6 +5694,15 @@ msgstr "Edit"
 msgid "قائمة تحقق الولادة"
 msgstr "Birth checklist"
 
+#: app/templates/animal_detail.html:155
+msgid ""
+"فحوصات سلامة مبدئية بعد الولادة مباشرة — تسجيلها اختياري بس مهم لرصد أي "
+"مشكلة مبكراً (رفض إرضاع، مشاكل تنفّس...) قبل ما تتفاقم."
+msgstr ""
+"Initial safety checks right after birth — recording them is optional but "
+"important for catching any problem early (refusing to nurse, breathing "
+"issues...) before it worsens."
+
 #: app/templates/animal_detail.html:160 app/templates/animal_detail.html:180
 msgid "تنفّس طبيعي"
 msgstr "Normal breathing"
@@ -5807,6 +5825,15 @@ msgstr "Save"
 msgid "كل السجلات مرتبة بالتاريخ"
 msgstr "All records ordered by date"
 
+#: app/templates/animal_detail.html:229
+msgid ""
+"التصنيف بين قوسين [...] بكل حدث يوضّح نوعه (وزن، صحة، تحصين، تكاثر...) — "
+"نظرة سريعة على كل تاريخ هذا الرأس بدون التنقّل بين التبويبات."
+msgstr ""
+"The category in brackets [...] on each event shows its type (weight, "
+"health, vaccination, breeding...) — a quick look at this head's entire "
+"history without switching between tabs."
+
 #: app/templates/animal_detail.html:241
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "No records linked to this animal yet."
@@ -5914,6 +5941,15 @@ msgstr "Vaccine"
 msgid "الجرعة القادمة"
 msgstr "Next dose"
 
+#: app/templates/animal_detail.html:289
+msgid ""
+"تُحسب تلقائياً من تاريخ التحصين + مدة الحماية المسجَّلة على اللقاح "
+"بالصيدلية — فاضي يعني اللقاح ما له مدة حماية محدَّدة."
+msgstr ""
+"Calculated automatically from the vaccination date + the protection "
+"period recorded on the vaccine in the pharmacy — empty means the vaccine "
+"has no set protection period."
+
 #: app/templates/animal_detail.html:292
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "No vaccinations recorded."
@@ -5929,6 +5965,10 @@ msgstr "Mating"
 #: app/templates/team/members_list.html:11
 msgid "الدور"
 msgstr "Role"
+
+#: app/templates/animal_detail.html:303
+msgid "هل هذا الرأس كان الأنثى أو الفحل بعملية التقريع."
+msgstr "Whether this head was the female or the male in the mating."
 
 #: app/templates/animal_detail.html:303
 msgid "الطرف الآخر"
@@ -5954,6 +5994,15 @@ msgstr "No mating recorded."
 #: app/templates/home.html:112 app/templates/repro/pregnancies_list.html:6
 msgid "تشخيص الحمل"
 msgstr "Pregnancy diagnosis"
+
+#: app/templates/animal_detail.html:318
+msgid ""
+"\"مؤكد\" = متابعة الحمل التلقائية مفعّلة (نقل لحظيرة رعاية الحمل المتأخر،"
+" حساب الولادة المتوقعة...). \"قيد الفحص\" = لسا الحمل غير مؤكَّد قطعياً."
+msgstr ""
+"\"Confirmed\" = automatic pregnancy follow-up is active (move to the "
+"late-pregnancy care pen, expected due date calculation...). \"Under "
+"examination\" = the pregnancy is not yet definitively confirmed."
 
 #: app/templates/animal_detail.html:318 app/templates/animal_detail.html:329
 #: app/templates/bulk_action_form.html:410
@@ -6023,6 +6072,16 @@ msgstr "No births recorded for this animal."
 #: app/templates/animal_detail.html:373
 msgid "تسجيل وزن جديد"
 msgstr "Record new weight"
+
+#: app/templates/animal_detail.html:373
+#, python-format
+msgid ""
+"لو الوزن الجديد يختلف بنسبة كبيرة (40%% فأكثر) عن آخر وزن مسجَّل، النظام "
+"يطلب تأكيدك قبل الحفظ — حماية من خطأ كتابة رقم غلط بالغلط."
+msgstr ""
+"If the new weight differs by a large percentage (40%% or more) from the "
+"last recorded weight, the system asks you to confirm before saving — "
+"protection against accidentally typing the wrong number."
 
 #: app/templates/animal_detail.html:377 app/templates/animal_detail.html:408
 #: app/templates/animal_form.html:172
@@ -6656,6 +6715,17 @@ msgstr ""
 msgid "قرار الخروج"
 msgstr "Exit decision"
 
+#: app/templates/animal_workflow.html:87
+msgid ""
+"\"بيع\" و\"نفوق\" يسجّلان السبب الفعلي وتاريخه، ويؤثران على تقارير "
+"المالية والإنتاج. \"أرشفة\" لحالات ثانية (تحويل لمزرعة ثانية، خطأ "
+"تسجيل...) — يخفي الرأس من القوائم النشطة بدون تصنيفه بيع أو نفوق."
+msgstr ""
+"\"Sale\" and \"death\" record the actual reason and date, and affect "
+"financial and production reports. \"Archive\" is for other cases "
+"(transferred to another farm, a registration error...) — it hides the "
+"head from active lists without classifying it as a sale or death."
+
 #: app/templates/animal_workflow.html:91
 msgid "بيع — السعر"
 msgstr "Sale — price"
@@ -6767,6 +6837,15 @@ msgstr "Undo sale"
 #: app/templates/animal_workflow.html:152
 msgid "سجل أحداث الدورة"
 msgstr "Cycle events log"
+
+#: app/templates/animal_workflow.html:152
+msgid ""
+"\"المتطلب التالي\" يوضّح إيش يحتاج يتسجَّل عشان الرأس يتقدّم للمرحلة "
+"الجاية — فاضي يعني ما فيه متطلب معلّق وقت هذا الحدث."
+msgstr ""
+"\"Next requirement\" shows what needs to be recorded for the head to "
+"advance to the next stage — empty means there was no pending requirement "
+"at the time of this event."
 
 #: app/templates/animal_workflow.html:155
 msgid "الحدث"

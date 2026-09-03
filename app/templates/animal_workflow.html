@@ -84,7 +84,7 @@
 </div>
 
 <div class="card" id="exit">
-  <h3 style="font-size:15px;">{{ _('قرار الخروج') }}</h3>
+  <h3 style="font-size:15px;">{{ _('قرار الخروج') }} {{ tip(_('"بيع" و"نفوق" يسجّلان السبب الفعلي وتاريخه، ويؤثران على تقارير المالية والإنتاج. "أرشفة" لحالات ثانية (تحويل لمزرعة ثانية، خطأ تسجيل...) — يخفي الرأس من القوائم النشطة بدون تصنيفه بيع أو نفوق.')) }}</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">
     <form method="post" action="{{ url_for('core.animal_sell', animal_id=animal.id) }}" style="flex:1; min-width:220px;" data-offline>
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -149,7 +149,7 @@
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('سجل أحداث الدورة') }}</h3>
+  <h3 style="font-size:15px;">{{ _('سجل أحداث الدورة') }} {{ tip(_('"المتطلب التالي" يوضّح إيش يحتاج يتسجَّل عشان الرأس يتقدّم للمرحلة الجاية — فاضي يعني ما فيه متطلب معلّق وقت هذا الحدث.')) }}</h3>
   <div class="table-scroll">
 <table>
     <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحدث') }}</th><th>{{ _('المرحلة') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('المتطلب التالي') }}</th></tr>
