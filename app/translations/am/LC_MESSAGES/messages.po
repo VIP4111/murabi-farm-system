@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 23:20+0300\n"
+"POT-Creation-Date: 2026-09-03 11:32+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -4391,7 +4391,7 @@ msgstr "ምድብ"
 
 #: app/reports/report_service.py:378 app/templates/assistant/chat.html:121
 #: app/templates/team/_task_assign_fields.html:5
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 #: app/templates/team/tasks_list.html:65 app/templates/team/tasks_list.html:112
 #: app/templates/team/tasks_list.html:155
 #: app/templates/team/tasks_list.html:179
@@ -5641,7 +5641,7 @@ msgstr "ክብደት"
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
 #: app/templates/settings_readiness.html:21
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/reports_list.html:26
@@ -8289,7 +8289,7 @@ msgstr "አልነቃም"
 msgid "تعطيل"
 msgstr "አቦዝን"
 
-#: app/templates/settings.html:155 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:155 app/templates/team/daily_templates.html:28
 #: app/templates/team/members_list.html:30
 msgid "تفعيل"
 msgstr "አንቃ"
@@ -9333,7 +9333,7 @@ msgstr "የመድረሻ ቀን"
 #: app/templates/health/disease_type_form.html:11
 #: app/templates/health/pharmacy_purchase_form.html:22
 #: app/templates/health/vaccination_schedule_form.html:40
-#: app/templates/team/daily_templates.html:9
+#: app/templates/team/daily_templates.html:10
 msgid "ملاحظات (اختياري)"
 msgstr "ማስታወሻዎች (አማራጭ)"
 
@@ -14086,12 +14086,22 @@ msgstr ""
 msgid "التفاصيل / ملاحظات"
 msgstr "ዝርዝሮች / ማስታወሻዎች"
 
-#: app/templates/team/daily_templates.html:4
+#: app/templates/team/daily_templates.html:5
 #: app/templates/team/tasks_list.html:9
 msgid "مهام العامل التلقائية"
 msgstr "ራስ-ሰር የሠራተኛ ተግባራት"
 
 #: app/templates/team/daily_templates.html:5
+msgid ""
+"كل مهمة هنا تتكرر يومياً تلقائياً لكل المزرعة (مو حظيرة معيّنة) — تظهر "
+"بجدول \"المهام المعتمدة\" بدون انتظار اعتماد الدكتور. لا تضيف نفس العنوان"
+" مرتين — النظام يمنعك ويولّد مهمتين منفصلتين كل يوم للأبد لو صار."
+msgstr ""
+"እዚህ ያለ እያንዳንዱ ተግባር በራስ-ሰር በየቀኑ ለመላው እርሻ ይደጋገማል (ለተወሰነ በረት አይደለም) — ሀኪሙን "
+"ማጽደቅ ሳይጠብቅ በ\"የተፈቀዱ ተግባራት\" ሠንጠረዥ ውስጥ ይታያል። አንድን ርዕስ ሁለት ጊዜ አይጨምሩ — ስርዓቱ "
+"ይከለክላል፣ ካልሆነ ሁለት የተለያዩ ተግባራት በየቀኑ ለዘላለም ይፈጠራሉ።"
+
+#: app/templates/team/daily_templates.html:6
 msgid ""
 "هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد"
 " الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها."
@@ -14099,39 +14109,47 @@ msgstr ""
 "እነዚህ ተግባራት በየቀኑ በራስ-ሰር ይፈጠራሉ እና በቀጥታ ለሠራተኛው ይደርሳሉ (የዶክተር ማጽደቅ ሳይጠብቁ)። አዲስ"
 " ተግባር ያክሉ፣ ወይም ካለው አጠገብ ካለው ቁልፍ ነባር ተግባርን ያቁሙ።"
 
-#: app/templates/team/daily_templates.html:8
+#: app/templates/team/daily_templates.html:9
 msgid "عنوان المهمة"
 msgstr "የተግባር ርዕስ"
 
-#: app/templates/team/daily_templates.html:8
+#: app/templates/team/daily_templates.html:9
 msgid "مثال: تنظيف مظلات الحظيرة B"
 msgstr "ምሳሌ: የበረት B ጥላዎችን ማጽዳት"
 
-#: app/templates/team/daily_templates.html:10
+#: app/templates/team/daily_templates.html:11
 msgid "إضافة مهمة يومية"
 msgstr "ዕለታዊ ተግባር ያክሉ"
 
-#: app/templates/team/daily_templates.html:15
+#: app/templates/team/daily_templates.html:16
 msgid "القائمة الحالية"
 msgstr "የአሁኑ ዝርዝር"
 
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 msgid "الملاحظات"
 msgstr "ማስታወሻዎች"
 
-#: app/templates/team/daily_templates.html:23
+#: app/templates/team/daily_templates.html:19
+msgid ""
+"\"فعّالة\" = تولّد مهمة يومياً للعامل. \"موقوفة\" = محفوظة بس ما تولّد شي"
+" — تقدر تفعّلها لاحقاً بدون ما تعيد كتابتها من جديد."
+msgstr ""
+"\"ንቁ\" = በየቀኑ ለሰራተኛው ተግባር ይፈጥራል። \"የቆመ\" = ተቀምጧል ግን ምንም አይፈጥርም — እንደገና "
+"ሳይተይቡት በኋላ ማንቃት ይችላሉ።"
+
+#: app/templates/team/daily_templates.html:24
 msgid "فعّالة"
 msgstr "ንቁ"
 
-#: app/templates/team/daily_templates.html:23
+#: app/templates/team/daily_templates.html:24
 msgid "موقوفة"
 msgstr "ቆሟል"
 
-#: app/templates/team/daily_templates.html:27
+#: app/templates/team/daily_templates.html:28
 msgid "إيقاف"
 msgstr "አቁም"
 
-#: app/templates/team/daily_templates.html:32
+#: app/templates/team/daily_templates.html:33
 msgid "ما فيه مهام يومية مضافة بعد."
 msgstr "እስካሁን የተጨመረ ዕለታዊ ተግባር የለም።"
 

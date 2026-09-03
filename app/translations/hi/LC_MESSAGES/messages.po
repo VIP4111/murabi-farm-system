@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 23:20+0300\n"
+"POT-Creation-Date: 2026-09-03 11:32+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4556,7 +4556,7 @@ msgstr "श्रेणी"
 
 #: app/reports/report_service.py:378 app/templates/assistant/chat.html:121
 #: app/templates/team/_task_assign_fields.html:5
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 #: app/templates/team/tasks_list.html:65 app/templates/team/tasks_list.html:112
 #: app/templates/team/tasks_list.html:155
 #: app/templates/team/tasks_list.html:179
@@ -5834,7 +5834,7 @@ msgstr "गंभीरता"
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
 #: app/templates/settings_readiness.html:21
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/reports_list.html:26
@@ -8574,7 +8574,7 @@ msgstr "अक्षम"
 msgid "تعطيل"
 msgstr "निष्क्रिय करें"
 
-#: app/templates/settings.html:155 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:155 app/templates/team/daily_templates.html:28
 #: app/templates/team/members_list.html:30
 msgid "تفعيل"
 msgstr "सक्रिय करें"
@@ -9668,7 +9668,7 @@ msgstr "आगमन तिथि"
 #: app/templates/health/disease_type_form.html:11
 #: app/templates/health/pharmacy_purchase_form.html:22
 #: app/templates/health/vaccination_schedule_form.html:40
-#: app/templates/team/daily_templates.html:9
+#: app/templates/team/daily_templates.html:10
 msgid "ملاحظات (اختياري)"
 msgstr "टिप्पणियां (वैकल्पिक)"
 
@@ -14575,12 +14575,24 @@ msgstr ""
 msgid "التفاصيل / ملاحظات"
 msgstr "विवरण / टिप्पणियां"
 
-#: app/templates/team/daily_templates.html:4
+#: app/templates/team/daily_templates.html:5
 #: app/templates/team/tasks_list.html:9
 msgid "مهام العامل التلقائية"
 msgstr "स्वचालित कार्यकर्ता कार्य"
 
 #: app/templates/team/daily_templates.html:5
+msgid ""
+"كل مهمة هنا تتكرر يومياً تلقائياً لكل المزرعة (مو حظيرة معيّنة) — تظهر "
+"بجدول \"المهام المعتمدة\" بدون انتظار اعتماد الدكتور. لا تضيف نفس العنوان"
+" مرتين — النظام يمنعك ويولّد مهمتين منفصلتين كل يوم للأبد لو صار."
+msgstr ""
+"यहाँ हर कार्य पूरे फार्म के लिए हर दिन अपने आप दोहराया जाता है (किसी "
+"विशेष बाड़े के लिए नहीं) — यह डॉक्टर की मंजूरी का इंतज़ार किए बिना "
+"\"मंजूर कार्य\" तालिका में दिखता है। एक ही शीर्षक दो बार न जोड़ें — "
+"सिस्टम इसे रोकता है, क्योंकि ऐसा होने पर हर दिन हमेशा के लिए दो अलग कार्य"
+" बन जाएंगे।"
+
+#: app/templates/team/daily_templates.html:6
 msgid ""
 "هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد"
 " الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها."
@@ -14589,39 +14601,48 @@ msgstr ""
 " मंजूरी की प्रतीक्षा किए बिना)। नया कार्य जोड़ें, या इसके बगल के बटन से "
 "मौजूदा कार्य रोकें।"
 
-#: app/templates/team/daily_templates.html:8
+#: app/templates/team/daily_templates.html:9
 msgid "عنوان المهمة"
 msgstr "कार्य शीर्षक"
 
-#: app/templates/team/daily_templates.html:8
+#: app/templates/team/daily_templates.html:9
 msgid "مثال: تنظيف مظلات الحظيرة B"
 msgstr "उदाहरण: बाड़ा B की छतरियां साफ करें"
 
-#: app/templates/team/daily_templates.html:10
+#: app/templates/team/daily_templates.html:11
 msgid "إضافة مهمة يومية"
 msgstr "दैनिक कार्य जोड़ें"
 
-#: app/templates/team/daily_templates.html:15
+#: app/templates/team/daily_templates.html:16
 msgid "القائمة الحالية"
 msgstr "वर्तमान सूची"
 
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 msgid "الملاحظات"
 msgstr "टिप्पणियां"
 
-#: app/templates/team/daily_templates.html:23
+#: app/templates/team/daily_templates.html:19
+msgid ""
+"\"فعّالة\" = تولّد مهمة يومياً للعامل. \"موقوفة\" = محفوظة بس ما تولّد شي"
+" — تقدر تفعّلها لاحقاً بدون ما تعيد كتابتها من جديد."
+msgstr ""
+"\"सक्रिय\" = कर्मचारी के लिए हर दिन एक कार्य बनाता है। \"बंद\" = सहेजा "
+"हुआ है पर कुछ नहीं बनाता — आप इसे दोबारा टाइप किए बिना बाद में सक्रिय कर "
+"सकते हैं।"
+
+#: app/templates/team/daily_templates.html:24
 msgid "فعّالة"
 msgstr "सक्रिय"
 
-#: app/templates/team/daily_templates.html:23
+#: app/templates/team/daily_templates.html:24
 msgid "موقوفة"
 msgstr "रुका हुआ"
 
-#: app/templates/team/daily_templates.html:27
+#: app/templates/team/daily_templates.html:28
 msgid "إيقاف"
 msgstr "रोकें"
 
-#: app/templates/team/daily_templates.html:32
+#: app/templates/team/daily_templates.html:33
 msgid "ما فيه مهام يومية مضافة بعد."
 msgstr "अभी तक कोई दैनिक कार्य नहीं जोड़ा गया है।"
 

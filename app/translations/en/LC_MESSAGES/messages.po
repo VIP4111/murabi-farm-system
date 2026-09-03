@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 23:20+0300\n"
+"POT-Creation-Date: 2026-09-03 11:32+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -4585,7 +4585,7 @@ msgstr "Category"
 
 #: app/reports/report_service.py:378 app/templates/assistant/chat.html:121
 #: app/templates/team/_task_assign_fields.html:5
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 #: app/templates/team/tasks_list.html:65 app/templates/team/tasks_list.html:112
 #: app/templates/team/tasks_list.html:155
 #: app/templates/team/tasks_list.html:179
@@ -5867,7 +5867,7 @@ msgstr "Severity"
 #: app/templates/repro/program_detail.html:93
 #: app/templates/repro/programs_list.html:10
 #: app/templates/settings_readiness.html:21
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 #: app/templates/team/members_list.html:10
 #: app/templates/team/payroll_list.html:22
 #: app/templates/team/reports_list.html:26
@@ -8622,7 +8622,7 @@ msgstr "Disabled"
 msgid "تعطيل"
 msgstr "Disable"
 
-#: app/templates/settings.html:155 app/templates/team/daily_templates.html:27
+#: app/templates/settings.html:155 app/templates/team/daily_templates.html:28
 #: app/templates/team/members_list.html:30
 msgid "تفعيل"
 msgstr "Activate"
@@ -9713,7 +9713,7 @@ msgstr "Arrival date"
 #: app/templates/health/disease_type_form.html:11
 #: app/templates/health/pharmacy_purchase_form.html:22
 #: app/templates/health/vaccination_schedule_form.html:40
-#: app/templates/team/daily_templates.html:9
+#: app/templates/team/daily_templates.html:10
 msgid "ملاحظات (اختياري)"
 msgstr "Notes (optional)"
 
@@ -14642,12 +14642,24 @@ msgstr ""
 msgid "التفاصيل / ملاحظات"
 msgstr "Details / notes"
 
-#: app/templates/team/daily_templates.html:4
+#: app/templates/team/daily_templates.html:5
 #: app/templates/team/tasks_list.html:9
 msgid "مهام العامل التلقائية"
 msgstr "Automatic worker tasks"
 
 #: app/templates/team/daily_templates.html:5
+msgid ""
+"كل مهمة هنا تتكرر يومياً تلقائياً لكل المزرعة (مو حظيرة معيّنة) — تظهر "
+"بجدول \"المهام المعتمدة\" بدون انتظار اعتماد الدكتور. لا تضيف نفس العنوان"
+" مرتين — النظام يمنعك ويولّد مهمتين منفصلتين كل يوم للأبد لو صار."
+msgstr ""
+"Every task here repeats automatically every day for the whole farm (not a"
+" specific barn) — it shows up in the \"approved tasks\" table without "
+"waiting for the doctor's approval. Don't add the same title twice — the "
+"system blocks it, since two would generate two separate tasks every "
+"single day forever if it happened."
+
+#: app/templates/team/daily_templates.html:6
 msgid ""
 "هذي المهام تتولّد كل يوم تلقائياً وتوصل مباشرة للعامل (بدون انتظار اعتماد"
 " الدكتور). أضف مهمة جديدة، أو أوقف مهمة موجودة من الزر جنبها."
@@ -14656,39 +14668,48 @@ msgstr ""
 "worker (without waiting for the doctor's approval). Add a new task, or "
 "stop an existing one with the button next to it."
 
-#: app/templates/team/daily_templates.html:8
+#: app/templates/team/daily_templates.html:9
 msgid "عنوان المهمة"
 msgstr "Task title"
 
-#: app/templates/team/daily_templates.html:8
+#: app/templates/team/daily_templates.html:9
 msgid "مثال: تنظيف مظلات الحظيرة B"
 msgstr "Example: clean barn B's shades"
 
-#: app/templates/team/daily_templates.html:10
+#: app/templates/team/daily_templates.html:11
 msgid "إضافة مهمة يومية"
 msgstr "Add daily task"
 
-#: app/templates/team/daily_templates.html:15
+#: app/templates/team/daily_templates.html:16
 msgid "القائمة الحالية"
 msgstr "Current list"
 
-#: app/templates/team/daily_templates.html:18
+#: app/templates/team/daily_templates.html:19
 msgid "الملاحظات"
 msgstr "Notes"
 
-#: app/templates/team/daily_templates.html:23
+#: app/templates/team/daily_templates.html:19
+msgid ""
+"\"فعّالة\" = تولّد مهمة يومياً للعامل. \"موقوفة\" = محفوظة بس ما تولّد شي"
+" — تقدر تفعّلها لاحقاً بدون ما تعيد كتابتها من جديد."
+msgstr ""
+"\"Active\" = generates a task for the worker every day. \"Stopped\" = "
+"saved but doesn't generate anything — you can reactivate it later without"
+" retyping it."
+
+#: app/templates/team/daily_templates.html:24
 msgid "فعّالة"
 msgstr "Active"
 
-#: app/templates/team/daily_templates.html:23
+#: app/templates/team/daily_templates.html:24
 msgid "موقوفة"
 msgstr "Stopped"
 
-#: app/templates/team/daily_templates.html:27
+#: app/templates/team/daily_templates.html:28
 msgid "إيقاف"
 msgstr "Stop"
 
-#: app/templates/team/daily_templates.html:32
+#: app/templates/team/daily_templates.html:33
 msgid "ما فيه مهام يومية مضافة بعد."
 msgstr "No daily tasks added yet."
 

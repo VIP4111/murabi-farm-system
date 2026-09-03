@@ -1,6 +1,6 @@
 import click
 from app.extensions import db
-from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom, ChecklistItem, Feed
+from app.models import Role, Permission, User, ServiceToggle, DiseaseType, Symptom, DiseaseSymptomLink, DailyTaskTemplate, EmergencySymptom, ChecklistItem, Feed, Task
 from app.permissions_registry import PERMISSIONS, DEFAULT_ROLES
 from app.disease_library_data import DISEASE_LIBRARY_V2, DISEASE_ALIAS_MAP
 
@@ -405,6 +405,46 @@ def register_cli(app):
         if not DailyTaskTemplate.query.first():
             for order, (title, notes) in enumerate(DEFAULT_DAILY_TASK_TEMPLATES):
                 db.session.add(DailyTaskTemplate(title=title, notes=notes, sort_order=order))
+
+        # بند إصلاح — بلاغ مستخدم بصورة شاشة: نفس المهمة اليومية تكررت
+        # عدة مرات بجدول المهام المعتمدة كل يوم. السبب: قوالب فعّالة
+        # مكرَّرة بنفس العنوان بجدول DailyTaskTemplate — كل قالب يولّد
+        # مهمة منفصلة يومياً (idempotency مبنية على معرّف القالب نفسه
+        # مو على العنوان). منعنا إضافة قالب جديد بعنوان مكرَّر من شاشة
+        # "مهام العامل التلقائية" (بند سابق)، بس هذا ما ينظّف القوالب
+        # المكرَّرة الموجودة أصلاً بقاعدة البيانات — تحتاج تنظيف فعلي
+        # مرة وحدة. بدل ما نطلب من المستخدم يوقفها يدوياً واحدة واحدة،
+        # ننظّفها هنا تلقائياً بكل نشر: لكل مجموعة قوالب فعّالة بنفس
+        # العنوان، نبقي الأقدم (أصغر id) بس ونوقف الباقي. idempotent —
+        # ما فيها أثر لو ما فيه تكرار أصلاً.
+        active_templates = DailyTaskTemplate.query.filter_by(is_active=True).order_by(DailyTaskTemplate.id).all()
+        seen_titles = set()
+        for t in active_templates:
+            if t.title in seen_titles:
+                t.is_active = False
+            else:
+                seen_titles.add(t.title)
+
+        # نفس المنطق فوق بس على المهام اليومية اللي اتولّدت فعلاً قبل
+        # هذا الإصلاح (`Task.source_type == "DailyHusbandry"`) — إيقاف
+        # القوالب المكرَّرة ما يمسح المهام المكرَّرة اللي سبق اتولّدت
+        # منها. لكل مجموعة (عنوان + موعد) مكرَّرة، نحذف كل نسخة لسا
+        # "قيد الانتظار" (ما بدأها أو أنجزها حد فعلياً) عدا الأقدم —
+        # ما نلمس أي مهمة قيد التنفيذ أو منجزة أو متعذّرة، حتى لو كانت
+        # جزءاً من مجموعة مكرَّرة، لأنها تمثّل عمل فعلي حصل.
+        duplicate_rows = (
+            Task.query.filter(
+                Task.source_type == "DailyHusbandry",
+                Task.status.in_(["suggested", "pending"]),
+            ).order_by(Task.title, Task.due_date, Task.id).all()
+        )
+        seen_task_keys = set()
+        for t in duplicate_rows:
+            key = (t.title, t.due_date)
+            if key in seen_task_keys:
+                db.session.delete(t)
+            else:
+                seen_task_keys.add(key)
 
         db.session.commit()
 
