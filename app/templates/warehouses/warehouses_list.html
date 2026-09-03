@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -13,7 +14,7 @@
   </p>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('ملاحظة الموقع') }}</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }} {{ tip(_('يحدّد أي مخزون (علف أو صيدلية) يظهر بهذا المستودع عند التحويل أو الجرد — تصنيف تنظيمي بس، ما يمنع تخزين أي صنف فعلياً.')) }}</th><th>{{ _('ملاحظة الموقع') }}</th></tr>
     {% for w in warehouses %}
     <tr><td>{{ w.name }}</td><td>{{ type_labels.get(w.warehouse_type, w.warehouse_type) }}</td><td>{{ w.location_note or '-' }}</td></tr>
     {% else %}<tr><td colspan="3" style="color:#888;">{{ _('لا يوجد مستودعات مسمّاة إضافية بعد — كل المخزون بالمستودع الرئيسي الافتراضي.') }}</td></tr>{% endfor %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -7,7 +8,7 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('السعة') }}</th><th>{{ _('المسؤول') }}</th><th>{{ _('عدد الحيوانات') }}</th><th></th></tr>
+    <tr><th>{{ _('الرقم') }}</th><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th><th>{{ _('السعة') }}</th><th>{{ _('المسؤول') }} {{ tip(_('عضو الفريق المسؤول عن هذي الحظيرة — يحدَّد بمن يشوف "تنبيهاتي" و"مهامي" الخاصة بها فقط بدل تنبيهات المزرعة كاملة.')) }}</th><th>{{ _('عدد الحيوانات') }}</th><th></th></tr>
     {% for b in barns %}
     <tr>
       <td>{{ b.barn_no }}</td>

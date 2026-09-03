@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -10,7 +11,7 @@
   <h3 style="font-size:14px;">{{ _('القادمة') }}</h3>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('التاريخ المخطَّط') }}</th><th>{{ _('الرؤوس المستهدَفة') }}</th><th>{{ _('ملاحظات') }}</th><th>{{ _('إجراءات') }}</th></tr>
+    <tr><th>{{ _('الحظيرة') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('التاريخ المخطَّط') }}</th><th>{{ _('الرؤوس المستهدَفة') }} {{ tip(_('"كل الحظيرة" يُحسب حياً وقت العرض من عدد رؤوسها الفعلي حينها (لو تغيّر العدد بعد الجدولة، الرقم هنا يتحدَّث تلقائياً) — مو قائمة أسماء ثابتة إلا لو اخترت رؤوساً محدَّدة.')) }}</th><th>{{ _('ملاحظات') }}</th><th>{{ _('إجراءات') }}</th></tr>
     {% for s in upcoming %}
     <tr>
       <td>{{ s.barn.barn_name }}</td>

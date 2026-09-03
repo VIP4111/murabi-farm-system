@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <style>
   .a-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:12px;}
@@ -17,7 +18,7 @@
 
 <div class="card">
   <button class="btn light" type="button" onclick="window.location='{{ url_for('core.home') }}'">→ {{ _('الرئيسية') }}</button>
-  <h2 style="margin-top:12px;">🐑 {{ _('الحيوانات') }}</h2>
+  <h2 style="margin-top:12px;">🐑 {{ _('الحيوانات') }} {{ tip(_('الرقم الأحمر أعلى صورة الرأس (⚠️) = عدد التنبيهات المفتوحة له حالياً (تحصين مستحق، فترة سحب...) — افتح الرأس وشوف تفصيلها بصفحته.')) }}</h2>
 </div>
 
 <div class="card">

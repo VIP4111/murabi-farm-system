@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -16,7 +17,7 @@
 <div class="card">
   <div class="table-scroll">
   <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }}</th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }} {{ tip(_('"رئيسي" = يظهر كخيار أول بالمساعد التشخيصي (نقطة بداية الشجرة). "متابعة" = يظهر بس كسؤال تالٍ حسب إجاباتك السابقة.')) }}</th></tr>
     {% for s in symptoms %}
     <tr>
       <td>{{ s.name }}</td>

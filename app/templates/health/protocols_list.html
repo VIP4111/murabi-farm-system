@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -12,7 +13,7 @@
   </p>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('المرض المرتبط') }}</th><th>{{ _('عدد الخطوات') }}</th><th>{{ _('الحالة') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('المرض المرتبط') }}</th><th>{{ _('عدد الخطوات') }}</th><th>{{ _('الحالة') }} {{ tip(_('"موقوف" يخفي البروتوكول من خيارات "تطبيق على رأس" الجديدة، بدون ما يمسح أي تطبيق سابق له.')) }}</th><th></th></tr>
     {% for p in protocols %}
     <tr>
       <td>{{ p.name }}</td>
