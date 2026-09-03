@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import status_badge %}
+{% from "_macros.html" import status_badge, tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -20,7 +20,7 @@
 
 {% if current_user.has_permission('reports.manage') %}
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('صندوق الوارد (بلاغات جديدة)') }}</h3>
+  <h3 style="font-size:15px;">{{ _('صندوق الوارد (بلاغات جديدة)') }} {{ tip(_('بلاغات وصلت الآن، ما حد راجعها بعد — اقبلها لتاخذها بمسؤوليتك، أو أجّلها، أو ألغِها لو مو حقيقية (تنتقل لصاحب الحلال للمراجعة).')) }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
@@ -32,7 +32,7 @@
 </div>
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('بلاغات مستلمة مني') }}</h3>
+  <h3 style="font-size:15px;">{{ _('بلاغات مستلمة مني') }} {{ tip(_('البلاغات اللي قبلتها أنت بنفسك من صندوق الوارد — إما تنفّذها بنفسك مباشرة، أو تحوّلها لعضو ثاني ينفّذها.')) }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>
@@ -45,7 +45,7 @@
 {% endif %}
 
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('محوّلة لي للتنفيذ') }}</h3>
+  <h3 style="font-size:15px;">{{ _('محوّلة لي للتنفيذ') }} {{ tip(_('بلاغات حوّلها لك عضو ثاني عشان تنفّذها أنت — افتح البلاغ وسجّل "تم الإنجاز" لما تخلص.')) }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('الحالة') }}</th></tr>

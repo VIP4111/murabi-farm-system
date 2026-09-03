@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 11:32+0300\n"
+"POT-Creation-Date: 2026-09-03 11:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -15216,6 +15216,17 @@ msgstr "Closed by"
 msgid "إجراءات (صندوق الوارد)"
 msgstr "Actions (inbox)"
 
+#: app/templates/team/report_detail.html:42
+msgid ""
+"\"قبول\" ياخذ البلاغ بمسؤوليتك (يفتح لك خيار تنفيذه بنفسك أو تحويله). "
+"\"تأجيل\" يرجّعه لصندوق الوارد لاحقاً بدون قبوله. \"إلغاء\" يعني البلاغ "
+"مو حقيقي/مكرَّر — ينتقل لصاحب الحلال يراجعه."
+msgstr ""
+"\"Accept\" puts the report under your responsibility (opens the option to"
+" execute it yourself or transfer it). \"Postpone\" sends it back to the "
+"inbox for later without accepting it. \"Cancel\" means the report isn't "
+"genuine/is a duplicate — it goes to the farm owner to review."
+
 #: app/templates/team/report_detail.html:46
 msgid "قبول البلاغ"
 msgstr "Accept report"
@@ -15243,6 +15254,15 @@ msgstr "Execute and close directly"
 #: app/templates/team/report_detail.html:81
 msgid "أو حوّلها لعضو ثاني"
 msgstr "Or transfer it to another member"
+
+#: app/templates/team/report_detail.html:81
+msgid ""
+"يوصل البلاغ لقائمة \"محوّلة لي للتنفيذ\" عند العضو المختار، مع تعليماتك —"
+" يبقى البلاغ تحت مسؤوليتك (اسمك) لين هو يسجّل \"تم الإنجاز\"."
+msgstr ""
+"Delivers the report to the chosen member's \"transferred to me\" list, "
+"with your instructions — the report stays under your responsibility (your"
+" name) until they mark it \"Done\"."
 
 #: app/templates/team/report_detail.html:84
 msgid "حوّل لـ"
@@ -15362,6 +15382,15 @@ msgstr "New report"
 msgid "صندوق الوارد (بلاغات جديدة)"
 msgstr "Inbox (new reports)"
 
+#: app/templates/team/reports_list.html:23
+msgid ""
+"بلاغات وصلت الآن، ما حد راجعها بعد — اقبلها لتاخذها بمسؤوليتك، أو أجّلها،"
+" أو ألغِها لو مو حقيقية (تنتقل لصاحب الحلال للمراجعة)."
+msgstr ""
+"Reports that just came in, no one has reviewed them yet — accept one to "
+"take responsibility for it, postpone it, or cancel it if it's not genuine"
+" (it goes to the farm owner for review)."
+
 #: app/templates/team/reports_list.html:28
 msgid "صندوق الوارد فاضي."
 msgstr "Inbox is empty."
@@ -15370,6 +15399,14 @@ msgstr "Inbox is empty."
 msgid "بلاغات مستلمة مني"
 msgstr "Reports I've accepted"
 
+#: app/templates/team/reports_list.html:35
+msgid ""
+"البلاغات اللي قبلتها أنت بنفسك من صندوق الوارد — إما تنفّذها بنفسك "
+"مباشرة، أو تحوّلها لعضو ثاني ينفّذها."
+msgstr ""
+"Reports you personally accepted from the inbox — either execute them "
+"yourself directly, or transfer them to another member to execute."
+
 #: app/templates/team/reports_list.html:40
 msgid "لا يوجد بلاغات مستلمة حالياً."
 msgstr "No accepted reports right now."
@@ -15377,6 +15414,14 @@ msgstr "No accepted reports right now."
 #: app/templates/team/reports_list.html:48
 msgid "محوّلة لي للتنفيذ"
 msgstr "Transferred to me for execution"
+
+#: app/templates/team/reports_list.html:48
+msgid ""
+"بلاغات حوّلها لك عضو ثاني عشان تنفّذها أنت — افتح البلاغ وسجّل \"تم "
+"الإنجاز\" لما تخلص."
+msgstr ""
+"Reports another member transferred to you for you to execute — open the "
+"report and mark \"Done\" once you finish."
 
 #: app/templates/team/reports_list.html:53
 msgid "لا يوجد بلاغات محوّلة لك حالياً."

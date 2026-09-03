@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import status_badge %}
+{% from "_macros.html" import status_badge, tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -39,7 +39,7 @@
 
 {% if r.status == 'new' and can_manage %}
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('إجراءات (صندوق الوارد)') }}</h3>
+  <h3 style="font-size:15px;">{{ _('إجراءات (صندوق الوارد)') }} {{ tip(_('"قبول" ياخذ البلاغ بمسؤوليتك (يفتح لك خيار تنفيذه بنفسك أو تحويله). "تأجيل" يرجّعه لصندوق الوارد لاحقاً بدون قبوله. "إلغاء" يعني البلاغ مو حقيقي/مكرَّر — ينتقل لصاحب الحلال يراجعه.')) }}</h3>
   <div style="display:flex; gap:16px; flex-wrap:wrap;">
     <form method="post" action="{{ url_for('team.report_accept', report_id=r.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -78,7 +78,7 @@
   </form>
 </div>
 <div class="card">
-  <h3 style="font-size:15px;">{{ _('أو حوّلها لعضو ثاني') }}</h3>
+  <h3 style="font-size:15px;">{{ _('أو حوّلها لعضو ثاني') }} {{ tip(_('يوصل البلاغ لقائمة "محوّلة لي للتنفيذ" عند العضو المختار، مع تعليماتك — يبقى البلاغ تحت مسؤوليتك (اسمك) لين هو يسجّل "تم الإنجاز".')) }}</h3>
   <form method="post" action="{{ url_for('team.report_transfer', report_id=r.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('حوّل لـ') }}</label>
