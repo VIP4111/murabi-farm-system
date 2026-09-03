@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 11:45+0300\n"
+"POT-Creation-Date: 2026-09-03 11:54+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -3593,8 +3593,8 @@ msgstr "बैच हटा दिया गया है"
 #: app/reports/report_service.py:296 app/templates/animal_detail.html:493
 #: app/templates/finance/form.html:36 app/templates/finance/list.html:20
 #: app/templates/finance/list.html:69
-#: app/templates/team/payroll_prepare.html:44
-#: app/templates/team/payroll_prepare.html:78
+#: app/templates/team/payroll_prepare.html:45
+#: app/templates/team/payroll_prepare.html:80
 msgid "المبلغ"
 msgstr "राशि"
 
@@ -4481,7 +4481,7 @@ msgstr "कुल बिक्री"
 msgid "إجمالي المشتريات+المصروفات"
 msgstr "कुल खरीद+व्यय"
 
-#: app/reports/report_service.py:247 app/templates/team/payroll_list.html:22
+#: app/reports/report_service.py:247 app/templates/team/payroll_list.html:23
 #: app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:50
 msgid "الصافي"
@@ -5836,7 +5836,7 @@ msgstr "गंभीरता"
 #: app/templates/settings_readiness.html:21
 #: app/templates/team/daily_templates.html:19
 #: app/templates/team/members_list.html:10
-#: app/templates/team/payroll_list.html:22
+#: app/templates/team/payroll_list.html:23
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
 #: app/templates/team/reports_list.html:51
@@ -6368,7 +6368,7 @@ msgstr "अतिरिक्त विवरण (वैकल्पिक)"
 #: app/templates/settings.html:169 app/templates/team/member_edit_form.html:17
 #: app/templates/team/member_form.html:11
 #: app/templates/team/members_list.html:10
-#: app/templates/team/payroll_list.html:22
+#: app/templates/team/payroll_list.html:23
 #: app/templates/team/performance_report.html:21
 #: app/templates/warehouses/warehouse_form.html:8
 #: app/templates/warehouses/warehouses_list.html:16
@@ -7192,7 +7192,7 @@ msgstr "टीम के सदस्य"
 msgid "إعداد الرواتب"
 msgstr "वेतन सेटअप"
 
-#: app/templates/base.html:991 app/templates/team/payroll_list.html:5
+#: app/templates/base.html:991 app/templates/team/payroll_list.html:6
 #: app/templates/team/salaries_list.html:6
 msgid "رواتب الشهر"
 msgstr "इस महीने का वेतन"
@@ -7868,7 +7868,7 @@ msgid "ما قدر"
 msgstr "नहीं कर सका"
 
 #: app/templates/family_view.html:123
-#: app/templates/team/payroll_prepare.html:120
+#: app/templates/team/payroll_prepare.html:122
 msgid "السبب:"
 msgstr "कारण:"
 
@@ -11421,8 +11421,8 @@ msgid "إصدار"
 msgstr "जारी करें"
 
 #: app/templates/finance/list.html:84 app/templates/reports/purchases.html:44
-#: app/templates/team/payroll_list.html:15
-#: app/templates/team/payroll_list.html:39
+#: app/templates/team/payroll_list.html:16
+#: app/templates/team/payroll_list.html:40
 #: app/templates/team/payroll_reports.html:13
 #: app/templates/team/payroll_reports.html:42
 #: app/templates/team/performance_report.html:13
@@ -11603,7 +11603,7 @@ msgid "تكلفة الرأس"
 msgstr "प्रति पशु लागत"
 
 #: app/templates/finance/monthly_cost_report.html:27
-#: app/templates/team/payroll_list.html:9
+#: app/templates/team/payroll_list.html:10
 #: app/templates/team/payroll_reports.html:7
 msgid "الشهر"
 msgstr "महीना"
@@ -14838,128 +14838,158 @@ msgstr "निष्क्रिय"
 msgid "لا يوجد أعضاء بعد."
 msgstr "अभी तक कोई सदस्य नहीं है।"
 
-#: app/templates/team/payroll_list.html:6
+#: app/templates/team/payroll_list.html:7
 #: app/templates/team/payroll_reports.html:32
 msgid "تقارير الرواتب حسب العامل"
 msgstr "कर्मचारी अनुसार वेतन रिपोर्ट"
 
-#: app/templates/team/payroll_list.html:14
+#: app/templates/team/payroll_list.html:15
 #: app/templates/team/payroll_reports.html:12
 msgid "السنة"
 msgstr "वर्ष"
 
-#: app/templates/team/payroll_list.html:22
-#: app/templates/team/payroll_prepare.html:29
+#: app/templates/team/payroll_list.html:23
+#: app/templates/team/payroll_prepare.html:30
 #: app/templates/team/payroll_reports.html:50
 #: app/templates/team/salaries_list.html:34
 msgid "الراتب الأساسي"
 msgstr "मूल वेतन"
 
-#: app/templates/team/payroll_list.html:29
+#: app/templates/team/payroll_list.html:23
+msgid ""
+"\"ما تجهّز بعد\" = ما فتحت راتبه هذا الشهر بعد. \"مسودة\" = فتحته وعدّلت "
+"عليه بس ما أكدته نهائياً — يقدر يتعدّل. \"مؤكَّد\" = اتقفل وسُجّل فعلياً "
+"بالمالية."
+msgstr ""
+"\"अभी तैयार नहीं\" = आपने इस महीने उसका वेतन अभी तक नहीं खोला। "
+"\"ड्राफ्ट\" = आपने इसे खोला और संपादित किया पर अंतिम रूप से पुष्टि नहीं "
+"की — इसे अभी भी संपादित किया जा सकता है। \"पुष्टि की गई\" = यह लॉक हो गया"
+" और वास्तव में वित्त में दर्ज हो गया।"
+
+#: app/templates/team/payroll_list.html:23
+msgid ""
+"\"الوصل الموقَّع\" يظهر بس بعد التأكيد — ارفع صورة من الوصل بعد ما العامل"
+" يوقّعه فعلياً، دليل استلام رسمي محفوظ بملفه."
+msgstr ""
+"\"हस्ताक्षरित रसीद\" केवल पुष्टि के बाद दिखती है — कर्मचारी के वास्तव में"
+" हस्ताक्षर करने के बाद रसीद की फोटो अपलोड करें, उनकी फाइल में रखा गया एक "
+"आधिकारिक प्राप्ति प्रमाण।"
+
+#: app/templates/team/payroll_list.html:30
 msgid "ما تجهّز بعد"
 msgstr "अभी तैयार नहीं हुआ"
 
-#: app/templates/team/payroll_list.html:31
-#: app/templates/team/payroll_prepare.html:6
+#: app/templates/team/payroll_list.html:32
+#: app/templates/team/payroll_prepare.html:7
 msgid "مؤكَّد"
 msgstr "पुष्ट"
 
-#: app/templates/team/payroll_list.html:33
+#: app/templates/team/payroll_list.html:34
 msgid "مسودة"
 msgstr "ड्राफ्ट"
 
-#: app/templates/team/payroll_list.html:39
+#: app/templates/team/payroll_list.html:40
 msgid "عرض/تجهيز"
 msgstr "देखें/तैयार करें"
 
-#: app/templates/team/payroll_list.html:42
-#: app/templates/team/payroll_prepare.html:63
+#: app/templates/team/payroll_list.html:43
+#: app/templates/team/payroll_prepare.html:65
 #: app/templates/team/payroll_upload_receipt.html:25
 msgid "طباعة الوصل"
 msgstr "रसीद प्रिंट करें"
 
-#: app/templates/team/payroll_list.html:44
+#: app/templates/team/payroll_list.html:45
 #: app/templates/team/payroll_upload_receipt.html:4
 msgid "الوصل الموقَّع"
 msgstr "हस्ताक्षरित रसीद"
 
-#: app/templates/team/payroll_list.html:50
+#: app/templates/team/payroll_list.html:51
 #: app/templates/team/salaries_list.html:73
 msgid "لا يوجد أعضاء نشطون."
 msgstr "कोई सक्रिय सदस्य नहीं।"
 
-#: app/templates/team/payroll_prepare.html:4
+#: app/templates/team/payroll_prepare.html:5
 msgid "تجهيز راتب"
 msgstr "वेतन तैयार करें"
 
-#: app/templates/team/payroll_prepare.html:5
+#: app/templates/team/payroll_prepare.html:6
 msgid "الفترة:"
 msgstr "अवधि:"
 
-#: app/templates/team/payroll_prepare.html:11
+#: app/templates/team/payroll_prepare.html:12
 msgid "أيام الحضور الفعلية هذا الشهر:"
 msgstr "इस महीने वास्तविक उपस्थिति के दिन:"
 
-#: app/templates/team/payroll_prepare.html:12
+#: app/templates/team/payroll_prepare.html:13
 msgid "— الراتب المتناسب المقترح:"
 msgstr "— सुझाया गया आनुपातिक वेतन:"
 
-#: app/templates/team/payroll_prepare.html:14
+#: app/templates/team/payroll_prepare.html:15
 msgid "استخدم القيمة المقترحة"
 msgstr "सुझाया गया मान उपयोग करें"
 
-#: app/templates/team/payroll_prepare.html:21
+#: app/templates/team/payroll_prepare.html:22
 msgid "أعلى نقطة أداء الشهر الماضي —"
 msgstr "पिछले महीने का सर्वश्रेष्ठ प्रदर्शन स्कोर —"
 
-#: app/templates/team/payroll_prepare.html:22
+#: app/templates/team/payroll_prepare.html:23
 msgid "اقترح مكافأة"
 msgstr "बोनस सुझाएं"
 
-#: app/templates/team/payroll_prepare.html:31
+#: app/templates/team/payroll_prepare.html:32
 msgid "المكافأة (اختياري)"
 msgstr "बोनस (वैकल्पिक)"
 
-#: app/templates/team/payroll_prepare.html:33
+#: app/templates/team/payroll_prepare.html:34
 msgid "اسم المستلم (اختياري، لو حوالة)"
 msgstr "प्राप्तकर्ता का नाम (वैकल्पिक — प्रेषण के लिए)"
 
-#: app/templates/team/payroll_prepare.html:38
+#: app/templates/team/payroll_prepare.html:39
 #: app/templates/team/payroll_reports.html:50
 msgid "الخصومات"
 msgstr "कटौतियाँ"
 
-#: app/templates/team/payroll_prepare.html:39
+#: app/templates/team/payroll_prepare.html:40
 msgid "إضافة خصم"
 msgstr "कटौती जोड़ें"
 
-#: app/templates/team/payroll_prepare.html:45
-#: app/templates/team/payroll_prepare.html:79
+#: app/templates/team/payroll_prepare.html:46
+#: app/templates/team/payroll_prepare.html:81
 msgid "سبب الخصم"
 msgstr "कटौती का कारण"
 
-#: app/templates/team/payroll_prepare.html:52
+#: app/templates/team/payroll_prepare.html:53
 msgid "الصافي المستحق الحالي:"
 msgstr "वर्तमान निवल राशि:"
 
-#: app/templates/team/payroll_prepare.html:55
+#: app/templates/team/payroll_prepare.html:56
 msgid "حفظ مسودة"
 msgstr "ड्राफ्ट सहेजें"
 
-#: app/templates/team/payroll_prepare.html:56
+#: app/templates/team/payroll_prepare.html:57
 msgid "تأكيد نهائي"
 msgstr "अंतिम पुष्टि"
 
-#: app/templates/team/payroll_prepare.html:119
+#: app/templates/team/payroll_prepare.html:58
+msgid ""
+"\"حفظ مسودة\" يخليك ترجع تعدّل لاحقاً بدون أي أثر مالي. \"تأكيد نهائي\" "
+"يقفل الراتب ويسجّله فعلياً بسجل المالية — ما تقدر تعدّله بعدها."
+msgstr ""
+"\"ड्राफ्ट सेव करें\" आपको बिना किसी वित्तीय प्रभाव के बाद में वापस आकर "
+"संपादित करने देता है। \"अंतिम पुष्टि\" वेतन को लॉक कर देती है और इसे "
+"वास्तव में वित्त लॉग में दर्ज कर देती है — बाद में इसे संपादित नहीं किया "
+"जा सकता।"
+
+#: app/templates/team/payroll_prepare.html:121
 msgid "بدون سبب مذكور"
 msgstr "कोई कारण नहीं बताया गया"
 
-#: app/templates/team/payroll_prepare.html:120
+#: app/templates/team/payroll_prepare.html:122
 msgid "تنبيه: على هذا العامل خصومات بقيمة"
 msgstr "चेतावनी: इस कर्मचारी की कटौतियां कुल"
 
-#: app/templates/team/payroll_prepare.html:121
 #: app/templates/team/payroll_prepare.html:123
+#: app/templates/team/payroll_prepare.html:125
 msgid "تأكيد نهائي — يترحّل مبلغ فعلي لسجل المالية، ما يتعدَّل بعدها. متأكد؟"
 msgstr ""
 "अंतिम पुष्टि — एक वास्तविक राशि वित्तीय रिकॉर्ड में दर्ज होगी और बाद में "

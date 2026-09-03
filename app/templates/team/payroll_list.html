@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -19,7 +20,7 @@
 <div class="card">
   <div class="table-scroll">
   <table class="compact-table">
-    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الراتب الأساسي') }}</th><th>{{ _('الحالة') }}</th><th>{{ _('الصافي') }}</th><th></th></tr>
+    <tr><th>{{ _('الاسم') }}</th><th>{{ _('الراتب الأساسي') }}</th><th>{{ _('الحالة') }} {{ tip(_('"ما تجهّز بعد" = ما فتحت راتبه هذا الشهر بعد. "مسودة" = فتحته وعدّلت عليه بس ما أكدته نهائياً — يقدر يتعدّل. "مؤكَّد" = اتقفل وسُجّل فعلياً بالمالية.')) }}</th><th>{{ _('الصافي') }}</th><th>{{ tip(_('"الوصل الموقَّع" يظهر بس بعد التأكيد — ارفع صورة من الوصل بعد ما العامل يوقّعه فعلياً، دليل استلام رسمي محفوظ بملفه.')) }}</th></tr>
     {% for member, p in rows %}
     <tr>
       <td>{{ member.name }}</td>

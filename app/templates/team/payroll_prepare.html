@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 <div class="card" style="max-width:520px;">
   <h2>💰 {{ _('تجهيز راتب') }} — {{ user.name }}</h2>
@@ -51,9 +52,10 @@
 
     <p style="color:var(--muted); font-size:12px; margin:14px 0 6px;">{{ _('الصافي المستحق الحالي:') }} <b>{{ '%.2f'|format(payroll.net_amount) }}</b></p>
 
-    <div style="display:flex; gap:8px; margin-top:10px;">
+    <div style="display:flex; gap:8px; margin-top:10px; align-items:center;">
       <button class="btn light" type="submit" name="action" value="save">{{ _('حفظ مسودة') }}</button>
       <button class="btn" type="submit" name="action" value="confirm" id="confirmFinalBtn">✅ {{ _('تأكيد نهائي') }}</button>
+      {{ tip(_('"حفظ مسودة" يخليك ترجع تعدّل لاحقاً بدون أي أثر مالي. "تأكيد نهائي" يقفل الراتب ويسجّله فعلياً بسجل المالية — ما تقدر تعدّله بعدها.')) }}
     </div>
     </fieldset>
   </form>
