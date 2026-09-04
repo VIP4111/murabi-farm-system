@@ -115,8 +115,26 @@ def logout():
     # هنا طبقة حماية إضافية فوق تنظيف Flask-Login التلقائي (يغطي أي
     # مفتاح جلسة ثاني)، والرؤوس تحت (`no_cache_response`) تمنع أي طبقة
     # تخزين (متصفح/بروكسي) من عرض نسخة قديمة من شاشة الدخول بعد الخروج.
+    #
+    # إصلاح خطير — بلاغ مستخدم حقيقي: "أسوي خروج من حساب الدكتور ما
+    # يطلع" (يرجعه للرئيسية وهو لسا داخل بالحساب). السبب: تسجيل الدخول
+    # دايماً يستخدم `remember=True` (كوكي "تذكّرني" منفصلة عن كوكي
+    # الجلسة). `logout_user()` بالسطر فوق يعلّم `session['_remember'] =
+    # 'clear'` — هذي هي الإشارة اللي يعتمد عليها Flask-Login بعد
+    # الطلب (`after_request` الخاص فيه) عشان فعلياً يحذف كوكي "تذكّرني"
+    # من المتصفح. لكن `session.clear()` تحت كانت تمسح هذا العلم بالذات
+    # *قبل* ما يوصل دوره — يعني كوكي "تذكّرني" تبقى صالحة بالمتصفح رغم
+    # الخروج! أول طلب بعدها لأي صفحة (بما فيها /login نفسها) يعيد
+    # تسجيل الدخول تلقائياً وبصمت عبر تلك الكوكي — و`login()` نفسها
+    # عندها "لو مسجّل دخول، ودّيه الرئيسية" — فيبان تماماً وكإن "خروج"
+    # ما سوى شي. الحل: نمسح كوكي "تذكّرني" صراحة بأنفسنا هنا (نفس
+    # الاسم والإعدادات اللي يستخدمها Flask-Login) قبل `session.clear()`،
+    # عشان ما نعتمد على ترتيب تنفيذ داخلي حسّاس كذا مرة ثانية.
+    response = _no_cache_response(redirect(url_for("auth.login")))
+    remember_cookie_name = current_app.config.get("REMEMBER_COOKIE_NAME", "remember_token")
+    response.delete_cookie(remember_cookie_name)
     session.clear()
-    return _no_cache_response(redirect(url_for("auth.login")))
+    return response
 
 
 def _no_cache_response(response):
