@@ -65,6 +65,17 @@ def factory_reset(*, current_user: User, app) -> dict:
     counts = _wipe_all_tables()
     db.session.commit()
 
+    # إصلاح — بلاغ مستخدم منفصل عن هذا البند: "بطء ممل في تعديل بيانات
+    # الحيوانات" حُلَّ بتخزين علم على `current_app.extensions` يمنع
+    # إعادة تشغيل seeding الحظائر/السلالات/الألوان الافتراضية أكثر من
+    # مرة وحدة لكل تطبيق شغّال (راجع `_ensure_animal_form_options_seeded`
+    # بـ`app/core/routes.py`). لو ما مسحنا هذا العلم هنا، بعد ضبط
+    # المصنع (كل الجداول تُمسح، بما فيها الحظائر) العلم يبقى محفوظاً من
+    # قبل الحذف، فأول زيارة لشاشة "حيوان جديد" بعدها ما تعيد إنشاء
+    # الحظائر النظامية الأساسية إطلاقاً — تبقى مزرعة بلا حظائر لين
+    # يُعاد تشغيل السيرفر يدوياً.
+    app.extensions.pop("_animal_form_options_seeded", None)
+
     from click.testing import CliRunner
     result = CliRunner().invoke(app.cli, ["seed"], standalone_mode=False)
     if result.exception:

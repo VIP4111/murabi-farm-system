@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-04 13:06+0300\n"
+"POT-Creation-Date: 2026-09-04 14:07+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -18,20 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:136 app/core/routes.py:1071
+#: app/__init__.py:136 app/core/routes.py:1089
 #: app/templates/team/members_list.html:25
 msgid "نشط"
 msgstr "ንቁ"
 
-#: app/__init__.py:137 app/core/routes.py:1071
+#: app/__init__.py:137 app/core/routes.py:1089
 msgid "غير نشط"
 msgstr "ንቁ ያልሆነ"
 
-#: app/__init__.py:138 app/core/routes.py:1071
+#: app/__init__.py:138 app/core/routes.py:1089
 msgid "مباع"
 msgstr "የተሸጠ"
 
-#: app/__init__.py:139 app/core/routes.py:1071
+#: app/__init__.py:139 app/core/routes.py:1089
 msgid "نافق"
 msgstr "የሞተ"
 
@@ -326,7 +326,7 @@ msgid "نقل حظائر جماعي"
 msgstr "የቡድን በረት ማዛወር"
 
 #: app/__init__.py:298 app/core/routes.py:417
-#: app/templates/animals_list.html:79
+#: app/templates/animals_list.html:80
 msgid "عزل جماعي"
 msgstr "የቡድን መገለል"
 
@@ -959,7 +959,7 @@ msgstr "ከ%(d)s ጀምሮ ዘግይቷል"
 msgid "مستحق بتاريخ %(d)s"
 msgstr "በ%(d)s ይጠበቃል"
 
-#: app/core/alerts_service.py:82 app/templates/animals_list.html:93
+#: app/core/alerts_service.py:82 app/templates/animals_list.html:94
 msgid "فترة سحب"
 msgstr "የመውጫ ጊዜ"
 
@@ -1391,55 +1391,60 @@ msgstr "ለ%(barn)s በ%(date)s የታቀደ ክትባት አለ — የክት�
 msgid "افتح جدول التحصينات ←"
 msgstr "የክትባት መርሃ ግብር ይክፈቱ ←"
 
-#: app/core/animal_filters_service.py:181 app/team/routes.py:762
+#: app/core/animal_filters_service.py:185 app/team/routes.py:762
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:15
 msgid "الكل"
 msgstr "ሁሉም"
 
-#: app/core/animal_filters_service.py:182
+#: app/core/animal_filters_service.py:186
 msgid "البهم"
 msgstr "ግልገል በጎች"
 
-#: app/core/animal_filters_service.py:183
+#: app/core/animal_filters_service.py:187
 #: app/templates/smart_sale_report.html:10
 msgid "الذكور"
 msgstr "ወንዶች"
 
-#: app/core/animal_filters_service.py:184
+#: app/core/animal_filters_service.py:188
+#: app/templates/smart_sale_report.html:11
+msgid "الإناث"
+msgstr "ሴቶች"
+
+#: app/core/animal_filters_service.py:189
 msgid "قريب الولادة"
 msgstr "ወሊድ ተቃርቧል"
 
-#: app/core/animal_filters_service.py:185
+#: app/core/animal_filters_service.py:190
 msgid "المقرعات"
 msgstr "የተጋቡ"
 
-#: app/core/animal_filters_service.py:186
+#: app/core/animal_filters_service.py:191
 msgid "دافع"
 msgstr "አምራች"
 
-#: app/core/animal_filters_service.py:187
+#: app/core/animal_filters_service.py:192
 msgid "غير دافع"
 msgstr "የማያመርት"
 
-#: app/core/animal_filters_service.py:188
+#: app/core/animal_filters_service.py:193
 msgid "المرضعات"
 msgstr "የሚያጠቡ"
 
-#: app/core/animal_filters_service.py:189
+#: app/core/animal_filters_service.py:194
 msgid "التسمين"
 msgstr "ማድለብ"
 
-#: app/core/animal_filters_service.py:190
+#: app/core/animal_filters_service.py:195
 msgid "النفوق"
 msgstr "የሞቱ"
 
-#: app/core/animal_filters_service.py:191
+#: app/core/animal_filters_service.py:196
 msgid "جاهزة للتقريع"
 msgstr "ለማዳቀል ዝግጁ"
 
-#: app/core/animal_filters_service.py:192
+#: app/core/animal_filters_service.py:197
 msgid "النعام"
 msgstr "ሰጎኖች"
 
@@ -2368,43 +2373,43 @@ msgstr "አዲስ የካታሎግ አገናኝ ተፈጥሯል — የድሮው 
 msgid "تم حفظ علامات البيع"
 msgstr "የሽያጭ ምልክቶች ተቀምጠዋል"
 
-#: app/core/routes.py:409 app/templates/animals_list.html:68
+#: app/core/routes.py:409 app/templates/animals_list.html:69
 msgid "وزن جماعي"
 msgstr "የቡድን ክብደት"
 
-#: app/core/routes.py:410 app/templates/animals_list.html:77
+#: app/core/routes.py:410 app/templates/animals_list.html:78
 msgid "تحصين جماعي"
 msgstr "የቡድን ክትባት"
 
-#: app/core/routes.py:411 app/templates/animals_list.html:69
+#: app/core/routes.py:411 app/templates/animals_list.html:70
 msgid "ملاحظة جماعية"
 msgstr "የቡድን ማስታወሻ"
 
-#: app/core/routes.py:412 app/templates/animals_list.html:70
+#: app/core/routes.py:412 app/templates/animals_list.html:71
 msgid "نقل حظيرة جماعي"
 msgstr "የቡድን በረት ማዛወር"
 
-#: app/core/routes.py:413 app/templates/animals_list.html:71
+#: app/core/routes.py:413 app/templates/animals_list.html:72
 msgid "تحديد الغرض جماعياً (تربية/تسمين/بيع)"
 msgstr "የቡድን ዓላማ መወሰን (ማራባት/ማድለብ/ሽያጭ)"
 
-#: app/core/routes.py:414 app/templates/animals_list.html:72
+#: app/core/routes.py:414 app/templates/animals_list.html:73
 msgid "بيع جماعي"
 msgstr "የቡድን ሽያጭ"
 
-#: app/core/routes.py:415 app/templates/animals_list.html:73
+#: app/core/routes.py:415 app/templates/animals_list.html:74
 msgid "تسجيل نفوق جماعي"
 msgstr "የቡድን ሞት መመዝገብ"
 
-#: app/core/routes.py:416 app/templates/animals_list.html:78
+#: app/core/routes.py:416 app/templates/animals_list.html:79
 msgid "علاج/مرض جماعي"
 msgstr "የቡድን ሕክምና/በሽታ"
 
-#: app/core/routes.py:418 app/templates/animals_list.html:83
+#: app/core/routes.py:418 app/templates/animals_list.html:84
 msgid "فحص سونار جماعي"
 msgstr "የቡድን ሶናር ምርመራ"
 
-#: app/core/routes.py:419 app/templates/animals_list.html:80
+#: app/core/routes.py:419 app/templates/animals_list.html:81
 msgid "خطة علاج مخطَّط (بانتظار تأكيد التنفيذ)"
 msgstr "የታቀደ የሕክምና ዕቅድ (የማስፈጸም ማረጋገጫ በመጠበቅ ላይ)"
 
@@ -2505,24 +2510,24 @@ msgstr "አዲስ ስብስብ ግዢ፡ ከ%(total)s ውስጥ %(done)s በተ�
 msgid "%(no)s: %(msg)s"
 msgstr "%(no)s: %(msg)s"
 
-#: app/core/routes.py:814
+#: app/core/routes.py:837
 msgid "اسم الفصيلة مطلوب"
 msgstr "የፍጥረት ስም ያስፈልጋል"
 
-#: app/core/routes.py:817 app/core/routes.py:838
+#: app/core/routes.py:840 app/core/routes.py:861
 #, python-format
 msgid "\"%(value)s\" موجودة بالقائمة أصلاً"
 msgstr "\"%(value)s\" አስቀድሞ በዝርዝሩ ውስጥ አለ"
 
-#: app/core/routes.py:821
+#: app/core/routes.py:844
 msgid "تمت إضافة الفصيلة"
 msgstr "ፍጥረቱ ታክሏል"
 
-#: app/core/routes.py:823 app/templates/animal_form.html:61
+#: app/core/routes.py:846 app/templates/animal_form.html:61
 msgid "إضافة فصيلة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
-#: app/core/routes.py:825
+#: app/core/routes.py:848
 msgid ""
 "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل"
 " بأمان مثل النعام لين يُبنى لها نظام مخصّص."
@@ -2530,141 +2535,141 @@ msgstr ""
 "አዲስ ዝርያ በራስ-ሰር ወደ ምርት ዑደት ሞተር (ማዳቀል/እርግዝና/ጡት ማስጣት) አይገባም — ለእሱ ልዩ ስርዓት "
 "እስኪገነባ ድረስ እንደ ሰጎን በደህንነት ይያዛል።"
 
-#: app/core/routes.py:835
+#: app/core/routes.py:858
 msgid "اسم السلالة مطلوب"
 msgstr "የዝርያ ስም ያስፈልጋል"
 
-#: app/core/routes.py:842
+#: app/core/routes.py:865
 msgid "تمت إضافة السلالة"
 msgstr "ዝርያው ታክሏል"
 
-#: app/core/routes.py:844 app/templates/animal_form.html:71
+#: app/core/routes.py:867 app/templates/animal_form.html:71
 msgid "إضافة سلالة جديدة"
 msgstr "አዲስ ዝርያ ያክሉ"
 
-#: app/core/routes.py:867
+#: app/core/routes.py:890
 msgid "تم حفظ ملاحظات السلالة"
 msgstr "የዝርያ ማስታወሻዎች ተቀምጠዋል"
 
-#: app/core/routes.py:879
+#: app/core/routes.py:902
 msgid "اسم اللون مطلوب"
 msgstr "የቀለም ስም ያስፈልጋል"
 
-#: app/core/routes.py:882
+#: app/core/routes.py:905
 #, python-format
 msgid "\"%(value)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(value)s\" አስቀድሞ በዝርዝሩ ውስጥ አለ"
 
-#: app/core/routes.py:886
+#: app/core/routes.py:909
 msgid "تمت إضافة اللون"
 msgstr "ቀለሙ ታክሏል"
 
-#: app/core/routes.py:888 app/templates/animal_form.html:31
+#: app/core/routes.py:911 app/templates/animal_form.html:31
 msgid "إضافة لون جديد"
 msgstr "አዲስ ቀለም ያክሉ"
 
-#: app/core/routes.py:914 app/core/routes.py:1026
+#: app/core/routes.py:937 app/core/routes.py:1046
 msgid "الحظيرة مطلوبة"
 msgstr "በረቱ ያስፈልጋል"
 
-#: app/core/routes.py:917 app/core/routes.py:1029
+#: app/core/routes.py:940 app/core/routes.py:1049
 msgid "اللون مطلوب"
 msgstr "ቀለሙ ያስፈልጋል"
 
-#: app/core/routes.py:947 app/core/routes.py:1053
+#: app/core/routes.py:970 app/core/routes.py:1073
 #, python-format
 msgid "رقم الحيوان \"%(no)s\" مستخدم من قبل"
 msgstr "የእንስሳ ቁጥር \"%(no)s\" አስቀድሞ ጥቅም ላይ ውሏል"
 
-#: app/core/routes.py:958
+#: app/core/routes.py:981
 msgid "تمت إضافة الحيوان"
 msgstr "እንስሳው ታክሏል"
 
-#: app/core/routes.py:978
+#: app/core/routes.py:1001
 #, python-format
 msgid "🍼 ولادة جديدة — %(no)s"
 msgstr "🍼 አዲስ ልደት — %(no)s"
 
-#: app/core/routes.py:980
+#: app/core/routes.py:1003
 #, python-format
 msgid "(الأم %(no)s)"
 msgstr "(እናት %(no)s)"
 
-#: app/core/routes.py:1023
+#: app/core/routes.py:1043
 msgid "رقم الحيوان مطلوب"
 msgstr "የእንስሳ ቁጥር ያስፈልጋል"
 
-#: app/core/routes.py:1055
+#: app/core/routes.py:1075
 msgid "تم تحديث بيانات الحيوان"
 msgstr "የእንስሳው መረጃ ተዘምኗል"
 
-#: app/core/routes.py:1069 app/models/animal_options.py:30
+#: app/core/routes.py:1087 app/models/animal_options.py:30
 #: app/templates/animals_bulk_purchase.html:22
 #: app/templates/team/report_detail.html:17
 msgid "حلال (ضأن/ماعز)"
 msgstr "እንስሳት (በግ/ፍየል)"
 
-#: app/core/routes.py:1069 app/models/animal_options.py:31
+#: app/core/routes.py:1087 app/models/animal_options.py:31
 #: app/templates/animal_detail.html:104
 #: app/templates/animals_bulk_purchase.html:23
 #: app/templates/team/report_detail.html:17
 msgid "نعام"
 msgstr "ሰጎን"
 
-#: app/core/routes.py:1080 app/templates/health/dashboard.html:29
+#: app/core/routes.py:1098 app/templates/health/dashboard.html:29
 #, python-format
 msgid "%(n)s يوم"
 msgstr "%(n)s ቀናት"
 
-#: app/core/routes.py:1082
+#: app/core/routes.py:1100
 #, python-format
 msgid "%(n)s شهر"
 msgstr "%(n)s ወር"
 
-#: app/core/routes.py:1083
+#: app/core/routes.py:1101
 #, python-format
 msgid "%(n)s سنة"
 msgstr "%(n)s ዓመት"
 
-#: app/core/routes.py:1110 app/templates/animal_detail.html:26
+#: app/core/routes.py:1128 app/templates/animal_detail.html:26
 #: app/templates/animals_bulk_purchase.html:29
 msgid "بدون حظيرة"
 msgstr "ያለ በረት"
 
-#: app/core/routes.py:1194
+#: app/core/routes.py:1212
 msgid ""
 "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر "
 "البنود يدوياً بالأسفل."
 msgstr "ብልህ ጥቆማ አሁን አይገኝም (GEMINI_API_KEY መንቃቱን ያረጋግጡ) — ከታች ያሉትን ንጥሎች በእጅ ይምረጡ።"
 
-#: app/core/routes.py:1223
+#: app/core/routes.py:1241
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr "ለ%(no)s ራስ %(n)s የፍተሻ ተግባር(ተግባራት) ተመድቧል/ተመድበዋል።"
 
-#: app/core/routes.py:1263
+#: app/core/routes.py:1281
 msgid "تم تسجيل الوزن"
 msgstr "ክብደቱ ተመዝግቧል"
 
-#: app/core/routes.py:1290
+#: app/core/routes.py:1308
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr "የወሊድ ማረጋገጫ ዝርዝር ተቀምጧል"
 
-#: app/core/routes.py:1310
+#: app/core/routes.py:1328
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr "%(no)s ወደ መታቀብ ተዛውሯል"
 
-#: app/core/routes.py:1346
+#: app/core/routes.py:1364
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s ከመታቀብ ወጥቷል"
 
-#: app/core/routes.py:1370
+#: app/core/routes.py:1388
 msgid "تم تسجيل الحليب"
 msgstr "ወተቱ ተመዝግቧል"
 
-#: app/core/routes.py:1380
+#: app/core/routes.py:1398
 #, python-format
 msgid ""
 "تنبيه: %(no)s تحت فترة تحريم حليب حتى %(until)s — الحليب المسجَّل الآن قد"
@@ -2673,15 +2678,15 @@ msgstr ""
 "ማንቂያ: %(no)s እስከ %(until)s ድረስ በወተት እገዳ ጊዜ ውስጥ ነው — አሁን የተመዘገበው ወተት ለመሸጥ "
 "ወይም ለመጠቀም ደህንነቱ ያልተጠበቀ ሊሆን ይችላል።"
 
-#: app/core/routes.py:1396
+#: app/core/routes.py:1414
 msgid "تمت إضافة الملاحظة"
 msgstr "ማስታወሻው ታክሏል"
 
-#: app/core/routes.py:1434
+#: app/core/routes.py:1452
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr "ሰጎኖች ወደ ምርት ዑደት አይገቡም — የሰጎን መዝገብ ይመልከቱ (እንቁላል/መፈልፈል)።"
 
-#: app/core/routes.py:1437
+#: app/core/routes.py:1455
 msgid ""
 "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا"
 " يوجد نظام دورة مخصّص لها بعد."
@@ -2689,81 +2694,81 @@ msgstr ""
 "ይህ ፍጥረት ወደ ምርት ዑደት ሞተር አይገባም (ለከብት ባዮሎጂ ብቻ የተገነባ) — እስካሁን ለእሱ የተለየ የዑደት "
 "ስርዓት የለም።"
 
-#: app/core/routes.py:1481
+#: app/core/routes.py:1499
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "ለዚህ እንስሳ የተመዘገበ ሽያጭ የለም።"
 
-#: app/core/routes.py:1484
+#: app/core/routes.py:1502
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "ይህ ሽያጭ ያለ ደረሰኝ ተመዝግቧል።"
 
-#: app/core/routes.py:1506
+#: app/core/routes.py:1524
 msgid "تم تحديث بيانات التخطيط"
 msgstr "የእቅድ መረጃ ተዘምኗል"
 
-#: app/core/routes.py:1530
+#: app/core/routes.py:1548
 msgid "تم تسجيل البيع"
 msgstr "ሽያጩ ተመዝግቧል"
 
-#: app/core/routes.py:1544
+#: app/core/routes.py:1562
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 እንስሳ ተሽጧል — %(no)s በ%(price)s"
 
-#: app/core/routes.py:1562
+#: app/core/routes.py:1580
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "ወደ ገበያ የመውጣት መዝገብ ተመዝግቧል"
 
-#: app/core/routes.py:1574
+#: app/core/routes.py:1592
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "ያለ ሽያጭ ወደ እርሻ የመመለስ መዝገብ ተመዝግቧል"
 
-#: app/core/routes.py:1589
+#: app/core/routes.py:1607
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "ሞቱ ተመዝግቧል (የዑደት ማጠናቀቅ ሁኔታ ሳይኖር)"
 
-#: app/core/routes.py:1605
+#: app/core/routes.py:1623
 msgid "تم أرشفة الحيوان"
 msgstr "እንስሳው ተመዝግቧል"
 
-#: app/core/routes.py:1653 app/core/routes.py:1688
+#: app/core/routes.py:1671 app/core/routes.py:1706
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr "የበረት ቁጥር \"%(no)s\" ቀደም ሲል ጥቅም ላይ ውሏል"
 
-#: app/core/routes.py:1659
+#: app/core/routes.py:1677
 msgid "تمت إضافة الحظيرة"
 msgstr "በረቱ ታክሏል"
 
-#: app/core/routes.py:1694
+#: app/core/routes.py:1712
 msgid "تم تحديث الحظيرة"
 msgstr "በረቱ ተዘምኗል"
 
-#: app/core/routes.py:1774
+#: app/core/routes.py:1792
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "የጊዜ ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1788
+#: app/core/routes.py:1806
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "የመቀበያ መድሃኒት ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1816
+#: app/core/routes.py:1834
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "የማረጋገጫ ሐረጉን በትክክል መጻፍ አለብዎት: \"%(phrase)s\""
 
-#: app/core/routes.py:1819
+#: app/core/routes.py:1837
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "የይለፍ ቃል የተሳሳተ ነው — የፋብሪካ ዳግም ማስጀመር አልተፈጸመም።"
 
-#: app/core/routes.py:1830
+#: app/core/routes.py:1848
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
 "%(err)s"
 msgstr "የፋብሪካ ዳግም ማስጀመር አልተቻለም፣ ምንም አልተሰረዘም (በራስ-ሰር ተመልሷል)። ስህተት፡ %(err)s"
 
-#: app/core/routes.py:1833
+#: app/core/routes.py:1851
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2771,55 +2776,55 @@ msgstr ""
 "የፋብሪካ ዳግም ማስጀመር ተሳክቷል — ሁሉም የእርሻ መረጃ ተሰርዟል። በተመሳሳይ ስልክ ቁጥር እና የይለፍ ቃል "
 "እንደገና ይግቡ።"
 
-#: app/core/routes.py:1852
+#: app/core/routes.py:1870
 msgid "تم حفظ بيانات المزرعة"
 msgstr "የእርሻው መረጃ ተቀምጧል"
 
-#: app/core/routes.py:1869
+#: app/core/routes.py:1887
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "የሚና ስም \"%(slug)s\" ቀደም ሲል ጥቅም ላይ ውሏል"
 
-#: app/core/routes.py:1874
+#: app/core/routes.py:1892
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "የስራ መደቡ ተፈጥሯል — አሁን ፈቃዶቹን ይግለጹ"
 
-#: app/core/routes.py:1886
+#: app/core/routes.py:1904
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "የባለቤቱን ሚና ፈቃዶች ማስተካከል አይችሉም — ሁልጊዜ ሁሉንም ፈቃዶች አለው"
 
-#: app/core/routes.py:1904
+#: app/core/routes.py:1922
 msgid "تم تحديث صلاحيات الدور"
 msgstr "የሚና ፈቃዶች ተዘምነዋል"
 
-#: app/core/routes.py:1931
+#: app/core/routes.py:1949
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ነቅቷል"
 
-#: app/core/routes.py:1931
+#: app/core/routes.py:1949
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
 
-#: app/core/routes.py:1957
+#: app/core/routes.py:1975
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
 
-#: app/core/routes.py:2057
+#: app/core/routes.py:2075
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2065
+#: app/core/routes.py:2083
 msgid "تم حذف بيانات المحاكاة."
 msgstr "የማስመሰያ መረጃ ተሰርዟል።"
 
-#: app/core/routes.py:2087
+#: app/core/routes.py:2105
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2108
+#: app/core/routes.py:2126
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -4249,7 +4254,7 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 
 #: app/reports/report_service.py:166 app/reports/report_service.py:211
 #: app/templates/animal_form.html:13 app/templates/animal_form.html:18
-#: app/templates/animals_list.html:93 app/templates/barn_form.html:7
+#: app/templates/animals_list.html:94 app/templates/barn_form.html:7
 #: app/templates/barns_list.html:11 app/templates/batches/batch_detail.html:56
 #: app/templates/bulk_action_form.html:20
 #: app/templates/bulk_action_form.html:104
@@ -5127,7 +5132,7 @@ msgstr "ይህን ግቤት ሳይሰቀል በቋሚነት ችላ ይባል?"
 msgid "تنبيهاتي"
 msgstr "ማንቂያዎቼ"
 
-#: app/templates/alerts_list.html:6 app/templates/animals_list.html:93
+#: app/templates/alerts_list.html:6 app/templates/animals_list.html:94
 #: app/templates/assistant/chat.html:81
 msgid "التنبيهات"
 msgstr "ማንቂያዎች"
@@ -5190,13 +5195,13 @@ msgstr "አሁን ምንም ማንቂያ የለም — ሁሉም ነገር ደ�
 msgid "تفاصيل الرأس"
 msgstr "የእንስሳ ዝርዝሮች"
 
-#: app/templates/animal_detail.html:5 app/templates/animals_list.html:95
+#: app/templates/animal_detail.html:5 app/templates/animals_list.html:96
 msgid "مولود بالمزرعة"
 msgstr "በእርሻው የተወለደ"
 
 #: app/templates/animal_detail.html:5 app/templates/animal_detail.html:495
 #: app/templates/animal_form.html:76 app/templates/animal_form.html:84
-#: app/templates/animal_form.html:90 app/templates/animals_list.html:95
+#: app/templates/animal_form.html:90 app/templates/animals_list.html:96
 #: app/templates/batches/batch_detail.html:5
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:5
@@ -5206,7 +5211,7 @@ msgstr "በእርሻው የተወለደ"
 msgid "شراء"
 msgstr "ግዢ"
 
-#: app/templates/animal_detail.html:5 app/templates/animals_list.html:95
+#: app/templates/animal_detail.html:5 app/templates/animals_list.html:96
 #: app/templates/batches/batch_detail.html:5
 #: app/templates/batches/batch_form.html:3
 #: app/templates/batches/batches_list.html:5
@@ -5214,7 +5219,7 @@ msgid "هدية/دعم"
 msgstr "ስጦታ/ድጋፍ"
 
 #: app/templates/animal_detail.html:5 app/templates/animal_form.html:76
-#: app/templates/animal_form.html:84 app/templates/animals_list.html:95
+#: app/templates/animal_form.html:84 app/templates/animals_list.html:96
 msgid "رصيد افتتاحي"
 msgstr "የመክፈቻ ቀሪ ሂሳብ"
 
@@ -5437,7 +5442,7 @@ msgid "تاريخ الدخول للمزرعة"
 msgstr "የእርሻ መግቢያ ቀን"
 
 #: app/templates/animal_detail.html:140 app/templates/animal_form.html:123
-#: app/templates/animals_list.html:93
+#: app/templates/animals_list.html:94
 #: app/templates/equipment/assets_list.html:15
 #: app/templates/feed/barn_plan_form.html:8
 #: app/templates/feed/barn_plans_list.html:10
@@ -5672,7 +5677,7 @@ msgstr "ክብደት"
 
 #: app/templates/animal_detail.html:272 app/templates/animal_detail.html:318
 #: app/templates/animal_detail.html:341 app/templates/animal_workflow.html:155
-#: app/templates/animals_list.html:93 app/templates/assistant/chat.html:221
+#: app/templates/animals_list.html:94 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:71
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
 #: app/templates/finance/lots_list.html:18
@@ -6077,7 +6082,7 @@ msgid "السلالة"
 msgstr "ዝርያ (ንዑስ)"
 
 #: app/templates/animal_form.html:75 app/templates/animal_form.html:88
-#: app/templates/animals_list.html:93 app/templates/batches/batch_form.html:11
+#: app/templates/animals_list.html:94 app/templates/batches/batch_form.html:11
 #: app/templates/batches/batches_list.html:15
 msgid "المصدر"
 msgstr "ምንጭ"
@@ -6204,7 +6209,7 @@ msgid "تفاصيل إضافية (اختياري)"
 msgstr "ተጨማሪ ዝርዝሮች (አማራጭ)"
 
 #: app/templates/animal_form.html:170 app/templates/animal_option_form.html:8
-#: app/templates/animals_list.html:93 app/templates/barn_form.html:8
+#: app/templates/animals_list.html:94 app/templates/barn_form.html:8
 #: app/templates/barns_list.html:11 app/templates/bulk_action_form.html:20
 #: app/templates/bulk_action_form.html:104
 #: app/templates/bulk_action_form.html:251
@@ -6594,7 +6599,7 @@ msgstr ""
 msgid "الحدث"
 msgstr "ክስተት"
 
-#: app/templates/animal_workflow.html:155 app/templates/animals_list.html:93
+#: app/templates/animal_workflow.html:155 app/templates/animals_list.html:94
 #: app/templates/batches/batches_list.html:15
 msgid "المرحلة"
 msgstr "ደረጃ"
@@ -6691,34 +6696,38 @@ msgid "الذكور: كل الرؤوس النشطة بجنس ذكر."
 msgstr "ወንዶች: ወንድ ጾታ ያላቸው ሁሉም ንቁ እንስሳት።"
 
 #: app/templates/animals_list.html:43
+msgid "الإناث: كل الرؤوس النشطة بجنس أنثى."
+msgstr "ሴቶች፦ ሴት ጾታ ያላቸው ንቁ ራሶች ሁሉ።"
+
+#: app/templates/animals_list.html:44
 msgid "قريب الولادة: حمل مؤكد وتاريخ الولادة المتوقع خلال 30 يوم القادمة."
 msgstr "ወሊድ ተቃርቧል: የተረጋገጠ እርግዝና እና በሚቀጥሉት 30 ቀናት ውስጥ የሚጠበቅ የልደት ቀን።"
 
-#: app/templates/animals_list.html:44
+#: app/templates/animals_list.html:45
 msgid "المقرعات: عندها تقريع مسجّل خلال آخر دورة حمل (بغض النظر عن تأكيد الحمل)."
 msgstr "የተጋቡ: በመጨረሻው የእርግዝና ዑደት ውስጥ የተመዘገበ ማዳቀል (የእርግዝና ማረጋገጫ ሳይለይ)።"
 
-#: app/templates/animals_list.html:45
+#: app/templates/animals_list.html:46
 msgid "دافع: أنثى بعمر سنة فأكثر وعندها ولادة واحدة على الأقل خلال آخر 400 يوم."
 msgstr "አምራች: አንድ ዓመት ወይም ከዚያ በላይ ዕድሜ ያላት እና ባለፉት 400 ቀናት ውስጥ ቢያንስ አንድ ልደት ያላት ሴት።"
 
-#: app/templates/animals_list.html:46
+#: app/templates/animals_list.html:47
 msgid "غير دافع: أنثى بعمر سنة فأكثر بدون أي ولادة خلال آخر 400 يوم."
 msgstr "የማያመርት: አንድ ዓመት ወይም ከዚያ በላይ ዕድሜ ያላት ባለፉት 400 ቀናት ውስጥ ምንም ልደት ያልነበራት ሴት።"
 
-#: app/templates/animals_list.html:47
+#: app/templates/animals_list.html:48
 msgid "المرضعات: عندها مولود عمره أقل من 90 يوم."
 msgstr "የሚያጠቡ: ከ90 ቀናት በታች ዕድሜ ያለው ግልገል አላቸው።"
 
-#: app/templates/animals_list.html:48
+#: app/templates/animals_list.html:49
 msgid "التسمين: الغرض المسجّل للحيوان = تسمين."
 msgstr "ማድለብ: የእንስሳው የተመዘገበ ዓላማ = ማድለብ።"
 
-#: app/templates/animals_list.html:49
+#: app/templates/animals_list.html:50
 msgid "النفوق: كل الرؤوس بحالة نافق."
 msgstr "የሞቱ: በሞት ሁኔታ ውስጥ ያሉ ሁሉም እንስሳት።"
 
-#: app/templates/animals_list.html:50
+#: app/templates/animals_list.html:51
 msgid ""
 "جاهزة للتقريع: بلغت أقل عمر تقريع، مو حامل، ما عندها تقريع نشط حالياً، "
 "عدّت فترة الراحة بعد آخر ولادة، وبدون أمراض مفتوحة (القيم من الإعدادات)."
@@ -6726,7 +6735,7 @@ msgstr ""
 "ለማዳቀል ዝግጁ: ዝቅተኛውን የማዳቀያ ዕድሜ ደርሷል፣ ነፍሰ ጡር አይደለም፣ በአሁኑ ጊዜ ንቁ ማዳቀል የለውም፣ "
 "ከመጨረሻው ልደት በኋላ የዕረፍት ጊዜውን አልፏል፣ እና ክፍት በሽታዎች የሉትም (ዋጋዎቹ ከቅንብሮች)።"
 
-#: app/templates/animals_list.html:51
+#: app/templates/animals_list.html:52
 msgid ""
 "النعام: كل الرؤوس النشطة من فصيلة النعام (بدون دورة إنتاج المجترات) — "
 "راجع سجل البيض والتفقيس من القائمة الجانبية."
@@ -6734,23 +6743,23 @@ msgstr ""
 "ሰጎኖች: ከሰጎን ዝርያ ሁሉም ንቁ እንስሳት (የአኝኪ ምርት ዑደት የላቸውም) — የእንቁላል እና የመፈልፈል መዝገብን"
 " ከጎን ምናሌ ይመልከቱ።"
 
-#: app/templates/animals_list.html:53
+#: app/templates/animals_list.html:54
 msgid "هذا تعريف اجتهادي قابل للتعديل — كلّمني لو عندك تعريف مختلف."
 msgstr "ይህ ሊለወጥ የሚችል የሥራ ትርጉም ነው — የተለየ ትርጉም ካለዎት ይንገሩኝ።"
 
-#: app/templates/animals_list.html:65
+#: app/templates/animals_list.html:66
 msgid "محدّد"
 msgstr "የተመረጠ"
 
-#: app/templates/animals_list.html:74
+#: app/templates/animals_list.html:75
 msgid "استقبال دفعة جديدة"
 msgstr "አዲስ ጭነት ተቀበል"
 
-#: app/templates/animals_list.html:86
+#: app/templates/animals_list.html:87
 msgid "متابعة الإجراء الجماعي"
 msgstr "የቡድን እርምጃን ቀጥል"
 
-#: app/templates/animals_list.html:93
+#: app/templates/animals_list.html:94
 msgid ""
 "مرحلة الرأس الحالية بدورة الإنتاج (عزل، جاهزة للتقريع، حامل...) — اضغط "
 "عليها لعرض/تعديل مراحل دورة الحياة كاملة."
@@ -6758,7 +6767,7 @@ msgstr ""
 "የራሱ በምርት ዑደት ውስጥ ያለው የአሁኑ ደረጃ (ማግለያ፣ ለማዳቀል ዝግጁ፣ እርጉዝ...) — ሙሉውን የህይወት ዑደት"
 " ደረጃዎች ለማየት/ለማርትዕ ይጫኑት።"
 
-#: app/templates/animals_list.html:93
+#: app/templates/animals_list.html:94
 msgid ""
 "لو الرأس تحت فترة سحب دواء، ما يُسمح ببيعها أو ذبحها لحد ما تنتهي المدة —"
 " النظام يمنع البيع تلقائياً حماية للمستهلك."
@@ -6766,40 +6775,40 @@ msgstr ""
 "በመድሃኒት መውጫ ጊዜ ውስጥ እንስሳ መሸጥ የተመዘገበ ምክንያት ይፈልጋል — ስርዓቱ ተጠቃሚውን ለመጠበቅ በዚህ ሁኔታ"
 " መደበኛ ሽያጭን በራስ-ሰር ይከለክላል።"
 
-#: app/templates/animals_list.html:104
+#: app/templates/animals_list.html:105
 msgid "نعام — بدون دورة"
 msgstr "ሰጎን — ያለ ዑደት"
 
-#: app/templates/animals_list.html:108
+#: app/templates/animals_list.html:109
 msgid "ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس"
 msgstr "ሽያጭ/ማረድ የተከለከለ — በራስ-ሰር ይነሳል — ለእንስሳ ዝርዝሮች ይጫኑ"
 
-#: app/templates/animals_list.html:108
+#: app/templates/animals_list.html:109
 msgid "حتى"
 msgstr "እስከ"
 
-#: app/templates/animals_list.html:108
+#: app/templates/animals_list.html:109
 #, python-format
 msgid "باقي %(n)s يوم"
 msgstr "%(n)s ቀናት ቀርተዋል"
 
-#: app/templates/animals_list.html:109
+#: app/templates/animals_list.html:110
 msgid "اضغط لتفاصيل الرأس"
 msgstr "ለእንስሳ ዝርዝሮች ይጫኑ"
 
-#: app/templates/animals_list.html:109
+#: app/templates/animals_list.html:110
 msgid "آمن"
 msgstr "ደህንነቱ የተጠበቀ"
 
-#: app/templates/animals_list.html:114
+#: app/templates/animals_list.html:115
 msgid "اضغط لعرض كل تنبيهات هذا الرأس"
 msgstr "የዚህን እንስሳ ሁሉንም ማንቂያዎች ለማየት ንኩ"
 
-#: app/templates/animals_list.html:119
+#: app/templates/animals_list.html:120
 msgid "لا يوجد حيوانات ضمن هذا الفلتر حالياً."
 msgstr "በዚህ ማጣሪያ ውስጥ በአሁኑ ጊዜ እንስሳት የሉም።"
 
-#: app/templates/animals_list.html:119
+#: app/templates/animals_list.html:120
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ እንስሳ የለም።"
 
@@ -8801,10 +8810,6 @@ msgid ""
 msgstr ""
 "ዕድሜ ከሁሉም በላይ አስፈላጊ ነው — በ6 ወር ዕድሜ መደበኛ ሽያጭ፣ የመስዋዕት ሽያጭ ደግሞ ከ6 ወር በላይ ዕድሜ "
 "ይፈልጋል (ሸሪዓዊ የጃዛህ ዕድሜ)፣ ክብደት ሁለተኛ ደረጃ ነው (ከቆመ/ከቀነሰ፣ ያለ ጥቅም መኖ ይጠቀማል)።"
-
-#: app/templates/smart_sale_report.html:11
-msgid "الإناث"
-msgstr "ሴቶች"
 
 #: app/templates/smart_sale_report.html:11
 msgid ""

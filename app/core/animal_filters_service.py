@@ -67,6 +67,10 @@ def _males():
     return _active_query().filter_by(gender="ذكر").order_by(Animal.animal_no).all()
 
 
+def _females():
+    return _active_query().filter_by(gender="أنثى").order_by(Animal.animal_no).all()
+
+
 def _fattening():
     return _active_query().filter_by(purpose="تسمين").order_by(Animal.animal_no).all()
 
@@ -181,6 +185,7 @@ FILTERS = {
     "all": (_l("الكل"), lambda: _active_query().order_by(Animal.animal_no).all()),
     "lambs": (_l("البهم"), _lambs),
     "males": (_l("الذكور"), _males),
+    "females": (_l("الإناث"), _females),
     "near_birth": (_l("قريب الولادة"), _near_birth),
     "mated": (_l("المقرعات"), _mated),
     "productive": (_l("دافع"), lambda: _productive_split()[0]),

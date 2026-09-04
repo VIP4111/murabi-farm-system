@@ -800,6 +800,29 @@ def _seed_system_barns() -> None:
         db.session.commit()
 
 
+# بند إصلاح أداء — بلاغ مستخدم حقيقي: "بطء ممل في تعديل بيانات
+# الحيوانات". `_seed_system_barns`/`SpeciesType.seed_defaults`/
+# `Breed.seed_defaults`/`AnimalColor.seed_defaults` كانت تُستدعى مباشرة
+# بمسارات `animals_new`/`animals_edit` — كل واحدة تسوي عدة استعلامات
+# idempotent-check تسلسلية للقاعدة، يعني ١٠+ رحلة ذهاب وإياب على كل
+# فتحة صفحة تعديل رأس، رغم إنها عملياً ما تحتاج تضيف أي شي بعد أول
+# تشغيل. الحل: علم على تطبيق Flask نفسه (`current_app`، مو متغيّر عالمي
+# بذاكرة العملية) — أول طلب بعد إقلاع كل تطبيق يسوي الفحص الحقيقي مرة
+# وحدة، وأي طلب بعده لنفس التطبيق يتخطاه فوراً بدون أي استعلام. علم
+# بمستوى التطبيق (مو العملية) عمداً — عشان كل اختبار آلي يبني تطبيق
+# وقاعدة بيانات جديدين تماماً (`tests/conftest.py`)، فالعلم يتصفّر معه
+# طبيعياً بدل ما يتسرّب بين الاختبارات لو كان متغيّراً عالمياً ثابتاً.
+def _ensure_animal_form_options_seeded() -> None:
+    from flask import current_app
+    if current_app.extensions.get("_animal_form_options_seeded"):
+        return
+    _seed_system_barns()
+    SpeciesType.seed_defaults()
+    Breed.seed_defaults()
+    AnimalColor.seed_defaults()
+    current_app.extensions["_animal_form_options_seeded"] = True
+
+
 @core_bp.route("/animals/species-types/new", methods=["GET", "POST"])
 @login_required
 @require_permission("animals.manage")
@@ -983,10 +1006,7 @@ def animals_new():
                         telegram_service.notify_user(u, text)
         return redirect(url_for("core.animals_list"))
 
-    _seed_system_barns()
-    SpeciesType.seed_defaults()
-    Breed.seed_defaults()
-    AnimalColor.seed_defaults()
+    _ensure_animal_form_options_seeded()
     return render_template(
         "animal_form.html",
         barns=Barn.query.order_by(Barn.barn_name).all(),
@@ -1055,9 +1075,7 @@ def animals_edit(animal_id):
         flash(_("تم تحديث بيانات الحيوان"), "success")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
 
-    _seed_system_barns()
-    Breed.seed_defaults()
-    AnimalColor.seed_defaults()
+    _ensure_animal_form_options_seeded()
     return render_template(
         "animal_form.html", animal=animal,
         barns=Barn.query.order_by(Barn.barn_name).all(),
