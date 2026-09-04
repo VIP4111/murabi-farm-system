@@ -43,4 +43,4 @@ def test_animal_form_options_flag_is_per_app_not_global(app):
     بيانات جديدة تماماً) ما يتأثر بعلم تطبيق سابق."""
     with app.app_context():
         from flask import current_app
-        assert current_app.extensions.get("_animal_form_options_seeded") in (None, False)
+        assert current_app.extensions.get("_run_once_animal_form_options_seeded") in (None, False)

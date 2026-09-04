@@ -10,7 +10,7 @@ from app.team import team_bp
 from app.team import report_service as svc
 from app.team import task_service as tsvc
 from app.auth.decorators import require_permission, rate_limited
-from app.extensions import db
+from app.extensions import db, run_once_per_app
 from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate, ReportType
 
 
@@ -584,7 +584,7 @@ def reports_new():
     if barn_ids is not None:
         animals_query = animals_query.filter(Animal.barn_id.in_(barn_ids))
         barns_query = barns_query.filter(Barn.id.in_(barn_ids))
-    ReportType.seed_defaults()
+    run_once_per_app("report_type_defaults_seeded", ReportType.seed_defaults)
     return render_template(
         "team/report_form.html",
         animals=animals_query.order_by(Animal.animal_no).all(),

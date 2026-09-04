@@ -66,15 +66,17 @@ def factory_reset(*, current_user: User, app) -> dict:
     db.session.commit()
 
     # إصلاح — بلاغ مستخدم منفصل عن هذا البند: "بطء ممل في تعديل بيانات
-    # الحيوانات" حُلَّ بتخزين علم على `current_app.extensions` يمنع
-    # إعادة تشغيل seeding الحظائر/السلالات/الألوان الافتراضية أكثر من
-    # مرة وحدة لكل تطبيق شغّال (راجع `_ensure_animal_form_options_seeded`
-    # بـ`app/core/routes.py`). لو ما مسحنا هذا العلم هنا، بعد ضبط
-    # المصنع (كل الجداول تُمسح، بما فيها الحظائر) العلم يبقى محفوظاً من
-    # قبل الحذف، فأول زيارة لشاشة "حيوان جديد" بعدها ما تعيد إنشاء
-    # الحظائر النظامية الأساسية إطلاقاً — تبقى مزرعة بلا حظائر لين
-    # يُعاد تشغيل السيرفر يدوياً.
-    app.extensions.pop("_animal_form_options_seeded", None)
+    # الحيوانات" (وأخواتها بشاشات ثانية) حُلَّ بـ`run_once_per_app`
+    # (راجع `app/extensions.py`) — علم على `current_app.extensions` يمنع
+    # إعادة تشغيل seeding القوائم المرجعية الافتراضية أكثر من مرة وحدة
+    # لكل تطبيق شغّال. لو ما مسحنا هذي الأعلام هنا، بعد ضبط المصنع (كل
+    # الجداول تُمسح، بما فيها الحظائر) الأعلام تبقى محفوظة من قبل الحذف،
+    # فأول زيارة لأي من هذي الشاشات بعده ما تعيد إنشاء القوائم
+    # الأساسية إطلاقاً — تبقى مزرعة بلا حظائر/أنواع بلاغات/طرق استخدام
+    # لين يُعاد تشغيل السيرفر يدوياً.
+    for flag_key in list(app.extensions.keys()):
+        if flag_key.startswith("_run_once_"):
+            app.extensions.pop(flag_key, None)
 
     from click.testing import CliRunner
     result = CliRunner().invoke(app.cli, ["seed"], standalone_mode=False)

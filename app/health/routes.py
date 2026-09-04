@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 
 from app.health import health_bp
 from app.auth.decorators import require_permission, rate_limited
-from app.extensions import db
+from app.extensions import db, run_once_per_app
 from app.models import (
     Pharmacy, PharmacyBatch, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
     Disease, Vaccination, Animal, AuditLog, Barn,
@@ -251,7 +251,7 @@ def pharmacy_new():
         db.session.commit()
         flash(_("تمت إضافة الدواء"), "success")
         return redirect(url_for("health.pharmacy_list"))
-    UsageRoute.seed_defaults()
+    run_once_per_app("usage_route_defaults_seeded", UsageRoute.seed_defaults)
     # تعبئة مسبقة من صورة روشتة (بند إضافي، 2026-08-30) — راجع
     # pharmacy_prescription_image أعلاه. فاضية دائماً بالوضع الطبيعي.
     prefill = {k: request.args.get(k) for k in _PRESCRIPTION_PREFILL_FIELDS if request.args.get(k)}
@@ -321,7 +321,7 @@ def pharmacy_edit(pharmacy_id):
         db.session.commit()
         flash(_("تم تحديث بيانات الدواء"), "success")
         return redirect(url_for("health.pharmacy_list"))
-    UsageRoute.seed_defaults()
+    run_once_per_app("usage_route_defaults_seeded", UsageRoute.seed_defaults)
     return render_template(
         "health/pharmacy_form.html", item=item,
         medicine_classes=Pharmacy.MEDICINE_CLASSES,

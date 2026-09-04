@@ -7,6 +7,7 @@ from app.batches import batches_bp
 from app.auth.decorators import require_permission
 from app.core import batch_service
 from app.models import AnimalBatch, Animal, Barn, AnimalColor, Breed
+from app.extensions import run_once_per_app
 
 BATCH_ENTRY_SLOTS = range(20)
 
@@ -58,7 +59,7 @@ def batches_new():
     # القديمة)، منفصلة تماماً عن جدول `Breed` الحقيقي اللي تضيف له
     # سلالات جديدة من شاشة "+ حيوان جديد" — أي سلالة تضيفها هناك ما
     # كانت تظهر هنا إطلاقاً. صارت تقرأ من نفس المصدر الحقيقي الوحيد.
-    Breed.seed_defaults()
+    run_once_per_app("breed_defaults_seeded", Breed.seed_defaults)
     return render_template(
         "batches/batch_form.html", entry_slots=BATCH_ENTRY_SLOTS,
         sources=AnimalBatch.SOURCES, breeds=Breed.query.order_by(Breed.name).all(),

@@ -17,7 +17,7 @@ from app.core import backup_service
 from app.core import readiness_service
 from app.core import isolation_service
 from app.auth.decorators import require_permission, rate_limited
-from app.extensions import db
+from app.extensions import db, run_once_per_app
 from app.models import Animal, Barn, BarnFeedingSchedule, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
 from app.models import SpeciesType, Breed, AnimalColor, Task, Report
 from app.models.animal import AnimalSource
@@ -801,26 +801,16 @@ def _seed_system_barns() -> None:
 
 
 # بند إصلاح أداء — بلاغ مستخدم حقيقي: "بطء ممل في تعديل بيانات
-# الحيوانات". `_seed_system_barns`/`SpeciesType.seed_defaults`/
-# `Breed.seed_defaults`/`AnimalColor.seed_defaults` كانت تُستدعى مباشرة
-# بمسارات `animals_new`/`animals_edit` — كل واحدة تسوي عدة استعلامات
-# idempotent-check تسلسلية للقاعدة، يعني ١٠+ رحلة ذهاب وإياب على كل
-# فتحة صفحة تعديل رأس، رغم إنها عملياً ما تحتاج تضيف أي شي بعد أول
-# تشغيل. الحل: علم على تطبيق Flask نفسه (`current_app`، مو متغيّر عالمي
-# بذاكرة العملية) — أول طلب بعد إقلاع كل تطبيق يسوي الفحص الحقيقي مرة
-# وحدة، وأي طلب بعده لنفس التطبيق يتخطاه فوراً بدون أي استعلام. علم
-# بمستوى التطبيق (مو العملية) عمداً — عشان كل اختبار آلي يبني تطبيق
-# وقاعدة بيانات جديدين تماماً (`tests/conftest.py`)، فالعلم يتصفّر معه
-# طبيعياً بدل ما يتسرّب بين الاختبارات لو كان متغيّراً عالمياً ثابتاً.
+# الحيوانات". راجع `app.extensions.run_once_per_app` للشرح الكامل —
+# نفس النمط استخدمناه بعدة مسارات ثانية عندها نفس المشكلة بالضبط
+# (`batches_new`، `team.report_form`، `health.pharmacy_new`/`pharmacy_edit`).
 def _ensure_animal_form_options_seeded() -> None:
-    from flask import current_app
-    if current_app.extensions.get("_animal_form_options_seeded"):
-        return
-    _seed_system_barns()
-    SpeciesType.seed_defaults()
-    Breed.seed_defaults()
-    AnimalColor.seed_defaults()
-    current_app.extensions["_animal_form_options_seeded"] = True
+    run_once_per_app("animal_form_options_seeded", lambda: (
+        _seed_system_barns(),
+        SpeciesType.seed_defaults(),
+        Breed.seed_defaults(),
+        AnimalColor.seed_defaults(),
+    ))
 
 
 @core_bp.route("/animals/species-types/new", methods=["GET", "POST"])
