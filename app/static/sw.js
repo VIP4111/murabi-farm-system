@@ -20,7 +20,7 @@
  * مستقبلاً — أي صفحة جديدة تُبنى تدخل التغطية تلقائياً بدون أي تعديل
  * على هذا الملف.
  */
-const CACHE_NAME = "murabi-offline-v6";
+const CACHE_NAME = "murabi-offline-v7";
 
 // صفحات القوائم القديمة تبقى مُخزَّنة مسبقاً عند التثبيت (تجربة أول
 // استخدام أسرع، قبل حتى ما يزور المستخدم أي صفحة). التخزين الفعلي بعد
@@ -109,6 +109,28 @@ function shouldCacheResponse(res) {
   return res.url.indexOf("/login") === -1;
 }
 
+// إصلاح — بلاغ مستخدم حقيقي: "احفظ بيانات حيوان، والبيانات ما ترتفع
+// بنفس اللحظة — بس لو سويت خروج ودخول ترجع صحيحة". السبب مباشر متعلّق
+// بنفس آلية السباق فوق: لو الشبكة أبطأ من `NETWORK_TIMEOUT_MS` (وارد
+// بنت المزرعة الضعيف)، الصفحة تُعرض من النسخة المخزَّنة القديمة (قبل
+// الحفظ)، والرد الفعلي الطازج يوصل بالخلفية بعدها بثوانٍ بدون ما يشوفه
+// المستخدم إطلاقاً إلا لو حدّث الصفحة يدوياً. الحل: أي مرة نضطر نعرض
+// نسخة مخزَّنة (لأن الشبكة تأخرت)، لما الرد الطازج يوصل فعلاً بالخلفية
+// نبعت رسالة لكل تبويب مفتوح على نفس الرابط يطلب منه يعيد التحميل —
+// فالمستخدم يشوف بياناته المحفوظة فعلياً خلال ثوانٍ قليلة تلقائياً،
+// بدل ما يبقى شايف نسخة قديمة لين يحدّث يدوياً بنفسه.
+function buildStaleReloadMessage(url) {
+  return { type: "MURABI_STALE_PAGE_REFRESHED", url: url };
+}
+
+function notifyClientsOfFreshData(url, matchAllFn) {
+  matchAllFn = matchAllFn || (() => self.clients.matchAll({ type: "window" }));
+  return matchAllFn().then((clientList) => {
+    clientList.forEach((client) => client.postMessage(buildStaleReloadMessage(url)));
+    return clientList;
+  });
+}
+
 // تسجيل الأحداث محصور ببيئة Service Worker حقيقية بس (بند إضافي 83) —
 // `self.addEventListener` غير موجود بـNode.js، وهذا الشرط يخلي نفس
 // الملف قابل لـ`require()` وقت الاختبار بدون أي خطأ عند التحميل.
@@ -153,7 +175,16 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
         // لا رد من الشبكة خلال المهلة (أو فشلت) — النسخة المخزَّنة أول
         // شي، وإلا نترك networkFetch يكمل بالخلفية (ممكن يوصل متأخر
         // ويحدّث الكاش لمرة قادمة حتى لو ما استفدنا منه الآن).
-        return caches.match(req).then((cached) => cached || networkFetch);
+        return caches.match(req).then((cached) => {
+          if (cached && req.mode === "navigate") {
+            // الرد الطازج لسا بالطريق بالخلفية — لما يوصل فعلاً، نبلّغ
+            // أي تبويب مفتوح على نفس الرابط يحدّث نفسه تلقائياً.
+            networkFetch.then((freshRes) => {
+              if (freshRes) notifyClientsOfFreshData(req.url);
+            });
+          }
+          return cached || networkFetch;
+        });
       })
     );
   });
@@ -165,5 +196,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
     raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
+    buildStaleReloadMessage, notifyClientsOfFreshData,
   };
 }

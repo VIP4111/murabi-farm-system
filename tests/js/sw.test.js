@@ -7,6 +7,7 @@ const assert = require("node:assert/strict");
 const {
   isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
   raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
+  buildStaleReloadMessage, notifyClientsOfFreshData,
 } = require("../../app/static/sw.js");
 
 const ORIGIN = "https://murabi-farm-system.onrender.com";
@@ -89,4 +90,31 @@ test("shouldCacheResponse: a non-ok response (error page) → never cached", () 
 test("shouldCacheResponse: null/undefined response → never cached, never throws", () => {
   assert.equal(shouldCacheResponse(null), false);
   assert.equal(shouldCacheResponse(undefined), false);
+});
+
+// إصلاح — بلاغ مستخدم: "احفظ بيانات حيوان، والبيانات ما ترتفع بنفس
+// اللحظة — بس لو سويت خروج ودخول ترجع صحيحة" — لما الشبكة تتأخر ونعرض
+// نسخة مخزَّنة قديمة، لازم نبلّغ الصفحة المفتوحة أول ما يوصل الرد
+// الطازج فعلاً عشان تحدّث نفسها تلقائياً بدل ما تبقى عالقة بنسخة قديمة.
+test("buildStaleReloadMessage: carries the exact url to reload", () => {
+  const msg = buildStaleReloadMessage("https://x.test/animals/5");
+  assert.equal(msg.type, "MURABI_STALE_PAGE_REFRESHED");
+  assert.equal(msg.url, "https://x.test/animals/5");
+});
+
+test("notifyClientsOfFreshData: posts the reload message to every open window client", async () => {
+  const posted = [];
+  const fakeClients = [
+    { postMessage: (m) => posted.push(m) },
+    { postMessage: (m) => posted.push(m) },
+  ];
+  await notifyClientsOfFreshData("https://x.test/animals/5", () => Promise.resolve(fakeClients));
+  assert.equal(posted.length, 2);
+  assert.equal(posted[0].type, "MURABI_STALE_PAGE_REFRESHED");
+  assert.equal(posted[0].url, "https://x.test/animals/5");
+});
+
+test("notifyClientsOfFreshData: no open clients → resolves without throwing", async () => {
+  const result = await notifyClientsOfFreshData("https://x.test/animals/5", () => Promise.resolve([]));
+  assert.deepEqual(result, []);
 });

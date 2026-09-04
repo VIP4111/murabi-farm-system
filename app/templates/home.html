@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import tip %}
 {% block content %}
 
 {% if not user.onboarding_completed_at %}
@@ -71,10 +72,13 @@
       <a href="{{ url_for('team.reports_list') }}"><span class="emoji">📋</span> {{ _('البلاغات') }}</a>
       <a href="{{ url_for('team.tasks_list') }}"><span class="emoji">✅</span> {{ _('المهام') }}</a>
       {% if user.has_permission('animals.view') %}
-      <a href="{{ url_for('core.animals_list') }}" style="position:relative;">
-        {% if animals_alerts_count %}<span class="notif-bubble overdue" title="{{ _('%(n)s تنبيه على رؤوس مسجَّلة', n=animals_alerts_count) }}">{{ animals_alerts_count }}</span>{% endif %}
-        <span class="emoji">🐑</span> {{ _('الحيوانات') }}
-      </a>
+      <div style="position:relative;">
+        <a href="{{ url_for('core.animals_list') }}" style="position:relative;">
+          {% if animals_alerts_count %}<span class="notif-bubble overdue" title="{{ _('%(n)s تنبيه على رؤوس مسجَّلة', n=animals_alerts_count) }}">{{ animals_alerts_count }}</span>{% endif %}
+          <span class="emoji">🐑</span> {{ _('الحيوانات') }}
+        </a>
+        {% if animals_alerts_count %}<span style="position:absolute; top:6px; left:6px; z-index:2;">{{ tip(_('هذا الرقم = إجمالي تنبيهات كل الحيوانات مجتمعة (تحصين مستحق، فترة سحب، ولادة متوقعة، توقّف بدورة الإنتاج...) من شاشة "التنبيهات". مختلف عن "المتطلبات الناقصة" اللي تشوفها بصفحة "دورة الإنتاج" لرأس معيّن — تلك خاصة بمرحلته الحالية بس، وتظهر بالتفصيل هناك.')) }}</span>{% endif %}
+      </div>
       {% endif %}
       {% if user.has_permission('animals.manage') %}
       <a href="{{ url_for('core.animals_new') }}"><span class="emoji">➕</span> {{ _('حيوان جديد') }}</a>

@@ -620,6 +620,22 @@
       if (event.persisted) location.reload();
     });
 
+    // بند إصلاح — بلاغ مستخدم: "احفظ بيانات حيوان، والبيانات ما ترتفع
+    // بنفس اللحظة". السبب: Service Worker (نظام العمل بدون إنترنت)
+    // يعرض نسخة مخزَّنة قديمة لو الشبكة أبطأ من مهلته (وارد بنت المزرعة
+    // الضعيف)، والرد الطازج الفعلي يوصل بالخلفية بعدها بثوانٍ. الحل:
+    // الـService Worker يبعت رسالة لهذا التبويب بالضبط لما الرد الطازج
+    // يوصل فعلياً لنفس الرابط المفتوح — فنحدّث الصفحة تلقائياً، والمستخدم
+    // يشوف بياناته المحفوظة خلال ثوانٍ قليلة بدون أي تدخّل يدوي منه.
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', function(event){
+        var data = event.data;
+        if (data && data.type === 'MURABI_STALE_PAGE_REFRESHED' && data.url === window.location.href) {
+          location.reload();
+        }
+      });
+    }
+
     // بند إضافي (2026-08-31) — يغلّف كل حقل type=file بالصفحة بطبقة
     // عرض مترجَمة (راجع .file-input-wrap CSS أعلاه) — الحقل الأصلي
     // يبقى الوحيد المسؤول فعلياً عن الرفع، هذا مجرد عرض بديل لنصه
