@@ -592,10 +592,19 @@ def _weight_schedule_missing_reference_date() -> list[dict]:
     تحتاج تاريخاً مرجعياً (آخر وزن، أو ولادة/شراء/دخول لو ما فيه وزن
     أصلاً) عشان تحسب "من متى ما اتوزن" — لو الرأس ما عنده أي وزن مسجَّل
     ولا أي تاريخ من الثلاثة، الدالة تتجاهله للأبد بصمت، بدون أي تنبيه."""
+    # إصلاح أداء — بلاغ مستخدم: "ضعف في التصفح غير سريع" (استكمال جولة
+    # التدقيق نفسها). كانت هذي الدالة تسوي استعلام AnimalWeight منفصل
+    # *لكل رأس نشط بالمزرعة على حدة* (N+1) — تُستدعى بكل زيارة للرئيسية
+    # والتنبيهات. الحل: استعلام واحد يجيب كل animal_id عنده وزن مسجَّل،
+    # ونفلتر بالذاكرة بعدها.
+    from app.extensions import db
     animals = Animal.query.filter_by(status="active", species="sheep_goat").all()
+    animal_ids_with_weight = {
+        row[0] for row in db.session.query(AnimalWeight.animal_id).distinct().all()
+    }
     missing = [
         a for a in animals
-        if not AnimalWeight.query.filter_by(animal_id=a.id).first()
+        if a.id not in animal_ids_with_weight
         and not (a.birth_date or a.purchase_date or a.entry_date)
     ]
     if not missing:
