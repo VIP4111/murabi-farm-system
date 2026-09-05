@@ -13,7 +13,12 @@
   <div class="notice" style="background:#e8f5e9; border-color:#a5d6a7; color:#1b5e20;">
     <b>📥 {{ _('نسخة احتياطية كاملة — تنزيل فوري') }}</b>
     <p style="margin:6px 0;">{{ _('يصدّر كل بيانات مزرعتك (حيوانات، صحة، مالية، فريق، كل شي) لملف واحد على جهازك مباشرة — يشتغل بأي نوع قاعدة بيانات، بدون أي تخزين بالسيرفر. احفظه بمكان آمن بانتظام (أسبوعياً مثلاً) — لو صار أي عطل بقاعدة البيانات، هذا الملف هو ضمانتك الوحيدة.') }}</p>
-    <a class="btn" href="{{ url_for('core.backup_export_now') }}">⬇️ {{ _('تنزيل نسخة احتياطية كاملة الآن') }}</a>
+    {# SEC-01 (تدقيق 2026-09-04): كان رابط GET — تفريغ كامل للقاعدة ببنقرة
+       عادية، وقابل للتخزين بكاش الـService Worker. صار فورم POST بـCSRF. #}
+    <form method="post" action="{{ url_for('core.backup_export_now') }}" style="display:inline;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn" type="submit">⬇️ {{ _('تنزيل نسخة احتياطية كاملة الآن') }}</button>
+    </form>
   </div>
 
   {% if not supported %}

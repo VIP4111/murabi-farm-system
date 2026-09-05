@@ -1978,7 +1978,7 @@ def backup_download(filename):
     return send_file(path, as_attachment=True)
 
 
-@core_bp.route("/settings/backup/export-now")
+@core_bp.route("/settings/backup/export-now", methods=["POST"])
 @login_required
 @require_permission("settings.manage")
 def backup_export_now():
@@ -1986,7 +1986,14 @@ def backup_export_now():
     (SQLite أو PostgreSQL بالإنتاج)، بدون أي تخزين بالسيرفر (بيئات
     الاستضافة المُدارة تمسح الملفات المحلية عند كل إعادة نشر أصلاً).
     بند إضافي (2026-09-01) بعد حادثة حقيقية: قاعدة PostgreSQL مجانية
-    انتهت صلاحيتها تلقائياً بدون أي نسخة احتياطية متاحة."""
+    انتهت صلاحيتها تلقائياً بدون أي نسخة احتياطية متاحة.
+
+    **SEC-01 (تدقيق 2026-09-04)**: كان مسار GET. تفريغ كامل للقاعدة (79
+    جدولاً — هاشات كلمات المرور، وثائق هوية العمالة، الرواتب، رمزا وصول
+    حيّان) لا يجوز أن يكون طلب GET: (1) الـService Worker كان يخزّن أي ردّ
+    GET ناجح بكاش المتصفح فيبقى الملف كاملاً على الجهاز بعد الخروج ويصل
+    للمستخدم التالي؛ (2) GET قابل للتشغيل برابط أو prefetch من المتصفح بلا
+    أي نيّة من المستخدم. صار POST محمياً بـCSRF — والواجهة زر فورم صريح."""
     from datetime import datetime, timezone
     buf = backup_service.export_all_tables_json()
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")

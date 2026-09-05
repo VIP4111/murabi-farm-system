@@ -14,7 +14,8 @@ Node v22.22.2. قاعدة بيانات SQLite مؤقتة داخل مجلد مؤ�
 | Type-check | **Blocked** | لا mypy ولا pyright ولا أي type checker؛ التلميحات النوعية جزئية | لا `mypy.ini`/`pyproject.toml`/`setup.cfg` |
 | Unit + Integration tests (pytest) | **Pass** | **1571 passed، 0 failed، 3802 تحذير، 830 ثانية (13:50)** | `pytest -q` → `1571 passed, 3802 warnings in 830.40s` |
 | JS tests (node --test) | **Pass** | **22 passed، 0 failed** (`tests/js/sw.test.js`, `offline_sync.test.js`) | `node --test tests/js/*.test.js` → `# pass 22 / # fail 0` |
-| E2E tests (متصفح حقيقي) | **غير موجودة** | صفر اختبار Playwright/Selenium؛ كل الاختبارات على مستوى Flask test client | `grep -rn "playwright\|selenium" tests/` → صفر |
+| E2E tests (متصفح حقيقي) | **غير موجودة وقت التدقيق** | صفر اختبار Playwright/Selenium؛ كل الاختبارات على مستوى Flask test client | `grep -rn "playwright\|selenium" tests/` → صفر |
+| ↳ **تحديث 2026-09-05** | **Pass** | أُضيفت 3 سيناريوهات E2E بمتصفح حقيقي لـ`SEC-01` (عزل الكاش، ترقية الـSW، طابور الإدخالات) — تُشغَّل بأمر واحد وتُتخطّى بسبب صريح حيث لا يتوفر Playwright | `bash tests/e2e/run_sw_e2e.sh` → rc=0 · `pytest -m e2e` |
 | Production build | **N/A → Pass** | لا خطوة بناء (SSR بالكامل). التحقق البديل: التطبيق يقلع فعلياً تحت gunicorn بإعدادات الإنتاج | `gunicorn run:app --workers 2 --timeout 60` → `/_healthz` = `{"status":"ok"}` |
 | Local runtime (gunicorn) | **Pass** | 136 صفحة GET = 200، 3 = 302، **صفر 5xx** | زحف كامل (أدناه) |
 | Database migrations | **Pass** | 103 مايجريشن، سلسلة خطية، **رأس واحد** (`0f2a5b602937`)، تُطبَّق من الصفر بلا خطأ | `flask db upgrade` → exit 0 |
@@ -119,7 +120,7 @@ since SQLAlchemy 2.0`. **57 موضع استدعاء** لـ`.query.get(` داخل
 
 | البند | السبب |
 |---|---|
-| السلوك الفعلي للـService Worker والكاش بين مستخدمين | يحتاج متصفح حقيقي (Cache Storage API لا يوجد بـFlask test client). الاستنتاج مبني على قراءة الكود سطراً بسطر — راجع `SEC-01`. |
+| ~~السلوك الفعلي للـService Worker والكاش بين مستخدمين~~ | **أُغلقت 2026-09-05 (دفعة SEC-01)**: نُفِّذ العرض الحي بـChromium على سياق واحد (جهاز مشترك). على `main` @ 5de1eeb ظهرت صفحة مالية المالك للعامل بلا شبكة وفيها «صافي الربح»؛ وعلى فرع الإصلاح: صفر تسريب. صار اختباراً آلياً قابلاً للتكرار — `bash tests/e2e/run_sw_e2e.sh`. |
 | سلوك النظام وأداؤه على PostgreSQL | لم أتصل بأي قاعدة خارجية (قيد التدقيق الصريح). كل القياسات الزمنية على SQLite داخل العملية. لم أقِس أثر رحلة الشبكة لكل استعلام على PostgreSQL، ولا أذكر له رقماً. إغلاق الفجوة: تشغيل نفس السكربت على PostgreSQL محلي بأحجام القطيع الأربعة نفسها. |
 | فترة صلاحية رمز CSRF الفعلية بالإنتاج | `WTF_CSRF_TIME_LIMIT` غير مضبوط ⇒ الافتراضي 3600 ثانية. أثبتُّ سلوك الرفض والحذف الصامت برمز غير صالح (وهو نفس مسار الرمز المنتهي). |
 | سلوك الجدولة مع أكثر من عامل gunicorn | يحتاج تشغيل متزامن حقيقي تحت حمل. الخطر مستنتَج من الكود (SELECT-ثم-INSERT بلا قيد فريد). |

@@ -49,7 +49,8 @@ def test_export_all_tables_json_serializes_dates_safely(app, owner):
 
 
 def test_backup_export_now_route_returns_downloadable_json(app, logged_in_client, owner):
-    resp = logged_in_client.get("/settings/backup/export-now")
+    # SEC-01: المسار صار POST (راجع tests/test_sec01_sw_cache_isolation.py)
+    resp = logged_in_client.post("/settings/backup/export-now")
     assert resp.status_code == 200
     assert resp.mimetype == "application/json"
     assert "attachment" in resp.headers.get("Content-Disposition", "")
@@ -59,14 +60,14 @@ def test_backup_export_now_route_returns_downloadable_json(app, logged_in_client
 
 def test_backup_export_now_requires_settings_manage_permission(app, client, worker):
     client.post("/login", data={"phone": worker.phone, "password": "pass1234"})
-    resp = client.get("/settings/backup/export-now")
+    resp = client.post("/settings/backup/export-now")
     assert resp.status_code == 403
 
 
 def test_backup_export_now_creates_audit_log_entry(app, logged_in_client, owner):
     from app.models import AuditLog
 
-    logged_in_client.get("/settings/backup/export-now")
+    logged_in_client.post("/settings/backup/export-now")
     entry = AuditLog.query.filter_by(action="backup.export_json").order_by(AuditLog.id.desc()).first()
     assert entry is not None
     assert entry.actor_user_id == owner.id
