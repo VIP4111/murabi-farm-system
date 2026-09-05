@@ -3,6 +3,7 @@ from flask_babel import gettext as _
 from flask_login import login_required, current_user
 from flask_babel import lazy_gettext as _l
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import joinedload
 
 from datetime import date, datetime, timedelta
 
@@ -836,6 +837,17 @@ def task_quality_rate(task_id):
     return redirect(url_for("team.todays_completed_tasks"))
 
 
+# إصلاح أداء — بلاغ مستخدم: "ضعف في التصفح غير سريع". `task_display_title()`
+# (app/__init__.py، تُستدعى لكل صف بكل جداول شاشة "المهام") توصل
+# لـ`task.animal`/`task.barn`، وقالب الشاشة يوصل كمان لـ`task.assignee`
+# (وأحياناً `task.assignee.role`) — بدون تحميل مسبق هذا N+1 كلاسيكي
+# على أكثر شاشة تُفتح بالنظام. تُستخدم بكل الـ5 queries بـ`tasks_list()`.
+_TASK_ROW_EAGER_LOAD = (
+    joinedload(Task.animal), joinedload(Task.barn),
+    joinedload(Task.assignee).joinedload(User.role),
+)
+
+
 @team_bp.route("/tasks")
 @login_required
 def tasks_list():
@@ -846,16 +858,26 @@ def tasks_list():
     # اليومية المشتركة (بلا `assignee_id`، تولّد بـtarget_role="worker")
     # كانت ما تظهر لأي عامل إطلاقاً حتى بعد اعتمادها. صارت تظهر لأي عامل
     # يطابق دوره — أول وحد يبدأها يصير مسؤولها فعلياً (`_claim_if_unassigned`).
-    my_role_name = current_user.role.name if current_user.role else None
-    my_tasks = (Task.query
-                .filter(
-                    Task.status.in_(["pending", "in_progress"]),
-                    db.or_(
-                        Task.assignee_id == current_user.id,
-                        db.and_(Task.assignee_id.is_(None), Task.target_role == my_role_name),
-                    ),
-                )
-                .order_by(Task.due_date, Task.sort_order).all())
+    #
+    # إصلاح أداء — بلاغ مستخدم: "ضعف في التصفح غير سريع" (استكمال جولة
+    # التدقيق نفسها). `task_display_title()` (يُستدعى لكل صف بكل جداول
+    # هذي الشاشة) يوصل لـ`task.animal`/`task.barn`، وقالب الشاشة يوصل
+    # كمان لـ`task.assignee` — بدون تحميل مسبق، كل صف بكل جدول من
+    # الخمسة (مهامي، مقترحة، صندوق المراجعة، وزّعتها، جدول المهام
+    # المعتمدة) كان يسوي استعلامات علاقة منفصلة له وحده (N+1) — وهذي
+    # على الأرجح أكثر شاشة تُفتح بالنظام. `_TASK_ROW_EAGER_LOAD` يجمع
+    # كل العلاقات المطلوبة بالقالب، مطبَّق على الخمس queries تحت.
+    my_tasks_q = (
+        Task.query.options(*_TASK_ROW_EAGER_LOAD)
+        .filter(
+            Task.status.in_(["pending", "in_progress"]),
+            db.or_(
+                Task.assignee_id == current_user.id,
+                db.and_(Task.assignee_id.is_(None), Task.target_role == (current_user.role.name if current_user.role else None)),
+            ),
+        )
+    )
+    my_tasks = my_tasks_q.order_by(Task.due_date, Task.sort_order).all()
     # جزء HTML مستقل لجدول "مهامي" بس (بند إضافي 81) — يُطلَب بـfetch
     # بعد إجراء AJAX (زر "بدء") بدل إعادة تحميل الصفحة كاملة. رجوع مبكر
     # قبل أي استعلام إضافي غير لازم لهذا الطلب المصغَّر.
@@ -876,7 +898,7 @@ def tasks_list():
         # نقارن عليه أصلاً.
         tsvc.expire_stale_suggested_tasks()
         today = date.today()
-        suggested = (Task.query.filter(
+        suggested = (Task.query.options(*_TASK_ROW_EAGER_LOAD).filter(
                 Task.status == "suggested",
                 db.or_(Task.due_date.is_(None),
                        db.and_(Task.due_date >= today, Task.due_date <= today + timedelta(days=1))),
@@ -897,9 +919,10 @@ def tasks_list():
     if request.args.get("fragment") == "suggested_tasks":
         return render_template("team/_suggested_tasks_rows.html", suggested=suggested)
     if current_user.has_permission("tasks.delete_final"):
-        review_box = Task.query.filter_by(status="deleted_pending_review").order_by(Task.updated_at.desc()).all()
+        review_box = (Task.query.options(*_TASK_ROW_EAGER_LOAD)
+                      .filter_by(status="deleted_pending_review").order_by(Task.updated_at.desc()).all())
     if current_user.has_permission("tasks.assign_any"):
-        assigned_by_me = (Task.query
+        assigned_by_me = (Task.query.options(*_TASK_ROW_EAGER_LOAD)
                           .filter(Task.created_by_id == current_user.id, Task.status.in_(["pending", "in_progress"]))
                           .order_by(Task.due_date, Task.sort_order).all())
     # "جدول المهام المعتمدة" (بند إضافي 70) — نظرة عامة على كل المهام
@@ -910,7 +933,7 @@ def tasks_list():
     # "مهام مقترحة").
     approved_tasks = []
     if current_user.has_permission("tasks.review_daily") or current_user.has_permission("tasks.assign_any"):
-        approved_tasks = (Task.query
+        approved_tasks = (Task.query.options(*_TASK_ROW_EAGER_LOAD)
                            .filter(Task.status.in_(["pending", "in_progress"]))
                            .order_by(Task.due_date, Task.sort_order).all())
     modal_context = {}
