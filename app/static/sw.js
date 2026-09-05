@@ -66,12 +66,12 @@
  * تحتاج تصميماً مستقلاً (تقسيم الكاش حسب المستخدم أو قشرة ثابتة بلا بيانات)
  * وهي خارج نطاق هذي الدفعة عمداً.
  *
- * ورُفع CACHE_NAME إلى v8 عمداً: معالج activate الموجود أصلاً يمسح أي كاش
- * باسم مختلف، فأول تفعيل للنسخة الجديدة على أي جهاز يمسح v7 الملوَّث كله.
+ * ورُفع CACHE_NAME إلى v9 عمداً: معالج activate الموجود أصلاً يمسح أي كاش
+ * باسم مختلف، فأول تفعيل للنسخة الجديدة على أي جهاز يمسح الكاش القديم كله.
  * **متى يصبح الإصلاح فعّالاً**: عند تفعيل (activate) الـSW الجديد على
  * الجهاز — يحدث تلقائياً بعد جلب /sw.js المحدَّث (المتصفح يفحصه مع كل
  * تنقّل) بفضل skipWaiting()+clients.claim(). حتى تلك اللحظة قد يخدم الـSW
- * القديم (v7) نسخة ملوَّثة واحدة. لضمان فوري على جهاز مشترك بعد النشر:
+ * القديم نسخة ملوَّثة واحدة. لضمان فوري على جهاز مشترك بعد النشر:
  * افتح الموقع مرة وأنت متصل (تنقّل واحد يكفي لجلب /sw.js الجديد).
  * **الخروج والدخول وحدهما ليسا دليلاً** أن الجهاز صار على النسخة الجديدة —
  * الـSW القديم ينفّذهما بلا ترقية. الدليل الوحيد: تشغيل
@@ -83,7 +83,11 @@
  * `bash tests/e2e/run_sw_e2e.sh --diff` (tests/e2e/page_response_diff_e2e.py)
  * يقيس فرق الردّ بين حساب مالك وحساب عامل للمسارات الخمسة المذكورة أعلاه.
  */
-const CACHE_NAME = "murabi-offline-v8";
+// v9 (لا v8): منطق حدّ المصادقة تغيّر جوهرياً بعد v8 (مرحلتان: حجب ثم
+// إعادة تحميل بعد التأكيد). لو بقي الاسم v8 لكان جهاز يشغّل النسخة
+// الوسيطة يُبلِّغ "v8" ويجتاز فحص ما بعد النشر رغم أنه بلا إصلاح الترتيب.
+// اسم الكاش هو هوية النسخة على الجهاز، فيتغيّر كلما تغيّر السلوك.
+const CACHE_NAME = "murabi-offline-v9";
 
 // كان يخزّن أربع صفحات مسبقاً عند التثبيت. أُفرِغ بـSEC-01: كل صفحة HTML
 // تحمل هوية جلسة (اسم المستخدم + رمز CSRF)، فتخزينها المسبق يعني تخزين
@@ -261,9 +265,26 @@ function buildStaleReloadMessage(url) {
 
 // SEC-01(هـ) — مسح الكاش لا يمحو ما هو **معروض** أصلاً بتبويب مفتوح: تبويب
 // بقي على صفحة المالك يظل يعرض بياناته بالـDOM بعد أن يسجّل غيره الدخول.
-// عند أي حدّ مصادقة نبلّغ كل التبويبات المفتوحة لتعيد التحميل فوراً — فتذهب
-// للشبكة (ما فيه كاش لأي صفحة أصلاً) وتُعاد توجيهها للدخول. نستثني التبويبات
-// الواقفة على صفحة دخول أصلاً منعاً لحلقة إعادة تحميل لا تنتهي.
+//
+// **الترتيب مهم، ومرحلتان لا واحدة** (تصحيح 2026-09-05 بعد مراجعة): حدث
+// fetch لـ/logout يصل **قبل** أن يعالجه الخادم — الجلسة ما زالت مفتوحة
+// لحظتها. لو بلّغنا التبويبات "أعيدي التحميل" هنا، لقرأت الصفحات المحمية
+// بالجلسة **القديمة** وعرضت بيانات المالك من جديد (طازجة هذي المرة، لا
+// مخزَّنة)، ثم لا يصلها شيء بعد اكتمال الخروج فتبقى عارضة لها. فصار:
+//
+//   1) عند **بدء** التبديل: MURABI_AUTH_BOUNDARY_START ⇒ التبويب يحجب
+//      محتواه فوراً بلا أي قراءة للشبكة. لا بيانات للحساب السابق تُعرض
+//      من اللحظة الأولى.
+//   2) عند **تأكيد اكتمال** التبديل (ظهور العميل الناتج عن التنقّل =
+//      الوثيقة الجديدة أُنشئت = الخادم ردّ وطبّق Set-Cookie):
+//      MURABI_AUTH_BOUNDARY ⇒ التبويب يعيد التحميل الآن، بجلسة محسومة.
+//
+// نستثني التبويبات الواقفة على صفحة دخول أصلاً (لا بيانات لديها، ومنعاً
+// لحلقة إعادة تحميل)، ونستثني التبويب المُنتقِل نفسه (تحت).
+function buildAuthBoundaryStartMessage() {
+  return { type: "MURABI_AUTH_BOUNDARY_START" };
+}
+
 function buildAuthBoundaryMessage() {
   return { type: "MURABI_AUTH_BOUNDARY" };
 }
@@ -273,17 +294,82 @@ function buildAuthBoundaryMessage() {
 // معروضاً على رابطه القديم داخل clients.matchAll، فلو بلّغناه أعاد التحميل
 // وأجهض انتقاله الجاري إلى /logout (net::ERR_ABORTED) — فما يتم الخروج
 // أصلاً. وهو لا يحتاج التبليغ: انتقاله نفسه ينتهي بصفحة الدخول.
-function notifyClientsOfAuthBoundary(matchAllFn, excludeClientId) {
+function notifyAuthBoundaryClients(message, matchAllFn, excludeClientId) {
   matchAllFn = matchAllFn || (() => self.clients.matchAll({ type: "window" }));
   return matchAllFn().then((clientList) => {
     clientList.forEach((client) => {
       if (excludeClientId && client.id === excludeClientId) return;
       var onLoginPage = false;
       try { onLoginPage = new URL(client.url).pathname.startsWith("/login"); } catch (e) { }
-      if (!onLoginPage) client.postMessage(buildAuthBoundaryMessage());
+      if (!onLoginPage) client.postMessage(message);
     });
     return clientList;
   });
+}
+
+function notifyClientsOfAuthBoundaryStart(matchAllFn, excludeClientId) {
+  return notifyAuthBoundaryClients(buildAuthBoundaryStartMessage(), matchAllFn, excludeClientId);
+}
+
+function notifyClientsOfAuthBoundary(matchAllFn, excludeClientId) {
+  return notifyAuthBoundaryClients(buildAuthBoundaryMessage(), matchAllFn, excludeClientId);
+}
+
+// انتظار **تأكيد** اكتمال حدّ المصادقة قبل السماح بإعادة تحميل أي تبويب.
+// الإشارة: ظهور العميل الناتج عن هذا التنقّل (event.resultingClientId).
+// المتصفح لا يُظهره بـclients.get إلا بعد أن تُنشأ الوثيقة الجديدة فعلاً —
+// أي بعد أن يردّ الخادم ويُطبَّق Set-Cookie. قِيس بـChromium على خادم
+// /logout بطيء متعمَّد (1.5 ثانية): الرسالة الأولى عند 2ms، والتأكيد عند
+// 1515ms ورابط العميل الناتج /login. فهذي إشارة "بعد الاكتمال" لا تقدير زمني.
+// عند غياب resultingClientId نستبدلها بمسح clients بحثاً عن تبويب وصل
+// لصفحة الدخول. وعند انتهاء المهلة: **لا نبلّغ إطلاقاً** — الأسوأ أن نأذن
+// بإعادة قراءة صفحة محمية قبل التأكيد، وشبكة الأمان بالعميل تتكفّل.
+const AUTH_BOUNDARY_SETTLE_BUDGET_MS = 10000;
+const AUTH_BOUNDARY_POLL_MS = 100;
+
+function defaultDelay(ms) {
+  return new Promise(function (resolve) { setTimeout(resolve, ms); });
+}
+
+function waitForAuthBoundaryToSettle(resultingClientId, deps) {
+  deps = deps || {};
+  var delayFn = deps.delay || defaultDelay;
+  var budget = deps.budgetMs === undefined ? AUTH_BOUNDARY_SETTLE_BUDGET_MS : deps.budgetMs;
+  var step = deps.pollMs === undefined ? AUTH_BOUNDARY_POLL_MS : deps.pollMs;
+  var getClient = deps.getClient || function (id) { return self.clients.get(id); };
+  var matchAllFn = deps.matchAll || (() => self.clients.matchAll({ type: "window" }));
+
+  function probe() {
+    if (resultingClientId) {
+      return Promise.resolve()
+        .then(function () { return getClient(resultingClientId); })
+        .catch(function () { return undefined; })
+        .then(function (client) { return client || null; });
+    }
+    // لا معرّف ناتج: نبحث عن أي تبويب وصل فعلاً لصفحة الدخول.
+    return Promise.resolve()
+      .then(matchAllFn)
+      .catch(function () { return []; })
+      .then(function (list) {
+        for (var i = 0; i < (list || []).length; i++) {
+          try {
+            if (new URL(list[i].url).pathname.startsWith("/login")) return list[i];
+          } catch (e) { }
+        }
+        return null;
+      });
+  }
+
+  var waited = 0;
+  function poll() {
+    return probe().then(function (found) {
+      if (found) return found;
+      waited += step;
+      if (waited >= budget) return null;
+      return delayFn(step).then(poll);
+    });
+  }
+  return poll();
 }
 
 // SEC-01 — تحقّق ما بعد النشر: الجهاز قد يبقى على الـSW القديم بعد النشر،
@@ -363,11 +449,19 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
     // لا نجيب نحن عن هذا الطلب (المتصفح يتولاه طبيعياً)، بس نمسح الكاش
     // كاملاً ونمدّ عمر الحدث لين يكتمل المسح فعلياً.
     if (req.mode === "navigate" && isAuthBoundaryNavigation(req.url)) {
-      // نمسح ثم نبلّغ التبويبات المفتوحة لتعيد التحميل (SEC-01(هـ)).
+      // نمسح، ثم **نحجب** فوراً، ثم ننتظر تأكيد اكتمال الخروج قبل أن نأذن
+      // بإعادة التحميل (SEC-01(هـ) — الترتيب مشروح فوق عند الدالتين).
       // التبليغ من هنا فقط — لا من مسار endedAtLogin تحت — منعاً لحلقة
       // إعادة تحميل (إعادة التحميل نفسها تنتهي غالباً بإعادة توجيه للدخول).
+      const boundaryClientId = event.clientId;
+      const boundaryResultingClientId = event.resultingClientId;
       event.waitUntil(
-        purgeAllCaches().then(() => notifyClientsOfAuthBoundary(null, event.clientId))
+        purgeAllCaches()
+          .then(() => notifyClientsOfAuthBoundaryStart(null, boundaryClientId))
+          .then(() => waitForAuthBoundaryToSettle(boundaryResultingClientId))
+          .then((settled) => (settled
+            ? notifyClientsOfAuthBoundary(null, boundaryClientId)
+            : null))
       );
       return;
     }
@@ -432,6 +526,8 @@ if (typeof module !== "undefined" && module.exports) {
     precacheUrls, PRECACHE_URLS,
     isPublicAsset, currentCacheEpoch, mayCommitCache,
     buildAuthBoundaryMessage, notifyClientsOfAuthBoundary,
+    buildAuthBoundaryStartMessage, notifyClientsOfAuthBoundaryStart,
+    waitForAuthBoundaryToSettle, AUTH_BOUNDARY_SETTLE_BUDGET_MS, AUTH_BOUNDARY_POLL_MS,
     SW_VERSION_QUERY, buildVersionReply, answerVersionQuery,
   };
 }

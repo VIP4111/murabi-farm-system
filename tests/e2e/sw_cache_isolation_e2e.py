@@ -16,18 +16,21 @@
      له محتوى المالك فعلياً — لا مجرد أن Cache Storage فارغ. نبحث عن
      بصمات نصية من صفحات المالك بالـDOM المعروض.
 
-  C) الرد المتأخر عبر تبويبين (فجوة القبول 2): تبويب ثانٍ يبدأ طلباً
-     لصفحة المالك ويتأخر رده حتى بعد الخروج. يثبت أن وصول الرد المتأخر
-     **لا يعيد** صفحة المالك للكاش بعد تنظيفه.
-     ملاحظة على قوة الدليل: بعد تقليص قائمة السماح إلى `/static/` فقط، لا
-     صفحة HTML قابلة للتخزين أصلاً — فهذا الفحص طبقة ثانية بالسلوك الحيّ،
-     أما حارس الحقبة نفسه (SEC-01(د): مسح يقع بين بدء الطلب ووصول الرد)
-     فمُغطّى بوحدات `tests/js/sw.test.js` التي تحاكي هذا التسلسل مباشرة.
+  C) **حارس الحقبة برد محتجَز فعلياً** (فجوة القبول 2): نطلب مورداً
+     **قابلاً للتخزين حقاً** (`/static/…`) ونحتجز ردّه بالمعترض فلا يصل
+     إطلاقاً، ثم نخرج، ثم نُطلقه **بعد** اكتمال الخروج. فالترتيب مفروض لا
+     مُقدَّر: يستحيل أن يصل الرد قبل الخروج لأننا نحن من يطلقه. بلا حارس
+     الحقبة كان هذا الرد يُكتب بالكاش بعد تنظيفه (المسار ضمن قائمة السماح)،
+     فوجوده أو غيابه بالكاش فحص يميّز فعلاً. ونفحص معه ألا تعود أي صفحة
+     HTML للكاش.
 
-  D) **التبويب القديم بعد تبديل الحساب** (فجوة القبول 4): تبويب بقي مفتوحاً
-     على صفحة المالك — مسح الكاش لا يمحو ما هو معروض بالـDOM. نثبت أن
-     الـService Worker يبلّغه عند حدّ المصادقة فيعيد التحميل تلقائياً،
-     وينتهي بصفحة الدخول لا ببيانات المالك.
+  D) **ترتيب تبديل الهوية بخروج محتجَز** (فجوة القبول 4 + مراجعة الترتيب):
+     تبويب بقي مفتوحاً على صفحة المالك، ونحتجز ردّ `/logout` نفسه. أثناء
+     الاحتجاز — والجلسة على الخادم **ما زالت مفتوحة** — نتحقق أن التبويب:
+     (1) حجب بيانات المالك فوراً، و(2) **لم** يعد تحميل الصفحة المحمية
+     (لو فعل لقرأها بالجلسة القديمة وعرض بيانات المالك طازجة). ثم نطلق
+     الخروج ونتحقق أنه أعاد التحميل وانتهى لصفحة الدخول. الفحص على
+     **المحتوى بعد اكتمال الخروج**، لا على وصول رسالة.
 
   E) **فحص ما بعد النشر** (فجوة القبول 5): نشغّل `sw_post_deploy_check.js`
      — نفس الملف الذي يلصقه المستخدم بأدوات المطوّر — ونتأكد أنه يعطي PASS
@@ -80,6 +83,36 @@ READ_CACHED_TEXT = """async (path) => {
 failures = []
 
 
+class HeldRequest:
+    """يحتجز ردّ طلب بعينه حتى نطلقه صراحةً — فالترتيب مفروض لا مُقدَّر.
+
+    معالج المسار بـPlaywright لا يجب أن يحجب الخيط، فنحتفظ بكائن الطلب
+    ونُكمله لاحقاً من الخيط الرئيسي. بين اللحظتين يبقى الرد معلَّقاً فعلياً
+    على الشبكة — وهو ما يجعل «وصل بعد الخروج» حقيقة لا افتراضاً زمنياً.
+    """
+
+    def __init__(self, ctx, predicate):
+        self.route = None
+        ctx.route(predicate, self._hold)
+
+    def _hold(self, route):
+        if self.route is None:
+            self.route = route          # لا continue_ الآن — الرد محتجَز
+        else:
+            route.continue_()
+
+    def wait_until_held(self, pump_page, timeout_ms=15000):
+        waited = 0
+        while self.route is None and waited < timeout_ms:
+            pump_page.wait_for_timeout(100)   # يدوّر حلقة أحداث Playwright
+            waited += 100
+        return self.route is not None
+
+    def release(self):
+        assert self.route is not None, "لم يصل الطلب المحتجَز أصلاً"
+        self.route.continue_()
+
+
 def check(ok, label, detail=""):
     print(f"   {'✅' if ok else '❌'} {label}" + (f" — {detail}" if detail else ""))
     if not ok:
@@ -127,56 +160,95 @@ def main() -> int:
         leaked = [p for p in owner_pages if p.startswith(SENSITIVE_PREFIXES)]
         check(not leaked, "لا شاشة حسّاسة تُخزَّن أثناء جلسة المالك", str(leaked))
 
-        # ---------- C) الرد المتأخر عبر تبويبين ----------
-        # نبدأ الطلب المتأخر الآن (قبل الخروج) من تبويب ثانٍ، ونتركه معلَّقاً.
-        print("\nC) الرد المتأخر عبر تبويبين (حارس الحقبة)")
+        # ---------- C) رد محتجَز فعلياً على مسار قابل للتخزين ----------
+        print("\nC) حارس الحقبة برد محتجَز حتى ما بعد الخروج")
         tab2 = ctx.new_page()
         tab2.goto(BASE + "/team/tasks", wait_until="networkidle")
-        # طلب مؤجَّل على مسار قابل للتخزين: نؤخّره داخل المتصفح نفسه
-        # (نفس أثر خادم بطيء) ثم نتحقق ماذا يفعل رده بعد الخروج.
-        tab2.evaluate("""() => {
-            window.__late = fetch('/team/tasks?late=1', {credentials: 'same-origin'})
-              .then(r => r.text()).then(() => 'done').catch(e => 'err:' + e);
-        }""")
-        tab2.wait_for_timeout(150)  # الطلب انطلق فعلاً
 
-        # تبويب ثالث يبقى مفتوحاً على صفحة مالية المالك (للسيناريو D).
-        # نلتقط شرط صحة الاختبار **الآن** قبل الخروج: بعده يُعاد تحميل
-        # التبويب خلال أجزاء من الثانية (وهو المطلوب)، فقراءته بعد الخروج
-        # تقيس النتيجة لا الشرط.
+        # المورد المطلوب **ضمن قائمة السماح** (/static/) — أي أنه يُخزَّن
+        # فعلاً لولا حارس الحقبة، فالفحص يميّز بين وجود الحارس وغيابه.
+        LATE_ASSET = "/static/offline_sync.js?sec01-late=1"
+        late = HeldRequest(ctx, lambda url: "sec01-late=1" in url)
+        tab2.evaluate("""() => {
+            window.__lateDone = false;
+            fetch('%s', {credentials: 'same-origin'})
+              .then(r => r.text()).then(() => { window.__lateDone = true; })
+              .catch(() => { window.__lateDone = 'error'; });
+        }""" % LATE_ASSET)
+        check(late.wait_until_held(tab2), "الطلب المتأخر احتُجز فعلاً قبل الخروج (شرط صحة الاختبار)")
+        check(tab2.evaluate("window.__lateDone") is False,
+              "الرد المحتجَز لم يصل بعد — الترتيب مفروض لا مُقدَّر")
+
+        # ---------- D) تبويب قديم + خروج محتجَز ----------
+        # التبويب يبقى مفتوحاً على صفحة مالية المالك، ونحتجز ردّ /logout
+        # نفسه لنفحص ما يفعله التبويب **والجلسة ما زالت مفتوحة**.
+        print("\nD) ترتيب تبديل الهوية بخروج محتجَز")
         stale_tab = ctx.new_page()
         stale_tab.goto(BASE + "/finance/", wait_until="networkidle")
         stale_tab.wait_for_timeout(300)
-        stale_before = "صافي الربح" in stale_tab.content()
+        check("صافي الربح" in stale_tab.content(),
+              "التبويب القديم كان يعرض بيانات المالك قبل الخروج (شرط صحة الاختبار)")
+        # علامة تختفي مع أي إعادة تحميل — بها نثبت أن التبويب لم يُعِد
+        # قراءة الصفحة المحمية قبل تأكيد اكتمال الخروج.
+        stale_tab.evaluate("window.__murabiNoReloadYet = 1")
 
-        # ---------- الخروج ----------
-        page.goto(BASE + "/logout", wait_until="networkidle")
-        page.wait_for_timeout(600)
-        # انحدار: تبليغ حدّ المصادقة كان يبلّغ التبويب المُنتقِل نفسه فيعيد
-        # تحميله ويُجهض انتقاله لـ/logout (net::ERR_ABORTED) — أي أن الخروج
-        # لا يتم أصلاً. وصولنا لصفحة الدخول هو إثبات أن الخروج نُفِّذ فعلاً.
+        held_logout = HeldRequest(ctx, lambda url: url.rstrip("/").endswith("/logout"))
+        # ننتقل بلا انتظار: الرد محتجَز، فـgoto كانت ستُجمّد الخيط.
+        page.evaluate("setTimeout(() => { window.location.href = '/logout'; }, 0)")
+        check(held_logout.wait_until_held(stale_tab), "ردّ /logout احتُجز فعلاً (شرط صحة الاختبار)")
+
+        # الجلسة على الخادم ما زالت مفتوحة الآن — هذي هي اللحظة الحرجة.
+        stale_tab.wait_for_timeout(800)
+        mid_body = stale_tab.content()
+        mid_marker = stale_tab.evaluate("window.__murabiNoReloadYet")
+        mid_found = [m for m in OWNER_ONLY_MARKERS if m in mid_body]
+        check(not mid_found,
+              "بيانات المالك أُزيلت من المستند فور بدء التبديل، قبل اكتمال الخروج",
+              str(mid_found))
+        check("صافي الربح" not in stale_tab.title(),
+              "ولا عنوان التبويب يكشف شاشة الحساب السابق", stale_tab.title())
+        check(mid_marker == 1,
+              "التبويب لم يُعِد قراءة الصفحة المحمية قبل تأكيد اكتمال الخروج",
+              f"marker={mid_marker}")
+
+        # الآن نُطلق الخروج ونتحقق من المحتوى **بعد اكتماله**.
+        held_logout.release()
+        page.wait_for_url("**/login**", timeout=20000)
         check("/login" in page.url, "انتقال الخروج اكتمل ولم يُجهَض بتبليغ حدّ المصادقة", page.url)
-        after_logout, _ = cached_pages(page)
-        check(not after_logout, "الكاش فارغ بعد تسجيل الخروج", str(after_logout))
 
-        # ندع الطلب المتأخر يكتمل بعد المسح
-        tab2.wait_for_timeout(1200)
-        after_late, _ = cached_pages(page)
-        check(not after_late, "الرد المتأخر لم يُعِد صفحات المالك للكاش بعد المسح", str(after_late))
-        tab2.close()
-
-        # ---------- D) التبويب القديم المفتوح على صفحة المالك ----------
-        # ملاحظة: أُنشئ هذا التبويب **قبل** الخروج أعلاه، ويعرض صفحة المالك.
-        print("\nD) التبويب القديم بعد تبديل الحساب")
-        check(stale_before, "التبويب القديم كان يعرض بيانات المالك قبل الخروج (شرط صحة الاختبار)")
-        stale_tab.wait_for_timeout(2500)   # مهلة لوصول رسالة حدّ المصادقة وإعادة التحميل
+        stale_tab.wait_for_timeout(3000)
         stale_url = stale_tab.url
         stale_body = stale_tab.content()
+        check(stale_tab.evaluate("window.__murabiNoReloadYet") is None,
+              "بعد اكتمال الخروج أعاد التبويب التحميل فعلاً")
         check("صافي الربح" not in stale_body,
-              "التبويب القديم لم يعد يعرض بيانات المالك بعد الخروج")
+              "التبويب القديم لا يعرض بيانات المالك بعد اكتمال الخروج")
         check("/login" in stale_url or "كلمة المرور" in stale_body,
               "التبويب القديم انتهى لصفحة الدخول", stale_url)
         stale_tab.close()
+
+        after_logout, _ = cached_pages(page)
+        check(not after_logout, "الكاش فارغ بعد تسجيل الخروج", str(after_logout))
+
+        # ---------- إطلاق الرد المتأخر: بعد الخروج يقيناً ----------
+        late.release()
+        tab2.wait_for_function("window.__lateDone !== false", timeout=15000)
+        tab2.wait_for_timeout(600)   # cache.put غير متزامن لو وقع
+        cached_late = tab2.evaluate("""async () => {
+          for (const n of await caches.keys()) {
+            const c = await caches.open(n);
+            const ks = await c.keys();
+            const hit = ks.map(r => r.url).filter(u => u.indexOf('sec01-late=1') !== -1);
+            if (hit.length) return hit;
+          }
+          return [];
+        }""")
+        check(not cached_late,
+              "رد وصل بعد المسح لم يُكتب بالكاش رغم أن مساره ضمن قائمة السماح "
+              "(حارس الحقبة)", str(cached_late))
+        after_late, _ = cached_pages(page)
+        check(not after_late, "ولا صفحة HTML عادت للكاش بعد المسح", str(after_late))
+        tab2.close()
 
         # ---------- دخول العامل ----------
         print("\nB) محتوى فعلي تحت انقطاع الشبكة (بعد دخول العامل)")

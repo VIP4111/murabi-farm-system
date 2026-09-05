@@ -12,6 +12,8 @@ const {
   endedAtLogin, precacheUrls, PRECACHE_URLS,
   isPublicAsset, currentCacheEpoch, mayCommitCache,
   buildAuthBoundaryMessage, notifyClientsOfAuthBoundary,
+  buildAuthBoundaryStartMessage, notifyClientsOfAuthBoundaryStart,
+  waitForAuthBoundaryToSettle,
   SW_VERSION_QUERY, buildVersionReply, answerVersionQuery, CACHE_NAME,
 } = require("../../app/static/sw.js");
 
@@ -401,4 +403,112 @@ test("post-deploy: unrelated messages are ignored entirely", () => {
     assert.equal(answerVersionQuery({ data, ports: [port] }), null);
   }
   assert.deepEqual(sent, []);
+});
+
+
+// ============================================================
+// SEC-01(هـ) الترتيب — حجب فور بدء التبديل، وإعادة تحميل بعد تأكيد اكتماله.
+// حدث fetch لـ/logout يقع **قبل** أن يُنهي الخادم الجلسة؛ إعادة تحميل عنده
+// كانت ستقرأ الصفحات المحمية بالجلسة القديمة وتعرض بيانات المالك من جديد.
+// ============================================================
+
+// أداة: عميل وهمي يسجّل ما وصله بالترتيب.
+function fakeClient(id, url, log) {
+  return { id: id, url: url, postMessage: (m) => log.push([id, m.type]) };
+}
+
+test("SEC-01(هـ): the START message is distinct and carries no user data", () => {
+  assert.deepEqual(buildAuthBoundaryStartMessage(), { type: "MURABI_AUTH_BOUNDARY_START" });
+  assert.notEqual(buildAuthBoundaryStartMessage().type, buildAuthBoundaryMessage().type);
+});
+
+test("SEC-01(هـ): START blanks every tab but the login page and the navigating one", async () => {
+  const log = [];
+  const clients = [
+    fakeClient("self", ORIGIN + "/finance/", log),
+    fakeClient("other", ORIGIN + "/team/tasks", log),
+    fakeClient("login", ORIGIN + "/login", log),
+  ];
+  await notifyClientsOfAuthBoundaryStart(() => Promise.resolve(clients), "self");
+  assert.deepEqual(log, [["other", "MURABI_AUTH_BOUNDARY_START"]]);
+});
+
+test("SEC-01(هـ): settle waits for the resulting client and never resolves early", async () => {
+  // العميل الناتج لا يظهر إلا بعد أن يردّ الخادم فعلاً — نحاكي ثلاث محاولات
+  // فاشلة قبل ظهوره، ونتأكد أننا لم نستسلم ولم نُرجع شيئاً قبل ظهوره.
+  let calls = 0;
+  const client = { id: "new", url: ORIGIN + "/login" };
+  const settled = await waitForAuthBoundaryToSettle("new", {
+    getClient: () => { calls += 1; return Promise.resolve(calls >= 4 ? client : undefined); },
+    delay: () => Promise.resolve(),
+    budgetMs: 1000, pollMs: 100,
+  });
+  assert.equal(settled, client);
+  assert.equal(calls, 4, "استمر بالمحاولة حتى ظهر العميل الناتج");
+});
+
+test("SEC-01(هـ): settle gives up within its budget and returns null (no reload is authorised)", async () => {
+  let calls = 0;
+  const settled = await waitForAuthBoundaryToSettle("never", {
+    getClient: () => { calls += 1; return Promise.resolve(undefined); },
+    delay: () => Promise.resolve(),
+    budgetMs: 500, pollMs: 100,
+  });
+  assert.equal(settled, null, "عند انتهاء المهلة لا نأذن بإعادة التحميل إطلاقاً");
+  assert.equal(calls, 5);
+});
+
+test("SEC-01(هـ): a throwing clients.get never breaks the boundary", async () => {
+  const settled = await waitForAuthBoundaryToSettle("boom", {
+    getClient: () => { throw new Error("no"); },
+    delay: () => Promise.resolve(),
+    budgetMs: 300, pollMs: 100,
+  });
+  assert.equal(settled, null);
+});
+
+test("SEC-01(هـ): with no resultingClientId, settle falls back to spotting a login tab", async () => {
+  let round = 0;
+  const settled = await waitForAuthBoundaryToSettle("", {
+    matchAll: () => {
+      round += 1;
+      return Promise.resolve(round < 3
+        ? [{ id: "a", url: ORIGIN + "/finance/" }]
+        : [{ id: "a", url: ORIGIN + "/finance/" }, { id: "b", url: ORIGIN + "/login" }]);
+    },
+    delay: () => Promise.resolve(),
+    budgetMs: 1000, pollMs: 100,
+  });
+  assert.equal(settled.id, "b");
+});
+
+test("SEC-01(هـ): full ordering — nothing is told to reload before the boundary settles", async () => {
+  // نحاكي معالج الحدث نفسه: مسح ⇒ START ⇒ انتظار ⇒ إعادة تحميل.
+  const log = [];
+  const clients = [fakeClient("other", ORIGIN + "/finance/", log)];
+  const matchAll = () => Promise.resolve(clients);
+  let serverDone = false;
+
+  const boundary = notifyClientsOfAuthBoundaryStart(matchAll, "self")
+    .then(() => waitForAuthBoundaryToSettle("new", {
+      // العميل الناتج لا يوجد إلا بعد أن "ينتهي الخادم" فعلاً
+      getClient: () => Promise.resolve(serverDone ? { id: "new" } : undefined),
+      // تأخير حقيقي (مهمة كبرى) لا مجرد microtask — وإلا احتكرت حلقة
+      // الاستطلاع الخيط ولم يعمل أي مؤقّت آخر بالاختبار.
+      delay: () => new Promise((r) => setTimeout(r, 1)),
+      budgetMs: 100000, pollMs: 1,
+    }))
+    .then((settled) => (settled ? notifyClientsOfAuthBoundary(matchAll, "self") : null));
+
+  // بينما الخادم لم ينتهِ: وصل الحجب فقط، ولا إذن بإعادة التحميل.
+  await new Promise((r) => setTimeout(r, 30));
+  assert.deepEqual(log, [["other", "MURABI_AUTH_BOUNDARY_START"]],
+    "قبل اكتمال الخروج: حجب فقط، بلا أي إذن بقراءة صفحة محمية");
+
+  serverDone = true;                       // الخادم أنهى الجلسة الآن
+  await boundary;
+  assert.deepEqual(log, [
+    ["other", "MURABI_AUTH_BOUNDARY_START"],
+    ["other", "MURABI_AUTH_BOUNDARY"],
+  ], "إعادة التحميل تأتي بعد التأكيد لا قبله");
 });

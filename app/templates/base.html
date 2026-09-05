@@ -627,6 +627,28 @@
     // الـService Worker يبعت رسالة لهذا التبويب بالضبط لما الرد الطازج
     // يوصل فعلياً لنفس الرابط المفتوح — فنحدّث الصفحة تلقائياً، والمستخدم
     // يشوف بياناته المحفوظة خلال ثوانٍ قليلة بدون أي تدخّل يدوي منه.
+    // SEC-01(هـ) — حجب فوري لمحتوى الحساب السابق عند بدء تبديل الهوية.
+    // **إزالة من الـDOM لا إخفاء بصري**: `visibility:hidden` يترك النص
+    // موجوداً بالمستند (يُقرأ بأدوات المطوّر، وبنسخ الصفحة، وبقارئ الشاشة)
+    // فهو تغطية لا حجب. نفرّغ <body> فعلياً ونضع الستارة خارجه فلا تتأثر.
+    // لا نقرأ الشبكة هنا إطلاقاً — القراءة تنتظر تأكيد اكتمال الخروج.
+    // شبكة أمان: لو ما وصل التأكيد أبداً (خروج معلَّق أو Service Worker
+    // انتهى) نعيد التحميل بعد مهلة أطول من مهلة التأكيد بالـSW — والنتيجة
+    // صحيحة أياً كانت: جلسة مغلقة ⇒ صفحة دخول، جلسة حيّة ⇒ لم يقع خروج.
+    function murabiVeilForAuthBoundary(){
+      if (document.getElementById('murabiAuthBoundaryVeil')) return;
+      var veil = document.createElement('div');
+      veil.id = 'murabiAuthBoundaryVeil';
+      veil.setAttribute('style', 'position:fixed;top:0;left:0;right:0;bottom:0;' +
+        'z-index:2147483647;background:#fff;color:#666;display:flex;' +
+        'align-items:center;justify-content:center;font-size:15px;');
+      veil.textContent = {{ _('جارٍ تبديل الحساب…')|tojson }};
+      document.documentElement.appendChild(veil);
+      if (document.body) document.body.textContent = '';
+      document.title = veil.textContent;
+      setTimeout(function(){ location.reload(); }, 15000);
+    }
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', function(event){
         var data = event.data;
@@ -634,10 +656,18 @@
           location.reload();
         }
         // SEC-01(هـ) — تبديل حساب بتبويب آخر على نفس الجهاز: مسح الكاش لا
-        // يمحو ما هو معروض أصلاً بهذا التبويب. الـService Worker يبلّغنا عند
-        // أي حدّ مصادقة (/login أو /logout) فنعيد التحميل فوراً — الطلب
-        // يذهب للشبكة (ما فيه كاش لأي صفحة) فيُعاد توجيهنا لصفحة الدخول
-        // بدل بقاء بيانات المستخدم السابق ظاهرة على الشاشة.
+        // يمحو ما هو معروض أصلاً بهذا التبويب. مرحلتان بترتيب مقصود:
+        //
+        //   START  = بدأ التبديل (الخادم لسا ما أنهى الجلسة) ⇒ **احجب**
+        //            المحتوى فوراً، ولا تقرأ أي صفحة محمية من الشبكة —
+        //            إعادة التحميل الآن كانت ستُرجع بيانات المالك بجلسته
+        //            القديمة التي لم تُغلق بعد.
+        //   MURABI_AUTH_BOUNDARY = تأكّد اكتمال التبديل (الخادم ردّ فعلاً
+        //            وطُبِّق Set-Cookie) ⇒ أعِد التحميل الآن بأمان.
+        if (data && data.type === 'MURABI_AUTH_BOUNDARY_START' &&
+            window.location.pathname.indexOf('/login') !== 0) {
+          murabiVeilForAuthBoundary();
+        }
         if (data && data.type === 'MURABI_AUTH_BOUNDARY' &&
             window.location.pathname.indexOf('/login') !== 0) {
           location.reload();

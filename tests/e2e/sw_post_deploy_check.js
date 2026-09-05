@@ -14,7 +14,7 @@
  * يعمل بنسخه واللصق كما هو؛ ويُستخدم أيضاً آلياً بـtests/e2e/sw_cache_isolation_e2e.py
  */
 (async function murabiPostDeployCheck() {
-  const EXPECTED_CACHE = "murabi-offline-v8";
+  const EXPECTED_CACHE = "murabi-offline-v9";
   const out = { checks: [], pass: true };
   const add = (ok, label, detail) => {
     out.checks.push({ ok, label, detail });
@@ -51,7 +51,8 @@
   add(sw.indexOf('"' + EXPECTED_CACHE + '"') !== -1,
       "الخادم يقدّم " + EXPECTED_CACHE + " (النشر تم)",
       (sw.match(/murabi-offline-v\d+/) || ["?"])[0]);
-  for (const marker of ["purgeAllCaches", "mayCommitCache", "notifyClientsOfAuthBoundary"]) {
+  for (const marker of ["purgeAllCaches", "mayCommitCache",
+                        "notifyClientsOfAuthBoundary", "waitForAuthBoundaryToSettle"]) {
     add(sw.indexOf(marker) !== -1, "طبقة الحماية موجودة: " + marker, "");
   }
 

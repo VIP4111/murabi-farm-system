@@ -80,7 +80,7 @@ def test_settings_backup_page_uses_post_form_not_plain_link(app, logged_in_clien
 
 def test_served_sw_has_all_five_defence_layers_and_bumped_cache(app, logged_in_client):
     """يتحقق إن النسخة المُقدَّمة فعلياً على /sw.js (لا ملف بالمستودع
-    وحسب) تحوي طبقات الإصلاح الخمس، وإن إصدار الكاش تجاوز v7 الملوَّث."""
+    وحسب) تحوي طبقات الإصلاح الخمس، وإن إصدار الكاش تجاوز كل نسخة سابقة."""
     resp = logged_in_client.get("/sw.js")
     assert resp.status_code == 200
     body = resp.data.decode()
@@ -102,12 +102,18 @@ def test_served_sw_has_all_five_defence_layers_and_bumped_cache(app, logged_in_c
     # (د) حارس الحقبة للرد المتأخر
     assert "mayCommitCache" in body
     assert "currentCacheEpoch" in body
+    # (هـ) الترتيب: حجب فور بدء التبديل، ثم إعادة تحميل بعد **تأكيد**
+    # اكتمال الخروج — لا عند بدء الطلب والجلسة ما زالت مفتوحة.
+    assert "MURABI_AUTH_BOUNDARY_START" in body
+    assert "waitForAuthBoundaryToSettle" in body
     # أداة التحقق بعد النشر: الـSW يردّ بإصداره لمن يسأله (نسخة قديمة لا
     # تعرف هذه الرسالة فلا تردّ — وغياب الرد هو الدليل على عدم الترقية).
     assert "MURABI_SW_VERSION" in body
     assert "buildVersionReply" in body
-    # إصدار الكاش تجاوز v7 الملوَّث
+    # إصدار الكاش تجاوز كل نسخة سابقة (v7 الملوَّث، وv8 الوسيط الذي كان
+    # يأذن بإعادة التحميل قبل اكتمال الخروج)
     assert 'murabi-offline-v7"' not in body
+    assert 'murabi-offline-v8"' not in body
 
 
 def test_no_html_page_is_on_the_offline_allowlist(app, logged_in_client):

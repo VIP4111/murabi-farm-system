@@ -4,7 +4,7 @@
 هنا يصير جزءاً من `pytest` العادي: **يعمل فعلياً** بأي بيئة فيها Playwright
 وChromium (محلياً أو CI مجهَّز)، و**يُتخطّى بسبب صريح** حيث لا تتوفران —
 لا يختفي بصمت. البديل الآلي الدائم بالـCI الحالي: `tests/js/sw.test.js`
-(44 اختباراً على منطق الـSW) + `tests/test_sec01_sw_cache_isolation.py`.
+(51 اختباراً على منطق الـSW) + `tests/test_sec01_sw_cache_isolation.py`.
 
 التشغيل اليدوي الكامل بأمر واحد: `bash tests/e2e/run_sw_e2e.sh`
 """
