@@ -40,7 +40,29 @@ def _age_label(birth_date) -> str | None:
     return f"{days // 365} سنة"
 
 
-def _feed_cost_estimate(animal: Animal) -> dict:
+def _current_feed_plans_by_barn() -> dict:
+    """كل خطط التغذية الفعّالة اليوم، مجموعة حسب الحظيرة (آخر خطة لكل
+    حظيرة لو فيه أكثر من وحدة). بند إصلاح أداء لاحق (`break_even_summary`
+    كان يستدعي `_feed_cost_estimate` لكل رأس نشط، وكل استدعاء يسوي
+    استعلام FeedBarnPlan منفصل له وحده — نفس مشكلة N+1) — نجيبها *مرة
+    وحدة* لكل الحظائر بدل استعلام لكل رأس على حدة."""
+    today = date.today()
+    plans = (
+        FeedBarnPlan.query
+        .filter(FeedBarnPlan.start_date <= today)
+        .filter((FeedBarnPlan.end_date.is_(None)) | (FeedBarnPlan.end_date >= today))
+        .order_by(FeedBarnPlan.start_date.asc())
+        .all()
+    )
+    # الترتيب تصاعدي وكل حظيرة تُكتب فوق سابقتها — النتيجة النهائية
+    # لكل حظيرة هي الخطة ذات أحدث start_date، نفس `.order_by(desc()).first()`.
+    by_barn = {}
+    for p in plans:
+        by_barn[p.barn_id] = p
+    return by_barn
+
+
+def _feed_cost_estimate(animal: Animal, plan_by_barn: dict | None = None) -> dict:
     """
     تقدير تقريبي لنصيب الحيوان من تكلفة العلف (بند إضافي، 2026-07-23) —
     **تقدير مو رقم دقيق**، موضّح صراحة بالواجهة: يفترض إن الحيوان قضى
@@ -48,6 +70,11 @@ def _feed_cost_estimate(animal: Animal) -> dict:
     عنده جدول يتتبّع تاريخ انتقال الحيوان بين الحظائر (نفس القيد الموثّق
     ببند 18 لتقرير تكلفة الرأس الشهرية). لو الحيوان تنقّل حظائر فعلياً،
     الرقم يبتعد عن الواقع بقدر التنقّل.
+
+    `plan_by_barn` اختياري (بند إصلاح أداء لاحق) — لو مُمرَّر (من
+    `break_even_summary` اللي يستدعي هذي الدالة لكل رأس نشط بالمزرعة)،
+    نستخدمه بدل استعلام FeedBarnPlan منفصل لكل رأس؛ فاضي = السلوك
+    الأصلي (استعلام مباشر)، يبقى صحيحاً لاستخدام رأس واحد (`get_profile`).
     """
     today = date.today()
     since = animal.entry_date or animal.birth_date or (animal.created_at.date() if animal.created_at else today)
@@ -55,13 +82,16 @@ def _feed_cost_estimate(animal: Animal) -> dict:
     if not animal.barn_id:
         return {"daily_cost": 0, "days": days, "total": 0, "available": False}
 
-    plan = (
-        FeedBarnPlan.query.filter_by(barn_id=animal.barn_id)
-        .filter(FeedBarnPlan.start_date <= today)
-        .filter((FeedBarnPlan.end_date.is_(None)) | (FeedBarnPlan.end_date >= today))
-        .order_by(FeedBarnPlan.start_date.desc())
-        .first()
-    )
+    if plan_by_barn is not None:
+        plan = plan_by_barn.get(animal.barn_id)
+    else:
+        plan = (
+            FeedBarnPlan.query.filter_by(barn_id=animal.barn_id)
+            .filter(FeedBarnPlan.start_date <= today)
+            .filter((FeedBarnPlan.end_date.is_(None)) | (FeedBarnPlan.end_date >= today))
+            .order_by(FeedBarnPlan.start_date.desc())
+            .first()
+        )
     if not plan:
         return {"daily_cost": 0, "days": days, "total": 0, "available": False}
 
@@ -250,7 +280,26 @@ def get_profile(animal: Animal) -> dict:
     }
 
 
-def estimate_market_value_from_comparable_sales(animal: Animal) -> dict | None:
+def _all_comparable_sales_in_window() -> list:
+    """كل عمليات البيع (مع الرأس المرتبط) خلال آخر
+    `COMPARABLE_SALES_WINDOW_DAYS` يوم، بدون فلترة نوع/جنس — بند إصلاح
+    أداء لاحق: `break_even_summary` كان يستدعي
+    `estimate_market_value_from_comparable_sales` لكل رأس نشط، وكل
+    استدعاء يسوي استعلام JOIN منفصل له وحده (N+1). نجيب المبيعات *مرة
+    وحدة* هنا، وتفلترها كل استدعاء لاحقاً بالذاكرة (بند نوع/جنس/عمر) —
+    نفس النتيجة بالضبط، استعلام واحد بدل واحد لكل رأس."""
+    cutoff = date.today() - timedelta(days=COMPARABLE_SALES_WINDOW_DAYS)
+    return (
+        db.session.query(Finance, Animal)
+        .join(Animal, Finance.related_animal_id == Animal.id)
+        .filter(
+            Finance.operation_type == "sale", Finance.is_cancelled.is_(False),
+            Finance.date >= cutoff,
+        ).all()
+    )
+
+
+def estimate_market_value_from_comparable_sales(animal: Animal, all_sales: list | None = None) -> dict | None:
     """يقدّر القيمة السوقية لرأس نشط من عمليات بيع حقيقية سابقة لرؤوس
     مشابهة (بند إضافي 254، طلبك الصريح: "ليش الهامش ما يعتمد على أرقام
     البيع الذي يتم عن طريق المزرعة") — بدل قيمة يدوية تصدأ (كانت
@@ -258,17 +307,17 @@ def estimate_market_value_from_comparable_sales(animal: Animal) -> dict | None:
     يحسب حي من مبيعات حقيقية (نفس النوع + الجنس، وعمر قريب لو متوفر
     تاريخ ميلاد الطرفين) ضمن آخر `COMPARABLE_SALES_WINDOW_DAYS` يوم —
     يتحدّث تلقائياً كل مرة تُفتح الشاشة، ما يصدأ أبداً. يرجع `None`
-    صراحةً لو ما فيه عينة كافية (ما نخترع رقم من عدم)."""
-    cutoff = date.today() - timedelta(days=COMPARABLE_SALES_WINDOW_DAYS)
-    sales = (
-        db.session.query(Finance, Animal)
-        .join(Animal, Finance.related_animal_id == Animal.id)
-        .filter(
-            Finance.operation_type == "sale", Finance.is_cancelled.is_(False),
-            Finance.date >= cutoff, Animal.id != animal.id,
-            Animal.species == animal.species, Animal.gender == animal.gender,
-        ).all()
-    )
+    صراحةً لو ما فيه عينة كافية (ما نخترع رقم من عدم).
+
+    `all_sales` اختياري (بند إصلاح أداء لاحق) — لو مُمرَّر (من
+    `break_even_summary`، مُجهَّز مسبقاً بـ`_all_comparable_sales_in_window`)،
+    نفلتره بالذاكرة بدل استعلام JOIN منفصل؛ فاضي = السلوك الأصلي
+    (استعلام مباشر)، يبقى صحيحاً لاستخدام رأس واحد."""
+    all_sales = all_sales if all_sales is not None else _all_comparable_sales_in_window()
+    sales = [
+        (fin, other) for fin, other in all_sales
+        if other.id != animal.id and other.species == animal.species and other.gender == animal.gender
+    ]
     if not sales:
         return None
 
@@ -304,18 +353,47 @@ def break_even_summary() -> list[dict]:
     entry_exit_maps = build_entry_exit_maps()
     since_cache: dict = {}
     avg_head_count_cache: dict = {}
+
+    # إصلاح أداء — بلاغ مستخدم: "ضعف في التصفح غير سريع" (استكمال نفس
+    # جولة التدقيق اللي كشفت مشكلة صفحة تفاصيل الحيوان). كانت هذي
+    # الحلقة تسوي ٦+ استعلامات منفصلة *لكل رأس نشط على حدة* (Finance
+    # مرتين، VetVisit، Disease، Vaccination، خطة علف، ومبيعات مشابهة) —
+    # لمزرعة عندها 50 رأس هذا يعني 300+ استعلام لفتحة صفحة وحدة. نجيب
+    # كل شي مرة وحدة قبل الحلقة، ونجمّعه حسب animal_id بالذاكرة — نفس
+    # النتيجة بالضبط، عدد استعلامات ثابت بغض النظر عن عدد الرؤوس.
+    from collections import defaultdict
+    animal_ids = [a.id for a in animals]
+    finance_by_animal = defaultdict(list)
+    for f in Finance.query.filter(Finance.related_animal_id.in_(animal_ids), Finance.is_cancelled.is_(False)).all():
+        finance_by_animal[f.related_animal_id].append(f)
+    vet_visits_by_animal = defaultdict(list)
+    for v in VetVisit.query.filter(VetVisit.animal_id.in_(animal_ids)).all():
+        vet_visits_by_animal[v.animal_id].append(v)
+    diseases_by_animal = defaultdict(list)
+    for d in Disease.query.filter(Disease.animal_id.in_(animal_ids)).all():
+        diseases_by_animal[d.animal_id].append(d)
+    vaccinations_by_animal = defaultdict(list)
+    for vc in Vaccination.query.filter(Vaccination.animal_id.in_(animal_ids)).all():
+        vaccinations_by_animal[vc.animal_id].append(vc)
+    plan_by_barn = _current_feed_plans_by_barn()
+    all_comparable_sales = _all_comparable_sales_in_window()
+    from app.models.cycle import ProductionWorkflow
+    workflow_by_animal = {
+        w.animal_id: w for w in ProductionWorkflow.query.filter(ProductionWorkflow.animal_id.in_(animal_ids)).all()
+    }
+
     rows = []
     for animal in animals:
-        finance_rows = Finance.query.filter_by(related_animal_id=animal.id, is_cancelled=False).all()
+        finance_rows = finance_by_animal.get(animal.id, [])
         purchase_cost = round(sum(f.amount for f in finance_rows if f.operation_type == "purchase"), 2)
-        vet_visits = VetVisit.query.filter_by(animal_id=animal.id).all()
-        diseases = Disease.query.filter_by(animal_id=animal.id).all()
-        vaccinations = Vaccination.query.filter_by(animal_id=animal.id).all()
+        vet_visits = vet_visits_by_animal.get(animal.id, [])
+        diseases = diseases_by_animal.get(animal.id, [])
+        vaccinations = vaccinations_by_animal.get(animal.id, [])
         direct_medical_cost = round(
             sum(v.cost or 0 for v in vet_visits) + sum(d.treatment_cost or 0 for d in diseases)
             + sum(vc.cost or 0 for vc in vaccinations), 2,
         )
-        feed_cost_estimate = _feed_cost_estimate(animal)
+        feed_cost_estimate = _feed_cost_estimate(animal, plan_by_barn=plan_by_barn)
 
         since = animal.entry_date or animal.birth_date or animal.purchase_date or (
             animal.created_at.date() if animal.created_at else date.today())
@@ -338,8 +416,8 @@ def break_even_summary() -> list[dict]:
         # مبيعات حقيقية مشابهة (يتحدّث تلقائياً، ما يصدأ)، وإلا رجوع
         # للقيمة اليدوية (بند 176، شاشة "بيانات تخطيط السوق") لو
         # مسجَّلة، وإلا ما فيه قيمة أصلاً (الهامش ما يُحسب).
-        auto_estimate = estimate_market_value_from_comparable_sales(animal)
-        wf = animal.workflow
+        auto_estimate = estimate_market_value_from_comparable_sales(animal, all_sales=all_comparable_sales)
+        wf = workflow_by_animal.get(animal.id)
         manual_value = wf.estimated_value if wf and wf.estimated_value else None
         if auto_estimate:
             estimated_value = auto_estimate["value"]
