@@ -8,35 +8,28 @@ const {
   isCacheablePath, keysToEvict, MAX_CACHE_ENTRIES,
   raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
   buildStaleReloadMessage, notifyClientsOfFreshData,
-  CACHE_NAME, AUTH_BOUNDARY_PREFIXES, isAuthBoundaryNavigation, purgeAllCaches,
+  AUTH_BOUNDARY_PREFIXES, isAuthBoundaryNavigation, purgeAllCaches,
   endedAtLogin, precacheUrls, PRECACHE_URLS,
-  isPublicAsset, isOfflineFieldPage, OFFLINE_FIELD_PAGE_EXACT, OFFLINE_FIELD_PAGE_PREFIXES,
-  currentCacheEpoch, mayCommitCache,
+  isPublicAsset, currentCacheEpoch, mayCommitCache,
+  buildAuthBoundaryMessage, notifyClientsOfAuthBoundary,
+  SW_VERSION_QUERY, buildVersionReply, answerVersionQuery, CACHE_NAME,
 } = require("../../app/static/sw.js");
 
 const ORIGIN = "https://murabi-farm-system.onrender.com";
 
-test("isCacheablePath (allowlist): allowlisted field pages → true", () => {
-  assert.equal(isCacheablePath(ORIGIN + "/team/tasks", ORIGIN), true);
-  assert.equal(isCacheablePath(ORIGIN + "/team/tasks/5", ORIGIN), true);
-  assert.equal(isCacheablePath(ORIGIN + "/team/reports", ORIGIN), true);
-  assert.equal(isCacheablePath(ORIGIN + "/", ORIGIN), true);
-  assert.equal(isCacheablePath(ORIGIN + "/today", ORIGIN), true);
-  assert.equal(isCacheablePath(ORIGIN + "/alerts/mine", ORIGIN), true);
-});
-
-test("isCacheablePath (allowlist): public /static/ assets → true", () => {
+test("isCacheablePath (allowlist): ONLY public /static/ assets → true", () => {
   assert.equal(isCacheablePath(ORIGIN + "/static/offline_sync.js", ORIGIN), true);
   assert.equal(isCacheablePath(ORIGIN + "/static/icons/icon-32.png", ORIGIN), true);
 });
 
-test("isCacheablePath (allowlist): DEFAULT-DENY — anything not allowlisted → false", () => {
-  // تغيّر سلوكي مقصود (SEC-01): صفحات محمية/مرتبطة بمستخدم لم تعد تُخزَّن
-  // افتراضياً، حتى لو ليست بأي "قائمة استثناء". العمل الميداني الحرج
-  // (طابور الإدخالات data-offline) مستقل تماماً عن كاش الصفحات هذا.
-  for (const path of ["/animals/5", "/health/pharmacy", "/repro/matings",
-                      "/feed/", "/batches/new", "/warehouses/", "/ostrich/",
-                      "/equipment/", "/climate/"]) {
+test("isCacheablePath (allowlist): DEFAULT-DENY — every HTML page, without exception", () => {
+  // تغيّر سلوكي مقصود (SEC-01): قياس فعلي أثبت أن الصفحات الخمس التي
+  // اعتُبرت "ميدانية آمنة" تحمل كلها اسم المستخدم ورمز CSRF الخاص
+  // بالجلسة — فأُخرجت. لا صفحة HTML تُخزَّن الآن إطلاقاً. العمل الميداني
+  // الحرج (طابور data-offline بـIndexedDB) مستقل تماماً عن كاش الصفحات.
+  for (const path of ["/", "/today", "/alerts/mine", "/team/tasks", "/team/tasks/5",
+                      "/team/reports", "/animals/5", "/health/pharmacy",
+                      "/repro/matings", "/feed/", "/batches/new"]) {
     assert.equal(isCacheablePath(ORIGIN + path, ORIGIN), false, path);
   }
 });
@@ -56,17 +49,12 @@ test("isCacheablePath: malformed URL → false, never throws", () => {
   assert.equal(isCacheablePath("not a url", ORIGIN), false);
 });
 
-test("isPublicAsset / isOfflineFieldPage: exact building blocks of the allowlist", () => {
+test("isPublicAsset: the entire allowlist, and it never matches a page", () => {
   assert.equal(isPublicAsset("/static/x.js"), true);
-  assert.equal(isPublicAsset("/team/tasks"), false);
-  assert.equal(isOfflineFieldPage("/team/tasks"), true);
-  assert.equal(isOfflineFieldPage("/team/tasks/5"), true);
-  assert.equal(isOfflineFieldPage("/team/reports/new"), true);
-  assert.equal(isOfflineFieldPage("/finance/"), false);
-  assert.equal(isOfflineFieldPage("/settings"), false);
-  // "/team/reports" (بلاغات ميدانية) مسموح، لكن "/reports" (تحليلي) لا
-  assert.equal(isOfflineFieldPage("/reports/"), false);
-  assert.equal(isOfflineFieldPage("/reports/sales"), false);
+  assert.equal(isPublicAsset("/static/icons/i.png"), true);
+  for (const p of ["/", "/team/tasks", "/finance/", "/settings", "/reports/"]) {
+    assert.equal(isPublicAsset(p), false, p);
+  }
 });
 
 // بند إضافي 91 (نقطة 7) — تقليم الكاش بدون حد أقصى سابق
@@ -183,9 +171,11 @@ test("SEC-01(أ): sensitive owner/admin screens are never cached (now by default
   }
 });
 
-test("SEC-01(أ): excluding /reports (analytics) must NOT exclude /team/reports (field reports)", () => {
-  assert.equal(isCacheablePath(ORIGIN + "/team/reports", ORIGIN), true);
-  assert.equal(isCacheablePath(ORIGIN + "/team/reports/new", ORIGIN), true);
+test("SEC-01(أ): field reports are no longer cached either — the exception was dropped", () => {
+  // كان الاستثناء يسمح بـ/team/reports كصفحة ميدانية. أسقطه القياس: الردّ
+  // يحمل اسم المستخدم ورمز CSRF الخاص بجلسته، فصار كبقية الصفحات.
+  assert.equal(isCacheablePath(ORIGIN + "/team/reports", ORIGIN), false);
+  assert.equal(isCacheablePath(ORIGIN + "/team/reports/new", ORIGIN), false);
   assert.equal(isCacheablePath(ORIGIN + "/reports/", ORIGIN), false);
 });
 
@@ -281,10 +271,11 @@ test("SEC-01: precacheUrls tolerates a failing fetch without dropping the rest",
   assert.deepEqual(stored, ["/"]);
 });
 
-test("PRECACHE_URLS: every precached url is on the allowlist and is not an auth boundary", () => {
+test("PRECACHE_URLS: empty — precaching a page would store the first user's session", () => {
+  assert.deepEqual(PRECACHE_URLS, []);
+  // وأي عنصر يُضاف مستقبلاً لازم يمرّ بقائمة السماح نفسها
   for (const url of PRECACHE_URLS) {
     assert.equal(isCacheablePath(ORIGIN + url, ORIGIN), true, url);
-    assert.equal(isAuthBoundaryNavigation(ORIGIN + url, ORIGIN), false, url);
   }
 });
 
@@ -310,4 +301,104 @@ test("SEC-01(د): epoch is monotonic across successive purges", async () => {
   await purgeAllCaches(fake);
   assert.ok(currentCacheEpoch() >= e0 + 2);
   assert.equal(mayCommitCache(e0), false);
+});
+
+// ============================================================
+// SEC-01(هـ) — تبويب مفتوح يعرض بيانات المستخدم السابق: مسح الكاش لا يمحو
+// ما هو معروض بالـDOM. عند حدّ المصادقة نبلّغ التبويبات لتعيد التحميل.
+// ============================================================
+
+test("SEC-01(هـ): auth-boundary message reaches every open tab except login pages", async () => {
+  const posted = [];
+  const clients = [
+    { url: ORIGIN + "/team/tasks", postMessage: (m) => posted.push([ORIGIN + "/team/tasks", m]) },
+    { url: ORIGIN + "/finance/", postMessage: (m) => posted.push([ORIGIN + "/finance/", m]) },
+    { url: ORIGIN + "/login", postMessage: (m) => posted.push([ORIGIN + "/login", m]) },
+  ];
+  await notifyClientsOfAuthBoundary(() => Promise.resolve(clients));
+  assert.equal(posted.length, 2, "التبويب الواقف على /login لا يُبلَّغ (منع حلقة إعادة تحميل)");
+  assert.deepEqual(posted.map(([u]) => u).sort(), [ORIGIN + "/finance/", ORIGIN + "/team/tasks"]);
+  assert.equal(posted[0][1].type, "MURABI_AUTH_BOUNDARY");
+});
+
+test("SEC-01(هـ): message shape is stable and carries no user data", () => {
+  assert.deepEqual(buildAuthBoundaryMessage(), { type: "MURABI_AUTH_BOUNDARY" });
+});
+
+test("SEC-01(هـ): a malformed client url never throws and is still notified", async () => {
+  const posted = [];
+  await notifyClientsOfAuthBoundary(() => Promise.resolve([
+    { url: "not a url", postMessage: (m) => posted.push(m) },
+  ]));
+  assert.equal(posted.length, 1);
+});
+
+test("SEC-01(هـ): no open tabs → resolves without throwing", async () => {
+  const r = await notifyClientsOfAuthBoundary(() => Promise.resolve([]));
+  assert.deepEqual(r, []);
+});
+
+// انحدار مُقاس بمتصفح حقيقي (Chromium 1194): وقت وصول حدث fetch لتنقّل
+// /logout، التبويب المُنتقِل نفسه لسا موجود بـclients.matchAll برابطه
+// **القديم** (مثلاً /finance/)، و`event.clientId` يساوي مُعرِّفه. تبليغه
+// كان يجعله يعيد تحميل نفسه فيُجهض انتقاله إلى /logout بـERR_ABORTED —
+// أي أن الخروج نفسه ما يتم. لازم يُستثنى، ويظل غيره يُبلَّغ.
+test("SEC-01(هـ): the tab performing the logout navigation is never told to reload", async () => {
+  const posted = [];
+  const clients = [
+    { id: "self", url: ORIGIN + "/finance/", postMessage: () => posted.push("self") },
+    { id: "other", url: ORIGIN + "/team/tasks", postMessage: () => posted.push("other") },
+  ];
+  await notifyClientsOfAuthBoundary(() => Promise.resolve(clients), "self");
+  assert.deepEqual(posted, ["other"],
+    "التبويب المُنتقِل يُستثنى وإلا أجهض خروجه؛ وبقية التبويبات تُبلَّغ");
+});
+
+test("SEC-01(هـ): a missing clientId excludes nobody (fallback stays safe)", async () => {
+  const posted = [];
+  const clients = [
+    { id: "a", url: ORIGIN + "/finance/", postMessage: () => posted.push("a") },
+    { id: "b", url: ORIGIN + "/team/tasks", postMessage: () => posted.push("b") },
+  ];
+  for (const missing of ["", null, undefined]) {
+    posted.length = 0;
+    await notifyClientsOfAuthBoundary(() => Promise.resolve(clients), missing);
+    assert.deepEqual(posted, ["a", "b"], `excludeClientId=${JSON.stringify(missing)}`);
+  }
+});
+
+
+// ============================================================
+// SEC-01 — تحقّق ما بعد النشر: سؤال الـSW الفعّال عن إصداره.
+// الخروج والدخول لا يثبتان أن الجهاز رُقِّي؛ الردّ المباشر يثبت.
+// ============================================================
+
+test("post-deploy: the worker answers its own cache version over a MessagePort", () => {
+  const sent = [];
+  const reply = answerVersionQuery({
+    data: { type: SW_VERSION_QUERY },
+    ports: [{ postMessage: (m) => sent.push(m) }],
+  });
+  assert.deepEqual(reply, { type: "MURABI_SW_VERSION_RESULT", cacheName: CACHE_NAME });
+  assert.deepEqual(sent, [reply], "الرد يُرسل عبر المنفذ الذي أرسله العميل");
+  assert.equal(buildVersionReply().cacheName, CACHE_NAME);
+});
+
+test("post-deploy: falls back to event.source when no port was transferred", () => {
+  const sent = [];
+  answerVersionQuery({
+    data: { type: SW_VERSION_QUERY },
+    source: { postMessage: (m) => sent.push(m) },
+  });
+  assert.equal(sent.length, 1);
+  assert.equal(sent[0].cacheName, CACHE_NAME);
+});
+
+test("post-deploy: unrelated messages are ignored entirely", () => {
+  const sent = [];
+  const port = { postMessage: (m) => sent.push(m) };
+  for (const data of [null, undefined, {}, { type: "SOMETHING_ELSE" }]) {
+    assert.equal(answerVersionQuery({ data, ports: [port] }), null);
+  }
+  assert.deepEqual(sent, []);
 });

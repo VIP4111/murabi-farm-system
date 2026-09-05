@@ -27,14 +27,11 @@
  * كان يشوف صفحات المالك المخزَّنة (المالية، الرواتب، سجل التدقيق) — الطلب
  * ما يوصل السيرفر أصلاً فلا فحص صلاحيات يقع. والأخطر: تفريغ قاعدة البيانات
  * الكامل (/settings/backup/export-now، كان GET) كان يُخزَّن بالكاش ويبقى
- * بعد الخروج. الإصلاح بثلاث طبقات مستقلة (أي واحدة تكفي وحدها لسدّ أغلب
- * الطريق، والثلاث معاً دفاع بالعمق):
+ * بعد الخروج. الإصلاح بخمس طبقات مستقلة (أي واحدة تكفي وحدها لسدّ أغلب
+ * الطريق، والخمس معاً دفاع بالعمق):
  *   (أ) **قائمة سماح** (allowlist) بدل استثناء بالاسم: لا يُخزَّن أي ردّ
- *       افتراضياً. المسموح حصراً: أصول عامة آمنة غير مرتبطة بمستخدم
- *       (/static/)، + استثناء موثَّق مُعزَّل لصفحات العامل الميدانية التي
- *       يحتاجها العمل بلا اتصال (isOfflineFieldPage). أي مسار جديد — بما
- *       فيه أي شاشة محمية أو مرتبطة بمستخدم — لا يُخزَّن حتى يُضاف صراحةً
- *       لقائمة السماح بعد تبرير نطاقه وعزله. راجع OFFLINE_FIELD_PAGE_* أدناه.
+ *       افتراضياً. المسموح **حصراً**: أصول عامة ثابتة غير مرتبطة بأي
+ *       مستخدم (/static/). **صفر صفحات HTML** — راجع "لماذا لا صفحات" أدناه.
  *   (ب) أي تنقّل يعبر "حدّ مصادقة" (/login أو /logout) — أو أي ردّ انتهى
  *       بإعادة توجيه لصفحة الدخول (جلسة منتهية) — يمسح **كل** الكاش فوراً
  *       (AUTH_BOUNDARY_PREFIXES + purgeAllCaches). هذا يحسم المشكلة عند
@@ -44,53 +41,72 @@
  *   (د) **حارس الحقبة** (cache epoch): ردّ بدأ طلبه قبل المسح وتأخّر حتى
  *       بعده لا يُعاد للكاش — كل مسح يرفع عدّاد الحقبة، والكتابة تُلغى لو
  *       تغيّرت الحقبة بين بدء الطلب ووصول الردّ (mayCommitCache).
+ *   (هـ) **تبليغ حدّ المصادقة**: منع التخزين لا يمحو ما هو **معروض** أصلاً
+ *       بتبويب بقي مفتوحاً على صفحة المستخدم السابق. عند أي حدّ مصادقة
+ *       يُبلَّغ كل تبويب مفتوح (notifyClientsOfAuthBoundary) فيعيد التحميل
+ *       وينتهي لصفحة الدخول. يُستثنى التبويب الواقف على /login (منع حلقة)
+ *       و**التبويب المُنتقِل نفسه** (event.clientId) — تبليغه كان يجهض
+ *       انتقاله لـ/logout فلا يتم الخروج أصلاً.
+ *
+ * **لماذا لا صفحات إطلاقاً؟** (مراجعة 2026-09-05 على الدفعة نفسها) — جرّبنا
+ * أولاً استثناءً "لصفحات ميدانية آمنة" (الرئيسية، اليوم، تنبيهاتي، المهام،
+ * البلاغات) بحجة أنها ضمن صلاحيات أي عضو ميداني. قياس فعلي للردود بين حساب
+ * مالك وحساب عامل أسقط الحجّة: **الخمسة كلها** تختلف نصّياً، وتحمل اسم
+ * المستخدم، و**رمز CSRF مرتبطاً بالجلسة** بـ<meta name="csrf-token"> وبـ10–11
+ * حقلاً مخفياً داخل الفورمات. اشتراك مستخدمَين بصلاحية *فتح* صفحة لا يعني
+ * أن *الردّ* آمن للمشاركة: الردّ يحمل هوية الجلسة نفسها. فأي صفحة HTML
+ * أُخرجت من الكاش نهائياً بهذي الدفعة.
+ *
+ * **أثر ذلك على الاستخدام** (مقصود وموثَّق): عرض الصفحات بلا اتصال لم يعد
+ * يعمل — فتح التطبيق على جهاز مقطوع الاتصال من الصفر يعطي خطأ المتصفح بدل
+ * آخر نسخة مخزَّنة، ولا يمكن الوصول لشاشة إدخال جديدة وأنت أوفلاين. **ما
+ * زال يعمل**: أي صفحة مفتوحة أصلاً قبل انقطاع الاتصال تكمل عملها، وطابور
+ * الإدخالات (data-offline + IndexedDB) يخزّن ويعيد الإرسال تلقائياً كما هو
+ * تماماً — وهو القدرة الميدانية الحرجة. إعادة عرض الصفحات أوفلاين بأمان
+ * تحتاج تصميماً مستقلاً (تقسيم الكاش حسب المستخدم أو قشرة ثابتة بلا بيانات)
+ * وهي خارج نطاق هذي الدفعة عمداً.
+ *
  * ورُفع CACHE_NAME إلى v8 عمداً: معالج activate الموجود أصلاً يمسح أي كاش
  * باسم مختلف، فأول تفعيل للنسخة الجديدة على أي جهاز يمسح v7 الملوَّث كله.
  * **متى يصبح الإصلاح فعّالاً**: عند تفعيل (activate) الـSW الجديد على
  * الجهاز — يحدث تلقائياً بعد جلب /sw.js المحدَّث (المتصفح يفحصه مع كل
  * تنقّل) بفضل skipWaiting()+clients.claim(). حتى تلك اللحظة قد يخدم الـSW
  * القديم (v7) نسخة ملوَّثة واحدة. لضمان فوري على جهاز مشترك بعد النشر:
- * سجّل خروجاً ودخولاً مرة، أو أغلق كل تبويبات الموقع ثم افتحه. (موثَّق
- * بـtests/e2e/README وبسجل التدقيق.)
+ * افتح الموقع مرة وأنت متصل (تنقّل واحد يكفي لجلب /sw.js الجديد).
+ * **الخروج والدخول وحدهما ليسا دليلاً** أن الجهاز صار على النسخة الجديدة —
+ * الـSW القديم ينفّذهما بلا ترقية. الدليل الوحيد: تشغيل
+ * tests/e2e/sw_post_deploy_check.js بأدوات المطوّر على الجهاز نفسه ورؤية
+ * PASS. (موثَّق بـtests/e2e/README وبسجل التدقيق؛ الأداة نفسها مُختبَرة
+ * بسيناريو (E) داخل sw_cache_isolation_e2e.py.)
+ *
+ * دليل قرار قائمة السماح قابل لإعادة التشغيل:
+ * `bash tests/e2e/run_sw_e2e.sh --diff` (tests/e2e/page_response_diff_e2e.py)
+ * يقيس فرق الردّ بين حساب مالك وحساب عامل للمسارات الخمسة المذكورة أعلاه.
  */
 const CACHE_NAME = "murabi-offline-v8";
 
-// صفحات القوائم القديمة تبقى مُخزَّنة مسبقاً عند التثبيت (تجربة أول
-// استخدام أسرع، قبل حتى ما يزور المستخدم أي صفحة). التخزين الفعلي بعد
-// كذا يصير تلقائياً لأي صفحة تُزار (راجع isCacheablePath تحت).
-const PRECACHE_URLS = [
-  "/", "/team/tasks", "/team/reports", "/alerts/mine",
-];
+// كان يخزّن أربع صفحات مسبقاً عند التثبيت. أُفرِغ بـSEC-01: كل صفحة HTML
+// تحمل هوية جلسة (اسم المستخدم + رمز CSRF)، فتخزينها المسبق يعني تخزين
+// جلسة أول من يفتح التطبيق ثم تقديمها لمن بعده. الأصول الثابتة تُخزَّن
+// تلقائياً عند أول زيارة تحتاجها — لا حاجة لقائمة مسبقة.
+const PRECACHE_URLS = [];
 
-// SEC-01(أ) — قائمة السماح. سياستان:
+// SEC-01(أ) — قائمة السماح، بندان:
 //
-// (1) أصول عامة آمنة غير مرتبطة بأي مستخدم: كل شي تحت /static/ (سكربتات،
-//     أيقونات، خطوط، manifest). متطابقة لكل المستخدمين، فلا تسريب ممكن،
-//     وتُخزَّن بحرية ولا يمسّها مسح حدّ المصادقة (نُبقيها لسرعة الإقلاع).
+// (1) **المسموح**: أصول عامة ثابتة غير مرتبطة بأي مستخدم — كل شي تحت
+//     /static/ (سكربتات، أيقونات، خطوط، manifest). متطابقة لكل المستخدمين
+//     فلا تسريب ممكن. ملاحظة: مسح حدّ المصادقة (purgeAllCaches) يمسحها هي
+//     أيضاً — مسح شامل بلا استثناء أبسط وأأمن من انتقاء ما يُستبقى، والكلفة
+//     إعادة تنزيل أصول ثابتة مرة واحدة بعد كل تسجيل دخول.
 function isPublicAsset(pathname) {
   return pathname.startsWith("/static/");
 }
 
-// (2) استثناء موثَّق ومُعزَّل: صفحات العامل الميدانية التي يحتاجها العمل
-//     بلا اتصال (عرض المهام/البلاغات/التنبيهات/الرئيسية المبسّطة). هذي
-//     الصفحات **مرتبطة بمستخدم** (تُعرَض حسب الدور)، فاعتمادها استثناء لا
-//     قاعدة — نطاقه وعزله:
-//       • النطاق: حصراً المسارات أدناه، وكلها ضمن صلاحيات أي عضو ميداني
-//         (لا مالية، لا رواتب، لا إعدادات، لا تقارير تحليلية، لا مساعد).
-//       • النظام أحادي المزرعة (مزرعة واحدة لكل نشر)، فلا عزل بين مؤسسات
-//         مطلوب؛ الخطر الوحيد هو التبديل بين أدوار نفس المزرعة على الجهاز.
-//       • آلية العزل: (ب) مسح الكاش كاملاً عند كل حدّ مصادقة (/login،
-//         /logout، أو ردّ أُعيد توجيهه للدخول) + (د) حارس الحقبة للرد
-//         المتأخر. فأي صفحة خُزِّنت بجلسة المالك لا تنجو لجلسة العامل —
-//         لا يصير أحد مستخدماً آخر دون المرور بـ/login الذي يمسح الكل.
-//     أي إضافة لهذي القائمة تتطلب نفس التبرير (نطاق + عزل) قبل اعتمادها.
-const OFFLINE_FIELD_PAGE_EXACT = ["/", "/today", "/alerts/mine", "/team/tasks", "/team/reports"];
-const OFFLINE_FIELD_PAGE_PREFIXES = ["/team/tasks/", "/team/reports/"];
-
-function isOfflineFieldPage(pathname) {
-  if (OFFLINE_FIELD_PAGE_EXACT.indexOf(pathname) !== -1) return true;
-  return OFFLINE_FIELD_PAGE_PREFIXES.some(function (p) { return pathname.startsWith(p); });
-}
+// (2) **لا استثناء لأي صفحة HTML.** جرّبنا استثناءً لخمس صفحات ميدانية
+//     وأسقطه القياس: كلها تحمل اسم المستخدم ورمز CSRF الخاص بالجلسة
+//     (راجع تعليق الرأس). قائمة السماح صارت isPublicAsset وحدها. أي طلب
+//     لإضافة صفحة للكاش مستقبلاً يجب أن يثبت أولاً أن **الردّ نفسه** خالٍ
+//     من أي بيانات جلسة أو مستخدم، لا أن المستخدمين يشتركون بصلاحية فتحه.
 
 // SEC-01(ب): حدود المصادقة — أي تنقّل (navigate) يبدأ بأحد هذي المسارات
 // يعني بالضرورة أن هوية المستخدم على هذا الجهاز تتغيّر أو تُعاد: خروج
@@ -161,15 +177,14 @@ function trimCache(cache) {
 // نقطة 9 من قائمة نقاط الضعف) — يخلي الدالة قابلة للاختبار بـNode.js
 // خارج بيئة Service Worker الحقيقية بدون محاكاة `self` كاملة. بالمتصفح
 // الفعلي دايماً تُستدعى بدون هذا الوسيط، فترجع لنفس السلوك القديم بالضبط.
-// SEC-01(أ): قائمة سماح — يُخزَّن فقط من نفس الأصل، وفقط أصل عام آمن أو
-// صفحة عامل ميدانية بقائمة الاستثناء الموثَّقة. كل ما عداه → false (لا
-// يُخزَّن افتراضياً)، فأي مسار محمي/مرتبط بمستخدم غير مُدرَج لا يُخزَّن.
+// SEC-01(أ): قائمة سماح — يُخزَّن فقط من نفس الأصل، وفقط أصل عام ثابت
+// (/static/). كل ما عداه → false، بما فيه **كل** صفحات HTML بلا استثناء.
 function isCacheablePath(requestUrl, origin) {
   origin = origin || self.location.origin;
   try {
     var url = new URL(requestUrl);
     if (url.origin !== origin) return false;
-    return isPublicAsset(url.pathname) || isOfflineFieldPage(url.pathname);
+    return isPublicAsset(url.pathname);
   } catch (e) {
     return false;
   }
@@ -244,6 +259,52 @@ function buildStaleReloadMessage(url) {
   return { type: "MURABI_STALE_PAGE_REFRESHED", url: url };
 }
 
+// SEC-01(هـ) — مسح الكاش لا يمحو ما هو **معروض** أصلاً بتبويب مفتوح: تبويب
+// بقي على صفحة المالك يظل يعرض بياناته بالـDOM بعد أن يسجّل غيره الدخول.
+// عند أي حدّ مصادقة نبلّغ كل التبويبات المفتوحة لتعيد التحميل فوراً — فتذهب
+// للشبكة (ما فيه كاش لأي صفحة أصلاً) وتُعاد توجيهها للدخول. نستثني التبويبات
+// الواقفة على صفحة دخول أصلاً منعاً لحلقة إعادة تحميل لا تنتهي.
+function buildAuthBoundaryMessage() {
+  return { type: "MURABI_AUTH_BOUNDARY" };
+}
+
+// `excludeClientId` = التبويب الذي **يقوم** بالتنقّل نفسه (event.clientId).
+// استثناؤه ليس تجميلاً: وقت وصول حدث fetch لـ/logout يكون هذا التبويب لسا
+// معروضاً على رابطه القديم داخل clients.matchAll، فلو بلّغناه أعاد التحميل
+// وأجهض انتقاله الجاري إلى /logout (net::ERR_ABORTED) — فما يتم الخروج
+// أصلاً. وهو لا يحتاج التبليغ: انتقاله نفسه ينتهي بصفحة الدخول.
+function notifyClientsOfAuthBoundary(matchAllFn, excludeClientId) {
+  matchAllFn = matchAllFn || (() => self.clients.matchAll({ type: "window" }));
+  return matchAllFn().then((clientList) => {
+    clientList.forEach((client) => {
+      if (excludeClientId && client.id === excludeClientId) return;
+      var onLoginPage = false;
+      try { onLoginPage = new URL(client.url).pathname.startsWith("/login"); } catch (e) { }
+      if (!onLoginPage) client.postMessage(buildAuthBoundaryMessage());
+    });
+    return clientList;
+  });
+}
+
+// SEC-01 — تحقّق ما بعد النشر: الجهاز قد يبقى على الـSW القديم بعد النشر،
+// والخروج والدخول لا يكشفان ذلك إطلاقاً. أي عميل يستطيع سؤال الـSW **الفعّال
+// على هذا الجهاز** عن إصداره؛ نسخة قديمة لا تعرف هذه الرسالة فلا تردّ أصلاً،
+// وغياب الرد بحد ذاته دليل أن الجهاز لم يُرقَّ. تُستهلك بـ
+// tests/e2e/sw_post_deploy_check.js.
+const SW_VERSION_QUERY = "MURABI_SW_VERSION";
+
+function buildVersionReply() {
+  return { type: "MURABI_SW_VERSION_RESULT", cacheName: CACHE_NAME };
+}
+
+function answerVersionQuery(event) {
+  if (!event || !event.data || event.data.type !== SW_VERSION_QUERY) return null;
+  var reply = buildVersionReply();
+  if (event.ports && event.ports[0]) event.ports[0].postMessage(reply);
+  else if (event.source && event.source.postMessage) event.source.postMessage(reply);
+  return reply;
+}
+
 function notifyClientsOfFreshData(url, matchAllFn) {
   matchAllFn = matchAllFn || (() => self.clients.matchAll({ type: "window" }));
   return matchAllFn().then((clientList) => {
@@ -290,6 +351,10 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
     );
   });
 
+  self.addEventListener("message", (event) => {
+    answerVersionQuery(event);
+  });
+
   self.addEventListener("fetch", (event) => {
     const req = event.request;
 
@@ -298,7 +363,12 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
     // لا نجيب نحن عن هذا الطلب (المتصفح يتولاه طبيعياً)، بس نمسح الكاش
     // كاملاً ونمدّ عمر الحدث لين يكتمل المسح فعلياً.
     if (req.mode === "navigate" && isAuthBoundaryNavigation(req.url)) {
-      event.waitUntil(purgeAllCaches());
+      // نمسح ثم نبلّغ التبويبات المفتوحة لتعيد التحميل (SEC-01(هـ)).
+      // التبليغ من هنا فقط — لا من مسار endedAtLogin تحت — منعاً لحلقة
+      // إعادة تحميل (إعادة التحميل نفسها تنتهي غالباً بإعادة توجيه للدخول).
+      event.waitUntil(
+        purgeAllCaches().then(() => notifyClientsOfAuthBoundary(null, event.clientId))
+      );
       return;
     }
 
@@ -360,7 +430,8 @@ if (typeof module !== "undefined" && module.exports) {
     buildStaleReloadMessage, notifyClientsOfFreshData,
     CACHE_NAME, AUTH_BOUNDARY_PREFIXES, isAuthBoundaryNavigation, purgeAllCaches, endedAtLogin,
     precacheUrls, PRECACHE_URLS,
-    isPublicAsset, isOfflineFieldPage, OFFLINE_FIELD_PAGE_EXACT, OFFLINE_FIELD_PAGE_PREFIXES,
-    currentCacheEpoch, mayCommitCache,
+    isPublicAsset, currentCacheEpoch, mayCommitCache,
+    buildAuthBoundaryMessage, notifyClientsOfAuthBoundary,
+    SW_VERSION_QUERY, buildVersionReply, answerVersionQuery,
   };
 }

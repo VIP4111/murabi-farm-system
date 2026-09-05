@@ -5,7 +5,7 @@
 وهو أيضاً جزء من pytest عبر `tests/test_sec01_e2e_browser.py` (يُتخطّى
 بسبب صريح حيث لا يتوفر Playwright/Chromium).
 
-يغطي أربعة سيناريوهات، كلها على **سياق متصفح واحد** = Cache Storage واحد
+يغطي خمسة سيناريوهات، كلها على **سياق متصفح واحد** = Cache Storage واحد
 = جهاز واحد يتناوب عليه مستخدمان:
 
   A) العزل الأساسي: مالك يتصفّح ⇒ خروج ⇒ عامل يدخل.
@@ -17,17 +17,27 @@
      بصمات نصية من صفحات المالك بالـDOM المعروض.
 
   C) الرد المتأخر عبر تبويبين (فجوة القبول 2): تبويب ثانٍ يبدأ طلباً
-     لصفحة قابلة للتخزين بجلسة المالك، نؤخّر رده على الخادم، ثم نخرج
-     وندخل بحساب العامل قبل وصوله. يثبت أن وصول الرد المتأخر **لا يعيد**
-     صفحة المالك للكاش بعد تنظيفه (حارس الحقبة، SEC-01(د)).
+     لصفحة المالك ويتأخر رده حتى بعد الخروج. يثبت أن وصول الرد المتأخر
+     **لا يعيد** صفحة المالك للكاش بعد تنظيفه.
+     ملاحظة على قوة الدليل: بعد تقليص قائمة السماح إلى `/static/` فقط، لا
+     صفحة HTML قابلة للتخزين أصلاً — فهذا الفحص طبقة ثانية بالسلوك الحيّ،
+     أما حارس الحقبة نفسه (SEC-01(د): مسح يقع بين بدء الطلب ووصول الرد)
+     فمُغطّى بوحدات `tests/js/sw.test.js` التي تحاكي هذا التسلسل مباشرة.
 
-  D) ترقية الـSW بكاش ملوّث (فجوة القبول 3): تُشغَّل بوضع خاص — راجع
-     `--upgrade-from` أدناه وتوثيق "متى يصبح الإصلاح فعّالاً".
+  D) **التبويب القديم بعد تبديل الحساب** (فجوة القبول 4): تبويب بقي مفتوحاً
+     على صفحة المالك — مسح الكاش لا يمحو ما هو معروض بالـDOM. نثبت أن
+     الـService Worker يبلّغه عند حدّ المصادقة فيعيد التحميل تلقائياً،
+     وينتهي بصفحة الدخول لا ببيانات المالك.
+
+  E) **فحص ما بعد النشر** (فجوة القبول 5): نشغّل `sw_post_deploy_check.js`
+     — نفس الملف الذي يلصقه المستخدم بأدوات المطوّر — ونتأكد أنه يعطي PASS
+     على جهاز مُحدَّث فعلاً. أي أن أداة التحقق نفسها مُختبَرة، لا مجرد نصيحة.
 
 يخرج بـ0 عند ISOLATED ✅ و1 عند LEAK ❌.
 """
 import glob
 import sys
+from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
@@ -40,6 +50,8 @@ SENSITIVE_PREFIXES = ("/finance", "/settings", "/team/salaries", "/team/payroll"
 # بصمات نصية تظهر حصراً بصفحات المالك الحسّاسة (فجوة القبول 6) — وجود أيٍّ
 # منها بصفحة يراها العامل = تسريب محتوى فعلي، لا مجرد أثر بالكاش.
 OWNER_ONLY_MARKERS = ["صافي الربح", "الراتب الأساسي", "نسخة احتياطية كاملة"]
+
+POST_DEPLOY_CHECK = (Path(__file__).parent / "sw_post_deploy_check.js").read_text(encoding="utf-8")
 
 _candidates = (glob.glob("/opt/pw-browsers/chromium-*/chrome-linux/chrome")
                + glob.glob("/opt/pw-browsers/chromium-*/chrome-linux/headless_shell"))
@@ -128,9 +140,22 @@ def main() -> int:
         }""")
         tab2.wait_for_timeout(150)  # الطلب انطلق فعلاً
 
+        # تبويب ثالث يبقى مفتوحاً على صفحة مالية المالك (للسيناريو D).
+        # نلتقط شرط صحة الاختبار **الآن** قبل الخروج: بعده يُعاد تحميل
+        # التبويب خلال أجزاء من الثانية (وهو المطلوب)، فقراءته بعد الخروج
+        # تقيس النتيجة لا الشرط.
+        stale_tab = ctx.new_page()
+        stale_tab.goto(BASE + "/finance/", wait_until="networkidle")
+        stale_tab.wait_for_timeout(300)
+        stale_before = "صافي الربح" in stale_tab.content()
+
         # ---------- الخروج ----------
         page.goto(BASE + "/logout", wait_until="networkidle")
         page.wait_for_timeout(600)
+        # انحدار: تبليغ حدّ المصادقة كان يبلّغ التبويب المُنتقِل نفسه فيعيد
+        # تحميله ويُجهض انتقاله لـ/logout (net::ERR_ABORTED) — أي أن الخروج
+        # لا يتم أصلاً. وصولنا لصفحة الدخول هو إثبات أن الخروج نُفِّذ فعلاً.
+        check("/login" in page.url, "انتقال الخروج اكتمل ولم يُجهَض بتبليغ حدّ المصادقة", page.url)
         after_logout, _ = cached_pages(page)
         check(not after_logout, "الكاش فارغ بعد تسجيل الخروج", str(after_logout))
 
@@ -139,6 +164,19 @@ def main() -> int:
         after_late, _ = cached_pages(page)
         check(not after_late, "الرد المتأخر لم يُعِد صفحات المالك للكاش بعد المسح", str(after_late))
         tab2.close()
+
+        # ---------- D) التبويب القديم المفتوح على صفحة المالك ----------
+        # ملاحظة: أُنشئ هذا التبويب **قبل** الخروج أعلاه، ويعرض صفحة المالك.
+        print("\nD) التبويب القديم بعد تبديل الحساب")
+        check(stale_before, "التبويب القديم كان يعرض بيانات المالك قبل الخروج (شرط صحة الاختبار)")
+        stale_tab.wait_for_timeout(2500)   # مهلة لوصول رسالة حدّ المصادقة وإعادة التحميل
+        stale_url = stale_tab.url
+        stale_body = stale_tab.content()
+        check("صافي الربح" not in stale_body,
+              "التبويب القديم لم يعد يعرض بيانات المالك بعد الخروج")
+        check("/login" in stale_url or "كلمة المرور" in stale_body,
+              "التبويب القديم انتهى لصفحة الدخول", stale_url)
+        stale_tab.close()
 
         # ---------- دخول العامل ----------
         print("\nB) محتوى فعلي تحت انقطاع الشبكة (بعد دخول العامل)")
@@ -164,6 +202,16 @@ def main() -> int:
             found = [m for m in OWNER_ONLY_MARKERS if m in body]
             check(not found, f"لا محتوى للمالك يُعرَض عند طلب {path} بلا شبكة", str(found))
         ctx.set_offline(False)
+
+        # ---------- E) أداة فحص ما بعد النشر ----------
+        print("\nE) أداة الفحص التي يلصقها المستخدم بأدوات المطوّر")
+        page.goto(BASE + "/", wait_until="networkidle")
+        page.wait_for_timeout(400)
+        result = page.evaluate(POST_DEPLOY_CHECK)
+        for c in result["checks"]:
+            print(f"   {'✅' if c['ok'] else '❌'} {c['label']}"
+                  + (f" — {c['detail']}" if c["detail"] else ""))
+        check(result["pass"], "أداة فحص ما بعد النشر تعطي PASS على جهاز مُحدَّث")
 
         browser.close()
 

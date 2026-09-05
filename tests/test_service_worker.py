@@ -13,8 +13,9 @@ def test_service_worker_route_serves_updated_denylist_logic(logged_in_client):
     # SEC-01: تحوّلت السياسة من "قائمة استثناء" (denylist) إلى "قائمة سماح"
     # (allowlist) — لا يُخزَّن أي ردّ افتراضياً. راجع tests/js/sw.test.js.
     assert "EXCLUDED_PATH_PREFIXES" not in body
-    assert "isOfflineFieldPage" in body
     assert "isPublicAsset" in body
+    # ولا استثناء لأي صفحة HTML (أُسقط بعد قياس ردود المالك مقابل العامل)
+    assert "isOfflineFieldPage" not in body
     # المنطق القديم (allowlist) لازم يكون اختفى تماماً كتعريف فعلي — التأكيد
     # الحقيقي إن الاستبدال صار، مو بس إضافة (مذكورة بتعليق توثيقي بس، وهذا مقبول)
     assert "const OFFLINE_URL_PATTERNS" not in body

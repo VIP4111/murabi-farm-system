@@ -12,6 +12,9 @@
   4. نعيد `sw.js` إلى v8 (نفس ما يحدث لحظة النشر — الملف يُقدَّم من القرص).
   5. نجبر المتصفح على فحص التحديث (`registration.update()`) ثم ننتقل.
   6. نتحقق: هل اختفى كاش v7 وبياناته الملوّثة فعلاً؟
+  7. ونشغّل `sw_post_deploy_check.js` **مرتين**: قبل الترقية يجب أن يعطي
+     FAIL بسبب إصدار الـSW العامل، وبعدها PASS. أداة تحقّق لا تفشل على
+     جهاز لم يُرقَّ لا تصلح دليلاً على الترقية.
 
 **النتيجة الموثَّقة (2026-09-05)**: نعم — بمجرد تفعيل v8 (بفضل
 `skipWaiting()` + `clients.claim()` الموجودتين أصلاً) يمسح معالج `activate`
@@ -30,6 +33,7 @@ from playwright.sync_api import sync_playwright
 
 BASE = (sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8099").rstrip("/")
 SW_PATH = Path(__file__).resolve().parents[2] / "app" / "static" / "sw.js"
+POST_DEPLOY_CHECK = (Path(__file__).parent / "sw_post_deploy_check.js").read_text(encoding="utf-8")
 OWNER = ("0500000000", "change-me-123")
 
 _c = (glob.glob("/opt/pw-browsers/chromium-*/chrome-linux/chrome")
@@ -95,6 +99,16 @@ def main() -> int:
             tab2.goto(BASE + "/team/tasks", wait_until="networkidle")
             print("   تبويب ثانٍ مفتوح تحت سيطرة v7")
 
+            # أداة الفحص بعد النشر يجب أن **تفشل** هنا: الجهاز لسا على v7.
+            # أداة لا تعرف كيف تقول "لم تُرقَّ" لا تصلح دليلاً على الترقية.
+            stale_result = page.evaluate(POST_DEPLOY_CHECK)
+            stale_named = [c["label"] for c in stale_result["checks"] if not c["ok"]]
+            check(not stale_result["pass"],
+                  "أداة فحص ما بعد النشر ترفض جهازاً لم يُرقَّ (شرط صحة الأداة)")
+            check(any("العامل على هذا الجهاز" in lbl for lbl in stale_named),
+                  "الرفض سببه إصدار الـSW العامل نفسه لا مجرد بقايا كاش",
+                  str(stale_named))
+
             print("\n2) نشر النسخة الجديدة v8 (استبدال الملف على القرص)")
             SW_PATH.write_text(new_sw, encoding="utf-8")
             time.sleep(0.5)
@@ -115,6 +129,13 @@ def main() -> int:
                   str(list(after.keys())))
             check(not still, "لا مُدخَل ملوَّث باقٍ", str(still))
 
+            # وبعد الترقية الفعلية: نفس الأداة تعطي PASS. الطرفان معاً
+            # (FAIL قبل، PASS بعد) هما ما يجعلها دليلاً لا نصيحة.
+            fresh_result = page.evaluate(POST_DEPLOY_CHECK)
+            check(fresh_result["pass"],
+                  "نفس الأداة تعطي PASS بعد الترقية",
+                  str([c["label"] for c in fresh_result["checks"] if not c["ok"]]))
+
             tab2.close()
             browser.close()
     finally:
@@ -128,9 +149,14 @@ def main() -> int:
     print("    ومعالج activate يمسح كل كاش باسم مختلف — فيختفي v7 بكل محتواه.")
     print("  • النافذة المتبقّية: تنقّل واحد قد يُخدَم من v7 قبل تفعيل v8، ولو كان")
     print("    الجهاز بلا اتصال تماماً فلن يُجلب /sw.js أصلاً ويبقى v7 عاملاً.")
-    print("  ⇒ إجراء المستخدم بعد النشر على جهاز مشترك: سجّل خروجاً ودخولاً مرة")
-    print("    وأنت متصل (أو أغلق كل تبويبات الموقع ثم افتحه). بعدها المسح")
-    print("    التلقائي عند كل حدّ مصادقة يتكفّل بالباقي بلا أي تدخّل.")
+    print("  ⇒ إجراء المستخدم بعد النشر على جهاز مشترك: افتح الموقع مرة وأنت")
+    print("    متصل (تنقّل واحد يكفي لجلب /sw.js الجديد).")
+    print("  ⇒ الخروج والدخول **وحدهما ليسا دليلاً** أن الجهاز صار على v8: قد")
+    print("    ينفّذهما v7 القديم بلا أي ترقية. الدليل الوحيد المقبول هو تشغيل")
+    print("    tests/e2e/sw_post_deploy_check.js بأدوات المطوّر على الجهاز نفسه")
+    print("    ورؤية PASS — وهو يفحص اسم الكاش الفعلي ووجود طبقات الحماية")
+    print("    وخلوّ الجهاز من أي كاش قديم أو صفحة مخزَّنة. الأداة نفسها مُختبَرة")
+    print("    بسيناريو (E) داخل sw_cache_isolation_e2e.py.")
 
     print("\n=== الحكم ===")
     if failures:

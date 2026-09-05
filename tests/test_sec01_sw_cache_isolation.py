@@ -78,16 +78,21 @@ def test_settings_backup_page_uses_post_form_not_plain_link(app, logged_in_clien
 
 # ---------- الـService Worker المُقدَّم يحمل إصلاح SEC-01 ----------
 
-def test_served_sw_has_all_four_defence_layers_and_bumped_cache(app, logged_in_client):
+def test_served_sw_has_all_five_defence_layers_and_bumped_cache(app, logged_in_client):
     """يتحقق إن النسخة المُقدَّمة فعلياً على /sw.js (لا ملف بالمستودع
-    وحسب) تحوي طبقات الإصلاح الأربع، وإن إصدار الكاش تجاوز v7 الملوَّث."""
+    وحسب) تحوي طبقات الإصلاح الخمس، وإن إصدار الكاش تجاوز v7 الملوَّث."""
     resp = logged_in_client.get("/sw.js")
     assert resp.status_code == 200
     body = resp.data.decode()
-    # (أ) قائمة سماح — لا قائمة استثناء
+    # (أ) قائمة سماح — لا قائمة استثناء، ولا استثناء لأي صفحة
     assert "isPublicAsset" in body
-    assert "isOfflineFieldPage" in body
+    assert "isOfflineFieldPage" not in body
     assert "EXCLUDED_PATH_PREFIXES" not in body
+    # (هـ) إشعار التبويبات المفتوحة عند حدّ المصادقة، مع استثناء التبويب
+    # المُنتقِل نفسه — بدونه يعيد تحميل نفسه ويُجهض انتقاله لـ/logout.
+    assert "notifyClientsOfAuthBoundary" in body
+    assert "MURABI_AUTH_BOUNDARY" in body
+    assert "event.clientId" in body
     # (ب) مسح عند حدّ المصادقة
     assert "AUTH_BOUNDARY_PREFIXES" in body
     assert "isAuthBoundaryNavigation" in body
@@ -97,25 +102,44 @@ def test_served_sw_has_all_four_defence_layers_and_bumped_cache(app, logged_in_c
     # (د) حارس الحقبة للرد المتأخر
     assert "mayCommitCache" in body
     assert "currentCacheEpoch" in body
+    # أداة التحقق بعد النشر: الـSW يردّ بإصداره لمن يسأله (نسخة قديمة لا
+    # تعرف هذه الرسالة فلا تردّ — وغياب الرد هو الدليل على عدم الترقية).
+    assert "MURABI_SW_VERSION" in body
+    assert "buildVersionReply" in body
     # إصدار الكاش تجاوز v7 الملوَّث
     assert 'murabi-offline-v7"' not in body
 
 
-def test_sensitive_screens_are_not_on_the_offline_allowlist(app, logged_in_client):
-    """قائمة السماح يجب ألا تحوي أي شاشة محمية خارج نطاق العامل الميداني.
-    نقرأ القائمة من الملف المُقدَّم نفسه ونتأكد أن كل عنصر فيها ضمن
-    المسارات الميدانية المتفَّق عليها — حارس ضد توسيع صامت لاحقاً."""
+def test_no_html_page_is_on_the_offline_allowlist(app, logged_in_client):
+    """قائمة السماح يجب أن تبقى `/static/` وحدها. قياس فعلي (2026-09-05)
+    أثبت أن كل صفحة HTML — بما فيها الخمس التي اعتُبرت "ميدانية آمنة" —
+    تحمل اسم المستخدم ورمز CSRF الخاص بجلسته، فلا صفحة تُخزَّن إطلاقاً.
+    هذا حارس ضد إعادة إدخال استثناء صامت لاحقاً."""
     import re
 
     body = logged_in_client.get("/sw.js").data.decode()
-    exact = re.search(r"OFFLINE_FIELD_PAGE_EXACT\s*=\s*\[(.*?)\]", body, re.S).group(1)
-    prefixes = re.search(r"OFFLINE_FIELD_PAGE_PREFIXES\s*=\s*\[(.*?)\]", body, re.S).group(1)
-    listed = set(re.findall(r'"([^"]+)"', exact + prefixes))
-    assert listed == {"/", "/today", "/alerts/mine", "/team/tasks", "/team/reports",
-                      "/team/tasks/", "/team/reports/"}, listed
-    for sensitive in ("/finance", "/settings", "/team/salaries", "/team/payroll",
-                      "/team/members", "/reports", "/assistant", "/uploads"):
-        assert not any(p.startswith(sensitive) for p in listed), sensitive
+    # لا ثوابت استثناء صفحات
+    assert "OFFLINE_FIELD_PAGE" not in body
+    # isCacheablePath يعتمد isPublicAsset وحدها
+    fn = body[body.index("function isCacheablePath"):]
+    fn = fn[:fn.index("\n}")]
+    assert "isPublicAsset" in fn
+    assert re.search(r"return\s+isPublicAsset\(url\.pathname\);", fn), fn
+    # وisPublicAsset محصورة بـ/static/
+    pub = body[body.index("function isPublicAsset"):]
+    pub = pub[:pub.index("\n}")]
+    assert '"/static/"' in pub
+
+
+def test_precache_list_is_empty(app, logged_in_client):
+    """التخزين المسبق عند التثبيت كان يخزّن أربع صفحات — أي جلسة أول من
+    يفتح التطبيق. أُفرِغ بـSEC-01."""
+    import re
+
+    body = logged_in_client.get("/sw.js").data.decode()
+    m = re.search(r"const PRECACHE_URLS = \[(.*?)\]", body, re.S)
+    assert m, "PRECACHE_URLS غير موجود"
+    assert not re.findall(r'"([^"]+)"', m.group(1)), "PRECACHE_URLS يجب أن يبقى فارغاً"
 
 
 def test_offline_submission_queue_is_independent_of_the_page_cache(app, logged_in_client):

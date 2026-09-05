@@ -4,7 +4,7 @@
 هنا يصير جزءاً من `pytest` العادي: **يعمل فعلياً** بأي بيئة فيها Playwright
 وChromium (محلياً أو CI مجهَّز)، و**يُتخطّى بسبب صريح** حيث لا تتوفران —
 لا يختفي بصمت. البديل الآلي الدائم بالـCI الحالي: `tests/js/sw.test.js`
-(41 اختباراً على منطق الـSW) + `tests/test_sec01_sw_cache_isolation.py`.
+(44 اختباراً على منطق الـSW) + `tests/test_sec01_sw_cache_isolation.py`.
 
 التشغيل اليدوي الكامل بأمر واحد: `bash tests/e2e/run_sw_e2e.sh`
 """
@@ -45,6 +45,11 @@ def _missing() -> str:
 
 requires_browser = pytest.mark.skipif(bool(_missing()), reason=_missing() or "متوفر")
 
+# سيناريو المقارنة لا يحتاج متصفحاً إطلاقاً (urllib فقط) — يحتاج الخادم فقط،
+# فشرط تخطّيه أضيق: لو gunicorn موجود يعمل حتى بلا Playwright.
+requires_server = pytest.mark.skipif(
+    not _has_module("gunicorn"), reason="غير متوفر: gunicorn")
+
 
 def _run(scenario: str, expected: str):
     # نمرّر مفسّر بايثون الحالي للسكربت ليستخدم نفس الـvenv بلا تفعيل.
@@ -79,3 +84,14 @@ def test_cache_purge_preserves_offline_submission_queue():
     """مسح الكاش لا يمسّ طابور الإدخالات غير المرسَلة (لا فقدان بيانات)،
     ولا يقع نَسْب خاطئ لإدخال المالك عند تبديل الحساب."""
     _run("--queue", "مسح الكاش لا يمسّ طابور الإدخالات")
+
+
+@pytest.mark.e2e
+@requires_server
+def test_the_five_field_pages_all_carry_session_data():
+    """دليل قرار قائمة السماح: المسارات الخمسة التي كانت مستثناة تختلف
+    فعلياً بين حساب المالك وحساب العامل وتحمل اسم المستخدم ورموز CSRF
+    مرتبطة بالجلسة — فلا واحد منها يصلح للمشاركة بكاش على مستوى الأصل.
+    لو تغيّر ذلك مستقبلاً (صفحة صارت متطابقة فعلاً) يسقط هذا الاختبار
+    فيُراجَع القرار بدل أن يبقى مبرَّراً بنصّ قديم."""
+    _run("--diff", "لا واحد منها صالح للمشاركة بكاش على مستوى الأصل")

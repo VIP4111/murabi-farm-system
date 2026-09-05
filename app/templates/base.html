@@ -633,6 +633,15 @@
         if (data && data.type === 'MURABI_STALE_PAGE_REFRESHED' && data.url === window.location.href) {
           location.reload();
         }
+        // SEC-01(هـ) — تبديل حساب بتبويب آخر على نفس الجهاز: مسح الكاش لا
+        // يمحو ما هو معروض أصلاً بهذا التبويب. الـService Worker يبلّغنا عند
+        // أي حدّ مصادقة (/login أو /logout) فنعيد التحميل فوراً — الطلب
+        // يذهب للشبكة (ما فيه كاش لأي صفحة) فيُعاد توجيهنا لصفحة الدخول
+        // بدل بقاء بيانات المستخدم السابق ظاهرة على الشاشة.
+        if (data && data.type === 'MURABI_AUTH_BOUNDARY' &&
+            window.location.pathname.indexOf('/login') !== 0) {
+          location.reload();
+        }
       });
     }
 

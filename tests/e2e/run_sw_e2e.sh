@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # SEC-01 — تشغيل اختبار عزل كاش الـService Worker بمتصفح حقيقي، بأمر واحد.
 #
-#   bash tests/e2e/run_sw_e2e.sh            # السيناريوهات الثلاثة كلها
+#   bash tests/e2e/run_sw_e2e.sh            # السيناريوهات الأربعة كلها
 #   bash tests/e2e/run_sw_e2e.sh --isolation # العزل بين المستخدمين فقط
 #   bash tests/e2e/run_sw_e2e.sh --upgrade   # ترقية v7→v8 بكاش ملوّث فقط
 #   bash tests/e2e/run_sw_e2e.sh --queue     # طابور الإدخالات عبر المستخدمين فقط
+#   bash tests/e2e/run_sw_e2e.sh --diff      # مقارنة ردّ المالك والعامل (دليل قائمة السماح)
 #
 # يجهّز كل شي بنفسه: قاعدة SQLite مؤقتة + مايجريشن + بذر + حساب عامل،
 # يشغّل gunicorn على منفذ حر، ينفّذ الاختبار، ثم ينظّف كل شي (حتى عند الفشل).
@@ -87,10 +88,12 @@ case "$SCENARIO" in
   --isolation) run "عزل الكاش بين المستخدمين" tests/e2e/sw_cache_isolation_e2e.py ;;
   --upgrade)   run "ترقية الـService Worker بكاش ملوّث" tests/e2e/sw_upgrade_e2e.py ;;
   --queue)     run "طابور الإدخالات عبر تبديل الحساب" tests/e2e/offline_queue_across_users_e2e.py ;;
+  --diff)      run "مقارنة ردّ المالك والعامل للمسارات الخمسة" tests/e2e/page_response_diff_e2e.py ;;
   --all|"")
     run "عزل الكاش بين المستخدمين" tests/e2e/sw_cache_isolation_e2e.py
     run "ترقية الـService Worker بكاش ملوّث" tests/e2e/sw_upgrade_e2e.py
     run "طابور الإدخالات عبر تبديل الحساب" tests/e2e/offline_queue_across_users_e2e.py
+    run "مقارنة ردّ المالك والعامل للمسارات الخمسة" tests/e2e/page_response_diff_e2e.py
     ;;
   *) echo "خيار غير معروف: $SCENARIO" >&2; exit 2 ;;
 esac
