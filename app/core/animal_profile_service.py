@@ -13,6 +13,7 @@ Disease...) مو من CycleEvent — CycleEvent مخصص لمحاسبة بواب
 البوابات، وهذه الصفحة تكمّلها بمحتوى السجلات نفسها.
 """
 from datetime import date, timedelta
+from sqlalchemy.orm import joinedload
 from app.extensions import db
 from app.models import (
     Animal, VetVisit, Disease, Vaccination, Finance,
@@ -71,11 +72,26 @@ def _feed_cost_estimate(animal: Animal) -> dict:
 
 
 def get_profile(animal: Animal) -> dict:
-    vet_visits = VetVisit.query.filter_by(animal_id=animal.id).order_by(VetVisit.date.desc()).all()
+    # إصلاح أداء — بلاغ مستخدم: "بطيء وهو يعرض بيانات الحيوان". السبب:
+    # التسلسل الزمني تحت يوصل لعلاقات (`v.doctor`, `n.created_by`,
+    # `m.male`/`m.female`) داخل حلقة `for` — بدون تحميل مسبق (eager
+    # load)، كل وصول كذا يسوي استعلام قاعدة بيانات منفصل لكل صف على حدة
+    # (N+1 كلاسيكي) — لرأس عنده تاريخ طويل (زيارات/ملاحظات/تقريع كثير)
+    # هذا يعني عشرات الاستعلامات الإضافية بكل فتحة صفحة، فوق قاعدة
+    # بيانات بعيدة (Neon) كل استعلام له زمن شبكة حقيقي. `joinedload`
+    # يجيب العلاقة بنفس الاستعلام الأصلي (JOIN وحدة) بدل استعلام منفصل
+    # لكل صف — نفس النتيجة بالضبط، أسرع بكثير.
+    vet_visits = (
+        VetVisit.query.options(joinedload(VetVisit.doctor))
+        .filter_by(animal_id=animal.id).order_by(VetVisit.date.desc()).all()
+    )
     diseases = Disease.query.filter_by(animal_id=animal.id).order_by(Disease.date.desc()).all()
     vaccinations = Vaccination.query.filter_by(animal_id=animal.id).order_by(Vaccination.date.desc()).all()
     weights = AnimalWeight.query.filter_by(animal_id=animal.id).order_by(AnimalWeight.date.desc()).all()
-    notes = AnimalNote.query.filter_by(animal_id=animal.id).order_by(AnimalNote.date.desc()).all()
+    notes = (
+        AnimalNote.query.options(joinedload(AnimalNote.created_by))
+        .filter_by(animal_id=animal.id).order_by(AnimalNote.date.desc()).all()
+    )
     milk_records = (
         MilkRecord.query.filter_by(animal_id=animal.id)
         .order_by(MilkRecord.date.desc(), MilkRecord.session.desc()).all()
@@ -87,7 +103,8 @@ def get_profile(animal: Animal) -> dict:
     )
 
     matings = (
-        Mating.query.filter((Mating.female_id == animal.id) | (Mating.male_id == animal.id))
+        Mating.query.options(joinedload(Mating.male), joinedload(Mating.female))
+        .filter((Mating.female_id == animal.id) | (Mating.male_id == animal.id))
         .order_by(Mating.date.desc()).all()
     )
     pregnancies = Pregnancy.query.filter_by(female_id=animal.id).order_by(Pregnancy.date.desc()).all()
