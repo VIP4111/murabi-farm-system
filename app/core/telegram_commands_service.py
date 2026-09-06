@@ -11,8 +11,6 @@
 أوامر المرحلة ب تستخدم دوال `report_service`/`task_service` الموجودة
 أصلاً بالضبط (نفس قواعد الصلاحية والحالة اللي تطبَّق من التطبيق) —
 البوت واجهة جديدة بس، مو مسار موازٍ بقواعد مختلفة."""
-from datetime import date
-
 from flask_babel import gettext as _, force_locale
 
 from app.core import telegram_service
@@ -170,7 +168,12 @@ def _open_reports_summary() -> str:
 
 def _today_summary() -> str:
     from app.models import Animal, Task, Report
-    today = date.today()
+
+    # بند إصلاح (مراجعة "أكواد الخلفية") — `farm_today()` بدل `date.
+    # today()` الخام، نفس إصلاح مولّدات المهام الخلفية (يوم السعودية
+    # لا يوم UTC).
+    from app.extensions import farm_today
+    today = farm_today()
     total_animals = Animal.query.filter_by(status="active").count()
     tasks_today = (
         Task.query.filter(Task.status.in_(["pending", "in_progress"]))

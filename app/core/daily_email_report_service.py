@@ -11,7 +11,6 @@
 يبرز الحرج، وبدون رابط مباشر لحل أي شي. هذا الملف صار يبني نسخة نص
 عادي (fallback لعملاء بريد ما يدعمون HTML) ونسخة HTML منسَّقة معاً."""
 import os
-from datetime import date
 
 from flask_babel import gettext as _, get_locale
 
@@ -62,7 +61,11 @@ def gather_report_data() -> dict:
     from app.models import Animal, Report
     from app.core.alerts_service import get_alerts
 
-    today = date.today()
+    # بند إصلاح (مراجعة "أكواد الخلفية") — `farm_today()` بدل `date.
+    # today()` الخام (وقت سيرفر Render UTC، متأخر 3 ساعات عن السعودية
+    # قرب منتصف الليل)، نفس الإصلاح المطبَّق بكل مولّدات المهام الخلفية.
+    from app.extensions import farm_today
+    today = farm_today()
     total_animals = Animal.query.filter_by(status="active").count()
     tasks = _task_breakdown(today)
     open_statuses = ["new", "accepted", "executed_pending_review"]
@@ -193,7 +196,14 @@ def send_daily_report_now() -> int:
 
 def generate_daily_email_report_if_needed() -> None:
     from app.models import FarmSettings
-    today = date.today()
+
+    # بند إصلاح (مراجعة "أكواد الخلفية") — نفس ملاحظة `gather_report_
+    # data` أعلاه: كان `date.today()` الخام يخلي حارس "هل أُرسل التقرير
+    # اليوم؟" يعتمد يوم UTC بدل يوم السعودية، فقرب منتصف الليل بالسعودية
+    # (يوم UTC لسا ما تغيّر) كان ممكن يفوّت إرسال يوم كامل أو يرسل يوم
+    # قديم بالخطأ حسب توقيت أول طلب يوصل السيرفر.
+    from app.extensions import farm_today
+    today = farm_today()
     settings = FarmSettings.get()
     if settings.last_daily_email_report_sent == today:
         return

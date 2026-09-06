@@ -8,8 +8,6 @@
 دالة بناء المحتوى (`build_report_email`) بدل تكرار منطق التجميع،
 ويعتمد حارس منفصل (`last_daily_telegram_report_sent`) عشان فشل قناة
 وحدة (بريد أو تيليجرام) ما يوقف الثانية."""
-from datetime import date
-
 from flask_babel import gettext as _
 
 from app.extensions import db
@@ -62,7 +60,12 @@ def send_daily_report_now() -> int:
 
 def generate_daily_telegram_report_if_needed() -> None:
     from app.models import FarmSettings
-    today = date.today()
+
+    # بند إصلاح (مراجعة "أكواد الخلفية") — نفس إصلاح `generate_daily_
+    # email_report_if_needed`: `farm_today()` بدل `date.today()` الخام
+    # عشان حارس "هل أُرسل التقرير اليوم؟" يعتمد يوم السعودية لا يوم UTC.
+    from app.extensions import farm_today
+    today = farm_today()
     settings = FarmSettings.get()
     if settings.last_daily_telegram_report_sent == today:
         return
