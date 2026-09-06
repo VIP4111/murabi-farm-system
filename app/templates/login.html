@@ -14,7 +14,10 @@
   <form method="post">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('رقم الجوال') }}</label>
-    <input type="text" name="phone" required>
+    {# فحص "مقاسات الجوال" — الحقل كان type="text" فيطلع لوحة مفاتيح
+       كاملة بالجوال بدل لوحة أرقام، رغم إن المحتوى رقم جوال دايماً.
+       type="tel" + inputmode="numeric" يفرضان لوحة أرقام بكل المتصفحات. #}
+    <input type="tel" inputmode="numeric" name="phone" required>
     <label>{{ _('كلمة المرور') }}</label>
     <input type="password" name="password" required>
     <button class="btn" style="width:100%;" type="submit">{{ _('دخول') }}</button>
