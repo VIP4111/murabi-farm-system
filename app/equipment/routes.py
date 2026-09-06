@@ -29,6 +29,16 @@ def items_list():
 @require_permission("equipment.manage")
 def items_new():
     if request.method == "POST":
+        # بند إصلاح (فحص عميق مقسَّم — تدقيق شامل للنماذج) — نفس نمط
+        # ثغرات deduct_stock/add_stock المُصلَحة، بس هنا الرصيد الافتتاحي
+        # يُدخَل مباشرة بدون المرور بأي دالة محمية.
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
+            validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("equipment.items_new"))
         item = Equipment(
             name=request.form["name"], category=request.form.get("category"),
             unit=request.form.get("unit") or "قطعة",
@@ -51,6 +61,13 @@ def items_new():
 def items_edit(item_id):
     item = Equipment.query.get_or_404(item_id)
     if request.method == "POST":
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
+            validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("equipment.items_edit", item_id=item.id))
         item.name = request.form["name"]
         item.category = request.form.get("category")
         item.unit = request.form.get("unit") or "قطعة"

@@ -31,6 +31,19 @@ def items_list():
 @require_permission("feed.manage")
 def items_new():
     if request.method == "POST":
+        # بند إصلاح (فحص عميق مقسَّم — تدقيق شامل للنماذج) — نفس نمط
+        # ثغرات deduct_stock/add_stock المُصلَحة، بس هنا القيمة تُدخَل
+        # مباشرة بالسجل عند الإنشاء (رصيد افتتاحي) بدون المرور بأي دالة
+        # محمية — كمية سالبة أو سعر سالب كانا يُحفظان بصمت، ويكسران فحص
+        # "qty > available" بكل عمليات الخصم اللاحقة (رصيد سالب أصلاً
+        # يخلي أي خصم موجب يبان "أكبر من المتوفر" حتى لو معقول).
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
+            validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("feed.items_new"))
         item = Feed(
             name=request.form["name"], category=request.form.get("category"),
             feed_class=request.form.get("feed_class") or None,
@@ -63,6 +76,13 @@ def items_new():
 def items_edit(item_id):
     item = Feed.query.get_or_404(item_id)
     if request.method == "POST":
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
+            validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("feed.items_edit", item_id=item.id))
         item.name = request.form["name"]
         item.category = request.form.get("category")
         item.feed_class = request.form.get("feed_class") or None

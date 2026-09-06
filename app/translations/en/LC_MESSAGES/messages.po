@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 21:37+0300\n"
+"POT-Creation-Date: 2026-09-06 22:23+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1541,7 +1541,7 @@ msgstr "The mother doesn't exist"
 msgid "السعر"
 msgstr "Price"
 
-#: app/core/animal_service.py:181 app/reports/report_service.py:211
+#: app/core/animal_service.py:181 app/reports/report_service.py:223
 #: app/templates/animal_detail.html:137 app/templates/animal_form.html:144
 msgid "تاريخ الولادة"
 msgstr "Birth date"
@@ -2179,8 +2179,8 @@ msgstr "📋 Review tasks (%(n)s)"
 msgid "💬 فتح المساعد الذكي"
 msgstr "💬 Open the smart assistant"
 
-#: app/core/data_completeness_service.py:31 app/reports/report_service.py:166
-#: app/reports/report_service.py:211 app/templates/animal_detail.html:132
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:178
+#: app/reports/report_service.py:223 app/templates/animal_detail.html:132
 #: app/templates/animal_detail.html:356 app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
@@ -2188,7 +2188,7 @@ msgstr "💬 Open the smart assistant"
 msgid "الجنس"
 msgstr "Gender"
 
-#: app/core/data_completeness_service.py:31 app/reports/report_service.py:211
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:223
 #: app/templates/health/disease_type_detail.html:60
 msgid "الوزن"
 msgstr "Weight"
@@ -2553,7 +2553,7 @@ msgstr "Unknown bulk action"
 msgid "وزن جماعي: %(done)s من %(total)s تم تسجيلهم"
 msgstr "Bulk weighing: %(done)s of %(total)s were recorded"
 
-#: app/core/routes.py:510 app/health/routes.py:1137
+#: app/core/routes.py:510 app/health/routes.py:1156
 msgid "لازم تختار لقاحاً فعلياً مسجَّلاً بالصيدلية بفئة (لقاح)"
 msgstr ""
 "You must select an actual vaccine registered in the pharmacy under the "
@@ -3505,9 +3505,9 @@ msgstr ""
 "%(qty)s liters is unreasonable for one milking session — above the "
 "expected limit (%(max)s liters). Check the number before saving."
 
-#: app/core/validation_service.py:67 app/reports/report_service.py:166
-#: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/reports/report_service.py:378 app/templates/animal_detail.html:258
+#: app/core/validation_service.py:67 app/reports/report_service.py:178
+#: app/reports/report_service.py:265 app/reports/report_service.py:308
+#: app/reports/report_service.py:390 app/templates/animal_detail.html:258
 #: app/templates/animal_detail.html:272 app/templates/animal_detail.html:289
 #: app/templates/animal_detail.html:303 app/templates/animal_detail.html:318
 #: app/templates/animal_detail.html:329 app/templates/animal_detail.html:356
@@ -3598,55 +3598,66 @@ msgstr "This movement isn't a loan in the first place."
 msgid "هذي القطعة مسجَّلة راجعة من قبل."
 msgstr "This item is already recorded as returned."
 
-#: app/equipment/routes.py:43
+#: app/equipment/routes.py:37 app/equipment/routes.py:66 app/feed/routes.py:42
+#: app/feed/routes.py:81 app/health/routes.py:234 app/health/routes.py:321
+#: app/templates/feed/item_form.html:37
+msgid "الكمية المتوفرة"
+msgstr "Available quantity"
+
+#: app/equipment/routes.py:38 app/equipment/routes.py:67 app/feed/routes.py:43
+#: app/feed/routes.py:82 app/health/routes.py:235 app/health/routes.py:322
+msgid "الحد الأدنى للمخزون"
+msgstr "Minimum stock level"
+
+#: app/equipment/routes.py:53
 msgid "تمت إضافة الصنف"
 msgstr "The item has been added"
 
-#: app/equipment/routes.py:69
+#: app/equipment/routes.py:86
 msgid "تم تحديث الصنف"
 msgstr "The item has been updated"
 
-#: app/equipment/routes.py:81 app/feed/routes.py:220
+#: app/equipment/routes.py:98 app/feed/routes.py:240
 msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."
 msgstr ""
 "You also need finance-management permission to record a purchase (it "
 "creates a finance entry)."
 
-#: app/equipment/routes.py:98 app/feed/routes.py:237
+#: app/equipment/routes.py:115 app/feed/routes.py:257
 msgid "تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"
 msgstr ""
 "The purchase has been recorded — stock increased and the finance entry "
 "was recorded together"
 
-#: app/equipment/routes.py:115
+#: app/equipment/routes.py:132
 msgid "لازم تحدد مين يستلم القطعة قبل تسجيل الصرف."
 msgstr "You must specify who is receiving the item before recording the issue."
 
-#: app/equipment/routes.py:127
+#: app/equipment/routes.py:144
 msgid "تم تسجيل الحركة"
 msgstr "The movement has been recorded"
 
-#: app/equipment/routes.py:180
+#: app/equipment/routes.py:197
 msgid "تم تسجيل أخذك للقطعة"
 msgstr "Your taking of the item has been recorded"
 
-#: app/equipment/routes.py:195
+#: app/equipment/routes.py:212
 msgid "ما فيه استعارة قائمة لك بهذي القطعة"
 msgstr "You have no active loan for this item"
 
-#: app/equipment/routes.py:200 app/equipment/routes.py:215
+#: app/equipment/routes.py:217 app/equipment/routes.py:232
 msgid "تم تسجيل استرجاع القطعة"
 msgstr "The item's return has been recorded"
 
-#: app/equipment/routes.py:254
+#: app/equipment/routes.py:271
 msgid "تمت إضافة الأصل"
 msgstr "The asset has been added"
 
-#: app/equipment/routes.py:274
+#: app/equipment/routes.py:291
 msgid "تم تسجيل الصيانة"
 msgstr "The maintenance has been recorded"
 
-#: app/equipment/routes.py:305
+#: app/equipment/routes.py:322
 msgid "تم تسجيل القراءة"
 msgstr "The reading has been recorded"
 
@@ -3658,32 +3669,32 @@ msgstr ""
 "An outgoing (consumption) movement must be linked to a barn — without "
 "one, the daily cost cannot be calculated correctly."
 
-#: app/feed/routes.py:52
+#: app/feed/routes.py:65
 msgid "تمت إضافة مكوّن العلف"
 msgstr "The feed ingredient has been added"
 
-#: app/feed/routes.py:82
+#: app/feed/routes.py:102
 msgid "تم تحديث مكوّن العلف"
 msgstr "The feed ingredient has been updated"
 
-#: app/feed/routes.py:126 app/feed/routes.py:182
+#: app/feed/routes.py:146 app/feed/routes.py:202
 #, python-format
 msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد."
 msgstr "%(msg)s Write the override reason in the dedicated field if you're sure."
 
-#: app/feed/routes.py:138
+#: app/feed/routes.py:158
 msgid "تمت إضافة الوصفة"
 msgstr "The recipe has been added"
 
-#: app/feed/routes.py:200
+#: app/feed/routes.py:220
 msgid "تمت إضافة خطة التغذية"
 msgstr "The feeding plan has been added"
 
-#: app/feed/routes.py:270
+#: app/feed/routes.py:290
 msgid "تم تسجيل حركة المخزون"
 msgstr "The stock movement has been recorded"
 
-#: app/feed/routes.py:340 app/feed/routes.py:377
+#: app/feed/routes.py:360 app/feed/routes.py:397
 msgid "الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"
 msgstr "The selected animal has no recorded weight — enter a manual weight"
 
@@ -3703,8 +3714,8 @@ msgstr "The sale batch has been created"
 msgid "تم حذف الدفعة"
 msgstr "The batch has been deleted"
 
-#: app/finance/routes.py:271 app/reports/report_service.py:253
-#: app/reports/report_service.py:296 app/templates/animal_detail.html:494
+#: app/finance/routes.py:271 app/reports/report_service.py:265
+#: app/reports/report_service.py:308 app/templates/animal_detail.html:494
 #: app/templates/finance/form.html:36 app/templates/finance/list.html:20
 #: app/templates/finance/list.html:69
 #: app/templates/team/payroll_prepare.html:45
@@ -4196,131 +4207,131 @@ msgstr ""
 "The available data was extracted from the image — review and correct "
 "every field before you click save."
 
-#: app/health/routes.py:252
+#: app/health/routes.py:262
 msgid "تمت إضافة الدواء"
 msgstr "The medicine has been added"
 
-#: app/health/routes.py:322
+#: app/health/routes.py:341
 msgid "تم تحديث بيانات الدواء"
 msgstr "The medicine's data has been updated"
 
-#: app/health/routes.py:360
+#: app/health/routes.py:379
 msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."
 msgstr ""
 "You also need finance-management permission to record a purchase with a "
 "price (it creates a finance entry)."
 
-#: app/health/routes.py:375
+#: app/health/routes.py:394
 msgid "تم تسجيل عملية الشراء بالمخزون بس — بدون سعر، ما انسجلت عملية مالية."
 msgstr ""
 "The purchase was recorded in stock only — with no price, no finance entry"
 " was created."
 
-#: app/health/routes.py:377
+#: app/health/routes.py:396
 msgid "تم تسجيل عملية الشراء — زاد المخزون وانسجلت العملية المالية معاً"
 msgstr ""
 "The purchase has been recorded — stock increased and the finance entry "
 "was recorded together"
 
-#: app/health/routes.py:394
+#: app/health/routes.py:413
 msgid "اسم الطريقة مطلوب"
 msgstr "Method name is required"
 
-#: app/health/routes.py:397
+#: app/health/routes.py:416
 #, python-format
 msgid "\"%(name)s\" موجودة بالقائمة أصلاً"
 msgstr "\"%(name)s\" is already in the list"
 
-#: app/health/routes.py:401
+#: app/health/routes.py:420
 msgid "تمت إضافة طريقة الاستخدام"
 msgstr "The usage method has been added"
 
-#: app/health/routes.py:403 app/templates/health/pharmacy_form.html:70
+#: app/health/routes.py:422 app/templates/health/pharmacy_form.html:70
 msgid "إضافة طريقة استخدام جديدة"
 msgstr "Add a new usage method"
 
-#: app/health/routes.py:418
+#: app/health/routes.py:437
 msgid "اسم الدواء مطلوب"
 msgstr "Medicine name is required"
 
-#: app/health/routes.py:421
+#: app/health/routes.py:440
 #, python-format
 msgid "\"%(name)s\" موجود بالكتالوج أصلاً"
 msgstr "\"%(name)s\" is already in the catalog"
 
-#: app/health/routes.py:425
+#: app/health/routes.py:444
 msgid "تمت إضافة الدواء للكتالوج"
 msgstr "The medicine has been added to the catalog"
 
-#: app/health/routes.py:452 app/health/routes.py:489 app/team/routes.py:614
+#: app/health/routes.py:471 app/health/routes.py:508 app/team/routes.py:614
 #, python-format
 msgid "\"%(name)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(name)s\" is already in the list"
 
-#: app/health/routes.py:459
+#: app/health/routes.py:478
 msgid "تمت إضافة المرض للقائمة"
 msgstr "The disease has been added to the list"
 
-#: app/health/routes.py:486
+#: app/health/routes.py:505
 msgid "اسم العرض مطلوب"
 msgstr "Symptom name is required"
 
-#: app/health/routes.py:493
+#: app/health/routes.py:512
 msgid "تمت إضافة العرض"
 msgstr "The symptom has been added"
 
-#: app/health/routes.py:530
+#: app/health/routes.py:549
 msgid "لازم تختار عرض واحد على الأقل"
 msgstr "You must select at least one symptom"
 
-#: app/health/routes.py:555
+#: app/health/routes.py:574
 #, python-format
 msgid "تم — %(created)s رابط جديد و%(updated)s تحديث لمرض %(name)s"
 msgstr "Done — %(created)s new link(s) and %(updated)s update(s) for %(name)s"
 
-#: app/health/routes.py:573
+#: app/health/routes.py:592
 msgid "لازم تختار عرض"
 msgstr "You must select a symptom"
 
-#: app/health/routes.py:576
+#: app/health/routes.py:595
 msgid "هذا العرض مربوط بهذا المرض أصلاً"
 msgstr "This symptom is already linked to this disease"
 
-#: app/health/routes.py:590
+#: app/health/routes.py:609
 msgid "تمت إضافة الرابط"
 msgstr "The link has been added"
 
-#: app/health/routes.py:606
+#: app/health/routes.py:625
 msgid "تم تحديث الرابط"
 msgstr "The link has been updated"
 
-#: app/health/routes.py:620
+#: app/health/routes.py:639
 msgid "تم حذف الرابط"
 msgstr "The link has been deleted"
 
-#: app/health/routes.py:652
+#: app/health/routes.py:671
 msgid "لازم تحدد العرض وتكتب التشخيص التفريقي والتوصية"
 msgstr ""
 "You must select the symptom and write the differential diagnosis and "
 "recommendation"
 
-#: app/health/routes.py:655
+#: app/health/routes.py:674
 msgid "هذا العرض مسجَّل بقائمة الطوارئ أصلاً"
 msgstr "This symptom is already registered in the emergency list"
 
-#: app/health/routes.py:665
+#: app/health/routes.py:684
 msgid "تمت إضافة عرض الطوارئ"
 msgstr "The emergency symptom has been added"
 
-#: app/health/routes.py:678
+#: app/health/routes.py:697
 msgid "تم حذف عرض الطوارئ"
 msgstr "The emergency symptom has been deleted"
 
-#: app/health/routes.py:708
+#: app/health/routes.py:727
 msgid "تمت إضافة الطبيب"
 msgstr "The doctor has been added"
 
-#: app/health/routes.py:755
+#: app/health/routes.py:774
 msgid ""
 "تم تسجيل الزيارة (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء "
 "يتطلبها)"
@@ -4328,7 +4339,7 @@ msgstr ""
 "The visit has been recorded (cost was calculated automatically from the "
 "unit price, if the medicine requires it)"
 
-#: app/health/routes.py:826
+#: app/health/routes.py:845
 msgid ""
 "تم تسجيل الحالة المرضية (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء"
 " يتطلبها)"
@@ -4336,11 +4347,11 @@ msgstr ""
 "The medical case has been recorded (cost was calculated automatically "
 "from the unit price, if the medicine requires it)"
 
-#: app/health/routes.py:968
+#: app/health/routes.py:987
 msgid "تم إغلاق السجل المرضي"
 msgstr "The medical record has been closed"
 
-#: app/health/routes.py:1011
+#: app/health/routes.py:1030
 msgid ""
 "تم تسجيل التطعيم (والتكلفة اتحسبت تلقائياً من سعر الوحدة لو الدواء "
 "يتطلبها)"
@@ -4348,11 +4359,11 @@ msgstr ""
 "The vaccination has been recorded (cost was calculated automatically from"
 " the unit price, if the medicine requires it)"
 
-#: app/health/routes.py:1075
+#: app/health/routes.py:1094
 msgid "تم إنشاء البروتوكول"
 msgstr "The protocol has been created"
 
-#: app/health/routes.py:1097
+#: app/health/routes.py:1116
 #, python-format
 msgid ""
 "تم تطبيق البروتوكول \"%(name)s\" — تولّدت %(n)s مهمة علاج مخطَّطة بانتظار"
@@ -4361,15 +4372,15 @@ msgstr ""
 "Protocol \"%(name)s\" applied — %(n)s planned treatment task(s) were "
 "generated, pending the doctor's review."
 
-#: app/health/routes.py:1156
+#: app/health/routes.py:1175
 msgid "تمت جدولة التحصين"
 msgstr "The vaccination has been scheduled"
 
-#: app/health/routes.py:1181
+#: app/health/routes.py:1200
 msgid "تم إلغاء الجدولة"
 msgstr "The schedule has been cancelled"
 
-#: app/health/routes.py:1197
+#: app/health/routes.py:1216
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "The schedule has been marked as completed"
 
@@ -4495,59 +4506,59 @@ msgstr "Current month"
 msgid "نطاق مخصص"
 msgstr "Custom range"
 
-#: app/reports/report_service.py:110
+#: app/reports/report_service.py:122
 msgid "الرؤوس النشطة حالياً"
 msgstr "Currently active heads"
 
-#: app/reports/report_service.py:111
+#: app/reports/report_service.py:123
 msgid "رؤوس جديدة بالفترة"
 msgstr "New heads in period"
 
-#: app/reports/report_service.py:112 app/reports/report_service.py:202
+#: app/reports/report_service.py:124 app/reports/report_service.py:214
 msgid "ولادات بالفترة"
 msgstr "Births in period"
 
-#: app/reports/report_service.py:113
+#: app/reports/report_service.py:125
 msgid "حالات نفوق بالفترة"
 msgstr "Mortality cases in period"
 
-#: app/reports/report_service.py:114
+#: app/reports/report_service.py:126
 msgid "معدل النفوق التقريبي"
 msgstr "Approximate mortality rate"
 
-#: app/reports/report_service.py:115
+#: app/reports/report_service.py:127
 msgid "مبيعات بالفترة"
 msgstr "Sales in period"
 
-#: app/reports/report_service.py:116
+#: app/reports/report_service.py:128
 msgid "مصروفات+مشتريات بالفترة"
 msgstr "Expenses+purchases in period"
 
-#: app/reports/report_service.py:117
+#: app/reports/report_service.py:129
 msgid "صافي الفترة"
 msgstr "Net for period"
 
-#: app/reports/report_service.py:118
+#: app/reports/report_service.py:130
 msgid "تحصينات بالفترة"
 msgstr "Vaccinations in period"
 
-#: app/reports/report_service.py:119 app/templates/animal_detail.html:109
+#: app/reports/report_service.py:131 app/templates/animal_detail.html:109
 msgid "أمراض مفتوحة حالياً"
 msgstr "Currently open diseases"
 
-#: app/reports/report_service.py:124
+#: app/reports/report_service.py:136
 msgid "المؤشر"
 msgstr "Indicator"
 
-#: app/reports/report_service.py:124
+#: app/reports/report_service.py:136
 msgid "القيمة"
 msgstr "Value"
 
-#: app/reports/report_service.py:165
+#: app/reports/report_service.py:177
 msgid "إجمالي حالات النفوق"
 msgstr "Total mortality cases"
 
-#: app/reports/report_service.py:166 app/reports/report_service.py:211
+#: app/reports/report_service.py:178 app/reports/report_service.py:223
 #: app/templates/animal_form.html:13 app/templates/animal_form.html:18
 #: app/templates/animals_list.html:101 app/templates/barn_form.html:7
 #: app/templates/barns_list.html:11 app/templates/batches/batch_detail.html:56
@@ -4571,78 +4582,78 @@ msgstr "Total mortality cases"
 msgid "الرقم"
 msgstr "Number"
 
-#: app/reports/report_service.py:166 app/templates/reports/mortality.html:22
+#: app/reports/report_service.py:178 app/templates/reports/mortality.html:22
 #: app/templates/smart_sale_report.html:19
 #: app/templates/team/tasks_list.html:198
 msgid "السبب"
 msgstr "Reason"
 
-#: app/reports/report_service.py:166 app/templates/bulk_action_form.html:104
+#: app/reports/report_service.py:178 app/templates/bulk_action_form.html:104
 msgid "العمر (يوم)"
 msgstr "Age (days)"
 
-#: app/reports/report_service.py:203
+#: app/reports/report_service.py:215
 msgid "ذكور / إناث"
 msgstr "Males / Females"
 
-#: app/reports/report_service.py:204
+#: app/reports/report_service.py:216
 msgid "متوسط حجم البطن"
 msgstr "Average litter size"
 
-#: app/reports/report_service.py:205
+#: app/reports/report_service.py:217
 msgid "تقريعات بالفترة"
 msgstr "Matings in period"
 
-#: app/reports/report_service.py:206
+#: app/reports/report_service.py:218
 msgid "حمل مؤكد بالفترة"
 msgstr "Confirmed pregnancies in period"
 
-#: app/reports/report_service.py:207
+#: app/reports/report_service.py:219
 msgid "نسبة نجاح التقريع→حمل"
 msgstr "Mating→pregnancy success rate"
 
-#: app/reports/report_service.py:211 app/templates/animal_detail.html:135
+#: app/reports/report_service.py:223 app/templates/animal_detail.html:135
 #: app/templates/ostrich/egg_form.html:11
 #: app/templates/ostrich/egg_hatch_form.html:8
 #: app/templates/ostrich/eggs_list.html:24
 msgid "الأم"
 msgstr "Mother"
 
-#: app/reports/report_service.py:244
+#: app/reports/report_service.py:256
 msgid "عدد عمليات البيع"
 msgstr "Number of sale transactions"
 
-#: app/reports/report_service.py:245
+#: app/reports/report_service.py:257
 msgid "إجمالي المبيعات"
 msgstr "Total sales"
 
-#: app/reports/report_service.py:246 app/reports/report_service.py:288
+#: app/reports/report_service.py:258 app/reports/report_service.py:300
 msgid "إجمالي المشتريات+المصروفات"
 msgstr "Total purchases+expenses"
 
-#: app/reports/report_service.py:247 app/templates/team/payroll_list.html:23
+#: app/reports/report_service.py:259 app/templates/team/payroll_list.html:23
 #: app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:50
 msgid "الصافي"
 msgstr "Net"
 
-#: app/reports/report_service.py:248
+#: app/reports/report_service.py:260
 msgid "دعم خارجي مستلم (دين)"
 msgstr "External support received (debt)"
 
-#: app/reports/report_service.py:249 app/templates/finance/form.html:15
+#: app/reports/report_service.py:261 app/templates/finance/form.html:15
 #: app/templates/finance/list.html:73
 msgid "سداد دين"
 msgstr "Debt repayment"
 
-#: app/reports/report_service.py:253 app/reports/report_service.py:296
+#: app/reports/report_service.py:265 app/reports/report_service.py:308
 #: app/templates/finance/form.html:33 app/templates/finance/list.html:20
 #: app/templates/finance/list.html:69 app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "Item"
 
-#: app/reports/report_service.py:253 app/reports/report_service.py:296
-#: app/reports/report_service.py:378 app/templates/finance/health_view.html:14
+#: app/reports/report_service.py:265 app/reports/report_service.py:308
+#: app/reports/report_service.py:390 app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/dashboard.html:43
@@ -4657,35 +4668,35 @@ msgstr "Item"
 msgid "الحيوان"
 msgstr "Animal"
 
-#: app/reports/report_service.py:287
+#: app/reports/report_service.py:299
 msgid "عدد عمليات الشراء/المصروف"
 msgstr "Number of purchase/expense transactions"
 
-#: app/reports/report_service.py:289
+#: app/reports/report_service.py:301
 msgid "عدد عمليات الشراء"
 msgstr "Number of purchase transactions"
 
-#: app/reports/report_service.py:290
+#: app/reports/report_service.py:302
 msgid "إجمالي الشراء"
 msgstr "Total purchases"
 
-#: app/reports/report_service.py:291
+#: app/reports/report_service.py:303
 msgid "عدد المصروفات"
 msgstr "Number of expenses"
 
-#: app/reports/report_service.py:292
+#: app/reports/report_service.py:304
 msgid "إجمالي المصروفات"
 msgstr "Total expenses"
 
-#: app/reports/report_service.py:296
+#: app/reports/report_service.py:308
 msgid "الفاتورة المرفقة"
 msgstr "Attached invoice"
 
-#: app/reports/report_service.py:374
+#: app/reports/report_service.py:386
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "No activity in this period"
 
-#: app/reports/report_service.py:378 app/templates/equipment/items_list.html:15
+#: app/reports/report_service.py:390 app/templates/equipment/items_list.html:15
 #: app/templates/feed/barn_report.html:33 app/templates/feed/item_form.html:8
 #: app/templates/feed/items_list.html:14
 #: app/templates/health/pharmacy_list.html:14
@@ -4693,7 +4704,7 @@ msgstr "No activity in this period"
 msgid "الفئة"
 msgstr "Category"
 
-#: app/reports/report_service.py:378 app/templates/assistant/chat.html:121
+#: app/reports/report_service.py:390 app/templates/assistant/chat.html:121
 #: app/templates/team/_task_assign_fields.html:5
 #: app/templates/team/daily_templates.html:19
 #: app/templates/team/tasks_list.html:65 app/templates/team/tasks_list.html:112
@@ -4703,23 +4714,23 @@ msgstr "Category"
 msgid "العنوان"
 msgstr "Title"
 
-#: app/reports/report_service.py:378
+#: app/reports/report_service.py:390
 msgid "التفاصيل"
 msgstr "Details"
 
-#: app/reports/report_service.py:470
+#: app/reports/report_service.py:482
 msgid "عدد الرؤوس النشطة"
 msgstr "Number of active heads"
 
-#: app/reports/report_service.py:471
+#: app/reports/report_service.py:483
 msgid "عدد الأصناف المطلوب شراؤها"
 msgstr "Number of items needing purchase"
 
-#: app/reports/report_service.py:472
+#: app/reports/report_service.py:484
 msgid "فترة قياس الاستهلاك (أيام)"
 msgstr "Consumption measurement period (days)"
 
-#: app/reports/report_service.py:477 app/templates/animal_detail.html:494
+#: app/reports/report_service.py:489 app/templates/animal_detail.html:494
 #: app/templates/barn_form.html:12 app/templates/barns_list.html:11
 #: app/templates/equipment/asset_form.html:9
 #: app/templates/equipment/assets_list.html:15
@@ -4744,59 +4755,59 @@ msgstr "Consumption measurement period (days)"
 msgid "النوع"
 msgstr "Type"
 
-#: app/reports/report_service.py:477
+#: app/reports/report_service.py:489
 #: app/templates/equipment/purchase_form.html:9
 #: app/templates/warehouses/inventory_counts_list.html:10
 msgid "الصنف"
 msgstr "Item"
 
-#: app/reports/report_service.py:477
+#: app/reports/report_service.py:489
 msgid "المستهلك بالفترة"
 msgstr "Consumed in period"
 
-#: app/reports/report_service.py:477
+#: app/reports/report_service.py:489
 msgid "الاحتياج المتوقع (30 يوم)"
 msgstr "Projected need (30 days)"
 
-#: app/reports/report_service.py:478
+#: app/reports/report_service.py:490
 msgid "المخزون الحالي"
 msgstr "Current stock"
 
-#: app/reports/report_service.py:478
+#: app/reports/report_service.py:490
 msgid "الكمية المقترح شراؤها"
 msgstr "Suggested purchase quantity"
 
-#: app/reports/report_service.py:478 app/templates/equipment/item_form.html:13
+#: app/reports/report_service.py:490 app/templates/equipment/item_form.html:13
 #: app/templates/feed/item_form.html:29
 #: app/templates/health/pharmacy_form.html:127
 msgid "الوحدة"
 msgstr "Unit"
 
-#: app/reports/report_service.py:485
+#: app/reports/report_service.py:497
 msgid "التقرير الشامل"
 msgstr "Comprehensive report"
 
-#: app/reports/report_service.py:486
+#: app/reports/report_service.py:498
 msgid "تقرير النفوق"
 msgstr "Mortality report"
 
-#: app/reports/report_service.py:487
+#: app/reports/report_service.py:499
 msgid "تقرير الولادات والإنتاج"
 msgstr "Births and production report"
 
-#: app/reports/report_service.py:488
+#: app/reports/report_service.py:500
 msgid "تقرير المبيعات والمالية"
 msgstr "Sales and finance report"
 
-#: app/reports/report_service.py:489
+#: app/reports/report_service.py:501
 msgid "تقرير المشتريات"
 msgstr "Purchases report"
 
-#: app/reports/report_service.py:490
+#: app/reports/report_service.py:502
 msgid "تقرير إنجاز اليوم"
 msgstr "Daily activity report"
 
-#: app/reports/report_service.py:491
+#: app/reports/report_service.py:503
 msgid "تقرير طلب الشراء"
 msgstr "Purchase request report"
 
@@ -11220,10 +11231,6 @@ msgid ""
 msgstr ""
 "Useful for units whose weight isn't fixed (bale, bag) — a reference for "
 "you only, not used in any automatic calculation."
-
-#: app/templates/feed/item_form.html:37
-msgid "الكمية المتوفرة"
-msgstr "Available quantity"
 
 #: app/templates/feed/items_list.html:9
 msgid "مكوّن جديد"

@@ -226,6 +226,16 @@ def _resolve_pharmacy_quantity(form) -> tuple[int | None, float | None, float]:
 def pharmacy_new():
     if request.method == "POST":
         box_count, box_quantity, available_qty = _resolve_pharmacy_quantity(request.form)
+        # بند إصلاح (فحص عميق مقسَّم — تدقيق شامل للنماذج) — نفس نمط
+        # ثغرات deduct_stock/add_stock المُصلَحة، بس هنا الرصيد الافتتاحي
+        # يُدخَل مباشرة بدون المرور بأي دالة محمية.
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(available_qty, field_label=_("الكمية المتوفرة"))
+            validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("health.pharmacy_new"))
         item = Pharmacy(
             name=request.form["name"],
             medicine_class=request.form.get("medicine_class") or None,
@@ -304,8 +314,17 @@ def pharmacy_edit(pharmacy_id):
         item.name = request.form["name"]
         item.medicine_class = request.form.get("medicine_class") or None
         item.contains_high_copper = bool(request.form.get("contains_high_copper"))
-        item.box_count, item.box_quantity, item.available_qty = _resolve_pharmacy_quantity(request.form)
-        item.min_stock_qty = float(request.form.get("min_stock_qty") or 0)
+        box_count, box_quantity, available_qty = _resolve_pharmacy_quantity(request.form)
+        min_stock_qty = float(request.form.get("min_stock_qty") or 0)
+        from app.core import validation_service
+        try:
+            validation_service.validate_price(available_qty, field_label=_("الكمية المتوفرة"))
+            validation_service.validate_price(min_stock_qty, field_label=_("الحد الأدنى للمخزون"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("health.pharmacy_edit", pharmacy_id=item.id))
+        item.box_count, item.box_quantity, item.available_qty = box_count, box_quantity, available_qty
+        item.min_stock_qty = min_stock_qty
         item.unit = request.form.get("unit")
         item.unit_price = float(request.form["unit_price"]) if request.form.get("unit_price") else None
         item.expiry_date = date.fromisoformat(request.form["expiry_date"]) if request.form.get("expiry_date") else None
