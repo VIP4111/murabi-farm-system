@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 20:50+0300\n"
+"POT-Creation-Date: 2026-09-06 21:03+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -4373,7 +4373,7 @@ msgstr "The schedule has been cancelled"
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "The schedule has been marked as completed"
 
-#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:135
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:144
 #, python-format
 msgid ""
 "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" "
@@ -4382,6 +4382,10 @@ msgstr ""
 "The requested quantity (%(qty)s) is greater than what is actually "
 "available of \"%(name)s\" (%(available)s) — update the stock first or "
 "reduce the quantity."
+
+#: app/models/pharmacy.py:140
+msgid "الكمية المستخدمة لازم تكون رقماً موجباً أكبر من صفر."
+msgstr "The used quantity must be a positive number greater than zero."
 
 #: app/models/role.py:28
 msgid "صاحب الحلال"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 20:50+0300\n"
+"POT-Creation-Date: 2026-09-06 21:03+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4345,7 +4345,7 @@ msgstr "शेड्यूल रद्द कर दिया गया है"
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "शेड्यूल को पूर्ण के रूप में चिह्नित कर दिया गया है"
 
-#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:135
+#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:144
 #, python-format
 msgid ""
 "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" "
@@ -4353,6 +4353,10 @@ msgid ""
 msgstr ""
 "अनुरोधित मात्रा (%(qty)s) \"%(name)s\" से वास्तव में उपलब्ध "
 "(%(available)s) से अधिक है — पहले स्टॉक अपडेट करें या मात्रा कम करें।"
+
+#: app/models/pharmacy.py:140
+msgid "الكمية المستخدمة لازم تكون رقماً موجباً أكبر من صفر."
+msgstr "उपयोग की गई मात्रा शून्य से अधिक एक सकारात्मक संख्या होनी चाहिए।"
 
 #: app/models/role.py:28
 msgid "صاحب الحلال"
