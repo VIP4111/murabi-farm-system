@@ -627,12 +627,27 @@
     // الـService Worker يبعت رسالة لهذا التبويب بالضبط لما الرد الطازج
     // يوصل فعلياً لنفس الرابط المفتوح — فنحدّث الصفحة تلقائياً، والمستخدم
     // يشوف بياناته المحفوظة خلال ثوانٍ قليلة بدون أي تدخّل يدوي منه.
+    // بلاغ مستخدم حقيقي: "الصورة (الشعار) بالرئيسية تختفي وترجع بشكل
+    // مستمر". السبب: على إنترنت ضعيف باستمرار (أبطأ من مهلة الـService
+    // Worker كل مرة)، كل `location.reload()` فوق يصير هو نفسه طلب تصفّح
+    // جديد يدخل بنفس السباق شبكة/مهلة من جديد — لو الشبكة ما زالت بطيئة،
+    // يتكرر "اعرض نسخة قديمة ← الرد الطازج يوصل متأخر ← أعد التحميل" بلا
+    // توقف، فتبان الصفحة (وبالذات الشعار وقت إعادة الرسم) تختفي وترجع
+    // باستمرار. الحل: حارس بسيط بذاكرة التبويب (sessionStorage) يمنع أكثر
+    // من إعادة تحميل تلقائية واحدة لكل رابط خلال 15 ثانية — يبقى التحديث
+    // التلقائي شغّالاً للحالة العادية (تأخر عابر)، بس يوقف حلقة التكرار
+    // اللانهائية على إنترنت ضعيف مستمر.
+    var AUTO_RELOAD_COOLDOWN_MS = 15000;
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', function(event){
         var data = event.data;
-        if (data && data.type === 'MURABI_STALE_PAGE_REFRESHED' && data.url === window.location.href) {
-          location.reload();
-        }
+        if (!(data && data.type === 'MURABI_STALE_PAGE_REFRESHED' && data.url === window.location.href)) return;
+        var storageKey = 'murabi_last_auto_reload';
+        var lastReload = 0;
+        try { lastReload = parseInt(sessionStorage.getItem(storageKey) || '0', 10) || 0; } catch (e) {}
+        if (Date.now() - lastReload < AUTO_RELOAD_COOLDOWN_MS) return;
+        try { sessionStorage.setItem(storageKey, String(Date.now())); } catch (e) {}
+        location.reload();
       });
     }
 
