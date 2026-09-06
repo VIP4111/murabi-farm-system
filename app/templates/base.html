@@ -298,9 +298,14 @@
     }
     [data-density="comfortable"] .btn.light{border-width:2px;}
 
+    /* بحث "مقاسات الجوال" — كان حجم خط الحقول 14.5px. Safari بالآيفون
+       يكبّر الصفحة تلقائياً (zoom) عند الضغط على أي حقل إدخال حجم خطه
+       أقل من 16px — يصير كل ضغط على أي حقل بالنظام (وكلها بنفس هذي
+       القاعدة) يكبّر الشاشة فجأة، وغالباً ما ترجع تصغير لوحدها. 16px
+       يمنع هذا التكبير تماماً بأي متصفح آيفون، بدون أي فرق بصري يُذكر. */
     input, select, textarea{
       width:100%; border:1px solid var(--line); background:#fff; border-radius:16px;
-      padding:11px 12px; font-size:14.5px; font-family:inherit; outline:none;
+      padding:11px 12px; font-size:16px; font-family:inherit; outline:none;
       margin-bottom:10px;
     }
     textarea{min-height:80px; resize:vertical;}
