@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-04 14:07+0300\n"
+"POT-Creation-Date: 2026-09-06 07:28+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,20 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:136 app/core/routes.py:1089
+#: app/__init__.py:136 app/core/routes.py:1079
 #: app/templates/team/members_list.html:25
 msgid "نشط"
 msgstr "Active"
 
-#: app/__init__.py:137 app/core/routes.py:1089
+#: app/__init__.py:137 app/core/routes.py:1079
 msgid "غير نشط"
 msgstr "Inactive"
 
-#: app/__init__.py:138 app/core/routes.py:1089
+#: app/__init__.py:138 app/core/routes.py:1079
 msgid "مباع"
 msgstr "Sold"
 
-#: app/__init__.py:139 app/core/routes.py:1089
+#: app/__init__.py:139 app/core/routes.py:1079
 msgid "نافق"
 msgstr "Deceased"
 
@@ -144,15 +144,15 @@ msgstr "Moderate"
 msgid "شديدة"
 msgstr "Severe"
 
-#: app/__init__.py:196 app/team/routes.py:770
+#: app/__init__.py:196 app/team/routes.py:771
 msgid "مهمة عامة"
 msgstr "General task"
 
-#: app/__init__.py:197 app/team/routes.py:771
+#: app/__init__.py:197 app/team/routes.py:772
 msgid "فحص عزل"
 msgstr "Isolation check"
 
-#: app/__init__.py:198 app/team/routes.py:775
+#: app/__init__.py:198 app/team/routes.py:776
 msgid "مراجعة الدكتور"
 msgstr "Doctor review"
 
@@ -168,15 +168,15 @@ msgstr "Selenium dose"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "Colostrum/nursing follow-up"
 
-#: app/__init__.py:202 app/team/routes.py:772
+#: app/__init__.py:202 app/team/routes.py:773
 msgid "وزن"
 msgstr "Weighing"
 
-#: app/__init__.py:203 app/team/routes.py:773
+#: app/__init__.py:203 app/team/routes.py:774
 msgid "تحصين مستحق"
 msgstr "Vaccination due"
 
-#: app/__init__.py:204 app/team/routes.py:774
+#: app/__init__.py:204 app/team/routes.py:775
 msgid "تبديل علف"
 msgstr "Feed switch"
 
@@ -280,7 +280,7 @@ msgstr "Complete animal data"
 msgid "مراجعة احتمال عدوى منتشرة"
 msgstr "Review possible outbreak"
 
-#: app/__init__.py:277 app/team/routes.py:32 app/templates/base.html:1235
+#: app/__init__.py:277 app/team/routes.py:33 app/templates/base.html:1235
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "Emergency"
@@ -293,7 +293,7 @@ msgstr "Health condition"
 msgid "نقل للعزل"
 msgstr "Transfer to isolation"
 
-#: app/__init__.py:280 app/team/routes.py:44 app/templates/simple_home.html:79
+#: app/__init__.py:280 app/team/routes.py:45 app/templates/simple_home.html:79
 #: app/templates/worker_home.html:92
 msgid "تغذية / عليقة"
 msgstr "Feeding / ration"
@@ -751,6 +751,18 @@ msgstr ""
 "The link you opened is wrong or the page was removed — check the link or "
 "go back to the home page."
 
+#: app/__init__.py:479
+msgid "صار خطأ تقني غير متوقع"
+msgstr "An unexpected technical error occurred"
+
+#: app/__init__.py:480
+msgid ""
+"حاول مرة ثانية، ولو تكرر الخطأ أبلغ صاحب الحلال بوقت حصوله وشو كنت تسوي "
+"بالضبط عشان نصلحه."
+msgstr ""
+"Please try again. If it keeps happening, tell the farm owner when it "
+"happened and exactly what you were doing so it can be fixed."
+
 #: app/assistant/draft_action_service.py:31
 #, python-format
 msgid "ما فيه حيوان أم برقم \"%(no)s\"."
@@ -867,46 +879,46 @@ msgstr ""
 msgid "رقم الجوال أو كلمة المرور غير صحيحة"
 msgstr "Incorrect phone number or password"
 
-#: app/batches/routes.py:41
+#: app/batches/routes.py:42
 msgid "لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف."
 msgstr ""
 "At least one animal is required in the batch — specify at least the "
 "gender for each row."
 
-#: app/batches/routes.py:53
+#: app/batches/routes.py:54
 #, python-format
 msgid "تم تسجيل الدفعة \"%(no)s\" (%(n)s رأس) وعزلها بحظيرة الحجر الصحي."
 msgstr ""
 "Batch \"%(no)s\" (%(n)s head) was registered and isolated in the "
 "quarantine barn."
 
-#: app/batches/routes.py:93
+#: app/batches/routes.py:94
 #, python-format
 msgid "تقدّمت الدفعة لمرحلة الترقيم/الفحص — تولّدت %(n)s مهمة فحص فردي."
 msgstr ""
 "The batch has advanced to the tagging/checkup stage — %(n)s individual "
 "checkup task(s) were generated."
 
-#: app/batches/routes.py:112
+#: app/batches/routes.py:113
 #, python-format
 msgid "تم توزيع %(n)s رأس على حظائرها الدائمة."
 msgstr "%(n)s animal(s) have been distributed to their permanent barns."
 
-#: app/batches/routes.py:126
+#: app/batches/routes.py:127
 #, python-format
 msgid "استُبعدت %(no)s من التقدّم الجماعي التالي."
 msgstr "%(no)s has been excluded from the next bulk advance."
 
-#: app/batches/routes.py:140
+#: app/batches/routes.py:141
 #, python-format
 msgid "تم تحرير استبعاد %(no)s."
 msgstr "%(no)s's exclusion has been released."
 
-#: app/batches/routes.py:151
+#: app/batches/routes.py:152
 msgid "هذا الرأس مو ضمن أي دفعة."
 msgstr "This animal isn't part of any batch."
 
-#: app/batches/routes.py:162
+#: app/batches/routes.py:163
 #, python-format
 msgid "لحقت %(no)s بمرحلة الدفعة الحالية."
 msgstr "%(no)s has caught up with the batch's current stage."
@@ -1078,7 +1090,7 @@ msgstr "%(no)s — its pregnancy is delayed more than %(days)s day(s)"
 msgid "بدون تقريع/حمل جديد منذ آخر ولادة أو تلقيح مسجَّل"
 msgstr "No new breeding/pregnancy since the last recorded birth or insemination"
 
-#: app/core/alerts_service.py:266 app/core/alerts_service.py:604
+#: app/core/alerts_service.py:266 app/core/alerts_service.py:613
 msgid "بيانات ناقصة"
 msgstr "Missing data"
 
@@ -1290,12 +1302,12 @@ msgstr ""
 "alternative barn manually at completion time if you don't want to create "
 "this type)."
 
-#: app/core/alerts_service.py:605
+#: app/core/alerts_service.py:614
 #, python-format
 msgid "%(n)s رأس ما راح يدخل جدولة الأوزان المتأخرة إطلاقاً"
 msgstr "%(n)s animal(s) will never enter the overdue-weighing schedule"
 
-#: app/core/alerts_service.py:606
+#: app/core/alerts_service.py:615
 msgid ""
 "ما عندها وزن مسجَّل ولا تاريخ ولادة/شراء/دخول — بدون أي تاريخ مرجعي، "
 "النظام ما يقدر يحسب \"من متى ما اتوزنت\"، فتنبيه الوزن المتأخر ما يشتغل "
@@ -1308,16 +1320,16 @@ msgstr ""
 "Complete the purchase/entry date or record a first weight from the animal"
 " edit screen."
 
-#: app/core/alerts_service.py:630 app/core/alerts_service.py:650
+#: app/core/alerts_service.py:639 app/core/alerts_service.py:659
 msgid "عزل بدون حظيرة مصنّفة"
 msgstr "Isolation without a classified barn"
 
-#: app/core/alerts_service.py:631
+#: app/core/alerts_service.py:640
 #, python-format
 msgid "%(n)s رأس بمهام عزل بدون حظيرة عزل فعلية"
 msgstr "%(n)s animal(s) with isolation tasks and no actual isolation barn"
 
-#: app/core/alerts_service.py:632
+#: app/core/alerts_service.py:641
 msgid ""
 "ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً "
 "لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من شاشة "
@@ -1328,14 +1340,14 @@ msgstr ""
 "herd. Create a new \"isolation\" barn from the barns screen so automatic "
 "isolation works correctly for upcoming births."
 
-#: app/core/alerts_service.py:651
+#: app/core/alerts_service.py:660
 #, python-format
 msgid "%(n)s رأس أجهض بدون عزل فعلي — ما فيه حظيرة عزل"
 msgstr ""
 "%(n)s animal(s) aborted without actual isolation — there's no isolation "
 "barn"
 
-#: app/core/alerts_service.py:652
+#: app/core/alerts_service.py:661
 msgid ""
 "ما فيه حظيرة بنوع \"عزل\" بالنظام — الرأس المُجهِض ما انتقل لعزل طبي "
 "منفصل ولسا يخالط باقي القطيع رغم احتمال عدوى. أنشئ حظيرة بنوع \"عزل\" من "
@@ -1346,25 +1358,25 @@ msgstr ""
 "of the herd despite a possible infection. Create an \"isolation\" barn "
 "from the barns screen then move the animal manually."
 
-#: app/core/alerts_service.py:680
+#: app/core/alerts_service.py:689
 msgid "توزيع علف ناقص"
 msgstr "Incomplete feed distribution"
 
-#: app/core/alerts_service.py:681
+#: app/core/alerts_service.py:690
 #, python-format
 msgid "%(title)s — العلف ما اتوزّع بالكامل"
 msgstr "%(title)s — the feed wasn't fully distributed"
 
-#: app/core/alerts_service.py:737
+#: app/core/alerts_service.py:746
 msgid "توقّع نفاد علف"
 msgstr "Feed depletion forecast"
 
-#: app/core/alerts_service.py:738
+#: app/core/alerts_service.py:747
 #, python-format
 msgid "%(name)s — يتوقّع نفاده خلال %(days).1f يوم"
 msgstr "%(name)s — expected to run out within %(days).1f day(s)"
 
-#: app/core/alerts_service.py:739
+#: app/core/alerts_service.py:748
 #, python-format
 msgid ""
 "المتبقي %(available).1f %(unit)s، بمعدل استهلاك %(rate).1f %(unit)s/يوم "
@@ -1374,58 +1386,58 @@ msgstr ""
 "%(unit)s/day over the last %(span)s day(s) — placing a purchase order now"
 " is recommended."
 
-#: app/core/alerts_service.py:766
+#: app/core/alerts_service.py:775
 msgid "مهمة متعذّرة بانتظار المراجعة"
 msgstr "Failed task awaiting review"
 
-#: app/core/alerts_service.py:767
+#: app/core/alerts_service.py:776
 #, python-format
 msgid "%(title)s — %(reason)s"
 msgstr "%(title)s — %(reason)s"
 
-#: app/core/alerts_service.py:768
+#: app/core/alerts_service.py:777
 msgid "بدون ملاحظة إضافية من العامل."
 msgstr "No additional note from the worker."
 
-#: app/core/alerts_service.py:793
+#: app/core/alerts_service.py:802
 msgid "مهمة مقترحة بانتظار الاعتماد"
 msgstr "Suggested task awaiting approval"
 
-#: app/core/alerts_service.py:794
+#: app/core/alerts_service.py:803
 #, python-format
 msgid "%(title)s — بانتظار اعتمادك من قبل %(d)s"
 msgstr "%(title)s — awaiting your approval since %(d)s"
 
-#: app/core/alerts_service.py:795
+#: app/core/alerts_service.py:804
 msgid "افتح شاشة \"مهام مقترحة بانتظار الاعتماد\" واعتمدها أو أجّلها أو احذفها."
 msgstr ""
 "Open the \"suggested tasks awaiting approval\" screen and approve, "
 "postpone, or delete it."
 
-#: app/core/alerts_service.py:864
+#: app/core/alerts_service.py:873
 msgid "تباطؤ نمو مشبوه"
 msgstr "Suspicious growth slowdown"
 
-#: app/core/alerts_service.py:865
+#: app/core/alerts_service.py:874
 #, python-format
 msgid "%(no)s — معدل نموه %(rate).2f كجم/يوم"
 msgstr "%(no)s — its growth rate is %(rate).2f kg/day"
 
-#: app/core/alerts_service.py:866
+#: app/core/alerts_service.py:875
 #, python-format
 msgid "ينقص وزنه فعلياً (متوسط حظيرته %(avg).2f كجم/يوم) — يوصى بفحص صحي عاجل"
 msgstr ""
 "It's actually losing weight (its barn's average is %(avg).2f kg/day) — an"
 " urgent health check is recommended"
 
-#: app/core/alerts_service.py:868
+#: app/core/alerts_service.py:877
 #, python-format
 msgid "أبطأ بوضوح من متوسط حظيرته (%(avg).2f كجم/يوم) — يوصى بفحص صحي"
 msgstr ""
 "Clearly slower than its barn's average (%(avg).2f kg/day) — a health "
 "check is recommended"
 
-#: app/core/alerts_service.py:1050
+#: app/core/alerts_service.py:1059
 #, python-format
 msgid ""
 "فيه موعد تحصين مجدول لحظيرة %(barn)s بتاريخ %(date)s — تبي تراجع جدول "
@@ -1434,11 +1446,11 @@ msgstr ""
 "There is a scheduled vaccination for %(barn)s on %(date)s — want to "
 "review the vaccination schedule?"
 
-#: app/core/alerts_service.py:1054
+#: app/core/alerts_service.py:1063
 msgid "افتح جدول التحصينات ←"
 msgstr "Open the vaccination schedule ←"
 
-#: app/core/animal_filters_service.py:185 app/team/routes.py:762
+#: app/core/animal_filters_service.py:185 app/team/routes.py:763
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:15
@@ -2165,7 +2177,7 @@ msgstr "Purpose (breeding/fattening/sale)"
 msgid "اللون"
 msgstr "Color"
 
-#: app/core/factory_reset_service.py:73
+#: app/core/factory_reset_service.py:86
 #, python-format
 msgid "فشلت إعادة التهيئة بعد الحذف: %(error)s"
 msgstr "Re-initialization failed after deletion: %(error)s"
@@ -2605,24 +2617,24 @@ msgstr "New batch purchase: %(done)s of %(total)s were added successfully"
 msgid "%(no)s: %(msg)s"
 msgstr "%(no)s: %(msg)s"
 
-#: app/core/routes.py:837
+#: app/core/routes.py:827
 msgid "اسم الفصيلة مطلوب"
 msgstr "Species name is required"
 
-#: app/core/routes.py:840 app/core/routes.py:861
+#: app/core/routes.py:830 app/core/routes.py:851
 #, python-format
 msgid "\"%(value)s\" موجودة بالقائمة أصلاً"
 msgstr "\"%(value)s\" is already in the list"
 
-#: app/core/routes.py:844
+#: app/core/routes.py:834
 msgid "تمت إضافة الفصيلة"
 msgstr "The species has been added"
 
-#: app/core/routes.py:846 app/templates/animal_form.html:61
+#: app/core/routes.py:836 app/templates/animal_form.html:61
 msgid "إضافة فصيلة جديدة"
 msgstr "Add new species"
 
-#: app/core/routes.py:848
+#: app/core/routes.py:838
 msgid ""
 "فصيلة جديدة ما تدخل محرك دورة الإنتاج (تقريع/حمل/فطام) تلقائياً — تُعامَل"
 " بأمان مثل النعام لين يُبنى لها نظام مخصّص."
@@ -2631,108 +2643,108 @@ msgstr ""
 "(mating/pregnancy/weaning) — it's handled safely like ostriches until a "
 "dedicated system is built for it."
 
-#: app/core/routes.py:858
+#: app/core/routes.py:848
 msgid "اسم السلالة مطلوب"
 msgstr "Breed name is required"
 
-#: app/core/routes.py:865
+#: app/core/routes.py:855
 msgid "تمت إضافة السلالة"
 msgstr "The breed has been added"
 
-#: app/core/routes.py:867 app/templates/animal_form.html:71
+#: app/core/routes.py:857 app/templates/animal_form.html:71
 msgid "إضافة سلالة جديدة"
 msgstr "Add new breed"
 
-#: app/core/routes.py:890
+#: app/core/routes.py:880
 msgid "تم حفظ ملاحظات السلالة"
 msgstr "The breed notes have been saved"
 
-#: app/core/routes.py:902
+#: app/core/routes.py:892
 msgid "اسم اللون مطلوب"
 msgstr "Color name is required"
 
-#: app/core/routes.py:905
+#: app/core/routes.py:895
 #, python-format
 msgid "\"%(value)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(value)s\" is already in the list"
 
-#: app/core/routes.py:909
+#: app/core/routes.py:899
 msgid "تمت إضافة اللون"
 msgstr "The color has been added"
 
-#: app/core/routes.py:911 app/templates/animal_form.html:31
+#: app/core/routes.py:901 app/templates/animal_form.html:31
 msgid "إضافة لون جديد"
 msgstr "Add new color"
 
-#: app/core/routes.py:937 app/core/routes.py:1046
+#: app/core/routes.py:927 app/core/routes.py:1036
 msgid "الحظيرة مطلوبة"
 msgstr "The barn is required"
 
-#: app/core/routes.py:940 app/core/routes.py:1049
+#: app/core/routes.py:930 app/core/routes.py:1039
 msgid "اللون مطلوب"
 msgstr "The color is required"
 
-#: app/core/routes.py:970 app/core/routes.py:1073
+#: app/core/routes.py:960 app/core/routes.py:1063
 #, python-format
 msgid "رقم الحيوان \"%(no)s\" مستخدم من قبل"
 msgstr "Animal number \"%(no)s\" is already in use"
 
-#: app/core/routes.py:981
+#: app/core/routes.py:971
 msgid "تمت إضافة الحيوان"
 msgstr "The animal has been added"
 
-#: app/core/routes.py:1001
+#: app/core/routes.py:991
 #, python-format
 msgid "🍼 ولادة جديدة — %(no)s"
 msgstr "🍼 New birth — %(no)s"
 
-#: app/core/routes.py:1003
+#: app/core/routes.py:993
 #, python-format
 msgid "(الأم %(no)s)"
 msgstr "(mother %(no)s)"
 
-#: app/core/routes.py:1043
+#: app/core/routes.py:1033
 msgid "رقم الحيوان مطلوب"
 msgstr "The animal number is required"
 
-#: app/core/routes.py:1075
+#: app/core/routes.py:1065
 msgid "تم تحديث بيانات الحيوان"
 msgstr "The animal's data has been updated"
 
-#: app/core/routes.py:1087 app/models/animal_options.py:30
+#: app/core/routes.py:1077 app/models/animal_options.py:30
 #: app/templates/animals_bulk_purchase.html:22
 #: app/templates/team/report_detail.html:17
 msgid "حلال (ضأن/ماعز)"
 msgstr "Livestock (sheep/goat)"
 
-#: app/core/routes.py:1087 app/models/animal_options.py:31
+#: app/core/routes.py:1077 app/models/animal_options.py:31
 #: app/templates/animal_detail.html:104
 #: app/templates/animals_bulk_purchase.html:23
 #: app/templates/team/report_detail.html:17
 msgid "نعام"
 msgstr "Ostrich"
 
-#: app/core/routes.py:1098 app/templates/health/dashboard.html:29
+#: app/core/routes.py:1088 app/templates/health/dashboard.html:29
 #, python-format
 msgid "%(n)s يوم"
 msgstr "%(n)s days"
 
-#: app/core/routes.py:1100
+#: app/core/routes.py:1090
 #, python-format
 msgid "%(n)s شهر"
 msgstr "%(n)s month(s)"
 
-#: app/core/routes.py:1101
+#: app/core/routes.py:1091
 #, python-format
 msgid "%(n)s سنة"
 msgstr "%(n)s year(s)"
 
-#: app/core/routes.py:1128 app/templates/animal_detail.html:26
+#: app/core/routes.py:1118 app/templates/animal_detail.html:26
 #: app/templates/animals_bulk_purchase.html:29
 msgid "بدون حظيرة"
 msgstr "No barn"
 
-#: app/core/routes.py:1212
+#: app/core/routes.py:1202
 msgid ""
 "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر "
 "البنود يدوياً بالأسفل."
@@ -2740,34 +2752,34 @@ msgstr ""
 "Smart suggestion isn't available right now (make sure GEMINI_API_KEY is "
 "enabled) — pick the items manually below."
 
-#: app/core/routes.py:1241
+#: app/core/routes.py:1231
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr "%(n)s checkup task(s) have been assigned for animal %(no)s."
 
-#: app/core/routes.py:1281
+#: app/core/routes.py:1271
 msgid "تم تسجيل الوزن"
 msgstr "The weight has been recorded"
 
-#: app/core/routes.py:1308
+#: app/core/routes.py:1298
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr "The birth checklist has been saved"
 
-#: app/core/routes.py:1328
+#: app/core/routes.py:1318
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr "%(no)s has been moved to isolation"
 
-#: app/core/routes.py:1364
+#: app/core/routes.py:1354
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s has been taken out of isolation"
 
-#: app/core/routes.py:1388
+#: app/core/routes.py:1378
 msgid "تم تسجيل الحليب"
 msgstr "The milk has been recorded"
 
-#: app/core/routes.py:1398
+#: app/core/routes.py:1388
 #, python-format
 msgid ""
 "تنبيه: %(no)s تحت فترة تحريم حليب حتى %(until)s — الحليب المسجَّل الآن قد"
@@ -2776,17 +2788,17 @@ msgstr ""
 "Warning: %(no)s is under a milk withdrawal period until %(until)s — milk "
 "recorded now may be unsafe to sell or consume."
 
-#: app/core/routes.py:1414
+#: app/core/routes.py:1404
 msgid "تمت إضافة الملاحظة"
 msgstr "The note has been added"
 
-#: app/core/routes.py:1452
+#: app/core/routes.py:1442
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr ""
 "Ostriches don't enter the production cycle — check the ostrich record "
 "(eggs/hatching)."
 
-#: app/core/routes.py:1455
+#: app/core/routes.py:1445
 msgid ""
 "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا"
 " يوجد نظام دورة مخصّص لها بعد."
@@ -2794,74 +2806,74 @@ msgstr ""
 "This species doesn't enter the production-cycle engine (built for "
 "livestock biology only) — there's no dedicated cycle system for it yet."
 
-#: app/core/routes.py:1499
+#: app/core/routes.py:1489
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "There's no recorded sale for this animal."
 
-#: app/core/routes.py:1502
+#: app/core/routes.py:1492
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "This sale was recorded without an invoice."
 
-#: app/core/routes.py:1524
+#: app/core/routes.py:1514
 msgid "تم تحديث بيانات التخطيط"
 msgstr "The planning data has been updated"
 
-#: app/core/routes.py:1548
+#: app/core/routes.py:1538
 msgid "تم تسجيل البيع"
 msgstr "The sale has been recorded"
 
-#: app/core/routes.py:1562
+#: app/core/routes.py:1552
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 Animal sold — %(no)s for %(price)s"
 
-#: app/core/routes.py:1580
+#: app/core/routes.py:1570
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "The animal's departure to the market has been recorded"
 
-#: app/core/routes.py:1592
+#: app/core/routes.py:1582
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "The animal's return to the farm without a sale has been recorded"
 
-#: app/core/routes.py:1607
+#: app/core/routes.py:1597
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "The death has been recorded (without the cycle-completion requirement)"
 
-#: app/core/routes.py:1623
+#: app/core/routes.py:1613
 msgid "تم أرشفة الحيوان"
 msgstr "The animal has been archived"
 
-#: app/core/routes.py:1671 app/core/routes.py:1706
+#: app/core/routes.py:1661 app/core/routes.py:1696
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr "Barn number \"%(no)s\" is already in use"
 
-#: app/core/routes.py:1677
+#: app/core/routes.py:1667
 msgid "تمت إضافة الحظيرة"
 msgstr "The barn has been added"
 
-#: app/core/routes.py:1712
+#: app/core/routes.py:1702
 msgid "تم تحديث الحظيرة"
 msgstr "The barn has been updated"
 
-#: app/core/routes.py:1792
+#: app/core/routes.py:1782
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "The time settings have been saved"
 
-#: app/core/routes.py:1806
+#: app/core/routes.py:1796
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "The intake-medicine settings have been saved"
 
-#: app/core/routes.py:1834
+#: app/core/routes.py:1824
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "You must type the confirmation phrase exactly: \"%(phrase)s\""
 
-#: app/core/routes.py:1837
+#: app/core/routes.py:1827
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "Incorrect password — the factory reset was not performed."
 
-#: app/core/routes.py:1848
+#: app/core/routes.py:1838
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2870,7 +2882,7 @@ msgstr ""
 "Couldn't perform the factory reset, nothing was deleted (rolled back "
 "automatically). Error: %(err)s"
 
-#: app/core/routes.py:1851
+#: app/core/routes.py:1841
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2878,57 +2890,57 @@ msgstr ""
 "The factory reset succeeded — all farm data has been deleted. Log in "
 "again with the same phone number and password."
 
-#: app/core/routes.py:1870
+#: app/core/routes.py:1860
 msgid "تم حفظ بيانات المزرعة"
 msgstr "The farm's data has been saved"
 
-#: app/core/routes.py:1887
+#: app/core/routes.py:1877
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "The role name \"%(slug)s\" is already in use"
 
-#: app/core/routes.py:1892
+#: app/core/routes.py:1882
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "The job role has been created — now set its permissions"
 
-#: app/core/routes.py:1904
+#: app/core/routes.py:1894
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "You can't edit the owner role's permissions — it always has all "
 "permissions"
 
-#: app/core/routes.py:1922
+#: app/core/routes.py:1912
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:1949
+#: app/core/routes.py:1939
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:1949
+#: app/core/routes.py:1939
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:1975
+#: app/core/routes.py:1965
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:2075
+#: app/core/routes.py:2065
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:2083
+#: app/core/routes.py:2073
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2105
+#: app/core/routes.py:2095
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2126
+#: app/core/routes.py:2116
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -4160,7 +4172,7 @@ msgstr "\"%(name)s\" is already in the catalog"
 msgid "تمت إضافة الدواء للكتالوج"
 msgstr "The medicine has been added to the catalog"
 
-#: app/health/routes.py:452 app/health/routes.py:489 app/team/routes.py:609
+#: app/health/routes.py:452 app/health/routes.py:489 app/team/routes.py:610
 #, python-format
 msgid "\"%(name)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(name)s\" is already in the list"
@@ -4793,7 +4805,7 @@ msgstr "The hormone injection has been recorded"
 msgid "تم تحديث حالة البرنامج"
 msgstr "The program status has been updated"
 
-#: app/team/payroll_service.py:140 app/team/routes.py:354
+#: app/team/payroll_service.py:140 app/team/routes.py:355
 msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
 msgstr "This salary is already confirmed — it can't be edited."
 
@@ -4883,67 +4895,67 @@ msgstr "Permanent deletion is exclusive to the owner."
 msgid "الحذف النهائي بس للبلاغات الملغاة."
 msgstr "Permanent deletion is only for cancelled reports."
 
-#: app/team/routes.py:36 app/templates/simple_home.html:71
+#: app/team/routes.py:37 app/templates/simple_home.html:71
 #: app/templates/worker_home.html:84
 msgid "فحص / حالة صحية"
 msgstr "Checkup / Health status"
 
-#: app/team/routes.py:40 app/templates/simple_home.html:75
+#: app/team/routes.py:41 app/templates/simple_home.html:75
 #: app/templates/worker_home.html:88
 msgid "نقل إلى العزل"
 msgstr "Move to Isolation"
 
-#: app/team/routes.py:48 app/templates/worker_home.html:96
+#: app/team/routes.py:49 app/templates/worker_home.html:96
 msgid "بيض / حضانة (نعام)"
 msgstr "Eggs / Incubation (ostrich)"
 
-#: app/team/routes.py:91
+#: app/team/routes.py:92
 msgid "تمت إضافة العضو"
 msgstr "The member has been added"
 
-#: app/team/routes.py:131
+#: app/team/routes.py:132
 #, python-format
 msgid "رقم الجوال \"%(phone)s\" مستخدم من قبل"
 msgstr "Phone number \"%(phone)s\" is already in use"
 
-#: app/team/routes.py:133
+#: app/team/routes.py:134
 msgid "تم تحديث بيانات العضو وكلمة المرور"
 msgstr "The member's data and password have been updated"
 
-#: app/team/routes.py:133
+#: app/team/routes.py:134
 msgid "تم تحديث بيانات العضو"
 msgstr "The member's data has been updated"
 
-#: app/team/routes.py:171
+#: app/team/routes.py:172
 msgid "تم حفظ بيانات صاحب الحلال"
 msgstr "The owner's data has been saved"
 
-#: app/team/routes.py:184
+#: app/team/routes.py:185
 msgid "قيمة راتب غير صحيحة"
 msgstr "Invalid salary value"
 
-#: app/team/routes.py:198
+#: app/team/routes.py:199
 msgid "تاريخ وصول غير صحيح"
 msgstr "Invalid arrival date"
 
-#: app/team/routes.py:205
+#: app/team/routes.py:206
 #, python-format
 msgid "تم تحديث بيانات راتب %(name)s"
 msgstr "%(name)s's salary data has been updated"
 
-#: app/team/routes.py:222
+#: app/team/routes.py:223
 #, python-format
 msgid "تم تسجيل عودة %(name)s من السفر"
 msgstr "%(name)s's return from travel has been recorded"
 
-#: app/team/routes.py:225
+#: app/team/routes.py:226
 #, python-format
 msgid "تم تسجيل %(name)s كمسافر — أيام السفر تُستبعد من راتبه"
 msgstr ""
 "%(name)s has been recorded as traveling — travel days are excluded from "
 "their salary"
 
-#: app/team/routes.py:257
+#: app/team/routes.py:258
 #, python-format
 msgid ""
 "تنبيه: هذا التغيير يخص شهر (أشهر) عندها راتب مؤكَّد بالفعل (%(periods)s) "
@@ -4954,136 +4966,136 @@ msgstr ""
 "confirmed salary (%(periods)s) — the confirmed amount doesn't change "
 "automatically; edit it manually on the salary screen if needed."
 
-#: app/team/routes.py:273 app/team/routes.py:297
+#: app/team/routes.py:274 app/team/routes.py:298
 msgid "تاريخ غير صحيح"
 msgstr "Invalid date"
 
-#: app/team/routes.py:276 app/team/routes.py:300
+#: app/team/routes.py:277 app/team/routes.py:301
 msgid "تاريخ النهاية لازم يكون بعد تاريخ البداية"
 msgstr "The end date must be after the start date"
 
-#: app/team/routes.py:280
+#: app/team/routes.py:281
 msgid "تمت إضافة فترة السفر"
 msgstr "The travel period has been added"
 
-#: app/team/routes.py:306
+#: app/team/routes.py:307
 msgid "تم تعديل فترة السفر"
 msgstr "The travel period has been edited"
 
-#: app/team/routes.py:320
+#: app/team/routes.py:321
 msgid "تم حذف فترة السفر"
 msgstr "The travel period has been deleted"
 
-#: app/team/routes.py:360
+#: app/team/routes.py:361
 msgid "قيمة غير صحيحة بالراتب أو المكافأة"
 msgstr "Invalid value in the salary or bonus"
 
-#: app/team/routes.py:381
+#: app/team/routes.py:382
 #, python-format
 msgid "تم تأكيد راتب %(name)s — رحّل %(amount)s لسجل المالية."
 msgstr ""
 "%(name)s's salary has been confirmed — %(amount)s was posted to the "
 "finance record."
 
-#: app/team/routes.py:384
+#: app/team/routes.py:385
 msgid "تم حفظ المسودة"
 msgstr "The draft has been saved"
 
-#: app/team/routes.py:415
+#: app/team/routes.py:416
 msgid "لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع."
 msgstr "The salary must be confirmed first before uploading the signed receipt."
 
-#: app/team/routes.py:420
+#: app/team/routes.py:421
 msgid "تم رفع الوصل الموقَّع"
 msgstr "The signed receipt has been uploaded"
 
-#: app/team/routes.py:435
+#: app/team/routes.py:436
 msgid "هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع."
 msgstr "This salary hasn't been confirmed yet — there's no receipt to print."
 
-#: app/team/routes.py:479
+#: app/team/routes.py:480
 msgid "ما تقدر تعطّل حسابك أنت"
 msgstr "You can't deactivate your own account"
 
-#: app/team/routes.py:486
+#: app/team/routes.py:487
 msgid "تم تفعيل الحساب"
 msgstr "The account has been activated"
 
-#: app/team/routes.py:486
+#: app/team/routes.py:487
 msgid "تم تعطيل الحساب"
 msgstr "The account has been deactivated"
 
-#: app/team/routes.py:558
+#: app/team/routes.py:559
 #, python-format
 msgid "بلاغات كثيرة بوقت قصير — حاول بعد %(n)s ثانية."
 msgstr "Too many reports in a short time — try again after %(n)s seconds."
 
-#: app/team/routes.py:564
+#: app/team/routes.py:565
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل رفع البلاغ"
 msgstr ""
 "You must specify at least the animal or the barn before submitting the "
 "report"
 
-#: app/team/routes.py:579
+#: app/team/routes.py:580
 msgid "تم رفع البلاغ"
 msgstr "The report has been submitted"
 
-#: app/team/routes.py:606
+#: app/team/routes.py:607
 msgid "اسم نوع البلاغ مطلوب"
 msgstr "The report type name is required"
 
-#: app/team/routes.py:613
+#: app/team/routes.py:614
 msgid "تمت إضافة نوع البلاغ"
 msgstr "The report type has been added"
 
-#: app/team/routes.py:660
+#: app/team/routes.py:661
 msgid "تم قبول البلاغ — بدأ عدّاد الوقت"
 msgstr "The report has been accepted — the timer has started"
 
-#: app/team/routes.py:672
+#: app/team/routes.py:673
 msgid "تم تأجيل البلاغ"
 msgstr "The report has been postponed"
 
-#: app/team/routes.py:684
+#: app/team/routes.py:685
 msgid "رجع البلاغ لصندوق الوارد"
 msgstr "The report went back to the inbox"
 
-#: app/team/routes.py:696
+#: app/team/routes.py:697
 msgid "تم إلغاء البلاغ — انتقل لصاحب الحلال"
 msgstr "The report has been cancelled — moved to the owner"
 
-#: app/team/routes.py:709
+#: app/team/routes.py:710
 #, python-format
 msgid "تم تحويل البلاغ لـ %(name)s"
 msgstr "The report has been forwarded to %(name)s"
 
-#: app/team/routes.py:722
+#: app/team/routes.py:723
 msgid "تم تسجيل الإنجاز — رجع البلاغ للدكتور للمراجعة والإغلاق"
 msgstr ""
 "The completion has been recorded — the report went back to the doctor for"
 " review and closure"
 
-#: app/team/routes.py:734
+#: app/team/routes.py:735
 msgid "تم تنفيذ البلاغ وإغلاقه"
 msgstr "The report has been executed and closed"
 
-#: app/team/routes.py:746
+#: app/team/routes.py:747
 msgid "تم إغلاق البلاغ"
 msgstr "The report has been closed"
 
-#: app/team/routes.py:826
+#: app/team/routes.py:827
 msgid "قيمة تقييم غير صحيحة"
 msgstr "Invalid rating value"
 
-#: app/team/routes.py:835
+#: app/team/routes.py:836
 msgid "تم حفظ التقييم"
 msgstr "The rating has been saved"
 
-#: app/team/routes.py:983
+#: app/team/routes.py:1006
 msgid "عنوان المهمة مطلوب"
 msgstr "The task title is required"
 
-#: app/team/routes.py:994
+#: app/team/routes.py:1017
 msgid ""
 "فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها "
 "من القائمة وأضف وحدة جديدة."
@@ -5091,67 +5103,67 @@ msgstr ""
 "There's already an active daily task with this exact title — to change "
 "its notes, stop it from the list and add a new one instead."
 
-#: app/team/routes.py:1003
+#: app/team/routes.py:1026
 msgid "تمت إضافة المهمة اليومية"
 msgstr "The daily task has been added"
 
-#: app/team/routes.py:1019
+#: app/team/routes.py:1042
 msgid "تم إيقاف المهمة اليومية"
 msgstr "The daily task has been paused"
 
-#: app/team/routes.py:1019
+#: app/team/routes.py:1042
 msgid "تم تفعيل المهمة اليومية"
 msgstr "The daily task has been activated"
 
-#: app/team/routes.py:1042
+#: app/team/routes.py:1065
 msgid "تم توزيع المهمة"
 msgstr "The task has been assigned"
 
-#: app/team/routes.py:1072
+#: app/team/routes.py:1095
 msgid "بدأت المهمة"
 msgstr "The task has started"
 
-#: app/team/routes.py:1092
+#: app/team/routes.py:1115
 msgid "تم إنجاز المهمة"
 msgstr "The task has been completed"
 
-#: app/team/routes.py:1112
+#: app/team/routes.py:1135
 msgid "تم تسجيل تعذّر المهمة"
 msgstr "The task failure has been recorded"
 
-#: app/team/routes.py:1129
+#: app/team/routes.py:1152
 msgid "تم اعتماد المهمة — نزلت للعامل"
 msgstr "The task has been approved — sent to the worker"
 
-#: app/team/routes.py:1155 app/team/routes.py:1189
+#: app/team/routes.py:1178 app/team/routes.py:1212
 msgid "تم تأجيل المهمة ليوم واحد"
 msgstr "The task has been postponed by one day"
 
-#: app/team/routes.py:1172
+#: app/team/routes.py:1195
 msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
 msgstr "The task has been deleted — moved to the owner's review box"
 
-#: app/team/routes.py:1201
+#: app/team/routes.py:1224
 msgid "تم إلغاء المهمة"
 msgstr "The task has been cancelled"
 
-#: app/team/routes.py:1213
+#: app/team/routes.py:1236
 msgid "تم استرجاع المهمة"
 msgstr "The task has been restored"
 
-#: app/team/routes.py:1225
+#: app/team/routes.py:1248
 msgid "تم حذف المهمة نهائياً"
 msgstr "The task has been permanently deleted"
 
-#: app/team/routes.py:1244
+#: app/team/routes.py:1267
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
 msgstr "You must specify at least the animal or the barn before submitting"
 
-#: app/team/routes.py:1263
+#: app/team/routes.py:1286
 msgid "تم رفع البلاغ — راح يوصل للدكتور"
 msgstr "The report has been submitted — it will reach the doctor"
 
-#: app/team/routes.py:1314
+#: app/team/routes.py:1337
 msgid "تم حذف البلاغ نهائياً"
 msgstr "The report has been permanently deleted"
 
