@@ -13,7 +13,11 @@ class AnimalWeight(db.Model):
     __tablename__ = "animal_weights"
 
     id = db.Column(db.Integer, primary_key=True)
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    # بند إصلاح أداء (فحص "سرعة التصفح") — عمود يُفلتَر عليه (`filter_by
+    # (animal_id=...)`) بكل فتحة لصفحة تفاصيل رأس، وبكل حساب لاتجاه
+    # الوزن/فترة السحب المجمَّعة — بدون فهرس، مقارنة PostgreSQL تتحول
+    # لمسح كامل للجدول كل ما يكبر (سجل وزن يتراكم أسبوعياً لكل رأس).
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     animal = db.relationship("Animal")
 
     date = db.Column(db.Date, nullable=False)
@@ -31,7 +35,8 @@ class AnimalNote(db.Model):
     __tablename__ = "animal_notes"
 
     id = db.Column(db.Integer, primary_key=True)
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    # نفس إصلاح الفهرس أعلاه (`AnimalWeight.animal_id`).
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     animal = db.relationship("Animal")
 
     date = db.Column(db.Date, nullable=False)

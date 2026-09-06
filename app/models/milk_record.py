@@ -11,7 +11,10 @@ class MilkRecord(db.Model):
     __tablename__ = "milk_records"
 
     id = db.Column(db.Integer, primary_key=True)
-    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False)
+    # بند إصلاح أداء (فحص "سرعة التصفح") — نفس ملاحظة `AnimalWeight.
+    # animal_id`: يُفلتَر عليه بكل فتحة لصفحة تفاصيل رأس، بدون فهرس
+    # سابق — سجل حليب يتراكم يومياً (جلستين/يوم) لكل رأس منتج.
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=False, index=True)
     animal = db.relationship("Animal")
 
     date = db.Column(db.Date, nullable=False)

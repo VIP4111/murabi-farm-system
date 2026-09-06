@@ -33,7 +33,10 @@ class Task(db.Model):
     # المالك لاحقاً من الإعدادات.
     target_role = db.Column(db.String(32), nullable=True)
 
-    barn_id = db.Column(db.Integer, db.ForeignKey("barns.id"), nullable=True)
+    # بند إصلاح أداء (فحص "سرعة التصفح") — يُفلتَر عليه بشاشة "تنبيهاتي"
+    # وقوائم مهام العامل المقيَّد بحظيرة، بدون فهرس سابق (عكس `assignee_id`/
+    # `animal_id` بنفس الجدول اللي عندهما فهرس أصلاً).
+    barn_id = db.Column(db.Integer, db.ForeignKey("barns.id"), nullable=True, index=True)
     barn = db.relationship("Barn")
     animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"), nullable=True, index=True)
     animal = db.relationship("Animal")
