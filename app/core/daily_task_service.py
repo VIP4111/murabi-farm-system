@@ -23,8 +23,7 @@ def _source_id(rule_key: str, for_date: date) -> int:
     return zlib.crc32(f"{rule_key}:{for_date.isoformat()}".encode()) & 0x7FFFFFFF
 
 
-def _build_context() -> dict:
-    today = date.today()
+def _build_context(today: date) -> dict:
     active_animals = Animal.query.filter_by(status="active").all()
 
     has_newborns = any(
@@ -100,9 +99,16 @@ def generate_daily_husbandry_tasks(*, now: datetime | None = None) -> list:
     مسبقاً أيضاً — عشان يفتح المجال للتحضير المسائي بدل ما تنحبس مهام
     الغد لين تبدأ صباحاً. ترجع فقط المهام اللي أُنشئت الآن — تكرار
     الاستدعاء لاحقاً بنفس اليوم/الساعة يرجّع قائمة فاضية."""
+    # بند إصلاح (مراجعة "أكواد الخلفية") — `now` نفسه صار يُمرَّر
+    # بتوقيت الرياض من كل المستدعين (`scheduler.py`/`alerts_service.py`
+    # يستخدمان `farm_now_naive()`)، لكن `_build_context()` كانت لسا
+    # تحسب `today` الخاص فيها بشكل مستقل عبر `date.today()` الخام (UTC)
+    # بدل استخدام نفس `today` المحسوب هنا أصلاً — تناقض داخلي: تاريخ
+    # "اليوم" يختلف بين الدالتين قرب منتصف الليل بالسعودية. صار
+    # `_build_context` تستقبل `today` كوسيط بدل ما تعيد حسابه بنفسها.
     now = now or datetime.now()
     today = now.date()
-    ctx = _build_context()
+    ctx = _build_context(today)
     rules = _rule_definitions(ctx)
     created = []
 
