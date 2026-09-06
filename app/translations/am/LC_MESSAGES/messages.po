@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 22:23+0300\n"
+"POT-Creation-Date: 2026-09-07 00:14+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -3396,7 +3396,7 @@ msgstr ""
 #: app/templates/feed/movements_list.html:11
 #: app/templates/feed/purchase_form.html:15 app/templates/finance/form.html:8
 #: app/templates/finance/health_view.html:14
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:78
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:19
 #: app/templates/health/diseases_list.html:14
@@ -3558,36 +3558,36 @@ msgstr "የክምችት እንቅስቃሴ ተመዝግቧል"
 msgid "الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"
 msgstr "የተመረጠው እንስሳ የተመዘገበ ክብደት የለውም — በእጅ ክብደት ያስገቡ"
 
-#: app/finance/routes.py:172
+#: app/finance/routes.py:194
 msgid "اسم الدفعة مطلوب"
 msgstr "የስብስቡ ስም ያስፈልጋል"
 
-#: app/finance/routes.py:176
+#: app/finance/routes.py:198
 msgid "لازم تختار رأساً واحداً على الأقل"
 msgstr "ቢያንስ አንድ ራስ መምረጥ አለብዎት"
 
-#: app/finance/routes.py:191
+#: app/finance/routes.py:213
 msgid "تم إنشاء دفعة البيع"
 msgstr "የሽያጭ ስብስቡ ተፈጥሯል"
 
-#: app/finance/routes.py:243
+#: app/finance/routes.py:265
 msgid "تم حذف الدفعة"
 msgstr "ስብስቡ ተሰርዟል"
 
-#: app/finance/routes.py:271 app/reports/report_service.py:265
+#: app/finance/routes.py:293 app/reports/report_service.py:265
 #: app/reports/report_service.py:308 app/templates/animal_detail.html:494
 #: app/templates/finance/form.html:36 app/templates/finance/list.html:20
-#: app/templates/finance/list.html:69
+#: app/templates/finance/list.html:78
 #: app/templates/team/payroll_prepare.html:45
 #: app/templates/team/payroll_prepare.html:80
 msgid "المبلغ"
 msgstr "መጠን"
 
-#: app/finance/routes.py:272
+#: app/finance/routes.py:294
 msgid "تاريخ الحركة"
 msgstr "የእንቅስቃሴ ቀን"
 
-#: app/finance/routes.py:298
+#: app/finance/routes.py:320
 #, python-format
 msgid ""
 "تنبيه: هذا المبلغ (%(amount)s) %(direction)s بنسبة %(pct)s%% من متوسط "
@@ -3596,23 +3596,23 @@ msgstr ""
 "ማንቂያ: ይህ መጠን (%(amount)s) ካለፉት \"%(category)s\" ግብይቶች አማካይ (%(average)s) "
 "በ%(pct)s%% %(direction)s ነው።"
 
-#: app/finance/routes.py:315
+#: app/finance/routes.py:337
 #, python-format
 msgid "⚠️ عملية %(op)s غير معتادة"
 msgstr "⚠️ ያልተለመደ የ%(op)s ግብይት"
 
-#: app/finance/routes.py:316
+#: app/finance/routes.py:338
 #, python-format
 msgid ""
 "%(category)s — %(amount)s (%(direction)s بـ%(pct)s%% عن المعتاد "
 "%(average)s)"
 msgstr "%(category)s — %(amount)s (ከተለመደው %(average)s በ%(pct)s%% %(direction)s)"
 
-#: app/finance/routes.py:325
+#: app/finance/routes.py:347
 msgid "تمت إضافة العملية المالية"
 msgstr "የገንዘብ ግብይቱ ታክሏል"
 
-#: app/finance/routes.py:347
+#: app/finance/routes.py:369
 msgid "تم إلغاء العملية (السجل باقٍ للتدقيق)"
 msgstr "ግብይቱ ተሰርዟል (መዝገቡ ለምርመራ ይቆያል)"
 
@@ -4441,13 +4441,13 @@ msgid "دعم خارجي مستلم (دين)"
 msgstr "የተቀበለ የውጭ ድጋፍ (ዕዳ)"
 
 #: app/reports/report_service.py:261 app/templates/finance/form.html:15
-#: app/templates/finance/list.html:73
+#: app/templates/finance/list.html:82
 msgid "سداد دين"
 msgstr "የዕዳ ክፍያ"
 
 #: app/reports/report_service.py:265 app/reports/report_service.py:308
 #: app/templates/finance/form.html:33 app/templates/finance/list.html:20
-#: app/templates/finance/list.html:69 app/templates/settings_readiness.html:21
+#: app/templates/finance/list.html:78 app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "ንጥል"
 
@@ -4538,7 +4538,7 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 #: app/templates/equipment/utility_form.html:8
 #: app/templates/feed/movement_form.html:16
 #: app/templates/feed/movements_list.html:11 app/templates/finance/form.html:9
-#: app/templates/finance/list.html:69 app/templates/health/doctors_list.html:11
+#: app/templates/finance/list.html:78 app/templates/health/doctors_list.html:11
 #: app/templates/health/symptoms_list.html:20
 #: app/templates/repro/program_detail.html:39
 #: app/templates/team/_task_assign_fields.html:6
@@ -5327,7 +5327,7 @@ msgstr "በእርሻው የተወለደ"
 #: app/templates/batches/batches_list.html:5
 #: app/templates/equipment/items_list.html:9
 #: app/templates/feed/items_list.html:8 app/templates/finance/form.html:12
-#: app/templates/finance/list.html:73
+#: app/templates/finance/list.html:82
 msgid "شراء"
 msgstr "ግዢ"
 
@@ -5799,7 +5799,7 @@ msgstr "ክብደት"
 #: app/templates/animal_detail.html:341 app/templates/animal_workflow.html:155
 #: app/templates/animals_list.html:101 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:71
-#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:69
+#: app/templates/finance/health_view.html:34 app/templates/finance/list.html:78
 #: app/templates/finance/lots_list.html:18
 #: app/templates/health/diseases_list.html:14
 #: app/templates/health/doctors_list.html:11
@@ -6124,12 +6124,12 @@ msgid "الوصف"
 msgstr "መግለጫ"
 
 #: app/templates/animal_detail.html:495 app/templates/finance/form.html:11
-#: app/templates/finance/list.html:73
+#: app/templates/finance/list.html:82
 msgid "بيع"
 msgstr "ሽያጭ"
 
 #: app/templates/animal_detail.html:495 app/templates/finance/form.html:13
-#: app/templates/finance/list.html:73
+#: app/templates/finance/list.html:82
 msgid "مصروف"
 msgstr "ወጪ"
 
@@ -6420,7 +6420,7 @@ msgid "إضافة"
 msgstr "ጨምር"
 
 #: app/templates/animal_option_form.html:16 app/templates/family_view.html:140
-#: app/templates/finance/list.html:92
+#: app/templates/finance/list.html:101
 #: app/templates/health/drug_catalog_form.html:18
 #: app/templates/health/symptom_form.html:15
 #: app/templates/health/vaccination_schedule_form.html:44
@@ -9178,7 +9178,7 @@ msgstr "አጭር ጉብኝት (2 ደቂቃ) የዕለት ተዕለት መመሪ
 msgid "دليلك اليوم"
 msgstr "የዕለት ተዕለት መመሪያዎ"
 
-#: app/templates/worker_home.html:44
+#: app/templates/finance/list.html:61 app/templates/worker_home.html:44
 msgid "عرض الكل"
 msgstr "ሁሉንም ይመልከቱ"
 
@@ -11110,12 +11110,12 @@ msgid "لا يوجد وصفات مسجّلة بعد."
 msgstr "እስካሁን የተመዘገበ ራሽን የለም።"
 
 #: app/templates/finance/break_even_report.html:6
-#: app/templates/finance/list.html:59
+#: app/templates/finance/list.html:64
 msgid "التحليل المالي ونقطة التعادل"
 msgstr "የገንዘብ ትንተና እና ዕኩልነት ነጥብ"
 
 #: app/templates/finance/break_even_report.html:8
-#: app/templates/finance/list.html:63 app/templates/reports/_filter.html:11
+#: app/templates/finance/list.html:68 app/templates/reports/_filter.html:11
 #: app/templates/repro/matings_list.html:9
 msgid "تصدير Excel"
 msgstr "Excel ላክ"
@@ -11194,7 +11194,7 @@ msgid "لا يوجد رؤوس نشطة لتحليلها."
 msgstr "ለመተንተን ንቁ እንስሳት የሉም።"
 
 #: app/templates/finance/culling_index.html:5
-#: app/templates/finance/list.html:61
+#: app/templates/finance/list.html:66
 msgid "مؤشر الاستبعاد المالي"
 msgstr "የማስወገጃ መለኪያ"
 
@@ -11422,23 +11422,43 @@ msgstr "የተከፈለ"
 msgid "المتبقي عليك"
 msgstr "በእርስዎ ላይ የቀረው"
 
-#: app/templates/finance/list.html:58
+#: app/templates/finance/list.html:59
+msgid "الشهر الحالي بس"
+msgstr "የአሁኑ ወር ብቻ"
+
+#: app/templates/finance/list.html:61
+msgid ""
+"يجيب كل سجلات المالية منذ أول يوم بالمزرعة — أبطأ كل ما تراكمت البيانات، "
+"الافتراضي (الشهر الحالي) أسرع لمعظم الاستخدام."
+msgstr ""
+"ከእርሻው የመጀመሪያ ቀን ጀምሮ ያሉትን ሁሉንም የፋይናንስ መዝገቦች ያመጣል — መረጃው እየተከማቸ ሲሄድ ቀስ ብሎ "
+"ይሠራል፤ ነባሪው (የአሁኑ ወር) ለአብዛኛው አጠቃቀም ፈጣን ነው።"
+
+#: app/templates/finance/list.html:63
 msgid "تقرير تكلفة الرأس الشهرية"
 msgstr "ወርሃዊ የእንስሳ ዋጋ ሪፖርት"
 
-#: app/templates/finance/list.html:60
+#: app/templates/finance/list.html:65
 msgid "موسمية أسعار البيع"
 msgstr "የሽያጭ ዋጋ ወቅታዊነት"
 
-#: app/templates/finance/list.html:62 app/templates/finance/lots_list.html:6
+#: app/templates/finance/list.html:67 app/templates/finance/lots_list.html:6
 msgid "دفعات البيع"
 msgstr "የሽያጭ ጭነቶች"
 
-#: app/templates/finance/list.html:64
+#: app/templates/finance/list.html:69
 msgid "عملية جديدة"
 msgstr "አዲስ ግብይት"
 
-#: app/templates/finance/list.html:69
+#: app/templates/finance/list.html:73
+msgid "يعرض كل السجلات منذ أول يوم بالمزرعة."
+msgstr "ከእርሻው የመጀመሪያ ቀን ጀምሮ ያሉትን ሁሉንም መዝገቦች ያሳያል።"
+
+#: app/templates/finance/list.html:74
+msgid "يعرض سجلات الشهر الحالي بس — الإجماليات فوق تبقى لكل الوقت."
+msgstr "የአሁኑን ወር መዝገቦች ብቻ ያሳያል — ከላይ ያሉት ድምሮች ግን ሁሉንም ጊዜ ይሸፍናሉ።"
+
+#: app/templates/finance/list.html:78
 msgid ""
 "\"ملغاة\" = عملية أُلغيت بعد تسجيلها (ما تُحسب بأي تقرير مالي)، تبقى "
 "محفوظة للتوثيق بس. \"سارية\" = محسوبة فعلياً بكل الأرقام والتقارير فوق."
@@ -11446,11 +11466,11 @@ msgstr ""
 "\"የተሰረዘ\" = ከተመዘገበ በኋላ የተሰረዘ ግብይት (በምንም የገንዘብ ሪፖርት ውስጥ አይቆጠርም)፣ ለሰነድ ብቻ "
 "ይቀመጣል። \"ንቁ\" = ከላይ ባሉት ቁጥሮችና ሪፖርቶች ሁሉ ውስጥ በትክክል ይቆጠራል።"
 
-#: app/templates/finance/list.html:69
+#: app/templates/finance/list.html:78
 msgid "الفاتورة"
 msgstr "ደረሰኝ"
 
-#: app/templates/finance/list.html:69
+#: app/templates/finance/list.html:78
 msgid ""
 "لبيع رأس: فاتورة رسمية تولَّد أو ترفعها. لباقي العمليات: مرفق اختياري "
 "(صورة/PDF) لفاتورة الشراء أو المصروف."
@@ -11458,28 +11478,28 @@ msgstr ""
 "ራስ ለመሸጥ፦ የሚያመነጩት ወይም የሚስቀሉት ኦፊሴላዊ ደረሰኝ። ለሌሎች ግብይቶች፦ የግዢ ወይም የወጪ ደረሰኝ አማራጭ"
 " አባሪ (ምስል/PDF)።"
 
-#: app/templates/finance/list.html:73
+#: app/templates/finance/list.html:82
 msgid "دعم خارجي (دين)"
 msgstr "የውጭ ድጋፍ (ዕዳ)"
 
-#: app/templates/finance/list.html:76
+#: app/templates/finance/list.html:85
 #: app/templates/health/vaccination_schedule_list.html:63
 msgid "ملغاة"
 msgstr "የተሰረዘ"
 
-#: app/templates/finance/list.html:76
+#: app/templates/finance/list.html:85
 msgid "سارية"
 msgstr "ንቁ"
 
-#: app/templates/finance/list.html:79
+#: app/templates/finance/list.html:88
 msgid "بدون فاتورة"
 msgstr "ያለ ደረሰኝ"
 
-#: app/templates/finance/list.html:81
+#: app/templates/finance/list.html:90
 msgid "إصدار"
 msgstr "አውጣ"
 
-#: app/templates/finance/list.html:84 app/templates/reports/purchases.html:44
+#: app/templates/finance/list.html:93 app/templates/reports/purchases.html:44
 #: app/templates/team/payroll_list.html:16
 #: app/templates/team/payroll_list.html:40
 #: app/templates/team/payroll_reports.html:13
@@ -11488,11 +11508,11 @@ msgstr "አውጣ"
 msgid "عرض"
 msgstr "አሳይ"
 
-#: app/templates/finance/list.html:89
+#: app/templates/finance/list.html:98
 msgid "تأكيد الإلغاء؟"
 msgstr "መሰረዙን ያረጋግጡ?"
 
-#: app/templates/finance/list.html:98
+#: app/templates/finance/list.html:107
 msgid "لا يوجد عمليات مالية بعد."
 msgstr "እስካሁን የገንዘብ ግብይት የለም።"
 

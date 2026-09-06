@@ -27,13 +27,35 @@ def finance_health_view():
 @login_required
 @require_permission("finance.full.manage")
 def finance_list():
-    rows = Finance.query.order_by(Finance.date.desc()).all()
-    total_in = sum(r.amount for r in rows if r.operation_type == "sale" and not r.is_cancelled)
-    total_out = sum(r.amount for r in rows if r.operation_type in ("purchase", "expense") and not r.is_cancelled)
+    # بند إصلاح أداء (فحص "سرعة التصفح") — كانت تجيب *كل* سجلات المالية
+    # منذ أول يوم بالمزرعة دفعة وحدة (بلا حد أقصى ولا تقسيم)، وتحسب
+    # المجاميع بلوب Python فوقها — يتراكم بطء تدريجي مع الزمن (كل بيع/
+    # شراء/راتب/تكلفة طبية صف جديد). المجاميع (الإجماليات، صافي الربح)
+    # تبقى **كل الوقت** كما هي (تعريفها الأصلي "إجمالي")، تُحسب الآن
+    # بتجميع SQL مباشر (`func.sum`) بدل سحب كل الصفوف لبايثون — نفس
+    # فلسفة `finance_report_service.py` الموثَّقة أصلاً بالمشروع. الجدول
+    # المعروض بس يفتح افتراضياً على الشهر الحالي (أسرع + أنسب لمعظم
+    # الاستخدام)، مع رابط "عرض الكل" (قرارك الصريح) لو احتجت السجل كامل.
+    show_all = request.args.get("range") == "all"
+    rows_query = Finance.query.order_by(Finance.date.desc())
+    if not show_all:
+        today = date.today()
+        rows_query = rows_query.filter(Finance.date >= today.replace(day=1))
+    rows = rows_query.all()
+
+    def _sum_for(*op_types):
+        return float(
+            db.session.query(db.func.coalesce(db.func.sum(Finance.amount), 0.0))
+            .filter(Finance.operation_type.in_(op_types), Finance.is_cancelled.is_(False))
+            .scalar()
+        )
+
+    total_in = _sum_for("sale")
+    total_out = _sum_for("purchase", "expense")
     # الديون منفصلة تماماً عن الداخل/الخارج التشغيلي — "دعم خارجي" مو دخل
     # حقيقي، هو التزام لازم يُرد، فما يُحسب مع صافي الدخل (بند 18).
-    total_debt_in = sum(r.amount for r in rows if r.operation_type == "debt_in" and not r.is_cancelled)
-    total_debt_repaid = sum(r.amount for r in rows if r.operation_type == "debt_repayment" and not r.is_cancelled)
+    total_debt_in = _sum_for("debt_in")
+    total_debt_repaid = _sum_for("debt_repayment")
 
     # صافي الربح ونسبته % (بند إضافي 256، طلبك الصريح: "كم نسبة أرباحي")
     # — الديون مستثناة عمداً (نفس منطق الداخل/الخارج أعلاه)، الديون
@@ -49,7 +71,7 @@ def finance_list():
         total_debt_in=total_debt_in, total_debt_repaid=total_debt_repaid,
         debt_outstanding=total_debt_in - total_debt_repaid,
         net_profit=net_profit, profit_percent=profit_percent,
-        loss_diagnosis=loss_diagnosis,
+        loss_diagnosis=loss_diagnosis, show_all=show_all,
     )
 
 

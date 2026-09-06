@@ -55,6 +55,11 @@
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
     <h2 style="margin:0;">{{ _('المالية') }}</h2>
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      {% if show_all %}
+      <a class="btn light" href="{{ url_for('finance.finance_list') }}">{{ _('الشهر الحالي بس') }}</a>
+      {% else %}
+      <a class="btn light" href="{{ url_for('finance.finance_list', range='all') }}">{{ _('عرض الكل') }} {{ tip(_('يجيب كل سجلات المالية منذ أول يوم بالمزرعة — أبطأ كل ما تراكمت البيانات، الافتراضي (الشهر الحالي) أسرع لمعظم الاستخدام.')) }}</a>
+      {% endif %}
       <a class="btn light" href="{{ url_for('finance.monthly_cost_report') }}">{{ _('تقرير تكلفة الرأس الشهرية') }}</a>
       <a class="btn light" href="{{ url_for('finance.break_even_report') }}">{{ _('التحليل المالي ونقطة التعادل') }}</a>
       <a class="btn light" href="{{ url_for('finance.seasonal_price_analysis') }}">📈 {{ _('موسمية أسعار البيع') }}</a>
@@ -64,7 +69,11 @@
       <a class="btn" href="{{ url_for('finance.finance_new') }}">+ {{ _('عملية جديدة') }}</a>
     </div>
   </div>
-  <div class="table-scroll" style="margin-top:12px;">
+  <p style="color:var(--muted); font-size:12px; margin:10px 0 0;">
+    {% if show_all %}{{ _('يعرض كل السجلات منذ أول يوم بالمزرعة.') }}
+    {% else %}{{ _('يعرض سجلات الشهر الحالي بس — الإجماليات فوق تبقى لكل الوقت.') }}{% endif %}
+  </p>
+  <div class="table-scroll" style="margin-top:8px;">
   <table class="compact-table">
     <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النوع') }}</th><th>{{ _('البند') }}</th><th>{{ _('المبلغ') }}</th><th>{{ _('الحالة') }} {{ tip(_('"ملغاة" = عملية أُلغيت بعد تسجيلها (ما تُحسب بأي تقرير مالي)، تبقى محفوظة للتوثيق بس. "سارية" = محسوبة فعلياً بكل الأرقام والتقارير فوق.')) }}</th><th>{{ _('الفاتورة') }} {{ tip(_('لبيع رأس: فاتورة رسمية تولَّد أو ترفعها. لباقي العمليات: مرفق اختياري (صورة/PDF) لفاتورة الشراء أو المصروف.')) }}</th><th></th></tr>
     {% for r in rows %}
