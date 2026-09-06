@@ -1782,9 +1782,21 @@ def telegram_status():
 @login_required
 @require_permission("settings.manage")
 def farm_settings_save():
+    """بند إصلاح (فحص عميق — شاشة الإعدادات) — هذي القيم الأربعين+ تغذّي
+    مباشرة كل منطق دورة الإنتاج والمهام التلقائية بالخلفية (مدة الحمل،
+    الحجر، تنبيهات المخزون التنبؤية...) بدون أي تحقق سابقاً: (1) قيمة
+    فاضية أو غير رقمية بحقل واحد بس (مسح خطأ، لصق فاضي) كانت تكسر
+    `int()`/`float()` مباشرة وترمي 500 خام يفقد كل التعديلات الأربعين
+    المدخلة بنفس الفورم دفعة وحدة، بدل رسالة توضّح أي حقل بالضبط؛ (2)
+    قيمة سالبة (خطأ كتابة، أو تلاعب متعمَّد بالفورم) كانت تُقبل بصمت
+    وتنكسر بها حسابات تاريخية حساسة بكل أنحاء النظام (مثلاً `gestation_
+    days` سالب يخلي "تاريخ الولادة المتوقع" بالماضي، يكسر `pregnancy_
+    care_service`/`barn_physiology_service` بالكامل). صار يتحقق من كل
+    القيم أولاً (رقم صحيح موجب أو صفر) قبل أي `setattr`، ويرفض العملية
+    كاملة (بدون حفظ جزئي) برسالة تحدّد اسم الحقل المسبِّب لو فشل شي."""
     from app.models import FarmSettings
     fs = FarmSettings.get()
-    for field in (
+    int_fields = (
         "gestation_days", "sponge_duration_days", "ram_entry_after_sponge_days",
         "pre_birth_feed_change_days", "postpartum_feed_days", "male_sale_after_birth_days",
         "alert_before_days", "vaccination_repeat_days", "isolation_days",
@@ -1808,12 +1820,46 @@ def farm_settings_save():
         "colostrum_window_hours", "placenta_check_hours", "postpartum_mother_followup_days",
         # بند إضافي 278 — مهلة إنذار المهام حسّاسة الوقت (وجبات العلف).
         "task_late_grace_minutes",
-    ):
-        setattr(fs, field, int(request.form[field]))
-    fs.target_profit_margin_percent = float(request.form["target_profit_margin_percent"])
-    fs.concentrate_increase_max_percent_weekly = float(request.form["concentrate_increase_max_percent_weekly"])
-    fs.ca_phosphorus_target_ratio = float(request.form["ca_phosphorus_target_ratio"])
-    fs.ca_phosphorus_tolerance = float(request.form["ca_phosphorus_tolerance"])
+    )
+    float_fields = (
+        "target_profit_margin_percent", "concentrate_increase_max_percent_weekly",
+        "ca_phosphorus_target_ratio", "ca_phosphorus_tolerance",
+    )
+
+    new_values = {}
+    invalid_field = None
+    for field in int_fields:
+        try:
+            value = int(request.form[field])
+        except (KeyError, ValueError, TypeError):
+            invalid_field = field
+            break
+        if value < 0:
+            invalid_field = field
+            break
+        new_values[field] = value
+    if invalid_field is None:
+        for field in float_fields:
+            try:
+                value = float(request.form[field])
+            except (KeyError, ValueError, TypeError):
+                invalid_field = field
+                break
+            if value < 0:
+                invalid_field = field
+                break
+            new_values[field] = value
+
+    if invalid_field is not None:
+        flash(_(
+            'قيمة الحقل "%(field)s" غير صالحة — لازم تكون رقماً صحيحاً موجباً (أو صفر). '
+            "لم يُحفَظ أي تعديل، صحّح القيمة وحاول مرة ثانية.",
+            field=invalid_field,
+        ), "danger")
+        return redirect(url_for("core.settings_home"))
+
+    for field, value in new_values.items():
+        setattr(fs, field, value)
     db.session.add(fs)
     db.session.commit()
     flash(_("تم حفظ الإعدادات الزمنية"), "success")

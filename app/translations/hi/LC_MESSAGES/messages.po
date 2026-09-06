@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 00:14+0300\n"
+"POT-Creation-Date: 2026-09-07 02:23+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -55,7 +55,7 @@ msgstr "हटाया/संग्रहीत"
 msgid "ترتيب غير منتظم"
 msgstr "अनियमित क्रम"
 
-#: app/__init__.py:145 app/core/telegram_commands_service.py:162
+#: app/__init__.py:145 app/core/telegram_commands_service.py:160
 msgid "جديد"
 msgstr "नया"
 
@@ -773,7 +773,7 @@ msgstr ""
 "आपने जो फ़ाइल अपलोड की है वह अनुमति से बड़ी है — कृपया छोटी फ़ोटो या "
 "ऑडियो रिकॉर्डिंग आज़माएँ।"
 
-#: app/extensions.py:42
+#: app/extensions.py:61
 msgid "سجّل دخولك أولاً عشان توصل لهذي الصفحة."
 msgstr "इस पेज तक पहुँचने के लिए पहले लॉग इन करें।"
 
@@ -1449,7 +1449,7 @@ msgstr ""
 "अपने बाड़े के औसत (%(avg).2f किग्रा/दिन) से स्पष्ट रूप से धीमा — "
 "स्वास्थ्य जांच की सिफारिश की जाती है"
 
-#: app/core/alerts_service.py:1070
+#: app/core/alerts_service.py:1075
 #, python-format
 msgid ""
 "فيه موعد تحصين مجدول لحظيرة %(barn)s بتاريخ %(date)s — تبي تراجع جدول "
@@ -1458,7 +1458,7 @@ msgstr ""
 "%(barn)s के लिए %(date)s को एक निर्धारित टीकाकरण है — क्या आप टीकाकरण "
 "अनुसूची की समीक्षा करना चाहते हैं?"
 
-#: app/core/alerts_service.py:1074
+#: app/core/alerts_service.py:1079
 msgid "افتح جدول التحصينات ←"
 msgstr "टीकाकरण अनुसूची खोलें ←"
 
@@ -2039,26 +2039,26 @@ msgstr ""
 "इस पशु से जुड़े वित्तीय लेनदेन मौजूद हैं — यदि आप जारी रखना चाहते हैं तो "
 "\"ओवरराइड\" सक्षम करें।"
 
-#: app/core/daily_email_report_service.py:97
+#: app/core/daily_email_report_service.py:100
 #, python-format
 msgid "📊 تقرير مراح بو علي اليومي — %(date)s"
 msgstr "📊 मुराबी बू अली दैनिक रिपोर्ट — %(date)s"
 
-#: app/core/daily_email_report_service.py:102
+#: app/core/daily_email_report_service.py:105
 msgid "موجز الحالة اليومية:"
 msgstr "आज की स्थिति सारांश:"
 
-#: app/core/daily_email_report_service.py:103
+#: app/core/daily_email_report_service.py:106
 #, python-format
 msgid "🐑 إجمالي القطيع النشط: %(n)s رأس"
 msgstr "🐑 कुल सक्रिय झुंड: %(n)s सिर"
 
-#: app/core/daily_email_report_service.py:104
+#: app/core/daily_email_report_service.py:107
 #, python-format
 msgid "🚨 تنبيهات مستعجلة: %(urgent)s من أصل %(total)s"
 msgstr "🚨 तत्काल अलर्ट: %(total)s में से %(urgent)s"
 
-#: app/core/daily_email_report_service.py:105
+#: app/core/daily_email_report_service.py:108
 #, python-format
 msgid ""
 "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة اليوم: %(due_today)s  |  "
@@ -2067,104 +2067,104 @@ msgstr ""
 "⚠️ वास्तव में विलंबित: %(overdue)s  |  आज देय: %(due_today)s  |  बिना "
 "तारीख: %(no_date)s"
 
-#: app/core/daily_email_report_service.py:107
-#: app/core/telegram_commands_service.py:165
+#: app/core/daily_email_report_service.py:110
+#: app/core/telegram_commands_service.py:163
 #, python-format
 msgid "📋 بلاغات مفتوحة: %(n)s"
 msgstr "📋 खुली रिपोर्टें: %(n)s"
 
-#: app/core/daily_email_report_service.py:110
-#: app/core/daily_email_report_service.py:154
+#: app/core/daily_email_report_service.py:113
+#: app/core/daily_email_report_service.py:157
 msgid "أهم ما يحتاج إجراء اليوم:"
 msgstr "आज की सबसे ज़रूरी प्राथमिकताएं:"
 
-#: app/core/daily_email_report_service.py:115
+#: app/core/daily_email_report_service.py:118
 msgid "روابط سريعة:"
 msgstr "त्वरित लिंक:"
 
-#: app/core/daily_email_report_service.py:116
+#: app/core/daily_email_report_service.py:119
 #, python-format
 msgid "- كل التنبيهات (%(n)s): %(url)s"
 msgstr "- सभी अलर्ट (%(n)s): %(url)s"
 
-#: app/core/daily_email_report_service.py:117
+#: app/core/daily_email_report_service.py:120
 #, python-format
 msgid "- المهام (%(n)s): %(url)s"
 msgstr "- कार्य (%(n)s): %(url)s"
 
-#: app/core/daily_email_report_service.py:118
+#: app/core/daily_email_report_service.py:121
 #, python-format
 msgid "- المساعد الذكي: %(url)s"
 msgstr "- स्मार्ट सहायक: %(url)s"
 
-#: app/core/daily_email_report_service.py:128
+#: app/core/daily_email_report_service.py:131
 msgid "🐑 إجمالي القطيع النشط"
 msgstr "🐑 कुल सक्रिय झुंड"
 
-#: app/core/daily_email_report_service.py:128
+#: app/core/daily_email_report_service.py:131
 #: app/templates/batches/batch_detail.html:11
 #, python-format
 msgid "%(n)s رأس"
 msgstr "%(n)s पशु"
 
-#: app/core/daily_email_report_service.py:129
+#: app/core/daily_email_report_service.py:132
 msgid "🚨 تنبيهات مستعجلة"
 msgstr "🚨 तत्काल अलर्ट"
 
-#: app/core/daily_email_report_service.py:129
+#: app/core/daily_email_report_service.py:132
 #, python-format
 msgid "%(urgent)s من أصل %(total)s"
 msgstr "%(total)s में से %(urgent)s"
 
-#: app/core/daily_email_report_service.py:131
+#: app/core/daily_email_report_service.py:134
 msgid "⏰ مهام متأخرة فعلاً"
 msgstr "⏰ वास्तव में विलंबित कार्य"
 
-#: app/core/daily_email_report_service.py:132
+#: app/core/daily_email_report_service.py:135
 msgid "📅 مهام مستحقة اليوم"
 msgstr "📅 आज देय कार्य"
 
-#: app/core/daily_email_report_service.py:133
+#: app/core/daily_email_report_service.py:136
 msgid "🗂️ مهام بدون تاريخ محدَّد"
 msgstr "🗂️ बिना तारीख वाले कार्य"
 
-#: app/core/daily_email_report_service.py:134
+#: app/core/daily_email_report_service.py:137
 msgid "📋 بلاغات مفتوحة"
 msgstr "📋 खुली रिपोर्टें"
 
-#: app/core/daily_email_report_service.py:140
+#: app/core/daily_email_report_service.py:143
 msgid "حل المشكلة ◀"
 msgstr "ठीक करें ◀"
 
-#: app/core/daily_email_report_service.py:155
+#: app/core/daily_email_report_service.py:158
 msgid "🔗 روابط سريعة"
 msgstr "🔗 त्वरित लिंक"
 
-#: app/core/daily_email_report_service.py:157
+#: app/core/daily_email_report_service.py:160
 #, python-format
 msgid "عرض كل التنبيهات (%(n)s)"
 msgstr "सभी अलर्ट देखें (%(n)s)"
 
-#: app/core/daily_email_report_service.py:158
+#: app/core/daily_email_report_service.py:161
 #, python-format
 msgid "مراجعة المهام (%(n)s)"
 msgstr "कार्यों की समीक्षा करें (%(n)s)"
 
-#: app/core/daily_email_report_service.py:159
+#: app/core/daily_email_report_service.py:162
 msgid "فتح المساعد الذكي"
 msgstr "स्मार्ट सहायक खोलें"
 
-#: app/core/daily_telegram_report_service.py:52
+#: app/core/daily_telegram_report_service.py:50
 #, python-format
 msgid "🚨 عرض التنبيهات (%(n)s)"
 msgstr "🚨 अलर्ट देखें (%(n)s)"
 
-#: app/core/daily_telegram_report_service.py:53
+#: app/core/daily_telegram_report_service.py:51
 #, python-format
 msgid "📋 مراجعة المهام (%(n)s)"
 msgstr "📋 कार्यों की समीक्षा करें (%(n)s)"
 
-#: app/core/daily_telegram_report_service.py:54
+#: app/core/daily_telegram_report_service.py:52
 msgid "💬 فتح المساعد الذكي"
 msgstr "💬 स्मार्ट सहायक खोलें"
 
@@ -2266,12 +2266,12 @@ msgstr "दादी/पोता"
 msgid "عم/عمة أو خال/خالة"
 msgstr "चाचा/मामा संबंध"
 
-#: app/core/outbreak_service.py:82
+#: app/core/outbreak_service.py:84
 #, python-format
 msgid "🦠 احتمال عدوى منتشرة — حظيرة %(barn)s"
 msgstr "🦠 संभावित प्रकोप — %(barn)s"
 
-#: app/core/outbreak_service.py:84
+#: app/core/outbreak_service.py:86
 #, python-format
 msgid "%(n)s رأس مختلف بنفس الحظيرة بحالة مرضية مفتوحة خلال آخر %(days)s يوم."
 msgstr ""
@@ -2883,24 +2883,34 @@ msgstr "बाड़ा जोड़ दिया गया है"
 msgid "تم تحديث الحظيرة"
 msgstr "बाड़ा अपडेट कर दिया गया है"
 
-#: app/core/routes.py:1819
+#: app/core/routes.py:1855
+#, python-format
+msgid ""
+"قيمة الحقل \"%(field)s\" غير صالحة — لازم تكون رقماً صحيحاً موجباً (أو "
+"صفر). لم يُحفَظ أي تعديل، صحّح القيمة وحاول مرة ثانية."
+msgstr ""
+"\"%(field)s\" फ़ील्ड का मान अमान्य है — यह पूर्ण संख्या (शून्य या "
+"धनात्मक) होनी चाहिए। कोई भी बदलाव सहेजा नहीं गया — मान ठीक करके फिर कोशिश"
+" करें।"
+
+#: app/core/routes.py:1865
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "समय सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1833
+#: app/core/routes.py:1879
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "इनटेक-दवा सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1861 app/core/routes.py:2058
+#: app/core/routes.py:1907 app/core/routes.py:2104
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "आपको पुष्टिकरण वाक्यांश बिल्कुल ऐसे लिखना होगा: \"%(phrase)s\""
 
-#: app/core/routes.py:1864
+#: app/core/routes.py:1910
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "पासवर्ड गलत है — फैक्टरी रीसेट नहीं किया गया।"
 
-#: app/core/routes.py:1875
+#: app/core/routes.py:1921
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2909,7 +2919,7 @@ msgstr ""
 "फैक्टरी रीसेट नहीं हो सका, कुछ भी नहीं हटाया गया (अपने आप वापस कर दिया "
 "गया)। त्रुटि: %(err)s"
 
-#: app/core/routes.py:1878
+#: app/core/routes.py:1924
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2917,59 +2927,59 @@ msgstr ""
 "फैक्टरी रीसेट सफल रहा — फार्म का सारा डेटा हटा दिया गया है। उसी फोन नंबर "
 "और पासवर्ड से फिर से लॉगिन करें।"
 
-#: app/core/routes.py:1897
+#: app/core/routes.py:1943
 msgid "تم حفظ بيانات المزرعة"
 msgstr "फार्म का डेटा सेव कर दिया गया है"
 
-#: app/core/routes.py:1914
+#: app/core/routes.py:1960
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "भूमिका का नाम \"%(slug)s\" पहले से उपयोग में है"
 
-#: app/core/routes.py:1919
+#: app/core/routes.py:1965
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "पद बना दिया गया है — अब उसकी अनुमतियां तय करें"
 
-#: app/core/routes.py:1931
+#: app/core/routes.py:1977
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "आप मालिक की भूमिका की अनुमतियां संपादित नहीं कर सकते — इसके पास हमेशा सभी"
 " अनुमतियां होती हैं"
 
-#: app/core/routes.py:1949
+#: app/core/routes.py:1995
 msgid "تم تحديث صلاحيات الدور"
 msgstr "भूमिका की अनुमतियां अपडेट कर दी गई हैं"
 
-#: app/core/routes.py:1976
+#: app/core/routes.py:2022
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "%(name)s सेवा सक्रिय कर दी गई है"
 
-#: app/core/routes.py:1976
+#: app/core/routes.py:2022
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "%(name)s सेवा निष्क्रिय कर दी गई है"
 
-#: app/core/routes.py:2002
+#: app/core/routes.py:2048
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "बैकअप बना दिया गया है: %(name)s"
 
-#: app/core/routes.py:2061
+#: app/core/routes.py:2107
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
 msgstr "पासवर्ड गलत है — रिस्टोर नहीं किया गया।"
 
-#: app/core/routes.py:2064
+#: app/core/routes.py:2110
 msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
 msgstr "पहले बैकअप फ़ाइल (JSON) चुनें।"
 
-#: app/core/routes.py:2071
+#: app/core/routes.py:2117
 msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
 msgstr ""
 "अपलोड की गई फ़ाइल मान्य JSON नहीं है — सुनिश्चित करें कि यह वही डाउनलोड "
 "की गई फ़ाइल है, बिना किसी बदलाव के।"
 
-#: app/core/routes.py:2084
+#: app/core/routes.py:2130
 #, python-format
 msgid ""
 "تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
@@ -2978,7 +2988,7 @@ msgstr ""
 "रिस्टोर विफल — कोई डेटा नहीं बदला गया (स्वतः वापस कर दिया गया)। त्रुटि: "
 "%(err)s"
 
-#: app/core/routes.py:2091
+#: app/core/routes.py:2137
 #, python-format
 msgid ""
 "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
@@ -2987,19 +2997,19 @@ msgstr ""
 "%(n)s पंक्तियाँ सफलतापूर्वक बहाल की गईं — सारा मौजूदा डेटा अपलोड किए गए "
 "बैकअप से बदल दिया गया। कृपया दोबारा लॉग इन करें।"
 
-#: app/core/routes.py:2162
+#: app/core/routes.py:2208
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "आपको सटीक वाक्यांश लिखना होगा और पुष्टि चेक करनी होगी।"
 
-#: app/core/routes.py:2170
+#: app/core/routes.py:2216
 msgid "تم حذف بيانات المحاكاة."
 msgstr "सिमुलेशन डेटा हटा दिया गया है।"
 
-#: app/core/routes.py:2192
+#: app/core/routes.py:2238
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "आपको पुष्टि बॉक्स चेक करना होगा।"
 
-#: app/core/routes.py:2213
+#: app/core/routes.py:2259
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -3217,12 +3227,12 @@ msgstr "वर्तमान लाभ मार्जिन %(margin)s%% ≥ �
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "कोई बिक्री संकेत नहीं — उत्पादक मादा, रखना बेहतर"
 
-#: app/core/stock_alert_service.py:39
+#: app/core/stock_alert_service.py:55
 #, python-format
 msgid "متبقي %(available)s %(unit)s (الحد الأدنى %(min)s %(unit)s)"
 msgstr "शेष %(available)s %(unit)s (न्यूनतम %(min)s %(unit)s)"
 
-#: app/core/stock_alert_service.py:43
+#: app/core/stock_alert_service.py:59
 #, python-format
 msgid ""
 "متبقي %(available)s %(unit)s — على معدل الاستهلاك الأخير، يكفي ~%(days)s "
@@ -3231,182 +3241,182 @@ msgstr ""
 "शेष %(available)s %(unit)s — हाल की खपत दर पर, केवल ~%(days)s दिन "
 "पर्याप्त हैं (%(threshold)s दिनों से कम)"
 
-#: app/core/stock_alert_service.py:48
+#: app/core/stock_alert_service.py:64
 #, python-format
 msgid "📦 نقص مخزون %(kind)s %(icon)s"
 msgstr "📦 %(kind)s स्टॉक की कमी %(icon)s"
 
-#: app/core/telegram_commands_service.py:72
+#: app/core/telegram_commands_service.py:70
 msgid "هذا الأمر خاص بصاحب الحلال فقط."
 msgstr "यह कमांड केवल मालिक के लिए है।"
 
-#: app/core/telegram_commands_service.py:87
+#: app/core/telegram_commands_service.py:85
 msgid "هذا الأمر يحتاج صلاحية عرض السجل الصحي."
 msgstr "इस कमांड के लिए स्वास्थ्य रिकॉर्ड देखने की अनुमति चाहिए।"
 
-#: app/core/telegram_commands_service.py:96
+#: app/core/telegram_commands_service.py:94
 msgid "هذا الأمر يحتاج صلاحية رفع بلاغ."
 msgstr "इस कमांड के लिए रिपोर्ट सबमिट करने की अनुमति चाहिए।"
 
-#: app/core/telegram_commands_service.py:127
+#: app/core/telegram_commands_service.py:125
 msgid "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم"
 msgstr "अज्ञात कमांड। उपलब्ध कमांड: /مهامي, تم"
 
-#: app/core/telegram_commands_service.py:139
+#: app/core/telegram_commands_service.py:137
 msgid "لا توجد مهام مفتوحة عليك حالياً. 👍"
 msgstr "फिलहाल आपके पास कोई खुला कार्य नहीं है। 👍"
 
-#: app/core/telegram_commands_service.py:140
+#: app/core/telegram_commands_service.py:138
 #, python-format
 msgid " (موعدها %(d)s)"
 msgstr " (नियत तिथि %(d)s)"
 
-#: app/core/telegram_commands_service.py:141
+#: app/core/telegram_commands_service.py:139
 #, python-format
 msgid "✅ مهامك المفتوحة (%(n)s):"
 msgstr "✅ आपके खुले कार्य (%(n)s):"
 
-#: app/core/telegram_commands_service.py:148
+#: app/core/telegram_commands_service.py:146
 msgid "لا توجد تنبيهات حالياً. ✅"
 msgstr "फिलहाल कोई अलर्ट नहीं है। ✅"
 
-#: app/core/telegram_commands_service.py:152
+#: app/core/telegram_commands_service.py:150
 #, python-format
 msgid "🔔 عدد التنبيهات: %(total)s (منها %(urgent)s مستعجل)"
 msgstr "🔔 अलर्ट संख्या: %(total)s (%(urgent)s तत्काल)"
 
-#: app/core/telegram_commands_service.py:161
+#: app/core/telegram_commands_service.py:159
 msgid "لا توجد بلاغات مفتوحة حالياً. ✅"
 msgstr "फिलहाल कोई खुली रिपोर्ट नहीं है। ✅"
 
-#: app/core/telegram_commands_service.py:162
-#: app/core/telegram_commands_service.py:210
+#: app/core/telegram_commands_service.py:160
+#: app/core/telegram_commands_service.py:213
 msgid "مقبول"
 msgstr "स्वीकृत"
 
-#: app/core/telegram_commands_service.py:162
-#: app/core/telegram_commands_service.py:210
+#: app/core/telegram_commands_service.py:160
+#: app/core/telegram_commands_service.py:213
 msgid "بانتظار المراجعة"
 msgstr "समीक्षा लंबित"
 
-#: app/core/telegram_commands_service.py:166
+#: app/core/telegram_commands_service.py:164
 #, python-format
 msgid "أحدثها (#%(id)s, %(status)s): %(desc)s"
 msgstr "नवीनतम (#%(id)s, %(status)s): %(desc)s"
 
-#: app/core/telegram_commands_service.py:186
+#: app/core/telegram_commands_service.py:189
 #, python-format
 msgid "📊 تقرير اليوم (%(date)s):"
 msgstr "📊 आज की रिपोर्ट (%(date)s):"
 
-#: app/core/telegram_commands_service.py:187
+#: app/core/telegram_commands_service.py:190
 #, python-format
 msgid "🐑 إجمالي الرؤوس النشطة: %(n)s"
 msgstr "🐑 कुल सक्रिय सिर: %(n)s"
 
-#: app/core/telegram_commands_service.py:188
+#: app/core/telegram_commands_service.py:191
 #, python-format
 msgid "✅ مهام مفتوحة/متأخرة: %(n)s"
 msgstr "✅ खुले/विलंबित कार्य: %(n)s"
 
-#: app/core/telegram_commands_service.py:189
+#: app/core/telegram_commands_service.py:192
 #, python-format
 msgid "📋 بلاغات جديدة اليوم: %(n)s"
 msgstr "📋 आज नई रिपोर्टें: %(n)s"
 
-#: app/core/telegram_commands_service.py:190
+#: app/core/telegram_commands_service.py:193
 #, python-format
 msgid "🔔 تنبيهات مستعجلة: %(n)s"
 msgstr "🔔 तत्काल अलर्ट: %(n)s"
 
-#: app/core/telegram_commands_service.py:209
+#: app/core/telegram_commands_service.py:212
 msgid "لا توجد بلاغات مستلمة عليك حالياً. 👍"
 msgstr "फिलहाल आपको कोई प्राप्त रिपोर्ट नहीं है। 👍"
 
-#: app/core/telegram_commands_service.py:212
+#: app/core/telegram_commands_service.py:215
 #, python-format
 msgid "📋 بلاغاتك المستلمة (%(n)s):"
 msgstr "📋 आपकी प्राप्त रिपोर्टें (%(n)s):"
 
-#: app/core/telegram_commands_service.py:223
+#: app/core/telegram_commands_service.py:226
 msgid "لا توجد حالات معزولة حالياً. ✅"
 msgstr "फिलहाल कोई पृथक मामले नहीं हैं। ✅"
 
-#: app/core/telegram_commands_service.py:224
+#: app/core/telegram_commands_service.py:227
 #, python-format
 msgid "🚨 عدد الرؤوس المعزولة حالياً: %(n)s"
 msgstr "🚨 वर्तमान में पृथक सिर: %(n)s"
 
-#: app/core/telegram_commands_service.py:231
+#: app/core/telegram_commands_service.py:234
 msgid "افتح التطبيق ← البلاغات ← بلاغ جديد."
 msgstr "ऐप खोलें ← रिपोर्टें ← नई रिपोर्ट।"
 
-#: app/core/telegram_commands_service.py:232
+#: app/core/telegram_commands_service.py:235
 msgid "📋 رفع بلاغ جديد:"
 msgstr "📋 नई रिपोर्ट सबमिट करें:"
 
-#: app/core/telegram_commands_service.py:244
+#: app/core/telegram_commands_service.py:247
 msgid "هذا الأمر يحتاج صلاحية إدارة البلاغات."
 msgstr "इस कमांड के लिए रिपोर्ट प्रबंधन अनुमति चाहिए।"
 
-#: app/core/telegram_commands_service.py:246
+#: app/core/telegram_commands_service.py:249
 msgid "الصيغة: /قبول رقم_البلاغ"
 msgstr "प्रारूप: /قبول रिपोर्ट_संख्या"
 
-#: app/core/telegram_commands_service.py:249
-#: app/core/telegram_commands_service.py:263
+#: app/core/telegram_commands_service.py:252
+#: app/core/telegram_commands_service.py:266
 #, python-format
 msgid "لا يوجد بلاغ برقم %(id)s."
 msgstr "संख्या %(id)s वाली कोई रिपोर्ट नहीं है।"
 
-#: app/core/telegram_commands_service.py:253
+#: app/core/telegram_commands_service.py:256
 #, python-format
 msgid "✅ تم قبول البلاغ #%(id)s."
 msgstr "✅ रिपोर्ट #%(id)s स्वीकृत हुई।"
 
-#: app/core/telegram_commands_service.py:260
+#: app/core/telegram_commands_service.py:263
 msgid "الصيغة: /إغلاق رقم_البلاغ"
 msgstr "प्रारूप: /إغلاق रिपोर्ट_संख्या"
 
-#: app/core/telegram_commands_service.py:267
+#: app/core/telegram_commands_service.py:270
 #, python-format
 msgid "✅ تم إغلاق البلاغ #%(id)s."
 msgstr "✅ रिपोर्ट #%(id)s बंद हुई।"
 
-#: app/core/telegram_commands_service.py:274
+#: app/core/telegram_commands_service.py:277
 msgid "هذا الأمر يحتاج صلاحية توزيع المهام."
 msgstr "इस कमांड के लिए कार्य असाइन करने की अनुमति चाहिए।"
 
-#: app/core/telegram_commands_service.py:276
+#: app/core/telegram_commands_service.py:279
 msgid "الصيغة: /مهمة جوال_العضو نص_المهمة"
 msgstr "प्रारूप: /مهمة सदस्य_फोन कार्य_पाठ"
 
-#: app/core/telegram_commands_service.py:281
+#: app/core/telegram_commands_service.py:284
 #, python-format
 msgid "لا يوجد عضو فعّال بجوال %(phone)s."
 msgstr "फोन %(phone)s वाला कोई सक्रिय सदस्य नहीं है।"
 
-#: app/core/telegram_commands_service.py:284
+#: app/core/telegram_commands_service.py:287
 #, python-format
 msgid "✅ تم توزيع مهمة على %(name)s:"
 msgstr "✅ कार्य %(name)s को सौंपा गया:"
 
-#: app/core/telegram_commands_service.py:298
-#: app/core/telegram_commands_service.py:311
+#: app/core/telegram_commands_service.py:301
+#: app/core/telegram_commands_service.py:314
 msgid "تم الإنجاز عبر تيليجرام"
 msgstr "टेलीग्राम के माध्यम से पूर्ण किया गया"
 
-#: app/core/telegram_commands_service.py:299
+#: app/core/telegram_commands_service.py:302
 #, python-format
 msgid "✅ تم إنجاز المهمة: %(title)s"
 msgstr "✅ कार्य पूर्ण हुआ: %(title)s"
 
-#: app/core/telegram_commands_service.py:312
+#: app/core/telegram_commands_service.py:315
 #, python-format
 msgid "✅ تم تسجيل تنفيذ البلاغ #%(id)s."
 msgstr "✅ रिपोर्ट #%(id)s का निष्पादन दर्ज किया गया।"
 
-#: app/core/telegram_commands_service.py:316
+#: app/core/telegram_commands_service.py:319
 msgid "ما فيه مهمة أو بلاغ مفتوح عليك حالياً."
 msgstr "फिलहाल आपके पास कोई खुला कार्य या रिपोर्ट नहीं है।"
 
@@ -4356,12 +4366,12 @@ msgstr "शेड्यूल रद्द कर दिया गया है"
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "शेड्यूल को पूर्ण के रूप में चिह्नित कर दिया गया है"
 
-#: app/models/equipment.py:48 app/models/equipment.py:62 app/models/feed.py:75
-#: app/models/feed.py:90 app/models/pharmacy.py:155
+#: app/models/equipment.py:48 app/models/equipment.py:62 app/models/feed.py:84
+#: app/models/feed.py:99 app/models/pharmacy.py:163
 msgid "الكمية لازم تكون رقماً موجباً أكبر من صفر."
 msgstr "मात्रा शून्य से अधिक एक सकारात्मक संख्या होनी चाहिए।"
 
-#: app/models/equipment.py:52 app/models/feed.py:79 app/models/pharmacy.py:144
+#: app/models/equipment.py:52 app/models/feed.py:88 app/models/pharmacy.py:152
 #, python-format
 msgid ""
 "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" "
@@ -4370,7 +4380,7 @@ msgstr ""
 "अनुरोधित मात्रा (%(qty)s) \"%(name)s\" से वास्तव में उपलब्ध "
 "(%(available)s) से अधिक है — पहले स्टॉक अपडेट करें या मात्रा कम करें।"
 
-#: app/models/pharmacy.py:140
+#: app/models/pharmacy.py:148
 msgid "الكمية المستخدمة لازم تكون رقماً موجباً أكبر من صفر."
 msgstr "उपयोग की गई मात्रा शून्य से अधिक एक सकारात्मक संख्या होनी चाहिए।"
 

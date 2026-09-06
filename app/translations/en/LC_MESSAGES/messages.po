@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 00:14+0300\n"
+"POT-Creation-Date: 2026-09-07 02:23+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -55,7 +55,7 @@ msgstr "Deleted/archived"
 msgid "ترتيب غير منتظم"
 msgstr "Out of order"
 
-#: app/__init__.py:145 app/core/telegram_commands_service.py:162
+#: app/__init__.py:145 app/core/telegram_commands_service.py:160
 msgid "جديد"
 msgstr "New"
 
@@ -773,7 +773,7 @@ msgstr ""
 "The file you uploaded is larger than allowed — try a smaller photo or "
 "voice recording."
 
-#: app/extensions.py:42
+#: app/extensions.py:61
 msgid "سجّل دخولك أولاً عشان توصل لهذي الصفحة."
 msgstr "Please log in to access this page."
 
@@ -1451,7 +1451,7 @@ msgstr ""
 "Clearly slower than its barn's average (%(avg).2f kg/day) — a health "
 "check is recommended"
 
-#: app/core/alerts_service.py:1070
+#: app/core/alerts_service.py:1075
 #, python-format
 msgid ""
 "فيه موعد تحصين مجدول لحظيرة %(barn)s بتاريخ %(date)s — تبي تراجع جدول "
@@ -1460,7 +1460,7 @@ msgstr ""
 "There is a scheduled vaccination for %(barn)s on %(date)s — want to "
 "review the vaccination schedule?"
 
-#: app/core/alerts_service.py:1074
+#: app/core/alerts_service.py:1079
 msgid "افتح جدول التحصينات ←"
 msgstr "Open the vaccination schedule ←"
 
@@ -2050,26 +2050,26 @@ msgstr ""
 "There are financial transactions linked to this animal — enable "
 "\"override\" if you are sure you want to continue."
 
-#: app/core/daily_email_report_service.py:97
+#: app/core/daily_email_report_service.py:100
 #, python-format
 msgid "📊 تقرير مراح بو علي اليومي — %(date)s"
 msgstr "📊 Murabi Bu Ali daily report — %(date)s"
 
-#: app/core/daily_email_report_service.py:102
+#: app/core/daily_email_report_service.py:105
 msgid "موجز الحالة اليومية:"
 msgstr "Today's status summary:"
 
-#: app/core/daily_email_report_service.py:103
+#: app/core/daily_email_report_service.py:106
 #, python-format
 msgid "🐑 إجمالي القطيع النشط: %(n)s رأس"
 msgstr "🐑 Total active herd: %(n)s head"
 
-#: app/core/daily_email_report_service.py:104
+#: app/core/daily_email_report_service.py:107
 #, python-format
 msgid "🚨 تنبيهات مستعجلة: %(urgent)s من أصل %(total)s"
 msgstr "🚨 Urgent alerts: %(urgent)s of %(total)s"
 
-#: app/core/daily_email_report_service.py:105
+#: app/core/daily_email_report_service.py:108
 #, python-format
 msgid ""
 "⚠️ مهام متأخرة فعلاً: %(overdue)s  |  مستحقة اليوم: %(due_today)s  |  "
@@ -2078,104 +2078,104 @@ msgstr ""
 "⚠️ Actually overdue: %(overdue)s  |  Due today: %(due_today)s  |  No "
 "date: %(no_date)s"
 
-#: app/core/daily_email_report_service.py:107
-#: app/core/telegram_commands_service.py:165
+#: app/core/daily_email_report_service.py:110
+#: app/core/telegram_commands_service.py:163
 #, python-format
 msgid "📋 بلاغات مفتوحة: %(n)s"
 msgstr "📋 Open reports: %(n)s"
 
-#: app/core/daily_email_report_service.py:110
-#: app/core/daily_email_report_service.py:154
+#: app/core/daily_email_report_service.py:113
+#: app/core/daily_email_report_service.py:157
 msgid "أهم ما يحتاج إجراء اليوم:"
 msgstr "Today's top priorities:"
 
-#: app/core/daily_email_report_service.py:115
+#: app/core/daily_email_report_service.py:118
 msgid "روابط سريعة:"
 msgstr "Quick links:"
 
-#: app/core/daily_email_report_service.py:116
+#: app/core/daily_email_report_service.py:119
 #, python-format
 msgid "- كل التنبيهات (%(n)s): %(url)s"
 msgstr "- All alerts (%(n)s): %(url)s"
 
-#: app/core/daily_email_report_service.py:117
+#: app/core/daily_email_report_service.py:120
 #, python-format
 msgid "- المهام (%(n)s): %(url)s"
 msgstr "- Tasks (%(n)s): %(url)s"
 
-#: app/core/daily_email_report_service.py:118
+#: app/core/daily_email_report_service.py:121
 #, python-format
 msgid "- المساعد الذكي: %(url)s"
 msgstr "- Smart assistant: %(url)s"
 
-#: app/core/daily_email_report_service.py:128
+#: app/core/daily_email_report_service.py:131
 msgid "🐑 إجمالي القطيع النشط"
 msgstr "🐑 Total active herd"
 
-#: app/core/daily_email_report_service.py:128
+#: app/core/daily_email_report_service.py:131
 #: app/templates/batches/batch_detail.html:11
 #, python-format
 msgid "%(n)s رأس"
 msgstr "%(n)s animals"
 
-#: app/core/daily_email_report_service.py:129
+#: app/core/daily_email_report_service.py:132
 msgid "🚨 تنبيهات مستعجلة"
 msgstr "🚨 Urgent alerts"
 
-#: app/core/daily_email_report_service.py:129
+#: app/core/daily_email_report_service.py:132
 #, python-format
 msgid "%(urgent)s من أصل %(total)s"
 msgstr "%(urgent)s of %(total)s"
 
-#: app/core/daily_email_report_service.py:131
+#: app/core/daily_email_report_service.py:134
 msgid "⏰ مهام متأخرة فعلاً"
 msgstr "⏰ Actually overdue tasks"
 
-#: app/core/daily_email_report_service.py:132
+#: app/core/daily_email_report_service.py:135
 msgid "📅 مهام مستحقة اليوم"
 msgstr "📅 Tasks due today"
 
-#: app/core/daily_email_report_service.py:133
+#: app/core/daily_email_report_service.py:136
 msgid "🗂️ مهام بدون تاريخ محدَّد"
 msgstr "🗂️ Tasks without a set date"
 
-#: app/core/daily_email_report_service.py:134
+#: app/core/daily_email_report_service.py:137
 msgid "📋 بلاغات مفتوحة"
 msgstr "📋 Open reports"
 
-#: app/core/daily_email_report_service.py:140
+#: app/core/daily_email_report_service.py:143
 msgid "حل المشكلة ◀"
 msgstr "Fix it ◀"
 
-#: app/core/daily_email_report_service.py:155
+#: app/core/daily_email_report_service.py:158
 msgid "🔗 روابط سريعة"
 msgstr "🔗 Quick links"
 
-#: app/core/daily_email_report_service.py:157
+#: app/core/daily_email_report_service.py:160
 #, python-format
 msgid "عرض كل التنبيهات (%(n)s)"
 msgstr "View all alerts (%(n)s)"
 
-#: app/core/daily_email_report_service.py:158
+#: app/core/daily_email_report_service.py:161
 #, python-format
 msgid "مراجعة المهام (%(n)s)"
 msgstr "Review tasks (%(n)s)"
 
-#: app/core/daily_email_report_service.py:159
+#: app/core/daily_email_report_service.py:162
 msgid "فتح المساعد الذكي"
 msgstr "Open the smart assistant"
 
-#: app/core/daily_telegram_report_service.py:52
+#: app/core/daily_telegram_report_service.py:50
 #, python-format
 msgid "🚨 عرض التنبيهات (%(n)s)"
 msgstr "🚨 View alerts (%(n)s)"
 
-#: app/core/daily_telegram_report_service.py:53
+#: app/core/daily_telegram_report_service.py:51
 #, python-format
 msgid "📋 مراجعة المهام (%(n)s)"
 msgstr "📋 Review tasks (%(n)s)"
 
-#: app/core/daily_telegram_report_service.py:54
+#: app/core/daily_telegram_report_service.py:52
 msgid "💬 فتح المساعد الذكي"
 msgstr "💬 Open the smart assistant"
 
@@ -2277,12 +2277,12 @@ msgstr "Grandmother/grandson"
 msgid "عم/عمة أو خال/خالة"
 msgstr "Uncle/aunt relation"
 
-#: app/core/outbreak_service.py:82
+#: app/core/outbreak_service.py:84
 #, python-format
 msgid "🦠 احتمال عدوى منتشرة — حظيرة %(barn)s"
 msgstr "🦠 Possible outbreak — %(barn)s"
 
-#: app/core/outbreak_service.py:84
+#: app/core/outbreak_service.py:86
 #, python-format
 msgid "%(n)s رأس مختلف بنفس الحظيرة بحالة مرضية مفتوحة خلال آخر %(days)s يوم."
 msgstr ""
@@ -2891,24 +2891,33 @@ msgstr "The barn has been added"
 msgid "تم تحديث الحظيرة"
 msgstr "The barn has been updated"
 
-#: app/core/routes.py:1819
+#: app/core/routes.py:1855
+#, python-format
+msgid ""
+"قيمة الحقل \"%(field)s\" غير صالحة — لازم تكون رقماً صحيحاً موجباً (أو "
+"صفر). لم يُحفَظ أي تعديل، صحّح القيمة وحاول مرة ثانية."
+msgstr ""
+"The \"%(field)s\" field value is invalid — it must be a whole number, "
+"zero or positive. No changes were saved — fix the value and try again."
+
+#: app/core/routes.py:1865
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "The time settings have been saved"
 
-#: app/core/routes.py:1833
+#: app/core/routes.py:1879
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "The intake-medicine settings have been saved"
 
-#: app/core/routes.py:1861 app/core/routes.py:2058
+#: app/core/routes.py:1907 app/core/routes.py:2104
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "You must type the confirmation phrase exactly: \"%(phrase)s\""
 
-#: app/core/routes.py:1864
+#: app/core/routes.py:1910
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "Incorrect password — the factory reset was not performed."
 
-#: app/core/routes.py:1875
+#: app/core/routes.py:1921
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2917,7 +2926,7 @@ msgstr ""
 "Couldn't perform the factory reset, nothing was deleted (rolled back "
 "automatically). Error: %(err)s"
 
-#: app/core/routes.py:1878
+#: app/core/routes.py:1924
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2925,59 +2934,59 @@ msgstr ""
 "The factory reset succeeded — all farm data has been deleted. Log in "
 "again with the same phone number and password."
 
-#: app/core/routes.py:1897
+#: app/core/routes.py:1943
 msgid "تم حفظ بيانات المزرعة"
 msgstr "The farm's data has been saved"
 
-#: app/core/routes.py:1914
+#: app/core/routes.py:1960
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "The role name \"%(slug)s\" is already in use"
 
-#: app/core/routes.py:1919
+#: app/core/routes.py:1965
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "The job role has been created — now set its permissions"
 
-#: app/core/routes.py:1931
+#: app/core/routes.py:1977
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "You can't edit the owner role's permissions — it always has all "
 "permissions"
 
-#: app/core/routes.py:1949
+#: app/core/routes.py:1995
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:1976
+#: app/core/routes.py:2022
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:1976
+#: app/core/routes.py:2022
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:2002
+#: app/core/routes.py:2048
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:2061
+#: app/core/routes.py:2107
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
 msgstr "Incorrect password — restore was not performed."
 
-#: app/core/routes.py:2064
+#: app/core/routes.py:2110
 msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
 msgstr "Choose the backup file (JSON) first."
 
-#: app/core/routes.py:2071
+#: app/core/routes.py:2117
 msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
 msgstr ""
 "The uploaded file is not valid JSON — make sure it is the exact "
 "downloaded file, unmodified."
 
-#: app/core/routes.py:2084
+#: app/core/routes.py:2130
 #, python-format
 msgid ""
 "تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
@@ -2986,7 +2995,7 @@ msgstr ""
 "Restore failed — no data was changed (automatically rolled back). Error: "
 "%(err)s"
 
-#: app/core/routes.py:2091
+#: app/core/routes.py:2137
 #, python-format
 msgid ""
 "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
@@ -2995,19 +3004,19 @@ msgstr ""
 "%(n)s rows restored successfully — all current data was replaced by the "
 "uploaded backup. Please log in again."
 
-#: app/core/routes.py:2162
+#: app/core/routes.py:2208
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:2170
+#: app/core/routes.py:2216
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2192
+#: app/core/routes.py:2238
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2213
+#: app/core/routes.py:2259
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -3230,12 +3239,12 @@ msgstr "Current profit margin %(margin)s%% ≥ target %(target)s%%"
 msgid "بدون علامات بيع — أنثى منتجة، يُفضّل الاحتفاظ"
 msgstr "No sale flags — a productive female, best kept"
 
-#: app/core/stock_alert_service.py:39
+#: app/core/stock_alert_service.py:55
 #, python-format
 msgid "متبقي %(available)s %(unit)s (الحد الأدنى %(min)s %(unit)s)"
 msgstr "Remaining %(available)s %(unit)s (minimum %(min)s %(unit)s)"
 
-#: app/core/stock_alert_service.py:43
+#: app/core/stock_alert_service.py:59
 #, python-format
 msgid ""
 "متبقي %(available)s %(unit)s — على معدل الاستهلاك الأخير، يكفي ~%(days)s "
@@ -3244,182 +3253,182 @@ msgstr ""
 "Remaining %(available)s %(unit)s — at the recent consumption rate, only "
 "~%(days)s day(s) left (below %(threshold)s days)"
 
-#: app/core/stock_alert_service.py:48
+#: app/core/stock_alert_service.py:64
 #, python-format
 msgid "📦 نقص مخزون %(kind)s %(icon)s"
 msgstr "📦 %(kind)s stock shortage %(icon)s"
 
-#: app/core/telegram_commands_service.py:72
+#: app/core/telegram_commands_service.py:70
 msgid "هذا الأمر خاص بصاحب الحلال فقط."
 msgstr "This command is only for the owner."
 
-#: app/core/telegram_commands_service.py:87
+#: app/core/telegram_commands_service.py:85
 msgid "هذا الأمر يحتاج صلاحية عرض السجل الصحي."
 msgstr "This command requires the health-record view permission."
 
-#: app/core/telegram_commands_service.py:96
+#: app/core/telegram_commands_service.py:94
 msgid "هذا الأمر يحتاج صلاحية رفع بلاغ."
 msgstr "This command requires the submit-report permission."
 
-#: app/core/telegram_commands_service.py:127
+#: app/core/telegram_commands_service.py:125
 msgid "الأمر غير معروف. الأوامر المتاحة: /مهامي، تم"
 msgstr "Unknown command. Available commands: /مهامي, تم"
 
-#: app/core/telegram_commands_service.py:139
+#: app/core/telegram_commands_service.py:137
 msgid "لا توجد مهام مفتوحة عليك حالياً. 👍"
 msgstr "You have no open tasks right now. 👍"
 
-#: app/core/telegram_commands_service.py:140
+#: app/core/telegram_commands_service.py:138
 #, python-format
 msgid " (موعدها %(d)s)"
 msgstr " (due %(d)s)"
 
-#: app/core/telegram_commands_service.py:141
+#: app/core/telegram_commands_service.py:139
 #, python-format
 msgid "✅ مهامك المفتوحة (%(n)s):"
 msgstr "✅ Your open tasks (%(n)s):"
 
-#: app/core/telegram_commands_service.py:148
+#: app/core/telegram_commands_service.py:146
 msgid "لا توجد تنبيهات حالياً. ✅"
 msgstr "No alerts right now. ✅"
 
-#: app/core/telegram_commands_service.py:152
+#: app/core/telegram_commands_service.py:150
 #, python-format
 msgid "🔔 عدد التنبيهات: %(total)s (منها %(urgent)s مستعجل)"
 msgstr "🔔 Alert count: %(total)s (%(urgent)s urgent)"
 
-#: app/core/telegram_commands_service.py:161
+#: app/core/telegram_commands_service.py:159
 msgid "لا توجد بلاغات مفتوحة حالياً. ✅"
 msgstr "No open reports right now. ✅"
 
-#: app/core/telegram_commands_service.py:162
-#: app/core/telegram_commands_service.py:210
+#: app/core/telegram_commands_service.py:160
+#: app/core/telegram_commands_service.py:213
 msgid "مقبول"
 msgstr "Accepted"
 
-#: app/core/telegram_commands_service.py:162
-#: app/core/telegram_commands_service.py:210
+#: app/core/telegram_commands_service.py:160
+#: app/core/telegram_commands_service.py:213
 msgid "بانتظار المراجعة"
 msgstr "Pending review"
 
-#: app/core/telegram_commands_service.py:166
+#: app/core/telegram_commands_service.py:164
 #, python-format
 msgid "أحدثها (#%(id)s, %(status)s): %(desc)s"
 msgstr "Latest (#%(id)s, %(status)s): %(desc)s"
 
-#: app/core/telegram_commands_service.py:186
+#: app/core/telegram_commands_service.py:189
 #, python-format
 msgid "📊 تقرير اليوم (%(date)s):"
 msgstr "📊 Today's report (%(date)s):"
 
-#: app/core/telegram_commands_service.py:187
+#: app/core/telegram_commands_service.py:190
 #, python-format
 msgid "🐑 إجمالي الرؤوس النشطة: %(n)s"
 msgstr "🐑 Total active head: %(n)s"
 
-#: app/core/telegram_commands_service.py:188
+#: app/core/telegram_commands_service.py:191
 #, python-format
 msgid "✅ مهام مفتوحة/متأخرة: %(n)s"
 msgstr "✅ Open/overdue tasks: %(n)s"
 
-#: app/core/telegram_commands_service.py:189
+#: app/core/telegram_commands_service.py:192
 #, python-format
 msgid "📋 بلاغات جديدة اليوم: %(n)s"
 msgstr "📋 New reports today: %(n)s"
 
-#: app/core/telegram_commands_service.py:190
+#: app/core/telegram_commands_service.py:193
 #, python-format
 msgid "🔔 تنبيهات مستعجلة: %(n)s"
 msgstr "🔔 Urgent alerts: %(n)s"
 
-#: app/core/telegram_commands_service.py:209
+#: app/core/telegram_commands_service.py:212
 msgid "لا توجد بلاغات مستلمة عليك حالياً. 👍"
 msgstr "You have no received reports right now. 👍"
 
-#: app/core/telegram_commands_service.py:212
+#: app/core/telegram_commands_service.py:215
 #, python-format
 msgid "📋 بلاغاتك المستلمة (%(n)s):"
 msgstr "📋 Your received reports (%(n)s):"
 
-#: app/core/telegram_commands_service.py:223
+#: app/core/telegram_commands_service.py:226
 msgid "لا توجد حالات معزولة حالياً. ✅"
 msgstr "No isolated cases right now. ✅"
 
-#: app/core/telegram_commands_service.py:224
+#: app/core/telegram_commands_service.py:227
 #, python-format
 msgid "🚨 عدد الرؤوس المعزولة حالياً: %(n)s"
 msgstr "🚨 Currently isolated head: %(n)s"
 
-#: app/core/telegram_commands_service.py:231
+#: app/core/telegram_commands_service.py:234
 msgid "افتح التطبيق ← البلاغات ← بلاغ جديد."
 msgstr "Open the app ← Reports ← New report."
 
-#: app/core/telegram_commands_service.py:232
+#: app/core/telegram_commands_service.py:235
 msgid "📋 رفع بلاغ جديد:"
 msgstr "📋 Submit a new report:"
 
-#: app/core/telegram_commands_service.py:244
+#: app/core/telegram_commands_service.py:247
 msgid "هذا الأمر يحتاج صلاحية إدارة البلاغات."
 msgstr "This command requires the manage-reports permission."
 
-#: app/core/telegram_commands_service.py:246
+#: app/core/telegram_commands_service.py:249
 msgid "الصيغة: /قبول رقم_البلاغ"
 msgstr "Format: /قبول report_number"
 
-#: app/core/telegram_commands_service.py:249
-#: app/core/telegram_commands_service.py:263
+#: app/core/telegram_commands_service.py:252
+#: app/core/telegram_commands_service.py:266
 #, python-format
 msgid "لا يوجد بلاغ برقم %(id)s."
 msgstr "No report with number %(id)s."
 
-#: app/core/telegram_commands_service.py:253
+#: app/core/telegram_commands_service.py:256
 #, python-format
 msgid "✅ تم قبول البلاغ #%(id)s."
 msgstr "✅ Report #%(id)s accepted."
 
-#: app/core/telegram_commands_service.py:260
+#: app/core/telegram_commands_service.py:263
 msgid "الصيغة: /إغلاق رقم_البلاغ"
 msgstr "Format: /إغلاق report_number"
 
-#: app/core/telegram_commands_service.py:267
+#: app/core/telegram_commands_service.py:270
 #, python-format
 msgid "✅ تم إغلاق البلاغ #%(id)s."
 msgstr "✅ Report #%(id)s closed."
 
-#: app/core/telegram_commands_service.py:274
+#: app/core/telegram_commands_service.py:277
 msgid "هذا الأمر يحتاج صلاحية توزيع المهام."
 msgstr "This command requires the assign-task permission."
 
-#: app/core/telegram_commands_service.py:276
+#: app/core/telegram_commands_service.py:279
 msgid "الصيغة: /مهمة جوال_العضو نص_المهمة"
 msgstr "Format: /مهمة member_phone task_text"
 
-#: app/core/telegram_commands_service.py:281
+#: app/core/telegram_commands_service.py:284
 #, python-format
 msgid "لا يوجد عضو فعّال بجوال %(phone)s."
 msgstr "No active member with phone %(phone)s."
 
-#: app/core/telegram_commands_service.py:284
+#: app/core/telegram_commands_service.py:287
 #, python-format
 msgid "✅ تم توزيع مهمة على %(name)s:"
 msgstr "✅ Task assigned to %(name)s:"
 
-#: app/core/telegram_commands_service.py:298
-#: app/core/telegram_commands_service.py:311
+#: app/core/telegram_commands_service.py:301
+#: app/core/telegram_commands_service.py:314
 msgid "تم الإنجاز عبر تيليجرام"
 msgstr "Completed via Telegram"
 
-#: app/core/telegram_commands_service.py:299
+#: app/core/telegram_commands_service.py:302
 #, python-format
 msgid "✅ تم إنجاز المهمة: %(title)s"
 msgstr "✅ Task completed: %(title)s"
 
-#: app/core/telegram_commands_service.py:312
+#: app/core/telegram_commands_service.py:315
 #, python-format
 msgid "✅ تم تسجيل تنفيذ البلاغ #%(id)s."
 msgstr "✅ Report #%(id)s marked as executed."
 
-#: app/core/telegram_commands_service.py:316
+#: app/core/telegram_commands_service.py:319
 msgid "ما فيه مهمة أو بلاغ مفتوح عليك حالياً."
 msgstr "You have no open task or report right now."
 
@@ -4384,12 +4393,12 @@ msgstr "The schedule has been cancelled"
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "The schedule has been marked as completed"
 
-#: app/models/equipment.py:48 app/models/equipment.py:62 app/models/feed.py:75
-#: app/models/feed.py:90 app/models/pharmacy.py:155
+#: app/models/equipment.py:48 app/models/equipment.py:62 app/models/feed.py:84
+#: app/models/feed.py:99 app/models/pharmacy.py:163
 msgid "الكمية لازم تكون رقماً موجباً أكبر من صفر."
 msgstr "The quantity must be a positive number greater than zero."
 
-#: app/models/equipment.py:52 app/models/feed.py:79 app/models/pharmacy.py:144
+#: app/models/equipment.py:52 app/models/feed.py:88 app/models/pharmacy.py:152
 #, python-format
 msgid ""
 "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" "
@@ -4399,7 +4408,7 @@ msgstr ""
 "available of \"%(name)s\" (%(available)s) — update the stock first or "
 "reduce the quantity."
 
-#: app/models/pharmacy.py:140
+#: app/models/pharmacy.py:148
 msgid "الكمية المستخدمة لازم تكون رقماً موجباً أكبر من صفر."
 msgstr "The used quantity must be a positive number greater than zero."
 
