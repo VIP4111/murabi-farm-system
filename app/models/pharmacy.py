@@ -149,6 +149,10 @@ class Pharmacy(db.Model):
         self._consume_batches_fifo(qty)
 
     def add_stock(self, qty: float) -> None:
+        # بند إصلاح (نفس فحص deduct_stock فوق) — كمية سالبة هنا كانت
+        # تُنقص المخزون بصمت بدل ما تزيده.
+        if qty <= 0:
+            raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         self.available_qty = (self.available_qty or 0) + qty
 
     def _consume_batches_fifo(self, qty: float) -> None:

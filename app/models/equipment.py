@@ -39,7 +39,13 @@ class Equipment(db.Model):
 
     def deduct_stock(self, qty: float) -> None:
         """نفس قيد `Feed.deduct_stock`/`Pharmacy.deduct_stock` — سحب سالب
-        ممنوع، يرفض العملية كاملة بدل القصّ الصامت."""
+        ممنوع، يرفض العملية كاملة بدل القصّ الصامت.
+
+        بند إصلاح (فحص عميق مقسَّم — قسم "العلف والمستودعات") — نفس ثغرة
+        `Pharmacy.deduct_stock` المُصلَحة: `qty` نفسه ما كان يُتحقَّق
+        إنه موجب، فقيمة سالبة كانت تزيد المخزون بدل ما تخصمه."""
+        if qty <= 0:
+            raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         available = self.available_qty or 0
         if qty > available:
             raise ValueError(_(
@@ -50,6 +56,10 @@ class Equipment(db.Model):
         self.available_qty = available - qty
 
     def add_stock(self, qty: float) -> None:
+        # بند إصلاح (نفس فحص deduct_stock فوق) — كمية سالبة هنا كانت
+        # تُنقص المخزون بصمت بدل ما تزيده.
+        if qty <= 0:
+            raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         self.available_qty = (self.available_qty or 0) + qty
 
 

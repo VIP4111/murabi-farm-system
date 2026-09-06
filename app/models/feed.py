@@ -64,7 +64,15 @@ class Feed(db.Model):
 
     def deduct_stock(self, qty: float) -> None:
         """سحب سالب ممنوع (بند إضافي، 2026-07-23) — نفس قيد `Pharmacy.deduct_stock`،
-        كان يُقصّ عند الصفر بصمت فيسجّل استهلاك أكبر من المخزون الفعلي."""
+        كان يُقصّ عند الصفر بصمت فيسجّل استهلاك أكبر من المخزون الفعلي.
+
+        بند إصلاح (فحص عميق مقسَّم — قسم "العلف والمستودعات") — نفس ثغرة
+        `Pharmacy.deduct_stock` المُصلَحة بالضبط: `qty` نفسه ما كان
+        يُتحقَّق إنه موجب. قيمة سالبة كانت تمرّ من فحص `qty > available`
+        بسهولة، ثم `available_qty = available - qty` فعلياً **يزيد**
+        المخزون بدل ما يخصمه."""
+        if qty <= 0:
+            raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         available = self.available_qty or 0
         if qty > available:
             raise ValueError(_(
@@ -75,6 +83,11 @@ class Feed(db.Model):
         self.available_qty = available - qty
 
     def add_stock(self, qty: float) -> None:
+        # بند إصلاح (نفس فحص deduct_stock فوق) — كمية سالبة هنا كانت
+        # تُنقص المخزون بصمت بدل ما تزيده (عكس اتجاه العملية المتوقَّع
+        # من اسمها "إضافة").
+        if qty <= 0:
+            raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         self.available_qty = (self.available_qty or 0) + qty
 
 

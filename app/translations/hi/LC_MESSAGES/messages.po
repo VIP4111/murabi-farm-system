@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 21:23+0300\n"
+"POT-Creation-Date: 2026-09-06 21:37+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4345,7 +4345,12 @@ msgstr "शेड्यूल रद्द कर दिया गया है"
 msgid "تم تعليم الجدولة كمكتملة"
 msgstr "शेड्यूल को पूर्ण के रूप में चिह्नित कर दिया गया है"
 
-#: app/models/equipment.py:46 app/models/feed.py:71 app/models/pharmacy.py:144
+#: app/models/equipment.py:48 app/models/equipment.py:62 app/models/feed.py:75
+#: app/models/feed.py:90 app/models/pharmacy.py:155
+msgid "الكمية لازم تكون رقماً موجباً أكبر من صفر."
+msgstr "मात्रा शून्य से अधिक एक सकारात्मक संख्या होनी चाहिए।"
+
+#: app/models/equipment.py:52 app/models/feed.py:79 app/models/pharmacy.py:144
 #, python-format
 msgid ""
 "الكمية المطلوبة (%(qty)s) أكبر من المتوفر فعلياً من \"%(name)s\" "
