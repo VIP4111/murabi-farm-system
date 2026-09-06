@@ -49,4 +49,45 @@
   </table>
 </div>
 </div>
+{% if current_user.role.name == 'owner' %}
+{# بند إصلاح فجوة حقيقية (2026-09-06) — الواجهة فوق كانت تقول "هذا
+   الملف ضمانتك الوحيدة لو صار عطل بقاعدة البيانات" بدون أي زر فعلي
+   يرجّعه للنظام — تصدير بس، صفر استرجاع. نفس مستوى الحماية بالضبط
+   لضبط المصنع (حصري لصاحب الحلال + تأكيد مزدوج) لأنه بنفس الخطورة:
+   يمسح كل البيانات الحالية قبل الاسترجاع، بدون تراجع لاحق. #}
+<div class="card" style="border:2px solid #dc2626;">
+  <h2 style="color:#dc2626;">تحذير: استرجاع من نسخة احتياطية</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('يمسح كل بيانات المزرعة الحالية ويستبدلها بالكامل بمحتوى ملف النسخة الاحتياطية (JSON) اللي ترفعه — استخدمه بس لو صار عطل حقيقي بالبيانات وتبي ترجّعها من نسخة محفوظة قبل كذا.') }}</p>
+  <button type="button" class="btn" style="background:#dc2626;" id="openRestoreModalBtn">{{ _('استرجاع من ملف') }}</button>
+</div>
+
+<div class="modal-overlay" id="restoreModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" id="closeRestoreModalBtn">X</button>
+    <h2 style="color:#dc2626;">تأكيد الاسترجاع</h2>
+    <p style="color:var(--muted); font-size:13px;">{{ _('هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُمسح وتُستبدل بمحتوى الملف المرفوع.') }}</p>
+    <form method="post" action="{{ url_for('core.backup_restore') }}" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>{{ _('ملف النسخة الاحتياطية (JSON)') }}</label>
+      <input name="backup_file" type="file" accept="application/json,.json" required>
+      <label>{{ _('اكتب عبارة التأكيد بالضبط: "استرجاع النسخة"') }}</label>
+      <input name="confirm_phrase" required placeholder="استرجاع النسخة">
+      <label>{{ _('كلمة مرورك الحالية') }}</label>
+      <input name="password" type="password" required>
+      <button class="btn" type="submit" style="background:#dc2626;">{{ _('امسح واسترجع الآن') }}</button>
+    </form>
+  </div>
+</div>
+<script>
+(function(){
+  var openBtn = document.getElementById('openRestoreModalBtn');
+  var closeBtn = document.getElementById('closeRestoreModalBtn');
+  var overlay = document.getElementById('restoreModal');
+  if (!openBtn || !overlay) return;
+  openBtn.addEventListener('click', function(){ overlay.classList.add('open'); });
+  closeBtn.addEventListener('click', function(){ overlay.classList.remove('open'); });
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) overlay.classList.remove('open'); });
+})();
+</script>
+{% endif %}
 {% endblock %}

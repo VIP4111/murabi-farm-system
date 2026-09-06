@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 14:51+0300\n"
+"POT-Creation-Date: 2026-09-06 19:35+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -280,7 +280,7 @@ msgstr "पशु डेटा पूर्ण करें"
 msgid "مراجعة احتمال عدوى منتشرة"
 msgstr "संभावित प्रकोप की समीक्षा करें"
 
-#: app/__init__.py:277 app/team/routes.py:33 app/templates/base.html:1250
+#: app/__init__.py:277 app/team/routes.py:33 app/templates/base.html:1255
 #: app/templates/simple_home.html:67 app/templates/worker_home.html:80
 msgid "حالة طارئة"
 msgstr "आपातकालीन स्थिति"
@@ -1559,13 +1559,21 @@ msgstr "प्रवेश तिथि"
 msgid "تاريخ الوزن"
 msgstr "वजन तिथि"
 
-#: app/core/backup_service.py:58
+#: app/core/backup_service.py:60
 msgid ""
 "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع "
 "تنبيه بند 34 بالإعدادات لخطة النسخ الاحتياطي المناسبة للإنتاج."
 msgstr ""
 "इस वातावरण में बैकअप समर्थित नहीं है — डेटाबेस स्थानीय SQLite फ़ाइल नहीं "
 "है। उचित उत्पादन बैकअप योजना के लिए सेटिंग्स में आइटम 34 की सूचना देखें।"
+
+#: app/core/backup_service.py:240
+msgid ""
+"ملف النسخة الاحتياطية غير صالح — لازم يكون نفس الملف اللي نزّلته من زر "
+"\"تنزيل نسخة احتياطية كاملة\" بدون أي تعديل."
+msgstr ""
+"अमान्य बैकअप फ़ाइल — यह वही फ़ाइल होनी चाहिए जो आपने \"पूरा बैकअप अभी "
+"डाउनलोड करें\" से डाउनलोड की थी, बिना किसी बदलाव के।"
 
 #: app/core/batch_service.py:38
 msgid "لازم رأس واحدة على الأقل بالدفعة."
@@ -1642,7 +1650,7 @@ msgid "التكاثر"
 msgstr "प्रजनन"
 
 #: app/core/checklist_service.py:171 app/templates/animal_detail.html:124
-#: app/templates/base.html:1125 app/templates/finance/list.html:56
+#: app/templates/base.html:1130 app/templates/finance/list.html:56
 #: app/templates/home.html:131
 msgid "المالية"
 msgstr "वित्त"
@@ -1655,14 +1663,14 @@ msgstr "कार्य और रिपोर्ट"
 msgid "العلف"
 msgstr "चारा"
 
-#: app/core/checklist_service.py:174 app/templates/base.html:1032
+#: app/core/checklist_service.py:174 app/templates/base.html:1037
 #: app/templates/equipment/items_mine.html:18
 #: app/templates/family_view.html:159 app/templates/family_view.html:194
 msgid "المعدات"
 msgstr "उपकरण"
 
 #: app/core/checklist_service.py:175 app/core/checklist_service.py:365
-#: app/templates/base.html:1127
+#: app/templates/base.html:1132
 msgid "التقارير التحليلية"
 msgstr "विश्लेषण रिपोर्टें"
 
@@ -1671,7 +1679,7 @@ msgstr "विश्लेषण रिपोर्टें"
 msgid "المساعد الذكي"
 msgstr "स्मार्ट सहायक"
 
-#: app/core/checklist_service.py:177 app/templates/base.html:1043
+#: app/core/checklist_service.py:177 app/templates/base.html:1048
 msgid "المناخ"
 msgstr "जलवायु"
 
@@ -1965,7 +1973,7 @@ msgstr ""
 "ध्यान दें: यह एक निर्णय-सहायक है, पशु चिकित्सक नहीं — अंतिम चिकित्सा "
 "निर्णय हमेशा डॉक्टर का ही रहता है।"
 
-#: app/core/checklist_service.py:386 app/templates/base.html:1045
+#: app/core/checklist_service.py:386 app/templates/base.html:1050
 #: app/templates/climate/dashboard.html:6
 msgid "رادار المناخ والإجهاد الحراري"
 msgstr "जलवायु और गर्मी तनाव रडार"
@@ -2416,7 +2424,7 @@ msgid "%(n)s حساب نشط."
 msgstr "%(n)s सक्रिय खाते।"
 
 #: app/core/readiness_service.py:85 app/core/readiness_service.py:87
-#: app/templates/base.html:1077 app/templates/family_view.html:158
+#: app/templates/base.html:1082 app/templates/family_view.html:158
 #: app/templates/family_view.html:179 app/templates/health/pharmacy_list.html:6
 #: app/templates/home.html:106
 msgid "الصيدلية"
@@ -2870,7 +2878,7 @@ msgstr "समय सेटिंग्स सेव कर दी गई है
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "इनटेक-दवा सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1827
+#: app/core/routes.py:1827 app/core/routes.py:2024
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "आपको पुष्टिकरण वाक्यांश बिल्कुल ऐसे लिखना होगा: \"%(phrase)s\""
@@ -2934,19 +2942,51 @@ msgstr "%(name)s सेवा निष्क्रिय कर दी गई �
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "बैकअप बना दिया गया है: %(name)s"
 
-#: app/core/routes.py:2068
+#: app/core/routes.py:2027
+msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
+msgstr "पासवर्ड गलत है — रिस्टोर नहीं किया गया।"
+
+#: app/core/routes.py:2030
+msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
+msgstr "पहले बैकअप फ़ाइल (JSON) चुनें।"
+
+#: app/core/routes.py:2037
+msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
+msgstr ""
+"अपलोड की गई फ़ाइल मान्य JSON नहीं है — सुनिश्चित करें कि यह वही डाउनलोड "
+"की गई फ़ाइल है, बिना किसी बदलाव के।"
+
+#: app/core/routes.py:2050
+#, python-format
+msgid ""
+"تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
+"الخطأ: %(err)s"
+msgstr ""
+"रिस्टोर विफल — कोई डेटा नहीं बदला गया (स्वतः वापस कर दिया गया)। त्रुटि: "
+"%(err)s"
+
+#: app/core/routes.py:2057
+#, python-format
+msgid ""
+"تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
+"المرفوعة. سجّل دخولك من جديد."
+msgstr ""
+"%(n)s पंक्तियाँ सफलतापूर्वक बहाल की गईं — सारा मौजूदा डेटा अपलोड किए गए "
+"बैकअप से बदल दिया गया। कृपया दोबारा लॉग इन करें।"
+
+#: app/core/routes.py:2128
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "आपको सटीक वाक्यांश लिखना होगा और पुष्टि चेक करनी होगी।"
 
-#: app/core/routes.py:2076
+#: app/core/routes.py:2136
 msgid "تم حذف بيانات المحاكاة."
 msgstr "सिमुलेशन डेटा हटा दिया गया है।"
 
-#: app/core/routes.py:2098
+#: app/core/routes.py:2158
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "आपको पुष्टि बॉक्स चेक करना होगा।"
 
-#: app/core/routes.py:2119
+#: app/core/routes.py:2179
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -4374,7 +4414,7 @@ msgstr "असफल हैचिंग दर्ज कर दी गई है
 msgid "تمت إضافة الحاضنة"
 msgstr "इनक्यूबेटर जोड़ दिया गया है"
 
-#: app/reports/report_service.py:27 app/templates/base.html:700
+#: app/reports/report_service.py:27 app/templates/base.html:705
 #: app/templates/health/vaccination_schedule_list.html:23
 msgid "اليوم"
 msgstr "आज"
@@ -5389,7 +5429,7 @@ msgstr ""
 "आती है"
 
 #: app/templates/alerts_list.html:17 app/templates/audit_log.html:4
-#: app/templates/base.html:1136 app/templates/home.html:150
+#: app/templates/base.html:1141 app/templates/home.html:150
 #: app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
@@ -5591,7 +5631,7 @@ msgid "سجل بيطري"
 msgstr "पशु चिकित्सा रिकॉर्ड"
 
 #: app/templates/animal_detail.html:117 app/templates/animal_detail.html:269
-#: app/templates/base.html:1079 app/templates/health/diseases_list.html:6
+#: app/templates/base.html:1084 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:105
 msgid "الأمراض"
 msgstr "बीमारियाँ"
@@ -5840,7 +5880,7 @@ msgstr ""
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr "अभी तक इस पशु से जुड़ा कोई रिकॉर्ड नहीं है।"
 
-#: app/templates/animal_detail.html:250 app/templates/base.html:1088
+#: app/templates/animal_detail.html:250 app/templates/base.html:1093
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr "उपचार प्रोटोकॉल"
@@ -5849,7 +5889,7 @@ msgstr "उपचार प्रोटोकॉल"
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr "इस पशु पर तैयार उपचार प्रोटोकॉल लागू करें"
 
-#: app/templates/animal_detail.html:255 app/templates/base.html:1078
+#: app/templates/animal_detail.html:255 app/templates/base.html:1083
 #: app/templates/health/vet_visits_list.html:6
 msgid "الزيارات البيطرية"
 msgstr "पशु चिकित्सक यात्राएं"
@@ -5956,7 +5996,7 @@ msgstr ""
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr "कोई दर्ज टीकाकरण नहीं है।"
 
-#: app/templates/animal_detail.html:300 app/templates/base.html:1006
+#: app/templates/animal_detail.html:300 app/templates/base.html:1011
 #: app/templates/home.html:115 app/templates/repro/matings_list.html:6
 msgid "التقريع"
 msgstr "प्रजनन"
@@ -5992,7 +6032,7 @@ msgstr "नर"
 msgid "لا يوجد تقريع مسجّل."
 msgstr "कोई दर्ज संगमन नहीं है।"
 
-#: app/templates/animal_detail.html:315 app/templates/base.html:1007
+#: app/templates/animal_detail.html:315 app/templates/base.html:1012
 #: app/templates/home.html:116 app/templates/repro/pregnancies_list.html:6
 msgid "تشخيص الحمل"
 msgstr "गर्भावस्था निदान"
@@ -6555,7 +6595,7 @@ msgid "إلغاء"
 msgstr "रद्द करें"
 
 #: app/templates/animal_weight_new_simple.html:21
-#: app/templates/animals_list_simple.html:20 app/templates/base.html:995
+#: app/templates/animals_list_simple.html:20 app/templates/base.html:1000
 #: app/templates/error_page.html:7
 #: app/templates/health/disease_new_simple.html:22
 #: app/templates/onboarding/checklist.html:5 app/templates/simple_home.html:2
@@ -6912,7 +6952,7 @@ msgstr "जिस पंक्ति को नज़रअंदाज़ क�
 msgid "حفظ الدفعة كاملة"
 msgstr "पूरी खेप सहेजें"
 
-#: app/templates/animals_list.html:6 app/templates/base.html:1003
+#: app/templates/animals_list.html:6 app/templates/base.html:1008
 msgid "الإجراء الجماعي"
 msgstr "थोक कार्रवाई"
 
@@ -7076,7 +7116,7 @@ msgstr "इस फ़िल्टर में फिलहाल कोई प�
 msgid "لا يوجد حيوانات مسجّلة بعد."
 msgstr "अभी तक कोई पशु दर्ज नहीं है।"
 
-#: app/templates/animals_list_simple.html:21 app/templates/base.html:1002
+#: app/templates/animals_list_simple.html:21 app/templates/base.html:1007
 #: app/templates/home.html:78 app/templates/simple_home.html:45
 msgid "الحيوانات"
 msgstr "जानवर"
@@ -7169,7 +7209,7 @@ msgstr "नया बाड़ा"
 msgid "مثال: B-01"
 msgstr "उदाहरण: B-01"
 
-#: app/templates/barn_form.html:14 app/templates/base.html:1158
+#: app/templates/barn_form.html:14 app/templates/base.html:1163
 msgid "عادية"
 msgstr "सामान्य"
 
@@ -7244,7 +7284,7 @@ msgstr ""
 msgid "إضافة موعد وجبة"
 msgstr "भोजन समय जोड़ें"
 
-#: app/templates/barns_list.html:6 app/templates/base.html:1004
+#: app/templates/barns_list.html:6 app/templates/base.html:1009
 msgid "الحظائر"
 msgstr "बाड़े"
 
@@ -7268,231 +7308,231 @@ msgstr "पशुओं की संख्या"
 msgid "لا يوجد حظائر مسجّلة بعد."
 msgstr "अभी तक कोई बाड़ा दर्ज नहीं है।"
 
-#: app/templates/base.html:659
+#: app/templates/base.html:664
 msgid "اختر ملف"
 msgstr "फ़ाइल चुनें"
 
-#: app/templates/base.html:660
+#: app/templates/base.html:665
 msgid "لم يتم اختيار أي ملف"
 msgstr "कोई फ़ाइल नहीं चुनी गई"
 
-#: app/templates/base.html:699
+#: app/templates/base.html:704
 msgid "اختر تاريخ"
 msgstr "तारीख़ चुनें"
 
-#: app/templates/base.html:701
+#: app/templates/base.html:706
 msgid "مسح"
 msgstr "साफ़ करें"
 
-#: app/templates/base.html:917 app/templates/family_view.html:103
+#: app/templates/base.html:922 app/templates/family_view.html:103
 #: app/templates/family_view.html:112 app/templates/family_view.html:155
 #: app/templates/family_view.html:163 app/templates/family_view.html:178
 #: app/templates/family_view.html:193
 msgid "رجوع"
 msgstr "वापस"
 
-#: app/templates/base.html:920 app/templates/base.html:921
-#: app/templates/base.html:934
+#: app/templates/base.html:925 app/templates/base.html:926
+#: app/templates/base.html:939
 msgid "مراح بو علي"
 msgstr "مراح بو علي"
 
-#: app/templates/base.html:993
+#: app/templates/base.html:998
 msgid "الرئيسية والقطيع"
 msgstr "होम और झुंड"
 
-#: app/templates/base.html:996 app/templates/home.html:39
+#: app/templates/base.html:1001 app/templates/home.html:39
 #: app/templates/today.html:3 app/templates/today.html:6
 #: app/templates/worker_home.html:60
 msgid "صفحة اليوم"
 msgstr "आज का पेज"
 
-#: app/templates/base.html:1000
+#: app/templates/base.html:1005
 msgid "الحلال"
 msgstr "पशुधन"
 
-#: app/templates/base.html:1008 app/templates/home.html:117
+#: app/templates/base.html:1013 app/templates/home.html:117
 msgid "فحص السونار"
 msgstr "सोनार जांच"
 
-#: app/templates/base.html:1009
+#: app/templates/base.html:1014
 msgid "استخدام الاسفنجة للمتاوة"
 msgstr "मदाई सिंक्रोनाइज़ेशन के लिए स्पंज का उपयोग"
 
-#: app/templates/base.html:1010
+#: app/templates/base.html:1015
 msgid "النعام (بيض/تفقيس)"
 msgstr "शुतुरमुर्ग (अंडे/हैचिंग)"
 
-#: app/templates/base.html:1015
+#: app/templates/base.html:1020
 msgid "الفريق"
 msgstr "टीम"
 
-#: app/templates/base.html:1017 app/templates/family_view.html:97
+#: app/templates/base.html:1022 app/templates/family_view.html:97
 #: app/templates/family_view.html:104 app/templates/home.html:73
 #: app/templates/team/tasks_list.html:6
 msgid "المهام"
 msgstr "कार्य"
 
-#: app/templates/base.html:1018 app/templates/home.html:72
+#: app/templates/base.html:1023 app/templates/home.html:72
 #: app/templates/team/performance_report.html:23
 #: app/templates/team/reports_list.html:6
 msgid "البلاغات"
 msgstr "रिपोर्ट्स"
 
-#: app/templates/base.html:1019 app/templates/team/members_list.html:6
+#: app/templates/base.html:1024 app/templates/team/members_list.html:6
 msgid "أعضاء الفريق"
 msgstr "टीम के सदस्य"
 
-#: app/templates/base.html:1021 app/templates/team/salaries_list.html:6
+#: app/templates/base.html:1026 app/templates/team/salaries_list.html:6
 msgid "إعداد الرواتب"
 msgstr "वेतन सेटअप"
 
-#: app/templates/base.html:1022 app/templates/team/payroll_list.html:6
+#: app/templates/base.html:1027 app/templates/team/payroll_list.html:6
 #: app/templates/team/salaries_list.html:7
 msgid "رواتب الشهر"
 msgstr "इस महीने का वेतन"
 
-#: app/templates/base.html:1023
+#: app/templates/base.html:1028
 msgid "تقارير الرواتب"
 msgstr "वेतन रिपोर्ट"
 
-#: app/templates/base.html:1026 app/templates/team/performance_report.html:7
+#: app/templates/base.html:1031 app/templates/team/performance_report.html:7
 msgid "مراجعة مهام اليوم"
 msgstr "आज के कार्यों की समीक्षा करें"
 
-#: app/templates/base.html:1027 app/templates/team/performance_report.html:6
+#: app/templates/base.html:1032 app/templates/team/performance_report.html:6
 msgid "تقرير أداء الفريق"
 msgstr "टीम प्रदर्शन रिपोर्ट"
 
-#: app/templates/base.html:1035 app/templates/equipment/items_list.html:6
+#: app/templates/base.html:1040 app/templates/equipment/items_list.html:6
 msgid "مستودع المعدات"
 msgstr "उपकरण गोदाम"
 
-#: app/templates/base.html:1037 app/templates/simple_home.html:51
+#: app/templates/base.html:1042 app/templates/simple_home.html:51
 #: app/templates/worker_home.html:101
 msgid "معداتي"
 msgstr "मेरे उपकरण"
 
 #: app/templates/assistant/chat.html:4 app/templates/assistant/chat.html:28
-#: app/templates/base.html:1054
+#: app/templates/base.html:1059
 msgid "مركز الذكاء الاصطناعي"
 msgstr "एआई केंद्र"
 
-#: app/templates/base.html:1056
+#: app/templates/base.html:1061
 msgid "فتح المركز (محادثة، ملاحظات، إدخال ذكي)"
 msgstr "केंद्र खोलें (चैट, नोट्स, स्मार्ट एंट्री)"
 
-#: app/templates/base.html:1074
+#: app/templates/base.html:1079
 msgid "الصحة والتحصين"
 msgstr "स्वास्थ्य और टीकाकरण"
 
-#: app/templates/base.html:1076 app/templates/health/dashboard.html:3
+#: app/templates/base.html:1081 app/templates/health/dashboard.html:3
 #: app/templates/health/dashboard.html:6 app/templates/home.html:58
 msgid "مركز الطبيب"
 msgstr "पशु चिकित्सक केंद्र"
 
-#: app/templates/base.html:1080 app/templates/health/vaccinations_list.html:6
+#: app/templates/base.html:1085 app/templates/health/vaccinations_list.html:6
 #: app/templates/home.html:103
 msgid "التطعيمات"
 msgstr "टीकाकरण"
 
-#: app/templates/base.html:1081
+#: app/templates/base.html:1086
 #: app/templates/health/vaccination_schedule_list.html:6
 msgid "تقويم التحصينات"
 msgstr "टीकाकरण कैलेंडर"
 
-#: app/templates/base.html:1083 app/templates/health/dashboard.html:89
+#: app/templates/base.html:1088 app/templates/health/dashboard.html:89
 #: app/templates/health/diagnose_start.html:5
 #: app/templates/health/disease_form.html:8
 msgid "المساعد التشخيصي"
 msgstr "निदान सहायक"
 
-#: app/templates/base.html:1085 app/templates/health/dashboard.html:83
+#: app/templates/base.html:1090 app/templates/health/dashboard.html:83
 #: app/templates/health/injection_guide.html:5
 msgid "دليل الحقن الميداني"
 msgstr "फील्ड इंजेक्शन गाइड"
 
-#: app/templates/base.html:1086
+#: app/templates/base.html:1091
 #: app/templates/health/body_condition_guide.html:2
 msgid "دليل تقييم حالة الجسم"
 msgstr "शरीर स्थिति गाइड"
 
-#: app/templates/base.html:1087 app/templates/health/dashboard.html:86
+#: app/templates/base.html:1092 app/templates/health/dashboard.html:86
 #: app/templates/health/doctors_list.html:5
 msgid "دليل الأطباء"
 msgstr "पशु चिकित्सक निर्देशिका"
 
-#: app/templates/base.html:1101
+#: app/templates/base.html:1106
 msgid "التغذية والأعلاف"
 msgstr "चारा और पोषण"
 
-#: app/templates/base.html:1103 app/templates/feed/items_list.html:6
+#: app/templates/base.html:1108 app/templates/feed/items_list.html:6
 #: app/templates/feed/optimizer.html:78
 msgid "مكوّنات العلف"
 msgstr "चारा घटक"
 
-#: app/templates/base.html:1104
+#: app/templates/base.html:1109
 msgid "حركة المخزون (شراء/صرف)"
 msgstr "स्टॉक गतिविधि (खरीद/वितरण)"
 
-#: app/templates/base.html:1105 app/templates/feed/barn_plans_list.html:5
+#: app/templates/base.html:1110 app/templates/feed/barn_plans_list.html:5
 msgid "خطط تغذية الحظائر"
 msgstr "बाड़ा आहार योजनाएं"
 
-#: app/templates/base.html:1106
+#: app/templates/base.html:1111
 msgid "حاسبة العلف"
 msgstr "चारा कैलकुलेटर"
 
-#: app/templates/base.html:1107 app/templates/feed/fcr_report.html:6
+#: app/templates/base.html:1112 app/templates/feed/fcr_report.html:6
 msgid "معدل التحويل الغذائي (FCR)"
 msgstr "फ़ीड परिवर्तन अनुपात (FCR)"
 
-#: app/templates/base.html:1108 app/templates/feed/optimizer.html:6
+#: app/templates/base.html:1113 app/templates/feed/optimizer.html:6
 msgid "موازِن العليقة التلقائي"
 msgstr "स्वचालित राशन संतुलक"
 
-#: app/templates/base.html:1109 app/templates/feed/barn_report.html:6
+#: app/templates/base.html:1114 app/templates/feed/barn_report.html:6
 msgid "تقرير علف الحظيرة"
 msgstr "बाड़े का चारा रिपोर्ट"
 
-#: app/templates/base.html:1110 app/templates/feed/items_list.html:32
+#: app/templates/base.html:1115 app/templates/feed/items_list.html:32
 #: app/templates/health/pharmacy_list.html:31
 #: app/templates/warehouses/warehouses_list.html:6
 msgid "المستودعات"
 msgstr "गोदाम"
 
-#: app/templates/base.html:1123
+#: app/templates/base.html:1128
 msgid "المالية والمبيعات"
 msgstr "वित्त और बिक्री"
 
-#: app/templates/base.html:1126 app/templates/home.html:133
+#: app/templates/base.html:1131 app/templates/home.html:133
 msgid "مالية الصحة"
 msgstr "स्वास्थ्य वित्त"
 
-#: app/templates/base.html:1134 app/templates/home.html:144
+#: app/templates/base.html:1139 app/templates/home.html:144
 msgid "النظام"
 msgstr "सिस्टम"
 
-#: app/templates/base.html:1142
+#: app/templates/base.html:1147
 msgid "المظهر"
 msgstr "दिखावट"
 
-#: app/templates/base.html:1144
+#: app/templates/base.html:1149
 msgid "نهاري"
 msgstr "दिन"
 
-#: app/templates/base.html:1144
+#: app/templates/base.html:1149
 msgid "ليلي"
 msgstr "रात"
 
-#: app/templates/base.html:1156
+#: app/templates/base.html:1161
 msgid "مستوى الواجهة"
 msgstr "इंटरफेस स्तर"
 
-#: app/templates/base.html:1158
+#: app/templates/base.html:1163
 msgid "بسيط جداً"
 msgstr "बहुत आसान"
 
-#: app/templates/base.html:1166
+#: app/templates/base.html:1171
 msgid ""
 "\"بسيط جداً\" يبدّل شاشتك الرئيسية لأزرار كبيرة، سؤال وحد بالمرة — نفس "
 "البيانات بالضبط."
@@ -7500,33 +7540,33 @@ msgstr ""
 "\"बहुत आसान\" आपकी मुख्य स्क्रीन को बड़े बटनों में बदल देता है, एक बार "
 "में एक सवाल — बिल्कुल वही डेटा।"
 
-#: app/templates/base.html:1172
+#: app/templates/base.html:1177
 msgid "التقرير اليومي بالبريد"
 msgstr "दैनिक ईमेल रिपोर्ट"
 
-#: app/templates/base.html:1175
+#: app/templates/base.html:1180
 msgid "أرسل تقرير تجريبي الآن"
 msgstr "अभी परीक्षण रिपोर्ट भेजें"
 
-#: app/templates/base.html:1179
+#: app/templates/base.html:1184
 msgid "الملخص اليومي بتيليجرام"
 msgstr "दैनिक टेलीग्राम सारांश"
 
-#: app/templates/base.html:1182
+#: app/templates/base.html:1187
 msgid "أرسل ملخص تجريبي الآن"
 msgstr "अभी परीक्षण सारांश भेजें"
 
-#: app/templates/base.html:1188 app/templates/team/member_edit_form.html:23
+#: app/templates/base.html:1193 app/templates/team/member_edit_form.html:23
 #: app/templates/team/member_form.html:22
 #: app/templates/team/members_list.html:11
 msgid "اللغة"
 msgstr "भाषा"
 
-#: app/templates/base.html:1201
+#: app/templates/base.html:1206
 msgid "خروج"
 msgstr "लॉग आउट"
 
-#: app/templates/base.html:1238 app/templates/home.html:28
+#: app/templates/base.html:1243 app/templates/home.html:28
 msgid "تجاهل"
 msgstr "अनदेखा करें"
 
@@ -8273,15 +8313,15 @@ msgstr "लॉग इन"
 msgid "رقم الجوال"
 msgstr "फ़ोन नंबर"
 
-#: app/templates/login.html:18 app/templates/team/member_form.html:13
+#: app/templates/login.html:21 app/templates/team/member_form.html:13
 msgid "كلمة المرور"
 msgstr "पासवर्ड"
 
-#: app/templates/login.html:20
+#: app/templates/login.html:23
 msgid "دخول"
 msgstr "लॉग इन"
 
-#: app/templates/login.html:26
+#: app/templates/login.html:29
 msgid ""
 "وضع تجربة مفعَّل — دخول بلا كلمة مرور. أوقفه من الإعدادات لو الموقع "
 "يستخدمه فريقك فعلياً."
@@ -8854,7 +8894,7 @@ msgstr ""
 "पुष्टिकरण वाक्यांश बिल्कुल वैसे ही लिखें जैसा दिखाया गया है (अरबी में): "
 "\"ضبط المصنع\""
 
-#: app/templates/settings.html:222
+#: app/templates/settings.html:222 app/templates/settings_backup.html:75
 msgid "كلمة مرورك الحالية"
 msgstr "आपका वर्तमान पासवर्ड"
 
@@ -8940,6 +8980,40 @@ msgstr "डाउनलोड"
 #: app/templates/settings_backup.html:47
 msgid "ما فيه أي نسخة احتياطية بعد."
 msgstr "अभी तक कोई बैकअप नहीं है।"
+
+#: app/templates/settings_backup.html:60
+msgid ""
+"يمسح كل بيانات المزرعة الحالية ويستبدلها بالكامل بمحتوى ملف النسخة "
+"الاحتياطية (JSON) اللي ترفعه — استخدمه بس لو صار عطل حقيقي بالبيانات وتبي"
+" ترجّعها من نسخة محفوظة قبل كذا."
+msgstr ""
+"यह सारे मौजूदा फ़ार्म डेटा को मिटा देता है और उसे अपलोड की गई बैकअप फ़ाइल"
+" (JSON) से पूरी तरह बदल देता है — इसका उपयोग केवल तब करें जब वास्तव में "
+"डेटा में कोई समस्या हो और आपको पहले सहेजे गए बैकअप से डेटा वापस लाना हो।"
+
+#: app/templates/settings_backup.html:61
+msgid "استرجاع من ملف"
+msgstr "फ़ाइल से बहाल करें"
+
+#: app/templates/settings_backup.html:68
+msgid ""
+"هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُمسح وتُستبدل "
+"بمحتوى الملف المرفوع."
+msgstr ""
+"यह कार्रवाई अंतिम है और इसे वापस नहीं लिया जा सकता। सारा मौजूदा फ़ार्म "
+"डेटा मिटा दिया जाएगा और अपलोड की गई फ़ाइल से बदल दिया जाएगा।"
+
+#: app/templates/settings_backup.html:71
+msgid "ملف النسخة الاحتياطية (JSON)"
+msgstr "बैकअप फ़ाइल (JSON)"
+
+#: app/templates/settings_backup.html:73
+msgid "اكتب عبارة التأكيد بالضبط: \"استرجاع النسخة\""
+msgstr "पुष्टिकरण वाक्यांश ठीक-ठीक लिखें: \"استرجاع النسخة\""
+
+#: app/templates/settings_backup.html:77
+msgid "امسح واسترجع الآن"
+msgstr "अभी मिटाएं और बहाल करें"
 
 #: app/templates/settings_data_integrity.html:6
 msgid ""

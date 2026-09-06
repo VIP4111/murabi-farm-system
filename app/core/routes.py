@@ -2000,6 +2000,66 @@ def backup_export_now():
                       mimetype="application/json")
 
 
+RESTORE_CONFIRM_PHRASE = "استرجاع النسخة"
+
+
+@core_bp.route("/settings/backup/restore", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def backup_restore():
+    """استرجاع كامل من ملف نسخة احتياطية (بند إصلاح فجوة حقيقية —
+    الواجهة كانت تقول "هذا الملف ضمانتك الوحيدة لو صار عطل بقاعدة
+    البيانات" بدون أي زر فعلي يرجّعه للنظام؛ صفر استرجاع رغم وعد صريح
+    بالواجهة). محمي بنفس مستوى حماية "ضبط المصنع" بالضبط (حصري لصاحب
+    الحلال + تأكيد مزدوج: عبارة + كلمة مرور) — لأنه بنفس الخطورة تماماً:
+    يمسح كل البيانات الحالية قبل الاسترجاع، بدون تراجع لاحق."""
+    if current_user.role.name != "owner":
+        abort(403)
+
+    file_storage = request.files.get("backup_file")
+    typed_phrase = (request.form.get("confirm_phrase") or "").strip()
+    password = request.form.get("password") or ""
+
+    if typed_phrase != RESTORE_CONFIRM_PHRASE:
+        flash(_('لازم تكتب عبارة التأكيد بالضبط: "%(phrase)s"', phrase=RESTORE_CONFIRM_PHRASE), "error")
+        return redirect(url_for("core.backup_list"))
+    if not current_user.check_password(password):
+        flash(_("كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."), "error")
+        return redirect(url_for("core.backup_list"))
+    if not file_storage or not file_storage.filename:
+        flash(_("اختر ملف النسخة الاحتياطية (JSON) أولاً."), "error")
+        return redirect(url_for("core.backup_list"))
+
+    import json as json_module
+    try:
+        payload = json_module.load(file_storage.stream)
+    except (json_module.JSONDecodeError, UnicodeDecodeError):
+        flash(_("الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."), "error")
+        return redirect(url_for("core.backup_list"))
+
+    from flask_login import logout_user
+    try:
+        counts = backup_service.import_all_tables_json(payload)
+    except backup_service.InvalidBackupFile as e:
+        db.session.rollback()
+        flash(str(e), "error")
+        return redirect(url_for("core.backup_list"))
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.exception("فشل استرجاع النسخة الاحتياطية")
+        flash(_("تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). الخطأ: %(err)s", err=e), "error")
+        return redirect(url_for("core.backup_list"))
+
+    total_rows = sum(counts.values())
+    db.session.commit()
+    logout_user()
+    flash(_(
+        "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة المرفوعة. "
+        "سجّل دخولك من جديد.", n=total_rows,
+    ), "success")
+    return redirect(url_for("auth.login"))
+
+
 # ---------- سجل التدقيق (بند 34) ----------
 
 @core_bp.route("/settings/audit")
