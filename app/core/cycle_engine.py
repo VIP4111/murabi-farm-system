@@ -158,6 +158,7 @@ def _gate_quarantine(animal, wf):
     الرصيد الافتتاحي (حيوانات موجودة أصلاً بالقطيع وقت إطلاق النظام) ما
     يحتاج حجر — هو مو "وافد جديد"."""
     from app.models import FarmSettings
+    from app.extensions import farm_today
 
     missing = []
     if animal.weight is None:
@@ -170,7 +171,10 @@ def _gate_quarantine(animal, wf):
             missing.append("تاريخ الدخول")
         else:
             quarantine_days = FarmSettings.get().quarantine_days
-            days = (date.today() - entry).days
+            # بند إصلاح (بحث "منطق الأعمال") — نفس ملاحظة `scheduler.py`:
+            # `date.today()` بتوقيت UTC يخلي عداد أيام الحجر يتأخر 3
+            # ساعات كل ليلة عن توقيت السعودية الفعلي.
+            days = (farm_today() - entry).days
             if days < quarantine_days:
                 missing.append(f"فترة حجر {quarantine_days} يوم من الدخول (باقي {quarantine_days - days} يوم)")
     return (not missing, missing)

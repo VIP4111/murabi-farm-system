@@ -1,9 +1,29 @@
 """تجميع كل إضافات Flask بمكان واحد، عشان نتفادى استيراد دائري بين الملفات."""
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_babel import Babel
 from flask_wtf import CSRFProtect
+
+_RIYADH_TZ = ZoneInfo("Asia/Riyadh")
+
+
+def farm_today() -> date:
+    """بحث "منطق الأعمال" (2026-09-06) — طوال المشروع (163 موضع) كان
+    `date.today()` يعتمد على توقيت السيرفر (UTC على Render)، بدون أي
+    تحويل لتوقيت السعودية (UTC+3). النتيجة: كل ليلة، من 12:00 صباحاً
+    لين 3:00 صباحاً بتوقيت السعودية، "تاريخ اليوم" بالسيرفر لسا اليوم
+    اللي فات — يأثر على حساب أيام العزل/الحجر واستحقاق التنبيهات وتوليد
+    المهام اليومية بهامش خطأ 3 ساعات كل ليلة.
+
+    نقطة مركزية بس (قرارك الصريح: إصلاح محدود الأثر بدل استبدال شامل
+    لكل الـ163 موضع دفعة وحدة) — استُخدمت بأهم نقطتين: الجدولة اليومية
+    (`app/core/scheduler.py`) وحساب أيام الحجر الصحي (`cycle_engine.
+    _gate_quarantine`). بقية `date.today()` بالمشروع بقيت كما هي عمداً."""
+    return datetime.now(_RIYADH_TZ).date()
 
 db = SQLAlchemy()
 migrate = Migrate()

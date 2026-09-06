@@ -22,11 +22,14 @@ def _generate_if_needed_today():
     """المنطق الفعلي مشترك بين الـCron (وقت 3 فجراً) وبين نقطة التدارك
     عند أول طلب باليوم (بند إضافي 89، نقطة 6). لازم تُستدعى داخل
     app_context فعّال أصلاً."""
-    from app.extensions import db
+    from app.extensions import db, farm_today
     from app.models import FarmSettings
     from app.core import daily_task_service
 
-    today = date.today()
+    # بند إصلاح (بحث "منطق الأعمال") — `date.today()` بتوقيت السيرفر
+    # (UTC) يخلي "اليوم" يتغيّر متأخر 3 ساعات عن توقيت السعودية —
+    # `farm_today()` يحسبه بتوقيت الرياض مباشرة.
+    today = farm_today()
     settings = FarmSettings.get()
     # حارس بسيط (مو قفل موزَّع مثالي) يمنع تكرار التوليد أكثر من
     # مرة بنفس اليوم لو أكثر من عملية worker حاولت بنفس الوقت —
