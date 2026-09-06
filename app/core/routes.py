@@ -1041,6 +1041,15 @@ def animals_edit(animal_id):
         if not request.form.get("color"):
             flash(_("اللون مطلوب"), "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
+        # بند إصلاح (فحص "أكواد الحيوانات") — الجنس/الغرض قابلان للتعديل
+        # هنا (تصحيح خطأ إدخال)، لكن `ProductionWorkflow.route` (المسار
+        # الفعلي اللي يحدد بوابات دورة الإنتاج — `cycle_engine.determine_
+        # route`) كان يُحسب مرة وحدة عند الإنشاء وما يُعاد حسابه أبداً.
+        # لو صحّحت جنس رأس من ذكر لأنثى مثلاً، كان يستمر يمشي على مسار
+        # "فحل" الخاطئ (بوابات وأعمدة مختلفة تماماً عن مسار "أنثى مربية")
+        # بصمت — تناقض حقيقي بين بيانات الحيوان الظاهرة وواقع دورة إنتاجه.
+        old_gender, old_purpose = animal.gender, animal.purpose
+
         animal.animal_no = new_no
         animal.name = request.form.get("name") or None
         animal.gender = request.form["gender"]
@@ -1055,6 +1064,21 @@ def animals_edit(animal_id):
         animal.price = float(request.form["price"]) if request.form.get("price") else None
         animal.image_url = request.form.get("image_url") or None
         db.session.add(animal)
+
+        route_reset_notice = None
+        if (animal.gender, animal.purpose) != (old_gender, old_purpose) and animal.species == "sheep_goat":
+            wf = animal.workflow
+            if wf and wf.status != "complete":
+                new_route = cycle_engine.determine_route(animal)
+                if new_route != wf.route:
+                    wf.route = new_route
+                    wf.current_stage = 1
+                    wf.status = "active"
+                    db.session.add(wf)
+                    route_reset_notice = _(
+                        "تغيير الجنس/الغرض غيّر مسار دورة الإنتاج المناسب لهذا الرأس — "
+                        "أُعيد تعيين مرحلته لأول خطوة عشان يمر بالبوابات الصحيحة للمسار الجديد."
+                    )
         try:
             db.session.add(AuditLog(
                 actor_user_id=current_user.id, action="animal.edit",
@@ -1066,6 +1090,8 @@ def animals_edit(animal_id):
             flash(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=new_no), "error")
             return redirect(url_for("core.animals_edit", animal_id=animal.id))
         flash(_("تم تحديث بيانات الحيوان"), "success")
+        if route_reset_notice:
+            flash(route_reset_notice, "warning")
         return redirect(url_for("core.animal_detail", animal_id=animal.id))
 
     _ensure_animal_form_options_seeded()
