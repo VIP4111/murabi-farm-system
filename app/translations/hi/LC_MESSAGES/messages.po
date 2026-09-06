@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 02:23+0300\n"
+"POT-Creation-Date: 2026-09-07 02:40+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -144,15 +144,15 @@ msgstr "मध्यम"
 msgid "شديدة"
 msgstr "गंभीर"
 
-#: app/__init__.py:196 app/team/routes.py:775
+#: app/__init__.py:196 app/team/routes.py:804
 msgid "مهمة عامة"
 msgstr "सामान्य कार्य"
 
-#: app/__init__.py:197 app/team/routes.py:776
+#: app/__init__.py:197 app/team/routes.py:805
 msgid "فحص عزل"
 msgstr "आइसोलेशन जांच"
 
-#: app/__init__.py:198 app/team/routes.py:780
+#: app/__init__.py:198 app/team/routes.py:809
 msgid "مراجعة الدكتور"
 msgstr "डॉक्टर समीक्षा"
 
@@ -168,15 +168,15 @@ msgstr "सेलेनियम खुराक"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "कोलोस्ट्रम/स्तनपान अनुवर्ती"
 
-#: app/__init__.py:202 app/team/routes.py:777
+#: app/__init__.py:202 app/team/routes.py:806
 msgid "وزن"
 msgstr "वज़न"
 
-#: app/__init__.py:203 app/team/routes.py:778
+#: app/__init__.py:203 app/team/routes.py:807
 msgid "تحصين مستحق"
 msgstr "देय टीकाकरण"
 
-#: app/__init__.py:204 app/team/routes.py:779
+#: app/__init__.py:204 app/team/routes.py:808
 msgid "تبديل علف"
 msgstr "चारा बदलना"
 
@@ -1462,7 +1462,7 @@ msgstr ""
 msgid "افتح جدول التحصينات ←"
 msgstr "टीकाकरण अनुसूची खोलें ←"
 
-#: app/core/animal_filters_service.py:185 app/team/routes.py:767
+#: app/core/animal_filters_service.py:185 app/team/routes.py:796
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:15
@@ -4247,7 +4247,7 @@ msgstr "\"%(name)s\" पहले से कैटलॉग में मौज�
 msgid "تمت إضافة الدواء للكتالوج"
 msgstr "दवा कैटलॉग में जोड़ दी गई है"
 
-#: app/health/routes.py:471 app/health/routes.py:508 app/team/routes.py:614
+#: app/health/routes.py:471 app/health/routes.py:508 app/team/routes.py:643
 #, python-format
 msgid "\"%(name)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(name)s\" पहले से सूची में मौजूद है"
@@ -4882,7 +4882,7 @@ msgstr "हार्मोन इंजेक्शन दर्ज कर द�
 msgid "تم تحديث حالة البرنامج"
 msgstr "कार्यक्रम की स्थिति अपडेट कर दी गई है"
 
-#: app/team/payroll_service.py:147 app/team/routes.py:355
+#: app/team/payroll_service.py:147 app/team/routes.py:384
 msgid "هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."
 msgstr "यह वेतन पहले से पुष्ट है — इसे संपादित नहीं किया जा सकता।"
 
@@ -5003,53 +5003,65 @@ msgstr "आइसोलेशन में स्थानांतरण"
 msgid "بيض / حضانة (نعام)"
 msgstr "अंडे / इनक्यूबेशन (शुतुरमुर्ग)"
 
-#: app/team/routes.py:92
+#: app/team/routes.py:89
+msgid "ما تقدر تنشئ حساباً بدور صاحب الحلال — هذا الإجراء حصري لصاحب الحلال نفسه."
+msgstr "आप मालिक भूमिका वाला खाता नहीं बना सकते — यह केवल मालिक खुद कर सकता है।"
+
+#: app/team/routes.py:104
 msgid "تمت إضافة العضو"
 msgstr "सदस्य जोड़ दिया गया है"
 
-#: app/team/routes.py:132
+#: app/team/routes.py:134
+msgid ""
+"ما تقدر تغيّر دور صاحب الحلال أو ترقّي حساباً لدور صاحب الحلال — هذا "
+"الإجراء حصري لصاحب الحلال نفسه."
+msgstr ""
+"आप मालिक की भूमिका नहीं बदल सकते या किसी खाते को मालिक भूमिका में पदोन्नत"
+" नहीं कर सकते — यह केवल मालिक खुद कर सकता है।"
+
+#: app/team/routes.py:161
 #, python-format
 msgid "رقم الجوال \"%(phone)s\" مستخدم من قبل"
 msgstr "फ़ोन नंबर \"%(phone)s\" पहले से उपयोग में है"
 
-#: app/team/routes.py:134
+#: app/team/routes.py:163
 msgid "تم تحديث بيانات العضو وكلمة المرور"
 msgstr "सदस्य का डेटा और पासवर्ड अपडेट कर दिया गया है"
 
-#: app/team/routes.py:134
+#: app/team/routes.py:163
 msgid "تم تحديث بيانات العضو"
 msgstr "सदस्य का डेटा अपडेट कर दिया गया है"
 
-#: app/team/routes.py:172
+#: app/team/routes.py:201
 msgid "تم حفظ بيانات صاحب الحلال"
 msgstr "मालिक का डेटा सेव कर दिया गया है"
 
-#: app/team/routes.py:185
+#: app/team/routes.py:214
 msgid "قيمة راتب غير صحيحة"
 msgstr "अमान्य वेतन मान"
 
-#: app/team/routes.py:199
+#: app/team/routes.py:228
 msgid "تاريخ وصول غير صحيح"
 msgstr "अमान्य आगमन तिथि"
 
-#: app/team/routes.py:206
+#: app/team/routes.py:235
 #, python-format
 msgid "تم تحديث بيانات راتب %(name)s"
 msgstr "%(name)s के वेतन का डेटा अपडेट कर दिया गया है"
 
-#: app/team/routes.py:223
+#: app/team/routes.py:252
 #, python-format
 msgid "تم تسجيل عودة %(name)s من السفر"
 msgstr "%(name)s की यात्रा से वापसी दर्ज कर दी गई है"
 
-#: app/team/routes.py:226
+#: app/team/routes.py:255
 #, python-format
 msgid "تم تسجيل %(name)s كمسافر — أيام السفر تُستبعد من راتبه"
 msgstr ""
 "%(name)s को यात्रा पर दर्ज किया गया — यात्रा के दिन उनके वेतन से बाहर रखे"
 " जाते हैं"
 
-#: app/team/routes.py:258
+#: app/team/routes.py:287
 #, python-format
 msgid ""
 "تنبيه: هذا التغيير يخص شهر (أشهر) عندها راتب مؤكَّد بالفعل (%(periods)s) "
@@ -5060,136 +5072,136 @@ msgstr ""
 "पुष्ट है (%(periods)s) — पुष्ट राशि अपने आप नहीं बदलती, ज़रूरत हो तो वेतन"
 " स्क्रीन पर इसे मैन्युअल रूप से बदलें।"
 
-#: app/team/routes.py:274 app/team/routes.py:298
+#: app/team/routes.py:303 app/team/routes.py:327
 msgid "تاريخ غير صحيح"
 msgstr "अमान्य तिथि"
 
-#: app/team/routes.py:277 app/team/routes.py:301
+#: app/team/routes.py:306 app/team/routes.py:330
 msgid "تاريخ النهاية لازم يكون بعد تاريخ البداية"
 msgstr "अंतिम तिथि प्रारंभ तिथि के बाद होनी चाहिए"
 
-#: app/team/routes.py:281
+#: app/team/routes.py:310
 msgid "تمت إضافة فترة السفر"
 msgstr "यात्रा अवधि जोड़ दी गई है"
 
-#: app/team/routes.py:307
+#: app/team/routes.py:336
 msgid "تم تعديل فترة السفر"
 msgstr "यात्रा अवधि संपादित कर दी गई है"
 
-#: app/team/routes.py:321
+#: app/team/routes.py:350
 msgid "تم حذف فترة السفر"
 msgstr "यात्रा अवधि हटा दी गई है"
 
-#: app/team/routes.py:361
+#: app/team/routes.py:390
 msgid "قيمة غير صحيحة بالراتب أو المكافأة"
 msgstr "वेतन या बोनस में अमान्य मान"
 
-#: app/team/routes.py:386
+#: app/team/routes.py:415
 #, python-format
 msgid "تم تأكيد راتب %(name)s — رحّل %(amount)s لسجل المالية."
 msgstr ""
 "%(name)s का वेतन पुष्ट कर दिया गया — %(amount)s वित्त रिकॉर्ड में "
 "स्थानांतरित किया गया।"
 
-#: app/team/routes.py:389
+#: app/team/routes.py:418
 msgid "تم حفظ المسودة"
 msgstr "ड्राफ्ट सेव कर दिया गया है"
 
-#: app/team/routes.py:420
+#: app/team/routes.py:449
 msgid "لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع."
 msgstr "हस्ताक्षरित रसीद अपलोड करने से पहले वेतन पुष्ट होना जरूरी है।"
 
-#: app/team/routes.py:425
+#: app/team/routes.py:454
 msgid "تم رفع الوصل الموقَّع"
 msgstr "हस्ताक्षरित रसीद अपलोड कर दी गई है"
 
-#: app/team/routes.py:440
+#: app/team/routes.py:469
 msgid "هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع."
 msgstr "यह वेतन अभी तक पुष्ट नहीं हुआ है — प्रिंट करने के लिए कोई रसीद नहीं है।"
 
-#: app/team/routes.py:484
+#: app/team/routes.py:513
 msgid "ما تقدر تعطّل حسابك أنت"
 msgstr "आप अपना खुद का खाता निष्क्रिय नहीं कर सकते"
 
-#: app/team/routes.py:491
+#: app/team/routes.py:520
 msgid "تم تفعيل الحساب"
 msgstr "खाता सक्रिय कर दिया गया है"
 
-#: app/team/routes.py:491
+#: app/team/routes.py:520
 msgid "تم تعطيل الحساب"
 msgstr "खाता निष्क्रिय कर दिया गया है"
 
-#: app/team/routes.py:563
+#: app/team/routes.py:592
 #, python-format
 msgid "بلاغات كثيرة بوقت قصير — حاول بعد %(n)s ثانية."
 msgstr "थोड़े समय में बहुत सारी रिपोर्ट — %(n)s सेकंड बाद फिर कोशिश करें।"
 
-#: app/team/routes.py:569
+#: app/team/routes.py:598
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل رفع البلاغ"
 msgstr ""
 "रिपोर्ट सबमिट करने से पहले कम से कम जानवर या बाड़े को निर्दिष्ट करना "
 "जरूरी है"
 
-#: app/team/routes.py:584
+#: app/team/routes.py:613
 msgid "تم رفع البلاغ"
 msgstr "रिपोर्ट सबमिट कर दी गई है"
 
-#: app/team/routes.py:611
+#: app/team/routes.py:640
 msgid "اسم نوع البلاغ مطلوب"
 msgstr "रिपोर्ट प्रकार का नाम आवश्यक है"
 
-#: app/team/routes.py:618
+#: app/team/routes.py:647
 msgid "تمت إضافة نوع البلاغ"
 msgstr "रिपोर्ट प्रकार जोड़ दिया गया है"
 
-#: app/team/routes.py:665
+#: app/team/routes.py:694
 msgid "تم قبول البلاغ — بدأ عدّاد الوقت"
 msgstr "रिपोर्ट स्वीकार कर ली गई — समय गिनती शुरू हो गई"
 
-#: app/team/routes.py:677
+#: app/team/routes.py:706
 msgid "تم تأجيل البلاغ"
 msgstr "रिपोर्ट स्थगित कर दी गई है"
 
-#: app/team/routes.py:689
+#: app/team/routes.py:718
 msgid "رجع البلاغ لصندوق الوارد"
 msgstr "रिपोर्ट इनबॉक्स में वापस चली गई"
 
-#: app/team/routes.py:701
+#: app/team/routes.py:730
 msgid "تم إلغاء البلاغ — انتقل لصاحب الحلال"
 msgstr "रिपोर्ट रद्द कर दी गई — मालिक को भेज दी गई"
 
-#: app/team/routes.py:714
+#: app/team/routes.py:743
 #, python-format
 msgid "تم تحويل البلاغ لـ %(name)s"
 msgstr "रिपोर्ट %(name)s को भेज दी गई है"
 
-#: app/team/routes.py:727
+#: app/team/routes.py:756
 msgid "تم تسجيل الإنجاز — رجع البلاغ للدكتور للمراجعة والإغلاق"
 msgstr ""
 "पूर्णता दर्ज कर दी गई — रिपोर्ट समीक्षा और बंद करने के लिए डॉक्टर के पास "
 "वापस चली गई"
 
-#: app/team/routes.py:739
+#: app/team/routes.py:768
 msgid "تم تنفيذ البلاغ وإغلاقه"
 msgstr "रिपोर्ट पूरी करके बंद कर दी गई है"
 
-#: app/team/routes.py:751
+#: app/team/routes.py:780
 msgid "تم إغلاق البلاغ"
 msgstr "रिपोर्ट बंद कर दी गई है"
 
-#: app/team/routes.py:831
+#: app/team/routes.py:860
 msgid "قيمة تقييم غير صحيحة"
 msgstr "अमान्य रेटिंग मान"
 
-#: app/team/routes.py:840
+#: app/team/routes.py:869
 msgid "تم حفظ التقييم"
 msgstr "रेटिंग सेव कर दी गई है"
 
-#: app/team/routes.py:1010
+#: app/team/routes.py:1039
 msgid "عنوان المهمة مطلوب"
 msgstr "कार्य का शीर्षक आवश्यक है"
 
-#: app/team/routes.py:1021
+#: app/team/routes.py:1050
 msgid ""
 "فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها "
 "من القائمة وأضف وحدة جديدة."
@@ -5197,67 +5209,67 @@ msgstr ""
 "इसी शीर्षक वाला एक सक्रिय दैनिक कार्य पहले से मौजूद है — इसके नोट्स बदलने"
 " के लिए सूची से इसे रोकें और इसकी जगह नया जोड़ें।"
 
-#: app/team/routes.py:1030
+#: app/team/routes.py:1059
 msgid "تمت إضافة المهمة اليومية"
 msgstr "दैनिक कार्य जोड़ दिया गया है"
 
-#: app/team/routes.py:1046
+#: app/team/routes.py:1075
 msgid "تم إيقاف المهمة اليومية"
 msgstr "दैनिक कार्य रोक दिया गया है"
 
-#: app/team/routes.py:1046
+#: app/team/routes.py:1075
 msgid "تم تفعيل المهمة اليومية"
 msgstr "दैनिक कार्य सक्रिय कर दिया गया है"
 
-#: app/team/routes.py:1069
+#: app/team/routes.py:1098
 msgid "تم توزيع المهمة"
 msgstr "कार्य सौंप दिया गया है"
 
-#: app/team/routes.py:1099
+#: app/team/routes.py:1128
 msgid "بدأت المهمة"
 msgstr "कार्य शुरू हो गया है"
 
-#: app/team/routes.py:1119
+#: app/team/routes.py:1148
 msgid "تم إنجاز المهمة"
 msgstr "कार्य पूरा हो गया है"
 
-#: app/team/routes.py:1139
+#: app/team/routes.py:1168
 msgid "تم تسجيل تعذّر المهمة"
 msgstr "कार्य की विफलता दर्ज कर दी गई है"
 
-#: app/team/routes.py:1156
+#: app/team/routes.py:1185
 msgid "تم اعتماد المهمة — نزلت للعامل"
 msgstr "कार्य स्वीकृत हो गया — कर्मचारी को भेज दिया गया"
 
-#: app/team/routes.py:1182 app/team/routes.py:1216
+#: app/team/routes.py:1211 app/team/routes.py:1245
 msgid "تم تأجيل المهمة ليوم واحد"
 msgstr "कार्य एक दिन के लिए स्थगित कर दिया गया है"
 
-#: app/team/routes.py:1199
+#: app/team/routes.py:1228
 msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
 msgstr "कार्य हटा दिया गया — मालिक के समीक्षा बॉक्स में भेज दिया गया"
 
-#: app/team/routes.py:1228
+#: app/team/routes.py:1257
 msgid "تم إلغاء المهمة"
 msgstr "कार्य रद्द कर दिया गया है"
 
-#: app/team/routes.py:1240
+#: app/team/routes.py:1269
 msgid "تم استرجاع المهمة"
 msgstr "कार्य बहाल कर दिया गया है"
 
-#: app/team/routes.py:1252
+#: app/team/routes.py:1281
 msgid "تم حذف المهمة نهائياً"
 msgstr "कार्य स्थायी रूप से हटा दिया गया है"
 
-#: app/team/routes.py:1271
+#: app/team/routes.py:1300
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
 msgstr "भेजने से पहले कम से कम जानवर या बाड़े को निर्दिष्ट करना जरूरी है"
 
-#: app/team/routes.py:1290
+#: app/team/routes.py:1319
 msgid "تم رفع البلاغ — راح يوصل للدكتور"
 msgstr "रिपोर्ट सबमिट कर दी गई — यह डॉक्टर तक पहुंचेगी"
 
-#: app/team/routes.py:1341
+#: app/team/routes.py:1370
 msgid "تم حذف البلاغ نهائياً"
 msgstr "रिपोर्ट स्थायी रूप से हटा दी गई है"
 

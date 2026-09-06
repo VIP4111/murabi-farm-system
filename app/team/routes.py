@@ -76,10 +76,22 @@ def _save_member_photo(file_storage):
 @require_permission("users.manage")
 def members_new():
     if request.method == "POST":
+        role_id = int(request.form["role_id"])
+        # بند إصلاح (فحص عميق — شاشة الأدوار والصلاحيات) — `users.manage`
+        # صلاحية أخف كثيراً من "صاحب الحلال" (يمكن تُمنح لدور "موارد
+        # بشرية" مثلاً)، لكن ما فيه أي فحص هنا يمنع صاحبها من إنشاء حساب
+        # جديد بدور "owner" مباشرة — تصعيد صلاحيات كامل (يحصل كل شي عدا
+        # ضبط المصنع وحماية دور المالك نفسه من التعديل) بدون أي عائق.
+        # هذا الإجراء صار حصرياً لمن هو owner فعلاً بالأصل، نفس مبدأ
+        # حماية دور المالك المطبَّق أصلاً بـ`role_edit`.
+        role = Role.query.get(role_id)
+        if role and role.name == "owner" and current_user.role.name != "owner":
+            flash(_("ما تقدر تنشئ حساباً بدور صاحب الحلال — هذا الإجراء حصري لصاحب الحلال نفسه."), "error")
+            return redirect(url_for("team.members_new"))
         user = User(
             name=request.form["name"],
             phone=request.form["phone"].strip(),
-            role_id=int(request.form["role_id"]),
+            role_id=role_id,
             language=request.form.get("language") or "ar",
             photo_url=_save_member_photo(request.files.get("photo")),
         )
@@ -104,9 +116,26 @@ def members_edit(user_id):
     (المالك يدير حساب غيره، مو نفسه)."""
     user = User.query.get_or_404(user_id)
     if request.method == "POST":
+        new_role_id = int(request.form["role_id"])
+        # بند إصلاح (فحص عميق — شاشة الأدوار والصلاحيات) — نفس ثغرة
+        # `members_new`: ما فيه فحص يمنع صاحب `users.manage` (مو owner
+        # بالضرورة) من ترقية أي حساب (بما فيها حسابه نفسه) لدور "owner"
+        # مباشرة عبر هذي الشاشة — تصعيد صلاحيات كامل بضغطة وحدة. وبنفس
+        # الاتجاه المعاكس: كان يقدر يغيّر دور صاحب الحلال الفعلي بعيداً
+        # عن "owner" (يفقده صلاحياته بالكامل، ممكن يقفل عليه الوصول
+        # للنظام لو ما فيه owner ثانٍ). كلا الاتجاهين حصريان الآن لمن
+        # هو owner فعلاً — نفس مبدأ حماية دور المالك المطبَّق بـ`role_edit`.
+        if new_role_id != user.role_id:
+            new_role = Role.query.get(new_role_id)
+            promoting_or_demoting_owner = (
+                (new_role and new_role.name == "owner") or (user.role and user.role.name == "owner")
+            )
+            if promoting_or_demoting_owner and current_user.role.name != "owner":
+                flash(_("ما تقدر تغيّر دور صاحب الحلال أو ترقّي حساباً لدور صاحب الحلال — هذا الإجراء حصري لصاحب الحلال نفسه."), "error")
+                return redirect(url_for("team.members_edit", user_id=user.id))
         user.name = request.form["name"].strip()
         user.phone = request.form["phone"].strip()
-        user.role_id = int(request.form["role_id"])
+        user.role_id = new_role_id
         user.language = request.form.get("language") or "ar"
         user.telegram_chat_id = request.form.get("telegram_chat_id", "").strip() or None
         user.email = request.form.get("email", "").strip() or None
