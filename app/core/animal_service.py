@@ -307,6 +307,10 @@ def add_note(*, animal: Animal, note_date: date, note: str, created_by_id: int |
 
 def add_milk_record(*, animal: Animal, record_date: date, session: str, quantity_liters: float,
                      notes: str | None = None, recorded_by_id: int | None = None) -> MilkRecord:
+    from app.core import validation_service
+    validation_service.validate_milk_quantity(quantity_liters)
+    validation_service.validate_not_future_date(record_date, field_label=_("تاريخ الحليب"))
+
     row = MilkRecord(
         animal_id=animal.id, date=record_date, session=session,
         quantity_liters=quantity_liters, notes=notes, recorded_by_id=recorded_by_id,

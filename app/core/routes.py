@@ -1396,14 +1396,22 @@ def animal_milk_new(animal_id):
     from app.health.health_service import animal_under_milk_withdrawal
 
     animal = Animal.query.get_or_404(animal_id)
-    add_milk_record(
-        animal=animal,
-        record_date=date.fromisoformat(request.form["date"]),
-        session=request.form["session"],
-        quantity_liters=float(request.form["quantity_liters"]),
-        notes=request.form.get("notes") or None,
-        recorded_by_id=current_user.id,
-    )
+    # بند إصلاح (فحص "أكواد الحيوانات") — نفس نمط تسجيل الوزن أعلاه:
+    # `add_milk_record` صارت تتحقق من صحة الكمية/التاريخ (`validation_
+    # service`) وترفع ValueError برسالة عربية واضحة بدل حفظ قيمة غير
+    # منطقية بصمت.
+    try:
+        add_milk_record(
+            animal=animal,
+            record_date=date.fromisoformat(request.form["date"]),
+            session=request.form["session"],
+            quantity_liters=float(request.form["quantity_liters"]),
+            notes=request.form.get("notes") or None,
+            recorded_by_id=current_user.id,
+        )
+    except ValueError as e:
+        flash(str(e), "error")
+        return redirect(url_for("core.animal_detail", animal_id=animal.id, tab="milk"))
     flash(_("تم تسجيل الحليب"), "success")
     # تنبيه فترة التحريم (بند إضافي، 2026-07-23) — تسجيل تحذيري بس (مو
     # منع)، عشان يبقى القرار للمالك/الدكتور لو الحليب يُستخدم للاستهلاك

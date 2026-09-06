@@ -37,6 +37,29 @@ def validate_price(price: float | None, *, field_label: str = None) -> None:
         raise ValueError(_("%(field)s ما يقدر يكون رقماً سالباً.", field=field_label))
 
 
+MAX_MILK_LITERS_PER_SESSION = 15
+
+
+def validate_milk_quantity(quantity_liters: float | None) -> None:
+    """بند إصلاح (فحص "أكواد الحيوانات") — قيد الوزن (`validate_weight`)
+    والسعر (`validate_price`) عندهما فحص منطقي قبل الحفظ، لكن قيد الحليب
+    (`add_milk_record`) ما عنده أي فحص إطلاقاً — كمية سالبة أو صفرية أو
+    خطأ كتابة واضح (فاصلة بمكان غلط، مثلاً 250 بدل 2.5) كانت تُحفظ بدون
+    أي اعتراض، تلوّث تقارير إنتاج الحليب وتنبيهات فترة السحب. نفس نمط
+    وفلسفة `validate_weight` بالضبط — حد أقصى واسع عمداً (15 لتر بالحلبة
+    الواحدة، أعلى بكثير من أي إنتاج طبيعي فعلي لغنم/ماعز) يمنع خطأ كتابة
+    واضح بدون رفض قيم نادرة لكن ممكنة."""
+    if quantity_liters is None:
+        return
+    if quantity_liters <= 0:
+        raise ValueError(_("كمية الحليب لازم تكون رقماً موجباً أكبر من صفر."))
+    if quantity_liters > MAX_MILK_LITERS_PER_SESSION:
+        raise ValueError(
+            _("كمية %(qty)s لتر غير منطقية لحلبة واحدة — أعلى من الحد المتوقع (%(max)s لتر). "
+              "تأكد من الرقم قبل الحفظ.", qty=quantity_liters, max=MAX_MILK_LITERS_PER_SESSION)
+        )
+
+
 def validate_not_future_date(value: date | None, *, field_label: str = None) -> None:
     if value is None:
         return

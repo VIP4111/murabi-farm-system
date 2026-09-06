@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-06 20:23+0300\n"
+"POT-Creation-Date: 2026-09-06 20:50+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1510,6 +1510,10 @@ msgstr "የመግቢያ ቀን"
 msgid "تاريخ الوزن"
 msgstr "የመመዘኛ ቀን"
 
+#: app/core/animal_service.py:312
+msgid "تاريخ الحليب"
+msgstr "የወተት ቀን"
+
 #: app/core/backup_service.py:60
 msgid ""
 "النسخ الاحتياطي غير مدعوم بهذي البيئة — القاعدة مو ملف SQLite محلي. راجع "
@@ -2705,11 +2709,11 @@ msgstr "%(no)s ወደ መታቀብ ተዛውሯል"
 msgid "تم إخراج %(no)s من العزل"
 msgstr "%(no)s ከመታቀብ ወጥቷል"
 
-#: app/core/routes.py:1407
+#: app/core/routes.py:1415
 msgid "تم تسجيل الحليب"
 msgstr "ወተቱ ተመዝግቧል"
 
-#: app/core/routes.py:1417
+#: app/core/routes.py:1425
 #, python-format
 msgid ""
 "تنبيه: %(no)s تحت فترة تحريم حليب حتى %(until)s — الحليب المسجَّل الآن قد"
@@ -2718,15 +2722,15 @@ msgstr ""
 "ማንቂያ: %(no)s እስከ %(until)s ድረስ በወተት እገዳ ጊዜ ውስጥ ነው — አሁን የተመዘገበው ወተት ለመሸጥ "
 "ወይም ለመጠቀም ደህንነቱ ያልተጠበቀ ሊሆን ይችላል።"
 
-#: app/core/routes.py:1433
+#: app/core/routes.py:1441
 msgid "تمت إضافة الملاحظة"
 msgstr "ማስታወሻው ታክሏል"
 
-#: app/core/routes.py:1471
+#: app/core/routes.py:1479
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr "ሰጎኖች ወደ ምርት ዑደት አይገቡም — የሰጎን መዝገብ ይመልከቱ (እንቁላል/መፈልፈል)።"
 
-#: app/core/routes.py:1474
+#: app/core/routes.py:1482
 msgid ""
 "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا"
 " يوجد نظام دورة مخصّص لها بعد."
@@ -2734,81 +2738,81 @@ msgstr ""
 "ይህ ፍጥረት ወደ ምርት ዑደት ሞተር አይገባም (ለከብት ባዮሎጂ ብቻ የተገነባ) — እስካሁን ለእሱ የተለየ የዑደት "
 "ስርዓት የለም።"
 
-#: app/core/routes.py:1518
+#: app/core/routes.py:1526
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr "ለዚህ እንስሳ የተመዘገበ ሽያጭ የለም።"
 
-#: app/core/routes.py:1521
+#: app/core/routes.py:1529
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr "ይህ ሽያጭ ያለ ደረሰኝ ተመዝግቧል።"
 
-#: app/core/routes.py:1543
+#: app/core/routes.py:1551
 msgid "تم تحديث بيانات التخطيط"
 msgstr "የእቅድ መረጃ ተዘምኗል"
 
-#: app/core/routes.py:1567
+#: app/core/routes.py:1575
 msgid "تم تسجيل البيع"
 msgstr "ሽያጩ ተመዝግቧል"
 
-#: app/core/routes.py:1581
+#: app/core/routes.py:1589
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 እንስሳ ተሽጧል — %(no)s በ%(price)s"
 
-#: app/core/routes.py:1599
+#: app/core/routes.py:1607
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "ወደ ገበያ የመውጣት መዝገብ ተመዝግቧል"
 
-#: app/core/routes.py:1611
+#: app/core/routes.py:1619
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "ያለ ሽያጭ ወደ እርሻ የመመለስ መዝገብ ተመዝግቧል"
 
-#: app/core/routes.py:1626
+#: app/core/routes.py:1634
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "ሞቱ ተመዝግቧል (የዑደት ማጠናቀቅ ሁኔታ ሳይኖር)"
 
-#: app/core/routes.py:1642
+#: app/core/routes.py:1650
 msgid "تم أرشفة الحيوان"
 msgstr "እንስሳው ተመዝግቧል"
 
-#: app/core/routes.py:1690 app/core/routes.py:1725
+#: app/core/routes.py:1698 app/core/routes.py:1733
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr "የበረት ቁጥር \"%(no)s\" ቀደም ሲል ጥቅም ላይ ውሏል"
 
-#: app/core/routes.py:1696
+#: app/core/routes.py:1704
 msgid "تمت إضافة الحظيرة"
 msgstr "በረቱ ታክሏል"
 
-#: app/core/routes.py:1731
+#: app/core/routes.py:1739
 msgid "تم تحديث الحظيرة"
 msgstr "በረቱ ተዘምኗል"
 
-#: app/core/routes.py:1811
+#: app/core/routes.py:1819
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "የጊዜ ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1825
+#: app/core/routes.py:1833
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "የመቀበያ መድሃኒት ቅንብሮች ተቀምጠዋል"
 
-#: app/core/routes.py:1853 app/core/routes.py:2050
+#: app/core/routes.py:1861 app/core/routes.py:2058
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "የማረጋገጫ ሐረጉን በትክክል መጻፍ አለብዎት: \"%(phrase)s\""
 
-#: app/core/routes.py:1856
+#: app/core/routes.py:1864
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "የይለፍ ቃል የተሳሳተ ነው — የፋብሪካ ዳግም ማስጀመር አልተፈጸመም።"
 
-#: app/core/routes.py:1867
+#: app/core/routes.py:1875
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
 "%(err)s"
 msgstr "የፋብሪካ ዳግም ማስጀመር አልተቻለም፣ ምንም አልተሰረዘም (በራስ-ሰር ተመልሷል)። ስህተት፡ %(err)s"
 
-#: app/core/routes.py:1870
+#: app/core/routes.py:1878
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2816,62 +2820,62 @@ msgstr ""
 "የፋብሪካ ዳግም ማስጀመር ተሳክቷል — ሁሉም የእርሻ መረጃ ተሰርዟል። በተመሳሳይ ስልክ ቁጥር እና የይለፍ ቃል "
 "እንደገና ይግቡ።"
 
-#: app/core/routes.py:1889
+#: app/core/routes.py:1897
 msgid "تم حفظ بيانات المزرعة"
 msgstr "የእርሻው መረጃ ተቀምጧል"
 
-#: app/core/routes.py:1906
+#: app/core/routes.py:1914
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "የሚና ስም \"%(slug)s\" ቀደም ሲል ጥቅም ላይ ውሏል"
 
-#: app/core/routes.py:1911
+#: app/core/routes.py:1919
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "የስራ መደቡ ተፈጥሯል — አሁን ፈቃዶቹን ይግለጹ"
 
-#: app/core/routes.py:1923
+#: app/core/routes.py:1931
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr "የባለቤቱን ሚና ፈቃዶች ማስተካከል አይችሉም — ሁልጊዜ ሁሉንም ፈቃዶች አለው"
 
-#: app/core/routes.py:1941
+#: app/core/routes.py:1949
 msgid "تم تحديث صلاحيات الدور"
 msgstr "የሚና ፈቃዶች ተዘምነዋል"
 
-#: app/core/routes.py:1968
+#: app/core/routes.py:1976
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ነቅቷል"
 
-#: app/core/routes.py:1968
+#: app/core/routes.py:1976
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "የ%(name)s አገልግሎት ተሰናክሏል"
 
-#: app/core/routes.py:1994
+#: app/core/routes.py:2002
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "የመጠባበቂያ ቅጂ ተፈጥሯል፡ %(name)s"
 
-#: app/core/routes.py:2053
+#: app/core/routes.py:2061
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
 msgstr "የይለፍ ቃል ትክክል አይደለም — መልሶ ማግኘት አልተከናወነም።"
 
-#: app/core/routes.py:2056
+#: app/core/routes.py:2064
 msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
 msgstr "መጀመሪያ የመጠባበቂያ ፋይል (JSON) ይምረጡ።"
 
-#: app/core/routes.py:2063
+#: app/core/routes.py:2071
 msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
 msgstr "የተላከው ፋይል ትክክለኛ JSON አይደለም — ያወረዱትን ፋይል ሳይቀየር መሆኑን ያረጋግጡ።"
 
-#: app/core/routes.py:2076
+#: app/core/routes.py:2084
 #, python-format
 msgid ""
 "تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
 "الخطأ: %(err)s"
 msgstr "መልሶ ማግኘት አልተሳካም — ምንም መረጃ አልተቀየረም (በራስ-ሰር ተመልሷል)። ስህተት: %(err)s"
 
-#: app/core/routes.py:2083
+#: app/core/routes.py:2091
 #, python-format
 msgid ""
 "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
@@ -2880,19 +2884,19 @@ msgstr ""
 "%(n)s ረድፎች በተሳካ ሁኔታ ተመልሰዋል — ሁሉም የአሁኑ መረጃ በተላከው መጠባበቂያ ተተክቷል። እባክዎ እንደገና "
 "ይግቡ።"
 
-#: app/core/routes.py:2154
+#: app/core/routes.py:2162
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "ሐረጉን በትክክል መጻፍ እና ማረጋገጫውን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2162
+#: app/core/routes.py:2170
 msgid "تم حذف بيانات المحاكاة."
 msgstr "የማስመሰያ መረጃ ተሰርዟል።"
 
-#: app/core/routes.py:2184
+#: app/core/routes.py:2192
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "የማረጋገጫ ሳጥኑን መምረጥ አለብዎት።"
 
-#: app/core/routes.py:2205
+#: app/core/routes.py:2213
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -3354,7 +3358,20 @@ msgstr ""
 msgid "%(field)s ما يقدر يكون رقماً سالباً."
 msgstr "%(field)s አሉታዊ ቁጥር ሊሆን አይችልም።"
 
-#: app/core/validation_service.py:44 app/reports/report_service.py:166
+#: app/core/validation_service.py:55
+msgid "كمية الحليب لازم تكون رقماً موجباً أكبر من صفر."
+msgstr "የወተት መጠን ከዜሮ በላይ አዎንታዊ ቁጥር መሆን አለበት።"
+
+#: app/core/validation_service.py:58
+#, python-format
+msgid ""
+"كمية %(qty)s لتر غير منطقية لحلبة واحدة — أعلى من الحد المتوقع (%(max)s "
+"لتر). تأكد من الرقم قبل الحفظ."
+msgstr ""
+"%(qty)s ሊትር ለአንድ የወተት ማለቢያ ምክንያታዊ አይደለም — ከሚጠበቀው ገደብ (%(max)s ሊትር) በላይ "
+"ነው። ከማስቀመጥዎ በፊት ቁጥሩን ያረጋግጡ።"
+
+#: app/core/validation_service.py:67 app/reports/report_service.py:166
 #: app/reports/report_service.py:253 app/reports/report_service.py:296
 #: app/reports/report_service.py:378 app/templates/animal_detail.html:258
 #: app/templates/animal_detail.html:272 app/templates/animal_detail.html:289
@@ -3400,7 +3417,7 @@ msgstr "%(field)s አሉታዊ ቁጥር ሊሆን አይችልም።"
 msgid "التاريخ"
 msgstr "ቀን"
 
-#: app/core/validation_service.py:46
+#: app/core/validation_service.py:69
 #, python-format
 msgid "%(field)s ما يقدر يكون بالمستقبل."
 msgstr "%(field)s ወደፊት ሊሆን አይችልም።"
