@@ -135,9 +135,22 @@ def save_draft(payroll: Payroll, *, base_salary: float, bonus_amount: float,
                 deductions: list[tuple[float, str]], recipient_name: str | None) -> Payroll:
     """يستبدل كل سطور الخصم الحالية بالقائمة الجديدة — أبسط من محاولة
     تتبّع تعديل/حذف صف فردي، والفورم أصلاً يرسل القائمة كاملة كل مرة
-    (بند إضافي 242، زر "+ إضافة خصم" بالواجهة)."""
+    (بند إضافي 242، زر "+ إضافة خصم" بالواجهة).
+
+    بند إصلاح (فحص عميق مقسَّم — قسم "الفريق والمهام") — ما كان فيه أي
+    فحص إن الراتب الأساسي/المكافأة/كل خصم رقم غير سالب، رغم إنها تُرحَّل
+    مباشرة لسجل "المالية" (`confirm()` تحت) كمصروف حقيقي. راتب أساسي أو
+    مكافأة سالبة، أو خصم سالب (بونص مقنَّع بدون أثر بسجل المكافآت
+    الفعلي)، كانت تُحفظ بصمت وتشوّه `net_amount` المرحَّل للمالية —
+    نفس نمط الثغرة المُصلَحة بالوزن/الحليب/مخزون الدواء."""
     if payroll.status == "confirmed":
         raise ValueError(_("هذا الراتب مؤكَّد مسبقاً — ما يتعدَّل."))
+    from app.core import validation_service
+    validation_service.validate_price(base_salary, field_label=_("الراتب الأساسي"))
+    validation_service.validate_price(bonus_amount, field_label=_("المكافأة"))
+    for amount, _reason in deductions:
+        validation_service.validate_price(amount, field_label=_("مبلغ الخصم"))
+
     payroll.base_salary = base_salary
     payroll.bonus_amount = bonus_amount
     payroll.recipient_name = (recipient_name or "").strip() or None

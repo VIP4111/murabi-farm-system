@@ -372,10 +372,14 @@ def payroll_prepare(user_id):
                 except ValueError:
                     continue
 
-        payroll_service.save_draft(
-            payroll, base_salary=base_salary, bonus_amount=bonus_amount,
-            deductions=deductions, recipient_name=request.form.get("recipient_name"),
-        )
+        try:
+            payroll_service.save_draft(
+                payroll, base_salary=base_salary, bonus_amount=bonus_amount,
+                deductions=deductions, recipient_name=request.form.get("recipient_name"),
+            )
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
 
         if request.form.get("action") == "confirm":
             payroll_service.confirm(payroll, actor=current_user)
