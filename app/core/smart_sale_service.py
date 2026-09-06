@@ -33,9 +33,13 @@ def _age_days(animal: Animal):
     return (date.today() - ref).days
 
 
-def _weight_trend(animal: Animal) -> str | None:
-    """يرجّع 'up'/'flat'/'down' من آخر قيدين وزن، أو None لو ما فيه كفاية بيانات."""
-    records = (
+def _weight_trend(animal: Animal, last_two_weights: list | None = None) -> str | None:
+    """يرجّع 'up'/'flat'/'down' من آخر قيدين وزن، أو None لو ما فيه كفاية بيانات.
+
+    `last_two_weights` اختياري (بند إصلاح أداء) — لو مُمرَّر (من
+    `get_recommendations` المجمَّعة)، نستخدمه بدل استعلام AnimalWeight
+    منفصل؛ فاضي = السلوك الأصلي (استعلام مباشر)."""
+    records = last_two_weights if last_two_weights is not None else (
         AnimalWeight.query.filter_by(animal_id=animal.id)
         .order_by(AnimalWeight.date.desc()).limit(2).all()
     )
@@ -49,14 +53,63 @@ def _weight_trend(animal: Animal) -> str | None:
     return "flat"
 
 
-def _current_cost(animal: Animal) -> float:
+def _current_cost(animal: Animal, health_cost_map: dict | None = None) -> float:
+    """`health_cost_map` اختياري (بند إصلاح أداء) — دفتر {animal_id:
+    مجموع تكاليف VetVisit+Disease} مُجهَّز مسبقاً (من `get_recommendations`)
+    بدل استعلامين منفصلين لكل رأس؛ فاضي = السلوك الأصلي."""
     cost = animal.price or 0
-    cost += sum(v.cost or 0 for v in VetVisit.query.filter_by(animal_id=animal.id).all())
-    cost += sum(d.treatment_cost or 0 for d in Disease.query.filter_by(animal_id=animal.id).all())
+    if health_cost_map is not None:
+        cost += health_cost_map.get(animal.id, 0)
+    else:
+        cost += sum(v.cost or 0 for v in VetVisit.query.filter_by(animal_id=animal.id).all())
+        cost += sum(d.treatment_cost or 0 for d in Disease.query.filter_by(animal_id=animal.id).all())
     return cost
 
 
-def marginal_feeding_signal(animal: Animal) -> dict | None:
+def _bulk_health_cost_map(animal_ids: list) -> dict:
+    """بند إصلاح أداء (بحث "سرعة التنقل") — `_current_cost` كانت تسوي
+    استعلامين منفصلين (VetVisit + Disease) *لكل رأس على حدة*، وتُستدعى
+    مرتين لكل رأس (من `_profit_margin_percent` و`marginal_feeding_signal`
+    كل وحدة لحالها) بشاشة "البيع الذكي" — أثقل شاشة بالنظام من ناحية
+    الاستعلامات. الإصلاح: استعلامان ثابتان إجمالاً (GROUP BY animal_id)
+    لكل الرؤوس دفعة وحدة."""
+    from app.extensions import db
+    if not animal_ids:
+        return {}
+    cost_map: dict[int, float] = {}
+    for row in (
+        db.session.query(VetVisit.animal_id, db.func.sum(VetVisit.cost))
+        .filter(VetVisit.animal_id.in_(animal_ids)).group_by(VetVisit.animal_id).all()
+    ):
+        cost_map[row[0]] = cost_map.get(row[0], 0) + (row[1] or 0)
+    for row in (
+        db.session.query(Disease.animal_id, db.func.sum(Disease.treatment_cost))
+        .filter(Disease.animal_id.in_(animal_ids)).group_by(Disease.animal_id).all()
+    ):
+        cost_map[row[0]] = cost_map.get(row[0], 0) + (row[1] or 0)
+    return cost_map
+
+
+def _bulk_last_two_weights(animal_ids: list) -> dict:
+    """بند إصلاح أداء — نفس فلسفة `_bulk_health_cost_map`، لآخر قيدين
+    وزن لكل رأس. استعلام واحد يجيب كل أوزان الرؤوس المطلوبة (مرتبة)،
+    ثم تقسيم بالذاكرة — بدل استعلام منفصل لكل رأس."""
+    if not animal_ids:
+        return {}
+    rows = (
+        AnimalWeight.query.filter(AnimalWeight.animal_id.in_(animal_ids))
+        .order_by(AnimalWeight.animal_id, AnimalWeight.date.desc()).all()
+    )
+    by_animal: dict[int, list] = {}
+    for w in rows:
+        bucket = by_animal.setdefault(w.animal_id, [])
+        if len(bucket) < 2:
+            bucket.append(w)
+    return by_animal
+
+
+def marginal_feeding_signal(animal: Animal, *, last_two_weights: list | None = None,
+                             plan_by_barn: dict | None = None, health_cost_map: dict | None = None) -> dict | None:
     """الحاسبة التنبؤية للبيع — مؤشر داخلي بس (بند إضافي، 2026-07-24،
     بقرارك الصريح: مؤشر تكلفة/نمو داخلي، مو تنبؤ بسعر سوق خارجي — النظام
     ما عنده أي بيانات أسعار سوق أصلاً). يقارن **التكلفة الحدية الحالية**
@@ -64,10 +117,14 @@ def marginal_feeding_signal(animal: Animal) -> dict | None:
     التاريخي** لنفس الرأس (كل التكاليف المتراكمة ÷ الوزن الحالي). لو
     التكلفة الحدية أعلى بوضوح، معناه الاستمرار بتسمينه صار أغلى نسبياً
     من متوسط تكلفته لحد الآن — إشارة اقتصادية داخلية بس، مو توقيتاً
-    مالياً فعلياً (يحتاج بيانات سوق ما تتوفر بالنظام)."""
+    مالياً فعلياً (يحتاج بيانات سوق ما تتوفر بالنظام).
+
+    المعاملات الثلاثة الأخيرة اختيارية (بند إصلاح أداء، بحث "سرعة
+    التنقل") — لو مُمرَّرة (من `get_recommendations` المجمَّعة)، تُستخدم
+    بدل استعلامات منفصلة لكل رأس؛ فاضية = السلوك الأصلي."""
     from app.core.animal_profile_service import _feed_cost_estimate
 
-    records = (
+    records = last_two_weights if last_two_weights is not None else (
         AnimalWeight.query.filter_by(animal_id=animal.id)
         .order_by(AnimalWeight.date.desc()).limit(2).all()
     )
@@ -80,12 +137,12 @@ def marginal_feeding_signal(animal: Animal) -> dict | None:
         return None
     gain_per_day = gain / days_between
 
-    feed_est = _feed_cost_estimate(animal)
+    feed_est = _feed_cost_estimate(animal, plan_by_barn=plan_by_barn)
     if not feed_est["available"] or not feed_est["daily_cost"]:
         return None
     marginal_cost_per_kg = feed_est["daily_cost"] / gain_per_day
 
-    total_cost = _current_cost(animal) + feed_est["total"]
+    total_cost = _current_cost(animal, health_cost_map=health_cost_map) + feed_est["total"]
     if total_cost <= 0:
         return None
     historical_cost_per_kg = total_cost / animal.weight
@@ -103,11 +160,11 @@ def marginal_feeding_signal(animal: Animal) -> dict | None:
     }
 
 
-def _profit_margin_percent(animal: Animal) -> float | None:
+def _profit_margin_percent(animal: Animal, health_cost_map: dict | None = None) -> float | None:
     wf = animal.workflow
     if not wf or not wf.estimated_value:
         return None
-    cost = _current_cost(animal)
+    cost = _current_cost(animal, health_cost_map=health_cost_map)
     if cost <= 0:
         return None
     return (wf.estimated_value - cost) / cost * 100
@@ -135,7 +192,16 @@ def _label_for_score(score: int) -> str:
     return _("احتفاظ")
 
 
-def _evaluate_male(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
+def _evaluate_male(animal: Animal, fs: FarmSettings, ctx: dict | None = None) -> tuple[int, list[str]]:
+    ctx = ctx or {}
+    # ملاحظة: `.get(animal.id, [])` مو `None` — لو الدفتر المجمَّع
+    # موجود بـ`ctx`، غياب مفتاح الرأس فيه يعني "ما عنده أوزان مسجَّلة"
+    # فعلياً (قائمة فاضية)، مو "ما فيه دفتر أصلاً" (اللي يرجّع None
+    # ويشغّل استعلام مباشر بديل بالدوال الفرعية).
+    weights = ctx["weights_by_animal"].get(animal.id, []) if "weights_by_animal" in ctx else None
+    health_cost_map = ctx.get("health_cost_map")
+    plan_by_barn = ctx.get("plan_by_barn")
+
     reasons = []
     score = 0
     age = _age_days(animal)
@@ -150,19 +216,19 @@ def _evaluate_male(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
             score += round(30 * age / fs.regular_sale_age_days)
             reasons.append(_("لسا ما وصل سن البيع العادي (عمره %(age)s من %(min)s يوم)", age=age, min=fs.regular_sale_age_days))
 
-    trend = _weight_trend(animal)
+    trend = _weight_trend(animal, last_two_weights=weights)
     if trend in ("flat", "down"):
         score += 30
         reasons.append(_("الوزن متوقف أو يتراجع — يستهلك علف بدون عائد يستاهل الانتظار"))
     elif trend == "up":
         reasons.append(_("الوزن يتحسن — يستاهل الانتظار شوي قبل البيع"))
 
-    margin = _profit_margin_percent(animal)
+    margin = _profit_margin_percent(animal, health_cost_map=health_cost_map)
     if margin is not None and margin >= fs.target_profit_margin_percent:
         score += 25
         reasons.append(_("هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع", margin=f"{margin:.0f}", target=f"{fs.target_profit_margin_percent:.0f}"))
 
-    signal = marginal_feeding_signal(animal)
+    signal = marginal_feeding_signal(animal, last_two_weights=weights, plan_by_barn=plan_by_barn, health_cost_map=health_cost_map)
     if signal:
         score += 20
         reasons.append(signal["reason"])
@@ -260,13 +326,18 @@ def bulk_is_reproductively_delayed(females: list, fs: FarmSettings) -> dict:
     return result
 
 
-def _evaluate_female(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
+def _evaluate_female(animal: Animal, fs: FarmSettings, ctx: dict | None = None) -> tuple[int, list[str]]:
+    ctx = ctx or {}
+    weights = ctx["weights_by_animal"].get(animal.id, []) if "weights_by_animal" in ctx else None
+    health_cost_map = ctx.get("health_cost_map")
+    is_delayed = ctx["delayed_map"].get(animal.id, False) if "delayed_map" in ctx else _is_reproductively_delayed(animal, fs)
+
     flags = []
     if animal.refuses_nursing:
         flags.append(_("ترفض إرضاع مولودها"))
     if animal.udder_damaged:
         flags.append(_("الضرع/الدرة تالفة"))
-    if _is_reproductively_delayed(animal, fs):
+    if is_delayed:
         flags.append(_("تأخر حملها أكثر من %(n)s يوم بدون تقريع/حمل جديد", n=fs.female_delayed_conception_days))
 
     if flags:
@@ -277,11 +348,11 @@ def _evaluate_female(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
     # افتراضي نحو الاحتفاظ (أنثى منتجة بدون مشاكل لازم تبقى بالقطيع).
     reasons = []
     score = 0
-    trend = _weight_trend(animal)
+    trend = _weight_trend(animal, last_two_weights=weights)
     if trend == "down":
         score += 15
         reasons.append(_("الوزن يتراجع — يحتاج متابعة"))
-    margin = _profit_margin_percent(animal)
+    margin = _profit_margin_percent(animal, health_cost_map=health_cost_map)
     if margin is not None and margin >= fs.target_profit_margin_percent:
         score += 15
         reasons.append(_("هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%%", margin=f"{margin:.0f}", target=f"{fs.target_profit_margin_percent:.0f}"))
@@ -290,12 +361,12 @@ def _evaluate_female(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
     return score, reasons
 
 
-def evaluate_animal(animal: Animal) -> dict:
-    fs = FarmSettings.get()
+def evaluate_animal(animal: Animal, fs: FarmSettings | None = None, ctx: dict | None = None) -> dict:
+    fs = fs or FarmSettings.get()
     if animal.gender == "ذكر":
-        score, reasons = _evaluate_male(animal, fs)
+        score, reasons = _evaluate_male(animal, fs, ctx=ctx)
     else:
-        score, reasons = _evaluate_female(animal, fs)
+        score, reasons = _evaluate_female(animal, fs, ctx=ctx)
     return {
         "animal": animal,
         "score": score,
@@ -306,7 +377,27 @@ def evaluate_animal(animal: Animal) -> dict:
 
 
 def get_recommendations() -> list[dict]:
-    animals = Animal.query.filter_by(status="active").all()
-    rows = [evaluate_animal(a) for a in animals]
+    """بند إصلاح أداء حرج (بحث "سرعة التنقل") — كل رأس نشط كان يسوي
+    حتى 10 استعلامات منفصلة له لحاله (وزن مرتين، تكلفة صحية مرتين،
+    تأخر شياع حتى 4، خطة علف مرة) بهذي الشاشة — أثقل شاشة بالنظام،
+    وتُستدعى كمان تلقائياً بكل تحميل للرئيسية عبر `alerts_service.
+    _ready_to_sell_now`. الإصلاح: كل البيانات المساعدة تُجهَّز *مرة
+    وحدة* لكل الرؤوس دفعة وحدة (`ctx`) بدل استعلام لكل رأس."""
+    from app.core.animal_profile_service import _current_feed_plans_by_barn
+    from sqlalchemy.orm import joinedload
+
+    fs = FarmSettings.get()
+    animals = Animal.query.filter_by(status="active").options(joinedload(Animal.workflow)).all()
+    animal_ids = [a.id for a in animals]
+    females = [a for a in animals if a.gender != "ذكر"]
+
+    ctx = {
+        "weights_by_animal": _bulk_last_two_weights(animal_ids),
+        "health_cost_map": _bulk_health_cost_map(animal_ids),
+        "plan_by_barn": _current_feed_plans_by_barn(),
+        "delayed_map": bulk_is_reproductively_delayed(females, fs),
+    }
+
+    rows = [evaluate_animal(a, fs=fs, ctx=ctx) for a in animals]
     rows.sort(key=lambda r: r["score"], reverse=True)
     return rows
