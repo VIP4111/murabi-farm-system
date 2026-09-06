@@ -11,7 +11,7 @@
 كامل (تخزين، حالة مقروء/غير مقروء) — تغيير أكبر بكثير، يستاهل بند
 منفصل لو تبيه، مو تحت هذا البند.
 """
-from datetime import date, datetime, timezone
+from datetime import timezone
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -22,7 +22,7 @@ def _generate_if_needed_today():
     """المنطق الفعلي مشترك بين الـCron (وقت 3 فجراً) وبين نقطة التدارك
     عند أول طلب باليوم (بند إضافي 89، نقطة 6). لازم تُستدعى داخل
     app_context فعّال أصلاً."""
-    from app.extensions import db, farm_today
+    from app.extensions import db, farm_today, farm_now_naive
     from app.models import FarmSettings
     from app.core import daily_task_service
 
@@ -37,7 +37,12 @@ def _generate_if_needed_today():
     # فهذا احتياط مزدوج، مو الحارس الوحيد ضد التكرار.
     if settings.last_daily_tasks_auto_run == today:
         return
-    daily_task_service.generate_daily_husbandry_tasks(now=datetime.now())
+    # بند إصلاح (مراجعة "أكواد الخلفية") — نفس ملاحظة `farm_today()`
+    # أعلاه بالضبط، بس هذي فاتت بالإصلاح السابق: `datetime.now()` هنا
+    # يحدد أيضاً وقت بدء توليد مهام الغد مسبقاً (`EVENING_PREVIEW_HOUR`
+    # داخل `daily_task_service`) — كان يشتغل متأخراً 3 ساعات عن توقيت
+    # السعودية الفعلي.
+    daily_task_service.generate_daily_husbandry_tasks(now=farm_now_naive())
     settings.last_daily_tasks_auto_run = today
     db.session.commit()
 

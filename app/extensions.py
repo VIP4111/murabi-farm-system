@@ -25,6 +25,25 @@ def farm_today() -> date:
     _gate_quarantine`). بقية `date.today()` بالمشروع بقيت كما هي عمداً."""
     return datetime.now(_RIYADH_TZ).date()
 
+
+def farm_now_naive() -> datetime:
+    """بند إصلاح (مراجعة "أكواد الخلفية") — نفس مشكلة `farm_today()`
+    بالضبط لقيناها بمكان ثانٍ فاتنا وقتها: `daily_task_service.
+    generate_daily_husbandry_tasks()` يستدعي `datetime.now()` (بدون
+    منطقة زمنية — وقت السيرفر الخام، UTC على Render) عشان يقرر الساعة
+    اللي تبدأ منها توليد مهام الغد مسبقاً (`EVENING_PREVIEW_HOUR = 18`،
+    بند إضافي 72 بطلبك الصريح: "من 6 مساءً"). بتوقيت UTC، "الساعة 6"
+    فعلياً تعني 9 مساءً بتوقيت السعودية — الميزة كانت تشتغل متأخرة
+    3 ساعات كل ليلة عن الوقت اللي طلبته بالضبط. حتى `scheduler.py` (بعد
+    إصلاح `farm_today()` للتاريخ) كان لسا يمرّر `datetime.now()` الخام
+    لهذي الدالة بالذات — الإصلاح السابق ما غطاها.
+
+    ترجع وقت الرياض *بدون* معلومة منطقة زمنية (naive) عمداً — عشان
+    تبقى متوافقة مباشرة مع كود موجود يقارنها بـ`date`/يستخدم `.hour`
+    بدون تعقيد تحويل إضافي، نفس نمط بقية الدوال بالمشروع."""
+    return datetime.now(_RIYADH_TZ).replace(tzinfo=None)
+
+
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()

@@ -926,8 +926,13 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
     pregnancy_care_service.detect_implicit_pregnancies()
 
     # مهام يومية تلقائية (بند إضافي 55.1) — نفس الفلسفة بالضبط.
+    # بند إصلاح (مراجعة "أكواد الخلفية") — `farm_now_naive()` بدل ترك
+    # الدالة تستخدم `datetime.now()` الخام (وقت UTC بالسيرفر)، عشان
+    # ميزة "توليد مهام الغد من الساعة 6 مساءً" تشتغل بتوقيت السعودية
+    # الفعلي، مو متأخرة 3 ساعات.
     from app.core import daily_task_service
-    daily_task_service.generate_daily_husbandry_tasks()
+    from app.extensions import farm_now_naive
+    daily_task_service.generate_daily_husbandry_tasks(now=farm_now_naive())
 
     # مهام وجبات العلف حسب جدول كل حظيرة (بند إضافي 131) — نفس الفلسفة.
     from app.core import feeding_schedule_service
