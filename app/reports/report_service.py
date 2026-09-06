@@ -56,8 +56,20 @@ def _to_local_date(dt) -> date:
     محلية (date.today()). لو خادم Flask بتوقيت أمام UTC (مثلاً +3)، أول
     ساعات بعد منتصف الليل المحلي: date.today() صار "بكرة" بينما completed_at
     لسه "اليوم" بتوقيت UTC — يعيد بناء التاريخ المحلي الصحيح بدل مقارنة
-    تاريخ UTC مباشرة بتاريخ محلي."""
-    return dt.replace(tzinfo=timezone.utc).astimezone().date()
+    تاريخ UTC مباشرة بتاريخ محلي.
+
+    بند إصلاح (فحص عميق مقسَّم — قسم "التقارير") — كانت تستخدم
+    `.astimezone()` بدون منطقة زمنية صريحة، اللي يعتمد على توقيت
+    نظام التشغيل الافتراضي للسيرفر (`TZ` بالبيئة) — غير مضبوط بهذا
+    المشروع إطلاقاً، وبيئات استضافة مُدارة زي Render تُشغّل حاوياتها
+    بتوقيت UTC افتراضياً. يعني هذا "الإصلاح" نفسه كان لا يفعل شيئاً
+    عملياً بالإنتاج (UTC ← UTC، صفر تحويل) — بالضبط نفس مشكلة `date.
+    today()` المُصلَحة بـ`app/extensions.farm_today()`، بس هنا الكود
+    كان يتظاهر بمعالجتها بدون ما يعالجها فعلياً. الحل: نفس أسلوب
+    `farm_today()` بالضبط — منطقة زمنية صريحة (`Asia/Riyadh`) بدل
+    الاعتماد على توقيت النظام الافتراضي."""
+    from zoneinfo import ZoneInfo
+    return dt.replace(tzinfo=timezone.utc).astimezone(ZoneInfo("Asia/Riyadh")).date()
 
 
 def _utc_datetime_widened(column, start: date, end: date):
