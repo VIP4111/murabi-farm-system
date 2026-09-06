@@ -57,6 +57,15 @@ class Feed(db.Model):
     available_qty = db.Column(db.Float, default=0)
     min_stock_qty = db.Column(db.Float, default=0)
 
+    # بند إصلاح (مراجعة "أكواد الخلفية") — `stock_alert_service.check_
+    # feed_stock` تُستدعى بعد *كل* `deduct_stock()` فعلي (كل مرة توزَّع
+    # وجبة علف)، بدون أي منع تكرار — يعني طالما الصنف تحت الحد الأدنى،
+    # يوصل إشعار تيليجرام جديد لكل توزيعة (ممكن مرات يومياً)، عشرات
+    # الإشعارات المكرَّرة لنفس المشكلة بدل واحد بس. هذا العلم يمنع تكرار
+    # الإشعار طالما الوضع لسا نفسه، ويُصفَّر تلقائياً عند أي تزويد
+    # مخزون فعلي (`add_stock`) عشان لو رجع ينخفض تاني يُنبَّه من جديد.
+    low_stock_alert_sent = db.Column(db.Boolean, default=False, nullable=False)
+
     status = db.Column(db.String(32), default="active", nullable=False)
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
@@ -89,6 +98,10 @@ class Feed(db.Model):
         if qty <= 0:
             raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         self.available_qty = (self.available_qty or 0) + qty
+        # بند إصلاح (مراجعة "أكواد الخلفية") — نصفّر علم "أُرسل إشعار
+        # نقص" عند أي تزويد فعلي، عشان لو رجع المخزون ينخفض تحت الحد
+        # الأدنى لاحقاً يُنبَّه من جديد (مو يبقى صامتاً للأبد بعد أول إشعار).
+        self.low_stock_alert_sent = False
 
 
 class FeedRation(db.Model):

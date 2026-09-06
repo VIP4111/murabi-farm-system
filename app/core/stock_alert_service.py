@@ -13,6 +13,7 @@ from app.core import telegram_service
 
 
 def _notify(kind_label, icon: str, item, permission_code: str, days_until_stockout: float | None) -> None:
+    from app.extensions import db
     from app.models import FarmSettings
     fs = FarmSettings.get()
     min_qty = item.min_stock_qty or 0
@@ -24,6 +25,21 @@ def _notify(kind_label, icon: str, item, permission_code: str, days_until_stocko
     )
     if not under_min and not running_out_soon:
         return
+
+    # بند إصلاح (مراجعة "أكواد الخلفية") — هذي الدالة تُستدعى بعد *كل*
+    # استخدام فعلي (كل توزيعة علف، كل جرعة دواء)، عكس بقية إشعارات
+    # النظام اللي كلها "مرة وحدة حتى يُحل الوضع" (idempotency عبر
+    # source_id بمولّدات المهام، أو حارس last_sent بالتقارير اليومية).
+    # بدون هذا الفحص، صنف واحد تحت الحد الأدنى يبعث إشعار تيليجرام جديد
+    # مع كل استخدام — يعني عشرات الإشعارات المكرَّرة لنفس المشكلة
+    # بالضبط خلال يوم أو يومين، لدرجة تخلي المستخدم يكتم إشعارات البوت
+    # كلها فيفوّت إشعارات ثانية مهمة فعلاً. `low_stock_alert_sent`
+    # يضمن إشعاراً واحداً بس طالما الوضع لسا نفسه، ويُصفَّر تلقائياً
+    # عند أي تزويد مخزون فعلي (`add_stock`).
+    if item.low_stock_alert_sent:
+        return
+    item.low_stock_alert_sent = True
+    db.session.commit()
 
     # بند إضافي (2026-08-31) — نفس فجوة "تعدد المستلمين بلغات مختلفة"
     # المعالَجة بالتقرير اليومي — نص منفصل لكل لغة موجودة فعلياً بين

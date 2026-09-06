@@ -92,6 +92,14 @@ class Pharmacy(db.Model):
     # الجديدة (`/health/pharmacy/shortages`) تلقائياً.
     min_stock_qty = db.Column(db.Float, default=0)
 
+    # بند إصلاح (مراجعة "أكواد الخلفية") — نفس ملاحظة `Feed.low_stock_
+    # alert_sent`: `stock_alert_service.check_pharmacy_stock` تُستدعى بعد
+    # كل `deduct_stock()` فعلي (كل مرة يُستخدم فيها الدواء بزيارة/علاج/
+    # تطعيم)، بدون منع تكرار — طالما الدواء تحت الحد الأدنى، إشعار
+    # تيليجرام جديد مع كل استخدام. هذا العلم يمنع التكرار طالما الوضع
+    # لسا نفسه، ويُصفَّر عند أي تزويد فعلي (`add_stock`).
+    low_stock_alert_sent = db.Column(db.Boolean, default=False, nullable=False)
+
     # سعر الوحدة (بند إضافي، 2026-07-23) — أساس حساب تكلفة العلاج تلقائياً
     # (الكمية المستخدمة × سعر الوحدة) بدل إدخالها يدوياً بكل زيارة/مرض/
     # تطعيم. راجع app/health/health_service.py:_computed_cost.
@@ -154,6 +162,9 @@ class Pharmacy(db.Model):
         if qty <= 0:
             raise ValueError(_("الكمية لازم تكون رقماً موجباً أكبر من صفر."))
         self.available_qty = (self.available_qty or 0) + qty
+        # بند إصلاح (مراجعة "أكواد الخلفية") — نصفّر علم إشعار النقص
+        # عند أي تزويد فعلي (انظر تعريف `low_stock_alert_sent` أعلاه).
+        self.low_stock_alert_sent = False
 
     def _consume_batches_fifo(self, qty: float) -> None:
         """بند إضافي 96 — خصم الكمية من أقدم دفعة شراء أولاً (FIFO)، عشان
