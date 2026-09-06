@@ -27,7 +27,9 @@ def detect_barn_clusters(*, today: date | None = None) -> list:
     الأقل) خلال آخر `CLUSTER_WINDOW_DAYS` يوم — لو وُجد، يولّد مهمة
     مراجعة واحدة (idempotent أسبوعياً لكل حظيرة، عشان ما يتكرر يومياً
     لنفس الحالة المستمرة)."""
-    today = today or date.today()
+    if today is None:
+        from app.extensions import farm_today
+        today = farm_today()
     window_start = today - timedelta(days=CLUSTER_WINDOW_DAYS)
     week_number = today.isocalendar()[1]
 

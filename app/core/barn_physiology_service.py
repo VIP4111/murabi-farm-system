@@ -66,8 +66,13 @@ def generate_barn_move_tasks(*, now: datetime | None = None) -> list:
     """يولّد مهمة "🔀 انقل" لكل رأس وصل حالة (حامل بالشهور الأخيرة/
     رضاعة) وحظيرته الحالية مو من النوع المطابق — بشرط وجود حظيرة فعلية
     بهذا النوع أصلاً (بدون كذا ما فيه وجهة ننقل لها). ترجع فقط المهام
-    اللي أُنشئت الآن."""
-    today = (now or datetime.now()).date()
+    اللي أُنشئت الآن.
+
+    بند إصلاح (مراجعة "أكواد الخلفية") — نفس ملاحظة `farm_today()`:
+    `datetime.now()` الخام (UTC على Render) يخلي "اليوم" يتغيّر متأخر
+    3 ساعات عن توقيت السعودية قرب منتصف الليل."""
+    from app.extensions import farm_now_naive
+    today = (now or farm_now_naive()).date()
     created = []
 
     targets = {

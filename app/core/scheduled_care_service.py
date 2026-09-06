@@ -6,7 +6,7 @@
 `barn_physiology_service`, `data_completeness_service`): فحص حي عند فتح
 شاشة التنبيهات، بدون Cron، idempotent عبر `source_type`/`source_id`."""
 import zlib
-from datetime import date, datetime
+from datetime import datetime
 
 from app.models import Animal, Task, Vaccination
 from app.models.animal_log import AnimalWeight
@@ -26,7 +26,8 @@ def generate_vaccination_due_tasks(*, now: datetime | None = None) -> list:
     لكل رأس نشط <= اليوم)، بس هنا نولّد مهمة فعلية موجَّهة لعامل/دكتور
     الحظيرة بدل ما تبقى مجرد تنبيه سلبي — مو مرتبطة بمسار العزل بعد
     الولادة إطلاقاً."""
-    today = (now or datetime.now()).date()
+    from app.extensions import farm_now_naive
+    today = (now or farm_now_naive()).date()
     created = []
 
     rows = Vaccination.query.filter(Vaccination.next_due_date.isnot(None)).all()
@@ -74,8 +75,9 @@ def generate_overdue_weight_tasks(*, now: datetime | None = None) -> list:
     بس رد فعل بعد علاج معيّن."""
     from app.models import FarmSettings
 
+    from app.extensions import farm_now_naive
     settings = FarmSettings.get()
-    today = (now or datetime.now()).date()
+    today = (now or farm_now_naive()).date()
     created = []
 
     animals = Animal.query.filter_by(status="active", species="sheep_goat").all()

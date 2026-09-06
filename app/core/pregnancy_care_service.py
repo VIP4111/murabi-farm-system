@@ -6,7 +6,7 @@
 حمل مؤكَّد، ويولّد مهمة مقترحة واحدة لكل حمل وصل مرحلته المتأخرة (مرة
 وحدة بالضبط، بفحص idempotency عبر source_type/source_id=Pregnancy.id).
 """
-from datetime import date, timedelta
+from datetime import timedelta
 
 from app.extensions import db
 from app.models import Animal, FarmSettings, Mating, Pregnancy, Task
@@ -14,8 +14,12 @@ from app.team import task_service
 
 
 def generate_late_pregnancy_tasks() -> list[Task]:
+    # بند إصلاح (مراجعة "أكواد الخلفية") — `farm_today()` بدل `date.
+    # today()` الخام (UTC على Render، متأخر 3 ساعات عن السعودية قرب
+    # منتصف الليل).
+    from app.extensions import farm_today
     fs = FarmSettings.get()
-    today = date.today()
+    today = farm_today()
     created = []
 
     for p in Pregnancy.query.filter_by(confirmed=True).all():
@@ -60,8 +64,9 @@ def detect_implicit_pregnancies() -> list[Pregnancy]:
     حمل قوي (مو تأكيد طبي) — نسجّل حمل غير مؤكَّد مربوط بالتقريع نفسه
     (`mating_id`)، ونجدول فحص سونار تلقائياً بدل ما يبقى بانتظار تسجيل
     يدوي قد يُنسى تماماً."""
+    from app.extensions import farm_today
     fs = FarmSettings.get()
-    today = date.today()
+    today = farm_today()
     created = []
 
     cutoff = today - timedelta(days=fs.estrus_return_window_days)

@@ -16,7 +16,11 @@ def _source_id(asset_id: int) -> int:
 
 
 def generate_maintenance_due_tasks(*, now: datetime | None = None) -> list:
-    today = (now or datetime.now()).date()
+    # بند إصلاح (مراجعة "أكواد الخلفية") — نفس ملاحظة `farm_today()`:
+    # `datetime.now()` الخام (UTC على Render) يخلي "اليوم" يتغيّر متأخر
+    # 3 ساعات عن توقيت السعودية قرب منتصف الليل.
+    from app.extensions import farm_now_naive
+    today = (now or farm_now_naive()).date()
     created = []
 
     assets = Asset.query.filter(

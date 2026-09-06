@@ -8,7 +8,7 @@
 الموجود أصلاً، بند 48).
 """
 import zlib
-from datetime import date, datetime
+from datetime import datetime
 from flask_babel import lazy_gettext as _l
 
 from app.models import Animal, Task
@@ -51,7 +51,8 @@ def generate_completion_tasks(*, now: datetime | None = None) -> list:
     ما هي مفتوحة أصلاً). تُحل تلقائياً بمجرد ما العامل/الدكتور يفتحها
     ويكمل البيانات فعلياً بشاشة تعديل الحيوان، ثم يعلّمها "تم" يدوياً
     — نفس دورة حياة أي مهمة ثانية بالنظام، بدون آلية إغلاق خاصة."""
-    today = (now or datetime.now()).date()
+    from app.extensions import farm_now_naive
+    today = (now or farm_now_naive()).date()
     created = []
 
     active_animals = Animal.query.filter_by(status="active").all()
