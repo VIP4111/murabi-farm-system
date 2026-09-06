@@ -71,7 +71,14 @@ def run_farm_month_simulation(days: int = 30, *, send_email: bool = True) -> dic
         day = start_date + timedelta(days=offset)
 
         if random.random() < 0.2:
-            for _ in range(random.randint(1, 2)):
+            # بند إصلاح (تحليل ثابت بـpyflakes، فحص "افحص جميع الأكواد") —
+            # كان متغيّر الحلقة `_` (نفس اسم `gettext as _` المستورد
+            # بأعلى الملف). بايثون يعتبر أي اسم يُسنَد له بأي مكان بالدالة
+            # "محلياً" بكامل نطاقها — فأي `_(...)` قبل هذي الحلقة بنفس
+            # الدالة (رسائل الخطأ المبكرة أعلاه) كان يطلّع UnboundLocalError
+            # فوري بدل الرسالة العربية المقصودة. الحل: اسم غير مستخدم
+            # مختلف (`_i`) بدل `_`.
+            for _i in range(random.randint(1, 2)):
                 _new_animal(day, random.choice(["ذكر", "أنثى"]))
 
         task = task_service.create_suggested_task(
