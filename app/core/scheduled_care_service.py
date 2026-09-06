@@ -79,10 +79,30 @@ def generate_overdue_weight_tasks(*, now: datetime | None = None) -> list:
     created = []
 
     animals = Animal.query.filter_by(status="active", species="sheep_goat").all()
+
+    # بند إصلاح أداء (بحث "مشاكل تشغيلية") — كان "آخر وزن مسجَّل" و"فيه
+    # مهمة مفتوحة أصلاً؟" كل وحدة تسوي استعلام منفصل *لكل رأس على حدة*،
+    # تُستدعى هذي الدالة بكل زيارة تعرض تنبيهات. الإصلاح: استعلام واحد
+    # مجمَّع (`GROUP BY animal_id`) لآخر وزن، واستعلام واحد لكل مهام
+    # الفحص الدورية المفتوحة حالياً، بدل استعلام لكل رأس.
+    from app.extensions import db
+    animal_ids = [a.id for a in animals]
+    last_weight_by_animal = dict(
+        db.session.query(AnimalWeight.animal_id, db.func.max(AnimalWeight.date))
+        .filter(AnimalWeight.animal_id.in_(animal_ids))
+        .group_by(AnimalWeight.animal_id).all()
+    ) if animal_ids else {}
+    all_source_ids = [_source_id("weight", a.id) for a in animals]
+    open_source_ids = {
+        row[0] for row in
+        Task.query.filter(
+            Task.source_type == WEIGHT_SOURCE_TYPE, Task.source_id.in_(all_source_ids),
+            Task.status.in_(task_service.OPEN_TASK_STATUSES),
+        ).with_entities(Task.source_id).all()
+    } if all_source_ids else set()
+
     for animal in animals:
-        last_weight = (AnimalWeight.query.filter_by(animal_id=animal.id)
-                       .order_by(AnimalWeight.date.desc()).first())
-        reference_date = last_weight.date if last_weight else (animal.birth_date or animal.purchase_date or animal.entry_date)
+        reference_date = last_weight_by_animal.get(animal.id) or (animal.birth_date or animal.purchase_date or animal.entry_date)
         if reference_date is None:
             continue
         days_since = (today - reference_date).days
@@ -90,11 +110,7 @@ def generate_overdue_weight_tasks(*, now: datetime | None = None) -> list:
             continue
 
         source_id = _source_id("weight", animal.id)
-        existing = Task.query.filter(
-            Task.source_type == WEIGHT_SOURCE_TYPE, Task.source_id == source_id,
-            Task.status.in_(task_service.OPEN_TASK_STATUSES),
-        ).first()
-        if existing:
+        if source_id in open_source_ids:
             continue
         task = task_service.create_suggested_task(
             title=f"⚖️ وزن متأخر — {animal.animal_no} (آخر وزن منذ {days_since} يوم)",

@@ -754,3 +754,44 @@ def animal_under_milk_withdrawal(animal_id) -> date | None:
         if row:
             candidates.append(row.withdrawal_until_milk)
     return max(candidates) if candidates else None
+
+
+def _bulk_withdrawal_map(animal_ids, column_name: str) -> dict:
+    """أخطر N+1 لقيناه (بحث "مشاكل تشغيلية"، 2026-09-06): `animal_under_
+    withdrawal`/`animal_under_milk_withdrawal` تسويان 3 استعلامات منفصلة
+    *لكل حيوان على حدة* (وحدة لكل جدول VetVisit/Disease/Vaccination) —
+    كانت تُستدعى بحلقة for على كل الرؤوس النشطة بشاشة "سجل الحيوانات"
+    (أكثر شاشة تُفتح بالنظام) وبكل تحميل للرئيسية/التنبيهات (فترة سحب
+    اللحم + فترة سحب الحليب معاً = 6 استعلامات لكل رأس نشط!). على Neon
+    (زمن شبكة حقيقي لكل استعلام)، مزرعة فيها 50 رأس = 300 استعلام إضافي
+    بكل زيارة رئيسية. الإصلاح: 3 استعلامات ثابتة إجمالاً (وحدة لكل
+    جدول، بـGROUP BY animal_id) بغض النظر عن عدد الرؤوس، ثم دمج
+    بالذاكرة. `column_name` يحدد أي عمود (withdrawal_until أو
+    withdrawal_until_milk) — بقية المنطق مطابق تماماً للدالتين الأصليتين."""
+    if not animal_ids:
+        return {}
+    today = date.today()
+    result: dict[int, date] = {}
+    for model in (VetVisit, Disease, Vaccination):
+        column = getattr(model, column_name)
+        rows = (
+            db.session.query(model.animal_id, db.func.max(column))
+            .filter(model.animal_id.in_(animal_ids), column.isnot(None), column >= today)
+            .group_by(model.animal_id)
+            .all()
+        )
+        for animal_id, until in rows:
+            if until and (animal_id not in result or until > result[animal_id]):
+                result[animal_id] = until
+    return result
+
+
+def bulk_animal_under_withdrawal(animal_ids) -> dict:
+    """نسخة مجمَّعة من `animal_under_withdrawal()` لعرض قائمة رؤوس —
+    استخدمها بدل حلقة for على `animal_under_withdrawal(a.id)`."""
+    return _bulk_withdrawal_map(animal_ids, "withdrawal_until")
+
+
+def bulk_animal_under_milk_withdrawal(animal_ids) -> dict:
+    """نسخة مجمَّعة من `animal_under_milk_withdrawal()` — نفس الفكرة."""
+    return _bulk_withdrawal_map(animal_ids, "withdrawal_until_milk")

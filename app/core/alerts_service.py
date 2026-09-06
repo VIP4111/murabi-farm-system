@@ -71,12 +71,17 @@ def _withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
     """فترة سحب اللحم/الذبح — تنتهي البيع فقط. لفترة سحب الحليب انظر
     `_milk_withdrawal_ending_soon()` تحت (بند إضافي، 2026-08-30: طلبك
     الصريح إن التحريمين مستقلان)."""
-    from app.health.health_service import animal_under_withdrawal
+    from app.health.health_service import bulk_animal_under_withdrawal
     today = date.today()
     window_end = today + timedelta(days=fs.alert_before_days)
     alerts = []
-    for a in Animal.query.filter_by(status="active").all():
-        until = animal_under_withdrawal(a.id)
+    active_animals = Animal.query.filter_by(status="active").all()
+    # بند إصلاح أداء (بحث "مشاكل تشغيلية") — كانت `animal_under_withdrawal(a.id)`
+    # تُستدعى لكل رأس نشط على حدة (3 استعلامات/رأس) بكل زيارة للرئيسية/
+    # التنبيهات — استُبدلت باستعلام مجمَّع واحد لكل الرؤوس دفعة وحدة.
+    withdrawal_map = bulk_animal_under_withdrawal([a.id for a in active_animals])
+    for a in active_animals:
+        until = withdrawal_map.get(a.id)
         if until and until <= window_end:
             alerts.append({
                 "category": _("فترة سحب"), "icon": "⏳",
@@ -88,12 +93,15 @@ def _withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
 
 def _milk_withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
     """فترة سحب الحليب المستقلة (بند إضافي، 2026-08-30)."""
-    from app.health.health_service import animal_under_milk_withdrawal
+    from app.health.health_service import bulk_animal_under_milk_withdrawal
     today = date.today()
     window_end = today + timedelta(days=fs.alert_before_days)
     alerts = []
-    for a in Animal.query.filter_by(status="active").all():
-        until = animal_under_milk_withdrawal(a.id)
+    active_animals = Animal.query.filter_by(status="active").all()
+    # نفس إصلاح الأداء أعلاه (`_withdrawal_ending_soon`)، لعمود الحليب المستقل.
+    withdrawal_map = bulk_animal_under_milk_withdrawal([a.id for a in active_animals])
+    for a in active_animals:
+        until = withdrawal_map.get(a.id)
         if until and until <= window_end:
             alerts.append({
                 "category": _("فترة سحب حليب"), "icon": "🥛",
@@ -231,13 +239,16 @@ def _delayed_estrus(fs: FarmSettings) -> list[dict]:
     مطموراً بمحرك البيع الذكي (بند 19) وما يظهر إلا لو درجة البيع
     وصلت 80+. يعيد استخدام منطق حساب الأيام نفسه من `smart_sale_
     service._is_reproductively_delayed` حرفياً — صفر تكرار منطق."""
-    from app.core.smart_sale_service import _is_reproductively_delayed
+    from app.core.smart_sale_service import bulk_is_reproductively_delayed
 
+    # بند إصلاح أداء (بحث "مشاكل تشغيلية") — أثقل تنبيه بكل الجولة: كان
+    # `_is_reproductively_delayed(a, fs)` يُستدعى لكل أنثى نشطة على حدة
+    # (حتى 4 استعلامات/رأس) — استُبدل باستعلام مجمَّع واحد لكل الإناث دفعة وحدة.
+    females = [a for a in Animal.query.filter_by(status="active", gender="أنثى").all() if a.species == "sheep_goat"]
+    delayed_map = bulk_is_reproductively_delayed(females, fs)
     alerts = []
-    for a in Animal.query.filter_by(status="active", gender="أنثى").all():
-        if a.species != "sheep_goat":
-            continue
-        if _is_reproductively_delayed(a, fs):
+    for a in females:
+        if delayed_map.get(a.id):
             alerts.append({
                 "category": _("تأخر شياع"), "icon": "🔁",
                 "label": _("%(no)s — تأخر حملها أكثر من %(days)s يوم", no=a.animal_no, days=fs.female_delayed_conception_days),

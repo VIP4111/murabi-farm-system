@@ -320,7 +320,7 @@ def _animals_list_context(*, bulk_mode: bool) -> dict:
     (بند إضافي 132) — نفس منطق الفلترة بالضبط، الفرق الوحيد هو
     `bulk_mode` اللي يتحكم بعرض عمود التأشير وشريط الإجراء الجماعي
     بالقالب."""
-    from app.health.health_service import animal_under_withdrawal
+    from app.health.health_service import bulk_animal_under_withdrawal
 
     filter_key = request.args.get("filter", "all")
     if filter_key not in animal_filters_service.FILTERS:
@@ -335,7 +335,10 @@ def _animals_list_context(*, bulk_mode: bool) -> dict:
     if barn_filter_id:
         animals = [a for a in animals if a.barn_id == int(barn_filter_id)]
 
-    withdrawal_map = {a.id: animal_under_withdrawal(a.id) for a in animals}
+    # بند إصلاح أداء (بحث "مشاكل تشغيلية") — كان `animal_under_withdrawal(a.id)`
+    # يُستدعى لكل رأس على حدة (3 استعلامات/رأس)، أخطر N+1 بشاشة سجل
+    # الحيوانات (أكثر شاشة تُفتح بالنظام). استُبدلت باستعلام مجمَّع واحد.
+    withdrawal_map = bulk_animal_under_withdrawal([a.id for a in animals])
     alert_counts = alerts_service.alert_counts_by_animal()
     return dict(
         animals=animals, withdrawal_map=withdrawal_map, alert_counts=alert_counts, today=date.today(),

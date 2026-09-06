@@ -199,6 +199,67 @@ def _is_reproductively_delayed(animal: Animal, fs: FarmSettings) -> bool:
     return False
 
 
+def bulk_is_reproductively_delayed(females: list, fs: FarmSettings) -> dict:
+    """نسخة مجمَّعة من `_is_reproductively_delayed()` — بحث "مشاكل
+    تشغيلية" (2026-09-06) لقى إن هذي الدالة تسوي حتى 4 استعلامات منفصلة
+    *لكل أنثى على حدة* (حمل مؤكَّد + سونار + آخر مولود + آخر تلقيح)،
+    وتُستدعى بحلقة for على كل الإناث النشطات بتنبيه "تأخر شياع" —
+    الأثقل بكل التنبيهات (61 استعلام لـ15 رأس بالقياس الفعلي). نفس
+    المنطق بالضبط، بس بـ4 استعلامات ثابتة إجمالاً (وحدة لكل مصدر بيانات،
+    مجمَّعة بـIN/GROUP BY) بدل استعلام لكل رأس."""
+    from app.extensions import db
+    from app.models import Pregnancy, SonarResult
+    from app.core.animal_filters_service import BREEDING_ADULT_MIN_AGE_DAYS
+
+    ids = [a.id for a in females]
+    if not ids:
+        return {}
+
+    pregnant_ids = {
+        row[0] for row in
+        Pregnancy.query.filter(Pregnancy.female_id.in_(ids), Pregnancy.confirmed.is_(True))
+        .with_entities(Pregnancy.female_id).all()
+    }
+    pregnant_ids |= {
+        row[0] for row in
+        SonarResult.query.filter(SonarResult.ewe_id.in_(ids), SonarResult.result == "حامل")
+        .with_entities(SonarResult.ewe_id).all()
+    }
+
+    last_child_by_mother = dict(
+        db.session.query(Animal.mother_id, db.func.max(Animal.birth_date))
+        .filter(Animal.mother_id.in_(ids), Animal.birth_date.isnot(None))
+        .group_by(Animal.mother_id).all()
+    )
+    last_mating_by_female = dict(
+        db.session.query(Mating.female_id, db.func.max(Mating.date))
+        .filter(Mating.female_id.in_(ids))
+        .group_by(Mating.female_id).all()
+    )
+
+    today = date.today()
+    result = {}
+    for a in females:
+        if a.id in pregnant_ids:
+            result[a.id] = False
+            continue
+        last_child_date = last_child_by_mother.get(a.id)
+        if last_child_date:
+            rest_end = last_child_date + timedelta(days=fs.min_rest_after_birth_days)
+            if today < rest_end:
+                result[a.id] = False
+                continue
+        last_mating_date = last_mating_by_female.get(a.id)
+        if last_mating_date:
+            result[a.id] = (today - last_mating_date).days > fs.female_delayed_conception_days
+            continue
+        age = _age_days(a)
+        result[a.id] = bool(
+            age is not None and age >= BREEDING_ADULT_MIN_AGE_DAYS + fs.female_delayed_conception_days
+        )
+    return result
+
+
 def _evaluate_female(animal: Animal, fs: FarmSettings) -> tuple[int, list[str]]:
     flags = []
     if animal.refuses_nursing:
