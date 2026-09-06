@@ -24,9 +24,16 @@
 </div>
 
 <div class="card" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-  <form method="get" style="display:flex; align-items:center; gap:8px; margin:0;">
+  {# بند إصلاح (فحص "مقاسات الجوال") — نص التسمية طويل ("فلترة بحظيرة
+     لعملية جماعية على حظيرة كاملة") مع white-space:nowrap على شاشة
+     375px يفرض عرض الفورم أكبر من الشاشة، وبما إن الفورم نفسه ما فيه
+     flex-wrap، الصفحة كلها تصير قابلة للتمرير أفقياً (تختفي حواف
+     الهيدر/الجدول عن الشاشة). الإصلاح: flex-wrap على الفورم (نفس نمط
+     .card الأب) + إلغاء nowrap عن التسمية عشان تلف سطرين بدل ما تدفع
+     العرض. #}
+  <form method="get" style="display:flex; align-items:center; gap:8px; margin:0; flex-wrap:wrap; max-width:100%;">
     <input type="hidden" name="filter" value="{{ active_filter }}">
-    <label style="margin:0; white-space:nowrap;">{{ _('فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)') }}</label>
+    <label style="margin:0;">{{ _('فلترة بحظيرة (لعملية جماعية على حظيرة كاملة)') }}</label>
     <select name="barn_id" onchange="this.form.submit()" style="width:auto; margin:0;">
       <option value="">{{ _('كل الحظائر') }}</option>
       {% for b in barns %}<option value="{{ b.id }}" {{ 'selected' if active_barn_id == b.id }}>{{ b.display_name() }}</option>{% endfor %}

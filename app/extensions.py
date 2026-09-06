@@ -30,6 +30,17 @@ migrate = Migrate()
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
 babel = Babel()
+
+# بند إصلاح (فحص "مقاسات الجوال") — بلوغة عن رسالة "Please log in to
+# access this page." تطلع بالإنجليزي الخام لما تفتح رابطاً مباشرة بدون
+# تسجيل دخول (نفس فئة مشكلة صفحات 403/404/500/413 القديمة اللي صارت
+# عربية — هذي كانت الوحيدة المتبقية لأنها رسالة Flask-Login الافتراضية،
+# مو نص كتبناه إحنا بالكود، فما ظهرت بالفحوصات السابقة اللي بحثت عن
+# نصوصنا نحن). `_l` (lazy) لأن هذا يتنفَّذ وقت استيراد الملف، قبل ما
+# يكون فيه سياق تطبيق فعّال لترجمة فورية.
+from flask_babel import lazy_gettext as _l
+login_manager.login_message = _l("سجّل دخولك أولاً عشان توصل لهذي الصفحة.")
+login_manager.login_message_category = "warning"
 # حماية CSRF (بند إضافي 93، 2026-08-02 — التحليل الثالث) — قبل هذا
 # البند ما كان فيه أي رمز CSRF بأي فورم، والحماية الوحيدة كانت
 # SESSION_COOKIE_SAMESITE=Lax (بند 87) اللي تخفف الخطر بس ما تلغيه.
