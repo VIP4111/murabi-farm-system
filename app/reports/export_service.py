@@ -277,6 +277,23 @@ _ARABIC_MONTHS = {
 }
 
 
+def resolve_payslip_employer(user, farm_settings):
+    """يحدّد "صاحب العمل" اللي يُطبع بمسير راتب `user` — بند إصلاح
+    (طلبك الصريح: "هل صاحب الحلال راح يكون مكفول جميع العمال او في
+    امكانيه تسجيل كل عامل بيناته لحالها"). قبل هذا البند كان "صاحب
+    العمل" يُطبع دائماً من بيانات صاحب الحلال الوحيدة (`farm_settings`)
+    لكل عمال المزرعة بلا استثناء، حتى لو عامل معيّن مكفول فعلياً على
+    شخص/منشأة ثانية — يخلي المستند مغلوطاً لو استُخدم رسمياً. صار يفضّل
+    بيانات كفيل العامل نفسه (`User.sponsor_*`) لو معبّاة، ويرجع لصاحب
+    الحلال تلقائياً لو فاضية (نفس السلوك القديم بالضبط لأي عامل ما له
+    كفيل مستقل مسجَّل). دالة مستقلة (بدل منطق مباشر داخل بناء الـPDF)
+    عشان تُختبر بسهولة بدون الحاجة نفكّك محتوى PDF."""
+    name = user.sponsor_name or farm_settings.farm_name or "مراح بو علي"
+    national_id = user.sponsor_national_id or farm_settings.owner_national_id
+    phone = user.sponsor_phone or farm_settings.farm_phone
+    return name, national_id, phone
+
+
 def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
     """مسير راتب شهر واحد (بند إضافي 242) — نظام الرواتب العام (بخلاف
     وصل "موظف الشهر" الأبسط، بند 240): يفصّل الراتب الأساسي + المكافأة
@@ -299,17 +316,19 @@ def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
     c.line(left_margin, y, right_margin, y)
     y -= 10 * mm
 
+    employer_name, employer_national_id, employer_phone = resolve_payslip_employer(payroll.user, farm_settings)
+
     c.setFont("Arabic", 12)
     c.drawRightString(right_margin, y, ar("صاحب العمل"))
     y -= 6 * mm
     c.setFont("Arabic", 10)
-    c.drawRightString(right_margin, y, ar(farm_settings.farm_name or "مراح بو علي"))
+    c.drawRightString(right_margin, y, ar(employer_name))
     y -= 5.5 * mm
-    if farm_settings.owner_national_id:
-        c.drawRightString(right_margin, y, ar(f"رقم الهوية: {farm_settings.owner_national_id}"))
+    if employer_national_id:
+        c.drawRightString(right_margin, y, ar(f"رقم الهوية: {employer_national_id}"))
         y -= 5.5 * mm
-    if farm_settings.farm_phone:
-        c.drawRightString(right_margin, y, ar(f"رقم الجوال: {farm_settings.farm_phone}"))
+    if employer_phone:
+        c.drawRightString(right_margin, y, ar(f"رقم الجوال: {employer_phone}"))
         y -= 5.5 * mm
 
     y -= 8 * mm
@@ -332,10 +351,11 @@ def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
     y -= 5.5 * mm
     if payroll.user.payment_method == "تحويل بنكي":
         # حوالة (بند إضافي 244) — بطلبك: "من المحوّل ومن مستلم الحوالة"
-        # صريحين. المحوّل = صاحب الحلال (مذكور فوق أصلاً)، والمستلم
+        # صريحين. المحوّل = صاحب العمل المذكور فوق (كفيل العامل لو
+        # مسجَّل، وإلا صاحب الحلال — نفس `employer_name` أعلاه)، والمستلم
         # حقل مستقل قابل للاستبدال كل شهر (Payroll.recipient_name).
         recipient = payroll.recipient_name or payroll.user.name
-        c.drawRightString(right_margin, y, ar(f"طريقة الدفع: تحويل بنكي — من {farm_settings.farm_name or 'صاحب الحلال'} إلى {recipient}"))
+        c.drawRightString(right_margin, y, ar(f"طريقة الدفع: تحويل بنكي — من {employer_name} إلى {recipient}"))
         y -= 5.5 * mm
     elif payroll.user.payment_method:
         c.drawRightString(right_margin, y, ar(f"طريقة الدفع: {payroll.user.payment_method}"))

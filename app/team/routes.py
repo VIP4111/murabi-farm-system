@@ -219,6 +219,11 @@ def salary_update(user_id):
     user.passport_number = request.form.get("passport_number") or None
     user.border_number = request.form.get("border_number") or None
     user.payment_method = request.form.get("payment_method") or None
+    # بيانات الكفيل الخاص بهذا العامل (طلبك الصريح) — اختيارية تماماً،
+    # فاضية = يستمر يُستخدم صاحب الحلال تلقائياً (`build_payroll_receipt_pdf`).
+    user.sponsor_name = request.form.get("sponsor_name") or None
+    user.sponsor_national_id = request.form.get("sponsor_national_id") or None
+    user.sponsor_phone = request.form.get("sponsor_phone") or None
     # تاريخ وصول العامل للسعودية (بند إضافي 247) — أساس الراتب المتناسب.
     arrival_raw = (request.form.get("saudi_arrival_date") or "").strip()
     if arrival_raw:
