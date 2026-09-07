@@ -5,6 +5,7 @@
 الخراف [موزَّعة على كل الرؤوس]." الدالة هنا نقطة دخول واحدة تغطي
 العلف/الدواء/المعدات الثلاثة (نفس نمط `stock_purchase_service.kind`)."""
 from datetime import date
+from flask_babel import gettext as _
 
 from app.extensions import db
 from app.models import Feed, Pharmacy, Equipment, Finance, InventoryCount
@@ -21,6 +22,13 @@ def record_count(*, kind: str, item, actual_qty: float, count_date=None, note=No
     مو "ربح")."""
     if kind not in KIND_MODELS:
         raise ValueError(f'kind غير معروف: {kind}')
+    # بند إصلاح (فحص عميق — قسم المستودعات) — `actual_qty` ما كان عليها
+    # أي تحقق — قيمة سالبة (خطأ كتابة بالميزان) كانت تُخزَّن مباشرة
+    # كرصيد مخزون سالب (`item.available_qty`)، وتحسب "هالك" مضخَّماً
+    # بالغلط (الفرق كامل بين الرصيد المتوقع وسالب الكمية المُدخلة) —
+    # يُرحَّل كمصروف حقيقي بسجل المالية بقيمة فاسدة.
+    if actual_qty is None or actual_qty < 0:
+        raise ValueError(_("الكمية الفعلية المجرودة لازم تكون رقماً موجباً (أو صفر)."))
 
     count_date = count_date or date.today()
     expected_qty = item.available_qty or 0
