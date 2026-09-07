@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 03:45+0300\n"
+"POT-Creation-Date: 2026-09-07 03:56+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -144,15 +144,15 @@ msgstr "መካከለኛ"
 msgid "شديدة"
 msgstr "ከባድ"
 
-#: app/__init__.py:196 app/team/routes.py:804
+#: app/__init__.py:196 app/team/routes.py:808
 msgid "مهمة عامة"
 msgstr "አጠቃላይ ተግባር"
 
-#: app/__init__.py:197 app/team/routes.py:805
+#: app/__init__.py:197 app/team/routes.py:809
 msgid "فحص عزل"
 msgstr "የመነጠል ምርመራ"
 
-#: app/__init__.py:198 app/team/routes.py:809
+#: app/__init__.py:198 app/team/routes.py:813
 msgid "مراجعة الدكتور"
 msgstr "የዶክተር ግምገማ"
 
@@ -168,15 +168,15 @@ msgstr "የሴሌኒየም መጠን"
 msgid "متابعة اللبأ/الرضاعة"
 msgstr "የኮለስትረም/ጡት ማጥባት ክትትል"
 
-#: app/__init__.py:202 app/team/routes.py:806
+#: app/__init__.py:202 app/team/routes.py:810
 msgid "وزن"
 msgstr "ክብደት መለካት"
 
-#: app/__init__.py:203 app/team/routes.py:807
+#: app/__init__.py:203 app/team/routes.py:811
 msgid "تحصين مستحق"
 msgstr "የደረሰ ክትባት"
 
-#: app/__init__.py:204 app/team/routes.py:808
+#: app/__init__.py:204 app/team/routes.py:812
 msgid "تبديل علف"
 msgstr "የመኖ ለውጥ"
 
@@ -1415,7 +1415,7 @@ msgstr "ለ%(barn)s በ%(date)s የታቀደ ክትባት አለ — የክት�
 msgid "افتح جدول التحصينات ←"
 msgstr "የክትባት መርሃ ግብር ይክፈቱ ←"
 
-#: app/core/animal_filters_service.py:185 app/team/routes.py:796
+#: app/core/animal_filters_service.py:185 app/team/routes.py:800
 #: app/templates/audit_log.html:16 app/templates/audit_log.html:25
 #: app/templates/health/vaccination_schedule_form.html:20
 #: app/templates/ostrich/eggs_list.html:15
@@ -4100,7 +4100,7 @@ msgstr "\"%(name)s\" አስቀድሞ በካታሎጉ ውስጥ አለ"
 msgid "تمت إضافة الدواء للكتالوج"
 msgstr "መድሃኒቱ ወደ ካታሎግ ታክሏል"
 
-#: app/health/routes.py:471 app/health/routes.py:508 app/team/routes.py:643
+#: app/health/routes.py:471 app/health/routes.py:508 app/team/routes.py:647
 #, python-format
 msgid "\"%(name)s\" موجود بالقائمة أصلاً"
 msgstr "\"%(name)s\" አስቀድሞ በዝርዝሩ ውስጥ አለ"
@@ -4744,6 +4744,15 @@ msgstr "ጉርሻ"
 msgid "مبلغ الخصم"
 msgstr "የቅናሽ መጠን"
 
+#: app/team/payroll_service.py:179
+#, python-format
+msgid ""
+"مجموع الخصومات (%(deductions)s) أكبر من الراتب الأساسي + المكافأة — "
+"الصافي سالب (%(net)s). صحّح الخصومات قبل التأكيد."
+msgstr ""
+"አጠቃላይ ቅናሽ (%(deductions)s) ከመሠረታዊ ደመወዝ + ጉርሻ ይበልጣል — ተጣራ ውጤቱ አሉታዊ ነው "
+"(%(net)s)። ከማረጋገጥዎ በፊት ቅናሾችን ያስተካክሉ።"
+
 #: app/team/report_service.py:90
 msgid "🚨 بلاغ عاجل"
 msgstr "🚨 አስቸኳይ ሪፖርት"
@@ -4934,106 +4943,106 @@ msgstr "የጉዞ ጊዜው ተሰርዟል"
 msgid "قيمة غير صحيحة بالراتب أو المكافأة"
 msgstr "በደመወዝ ወይም ጉርሻ ውስጥ ልክ ያልሆነ ዋጋ"
 
-#: app/team/routes.py:415
+#: app/team/routes.py:419
 #, python-format
 msgid "تم تأكيد راتب %(name)s — رحّل %(amount)s لسجل المالية."
 msgstr "የ%(name)s ደመወዝ ተረጋግጧል — %(amount)s ወደ ፋይናንስ መዝገብ ተላልፏል።"
 
-#: app/team/routes.py:418
+#: app/team/routes.py:422
 msgid "تم حفظ المسودة"
 msgstr "ረቂቁ ተቀምጧል"
 
-#: app/team/routes.py:449
+#: app/team/routes.py:453
 msgid "لازم يتأكَّد الراتب أول قبل رفع الوصل الموقَّع."
 msgstr "የተፈረመውን ደረሰኝ ከመላክዎ በፊት ደመወዙ መጀመሪያ መረጋገጥ አለበት።"
 
-#: app/team/routes.py:454
+#: app/team/routes.py:458
 msgid "تم رفع الوصل الموقَّع"
 msgstr "የተፈረመው ደረሰኝ ተላከ"
 
-#: app/team/routes.py:469
+#: app/team/routes.py:473
 msgid "هذا الراتب لسا ما تأكَّد — ما فيه وصل يُطبع."
 msgstr "ይህ ደመወዝ እስካሁን አልተረጋገጠም — የሚታተም ደረሰኝ የለም።"
 
-#: app/team/routes.py:513
+#: app/team/routes.py:517
 msgid "ما تقدر تعطّل حسابك أنت"
 msgstr "የራስዎን መለያ ማሰናከል አይችሉም"
 
-#: app/team/routes.py:520
+#: app/team/routes.py:524
 msgid "تم تفعيل الحساب"
 msgstr "መለያው ነቅቷል"
 
-#: app/team/routes.py:520
+#: app/team/routes.py:524
 msgid "تم تعطيل الحساب"
 msgstr "መለያው ተሰናክሏል"
 
-#: app/team/routes.py:592
+#: app/team/routes.py:596
 #, python-format
 msgid "بلاغات كثيرة بوقت قصير — حاول بعد %(n)s ثانية."
 msgstr "በአጭር ጊዜ ውስጥ ብዙ ሪፖርቶች — ከ%(n)s ሰከንድ በኋላ ይሞክሩ።"
 
-#: app/team/routes.py:598
+#: app/team/routes.py:602
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل رفع البلاغ"
 msgstr "ሪፖርቱን ከመላክዎ በፊት ቢያንስ እንስሳውን ወይም በረቱን መግለጽ አለብዎት"
 
-#: app/team/routes.py:613
+#: app/team/routes.py:617
 msgid "تم رفع البلاغ"
 msgstr "ሪፖርቱ ተልኳል"
 
-#: app/team/routes.py:640
+#: app/team/routes.py:644
 msgid "اسم نوع البلاغ مطلوب"
 msgstr "የሪፖርት አይነት ስም ያስፈልጋል"
 
-#: app/team/routes.py:647
+#: app/team/routes.py:651
 msgid "تمت إضافة نوع البلاغ"
 msgstr "የሪፖርት አይነቱ ታክሏል"
 
-#: app/team/routes.py:694
+#: app/team/routes.py:698
 msgid "تم قبول البلاغ — بدأ عدّاد الوقت"
 msgstr "ሪፖርቱ ተቀብሏል — ሰዓት ቆጣሪ ተጀምሯል"
 
-#: app/team/routes.py:706
+#: app/team/routes.py:710
 msgid "تم تأجيل البلاغ"
 msgstr "ሪፖርቱ ተራዝሟል"
 
-#: app/team/routes.py:718
+#: app/team/routes.py:722
 msgid "رجع البلاغ لصندوق الوارد"
 msgstr "ሪፖርቱ ወደ የገቢ ሳጥን ተመልሷል"
 
-#: app/team/routes.py:730
+#: app/team/routes.py:734
 msgid "تم إلغاء البلاغ — انتقل لصاحب الحلال"
 msgstr "ሪፖርቱ ተሰርዟል — ወደ ባለቤቱ ተዛውሯል"
 
-#: app/team/routes.py:743
+#: app/team/routes.py:747
 #, python-format
 msgid "تم تحويل البلاغ لـ %(name)s"
 msgstr "ሪፖርቱ ለ%(name)s ተላልፏል"
 
-#: app/team/routes.py:756
+#: app/team/routes.py:760
 msgid "تم تسجيل الإنجاز — رجع البلاغ للدكتور للمراجعة والإغلاق"
 msgstr "ማጠናቀቁ ተመዝግቧል — ሪፖርቱ ለግምገማ እና ለመዝጋት ወደ ሐኪሙ ተመልሷል"
 
-#: app/team/routes.py:768
+#: app/team/routes.py:772
 msgid "تم تنفيذ البلاغ وإغلاقه"
 msgstr "ሪፖርቱ ተፈጽሞ ተዘግቷል"
 
-#: app/team/routes.py:780
+#: app/team/routes.py:784
 msgid "تم إغلاق البلاغ"
 msgstr "ሪፖርቱ ተዘግቷል"
 
-#: app/team/routes.py:860
+#: app/team/routes.py:864
 msgid "قيمة تقييم غير صحيحة"
 msgstr "ልክ ያልሆነ የደረጃ ዋጋ"
 
-#: app/team/routes.py:869
+#: app/team/routes.py:873
 msgid "تم حفظ التقييم"
 msgstr "ደረጃው ተቀምጧል"
 
-#: app/team/routes.py:1039
+#: app/team/routes.py:1043
 msgid "عنوان المهمة مطلوب"
 msgstr "የተግባሩ ርዕስ ያስፈልጋል"
 
-#: app/team/routes.py:1050
+#: app/team/routes.py:1054
 msgid ""
 "فيه مهمة يومية فعّالة بنفس العنوان أصلاً — لو تبي تعدّل ملاحظاتها أوقفها "
 "من القائمة وأضف وحدة جديدة."
@@ -5041,67 +5050,67 @@ msgstr ""
 "በዚህ ትክክለኛ ርዕስ ንቁ ዕለታዊ ተግባር አስቀድሞ አለ — ማስታወሻዎቹን ለመቀየር ከዝርዝሩ ውስጥ አቁመው አዲስ "
 "አክል።"
 
-#: app/team/routes.py:1059
+#: app/team/routes.py:1063
 msgid "تمت إضافة المهمة اليومية"
 msgstr "የዕለት ተግባሩ ታክሏል"
 
-#: app/team/routes.py:1075
+#: app/team/routes.py:1079
 msgid "تم إيقاف المهمة اليومية"
 msgstr "የዕለት ተግባሩ ቆሟል"
 
-#: app/team/routes.py:1075
+#: app/team/routes.py:1079
 msgid "تم تفعيل المهمة اليومية"
 msgstr "የዕለት ተግባሩ ነቅቷል"
 
-#: app/team/routes.py:1098
+#: app/team/routes.py:1102
 msgid "تم توزيع المهمة"
 msgstr "ተግባሩ ተመድቧል"
 
-#: app/team/routes.py:1128
+#: app/team/routes.py:1132
 msgid "بدأت المهمة"
 msgstr "ተግባሩ ተጀምሯል"
 
-#: app/team/routes.py:1148
+#: app/team/routes.py:1152
 msgid "تم إنجاز المهمة"
 msgstr "ተግባሩ ተጠናቅቋል"
 
-#: app/team/routes.py:1168
+#: app/team/routes.py:1172
 msgid "تم تسجيل تعذّر المهمة"
 msgstr "የተግባሩ ውድቀት ተመዝግቧል"
 
-#: app/team/routes.py:1185
+#: app/team/routes.py:1189
 msgid "تم اعتماد المهمة — نزلت للعامل"
 msgstr "ተግባሩ ጸድቋል — ለሠራተኛው ወርዷል"
 
-#: app/team/routes.py:1211 app/team/routes.py:1245
+#: app/team/routes.py:1215 app/team/routes.py:1249
 msgid "تم تأجيل المهمة ليوم واحد"
 msgstr "ተግባሩ ለአንድ ቀን ተራዝሟል"
 
-#: app/team/routes.py:1228
+#: app/team/routes.py:1232
 msgid "تم حذف المهمة — انتقلت لصندوق مراجعة صاحب الحلال"
 msgstr "ተግባሩ ተሰርዟል — ወደ ባለቤቱ ግምገማ ሳጥን ተዛውሯል"
 
-#: app/team/routes.py:1257
+#: app/team/routes.py:1261
 msgid "تم إلغاء المهمة"
 msgstr "ተግባሩ ተሰርዟል"
 
-#: app/team/routes.py:1269
+#: app/team/routes.py:1273
 msgid "تم استرجاع المهمة"
 msgstr "ተግባሩ ተመልሷል"
 
-#: app/team/routes.py:1281
+#: app/team/routes.py:1285
 msgid "تم حذف المهمة نهائياً"
 msgstr "ተግባሩ ሙሉ በሙሉ ተሰርዟል"
 
-#: app/team/routes.py:1300
+#: app/team/routes.py:1304
 msgid "لازم تحدد الحيوان أو الحظيرة على الأقل قبل الإرسال"
 msgstr "ከመላክዎ በፊት ቢያንስ እንስሳውን ወይም በረቱን መግለጽ አለብዎት"
 
-#: app/team/routes.py:1319
+#: app/team/routes.py:1323
 msgid "تم رفع البلاغ — راح يوصل للدكتور"
 msgstr "ሪፖርቱ ተልኳል — ለሐኪሙ ይደርሳል"
 
-#: app/team/routes.py:1370
+#: app/team/routes.py:1374
 msgid "تم حذف البلاغ نهائياً"
 msgstr "ሪፖርቱ ሙሉ በሙሉ ተሰርዟል"
 

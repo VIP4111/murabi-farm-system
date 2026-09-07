@@ -411,7 +411,11 @@ def payroll_prepare(user_id):
             return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
 
         if request.form.get("action") == "confirm":
-            payroll_service.confirm(payroll, actor=current_user)
+            try:
+                payroll_service.confirm(payroll, actor=current_user)
+            except ValueError as e:
+                flash(str(e), "error")
+                return redirect(url_for("team.payroll_prepare", user_id=user.id, year=year, month=month))
             flash(_("تم تأكيد راتب %(name)s — رحّل %(amount)s لسجل المالية.", name=user.name, amount=f"{payroll.net_amount:,.2f}"), "success")
             return redirect(url_for("team.payroll_list", year=year, month=month))
 

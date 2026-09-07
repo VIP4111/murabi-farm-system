@@ -168,6 +168,18 @@ def confirm(payroll: Payroll, *, actor) -> Payroll:
     if payroll.status == "confirmed":
         return payroll
     net = payroll.net_amount
+    # بند إصلاح (فحص عميق — قسم الفريق والمهام) — لو مجموع الخصومات
+    # تجاوز الراتب الأساسي + المكافأة، `net_amount` يصير سالباً — كان
+    # يُرحَّل كما هو لسجل "المالية" كمصروف بمبلغ سالب، يعني عملياً
+    # **يقلّل** إجمالي المصروفات المعروضة بدل ما يزيدها (راتب "سالب"
+    # ما له معنى مالي حقيقي). صار يُرفض التأكيد صراحة، عشان المستخدم
+    # يصحّح الخصومات (يقلّلها أو يزيد المكافأة) قبل الترحيل للمالية.
+    if net < 0:
+        raise ValueError(_(
+            "مجموع الخصومات (%(deductions)s) أكبر من الراتب الأساسي + المكافأة — "
+            "الصافي سالب (%(net)s). صحّح الخصومات قبل التأكيد.",
+            deductions=f"{payroll.total_deductions:,.2f}", net=f"{net:,.2f}",
+        ))
     fin = Finance(
         date=date.today(), operation_type="expense", category="راتب موظف",
         item=f"راتب {payroll.user.name} ({payroll.month}/{payroll.year})",
