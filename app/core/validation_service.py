@@ -61,11 +61,21 @@ def validate_milk_quantity(quantity_liters: float | None) -> None:
 
 
 def validate_not_future_date(value: date | None, *, field_label: str = None) -> None:
+    """بند إصلاح (فحص عميق — تحليل شامل) — كانت تستخدم `date.today()`
+    الخام (وقت سيرفر Render UTC) بدل `farm_today()`. هذي الدالة المشتركة
+    تُستدعى من عدة شاشات إدخال حقيقية (المالية، سجل الحليب...)، وعكس
+    بقية إصلاحات التوقيت السابقة (حافة نادرة قرب منتصف الليل)، هذا
+    الخلل يتكرر **يومياً وبدون استثناء** بنافذة 3 ساعات ثابتة: آخر 3
+    ساعات من كل يوم UTC (21:00-23:59) تقابل أول 3 ساعات من اليوم
+    *التالي* بالسعودية (00:00-02:59) — يعني أي مستخدم سعودي يسجّل عملية
+    بتاريخ "اليوم" الحقيقي خلال هذي النافذة كان يُرفَض بخطأ "التاريخ
+    بالمستقبل" بالغلط، لأن UTC لسا يعتبره الغد."""
     if value is None:
         return
     if field_label is None:
         field_label = _("التاريخ")
-    if value > date.today():
+    from app.extensions import farm_today
+    if value > farm_today():
         raise ValueError(_("%(field)s ما يقدر يكون بالمستقبل.", field=field_label))
 
 

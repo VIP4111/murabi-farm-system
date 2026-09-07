@@ -39,7 +39,11 @@ def finance_list():
     show_all = request.args.get("range") == "all"
     rows_query = Finance.query.order_by(Finance.date.desc())
     if not show_all:
-        today = date.today()
+        # بند إصلاح (فحص عميق — تحليل شامل) — `farm_today()` بدل
+        # `date.today()` الخام، نفس إصلاح شاشة التقارير: فلتر "الشهر
+        # الحالي" هنا كان يعتمد يوم UTC بدل السعودية.
+        from app.extensions import farm_today
+        today = farm_today()
         rows_query = rows_query.filter(Finance.date >= today.replace(day=1))
     rows = rows_query.all()
 
