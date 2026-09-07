@@ -23,12 +23,33 @@
     </td></tr>
     <tr><td>{{ _('الحظيرة') }}</td><td>{{ r.barn.display_name() if r.barn else '-' }}</td></tr>
     <tr><td>{{ _('الوصف') }}</td><td>{{ r.description }}</td></tr>
-    {% if r.evidence_image_url %}<tr><td>{{ _('صورة مرفقة') }}</td><td><a href="{{ r.evidence_image_url }}" target="_blank">{{ _('عرض الصورة') }}</a></td></tr>{% endif %}
+    {% if r.evidence_image_url %}<tr><td>{{ _('صورة مرفقة') }}</td><td>
+      <a href="{{ r.evidence_image_url }}" target="_blank">{{ _('عرض الصورة') }}</a>
+      {% if can_delete_image %}
+      <form method="post" action="{{ url_for('team.report_delete_image', report_id=r.id) }}" style="display:inline;" data-offline
+            onsubmit="return confirm('{{ _('تحذف الصورة نهائياً؟') }}')">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="field" value="evidence">
+        <button type="submit" class="btn light" style="padding:2px 8px; font-size:11.5px; margin-inline-start:6px;">🗑️ {{ _('حذف') }}</button>
+      </form>
+      {% endif %}
+    </td></tr>{% endif %}
     {% if r.evidence_audio_url %}<tr><td>{{ _('ملاحظة صوتية') }}</td><td><audio controls src="{{ r.evidence_audio_url }}" style="height:32px; max-width:260px;"></audio></td></tr>{% endif %}
     <tr><td>{{ _('الدكتور المسؤول') }}</td><td>{{ r.manager.name if r.manager else '-' }}</td></tr>
     <tr><td>{{ _('محوّلة لـ') }}</td><td>{{ r.executor.name if r.executor else '-' }}{% if r.transfer_note %} — {{ r.transfer_note }}{% endif %}</td></tr>
     {% if r.execution_note or r.execution_evidence_image_url %}
-    <tr><td>{{ _('دليل التنفيذ') }}</td><td>{{ r.execution_note or '-' }}{% if r.execution_evidence_image_url %} — <a href="{{ r.execution_evidence_image_url }}" target="_blank">{{ _('صورة') }}</a>{% endif %}</td></tr>
+    <tr><td>{{ _('دليل التنفيذ') }}</td><td>{{ r.execution_note or '-' }}
+      {% if r.execution_evidence_image_url %} — <a href="{{ r.execution_evidence_image_url }}" target="_blank">{{ _('صورة') }}</a>
+      {% if can_delete_image %}
+      <form method="post" action="{{ url_for('team.report_delete_image', report_id=r.id) }}" style="display:inline;" data-offline
+            onsubmit="return confirm('{{ _('تحذف الصورة نهائياً؟') }}')">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="field" value="execution">
+        <button type="submit" class="btn light" style="padding:2px 8px; font-size:11.5px; margin-inline-start:6px;">🗑️ {{ _('حذف') }}</button>
+      </form>
+      {% endif %}
+      {% endif %}
+    </td></tr>
     {% endif %}
     {% if r.status == 'cancelled' %}<tr><td>{{ _('سبب الإلغاء') }}</td><td>{{ r.cancel_reason }}</td></tr>{% endif %}
     {% if r.status == 'postponed' %}<tr><td>{{ _('سبب التأجيل') }}</td><td>{{ r.postpone_reason }}</td></tr>{% endif %}

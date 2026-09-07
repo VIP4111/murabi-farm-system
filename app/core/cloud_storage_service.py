@@ -68,6 +68,65 @@ def _save_locally(file_storage, *, subfolder: str, ext: str) -> str:
     return f"/uploads/{subfolder}/{filename}"
 
 
+def _delete_from_cloudinary(url: str) -> bool:
+    """حذف موقَّع (Signed Destroy) — نفس منطق التوقيع بـ`_upload_to_cloudinary`
+    بالضبط (SHA1 على المعاملات مرتبة أبجدياً + api_secret)، بس على نقطة
+    `destroy` بدل `upload`. الـ`public_id` يُستخرج من الرابط نفسه —
+    Cloudinary يرجّعه بصيغة ثابتة: `.../upload/v<رقم>/<public_id>.<امتداد>`،
+    و`public_id` هنا يشمل مجلد `murabi/<subfolder>/` كامل."""
+    cloud_name = os.environ["CLOUDINARY_CLOUD_NAME"]
+    api_key = os.environ["CLOUDINARY_API_KEY"]
+    api_secret = os.environ["CLOUDINARY_API_SECRET"]
+
+    marker = "/upload/"
+    if marker not in url:
+        return False
+    after_upload = url.split(marker, 1)[1]
+    parts = after_upload.split("/", 1)
+    # الجزء الأول بعد /upload/ نسخة (v123456...) لو موجودة — نتجاوزها.
+    path_with_ext = parts[1] if len(parts) == 2 and parts[0].startswith("v") and parts[0][1:].isdigit() else after_upload
+    public_id = path_with_ext.rsplit(".", 1)[0]
+
+    timestamp = int(time.time())
+    params_to_sign = {"public_id": public_id, "timestamp": timestamp}
+    to_sign = "&".join(f"{k}={v}" for k, v in sorted(params_to_sign.items())) + api_secret
+    signature = hashlib.sha1(to_sign.encode()).hexdigest()
+
+    try:
+        resp = requests.post(
+            f"https://api.cloudinary.com/v1_1/{cloud_name}/image/destroy",
+            data={**params_to_sign, "api_key": api_key, "signature": signature},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        return resp.json().get("result") == "ok"
+    except (requests.RequestException, KeyError, ValueError):
+        # نفس فلسفة الرفع — فشل حذف سحابي (شبكة/مفاتيح) ما يوقف العملية،
+        # الدالة المستدعية تصفّر الرابط بالسجل بغض النظر (بند إصلاح
+        # طلبك الصريح: "احذفهم" — الأولوية إن ما تظهر بالنظام بعدها).
+        return False
+
+
+def delete_upload(url: str | None) -> None:
+    """يحذف ملف مرفوع سابقاً (صورة/صوت) من مكان تخزينه الفعلي — سحابياً
+    (Cloudinary) لو الرابط منه، أو محلياً لو رابط `/uploads/...` قديم.
+    بند إضافي (طلبك الصريح: "لو رفعت صور بالبلاغات اقدر احذفهم") —
+    تعمّدنا فصلها بدالة مستقلة (بدل حذف صامت داخل الراوت) عشان تُختبر
+    لحالها، ونفس النمط يصلح لاحقاً لأي شاشة رفع ثانية بالمشروع.
+    ما ترمي استثناء أبداً — فشل حذف الملف الفعلي (رابط ميت، مفاتيح
+    Cloudinary تغيّرت...) ما لازم يمنع تصفير الرابط بالسجل نفسه."""
+    if not url:
+        return
+    if url.startswith("/uploads/"):
+        try:
+            os.remove(os.path.join(current_app.config["UPLOAD_DIR"], url.removeprefix("/uploads/")))
+        except OSError:
+            pass
+        return
+    if _cloudinary_configured() and "cloudinary.com" in url:
+        _delete_from_cloudinary(url)
+
+
 def save_upload(file_storage, *, subfolder: str, allowed_extensions: set[str], max_bytes: int) -> str | None:
     """نقطة الدخول الموحّدة لأي رفع ملف بالمشروع (صورة بلاغ، ملاحظة
     صوتية، فاتورة) — تفحص الامتداد والحجم أولاً (نفس المنطق اللي كان

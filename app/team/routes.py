@@ -10,6 +10,7 @@ from datetime import date, datetime, timedelta
 from app.team import team_bp
 from app.team import report_service as svc
 from app.team import task_service as tsvc
+from app.core import cloud_storage_service
 from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db, run_once_per_app
 from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate, ReportType
@@ -686,12 +687,43 @@ def report_detail(report_id):
         is_reporter=report.reporter_id == current_user.id,
         is_executor=report.executor_id == current_user.id,
         can_delete=current_user.has_permission("reports.delete_final"),
+        # بند إضافي (طلبك الصريح: "لو رفعت صور بالبلاغات اقدر احذفهم...
+        # تقيد فقط لصاحب الحلال") — فحص دور مباشر (نفس نمط ضبط المصنع
+        # بـcore.routes) بدل صلاحية جديدة، لأنك طلبت التقييد لصاحب الحلال
+        # حصراً بلا استثناء (حتى الدكتور المستلم أو حامل reports.manage
+        # ما يقدر يحذف الصورة).
+        can_delete_image=current_user.role.name == "owner",
         executors_by_role=executors_by_role,
     )
 
 
 def _redirect_back(report_id):
     return redirect(url_for("team.report_detail", report_id=report_id))
+
+
+@team_bp.route("/reports/<int:report_id>/delete-image", methods=["POST"])
+@login_required
+def report_delete_image(report_id):
+    """حذف صورة دليل مرفقة ببلاغ (الأصلية أو دليل التنفيذ) — حصري
+    لصاحب الحلال (طلبك الصريح)، مو حتى الدكتور المستلم أو حامل صلاحية
+    reports.manage. يحذف الملف الفعلي من مكان تخزينه (Cloudinary أو
+    محلي، عبر `delete_upload` الموحَّدة) ويصفّر الرابط بالسجل."""
+    if current_user.role.name != "owner":
+        abort(403)
+    report = Report.query.get_or_404(report_id)
+    field = request.form.get("field")
+    if field == "evidence":
+        cloud_storage_service.delete_upload(report.evidence_image_url)
+        report.evidence_image_url = None
+    elif field == "execution":
+        cloud_storage_service.delete_upload(report.execution_evidence_image_url)
+        report.execution_evidence_image_url = None
+    else:
+        abort(400)
+    db.session.add(report)
+    db.session.commit()
+    flash(_("تم حذف الصورة"), "success")
+    return _redirect_back(report_id)
 
 
 @team_bp.route("/reports/<int:report_id>/accept", methods=["POST"])
