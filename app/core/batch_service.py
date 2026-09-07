@@ -42,10 +42,22 @@ def create_batch(*, source: str, arrival_date: date, notes: str | None,
     # حيوان جديد" و"الاستقبال الجماعي" (بند 285)، مطبَّق هنا أيضاً —
     # قبل هذا البند كل رأس بهذي الشاشة كان يُسجَّل بلون فاضي دائماً
     # لأن الفورم نفسه ما فيه حقل لون إطلاقاً.
+    # بند إصلاح (فحص عميق — قسم الدفعات) — `create_animal()` تعمل
+    # `commit()` فوري لكل رأس (تصميم مقصود لبقية نقاط الاستدعاء
+    # الفردية بالمشروع)، فلو رأس رقم 15 من دفعة 20 رأس فشل التحقق
+    # (وزن/سعر غير منطقي)، الرؤوس 1-14 كانت أصلاً **محفوظة نهائياً
+    # بقاعدة البيانات** قبل ما يوصل الخطأ — المستخدم يشوف رسالة خطأ
+    # ويظن إن العملية كلها فشلت وما تسجّل أي شي، بينما فعلياً نص
+    # الدفعة انحفظ بصمت بدون علمه. الحل: نتحقق من *كل* رؤوس الدفعة
+    # أولاً (نفس فحوصات `create_animal` الداخلية بالضبط) قبل ما نبدأ
+    # ننشئ أي رأس فعلياً — إما الدفعة كلها تنحفظ، أو ولا رأس واحد.
+    from app.core import validation_service
     for idx, entry in enumerate(entries, start=1):
+        label = entry.get("animal_no") or _("صف رقم %(idx)s", idx=idx)
         if not entry.get("color"):
-            label = entry.get("animal_no") or _("صف رقم %(idx)s", idx=idx)
             raise ValueError(_("%(label)s: لازم تحدد اللون.", label=label))
+        validation_service.validate_weight(entry.get("weight"))
+        validation_service.validate_price(entry.get("price"), field_label=_("%(label)s: السعر", label=label))
 
     batch = AnimalBatch(
         batch_no=generate_batch_no(arrival_date), source=source,

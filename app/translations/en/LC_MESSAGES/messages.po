@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:06+0300\n"
+"POT-Creation-Date: 2026-09-07 05:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1591,51 +1591,56 @@ msgstr "At least one animal is required in the batch."
 msgid "مصدر غير معروف: \"%(src)s\""
 msgstr "Unknown source: \"%(src)s\""
 
-#: app/core/batch_service.py:47
+#: app/core/batch_service.py:56
 #, python-format
 msgid "صف رقم %(idx)s"
 msgstr "Row %(idx)s"
 
-#: app/core/batch_service.py:48
+#: app/core/batch_service.py:58
 #, python-format
 msgid "%(label)s: لازم تحدد اللون."
 msgstr "%(label)s: you must specify the color."
 
-#: app/core/batch_service.py:126
+#: app/core/batch_service.py:60
+#, python-format
+msgid "%(label)s: السعر"
+msgstr "%(label)s: price"
+
+#: app/core/batch_service.py:138
 msgid "التقدّم الجماعي التلقائي متاح فقط من مرحلة الحجر لمرحلة الترقيم."
 msgstr ""
 "Automatic bulk advance is only available from the quarantine stage to the"
 " tagging stage."
 
-#: app/core/batch_service.py:146
+#: app/core/batch_service.py:158
 msgid "التوزيع النهائي متاح فقط من مرحلة الترقيم/الفحص."
 msgstr "Final distribution is only available from the tagging/checkup stage."
 
-#: app/core/batch_service.py:169
+#: app/core/batch_service.py:181
 msgid "هذا الرأس مو ضمن أي دفعة استقبال."
 msgstr "This animal isn't part of any intake batch."
 
-#: app/core/batch_service.py:171
+#: app/core/batch_service.py:183
 msgid "لازم سبب صريح للاستبعاد."
 msgstr "An explicit reason for the exclusion is required."
 
-#: app/core/batch_service.py:182
+#: app/core/batch_service.py:194
 msgid "هذا الرأس مو مستبعدة أصلاً."
 msgstr "This animal isn't excluded in the first place."
 
-#: app/core/batch_service.py:196
+#: app/core/batch_service.py:208
 msgid "هذا الرأس مو من هذي الدفعة."
 msgstr "This animal isn't from this batch."
 
-#: app/core/batch_service.py:198
+#: app/core/batch_service.py:210
 msgid "لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي."
 msgstr "You must release the exclusion first before an individual advance."
 
-#: app/core/batch_service.py:204
+#: app/core/batch_service.py:216
 msgid "لازم تحدد حظيرة دائمة لهذا الرأس."
 msgstr "You must specify a permanent barn for this animal."
 
-#: app/core/batch_service.py:207
+#: app/core/batch_service.py:219
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr ""
 "The batch is still at the quarantine stage — no additional individual "

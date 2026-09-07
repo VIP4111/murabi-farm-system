@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:06+0300\n"
+"POT-Creation-Date: 2026-09-07 05:17+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -1588,49 +1588,54 @@ msgstr "बैच में कम से कम एक जानवर आव�
 msgid "مصدر غير معروف: \"%(src)s\""
 msgstr "अज्ञात स्रोत: \"%(src)s\""
 
-#: app/core/batch_service.py:47
+#: app/core/batch_service.py:56
 #, python-format
 msgid "صف رقم %(idx)s"
 msgstr "पंक्ति संख्या %(idx)s"
 
-#: app/core/batch_service.py:48
+#: app/core/batch_service.py:58
 #, python-format
 msgid "%(label)s: لازم تحدد اللون."
 msgstr "%(label)s: आपको रंग निर्दिष्ट करना होगा।"
 
-#: app/core/batch_service.py:126
+#: app/core/batch_service.py:60
+#, python-format
+msgid "%(label)s: السعر"
+msgstr "%(label)s: कीमत"
+
+#: app/core/batch_service.py:138
 msgid "التقدّم الجماعي التلقائي متاح فقط من مرحلة الحجر لمرحلة الترقيم."
 msgstr "स्वचालित बल्क प्रगति केवल क्वारंटीन चरण से टैगिंग चरण तक उपलब्ध है।"
 
-#: app/core/batch_service.py:146
+#: app/core/batch_service.py:158
 msgid "التوزيع النهائي متاح فقط من مرحلة الترقيم/الفحص."
 msgstr "अंतिम वितरण केवल टैगिंग/जांच चरण से उपलब्ध है।"
 
-#: app/core/batch_service.py:169
+#: app/core/batch_service.py:181
 msgid "هذا الرأس مو ضمن أي دفعة استقبال."
 msgstr "यह जानवर किसी इनटेक बैच का हिस्सा नहीं है।"
 
-#: app/core/batch_service.py:171
+#: app/core/batch_service.py:183
 msgid "لازم سبب صريح للاستبعاد."
 msgstr "बहिष्करण के लिए स्पष्ट कारण आवश्यक है।"
 
-#: app/core/batch_service.py:182
+#: app/core/batch_service.py:194
 msgid "هذا الرأس مو مستبعدة أصلاً."
 msgstr "यह जानवर वैसे भी बाहर नहीं रखा गया है।"
 
-#: app/core/batch_service.py:196
+#: app/core/batch_service.py:208
 msgid "هذا الرأس مو من هذي الدفعة."
 msgstr "यह जानवर इस बैच से नहीं है।"
 
-#: app/core/batch_service.py:198
+#: app/core/batch_service.py:210
 msgid "لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي."
 msgstr "व्यक्तिगत प्रगति से पहले आपको बहिष्करण हटाना होगा।"
 
-#: app/core/batch_service.py:204
+#: app/core/batch_service.py:216
 msgid "لازم تحدد حظيرة دائمة لهذا الرأس."
 msgstr "आपको इस जानवर के लिए एक स्थायी बाड़ा निर्दिष्ट करना होगा।"
 
-#: app/core/batch_service.py:207
+#: app/core/batch_service.py:219
 msgid "الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."
 msgstr ""
 "बैच अभी भी क्वारंटीन चरण में है — अभी कोई अतिरिक्त व्यक्तिगत कार्रवाई "
