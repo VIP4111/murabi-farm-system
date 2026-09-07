@@ -758,6 +758,14 @@ def animals_bulk_purchase():
                 flash(_("%(no)s: %(msg)s", no=animal_no, msg=r), "error")
         return redirect(url_for("core.animals_bulk_home"))
 
+    # بند إصلاح (فحص عميق — اختبار حي كامل للمنتج) — خلافاً لشاشة "+
+    # حيوان جديد" الفردية (`animals_new`)، هذي الشاشة كانت ما تستدعي
+    # `_ensure_animal_form_options_seeded()` قبل عرض القائمة — فمزرعة
+    # جديدة لسا ما زارت شاشة الإدخال الفردي ولا مرة يطلع لها `colors`
+    # فاضية تماماً (٠ ألوان)، فكل صف بالدفعة يُرفض بصمت "لازم تحدد
+    # اللون" بدون أي طريقة لإصلاحه من نفس الشاشة — طريق مسدود فعلي
+    # جربته مباشرة بالمتصفح على مزرعة طازجة.
+    _ensure_animal_form_options_seeded()
     from app.models import AnimalColor
     return render_template(
         "animals_bulk_purchase.html",
