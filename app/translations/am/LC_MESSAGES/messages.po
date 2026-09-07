@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 02:40+0300\n"
+"POT-Creation-Date: 2026-09-07 03:32+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -1490,7 +1490,7 @@ msgstr "እናትየው የለችም"
 msgid "السعر"
 msgstr "ዋጋ"
 
-#: app/core/animal_service.py:181 app/reports/report_service.py:223
+#: app/core/animal_service.py:181 app/reports/report_service.py:232
 #: app/templates/animal_detail.html:137 app/templates/animal_form.html:144
 msgid "تاريخ الولادة"
 msgstr "የልደት ቀን"
@@ -2095,8 +2095,8 @@ msgstr "📋 ተግባራትን ይገምግሙ (%(n)s)"
 msgid "💬 فتح المساعد الذكي"
 msgstr "💬 ብልህ ረዳትን ይክፈቱ"
 
-#: app/core/data_completeness_service.py:31 app/reports/report_service.py:178
-#: app/reports/report_service.py:223 app/templates/animal_detail.html:132
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:187
+#: app/reports/report_service.py:232 app/templates/animal_detail.html:132
 #: app/templates/animal_detail.html:356 app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
@@ -2104,7 +2104,7 @@ msgstr "💬 ብልህ ረዳትን ይክፈቱ"
 msgid "الجنس"
 msgstr "ጾታ"
 
-#: app/core/data_completeness_service.py:31 app/reports/report_service.py:223
+#: app/core/data_completeness_service.py:31 app/reports/report_service.py:232
 #: app/templates/health/disease_type_detail.html:60
 msgid "الوزن"
 msgstr "ክብደት"
@@ -3380,9 +3380,9 @@ msgstr ""
 "%(qty)s ሊትር ለአንድ የወተት ማለቢያ ምክንያታዊ አይደለም — ከሚጠበቀው ገደብ (%(max)s ሊትር) በላይ "
 "ነው። ከማስቀመጥዎ በፊት ቁጥሩን ያረጋግጡ።"
 
-#: app/core/validation_service.py:67 app/reports/report_service.py:178
-#: app/reports/report_service.py:265 app/reports/report_service.py:308
-#: app/reports/report_service.py:390 app/templates/animal_detail.html:258
+#: app/core/validation_service.py:76 app/reports/report_service.py:187
+#: app/reports/report_service.py:274 app/reports/report_service.py:317
+#: app/reports/report_service.py:399 app/templates/animal_detail.html:258
 #: app/templates/animal_detail.html:272 app/templates/animal_detail.html:289
 #: app/templates/animal_detail.html:303 app/templates/animal_detail.html:318
 #: app/templates/animal_detail.html:329 app/templates/animal_detail.html:356
@@ -3426,7 +3426,7 @@ msgstr ""
 msgid "التاريخ"
 msgstr "ቀን"
 
-#: app/core/validation_service.py:69
+#: app/core/validation_service.py:79
 #, python-format
 msgid "%(field)s ما يقدر يكون بالمستقبل."
 msgstr "%(field)s ወደፊት ሊሆን አይችልም።"
@@ -3492,11 +3492,11 @@ msgstr "ንጥሉ ታክሏል"
 msgid "تم تحديث الصنف"
 msgstr "ንጥሉ ተዘምኗል"
 
-#: app/equipment/routes.py:98 app/feed/routes.py:240
+#: app/equipment/routes.py:98 app/feed/routes.py:260
 msgid "تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء (يُنشئ عملية مالية)."
 msgstr "ግዢ ለመመዝገብ (የገንዘብ ግብይት ስለሚፈጥር) የገንዘብ አስተዳደር ፈቃድም ያስፈልግዎታል።"
 
-#: app/equipment/routes.py:115 app/feed/routes.py:257
+#: app/equipment/routes.py:115 app/feed/routes.py:277
 msgid "تم تسجيل الشراء — زاد المخزون وانسجلت العملية المالية معاً"
 msgstr "ግዢው ተመዝግቧል — ክምችቱ ጨምሯል እና የገንዘብ ግብይቱ አብሮ ተመዝግቧል"
 
@@ -3546,7 +3546,7 @@ msgstr "የመኖ ንጥረ ነገሩ ታክሏል"
 msgid "تم تحديث مكوّن العلف"
 msgstr "የመኖ ንጥረ ነገሩ ተዘምኗል"
 
-#: app/feed/routes.py:146 app/feed/routes.py:202
+#: app/feed/routes.py:146 app/feed/routes.py:222
 #, python-format
 msgid "%(msg)s اكتب سبب التجاوز بالحقل المخصص لو متأكد."
 msgstr "%(msg)s እርግጠኛ ከሆኑ የመተላለፊያ ምክንያቱን በተዘጋጀው መስክ ይጻፉ።"
@@ -3555,36 +3555,48 @@ msgstr "%(msg)s እርግጠኛ ከሆኑ የመተላለፊያ ምክንያቱ�
 msgid "تمت إضافة الوصفة"
 msgstr "የምግብ አዘገጃጀቱ ታክሏል"
 
-#: app/feed/routes.py:220
+#: app/feed/routes.py:209
+msgid "الكمية اليومية للرأس"
+msgstr "በቀን የአንድ ራስ መጠን"
+
+#: app/feed/routes.py:211
+msgid "الكمية اليومية للرأس لازم تكون رقماً موجباً أكبر من صفر."
+msgstr "በቀን የአንድ ራስ መጠን ከዜሮ የሚበልጥ አዎንታዊ ቁጥር መሆን አለበት።"
+
+#: app/feed/routes.py:213
+msgid "تاريخ نهاية الخطة ما يقدر يكون قبل تاريخ بدايتها."
+msgstr "የእቅዱ መጨረሻ ቀን ከመጀመሪያ ቀኑ በፊት ሊሆን አይችልም።"
+
+#: app/feed/routes.py:240
 msgid "تمت إضافة خطة التغذية"
 msgstr "የመመገቢያ እቅዱ ታክሏል"
 
-#: app/feed/routes.py:290
+#: app/feed/routes.py:310
 msgid "تم تسجيل حركة المخزون"
 msgstr "የክምችት እንቅስቃሴ ተመዝግቧል"
 
-#: app/feed/routes.py:360 app/feed/routes.py:397
+#: app/feed/routes.py:380 app/feed/routes.py:417
 msgid "الحيوان المختار ما له وزن مسجّل — أدخل وزن يدوي"
 msgstr "የተመረጠው እንስሳ የተመዘገበ ክብደት የለውም — በእጅ ክብደት ያስገቡ"
 
-#: app/finance/routes.py:194
+#: app/finance/routes.py:198
 msgid "اسم الدفعة مطلوب"
 msgstr "የስብስቡ ስም ያስፈልጋል"
 
-#: app/finance/routes.py:198
+#: app/finance/routes.py:202
 msgid "لازم تختار رأساً واحداً على الأقل"
 msgstr "ቢያንስ አንድ ራስ መምረጥ አለብዎት"
 
-#: app/finance/routes.py:213
+#: app/finance/routes.py:217
 msgid "تم إنشاء دفعة البيع"
 msgstr "የሽያጭ ስብስቡ ተፈጥሯል"
 
-#: app/finance/routes.py:265
+#: app/finance/routes.py:269
 msgid "تم حذف الدفعة"
 msgstr "ስብስቡ ተሰርዟል"
 
-#: app/finance/routes.py:293 app/reports/report_service.py:265
-#: app/reports/report_service.py:308 app/templates/animal_detail.html:494
+#: app/finance/routes.py:297 app/reports/report_service.py:274
+#: app/reports/report_service.py:317 app/templates/animal_detail.html:494
 #: app/templates/finance/form.html:36 app/templates/finance/list.html:20
 #: app/templates/finance/list.html:78
 #: app/templates/team/payroll_prepare.html:45
@@ -3592,11 +3604,11 @@ msgstr "ስብስቡ ተሰርዟል"
 msgid "المبلغ"
 msgstr "መጠን"
 
-#: app/finance/routes.py:294
+#: app/finance/routes.py:298
 msgid "تاريخ الحركة"
 msgstr "የእንቅስቃሴ ቀን"
 
-#: app/finance/routes.py:320
+#: app/finance/routes.py:324
 #, python-format
 msgid ""
 "تنبيه: هذا المبلغ (%(amount)s) %(direction)s بنسبة %(pct)s%% من متوسط "
@@ -3605,23 +3617,23 @@ msgstr ""
 "ማንቂያ: ይህ መጠን (%(amount)s) ካለፉት \"%(category)s\" ግብይቶች አማካይ (%(average)s) "
 "በ%(pct)s%% %(direction)s ነው።"
 
-#: app/finance/routes.py:337
+#: app/finance/routes.py:341
 #, python-format
 msgid "⚠️ عملية %(op)s غير معتادة"
 msgstr "⚠️ ያልተለመደ የ%(op)s ግብይት"
 
-#: app/finance/routes.py:338
+#: app/finance/routes.py:342
 #, python-format
 msgid ""
 "%(category)s — %(amount)s (%(direction)s بـ%(pct)s%% عن المعتاد "
 "%(average)s)"
 msgstr "%(category)s — %(amount)s (ከተለመደው %(average)s በ%(pct)s%% %(direction)s)"
 
-#: app/finance/routes.py:347
+#: app/finance/routes.py:351
 msgid "تمت إضافة العملية المالية"
 msgstr "የገንዘብ ግብይቱ ታክሏል"
 
-#: app/finance/routes.py:369
+#: app/finance/routes.py:373
 msgid "تم إلغاء العملية (السجل باقٍ للتدقيق)"
 msgstr "ግብይቱ ተሰርዟል (መዝገቡ ለምርመራ ይቆያል)"
 
@@ -4314,59 +4326,59 @@ msgstr "የአሁኑ ወር"
 msgid "نطاق مخصص"
 msgstr "ብጁ ክልል"
 
-#: app/reports/report_service.py:122
+#: app/reports/report_service.py:131
 msgid "الرؤوس النشطة حالياً"
 msgstr "በአሁኑ ጊዜ ንቁ እንስሳት"
 
-#: app/reports/report_service.py:123
+#: app/reports/report_service.py:132
 msgid "رؤوس جديدة بالفترة"
 msgstr "በጊዜው ውስጥ አዲስ እንስሳት"
 
-#: app/reports/report_service.py:124 app/reports/report_service.py:214
+#: app/reports/report_service.py:133 app/reports/report_service.py:223
 msgid "ولادات بالفترة"
 msgstr "በጊዜው ውስጥ ልደቶች"
 
-#: app/reports/report_service.py:125
+#: app/reports/report_service.py:134
 msgid "حالات نفوق بالفترة"
 msgstr "በጊዜው ውስጥ የሞት ጉዳዮች"
 
-#: app/reports/report_service.py:126
+#: app/reports/report_service.py:135
 msgid "معدل النفوق التقريبي"
 msgstr "ግምታዊ የሞት መጠን"
 
-#: app/reports/report_service.py:127
+#: app/reports/report_service.py:136
 msgid "مبيعات بالفترة"
 msgstr "በጊዜው ውስጥ ሽያጮች"
 
-#: app/reports/report_service.py:128
+#: app/reports/report_service.py:137
 msgid "مصروفات+مشتريات بالفترة"
 msgstr "በጊዜው ውስጥ ወጪ+ግዢ"
 
-#: app/reports/report_service.py:129
+#: app/reports/report_service.py:138
 msgid "صافي الفترة"
 msgstr "የጊዜው ተጣራ"
 
-#: app/reports/report_service.py:130
+#: app/reports/report_service.py:139
 msgid "تحصينات بالفترة"
 msgstr "በጊዜው ውስጥ ክትባቶች"
 
-#: app/reports/report_service.py:131 app/templates/animal_detail.html:109
+#: app/reports/report_service.py:140 app/templates/animal_detail.html:109
 msgid "أمراض مفتوحة حالياً"
 msgstr "በአሁኑ ጊዜ ክፍት በሽታዎች"
 
-#: app/reports/report_service.py:136
+#: app/reports/report_service.py:145
 msgid "المؤشر"
 msgstr "ጠቋሚ"
 
-#: app/reports/report_service.py:136
+#: app/reports/report_service.py:145
 msgid "القيمة"
 msgstr "ዋጋ"
 
-#: app/reports/report_service.py:177
+#: app/reports/report_service.py:186
 msgid "إجمالي حالات النفوق"
 msgstr "ጠቅላላ የሞት ጉዳዮች"
 
-#: app/reports/report_service.py:178 app/reports/report_service.py:223
+#: app/reports/report_service.py:187 app/reports/report_service.py:232
 #: app/templates/animal_form.html:13 app/templates/animal_form.html:18
 #: app/templates/animals_list.html:101 app/templates/barn_form.html:7
 #: app/templates/barns_list.html:11 app/templates/batches/batch_detail.html:56
@@ -4390,78 +4402,78 @@ msgstr "ጠቅላላ የሞት ጉዳዮች"
 msgid "الرقم"
 msgstr "ቁጥር"
 
-#: app/reports/report_service.py:178 app/templates/reports/mortality.html:22
+#: app/reports/report_service.py:187 app/templates/reports/mortality.html:22
 #: app/templates/smart_sale_report.html:19
 #: app/templates/team/tasks_list.html:198
 msgid "السبب"
 msgstr "ምክንያት"
 
-#: app/reports/report_service.py:178 app/templates/bulk_action_form.html:104
+#: app/reports/report_service.py:187 app/templates/bulk_action_form.html:104
 msgid "العمر (يوم)"
 msgstr "ዕድሜ (ቀናት)"
 
-#: app/reports/report_service.py:215
+#: app/reports/report_service.py:224
 msgid "ذكور / إناث"
 msgstr "ወንድ / ሴት"
 
-#: app/reports/report_service.py:216
+#: app/reports/report_service.py:225
 msgid "متوسط حجم البطن"
 msgstr "አማካይ የወሊድ መጠን"
 
-#: app/reports/report_service.py:217
+#: app/reports/report_service.py:226
 msgid "تقريعات بالفترة"
 msgstr "በጊዜው ውስጥ ማዳቀሎች"
 
-#: app/reports/report_service.py:218
+#: app/reports/report_service.py:227
 msgid "حمل مؤكد بالفترة"
 msgstr "በጊዜው ውስጥ የተረጋገጠ እርግዝና"
 
-#: app/reports/report_service.py:219
+#: app/reports/report_service.py:228
 msgid "نسبة نجاح التقريع→حمل"
 msgstr "የማዳቀል→እርግዝና ስኬት መጠን"
 
-#: app/reports/report_service.py:223 app/templates/animal_detail.html:135
+#: app/reports/report_service.py:232 app/templates/animal_detail.html:135
 #: app/templates/ostrich/egg_form.html:11
 #: app/templates/ostrich/egg_hatch_form.html:8
 #: app/templates/ostrich/eggs_list.html:24
 msgid "الأم"
 msgstr "እናት"
 
-#: app/reports/report_service.py:256
+#: app/reports/report_service.py:265
 msgid "عدد عمليات البيع"
 msgstr "የሽያጭ ግብይቶች ብዛት"
 
-#: app/reports/report_service.py:257
+#: app/reports/report_service.py:266
 msgid "إجمالي المبيعات"
 msgstr "ጠቅላላ ሽያጮች"
 
-#: app/reports/report_service.py:258 app/reports/report_service.py:300
+#: app/reports/report_service.py:267 app/reports/report_service.py:309
 msgid "إجمالي المشتريات+المصروفات"
 msgstr "ጠቅላላ ግዢ+ወጪ"
 
-#: app/reports/report_service.py:259 app/templates/team/payroll_list.html:23
+#: app/reports/report_service.py:268 app/templates/team/payroll_list.html:23
 #: app/templates/team/payroll_reports.html:21
 #: app/templates/team/payroll_reports.html:50
 msgid "الصافي"
 msgstr "ተጣራ"
 
-#: app/reports/report_service.py:260
+#: app/reports/report_service.py:269
 msgid "دعم خارجي مستلم (دين)"
 msgstr "የተቀበለ የውጭ ድጋፍ (ዕዳ)"
 
-#: app/reports/report_service.py:261 app/templates/finance/form.html:15
+#: app/reports/report_service.py:270 app/templates/finance/form.html:15
 #: app/templates/finance/list.html:82
 msgid "سداد دين"
 msgstr "የዕዳ ክፍያ"
 
-#: app/reports/report_service.py:265 app/reports/report_service.py:308
+#: app/reports/report_service.py:274 app/reports/report_service.py:317
 #: app/templates/finance/form.html:33 app/templates/finance/list.html:20
 #: app/templates/finance/list.html:78 app/templates/settings_readiness.html:21
 msgid "البند"
 msgstr "ንጥል"
 
-#: app/reports/report_service.py:265 app/reports/report_service.py:308
-#: app/reports/report_service.py:390 app/templates/finance/health_view.html:14
+#: app/reports/report_service.py:274 app/reports/report_service.py:317
+#: app/reports/report_service.py:399 app/templates/finance/health_view.html:14
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/dashboard.html:43
@@ -4476,35 +4488,35 @@ msgstr "ንጥል"
 msgid "الحيوان"
 msgstr "እንስሳ"
 
-#: app/reports/report_service.py:299
+#: app/reports/report_service.py:308
 msgid "عدد عمليات الشراء/المصروف"
 msgstr "የግዢ/ወጪ ግብይቶች ብዛት"
 
-#: app/reports/report_service.py:301
+#: app/reports/report_service.py:310
 msgid "عدد عمليات الشراء"
 msgstr "የግዢ ግብይቶች ብዛት"
 
-#: app/reports/report_service.py:302
+#: app/reports/report_service.py:311
 msgid "إجمالي الشراء"
 msgstr "ጠቅላላ ግዢ"
 
-#: app/reports/report_service.py:303
+#: app/reports/report_service.py:312
 msgid "عدد المصروفات"
 msgstr "የወጪዎች ብዛት"
 
-#: app/reports/report_service.py:304
+#: app/reports/report_service.py:313
 msgid "إجمالي المصروفات"
 msgstr "ጠቅላላ ወጪ"
 
-#: app/reports/report_service.py:308
+#: app/reports/report_service.py:317
 msgid "الفاتورة المرفقة"
 msgstr "የተያያዘ ደረሰኝ"
 
-#: app/reports/report_service.py:386
+#: app/reports/report_service.py:395
 msgid "لا يوجد نشاط بهذي الفترة"
 msgstr "በዚህ ጊዜ ውስጥ ምንም እንቅስቃሴ የለም"
 
-#: app/reports/report_service.py:390 app/templates/equipment/items_list.html:15
+#: app/reports/report_service.py:399 app/templates/equipment/items_list.html:15
 #: app/templates/feed/barn_report.html:33 app/templates/feed/item_form.html:8
 #: app/templates/feed/items_list.html:14
 #: app/templates/health/pharmacy_list.html:14
@@ -4512,7 +4524,7 @@ msgstr "በዚህ ጊዜ ውስጥ ምንም እንቅስቃሴ የለም"
 msgid "الفئة"
 msgstr "ምድብ"
 
-#: app/reports/report_service.py:390 app/templates/assistant/chat.html:121
+#: app/reports/report_service.py:399 app/templates/assistant/chat.html:121
 #: app/templates/team/_task_assign_fields.html:5
 #: app/templates/team/daily_templates.html:19
 #: app/templates/team/tasks_list.html:65 app/templates/team/tasks_list.html:112
@@ -4522,23 +4534,23 @@ msgstr "ምድብ"
 msgid "العنوان"
 msgstr "ርዕስ"
 
-#: app/reports/report_service.py:390
+#: app/reports/report_service.py:399
 msgid "التفاصيل"
 msgstr "ዝርዝሮች"
 
-#: app/reports/report_service.py:482
+#: app/reports/report_service.py:491
 msgid "عدد الرؤوس النشطة"
 msgstr "የንቁ እንስሳት ብዛት"
 
-#: app/reports/report_service.py:483
+#: app/reports/report_service.py:492
 msgid "عدد الأصناف المطلوب شراؤها"
 msgstr "መገዛት ያለባቸው ንጥሎች ብዛት"
 
-#: app/reports/report_service.py:484
+#: app/reports/report_service.py:493
 msgid "فترة قياس الاستهلاك (أيام)"
 msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 
-#: app/reports/report_service.py:489 app/templates/animal_detail.html:494
+#: app/reports/report_service.py:498 app/templates/animal_detail.html:494
 #: app/templates/barn_form.html:12 app/templates/barns_list.html:11
 #: app/templates/equipment/asset_form.html:9
 #: app/templates/equipment/assets_list.html:15
@@ -4563,59 +4575,59 @@ msgstr "የፍጆታ መለኪያ ጊዜ (ቀናት)"
 msgid "النوع"
 msgstr "ዓይነት"
 
-#: app/reports/report_service.py:489
+#: app/reports/report_service.py:498
 #: app/templates/equipment/purchase_form.html:9
 #: app/templates/warehouses/inventory_counts_list.html:10
 msgid "الصنف"
 msgstr "ንጥል"
 
-#: app/reports/report_service.py:489
+#: app/reports/report_service.py:498
 msgid "المستهلك بالفترة"
 msgstr "በጊዜው ውስጥ የተበላ"
 
-#: app/reports/report_service.py:489
+#: app/reports/report_service.py:498
 msgid "الاحتياج المتوقع (30 يوم)"
 msgstr "የሚጠበቅ ፍላጎት (30 ቀናት)"
 
-#: app/reports/report_service.py:490
+#: app/reports/report_service.py:499
 msgid "المخزون الحالي"
 msgstr "የአሁኑ ክምችት"
 
-#: app/reports/report_service.py:490
+#: app/reports/report_service.py:499
 msgid "الكمية المقترح شراؤها"
 msgstr "የቀረበ የግዢ መጠን"
 
-#: app/reports/report_service.py:490 app/templates/equipment/item_form.html:13
+#: app/reports/report_service.py:499 app/templates/equipment/item_form.html:13
 #: app/templates/feed/item_form.html:29
 #: app/templates/health/pharmacy_form.html:127
 msgid "الوحدة"
 msgstr "አሃድ"
 
-#: app/reports/report_service.py:497
+#: app/reports/report_service.py:506
 msgid "التقرير الشامل"
 msgstr "አጠቃላይ ሪፖርት"
 
-#: app/reports/report_service.py:498
+#: app/reports/report_service.py:507
 msgid "تقرير النفوق"
 msgstr "የሞት ሪፖርት"
 
-#: app/reports/report_service.py:499
+#: app/reports/report_service.py:508
 msgid "تقرير الولادات والإنتاج"
 msgstr "የልደት እና ምርት ሪፖርት"
 
-#: app/reports/report_service.py:500
+#: app/reports/report_service.py:509
 msgid "تقرير المبيعات والمالية"
 msgstr "የሽያጭ እና ፋይናንስ ሪፖርት"
 
-#: app/reports/report_service.py:501
+#: app/reports/report_service.py:510
 msgid "تقرير المشتريات"
 msgstr "የግዢ ሪፖርት"
 
-#: app/reports/report_service.py:502
+#: app/reports/report_service.py:511
 msgid "تقرير إنجاز اليوم"
 msgstr "ዕለታዊ እንቅስቃሴ ሪፖርት"
 
-#: app/reports/report_service.py:503
+#: app/reports/report_service.py:512
 msgid "تقرير طلب الشراء"
 msgstr "የግዢ ጥያቄ ሪፖርት"
 

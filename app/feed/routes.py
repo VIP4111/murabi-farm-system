@@ -193,7 +193,27 @@ def barn_plans_new():
         barn_id = int(request.form["barn_id"])
         ration = FeedRation.query.get_or_404(int(request.form["ration_id"]))
         start_date_ = date.fromisoformat(request.form["start_date"])
+        end_date_ = date.fromisoformat(request.form["end_date"]) if request.form.get("end_date") else None
         override_reason = request.form.get("increase_override_reason") or None
+
+        # بند إصلاح (فحص عميق — قسم الأعلاف) — `daily_qty_per_animal_kg`
+        # ما كان عليها أي تحقق، عكس نفس الحقل بحاسبة العلف الفردية —
+        # قيمة سالبة أو صفرية كانت تُحفظ بصمت وتنكسر بها تكلفة الرأس
+        # اليومية المحسوبة منها مباشرة (`current_barn_daily_cost_per_head`)
+        # وتقارير التكلفة الشهرية اللي تعتمد عليها. وتاريخ نهاية أقدم
+        # من تاريخ البداية (خطأ إدخال شائع بحقلي تاريخ منفصلين) كان يمر
+        # بصمت أيضاً، يخلي الخطة "منتهية قبل ما تبدأ" فعلياً.
+        from app.core import validation_service
+        try:
+            daily_qty = float(request.form["daily_qty_per_animal_kg"])
+            validation_service.validate_price(daily_qty, field_label=_("الكمية اليومية للرأس"))
+            if daily_qty <= 0:
+                raise ValueError(_("الكمية اليومية للرأس لازم تكون رقماً موجباً أكبر من صفر."))
+            if end_date_ and end_date_ < start_date_:
+                raise ValueError(_("تاريخ نهاية الخطة ما يقدر يكون قبل تاريخ بدايتها."))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("feed.barn_plans_new"))
 
         warning = svc.concentrate_increase_warning(
             barn_id=barn_id, new_ration=ration, new_start_date=start_date_, fs=FarmSettings.get(),
@@ -210,9 +230,9 @@ def barn_plans_new():
         plan = FeedBarnPlan(
             barn_id=barn_id,
             ration_id=ration.id,
-            daily_qty_per_animal_kg=float(request.form["daily_qty_per_animal_kg"]),
+            daily_qty_per_animal_kg=daily_qty,
             start_date=start_date_,
-            end_date=date.fromisoformat(request.form["end_date"]) if request.form.get("end_date") else None,
+            end_date=end_date_,
             notes=request.form.get("notes"),
         )
         db.session.add(plan)
