@@ -123,6 +123,17 @@ def transfer_stock(*, kind: str, item_id: int, from_warehouse_id: int, to_wareho
         to_warehouse = Warehouse.query.get(to_warehouse_id)
         if not to_warehouse:
             raise ValueError(_("مستودع الوجهة غير موجود."))
+        # دفاع بعمق (فحص عميق — قسم المستودعات) — الشاشة تفلتر قائمة
+        # مستودعات الوجهة بنوعها (`kind`) أو "مختلط" أصلاً، لكن هذي
+        # الدالة نفسها ما كانت تتحقق منه — طلب مباشر للسيرفر بمعرّف
+        # مستودع من نوع مختلف (مثلاً تحويل علف لمستودع "صيدلية") كان
+        # يمر بصمت، ينشئ صف `FeedWarehouseStock` مربوط بمستودع صيدلية
+        # فعلياً — بيانات متناقضة تكسر أي تجميع لاحق حسب نوع المستودع.
+        if to_warehouse.warehouse_type not in (kind, "mixed"):
+            raise ValueError(_(
+                'مستودع الوجهة "%(name)s" من نوع مختلف عن الصنف المُحوَّل — اختر مستودعاً '
+                "مناسباً أو من النوع المختلط.", name=to_warehouse.name,
+            ))
         to_row = _get_or_create_named_row(item, kind, to_warehouse)
         to_row.qty = (to_row.qty or 0) + qty
         db.session.add(to_row)

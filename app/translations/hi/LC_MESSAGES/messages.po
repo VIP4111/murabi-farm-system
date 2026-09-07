@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:17+0300\n"
+"POT-Creation-Date: 2026-09-07 05:27+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -3593,6 +3593,15 @@ msgstr ""
 #: app/core/warehouse_service.py:125
 msgid "مستودع الوجهة غير موجود."
 msgstr "गंतव्य गोदाम मौजूद नहीं है।"
+
+#: app/core/warehouse_service.py:134
+#, python-format
+msgid ""
+"مستودع الوجهة \"%(name)s\" من نوع مختلف عن الصنف المُحوَّل — اختر "
+"مستودعاً مناسباً أو من النوع المختلط."
+msgstr ""
+"\"%(name)s\" गंतव्य गोदाम स्थानांतरित वस्तु से अलग प्रकार का है — उपयुक्त"
+" गोदाम या मिश्रित प्रकार चुनें।"
 
 #: app/equipment/equipment_service.py:105
 msgid "هذي الحركة مو استعارة أصلاً."
