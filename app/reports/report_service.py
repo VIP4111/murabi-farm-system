@@ -29,8 +29,17 @@ RANGE_LABELS = {
 
 
 def parse_date_range(args) -> tuple[date, date, str]:
+    """بند إصلاح (فحص عميق — شاشة التقارير) — كانت تستخدم `date.today()`
+    الخام (وقت سيرفر Render UTC) بدل `farm_today()` لحساب "اليوم"/
+    "الشهر الحالي" الافتراضيين. الأثر أوضح شي بأول 3 ساعات من كل شهر
+    جديد بتوقيت السعودية (بين منتصف الليل و3 فجراً بالضبط، لأنها لسا
+    اليوم الأخير من الشهر السابق بتوقيت UTC): تقرير "الشهر الحالي"
+    الافتراضي كان يعرض بيانات الشهر *السابق*، ونطاق "اليوم" يعرض بيانات
+    *أمس* — نفس فئة الخلل المُصلَحة بكل مولّدات المهام الخلفية، بس هنا
+    تمس شاشة يفتحها المستخدم مباشرة ويقرأ أرقامها فوراً."""
+    from app.extensions import farm_today
     range_key = args.get("range", "month")
-    today = date.today()
+    today = farm_today()
     if range_key == "today":
         return today, today, range_key
     if range_key == "7days":
