@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 03:32+0300\n"
+"POT-Creation-Date: 2026-09-07 03:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -4148,19 +4148,27 @@ msgstr ""
 "आपने एक दवा (\"%(name)s\") चुनी बिना उपयोग की गई मात्रा बताए — लागत और "
 "स्टॉक कटौती सही ढंग से गणना होने के लिए आपको खुराक निर्दिष्ट करनी होगी।"
 
-#: app/health/health_service.py:491
+#: app/health/health_service.py:413
+msgid "التكلفة ما يقدر تكون رقماً سالباً."
+msgstr "लागत ऋणात्मक संख्या नहीं हो सकती।"
+
+#: app/health/health_service.py:447
+msgid "تكلفة العلاج ما يقدر تكون رقماً سالباً."
+msgstr "उपचार की लागत ऋणात्मक संख्या नहीं हो सकती।"
+
+#: app/health/health_service.py:505
 msgid "منخفضة عن الطبيعي"
 msgstr "सामान्य से कम"
 
-#: app/health/health_service.py:492
+#: app/health/health_service.py:506
 msgid "مرتفعة عن الطبيعي (حمى محتملة)"
 msgstr "सामान्य से अधिक (संभावित बुखार)"
 
-#: app/health/health_service.py:493
+#: app/health/health_service.py:507
 msgid "ضمن النطاق الطبيعي"
 msgstr "सामान्य सीमा में"
 
-#: app/health/health_service.py:708
+#: app/health/health_service.py:722
 #, python-format
 msgid "🚨 حالة طوارئ — الرأس %(no)s"
 msgstr "🚨 आपातकाल — पशु %(no)s"

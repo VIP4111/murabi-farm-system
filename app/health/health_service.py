@@ -402,6 +402,15 @@ def _link_finance_for_cost(*, cost: float, pharmacy: Pharmacy | None, quantity_u
 
 def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
                       pharmacy_id=None, quantity_used=None, cost=0, notes=None) -> VetVisit:
+    # بند إصلاح (فحص عميق — قسم الصحة) — `cost` اليدوي (أجرة الكشف لو
+    # ما فيه دواء) ما كان عليه أي تحقق — قيمة سالبة كانت تُخزَّن مباشرة
+    # على `VetVisit.cost` بصمت (تتجاوز فحص `_link_finance_for_cost`'s
+    # `cost <= 0` فتفوّت إنشاء عملية مالية، لكن الحقل نفسه يبقى سالباً)،
+    # تكسر بها "مالية الدكتور" (`finance_health_view`) اللي تجمع
+    # `sum(v.cost or 0 for v in visits)` مباشرة — تكلفة سالبة تُنقص
+    # الإجمالي المعروض بدل ما تزيده.
+    if cost and cost < 0:
+        raise IncompleteRecordError(_("التكلفة ما يقدر تكون رقماً سالباً."))
     from app.models import Animal
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
     _require_quantity_if_medicine(pharmacy, quantity_used)
@@ -431,6 +440,11 @@ def record_vet_visit(*, actor_user_id, animal_id, doctor_id, date_, diagnosis,
 
 def record_disease(*, actor_user_id, animal_id, disease_name, date_, severity,
                     pharmacy_id=None, quantity_used=None, treatment_cost=0) -> Disease:
+    # بند إصلاح (فحص عميق — قسم الصحة) — نفس ثغرة `record_vet_visit`
+    # بالضبط: `treatment_cost` اليدوي بدون تحقق، تكلفة سالبة تُخزَّن
+    # مباشرة على `Disease.treatment_cost` وتكسر بها "مالية الدكتور".
+    if treatment_cost and treatment_cost < 0:
+        raise IncompleteRecordError(_("تكلفة العلاج ما يقدر تكون رقماً سالباً."))
     from app.models import Animal
     pharmacy = Pharmacy.query.get(pharmacy_id) if pharmacy_id else None
     _require_quantity_if_medicine(pharmacy, quantity_used)

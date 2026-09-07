@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 03:32+0300\n"
+"POT-Creation-Date: 2026-09-07 03:45+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -4173,19 +4173,27 @@ msgstr ""
 "used — you must specify the dose for the cost and stock deduction to be "
 "calculated correctly."
 
-#: app/health/health_service.py:491
+#: app/health/health_service.py:413
+msgid "التكلفة ما يقدر تكون رقماً سالباً."
+msgstr "The cost cannot be a negative number."
+
+#: app/health/health_service.py:447
+msgid "تكلفة العلاج ما يقدر تكون رقماً سالباً."
+msgstr "The treatment cost cannot be a negative number."
+
+#: app/health/health_service.py:505
 msgid "منخفضة عن الطبيعي"
 msgstr "Below normal"
 
-#: app/health/health_service.py:492
+#: app/health/health_service.py:506
 msgid "مرتفعة عن الطبيعي (حمى محتملة)"
 msgstr "Above normal (possible fever)"
 
-#: app/health/health_service.py:493
+#: app/health/health_service.py:507
 msgid "ضمن النطاق الطبيعي"
 msgstr "Within normal range"
 
-#: app/health/health_service.py:708
+#: app/health/health_service.py:722
 #, python-format
 msgid "🚨 حالة طوارئ — الرأس %(no)s"
 msgstr "🚨 Emergency — animal %(no)s"
