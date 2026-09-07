@@ -281,6 +281,13 @@ def asset_maintenance(asset_id):
     if request.method == "POST":
         maintenance_date = date.fromisoformat(request.form["date"])
         cost = float(request.form["cost"]) if request.form.get("cost") else None
+        # بند إصلاح (فحص عميق — قسم المعدات) — نفس ثغرة تكلفة الزيارة
+        # البيطرية اليدوية: `record_maintenance_cost` تتجاوز إنشاء عملية
+        # مالية لو `cost <= 0`، لكن القيمة السالبة تبقى مخزَّنة مباشرة
+        # على `AssetMaintenanceLog.cost` بصمت.
+        if cost is not None and cost < 0:
+            flash(_("التكلفة ما يقدر تكون رقماً سالباً."), "error")
+            return redirect(url_for("equipment.asset_maintenance", asset_id=asset.id))
         finance_id = svc.record_maintenance_cost(asset=asset, cost=cost, date_=maintenance_date)
         db.session.add(AssetMaintenanceLog(
             asset_id=asset.id, date=maintenance_date, notes=request.form.get("notes"),
@@ -312,6 +319,10 @@ def utilities_new():
         reading_date = date.fromisoformat(request.form["date"])
         utility_type = request.form["utility_type"]
         cost = float(request.form["cost"]) if request.form.get("cost") else None
+        # بند إصلاح (فحص عميق — قسم المعدات) — نفس ملاحظة الصيانة أعلاه.
+        if cost is not None and cost < 0:
+            flash(_("التكلفة ما يقدر تكون رقماً سالباً."), "error")
+            return redirect(url_for("equipment.utilities_new"))
         finance_id = svc.record_utility_cost(utility_type=utility_type, cost=cost, date_=reading_date)
         db.session.add(UtilityReading(
             utility_type=utility_type, date=reading_date,
