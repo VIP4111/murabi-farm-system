@@ -55,12 +55,29 @@ def settings():
             flash(_("إحداثيات غير صالحة."), "error")
             return redirect(url_for("climate.settings"))
 
+        thi_mild = float(request.form.get("thi_mild") or fs.thi_mild)
+        thi_moderate = float(request.form.get("thi_moderate") or fs.thi_moderate)
+        thi_severe = float(request.form.get("thi_severe") or fs.thi_severe)
+        thi_emergency = float(request.form.get("thi_emergency") or fs.thi_emergency)
+        # بند إصلاح (فحص عميق — قسم المناخ) — `classify_stress_level`
+        # مبنية بالكامل على افتراض إن العتبات الأربعة تصاعدية (mild <
+        # moderate < severe < emergency) — سلسلة if/elif تقارن كل قراءة
+        # بالعتبة تلو الثانية بهذا الترتيب. لو المستخدم أدخل عتبة بترتيب
+        # خاطئ (خطأ كتابة، مثلاً moderate أقل من mild)، التصنيف كله
+        # ينكسر بصمت لكل المزرعة — بدون أي رسالة خطأ توضّح المشكلة.
+        if not (thi_mild < thi_moderate < thi_severe < thi_emergency):
+            flash(_(
+                "عتبات مؤشر الإجهاد الحراري لازم تكون تصاعدية بالترتيب "
+                "(خفيف < متوسط < شديد < طارئ)."
+            ), "error")
+            return redirect(url_for("climate.settings"))
+
         fs.farm_latitude = lat
         fs.farm_longitude = lon
-        fs.thi_mild = float(request.form.get("thi_mild") or fs.thi_mild)
-        fs.thi_moderate = float(request.form.get("thi_moderate") or fs.thi_moderate)
-        fs.thi_severe = float(request.form.get("thi_severe") or fs.thi_severe)
-        fs.thi_emergency = float(request.form.get("thi_emergency") or fs.thi_emergency)
+        fs.thi_mild = thi_mild
+        fs.thi_moderate = thi_moderate
+        fs.thi_severe = thi_severe
+        fs.thi_emergency = thi_emergency
         db.session.commit()
         flash(_("تم حفظ إعدادات رادار المناخ."), "success")
         return redirect(url_for("climate.dashboard"))

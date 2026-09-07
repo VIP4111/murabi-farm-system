@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:27+0300\n"
+"POT-Creation-Date: 2026-09-07 05:38+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -972,16 +972,24 @@ msgstr "मौसम सेवा की प्रतिक्रिया म�
 msgid "إحداثيات غير صالحة."
 msgstr "अमान्य निर्देशांक।"
 
-#: app/climate/routes.py:65
+#: app/climate/routes.py:70
+msgid ""
+"عتبات مؤشر الإجهاد الحراري لازم تكون تصاعدية بالترتيب (خفيف < متوسط < "
+"شديد < طارئ)."
+msgstr ""
+"गर्मी तनाव सूचकांक की सीमाएँ आरोही क्रम में होनी चाहिए (हल्का < मध्यम < "
+"गंभीर < आपातकालीन)।"
+
+#: app/climate/routes.py:82
 msgid "تم حفظ إعدادات رادار المناخ."
 msgstr "जलवायु-रडार सेटिंग्स सेव कर दी गई हैं।"
 
-#: app/climate/routes.py:77
+#: app/climate/routes.py:94
 #, python-format
 msgid "تعذّر تحديث الطقس: %(err)s"
 msgstr "मौसम अपडेट नहीं हो सका: %(err)s"
 
-#: app/climate/routes.py:79
+#: app/climate/routes.py:96
 msgid "تم تحديث توقعات الطقس."
 msgstr "मौसम पूर्वानुमान अपडेट कर दिया गया है।"
 

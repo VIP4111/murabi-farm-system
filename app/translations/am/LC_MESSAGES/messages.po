@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:27+0300\n"
+"POT-Creation-Date: 2026-09-07 05:38+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -955,16 +955,24 @@ msgstr "የአየር ሁኔታ አገልግሎት ምላሽ ትክክለኛ መ�
 msgid "إحداثيات غير صالحة."
 msgstr "ልክ ያልሆኑ መጋጠሚያዎች።"
 
-#: app/climate/routes.py:65
+#: app/climate/routes.py:70
+msgid ""
+"عتبات مؤشر الإجهاد الحراري لازم تكون تصاعدية بالترتيب (خفيف < متوسط < "
+"شديد < طارئ)."
+msgstr ""
+"የሙቀት ጭንቀት መረጃ ጠቋሚ ገደቦች ከዝቅተኛ ወደ ከፍተኛ ቅደም ተከተል መሆን አለባቸው (ቀላል < መካከለኛ < "
+"ከባድ < አስቸኳይ)።"
+
+#: app/climate/routes.py:82
 msgid "تم حفظ إعدادات رادار المناخ."
 msgstr "የአየር ንብረት ራዳር ቅንብሮች ተቀምጠዋል።"
 
-#: app/climate/routes.py:77
+#: app/climate/routes.py:94
 #, python-format
 msgid "تعذّر تحديث الطقس: %(err)s"
 msgstr "የአየር ሁኔታ ማዘመን አልተቻለም፡ %(err)s"
 
-#: app/climate/routes.py:79
+#: app/climate/routes.py:96
 msgid "تم تحديث توقعات الطقس."
 msgstr "የአየር ሁኔታ ትንበያ ተዘምኗል።"
 

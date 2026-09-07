@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:27+0300\n"
+"POT-Creation-Date: 2026-09-07 05:38+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -976,16 +976,24 @@ msgstr "The weather service response has no valid data."
 msgid "إحداثيات غير صالحة."
 msgstr "Invalid coordinates."
 
-#: app/climate/routes.py:65
+#: app/climate/routes.py:70
+msgid ""
+"عتبات مؤشر الإجهاد الحراري لازم تكون تصاعدية بالترتيب (خفيف < متوسط < "
+"شديد < طارئ)."
+msgstr ""
+"Heat stress index thresholds must be in ascending order (mild < moderate "
+"< severe < emergency)."
+
+#: app/climate/routes.py:82
 msgid "تم حفظ إعدادات رادار المناخ."
 msgstr "The climate-radar settings have been saved."
 
-#: app/climate/routes.py:77
+#: app/climate/routes.py:94
 #, python-format
 msgid "تعذّر تحديث الطقس: %(err)s"
 msgstr "Couldn't update the weather: %(err)s"
 
-#: app/climate/routes.py:79
+#: app/climate/routes.py:96
 msgid "تم تحديث توقعات الطقس."
 msgstr "The weather forecast has been updated."
 
