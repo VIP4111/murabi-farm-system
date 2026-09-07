@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 03:56+0300\n"
+"POT-Creation-Date: 2026-09-07 05:06+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -2266,6 +2266,10 @@ msgstr "दादी/पोता"
 msgid "عم/عمة أو خال/خالة"
 msgstr "चाचा/मामा संबंध"
 
+#: app/core/ostrich_service.py:51 app/core/ostrich_service.py:71
+msgid "هذي البيضة مسجَّلة لها نتيجة فقس مسبقاً."
+msgstr "इस अंडे का पहले से ही अंडे सेने का परिणाम दर्ज है।"
+
 #: app/core/outbreak_service.py:84
 #, python-format
 msgid "🦠 احتمال عدوى منتشرة — حظيرة %(barn)s"
@@ -3646,11 +3650,16 @@ msgstr "आइटम की वापसी दर्ज कर दी गई �
 msgid "تمت إضافة الأصل"
 msgstr "संपत्ति जोड़ दी गई है"
 
-#: app/equipment/routes.py:291
+#: app/equipment/routes.py:289 app/equipment/routes.py:324
+#: app/health/health_service.py:413
+msgid "التكلفة ما يقدر تكون رقماً سالباً."
+msgstr "लागत ऋणात्मक संख्या नहीं हो सकती।"
+
+#: app/equipment/routes.py:298
 msgid "تم تسجيل الصيانة"
 msgstr "रखरखाव दर्ज कर दिया गया है"
 
-#: app/equipment/routes.py:322
+#: app/equipment/routes.py:333
 msgid "تم تسجيل القراءة"
 msgstr "रीडिंग दर्ज कर दी गई है"
 
@@ -4148,10 +4157,6 @@ msgstr ""
 "आपने एक दवा (\"%(name)s\") चुनी बिना उपयोग की गई मात्रा बताए — लागत और "
 "स्टॉक कटौती सही ढंग से गणना होने के लिए आपको खुराक निर्दिष्ट करनी होगी।"
 
-#: app/health/health_service.py:413
-msgid "التكلفة ما يقدر تكون رقماً سالباً."
-msgstr "लागत ऋणात्मक संख्या नहीं हो सकती।"
-
 #: app/health/health_service.py:447
 msgid "تكلفة العلاج ما يقدر تكون رقماً سالباً."
 msgstr "उपचार की लागत ऋणात्मक संख्या नहीं हो सकती।"
@@ -4482,11 +4487,11 @@ msgstr "हैचिंग दर्ज कर दी गई और चूजे
 msgid "تعذّر تسجيل الفقس: %(err)s"
 msgstr "हैचिंग दर्ज नहीं हो सकी: %(err)s"
 
-#: app/ostrich/routes.py:86
+#: app/ostrich/routes.py:87
 msgid "تم تسجيل فشل الفقس"
 msgstr "असफल हैचिंग दर्ज कर दी गई है"
 
-#: app/ostrich/routes.py:116
+#: app/ostrich/routes.py:120
 msgid "تمت إضافة الحاضنة"
 msgstr "इनक्यूबेटर जोड़ दिया गया है"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 03:56+0300\n"
+"POT-Creation-Date: 2026-09-07 05:06+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -2277,6 +2277,10 @@ msgstr "Grandmother/grandson"
 msgid "عم/عمة أو خال/خالة"
 msgstr "Uncle/aunt relation"
 
+#: app/core/ostrich_service.py:51 app/core/ostrich_service.py:71
+msgid "هذي البيضة مسجَّلة لها نتيجة فقس مسبقاً."
+msgstr "This egg already has a recorded hatch result."
+
 #: app/core/outbreak_service.py:84
 #, python-format
 msgid "🦠 احتمال عدوى منتشرة — حظيرة %(barn)s"
@@ -3662,11 +3666,16 @@ msgstr "The item's return has been recorded"
 msgid "تمت إضافة الأصل"
 msgstr "The asset has been added"
 
-#: app/equipment/routes.py:291
+#: app/equipment/routes.py:289 app/equipment/routes.py:324
+#: app/health/health_service.py:413
+msgid "التكلفة ما يقدر تكون رقماً سالباً."
+msgstr "The cost cannot be a negative number."
+
+#: app/equipment/routes.py:298
 msgid "تم تسجيل الصيانة"
 msgstr "The maintenance has been recorded"
 
-#: app/equipment/routes.py:322
+#: app/equipment/routes.py:333
 msgid "تم تسجيل القراءة"
 msgstr "The reading has been recorded"
 
@@ -4173,10 +4182,6 @@ msgstr ""
 "used — you must specify the dose for the cost and stock deduction to be "
 "calculated correctly."
 
-#: app/health/health_service.py:413
-msgid "التكلفة ما يقدر تكون رقماً سالباً."
-msgstr "The cost cannot be a negative number."
-
 #: app/health/health_service.py:447
 msgid "تكلفة العلاج ما يقدر تكون رقماً سالباً."
 msgstr "The treatment cost cannot be a negative number."
@@ -4510,11 +4515,11 @@ msgstr "The hatching has been recorded and the chick added as a new animal"
 msgid "تعذّر تسجيل الفقس: %(err)s"
 msgstr "Couldn't record the hatching: %(err)s"
 
-#: app/ostrich/routes.py:86
+#: app/ostrich/routes.py:87
 msgid "تم تسجيل فشل الفقس"
 msgstr "The failed hatching has been recorded"
 
-#: app/ostrich/routes.py:116
+#: app/ostrich/routes.py:120
 msgid "تمت إضافة الحاضنة"
 msgstr "The incubator has been added"
 

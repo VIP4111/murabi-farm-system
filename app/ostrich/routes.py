@@ -82,8 +82,12 @@ def eggs_hatch(egg_id):
                 flash(_("تعذّر تسجيل الفقس: %(err)s", err=e), "error")
                 return redirect(url_for("ostrich.eggs_hatch", egg_id=egg.id))
         else:
-            svc.record_hatch_failure(egg, fail_reason=request.form.get("fail_reason") or "-", actor_user_id=current_user.id)
-            flash(_("تم تسجيل فشل الفقس"), "success")
+            try:
+                svc.record_hatch_failure(egg, fail_reason=request.form.get("fail_reason") or "-", actor_user_id=current_user.id)
+                flash(_("تم تسجيل فشل الفقس"), "success")
+            except svc.OstrichEggAlreadyProcessedError as e:
+                flash(str(e), "error")
+                return redirect(url_for("ostrich.eggs_list"))
         return redirect(url_for("ostrich.eggs_list"))
     fs = FarmSettings.get()
     return render_template(

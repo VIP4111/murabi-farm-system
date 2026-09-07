@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 03:56+0300\n"
+"POT-Creation-Date: 2026-09-07 05:06+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: am\n"
@@ -2193,6 +2193,10 @@ msgstr "አያት (ሴት)/የልጅ ልጅ (ወንድ)"
 msgid "عم/عمة أو خال/خالة"
 msgstr "አጎት/አክስት ዝምድና"
 
+#: app/core/ostrich_service.py:51 app/core/ostrich_service.py:71
+msgid "هذي البيضة مسجَّلة لها نتيجة فقس مسبقاً."
+msgstr "ይህ እንቁላል ቀደም ብሎ የመፈልፈል ውጤት ተመዝግቧል።"
+
 #: app/core/outbreak_service.py:84
 #, python-format
 msgid "🦠 احتمال عدوى منتشرة — حظيرة %(barn)s"
@@ -3524,11 +3528,16 @@ msgstr "የንጥሉ መመለስ ተመዝግቧል"
 msgid "تمت إضافة الأصل"
 msgstr "ንብረቱ ታክሏል"
 
-#: app/equipment/routes.py:291
+#: app/equipment/routes.py:289 app/equipment/routes.py:324
+#: app/health/health_service.py:413
+msgid "التكلفة ما يقدر تكون رقماً سالباً."
+msgstr "ወጪው አሉታዊ ቁጥር ሊሆን አይችልም።"
+
+#: app/equipment/routes.py:298
 msgid "تم تسجيل الصيانة"
 msgstr "ጥገናው ተመዝግቧል"
 
-#: app/equipment/routes.py:322
+#: app/equipment/routes.py:333
 msgid "تم تسجيل القراءة"
 msgstr "ንባቡ ተመዝግቧል"
 
@@ -3995,10 +4004,6 @@ msgstr ""
 "መድሃኒት (\"%(name)s\") መርጠዋል ያለ ጥቅም ላይ የዋለውን መጠን ሳይገልጹ — ወጪውና የክምችት ቅናሽ "
 "በትክክል እንዲሰላ መጠኑን መግለጽ አለብዎት።"
 
-#: app/health/health_service.py:413
-msgid "التكلفة ما يقدر تكون رقماً سالباً."
-msgstr "ወጪው አሉታዊ ቁጥር ሊሆን አይችልም።"
-
 #: app/health/health_service.py:447
 msgid "تكلفة العلاج ما يقدر تكون رقماً سالباً."
 msgstr "የሕክምና ወጪው አሉታዊ ቁጥር ሊሆን አይችልም።"
@@ -4309,11 +4314,11 @@ msgstr "መፈልፈሉ ተመዝግቧል እና ጫጩቱ እንደ አዲስ 
 msgid "تعذّر تسجيل الفقس: %(err)s"
 msgstr "መፈልፈልን መመዝገብ አልተቻለም፡ %(err)s"
 
-#: app/ostrich/routes.py:86
+#: app/ostrich/routes.py:87
 msgid "تم تسجيل فشل الفقس"
 msgstr "ያልተሳካው መፈልፈል ተመዝግቧል"
 
-#: app/ostrich/routes.py:116
+#: app/ostrich/routes.py:120
 msgid "تمت إضافة الحاضنة"
 msgstr "ማብቀያው ታክሏል"
 

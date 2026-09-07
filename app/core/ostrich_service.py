@@ -4,6 +4,7 @@
 لازم يمر من `record_hatch_success()` هنا، ما يُنشأ مباشرة بجدول Animal.
 """
 from datetime import date, timedelta
+from flask_babel import gettext as _
 from app.extensions import db
 from app.models import Animal, AuditLog
 from app.models.animal import AnimalSource
@@ -33,9 +34,21 @@ def expected_hatch_date(egg: OstrichEgg, incubation_days: int) -> date | None:
     return egg.incubation_start_date + timedelta(days=incubation_days)
 
 
+class OstrichEggAlreadyProcessedError(ValueError):
+    """بند إصلاح (فحص عميق — قسم النعام) — ما كان فيه أي حارس ضد تسجيل
+    نتيجة فقس بيضة مسجَّل لها نتيجة أصلاً — إعادة إرسال الفورم بالغلط
+    (رجوع بالمتصفح، ضغطة مزدوجة) كانت تنشئ رأساً ثانياً مكرَّراً لنفس
+    البيضة الفعلية (`record_hatch_success`)، أو تكتب فوق سبب الفشل
+    الأصلي بصمت (`record_hatch_failure`) — بدون أي رسالة توضّح إنها
+    مسجَّلة من قبل. نفس مبدأ الحارس الموجود أصلاً بمسار مشابه تماماً
+    (`pregnancies_abort`: "هذا الحمل مسجَّل له نتيجة إجهاض مسبقاً")."""
+
+
 def record_hatch_success(egg: OstrichEgg, *, actual_hatch_date: date, animal_no: str,
                           gender: str | None = None, weight: float | None = None,
                           actor_user_id: int | None = None) -> Animal:
+    if egg.hatch_result != "pending":
+        raise OstrichEggAlreadyProcessedError(_("هذي البيضة مسجَّلة لها نتيجة فقس مسبقاً."))
     from app.core.animal_service import create_animal
 
     chick = create_animal(
@@ -54,6 +67,8 @@ def record_hatch_success(egg: OstrichEgg, *, actual_hatch_date: date, animal_no:
 
 
 def record_hatch_failure(egg: OstrichEgg, *, fail_reason: str, actor_user_id: int | None = None) -> OstrichEgg:
+    if egg.hatch_result != "pending":
+        raise OstrichEggAlreadyProcessedError(_("هذي البيضة مسجَّلة لها نتيجة فقس مسبقاً."))
     egg.hatch_result = "failed"
     egg.fail_reason = fail_reason
     db.session.add(egg)
