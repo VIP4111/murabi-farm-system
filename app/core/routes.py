@@ -1560,10 +1560,11 @@ def animal_sell(animal_id):
     override_reason = request.form.get("withdrawal_override_reason") or None
     if override_reason and not current_user.has_permission("sales.override_withdrawal"):
         override_reason = None  # دفاع بعمق — تجاهل صامت لو المستخدم ما يملك الصلاحية فعلاً
+    sale_price = float(request.form["sale_price"])
     try:
         cycle_engine.sell_animal(
             animal,
-            sale_price=float(request.form["sale_price"]),
+            sale_price=sale_price,
             actor_user_id=current_user.id,
             sale_date=date.fromisoformat(request.form["sale_date"]) if request.form.get("sale_date") else None,
             notes=request.form.get("notes"),

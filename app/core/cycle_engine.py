@@ -475,6 +475,16 @@ def sell_animal(animal: Animal, *, sale_price: float, actor_user_id: int, sale_d
                  buyer_name=None, buyer_phone=None, no_invoice=False, withdrawal_override_reason=None):
     from app.models import Finance, AuditLog
 
+    # بند إصلاح (فحص عميق — محرك دورة الإنتاج) — `sale_price` ما كان
+    # عليها أي تحقق قبل إنشاء عملية "بيع" حقيقية بسجل المالية — سعر
+    # سالب أو صفري (خطأ كتابة) كان يُنشئ دخل "بيع" سالب/معدوم، يقلّل
+    # إجمالي المبيعات وصافي الربح المعروضين بدل ما يعكس بيعاً حقيقياً.
+    # `CycleExitBlocked` عمداً (مو ValueError) — نقطة الدخول الموحّدة
+    # الوحيدة (بيع فردي وجماعي معاً)، وكلا المتصلين يتعاملان مع هذا
+    # الاستثناء تحديداً أصلاً.
+    if not sale_price or sale_price <= 0:
+        raise CycleExitBlocked(_("سعر البيع لازم يكون رقماً موجباً أكبر من صفر."))
+
     sale_date = sale_date or date.today()
     assert_exit_allowed(animal, withdrawal_override_reason=withdrawal_override_reason, actor_user_id=actor_user_id)
     wf = animal.workflow

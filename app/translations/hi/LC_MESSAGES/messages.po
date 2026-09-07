@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:38+0300\n"
+"POT-Creation-Date: 2026-09-07 10:11+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -2044,7 +2044,11 @@ msgstr ""
 "\"%(no)s\" %(until)s तक दवा प्रतिबंध अवधि में है (%(days)s दिन शेष) — "
 "अवधि पूरी तरह समाप्त होने तक बेचना या वध करना प्रतिबंधित है।"
 
-#: app/core/cycle_engine.py:587
+#: app/core/cycle_engine.py:486
+msgid "سعر البيع لازم يكون رقماً موجباً أكبر من صفر."
+msgstr "बिक्री मूल्य शून्य से बड़ी धनात्मक संख्या होनी चाहिए।"
+
+#: app/core/cycle_engine.py:597
 msgid ""
 "يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل \"تجاوز\" لو متأكد إنك تبي "
 "تكمل."
@@ -2862,45 +2866,45 @@ msgstr "यह बिक्री बिना इनवॉइस के दर�
 msgid "تم تحديث بيانات التخطيط"
 msgstr "योजना डेटा अपडेट कर दिया गया है"
 
-#: app/core/routes.py:1575
+#: app/core/routes.py:1576
 msgid "تم تسجيل البيع"
 msgstr "बिक्री दर्ज कर दी गई है"
 
-#: app/core/routes.py:1589
+#: app/core/routes.py:1590
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 पशु बेचा गया — %(no)s, %(price)s में"
 
-#: app/core/routes.py:1607
+#: app/core/routes.py:1608
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "बाज़ार के लिए जानवर का निकलना दर्ज कर दिया गया है"
 
-#: app/core/routes.py:1619
+#: app/core/routes.py:1620
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "बिना बिक्री के जानवर का फार्म वापस आना दर्ज कर दिया गया है"
 
-#: app/core/routes.py:1634
+#: app/core/routes.py:1635
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "मृत्यु दर्ज कर दी गई है (चक्र-पूर्णता शर्त के बिना)"
 
-#: app/core/routes.py:1650
+#: app/core/routes.py:1651
 msgid "تم أرشفة الحيوان"
 msgstr "जानवर आर्काइव कर दिया गया है"
 
-#: app/core/routes.py:1698 app/core/routes.py:1733
+#: app/core/routes.py:1699 app/core/routes.py:1734
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr "बाड़ा संख्या \"%(no)s\" पहले से उपयोग में है"
 
-#: app/core/routes.py:1704
+#: app/core/routes.py:1705
 msgid "تمت إضافة الحظيرة"
 msgstr "बाड़ा जोड़ दिया गया है"
 
-#: app/core/routes.py:1739
+#: app/core/routes.py:1740
 msgid "تم تحديث الحظيرة"
 msgstr "बाड़ा अपडेट कर दिया गया है"
 
-#: app/core/routes.py:1855
+#: app/core/routes.py:1856
 #, python-format
 msgid ""
 "قيمة الحقل \"%(field)s\" غير صالحة — لازم تكون رقماً صحيحاً موجباً (أو "
@@ -2910,24 +2914,24 @@ msgstr ""
 "धनात्मक) होनी चाहिए। कोई भी बदलाव सहेजा नहीं गया — मान ठीक करके फिर कोशिश"
 " करें।"
 
-#: app/core/routes.py:1865
+#: app/core/routes.py:1866
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "समय सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1879
+#: app/core/routes.py:1880
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "इनटेक-दवा सेटिंग्स सेव कर दी गई हैं"
 
-#: app/core/routes.py:1907 app/core/routes.py:2104
+#: app/core/routes.py:1908 app/core/routes.py:2105
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "आपको पुष्टिकरण वाक्यांश बिल्कुल ऐसे लिखना होगा: \"%(phrase)s\""
 
-#: app/core/routes.py:1910
+#: app/core/routes.py:1911
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "पासवर्ड गलत है — फैक्टरी रीसेट नहीं किया गया।"
 
-#: app/core/routes.py:1921
+#: app/core/routes.py:1922
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2936,7 +2940,7 @@ msgstr ""
 "फैक्टरी रीसेट नहीं हो सका, कुछ भी नहीं हटाया गया (अपने आप वापस कर दिया "
 "गया)। त्रुटि: %(err)s"
 
-#: app/core/routes.py:1924
+#: app/core/routes.py:1925
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2944,59 +2948,59 @@ msgstr ""
 "फैक्टरी रीसेट सफल रहा — फार्म का सारा डेटा हटा दिया गया है। उसी फोन नंबर "
 "और पासवर्ड से फिर से लॉगिन करें।"
 
-#: app/core/routes.py:1943
+#: app/core/routes.py:1944
 msgid "تم حفظ بيانات المزرعة"
 msgstr "फार्म का डेटा सेव कर दिया गया है"
 
-#: app/core/routes.py:1960
+#: app/core/routes.py:1961
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "भूमिका का नाम \"%(slug)s\" पहले से उपयोग में है"
 
-#: app/core/routes.py:1965
+#: app/core/routes.py:1966
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "पद बना दिया गया है — अब उसकी अनुमतियां तय करें"
 
-#: app/core/routes.py:1977
+#: app/core/routes.py:1978
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "आप मालिक की भूमिका की अनुमतियां संपादित नहीं कर सकते — इसके पास हमेशा सभी"
 " अनुमतियां होती हैं"
 
-#: app/core/routes.py:1995
+#: app/core/routes.py:1996
 msgid "تم تحديث صلاحيات الدور"
 msgstr "भूमिका की अनुमतियां अपडेट कर दी गई हैं"
 
-#: app/core/routes.py:2022
+#: app/core/routes.py:2023
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "%(name)s सेवा सक्रिय कर दी गई है"
 
-#: app/core/routes.py:2022
+#: app/core/routes.py:2023
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "%(name)s सेवा निष्क्रिय कर दी गई है"
 
-#: app/core/routes.py:2048
+#: app/core/routes.py:2049
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "बैकअप बना दिया गया है: %(name)s"
 
-#: app/core/routes.py:2107
+#: app/core/routes.py:2108
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
 msgstr "पासवर्ड गलत है — रिस्टोर नहीं किया गया।"
 
-#: app/core/routes.py:2110
+#: app/core/routes.py:2111
 msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
 msgstr "पहले बैकअप फ़ाइल (JSON) चुनें।"
 
-#: app/core/routes.py:2117
+#: app/core/routes.py:2118
 msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
 msgstr ""
 "अपलोड की गई फ़ाइल मान्य JSON नहीं है — सुनिश्चित करें कि यह वही डाउनलोड "
 "की गई फ़ाइल है, बिना किसी बदलाव के।"
 
-#: app/core/routes.py:2130
+#: app/core/routes.py:2131
 #, python-format
 msgid ""
 "تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
@@ -3005,7 +3009,7 @@ msgstr ""
 "रिस्टोर विफल — कोई डेटा नहीं बदला गया (स्वतः वापस कर दिया गया)। त्रुटि: "
 "%(err)s"
 
-#: app/core/routes.py:2137
+#: app/core/routes.py:2138
 #, python-format
 msgid ""
 "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
@@ -3014,19 +3018,19 @@ msgstr ""
 "%(n)s पंक्तियाँ सफलतापूर्वक बहाल की गईं — सारा मौजूदा डेटा अपलोड किए गए "
 "बैकअप से बदल दिया गया। कृपया दोबारा लॉग इन करें।"
 
-#: app/core/routes.py:2208
+#: app/core/routes.py:2209
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "आपको सटीक वाक्यांश लिखना होगा और पुष्टि चेक करनी होगी।"
 
-#: app/core/routes.py:2216
+#: app/core/routes.py:2217
 msgid "تم حذف بيانات المحاكاة."
 msgstr "सिमुलेशन डेटा हटा दिया गया है।"
 
-#: app/core/routes.py:2238
+#: app/core/routes.py:2239
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "आपको पुष्टि बॉक्स चेक करना होगा।"
 
-#: app/core/routes.py:2259
+#: app/core/routes.py:2260
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "

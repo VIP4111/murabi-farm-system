@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-07 05:38+0300\n"
+"POT-Creation-Date: 2026-09-07 10:11+0300\n"
 "PO-Revision-Date: 2026-07-23 17:13+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -2055,7 +2055,11 @@ msgstr ""
 "(%(days)s day(s) left) — selling or slaughtering is not allowed before "
 "the period fully ends."
 
-#: app/core/cycle_engine.py:587
+#: app/core/cycle_engine.py:486
+msgid "سعر البيع لازم يكون رقماً موجباً أكبر من صفر."
+msgstr "The sale price must be a positive number greater than zero."
+
+#: app/core/cycle_engine.py:597
 msgid ""
 "يوجد عمليات مالية مرتبطة بهذا الحيوان — فعّل \"تجاوز\" لو متأكد إنك تبي "
 "تكمل."
@@ -2870,45 +2874,45 @@ msgstr "This sale was recorded without an invoice."
 msgid "تم تحديث بيانات التخطيط"
 msgstr "The planning data has been updated"
 
-#: app/core/routes.py:1575
+#: app/core/routes.py:1576
 msgid "تم تسجيل البيع"
 msgstr "The sale has been recorded"
 
-#: app/core/routes.py:1589
+#: app/core/routes.py:1590
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr "💰 Animal sold — %(no)s for %(price)s"
 
-#: app/core/routes.py:1607
+#: app/core/routes.py:1608
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr "The animal's departure to the market has been recorded"
 
-#: app/core/routes.py:1619
+#: app/core/routes.py:1620
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr "The animal's return to the farm without a sale has been recorded"
 
-#: app/core/routes.py:1634
+#: app/core/routes.py:1635
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr "The death has been recorded (without the cycle-completion requirement)"
 
-#: app/core/routes.py:1650
+#: app/core/routes.py:1651
 msgid "تم أرشفة الحيوان"
 msgstr "The animal has been archived"
 
-#: app/core/routes.py:1698 app/core/routes.py:1733
+#: app/core/routes.py:1699 app/core/routes.py:1734
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr "Barn number \"%(no)s\" is already in use"
 
-#: app/core/routes.py:1704
+#: app/core/routes.py:1705
 msgid "تمت إضافة الحظيرة"
 msgstr "The barn has been added"
 
-#: app/core/routes.py:1739
+#: app/core/routes.py:1740
 msgid "تم تحديث الحظيرة"
 msgstr "The barn has been updated"
 
-#: app/core/routes.py:1855
+#: app/core/routes.py:1856
 #, python-format
 msgid ""
 "قيمة الحقل \"%(field)s\" غير صالحة — لازم تكون رقماً صحيحاً موجباً (أو "
@@ -2917,24 +2921,24 @@ msgstr ""
 "The \"%(field)s\" field value is invalid — it must be a whole number, "
 "zero or positive. No changes were saved — fix the value and try again."
 
-#: app/core/routes.py:1865
+#: app/core/routes.py:1866
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr "The time settings have been saved"
 
-#: app/core/routes.py:1879
+#: app/core/routes.py:1880
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr "The intake-medicine settings have been saved"
 
-#: app/core/routes.py:1907 app/core/routes.py:2104
+#: app/core/routes.py:1908 app/core/routes.py:2105
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr "You must type the confirmation phrase exactly: \"%(phrase)s\""
 
-#: app/core/routes.py:1910
+#: app/core/routes.py:1911
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr "Incorrect password — the factory reset was not performed."
 
-#: app/core/routes.py:1921
+#: app/core/routes.py:1922
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
@@ -2943,7 +2947,7 @@ msgstr ""
 "Couldn't perform the factory reset, nothing was deleted (rolled back "
 "automatically). Error: %(err)s"
 
-#: app/core/routes.py:1924
+#: app/core/routes.py:1925
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
@@ -2951,59 +2955,59 @@ msgstr ""
 "The factory reset succeeded — all farm data has been deleted. Log in "
 "again with the same phone number and password."
 
-#: app/core/routes.py:1943
+#: app/core/routes.py:1944
 msgid "تم حفظ بيانات المزرعة"
 msgstr "The farm's data has been saved"
 
-#: app/core/routes.py:1960
+#: app/core/routes.py:1961
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr "The role name \"%(slug)s\" is already in use"
 
-#: app/core/routes.py:1965
+#: app/core/routes.py:1966
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr "The job role has been created — now set its permissions"
 
-#: app/core/routes.py:1977
+#: app/core/routes.py:1978
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 "You can't edit the owner role's permissions — it always has all "
 "permissions"
 
-#: app/core/routes.py:1995
+#: app/core/routes.py:1996
 msgid "تم تحديث صلاحيات الدور"
 msgstr "The role's permissions have been updated"
 
-#: app/core/routes.py:2022
+#: app/core/routes.py:2023
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr "The %(name)s service has been enabled"
 
-#: app/core/routes.py:2022
+#: app/core/routes.py:2023
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr "The %(name)s service has been disabled"
 
-#: app/core/routes.py:2048
+#: app/core/routes.py:2049
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr "A backup has been created: %(name)s"
 
-#: app/core/routes.py:2107
+#: app/core/routes.py:2108
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
 msgstr "Incorrect password — restore was not performed."
 
-#: app/core/routes.py:2110
+#: app/core/routes.py:2111
 msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
 msgstr "Choose the backup file (JSON) first."
 
-#: app/core/routes.py:2117
+#: app/core/routes.py:2118
 msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
 msgstr ""
 "The uploaded file is not valid JSON — make sure it is the exact "
 "downloaded file, unmodified."
 
-#: app/core/routes.py:2130
+#: app/core/routes.py:2131
 #, python-format
 msgid ""
 "تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
@@ -3012,7 +3016,7 @@ msgstr ""
 "Restore failed — no data was changed (automatically rolled back). Error: "
 "%(err)s"
 
-#: app/core/routes.py:2137
+#: app/core/routes.py:2138
 #, python-format
 msgid ""
 "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
@@ -3021,19 +3025,19 @@ msgstr ""
 "%(n)s rows restored successfully — all current data was replaced by the "
 "uploaded backup. Please log in again."
 
-#: app/core/routes.py:2208
+#: app/core/routes.py:2209
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr "You must type the exact phrase and check the confirmation box."
 
-#: app/core/routes.py:2216
+#: app/core/routes.py:2217
 msgid "تم حذف بيانات المحاكاة."
 msgstr "The simulation data has been deleted."
 
-#: app/core/routes.py:2238
+#: app/core/routes.py:2239
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr "You must check the confirmation box."
 
-#: app/core/routes.py:2259
+#: app/core/routes.py:2260
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
