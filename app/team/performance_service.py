@@ -91,10 +91,20 @@ def todays_completed_tasks():
     """كل المهام المنجزة اليوم عبر كل الفريق (بند إضافي 229) — أساس
     شاشة المراجعة اليومية اللي يقدر منها صاحب الحلال/الدكتور/الممرض
     يحطون تقييم جودة يدوي اختياري."""
-    from datetime import date as date_cls
-    today = date_cls.today()
-    range_start = datetime.combine(today, time.min)
-    range_end = datetime.combine(today, time.max)
+    # بند إصلاح (فحص عميق — قسم الفريق والمهام) — كانت تستخدم `date.
+    # today()` الخام (UTC) *و* تبني حدود اليوم كوقت خام بدون تحويل،
+    # رغم إن `Task.completed_at` يُخزَّن UTC ساذج (naive) فعلياً. قرب
+    # منتصف الليل بالسعودية، هذا يعني خطأين مضاعفين: "اليوم" نفسه خطأ
+    # (UTC بدل السعودية)، وحتى لو صُحِّح "اليوم" فقط، حدود اليوم لازم
+    # تُحوَّل لمكافئها بتوقيت UTC (بما إن العمود المخزَّن UTC) — نحسب
+    # حدود يوم الرياض بالكامل (00:00-23:59:59 بتوقيت الرياض) ثم نحوّلها
+    # لـUTC ساذج قبل المقارنة بالعمود.
+    from zoneinfo import ZoneInfo
+    from app.extensions import farm_today
+    riyadh_tz = ZoneInfo("Asia/Riyadh")
+    today = farm_today()
+    range_start = datetime.combine(today, time.min, tzinfo=riyadh_tz).astimezone(ZoneInfo("UTC")).replace(tzinfo=None)
+    range_end = datetime.combine(today, time.max, tzinfo=riyadh_tz).astimezone(ZoneInfo("UTC")).replace(tzinfo=None)
     return (Task.query.filter(
         Task.status == "done", Task.completed_at >= range_start, Task.completed_at <= range_end,
     ).order_by(Task.completed_at.desc()).all())
