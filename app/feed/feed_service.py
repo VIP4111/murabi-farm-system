@@ -8,6 +8,7 @@
 """
 from datetime import date, timedelta
 from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 from app.models import Feed, FeedRation, FeedMovement, FeedBarnPlan
 
@@ -34,14 +35,16 @@ PURPOSE_TO_STATE = {
     "صيانة": "maintenance",
 }
 
+# بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — نفس فجوة
+# `medicine_class`/`feed_class` بالضبط: نص عربي خام بدون `_l()`.
 STATE_LABELS_AR = {
-    "maintenance": "عادي (صيانة)",
-    "growth": "نمو",
-    "late_pregnancy": "حمل متأخر",
-    "lactation": "رضاعة (الأم)",
-    "breeding_active": "فحل — موسم تقريع فعلي",
-    "nursing_newborn": "مولود على حليب أمه",
-    "creep_feeding": "مولود — تغذية تأسيسية (Creep Feed)",
+    "maintenance": _l("عادي (صيانة)"),
+    "growth": _l("نمو"),
+    "late_pregnancy": _l("حمل متأخر"),
+    "lactation": _l("رضاعة (الأم)"),
+    "breeding_active": _l("فحل — موسم تقريع فعلي"),
+    "nursing_newborn": _l("مولود على حليب أمه"),
+    "creep_feeding": _l("مولود — تغذية تأسيسية (Creep Feed)"),
 }
 
 

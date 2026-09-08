@@ -6,12 +6,15 @@
 العلف/الدواء/المعدات الثلاثة (نفس نمط `stock_purchase_service.kind`)."""
 from datetime import date
 from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _l
 
 from app.extensions import db
 from app.models import Feed, Pharmacy, Equipment, Finance, InventoryCount
 
 KIND_MODELS = {"feed": Feed, "pharmacy": Pharmacy, "equipment": Equipment}
-KIND_LABELS_AR = {"feed": "أعلاف", "pharmacy": "دواء", "equipment": "معدات"}
+# بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — نفس فجوة
+# `medicine_class` بالضبط: نص عربي خام بدون `_l()` بشاشة جرد المستودعات.
+KIND_LABELS_AR = {"feed": _l("أعلاف"), "pharmacy": _l("دواء"), "equipment": _l("معدات")}
 
 
 def record_count(*, kind: str, item, actual_qty: float, count_date=None, note=None, created_by_id=None):

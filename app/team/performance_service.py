@@ -11,13 +11,16 @@
 كلياً عن هذي النقطة — إضافي فوقها، مو داخل بمعادلتها، عشان يبقى رأي
 بشري صريح مو مخفياً برقم آلي."""
 from datetime import datetime, time
+from flask_babel import lazy_gettext as _l
 
 from app.models import Task, Report, User
 
 COMPLETION_WEIGHT = 0.5
 ON_TIME_WEIGHT = 0.5
 
-QUALITY_LABELS_AR = {"weak": "ضعيف", "medium": "متوسط", "excellent": "ممتاز"}
+# بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — نفس فجوة
+# `medicine_class` بالضبط: نص عربي خام بدون `_l()` بتقرير أداء الفريق.
+QUALITY_LABELS_AR = {"weak": _l("ضعيف"), "medium": _l("متوسط"), "excellent": _l("ممتاز")}
 
 
 def worker_performance(*, start_date, end_date) -> list[dict]:

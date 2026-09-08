@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 
 
@@ -16,8 +17,11 @@ class Feed(db.Model):
     # الحر أعلاه، عشان حارس منع الزيادة المفاجئة للمركزات (10% أسبوعياً)
     # يحتاج تمييزاً موثوقاً لا يعتمد على دقة كتابة من يدير المخزون.
     FEED_CLASSES = ["concentrate", "roughage", "mineral", "other"]
+    # بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — كانت
+    # نصاً عربياً خاماً غير قابل للترجمة، نفس فجوة `medicine_class`
+    # بالصيدلية بالضبط — صارت `_l()` (نفس نمط `WAREHOUSE_TYPE_LABELS_AR`).
     FEED_CLASS_LABELS_AR = {
-        "concentrate": "مركّز", "roughage": "خشن", "mineral": "معدني/أملاح", "other": "أخرى",
+        "concentrate": _l("مركّز"), "roughage": _l("خشن"), "mineral": _l("معدني/أملاح"), "other": _l("أخرى"),
     }
 
     id = db.Column(db.Integer, primary_key=True)
