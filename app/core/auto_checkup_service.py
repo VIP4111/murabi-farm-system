@@ -48,16 +48,29 @@ def _create_checkup_batch(*, animal: Animal, items: list[str], source_type: str,
     from app.team import task_service as tsvc
     source_id = None
     for item in items:
+        # بند إصلاح (فحص عميق ذاتي بعد الشحن) — `create_suggested_task`
+        # لو استقبلت `barn_id` تعيّن `assignee_id` تلقائياً = عامل تلك
+        # الحظيرة المسؤول (فرعها الداخلي، مصمَّم لمهام الرعاية اليومية
+        # العادية زي التنظيف). هذي المهام صحية وتحتاج دكتور تحديداً —
+        # تمرير `barn_id` هنا كان يعيّن عامل الحظيرة بصمت (يتجاوز
+        # `target_role="doctor"` كلياً، لأن `assignee_id` صريح له
+        # أولوية) — نفس الفخ اللي `assign_animal_checkup` تجنّبته
+        # صراحة بتعليقها (بند 308). ما اكتشفته اختبارات هذا البند لأن
+        # كل حيوانات الاختبار بلا حظيرة (`barn_id=None`) — الحظائر
+        # الحقيقية موجودة لكل رأس تقريباً بمزرعة فعلية. الحل: ما نمرّر
+        # `barn_id` لـ`create_suggested_task`، ونحطه يدوياً على صف
+        # المهمة بعد إنشائها.
         task = tsvc.create_suggested_task(
             title=f"{item} — {animal.animal_no}", task_type="animal_checkup",
-            animal_id=animal.id, barn_id=animal.barn_id, due_date=due_date,
+            animal_id=animal.id, due_date=due_date,
             target_role="doctor", source_type=source_type, source_id=source_id,
             auto_approve=True,
         )
+        task.barn_id = animal.barn_id
         if source_id is None:
             source_id = task.id
             task.source_id = source_id
-            db.session.commit()
+        db.session.commit()
 
 
 def generate_automatic_checkups(*, today: date) -> int:

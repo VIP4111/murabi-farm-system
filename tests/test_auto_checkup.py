@@ -4,13 +4,22 @@
 from datetime import date, timedelta
 
 from app.extensions import db
-from app.models import CheckupItemPreset, Disease, VetVisit, Doctor, Task
+from app.models import CheckupItemPreset, Disease, VetVisit, Doctor, Task, Role, User
 from app.core import auto_checkup_service as svc
 from tests.factories import make_animal, make_barn
 
 
 def _seed_presets():
     CheckupItemPreset.seed_defaults()
+
+
+def _worker(phone, role_name="worker"):
+    role = Role.query.filter_by(name=role_name).first()
+    u = User(name=f"مستخدم {phone}", phone=phone, role_id=role.id, language="ar")
+    u.set_password("pass1234")
+    db.session.add(u)
+    db.session.commit()
+    return u
 
 
 def test_owner_can_add_edit_delete_checkup_item(app, logged_in_client):
@@ -99,6 +108,30 @@ def test_routine_rule_skips_animal_with_recent_vet_visit(app):
     generated = svc.generate_automatic_checkups(today=date.today())
     assert generated == 0
     assert Task.query.filter_by(animal_id=animal.id, source_type=svc.SOURCE_ROUTINE).count() == 0
+
+
+def test_generated_task_not_silently_assigned_to_barn_worker(app):
+    """فحص عميق ذاتي بعد الشحن — بلاغ حقيقي محتمل: `create_suggested_
+    task` تعيّن `assignee_id` تلقائياً = عامل الحظيرة المسؤول لو
+    استقبلت `barn_id`، فتتجاوز `target_role="doctor"` بصمت. كل رؤوس
+    الاختبارات الثانية بلا حظيرة فما اكتشفت الفخ — هذا الاختبار يعيّن
+    حظيرة فعلية عمداً (نفس واقع أي مزرعة حقيقية) ويتأكد إن المهمة
+    توصل لـ"أي دكتور متاح" (`assignee_id=None`, `target_role="doctor"`)
+    مو لعامل الحظيرة مباشرة."""
+    _seed_presets()
+    worker = _worker("0500099010")
+    barn = make_barn(barn_no="ACHK-BARN", responsible_worker_id=worker.id)
+    animal = make_animal(animal_no="ACHK-07", barn_id=barn.id)
+    db.session.add(Disease(animal_id=animal.id, disease_name="مرض اختبار", date=date.today(), status="active"))
+    db.session.commit()
+
+    svc.generate_automatic_checkups(today=date.today())
+    tasks = Task.query.filter_by(animal_id=animal.id, source_type=svc.SOURCE_DISEASE).all()
+    assert tasks
+    for t in tasks:
+        assert t.assignee_id is None, "لازم توصل لأي دكتور متاح، مو تُعيَّن لعامل الحظيرة تلقائياً"
+        assert t.target_role == "doctor"
+        assert t.barn_id == barn.id  # الحظيرة تبقى مسجَّلة بالمهمة، بس بدون تعيين تلقائي
 
 
 def test_routine_rule_ignores_animal_already_covered_by_disease_rule_same_run(app):
