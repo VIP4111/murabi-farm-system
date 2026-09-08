@@ -19,10 +19,17 @@ def _worker(phone, role_name="worker", language="ar"):
     return u
 
 
-def test_arabic_author_no_translation_call_needed(app, owner):
-    report = svc.submit_or_update(author=owner, text="اليوم سويت جولة على الحظائر")
-    assert report.arabic_text == "اليوم سويت جولة على الحظائر"
-    assert report.author_lang == "ar"
+def test_translation_always_attempted_regardless_of_stated_author_language(app):
+    """بند إصلاح — بلاغ مستخدم حقيقي: دكتور حسابه لغته "عربي" (افتراضي)
+    بس كتب تقريره إنجليزي فعلياً — كان `author.language` يُستخدم لتحديد
+    "يحتاج ترجمة؟" فيُحفَظ النص الإنجليزي حرفياً كـ"عربي" بدون أي ترجمة
+    فعلية. الترجمة صارت تُستدعى دائماً بغض النظر عن لغة الحساب المعلنة."""
+    doctor = _worker("0500099005", role_name="doctor", language="ar")  # الحساب "عربي" رغم كتابته إنجليزي فعلياً
+    with patch("app.assistant.llm_bridge.translate_to_arabic", return_value="مرحباً، وصل هذا الصنف") as mocked:
+        report = svc.submit_or_update(author=doctor, text="Hi there is this item arrived")
+    mocked.assert_called_once_with("Hi there is this item arrived")
+    assert report.arabic_text == "مرحباً، وصل هذا الصنف"
+    assert report.display_text() == "مرحباً، وصل هذا الصنف"
 
 
 def test_non_arabic_author_translated_via_gemini(app):

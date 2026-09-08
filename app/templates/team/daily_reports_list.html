@@ -18,12 +18,16 @@
     <span style="color:var(--muted); font-size:12px;">{{ r.report_date }} — {{ r.created_at.strftime('%H:%M') if r.created_at else '' }}</span>
   </div>
   <p style="margin:10px 0 0; white-space:pre-wrap;">{{ r.display_text() }}</p>
-  {% if r.author_lang != 'ar' and r.arabic_text %}
+  {# بند إصلاح — الاعتماد على `author_lang` (تفضيل لغة الحساب) لتحديد
+     "هل يحتاج عرض النص الأصلي؟" كان غلط: عضو حسابه عربي بس كتب تقريره
+     إنجليزي ما كان يشوف صاحب الحلال أي تلميح للترجمة الفعلية. الشرط
+     الصحيح: قارن محتوى النصين مباشرة. #}
+  {% if r.arabic_text and r.arabic_text != r.author_text %}
   <details style="margin-top:8px;">
     <summary style="cursor:pointer; color:var(--muted); font-size:12px;">{{ _('النص الأصلي') }}</summary>
     <p style="color:var(--muted); font-size:12.5px; white-space:pre-wrap; margin-top:6px;">{{ r.author_text }}</p>
   </details>
-  {% elif r.author_lang != 'ar' and not r.arabic_text %}
+  {% elif not r.arabic_text %}
   <p style="color:var(--danger, #c0392b); font-size:12px; margin-top:8px;">⚠️ {{ _('ما قدرنا نترجم هذا النص تلقائياً — هذا النص الأصلي كما هو.') }}</p>
   {% endif %}
 </div>

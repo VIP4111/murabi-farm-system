@@ -13,12 +13,22 @@ def submit_or_update(*, author, text: str) -> DailyReport:
     """يُنشئ تقرير اليوم لو أول مرة، أو يعدّل نفس السجل لو العضو أرسل
     تقريراً ثانياً بنفس اليوم — تقرير واحد باليوم لكل عضو (قيد فريد
     بالموديل نفسه، هذا فحص تطبيقي إضافي يمنع محاولة `INSERT` مكرَّرة
-    ترمي IntegrityError)."""
-    lang = author.language or "ar"
+    ترمي IntegrityError).
+
+    بند إصلاح (بلاغ مستخدم حقيقي — تقرير دكتور إنجليزي ما اتُرجم) —
+    كنا نقرر "يحتاج ترجمة؟" باعتماد `author.language` (تفضيل لغة
+    الواجهة بحسابه)، مو لغة النص اللي كتبه فعلياً — دكتور حسابه عربي
+    افتراضياً بس كتب تقريره إنجليزي (شائع جداً بفريق متعدد اللغات) كانت
+    تُحفظ نسخة "عربي" مطابقة حرفياً للنص الإنجليزي بدون أي ترجمة فعلية.
+    الحل: نستدعي الترجمة دائماً بغض النظر عن `author.language` — ترجمة
+    نص عربي أصلاً للعربي عبر Gemini نتيجتها نفس النص تقريباً (بدون
+    ضرر)، وتغطي كل الحالات الحقيقية الممكنة بدل الاعتماد على تفضيل
+    حساب قد يكون غير مطابق للغة الكتابة الفعلية."""
     today = date.today()
     report = DailyReport.query.filter_by(author_id=author.id, report_date=today).first()
 
-    arabic_text = text if lang == "ar" else _translate(text)
+    lang = author.language or "ar"
+    arabic_text = _translate(text)
 
     if report:
         report.author_text = text
