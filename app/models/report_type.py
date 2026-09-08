@@ -9,6 +9,7 @@
 بالجدول (بدون FK) — هذا الجدول مرجع اقتراحات فقط.
 """
 from datetime import datetime, timezone
+from flask_babel import get_locale
 from app.extensions import db
 
 
@@ -21,12 +22,26 @@ class ReportType(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    # بند إصلاح (فحص عميق — طلبك: "تأكد من باقي الشاشات ما فيهم نفس
+    # المشكلة" بعد بلاغ أعراض المساعد التشخيصي) — نفس الثغرة بالضبط:
+    # "نوع البلاغ" (مرض/مشكلة/صيانة/أخرى) اللي يستخدمه كل عامل برفع
+    # بلاغ، ما كان له أي ترجمة إطلاقاً. نفس نمط `DiseaseType`/`Breed`/
+    # `AnimalColor`/`Symptom` بالضبط.
+    name_en = db.Column(db.String(60), nullable=True)
     created_at = db.Column(db.DateTime, default=_now)
+
+    def display_label(self) -> str:
+        if self.name_en and str(get_locale()) != "ar":
+            return self.name_en
+        return self.name
 
     @classmethod
     def seed_defaults(cls) -> None:
-        if cls.query.count() > 0:
-            return
-        for n in ("مرض", "مشكلة", "صيانة", "أخرى"):
-            db.session.add(cls(name=n))
+        defaults = {"مرض": "Disease", "مشكلة": "Problem", "صيانة": "Maintenance", "أخرى": "Other"}
+        for n, n_en in defaults.items():
+            existing = cls.query.filter_by(name=n).first()
+            if not existing:
+                db.session.add(cls(name=n, name_en=n_en))
+            elif not existing.name_en:
+                existing.name_en = n_en
         db.session.commit()

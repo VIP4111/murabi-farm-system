@@ -6,6 +6,7 @@
 لاحقاً من لوحة إدارة بدون كود، لكن هذا البند يبني المحرك والمحتوى
 الافتراضي أولاً."""
 from datetime import datetime, timezone
+from flask_babel import get_locale
 from app.extensions import db
 
 
@@ -36,6 +37,28 @@ class ChecklistItem(db.Model):
     # لمن يفتحه (طيّة قابلة للطي بالواجهة) عشان ما يثقل القائمة اليومية
     # لمن أصلاً يعرف السبب (بند إضافي 170).
     rationale = db.Column(db.Text)
+    # بند إصلاح (فحص عميق — طلبك: "كلهم نفس المشكله ... حل مشكلة
+    # التعريب") — دليل المربي المبتدئ («خطوات أولى موصى بها») كان عربي
+    # بحت مهما كانت لغة الحساب، نفس فجوة Symptom/ReportType بالضبط،
+    # لأن `ChecklistItem` جدول مرجعي مزروع كود بدون أي عمود ترجمة.
+    title_en = db.Column(db.String(220), nullable=True)
+    description_en = db.Column(db.Text, nullable=True)
+    rationale_en = db.Column(db.Text, nullable=True)
+
+    def display_title(self) -> str:
+        if self.title_en and str(get_locale()) != "ar":
+            return self.title_en
+        return self.title
+
+    def display_description(self) -> str | None:
+        if self.description_en and str(get_locale()) != "ar":
+            return self.description_en
+        return self.description
+
+    def display_rationale(self) -> str | None:
+        if self.rationale_en and str(get_locale()) != "ar":
+            return self.rationale_en
+        return self.rationale
     link_endpoint = db.Column(db.String(100))
     sort_order = db.Column(db.Integer, default=0, nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)

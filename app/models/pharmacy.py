@@ -37,6 +37,19 @@ class Pharmacy(db.Model):
         "other": "Other",
     }
 
+    @classmethod
+    def medicine_class_labels(cls) -> dict:
+        """بند إصلاح (فحص عميق — طلبك: "كلهم نفس المشكله ... حل مشكلة
+        التعريب") — كانت كل شاشات الصيدلية تمرر `MEDICINE_CLASS_LABELS_AR`
+        دايماً بغض النظر عن لغة الحساب، رغم وجود `MEDICINE_CLASS_LABELS_EN`
+        جاهز أصلاً (مبني لقائمة منسدلة ثنائية اللغة، ما كان يُستخدم
+        لعمود "فئة الدواء" بجداول القائمة). ترجع القاموس الصحيح حسب
+        لغة العارض الحالية."""
+        from flask_babel import get_locale
+        if str(get_locale()) != "ar":
+            return cls.MEDICINE_CLASS_LABELS_EN
+        return cls.MEDICINE_CLASS_LABELS_AR
+
     # ظروف التخزين (بند إضافي 61، 2026-07-28) — وصفي بس، ما يشغّل أي منطق
     # آلي (لا تنبيه ولا حظر) — يظهر بفورم الدواء عشان العامل يعرف وين
     # يحفظ الدواء فعلياً.

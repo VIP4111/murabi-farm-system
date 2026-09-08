@@ -108,7 +108,7 @@ def pharmacy_list():
     stockout = {p.id: health_service.pharmacy_days_until_stockout(p) for p in items}
     return render_template(
         "health/pharmacy_list.html", items=items, today=date.today(), stockout=stockout,
-        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_labels=Pharmacy.medicine_class_labels(),
     )
 
 
@@ -268,7 +268,7 @@ def pharmacy_new():
     return render_template(
         "health/pharmacy_form.html",
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
-        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,  # نمط ثنائي دائم — انظر medicine_class_labels_en أدناه
         medicine_class_labels_en=Pharmacy.MEDICINE_CLASS_LABELS_EN,
         medicine_class_guide=health_service.MEDICINE_CLASS_GUIDE,
         medicine_class_guide_en=health_service.MEDICINE_CLASS_GUIDE_EN,
@@ -344,7 +344,7 @@ def pharmacy_edit(pharmacy_id):
     return render_template(
         "health/pharmacy_form.html", item=item,
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
-        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,  # نمط ثنائي دائم — انظر medicine_class_labels_en أدناه
         medicine_class_labels_en=Pharmacy.MEDICINE_CLASS_LABELS_EN,
         medicine_class_guide=health_service.MEDICINE_CLASS_GUIDE,
         medicine_class_guide_en=health_service.MEDICINE_CLASS_GUIDE_EN,
@@ -446,7 +446,7 @@ def drug_catalog_new():
     return render_template(
         "health/drug_catalog_form.html",
         medicine_classes=Pharmacy.MEDICINE_CLASSES,
-        medicine_class_labels=Pharmacy.MEDICINE_CLASS_LABELS_AR,
+        medicine_class_labels=Pharmacy.medicine_class_labels(),
         preselected_class=request.args.get("medicine_class") or "",
     )
 

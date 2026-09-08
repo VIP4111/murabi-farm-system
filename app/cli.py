@@ -176,76 +176,109 @@ DEFAULT_CHECKLIST_ITEMS = [
     # عام — يظهر دائماً، لمرة وحدة (مسار الترحيب)
     {"code": "onb_animals_list", "stage": "general", "frequency": "once", "role": "all",
      "title": "سجّل حيوانك الأول (أو استورد قطيعك الحالي)",
+     "title_en": "Register your first animal (or import your current herd)",
      "description": "من 'سجل الحيوانات' ← '+ حيوان جديد'، أو 'شراء دفعة جديدة' لو عندك عدة رؤوس دفعة وحدة.",
+     "description_en": "From 'Animal registry' → '+ New animal', or 'New batch purchase' if you have several heads at once.",
      "rationale": "كل شاشة بالنظام (الصحة، التكاثر، العلف، التقارير) مبنية على وجود سجل حيوان أولاً — بدونه ما فيه شي تربطه به المهام والتنبيهات.",
+     "rationale_en": "Every screen in the system (health, breeding, feed, reports) is built on an animal record existing first — without it there's nothing for tasks and alerts to attach to.",
      "link_endpoint": "core.animals_list", "sort_order": 1},
     {"code": "onb_barns", "stage": "general", "frequency": "once", "role": "owner",
      "title": "جهّز حظائرك — خصوصاً حظيرة عزل واحدة على الأقل",
+     "title_en": "Set up your barns — especially at least one isolation barn",
      "description": "العزل التلقائي بعد الولادة والحيوان الوافد الجديد يحتاجان حظيرة بنوع 'عزل' موجودة فعلاً.",
+     "description_en": "Automatic isolation after birth and for newly arrived animals needs an actual barn of type 'isolation' to exist.",
      "rationale": "العزل يمنع انتقال العدوى من رأس جديد/مولود للقطيع السليم قبل ما تتأكد من سلامته — بدون حظيرة عزل فعلية، النظام ما يقدر يفعّل هذا الحاجز التلقائي.",
+     "rationale_en": "Isolation prevents infection spreading from a new/newborn head to the healthy herd before you confirm it's safe — without an actual isolation barn, the system can't enforce this safeguard automatically.",
      "link_endpoint": "core.barns_list", "sort_order": 2},
     {"code": "onb_team", "stage": "general", "frequency": "once", "role": "owner",
      "title": "أضف فريقك (دكتور/عمال) بحساباتهم",
+     "title_en": "Add your team (doctor/workers) with their accounts",
      "description": "كل عضو فريق يحتاج حساب مستقل بمسمى وظيفي مناسب — يقدر يسجّل ملاحظاته ومهامه بنفسه.",
+     "description_en": "Every team member needs their own account with the right job title — so they can log their own notes and tasks.",
      "rationale": "متابعة القطيع يومياً عمل ميداني، مو مكتبي — كل ملاحظة تسجّلها أنت بنفسك بعيد عن الحظيرة تكون متأخرة. الفريق هو من يلتقط الحالة لحظة حدوثها.",
+     "rationale_en": "Following the herd day to day is field work, not office work — any note you log yourself while away from the barn arrives late. Your team is who catches the situation the moment it happens.",
      "link_endpoint": "team.members_list", "sort_order": 3},
     {"code": "onb_assistant", "stage": "general", "frequency": "once", "role": "beginner",
      "title": "جرّب المساعد الذكي لأي سؤال تشغيلي عام",
+     "title_en": "Try the AI assistant for any general operational question",
      "description": "يجاوب على أسئلة عامة (تحصينات، عزل...) لكنه مساعد قرار مو طبيب — القرار الطبي النهائي يبقى للطبيب دائماً.",
+     "description_en": "It answers general questions (vaccinations, isolation...) but it's a decision-support assistant, not a doctor — the final medical decision always stays with the vet.",
      "rationale": "بداية التربية فيها أسئلة كثيرة بسيطة (كيف يشتغل العزل بالنظام، وش معنى فترة السحب...) — أسرع تحصل جوابها من المساعد بدل ما توقف شغلك وتسأل أحد.",
+     "rationale_en": "Starting out in farming raises many simple questions (how does isolation work in the system, what does withdrawal period mean...) — you'll get an answer faster from the assistant than by stopping your work to ask someone.",
      "link_endpoint": "assistant.chat", "sort_order": 4},
     {"code": "onb_vet_relationship", "stage": "general", "frequency": "once", "role": "beginner",
      "title": "تأكد إن عندك طبيب بيطري تقدر توصله وقت الحاجة",
+     "title_en": "Make sure you have a vet you can reach when needed",
      "description": "النظام ينظّم بياناتك ويذكّرك بالمواعيد — لكنه ما يشخّص ولا يعالج. أضف بيانات طبيبك بشاشة 'دليل الأطباء'.",
+     "description_en": "The system organizes your data and reminds you of due dates — but it doesn't diagnose or treat. Add your vet's details in the 'Vet directory' screen.",
      "rationale": "أي حالة طارئة حقيقية (سقوط مفاجئ، إسهال مدمّى) تحتاج قرار طبيب بيطري حقيقي خلال دقائق — نظام إدارة مهما كان ذكياً ما يقدر يشخّص أو يعالج، وتأخير هذا القرار لحين تدوّر طبيب هو الخطر الحقيقي.",
+     "rationale_en": "Any real emergency (sudden collapse, bloody diarrhea) needs a real vet's decision within minutes — no matter how smart a management system is, it can't diagnose or treat, and delaying that decision until you go find a vet is the real danger.",
      "sort_order": 5},
 
     # يومي عام — للجميع، يظهر كل يوم
     {"code": "daily_water_feed", "stage": "general", "frequency": "daily", "role": "worker",
      "title": "تأكد من نظافة الماء وتوفر العلف بكل الحظائر",
+     "title_en": "Check water cleanliness and feed availability in every barn",
      "rationale": "الماء الملوّث أو نفاد العلف من أكثر أسباب انتشار المرض وتراجع الوزن شيوعاً — وأسهلها منعاً لو فُحصت يومياً بدل ما تُكتشف بعد ظهور أعراض.",
+     "rationale_en": "Contaminated water or running out of feed are among the most common causes of disease spread and weight loss — and among the easiest to prevent if checked daily instead of discovered after symptoms appear.",
      "sort_order": 10},
     {"code": "daily_visual_check", "stage": "general", "frequency": "daily", "role": "worker",
      "title": "فحص بصري سريع للقطيع: شهية، حركة، تنفس، عرج",
+     "title_en": "Quick visual check of the herd: appetite, movement, breathing, limping",
      "rationale": "أغلب الأمراض تبدأ بعلامات خفيفة (تراجع شهية، تباطؤ حركة) قبل ما تتفاقم — اكتشافها بيومها الأول يعني علاج أسرع وأرخص وأقل خطراً من انتظار أعراض واضحة.",
+     "rationale_en": "Most diseases start with mild signs (reduced appetite, slower movement) before worsening — catching them on day one means faster, cheaper, and safer treatment than waiting for obvious symptoms.",
      "sort_order": 11},
 
     # تجهيز — عام لكل مزرعة
     {"code": "prep_isolation_ready", "stage": "prep", "frequency": "weekly", "role": "owner",
      "title": "تأكد إن حظيرة العزل جاهزة ونظيفة",
+     "title_en": "Make sure the isolation barn is ready and clean",
      "rationale": "حظيرة عزل غير جاهزة وقت الحاجة الفعلية (ولادة مفاجئة، حيوان مريض) تعني تأخير قرار عزل حرج — التجهيز المسبق يفرغك من هذا الضغط وقت الحدث نفسه.",
+     "rationale_en": "An isolation barn that isn't ready when actually needed (a sudden birth, a sick animal) means delaying a critical isolation decision — preparing it in advance frees you from that pressure when the event actually happens.",
      "sort_order": 20},
 
     # شياع — لو فيه رؤوس جاهزة للتقريع
     {"code": "estrus_ready_to_mate", "stage": "estrus", "frequency": "weekly", "role": "doctor",
      "title": "راجع قائمة 'جاهزة للتقريع' وخطّط لعملية التقريع",
+     "title_en": "Review the 'ready to mate' list and plan the mating",
      "rationale": "تأخير تقريع أنثى جاهزة يمدّد فترة عدم الإنتاج بدون داعٍ — النظام يحدد الجاهزية تلقائياً من العمر وفترة الراحة، لكن قرار التوقيت والفحل المناسب يبقى تقديرك.",
+     "rationale_en": "Delaying mating a ready female needlessly extends her non-productive period — the system determines readiness automatically from age and rest period, but the timing and choice of sire remains your judgment.",
      "link_endpoint": "core.animals_list", "sort_order": 30},
 
     # حمل
     {"code": "pregnancy_feed_check", "stage": "pregnancy", "frequency": "weekly", "role": "worker",
      "title": "تأكد من تطبيق خطة علف الحوامل بالشهور الأخيرة",
+     "title_en": "Make sure the late-pregnancy feed plan is being followed",
      "rationale": "احتياج الأم الغذائي يرتفع بوضوح بالثلث الأخير من الحمل (نمو الجنين السريع) — نقص التغذية بهذي الفترة يزيد خطر ولادة ضعيفة أو مولود منخفض الوزن.",
+     "rationale_en": "The mother's nutritional needs rise sharply in the last third of pregnancy (rapid fetal growth) — under-feeding during this period increases the risk of a weak birth or a low-weight newborn.",
      "sort_order": 40},
     {"code": "pregnancy_sonar_followup", "stage": "pregnancy", "frequency": "weekly", "role": "doctor",
      "title": "راجع الحمول غير المؤكَّدة وحدّد موعد فحص سونار",
+     "title_en": "Review unconfirmed pregnancies and schedule a sonar exam",
      "rationale": "حمل غير مؤكَّد يبقى تخميناً — يأثّر على قرارات العلف والحظيرة وتوقيت الولادة المتوقع. التأكيد المبكر بالسونار يقلّل المفاجآت.",
+     "rationale_en": "An unconfirmed pregnancy stays a guess — it affects feed and barn decisions and the expected birth timing. Early sonar confirmation reduces surprises.",
      "link_endpoint": "repro.pregnancies_list", "sort_order": 41},
 
     # ولادة — عزل نشط حالياً
     {"code": "birth_isolation_checks", "stage": "birth", "frequency": "daily", "role": "worker",
      "title": "أنجز مهام فحص العزل اليومي للمواليد الجدد",
+     "title_en": "Complete the daily isolation check tasks for new births",
      "rationale": "أول أيام حياة المولود هي الأخطر — جهازه المناعي ضعيف والقابلية للجفاف أو العدوى عالية. الفحص اليومي المنتظم يلتقط أي تدهور بسرعة كافية للتدخل.",
+     "rationale_en": "A newborn's first days are the most dangerous — its immune system is weak and susceptibility to dehydration or infection is high. Regular daily checks catch any decline fast enough to intervene.",
      "link_endpoint": "team.tasks_list", "sort_order": 50},
     {"code": "birth_doctor_review", "stage": "birth", "frequency": "daily", "role": "doctor",
      "title": "راجع فحص الطبيب الإلزامي خلال أول 48 ساعة لكل مولود جديد",
+     "title_en": "Complete the mandatory doctor exam within the first 48 hours for every new birth",
      "rationale": "أول 48 ساعة تحدد نجاح الرضاعة الأولى (اللبأ) والتأكد من عدم وجود عيوب خلقية — تأخير هذا الفحص يقلّل فرصة التدخل المبكر لو فيه مشكلة.",
+     "rationale_en": "The first 48 hours determine whether the first (colostrum) feeding succeeds and whether there are any birth defects — delaying this exam reduces the chance of early intervention if there's a problem.",
      "sort_order": 51},
 
     # تسمين
     {"code": "fattening_weight_track", "stage": "fattening", "frequency": "weekly", "role": "worker",
      "title": "زن رؤوس التسمين بانتظام لمتابعة معدل الزيادة",
+     "title_en": "Weigh fattening heads regularly to track their growth rate",
      "rationale": "معدل زيادة الوزن هو المؤشر الوحيد الموضوعي لنجاح خطة التسمين — بدون وزن منتظم تعرف إن فيه مشكلة (تغذية أو صحية) بعد فوات وقت طويل من الخسارة الاقتصادية.",
+     "rationale_en": "The weight gain rate is the only objective indicator of a fattening plan's success — without regular weighing, you'll only discover a problem (feed or health related) long after the economic loss has already happened.",
      "sort_order": 60},
 ]
 
@@ -530,8 +563,11 @@ def register_cli(app):
             item.frequency = entry["frequency"]
             item.target_role = entry["role"]
             item.title = entry["title"]
+            item.title_en = entry.get("title_en")
             item.description = entry.get("description")
+            item.description_en = entry.get("description_en")
             item.rationale = entry.get("rationale")
+            item.rationale_en = entry.get("rationale_en")
             item.link_endpoint = entry.get("link_endpoint")
             item.sort_order = entry["sort_order"]
             item.is_active = True

@@ -84,9 +84,20 @@ class Breed(db.Model):
         لاحقاً (زي "ماعز" هنا) بمجرّد إعادة تشغيل `flask seed` — بدون
         هذا التغيير، الحارس القديم (`count() > 0`) كان يوقف أي إضافة
         مستقبلية بمجرد وجود سلالة واحدة، حتى لو كانت غير هذي بالاسم."""
-        for n in ("نعيمي", "ماعز", "عام/غير محدد"):
-            if not cls.query.filter_by(name=n).first():
-                db.session.add(cls(name=n))
+        # بند إصلاح (فحص عميق — طلبك: "كلهم نفس المشكله ... حل مشكلة
+        # التعريب") — شاشة "إضافة حيوان" كانت تعرض هالثلاث سلالات
+        # الافتراضية عربي بحت لدكتور/صاحب حلال حسابه إنجليزي، رغم إن
+        # `display_label()` جاهزة أصلاً — بس ما فيه اسم إنجليزي مزروع
+        # لهم. نضيفه هنا فقط لهالثلاثة "معروفة" (نفس استثناء التوثيق
+        # أعلاه) — أي سلالة يضيفها المستخدم بنفسه تبقى بدون ترجمة
+        # افتراضية، ما دام النظام "ما يخترع" ترجمة إدخال حر.
+        defaults = {"نعيمي": "Naeimi", "ماعز": "Goat", "عام/غير محدد": "General / Unspecified"}
+        for n, n_en in defaults.items():
+            existing = cls.query.filter_by(name=n).first()
+            if not existing:
+                db.session.add(cls(name=n, name_en=n_en))
+            elif not existing.name_en:
+                existing.name_en = n_en
         db.session.commit()
 
     def display_label(self) -> str:

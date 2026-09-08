@@ -653,12 +653,15 @@ def report_types_new():
         if ReportType.query.filter_by(name=name).first():
             flash(_('"%(name)s" موجود بالقائمة أصلاً', name=name), "error")
             return redirect(url_for("team.report_types_new"))
-        db.session.add(ReportType(name=name))
+        # بند إصلاح (فحص عميق — "تأكد من باقي الشاشات") — كان ما يحفظ اسم
+        # إنجليزي إطلاقاً، نفس فلسفة usage_routes_new/colors_new أدناه.
+        name_en = (request.form.get("name_en") or "").strip() or None
+        db.session.add(ReportType(name=name, name_en=name_en))
         db.session.commit()
         flash(_("تمت إضافة نوع البلاغ"), "success")
         return redirect(url_for("team.reports_new"))
     return render_template("animal_option_form.html", title="إضافة نوع بلاغ جديد",
-                            back_endpoint="team.reports_new")
+                            back_endpoint="team.reports_new", show_name_en=True)
 
 
 @team_bp.route("/reports/<int:report_id>")

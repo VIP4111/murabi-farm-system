@@ -1177,6 +1177,7 @@ def animal_detail(animal_id):
 
     doctors = []
     checkup_item_presets = []
+    checkup_item_preset_labels = {}
     suggested_items = []
     suggested_reason = None
     # بند إصلاح (طلبك الصريح: "المفروض النظام ياخذ بيانات كاملة يحافظ
@@ -1192,6 +1193,7 @@ def animal_detail(animal_id):
                    .order_by(User.name).all())
         run_once_per_app("checkup_item_presets_seeded", CheckupItemPreset.seed_defaults)
         checkup_item_presets = CheckupItemPreset.active_texts()
+        checkup_item_preset_labels = CheckupItemPreset.label_map()
         suggested_raw = request.args.get("suggested", "")
         suggested_items = [i for i in suggested_raw.split("|") if i]
         suggested_reason = request.args.get("suggested_reason") or None
@@ -1207,6 +1209,7 @@ def animal_detail(animal_id):
         suggested_items=suggested_items, suggested_reason=suggested_reason,
         animal_alerts=animal_alerts,
         doctors=doctors, checkup_item_presets=checkup_item_presets,
+        checkup_item_preset_labels=checkup_item_preset_labels,
         **profile,
     )
 
@@ -1522,7 +1525,10 @@ def animal_workflow(animal_id):
         animal=animal, wf=wf, events=events,
         stages=cycle_engine.STAGES,
         active_stages=cycle_engine.ROUTE_STAGES[wf.route],
-        route_label=cycle_engine.ROUTE_LABELS[wf.route],
+        # بند إصلاح (فحص عميق — "كلهم نفس المشكله ... حل مشكلة التعريب")
+        # — كان يمر النص العربي الخام من `ROUTE_LABELS`/`STAGES` بدون
+        # أي ترجمة لصفحة "دورة الإنتاج" لدكتور حسابه إنجليزي.
+        route_label=_(cycle_engine.ROUTE_LABELS[wf.route]),
         missing_items=missing_items,
         missing_items_with_actions=missing_items_with_actions,
         sale_finance=sale_finance,
@@ -1748,8 +1754,9 @@ def checkup_items_new():
     if not text:
         flash(_("لازم تكتب نص بند الفحص"), "error")
         return redirect(url_for("core.checkup_items_list"))
+    text_en = (request.form.get("text_en") or "").strip() or None
     max_order = db.session.query(db.func.max(CheckupItemPreset.sort_order)).scalar() or 0
-    item = CheckupItemPreset(text=text, sort_order=max_order + 1)
+    item = CheckupItemPreset(text=text, text_en=text_en, sort_order=max_order + 1)
     db.session.add(item)
     try:
         db.session.commit()
@@ -1772,6 +1779,7 @@ def checkup_items_edit(item_id):
         flash(_("لازم تكتب نص بند الفحص"), "error")
         return redirect(url_for("core.checkup_items_list"))
     item.text = text
+    item.text_en = (request.form.get("text_en") or "").strip() or None
     item.is_active = bool(request.form.get("is_active"))
     try:
         db.session.commit()

@@ -144,12 +144,19 @@ def get_or_create_workflow(animal: Animal) -> ProductionWorkflow:
 
 # ---------- بوابات المراحل: (animal, workflow) -> (passed, missing_items) ----------
 
+# بند إصلاح (فحص عميق — طلبك: "كلهم نفس المشكله ... حل مشكلة التعريب")
+# — كل نصوص "المتطلبات الناقصة" هنا كانت عربي بحت بدون أي `_()`، رغم
+# استيراد `gettext as _` بأعلى الملف واستخدامه بدوال ثانية بنفس الملف
+# (`assert_exit_allowed` مثلاً). الدالة `evaluate()` تُعاد استدعاؤها من
+# جديد بكل زيارة لصفحة "دورة الإنتاج" (`animal_workflow` بـ core/routes)
+# — فتغليف كل نص هنا بـ`_()` آمن 100%: يُحسب من جديد بلغة كل مستخدم
+# وقت زيارته هو، بدون أي تجميد بلغة أول من فتح الصفحة.
 def _gate_source(animal, wf):
     missing = []
     if not animal.animal_no:
-        missing.append("رقم الحيوان")
+        missing.append(_("رقم الحيوان"))
     if not (animal.birth_date or animal.purchase_date):
-        missing.append("تاريخ الميلاد أو الشراء")
+        missing.append(_("تاريخ الميلاد أو الشراء"))
     return (not missing, missing)
 
 
@@ -162,13 +169,13 @@ def _gate_quarantine(animal, wf):
 
     missing = []
     if animal.weight is None:
-        missing.append("وزن مسجّل")
+        missing.append(_("وزن مسجّل"))
     if not _has_health_evidence(animal):
-        missing.append("فحص صحي أو زيارة بيطرية أو تطعيم")
+        missing.append(_("فحص صحي أو زيارة بيطرية أو تطعيم"))
     if animal.source in (AnimalSource.PURCHASE, AnimalSource.GIFT):
         entry = animal.purchase_date or animal.entry_date
         if not entry:
-            missing.append("تاريخ الدخول")
+            missing.append(_("تاريخ الدخول"))
         else:
             quarantine_days = FarmSettings.get().quarantine_days
             # بند إصلاح (بحث "منطق الأعمال") — نفس ملاحظة `scheduler.py`:
@@ -176,7 +183,8 @@ def _gate_quarantine(animal, wf):
             # ساعات كل ليلة عن توقيت السعودية الفعلي.
             days = (farm_today() - entry).days
             if days < quarantine_days:
-                missing.append(f"فترة حجر {quarantine_days} يوم من الدخول (باقي {quarantine_days - days} يوم)")
+                missing.append(_("فترة حجر %(total)s يوم من الدخول (باقي %(left)s يوم)",
+                                  total=quarantine_days, left=quarantine_days - days))
     return (not missing, missing)
 
 
@@ -186,35 +194,37 @@ def _gate_breeding_prep(animal, wf):
 
     missing = []
     if animal.weight is None:
-        missing.append("وزن مسجّل")
+        missing.append(_("وزن مسجّل"))
     if _open_diseases_count(animal) > 0:
-        missing.append("لا يوجد أمراض مفتوحة")
+        missing.append(_("لا يوجد أمراض مفتوحة"))
 
     age = _age_days(animal)
     if wf.route == "male_breeder":
         from app.models import VetVisit
         has_exam = VetVisit.query.filter_by(animal_id=animal.id).count() > 0
         if not has_exam and not (age is not None and age >= fs.male_fertility_exam_alt_age_days):
-            missing.append(f"فحص خصوبة/زيارة بيطرية أو عمر {fs.male_fertility_exam_alt_age_days} يوم فأكثر")
+            missing.append(_("فحص خصوبة/زيارة بيطرية أو عمر %(n)s يوم فأكثر",
+                              n=fs.male_fertility_exam_alt_age_days))
     else:
         if not _has_confirmed_mating(animal) and not (age is not None and age >= fs.min_breeding_age_days):
-            missing.append(f"تقريع مسجّل (عادي أو ضمن برنامج) أو عمر {fs.min_breeding_age_days} يوم فأكثر")
+            missing.append(_("تقريع مسجّل (عادي أو ضمن برنامج) أو عمر %(n)s يوم فأكثر",
+                              n=fs.min_breeding_age_days))
     return (not missing, missing)
 
 
 def _gate_pregnancy_diagnosis(animal, wf):
     missing = []
     if not _has_confirmed_mating(animal):
-        missing.append("تقريع مسجّل")
+        missing.append(_("تقريع مسجّل"))
     if not _has_pregnancy_diagnosis(animal):
-        missing.append("تشخيص حمل أو فحص سونار")
+        missing.append(_("تشخيص حمل أو فحص سونار"))
     return (not missing, missing)
 
 
 def _gate_market_plan(animal, wf):
     missing = []
     if not wf.target_sale_date and not wf.estimated_value:
-        missing.append("تاريخ بيع مستهدف أو قيمة تقديرية (تُملأ بصفحة دورة الإنتاج)")
+        missing.append(_("تاريخ بيع مستهدف أو قيمة تقديرية (تُملأ بصفحة دورة الإنتاج)"))
     return (not missing, missing)
 
 
@@ -222,12 +232,12 @@ def _gate_pregnancy_management(animal, wf):
     from app.models import VetVisit, SonarResult
     missing = []
     if not _is_confirmed_pregnant(animal):
-        missing.append("تأكيد حمل إيجابي (تشخيص أو سونار)")
+        missing.append(_("تأكيد حمل إيجابي (تشخيص أو سونار)"))
     if _open_diseases_count(animal) > 0:
-        missing.append("لا يوجد أمراض مفتوحة")
+        missing.append(_("لا يوجد أمراض مفتوحة"))
     followups = VetVisit.query.filter_by(animal_id=animal.id).count() + SonarResult.query.filter_by(ewe_id=animal.id).count()
     if followups < 1:
-        missing.append("متابعة واحدة على الأقل (زيارة بيطرية أو سونار)")
+        missing.append(_("متابعة واحدة على الأقل (زيارة بيطرية أو سونار)"))
     return (not missing, missing)
 
 
@@ -239,20 +249,20 @@ def _gate_birth_care(animal, wf):
     missing = []
     if wf.route == "newborn":
         if animal.mother_id is None:
-            missing.append("مرتبط بأم")
+            missing.append(_("مرتبط بأم"))
         if animal.birth_date is None:
-            missing.append("تاريخ ولادة")
+            missing.append(_("تاريخ ولادة"))
         if animal.weight is None:
-            missing.append("وزن عند الولادة")
+            missing.append(_("وزن عند الولادة"))
         if not VetVisit.query.filter_by(animal_id=animal.id).count():
-            missing.append("فحص دكتور خلال فترة العزل")
+            missing.append(_("فحص دكتور خلال فترة العزل"))
         if not Vaccination.query.filter_by(animal_id=animal.id).count():
-            missing.append("تحصين المولود")
+            missing.append(_("تحصين المولود"))
     else:
         newest_child = (Animal.query.filter_by(mother_id=animal.id)
                         .order_by(Animal.birth_date.desc()).first())
         if not newest_child:
-            missing.append("تسجيل ولادة مرتبطة بهذه الأنثى")
+            missing.append(_("تسجيل ولادة مرتبطة بهذه الأنثى"))
         else:
             since_birth = newest_child.birth_date
             has_postpartum_vaccination = Vaccination.query.filter(
@@ -260,7 +270,7 @@ def _gate_birth_care(animal, wf):
                 Vaccination.date >= since_birth,
             ).count() > 0
             if not has_postpartum_vaccination:
-                missing.append("تحصين الأم بعد الولادة")
+                missing.append(_("تحصين الأم بعد الولادة"))
     return (not missing, missing)
 
 
@@ -272,14 +282,14 @@ def _gate_lactation_weaning(animal, wf):
     age = _age_days(animal)
     if wf.route == "fattening":
         if _open_diseases_count(animal) > 0:
-            missing.append("لا يوجد أمراض مفتوحة")
+            missing.append(_("لا يوجد أمراض مفتوحة"))
         if not wf.target_sale_date:
-            missing.append("تاريخ بيع مستهدف")
+            missing.append(_("تاريخ بيع مستهدف"))
     else:
         if age is None or age < fs.weaning_min_age_days:
-            missing.append(f"عمر {fs.weaning_min_age_days} يوم فأكثر")
+            missing.append(_("عمر %(n)s يوم فأكثر", n=fs.weaning_min_age_days))
         if not wf.weaning_date and not (age is not None and age >= fs.weaning_alt_age_days):
-            missing.append(f"تاريخ فطام أو عمر {fs.weaning_alt_age_days} يوم فأكثر")
+            missing.append(_("تاريخ فطام أو عمر %(n)s يوم فأكثر", n=fs.weaning_alt_age_days))
     return (not missing, missing)
 
 
@@ -298,16 +308,16 @@ def _gate_evaluation_sorting(animal, wf):
     missing = []
     score = _production_score(animal)
     if score < 60:
-        missing.append(f"التقييم الإنتاجي منخفض ({score}/100) — راجع الصحة والوزن")
+        missing.append(_("التقييم الإنتاجي منخفض (%(score)s/100) — راجع الصحة والوزن", score=score))
     if _open_diseases_count(animal) > 0:
-        missing.append("لا يوجد أمراض مفتوحة")
+        missing.append(_("لا يوجد أمراض مفتوحة"))
     return (not missing, missing)
 
 
 def _gate_destiny(animal, wf):
     if wf.status == "complete":
         return (True, [])
-    return (False, ["بانتظار قرار خروج: بيع / نفوق / أرشفة"])
+    return (False, [_("بانتظار قرار خروج: بيع / نفوق / أرشفة")])
 
 
 STAGE_GATES = {

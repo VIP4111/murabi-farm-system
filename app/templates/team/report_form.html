@@ -11,7 +11,7 @@
     <label>{{ _('نوع البلاغ') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="report_type" id="reportTypeSelect" style="flex:1;">
-        {% for rt in report_types %}<option value="{{ rt.name }}">{{ _(rt.name) }}</option>{% endfor %}
+        {% for rt in report_types %}<option value="{{ rt.name }}">{{ rt.display_label() }}</option>{% endfor %}
       </select>
       <a class="btn light" href="{{ url_for('team.report_types_new') }}" title="{{ _('إضافة نوع بلاغ جديد') }}" target="_blank">+ {{ _('إضافة') }}</a>
     </div>

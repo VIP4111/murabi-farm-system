@@ -24,8 +24,8 @@
     <h3 style="font-size:15px;">{{ _('خطوات أولى موصى بها') }}</h3>
     {% for s in steps %}
     <div style="padding:8px 0; border-top:1px solid var(--line);">
-      <b>{{ s.title }}</b>
-      {% if s.description %}<p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ s.description }}</p>{% endif %}
+      <b>{{ s.display_title() }}</b>
+      {% if s.description %}<p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ s.display_description() }}</p>{% endif %}
     </div>
     {% endfor %}
   </div>

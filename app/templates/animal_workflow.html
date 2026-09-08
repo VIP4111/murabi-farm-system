@@ -12,7 +12,7 @@
   <div class="table-scroll">
 <table>
     <tr><td>{{ _('المسار') }}</td><td>{{ route_label }}</td></tr>
-    <tr><td>{{ _('المرحلة الحالية') }}</td><td><strong>{{ wf.stage_name }}</strong> ({{ _('رقم %(n)s من 10', n=wf.current_stage) }})</td></tr>
+    <tr><td>{{ _('المرحلة الحالية') }}</td><td><strong>{{ _(wf.stage_name) }}</strong> ({{ _('رقم %(n)s من 10', n=wf.current_stage) }})</td></tr>
     <tr><td>{{ _('قرار المصير') }} {{ tip(_('توجّه هذا الرأس النهائي بدورة الإنتاج (تربية، تسمين، بيع...) — يُحدَّد عادة بمرحلة "تخطيط السوق" ويوجّه أي متطلبات تلي تلك المرحلة.')) }}</td><td>{{ wf.destiny_decision or '-' }}</td></tr>
     {% if wf.out_of_order_count %}<tr><td>{{ _('أحداث بترتيب غير منتظم') }}</td><td>{{ wf.out_of_order_count }}</td></tr>{% endif %}
   </table>
@@ -37,7 +37,7 @@
     {% if idx in active_stages %}
     <div class="workflow-stage {{ 'active' if idx == wf.current_stage else ('done' if idx < wf.current_stage else '') }}">
       <span style="font-size:11px; color:var(--muted);">{{ _('مرحلة %(n)s', n=idx) }}</span>
-      <b>{{ name }}</b>
+      <b>{{ _(name) }}</b>
       {% if idx < wf.current_stage %}<small>✅ {{ _('مكتملة') }}</small>
       {% elif idx == wf.current_stage %}<small style="color:var(--primary); font-weight:800;">◀ {{ _('الحالية') }}</small>
       {% else %}<small>{{ _('لاحقة') }}</small>{% endif %}
@@ -157,7 +157,7 @@
     <tr>
       <td>{{ e.event_date }}</td>
       <td>{{ e.event_type }}</td>
-      <td>{{ e.stage_name }}</td>
+      <td>{{ _(e.stage_name) if e.stage_name else '-' }}</td>
       <td>{{ e.cycle_status|ar_status }}</td>
       <td>{{ e.next_required_fix or '-' }}</td>
     </tr>

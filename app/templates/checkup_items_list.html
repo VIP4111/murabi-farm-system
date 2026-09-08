@@ -14,6 +14,10 @@
       <label>{{ _('بند فحص جديد') }}</label>
       <input name="text" placeholder="{{ _('مثال: فحص الأسنان') }}" required>
     </div>
+    <div style="flex:1 1 240px;">
+      <label>{{ _('الاسم بالإنجليزي (اختياري)') }}</label>
+      <input name="text_en" dir="ltr" placeholder="Example: Teeth check">
+    </div>
     <button class="btn" type="submit">+ {{ _('إضافة') }}</button>
   </form>
 </div>
@@ -24,6 +28,7 @@
     <form method="post" action="{{ url_for('core.checkup_items_edit', item_id=item.id) }}" style="display:flex; gap:8px; align-items:center; flex:1; min-width:260px;" data-offline>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input name="text" value="{{ item.text }}" style="flex:1; margin:0;">
+      <input name="text_en" value="{{ item.text_en or '' }}" dir="ltr" placeholder="English" style="flex:1; margin:0;">
       <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:normal; margin:0; white-space:nowrap;">
         <input type="checkbox" name="is_active" {% if item.is_active %}checked{% endif %}> {{ _('مفعَّل') }}
       </label>
