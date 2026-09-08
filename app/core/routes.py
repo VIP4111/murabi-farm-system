@@ -1670,6 +1670,48 @@ def barns_list():
     return render_template("barns_list.html", barns=barns)
 
 
+@core_bp.route("/barns/<int:barn_id>/delete", methods=["POST"])
+@login_required
+@require_permission("barns.manage")
+def barns_delete(barn_id):
+    """حذف حظيرة نهائياً — بطلبك الصريح: "زر حذف حظيرة... اذا كان يوجد
+    حيوانات داخل الحظيرة يطلع تنبيه نقل الحيوانات وخيارات انقل، بعد
+    اتمام النقل تستطيع الحذف". الحارس هنا صارم: أي رأس لسا مربوط
+    بـ`barn_id` هذي (بأي حالة، حتى النافق/المباع لو ما صُفِّر
+    `barn_id` عنه) يمنع الحذف قطعياً — يوجّه لشاشة النقل الجماعي مفلترة
+    على نفس الحظيرة (بند 132) بدل ما يوقف المستخدم بدون طريق واضح.
+    لو صفر رؤوس بس فيه سجلات تاريخية بجداول ثانية (خطط تغذية، مهام
+    قديمة، بلاغات...) تشير لنفس `barn_id`، الحذف يفشل بـIntegrityError
+    — نلتقطها ونعتذر بوضوح بدل خطأ خام يوقف الصفحة."""
+    barn = Barn.query.get_or_404(barn_id)
+    animals_count = Animal.query.filter_by(barn_id=barn.id).count()
+    if animals_count:
+        flash(_(
+            'فيه %(n)s رأس لسا مربوط بحظيرة "%(name)s" — انقلهم لحظيرة ثانية أولاً '
+            "قبل ما تقدر تحذفها.", n=animals_count, name=barn.display_name(),
+        ), "error")
+        return redirect(url_for("core.animals_bulk_home", barn_id=barn.id))
+
+    BarnFeedingSchedule.query.filter_by(barn_id=barn.id).delete()
+    barn_name = barn.display_name()
+    db.session.delete(barn)
+    try:
+        db.session.flush()
+    except IntegrityError:
+        db.session.rollback()
+        flash(_(
+            'ما قدرنا نحذف حظيرة "%(name)s" — عندها سجلات مرتبطة بتاريخها '
+            "(خطط تغذية، مهام، بلاغات سابقة...) ما تقدر تتحذف. تقدر تعدّل "
+            "اسمها بدل الحذف لو تبي تعيد استخدامها لغرض ثاني.", name=barn_name,
+        ), "error")
+        return redirect(url_for("core.barns_list"))
+    db.session.add(AuditLog(actor_user_id=current_user.id, action="barn.delete",
+                             entity_type="Barn", entity_id=barn_id, details=barn_name))
+    db.session.commit()
+    flash(_('تم حذف حظيرة "%(name)s"', name=barn_name), "success")
+    return redirect(url_for("core.barns_list"))
+
+
 def _save_feeding_schedule(barn_id: int) -> None:
     """مواعيد وجبات العلف لحظيرة (بند إضافي 131) — استبدال كامل بسيط،
     نفس فلسفة `_save_dose_rules` بملف `health/routes.py` بالضبط: يمسح كل

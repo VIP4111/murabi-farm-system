@@ -17,7 +17,16 @@
       <td>{{ b.capacity or '-' }}</td>
       <td>{{ b.responsible_worker.name if b.responsible_worker else '-' }}</td>
       <td>{{ b.animals|length }}</td>
-      <td>{% if current_user.has_permission('barns.manage') %}<a class="btn" href="{{ url_for('core.barns_edit', barn_id=b.id) }}">{{ _('تعديل') }}</a>{% endif %}</td>
+      <td>
+        {% if current_user.has_permission('barns.manage') %}
+        <a class="btn" href="{{ url_for('core.barns_edit', barn_id=b.id) }}">{{ _('تعديل') }}</a>
+        <form method="post" action="{{ url_for('core.barns_delete', barn_id=b.id) }}" style="display:inline;" data-offline
+              onsubmit="return confirm({{ _('تحذف حظيرة %(name)s نهائياً؟', name=b.display_name())|tojson }})">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn light" style="padding:6px 10px; font-size:12px;">🗑️ {{ _('حذف') }}</button>
+        </form>
+        {% endif %}
+      </td>
     </tr>
     {% else %}
     <tr><td colspan="7" style="color:#888;">{{ _('لا يوجد حظائر مسجّلة بعد.') }}</td></tr>
