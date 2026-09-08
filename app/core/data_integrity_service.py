@@ -6,7 +6,14 @@
 لو ما فيه مشكلة. الإصلاح يبقى فعل بشري واعٍ عبر شاشة السجل نفسه، مو
 هذي الأداة."""
 from datetime import date
+from flask_babel import gettext as _
 from app.models import Animal, VetVisit, Disease, Vaccination, Finance, Mating
+
+# بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — كل نصوص
+# "label" هنا كانت عربي بحت بدون `_()`، رغم إن `run_full_audit()`
+# يُعاد استدعاؤه من جديد بكل فتح لشاشة "فحص سلامة البيانات" — نفس
+# مبدأ إصلاح `cycle_engine.py` بالضبط (تُحسب من جديد بلغة كل مستخدم
+# وقت زيارته هو، بدون أي تجميد بلغة أول من فتح الشاشة).
 
 
 def _orphaned_animal_refs() -> list[dict]:
@@ -17,9 +24,9 @@ def _orphaned_animal_refs() -> list[dict]:
     valid_ids = {a.id for a in Animal.query.with_entities(Animal.id).all()}
 
     checks = [
-        (VetVisit, "زيارة بيطرية", "health.vet_visits_list"),
-        (Disease, "مرض", "health.diseases_list"),
-        (Vaccination, "تحصين", "health.vaccinations_list"),
+        (VetVisit, _("زيارة بيطرية"), "health.vet_visits_list"),
+        (Disease, _("مرض"), "health.diseases_list"),
+        (Vaccination, _("تحصين"), "health.vaccinations_list"),
     ]
     for model, label, endpoint in checks:
         orphans = [
@@ -28,7 +35,7 @@ def _orphaned_animal_refs() -> list[dict]:
         ]
         if orphans:
             issues.append({
-                "label": f"سجلات {label} يتيمة",
+                "label": _("سجلات %(label)s يتيمة", label=label),
                 "detail": f"{len(orphans)} سجل يشير لرأس غير موجود (معرّفات: {', '.join(str(o.id) for o in orphans[:10])}{'...' if len(orphans) > 10 else ''}).",
                 "link_endpoint": endpoint,
             })
@@ -39,7 +46,7 @@ def _orphaned_animal_refs() -> list[dict]:
     ]
     if orphan_matings:
         issues.append({
-            "label": "سجلات تقريع يتيمة",
+            "label": _("سجلات تقريع يتيمة"),
             "detail": f"{len(orphan_matings)} سجل تقريع يشير لأنثى/فحل غير موجود.",
             "link_endpoint": "repro.matings_list",
         })
@@ -50,7 +57,7 @@ def _orphaned_animal_refs() -> list[dict]:
     ]
     if orphan_finance:
         issues.append({
-            "label": "حركات مالية يتيمة",
+            "label": _("حركات مالية يتيمة"),
             "detail": f"{len(orphan_finance)} حركة مالية مرتبطة برأس غير موجود.",
             "link_endpoint": "finance.finance_list",
         })
@@ -67,7 +74,7 @@ def _illogical_birth_dates() -> list[dict]:
     future_births = Animal.query.filter(Animal.birth_date.isnot(None), Animal.birth_date > today).all()
     if future_births:
         issues.append({
-            "label": "تواريخ ولادة بالمستقبل",
+            "label": _("تواريخ ولادة بالمستقبل"),
             "detail": f"{len(future_births)} رأس: " + "، ".join(a.animal_no for a in future_births[:10]),
             "link_endpoint": "core.animals_list",
         })
@@ -82,7 +89,7 @@ def _illogical_birth_dates() -> list[dict]:
             younger_than_parent.append(a)
     if younger_than_parent:
         issues.append({
-            "label": "تاريخ ولادة أصغر من (أو يساوي) تاريخ ولادة أحد الأبوين",
+            "label": _("تاريخ ولادة أصغر من (أو يساوي) تاريخ ولادة أحد الأبوين"),
             "detail": f"{len(younger_than_parent)} رأس: " + "، ".join(a.animal_no for a in younger_than_parent[:10]),
             "link_endpoint": "core.animals_list",
         })
@@ -100,7 +107,7 @@ def _finance_missing_category() -> list[dict]:
     ).all()
     if no_category:
         issues.append({
-            "label": "مصاريف بدون فئة",
+            "label": _("مصاريف بدون فئة"),
             "detail": f"{len(no_category)} حركة مصروف بدون فئة مسجَّلة — يأثّر على دقة تقارير التكلفة المصنَّفة.",
             "link_endpoint": "finance.finance_list",
         })
@@ -111,7 +118,7 @@ def _finance_missing_category() -> list[dict]:
     ).all()
     if no_description:
         issues.append({
-            "label": "حركات مالية بدون صنف ولا وصف",
+            "label": _("حركات مالية بدون صنف ولا وصف"),
             "detail": f"{len(no_description)} حركة بدون أي تفصيل — يصعّب مراجعتها لاحقاً.",
             "link_endpoint": "finance.finance_list",
         })

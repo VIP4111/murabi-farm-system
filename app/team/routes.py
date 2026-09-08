@@ -684,7 +684,9 @@ def report_detail(report_id):
                  .order_by(Role.id, User.name).all())
     executors_by_role = {}
     for e in executors:
-        executors_by_role.setdefault(e.role.display_name, []).append(e)
+        # بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — نفس
+        # ثغرة `_role_tabs()`: `display_name` الخام بدل `display_label()`.
+        executors_by_role.setdefault(e.role.display_label(), []).append(e)
     return render_template(
         "team/report_detail.html",
         r=report, can_manage=can_manage, is_my_report=is_my_report,
@@ -838,7 +840,11 @@ def _role_tabs() -> list[tuple[str, str]]:
     الإعدادات يظهر هنا تلقائياً بدون أي تعديل كود. "المالك" مستثنى
     عمداً (نفس السلوك القديم — تكليف مهمة لدور المالك نادر الفائدة)."""
     roles = Role.query.filter(Role.name != "owner").order_by(Role.name).all()
-    return [("all", _l("الكل"))] + [(r.name, r.display_name) for r in roles]
+    # بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق"، صورة حية:
+    # تبويبات الدور بشاشة "مهام مقترحة بانتظار الاعتماد" عربي بحت
+    # لدكتور حسابه إنجليزي) — كان يستخدم `r.display_name` الخام بدل
+    # `r.display_label()` الجاهزة (نفس الآلية المبنية أصلاً بـ`Role`).
+    return [("all", _l("الكل"))] + [(r.name, r.display_label()) for r in roles]
 
 # قائمة مختارة لفورم "توزيع مهمة" اليدوي (بند إضافي 69) — مو كل 26 قيمة
 # فعلية لـ`task_type` (أغلبها تتولّد آلياً من محركات النظام نفسها، مو
