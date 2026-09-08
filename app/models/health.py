@@ -42,8 +42,17 @@ class Symptom(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(160), unique=True, nullable=False)
+    # بند إصلاح (طلبك الصريح، صورة حية: دكتور حسابه إنجليزي شاف قائمة
+    # الأعراض بالتشخيص التفاعلي عربي بحت) — اسم إنجليزي اختياري، نفس
+    # نمط `DiseaseType.name_en`/`Breed.name_en` بالضبط أعلاه بهذا الملف.
+    name_en = db.Column(db.String(160), nullable=True)
     is_primary = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=_now)
+
+    def display_label(self) -> str:
+        if self.name_en and str(get_locale()) != "ar":
+            return self.name_en
+        return self.name
 
 
 class EmergencySymptom(db.Model):

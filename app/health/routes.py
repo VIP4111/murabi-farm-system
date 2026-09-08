@@ -507,7 +507,10 @@ def symptoms_new():
         if Symptom.query.filter_by(name=name).first():
             flash(_('"%(name)s" موجود بالقائمة أصلاً', name=name), "error")
             return redirect(url_for("health.symptoms_new"))
-        db.session.add(Symptom(name=name, is_primary=bool(request.form.get("is_primary"))))
+        db.session.add(Symptom(
+            name=name, name_en=(request.form.get("name_en") or "").strip() or None,
+            is_primary=bool(request.form.get("is_primary")),
+        ))
         db.session.commit()
         flash(_("تمت إضافة العرض"), "success")
         return redirect(url_for("health.symptoms_list"))
@@ -916,7 +919,14 @@ def diagnose_result():
     temperature = request.form.get("temperature", type=float)
     results = health_service.score_diagnoses(symptom_ids=symptom_ids, temperature=temperature)
     animal = Animal.query.get(int(request.form["animal_id"])) if request.form.get("animal_id") else None
-    matched_names = [s.name for s in Symptom.query.filter(Symptom.id.in_(symptom_ids)).all()] if symptom_ids else []
+    matched_symptoms = Symptom.query.filter(Symptom.id.in_(symptom_ids)).all() if symptom_ids else []
+    # بند إصلاح (طلبك الصريح، صورة حية) — `matched_names` (الاسم العربي
+    # الخام) يبقى كما هو لأي مطابقة منطقية داخلية (`check_emergency_
+    # symptoms` تقارنه بأسماء عربية ثابتة بـ`health_service.py`، تغييره
+    # يكسر الربط) — `matched_labels` نسخة منفصلة للعرض بس، تحترم لغة
+    # المستخدم عبر `display_label()`.
+    matched_names = [s.name for s in matched_symptoms]
+    matched_labels = [s.display_label() for s in matched_symptoms]
 
     # بروتوكول الطوارئ والأعراض الحادة (بند إضافي 51) — يفحص أعراض
     # الطوارئ بمعزل عن ترتيب الاحتمالات العادي، ويعزل فوراً لو الحيوان
@@ -939,7 +949,7 @@ def diagnose_result():
 
     return render_template(
         "health/diagnose_result.html",
-        results=results, animal=animal, entered_symptoms=matched_names,
+        results=results, animal=animal, entered_symptoms=matched_labels,
         free_text=request.form.get("free_text_symptoms"),
         today=date.today().isoformat(),
         emergency=emergency,

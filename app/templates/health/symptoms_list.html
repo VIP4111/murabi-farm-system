@@ -20,7 +20,7 @@
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('النوع') }} {{ tip(_('"رئيسي" = يظهر كخيار أول بالمساعد التشخيصي (نقطة بداية الشجرة). "متابعة" = يظهر بس كسؤال تالٍ حسب إجاباتك السابقة.')) }}</th></tr>
     {% for s in symptoms %}
     <tr>
-      <td>{{ s.name }}</td>
+      <td>{{ s.name }}{% if s.name_en %} <span style="color:var(--muted); font-size:11.5px;" dir="ltr">({{ s.name_en }})</span>{% endif %}</td>
       <td>{% if s.is_primary %}<span class="badge on">{{ _('رئيسي') }}</span>{% else %}<span class="badge">{{ _('متابعة') }}</span>{% endif %}</td>
     </tr>
     {% else %}

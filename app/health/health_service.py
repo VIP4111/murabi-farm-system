@@ -623,8 +623,8 @@ def score_diagnoses(*, symptom_ids: list[int], temperature: float | None = None)
             "disease_type": DiseaseType.query.get(disease_type_id),
             "score": raw_score,
             "match_percent": match_percent,
-            "matched_symptoms": [l.symptom.name for l in matched],
-            "missing_required_symptoms": [l.symptom.name for l in missing_required],
+            "matched_symptoms": [l.symptom.display_label() for l in matched],
+            "missing_required_symptoms": [l.symptom.display_label() for l in missing_required],
             "context_boosted": context_multiplier > 1.0,
         })
     results.sort(key=lambda r: (-r["match_percent"], -r["score"]))

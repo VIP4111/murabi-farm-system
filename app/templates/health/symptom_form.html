@@ -6,6 +6,9 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('اسم العرض') }}</label>
     <input name="name" required autofocus>
+    <label>{{ _('الاسم بالإنجليزي (اختياري)') }}</label>
+    <input name="name_en" dir="ltr">
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('يظهر بدل الاسم العربي فقط لمستخدم لغته غير عربية — لو فاضي، يبقى الاسم العربي يظهر للجميع كما هو.') }}</p>
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
       <input type="checkbox" name="is_primary" value="1" style="width:auto; margin:0;">
       {{ _('عرض رئيسي (تبدأ منه شجرة التشخيص، مثل "حرارة"/"إسهال")') }}

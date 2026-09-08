@@ -29,7 +29,7 @@
     <label>{{ _('العرض الرئيسي') }}</label>
     <select name="primary" required>
       <option value="">{{ _('اختر عرضاً رئيسياً...') }}</option>
-      {% for s in primary_symptoms %}<option value="{{ s.id }}" {{ 'selected' if selected_primary_id == s.id }}>{{ s.name }}</option>{% endfor %}
+      {% for s in primary_symptoms %}<option value="{{ s.id }}" {{ 'selected' if selected_primary_id == s.id }}>{{ s.display_label() }}</option>{% endfor %}
     </select>
     <button class="btn" type="submit">{{ _('التالي — عرض الأسئلة المتابعة') }}</button>
   </form>
@@ -49,7 +49,7 @@
     {% for s in secondary_symptoms %}
     <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
       <input type="checkbox" name="symptom_ids" value="{{ s.id }}" style="width:auto; margin:0;">
-      {{ s.name }}
+      {{ s.display_label() }}
     </label>
     {% endfor %}
     <label>{{ _('أعراض إضافية بالكتابة الحرة (اختياري — تُسجَّل كملاحظة، ما تدخل بحساب الترتيب)') }}</label>
