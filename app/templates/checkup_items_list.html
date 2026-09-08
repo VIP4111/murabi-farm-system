@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ _('بنود الفحص') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">🩺 {{ _('بنود الفحص') }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('القائمة اللي تظهر بشاشة "طلب فحص خاص فوري" ويستخدمها النظام لتوليد الفحوصات الدورية التلقائية — أضف، عدّل، أو احذف أي بند حسب حاجة مزرعتك.') }}</p>
+</div>
+
+<div class="card">
+  <form method="post" action="{{ url_for('core.checkup_items_new') }}" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div style="flex:1 1 240px;">
+      <label>{{ _('بند فحص جديد') }}</label>
+      <input name="text" placeholder="{{ _('مثال: فحص الأسنان') }}" required>
+    </div>
+    <button class="btn" type="submit">+ {{ _('إضافة') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  {% for item in items %}
+  <div style="display:flex; gap:8px; align-items:center; padding:8px 0; border-top:1px solid var(--line); flex-wrap:wrap;">
+    <form method="post" action="{{ url_for('core.checkup_items_edit', item_id=item.id) }}" style="display:flex; gap:8px; align-items:center; flex:1; min-width:260px;" data-offline>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input name="text" value="{{ item.text }}" style="flex:1; margin:0;">
+      <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:normal; margin:0; white-space:nowrap;">
+        <input type="checkbox" name="is_active" {% if item.is_active %}checked{% endif %}> {{ _('مفعَّل') }}
+      </label>
+      <button class="btn light" type="submit" style="padding:6px 10px; font-size:12px;">{{ _('حفظ') }}</button>
+    </form>
+    <form method="post" action="{{ url_for('core.checkup_items_delete', item_id=item.id) }}" data-offline
+          onsubmit="return confirm({{ _('تحذف بند %(text)s نهائياً؟', text=item.text)|tojson }})">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="btn light" style="padding:6px 10px; font-size:12px;">🗑️ {{ _('حذف') }}</button>
+    </form>
+  </div>
+  {% else %}
+  <p style="color:var(--muted);">{{ _('ما فيه بنود فحص مسجَّلة بعد.') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

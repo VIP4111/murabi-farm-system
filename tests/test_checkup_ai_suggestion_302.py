@@ -6,11 +6,15 @@ from unittest.mock import patch, MagicMock
 
 from app.extensions import db
 from app.assistant import llm_bridge
-from app.team import task_service
+from app.models import CheckupItemPreset
 from factories import make_animal
 
 
-PRESETS = task_service.ANIMAL_CHECKUP_ITEM_PRESETS
+# نفس بنود `CheckupItemPreset._DEFAULTS` بالضبط — لا نزرعها بقاعدة
+# البيانات هنا عمداً (استيراد الملف يصير خارج app_context، قبل ما
+# تُبنى قاعدة اختبار مؤقتة أصلاً)؛ الاختبارات اللي فعلاً تحتاج القائمة
+# مزروعة بقاعدة البيانات (شاشة الفحص الحية) تزرعها بنفسها داخل الدالة.
+PRESETS = list(CheckupItemPreset._DEFAULTS)
 
 
 def test_suggest_returns_none_without_gemini_key(app, monkeypatch):

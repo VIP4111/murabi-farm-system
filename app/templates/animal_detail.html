@@ -65,16 +65,16 @@
 </div>
 {% endif %}
 
-{% if current_user.has_permission('tasks.assign_any') %}
+{% if current_user.role.name == 'owner' %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <h3 style="font-size:15px; margin:0;">📋 {{ _('طلب فحص شامل لهذا الرأس') }}</h3>
+    <h3 style="font-size:15px; margin:0;">📋 {{ _('طلب فحص خاص فوري لهذا الرأس') }}</h3>
     <form method="post" action="{{ url_for('core.animal_checkup_suggest', animal_id=animal.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit" class="btn light" style="padding:7px 12px; font-size:12.5px;">🤖 {{ _('اقترح لي بنود الفحص') }}</button>
     </form>
   </div>
-  <p style="color:var(--muted); font-size:12.5px; margin:6px 0 10px;">{{ _('اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها بملاحظة هو تقريره. أو اضغط "اقترح لي" ليحلّل الذكاء الاصطناعي بيانات هذا الرأس ويحدّد البنود المناسبة تلقائياً — تراجعها وتعدّلها قبل التوزيع.') }}</p>
+  <p style="color:var(--muted); font-size:12.5px; margin:6px 0 10px;">{{ _('الفحوصات الروتينية تتولّد تلقائياً بدون أي طلب منك (رأس جديد، مرض مفتوح، أو رأس ما له فحص من مدة). هذي الشاشة لطلب استثنائي فوري بس — اختر البنود، أو اضغط "اقترح لي" ليحلّل الذكاء الاصطناعي بيانات هذا الرأس ويحدّد البنود المناسبة تلقائياً.') }}</p>
   {% if suggested_items %}
   <div class="badge on" style="display:block; padding:8px 12px; margin-bottom:10px;">
     🤖 {{ _('اقتراح الذكاء الاصطناعي محدَّد أدناه') }}{% if suggested_reason %} — {{ suggested_reason }}{% endif %}
@@ -82,10 +82,19 @@
   {% endif %}
   <form method="post" action="{{ url_for('core.animal_checkup_request', animal_id=animal.id) }}" style="display:grid; gap:10px;">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <div style="display:flex; flex-direction:column; gap:6px;">
+    {# بند إصلاح (طلبك الصريح، صورة حية: "هل هذا ترتيب أو تشتت؟") — كانت
+       كل بند فحص `<label>` مستقل بلا حدود ولا خلفية، والمربع والنص
+       يعتمدان على `gap` بس بدون أي احتواء بصري يربطهم كوحدة وحدة —
+       بمقاسات شاشة/تكبير معيّنة يبين فيها فراغ كبير بينهم يوهم إنهم
+       عناصر منفصلة. صار كل بند "شريحة" مستقلة بحدود وخلفية وبطانة
+       داخلية موحّدة (نفس مبدأ `.quick a` بأعلى هذا الملف الأساسي) —
+       المربع والنص يبانون وحدة واحدة بصرياً بغض النظر عن حجم الشاشة،
+       بشبكة عمودين بالشاشات الأوسع بدل عمود واحد طويل. #}
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:8px;">
       {% for item in checkup_item_presets %}
-      <label style="display:flex; gap:8px; align-items:center; font-size:13.5px;">
-        <input type="checkbox" name="items" value="{{ item }}" {% if item in suggested_items %}checked{% endif %}> {{ item }}
+      <label style="display:flex; gap:10px; align-items:center; font-size:13.5px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--card);">
+        <input type="checkbox" name="items" value="{{ item }}" style="flex:0 0 auto;" {% if item in suggested_items %}checked{% endif %}>
+        <span>{{ item }}</span>
       </label>
       {% endfor %}
     </div>

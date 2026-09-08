@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-08 12:18+0300\n"
+"POT-Creation-Date: 2026-09-08 13:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -383,11 +383,11 @@ msgid ""
 "المخزون تلقائياً."
 msgstr ""
 
-#: app/core/alerts_service.py:377 app/templates/animal_detail.html:168
-#: app/templates/animal_detail.html:180 app/templates/animal_detail.html:181
-#: app/templates/animal_detail.html:182 app/templates/animal_detail.html:183
-#: app/templates/animal_detail.html:208 app/templates/animal_detail.html:218
-#: app/templates/animal_detail.html:219 app/templates/ostrich/egg_form.html:18
+#: app/core/alerts_service.py:377 app/templates/animal_detail.html:177
+#: app/templates/animal_detail.html:189 app/templates/animal_detail.html:190
+#: app/templates/animal_detail.html:191 app/templates/animal_detail.html:192
+#: app/templates/animal_detail.html:217 app/templates/animal_detail.html:227
+#: app/templates/animal_detail.html:228 app/templates/ostrich/egg_form.html:18
 msgid "غير محدد"
 msgstr ""
 
@@ -647,16 +647,16 @@ msgid "الأم غير موجودة"
 msgstr ""
 
 #: app/core/animal_service.py:180 app/core/validation_service.py:35
-#: app/templates/animal_detail.html:141 app/templates/animal_workflow.html:129
+#: app/templates/animal_detail.html:150 app/templates/animal_workflow.html:129
 msgid "السعر"
 msgstr ""
 
-#: app/core/animal_service.py:181 app/templates/animal_detail.html:137
+#: app/core/animal_service.py:181 app/templates/animal_detail.html:146
 #: app/templates/animal_form.html:144
 msgid "تاريخ الولادة"
 msgstr ""
 
-#: app/core/animal_service.py:182 app/templates/animal_detail.html:138
+#: app/core/animal_service.py:182 app/templates/animal_detail.html:147
 #: app/templates/animal_form.html:148
 #: app/templates/health/pharmacy_purchase_form.html:9
 #: app/templates/health/pharmacy_purchase_form.html:33
@@ -1348,105 +1348,105 @@ msgstr ""
 msgid "بدون حظيرة"
 msgstr ""
 
-#: app/core/routes.py:1239
+#: app/core/routes.py:1251
 msgid ""
 "الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر "
 "البنود يدوياً بالأسفل."
 msgstr ""
 
-#: app/core/routes.py:1268
+#: app/core/routes.py:1282
 #, python-format
 msgid "تم توزيع %(n)s مهمة فحص للرأس %(no)s."
 msgstr ""
 
-#: app/core/routes.py:1308
+#: app/core/routes.py:1322
 msgid "تم تسجيل الوزن"
 msgstr ""
 
-#: app/core/routes.py:1335
+#: app/core/routes.py:1349
 msgid "تم حفظ قائمة تحقق الولادة"
 msgstr ""
 
-#: app/core/routes.py:1355
+#: app/core/routes.py:1369
 #, python-format
 msgid "تم نقل %(no)s للعزل"
 msgstr ""
 
-#: app/core/routes.py:1391
+#: app/core/routes.py:1405
 #, python-format
 msgid "تم إخراج %(no)s من العزل"
 msgstr ""
 
-#: app/core/routes.py:1423
+#: app/core/routes.py:1437
 msgid "تم تسجيل الحليب"
 msgstr ""
 
-#: app/core/routes.py:1433
+#: app/core/routes.py:1447
 #, python-format
 msgid ""
 "تنبيه: %(no)s تحت فترة تحريم حليب حتى %(until)s — الحليب المسجَّل الآن قد"
 " يكون غير آمن للبيع/الاستهلاك."
 msgstr ""
 
-#: app/core/routes.py:1449
+#: app/core/routes.py:1463
 msgid "تمت إضافة الملاحظة"
 msgstr ""
 
-#: app/core/routes.py:1487
+#: app/core/routes.py:1501
 msgid "النعام ما يدخل دورة الإنتاج — راجع سجل النعام (بيض/تفقيس)."
 msgstr ""
 
-#: app/core/routes.py:1490
+#: app/core/routes.py:1504
 msgid ""
 "هذه الفصيلة ما تدخل محرك دورة الإنتاج (مبني على بيولوجيا الحلال فقط) — لا"
 " يوجد نظام دورة مخصّص لها بعد."
 msgstr ""
 
-#: app/core/routes.py:1534
+#: app/core/routes.py:1548
 msgid "ما فيه عملية بيع مسجّلة لهذا الحيوان."
 msgstr ""
 
-#: app/core/routes.py:1537
+#: app/core/routes.py:1551
 msgid "هذا البيع مسجَّل بدون فاتورة."
 msgstr ""
 
-#: app/core/routes.py:1559
+#: app/core/routes.py:1573
 msgid "تم تحديث بيانات التخطيط"
 msgstr ""
 
-#: app/core/routes.py:1584
+#: app/core/routes.py:1598
 msgid "تم تسجيل البيع"
 msgstr ""
 
-#: app/core/routes.py:1598
+#: app/core/routes.py:1612
 #, python-format
 msgid "💰 بيع رأس — %(no)s بسعر %(price)s"
 msgstr ""
 
-#: app/core/routes.py:1616
+#: app/core/routes.py:1630
 msgid "تم تسجيل خروج الرأس للسوق"
 msgstr ""
 
-#: app/core/routes.py:1628
+#: app/core/routes.py:1642
 msgid "تم تسجيل رجوع الرأس للمزرعة بدون بيع"
 msgstr ""
 
-#: app/core/routes.py:1643
+#: app/core/routes.py:1657
 msgid "تم تسجيل النفوق (بدون شرط اكتمال الدورة)"
 msgstr ""
 
-#: app/core/routes.py:1659
+#: app/core/routes.py:1673
 msgid "تم أرشفة الحيوان"
 msgstr ""
 
-#: app/core/routes.py:1690
+#: app/core/routes.py:1704
 #, python-format
 msgid ""
 "فيه %(n)s رأس لسا مربوط بحظيرة \"%(name)s\" — انقلهم لحظيرة ثانية أولاً "
 "قبل ما تقدر تحذفها."
 msgstr ""
 
-#: app/core/routes.py:1703
+#: app/core/routes.py:1717
 #, python-format
 msgid ""
 "ما قدرنا نحذف حظيرة \"%(name)s\" — عندها سجلات مرتبطة بتاريخها (خطط "
@@ -1454,136 +1454,157 @@ msgid ""
 "لو تبي تعيد استخدامها لغرض ثاني."
 msgstr ""
 
-#: app/core/routes.py:1711
+#: app/core/routes.py:1725
 #, python-format
 msgid "تم حذف حظيرة \"%(name)s\""
 msgstr ""
 
-#: app/core/routes.py:1749 app/core/routes.py:1784
+#: app/core/routes.py:1749 app/core/routes.py:1772
+msgid "لازم تكتب نص بند الفحص"
+msgstr ""
+
+#: app/core/routes.py:1758 app/core/routes.py:1780
+#, python-format
+msgid "بند الفحص \"%(text)s\" موجود من قبل"
+msgstr ""
+
+#: app/core/routes.py:1760
+msgid "تمت إضافة بند الفحص"
+msgstr ""
+
+#: app/core/routes.py:1782
+msgid "تم تعديل بند الفحص"
+msgstr ""
+
+#: app/core/routes.py:1794
+msgid "تم حذف بند الفحص"
+msgstr ""
+
+#: app/core/routes.py:1832 app/core/routes.py:1867
 #, python-format
 msgid "رقم الحظيرة \"%(no)s\" مستخدم من قبل"
 msgstr ""
 
-#: app/core/routes.py:1755
+#: app/core/routes.py:1838
 msgid "تمت إضافة الحظيرة"
 msgstr ""
 
-#: app/core/routes.py:1790
+#: app/core/routes.py:1873
 msgid "تم تحديث الحظيرة"
 msgstr ""
 
-#: app/core/routes.py:1906
+#: app/core/routes.py:1989
 #, python-format
 msgid ""
 "قيمة الحقل \"%(field)s\" غير صالحة — لازم تكون رقماً صحيحاً موجباً (أو "
 "صفر). لم يُحفَظ أي تعديل، صحّح القيمة وحاول مرة ثانية."
 msgstr ""
 
-#: app/core/routes.py:1916
+#: app/core/routes.py:1999
 msgid "تم حفظ الإعدادات الزمنية"
 msgstr ""
 
-#: app/core/routes.py:1930
+#: app/core/routes.py:2013
 msgid "تم حفظ إعدادات دواء الاستقبال"
 msgstr ""
 
-#: app/core/routes.py:1958 app/core/routes.py:2155
+#: app/core/routes.py:2041 app/core/routes.py:2238
 #, python-format
 msgid "لازم تكتب عبارة التأكيد بالضبط: \"%(phrase)s\""
 msgstr ""
 
-#: app/core/routes.py:1961
+#: app/core/routes.py:2044
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ ضبط المصنع."
 msgstr ""
 
-#: app/core/routes.py:1972
+#: app/core/routes.py:2055
 #, python-format
 msgid ""
 "تعذّر تنفيذ ضبط المصنع، ما تم حذف أي شي (تم التراجع تلقائياً). الخطأ: "
 "%(err)s"
 msgstr ""
 
-#: app/core/routes.py:1975
+#: app/core/routes.py:2058
 msgid ""
 "تم ضبط المصنع بنجاح — كل بيانات المزرعة انحذفت. سجّل دخولك من جديد بنفس "
 "رقم الجوال وكلمة المرور."
 msgstr ""
 
-#: app/core/routes.py:1994
+#: app/core/routes.py:2077
 msgid "تم حفظ بيانات المزرعة"
 msgstr ""
 
-#: app/core/routes.py:2011
+#: app/core/routes.py:2094
 #, python-format
 msgid "اسم الدور \"%(slug)s\" مستخدم من قبل"
 msgstr ""
 
-#: app/core/routes.py:2016
+#: app/core/routes.py:2099
 msgid "تم إنشاء المسمّى الوظيفي — الحين حدّد صلاحياته"
 msgstr ""
 
-#: app/core/routes.py:2028
+#: app/core/routes.py:2111
 msgid "ما تقدر تعدّل صلاحيات دور صاحب الحلال — يملك كل الصلاحيات دائماً"
 msgstr ""
 
-#: app/core/routes.py:2046
+#: app/core/routes.py:2129
 msgid "تم تحديث صلاحيات الدور"
 msgstr ""
 
-#: app/core/routes.py:2073
+#: app/core/routes.py:2156
 #, python-format
 msgid "تم تفعيل خدمة %(name)s"
 msgstr ""
 
-#: app/core/routes.py:2073
+#: app/core/routes.py:2156
 #, python-format
 msgid "تم تعطيل خدمة %(name)s"
 msgstr ""
 
-#: app/core/routes.py:2099
+#: app/core/routes.py:2182
 #, python-format
 msgid "تم إنشاء نسخة احتياطية: %(name)s"
 msgstr ""
 
-#: app/core/routes.py:2158
+#: app/core/routes.py:2241
 msgid "كلمة المرور غير صحيحة — ما تم تنفيذ الاسترجاع."
 msgstr ""
 
-#: app/core/routes.py:2161
+#: app/core/routes.py:2244
 msgid "اختر ملف النسخة الاحتياطية (JSON) أولاً."
 msgstr ""
 
-#: app/core/routes.py:2168
+#: app/core/routes.py:2251
 msgid "الملف المرفوع مو JSON صالح — تأكد إنه نفس ملف التنزيل بدون أي تعديل."
 msgstr ""
 
-#: app/core/routes.py:2181
+#: app/core/routes.py:2264
 #, python-format
 msgid ""
 "تعذّر تنفيذ الاسترجاع، ما تم تغيير أي بيانات (تم التراجع تلقائياً). "
 "الخطأ: %(err)s"
 msgstr ""
 
-#: app/core/routes.py:2188
+#: app/core/routes.py:2271
 #, python-format
 msgid ""
 "تم استرجاع %(n)s صف بنجاح — كل البيانات الحالية استُبدلت بالنسخة "
 "المرفوعة. سجّل دخولك من جديد."
 msgstr ""
 
-#: app/core/routes.py:2259
+#: app/core/routes.py:2342
 msgid "لازم تكتب العبارة بالضبط وتؤشّر على التأكيد."
 msgstr ""
 
-#: app/core/routes.py:2267
+#: app/core/routes.py:2350
 msgid "تم حذف بيانات المحاكاة."
 msgstr ""
 
-#: app/core/routes.py:2289
+#: app/core/routes.py:2372
 msgid "لازم تؤشّر على مربّع التأكيد."
 msgstr ""
 
-#: app/core/routes.py:2310
+#: app/core/routes.py:2393
 #, python-format
 msgid ""
 "تم تشغيل العرض التجريبي (%(days)s يوم) — %(animals)s رأس، %(matings)s "
@@ -1751,13 +1772,13 @@ msgstr ""
 msgid "هامش الربح الحالي %(margin)s%% ≥ الهدف %(target)s%% — وقت جيد للبيع"
 msgstr ""
 
-#: app/core/smart_sale_service.py:337 app/templates/animal_detail.html:202
-#: app/templates/animal_detail.html:218
+#: app/core/smart_sale_service.py:337 app/templates/animal_detail.html:211
+#: app/templates/animal_detail.html:227
 msgid "ترفض إرضاع مولودها"
 msgstr ""
 
-#: app/core/smart_sale_service.py:339 app/templates/animal_detail.html:203
-#: app/templates/animal_detail.html:219
+#: app/core/smart_sale_service.py:339 app/templates/animal_detail.html:212
+#: app/templates/animal_detail.html:228
 msgid "الضرع/الدرة تالفة"
 msgstr ""
 
@@ -2040,14 +2061,14 @@ msgid ""
 "لتر). تأكد من الرقم قبل الحفظ."
 msgstr ""
 
-#: app/core/validation_service.py:76 app/templates/animal_detail.html:258
-#: app/templates/animal_detail.html:272 app/templates/animal_detail.html:289
-#: app/templates/animal_detail.html:303 app/templates/animal_detail.html:318
-#: app/templates/animal_detail.html:329 app/templates/animal_detail.html:356
-#: app/templates/animal_detail.html:376 app/templates/animal_detail.html:408
-#: app/templates/animal_detail.html:423 app/templates/animal_detail.html:439
-#: app/templates/animal_detail.html:454 app/templates/animal_detail.html:464
-#: app/templates/animal_detail.html:494 app/templates/animal_workflow.html:155
+#: app/core/validation_service.py:76 app/templates/animal_detail.html:267
+#: app/templates/animal_detail.html:281 app/templates/animal_detail.html:298
+#: app/templates/animal_detail.html:312 app/templates/animal_detail.html:327
+#: app/templates/animal_detail.html:338 app/templates/animal_detail.html:365
+#: app/templates/animal_detail.html:385 app/templates/animal_detail.html:417
+#: app/templates/animal_detail.html:432 app/templates/animal_detail.html:448
+#: app/templates/animal_detail.html:463 app/templates/animal_detail.html:473
+#: app/templates/animal_detail.html:503 app/templates/animal_workflow.html:155
 #: app/templates/assistant/chat.html:121 app/templates/assistant/chat.html:221
 #: app/templates/bulk_action_form.html:64
 #: app/templates/bulk_action_form.html:247
@@ -2263,7 +2284,7 @@ msgstr ""
 msgid "تم حذف الدفعة"
 msgstr ""
 
-#: app/finance/routes.py:297 app/templates/animal_detail.html:494
+#: app/finance/routes.py:297 app/templates/animal_detail.html:503
 #: app/templates/finance/form.html:36 app/templates/finance/list.html:20
 #: app/templates/finance/list.html:78
 #: app/templates/team/payroll_prepare.html:45
@@ -3064,76 +3085,76 @@ msgstr ""
 msgid "الحذف النهائي بس للمهام اللي بصندوق المراجعة."
 msgstr ""
 
-#: app/team/task_service.py:252
+#: app/team/task_service.py:251
 msgid "لازم تختار بند فحص واحد على الأقل."
 msgstr ""
 
-#: app/team/task_service.py:376
+#: app/team/task_service.py:380
 #, python-format
 msgid "لازم تكمل المهمة السابقة أولاً: \"%(title)s\""
 msgstr ""
 
-#: app/team/task_service.py:402 app/team/task_service.py:418
-#: app/team/task_service.py:646
+#: app/team/task_service.py:406 app/team/task_service.py:422
+#: app/team/task_service.py:650
 msgid "هذي المهمة مو معيّنة لك."
 msgstr ""
 
-#: app/team/task_service.py:404
+#: app/team/task_service.py:408
 msgid "المهمة مو جاهزة للبدء."
 msgstr ""
 
-#: app/team/task_service.py:420
+#: app/team/task_service.py:424
 msgid "المهمة مو جاهزة للإنجاز."
 msgstr ""
 
-#: app/team/task_service.py:423
+#: app/team/task_service.py:427
 msgid "هذي المهمة تتطلب إرفاق صورة."
 msgstr ""
 
-#: app/team/task_service.py:553
+#: app/team/task_service.py:557
 msgid ""
 "ما فيه حظيرة بنوع \"حوامل\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو "
 "اختر حظيرة بديلة من فورم إنجاز المهمة."
 msgstr ""
 
-#: app/team/task_service.py:586
+#: app/team/task_service.py:590
 msgid "الحظيرة اللي اخترتها غير موجودة — تأكد من اختيارك."
 msgstr ""
 
-#: app/team/task_service.py:589
+#: app/team/task_service.py:593
 msgid ""
 "تعذّر تحديد الحظيرة الهدف لهذي المهمة (بيانات مصدر ناقصة) — راجع الدعم "
 "الفني."
 msgstr ""
 
-#: app/team/task_service.py:594
+#: app/team/task_service.py:598
 #, python-format
 msgid ""
 "ما فيه حظيرة بنوع \"%(type)s\" بالنظام — أنشئها من شاشة الحظائر أولاً، أو"
 " اختر حظيرة بديلة من فورم إنجاز المهمة."
 msgstr ""
 
-#: app/team/task_service.py:648
+#: app/team/task_service.py:652
 msgid "المهمة مو بحالة تسمح بتسجيل التعذّر."
 msgstr ""
 
-#: app/team/task_service.py:651
+#: app/team/task_service.py:655
 msgid "سبب التعذّر غير معروف."
 msgstr ""
 
-#: app/team/task_service.py:680
+#: app/team/task_service.py:684
 msgid "ما تملك صلاحية تأجيل المهام."
 msgstr ""
 
-#: app/team/task_service.py:682
+#: app/team/task_service.py:686
 msgid "هذي المهمة مو بحالة تسمح بالتأجيل."
 msgstr ""
 
-#: app/team/task_service.py:695
+#: app/team/task_service.py:699
 msgid "ما تملك صلاحية إلغاء المهام."
 msgstr ""
 
-#: app/team/task_service.py:697
+#: app/team/task_service.py:701
 msgid "هذي المهمة مو بحالة تسمح بالإلغاء."
 msgstr ""
 
@@ -3215,8 +3236,8 @@ msgid ""
 msgstr ""
 
 #: app/templates/alerts_list.html:17 app/templates/audit_log.html:4
-#: app/templates/base.html:1141 app/templates/home.html:155
-#: app/templates/settings_backup.html:4
+#: app/templates/base.html:1141 app/templates/checkup_items_list.html:5
+#: app/templates/home.html:155 app/templates/settings_backup.html:4
 #: app/templates/settings_data_integrity.html:4
 #: app/templates/settings_readiness.html:6
 #: app/templates/settings_simulation_data.html:4
@@ -3243,7 +3264,7 @@ msgstr ""
 msgid "مولود بالمزرعة"
 msgstr ""
 
-#: app/templates/animal_detail.html:5 app/templates/animal_detail.html:495
+#: app/templates/animal_detail.html:5 app/templates/animal_detail.html:504
 #: app/templates/animal_form.html:76 app/templates/animal_form.html:84
 #: app/templates/animal_form.html:90 app/templates/animals_list.html:103
 #: app/templates/batches/batch_detail.html:5
@@ -3342,7 +3363,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/animal_detail.html:71
-msgid "طلب فحص شامل لهذا الرأس"
+msgid "طلب فحص خاص فوري لهذا الرأس"
 msgstr ""
 
 #: app/templates/animal_detail.html:74
@@ -3351,102 +3372,103 @@ msgstr ""
 
 #: app/templates/animal_detail.html:77
 msgid ""
-"اختر بنود الفحص المطلوبة من الدكتور — كل بند يصير مهمة مستقلة، وإنجازها "
-"بملاحظة هو تقريره. أو اضغط \"اقترح لي\" ليحلّل الذكاء الاصطناعي بيانات "
-"هذا الرأس ويحدّد البنود المناسبة تلقائياً — تراجعها وتعدّلها قبل التوزيع."
+"الفحوصات الروتينية تتولّد تلقائياً بدون أي طلب منك (رأس جديد، مرض مفتوح، "
+"أو رأس ما له فحص من مدة). هذي الشاشة لطلب استثنائي فوري بس — اختر البنود،"
+" أو اضغط \"اقترح لي\" ليحلّل الذكاء الاصطناعي بيانات هذا الرأس ويحدّد "
+"البنود المناسبة تلقائياً."
 msgstr ""
 
 #: app/templates/animal_detail.html:80
 msgid "اقتراح الذكاء الاصطناعي محدَّد أدناه"
 msgstr ""
 
-#: app/templates/animal_detail.html:92
+#: app/templates/animal_detail.html:101
 msgid "بند فحص إضافي مخصَّص (اختياري)"
 msgstr ""
 
-#: app/templates/animal_detail.html:94
+#: app/templates/animal_detail.html:103
 msgid "أي دكتور متاح (بدون تعيين شخص محدَّد)"
 msgstr ""
 
-#: app/templates/animal_detail.html:97
+#: app/templates/animal_detail.html:106
 msgid "توزيع مهام الفحص"
 msgstr ""
 
-#: app/templates/animal_detail.html:104
+#: app/templates/animal_detail.html:113
 #: app/templates/animals_bulk_purchase.html:23
 #: app/templates/team/report_detail.html:17
 msgid "نعام"
 msgstr ""
 
-#: app/templates/animal_detail.html:104
+#: app/templates/animal_detail.html:113
 msgid "الفصيلة — بدون دورة إنتاج (مجترات فقط)"
 msgstr ""
 
-#: app/templates/animal_detail.html:106
+#: app/templates/animal_detail.html:115
 #, python-format
 msgid "مرحلة الدورة (%(n)s/10)"
 msgstr ""
 
-#: app/templates/animal_detail.html:106
+#: app/templates/animal_detail.html:115
 msgid ""
 "دورة إنتاج الرأس من عشر مراحل ثابتة (استقبال ← تربية ← تكاثر ← ...) — "
 "تتقدَّم تلقائياً حسب أحداث مسجَّلة (ولادة، بيع...) أو يدوياً من \"دورة "
 "الإنتاج\"."
 msgstr ""
 
-#: app/templates/animal_detail.html:108
+#: app/templates/animal_detail.html:117
 msgid "آخر وزن مسجّل (كجم)"
 msgstr ""
 
-#: app/templates/animal_detail.html:109
+#: app/templates/animal_detail.html:118
 msgid "أمراض مفتوحة حالياً"
 msgstr ""
 
-#: app/templates/animal_detail.html:110
+#: app/templates/animal_detail.html:119
 msgid "عدد الولادات المسجّلة"
 msgstr ""
 
-#: app/templates/animal_detail.html:114
+#: app/templates/animal_detail.html:123
 msgid "ملخص"
 msgstr ""
 
-#: app/templates/animal_detail.html:115
+#: app/templates/animal_detail.html:124
 msgid "التسلسل الزمني"
 msgstr ""
 
-#: app/templates/animal_detail.html:116
+#: app/templates/animal_detail.html:125
 msgid "سجل بيطري"
 msgstr ""
 
-#: app/templates/animal_detail.html:117 app/templates/animal_detail.html:269
+#: app/templates/animal_detail.html:126 app/templates/animal_detail.html:278
 #: app/templates/base.html:1084 app/templates/health/diseases_list.html:6
 #: app/templates/home.html:110
 msgid "الأمراض"
 msgstr ""
 
-#: app/templates/animal_detail.html:118 app/templates/animal_detail.html:286
+#: app/templates/animal_detail.html:127 app/templates/animal_detail.html:295
 msgid "التحصينات"
 msgstr ""
 
-#: app/templates/animal_detail.html:119 app/templates/home.html:118
+#: app/templates/animal_detail.html:128 app/templates/home.html:118
 msgid "التكاثر"
 msgstr ""
 
-#: app/templates/animal_detail.html:120 app/templates/animal_detail.html:353
+#: app/templates/animal_detail.html:129 app/templates/animal_detail.html:362
 msgid "الولادات"
 msgstr ""
 
-#: app/templates/animal_detail.html:121
+#: app/templates/animal_detail.html:130
 msgid "الأوزان"
 msgstr ""
 
-#: app/templates/animal_detail.html:122
+#: app/templates/animal_detail.html:131
 msgid "الحليب"
 msgstr ""
 
-#: app/templates/animal_detail.html:123 app/templates/animal_detail.html:378
-#: app/templates/animal_detail.html:408 app/templates/animal_detail.html:430
-#: app/templates/animal_detail.html:439 app/templates/animal_workflow.html:95
+#: app/templates/animal_detail.html:132 app/templates/animal_detail.html:387
+#: app/templates/animal_detail.html:417 app/templates/animal_detail.html:439
+#: app/templates/animal_detail.html:448 app/templates/animal_workflow.html:95
 #: app/templates/barn_form.html:30 app/templates/equipment/asset_form.html:24
 #: app/templates/equipment/asset_maintenance.html:15
 #: app/templates/equipment/asset_maintenance.html:24
@@ -3476,16 +3498,16 @@ msgstr ""
 msgid "ملاحظات"
 msgstr ""
 
-#: app/templates/animal_detail.html:124 app/templates/base.html:1130
+#: app/templates/animal_detail.html:133 app/templates/base.html:1130
 #: app/templates/finance/list.html:56 app/templates/home.html:136
 msgid "المالية"
 msgstr ""
 
-#: app/templates/animal_detail.html:129
+#: app/templates/animal_detail.html:138
 msgid "بيانات أساسية"
 msgstr ""
 
-#: app/templates/animal_detail.html:132 app/templates/animal_detail.html:356
+#: app/templates/animal_detail.html:141 app/templates/animal_detail.html:365
 #: app/templates/animal_form.html:98
 #: app/templates/animals_bulk_purchase.html:37
 #: app/templates/catalog_public.html:13 app/templates/finance/lot_form.html:33
@@ -3493,33 +3515,33 @@ msgstr ""
 msgid "الجنس"
 msgstr ""
 
-#: app/templates/animal_detail.html:133 app/templates/animal_form.html:24
+#: app/templates/animal_detail.html:142 app/templates/animal_form.html:24
 #: app/templates/animals_bulk_purchase.html:37
 msgid "اللون"
 msgstr ""
 
-#: app/templates/animal_detail.html:134 app/templates/animal_form.html:115
+#: app/templates/animal_detail.html:143 app/templates/animal_form.html:115
 #: app/templates/feed/ration_detail.html:8
 #: app/templates/feed/ration_form.html:9
 #: app/templates/feed/rations_list.html:11
 msgid "الغرض"
 msgstr ""
 
-#: app/templates/animal_detail.html:135 app/templates/ostrich/egg_form.html:11
+#: app/templates/animal_detail.html:144 app/templates/ostrich/egg_form.html:11
 #: app/templates/ostrich/egg_hatch_form.html:8
 #: app/templates/ostrich/eggs_list.html:24
 msgid "الأم"
 msgstr ""
 
-#: app/templates/animal_detail.html:136
+#: app/templates/animal_detail.html:145
 msgid "الأب"
 msgstr ""
 
-#: app/templates/animal_detail.html:139
+#: app/templates/animal_detail.html:148
 msgid "تاريخ الدخول للمزرعة"
 msgstr ""
 
-#: app/templates/animal_detail.html:140 app/templates/animal_form.html:123
+#: app/templates/animal_detail.html:149 app/templates/animal_form.html:123
 #: app/templates/animals_list.html:101
 #: app/templates/equipment/assets_list.html:15
 #: app/templates/feed/barn_plan_form.html:8
@@ -3535,12 +3557,12 @@ msgstr ""
 msgid "الحظيرة"
 msgstr ""
 
-#: app/templates/animal_detail.html:146
+#: app/templates/animal_detail.html:155
 #, python-format
 msgid "ملاحظة رعاية خاصة بسلالة %(breed)s:"
 msgstr ""
 
-#: app/templates/animal_detail.html:147 app/templates/barns_list.html:22
+#: app/templates/animal_detail.html:156 app/templates/barns_list.html:22
 #: app/templates/equipment/items_list.html:34
 #: app/templates/feed/items_list.html:31
 #: app/templates/health/pharmacy_list.html:30
@@ -3548,36 +3570,36 @@ msgstr ""
 msgid "تعديل"
 msgstr ""
 
-#: app/templates/animal_detail.html:155
+#: app/templates/animal_detail.html:164
 msgid "قائمة تحقق الولادة"
 msgstr ""
 
-#: app/templates/animal_detail.html:155
+#: app/templates/animal_detail.html:164
 msgid ""
 "فحوصات سلامة مبدئية بعد الولادة مباشرة — تسجيلها اختياري بس مهم لرصد أي "
 "مشكلة مبكراً (رفض إرضاع، مشاكل تنفّس...) قبل ما تتفاقم."
 msgstr ""
 
-#: app/templates/animal_detail.html:160 app/templates/animal_detail.html:180
+#: app/templates/animal_detail.html:169 app/templates/animal_detail.html:189
 msgid "تنفّس طبيعي"
 msgstr ""
 
-#: app/templates/animal_detail.html:161 app/templates/animal_detail.html:181
+#: app/templates/animal_detail.html:170 app/templates/animal_detail.html:190
 msgid "وقف على قوائمه"
 msgstr ""
 
-#: app/templates/animal_detail.html:162 app/templates/animal_detail.html:182
+#: app/templates/animal_detail.html:171 app/templates/animal_detail.html:191
 msgid "رضع اللبأ"
 msgstr ""
 
-#: app/templates/animal_detail.html:163 app/templates/animal_detail.html:183
+#: app/templates/animal_detail.html:172 app/templates/animal_detail.html:192
 msgid "تعقيم السرة"
 msgstr ""
 
-#: app/templates/animal_detail.html:169 app/templates/animal_detail.html:180
-#: app/templates/animal_detail.html:181 app/templates/animal_detail.html:182
-#: app/templates/animal_detail.html:183 app/templates/animal_detail.html:209
-#: app/templates/animal_detail.html:218 app/templates/animal_detail.html:219
+#: app/templates/animal_detail.html:178 app/templates/animal_detail.html:189
+#: app/templates/animal_detail.html:190 app/templates/animal_detail.html:191
+#: app/templates/animal_detail.html:192 app/templates/animal_detail.html:218
+#: app/templates/animal_detail.html:227 app/templates/animal_detail.html:228
 #: app/templates/animal_form.html:109
 #: app/templates/health/disease_type_detail.html:64
 #: app/templates/health/disease_type_detail.html:65
@@ -3589,10 +3611,10 @@ msgstr ""
 msgid "نعم"
 msgstr ""
 
-#: app/templates/animal_detail.html:170 app/templates/animal_detail.html:180
-#: app/templates/animal_detail.html:181 app/templates/animal_detail.html:182
-#: app/templates/animal_detail.html:183 app/templates/animal_detail.html:210
-#: app/templates/animal_detail.html:218 app/templates/animal_detail.html:219
+#: app/templates/animal_detail.html:179 app/templates/animal_detail.html:189
+#: app/templates/animal_detail.html:190 app/templates/animal_detail.html:191
+#: app/templates/animal_detail.html:192 app/templates/animal_detail.html:219
+#: app/templates/animal_detail.html:227 app/templates/animal_detail.html:228
 #: app/templates/animal_form.html:108
 #: app/templates/health/disease_link_wizard.html:83
 #: app/templates/health/disease_link_wizard.html:87
@@ -3601,42 +3623,44 @@ msgstr ""
 msgid "لا"
 msgstr ""
 
-#: app/templates/animal_detail.html:173
+#: app/templates/animal_detail.html:182
 msgid "عيوب خلقية (اتركه فاضي لو ما فيه)"
 msgstr ""
 
-#: app/templates/animal_detail.html:175
+#: app/templates/animal_detail.html:184
 msgid "حفظ قائمة التحقق"
 msgstr ""
 
-#: app/templates/animal_detail.html:184
+#: app/templates/animal_detail.html:193
 msgid "عيوب خلقية"
 msgstr ""
 
-#: app/templates/animal_detail.html:184
+#: app/templates/animal_detail.html:193
 msgid "لا يوجد"
 msgstr ""
 
-#: app/templates/animal_detail.html:194
+#: app/templates/animal_detail.html:203
 msgid "علامات بيع (محرك البيع الذكي — بند 19)"
 msgstr ""
 
-#: app/templates/animal_detail.html:195
+#: app/templates/animal_detail.html:204
 msgid "تقرير البيع الذكي"
 msgstr ""
 
-#: app/templates/animal_detail.html:197
+#: app/templates/animal_detail.html:206
 msgid ""
 "أي علامة \"نعم\" هنا تعني توصية بيع فورية بتقرير البيع الذكي، بغض النظر "
 "عن باقي العوامل."
 msgstr ""
 
-#: app/templates/animal_detail.html:213 app/templates/animal_detail.html:379
-#: app/templates/animal_detail.html:431 app/templates/animal_detail.html:456
+#: app/templates/animal_detail.html:222 app/templates/animal_detail.html:388
+#: app/templates/animal_detail.html:440 app/templates/animal_detail.html:465
 #: app/templates/animal_form.html:178
 #: app/templates/animal_weight_new_simple.html:44
 #: app/templates/animal_workflow.html:59 app/templates/barn_form.html:44
-#: app/templates/breed_edit_form.html:10 app/templates/climate/settings.html:33
+#: app/templates/breed_edit_form.html:10
+#: app/templates/checkup_items_list.html:30
+#: app/templates/climate/settings.html:33
 #: app/templates/equipment/asset_form.html:25
 #: app/templates/equipment/asset_maintenance.html:16
 #: app/templates/equipment/item_form.html:25
@@ -3674,35 +3698,35 @@ msgstr ""
 msgid "حفظ"
 msgstr ""
 
-#: app/templates/animal_detail.html:229
+#: app/templates/animal_detail.html:238
 msgid "كل السجلات مرتبة بالتاريخ"
 msgstr ""
 
-#: app/templates/animal_detail.html:229
+#: app/templates/animal_detail.html:238
 msgid ""
 "التصنيف بين قوسين [...] بكل حدث يوضّح نوعه (وزن، صحة، تحصين، تكاثر...) — "
 "نظرة سريعة على كل تاريخ هذا الرأس بدون التنقّل بين التبويبات."
 msgstr ""
 
-#: app/templates/animal_detail.html:241
+#: app/templates/animal_detail.html:250
 msgid "لا يوجد سجلات مرتبطة بهذا الحيوان بعد."
 msgstr ""
 
-#: app/templates/animal_detail.html:250 app/templates/base.html:1093
+#: app/templates/animal_detail.html:259 app/templates/base.html:1093
 #: app/templates/health/dashboard.html:84
 msgid "بروتوكولات العلاج"
 msgstr ""
 
-#: app/templates/animal_detail.html:251
+#: app/templates/animal_detail.html:260
 msgid "طبّق بروتوكول علاج جاهز على هذا الرأس"
 msgstr ""
 
-#: app/templates/animal_detail.html:255 app/templates/base.html:1083
+#: app/templates/animal_detail.html:264 app/templates/base.html:1083
 #: app/templates/health/vet_visits_list.html:6
 msgid "الزيارات البيطرية"
 msgstr ""
 
-#: app/templates/animal_detail.html:258
+#: app/templates/animal_detail.html:267
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:18
 #: app/templates/health/vet_visits_list.html:11
@@ -3710,14 +3734,14 @@ msgstr ""
 msgid "الطبيب"
 msgstr ""
 
-#: app/templates/animal_detail.html:258
+#: app/templates/animal_detail.html:267
 #: app/templates/finance/health_view.html:14
 #: app/templates/health/vet_visit_form.html:22
 #: app/templates/health/vet_visits_list.html:11
 msgid "التشخيص"
 msgstr ""
 
-#: app/templates/animal_detail.html:258
+#: app/templates/animal_detail.html:267
 #: app/templates/equipment/asset_maintenance.html:24
 #: app/templates/equipment/utilities_list.html:15
 #: app/templates/feed/barn_report.html:55 app/templates/feed/optimizer.html:50
@@ -3728,11 +3752,11 @@ msgstr ""
 msgid "التكلفة"
 msgstr ""
 
-#: app/templates/animal_detail.html:261
+#: app/templates/animal_detail.html:270
 msgid "لا يوجد زيارات مسجّلة."
 msgstr ""
 
-#: app/templates/animal_detail.html:272
+#: app/templates/animal_detail.html:281
 #: app/templates/finance/health_view.html:34
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/dashboard.html:43
@@ -3740,15 +3764,15 @@ msgstr ""
 msgid "المرض"
 msgstr ""
 
-#: app/templates/animal_detail.html:272 app/templates/bulk_action_form.html:355
+#: app/templates/animal_detail.html:281 app/templates/bulk_action_form.html:355
 #: app/templates/health/dashboard.html:22
 #: app/templates/health/disease_form.html:29
 #: app/templates/health/diseases_list.html:14
 msgid "الشدة"
 msgstr ""
 
-#: app/templates/animal_detail.html:272 app/templates/animal_detail.html:318
-#: app/templates/animal_detail.html:341 app/templates/animal_workflow.html:155
+#: app/templates/animal_detail.html:281 app/templates/animal_detail.html:327
+#: app/templates/animal_detail.html:350 app/templates/animal_workflow.html:155
 #: app/templates/animals_list.html:101 app/templates/assistant/chat.html:221
 #: app/templates/equipment/item_movement.html:71
 #: app/templates/finance/health_view.html:34 app/templates/finance/list.html:78
@@ -3775,11 +3799,11 @@ msgstr ""
 msgid "الحالة"
 msgstr ""
 
-#: app/templates/animal_detail.html:278
+#: app/templates/animal_detail.html:287
 msgid "لا يوجد أمراض مسجّلة."
 msgstr ""
 
-#: app/templates/animal_detail.html:289 app/templates/health/dashboard.html:64
+#: app/templates/animal_detail.html:298 app/templates/health/dashboard.html:64
 #: app/templates/health/vaccination_schedule_form.html:28
 #: app/templates/health/vaccination_schedule_list.html:14
 #: app/templates/health/vaccination_schedule_list.html:57
@@ -3787,41 +3811,41 @@ msgstr ""
 msgid "اللقاح"
 msgstr ""
 
-#: app/templates/animal_detail.html:289
+#: app/templates/animal_detail.html:298
 msgid "الجرعة القادمة"
 msgstr ""
 
-#: app/templates/animal_detail.html:289
+#: app/templates/animal_detail.html:298
 msgid ""
 "تُحسب تلقائياً من تاريخ التحصين + مدة الحماية المسجَّلة على اللقاح "
 "بالصيدلية — فاضي يعني اللقاح ما له مدة حماية محدَّدة."
 msgstr ""
 
-#: app/templates/animal_detail.html:292
+#: app/templates/animal_detail.html:301
 msgid "لا يوجد تحصينات مسجّلة."
 msgstr ""
 
-#: app/templates/animal_detail.html:300 app/templates/base.html:1011
+#: app/templates/animal_detail.html:309 app/templates/base.html:1011
 #: app/templates/home.html:120 app/templates/repro/matings_list.html:6
 msgid "التقريع"
 msgstr ""
 
-#: app/templates/animal_detail.html:303
+#: app/templates/animal_detail.html:312
 #: app/templates/team/member_edit_form.html:19
 #: app/templates/team/member_form.html:18
 #: app/templates/team/members_list.html:11
 msgid "الدور"
 msgstr ""
 
-#: app/templates/animal_detail.html:303
+#: app/templates/animal_detail.html:312
 msgid "هل هذا الرأس كان الأنثى أو الفحل بعملية التقريع."
 msgstr ""
 
-#: app/templates/animal_detail.html:303
+#: app/templates/animal_detail.html:312
 msgid "الطرف الآخر"
 msgstr ""
 
-#: app/templates/animal_detail.html:307 app/templates/animal_form.html:101
+#: app/templates/animal_detail.html:316 app/templates/animal_form.html:101
 #: app/templates/animals_bulk_purchase.html:44
 #: app/templates/animals_bulk_purchase.html:79
 #: app/templates/batches/batch_form.html:26
@@ -3829,49 +3853,49 @@ msgstr ""
 msgid "أنثى"
 msgstr ""
 
-#: app/templates/animal_detail.html:307
+#: app/templates/animal_detail.html:316
 msgid "فحل"
 msgstr ""
 
-#: app/templates/animal_detail.html:310
+#: app/templates/animal_detail.html:319
 msgid "لا يوجد تقريع مسجّل."
 msgstr ""
 
-#: app/templates/animal_detail.html:315 app/templates/base.html:1012
+#: app/templates/animal_detail.html:324 app/templates/base.html:1012
 #: app/templates/home.html:121 app/templates/repro/pregnancies_list.html:6
 msgid "تشخيص الحمل"
 msgstr ""
 
-#: app/templates/animal_detail.html:318
+#: app/templates/animal_detail.html:327
 msgid ""
 "\"مؤكد\" = متابعة الحمل التلقائية مفعّلة (نقل لحظيرة رعاية الحمل المتأخر،"
 " حساب الولادة المتوقعة...). \"قيد الفحص\" = لسا الحمل غير مؤكَّد قطعياً."
 msgstr ""
 
-#: app/templates/animal_detail.html:318 app/templates/animal_detail.html:329
+#: app/templates/animal_detail.html:327 app/templates/animal_detail.html:338
 #: app/templates/bulk_action_form.html:410
 msgid "عدد الأجنة"
 msgstr ""
 
-#: app/templates/animal_detail.html:320
+#: app/templates/animal_detail.html:329
 msgid "مؤكد"
 msgstr ""
 
-#: app/templates/animal_detail.html:320
+#: app/templates/animal_detail.html:329
 msgid "قيد الفحص"
 msgstr ""
 
-#: app/templates/animal_detail.html:321
+#: app/templates/animal_detail.html:330
 msgid "لا يوجد تشخيص حمل مسجّل."
 msgstr ""
 
-#: app/templates/animal_detail.html:326
+#: app/templates/animal_detail.html:335
 #: app/templates/repro/program_detail.html:110
 #: app/templates/repro/sonar_list.html:6
 msgid "فحوصات السونار"
 msgstr ""
 
-#: app/templates/animal_detail.html:329 app/templates/bulk_action_form.html:410
+#: app/templates/animal_detail.html:338 app/templates/bulk_action_form.html:410
 #: app/templates/feed/calculator.html:36
 #: app/templates/repro/pregnancies_list.html:11
 #: app/templates/repro/program_detail.html:115
@@ -3880,51 +3904,51 @@ msgstr ""
 msgid "النتيجة"
 msgstr ""
 
-#: app/templates/animal_detail.html:332
+#: app/templates/animal_detail.html:341
 msgid "لا يوجد فحوصات سونار مسجّلة."
 msgstr ""
 
-#: app/templates/animal_detail.html:338
+#: app/templates/animal_detail.html:347
 #: app/templates/repro/programs_list.html:6
 msgid "برامج الشياع التوأمي"
 msgstr ""
 
-#: app/templates/animal_detail.html:341 app/templates/repro/sonar_list.html:11
+#: app/templates/animal_detail.html:350 app/templates/repro/sonar_list.html:11
 msgid "البرنامج"
 msgstr ""
 
-#: app/templates/animal_detail.html:341
+#: app/templates/animal_detail.html:350
 msgid "البدء"
 msgstr ""
 
-#: app/templates/animal_detail.html:343
+#: app/templates/animal_detail.html:352
 msgid "برنامج #"
 msgstr ""
 
-#: app/templates/animal_detail.html:356
+#: app/templates/animal_detail.html:365
 msgid "رقم المولود"
 msgstr ""
 
-#: app/templates/animal_detail.html:356
+#: app/templates/animal_detail.html:365
 msgid "الوزن عند الولادة"
 msgstr ""
 
-#: app/templates/animal_detail.html:364
+#: app/templates/animal_detail.html:373
 msgid "لا يوجد ولادات مسجّلة لهذا الحيوان."
 msgstr ""
 
-#: app/templates/animal_detail.html:373
+#: app/templates/animal_detail.html:382
 msgid "تسجيل وزن جديد"
 msgstr ""
 
-#: app/templates/animal_detail.html:373
+#: app/templates/animal_detail.html:382
 #, python-format
 msgid ""
 "لو الوزن الجديد يختلف بنسبة كبيرة (40%% فأكثر) عن آخر وزن مسجَّل، النظام "
 "يطلب تأكيدك قبل الحفظ — حماية من خطأ كتابة رقم غلط بالغلط."
 msgstr ""
 
-#: app/templates/animal_detail.html:377 app/templates/animal_detail.html:408
+#: app/templates/animal_detail.html:386 app/templates/animal_detail.html:417
 #: app/templates/animal_form.html:172
 #: app/templates/animal_weight_new_simple.html:42
 #: app/templates/animals_bulk_purchase.html:37
@@ -3935,107 +3959,107 @@ msgstr ""
 msgid "الوزن (كجم)"
 msgstr ""
 
-#: app/templates/animal_detail.html:387
+#: app/templates/animal_detail.html:396
 #, python-format
 msgid "نسبة التغيّر القصوى المقبولة بدون تأكيد (%%)"
 msgstr ""
 
-#: app/templates/animal_detail.html:388
+#: app/templates/animal_detail.html:397
 #, python-format
 msgid ""
 "الوزن الجديد يختلف بنسبة __PCT__%% عن آخر وزن مسجَّل (__PREV__ كجم) — "
 "تأكيد فعلاً هذا الرقم؟"
 msgstr ""
 
-#: app/templates/animal_detail.html:405
+#: app/templates/animal_detail.html:414
 msgid "سجل الأوزان"
 msgstr ""
 
-#: app/templates/animal_detail.html:411
+#: app/templates/animal_detail.html:420
 msgid "لا يوجد أوزان مسجّلة بعد."
 msgstr ""
 
-#: app/templates/animal_detail.html:420
+#: app/templates/animal_detail.html:429
 msgid "تسجيل حلبة جديدة"
 msgstr ""
 
-#: app/templates/animal_detail.html:424 app/templates/animal_detail.html:439
+#: app/templates/animal_detail.html:433 app/templates/animal_detail.html:448
 msgid "الجلسة"
 msgstr ""
 
-#: app/templates/animal_detail.html:426
+#: app/templates/animal_detail.html:435
 msgid "صباح"
 msgstr ""
 
-#: app/templates/animal_detail.html:427
+#: app/templates/animal_detail.html:436
 msgid "مساء"
 msgstr ""
 
-#: app/templates/animal_detail.html:429 app/templates/animal_detail.html:439
+#: app/templates/animal_detail.html:438 app/templates/animal_detail.html:448
 msgid "الكمية (لتر)"
 msgstr ""
 
-#: app/templates/animal_detail.html:436
+#: app/templates/animal_detail.html:445
 msgid "سجل الحليب"
 msgstr ""
 
-#: app/templates/animal_detail.html:442
+#: app/templates/animal_detail.html:451
 msgid "لا يوجد حليب مسجّل بعد."
 msgstr ""
 
-#: app/templates/animal_detail.html:451
+#: app/templates/animal_detail.html:460
 msgid "إضافة ملاحظة"
 msgstr ""
 
-#: app/templates/animal_detail.html:455 app/templates/animal_detail.html:464
+#: app/templates/animal_detail.html:464 app/templates/animal_detail.html:473
 msgid "الملاحظة"
 msgstr ""
 
-#: app/templates/animal_detail.html:461
+#: app/templates/animal_detail.html:470
 msgid "الملاحظات المسجّلة"
 msgstr ""
 
-#: app/templates/animal_detail.html:464
+#: app/templates/animal_detail.html:473
 #: app/templates/equipment/asset_maintenance.html:24
 msgid "بواسطة"
 msgstr ""
 
-#: app/templates/animal_detail.html:467
+#: app/templates/animal_detail.html:476
 msgid "لا يوجد ملاحظات بعد."
 msgstr ""
 
-#: app/templates/animal_detail.html:475
+#: app/templates/animal_detail.html:484
 msgid "تقرير تكلفة الرأس الفردي"
 msgstr ""
 
-#: app/templates/animal_detail.html:477
+#: app/templates/animal_detail.html:486
 msgid "تكلفة الشراء"
 msgstr ""
 
-#: app/templates/animal_detail.html:478
+#: app/templates/animal_detail.html:487
 msgid "تكاليف طبية مباشرة (زيارات + أمراض + تحصينات)"
 msgstr ""
 
-#: app/templates/animal_detail.html:479
+#: app/templates/animal_detail.html:488
 #, python-format
 msgid "تقدير تكلفة العلف (%(n)s يوم)"
 msgstr ""
 
-#: app/templates/animal_detail.html:480
+#: app/templates/animal_detail.html:489
 msgid "نصيبه من المصاريف غير المباشرة (إيجار/صيانة/رواتب — موزَّعة على القطيع)"
 msgstr ""
 
-#: app/templates/animal_detail.html:481
+#: app/templates/animal_detail.html:490
 msgid "الإجمالي التقديري منذ الدخول"
 msgstr ""
 
-#: app/templates/animal_detail.html:484
+#: app/templates/animal_detail.html:493
 msgid ""
 "⚠️ تقدير العلف = 0 — الحيوان بدون حظيرة، أو ما فيه خطة تغذية فعّالة "
 "لحظيرته حالياً."
 msgstr ""
 
-#: app/templates/animal_detail.html:487
+#: app/templates/animal_detail.html:496
 msgid ""
 "ℹ️ تنبيهات صادقة على هذا التقرير: (1) تقدير العلف تقريبي — يفترض إن "
 "الحيوان قضى كامل مدته بنفس حظيرته وخطتها الحالية (النظام ما يتتبّع تاريخ "
@@ -4047,11 +4071,11 @@ msgid ""
 "اللي أدخلها الدكتور وقتها."
 msgstr ""
 
-#: app/templates/animal_detail.html:491
+#: app/templates/animal_detail.html:500
 msgid "الحركات المالية المرتبطة"
 msgstr ""
 
-#: app/templates/animal_detail.html:494 app/templates/barn_form.html:12
+#: app/templates/animal_detail.html:503 app/templates/barn_form.html:12
 #: app/templates/barns_list.html:11 app/templates/equipment/asset_form.html:9
 #: app/templates/equipment/assets_list.html:15
 #: app/templates/equipment/item_movement.html:71
@@ -4075,7 +4099,7 @@ msgstr ""
 msgid "النوع"
 msgstr ""
 
-#: app/templates/animal_detail.html:494 app/templates/finance/form.html:35
+#: app/templates/animal_detail.html:503 app/templates/finance/form.html:35
 #: app/templates/team/report_detail.html:25
 #: app/templates/team/reports_list.html:26
 #: app/templates/team/reports_list.html:38
@@ -4085,17 +4109,17 @@ msgstr ""
 msgid "الوصف"
 msgstr ""
 
-#: app/templates/animal_detail.html:495 app/templates/finance/form.html:11
+#: app/templates/animal_detail.html:504 app/templates/finance/form.html:11
 #: app/templates/finance/list.html:82
 msgid "بيع"
 msgstr ""
 
-#: app/templates/animal_detail.html:495 app/templates/finance/form.html:13
+#: app/templates/animal_detail.html:504 app/templates/finance/form.html:13
 #: app/templates/finance/list.html:82
 msgid "مصروف"
 msgstr ""
 
-#: app/templates/animal_detail.html:498
+#: app/templates/animal_detail.html:507
 msgid "لا يوجد حركات مالية مرتبطة بهذا الحيوان."
 msgstr ""
 
@@ -4382,6 +4406,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/animal_option_form.html:15
+#: app/templates/checkup_items_list.html:17
 #: app/templates/equipment/item_form.html:25
 #: app/templates/health/drug_catalog_form.html:17
 #: app/templates/health/symptom_form.html:14
@@ -5115,7 +5140,7 @@ msgstr ""
 msgid "تحذف حظيرة %(name)s نهائياً؟"
 msgstr ""
 
-#: app/templates/barns_list.html:26
+#: app/templates/barns_list.html:26 app/templates/checkup_items_list.html:35
 #: app/templates/health/disease_type_detail.html:48
 #: app/templates/health/emergency_symptoms_list.html:25
 #: app/templates/team/_suggested_tasks_rows.html:25
@@ -5856,6 +5881,38 @@ msgstr ""
 
 #: app/templates/catalog_public.html:23
 msgid "ما فيه رؤوس جاهزة للبيع حالياً."
+msgstr ""
+
+#: app/templates/checkup_items_list.html:2
+#: app/templates/checkup_items_list.html:6 app/templates/settings.html:203
+msgid "بنود الفحص"
+msgstr ""
+
+#: app/templates/checkup_items_list.html:7
+msgid ""
+"القائمة اللي تظهر بشاشة \"طلب فحص خاص فوري\" ويستخدمها النظام لتوليد "
+"الفحوصات الدورية التلقائية — أضف، عدّل، أو احذف أي بند حسب حاجة مزرعتك."
+msgstr ""
+
+#: app/templates/checkup_items_list.html:14
+msgid "بند فحص جديد"
+msgstr ""
+
+#: app/templates/checkup_items_list.html:15
+msgid "مثال: فحص الأسنان"
+msgstr ""
+
+#: app/templates/checkup_items_list.html:28
+msgid "مفعَّل"
+msgstr ""
+
+#: app/templates/checkup_items_list.html:33
+#, python-format
+msgid "تحذف بند %(text)s نهائياً؟"
+msgstr ""
+
+#: app/templates/checkup_items_list.html:39
+msgid "ما فيه بنود فحص مسجَّلة بعد."
 msgstr ""
 
 #: app/templates/family_view.html:6 app/templates/family_view.html:95
@@ -6650,46 +6707,46 @@ msgstr ""
 msgid "دليل السلالات وملاحظات الرعاية"
 msgstr ""
 
-#: app/templates/settings.html:208
+#: app/templates/settings.html:209
 msgid "منطقة الخطر"
 msgstr ""
 
-#: app/templates/settings.html:209
+#: app/templates/settings.html:210
 msgid ""
 "ضبط المصنع يحذف كل بيانات المزرعة نهائياً وبلا رجعة (الحيوانات، المالية، "
 "المهام، الفريق، كل شي) ويرجّع النظام كأنه جديد. حسابك (نفس الجوال وكلمة "
 "المرور) يبقى شغّال بعدها."
 msgstr ""
 
-#: app/templates/settings.html:210
+#: app/templates/settings.html:211
 msgid "ضبط المصنع"
 msgstr ""
 
-#: app/templates/settings.html:216
+#: app/templates/settings.html:217
 msgid "تأكيد ضبط المصنع"
 msgstr ""
 
-#: app/templates/settings.html:217
+#: app/templates/settings.html:218
 msgid "هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُحذف تماماً."
 msgstr ""
 
-#: app/templates/settings.html:220
+#: app/templates/settings.html:221
 msgid "اكتب عبارة التأكيد بالضبط: \"ضبط المصنع\""
 msgstr ""
 
-#: app/templates/settings.html:222 app/templates/settings_backup.html:75
+#: app/templates/settings.html:223 app/templates/settings_backup.html:75
 msgid "كلمة مرورك الحالية"
 msgstr ""
 
-#: app/templates/settings.html:224
+#: app/templates/settings.html:225
 msgid "احذف كل شي نهائياً"
 msgstr ""
 
-#: app/templates/reports/overview.html:18 app/templates/settings.html:243
+#: app/templates/reports/overview.html:18 app/templates/settings.html:244
 msgid "جدول المؤشرات"
 msgstr ""
 
-#: app/templates/settings.html:244
+#: app/templates/settings.html:245
 msgid "من أول الشهر الحالي إلى اليوم — نفس محرك شاشة التقارير."
 msgstr ""
 

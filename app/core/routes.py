@@ -1179,12 +1179,19 @@ def animal_detail(animal_id):
     checkup_item_presets = []
     suggested_items = []
     suggested_reason = None
-    if current_user.has_permission("tasks.assign_any"):
-        from app.models import User
-        from app.team import task_service as tsvc
+    # بند إصلاح (طلبك الصريح: "المفروض النظام ياخذ بيانات كاملة يحافظ
+    # على صحة القطيع... بدل ما يجي صاحب الحلال يفكر شنو يقترح على
+    # الدكتور") — الفحوصات الروتينية صارت تلقائية بالكامل (راجع
+    # `auto_checkup_service.py`). هذي الشاشة اليدوية تبقى حصراً لصاحب
+    # الحلال لطلب فحص خاص/فوري استثنائي، مو للدكتور يفتحها على نفسه —
+    # كان فحص `tasks.assign_any` يشمل الدكتور أصلاً (نفس صلاحية توزيع
+    # المهام)، صار فحص دور مباشر (نفس نمط حذف صور البلاغات/ضبط المصنع).
+    if current_user.role.name == "owner":
+        from app.models import User, CheckupItemPreset
         doctors = (User.query.join(Role).filter(Role.name.in_(("doctor", "nurse")))
                    .order_by(User.name).all())
-        checkup_item_presets = tsvc.ANIMAL_CHECKUP_ITEM_PRESETS
+        run_once_per_app("checkup_item_presets_seeded", CheckupItemPreset.seed_defaults)
+        checkup_item_presets = CheckupItemPreset.active_texts()
         suggested_raw = request.args.get("suggested", "")
         suggested_items = [i for i in suggested_raw.split("|") if i]
         suggested_reason = request.args.get("suggested_reason") or None
@@ -1206,7 +1213,6 @@ def animal_detail(animal_id):
 
 @core_bp.route("/animals/<int:animal_id>/checkup-suggest", methods=["POST"])
 @login_required
-@require_permission("tasks.assign_any")
 @rate_limited("animal_checkup_suggest", max_calls=20, window_seconds=300)
 def animal_checkup_suggest(animal_id):
     """اقتراح ذكي لبنود الفحص (بند إضافي 302) — طلبك الصريح: "ابي
@@ -1219,8 +1225,13 @@ def animal_checkup_suggest(animal_id):
     new-text`، `/assistant/drafts/new-voice`) بدون أي `rate_limited` —
     ثغرة استنزاف حصة/تكلفة API حقيقية، عالجناها بنفس الحد المستخدم
     لمسارات المسودات (20 كل 5 دقائق)."""
+    # بند إصلاح — نفس تقييد شاشة "طلب فحص شامل" لصاحب الحلال حصراً
+    # (راجع تعليق `animal_detail` أعلاه): فحص دور مباشر بدل صلاحية
+    # `tasks.assign_any` العامة اللي يملكها الدكتور أصلاً.
+    if current_user.role.name != "owner":
+        abort(403)
     from app.assistant import agent_tools, llm_bridge
-    from app.team import task_service as tsvc
+    from app.models import CheckupItemPreset
 
     animal = Animal.query.get_or_404(animal_id)
     history = agent_tools.animal_history(animal.animal_no)
@@ -1232,8 +1243,9 @@ def animal_checkup_suggest(animal_id):
         f"آخر تحصين: {history.get('last_vaccination')}",
         f"تنبيهات نشطة على هذا الرأس: {[a['category'] for a in animal_alerts]}",
     ]
+    run_once_per_app("checkup_item_presets_seeded", CheckupItemPreset.seed_defaults)
     result = llm_bridge.suggest_checkup_items(
-        "\n".join(context_lines), tsvc.ANIMAL_CHECKUP_ITEM_PRESETS,
+        "\n".join(context_lines), CheckupItemPreset.active_texts(),
     )
     if not result:
         flash(_("الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."), "error")
@@ -1247,10 +1259,12 @@ def animal_checkup_suggest(animal_id):
 
 @core_bp.route("/animals/<int:animal_id>/checkup-request", methods=["POST"])
 @login_required
-@require_permission("tasks.assign_any")
 def animal_checkup_request(animal_id):
     """طلب فحص شامل لرأس واحد (بند إضافي 301) — يولّد مهمة مستقلة لكل
-    بند فحص تختاره، كلها مجمَّعة كدفعة واحدة بشاشة تفاصيل المهمة."""
+    بند فحص تختاره، كلها مجمَّعة كدفعة واحدة بشاشة تفاصيل المهمة.
+    حصري لصاحب الحلال (بند إصلاح، نفس تعليق animal_detail أعلاه)."""
+    if current_user.role.name != "owner":
+        abort(403)
     from app.team import task_service as tsvc
 
     animal = Animal.query.get_or_404(animal_id)
@@ -1710,6 +1724,75 @@ def barns_delete(barn_id):
     db.session.commit()
     flash(_('تم حذف حظيرة "%(name)s"', name=barn_name), "success")
     return redirect(url_for("core.barns_list"))
+
+
+# ---------- بنود الفحص (Settings ← بنود الفحص) — بند إضافي، طلبك
+# الصريح: "صاحب الحلال يستطيع الحذف والاستبدال والاضافة" ----------
+
+@core_bp.route("/settings/checkup-items")
+@login_required
+@require_permission("settings.manage")
+def checkup_items_list():
+    from app.models import CheckupItemPreset
+    run_once_per_app("checkup_item_presets_seeded", CheckupItemPreset.seed_defaults)
+    items = CheckupItemPreset.query.order_by(CheckupItemPreset.sort_order, CheckupItemPreset.id).all()
+    return render_template("checkup_items_list.html", items=items)
+
+
+@core_bp.route("/settings/checkup-items/new", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def checkup_items_new():
+    from app.models import CheckupItemPreset
+    text = (request.form.get("text") or "").strip()
+    if not text:
+        flash(_("لازم تكتب نص بند الفحص"), "error")
+        return redirect(url_for("core.checkup_items_list"))
+    max_order = db.session.query(db.func.max(CheckupItemPreset.sort_order)).scalar() or 0
+    item = CheckupItemPreset(text=text, sort_order=max_order + 1)
+    db.session.add(item)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        flash(_('بند الفحص "%(text)s" موجود من قبل', text=text), "error")
+        return redirect(url_for("core.checkup_items_list"))
+    flash(_("تمت إضافة بند الفحص"), "success")
+    return redirect(url_for("core.checkup_items_list"))
+
+
+@core_bp.route("/settings/checkup-items/<int:item_id>/edit", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def checkup_items_edit(item_id):
+    from app.models import CheckupItemPreset
+    item = CheckupItemPreset.query.get_or_404(item_id)
+    text = (request.form.get("text") or "").strip()
+    if not text:
+        flash(_("لازم تكتب نص بند الفحص"), "error")
+        return redirect(url_for("core.checkup_items_list"))
+    item.text = text
+    item.is_active = bool(request.form.get("is_active"))
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        flash(_('بند الفحص "%(text)s" موجود من قبل', text=text), "error")
+        return redirect(url_for("core.checkup_items_list"))
+    flash(_("تم تعديل بند الفحص"), "success")
+    return redirect(url_for("core.checkup_items_list"))
+
+
+@core_bp.route("/settings/checkup-items/<int:item_id>/delete", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def checkup_items_delete(item_id):
+    from app.models import CheckupItemPreset
+    item = CheckupItemPreset.query.get_or_404(item_id)
+    db.session.delete(item)
+    db.session.commit()
+    flash(_("تم حذف بند الفحص"), "success")
+    return redirect(url_for("core.checkup_items_list"))
 
 
 def _save_feeding_schedule(barn_id: int) -> None:

@@ -221,19 +221,18 @@ def owner_delete_task_final(task: Task, *, actor) -> None:
 # يومية لنعجة مختارة من نظام مهام مضاعفة مثل افحص نعجة رقم خمس ورفع
 # تقرير". قائمة بنود جاهزة تختار منها (بدل كتابة كل بند من الصفر كل
 # مرة)، + إمكانية إضافة بند مخصَّص حر.
-ANIMAL_CHECKUP_ITEM_PRESETS = [
-    "فحص الحرارة والنبض",
-    "فحص الجلد والصوف (طفيليات خارجية)",
-    "فحص العين والأنف",
-    "فحص الخف/الحافر",
-    "فحص الخراجات أو الكتل الظاهرة",
-    "فحص الشهية والحالة العامة",
-    "رفع تقرير حالة الرأس",
-]
+#
+# بند إضافي (طلبك الصريح: "صاحب الحلال يستطيع الحذف والاستبدال
+# والاضافة") — القائمة كانت ثابتة بالكود هنا باسم
+# `ANIMAL_CHECKUP_ITEM_PRESETS`، صارت مُدارة من قاعدة البيانات عبر
+# `CheckupItemPreset.active_texts()` (الإعدادات ← بنود الفحص) —
+# راجع `app/core/routes.py` (شاشة تفاصيل الرأس + الاقتراح الذكي)
+# و`app/core/settings_routes...` (شاشة الإدارة) لنقاط الاستخدام.
 
 
 def assign_animal_checkup(*, actor, animal, items: list[str], assignee_id=None,
-                           target_role=None, due_date=None) -> list[Task]:
+                           target_role=None, due_date=None,
+                           source_type="AnimalCheckupRequest") -> list[Task]:
     """يولّد مهمة مستقلة لكل بند فحص، كلهم مربوطين ببعض بنفس آلية
     "الدفعة" الموجودة أصلاً (`source_type`/`source_id`، بند 50) — صفر
     جدول جديد. الدكتور يشوفهم كمجموعة واحدة بشاشة تفاصيل أي مهمة منهم
@@ -269,7 +268,12 @@ def assign_animal_checkup(*, actor, animal, items: list[str], assignee_id=None,
         task.barn_id = animal.barn_id
         if source_id is None:
             source_id = task.id
-        task.source_type = "AnimalCheckupRequest"
+        # بند إضافي (طلبك الصريح: فحوصات دورية تلقائية) — `source_type`
+        # قابل للتخصيص الآن (افتراضياً "AnimalCheckupRequest" نفس
+        # القديم بالضبط) عشان `auto_checkup_service.py` يميّز دفعاته
+        # التلقائية (مرض/دوري) عن أي طلب يدوي، بدون كسر `batch_siblings`
+        # (كل دفعة لسا لها source_type/source_id موحَّد لكل بنودها).
+        task.source_type = source_type
         task.source_id = source_id
         tasks.append(task)
     db.session.commit()

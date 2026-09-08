@@ -43,6 +43,19 @@ def _generate_if_needed_today():
     # داخل `daily_task_service`) — كان يشتغل متأخراً 3 ساعات عن توقيت
     # السعودية الفعلي.
     daily_task_service.generate_daily_husbandry_tasks(now=farm_now_naive())
+
+    # فحوصات دورية تلقائية (بند إضافي، طلبك الصريح: "النظام يقوم بهذا
+    # الطلب... يجبره") — نفس الحارس اليومي أعلاه بالضبط، فشلها ما يوقف
+    # توليد مهام الرعاية اليومية (استثناء عام + rollback، نفس فلسفة
+    # التقارير اليومية تحت).
+    from app.core import auto_checkup_service
+    try:
+        auto_checkup_service.generate_automatic_checkups(today=today)
+    except Exception as e:
+        from flask import current_app
+        current_app.logger.warning("auto_checkup_service failed: %s", e)
+        db.session.rollback()
+
     settings.last_daily_tasks_auto_run = today
     db.session.commit()
 
