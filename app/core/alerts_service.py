@@ -58,7 +58,7 @@ def _vaccinations_due(fs: FarmSettings) -> list[dict]:
         if v.next_due_date <= window_end:
             overdue = v.next_due_date < today
             alerts.append({
-                "category": _("تحصين"), "icon": "💉",
+                "category_key": "vaccination_due", "category": _("تحصين"), "icon": "💉",
                 "label": _("%(no)s — %(vaccine)s", no=v.animal.animal_no, vaccine=v.vaccine_name),
                 "detail": (_("متأخر منذ %(d)s", d=v.next_due_date) if overdue
                            else _("مستحق بتاريخ %(d)s", d=v.next_due_date)),
@@ -84,7 +84,7 @@ def _withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
         until = withdrawal_map.get(a.id)
         if until and until <= window_end:
             alerts.append({
-                "category": _("فترة سحب"), "icon": "⏳",
+                "category_key": "withdrawal_ending", "category": _("فترة سحب"), "icon": "⏳",
                 "label": _("%(no)s — تصير آمنة للبيع/الذبح بتاريخ %(d)s", no=a.animal_no, d=until),
                 "detail": "", "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
             })
@@ -104,7 +104,7 @@ def _milk_withdrawal_ending_soon(fs: FarmSettings) -> list[dict]:
         until = withdrawal_map.get(a.id)
         if until and until <= window_end:
             alerts.append({
-                "category": _("فترة سحب حليب"), "icon": "🥛",
+                "category_key": "milk_withdrawal_ending", "category": _("فترة سحب حليب"), "icon": "🥛",
                 "label": _("%(no)s — يصير حليبها آمناً بتاريخ %(d)s", no=a.animal_no, d=until),
                 "detail": "", "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
             })
@@ -115,7 +115,7 @@ def _near_births() -> list[dict]:
     from app.core.animal_filters_service import get_filtered
     return [
         {
-            "category": _("ولادة متوقعة"), "icon": "🍼",
+            "category_key": "near_birth", "category": _("ولادة متوقعة"), "icon": "🍼",
             "label": _("%(no)s — ولادة متوقعة قريباً", no=a.animal_no),
             "detail": "", "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
         }
@@ -135,7 +135,7 @@ def _device_removal_due(fs: FarmSettings) -> list[dict]:
             overdue = d.planned_remove_at < today
             ewe = d.program.ewe if d.program else None
             alerts.append({
-                "category": _("جهاز تكاثر"), "icon": "🔧",
+                "category_key": "repro_device_removal", "category": _("جهاز تكاثر"), "icon": "🔧",
                 "label": _("%(no)s — إزالة %(device)s", no=(ewe.animal_no if ewe else '-'), device=d.device_type),
                 "detail": (_("متأخر منذ %(d)s", d=d.planned_remove_at) if overdue
                            else _("موعد الإزالة %(d)s", d=d.planned_remove_at)),
@@ -150,7 +150,7 @@ def _stale_open_diseases(fs: FarmSettings) -> list[dict]:
     rows = Disease.query.filter(Disease.status == "active", Disease.date <= cutoff).all()
     return [
         {
-            "category": _("مرض مفتوح"), "icon": "🌡️",
+            "category_key": "open_disease", "category": _("مرض مفتوح"), "icon": "🌡️",
             "label": _("%(no)s — %(name)s", no=d.animal.animal_no, name=d.disease_name),
             "detail": _("مفتوح منذ %(d)s بدون إغلاق", d=d.date),
             "urgent": True, "animal_id": d.animal_id, "barn_id": d.animal.barn_id,
@@ -163,7 +163,7 @@ def _out_of_order_animals() -> list[dict]:
     rows = ProductionWorkflow.query.filter_by(status="out_of_order").all()
     return [
         {
-            "category": _("ترتيب غير منتظم"), "icon": "⚠️",
+            "category_key": "out_of_order_cycle", "category": _("ترتيب غير منتظم"), "icon": "⚠️",
             "label": _("%(no)s — دورة الإنتاج بترتيب غير منتظم", no=wf.animal.animal_no),
             "detail": wf.missing_items or "",
             "urgent": True, "animal_id": wf.animal_id, "barn_id": wf.animal.barn_id,
@@ -192,7 +192,7 @@ def _stalled_workflow(fs: FarmSettings) -> list[dict]:
         if updated and updated <= cutoff:
             days_stuck = (datetime.now(timezone.utc) - updated).days
             alerts.append({
-                "category": _("توقّف بدورة الإنتاج"), "icon": "⏸️",
+                "category_key": "stalled_workflow", "category": _("توقّف بدورة الإنتاج"), "icon": "⏸️",
                 "label": _("%(no)s — واقف بمرحلة '%(stage)s' منذ %(days)s يوم",
                            no=wf.animal.animal_no, stage=wf.stage_name, days=days_stuck),
                 "detail": wf.missing_items.replace("|", "؛ "),
@@ -208,7 +208,7 @@ def _stale_new_reports(fs: FarmSettings) -> list[dict]:
     rows = Report.query.filter(Report.status == "new", Report.created_at <= cutoff).all()
     return [
         {
-            "category": _("بلاغ منتظر"), "icon": "📋",
+            "category_key": "stale_report", "category": _("بلاغ منتظر"), "icon": "📋",
             "label": _("بلاغ #%(id)s من %(name)s — بانتظار الاستلام",
                        id=r.id, name=(r.reporter.name if r.reporter else '-')),
             "detail": r.description[:80], "urgent": True, "animal_id": r.animal_id,
@@ -224,7 +224,7 @@ def _ready_to_sell_now() -> list[dict]:
     from app.core.smart_sale_service import get_recommendations
     return [
         {
-            "category": _("جاهز للبيع"), "icon": "💰",
+            "category_key": "ready_to_sell", "category": _("جاهز للبيع"), "icon": "💰",
             "label": _("%(no)s — %(label)s (درجة %(score)s)",
                        no=row['animal'].animal_no, label=row['label'], score=row['score']),
             "detail": " — ".join(row["reasons"]), "urgent": True, "animal_id": row["animal"].id,
@@ -250,7 +250,7 @@ def _delayed_estrus(fs: FarmSettings) -> list[dict]:
     for a in females:
         if delayed_map.get(a.id):
             alerts.append({
-                "category": _("تأخر شياع"), "icon": "🔁",
+                "category_key": "delayed_estrus", "category": _("تأخر شياع"), "icon": "🔁",
                 "label": _("%(no)s — تأخر حملها أكثر من %(days)s يوم", no=a.animal_no, days=fs.female_delayed_conception_days),
                 "detail": _("بدون تقريع/حمل جديد منذ آخر ولادة أو تلقيح مسجَّل"),
                 "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
@@ -274,7 +274,7 @@ def _incomplete_animal_data() -> list[dict]:
         missing = dcs.missing_fields(a)
         for field in missing:
             alerts.append({
-                "category": _("بيانات ناقصة"), "icon": "📋",
+                "category_key": "incomplete_animal_data", "category": _("بيانات ناقصة"), "icon": "📋",
                 "label": _("%(no)s — ناقص: %(field)s", no=a.animal_no, field=dcs.FIELD_LABELS_AR[field]),
                 "detail": _("أكمّل هذا الحقل من شاشة تعديل الحيوان."),
                 "urgent": False, "animal_id": a.id, "barn_id": a.barn_id,
@@ -290,7 +290,7 @@ def _barns_without_responsible_worker() -> list[dict]:
     rows = Barn.query.filter(Barn.responsible_worker_id.is_(None)).all()
     return [
         {
-            "category": _("حظيرة بدون مسؤول"), "icon": "👷",
+            "category_key": "barn_without_worker", "category": _("حظيرة بدون مسؤول"), "icon": "👷",
             "label": _("حظيرة %(no)s (%(name)s) — بدون عامل مسؤول", no=b.barn_no, name=b.display_name()),
             "detail": _("المهام والتنبيهات التلقائية لهذي الحظيرة ما توجّه لأحد لين تحدد مسؤولاً."),
             "urgent": False, "animal_id": None, "barn_id": b.id,
@@ -328,7 +328,7 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
             if needed > available:
                 shortage = needed - available
                 alerts.append({
-                    "category": _("نقص مخزون تحصين مجدول"), "icon": "📦",
+                    "category_key": "vaccination_stock_shortage", "category": _("نقص مخزون تحصين مجدول"), "icon": "📦",
                     "label": label,
                     "detail": _("الاحتياج المتوقع %(needed).2f %(unit)s لـ%(head)s رأس، "
                                 "والمتوفر %(available)g %(unit)s فقط — يوصى بشراء "
@@ -338,7 +338,7 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
                 })
             else:
                 alerts.append({
-                    "category": _("تذكير تحصين مجدول"), "icon": "📅",
+                    "category_key": "vaccination_schedule_reminder", "category": _("تذكير تحصين مجدول"), "icon": "📅",
                     "label": label,
                     "detail": _("المخزون كافٍ (%(available)g %(unit)s) لـ%(head)s رأس — جهّز الحظيرة بالموعد.",
                                 available=available, unit=unit, head=head_count),
@@ -346,7 +346,7 @@ def _upcoming_vaccination_stock_shortage(fs: FarmSettings) -> list[dict]:
                 })
         else:
             alerts.append({
-                "category": _("تذكير تحصين مجدول"), "icon": "📅",
+                "category_key": "vaccination_schedule_reminder", "category": _("تذكير تحصين مجدول"), "icon": "📅",
                 "label": label,
                 "detail": _("%(head)s رأس بالحظيرة حالياً — سجّل جرعة افتراضية على الدواء لمقارنة المخزون تلقائياً.",
                             head=head_count),
@@ -376,7 +376,7 @@ def _late_time_critical_tasks(fs: FarmSettings, *, now: datetime | None = None) 
             if t.completed_at and t.completed_at > deadline:
                 who = t.accepted_by.name if t.accepted_by else (t.assignee.name if t.assignee else _("غير محدد"))
                 alerts.append({
-                    "category": _("مهمة أُنجزت متأخرة عن موعدها"), "icon": "🕘",
+                    "category_key": "task_completed_late", "category": _("مهمة أُنجزت متأخرة عن موعدها"), "icon": "🕘",
                     "label": _("%(title)s — أُنجزت الساعة %(time)s", title=t.title, time=t.completed_at.strftime('%H:%M')),
                     "detail": _("موعدها كان %(due)s — نفّذها: %(who)s.", due=t.due_time.strftime('%H:%M'), who=who),
                     "urgent": False, "animal_id": None, "barn_id": t.barn_id,
@@ -385,7 +385,7 @@ def _late_time_critical_tasks(fs: FarmSettings, *, now: datetime | None = None) 
         elif now > deadline:
             who = t.assignee.name if t.assignee else _("بدون عامل مكلَّف")
             alerts.append({
-                "category": _("مهمة متأخرة عن موعدها"), "icon": "⏰",
+                "category_key": "task_overdue", "category": _("مهمة متأخرة عن موعدها"), "icon": "⏰",
                 "label": _("%(title)s — لسا ما انجزت", title=t.title),
                 "detail": _("موعدها كان %(due)s — العامل المكلَّف: %(who)s.", due=t.due_time.strftime('%H:%M'), who=who),
                 "urgent": True, "animal_id": None, "barn_id": t.barn_id,
@@ -413,7 +413,7 @@ def _equipment_needs_maintenance() -> list[dict]:
             who = last.borrowed_by.name if last.borrowed_by else None
         detail = _("آخر من استعملها: %(who)s", who=who) if who else _("راجع شاشة حركة الصنف لمعرفة آخر من استعملها.")
         alerts.append({
-            "category": _("معدة تحتاج صيانة"), "icon": "🔧",
+            "category_key": "equipment_needs_maintenance", "category": _("معدة تحتاج صيانة"), "icon": "🔧",
             "label": _("%(name)s — تحتاج صيانة", name=item.name),
             "detail": detail,
             "urgent": False, "animal_id": None, "barn_id": None,
@@ -493,7 +493,7 @@ def _payroll_month_end_reminder() -> list[dict]:
             else:
                 detail = _("راتب شهر سابق ما تأكَّد بعد — متأخر، راجعه بأقرب فرصة.")
             alerts.append({
-                "category": _("تذكير رواتب نهاية الشهر"), "icon": "💰",
+                "category_key": "payroll_month_end", "category": _("تذكير رواتب نهاية الشهر"), "icon": "💰",
                 "label": _("راتب %(name)s — %(m)s/%(y)s", name=w.name, m=m, y=y),
                 "detail": detail,
                 "urgent": (is_current_month and today.day == days_in_month) or not is_current_month,
@@ -538,7 +538,7 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
             continue
         expired = expiry < today
         alerts.append({
-            "category": _("قرب انتهاء صلاحية دواء"), "icon": "⏳",
+            "category_key": "medicine_expiring", "category": _("قرب انتهاء صلاحية دواء"), "icon": "⏳",
             "label": _("%(name)s — %(qty)g %(unit)s", name=p.name, qty=(p.available_qty or 0), unit=(p.unit or '')),
             "detail": (_("منتهي الصلاحية منذ %(d)s", d=today - expiry) if expired
                        else _("تنتهي صلاحيته بتاريخ %(d)s", d=expiry)),
@@ -575,7 +575,7 @@ def _barn_physiology_target_missing() -> list[dict]:
         if Barn.query.filter_by(barn_type=target_barn_type).first():
             continue
         alerts.append({
-            "category": _("حظيرة هدف ناقصة"), "icon": "🏚️",
+            "category_key": "target_barn_missing", "category": _("حظيرة هدف ناقصة"), "icon": "🏚️",
             "label": _("%(n)s رأس بحاجة حظيرة \"%(type)s\" — ما أنشأتها بعد", n=len(animal_ids), type=target_barn_type),
             "detail": _("أنشئ حظيرة بنوع \"%(type)s\" من شاشة الحظائر، عشان النظام "
                         "يقدر يقترح نقل هالرؤوس تلقائياً (بانتظار موافقة الدكتور دائماً).", type=target_barn_type),
@@ -588,7 +588,7 @@ def _barn_physiology_target_missing() -> list[dict]:
     ).count()
     if open_pregnant_move_tasks and not Barn.query.filter_by(barn_type="حوامل").first():
         alerts.append({
-            "category": _("حظيرة هدف ناقصة"), "icon": "🏚️",
+            "category_key": "target_barn_missing", "category": _("حظيرة هدف ناقصة"), "icon": "🏚️",
             "label": _("%(n)s مهمة \"نقل لحظيرة الحوامل\" بانتظار حظيرة \"حوامل\" غير موجودة", n=open_pregnant_move_tasks),
             "detail": _("أنشئ حظيرة بنوع \"حوامل\" من شاشة الحظائر — بدونها المهمة ما تقدر تنقل الرأس فعلياً "
                         "لما تُنجَز (تقدر تختار حظيرة بديلة يدوياً وقت الإنجاز لو ما تبي تنشئ هذا النوع)."),
@@ -621,7 +621,7 @@ def _weight_schedule_missing_reference_date() -> list[dict]:
     if not missing:
         return []
     return [{
-        "category": _("بيانات ناقصة"), "icon": "⚖️",
+        "category_key": "incomplete_animal_data", "category": _("بيانات ناقصة"), "icon": "⚖️",
         "label": _("%(n)s رأس ما راح يدخل جدولة الأوزان المتأخرة إطلاقاً", n=len(missing)),
         "detail": _("ما عندها وزن مسجَّل ولا تاريخ ولادة/شراء/دخول — بدون أي تاريخ مرجعي، "
                     "النظام ما يقدر يحسب \"من متى ما اتوزنت\"، فتنبيه الوزن المتأخر ما يشتغل "
@@ -647,7 +647,7 @@ def _isolation_without_barn() -> list[dict]:
     if rows:
         animal_ids = sorted({t.animal_id for t in rows if t.animal_id})
         alerts.append({
-            "category": _("عزل بدون حظيرة مصنّفة"), "icon": "🚧",
+            "category_key": "isolation_without_barn", "category": _("عزل بدون حظيرة مصنّفة"), "icon": "🚧",
             "label": _("%(n)s رأس بمهام عزل بدون حظيرة عزل فعلية", n=len(animal_ids)),
             "detail": _("ما فيه حظيرة بنوع \"عزل\" بالنظام — الأم والمولود ما انتقلوا فعلياً "
                         "لحظيرة عزل منفصلة عن باقي القطيع. أنشئ حظيرة جديدة بنوع \"عزل\" من "
@@ -667,7 +667,7 @@ def _isolation_without_barn() -> list[dict]:
     if abortion_rows and not Barn.query.filter_by(barn_type="عزل").first():
         animal_ids2 = sorted({t.animal_id for t in abortion_rows if t.animal_id})
         alerts.append({
-            "category": _("عزل بدون حظيرة مصنّفة"), "icon": "🚧",
+            "category_key": "isolation_without_barn", "category": _("عزل بدون حظيرة مصنّفة"), "icon": "🚧",
             "label": _("%(n)s رأس أجهض بدون عزل فعلي — ما فيه حظيرة عزل", n=len(animal_ids2)),
             "detail": _("ما فيه حظيرة بنوع \"عزل\" بالنظام — الرأس المُجهِض ما انتقل لعزل طبي "
                         "منفصل ولسا يخالط باقي القطيع رغم احتمال عدوى. أنشئ حظيرة بنوع \"عزل\" "
@@ -697,7 +697,7 @@ def _feed_distribution_shortage() -> list[dict]:
     ).all())
     return [
         {
-            "category": _("توزيع علف ناقص"), "icon": "🥣",
+            "category_key": "feed_distribution_shortage", "category": _("توزيع علف ناقص"), "icon": "🥣",
             "label": _("%(title)s — العلف ما اتوزّع بالكامل", title=t.title),
             "detail": (t.completion_note or "").strip(),
             "urgent": True, "animal_id": t.animal_id, "barn_id": t.barn_id,
@@ -754,7 +754,7 @@ def _feed_depletion_forecast() -> list[dict]:
             continue
         urgent = available <= 0 or days_remaining <= 2
         alerts.append({
-            "category": _("توقّع نفاد علف"), "icon": "⏳",
+            "category_key": "feed_depletion_forecast", "category": _("توقّع نفاد علف"), "icon": "⏳",
             "label": _("%(name)s — يتوقّع نفاده خلال %(days).1f يوم", name=feed.name, days=days_remaining),
             "detail": _("المتبقي %(available).1f %(unit)s، بمعدل استهلاك "
                         "%(rate).1f %(unit)s/يوم آخر %(span)s يوم — يوصى بطلب شراء الآن.",
@@ -783,7 +783,7 @@ def _failed_tasks_pending_review() -> list[dict]:
             .filter(Task.failed_at >= cutoff).all())
     return [
         {
-            "category": _("مهمة متعذّرة بانتظار المراجعة"), "icon": "🚫",
+            "category_key": "failed_task_pending_review", "category": _("مهمة متعذّرة بانتظار المراجعة"), "icon": "🚫",
             "label": _("%(title)s — %(reason)s", title=t.title, reason=(t.failure_reason or _("سبب غير محدد"))),
             "detail": (t.completion_note or "").strip() or _("بدون ملاحظة إضافية من العامل."),
             "urgent": True, "animal_id": t.animal_id, "barn_id": t.barn_id,
@@ -810,7 +810,7 @@ def _suggested_tasks_pending_approval() -> list[dict]:
             .filter(Task.created_at <= cutoff).all())
     return [
         {
-            "category": _("مهمة مقترحة بانتظار الاعتماد"), "icon": "📥",
+            "category_key": "suggested_task_pending_approval", "category": _("مهمة مقترحة بانتظار الاعتماد"), "icon": "📥",
             "label": _("%(title)s — بانتظار اعتمادك من قبل %(d)s", title=t.title, d=t.created_at.date()),
             "detail": _("افتح شاشة \"مهام مقترحة بانتظار الاعتماد\" واعتمدها أو أجّلها أو احذفها."),
             "urgent": False, "animal_id": t.animal_id, "barn_id": t.barn_id,
@@ -881,7 +881,7 @@ def _weight_gain_underperformers() -> list[dict]:
                 continue
             animal = animal_by_id[animal_id]
             alerts.append({
-                "category": _("تباطؤ نمو مشبوه"), "icon": "📉",
+                "category_key": "weight_gain_underperformer", "category": _("تباطؤ نمو مشبوه"), "icon": "📉",
                 "label": _("%(no)s — معدل نموه %(rate).2f كجم/يوم", no=animal.animal_no, rate=rate),
                 "detail": (_("ينقص وزنه فعلياً (متوسط حظيرته %(avg).2f كجم/يوم) — يوصى بفحص صحي عاجل", avg=barn_avg)
                            if losing_weight else
@@ -985,31 +985,41 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
 # (بعضها معلوماتي بحت زي "فترة سحب" — تنتهي لحالها، ما فيه إجراء)،
 # فالفئات الناقصة من هالخريطة عمداً تبقى بدون زر (تفصيلها النصي يبقى
 # كافياً). كل دالة تاخذ animal_id وترجع endpoint + kwargs لـ`url_for`.
+#
+# بند إصلاح (طلبك، صورة حية: زر "حل المشكلة" يطلع بالعربي، بالإنجليزي
+# ما يطلع إطلاقاً) — كان المفتاح هنا نفس نص `category` العربي، و
+# `category` نفسه صار يُترجَم فوراً بـ`_()` وقت البناء (نص العرض) —
+# فلحساب لغته إنجليزية، `alert["category"]` يصير القيمة الإنجليزية
+# ("Missing data" مثلاً) وما تطابق أبداً أي مفتاح هنا، فـ`alert_action_url`
+# يرجّع `None` دايماً والزر يختفي بصمت. المفتاح صار `category_key`
+# ثابت غير قابل للترجمة (نفس مبدأ `code`/`name_en` بكل الإصلاحات
+# السابقة)، منفصل تماماً عن `category` المترجَم للعرض بس.
 _ALERT_ACTION_ROUTES = {
-    "تحصين": lambda aid: ("health.vaccinations_new", {}),
-    "مرض مفتوح": lambda aid: ("health.diseases_list", {}),
-    "بيانات ناقصة": lambda aid: ("core.animals_edit", {"animal_id": aid}),
-    "ترتيب غير منتظم": lambda aid: ("core.animal_workflow", {"animal_id": aid}),
-    "توقّف بدورة الإنتاج": lambda aid: ("core.animal_workflow", {"animal_id": aid}),
-    "جاهز للبيع": lambda aid: ("core.animal_workflow", {"animal_id": aid, "_anchor": "exit"}),
-    "تأخر شياع": lambda aid: ("repro.programs_list", {}),
-    "جهاز تكاثر": lambda aid: ("repro.programs_list", {}),
-    "تباطؤ نمو مشبوه": lambda aid: ("core.animals_edit", {"animal_id": aid}),
-    "مهمة مقترحة بانتظار الاعتماد": lambda aid: ("team.tasks_list", {"_anchor": "suggested-tasks"}),
-    "تذكير رواتب نهاية الشهر": lambda aid: ("team.payroll_list", {}),
-    "توقّع نفاد علف": lambda aid: ("feed.purchase_new", {}),
+    "vaccination_due": lambda aid: ("health.vaccinations_new", {}),
+    "open_disease": lambda aid: ("health.diseases_list", {}),
+    "incomplete_animal_data": lambda aid: ("core.animals_edit", {"animal_id": aid}),
+    "out_of_order_cycle": lambda aid: ("core.animal_workflow", {"animal_id": aid}),
+    "stalled_workflow": lambda aid: ("core.animal_workflow", {"animal_id": aid}),
+    "ready_to_sell": lambda aid: ("core.animal_workflow", {"animal_id": aid, "_anchor": "exit"}),
+    "delayed_estrus": lambda aid: ("repro.programs_list", {}),
+    "repro_device_removal": lambda aid: ("repro.programs_list", {}),
+    "weight_gain_underperformer": lambda aid: ("core.animals_edit", {"animal_id": aid}),
+    "suggested_task_pending_approval": lambda aid: ("team.tasks_list", {"_anchor": "suggested-tasks"}),
+    "payroll_month_end": lambda aid: ("team.payroll_list", {}),
+    "feed_depletion_forecast": lambda aid: ("feed.purchase_new", {}),
 }
 
 
 def alert_action_url(alert: dict) -> str | None:
     """رابط "حل هذي المشكلة" لتنبيه واحد — يستخدم `_ALERT_ACTION_ROUTES`
-    أعلاه. يرجّع None لو الفئة ما عندها إجراء مباشر (تبقى معلوماتية)."""
+    أعلاه، بمفتاح `category_key` الثابت (مو `category` المترجَم). يرجّع
+    None لو الفئة ما عندها إجراء مباشر (تبقى معلوماتية)."""
     from flask import url_for
-    if alert.get("category") == "معدة تحتاج صيانة" and alert.get("equipment_id"):
+    if alert.get("category_key") == "equipment_needs_maintenance" and alert.get("equipment_id"):
         return url_for("equipment.items_edit", item_id=alert["equipment_id"])
-    if alert.get("category") in ("مهمة متأخرة عن موعدها", "مهمة أُنجزت متأخرة عن موعدها") and alert.get("task_id"):
+    if alert.get("category_key") in ("task_overdue", "task_completed_late") and alert.get("task_id"):
         return url_for("team.task_detail", task_id=alert["task_id"])
-    resolver = _ALERT_ACTION_ROUTES.get(alert.get("category"))
+    resolver = _ALERT_ACTION_ROUTES.get(alert.get("category_key"))
     if not resolver:
         return None
     endpoint, kwargs = resolver(alert.get("animal_id"))

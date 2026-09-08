@@ -66,7 +66,7 @@ def test_fresh_suggested_task_not_yet_flagged(app):
 
 def test_alert_action_url_points_to_tasks_list(app):
     with app.test_request_context():
-        alert = {"category": "مهمة مقترحة بانتظار الاعتماد", "animal_id": None}
+        alert = {"category_key": "suggested_task_pending_approval", "animal_id": None}
         url = alerts_service.alert_action_url(alert)
         assert url is not None
         assert "/team/tasks" in url

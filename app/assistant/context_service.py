@@ -136,7 +136,11 @@ def disease_summary() -> dict:
 
 def vaccinations_due_summary() -> dict:
     alerts = alerts_service.get_alerts()
-    vaccine_alerts = [a for a in alerts if a["category"] == "تحصين"]
+    # بند إصلاح (فحص عميق — نفس خلل زر "حل المشكلة" بالضبط) — كانت
+    # تقارن مع النص العربي الخام لـ`category`، اللي صار مترجَماً فوراً
+    # وقت البناء — لحساب إنجليزي ترجع القائمة فاضية دايماً. المقارنة
+    # الصحيحة بـ`category_key` الثابت غير القابل للترجمة.
+    vaccine_alerts = [a for a in alerts if a.get("category_key") == "vaccination_due"]
     return {
         "count": len(vaccine_alerts),
         "overdue_count": sum(1 for a in vaccine_alerts if a["urgent"]),
