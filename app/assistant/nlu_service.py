@@ -14,6 +14,7 @@
 **قاعدة محترمة بكل رد يولّده هذا الملف**: "المساعد قرار مو طبيب" — ما فيه
 أي حساب جرعة دواء أو تشخيص نهائي بأي مسار هنا.
 """
+import re
 from dataclasses import dataclass, field
 from typing import Callable
 from app.extensions import db
@@ -64,6 +65,123 @@ def _looks_like_howto_action_question(normalized_text: str) -> bool:
     has_marker = any(m in normalized_text for m in _HOWTO_QUESTION_MARKERS)
     has_action_verb = any(v in normalized_text for v in _HOWTO_ACTION_VERBS)
     return has_marker and has_action_verb
+
+
+# بند إضافي (طلبك الصريح، صورة حية: دكتور سأل "عطي بيانات راس رقم 1"
+# ورجع "ما فهمت سؤالك" رغم إن السؤال واضح وبيانات الرأس موجودة فعلاً)
+# — نيتان محليتان جديدتان (بيانات رأس محدَّد، عدد رؤوس حظيرة محدَّدة)
+# ما تعتمدان على Gemini إطلاقاً (`INTENTS` بالأسفل كلها كذا فلسفتها —
+# موثوقة دايماً حتى لو المفتاح غير مفعَّل أو فشل الاتصال). الاستخراج
+# على النص الأصلي (مو المطبَّع) عشان رقم الرأس يحافظ على شرطاته
+# (`normalize()` تشيل علامات الترقيم فتكسر أرقام زي "A-001").
+_ANIMAL_DATA_WORDS = ["بيانات", "معلومات", "data", "info"]
+_ANIMAL_WORDS = ["راس", "رأس", "حيوان", "animal", "head"]
+_BARN_WORDS = ["حظيره", "حظيرة", "barn"]
+_COUNT_WORDS = ["كم", "عدد", "how many"]
+
+
+def _looks_like_animal_data_question(normalized_text: str) -> bool:
+    return (any(w in normalized_text for w in _ANIMAL_DATA_WORDS)
+            and any(w in normalized_text for w in _ANIMAL_WORDS))
+
+
+def _looks_like_barn_count_question(normalized_text: str) -> bool:
+    return (any(w in normalized_text for w in _COUNT_WORDS)
+            and any(w in normalized_text for w in _ANIMAL_WORDS)
+            and any(w in normalized_text for w in _BARN_WORDS))
+
+
+def _extract_after_marker(original_text: str, markers: list[str]) -> str | None:
+    for marker in markers:
+        m = re.search(rf"{marker}\s*[:#]?\s*([^\s؟?]+(?:\s+[^\s؟?]+)?)", original_text, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+    return None
+
+
+def _extract_animal_query(original_text: str) -> str | None:
+    found = _extract_after_marker(original_text, ["رقم", "number"])
+    if found:
+        return found
+    # ما فيه "رقم" صراحة — آخر توكن فيه رقم (يشبه رقم حيوان زي A-001 أو 405).
+    tokens = re.findall(r"[\w\-]+", original_text)
+    for tok in reversed(tokens):
+        if any(ch.isdigit() for ch in tok):
+            return tok
+    return None
+
+
+def _extract_barn_query(original_text: str) -> str | None:
+    return _extract_after_marker(original_text, ["حظيرة", "حظيره", "barn"])
+
+
+def _handle_animal_data_question(user, lang: str, original_text: str) -> str | None:
+    """يرجع الرد النصي، أو None لو ما قدر يستخرج استعلام واضح (يترك
+    الفرصة لمسارات الفهم الثانية بدل ما يرجع رد فاضي مضلِّل)."""
+    from app.assistant import agent_tools
+    query = _extract_animal_query(original_text)
+    if not query:
+        return None
+    result = agent_tools.search_animal_or_barn(query)
+    if result["status"] == "not_found":
+        return tr("animal_data_not_found", lang, query=query)
+    if result["status"] == "ambiguous":
+        animal_cands = [c for c in result["candidates"] if c["type"] == "animal"]
+        if not animal_cands:
+            return None
+        names = "، ".join(c["animal_no"] for c in animal_cands)
+        return tr("animal_data_ambiguous", lang, query=query, candidates=names)
+    if result["type"] != "animal":
+        return None
+
+    history = agent_tools.animal_history(result["animal_no"])
+    if history["status"] != "found":
+        return tr("animal_data_not_found", lang, query=query)
+
+    lines = [tr("animal_data_header", lang, animal_no=history["animal_no"])]
+    lines.append(
+        tr("animal_data_barn", lang, barn_name=history["barn_name"])
+        if history["barn_name"] else tr("animal_data_no_barn", lang)
+    )
+    if history["recent_weights"]:
+        w = history["recent_weights"][0]
+        lines.append(tr("animal_data_weight", lang, weight=w["weight_kg"], date=w["date"]))
+    else:
+        lines.append(tr("animal_data_no_weight", lang))
+    if history["open_diseases"]:
+        names = "، ".join(d["disease_name"] for d in history["open_diseases"])
+        lines.append(tr("animal_data_diseases", lang, names=names))
+    else:
+        lines.append(tr("animal_data_no_disease", lang))
+    if history["last_vaccination"]:
+        v = history["last_vaccination"]
+        lines.append(tr("animal_data_vaccination", lang, vaccine_name=v["vaccine_name"], date=v["date"]))
+    else:
+        lines.append(tr("animal_data_no_vaccination", lang))
+    return "\n".join(lines)
+
+
+def _handle_barn_count_question(user, lang: str, original_text: str) -> str | None:
+    from app.assistant import agent_tools
+    from app.models import Animal, Barn
+    query = _extract_barn_query(original_text)
+    if not query:
+        return None
+    result = agent_tools.search_animal_or_barn(query)
+    if result["status"] == "not_found":
+        return tr("barn_count_not_found", lang, query=query)
+    if result["status"] == "ambiguous":
+        barn_cands = [c for c in result["candidates"] if c["type"] == "barn"]
+        if not barn_cands:
+            return None
+        names = "، ".join(c["barn_name"] for c in barn_cands)
+        return tr("barn_count_ambiguous", lang, query=query, candidates=names)
+    if result["type"] != "barn":
+        return None
+
+    barn = Barn.query.filter_by(barn_no=result["barn_no"]).first()
+    count = Animal.query.filter_by(barn_id=barn.id, status="active").count() if barn else 0
+    return tr("barn_count_result", lang, barn_name=result["barn_name"], count=count)
 
 
 def PERMISSION_DENIED_MSG(lang="ar"):
@@ -353,6 +471,21 @@ def answer(user, message_text: str, lang: str | None = None) -> dict:
             entry = kb_hits[0]
             title, body = knowledge_base.localized_entry(entry, lang)
             return {"reply": f"**{title}**\n\n{body}", "intent_code": f"kb:{entry.code}", "answered_by": "local"}
+
+    # بيانات رأس محدَّد / عدد رؤوس حظيرة محدَّدة — قبل حلقة `INTENTS`
+    # العامة عمداً (نفس أولوية سؤال الإجراء فوق) عشان ما تختطفهم نية
+    # عامة عندها كلمة مفتاحية مشتركة ("كم"، "حيوان"...). ترجع None لو
+    # ما قدرت تستخرج استعلام واضح، فتكمل عادي لبقية المسارات (KB ثم
+    # Gemini) بدل ما توقف الطلب هنا برد فاضٍ.
+    if _looks_like_animal_data_question(normalized) and user.has_permission("animals.view"):
+        reply = _handle_animal_data_question(user, lang, message_text)
+        if reply:
+            return {"reply": reply, "intent_code": "animal_data", "answered_by": "local"}
+
+    if _looks_like_barn_count_question(normalized) and user.has_permission("animals.view"):
+        reply = _handle_barn_count_question(user, lang, message_text)
+        if reply:
+            return {"reply": reply, "intent_code": "barn_count", "answered_by": "local"}
 
     for intent in INTENTS:
         if intent.matches(normalized):

@@ -37,6 +37,8 @@ T: dict[str, dict[str, str]] = {
             "- وش التنبيهات الحالية؟\n"
             "- كم عندي مهمة اليوم؟\n"
             "- كم عدد الأمراض المفتوحة؟\n"
+            "- بيانات رأس رقم [الرقم]؟\n"
+            "- كم رأس بحظيرة [اسم الحظيرة]؟\n"
             "- إرشادات عن التفقيس، التحصينات، العزل، الشعير المستنبت، أو الأزولا."
         ),
         "en": (
@@ -49,6 +51,8 @@ T: dict[str, dict[str, str]] = {
             "- What are the current alerts?\n"
             "- How many tasks do I have today?\n"
             "- How many open disease cases?\n"
+            "- Head data for number [number]?\n"
+            "- How many heads in [barn name]?\n"
             "- Guidance on hatching, vaccinations, isolation, sprouted barley, or azolla."
         ),
         "am": (
@@ -61,6 +65,8 @@ T: dict[str, dict[str, str]] = {
             "- የአሁኑ ማንቂያዎች ምንድን ናቸው?\n"
             "- ዛሬ ስንት ተግባራት አሉኝ?\n"
             "- ስንት ክፍት የበሽታ ጉዳዮች አሉ?\n"
+            "- የራስ ቁጥር [ቁጥር] መረጃ?\n"
+            "- በ[የበረት ስም] ስንት ራሶች አሉ?\n"
             "- ስለ መፈልፈል፣ ክትባቶች፣ ማግለል፣ የበቀለ ገብስ ወይም አዞላ መመሪያ።"
         ),
         "hi": (
@@ -73,6 +79,8 @@ T: dict[str, dict[str, str]] = {
             "- वर्तमान अलर्ट क्या हैं?\n"
             "- आज मेरे पास कितने कार्य हैं?\n"
             "- कितने खुले रोग मामले हैं?\n"
+            "- नंबर [संख्या] के पशु का डेटा?\n"
+            "- [बाड़े का नाम] में कितने पशु हैं?\n"
             "- हैचिंग, टीकाकरण, आइसोलेशन, अंकुरित जौ, या एज़ोला पर मार्गदर्शन।"
         ),
     },
@@ -324,6 +332,94 @@ T: dict[str, dict[str, str]] = {
         "en": "Currently outstanding debt: {debt}",
         "am": "አሁን ያለ ያልተከፈለ ዕዳ: {debt}",
         "hi": "वर्तमान बकाया ऋण: {debt}",
+    },
+    # بند إضافي (طلبك الصريح، صورة حية: دكتور سأل "عطي بيانات راس رقم
+    # 1" ورجع "ما فهمت سؤالك" رغم إن السؤال واضح وبيانات الرأس موجودة
+    # فعلاً) — نية محلية جديدة ما تعتمد على Gemini إطلاقاً (موثوقة
+    # دايماً، نفس فلسفة كل النيات المحلية بهذا الملف).
+    "animal_data_not_found": {
+        "ar": "ما فيه رأس يطابق \"{query}\" — تأكد من الرقم وحاول مرة ثانية.",
+        "en": "No head matches \"{query}\" — double-check the number and try again.",
+        "am": "\"{query}\" የሚዛመድ ራስ የለም — ቁጥሩን አረጋግጠው እንደገና ይሞክሩ።",
+        "hi": "\"{query}\" से मेल खाने वाला कोई पशु नहीं मिला — नंबर जाँचें और फिर कोशिश करें।",
+    },
+    "animal_data_ambiguous": {
+        "ar": "فيه أكثر من نتيجة تطابق \"{query}\": {candidates}. حدد الرقم بالضبط.",
+        "en": "More than one result matches \"{query}\": {candidates}. Specify the exact number.",
+        "am": "\"{query}\" የሚዛመዱ ከአንድ በላይ ውጤቶች አሉ: {candidates}። ትክክለኛውን ቁጥር ይግለጹ።",
+        "hi": "\"{query}\" से मेल खाने वाले एक से अधिक परिणाम हैं: {candidates}। सटीक नंबर बताएं।",
+    },
+    "animal_data_header": {
+        "ar": "بيانات الرأس {animal_no}:",
+        "en": "Data for head {animal_no}:",
+        "am": "የራስ {animal_no} መረጃ:",
+        "hi": "पशु {animal_no} का डेटा:",
+    },
+    "animal_data_barn": {
+        "ar": "- الحظيرة: {barn_name}",
+        "en": "- Barn: {barn_name}",
+        "am": "- በረት: {barn_name}",
+        "hi": "- बाड़ा: {barn_name}",
+    },
+    "animal_data_no_barn": {
+        "ar": "- الحظيرة: غير محدَّدة",
+        "en": "- Barn: not set",
+        "am": "- በረት: አልተገለጸም",
+        "hi": "- बाड़ा: तय नहीं",
+    },
+    "animal_data_weight": {
+        "ar": "- آخر وزن: {weight} كجم ({date})",
+        "en": "- Last weight: {weight} kg ({date})",
+        "am": "- የመጨረሻ ክብደት: {weight} ኪግ ({date})",
+        "hi": "- अंतिम वज़न: {weight} किग्रा ({date})",
+    },
+    "animal_data_no_weight": {
+        "ar": "- ما فيه وزن مسجَّل بعد.",
+        "en": "- No weight recorded yet.",
+        "am": "- እስካሁን የተመዘገበ ክብደት የለም።",
+        "hi": "- अभी तक कोई वज़न दर्ज नहीं है।",
+    },
+    "animal_data_diseases": {
+        "ar": "- أمراض مفتوحة: {names}",
+        "en": "- Open diseases: {names}",
+        "am": "- ክፍት በሽታዎች: {names}",
+        "hi": "- खुली बीमारियाँ: {names}",
+    },
+    "animal_data_no_disease": {
+        "ar": "- ما فيه أمراض مفتوحة حالياً.",
+        "en": "- No open diseases currently.",
+        "am": "- አሁን ክፍት በሽታዎች የሉም።",
+        "hi": "- फ़िलहाल कोई खुली बीमारी नहीं है।",
+    },
+    "animal_data_vaccination": {
+        "ar": "- آخر تحصين: {vaccine_name} بتاريخ {date}",
+        "en": "- Last vaccination: {vaccine_name} on {date}",
+        "am": "- የመጨረሻ ክትባት: {vaccine_name} በ{date}",
+        "hi": "- अंतिम टीका: {vaccine_name}, दिनांक {date}",
+    },
+    "animal_data_no_vaccination": {
+        "ar": "- ما فيه تحصين مسجَّل بعد.",
+        "en": "- No vaccination recorded yet.",
+        "am": "- እስካሁን የተመዘገበ ክትባት የለም።",
+        "hi": "- अभी तक कोई टीका दर्ज नहीं है।",
+    },
+    "barn_count_not_found": {
+        "ar": "ما فيه حظيرة تطابق \"{query}\".",
+        "en": "No barn matches \"{query}\".",
+        "am": "\"{query}\" የሚዛመድ በረት የለም።",
+        "hi": "\"{query}\" से मेल खाने वाला कोई बाड़ा नहीं मिला।",
+    },
+    "barn_count_ambiguous": {
+        "ar": "فيه أكثر من حظيرة تطابق \"{query}\": {candidates}. حدد الاسم/الرقم بالضبط.",
+        "en": "More than one barn matches \"{query}\": {candidates}. Specify the exact name/number.",
+        "am": "\"{query}\" የሚዛመዱ ከአንድ በላይ በረቶች አሉ: {candidates}። ትክክለኛውን ስም/ቁጥር ይግለጹ።",
+        "hi": "\"{query}\" से मेल खाने वाले एक से अधिक बाड़े हैं: {candidates}। सटीक नाम/नंबर बताएं।",
+    },
+    "barn_count_result": {
+        "ar": "حظيرة {barn_name} فيها {count} رأس نشط حالياً.",
+        "en": "Barn {barn_name} currently has {count} active heads.",
+        "am": "{barn_name} በረት አሁን {count} ንቁ ራሶች አሉት።",
+        "hi": "बाड़ा {barn_name} में अभी {count} सक्रिय पशु हैं।",
     },
 }
 
