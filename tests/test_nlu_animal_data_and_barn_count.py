@@ -86,6 +86,19 @@ def test_barn_count_returns_active_head_count(owner):
     assert "حظيرة الاختبار" in result["reply"]
 
 
+def test_exact_animal_number_wins_over_substring_match(owner):
+    """بلاغ حي ثانٍ بعد الإصلاح الأول: رأس اسمه "1" ورأس اسمه "18"
+    موجودان معاً — سؤال "بيانات راس رقم 1" لازم يحسم لرأس "1" مباشرة
+    (مطابقة تامة)، مو يطلع "تعدد نتائج: 1، 18" رغم إن السؤال واضح."""
+    make_animal(animal_no="1")
+    make_animal(animal_no="18")
+
+    result = nlu_service.answer(owner, "عطي بيانات راس رقم 1")
+    assert result["intent_code"] == "animal_data"
+    assert "تعدد" not in result["reply"] and "أكثر من نتيجة" not in result["reply"]
+    assert "بيانات الرأس 1" in result["reply"] or "الرأس 1:" in result["reply"]
+
+
 def test_barn_count_not_found_gives_clear_message(owner):
     result = nlu_service.answer(owner, "كم رأس بحظيرة حظيرة غير موجودة أبداً")
     assert result["intent_code"] == "barn_count"

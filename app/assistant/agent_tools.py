@@ -55,6 +55,21 @@ def search_animal_or_barn(query: str) -> dict:
     if total == 0:
         return {"status": "not_found", "message": f"ما فيه حيوان أو حظيرة تطابق \"{q}\"."}
 
+    # بند إصلاح (فحص عميق ذاتي — بلاغ حي: كتب "رقم 1" وفيه رأس اسمه
+    # "1" بالضبط، بس النظام قاله "متعدد النتائج: 1، 18" — لأن مطابقة
+    # الاحتواء (`ilike %q%`) تصيب "18" كمان بما إنها تحتوي "1"). مطابقة
+    # تامة (رقم/اسم مطابق للاستعلام حرفياً) لازم تفوز فوراً على أي
+    # مطابقة جزئية ثانية، بدل ما تُغرَق بقائمة "تعدد نتائج" مزعجة
+    # لسؤال كان واضحاً 100% أصلاً.
+    q_lower = q.lower()
+    exact_animal = next((a for a in animals if a.animal_no.lower() == q_lower), None)
+    exact_barn = next((b for b in barns if b.barn_no.lower() == q_lower or (b.barn_name or "").lower() == q_lower), None)
+    if exact_animal and not exact_barn:
+        return {"status": "found", "type": "animal", "animal_no": exact_animal.animal_no,
+                "barn_name": exact_animal.barn.barn_name if exact_animal.barn else None}
+    if exact_barn and not exact_animal:
+        return {"status": "found", "type": "barn", "barn_no": exact_barn.barn_no, "barn_name": exact_barn.barn_name}
+
     if total == 1:
         if animals:
             a = animals[0]

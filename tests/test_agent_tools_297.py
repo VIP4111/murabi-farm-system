@@ -43,9 +43,26 @@ def test_search_not_found(app):
     assert result["status"] == "not_found"
 
 
-def test_search_ambiguous_across_animal_and_barn(app):
+def test_search_exact_animal_number_wins_over_partial_barn_match(app):
+    """بند إصلاح (فحص عميق ذاتي — بلاغ حي: رأس اسمه "1" ورأس اسمه "18"
+    كانا يُعتبَران "تعدد نتائج" لسؤال واضح "رقم 1"، لأن المطابقة كانت
+    بالاحتواء بس). مطابقة تامة لرقم الحيوان لازم تفوز فوراً على أي
+    مطابقة جزئية ثانية (حظيرة رقمها يحتوي نفس الأرقام كمان) — قبل هذا
+    الإصلاح كانت الحالة أدناه (رأس "405" بالضبط + حظيرة "B-405" تحتوي
+    "405") تُعتبَر "تعدد نتائج" رغم وضوح السؤال."""
     make_barn(barn_no="B-405", barn_name="حظيرة اختبار")
     make_animal(animal_no="405")
+    result = agent_tools.search_animal_or_barn("405")
+    assert result["status"] == "found"
+    assert result["type"] == "animal"
+    assert result["animal_no"] == "405"
+
+
+def test_search_ambiguous_when_no_exact_match_among_partials(app):
+    """لو ما فيه أي مطابقة تامة (كل النتائج جزئية بس)، يبقى السلوك
+    القديم بالضبط — تعدد نتائج، يسأل يحدد."""
+    make_barn(barn_no="B-4055", barn_name="حظيرة اختبار")
+    make_animal(animal_no="14055")
     result = agent_tools.search_animal_or_barn("405")
     assert result["status"] == "ambiguous"
 
