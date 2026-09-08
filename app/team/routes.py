@@ -10,10 +10,11 @@ from datetime import date, datetime, timedelta
 from app.team import team_bp
 from app.team import report_service as svc
 from app.team import task_service as tsvc
+from app.team import daily_report_service as daily_report_svc
 from app.core import cloud_storage_service
 from app.auth.decorators import require_permission, rate_limited
 from app.extensions import db, run_once_per_app
-from app.models import User, Role, Animal, Barn, Report, Task, AuditLog, DailyTaskTemplate, ReportType
+from app.models import User, Role, Animal, Barn, Report, DailyReport, Task, AuditLog, DailyTaskTemplate, ReportType
 
 
 # ---------- واجهة العامل المبسّطة (بند 27) ----------
@@ -1415,3 +1416,38 @@ def report_delete(report_id):
         return _redirect_back(report_id)
 
 
+
+
+# ---------- التقرير اليومي (بند إضافي، طلبك الصريح) ----------
+
+@team_bp.route("/daily-report", methods=["GET", "POST"])
+@login_required
+def daily_report_form():
+    """شاشة العضو الشخصية — يكتب تقريره اليومي بلغته، يُترجَم تلقائياً
+    للعربي ويوصل صاحب الحلال. متاحة لأي عضو مسجَّل دخول (بدون صلاحية
+    خاصة — نفس منطق "أنشئ بلاغ" العام)."""
+    today_report = DailyReport.query.filter_by(
+        author_id=current_user.id, report_date=date.today()
+    ).first()
+    if request.method == "POST":
+        text = (request.form.get("text") or "").strip()
+        if not text:
+            flash(_("لازم تكتب نص التقرير"), "error")
+            return redirect(url_for("team.daily_report_form"))
+        daily_report_svc.submit_or_update(author=current_user, text=text)
+        flash(_("تم إرسال تقريرك اليومي"), "success")
+        return redirect(url_for("team.daily_report_form"))
+    return render_template("team/daily_report_form.html", today_report=today_report)
+
+
+@team_bp.route("/daily-reports")
+@login_required
+def daily_reports_list():
+    """شاشة صاحب الحلال — كل التقارير اليومية لكل الفريق، مرتبة
+    بالأحدث أولاً. حصري لصاحب الحلال (طلبك: "أنا يوصلني بالعربي") —
+    نفس نمط فحص الدور المباشر بشاشة حذف صور البلاغات."""
+    if current_user.role.name != "owner":
+        abort(403)
+    reports = (DailyReport.query.options(joinedload(DailyReport.author))
+               .order_by(DailyReport.report_date.desc(), DailyReport.created_at.desc()).all())
+    return render_template("team/daily_reports_list.html", reports=reports)

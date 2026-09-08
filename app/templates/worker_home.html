@@ -101,6 +101,10 @@
       <span><b>{{ _('معداتي') }}</b><small>{{ _('أخذ أو استرجاع معدة بضغطة وحدة') }}</small></span>
     </a>
     {% endif %}
+    <a class="worker-btn" href="{{ url_for('team.daily_report_form') }}">
+      <span class="emoji">📝</span>
+      <span><b>{{ _('التقرير اليومي') }}</b><small>{{ _('اكتب بلغتك، يوصل صاحب المزرعة بالعربي') }}</small></span>
+    </a>
     <a class="worker-btn tasks" href="{{ url_for('team.tasks_list') }}" style="grid-column:1 / -1;">
       <span class="emoji">✅</span>
       <span><b>{{ _('مهامي اليوم') }}</b><small>{{ _('عرض وإنجاز المهام المطلوبة منك') }}</small></span>

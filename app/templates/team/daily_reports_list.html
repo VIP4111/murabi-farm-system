@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ _('التقارير اليومية') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الرئيسية') }}</a>
+  <h2 style="margin-top:12px;">📝 {{ _('التقارير اليومية') }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('كل التقارير اليومية اللي أرسلها الفريق، مترجَمة تلقائياً للعربي.') }}</p>
+</div>
+
+{% if not reports %}
+<div class="card"><p style="color:var(--muted);">{{ _('ما فيه تقارير يومية بعد.') }}</p></div>
+{% endif %}
+
+{% for r in reports %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+    <b>{{ r.author.name if r.author else '-' }}</b>
+    <span style="color:var(--muted); font-size:12px;">{{ r.report_date }} — {{ r.created_at.strftime('%H:%M') if r.created_at else '' }}</span>
+  </div>
+  <p style="margin:10px 0 0; white-space:pre-wrap;">{{ r.display_text() }}</p>
+  {% if r.author_lang != 'ar' and r.arabic_text %}
+  <details style="margin-top:8px;">
+    <summary style="cursor:pointer; color:var(--muted); font-size:12px;">{{ _('النص الأصلي') }}</summary>
+    <p style="color:var(--muted); font-size:12.5px; white-space:pre-wrap; margin-top:6px;">{{ r.author_text }}</p>
+  </details>
+  {% elif r.author_lang != 'ar' and not r.arabic_text %}
+  <p style="color:var(--danger, #c0392b); font-size:12px; margin-top:8px;">⚠️ {{ _('ما قدرنا نترجم هذا النص تلقائياً — هذا النص الأصلي كما هو.') }}</p>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

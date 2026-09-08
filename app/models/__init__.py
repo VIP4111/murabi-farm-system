@@ -23,6 +23,7 @@ from app.models.repro import (
 )
 from app.models.cycle import ProductionWorkflow, CycleEvent
 from app.models.report import Report
+from app.models.daily_report import DailyReport
 from app.models.task import Task, DailyTaskTemplate
 from app.models.feed import Feed, FeedRation, FeedRationItem, FeedBarnPlan, FeedMovement
 from app.models.farm_settings import FarmSettings
@@ -53,7 +54,7 @@ __all__ = [
     "Mating", "Pregnancy", "TwinEstrusProgram", "TwinEstrusAttempt",
     "ReproDevice", "HormoneInjection", "SonarResult",
     "ProductionWorkflow", "CycleEvent",
-    "Report", "Task", "DailyTaskTemplate",
+    "Report", "DailyReport", "Task", "DailyTaskTemplate",
     "Feed", "FeedRation", "FeedRationItem", "FeedBarnPlan", "FeedMovement",
     "FarmSettings",
     "AnimalWeight", "AnimalNote",

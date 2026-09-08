@@ -459,6 +459,38 @@ _TARGET_LANG_NAMES = {"ar": "العربية", "en": "English", "am": "አማር�
 TRANSLATE_SYSTEM_PROMPT = "أنت مترجم دقيق لمصطلحات مزارع الأغنام/الماعز. ترجم النص المرفق حرفياً بمعناه لهذي اللغة: {target_lang_name}. رجّع الترجمة بس، بدون أي شرح أو مقدمة إضافية."
 
 
+ARABIC_TRANSLATE_SYSTEM_PROMPT = "أنت مترجم دقيق لمصطلحات مزارع الأغنام/الماعز. ترجم النص المرفق حرفياً بمعناه للعربية الفصحى الواضحة. رجّع الترجمة بس، بدون أي شرح أو مقدمة إضافية."
+
+
+def translate_to_arabic(text: str) -> str | None:
+    """عكس `translate_text` بالضبط — بند إضافي (طلبك الصريح: "التقرير
+    اليومي... هو يرسله بلغته وأنا يوصلني بالعربي"). ترجع None بصمت لنص
+    فاضٍ أو Gemini غير مفعَّل أو أي فشل — المتصل (`daily_report_service`)
+    يتراجع لعرض النص الأصلي بدل ما يفشل حفظ التقرير كامل."""
+    if not text or not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL, contents=text,
+            config=types.GenerateContentConfig(system_instruction=ARABIC_TRANSLATE_SYSTEM_PROMPT),
+        )
+        translated = (response.text or "").strip()
+        return translated or None
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.translate_to_arabic failed: %s", e)
+        except Exception:
+            pass
+        return None
+
+
 def translate_text(text: str, target_lang: str) -> str | None:
     """يرجع ترجمة `text` للغة `target_lang`، أو None عند أي فشل/غياب
     مفتاح — المتصل (`draft_action_service`) يتراجع للنص الأصلي بدون

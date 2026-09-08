@@ -71,6 +71,11 @@
     <div class="quick">
       <a href="{{ url_for('team.reports_list') }}"><span class="emoji">📋</span> {{ _('البلاغات') }}</a>
       <a href="{{ url_for('team.tasks_list') }}"><span class="emoji">✅</span> {{ _('المهام') }}</a>
+      {% if user.role.name == 'owner' %}
+      <a href="{{ url_for('team.daily_reports_list') }}"><span class="emoji">📝</span> {{ _('التقارير اليومية') }}</a>
+      {% else %}
+      <a href="{{ url_for('team.daily_report_form') }}"><span class="emoji">📝</span> {{ _('التقرير اليومي') }}</a>
+      {% endif %}
       {% if user.has_permission('animals.view') %}
       <div style="position:relative;">
         <a href="{{ url_for('core.animals_list') }}" style="position:relative;">

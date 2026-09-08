@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ _('التقرير اليومي') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الرئيسية') }}</a>
+  <h2 style="margin-top:12px;">📝 {{ _('التقرير اليومي') }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('اكتب بلغتك اللي تريحك — يوصل صاحب المزرعة مترجَماً تلقائياً للعربي.') }}</p>
+</div>
+
+<div class="card">
+  <form method="post" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('تقريرك عن اليوم') }}</label>
+    <textarea name="text" rows="8" required style="width:100%;" placeholder="{{ _('شنو سويت اليوم؟ أي ملاحظة تبي توصل صاحب المزرعة...') }}">{{ today_report.author_text if today_report else '' }}</textarea>
+    <button class="btn" type="submit" style="margin-top:12px;">{{ _('إرسال') }}</button>
+  </form>
+  {% if today_report %}
+  <p style="color:var(--muted); font-size:12px; margin-top:10px;">
+    {{ _('عندك تقرير مُرسَل اليوم بالفعل (%(time)s) — إرسال نص جديد يستبدله.', time=today_report.created_at.strftime('%H:%M') if today_report.created_at else '') }}
+  </p>
+  {% endif %}
+</div>
+{% endblock %}
