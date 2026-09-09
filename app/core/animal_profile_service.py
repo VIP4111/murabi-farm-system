@@ -13,6 +13,7 @@ Disease...) مو من CycleEvent — CycleEvent مخصص لمحاسبة بواب
 البوابات، وهذه الصفحة تكمّلها بمحتوى السجلات نفسها.
 """
 from datetime import date, timedelta
+from flask_babel import gettext as _
 from sqlalchemy.orm import joinedload
 from app.extensions import db
 from app.models import (
@@ -34,10 +35,10 @@ def _age_label(birth_date) -> str | None:
     if days < 0:
         return None
     if days < 60:
-        return f"{days} يوم"
+        return _("%(n)s يوم", n=days)
     if days < 730:
-        return f"{days // 30} شهر"
-    return f"{days // 365} سنة"
+        return _("%(n)s شهر", n=days // 30)
+    return _("%(n)s سنة", n=days // 365)
 
 
 def _current_feed_plans_by_barn() -> dict:
@@ -147,76 +148,81 @@ def get_profile(animal: Animal) -> dict:
 
     open_diseases_count = sum(1 for d in diseases if d.status == "active")
 
+    # بند إصلاح (فحص عميق — طلبك: "ابدأ فحص عميق لباقي الشاشات") —
+    # التسلسل الزمني الكامل بصفحة تفاصيل الرأس كان عربي بحت بدون أي
+    # `_()` (لا استيراد gettext أصلاً بهذا الملف قبل هذا الإصلاح) —
+    # يُعاد بناؤه من جديد بكل فتح للصفحة، فتغليفه بـ`_()` آمن تماماً
+    # (نفس مبدأ إصلاح cycle_engine.py سابقاً بهذي الجلسة).
     timeline = []
     for v in vet_visits:
         timeline.append({
-            "date": v.date, "category": "سجل بيطري", "icon": "🩺",
-            "label": v.diagnosis or "زيارة بيطرية",
-            "detail": f"الطبيب: {v.doctor.name if v.doctor else '-'}",
+            "date": v.date, "category": _("سجل بيطري"), "icon": "🩺",
+            "label": v.diagnosis or _("زيارة بيطرية"),
+            "detail": _("الطبيب: %(name)s", name=v.doctor.name if v.doctor else '-'),
         })
     for d in diseases:
         timeline.append({
-            "date": d.date, "category": "مرض", "icon": "🌡️",
+            "date": d.date, "category": _("مرض"), "icon": "🌡️",
             "label": d.disease_name,
-            "detail": "مفتوح" if d.status == "active" else f"مغلق — {d.recovery_note or ''}".strip(" —"),
+            "detail": _("مفتوح") if d.status == "active" else _("مغلق — %(note)s", note=d.recovery_note or '').strip(" —"),
         })
     for vc in vaccinations:
         timeline.append({
-            "date": vc.date, "category": "تحصين", "icon": "💉",
+            "date": vc.date, "category": _("تحصين"), "icon": "💉",
             "label": vc.vaccine_name,
-            "detail": f"الجرعة القادمة: {vc.next_due_date}" if vc.next_due_date else "",
+            "detail": _("الجرعة القادمة: %(date)s", date=vc.next_due_date) if vc.next_due_date else "",
         })
     for w in weights:
         timeline.append({
-            "date": w.date, "category": "وزن", "icon": "⚖️",
-            "label": f"{w.weight} كجم",
+            "date": w.date, "category": _("وزن"), "icon": "⚖️",
+            "label": _("%(weight)s كجم", weight=w.weight),
             "detail": w.notes or "",
         })
     for mr in milk_records:
         timeline.append({
-            "date": mr.date, "category": "حليب", "icon": "🥛",
-            "label": f"{mr.quantity_liters} لتر ({mr.session})",
+            "date": mr.date, "category": _("حليب"), "icon": "🥛",
+            "label": _("%(qty)s لتر (%(session)s)", qty=mr.quantity_liters, session=mr.session),
             "detail": mr.notes or "",
         })
     for n in notes:
         timeline.append({
-            "date": n.date, "category": "ملاحظة", "icon": "📝",
+            "date": n.date, "category": _("ملاحظة"), "icon": "📝",
             "label": n.note[:80] + ("…" if len(n.note) > 80 else ""),
             "detail": n.created_by.name if n.created_by else "",
         })
     for b in births:
         if b.birth_date:
             timeline.append({
-                "date": b.birth_date, "category": "ولادة", "icon": "🍼",
-                "label": f"ولادة {b.animal_no} ({b.gender or '-'})",
-                "detail": f"الوزن عند الولادة: {b.weight} كجم" if b.weight else "",
+                "date": b.birth_date, "category": _("ولادة"), "icon": "🍼",
+                "label": _("ولادة %(no)s (%(gender)s)", no=b.animal_no, gender=b.gender or '-'),
+                "detail": _("الوزن عند الولادة: %(weight)s كجم", weight=b.weight) if b.weight else "",
             })
     for f in finance_rows:
-        op_labels = {"sale": "بيع", "purchase": "شراء", "expense": "مصروف"}
+        op_labels = {"sale": _("بيع"), "purchase": _("شراء"), "expense": _("مصروف")}
         timeline.append({
-            "date": f.date, "category": "مالية", "icon": "💰",
+            "date": f.date, "category": _("مالية"), "icon": "💰",
             "label": f"{op_labels.get(f.operation_type, f.operation_type)} — {f.amount} ",
             "detail": f.item or f.description or "",
         })
     for m in matings:
-        role = "أنثى" if m.female_id == animal.id else "فحل"
+        role = _("أنثى") if m.female_id == animal.id else _("فحل")
         other = m.male if m.female_id == animal.id else m.female
         timeline.append({
-            "date": m.date, "category": "تقريع", "icon": "🐑",
-            "label": f"تقريع — {role}",
-            "detail": f"الطرف الآخر: {other.animal_no if other else (m.male_note or '-')}",
+            "date": m.date, "category": _("تقريع"), "icon": "🐑",
+            "label": _("تقريع — %(role)s", role=role),
+            "detail": _("الطرف الآخر: %(other)s", other=other.animal_no if other else (m.male_note or '-')),
         })
     for p in pregnancies:
         timeline.append({
-            "date": p.date, "category": "تشخيص حمل", "icon": "🤰",
-            "label": "حمل مؤكد" if p.confirmed else "فحص حمل",
-            "detail": f"عدد الأجنة: {p.embryo_count}" if p.embryo_count else "",
+            "date": p.date, "category": _("تشخيص حمل"), "icon": "🤰",
+            "label": _("حمل مؤكد") if p.confirmed else _("فحص حمل"),
+            "detail": _("عدد الأجنة: %(n)s", n=p.embryo_count) if p.embryo_count else "",
         })
     for s in sonar_results:
         timeline.append({
-            "date": s.exam_date, "category": "فحص سونار", "icon": "📡",
-            "label": s.result or "فحص سونار",
-            "detail": f"عدد الأجنة: {s.embryo_count}" if s.embryo_count else "",
+            "date": s.exam_date, "category": _("فحص سونار"), "icon": "📡",
+            "label": s.result or _("فحص سونار"),
+            "detail": _("عدد الأجنة: %(n)s", n=s.embryo_count) if s.embryo_count else "",
         })
 
     timeline.sort(key=lambda e: e["date"] or animal.created_at.date(), reverse=True)

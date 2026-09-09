@@ -325,7 +325,7 @@ def barn_daily_blend(*, barn_id: int) -> dict:
     if not with_weight:
         return {
             "feasible": False,
-            "reason": "ما فيه رؤوس نشطة بهذي الحظيرة عندها وزن مسجَّل — سجّل وزن الرؤوس أولاً.",
+            "reason": _("ما فيه رؤوس نشطة بهذي الحظيرة عندها وزن مسجَّل — سجّل وزن الرؤوس أولاً."),
             "animals_included": 0, "animals_skipped": skipped_no_weight,
             "breakdown": {}, "nursing_excluded": 0,
         }
@@ -354,7 +354,7 @@ def barn_daily_blend(*, barn_id: int) -> dict:
     if not requirements:
         return {
             "feasible": False,
-            "reason": "كل رؤوس هذي الحظيرة (النشطة وعندها وزن) لسا على حليب أمهاتهم — ما فيه احتياج علف صلب يُحسب.",
+            "reason": _("كل رؤوس هذي الحظيرة (النشطة وعندها وزن) لسا على حليب أمهاتهم — ما فيه احتياج علف صلب يُحسب."),
             "animals_included": 0, "animals_skipped": skipped_no_weight,
             "breakdown": breakdown, "nursing_excluded": nursing_excluded,
         }
@@ -392,7 +392,7 @@ def optimize_blend(*, requirement: dict, feeds: list, max_fraction: float = 0.6)
     طبيب/مختص تغذية قبل اعتماد أي خلطة فعلياً بمزرعتك."""
     usable_feeds = [f for f in feeds if f.unit_price is not None and f.protein_percent is not None and f.energy_kcal_per_kg is not None]
     if not usable_feeds:
-        return {"feasible": False, "reason": "ما فيه مكوّنات علف عندها بروتين وطاقة وسعر وحدة مسجَّلة بالكامل — أكمل بيانات مكوّنات العلف أولاً."}
+        return {"feasible": False, "reason": _("ما فيه مكوّنات علف عندها بروتين وطاقة وسعر وحدة مسجَّلة بالكامل — أكمل بيانات مكوّنات العلف أولاً.")}
 
     import numpy as np
     from scipy.optimize import linprog
@@ -425,7 +425,7 @@ def optimize_blend(*, requirement: dict, feeds: list, max_fraction: float = 0.6)
     if not res.success:
         return {
             "feasible": False,
-            "reason": "ما فيه خلطة ممكنة بمكوّنات العلف الحالية تحقق الاحتياج المطلوب — أضف مكوّنات أعلى بروتين/طاقة، أو راجع الأهداف.",
+            "reason": _("ما فيه خلطة ممكنة بمكوّنات العلف الحالية تحقق الاحتياج المطلوب — أضف مكوّنات أعلى بروتين/طاقة، أو راجع الأهداف."),
         }
 
     blend = []

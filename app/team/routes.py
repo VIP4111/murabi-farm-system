@@ -660,7 +660,7 @@ def report_types_new():
         db.session.commit()
         flash(_("تمت إضافة نوع البلاغ"), "success")
         return redirect(url_for("team.reports_new"))
-    return render_template("animal_option_form.html", title="إضافة نوع بلاغ جديد",
+    return render_template("animal_option_form.html", title=_("إضافة نوع بلاغ جديد"),
                             back_endpoint="team.reports_new", show_name_en=True)
 
 
