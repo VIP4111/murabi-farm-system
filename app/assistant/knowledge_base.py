@@ -1494,6 +1494,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "نعم — الشاشات الميدانية الأساسية (مهامي، البلاغات، تسجيل وزن...) تفتح وتسجّل بياناتك محلياً حتى لو النت مقطوع، وتُرفع تلقائياً لما يرجع الاتصال (زر 🔄 يظهر لو فيه بيانات بانتظار المزامنة). لو فورم معيّن رُفض من السيرفر وقت المزامنة (بيانات ناقصة مثلاً)، يطلب منك تراجعه وتعيد إدخاله يدوياً."
         ),
+        translations={
+            "en": {
+                "title": "Does the app work without internet?",
+                "body": (
+                    "Yes — the core field screens (my tasks, reports, logging weight...) open and log your data locally even if the internet is down, and upload automatically once the connection is back (a 🔄 button appears if there's data waiting to sync). If a specific form is rejected by the server during sync (missing data, for example), it asks you to review it and re-enter it manually."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_report_execute_vs_transfer",
@@ -1505,6 +1513,17 @@ ENTRIES: list[KBEntry] = [
             "• 'تنفيذ ذاتي': يسمح للعامل نفسه اللي رفع البلاغ يوثّق إنه نفّذ إجراء بسيط بنفسه (لو الصلاحية تسمح)، بدون انتظار الدكتور.\n"
             "• 'تحويل': يمرّر البلاغ لشخص ثاني (تخصص مختلف) بدل ما ينفّذه المستلم الحالي."
         ),
+        translations={
+            "en": {
+                "title": "What's the difference between 'execute', 'self-execute', and 'transfer' for a report?",
+                "body": (
+                    "From the report detail screen:\n"
+                    "• 'Execute': the doctor/recipient carries out the required action themselves and documents it.\n"
+                    "• 'Self-execute': lets the worker who filed the report document that they carried out a simple action themselves (if permission allows), without waiting for the doctor.\n"
+                    "• 'Transfer': passes the report to someone else (a different specialty) instead of the current recipient executing it."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_remove_repro_device",
@@ -1513,6 +1532,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من صفحة برنامج الشياع التوأمي ← جدول الأجهزة المركَّبة، زر 'إزالة' جنب أي جهاز — يسجّل تاريخ ووقت الإزالة، ويبدأ تلقائياً عدّ موعد دخول الفحل المتوقع (حسب المدة المضبوطة بالإعدادات)."
         ),
+        translations={
+            "en": {
+                "title": "How do I log removing a sponge/repro device?",
+                "body": (
+                    "From the twin-estrus program page → the installed devices table, the 'remove' button next to any device — logs the removal date and time, and automatically starts counting toward the expected sire introduction date (per the interval set in settings)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_animal_quick_info",
@@ -1521,6 +1548,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "بشاشات فيها إشارة لرقم رأس (مثلاً بشاشة التحصين الجماعي)، تمرير المؤشر أو الضغط على رقمه يفتح بطاقة معلومات سريعة (العمر، الوزن الحالي، الحظيرة، الحالة) بدون ما تحتاج تفتح صفحته الكاملة."
         ),
+        translations={
+            "en": {
+                "title": "What does 'quick info' show when I hover over a head number?",
+                "body": (
+                    "On screens that reference a head number (like the group vaccination screen), hovering or tapping its number opens a quick info card (age, current weight, barn, status) without needing to open its full page."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_mortality_births_reports",
@@ -1530,6 +1565,15 @@ ENTRIES: list[KBEntry] = [
             "'التقارير' ← 'النفوق': يلخّص عدد حالات النفوق بالفترة المختارة مع توزيع الأسباب — مؤشر مبكر لو صنف/حظيرة معيّنة فيها تكرار غير طبيعي.\n"
             "'التقارير' ← 'الولادات': يلخّص عدد الولادات، نسبة التوائم، ووزن المواليد — أساس تقييم أداء التكاثر بالمزرعة عبر الوقت."
         ),
+        translations={
+            "en": {
+                "title": "How do I understand the mortality and births reports?",
+                "body": (
+                    "'Reports' → 'Mortality': summarizes the number of deaths in the chosen period with a breakdown of causes — an early sign if a specific type/barn has an abnormal recurrence.\n"
+                    "'Reports' → 'Births': summarizes the number of births, the twinning rate, and newborn weight — the basis for evaluating the farm's breeding performance over time."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_equipment_add",
@@ -1538,6 +1582,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المعدات' ← 'إضافة صنف' — اكتب الاسم والفئة والوحدة (قطعة افتراضياً)، وممكن تحدد رصيد بداية وحد أدنى للمخزون يظهرك تنبيه لو نزل تحته. بعدها تقدر تسجّل حركات صرف/استرجاع/استعارة على هذا الصنف من صفحته."
         ),
+        translations={
+            "en": {
+                "title": "How do I add new equipment to the farm?",
+                "body": (
+                    "'Equipment' → 'Add item' — type the name, category, and unit (piece by default), and you can optionally set a starting balance and a minimum stock threshold that shows you an alert if it drops below it. Then you can log issue/return/borrow movements for this item from its page."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_equipment_movement",
@@ -1546,6 +1598,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من صفحة الصنف بالمعدات ← 'تسجيل حركة': اختر 'وارد' أو 'صادر'، الكمية، والحظيرة لو تتعلق بحظيرة معيّنة. لو الصادر استعارة أداة هترجع (مو صرف نهائي)، حدد اسم العامل المستلم — الكمية تُخصم من الرصيد فوراً، وترجع تلقائياً لما تضغط 'استرجاع' جنب نفس الحركة بعدين. صفحة الصنف تعرض قائمة القطع المستعارة اللي لسا ما رجعت."
         ),
+        translations={
+            "en": {
+                "title": "How do I log issuing, borrowing, or returning equipment?",
+                "body": (
+                    "From the equipment item's page → 'log movement': pick 'in' or 'out', the quantity, and the barn if it relates to a specific barn. If the 'out' is a tool being borrowed (not a final issue), set the receiving worker's name — the quantity is deducted from the balance immediately, and returns automatically when you press 'return' next to that same movement later. The item's page shows the list of borrowed pieces not yet returned."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_barn_management",
@@ -1556,6 +1616,16 @@ ENTRIES: list[KBEntry] = [
             "من نفس الشاشة أضف مواعيد وجبات العلف اليومية للحظيرة — كل موعد يولّد تلقائياً مهمة توزيع علف (بكمية محسوبة تلقائياً من المخزون الفعلي) للعامل المسؤول.\n"
             "أهم استخدام عملي ثانٍ لشاشة 'تعديل' هو تغيير العامل المسؤول بعدين، لأنه أساس توجيه المهام التلقائي والتنبيهات لذاك العامل."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new barn or edit its data?",
+                "body": (
+                    "'Barns' → 'Add barn': barn number (must be unique), name, type (normal/isolation/post-partum/growth/late pregnancy/nursing/general), capacity, and its responsible worker. Setting the type to 'late pregnancy' or 'nursing' turns on an automatic check that alerts you and moves any head that actually reaches that state if it's in a different barn.\n"
+                    "From the same screen add the barn's daily feed meal times — each time automatically generates a feed distribution task (with a quantity computed automatically from actual stock) for the responsible worker.\n"
+                    "The second most important practical use of the 'edit' screen is changing the responsible worker later, since it's the basis for routing automatic tasks and alerts to that worker."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feeding_schedule",
@@ -1568,6 +1638,15 @@ ENTRIES: list[KBEntry] = [
             "من 'تعديل حظيرة' أضف موعد وجبة واحد أو أكثر (وقت باليوم) — إعداد مستقل لكل حظيرة.\n"
             "عند وصول الموعد، يتولّد تلقائياً مهمة 'وجبة علف' للعامل المسؤول عن الحظيرة، فيها خلطة اليوم المحسوبة تلقائياً من المخزون الفعلي (كمية وتكلفة كل مكوّن). لما يضغط العامل 'تم الإنجاز' بعد التوزيع الفعلي، يُخصَم المخزون تلقائياً."
         ),
+        translations={
+            "en": {
+                "title": "How do I schedule feed meal times automatically?",
+                "body": (
+                    "From 'edit barn' add one or more meal times (a time of day) — an independent setting per barn.\n"
+                    "When a time arrives, a 'feed meal' task is generated automatically for the barn's responsible worker, containing the day's mix computed automatically from actual stock (quantity and cost of each component). When the worker presses 'done' after the actual distribution, stock is deducted automatically."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_barn_physiology_sort",
@@ -1576,6 +1655,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "حدد نوع الحظيرة 'حامل - الشهور الأخيرة' أو 'رضاعة' من شاشة تعديل الحظيرة. أي رأس وصل هذي الحالة فعلياً (حمل بمرحلته المتأخرة، أو أم عندها مولود عمره أقل من 90 يوم) وحظيرته الحالية مو مطابقة، يتولّد له تلقائياً مهمة مقترحة تنقله — تحتاج اعتماد الدكتور، وإنجازها فعلياً ينقل الرأس."
         ),
+        translations={
+            "en": {
+                "title": "How do I sort barns by animal state (late pregnancy/nursing)?",
+                "body": (
+                    "Set the barn type to 'late pregnancy' or 'nursing' from the barn edit screen. Any head that actually reaches that state (a pregnancy in its late stage, or a mother with a newborn under 90 days old) whose current barn doesn't match, automatically gets a suggested task to move it — needs the doctor's approval, and completing it actually moves the head."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_pharmacy_purchase",
@@ -1585,6 +1672,15 @@ ENTRIES: list[KBEntry] = [
             "من صفحة تعديل الدواء بالصيدلية ← 'تسجيل شراء': أدخل الكمية، تاريخ الشراء، تاريخ انتهاء هذي الدفعة تحديداً (ممكن يختلف عن دفعات سابقة)، والسعر لو حبيت. الرصيد الإجمالي (`available_qty`) يزيد تلقائياً بنفس الكمية، وتقدر تراجع كل دفعات هذا الدواء وتواريخها من نفس الصفحة.\n"
             "**لو كتبت سعر الوحدة، تُنشأ تلقائياً عملية 'شراء' مالية حقيقية بفئة 'أدوية' تظهر بشاشة المالية** (يحتاج صلاحية إدارة المالية كمان لو فيه سعر) — بدون سعر، يُسجَّل بالمخزون بس. فورم 'تعديل' المباشر يبقى موجود لتصحيحات الرصيد العامة بس، مو بديل عن تسجيل الشراء."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a new pharmacy medicine purchase?",
+                "body": (
+                    "From the pharmacy medicine's edit page → 'log purchase': enter the quantity, purchase date, that specific batch's expiry date (can differ from earlier batches), and the price if you'd like. The total balance (`available_qty`) increases automatically by the same quantity, and you can review all of this medicine's batches and their dates from the same page.\n"
+                    "**If you enter the unit price, a real 'purchase' financial transaction is automatically created under the 'medicines' category and shown on the finance screen** (also needs finance management permission if there's a price) — without a price, it's logged in stock only. The direct 'edit' form stays available for general balance corrections only, not a substitute for logging a purchase."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_pharmacy_dose_table",
@@ -1593,6 +1689,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "بفورم إضافة/تعديل الدواء بالصيدلية، فيه جدول 'الجرعة حسب العمر' — تضيف صفوف (من عمر — إلى عمر — الجرعة بالمل)، ويُستخدم تلقائياً بشاشة التحصين الجماعي لاقتراح جرعة كل رأس حسب عمره. الجدول يُستبدل بالكامل عند كل حفظ (يمسح القديم ويكتب الجديد) — تذكّر إن هذا اقتراح تشغيلي، والجرعة النهائية قرار الدكتور دايماً."
         ),
+        translations={
+            "en": {
+                "title": "How do I set an age-based dose table for a specific medicine?",
+                "body": (
+                    "On the pharmacy medicine's add/edit form, there's an 'age-based dose' table — you add rows (from age — to age — dose in ml), and it's used automatically on the group vaccination screen to suggest each head's dose by its age. The table is fully replaced on every save (clears the old, writes the new) — remember this is an operational suggestion, the final dose is always the doctor's decision."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_usage_drug_catalog",
@@ -1601,6 +1705,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من فورم 'دواء جديد' بالصيدلية، جنب حقل 'طريقة الاستخدام' وحقل 'اسم الدواء' فيه رابط 'إضافة جديد' يفتح فورم بسيط (اسم بس، أو اسم + فئة الدواء للكتالوج). القائمتين مستقلتين عن أصناف الصيدلية الفعلية — مجرد قوائم اقتراح تسهّل تعبئة الفورم لاحقاً، بدون تكرار كتابة."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new usage route or medicine name to the pick lists?",
+                "body": (
+                    "On the pharmacy's 'new medicine' form, next to the 'usage route' field and the 'medicine name' field there's an 'add new' link that opens a simple form (name only, or name + medicine class for the catalog). Both lists are independent of actual pharmacy items — just suggestion lists that make filling in the form easier later, without retyping."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_repro_program_status",
@@ -1609,6 +1721,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من صفحة تفاصيل برنامج الشياع التوأمي فيه زر لتغيير حالة البرنامج (مثلاً من نشط لمكتمل أو ملغى) — التغيير يُسجَّل بسجل الأحداث تلقائياً."
         ),
+        translations={
+            "en": {
+                "title": "How do I change a twin-estrus program's status?",
+                "body": (
+                    "The twin-estrus program detail page has a button to change the program's status (e.g. from active to complete or cancelled) — the change is logged in the events record automatically."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_pregnancy_abort",
@@ -1617,6 +1737,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من صفحة الحمل ← زر 'تسجيل إجهاض' (متاح مرة وحدة بس لكل حمل، ما يقبل تكرار). النظام يطبّق تلقائياً بروتوكول عزل: عزل الحيوان فوراً + مهمة سحب عيّنات + مراقبة حرارة لبقية حظيرة الدفعة لعدة أيام — عشان أي سبب معدي محتمل يُكتشف بدري."
         ),
+        translations={
+            "en": {
+                "title": "How do I log an abortion in a pregnant animal?",
+                "body": (
+                    "From the pregnancy page → 'log abortion' button (available once only per pregnancy, doesn't accept repeats). The system automatically applies an isolation protocol: immediate isolation of the animal + a sample-collection task + temperature monitoring for the rest of the batch's barn for several days — so any possible infectious cause is caught early."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_movements",
@@ -1625,6 +1753,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'العلف' ← 'حركة المخزون' ← 'تسجيل حركة': اختر الصنف، نوع الحركة (وارد/صادر)، الكمية، والحظيرة أو الرأس المرتبط لو ينطبق. كل حركة تُسجَّل بتاريخها وتُحدّث الرصيد الإجمالي فوراً — أساس تقارير معدل التحويل الغذائي (FCR) والتكلفة الشهرية."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a feed issue movement?",
+                "body": (
+                    "'Feed' → 'Stock movement' → 'Log movement': pick the item, the movement type (in/out), the quantity, and the linked barn or head if applicable. Every movement is logged with its date and updates the total balance immediately — the basis for the feed conversion (FCR) and monthly cost reports."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_barn_plans",
@@ -1633,6 +1769,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'العلف' ← 'خطط الحظائر' ← 'إضافة خطة': اختر الحظيرة، الوصفة (الخلطة)، الكمية اليومية لكل رأس، وتاريخ البداية. لو رفعت نسبة المركّز فجأة عن آخر خطة بشكل كبير، النظام يحذّرك ويطلب سبب تجاوز صريح قبل الحفظ — احتياط ضد تحميص الكرش من تغيير مفاجئ."
         ),
+        translations={
+            "en": {
+                "title": "How do I set a feeding plan for a barn?",
+                "body": (
+                    "'Feed' → 'Barn plans' → 'Add plan': pick the barn, the ration (mix), the daily amount per head, and the start date. If you suddenly raise the concentrate percentage a lot compared to the last plan, the system warns you and requires an explicit override reason before saving — a safeguard against rumen acidosis from a sudden change."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_calculator",
@@ -1642,6 +1786,15 @@ ENTRIES: list[KBEntry] = [
             "'العلف' ← 'حاسبة الاحتياج': تدخل رأس أو وزن يدوي، ترجع لك الاحتياج اليومي مع اقتراح أقرب وصفات (خلطات) جاهزة مطابقة له.\n"
             "'موازِن العليقة' (Optimizer): نفس حساب الاحتياج، بس بدل اقتراح وصفة جاهزة يبني لك خلطة تلقائية من أصناف العلف المتوفرة فعلياً بمخزونك حالياً — أنسب لما ما عندك وصفة جاهزة تناسب الاحتياج."
         ),
+        translations={
+            "en": {
+                "title": "What's the difference between the feed calculator and the ration optimizer?",
+                "body": (
+                    "'Feed' → 'Requirement calculator': you enter a head or a manual weight, and it returns the daily requirement with a suggestion of the closest ready rations (mixes) matching it.\n"
+                    "'Ration optimizer': the same requirement calculation, but instead of suggesting a ready ration it builds an automatic mix from feed items actually available in your current stock — more suitable when you don't have a ready ration that fits the requirement."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_batch_hold_catchup",
