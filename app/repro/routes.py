@@ -113,18 +113,24 @@ def matings_export():
     """تصدير سجل التقريع (البيانات الوراثية الأساسية) Excel بضغطة زر
     واحدة (بند إضافي 179)."""
     from flask import Response
+    from flask_babel import gettext as _
     from app.reports import export_service as ex
     rows = Mating.query.order_by(Mating.date.desc()).all()
-    columns = ["التاريخ", "الأنثى", "الفحل", "ملاحظة الفحل الخارجي", "الحظيرة"]
+    # بند إصلاح (فحص عميق — طلبك: "ابدا بند التصدير") — الأعمدة كانت
+    # عربي بحت بغض النظر عن لغة المستخدم؛ الحظيرة تُترجم عبر
+    # `Barn.display_label()` الموجودة أصلاً (نفس مبدأ بقية التصدير).
+    columns = [
+        _("التاريخ"), _("الأنثى"), _("الفحل"), _("ملاحظة الفحل الخارجي"), _("الحظيرة"),
+    ]
     table_rows = [
         [
             str(r.date), r.female.animal_no if r.female else "-",
             r.male.animal_no if r.male else "-", r.male_note or "-",
-            r.barn.barn_name if r.barn else "-",
+            r.barn.display_name() if r.barn else "-",
         ]
         for r in rows
     ]
-    buf = ex.build_excel("سجل التقريع", columns, table_rows)
+    buf = ex.build_excel(_("سجل التقريع"), columns, table_rows)
     return Response(
         buf.read(),
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

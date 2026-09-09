@@ -89,17 +89,30 @@ def finance_export():
     from flask import Response
     from app.reports import export_service as ex
     rows = Finance.query.order_by(Finance.date.desc()).all()
-    columns = ["التاريخ", "النوع", "الفئة", "الصنف", "الوصف", "المبلغ", "طريقة الدفع", "الرأس المرتبط", "ملغاة"]
+    # بند إصلاح (فحص عميق — طلبك: "ابدا بند التصدير") — كل عمود وقيمة هنا
+    # كانت عربي بحت بغض النظر عن لغة المستخدم الحالي. القيمة الخام
+    # بقاعدة البيانات (Finance.category/operation_type) ما تتغيّر أبداً —
+    # نفس مبدأ display_category() المستخدم بالفلتر ar_finance_category،
+    # بس هنا نطبّقه مباشرة وقت بناء ملف التصدير.
+    _operation_type_labels = {
+        "sale": _("بيع"), "purchase": _("شراء"), "expense": _("مصروف"),
+        "debt_in": _("دعم خارجي (دين)"), "debt_repayment": _("سداد دين"),
+    }
+    columns = [
+        _("التاريخ"), _("النوع"), _("الفئة"), _("الصنف"), _("الوصف"), _("المبلغ"),
+        _("طريقة الدفع"), _("الرأس المرتبط"), _("ملغاة"),
+    ]
     table_rows = [
         [
-            str(r.date), r.operation_type, r.category or "-", r.item or "-", r.description or "-",
+            str(r.date), _operation_type_labels.get(r.operation_type, r.operation_type),
+            r.display_category() or "-", r.item or "-", r.description or "-",
             r.amount, r.payment_method or "-",
             r.related_animal.animal_no if r.related_animal else "-",
-            "نعم" if r.is_cancelled else "لا",
+            _("نعم") if r.is_cancelled else _("لا"),
         ]
         for r in rows
     ]
-    buf = ex.build_excel("السجل المالي الكامل", columns, table_rows)
+    buf = ex.build_excel(_("السجل المالي الكامل"), columns, table_rows)
     return Response(
         buf.read(),
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -115,8 +128,8 @@ def break_even_export():
     from app.reports import export_service as ex
     from app.core.animal_profile_service import break_even_summary
     rows = break_even_summary()
-    columns = ["رقم الرأس", "سعر التعادل", "القيمة التقديرية", "مصدر التقدير", "الهامش"]
-    _source_label = {"auto": "مبيعات مشابهة", "manual": "تقدير يدوي"}
+    columns = [_("رقم الرأس"), _("سعر التعادل"), _("القيمة التقديرية"), _("مصدر التقدير"), _("الهامش")]
+    _source_label = {"auto": _("مبيعات مشابهة"), "manual": _("تقدير يدوي")}
     table_rows = [
         [
             r["animal"].animal_no, r["break_even_price"],
@@ -126,7 +139,7 @@ def break_even_export():
         ]
         for r in rows
     ]
-    buf = ex.build_excel("التحليل المالي ونقطة التعادل", columns, table_rows)
+    buf = ex.build_excel(_("التحليل المالي ونقطة التعادل"), columns, table_rows)
     return Response(
         buf.read(),
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
