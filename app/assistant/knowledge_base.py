@@ -477,6 +477,22 @@ ENTRIES: list[KBEntry] = [
             "بنفس الصفحة (يظهر بعد تسجيل البيع) يرجّع الرأس نشط تلقائياً، والعملية المالية تُلغى (تبقى بالسجل للتدقيق، "
             "ما تُحذف نهائياً)."
         ),
+        translations={
+            "en": {
+                "title": "I sent an animal to market and didn't sell — what do I do?",
+                "body": (
+                    "From the 'production cycle' page for any active head, the 'market trip' card: the 'send to market' button logs its departure "
+                    "as a visual reminder only (doesn't change its status — it stays 'active' on every other screen like feeding and tasks).\n"
+                    "If it comes back unsold: the same card has a 'return to farm without selling' button — clears the reminder, with zero effect on any "
+                    "financial record since no sale was ever logged.\n"
+                    "If you actually sold it: log the sale on the normal 'exit decision' form (price, buyer, invoice) — the market trip reminder is "
+                    "cleared automatically at that point.\n"
+                    "And if you logged an actual sale and later need to undo it (it became a real sale in the system, not just a market trip): the "
+                    "'undo sale' button on the same page (appears after the sale is logged) returns the head to active automatically, and the financial "
+                    "transaction is cancelled (kept in the record for audit, not permanently deleted)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_add_animal",
@@ -494,6 +510,19 @@ ENTRIES: list[KBEntry] = [
             "• لو المصدر 'مولود' لازم تربطه بأمه — رقمه المؤقت يتولّد تلقائياً لو ما كتبت رقماً، وسجّل جنسه ووزنه وغرضه (تربية/تسمين/بيع) لأنها مطلوبة لأي رأس بغض النظر عن مصدره.\n"
             "• حقل 'السعر' اتركه فاضي للمولود — ما له سعر شراء أصلاً، تكلفته تُحسب تلقائياً من استهلاك العلف الفعلي عبر تقرير كفاءة العلف (FCR)، ما يحتاج أي إدخال يدوي منك."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new head?",
+                "body": (
+                    "From the side menu ☰ pick 'Animals' then '+ New animal' (or the /animals/new link directly):\n"
+                    "• Set the source first (purchase / born on farm / gift / opening balance) — determines the required fields after it.\n"
+                    "• Barn and color are required in every case.\n"
+                    "• If the source is 'purchase' and you put it in an 'isolation' type barn, the system automatically opens a preventive spray and initial vaccination task — no extra step from you.\n"
+                    "• If the source is 'newborn' you must link it to its mother — a temporary number is generated automatically if you don't type one, and log its sex, weight, and purpose (breeding/fattening/sale) since these are required for any head regardless of source.\n"
+                    "• Leave the 'price' field empty for a newborn — it never had a purchase price, its cost is computed automatically from actual feed consumption via the feed conversion (FCR) report, no manual entry needed."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="newborn_faq",
@@ -513,6 +542,21 @@ ENTRIES: list[KBEntry] = [
             "قابل للتعديل من الإعدادات) — وإما تسجّل 'تاريخ فطام' يدوياً من صفحة 'دورة الإنتاج' ← 'خطة السوق'، "
             "أو ينتظر عمر أكبر (افتراضي 90 يوم، قابل للتعديل أيضاً) فيعتبره النظام مفطوماً تلقائياً بدون تسجيل يدوي."
         ),
+        translations={
+            "en": {
+                "title": "A newborn's journey in the system — from registration to weaning",
+                "body": (
+                    "No — the initial registration is **manual** ('+ New animal' button, source 'born on farm', linked to its mother) — the system "
+                    "doesn't detect the birth on its own. But after registration, everything after is fully automatic:\n"
+                    "• It and its mother move automatically to the first 'isolation' barn, and 7 daily check tasks + a vet exam within 48 hours + "
+                    "a weighing task + vaccination (mother and newborn) are opened (see 'automatic isolation' for full details).\n"
+                    "• It never had a purchase price (left empty) — its cost is computed automatically from actual feed consumption (FCR report).\n"
+                    "• Weaning: the 'nursing & weaning' stage gate (stage 8 in the production cycle) needs a minimum age (default 60 days, adjustable "
+                    "in settings) — either you log a 'weaning date' manually from the 'production cycle' → 'market plan' page, or it waits for an "
+                    "older age (default 90 days, also adjustable) and the system considers it weaned automatically without manual logging."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_record_disease",
@@ -525,6 +569,18 @@ ENTRIES: list[KBEntry] = [
             "• إغلاق المرض بدواء له فترة سحب يُنشئ تلقائياً تذكيراً بتاريخ انتهاء الفترة — تلقاه بشاشة مراجعة المهام.\n"
             "• حقل 'تكلفة العلاج': لو اخترت دواء وكمية، التكلفة تُحسب تلقائياً من سعر الدواء (وما تُسجَّل عملية مالية إضافية — قيمة الدواء اتُّحسبت فعلياً وقت شرائه). لو كتبتها يدوياً بدون دواء (أجرة علاج خارجي مثلاً)، تُنشأ عملية 'مصروف' مالية حقيقية بفئة 'علاج مرض'."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a disease or treatment?",
+                "body": (
+                    "From 'Health' → 'Diseases' → '+ New disease record':\n"
+                    "• Pick the animal, disease name, and medicine used (if any) — the system deducts the quantity from the pharmacy automatically and computes the withdrawal period if the medicine requires one.\n"
+                    "• The record stays 'active' until you explicitly close it from the same screen (close button + recovery note) — it doesn't close automatically just because time passed.\n"
+                    "• Closing a disease with a medicine that has a withdrawal period automatically creates a reminder for the period's end date — you'll find it on the task review screen.\n"
+                    "• 'Treatment cost' field: if you picked a medicine and quantity, the cost is computed automatically from the medicine's price (no extra financial transaction is logged — the medicine's value was already accounted for when it was purchased). If you type it manually without a medicine (an external treatment fee, for example), a real 'expense' financial transaction is created under the 'disease treatment' category."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_assign_task",
@@ -536,6 +592,17 @@ ENTRIES: list[KBEntry] = [
             "• المهمة توصل للعامل فوراً بحالة 'قيد الانتظار' — ما تحتاج اعتماد إضافي لأنك أنت اللي وزّعتها مباشرة.\n"
             "• لو تبي مهمة يومية متكررة (تنظيف، فحص...) بدل مهمة لمرة وحدة، استخدم شاشة 'مهام العامل التلقائية' (زر ⚙️ بأعلى شاشة المهام) بدلها."
         ),
+        translations={
+            "en": {
+                "title": "How do I assign a task to a worker?",
+                "body": (
+                    "From the 'tasks' screen, the '+ assign task' button opens a quick dialog (without leaving the screen):\n"
+                    "• Set the title and the worker (or the barn, and the worker is set automatically from the barn's responsible worker if you didn't pick one by name).\n"
+                    "• The task reaches the worker immediately with status 'pending' — it doesn't need extra approval since you assigned it directly yourself.\n"
+                    "• If you want a recurring daily task (cleaning, checking...) instead of a one-time task, use the 'automatic worker tasks' screen (⚙️ button at the top of the tasks screen) instead."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_record_sale",
@@ -547,6 +614,17 @@ ENTRIES: list[KBEntry] = [
             "• لو الرأس تحت فترة سحب دواء نشطة، البيع يُرفض تلقائياً حتى تنتهي الفترة.\n"
             "• البيع يسجّل حركة مالية تلقائياً — ما تحتاج تدخلها يدوياً بشاشة المالية منفصلة."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a sale?",
+                "body": (
+                    "From the animal's own page (open it from the 'animals' screen) → 'production cycle' tab → 'sell' button:\n"
+                    "• The head must have reached the 'fate decision' stage (the last stage in the production cycle) before the system accepts the sale — an automatic safety gate.\n"
+                    "• If the head is under an active medicine withdrawal period, the sale is rejected automatically until the period ends.\n"
+                    "• The sale logs a financial transaction automatically — you don't need to enter it manually on a separate finance screen."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_pharmacy_stock",
@@ -556,6 +634,15 @@ ENTRIES: list[KBEntry] = [
             "دواء جديد كلياً: من 'الصحة' ← 'الصيدلية' ← '+ دواء جديد'.\n"
             "لتسجيل عملية شراء دواء موجود أصلاً (يزيد الكمية بدون الكتابة فوق الرقم الحالي): افتح الدواء ← تعديل ← زر '📦 تسجيل عملية شراء' — يسجّل تاريخ الشراء وتاريخ انتهاء الصلاحية لتلك الدفعة تحديداً، وينبّهك تلقائياً لما تقرب صلاحيتها."
         ),
+        translations={
+            "en": {
+                "title": "How do I add or update pharmacy stock?",
+                "body": (
+                    "A completely new medicine: from 'Health' → 'Pharmacy' → '+ New medicine'.\n"
+                    "To log a purchase of a medicine that already exists (adds to the quantity without overwriting the current number): open the medicine → edit → '📦 Log purchase' button — logs that specific batch's purchase date and expiry date, and warns you automatically as its expiry approaches."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_worker_report",
@@ -565,6 +652,16 @@ ENTRIES: list[KBEntry] = [
             "من الشاشة الرئيسية المبسّطة للعامل، اضغط أحد الأزرار الأربعة الجاهزة (فحص/حالة صحية، نقل للعزل، تغذية، بيض/حضانة) — كل زر يفتح فورم بلاغ سريع بنوع محدد مسبقاً، ما تحتاج تختار من قائمة.\n"
             "البلاغ يوصل مباشرة للدكتور/المالك بشاشة 'البلاغات' ويقدر يحوّله أو يغلقه بعد المعالجة."
         ),
+        translations={
+            "en": {
+                "title": "How do I file a report (as a worker)?",
+                "body": (
+                    "From the worker's simplified home screen, press one of the four ready buttons (checkup/health status, move to isolation, feeding, "
+                    "eggs/incubation) — each opens a quick report form with a pre-set type, no need to pick from a list.\n"
+                    "The report reaches the doctor/owner directly on the 'reports' screen and they can transfer or close it after handling it."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_alerts_screen",
@@ -574,6 +671,17 @@ ENTRIES: list[KBEntry] = [
             "التنبيهات صارت جزء من 'صفحة اليوم' (القائمة الجانبية) بدل شاشة منفصلة — عرض حي يُشتق كل مرة من بياناتك الفعلية: تحصينات مستحقة، فترات سحب قاربت تنتهي، ولادات متوقعة، أمراض مفتوحة من فترة، نقص مخزون متوقع، مهام متعذّرة، تباطؤ نمو مشبوه، بيانات حيوانات ناقصة، وأكثر.\n"
             "كل تنبيه جنبه زر 'فتح' يوديك مباشرة لصفحة الحيوان أو الحظيرة المرتبطة."
         ),
+        translations={
+            "en": {
+                "title": "Where do I find alerts?",
+                "body": (
+                    "Alerts became part of 'today's page' (side menu) instead of a separate screen — a live view derived every time from your actual "
+                    "data: vaccinations due, withdrawal periods about to end, expected births, diseases open for a while, expected stock shortages, "
+                    "stalled tasks, suspicious slow growth, missing animal data, and more.\n"
+                    "Each alert has an 'open' button next to it that takes you straight to the linked animal or barn page."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_incomplete_data_alerts",
@@ -583,6 +691,18 @@ ENTRIES: list[KBEntry] = [
             "أي حيوان مسجَّل بدون الجنس أو الوزن أو الغرض (تربية/تسمين/بيع) يطلع له تنبيه — بغض النظر عن مصدره. السعر مطلوب بس للشراء/الهدية/الرصيد الافتتاحي (المولود بالمزرعة ما له سعر شراء أصلاً، تكلفته تُحسب من استهلاك العلف).\n"
             "الحفظ نفسه ما يتوقف — تقدر تسجّل الحيوان عادي وتكمّل البيانات لاحقاً من شاشة تعديل الحيوان، والتنبيه يختفي تلقائياً بمجرد الإكمال."
         ),
+        translations={
+            "en": {
+                "title": "Why do I get a 'missing data' alert?",
+                "body": (
+                    "Any animal logged without sex, weight, or purpose (breeding/fattening/sale) gets an alert — regardless of its source. Price is only "
+                    "required for purchase/gift/opening balance (a farm-born newborn never had a purchase price, its cost is computed from feed "
+                    "consumption).\n"
+                    "Saving itself is never blocked — you can log the animal normally and complete the data later from the animal edit screen, and the "
+                    "alert disappears automatically once it's completed."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_add_team_member",
@@ -594,6 +714,17 @@ ENTRIES: list[KBEntry] = [
             "• حدد الدور (عامل/دكتور/ممرض/محاسب...) — يحدد تلقائياً أي شاشات يقدر يشوفها.\n"
             "• نسيت كلمة مرور حساب؟ من نفس شاشة الأعضاء ← تعديل العضو ← حقل كلمة مرور جديد (اختياري، يتغيّر بس لو عبّيته)."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new team member (worker/doctor)?",
+                "body": (
+                    "From 'Team' → 'Team members' → '+ New member':\n"
+                    "• The phone number is the login identifier (no email) — set a password for them yourself.\n"
+                    "• Set the role (worker/doctor/nurse/accountant...) — automatically determines which screens they can see.\n"
+                    "• Forgot an account's password? From the same members screen → edit the member → 'new password' field (optional, only changes if you fill it in)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_family_view",
@@ -605,6 +736,18 @@ ENTRIES: list[KBEntry] = [
             "• زر 'المخزون' يفتح 3 أقسام (علف/صيدلية/معدات) بالمتبقي والمستهلك يومياً وشهرياً.\n"
             "• زر صغير أعلى اليسار يبدّل وضع ليلي/نهاري، يُحفَظ تلقائياً بنفس الجهاز."
         ),
+        translations={
+            "en": {
+                "title": "Simplified follow-up screen (for people not used to apps)",
+                "body": (
+                    "The `/family-view` link (or the '👋 simplified follow-up screen' button on the settings screen) — a view-only page with very large "
+                    "text, no navigation complexity:\n"
+                    "• The 'tasks' button opens each role's progress (owner/doctor/worker) — done, failed, and remaining, with real postpone/cancel buttons.\n"
+                    "• The 'stock' button opens 3 sections (feed/pharmacy/equipment) with what's left and daily/monthly consumption.\n"
+                    "• A small button top-left switches night/day mode, saved automatically on that same device."
+                ),
+            },
+        },
     ),
 
     # ---------- توسعة مرشد الاستخدام (بند إضافي 115) ----------
@@ -621,6 +764,17 @@ ENTRIES: list[KBEntry] = [
             "• الزيارة سجل تاريخي بس (ما تبقى 'مفتوحة' زي المرض) — لتوثيق فحص أو كشف عام مو علاجاً ممتداً.\n"
             "• حقل 'التكلفة': نفس مبدأ تسجيل المرض — لو محسوبة من دواء استُخدم، ما تُنشأ عملية مالية إضافية (اتُّحسبت وقت الشراء). لو أجرة كشف يدوية بدون دواء، تُنشأ عملية 'مصروف' مالية حقيقية بفئة 'زيارة بيطرية' تظهر بشاشة المالية تلقائياً."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a vet visit?",
+                "body": (
+                    "From 'Health' → 'Vet visits' → '+ New visit':\n"
+                    "• Pick the animal, the doctor, and the diagnosis — the medicine used (if any) is deducted from the pharmacy and its withdrawal period is computed automatically, same principle as logging a disease.\n"
+                    "• The visit is a historical record only (doesn't stay 'open' like a disease) — for documenting an exam or general checkup, not extended treatment.\n"
+                    "• 'Cost' field: same principle as logging a disease — if computed from a medicine used, no extra financial transaction is created (already accounted for at purchase). If a manual exam fee without a medicine, a real 'expense' financial transaction is created under the 'vet visit' category and shows on the finance screen automatically."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_smart_diagnose",
@@ -629,6 +783,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من 'الصحة' ← 'تشخيص ذكي' (/health/diagnose): اختر الأعراض الظاهرة على الحيوان من القائمة، والنظام يرشّح أقرب الأمراض احتمالاً حسب مطابقة أعراض معروفة مسبقاً (بعض الأمراض لها عرض 'إجباري' مميّز — لو ما اخترته، نسبة التطابق تنخفض تلقائياً حتى لو باقي الأعراض متطابقة) — **ترشيح بس، مو تشخيص نهائي ولا وصفة علاج**، القرار الطبي يبقى للدكتور دايماً."
         ),
+        translations={
+            "en": {
+                "title": "How do I use the smart diagnosis tool?",
+                "body": (
+                    "From 'Health' → 'Smart diagnose' (/health/diagnose): pick the symptoms visible on the animal from the list, and the system suggests the closest likely diseases by matching them against pre-known symptoms (some diseases have a distinctive 'required' symptom — if you don't pick it, the match percentage drops automatically even if the rest of the symptoms match) — **a suggestion only, not a final diagnosis or a treatment prescription**, the medical decision always stays with the doctor."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_vaccination_schedule",
@@ -639,6 +801,16 @@ ENTRIES: list[KBEntry] = [
             "1. تحصين جماعي فوري: من 'الإجراء الجماعي' أشّر الرؤوس المطلوبة واختر 'تحصين جماعي' من قائمة الإجراءات — يسجَّل تحصين فعلي الآن لكل الرؤوس المحددة دفعة وحدة.\n"
             "2. جدولة موعد تحصين قادم (تذكير مستقبلي بدون تسجيل فعلي الآن): من 'الصحة' ← 'تقويم التحصينات' ← '+ جدولة جديدة': اختر الحظيرة، الدواء، والتاريخ المخطَّط. قبل الموعد بمدة كافية، النظام يقارن تلقائياً عدد رؤوس الحظيرة الحيّ × الجرعة الافتراضية مقابل مخزون الصيدلية، وينبّهك لو المخزون بيصير ناقص."
         ),
+        translations={
+            "en": {
+                "title": "How do I schedule a group vaccination in advance?",
+                "body": (
+                    "Yes, in two steps:\n"
+                    "1. Immediate group vaccination: from 'group action' check the required heads and pick 'group vaccination' from the actions list — logs an actual vaccination now for all selected heads at once.\n"
+                    "2. Scheduling an upcoming vaccination date (a future reminder without an actual record now): from 'Health' → 'Vaccination calendar' → '+ New schedule': pick the barn, medicine, and planned date. With enough lead time before the date, the system automatically compares the barn's live head count × the default dose against the pharmacy stock, and warns you if stock will fall short."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_treatment_protocol",
@@ -647,6 +819,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من 'الصحة' ← 'البروتوكولات' افتح بروتوكولاً جاهزاً (أو أنشئ وحدة جديدة بخطواته) ← زر 'تطبيق على رأس'. النظام يولّد مهمة منفصلة لكل خطوة بتاريخها — وبعد آخر خطوة (منجزة أو فاشلة) يولّد تلقائياً مهمة 'تقييم فعالية العلاج' تذكّرك تراجع النتيجة."
         ),
+        translations={
+            "en": {
+                "title": "How do I apply a ready treatment protocol?",
+                "body": (
+                    "From 'Health' → 'Protocols' open a ready protocol (or create a new one with its steps) → 'apply to a head' button. The system generates a separate task for each step with its date — and after the last step (completed or failed) it automatically generates a 'treatment effectiveness review' task to remind you to review the outcome."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_mating_pregnancy",
@@ -656,6 +836,15 @@ ENTRIES: list[KBEntry] = [
             "'التكاثر' ← 'التلقيح' ← '+ تسجيل تلقيح' لتسجيل تقريع الأنثى بفحل معيّن بتاريخه.\n"
             "بعدها 'التكاثر' ← 'الحمل' ← '+ تشخيص حمل جديد' لتأكيد الحمل (بفحص يدوي أو سونار) — تاريخ الولادة المتوقع يُحسب تلقائياً من مدة الحمل المضبوطة بالإعدادات."
         ),
+        translations={
+            "en": {
+                "title": "How do I log mating and pregnancy diagnosis?",
+                "body": (
+                    "'Breeding' → 'Mating' → '+ Log mating' to log a female's mating with a specific sire, with its date.\n"
+                    "Then 'Breeding' → 'Pregnancy' → '+ New pregnancy diagnosis' to confirm the pregnancy (by manual exam or sonar) — the expected birth date is computed automatically from the gestation period set in settings."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_sonar",
@@ -664,6 +853,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'التكاثر' ← 'السونار' ← '+ فحص جديد': اختر الأنثى، النتيجة (حامل/غير حامل/غير مؤكد)، وتاريخ إعادة الفحص لو النتيجة غير مؤكدة — النظام يولّد تلقائياً مهمة تذكير بتاريخ إعادة الفحص بالضبط."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a sonar exam?",
+                "body": (
+                    "'Breeding' → 'Sonar' → '+ New exam': pick the female, the result (pregnant/not pregnant/unconfirmed), and a re-exam date if the result is unconfirmed — the system automatically generates a reminder task for the exact re-exam date."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_item_new",
@@ -678,6 +875,16 @@ ENTRIES: list[KBEntry] = [
             "'الوحدة' قائمة ثابتة (كجم/طن/لتر/مل/كيس/ربطة) مو نص حر تكتبه بنفسك — عشان النظام يقدر يجمع نفس الصنف بثقة (كم متوفر، كم يُصرف يومياً، ومتى ينبّهك تشتري كمية محددة زي '80 كيلو شعير' لتغطية باقي الشهر). لو تكتب 'كيلو' مرة و'كجم' مرة ثانية لنفس الصنف، النظام كان يعاملهم كوحدتين مختلفتين بالغلط.\n"
             "لو الوحدة من نوع عدّي وزنه مو ثابت عالمياً (زي 'ربطة' برسيم أو 'كيس')، فيه حقل اختياري 'وزن الوحدة الواحدة بالكيلو' يسجّل مرجعك الشخصي (مثلاً ربطة = 15 كجم) — للرجوع له وقت الشراء بس، ما يدخل بأي حساب تلقائي بالنظام."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new feed component and what does 'fixed unit' mean?",
+                "body": (
+                    "'Feed' → 'Feed components' → '+ New component': name, price per unit, and available quantity — the basics.\n"
+                    "The 'unit' is a fixed list (kg/ton/liter/ml/bag/bundle), not free text you type yourself — so the system can reliably total the same item (how much is available, how much is used daily, and when to warn you to buy a specific amount like '80 kg of barley' to cover the rest of the month). If you type 'kilo' once and 'kg' another time for the same item, the system used to treat them as two different units by mistake.\n"
+                    "If the unit is a count-type whose weight isn't universally fixed (like a bundle of alfalfa or a bag), there's an optional 'weight of one unit in kg' field to log your own reference (e.g. one bundle = 15 kg) — for your own reference at purchase time only, it doesn't enter any automatic calculation in the system."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_ration",
@@ -687,6 +894,15 @@ ENTRIES: list[KBEntry] = [
             "'العلف' ← 'الوصفات' ← '+ وصفة جديدة': أضف مكوّنات العلف ونسبة كل وحدة من إجمالي الوزن.\n"
             "بعدها 'العلف' ← 'خطط التغذية' ← '+ خطة جديدة' لربط الوصفة بحظيرة معيّنة وكمية يومية لكل رأس — أساس حساب معدل التحويل الغذائي (FCR) تلقائياً لاحقاً."
         ),
+        translations={
+            "en": {
+                "title": "How do I build a feed ration and link it to a barn?",
+                "body": (
+                    "'Feed' → 'Rations' → '+ New ration': add feed components and each one's percentage of total weight.\n"
+                    "Then 'Feed' → 'Feed plans' → '+ New plan' to link the ration to a specific barn and a daily amount per head — the basis for automatically computing feed conversion (FCR) later."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_optimizer",
@@ -696,6 +912,15 @@ ENTRIES: list[KBEntry] = [
             "'العلف' ← 'موازِن العليقة': أدخل الاحتياج الغذائي المستهدف (بروتين/طاقة/كالسيوم...) والأصناف المتوفرة عندك بأسعارها — النظام يحسب أرخص خلطة تحقق الاحتياج فعلياً (برمجة خطية حقيقية، مو تخمين)، وتقدر تعدّل النتيجة يدوياً بعدها.\n"
             "هذا حساب يدوي لرأس واحد تختاره — لو تبي حساب تلقائي لكل حظيرة كاملة، راجع مواعيد وجبات العلف."
         ),
+        translations={
+            "en": {
+                "title": "How does the ration optimizer work?",
+                "body": (
+                    "'Feed' → 'Ration optimizer': enter the target nutritional requirement (protein/energy/calcium...) and the items you have available with their prices — the system computes the cheapest mix that actually meets the requirement (real linear programming, not a guess), and you can adjust the result manually afterward.\n"
+                    "This is a manual calculation for one head you pick — if you want an automatic calculation for a whole barn, see feeding schedule times."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_feed_blend_auto",
@@ -705,6 +930,15 @@ ENTRIES: list[KBEntry] = [
             "بدل ما تدخل العلف يدوياً لكل رأس، النظام يجمع احتياج كل رؤوس الحظيرة النشطة (وزن كل رأس + حالته الفسيولوجية) ويحسب خلطة واحدة تغطي الحظيرة كاملة من مكوّنات العلف المتوفرة فعلاً بالمخزون — نفس محرك 'موازِن العليقة' بس مجمَّع لحظيرة كاملة بدل رأس واحد.\n"
             "تشوف الخلطة المحسوبة بتفاصيل مهمة 'وجبة علف' قبل ما توزّعها فعلياً، ولما تنجزها المخزون ينخصم تلقائياً."
         ),
+        translations={
+            "en": {
+                "title": "How does the system compute feed quantity automatically per barn?",
+                "body": (
+                    "Instead of entering feed manually for each head, the system totals the requirement of every active head in the barn (each head's weight + its physiological state) and computes one mix that covers the whole barn from feed components actually available in stock — the same 'ration optimizer' engine, just aggregated for a whole barn instead of one head.\n"
+                    "You see the computed mix in the 'feed meal' task details before you actually distribute it, and stock is deducted automatically when you complete it."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_finance_entry",
@@ -714,6 +948,15 @@ ENTRIES: list[KBEntry] = [
             "'المالية' ← '+ عملية جديدة': حدد النوع (شراء/مصروف/دين مستلم/سداد دين...)، المبلغ، والحيوان المرتبط لو فيه.\n"
             "أغلب العمليات لها شاشتها المخصّصة اللي تسجّل المالية تلقائياً معاها — بيع رأس، شراء دواء أو علف أو معدات، صيانة أصل، فاتورة كهرباء/ماء، وراتب شهري (من 'الفريق' ← 'رواتب الشهر'، مو من هنا). هذي الشاشة العامة تبقى للعمليات المتفرقة اللي ما لها شاشة مخصّصة."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a financial transaction (expense/income)?",
+                "body": (
+                    "'Finance' → '+ New transaction': set the type (purchase/expense/debt received/debt repayment...), the amount, and the linked animal if any.\n"
+                    "Most transactions have their own dedicated screen that logs the finance automatically alongside them — selling a head, buying medicine, feed, or equipment, asset maintenance, an electricity/water bill, and monthly salary (from 'Team' → 'monthly payroll', not here). This general screen stays for scattered transactions that don't have a dedicated screen."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_export_reports",
@@ -722,6 +965,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "بأي شاشة تقارير ('التقارير' ← اختر النوع)، حدد الفترة الزمنية من فلتر أعلى الشاشة، بعدها زر 'تصدير Excel' أو 'تصدير PDF' بأعلى الجدول — يصدّر نفس البيانات المعروضة بالفلترة المختارة بالضبط."
         ),
+        translations={
+            "en": {
+                "title": "How do I export an Excel or PDF report?",
+                "body": (
+                    "On any reports screen ('Reports' → pick the type), set the date range from the filter at the top of the screen, then the 'Export Excel' or 'Export PDF' button at the top of the table — exports exactly the data shown with the chosen filtering."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_batch_receiving",
@@ -730,6 +981,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الدفعات' ← '+ دفعة جديدة': سجّل عدد الرؤوس المستقبلة كدفعة واحدة بدل تسجيل كل رأس لحاله. بعدها تقدر 'توزّع' الدفعة على أرقام رؤوس فردية تدريجياً، أو 'تقدّم' حالتها الجماعية (رش، تحصين مبدئي) لكل الدفعة دفعة وحدة."
         ),
+        translations={
+            "en": {
+                "title": "How do I receive a new batch of animals in stages?",
+                "body": (
+                    "'Batches' → '+ New batch': log the number of heads received as one batch instead of logging each head on its own. Then you can gradually 'break down' the batch into individual head numbers, or 'advance' its collective status (spraying, initial vaccination) for the whole batch at once."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_warehouse_transfer",
@@ -738,6 +997,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المستودعات' ← افتح الصنف ← زر 'تحويل': اختر المستودع الوجهة والكمية. التحويل يحافظ على الرصيد الإجمالي للصنف (ما يزيد ولا ينقص المجموع الكلي)، بس يعيد توزيعه بين المستودعات."
         ),
+        translations={
+            "en": {
+                "title": "How do I transfer stock between two warehouses?",
+                "body": (
+                    "'Warehouses' → open the item → 'transfer' button: pick the destination warehouse and the quantity. The transfer keeps the item's total balance unchanged (doesn't add to or subtract from the grand total), just redistributes it between warehouses."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_ostrich_egg",
@@ -747,6 +1014,15 @@ ENTRIES: list[KBEntry] = [
             "'النعام' ← 'البيض' ← '+ بيضة جديدة' لتسجيلها فور الجمع (رقم مستقل لكل بيضة).\n"
             "بعدها زر 'وضع بالحاضنة' يربطها بحاضنة معيّنة ويبدأ عدّ تاريخ الفقس المتوقع تلقائياً حسب مدة الحضانة المضبوطة بالإعدادات."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a new ostrich egg and load it into an incubator?",
+                "body": (
+                    "'Ostrich' → 'Eggs' → '+ New egg' to log it as soon as you collect it (its own number for each egg).\n"
+                    "Then the 'place in incubator' button links it to a specific incubator and starts counting the expected hatch date automatically per the incubation duration set in settings."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_climate_settings",
@@ -755,6 +1031,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المناخ' ← 'الإعدادات': أدخل موقع مزرعتك (يجلب توقعات الطقس تلقائياً من مصدر مجاني بدون مفتاح). بعد التفعيل، الشاشة الرئيسية تحسب مؤشر الإجهاد الحراري (THI) يومياً وتولّد مهام وقائية تلقائية (تعديل توقيت العلف، إضافة ماء، فحص تهوية/تظليل) لما المؤشر يتجاوز الحدود المضبوطة."
         ),
+        translations={
+            "en": {
+                "title": "How do I turn on the climate & heat stress radar?",
+                "body": (
+                    "'Climate' → 'Settings': enter your farm's location (fetches weather forecasts automatically from a free source, no key needed). After enabling it, the home screen computes the heat stress index (THI) daily and generates automatic preventive tasks (adjusting feed timing, adding water, checking ventilation/shade) when the index exceeds the set thresholds."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_backup",
@@ -763,6 +1047,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من الإعدادات ← 'النسخ الاحتياطي' ← زر 'إنشاء نسخة الآن' — يحفظ نسخة كاملة من قاعدة بياناتك بتاريخها، وتقدر تنزّلها لجهازك من نفس الشاشة. يُنصح تاخذ نسخة بشكل دوري، خصوصاً قبل أي تعديل كبير."
         ),
+        translations={
+            "en": {
+                "title": "How do I take or restore a backup?",
+                "body": (
+                    "From Settings → 'Backup' → 'Create backup now' button — saves a full copy of your database with its date, and you can download it to your device from the same screen. It's recommended to take a backup periodically, especially before any major change."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_roles_permissions",
@@ -771,6 +1063,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من الإعدادات ← 'الأدوار والصلاحيات' ← '+ دور جديد': اختر اسم الدور وحدد أي صلاحيات يملكها (عرض الحيوانات، إدارة الصحة، توزيع مهام...) من قائمة كاملة — بدون أي كود، كله من الواجهة. الأدوار الستة الجاهزة (مالك، دكتور، عامل، ممرض، محاسب، مشاهد) تبقى نقطة بداية تقدر تعدّلها أو تنشئ غيرها."
         ),
+        translations={
+            "en": {
+                "title": "How do I create a new job role with custom permissions?",
+                "body": (
+                    "From Settings → 'Roles & permissions' → '+ New role': pick a role name and set which permissions it has (viewing animals, managing health, assigning tasks...) from a full list — no code needed, all from the interface. The six ready roles (owner, doctor, worker, nurse, accountant, viewer) stay a starting point you can edit or build others from."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_setup_checklist",
@@ -779,6 +1079,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "تظهر بأعلى الصفحة الرئيسية أول ما تشغّل النظام — دليل سريع يتحقق تلقائياً (✅/⬜) هل أضفت أول حظيرة، أول رأس، أول عضو فريق، أول دواء، وأول صنف علف. تقدر تتجاهلها بزر 'ما أحتاجها' لو ما تحتاجها، وترجع لها لاحقاً من نفس المكان."
         ),
+        translations={
+            "en": {
+                "title": "What's the 'system setup steps' list on the home page?",
+                "body": (
+                    "Appears at the top of the home page as soon as you start using the system — a quick guide that automatically checks (✅/⬜) whether you've added your first barn, first animal, first team member, first medicine, and first feed item. You can dismiss it with the 'I don't need it' button if you don't need it, and come back to it later from the same place."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_readiness_check",
@@ -787,6 +1095,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من الإعدادات ← 'فحص الجاهزية قبل النشر' — قائمة تحقق آلية لنقاط شائعة تُنسى (كلمة مرور افتراضية، حظيرة عزل، حيوانات بلا حظيرة، فريق العمل، نسخة احتياطية...). عرض بس، بدون أي تعديل تلقائي على بياناتك — القرار يبقى لك."
         ),
+        translations={
+            "en": {
+                "title": "How do I use the 'go-live readiness check'?",
+                "body": (
+                    "From Settings → 'go-live readiness check' — an automatic checklist for commonly forgotten points (default password, isolation barn, animals with no barn, team members, a backup...). Display only, with no automatic change to your data — the decision stays yours."
+                ),
+            },
+        },
     ),
 
     # ---------- توسعة ثانية لمرشد الاستخدام (بند إضافي 116) ----------
