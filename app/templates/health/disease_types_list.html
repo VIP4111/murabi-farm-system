@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
+{# بند إصلاح (فحص تحجيم حي — طلبك: "٢" بعد فحص الجوال) — عمود
+   "ملاحظات" هنا يحمل فقرات دواء طويلة (جرعة/طريقة إعطاء/فترة سحب)،
+   بخلاف بقية جداول التطبيق (أسماء/أعراض قصيرة). الجدول العادي كان
+   ينكمش بشدة على الجوال ويصير نص عمودي ضيق جداً غير قابل للقراءة.
+   هذا التحويل خاص بهذي الشاشة فقط (مو تغيير عام بـ`.compact-table`
+   اللي يستخدمه عشرات الجداول الثانية بالتطبيق) — يحوّل كل صف لكارت
+   مستقل تحت 640px، بنفس بيانات الجدول بالضبط. #}
+<style>
+@media (max-width:640px){
+  table.disease-types-table{display:block; width:100%;}
+  table.disease-types-table tr:first-child{display:none;}
+  table.disease-types-table tr{
+    display:block; border:1px solid var(--line); border-radius:14px;
+    padding:10px 12px; margin-bottom:10px; background:#fff;
+  }
+  table.disease-types-table td{
+    display:block; width:100%; border:none !important; padding:5px 0 !important;
+  }
+  table.disease-types-table td::before{
+    content:attr(data-label); display:block; font-weight:700;
+    color:var(--muted); font-size:11px; margin-bottom:2px;
+  }
+  table.disease-types-table td:empty::before{content:none;}
+}
+</style>
+
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>{{ _('الأمراض الشائعة (قائمة الاقتراحات)') }}</h2>
@@ -19,11 +45,12 @@
 
 <div class="card">
   <div class="table-scroll">
-  <table class="compact-table">
+  <table class="compact-table disease-types-table">
     <tr><th>{{ _('الاسم') }}</th><th>{{ _('ملاحظات') }}</th><th></th></tr>
     {% for t in types %}
     <tr>
-      <td>{{ t.display_label() }}</td><td>{{ t.notes or '-' }}</td>
+      <td data-label="{{ _('الاسم') }}">{{ t.display_label() }}</td>
+      <td data-label="{{ _('ملاحظات') }}">{{ t.notes or '-' }}</td>
       <td><a class="btn light" style="padding:4px 10px; font-size:12px;" href="{{ url_for('health.disease_type_detail', disease_id=t.id) }}">{{ _('إدارة الأعراض') }} ←</a></td>
     </tr>
     {% else %}
