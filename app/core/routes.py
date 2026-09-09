@@ -1247,8 +1247,11 @@ def animal_checkup_suggest(animal_id):
         f"تنبيهات نشطة على هذا الرأس: {[a['category'] for a in animal_alerts]}",
     ]
     run_once_per_app("checkup_item_presets_seeded", CheckupItemPreset.seed_defaults)
+    # بند إصلاح (فحص عميق — نفس خلل ملخص "الإدخال الذكي" بالضبط) — سبب
+    # الاقتراح كان يُطلَب عربي دائماً بغض النظر عن لغة صاحب الحلال.
+    from app.assistant.translations import lang_for
     result = llm_bridge.suggest_checkup_items(
-        "\n".join(context_lines), CheckupItemPreset.active_texts(),
+        "\n".join(context_lines), CheckupItemPreset.active_texts(), lang_for(current_user),
     )
     if not result:
         flash(_("الاقتراح الذكي غير متاح حالياً (تأكد من تفعيل GEMINI_API_KEY) — اختر البنود يدوياً بالأسفل."), "error")

@@ -366,14 +366,18 @@ CHECKUP_SUGGESTION_SYSTEM_PROMPT = """أنت مساعد بيطري مساند ل
 - لو ما فيه أي مؤشر يستدعي فحصاً معيّناً، اقترح البنود الأساسية العامة بس (الشهية والحالة العامة + رفع تقرير).
 - ممنوع تشخّص مرضاً أو تقترح جرعة دواء — أنت تقترح "أي فحص يُجرى"، مو "وش النتيجة المتوقعة" أو "وش العلاج".
 - رجّع ردك **JSON صرف بس**، بدون أي نص قبله أو بعده، بالشكل التالي بالضبط:
-{"items": ["بند 1", "بند 2"], "reason": "جملة عربية قصيرة توضح سبب الاختيار"}
+{{"items": ["بند 1", "بند 2"], "reason": "جملة قصيرة بلغة {lang_name} توضح سبب الاختيار"}}
 """
 
 
-def suggest_checkup_items(context_text: str, available_items: list[str]) -> dict | None:
+def suggest_checkup_items(context_text: str, available_items: list[str], lang: str = "ar") -> dict | None:
     """يرجع `{"items": [...], "reason": "..."}` (فلترة صارمة لاحقاً على
     `available_items` بس)، أو None عند أي فشل/غياب مفتاح — نفس فلسفة
-    باقي دوال هذا الملف بالضبط. اقتراح بس، صفر تنفيذ."""
+    باقي دوال هذا الملف بالضبط. اقتراح بس، صفر تنفيذ.
+
+    ``lang`` (بند إصلاح — نفس خلل `summary_ar` بمسودات الإدخال الذكي
+    بالضبط) — كان `reason` يُطلَب عربي دائماً بغض النظر عن لغة صاحب
+    الحلال اللي يشوف بادج "اقتراح الذكاء الاصطناعي" بصفحة الحيوان."""
     if not is_gemini_configured():
         return None
     try:
@@ -384,10 +388,12 @@ def suggest_checkup_items(context_text: str, available_items: list[str]) -> dict
     try:
         import json
         client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        lang_name = _TARGET_LANG_NAMES.get(lang, _TARGET_LANG_NAMES["ar"])
         prompt = f"بيانات الرأس:\n{context_text}\n\nالبنود المتاحة للاختيار منها:\n" + "\n".join(f"- {i}" for i in available_items)
         response = client.models.generate_content(
             model=DEFAULT_GEMINI_MODEL, contents=prompt,
-            config=types.GenerateContentConfig(system_instruction=CHECKUP_SUGGESTION_SYSTEM_PROMPT),
+            config=types.GenerateContentConfig(
+                system_instruction=CHECKUP_SUGGESTION_SYSTEM_PROMPT.format(lang_name=lang_name)),
         )
         text = (response.text or "").strip()
         # بعض الأحيان يلف الرد بـ```json ... ``` رغم التعليمات — إزالة آمنة.
