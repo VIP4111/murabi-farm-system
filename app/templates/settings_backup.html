@@ -56,7 +56,7 @@
    لضبط المصنع (حصري لصاحب الحلال + تأكيد مزدوج) لأنه بنفس الخطورة:
    يمسح كل البيانات الحالية قبل الاسترجاع، بدون تراجع لاحق. #}
 <div class="card" style="border:2px solid #dc2626;">
-  <h2 style="color:#dc2626;">تحذير: استرجاع من نسخة احتياطية</h2>
+  <h2 style="color:#dc2626;">{{ _('تحذير: استرجاع من نسخة احتياطية') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('يمسح كل بيانات المزرعة الحالية ويستبدلها بالكامل بمحتوى ملف النسخة الاحتياطية (JSON) اللي ترفعه — استخدمه بس لو صار عطل حقيقي بالبيانات وتبي ترجّعها من نسخة محفوظة قبل كذا.') }}</p>
   <button type="button" class="btn" style="background:#dc2626;" id="openRestoreModalBtn">{{ _('استرجاع من ملف') }}</button>
 </div>
@@ -64,7 +64,7 @@
 <div class="modal-overlay" id="restoreModal">
   <div class="modal-card">
     <button type="button" class="modal-close" id="closeRestoreModalBtn">X</button>
-    <h2 style="color:#dc2626;">تأكيد الاسترجاع</h2>
+    <h2 style="color:#dc2626;">{{ _('تأكيد الاسترجاع') }}</h2>
     <p style="color:var(--muted); font-size:13px;">{{ _('هذا الإجراء نهائي وبلا رجعة. كل بيانات المزرعة الحالية ستُمسح وتُستبدل بمحتوى الملف المرفوع.') }}</p>
     <form method="post" action="{{ url_for('core.backup_restore') }}" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
