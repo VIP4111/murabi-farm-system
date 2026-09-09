@@ -159,7 +159,11 @@ def my_tasks_summary(user) -> dict:
         "count": len(rows),
         "locked_count": len(locked),
         "items": [
-            {"title": t.title, "due_date": t.due_date, "locked": t in locked}
+            # بند إصلاح (فحص عميق — طلبك: "افحص شاشة المساعد الذكي
+            # كمان") — نفس فجوة عناوين المهام اليومية التلقائية
+            # (`Task.display_title()`، أُصلحت للشاشات — نُسيت هنا بردود
+            # المساعد الذكي)، كان يرجع `t.title` الخام دايماً.
+            {"title": t.display_title(), "due_date": t.due_date, "locked": t in locked}
             for t in rows[:10]
         ],
     }

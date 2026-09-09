@@ -46,7 +46,11 @@ def test_unsupported_lang_falls_back_to_arabic():
 
 
 def test_kb_entry_without_translation_falls_back_to_arabic():
-    entry = knowledge_base.ENTRIES[0]
+    # بند إصلاح (فحص عميق — طلبك: "افحص شاشة المساعد الذكي كمان") —
+    # ENTRIES[0] صار مترجَماً فعلياً (جولة ترجمة قاعدة المعرفة)، فما
+    # يصلح كمثال "بدون ترجمة" — نبني بند وهمي بدل الاعتماد على ترتيب
+    # القائمة الحقيقية.
+    entry = knowledge_base.KBEntry(code="x", title="عنوان تجريبي", keywords=[], body="نص تجريبي")
     title, body = knowledge_base.localized_entry(entry, "en")
     assert title == entry.title
     assert body == entry.body

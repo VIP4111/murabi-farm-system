@@ -52,6 +52,20 @@ ENTRIES: list[KBEntry] = [
             "• لو فشلت بيضة، سجّل السبب بدقة (غير مخصّبة، توقّف نمو، مشكلة فقس) — يساعدك مع الوقت تكتشف نمط (حاضنة معيّنة، أم معيّنة...).\n"
             "• راجع طبيبك لو لاحظت نسبة فشل مرتفعة متكررة — قد يكون سببها تغذية الأمهات، مو الحاضنة."
         ),
+        translations={
+            "en": {
+                "title": "Hatching & incubation management (ostrich eggs)",
+                "body": (
+                    "General hatching guidance:\n"
+                    "• Collect eggs from the nest promptly (2-3 times a day) to reduce contamination or breakage.\n"
+                    "• Log each egg with its own number as soon as you collect it (same principle as the rest of the system: one egg = one record) before placing it in the incubator.\n"
+                    "• Check shell quality before loading it (cleanliness, no cracks) and record its weight if you have a scale — helps track normal weight loss during incubation.\n"
+                    "• The incubator's temperature and humidity are set per the manufacturer's manual for that device — the system doesn't store temperature/humidity values, only tracks the loading date and expected hatch date automatically from the 'ostrich egg incubation duration' setting.\n"
+                    "• If an egg fails, record the reason precisely (infertile, growth stopped, hatching problem) — over time this helps you spot a pattern (a specific incubator, a specific mother...).\n"
+                    "• See your vet if you notice a recurring high failure rate — it may be caused by the mothers' nutrition rather than the incubator."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="ostrich_chick_care",
@@ -64,6 +78,18 @@ ENTRIES: list[KBEntry] = [
             "• أبقِ الفرخ بمكان دافئ ونظيف بعيد عن الرطوبة الزائدة أول فترة.\n"
             "• أي إسهال أو خمول أو رفض أكل مستمر أكثر من يوم = استدعاء الطبيب، مو انتظار."
         ),
+        translations={
+            "en": {
+                "title": "Care for newly hatched ostrich chicks",
+                "body": (
+                    "General guidance for the chick's first weeks:\n"
+                    "• Watch the chick's standing and walking in the first 24-48 hours — any clear stumbling needs a quick vet check.\n"
+                    "• Weigh the chick regularly (the system logs it on the same animal detail screen as any other animal) — the best early indicator of a feeding or health problem.\n"
+                    "• Keep the chick somewhere warm, clean, and away from excess humidity early on.\n"
+                    "• Any diarrhea, lethargy, or refusal to eat for more than a day means calling the vet, not waiting."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="vaccination_protocol",
@@ -88,6 +114,21 @@ ENTRIES: list[KBEntry] = [
             "مو تسجيل تحصين فعلي وقتها. اختر حظيرة فيظهر لك أرقام رؤوسها الفعليين — علّم بس اللي يحتاج هذا اللقاح تحديداً "
             "(زر 'الكل' لو تقصدهم كلهم)، وسيب القائمة فاضية لو تقصد 'كل رؤوس الحظيرة' مهما تغيّرت لاحقاً."
         ),
+        translations={
+            "en": {
+                "title": "Vaccinations — schedule and general principles",
+                "body": (
+                    "General principles (the actual schedule for each animal is set by the vet based on vaccine type and herd condition):\n"
+                    "• Log every vaccination with its date and vaccine name — the system automatically computes the next due date and shows it on the alerts screen ahead of time, per your settings.\n"
+                    "• The mother's post-partum vaccination has a separate due date (default 45 days after birth, adjustable in settings) — it appears automatically as a task once the animal enters the post-birth isolation path.\n"
+                    "• Don't vaccinate a currently sick animal (an open, unclosed disease) without the vet's explicit approval — vaccination adds load to a weakened immune system.\n"
+                    "• Respect the withdrawal period for any vaccine that has one before a sale — the system blocks/warns automatically if you try to sell during that period.\n"
+                    "• Choosing the vaccine type and dose is the vet's decision alone — the assistant here never suggests a dose.\n"
+                    "**Does the system suggest vaccinations?** The system itself doesn't compute or suggest an automatic dose or date based on the animal's age/type — it only **reminds** you of the *next* due date after you actually log a vaccination and set its next due date yourself. However, the pharmacy catalog has 3 ready reference vaccine entries (CDT, PPR+sheep pox combined, FMD) with names and protection durations documented from real veterinary sources, but without dose or price (you/the vet fill those in when you receive the actual product) — see the 'Reference sheep/goat vaccination schedule' knowledge entry for full details.\n"
+                    "**The 'planned date' on the 'schedule new vaccination' screen:** a future date you intend to do the vaccination on later — a reminder/plan only, not an actual vaccination record at that time. Pick a barn and its actual head numbers appear — check only the ones that need this specific vaccine ('all' button if you mean all of them), and leave the list empty if you mean 'the whole barn's heads' whoever they turn out to be later."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="isolation_protocol",
@@ -100,6 +141,18 @@ ENTRIES: list[KBEntry] = [
             "• الخروج من العزل يحتاج فعلياً: فحص بيطري موثّق + تحصين المولود، وتحصين الأم مرتبط بتاريخ آخر ولادة لها — البوابة ما تفتح تلقائياً لمجرد مرور الوقت.\n"
             "• أي علامة غير طبيعية أثناء فترة العزل (خمول، إسهال، رفض رضاعة) = استدعاء الطبيب فوراً بدل انتظار الفحص اليومي المجدول."
         ),
+        translations={
+            "en": {
+                "title": "Automatic isolation (quarantine) in the system",
+                "body": (
+                    "How automatic isolation currently works in the system:\n"
+                    "• Any new birth automatically moves the mother and newborn to the first barn of type 'isolation', and opens 7 daily check tasks + a vet exam task within the first 48 hours + a weighing task + two vaccination tasks (mother and newborn).\n"
+                    "• A newly arriving animal (purchase or gift) goes through a quarantine period (default 21 days, adjustable in settings) before being considered a normal part of the herd — an opening-balance animal (already in the herd) is exempt from this quarantine.\n"
+                    "• Exiting isolation actually requires: a documented vet exam + newborn vaccination, and the mother's vaccination tied to her last birth date — the gate doesn't open automatically just because time has passed.\n"
+                    "• Any abnormal sign during isolation (lethargy, diarrhea, refusing to nurse) means calling the vet immediately instead of waiting for the scheduled daily check."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="sprouted_barley",
@@ -112,6 +165,18 @@ ENTRIES: list[KBEntry] = [
             "• سجّله بالنظام كمكوّن علف منفصل (`Feed`) بقيمه الغذائية التقريبية (بروتين/طاقة) عشان حاسبة الوصفات تحسبه صح ضمن أي تركيبة تضيفه لها.\n"
             "• راقب رطوبته العالية — يفسد بسرعة لو تخزّن، فالأفضل يُنتَج ويُستهلك يومياً بكمية محسوبة، مو يُخزَّن لفترة طويلة."
         ),
+        translations={
+            "en": {
+                "title": "Sprouted barley (green fodder)",
+                "body": (
+                    "Sprouted barley (fodder) as a supplementary feed component:\n"
+                    "• Barley is usually sprouted over 6-8 days (soaking + repeated watering, no soil) and yields a fresh, high-moisture green mass.\n"
+                    "• Used as a fresh supplement (a source of vitamins and easily digestible fiber), not a full replacement for concentrate feed — it must be part of a balanced ration.\n"
+                    "• Log it in the system as a separate feed component (`Feed`) with its approximate nutritional values (protein/energy) so the ration calculator accounts for it correctly in any mix you add it to.\n"
+                    "• Watch its high moisture — it spoils quickly if stored, so it's best produced and consumed daily in a calculated amount rather than stored for long."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="azolla",
@@ -124,6 +189,18 @@ ENTRIES: list[KBEntry] = [
             "• قبل اعتمادها بكمية كبيرة بوصفة دائمة، سجّل قيمها الغذائية الفعلية بالنظام (`Feed`) من تحليل مخبري أو مرجع موثوق لو متوفر، بدل تقدير عام — يخلي حساب الوصفة والتكلفة دقيق.\n"
             "• تحتاج مصدر مياه نظيف ومستقر لاستزراعها — جودة المياه تؤثر مباشرة على جودة المحصول."
         ),
+        translations={
+            "en": {
+                "title": "Azolla as a protein-rich alternative feed",
+                "body": (
+                    "Azolla (an aquatic plant) as an alternative/supplementary protein source:\n"
+                    "• Relatively high crude protein compared to most traditional green feeds, grown in shallow water ponds with a fast growth rate.\n"
+                    "• Fed fresh or dried as part of the ration, as an extra protein source — not a full replacement for the ration's main protein sources; include it at a measured proportion.\n"
+                    "• Before relying on a large amount in a permanent ration, log its actual nutritional values in the system (`Feed`) from a lab analysis or a reliable reference if available, instead of a rough estimate — keeps the ration and cost calculations accurate.\n"
+                    "• Needs a clean, stable water source to grow — water quality directly affects the crop's quality."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="feed_ration_basics",
@@ -136,6 +213,18 @@ ENTRIES: list[KBEntry] = [
             "• الوصفة تُبنى من مكوّنات مسجّلة بنسب مئوية من إجمالي الوزن — النظام يحسب البروتين/الطاقة الموزونة وتكلفة الكيلو تلقائياً من قيم كل مكوّن.\n"
             "• لو المخزون الحالي ما يكفي وصفة معيّنة، الحاسبة تنبّهك وترشّح بديل من المتوفر فعلياً — راجع 'ترشيح الوصفة' بدل التركيب اليدوي."
         ),
+        translations={
+            "en": {
+                "title": "Basics of ration planning and nutritional balance",
+                "body": (
+                    "Basics of building a balanced ration (without reinventing the feed calculator already built into the system):\n"
+                    "• Use the 'feed calculator' screen — it automatically computes the daily requirement from the animal's actual weight and its physiological state (growth/late pregnancy/lactation/maintenance) inferred from the production cycle.\n"
+                    "• The figures used are general estimates for small ruminants (sheep/goats), not a veterinary recommendation certified for your specific farm — review them with your vet before major purchase decisions.\n"
+                    "• A ration is built from logged components as percentages of total weight — the system automatically computes weighted protein/energy and cost per kilo from each component's values.\n"
+                    "• If current stock isn't enough for a given ration, the calculator warns you and suggests an alternative from what's actually available — see 'ration substitution' instead of manual mixing."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="general_health_red_flags",
@@ -151,6 +240,21 @@ ENTRIES: list[KBEntry] = [
             "• أي نزيف أو تورّم غير طبيعي.\n"
             "سجّل الحالة بشاشة 'الأمراض' أو ارفع بلاغ من شاشة البلاغات فور ملاحظتها — التشخيص والعلاج والجرعة قرار الطبيب حصراً."
         ),
+        translations={
+            "en": {
+                "title": "Signs that call for the vet immediately",
+                "body": (
+                    "These are general signs that call for **calling the vet immediately**, not waiting for the regular round — the assistant here doesn't diagnose or suggest treatment:\n"
+                    "• Complete refusal to eat or drink for more than a day.\n"
+                    "• Severe or persistent diarrhea, especially in a newborn or chick.\n"
+                    "• Clear difficulty breathing or repeated coughing.\n"
+                    "• Sudden limping or complete refusal to stand.\n"
+                    "• A noticeably high body temperature combined with clear lethargy.\n"
+                    "• Any abnormal bleeding or swelling.\n"
+                    "Log the case on the 'diseases' screen or file a report from the reports screen as soon as you notice it — diagnosis, treatment, and dosage are the vet's decision alone."
+                ),
+            },
+        },
     ),
     # خمسة بنود جديدة (بند إضافي 55.3) — فكرة التوسيع أساسها كود "مقاني"
     # (دليل مربٍّ موسّع)، لكن المحتوى مبني من الصفر ليطابق شاشات وميزات
@@ -171,6 +275,19 @@ ENTRIES: list[KBEntry] = [
             "بدون ما تحسبها يدوياً.\n"
             "'المستودعات' ← 'سجل الجرد' يعرض كل عمليات الجرد السابقة بكل الأقسام بتاريخها وقيمة أي هالك."
         ),
+        translations={
+            "en": {
+                "title": "How do I do a stock count and compute loss?",
+                "body": (
+                    "From 'Warehouses' → 'Count' button next to any item (feed/medicine/equipment): enter the actual quantity you weighed/counted "
+                    "in the warehouse — the system compares it to its computed balance (from purchase/consumption movements) and corrects the stock automatically.\n"
+                    "If actual is more than computed (surplus): a stock correction only, with no financial effect.\n"
+                    "If actual is less (shortage): counted as 'loss' — an indirect expense worth (missing quantity × the item's logged unit price), "
+                    "distributed automatically across all active heads via the same monthly per-head cost report — with no manual calculation from you.\n"
+                    "'Warehouses' → 'Count log' shows every past count across all sections with its date and any loss value."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_stock_purchase",
@@ -192,6 +309,22 @@ ENTRIES: list[KBEntry] = [
             "(كجم/كيس/ربطة...) مع إجمالي تقريبي بالكيلوجرام لو مسجَّل وزن الوحدة (بند 202) — عشان تعرف بالضبط كم "
             "كيلو انضاف فعلياً وقت تقسّمها لاحقاً على الحظائر أو الرؤوس."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a feed or equipment purchase in one click?",
+                "body": (
+                    "'Feed' → 'Feed components' → 'Purchase' button (and the same way 'Equipment' → 'Purchase'): "
+                    "one form does two linked operations in one click — increases stock immediately (an 'in' movement) "
+                    "and **logs the financial transaction** (amount = quantity × unit price, with a supplier invoice attached if you have one) at the same time.\n"
+                    "Instead of entering it via 'stock movement' alone then 'finance → new transaction' separately — the two become one linked record, "
+                    "and it needs both the section's management permission (feed/equipment) and the finance permission together since it creates a real financial transaction.\n"
+                    "If the item you're buying isn't logged yet, the 'add new component/item' button next to the selection list on the same form opens the add "
+                    "form directly without leaving the purchase page. Under the quantity field, the item's actual unit (kg/bag/bundle...) shows automatically "
+                    "with an approximate kilogram total if the unit weight is logged — so you know exactly how many kilos were actually added when you split it "
+                    "across barns or heads later."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="buying_checklist",
@@ -205,6 +338,19 @@ ENTRIES: list[KBEntry] = [
             "• سجّل الحيوان بالنظام فور الشراء (شراء فردي أو 'شراء دفعة' لعدة رؤوس دفعة واحدة) — يدخل تلقائياً فترة الحجر (افتراضي 21 يوم، قابلة للتعديل من الإعدادات) قبل ما يُخلط بالقطيع.\n"
             "• لو الدفعة فيها رأس تشتبه فيها، استخدم 'استبعاد فردي' بمسار استقبال الدفعة — تبقى بمرحلتها لحالها بينما تكمل بقية الدفعة السليمة."
         ),
+        translations={
+            "en": {
+                "title": "Checking an animal before buying",
+                "body": (
+                    "General points a breeder checks before deciding to buy (the final medical exam is always with the vet):\n"
+                    "• Eyes, nose, breathing, teeth, jaw, and legs — any abnormal sign is a question before the purchase, not after.\n"
+                    "• Udder and teats for females, and testicles for males.\n"
+                    "• Approximate age and the date of the last vaccination/treatment if the seller has it.\n"
+                    "• Log the animal in the system as soon as you buy it (single purchase or 'batch purchase' for several heads at once) — it automatically enters the quarantine period (default 21 days, adjustable in settings) before mixing with the herd.\n"
+                    "• If a head in the batch looks suspicious, use 'individual exclusion' in the batch-receiving flow — it stays at its own stage while the rest of the healthy batch continues."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="biosecurity",
@@ -218,6 +364,19 @@ ENTRIES: list[KBEntry] = [
             "• أي حيوان مجهول الحالة الصحية (وافد جديد، أو من سوق/معرض) يدخل حظيرة العزل أولاً — نفس منطق العزل التلقائي الموجود أصلاً بالنظام.\n"
             "• لاحظ تكرار نفوق أو مرض بنفس الحظيرة خلال فترة قصيرة — علامة تستدعي مراجعة الطبيب لفحص السبب البيئي، مو بس علاج كل حالة لحالها."
         ),
+        translations={
+            "en": {
+                "title": "Biosecurity and preventing disease spread",
+                "body": (
+                    "General principles for reducing disease spread within the farm (complements the system's automatic isolation plan, doesn't replace it):\n"
+                    "• Disinfect footwear, tools, and transport before entering the barns, especially after visiting another farm.\n"
+                    "• Don't share injection needles or treatment tools between different animals.\n"
+                    "• Attend to healthy animals before sick ones on your daily round, not the other way around — reduces disease transfer via clothes and hands.\n"
+                    "• Any animal of unknown health status (a new arrival, or from a market/exhibition) goes into the isolation barn first — same logic as the automatic isolation already built into the system.\n"
+                    "• Notice repeated deaths or disease in the same barn within a short period — a sign that calls for a vet review to check the environmental cause, not just treating each case on its own."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="heat_stress",
@@ -231,6 +390,19 @@ ENTRIES: list[KBEntry] = [
             "• راجع 'شاشة الطقس' بالنظام (لو موقع المزرعة مضبوط) لمتابعة درجة الحرارة الحالية والمتوقعة قبل جدولة أي عملية جماعية.\n"
             "• لهاث شديد مستمر أو ضعف مفاجئ وقت الحر الشديد = حالة طارئة تستدعي الطبيب فوراً، مو انتظار برودة الجو."
         ),
+        translations={
+            "en": {
+                "title": "Managing heat and heat stress",
+                "body": (
+                    "General principles for reducing the effect of heat (Saudi Arabia is a hot environment most of the year):\n"
+                    "• Provide shade and good ventilation, and avoid crowding inside the barn during peak heat hours.\n"
+                    "• Check water troughs more often and ensure water availability — the requirement rises with heat, especially for pregnant and nursing females.\n"
+                    "• Postpone any tiring procedure (transport, sorting, group operations, moving to a new barn) to the cooler times of day (early morning/evening) as much as possible.\n"
+                    "• Check the system's 'weather screen' (if the farm's location is set) to track current and forecast temperature before scheduling any group operation.\n"
+                    "• Persistent heavy panting or sudden weakness during severe heat is an emergency that calls for the vet immediately, not waiting for cooler weather."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="water_minerals",
@@ -243,6 +415,18 @@ ENTRIES: list[KBEntry] = [
             "• استخدم أملاح ومعادن مخصَّصة للأغنام/الماعز تحديداً — خلطات حيوانات أخرى قد تحتوي نسب معادن غير مناسبة.\n"
             "• سجّل أي منتج أملاح كمكوّن علف (`Feed`) بالنظام لو تستخدمه ضمن وصفة ثابتة، عشان حاسبة العلف تحسبه صح."
         ),
+        translations={
+            "en": {
+                "title": "Water and mineral salts",
+                "body": (
+                    "General principles for providing water and salts:\n"
+                    "• Clean, refreshed water matters more than any nutritional supplement — clean the troughs regularly and check water quality if you notice a collective refusal to drink.\n"
+                    "• The requirement rises with heat, pregnancy, lactation, and fattening — watch daily trough consumption as an early indicator of health or environmental problems.\n"
+                    "• Use salts and minerals formulated specifically for sheep/goats — mixes for other animals may contain unsuitable mineral ratios.\n"
+                    "• Log any salt product as a feed component (`Feed`) in the system if you use it within a fixed ration, so the feed calculator accounts for it correctly."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="smart_sale_explained",
@@ -255,6 +439,18 @@ ENTRIES: list[KBEntry] = [
             "• الدرجة الرقمية (من 100) بالشاشة مصحوبة دائماً بتفسير نصي يوضح كل سبب ساهم فيها — راجعه قبل اتخاذ القرار، مو الرقم لحاله.\n"
             "• النافذة الزمنية المقترحة (7/14/30/60 يوم) تقدير إداري لتفادي تراكم التكلفة، مو موعداً إلزامياً."
         ),
+        translations={
+            "en": {
+                "title": "How does the system suggest selling or culling?",
+                "body": (
+                    "General explanation of the 'smart sale' screen's logic already in the system (`/animals/smart-sale`) — the final decision is always the breeder's:\n"
+                    "• For males: age is the most important factor (a normal sale after about 6 months, sacrificial animals need a higher age), and stalled or declining weight raises the sale urgency because it's consuming feed with no benefit.\n"
+                    "• For females: any of four signs means an immediate sale — a clear delay in conception, no conception at all despite reaching breeding age, refusing to nurse her newborn, or udder damage (the last two are logged manually on the animal page since they're an actual observation).\n"
+                    "• The numeric score (out of 100) on the screen always comes with a text explanation of every reason that contributed to it — review it before deciding, not the number alone.\n"
+                    "• The suggested time window (7/14/30/60 days) is a management estimate to avoid cost buildup, not a mandatory deadline."
+                ),
+            },
+        },
     ),
 
     # ---------- إرشاد استخدام التطبيق (بند إضافي 114) ----------
