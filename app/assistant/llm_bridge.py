@@ -203,8 +203,17 @@ DRAFT_ACTION_SYSTEM_PROMPT = """أنت مساعد استخراج بيانات ب
 """
 
 
-def _draft_action_tool():
+def _draft_action_tool(lang: str = "ar"):
     from google.genai import types
+    # بند إصلاح (فحص عميق — طلبك: "افحص شاشة المساعد الذكي كمان") —
+    # كان الحقل مسمّى `summary_ar` والوصف يطلب "ملخص عربي" حرفياً، بغض
+    # النظر عن لغة من يراجع بطاقة الاعتماد لاحقاً (owner/manager قد
+    # يكون حسابه إنجليزي حتى لو العامل كتب الملاحظة بالعربي). نطلب
+    # الملخص الآن بلغة *مُنشئ* المسودة (نفس من يراجعها غالباً) — اسم
+    # الحقل بقاعدة البيانات (`summary_ar`) يبقى كما هو لتفادي أي هجرة،
+    # القيمة المخزَّنة فيه فقط تصير بلغته.
+    lang_name = _TARGET_LANG_NAMES.get(lang, _TARGET_LANG_NAMES["ar"])
+    summary_desc = f"ملخص قصير واحد للتأكيد، مكتوب بلغة {lang_name} حصراً"
     return types.Tool(function_declarations=[types.FunctionDeclaration(
         name=DRAFT_ACTION_TOOL_NAME,
         description="اقتراح مسودة إجراء منظَّم — يحتاج اعتماد بشري قبل أي تنفيذ فعلي.",
@@ -214,7 +223,7 @@ def _draft_action_tool():
                 "action_type": {"type": "STRING", "enum": list(ALLOWED_DRAFT_ACTION_TYPES)},
                 "target_animal_no": {"type": "STRING", "description": "رقم الحيوان المذكور"},
                 "payload_json": {"type": "STRING", "description": "بقية الحقول كنص JSON صالح"},
-                "summary_ar": {"type": "STRING", "description": "ملخص عربي واحد قصير للتأكيد"},
+                "summary_ar": {"type": "STRING", "description": summary_desc},
             },
             "required": ["action_type", "target_animal_no", "payload_json", "summary_ar"],
         },
@@ -241,12 +250,17 @@ def _extract_draft_action_call(response, *, fallback_summary: str) -> dict | Non
     return None
 
 
-def parse_draft_action(raw_text: str) -> dict | None:
+def parse_draft_action(raw_text: str, lang: str = "ar") -> dict | None:
     """يحلّل جملة حرة ويرجع `{"action_type", "payload", "summary_ar"}`
     لو النموذج استخدم أداة `propose_draft_action`، أو None لو رد بنص
     عادي (يعني ما تعرّف على إجراء مدعوم) أو فشل/غير مفعَّل. **فحص
     يدوي لاستدعاء الأداة، بدون تنفيذ تلقائي** — إحنا بس نقرأ الوسائط
-    اللي اقترحها النموذج، صفر تنفيذ فعلي من هذا الملف."""
+    اللي اقترحها النموذج، صفر تنفيذ فعلي من هذا الملف.
+
+    ``lang`` (بند إصلاح — طلبك: "افحص شاشة المساعد الذكي كمان") — لغة
+    مُنشئ المسودة (نفس من يراجع بطاقة الاعتماد غالباً)، تُستخدم بس
+    لطلب الملخص القصير باللغة الصحيحة — النص الأصلي والتحليل نفسه ما
+    يتأثران."""
     if not is_gemini_configured():
         return None
     try:
@@ -260,7 +274,7 @@ def parse_draft_action(raw_text: str) -> dict | None:
             model=DEFAULT_GEMINI_MODEL,
             contents=raw_text,
             config=types.GenerateContentConfig(system_instruction=DRAFT_ACTION_SYSTEM_PROMPT,
-                                                tools=[_draft_action_tool()]),
+                                                tools=[_draft_action_tool(lang)]),
         )
         return _extract_draft_action_call(response, fallback_summary=raw_text)
     except Exception as e:
@@ -272,11 +286,11 @@ def parse_draft_action(raw_text: str) -> dict | None:
         return None
 
 
-def parse_draft_action_from_audio(audio_bytes: bytes, mime_type: str) -> dict | None:
+def parse_draft_action_from_audio(audio_bytes: bytes, mime_type: str, lang: str = "ar") -> dict | None:
     """نفس `parse_draft_action` بالضبط، بس الإدخال مقطع صوتي — نمرّره
     مباشرة لـGemini (يدعم الصوت أصلاً كنوع محتوى) بدل تحويل نص منفصل؛
     أدق للهجة الميدانية من محركات تحويل كلام عامة (قرار معماري موثَّق
-    بخطة "عقل المزرعة" المعتمدة)."""
+    بخطة "عقل المزرعة" المعتمدة). ``lang`` — انظر `parse_draft_action`."""
     if not is_gemini_configured():
         return None
     try:
@@ -290,7 +304,7 @@ def parse_draft_action_from_audio(audio_bytes: bytes, mime_type: str) -> dict | 
             model=DEFAULT_GEMINI_MODEL,
             contents=[types.Part.from_bytes(data=audio_bytes, mime_type=mime_type)],
             config=types.GenerateContentConfig(system_instruction=DRAFT_ACTION_SYSTEM_PROMPT,
-                                                tools=[_draft_action_tool()]),
+                                                tools=[_draft_action_tool(lang)]),
         )
         return _extract_draft_action_call(response, fallback_summary="(من مقطع صوتي)")
     except Exception as e:

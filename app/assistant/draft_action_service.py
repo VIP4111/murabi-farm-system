@@ -131,7 +131,13 @@ ALLOWED_ACTION_TYPES = {
 
 
 def propose_from_text(raw_text: str, *, created_by) -> AssistantDraftAction:
-    parsed = llm_bridge.parse_draft_action(raw_text)
+    # بند إصلاح (فحص عميق — طلبك: "افحص شاشة المساعد الذكي كمان") —
+    # كان الملخص القصير بالبطاقة يُطلَب عربي دائماً بغض النظر عن لغة
+    # مُنشئ المسودة (نفس من يراجع بطاقة الاعتماد غالباً). صار يُطلَب
+    # بلغته الفعلية.
+    from app.assistant.translations import lang_for
+    lang = lang_for(created_by) if created_by else "ar"
+    parsed = llm_bridge.parse_draft_action(raw_text, lang)
     return _save_proposal(raw_text, parsed, created_by=created_by, input_source="text")
 
 
@@ -140,7 +146,9 @@ def propose_from_audio(audio_bytes: bytes, mime_type: str, *, created_by, audio_
     (نفس آلية `report_service.save_voice_note` الموجودة أصلاً)، عشان
     مسودة الصوت توثَّق بنفس مستوى مسودة الصورة (بند 305) — تقدر ترجع
     تسمع وش قلت بالضبط، مو بس النص المستخرَج منه."""
-    parsed = llm_bridge.parse_draft_action_from_audio(audio_bytes, mime_type)
+    from app.assistant.translations import lang_for
+    lang = lang_for(created_by) if created_by else "ar"
+    parsed = llm_bridge.parse_draft_action_from_audio(audio_bytes, mime_type, lang)
     return _save_proposal("(مقطع صوتي)", parsed, created_by=created_by, input_source="voice", audio_url=audio_url)
 
 
