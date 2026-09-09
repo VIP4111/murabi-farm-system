@@ -1114,6 +1114,15 @@ ENTRIES: list[KBEntry] = [
             "من القائمة الجانبية افتح 'الإجراء الجماعي' (شاشة مستقلة عن 'الحيوانات' العادية) — أشّر الرؤوس بعلامة ✓ (أو فلترة حسب حظيرة/فصيلة ثم تحديد الكل)، بعدها اختر العملية من القائمة (وزن، تحصين، ملاحظة، نقل حظيرة، تحديد الغرض جماعياً (تربية/تسمين/بيع)، بيع، نفوق، مرض، خطة علاج، عزل، سونار، أو 'استقبال دفعة جديدة' لتسجيل رؤوس جديدة) — تُطبَّق على كل الرؤوس المحددة دفعة وحدة.\n"
             "من نفس الشاشة زر 'متابعة الحجر الصحي' يوديك لتتبع مراحل دفعات الاستقبال."
         ),
+        translations={
+            "en": {
+                "title": "How do I apply an action to several heads at once?",
+                "body": (
+                    "From the side menu open 'bulk action' (a separate screen from the regular 'animals' one) — check heads with ✓ (or filter by barn/species then select all), then pick the action from the list (weight, vaccination, note, barn transfer, setting purpose in bulk (breeding/fattening/sale), sale, death, disease, treatment plan, isolation, sonar, or 'receive a new batch' to log new heads) — applies to all selected heads at once.\n"
+                    "From the same screen the 'quarantine tracking' button takes you to track the stages of received batches."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_bulk_fattening_group",
@@ -1126,6 +1135,15 @@ ENTRIES: list[KBEntry] = [
             "من 'الإجراء الجماعي' أشّر الرؤوس اللي تبي (فلترة بحظيرة تسهّلها لو كلها بحظيرة وحدة)، بعدها اختر 'تحديد الغرض جماعياً' من قائمة الإجراءات واختر الغرض المطلوب (تسمين/تربية/بيع سريع) — يتحدد لكل الرؤوس المحددة دفعة وحدة، نفس الإجراء لأي غرض من الثلاثة.\n"
             "بعدها تلقاهم بالتبويب المطابق (التسمين/دافع/غير دافع...) بشاشة 'الحيوانات' (فلتر عرض بس، مو مكان تضيف فيه — الإضافة تصير بتحديد الغرض زي فوق). الغرض 'تسمين' تحديداً هو نفسه اللي يحدد هدف التغذية (بروتين/طاقة أعلى) لحساب خلطة العلف التلقائي لو حظيرتهم عندها مواعيد وجبات مجدولة."
         ),
+        translations={
+            "en": {
+                "title": "How do I set the purpose of a group of animals (fattening/breeding/sale)?",
+                "body": (
+                    "From 'bulk action' check the heads you want (filtering by barn makes it easier if they're all in one barn), then pick 'set purpose in bulk' from the actions list and choose the purpose (fattening/breeding/quick sale) — it's set for all selected heads at once, the same action for any of the three purposes.\n"
+                    "You'll then find them under the matching tab (fattening/breeding.../not breeding...) on the 'animals' screen (a display filter only, not where you add them — adding happens by setting the purpose as above). The 'fattening' purpose specifically is what sets the feeding target (higher protein/energy) for the automatic feed mix calculation if their barn has scheduled meal times."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_smart_sale_screen",
@@ -1134,6 +1152,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من 'الحيوانات' ← 'البيع الذكي' (/animals/smart-sale) تلقى قائمة مرتّبة تلقائياً حسب إلحاح البيع — كل رأس له درجة وتفسير واضح ليش ترشّح. اضغط على أي رأس يوديك مباشرة لصفحته لتنفيذ البيع أو مراجعة التفاصيل قبل القرار."
         ),
+        translations={
+            "en": {
+                "title": "How do I use the smart sale screen in practice?",
+                "body": (
+                    "From 'Animals' → 'Smart sale' (/animals/smart-sale) you get a list sorted automatically by sale urgency — each head has a score and a clear explanation of why it was suggested. Clicking any head takes you straight to its page to carry out the sale or review the details before deciding."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_milk_record",
@@ -1142,6 +1168,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من صفحة الحيوان نفسه ← تبويب 'الحليب' ← '+ تسجيل جديد': حدد الكمية باللتر والفترة (صباح/مساء). السجلات التراكمية تظهر بتقرير الإنتاج، وتساعد على رصد أي تراجع مفاجئ مؤشراً مبكراً لمشكلة صحية."
         ),
+        translations={
+            "en": {
+                "title": "How do I log milk production?",
+                "body": (
+                    "From the animal's own page → 'milk' tab → '+ New record': set the amount in liters and the period (morning/evening). Cumulative records show on the production report, and help spot any sudden drop as an early sign of a health problem."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_sale_invoice",
@@ -1150,6 +1184,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "بعد إتمام عملية البيع من صفحة الحيوان، زر 'فاتورة البيع' يولّد PDF جاهز للطباعة برأس فاتورة يحمل بيانات مزرعتك (الاسم/الجوال/العنوان المضبوطة بالإعدادات ← 'بيانات المزرعة')."
         ),
+        translations={
+            "en": {
+                "title": "How do I print a sale invoice?",
+                "body": (
+                    "After completing a sale from the animal's page, the 'sale invoice' button generates a print-ready PDF with an invoice header carrying your farm's details (name/phone/address set in Settings → 'farm details')."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_species_breed_color",
@@ -1158,6 +1200,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "بفورم 'حيوان جديد'، جنب حقول الفصيلة/السلالة/اللون فيه زر '+ إضافة' صغير يفتح فورماً مصغّراً لإضافة قيمة جديدة للقائمة فوراً، بدون ما تحتاج تخرج من شاشة تسجيل الحيوان أصلاً."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new species/breed/color to the lists?",
+                "body": (
+                    "On the 'new animal' form, next to the species/breed/color fields there's a small '+ Add' button that opens a mini form to add a new value to the list instantly, without needing to leave the animal registration screen at all."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_doctor_management",
@@ -1166,6 +1216,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الصحة' ← 'الأطباء' ← '+ طبيب جديد' — سجل مرجعي منفصل عن حسابات المستخدمين (`User`)، يُستخدم لتوثيق مين باشر كل زيارة بيطرية، حتى لو الطبيب نفسه ما له حساب دخول للنظام (طبيب زائر مثلاً)."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a doctor (external or not registered as a user)?",
+                "body": (
+                    "'Health' → 'Doctors' → '+ New doctor' — a reference record separate from user accounts (`User`), used to document who carried out each vet visit, even if the doctor themselves has no login account on the system (a visiting vet, for example)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_create_protocol",
@@ -1174,6 +1232,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الصحة' ← 'البروتوكولات' ← '+ بروتوكول جديد': أضف اسم البروتوكول ثم خطواته بالترتيب (كل خطوة نوعها ووصفها والفاصل الزمني عن الخطوة السابقة). بعد الحفظ، يصير جاهزاً تطبّقه على أي رأس بضغطة وحدة ('كيف أطبّق بروتوكول علاج جاهز؟')."
         ),
+        translations={
+            "en": {
+                "title": "How do I create a new treatment protocol (its steps)?",
+                "body": (
+                    "'Health' → 'Protocols' → '+ New protocol': add the protocol's name then its steps in order (each step's type, description, and the time gap from the previous step). After saving, it's ready to apply to any head in one click ('How do I apply a ready treatment protocol?')."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_report_lifecycle",
@@ -1182,6 +1248,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من شاشة 'البلاغات': استلام البلاغ (يبدأ المعالجة) → تنفيذ أو تحويل لشخص ثاني لو يحتاج تخصص مختلف → إغلاق نهائي بملاحظة. تقدر أيضاً تؤجّله أو تلغيه بسبب واضح بأي مرحلة قبل الإغلاق."
         ),
+        translations={
+            "en": {
+                "title": "How does a report move after a worker files it?",
+                "body": (
+                    "From the 'reports' screen: receive the report (starts handling it) → execute or transfer it to someone else if it needs a different specialty → final close with a note. You can also postpone or cancel it with a clear reason at any stage before closing."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_fcr_calculator",
@@ -1190,6 +1264,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'العلف' ← 'FCR': اختر الحظيرة والفترة الزمنية — النظام يحسب تلقائياً (كمية العلف المستهلكة ÷ الزيادة بالوزن) من سجلات حركة العلف وأوزان الحيوانات الفعلية المسجَّلة أصلاً، بدون أي إدخال إضافي منك."
         ),
+        translations={
+            "en": {
+                "title": "How do I compute feed conversion ratio (FCR)?",
+                "body": (
+                    "'Feed' → 'FCR': pick the barn and the time period — the system computes it automatically (feed consumed ÷ weight gained) from feed movement records and actual logged animal weights, with no extra input from you."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_twin_estrus_program",
@@ -1198,6 +1280,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'التكاثر' ← 'برامج الشياع' ← '+ برنامج جديد': أضف الإناث المشمولات، سجّل تركيب الإسفنجة وإزالتها وحقن الهرمونات بتواريخها — النظام يذكّرك تلقائياً بمواعيد كل خطوة (دخول الفحل بعد إزالة الإسفنجة بالمدة المضبوطة بالإعدادات)."
         ),
+        translations={
+            "en": {
+                "title": "How do I manage a twin-estrus synchronization program?",
+                "body": (
+                    "'Breeding' → 'Estrus programs' → '+ New program': add the included females, log sponge insertion and removal and hormone injections with their dates — the system automatically reminds you of each step's timing (introducing the sire after sponge removal, per the interval set in settings)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_monthly_cost_report",
@@ -1206,6 +1296,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المالية' ← 'تقرير تكلفة الرأس الشهرية' — يقسم مجموع مصاريف كل شهر (شراء + مصروف) على عدد رؤوسك **الفعلي بذلك الشهر بالذات** (يُحسب من تاريخ دخول/خروج كل رأس فعلياً — مو عدد رؤوسك اليوم)، عشان الأشهر الماضية ما تطلع بأرقام غلط لو تغيّر حجم قطيعك من وقتها. الإجمالي السنوي (آخر N شهر) يستخدم متوسط عدد الرؤوس عبر الفترة."
         ),
+        translations={
+            "en": {
+                "title": "How do I see the monthly per-head cost?",
+                "body": (
+                    "'Finance' → 'Monthly per-head cost report' — divides each month's total expenses (purchases + expenses) by your **actual head count in that specific month** (computed from each head's real entry/exit date — not today's head count), so past months don't show wrong figures if your herd size changed since then. The yearly total (last N months) uses the average head count over the period."
+                ),
+            },
+        },
     ),
 
     # ---------- توسعة ثالثة لمرشد الاستخدام (بند إضافي 117) ----------
@@ -1216,6 +1314,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الحيوانات' ← 'شراء جماعي' (/animals/bulk-purchase): سجّل عدد الرؤوس المشتراة بنفس الصفقة بفورم واحد سريع (بدل تكرار فورم 'حيوان جديد' لكل رأس) — كل رأس ياخذ رقمه المستقل تلقائياً، وتقدر تعدّل تفاصيل أي رأس لاحقاً من صفحته."
         ),
+        translations={
+            "en": {
+                "title": "How do I receive several purchased heads at once (without a formal batch)?",
+                "body": (
+                    "'Animals' → 'Bulk purchase' (/animals/bulk-purchase): log the number of heads bought in the same deal on one quick form (instead of repeating the 'new animal' form for each head) — each head gets its own number automatically, and you can edit any head's details later from its page."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_pharmacy_shortages",
@@ -1224,6 +1330,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الصحة' ← 'الصيدلية' ← 'نواقص الصيدلية' — قائمة تلقائية لكل دواء وصل مخزونه للحد الأدنى المضبوط له أو أقل (`min_stock_qty` بفورم كل دواء) — عرض حي، بدون أي إدخال يدوي."
         ),
+        translations={
+            "en": {
+                "title": "How do I see pharmacy shortages?",
+                "body": (
+                    "'Health' → 'Pharmacy' → 'Pharmacy shortages' — an automatic list of every medicine whose stock has hit its set minimum or below (`min_stock_qty` on each medicine's form) — a live view, no manual entry."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_injection_guide",
@@ -1232,6 +1346,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الصحة' ← 'دليل الحقن' — مرجع عام يشرح الفرق بين طرق الحقن الشائعة (عضل/وريد/تحت الجلد) ومتى تُستخدم كل وحدة — إرشاد عام بس، اختيار الطريقة الفعلية لكل دواء قرار الطبيب."
         ),
+        translations={
+            "en": {
+                "title": "Where do I find the injection methods guide?",
+                "body": (
+                    "'Health' → 'Injection guide' — a general reference explaining the difference between common injection routes (intramuscular/intravenous/subcutaneous) and when each one is used — general guidance only, the actual route for each medicine is the vet's decision."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_service_toggles",
@@ -1240,6 +1362,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من الإعدادات ← قسم 'الخدمات' — قائمة خدمات اختيارية (تعدد الفروع، إدارة العملاء، لغات إضافية للعمال...) كل وحدة لها مفتاح تشغيل/إيقاف. الخدمة الموقوفة تختفي تماماً من كل واجهات النظام — فعّل بس اللي تحتاجه فعلياً."
         ),
+        translations={
+            "en": {
+                "title": "How do I turn an optional service on or off?",
+                "body": (
+                    "From Settings → the 'services' section — a list of optional services (multiple branches, customer management, extra worker languages...) each with an on/off switch. A disabled service disappears completely from every interface in the system — only turn on what you actually need."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_new_warehouse",
@@ -1248,6 +1378,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المستودعات' ← '+ مستودع جديد': سمّه (مثلاً 'مستودع الفرع الثاني') واحفظ. بعدها تقدر تحوّل كميات علف/دواء له من المستودع الرئيسي (راجع 'كيف أحوّل مخزون بين مستودعين؟')."
         ),
+        translations={
+            "en": {
+                "title": "How do I create a new warehouse (a second branch)?",
+                "body": (
+                    "'Warehouses' → '+ New warehouse': name it (e.g. 'second branch warehouse') and save. Then you can transfer feed/medicine quantities to it from the main warehouse (see 'How do I transfer stock between two warehouses?')."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_manage_vaccination_schedule_entry",
@@ -1256,6 +1394,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من 'تقويم التحصينات'، كل جدولة قادمة معها زرّين: 'إلغاء' (لو تراجعت عن الخطة) و'تم التنفيذ' (بعد ما تسجّل التحصينات الفعلية لكل رأس بالحظيرة عبر التحصين الجماعي أو الفردي) — يقفل الجدولة رسمياً بدل ما تبقى معلَّقة بلا نهاية."
         ),
+        translations={
+            "en": {
+                "title": "How do I cancel or close a group vaccination schedule?",
+                "body": (
+                    "From 'vaccination calendar', every upcoming schedule has two buttons: 'cancel' (if you dropped the plan) and 'done' (after you've logged the actual vaccinations for each head in the barn via group or individual vaccination) — closes the schedule formally instead of leaving it pending forever."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_disease_drug_admin_lists",
@@ -1265,6 +1411,15 @@ ENTRIES: list[KBEntry] = [
             "'الصحة' ← 'أنواع الأمراض' ← '+ إضافة' لقائمة أسماء الأمراض الشائعة (تسريع الإدخال بس، بدون علاج أو جرعة).\n"
             "'الصحة' ← 'دليل الأدوية' ← '+ إضافة' لإضافة اسم دواء جديد لقائمة الاختيار السريع وقت تسجيل مرض/زيارة/تحصين — منفصل عن 'دواء جديد' بالصيدلية (هذا مرجع أسماء بس، ذاك مخزون فعلي)."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new disease type or medicine to the reference list?",
+                "body": (
+                    "'Health' → 'Disease types' → '+ Add' for the common disease names list (speeds up entry only, no treatment or dose).\n"
+                    "'Health' → 'Drug catalog' → '+ Add' to add a new medicine name to the quick-pick list when logging a disease/visit/vaccination — separate from 'new medicine' in the pharmacy (this is a names reference only, that's actual stock)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_finance_health_view",
@@ -1273,6 +1428,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المالية' ← 'مالية الصحة' (شاشة منفصلة عن المالية الكاملة) — تعرض بس المصاريف المرتبطة بعلاج/دواء/تحصين، مفيدة لدور 'الدكتور' اللي عنده صلاحية يشوف تكلفة العلاج بدون الاطلاع على كامل الحسابات المالية للمزرعة."
         ),
+        translations={
+            "en": {
+                "title": "How do I see finances linked to health only?",
+                "body": (
+                    "'Finance' → 'Health finance' (a screen separate from full finance) — shows only expenses linked to treatment/medicine/vaccination, useful for the 'doctor' role who has permission to see treatment cost without access to the farm's full financial accounts."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_edit_team_member",
@@ -1281,6 +1444,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من 'أعضاء الفريق'، جنب كل عضو زر تبديل الحالة (نشط/معطَّل) — تعطيل الحساب يمنعه من تسجيل الدخول فوراً بدون حذف أي بيانات أو سجل تاريخي مرتبط فيه (مهام أنجزها، بلاغات رفعها...)."
         ),
+        translations={
+            "en": {
+                "title": "How do I deactivate a team member's account (without deleting it)?",
+                "body": (
+                    "From 'team members', next to each member is a status toggle button (active/disabled) — disabling the account blocks them from logging in immediately without deleting any of their data or history (tasks they completed, reports they filed...)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_animal_workflow_plan",
@@ -1289,6 +1460,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من صفحة الحيوان ← تبويب 'دورة الإنتاج' — يعرض المرحلة الحالية تلقائياً (محسوبة من أدلة فعلية: تلقيح/تشخيص حمل/ولادة...، مو إدخالاً يدوياً)، والمسار المتوقع القادم. زر 'خطة' يخليك تسجّل نية مستقبلية (مثلاً 'تسمين' بدل 'إنتاج حليب') تؤثر على حساب المرحلة القادمة."
         ),
+        translations={
+            "en": {
+                "title": "How do I view or edit a specific head's production cycle plan?",
+                "body": (
+                    "From the animal's page → 'production cycle' tab — shows the current stage automatically (computed from actual evidence: mating/pregnancy diagnosis/birth..., not manual entry), and the expected upcoming path. The 'plan' button lets you log a future intent (e.g. 'fattening' instead of 'milk production') that affects the next stage's calculation."
+                ),
+            },
+        },
     ),
 
     # ---------- توسعة رابعة لمرشد الاستخدام (بند إضافي 118) ----------
@@ -1299,6 +1478,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'النعام' ← 'الحاضنات' ← '+ حاضنة جديدة': سمّها وسجّل سعتها. بعدها من شاشة أي بيضة، زر 'وضع بالحاضنة' يربطها بحاضنة موجودة — تقدر تشوف كل البيض داخل حاضنة معيّنة من صفحتها."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a new incubator and link it to eggs?",
+                "body": (
+                    "'Ostrich' → 'Incubators' → '+ New incubator': name it and log its capacity. Then from any egg's screen, the 'place in incubator' button links it to an existing incubator — you can see all eggs inside a specific incubator from its page."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_offline_mode",
