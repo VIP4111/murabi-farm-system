@@ -1108,7 +1108,14 @@ def protocols_new():
         step_slots=PROTOCOL_STEP_SLOTS,
         medicines=Pharmacy.query.filter_by(status="active").order_by(Pharmacy.name).all(),
         disease_types=DiseaseType.query.order_by(DiseaseType.name).all(),
-        treatment_kinds=[("vet_visit", "زيارة بيطرية"), ("disease", "حالة مرضية"), ("vaccination", "تطعيم")],
+        # بند إصلاح (فحص تحجيم حي — طلبك: "ابدا فحص باقي الشاشات") —
+        # تسميات هذي القائمة كانت عربي بحت بغض النظر عن لغة المستخدم؛
+        # القيمة الخام المخزَّنة بـ`treatment_kind` (vet_visit/disease/
+        # vaccination) ما تتغيّر أبداً، فقط التسمية المعروضة بالقائمة.
+        treatment_kinds=[
+            ("vet_visit", _("زيارة بيطرية")), ("disease", _("حالة مرضية")),
+            ("vaccination", _("تطعيم")),
+        ],
     )
 
 
