@@ -293,6 +293,17 @@ def create_app(config_class=Config):
     def ar_report_type(value):
         return REPORT_TYPE_LABELS_AR.get(value, value)
 
+    # بند إصلاح (فحص عميق — طلبك: "ابدأ بند" على الفجوة اللي أبلغتك
+    # عنها: Finance.category تُخزَّن عربي بحت وقت الكتابة بعشرات
+    # المواضع بالكود). القاموس والمنطق الفعلي بـ`Finance.CATEGORY_
+    # LABELS_AR`/`display_category_value()` (app/models/finance.py)
+    # — هذا الفلتر واجهة قالب بس، مصدر واحد للحقيقة.
+    from app.models.finance import Finance as _Finance
+
+    @app.template_filter("ar_finance_category")
+    def ar_finance_category(value):
+        return _Finance.display_category_value(value)
+
     # سجل التدقيق (بند إضافي 192) — `AuditLog.action` و`AuditLog.entity_type`
     # كانا يُعرَضان بمفاتيح الكود الخام (report.accept، user.edit، Animal...)
     # بدل نص عربي مقروء — نفس أسلوب ar_status/ar_report_type بالضبط: قاموس

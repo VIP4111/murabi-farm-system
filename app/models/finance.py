@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 
 
@@ -10,6 +11,41 @@ class Finance(db.Model):
     """كل الحركات المالية: بيع، شراء، مصروف. لا تُحذف نهائياً أبداً — تُلغى
     (is_cancelled) عشان يضل سجل التدقيق كامل، بنفس مبدأ 'لا شيء يختفي بصمت'."""
     __tablename__ = "finance"
+
+    # بند إصلاح (فحص عميق — طلبك: "ابدأ بند" على فجوة `Finance.category`
+    # المخزَّنة عربي بحت وقت الكتابة بعشرات المواضع بالكود) — القيمة
+    # الخام تبقى كما هي (صفر هجرة بيانات، صفر تغيير بمنطق التجميع
+    # اللي يعتمد على القيمة الخام بالتقارير) — `display_category()`
+    # يترجم بس وقت العرض. أي فئة حرة يكتبها المستخدم يدوياً بشاشة
+    # "عملية جديدة" ترجع كما هي (fallback آمن، نفس أسلوب Role.display_label).
+    CATEGORY_LABELS_AR = {
+        "بيع رأس": _l("بيع رأس"),
+        "شراء حيوان": _l("شراء حيوان"),
+        "علاج مرض": _l("علاج مرض"),
+        "زيارة بيطرية": _l("زيارة بيطرية"),
+        "تحصين": _l("تحصين"),
+        "صيانة معدات": _l("صيانة معدات"),
+        "راتب موظف": _l("راتب موظف"),
+        "هالك": _l("هالك"),
+        "خسارة أصل": _l("خسارة أصل"),
+        "فاتورة كهرباء": _l("فاتورة كهرباء"),
+        "فاتورة ماء": _l("فاتورة ماء"),
+        "بدون تصنيف": _l("بدون تصنيف"),
+        # KIND_LABELS بـ stock_purchase_service.py (بند 259 — شراء مخزون
+        # أعلاف/معدات/أدوية) يخزّن هذي القيم أيضاً بـ Finance.category.
+        "أعلاف": _l("أعلاف"),
+        "معدات": _l("معدات"),
+        "أدوية": _l("أدوية"),
+    }
+
+    @classmethod
+    def display_category_value(cls, category: str | None) -> str | None:
+        if category is None:
+            return None
+        return str(cls.CATEGORY_LABELS_AR.get(category, category))
+
+    def display_category(self) -> str | None:
+        return self.display_category_value(self.category)
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False, index=True)

@@ -324,7 +324,7 @@ def finance_new():
                 'تنبيه: هذا المبلغ (%(amount)s) %(direction)s بنسبة %(pct)s%% من متوسط عمليات "%(category)s" '
                 "السابقة (%(average)s).",
                 amount=f"{anomaly['amount']:.0f}", direction=anomaly['direction'],
-                pct=abs(anomaly['deviation_pct']), category=row.category, average=f"{anomaly['average']:.0f}",
+                pct=abs(anomaly['deviation_pct']), category=row.display_category(), average=f"{anomaly['average']:.0f}",
             ), "error")
             from flask_babel import force_locale
             from app.core import telegram_service
@@ -340,7 +340,7 @@ def finance_new():
                     text = (
                         _("⚠️ عملية %(op)s غير معتادة", op=op_label) + "\n" +
                         _("%(category)s — %(amount)s (%(direction)s بـ%(pct)s%% عن المعتاد %(average)s)",
-                          category=row.category, amount=f"{anomaly['amount']:.0f}",
+                          category=row.display_category(), amount=f"{anomaly['amount']:.0f}",
                           direction=anomaly['direction'], pct=abs(anomaly['deviation_pct']),
                           average=f"{anomaly['average']:.0f}")
                     )

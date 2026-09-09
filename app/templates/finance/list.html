@@ -20,7 +20,7 @@
     <tr><th>{{ _('البند') }}</th><th>{{ _('المبلغ') }}</th><th>{{ _('%% من إجمالي الخارج') }}</th><th>{{ _('التغيّر عن الفترة السابقة') }}</th></tr>
     {% for c in loss_diagnosis.categories %}
     <tr>
-      <td>{{ c.category }}</td>
+      <td>{{ c.category|ar_finance_category }}</td>
       <td>{{ "%.2f"|format(c.amount) }}</td>
       <td>{{ c.percent_of_total }}%</td>
       <td>
