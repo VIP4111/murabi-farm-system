@@ -1,9 +1,48 @@
 from datetime import datetime, timezone
+from flask_babel import get_locale
 from app.extensions import db
 
 
 def _now():
     return datetime.now(timezone.utc)
+
+
+# بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — عناوين
+# المهام اليومية التلقائية الأربعة الثابتة بالكود (`daily_task_service.
+# _rule_definitions`) كانت تُكتب بـ`Task.title`/`Task.notes` عربي بحت
+# **وقت الإنشاء**، فتبقى مجمَّدة بتلك اللغة للأبد بغض النظر عن لغة
+# مين يشوف المهمة لاحقاً — عكس بقية الإصلاحات بهذي الجلسة (التي تُحسب
+# وقت العرض). الحل هنا مختلف عمداً: عمود `title_key` ثابت يُخزَّن فقط
+# لهذي المهام الأربعة المعروفة (`None` لأي مهمة ثانية — يدوية، أو من
+# `DailyTaskTemplate` نص حر يكتبه صاحب الحلال بنفسه) — `display_title()`/
+# `display_notes()` يترجمان حسب لغة العارض الحالية لو `title_key`
+# موجود، وإلا يرجعان `title`/`notes` الخام كما هي (سلوك قديم محفوظ).
+TASK_TITLE_TRANSLATIONS = {
+    "daily_isolation_review": {
+        "title_ar": "🚧 مراجعة العزل والحجر",
+        "title_en": "🚧 Isolation & quarantine review",
+        "notes_ar": "راجع الحيوانات الجديدة أو المريضة في حظيرة العزل قبل خلطها بالقطيع.",
+        "notes_en": "Review new or sick animals in the isolation barn before mixing them with the herd.",
+    },
+    "daily_newborn_review": {
+        "title_ar": "🍼 متابعة المواليد والرضاعة",
+        "title_en": "🍼 Newborn & nursing follow-up",
+        "notes_ar": "تأكد من رضاعة اللبأ ونشاط المواليد الجدد (عمر أقل من 30 يوماً).",
+        "notes_en": "Make sure newborns (under 30 days old) are nursing colostrum and active.",
+    },
+    "daily_weaning_review": {
+        "title_ar": "⚖️ مراجعة الفطام والفرز",
+        "title_en": "⚖️ Weaning & sorting review",
+        "notes_ar": "راجع الحملان بعمر الفطام (45-110 يوماً) وفرزها حسب الوزن والجنس.",
+        "notes_en": "Review lambs at weaning age (45-110 days) and sort them by weight and sex.",
+    },
+    "daily_withdrawal_review": {
+        "title_ar": "💊 مراجعة الحالات المرضية المفتوحة",
+        "title_en": "💊 Open disease case review",
+        "notes_ar": "تأكد من عدم وجود علاج مفتوح بلا متابعة، وفترة السحب مسجّلة قبل أي بيع.",
+        "notes_en": "Make sure no open treatment is left unfollowed, and withdrawal periods are recorded before any sale.",
+    },
+}
 
 
 class Task(db.Model):
@@ -114,6 +153,22 @@ class Task(db.Model):
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=_now)
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
+
+    # انظر `TASK_TITLE_TRANSLATIONS` أعلى الملف — يبقى `None` لأي مهمة
+    # عادية (يدوية أو نص حر)، ما يغيّر أي سلوك قديم.
+    title_key = db.Column(db.String(64), nullable=True)
+
+    def display_title(self) -> str:
+        entry = TASK_TITLE_TRANSLATIONS.get(self.title_key)
+        if entry and str(get_locale()) != "ar":
+            return entry["title_en"]
+        return self.title
+
+    def display_notes(self) -> str | None:
+        entry = TASK_TITLE_TRANSLATIONS.get(self.title_key)
+        if entry and str(get_locale()) != "ar":
+            return entry["notes_en"]
+        return self.notes
 
 
 class DailyTaskTemplate(db.Model):

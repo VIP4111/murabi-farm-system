@@ -260,8 +260,12 @@ def create_app(config_class=Config):
     _RAW_TITLE_TASK_TYPES = {"custom", "daily_husbandry"}
 
     def task_display_title(task):
+        # بند إصلاح (فحص عميق — طلبك: "افحص جميع النوافذ بعمق") — كان
+        # يرجع `task.title` الخام دائماً لهذا الاستثناء (custom/
+        # daily_husbandry)، حتى للمهام الأربعة الثابتة اللي صار عندها
+        # `title_key` (`Task.display_title()`، `app/models/task.py`).
         if not task or task.task_type in _RAW_TITLE_TASK_TYPES or task.task_type not in TASK_TYPE_LABELS_AR:
-            return task.title if task else ""
+            return task.display_title() if task else ""
         label = str(TASK_TYPE_LABELS_AR[task.task_type])
         ref = task.animal.animal_no if task.animal else (task.barn.display_name() if task.barn else None)
         return f"{label} — {ref}" if ref else label

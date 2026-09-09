@@ -200,7 +200,7 @@
     {% for t in review_box %}
     <tr>
       <td>{{ task_display_title(t) }}</td>
-      <td>{{ t.notes or '-' }}</td>
+      <td>{{ t.display_notes() or '-' }}</td>
       <td class="actions-col">
         <form method="post" action="{{ url_for('team.task_restore', task_id=t.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

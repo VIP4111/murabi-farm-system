@@ -122,11 +122,18 @@ def generate_daily_husbandry_tasks(*, now: datetime | None = None) -> list:
             existing = Task.query.filter_by(source_type=SOURCE_TYPE, source_id=source_id).first()
             if existing:
                 continue
+            # بند إصلاح (فحص عميق — "افحص جميع النوافذ بعمق") — `title_key`
+            # يُمرَّر بس للأربعة قواعد الثابتة بالكود (موجودة بـ
+            # `TASK_TITLE_TRANSLATIONS`)، مو لقوالب `DailyTaskTemplate`
+            # (نص حر يكتبه صاحب الحلال بنفسه، `daily_template_*`) — تلك
+            # تبقى بلا ترجمة تلقائية، نفس مبدأ اسم الحيوان الحر.
+            from app.models.task import TASK_TITLE_TRANSLATIONS
+            title_key = rule["key"] if rule["key"] in TASK_TITLE_TRANSLATIONS else None
             task = task_service.create_suggested_task(
                 title=rule["title"], task_type="daily_husbandry",
                 due_date=for_date, source_type=SOURCE_TYPE, source_id=source_id,
                 notes=rule["notes"], sort_order=order, target_role="worker",
-                auto_approve=True,
+                auto_approve=True, title_key=title_key,
             )
             created.append(task)
 
