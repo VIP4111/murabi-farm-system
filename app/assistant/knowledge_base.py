@@ -1804,6 +1804,15 @@ ENTRIES: list[KBEntry] = [
             "من صفحة تفاصيل الدفعة، جنب أي رأس: زر 'استبعاد' (Hold) يوقفه مؤقتاً عن التقدّم الجماعي التالي (مثلاً لو مريض أو وزنه ما يوافق) مع كتابة السبب — وزر 'تحرير' يرجّعه للتقدّم العادي بعدين.\n"
             "لو رأس فاته تقدّم كامل وتأخر عن بقية دفعته، زر 'إلحاق متأخر' (Catch-up) يقدّمه لنفس مرحلة الدفعة الحالية دفعة وحدة، مع تحديد حظيرته الجديدة لو لزم — يحتاج صلاحية اعتماد البوابات."
         ),
+        translations={
+            "en": {
+                "title": "How do I hold a head back from a batch's progress or catch it up later?",
+                "body": (
+                    "From the batch detail page, next to any head: the 'hold' button temporarily stops it from the next group advance (e.g. if it's sick or its weight doesn't qualify) with a reason field — and the 'release' button returns it to normal progress later.\n"
+                    "If a head missed a whole advance and fell behind the rest of its batch, the 'catch up' button advances it to the same stage as the current batch in one go, with setting its new barn if needed — needs gate approval permission."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="vaccination_schedule_reference",
@@ -1816,6 +1825,18 @@ ENTRIES: list[KBEntry] = [
             "**الحمى القلاعية (FMD)** — متوطّنة وشديدة العدوى. **إلزامية لأي رأس مستورد/مشترى جديد أثناء الحجر الصحي** قبل الاختلاط بالقطيع، خصوصاً لو حالته التحصينية غير معروفة.\n\n"
             "الثلاثة مسجَّلة كأصناف مرجعية جاهزة بالصيدلية (بدون جرعة أو سعر مفروضين) — راجعها من 'الصحة' ← 'الصيدلية'، وعبّي الجرعة والسعر الحقيقيين لما تستقبل المنتج الفعلي. تقدر بعدها تربطها بمهمتي 'رش وقائي'/'تحصين مبدئي' التلقائيتين عند شراء رأس جديد (الإعدادات ← 'دواء استقبال الرأس الجديد'، بند 283)."
         ),
+        translations={
+            "en": {
+                "title": "Reference sheep/goat vaccination schedule",
+                "body": (
+                    "A general reference from veterinary sources and local reports (check with your vet before any actual application — this isn't a diagnosis or a dose, general principles only):\n\n"
+                    "**CDT (enterotoxemia + tetanus)** — the near-universally agreed vaccine for all sheep/goats. Lambs: first dose at 4-8 weeks + a booster after 3-4 weeks, then yearly. Pregnant ewes: 4-6 weeks before birth.\n"
+                    "**Peste des Petits Ruminants (PPR) + sheep pox** — endemic in Saudi Arabia (the highest PPR prevalence recorded was in the Riyadh region, 86% in a survey study). A combined vaccine gives 12 months of protection, usually in spring.\n"
+                    "**Foot-and-mouth disease (FMD)** — endemic and highly contagious. **Mandatory for any imported/newly purchased head during quarantine** before mixing with the herd, especially if its vaccination status is unknown.\n\n"
+                    "All three are logged as ready reference items in the pharmacy (without an imposed dose or price) — check them from 'Health' → 'Pharmacy', and fill in the real dose and price when you receive the actual product. You can then link them to the automatic 'preventive spray'/'initial vaccination' tasks when buying a new head (Settings → 'new head reception medicine', item 283)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_task_daily_templates",
@@ -1824,6 +1845,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المهام' ← 'مهام العامل التلقائية' (يحتاج صلاحية تعيين مهام لأي عامل): 'إضافة' مهمة يومية (مثلاً تنظيف، سقاية، فحص يومي) — تتحول تلقائياً لمهام فعلية توصل للعامل المسؤول كل يوم، بدون انتظار اعتماد (خلافاً لبقية المهام التلقائية بالنظام). زر 'إيقاف/تفعيل' جنب كل قالب يوقفه مؤقتاً بدون حذفه."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a recurring daily task that's distributed automatically?",
+                "body": (
+                    "'Tasks' → 'Automatic worker tasks' (needs permission to assign tasks to any worker): 'Add' a daily task (e.g. cleaning, watering, a daily check) — it automatically turns into real tasks reaching the responsible worker every day, with no approval wait (unlike the rest of the automatic tasks in the system). The 'disable/enable' button next to each template pauses it temporarily without deleting it."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_task_lifecycle_active",
@@ -1832,6 +1861,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "لمهمة موكَلة فعلياً لعامل (مو مقترحة بانتظار اعتماد): زر 'تأجيل' يؤجلها ليوم واحد من موعدها الحالي، وزر 'إلغاء' يلغيها. لو صاحب الحلال حذف مهمة اقترحها النظام، تنتقل لصندوق مراجعته — من هناك زر 'استرجاع' يرجّعها نشطة، وزر 'حذف نهائي' يمسحها فعلياً بلا رجعة."
         ),
+        translations={
+            "en": {
+                "title": "How do I postpone, cancel, or restore an active task assigned to a worker?",
+                "body": (
+                    "For a task actually assigned to a worker (not a suggestion pending approval): the 'postpone' button pushes it one day from its current due date, and the 'cancel' button cancels it. If the owner deletes a task the system suggested, it moves to their review box — from there the 'restore' button makes it active again, and 'delete permanently' actually erases it with no way back."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_suggested_tasks_window",
@@ -1842,6 +1879,16 @@ ENTRIES: list[KBEntry] = [
             "لو مهمة مقترحة فات موعدها يومين كاملين بدون ما تعتمدها أو تؤجلها أو تحذفها يدوياً، النظام يحذفها تلقائياً (تنتقل لصندوق مراجعتك — نفس مصير الحذف اليدوي، مو حذف نهائي فوري، تقدر تسترجعها من هناك لو احتجت).\n"
             "المهام اللي بلا موعد محدد إطلاقاً (نادرة، زي بعض خطط العلاج المقترحة) تبقى تظهر دايماً بغض النظر عن هذي النافذة."
         ),
+        translations={
+            "en": {
+                "title": "Why do suggested tasks only show today and tomorrow, and where did old ones go?",
+                "body": (
+                    "The 'suggested tasks awaiting approval' table only shows tasks due today or tomorrow — so you don't build up a huge backlog of old tasks needing your review.\n"
+                    "If a suggested task's due date passes two full days without you approving, postponing, or manually deleting it, the system deletes it automatically (moves to your review box — same fate as a manual delete, not an immediate permanent delete, you can restore it from there if needed).\n"
+                    "Tasks with no due date at all (rare, like some suggested treatment plans) keep showing regardless of this window."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_purchase_request_report",
@@ -1850,6 +1897,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'التقارير' ← 'طلب شراء' شاشة منفصلة تلخّص الأصناف اللي وصلت أو قربت من الحد الأدنى بالمخزون (علف/دواء/معدات) — أساس تجهيز قائمة شراء فعلية بدل مراجعة كل مخزون لحاله. لتصدير أي تقرير كملف، راجع تصدير التقارير العادي (زر 'تصدير Excel'/'تصدير PDF')."
         ),
+        translations={
+            "en": {
+                "title": "How do I create a purchase request list from reports?",
+                "body": (
+                    "'Reports' → 'Purchase request' is a separate screen summarizing items that have hit or are close to their minimum stock (feed/medicine/equipment) — the basis for preparing an actual shopping list instead of reviewing each stock item on its own. To export any report as a file, see the normal report export ('Export Excel'/'Export PDF' button)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_climate_refresh",
@@ -1858,6 +1913,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من شاشة 'رادار المناخ' زر 'تحديث الآن' يجلب توقعات طقس جديدة فوراً بدل انتظار التحديث التلقائي المجدول — مفيد لو غيّرت إحداثيات المزرعة بالإعدادات وتبي تتأكد من صحة القراءة الجديدة مباشرة."
         ),
+        translations={
+            "en": {
+                "title": "How do I refresh the weather forecast manually?",
+                "body": (
+                    "From the 'climate radar' screen, the 'refresh now' button fetches a new weather forecast immediately instead of waiting for the scheduled automatic refresh — useful if you changed the farm's coordinates in settings and want to confirm the new reading right away."
+                ),
+            },
+        },
     ),
 
     # ---------- الرواتب (بند إضافي 268 — قسم كامل، ما كان موجود بقاعدة المعرفة إطلاقاً) ----------
@@ -1873,6 +1936,18 @@ ENTRIES: list[KBEntry] = [
             "• بطاقة منفصلة 'بيانات صاحب الحلال' بنفس الشاشة (اسمه، رقم هويته، رقم جواله) — تظهر تلقائياً كصاحب عمل بكل وصل راتب.\n"
             "صلاحية 'إدارة الرواتب' منفصلة عمداً عن صلاحية إدارة الفريق الكاملة — المحاسب يقدر يدخل هذي البيانات بدون ما يقدر يغيّر أدوار أو كلمات مرور."
         ),
+        translations={
+            "en": {
+                "title": "How do I log a base salary and a worker's ID details?",
+                "body": (
+                    "'Team' → 'Payroll setup' — a base data screen filled in once per worker, used automatically in every payroll run after that:\n"
+                    "• 'Salary details': base salary, payment method (cash/bank transfer), and the arrival date in Saudi Arabia (optional — used to compute a prorated salary, see the arrival date item below).\n"
+                    "• 'ID details': nationality, passport number, border number.\n"
+                    "• A separate 'owner details' card on the same screen (their name, ID number, phone) — shows automatically as the employer on every salary receipt.\n"
+                    "The 'manage payroll' permission is deliberately separate from full team management permission — the accountant can enter this data without being able to change roles or passwords."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payroll_prepare",
@@ -1885,6 +1960,18 @@ ENTRIES: list[KBEntry] = [
             "• أضف خصومات بزر '+ إضافة خصم' (راجع بند الخصومات).\n"
             "• 'حفظ مسودة' يحفظ التعديلات بدون ترحيل مالي — تقدر ترجع تعدّلها لاحقاً. 'تأكيد نهائي' يرحّل المبلغ الصافي فعلياً لسجل المالية ويقفل التعديل عليه نهائياً."
         ),
+        translations={
+            "en": {
+                "title": "How do I prepare a worker's salary for the month?",
+                "body": (
+                    "'Team' → 'monthly payroll' — a list of all members for a chosen month/year (the current month by default). The 'view/prepare' button next to any worker opens their prep screen:\n"
+                    "• The base salary is filled in automatically from 'payroll setup' (or a prorated salary if an arrival date or a travel period is logged — see the dedicated item).\n"
+                    "• Add a bonus (optional) and the transfer recipient's name (if the payment method is transfer — changes independently every month).\n"
+                    "• Add deductions with the '+ Add deduction' button (see the deductions item).\n"
+                    "• 'Save draft' saves the changes without posting to finance — you can come back and edit it later. 'Final confirm' actually posts the net amount to the finance record and permanently locks it from further edits."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payroll_confirm",
@@ -1893,6 +1980,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'تأكيد نهائي' بشاشة تجهيز الراتب يفعل شيئين معاً: (1) يرحّل الصافي المستحق كعملية مصروف حقيقية بسجل 'المالية' (يدخل بكل التقارير المبنية عليها: صافي الربح، تكلفة الرأس الشهرية، تشخيص الخسارة)، (2) يقفل الراتب من أي تعديل لاحق — يصير سجلاً ثابتاً (Snapshot) حتى لو تغيّر الراتب الأساسي للعامل لاحقاً. لو فيه خصومات، تطلع رسالة تأكيد إضافية توضح المبلغ والسبب قبل الترحيل النهائي — تقدر تراجع القرار قبل ما تضغط تأكيد."
         ),
+        translations={
+            "en": {
+                "title": "What exactly happens when I finally confirm a worker's salary?",
+                "body": (
+                    "'Final confirm' on the salary prep screen does two things together: (1) posts the net amount due as a real expense transaction in the 'finance' record (enters every report built on it: net profit, monthly per-head cost, loss diagnosis), (2) locks the salary from any further edit — it becomes a fixed snapshot even if the worker's base salary changes later. If there are deductions, an extra confirmation message shows the amount and reason before the final post — you can back out before pressing confirm."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payroll_deductions",
@@ -1901,6 +1996,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "بشاشة 'تجهيز راتب'، زر '+ إضافة خصم' يضيف سطر جديد (المبلغ + سبب الخصم نصي حر) — تقدر تضيف عدد غير محدود من الخصومات، كل وحد بسببه المستقل. حفظ مسودة يستبدل كل الخصومات القديمة بالقائمة الجديدة كاملة (مو تعديل جزئي) — يعني لو حذفت سطر خصم وحفظت، ينحذف فعلاً. مجموع الخصومات يُطرح تلقائياً من (الأساسي + المكافأة) ليطلع الصافي المستحق."
         ),
+        translations={
+            "en": {
+                "title": "How do I add a deduction to a worker's salary?",
+                "body": (
+                    "On the 'prepare salary' screen, the '+ Add deduction' button adds a new line (amount + a free-text reason) — you can add an unlimited number of deductions, each with its own reason. Saving a draft replaces all old deductions with the new full list (not a partial edit) — meaning if you delete a deduction line and save, it's actually removed. The total deductions are automatically subtracted from (base + bonus) to get the net amount due."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payroll_receipt",
@@ -1910,6 +2013,15 @@ ENTRIES: list[KBEntry] = [
             "بعد تأكيد الراتب نهائياً، زر '🖨️ طباعة الوصل' (من 'رواتب الشهر' أو تفاصيل الراتب) يطلع مسير راتب PDF رسمي — بيانات صاحب الحلال، بيانات العامل (الاسم دايماً، الجنسية/الجواز لو مسجَّلين)، تفصيل الراتب والخصومات، وطريقة الدفع (لو تحويل، يوضّح 'من {صاحب الحلال} إلى {مستلم الحوالة}' صراحة).\n"
             "زر '📎 الوصل الموقَّع' يفتح صفحة مستقلة لرفع صورة أو PDF للوصل بعد ما يوقّعه العامل فعلياً على الورق — يُحفَظ ويظهر لاحقاً بشاشة 'تقارير الرواتب حسب العامل'."
         ),
+        translations={
+            "en": {
+                "title": "How do I print a salary receipt or upload a signed copy of it?",
+                "body": (
+                    "After finally confirming the salary, the '🖨️ Print receipt' button (from 'monthly payroll' or the salary details) produces an official payroll PDF — the owner's details, the worker's details (name always, nationality/passport if logged), a breakdown of salary and deductions, and the payment method (if transfer, it explicitly states 'from {owner} to {transfer recipient}').\n"
+                    "The '📎 Signed receipt' button opens a separate page to upload an image or PDF of the receipt after the worker actually signs it on paper — saved and shown later on the 'payroll reports by worker' screen."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payroll_reports",
@@ -1920,6 +2032,16 @@ ENTRIES: list[KBEntry] = [
             "• بطاقة 'إجمالي رواتب الشهر' بالأعلى — مستقلة عن اختيار عامل معيّن، فلترة بسنة/شهر، تعطيك مجموع كل الرواتب المؤكَّدة لذلك الشهر لكل الفريق + تفصيل قابل للطي لكل عامل ومبلغه.\n"
             "• اختيار عامل معيّن يعرض كل رواتبه المؤكَّدة عبر كل الأشهر السابقة، مع رابط مباشر لوصله الموقَّع (لو مرفوع) لكل شهر."
         ),
+        translations={
+            "en": {
+                "title": "How do I see a specific worker's salary history or the month's total payroll?",
+                "body": (
+                    "'Team' → 'monthly payroll' → 'payroll reports by worker':\n"
+                    "• The 'monthly payroll total' card at the top — independent of picking a specific worker, filter by year/month, gives you the sum of all confirmed salaries for the whole team that month + a collapsible breakdown of each worker and their amount.\n"
+                    "• Picking a specific worker shows all their confirmed salaries across every previous month, with a direct link to their signed receipt (if uploaded) for each month."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_worker_travel",
@@ -1930,6 +2052,16 @@ ENTRIES: list[KBEntry] = [
             "**الأثر على الراتب:** أيام السفر تُستبعد من حساب الراتب المتناسب لذلك الشهر (يتقسم على أيام الشهر الفعلية، مو تصفير الشهر كامل) — يظهر تلقائياً كقيمة مقترحة بشاشة 'تجهيز راتب' مع زر 'استخدم القيمة المقترحة'، يبقى قابل للتعديل اليدوي دايماً.\n"
             "لتصحيح تاريخ فترة سفر أو حذفها، زر '📋 سجل السفر' جنب كل عامل يفتح كل فترات سفره القديمة قابلة للتعديل/الحذف مباشرة، مع فورم لإضافة فترة بأثر رجعي لو نسيت تسجّلها وقتها."
         ),
+        translations={
+            "en": {
+                "title": "I have a traveling worker — how do I log it and how does it affect their salary?",
+                "body": (
+                    "'Payroll setup' → the '🛫 Log travel' button next to the worker's name — logs the start of a travel period (shows a 'currently traveling' badge next to their name). When they come back, press '🛬 Log return' on the same button.\n"
+                    "**Effect on salary:** travel days are excluded from computing that month's prorated salary (divided by the actual days in the month, not zeroing out the whole month) — shows automatically as a suggested value on the 'prepare salary' screen with a 'use suggested value' button, always still manually editable.\n"
+                    "To correct or delete a travel period's dates, the '📋 Travel log' button next to each worker opens all their past travel periods, directly editable/deletable, with a form to add a period retroactively if you forgot to log it at the time."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_saudi_arrival_date",
@@ -1938,6 +2070,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "لو سجّلت تاريخ وصول عامل للسعودية بشاشة 'إعداد الرواتب'، النظام يحسب راتبه **كل شهر** (مو أول شهر بس) بالتناسب مع أيام حضوره الفعلية — لو دخل يوم 21 من شهر 30 يوم، أول راتب له يُحسب لـ10 أيام بس تلقائياً، ويظهر كقيمة مقترحة بشاشة تجهيز راتبه. عامل بدون تاريخ وصول مسجَّل = راتب كامل عادي بدون أي تناسب، بدون تغيير عن المعتاد."
         ),
+        translations={
+            "en": {
+                "title": "What's the use of 'arrival date in Saudi Arabia' in payroll?",
+                "body": (
+                    "If you log a worker's arrival date in Saudi Arabia on the 'payroll setup' screen, the system computes their salary **every month** (not just the first one) proportionally to their actual days present — if they arrived on day 21 of a 30-day month, their first salary is automatically computed for just 10 days, and shows as a suggested value on their salary prep screen. A worker with no logged arrival date = a normal full salary with no proration, no change from the usual."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_top_performer_bonus",
@@ -1946,6 +2086,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "لو العامل اللي تجهّز راتبه كان صاحب أعلى نقطة أداء بتقرير أداء الفريق للشهر الماضي، تطلع شارة '🏆 أعلى نقطة أداء الشهر الماضي' فوق فورم تجهيز راتبه (بس وهو لسا مسودة، تختفي بعد التأكيد). زر 'اقترح مكافأة' جنبها بس يركّز حقل المكافأة عشان تكتب رقم بنفسك — النظام ما يقترح مبلغاً محدداً، القرار لك بالكامل."
         ),
+        translations={
+            "en": {
+                "title": "What does the 'top performer last month' badge mean on the salary prep screen?",
+                "body": (
+                    "If the worker whose salary you're preparing had the highest performance score on last month's team performance report, a '🏆 Top performer last month' badge shows above their salary prep form (only while it's still a draft, disappears after confirmation). The 'suggest a bonus' button next to it just focuses the bonus field for you to type a number yourself — the system doesn't suggest a specific amount, the decision is entirely yours."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payroll_month_end_reminder",
@@ -1954,6 +2102,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "شاشة 'التنبيهات' فيها تذكير تلقائي لكل عامل عنده راتب أساسي مسجَّل وما تأكَّد راتب شهره بعد — يظهر آخر 3 أيام من الشهر الحالي، وأي شهر سابق كامل فاتك تأكيده يبقى تذكيره ظاهراً 'متأخر' بشكل دائم (مهما مر عليه من وقت) لين تروح تأكّده. التذكير يذكر مبلغ الخصومات لو فيه مسودة محفوظة عليها خصومات."
         ),
+        translations={
+            "en": {
+                "title": "Does the system remind me if I forget to prepare a worker's salary?",
+                "body": (
+                    "The 'alerts' screen has an automatic reminder for every worker with a logged base salary whose month's salary isn't confirmed yet — shows in the last 3 days of the current month, and any full past month you missed confirming stays showing 'overdue' permanently (no matter how much time passes) until you go confirm it. The reminder mentions the deduction amount if there's a saved draft with deductions on it."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_travel_edit_confirmed_month_warning",
@@ -1962,6 +2118,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "الراتب المؤكَّد Snapshot ثابت عمداً — ما يتغيّر تلقائياً لو عدّلت فترة سفر تخص شهره بعد التأكيد (حتى لو صحّحت تاريخ خطأ). التحذير بس يعلمك بهذا — لو تبي تعدّل المبلغ المؤكَّد فعلاً، لازم تروح تعدّله يدوياً بشاشة الراتب نفسه (لو ما زال قابلاً للتعديل، وإلا يبقى كسجل تاريخي ثابت)."
         ),
+        translations={
+            "en": {
+                "title": "I edited a worker's travel period and got a warning about a confirmed salary — what do I do?",
+                "body": (
+                    "A confirmed salary snapshot is deliberately fixed — it doesn't change automatically if you edit a travel period belonging to its month after confirmation (even if you're fixing a wrong date). The warning just informs you of this — if you actually want to change the confirmed amount, you need to go edit it manually on the salary screen itself (if it's still editable, otherwise it stays a fixed historical record)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_payment_method_payroll",
@@ -1970,6 +2134,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "تُحدَّد مرة وحدة لكل عامل بشاشة 'إعداد الرواتب'. لو 'تحويل بنكي'، مسير الراتب يطبع 'من {صاحب الحلال} إلى {مستلم الحوالة}' صراحة — اسم المستلم حقل منفصل يُدخَل كل شهر بشكل مستقل بشاشة تجهيز الراتب (يختلف حسب الشهر، مثلاً لو حوّلت لأخو العامل مرة ولحسابه مباشرة مرة ثانية). لو 'نقداً'، يطبع 'طريقة الدفع: نقداً' بس بدون تفاصيل إضافية."
         ),
+        translations={
+            "en": {
+                "title": "What's the difference between 'cash' and 'bank transfer' payment method on the receipt?",
+                "body": (
+                    "Set once per worker on the 'payroll setup' screen. If 'bank transfer', the payroll slip prints 'from {owner} to {transfer recipient}' explicitly — the recipient's name is a separate field entered independently each month on the salary prep screen (can differ by month, e.g. if you transferred to the worker's brother once and to their own account directly another time). If 'cash', it just prints 'payment method: cash' with no extra details."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_team_manage_salary_permission",
@@ -1978,6 +2150,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "صلاحية 'إدارة الرواتب' (team.manage_salary) منفصلة عمداً عن صلاحية 'إدارة الفريق' الكاملة (users.manage) — تُمنح افتراضياً لدور المحاسب. تغطي كل شاشات الرواتب (إعداد الأساسي، تجهيز/تأكيد الشهري، سجل السفر، بيانات صاحب الحلال) بدون ما تعطي القدرة على تغيير أدوار الأعضاء أو كلمات مرورهم أو تفعيل/تعطيل حساباتهم — تلك تبقى تحت 'إدارة الفريق' الكاملة بس."
         ),
+        translations={
+            "en": {
+                "title": "Who can manage payroll without full team permission?",
+                "body": (
+                    "The 'manage payroll' permission (team.manage_salary) is deliberately separate from the full 'manage team' permission (users.manage) — granted to the accountant role by default. It covers every payroll screen (base setup, monthly prep/confirm, travel log, owner details) without giving the ability to change members' roles or passwords or activate/deactivate their accounts — those stay under full 'manage team' only."
+                ),
+            },
+        },
     ),
 
     # ---------- تحليلات المالية الجديدة (بند إضافي 269 — صافي الربح، تشخيص الخسارة، الموسمية، القيمة السوقية) ----------
