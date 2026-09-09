@@ -2169,6 +2169,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "أعلى شاشة 'المالية' الرئيسية، بطاقتين: 'صافي الربح' (= إجمالي الداخل − إجمالي الخارج) و'نسبة الربح' (= صافي الربح ÷ إجمالي الخارج × 100). تتلوّن أحمر تلقائياً لو صرت بخسارة. الديون (دعم خارجي/سداد) مستثناة من الحسابين — التزام مو دخل أو مصروف تشغيلي حقيقي."
         ),
+        translations={
+            "en": {
+                "title": "How do I know my overall profit percentage?",
+                "body": (
+                    "At the top of the main 'finance' screen, two cards: 'net profit' (= total in − total out) and 'profit percentage' (= net profit ÷ total out × 100). Turns red automatically if you're at a loss. Debts (external support/repayment) are excluded from both calculations — a liability, not a real operating income or expense."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_loss_diagnosis",
@@ -2178,6 +2186,15 @@ ENTRIES: list[KBEntry] = [
             "لو آخر 30 يوم صافيهم سالب، تطلع بطاقة '🔍 ليش أنا بخسارة؟' تلقائياً أعلى شاشة 'المالية' — تفصيل بنود مصروفك (شراء/مصروف) حسب الفئة، مرتبة من الأكبر، مع نسبتها من الإجمالي ونسبة تغيّرها عن الـ30 يوم اللي قبلها (يبيّن أي بند فعلاً زاد وبكم)، + عدد الرؤوس بهامش سالب فعلياً (من شاشة نقطة التعادل) مع رابط لمراجعتهم.\n"
             "النظام ما يقترح حل جاهز ('قلّل مصاريفك' مثلاً) — يعرض لك الحقائق الرقمية من بياناتك الفعلية بس، أنت تقرر الحل المناسب."
         ),
+        translations={
+            "en": {
+                "title": "I'm at a loss — does the system explain why?",
+                "body": (
+                    "If the last 30 days' net is negative, a '🔍 Why am I at a loss?' card shows automatically at the top of the 'finance' screen — a breakdown of your expense items (purchases/expenses) by category, sorted largest first, with their share of the total and their change from the 30 days before that (shows exactly which item actually rose and by how much), + the number of heads with an actually negative margin (from the break-even screen) with a link to review them.\n"
+                    "The system doesn't suggest a ready-made fix ('cut your expenses', for example) — it just shows you the numeric facts from your actual data, you decide the right fix."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_seasonal_price_chart",
@@ -2187,6 +2204,15 @@ ENTRIES: list[KBEntry] = [
             "'المالية' ← 'موسمية أسعار البيع' — شارت مبني على التقويم **الهجري** (مو الميلادي، لأن عيد الأضحى يتحرك ~11 يوم كل سنة ميلادية) بعمودين لكل شهر هجري: أزرق = متوسط أسعار بيعك الحقيقية بهذا الشهر هالسنة، برتقالي = متوسط أسعار بيعك الحقيقية بنفس الشهر عبر كل السنين اللي عندك بيانات فيها. تظليل خفيف يبيّن رمضان وذو الحجة (فيه عيد الأضحى) — الموسمان الأكثر تأثيراً بسوق الأغنام/الماعز.\n"
             "**كل رقم من مبيعاتك الحقيقية بس — صفر بيانات سوق خارجية أو تخمين.** لو بياناتك من سنة هجرية وحدة بس، تطلع رسالة صريحة إن النمط لسا مو موثوق (يحتاج سنتين على الأقل)."
         ),
+        translations={
+            "en": {
+                "title": "Is there a chart that shows the best time to sell sheep/goats?",
+                "body": (
+                    "'Finance' → 'Seasonal sale prices' — a chart built on the **Hijri** calendar (not Gregorian, since Eid al-Adha shifts ~11 days every Gregorian year) with two bars per Hijri month: blue = your actual average sale prices in that month this year, orange = your actual average sale prices in the same month across every year you have data for. Light shading marks Ramadan and Dhu al-Hijjah (which holds Eid al-Adha) — the two seasons with the most impact on the sheep/goat market.\n"
+                    "**Every number is from your actual sales only — zero external market data or guessing.** If your data spans only one Hijri year, an explicit message shows that the pattern isn't reliable yet (needs at least two years)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_asset_maintenance",
@@ -2195,6 +2221,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "من 'المعدات' ← 'الأصول' ← اختر الأصل ← 'صيانة' — سجّل التاريخ والملاحظات وتكلفة الصيانة (اختياري). لو كتبت تكلفة، تُنشأ تلقائياً عملية 'مصروف' حقيقية بفئة 'صيانة معدات' تظهر بشاشة المالية وكل التقارير المبنية عليها — بدون أي إدخال إضافي منك."
         ),
+        translations={
+            "en": {
+                "title": "How do I log maintenance on an asset (generator, car...) and does its cost enter finance?",
+                "body": (
+                    "From 'Equipment' → 'Assets' → pick the asset → 'maintenance' — log the date, notes, and maintenance cost (optional). If you enter a cost, a real 'expense' transaction is automatically created under the 'equipment maintenance' category and shows on the finance screen and every report built on it — no extra entry from you."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_utility_readings",
@@ -2203,6 +2237,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'المعدات' ← 'استهلاك الطاقة والماء' ← 'قراءة جديدة': نوع الاستهلاك (كهرباء/ماء)، الكمية والوحدة، وتكلفة الفاتورة (اختياري). لو كتبت تكلفة، تُنشأ تلقائياً عملية 'مصروف' حقيقية (فئة 'فاتورة كهرباء' أو 'فاتورة ماء') تظهر بالمالية. الهدف الأساسي من القراءات نفسها: كشف تغيّر مفاجئ (تسريب، مولّد يستهلك أكثر من المعتاد) بمقارنة القراءات مع الوقت."
         ),
+        translations={
+            "en": {
+                "title": "How do I log an electricity or water bill?",
+                "body": (
+                    "'Equipment' → 'Energy & water consumption' → 'New reading': consumption type (electricity/water), the amount and unit, and the bill's cost (optional). If you enter a cost, a real 'expense' transaction is automatically created (category 'electricity bill' or 'water bill') and shows on finance. The main purpose of the readings themselves: detecting a sudden change (a leak, a generator consuming more than usual) by comparing readings over time."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_team_performance_report",
@@ -2211,6 +2253,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الفريق' ← 'تقرير الأداء' — لكل عامل عنده مهمة واحدة على الأقل محسومة (منجزة أو متعذّرة) بالفترة المختارة: نسبة الإنجاز، عدد المهام المتعذّرة، ونقطة أداء إجمالية من 100. الفترة الافتراضية أول الشهر الحالي لليوم، قابلة للتغيير من الفلتر. أعلى نقطة أداء بالشهر الماضي تظهر تلقائياً كشارة '🏆' بشاشة تجهيز راتب ذلك العامل (بند الرواتب) — نفس الرقم، بدون تكرار حساب."
         ),
+        translations={
+            "en": {
+                "title": "How do I see each worker's performance on the team?",
+                "body": (
+                    "'Team' → 'Performance report' — for every worker with at least one resolved task (completed or failed) in the chosen period: completion rate, number of failed tasks, and an overall performance score out of 100. The default period is the start of the current month to today, changeable from the filter. The highest performance score last month shows automatically as a '🏆' badge on that worker's salary prep screen (payroll item) — the same number, no recalculation."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_task_quality_rate",
@@ -2219,6 +2269,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "'الفريق' ← 'المهام المنجزة اليوم': لكل مهمة منجزة اليوم، ثلاث أزرار تقييم سريعة (ضعيف/متوسط/ممتاز) مع حقل ملاحظة اختياري. يحتاج صلاحية 'مراجعة المهام اليومية' (صاحب الحلال/الدكتور/الممرض). التقييم يُسجَّل بسجل المهمة نفسه (مين قيّم ومتى)، ومستقل عن نقطة الأداء الإجمالية بتقرير الأداء (تلك مبنية على الإنجاز/التعذّر، مو على الجودة)."
         ),
+        translations={
+            "en": {
+                "title": "How do I rate the quality of a task a worker completed?",
+                "body": (
+                    "'Team' → 'Tasks completed today': for each task completed today, three quick rating buttons (weak/medium/excellent) with an optional note field. Needs the 'review daily tasks' permission (owner/doctor/nurse). The rating is logged on the task's own record (who rated it and when), and is independent of the overall performance score on the performance report (that one is built on completion/failure, not quality)."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_break_even_screen",
@@ -2230,6 +2288,17 @@ ENTRIES: list[KBEntry] = [
             "• 'الهامش' = القيمة التقديرية − سعر التعادل (راجع بند مصدر القيمة التقديرية لتفاصيل من وين تجي). هامش سالب (أحمر) = خطر خسارة لو بيع الآن.\n"
             "بطاقة 'رؤوس بهامش سالب' أعلى الشاشة تعد لك عدد الرؤوس المهدَّدة مباشرة."
         ),
+        translations={
+            "en": {
+                "title": "What do 'break-even price' and 'margin' mean on the break-even screen?",
+                "body": (
+                    "'Finance' → 'Financial analysis & break-even' — for every active head:\n"
+                    "• 'Break-even price' = all estimated costs since it entered (purchase + treatment + feed + its share of indirect expenses) — the lowest sale price that actually covers your cost, any sale below it is a net loss.\n"
+                    "• 'Margin' = estimated value − break-even price (see the estimated value source item for where it comes from). A negative margin (red) = risk of loss if sold now.\n"
+                    "The 'heads with negative margin' card at the top of the screen counts the directly threatened heads for you."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_culling_index",
@@ -2239,6 +2308,15 @@ ENTRIES: list[KBEntry] = [
             "'المالية' ← 'مؤشر الاستبعاد المالي' — يحدد الإناث 'غير الدافعة' (بالغة بدون أي ولادة خلال آخر 400 يوم) ويحسب تكلفة استمرار الاحتفاظ بها شهرياً (علف + تكاليف صحية آخر 180 يوم)، مقابل قيمة إنتاجية = صفر (بحكم تعريف 'غير دافعة' نفسه).\n"
             "**النظام ما يبيع ولا يعزل أي رأس تلقائياً** — بس يحسب رقماً مالياً حقيقياً (تكلفة الفرصة البديلة) ويترك القرار لك. أنثى 'غير دافعة' ممكن سببها مؤقت (تأخر تقريع، مرض مؤقت) لا يستدعي استبعاداً — راجع دائماً سجلها الطبي والتكاثري قبل أي قرار بيع فعلي."
         ),
+        translations={
+            "en": {
+                "title": "What is the 'financial culling index'?",
+                "body": (
+                    "'Finance' → 'Financial culling index' — identifies 'non-productive' females (mature with no birth in the last 400 days) and computes the monthly cost of continuing to keep them (feed + health costs over the last 180 days), against a productive value of zero (by the very definition of 'non-productive').\n"
+                    "**The system never sells or isolates any head automatically** — it just computes a real financial figure (opportunity cost) and leaves the decision to you. A 'non-productive' female's cause might be temporary (delayed mating, a temporary illness) that doesn't call for culling — always review her medical and breeding record before any actual sale decision."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_break_even_market_value",
@@ -2247,6 +2325,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "أولوية المصدر: (1) تقدير محسوب حي من متوسط أسعار بيع حقيقية لرؤوس مشابهة (نفس النوع/الجنس، عمر قريب) خلال آخر 90 يوم — يتحدّث تلقائياً كل مرة تفتح الشاشة، يظهر معه '📊 من N مبيعات مشابهة'. (2) لو ما فيه مبيعات كافية، يرجع للقيمة اليدوية المسجَّلة بشاشة 'بيانات تخطيط السوق' لو موجودة، ويظهر '✍️ تقدير يدوي'. (3) وإلا الهامش ما يُحسب أصلاً — النظام ما يخترع سعر سوق من عدم."
         ),
+        translations={
+            "en": {
+                "title": "Where does the 'estimated value' on the break-even screen come from?",
+                "body": (
+                    "Source priority: (1) a live computed estimate from the average of real sale prices of similar heads (same type/sex, close age) over the last 90 days — updates automatically every time you open the screen, shown with '📊 from N similar sales'. (2) If there aren't enough sales, it falls back to the manual value logged on the 'market plan data' screen if present, shown with '✍️ manual estimate'. (3) Otherwise the margin isn't computed at all — the system doesn't invent a market price from nothing."
+                ),
+            },
+        },
     ),
 
     # بند إضافي 306 — فجوة حقيقية اكتشفناها بالتدقيق: خطة "عقل المزرعة"
@@ -2262,6 +2348,15 @@ ENTRIES: list[KBEntry] = [
             "'دفتر ملاحظات المزرعة' (رابط 📓 فوق شاشة المساعد الذكي) مكان تكتب فيه أي ملاحظة ميدانية حقيقية — سلوك حظيرة، سبب مشكلة تكرّرت، حل جرّبته وضبط معك — واختيارياً تربطها بحظيرة أو رأس معيّن.\n"
             "الفايدة: هذي الملاحظات تصير مصدر معرفة حقيقي أرجع له أنا (المساعد) مستقبلاً عند سؤال مشابه — مثلاً لو سألتني 'ليش الحظيرة الشرقية دايماً فيها مشكلة'، أقدر أسترجع ملاحظة سابقة كتبتها عنها. ما تُستخدم كقاعدة طبية ثابتة، مجرد سياق مرجعي."
         ),
+        translations={
+            "en": {
+                "title": "What's the farm notebook, and how do I use it?",
+                "body": (
+                    "The 'farm notebook' (📓 link above the assistant screen) is a place to write any real field observation — a barn's behavior, the cause of a recurring problem, a fix you tried that worked for you — and optionally link it to a specific barn or head.\n"
+                    "The benefit: these notes become a real knowledge source I (the assistant) come back to later for a similar question — for example, if you ask me 'why does the eastern barn always have a problem', I can recall a previous note you wrote about it. Not used as a fixed medical rule, just reference context."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_smart_draft_entry",
@@ -2272,6 +2367,16 @@ ENTRIES: list[KBEntry] = [
             "**قاعدة صارمة**: أنا أقترح مسودة بس — ما ينفَّذ أي شي فعلي بقاعدة البيانات إلا بعد ما تراجع البطاقة وتضغط 'اعتماد' بنفسك. المسودات المعلَّقة بدون قرار لمدة 48 ساعة تُحذف تلقائياً. الإجراءات المدعومة حالياً: تسجيل ولادة، تسجيل وزن، وتوزيع مهمة — أي شي يخص جرعة دواء أو حذف سجل يُرفض تلقائياً ولا يوصلك أصلاً كمسودة.\n"
             "**توزيع مهمة تحديداً (بند إضافي 316)**: أبداً ما أحدد أنا مين المكلَّف — بطاقة الاعتماد تعرض لك قائمة حقيقية بأسماء كل أعضاء الفريق تختار منها بنفسك. بعد اختيارك، أترجم نص المهمة تلقائياً للغة المسجَّلة لذاك الشخص بالضبط (لو مختلفة عن العربي) قبل ما توزَّع — النص الأصلي بالعربي يبقى محفوظاً بملاحظة المهمة."
         ),
+        translations={
+            "en": {
+                "title": "What's 'smart entry', and how do I log an event or assign a task by text or voice?",
+                "body": (
+                    "The 'smart entry' screen (🎙️ link above the assistant screen) lets you type or voice-record an event that actually happened on the farm, in natural everyday phrasing — e.g. 'I logged a birth today for ewe 405', 'I logged today's weight for head 900: 35 kg', or 'assign a pregnancy check task to the doctor'.\n"
+                    "**A strict rule**: I only suggest a draft — nothing actually happens in the database until you review the card and press 'approve' yourself. Pending drafts with no decision for 48 hours are deleted automatically. Currently supported actions: logging a birth, logging a weight, and assigning a task — anything involving a medicine dose or deleting a record is rejected automatically and never reaches you as a draft at all.\n"
+                    "**Assigning a task specifically**: I never decide who's assigned — the approval card shows you a real list of every team member's name for you to pick from yourself. After you pick, I automatically translate the task text into that exact person's logged language (if different from Arabic) before it's assigned — the original Arabic text stays saved in the task's note."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_animal_checkup_request",
@@ -2281,6 +2386,15 @@ ENTRIES: list[KBEntry] = [
             "افتح صفحة تفاصيل أي رأس، وتحت بطاقة 'طلب فحص شامل لهذا الرأس' اختر بنود الفحص اللي تبيها (حرارة، جلد، عين، خف، خراجات...)، أو اضغط '🤖 اقترح لي بنود الفحص' عشان أحلّل بيانات الرأس الحية (تنبيهاته، أمراضه المفتوحة، آخر وزن) وأقترح لك البنود المناسبة تلقائياً — تقدر تراجع وتعدّل قبل التوزيع.\n"
             "كل بند يصير مهمة مستقلة للدكتور، وإنجازه لها بملاحظة هو فعلياً تقريره — تقدر تشوف كل بنود نفس الطلب مجمَّعة ببعض من شاشة تفاصيل أي مهمة منها."
         ),
+        translations={
+            "en": {
+                "title": "How do I ask the doctor to check a specific head and file a report?",
+                "body": (
+                    "Open any head's detail page, and under the 'request a full checkup for this head' card pick the check items you want (temperature, skin, eye, hoof, abscesses...), or press '🤖 suggest checkup items for me' so I analyze the head's live data (its alerts, open diseases, last weight) and suggest the right items automatically — you can review and edit before assigning.\n"
+                    "Each item becomes a separate task for the doctor, and their completing it with a note is effectively their report — you can see all items of the same request grouped together from any one item's task detail screen."
+                ),
+            },
+        },
     ),
     KBEntry(
         code="howto_assistant_image_analysis",
@@ -2289,6 +2403,14 @@ ENTRIES: list[KBEntry] = [
         body=(
             "نعم — بشاشة المساعد الذكي، اضغط زر 📷 جنب صندوق الكتابة وارفع صورة (حالة جلدية، رقم أذن، صنف علف...) مع سؤالك النصي أو بدونه. أصف لك اللي أشوفه وأجاوب سؤالك، بس ممنوع أشخّص مرضاً نهائياً أو أقترح جرعة دواء من صورة — أي قرار علاجي نهائي لازم يمر على الطبيب البيطري."
         ),
+        translations={
+            "en": {
+                "title": "Can I send an image to the AI assistant?",
+                "body": (
+                    "Yes — on the assistant screen, press the 📷 button next to the text box and upload an image (a skin condition, an ear tag number, a feed item...) with your text question or without one. I'll describe what I see and answer your question, but I'm not allowed to give a final disease diagnosis or suggest a medicine dose from an image — any final treatment decision must go through the veterinarian."
+                ),
+            },
+        },
     ),
 ]
 
