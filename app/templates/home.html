@@ -2,6 +2,31 @@
 {% from "_macros.html" import tip %}
 {% block content %}
 
+{# بند إصلاح (فحص تصميم حي — طلبك: "طبّق على الواقع" بعد نموذج
+   "بلاطات مراح" التجريبي) — شريط إحصائيات مدمجة (رقم + وصفه جوّا
+   نفس المربع الملوّن) بأعلى الصفحة، من بيانات حقيقية موجودة أصلاً
+   بمتغيرات الصفحة (صفر رقم مخترع) — يظهر بس للأرقام المتاحة فعلاً
+   حسب صلاحية المستخدم. #}
+{% if today_tasks_count is not none or today_alerts_count is not none or animals_alerts_count %}
+<div class="home-stats">
+  {% if today_tasks_count is not none %}
+  <a class="stat-chip" style="background:var(--t-team);" href="{{ url_for('team.tasks_list') }}">
+    <span class="emoji">✅</span><span class="num">{{ today_tasks_count }}</span><span class="cap">{{ _('مهام اليوم') }}</span>
+  </a>
+  {% endif %}
+  {% if today_alerts_count is not none %}
+  <a class="stat-chip" style="background:var(--t-health);" href="{{ url_for('core.alerts_list') if user.has_permission('animals.view') else url_for('core.alerts_mine') }}">
+    <span class="emoji">🔔</span><span class="num">{{ today_alerts_count }}</span><span class="cap">{{ _('تنبيهات اليوم') }}</span>
+  </a>
+  {% endif %}
+  {% if animals_alerts_count %}
+  <a class="stat-chip" style="background:var(--t-animals);" href="{{ url_for('core.animals_list') }}">
+    <span class="emoji">🐑</span><span class="num">{{ animals_alerts_count }}</span><span class="cap">{{ _('تنبيهات على الرؤوس') }}</span>
+  </a>
+  {% endif %}
+</div>
+{% endif %}
+
 {% if not user.onboarding_completed_at %}
 <div class="card" style="background:var(--primary); color:#fff;">
   <h3 style="margin:0; color:#fff;">👋 {{ _('أول مرة تستخدم النظام؟') }}</h3>
@@ -69,16 +94,16 @@
   <div class="quick-group">
     <div class="quick-group-title">{{ _('الأكثر استخدامًا') }}</div>
     <div class="quick">
-      <a href="{{ url_for('team.reports_list') }}"><span class="emoji">📋</span> {{ _('البلاغات') }}</a>
-      <a href="{{ url_for('team.tasks_list') }}"><span class="emoji">✅</span> {{ _('المهام') }}</a>
+      <a style="background:var(--t-team); color:#fff;" href="{{ url_for('team.reports_list') }}"><span class="emoji">📋</span> {{ _('البلاغات') }}</a>
+      <a style="background:var(--t-team); color:#fff;" href="{{ url_for('team.tasks_list') }}"><span class="emoji">✅</span> {{ _('المهام') }}</a>
       {% if user.role.name == 'owner' %}
-      <a href="{{ url_for('team.daily_reports_list') }}"><span class="emoji">📝</span> {{ _('التقارير اليومية') }}</a>
+      <a style="background:var(--t-team); color:#fff;" href="{{ url_for('team.daily_reports_list') }}"><span class="emoji">📝</span> {{ _('التقارير اليومية') }}</a>
       {% else %}
-      <a href="{{ url_for('team.daily_report_form') }}"><span class="emoji">📝</span> {{ _('التقرير اليومي') }}</a>
+      <a style="background:var(--t-team); color:#fff;" href="{{ url_for('team.daily_report_form') }}"><span class="emoji">📝</span> {{ _('التقرير اليومي') }}</a>
       {% endif %}
       {% if user.has_permission('animals.view') %}
       <div style="position:relative;">
-        <a href="{{ url_for('core.animals_list') }}" style="position:relative;">
+        <a href="{{ url_for('core.animals_list') }}" style="position:relative; background:var(--t-animals); color:#fff;">
           {% if animals_alerts_count %}<span class="notif-bubble overdue" title="{{ _('%(n)s تنبيه على رؤوس مسجَّلة', n=animals_alerts_count) }}">{{ animals_alerts_count }}</span>{% endif %}
           <span class="emoji">🐑</span> {{ _('الحيوانات') }}
         </a>
@@ -86,13 +111,13 @@
       </div>
       {% endif %}
       {% if user.has_permission('animals.manage') %}
-      <a href="{{ url_for('core.animals_new') }}"><span class="emoji">➕</span> {{ _('حيوان جديد') }}</a>
+      <a style="background:var(--t-animals); color:#fff;" href="{{ url_for('core.animals_new') }}"><span class="emoji">➕</span> {{ _('حيوان جديد') }}</a>
       {# بند إضافي (2026-08-31، طلبك المباشر: "نماذج سريعة وبسيطة تقلل
          عدد الحقول") — اختصار مباشر لأكثر حالة تسجيل يومية شيوعاً
          (مولود بالمزرعة)، يفتح نفس فورم "حيوان جديد" بس بالمصدر معبّى
          مسبقاً — خطوة أقل، وحقول الفورم تبدأ مباشرة بالأم/الأب/تاريخ
          الولادة بدل قائمة مصادر عامة. #}
-      <a href="{{ url_for('core.animals_new', source='birth') }}"><span class="emoji">🐣</span> {{ _('تسجيل مولود') }}</a>
+      <a style="background:var(--t-repro); color:#fff;" href="{{ url_for('core.animals_new', source='birth') }}"><span class="emoji">🐣</span> {{ _('تسجيل مولود') }}</a>
       {% endif %}
     </div>
   </div>
@@ -101,14 +126,14 @@
   <div class="quick-group">
     <div class="quick-group-title">{{ _('الصحة') }}</div>
     <div class="quick">
-      <a href="{{ url_for('health.vet_visits_list') }}"><span class="emoji">🩺</span> {{ _('البيطرة') }}</a>
-      <a href="{{ url_for('health.vaccinations_list') }}" style="position:relative;">
+      <a style="background:var(--t-health); color:#fff;" href="{{ url_for('health.vet_visits_list') }}"><span class="emoji">🩺</span> {{ _('البيطرة') }}</a>
+      <a href="{{ url_for('health.vaccinations_list') }}" style="position:relative; background:var(--t-vax); color:#fff;">
         {% if vaccinations_overdue_count %}<span class="notif-bubble overdue" title="{{ _('%(n)s متأخرة', n=vaccinations_overdue_count) }}">{{ vaccinations_overdue_count }}</span>{% endif %}
         {% if vaccinations_upcoming_count %}<span class="notif-bubble upcoming" title="{{ _('%(n)s قادمة لم يحن وقتها', n=vaccinations_upcoming_count) }}">{{ vaccinations_upcoming_count }}</span>{% endif %}
         <span class="emoji">💉</span> {{ _('التطعيمات') }}
       </a>
-      <a href="{{ url_for('health.diseases_list') }}"><span class="emoji">🌡️</span> {{ _('الأمراض') }}</a>
-      <a href="{{ url_for('health.pharmacy_list') }}"><span class="emoji">💊</span> {{ _('الصيدلية') }}</a>
+      <a style="background:var(--t-disease); color:#fff;" href="{{ url_for('health.diseases_list') }}"><span class="emoji">🌡️</span> {{ _('الأمراض') }}</a>
+      <a style="background:var(--t-pharmacy); color:#fff;" href="{{ url_for('health.pharmacy_list') }}"><span class="emoji">💊</span> {{ _('الصيدلية') }}</a>
     </div>
   </div>
   {% endif %}
@@ -117,10 +142,10 @@
   <div class="quick-group">
     <div class="quick-group-title">{{ _('التكاثر') }}</div>
     <div class="quick">
-      <a href="{{ url_for('repro.matings_list') }}"><span class="emoji">🐑</span> {{ _('التقريع') }}</a>
-      <a href="{{ url_for('repro.pregnancies_list') }}"><span class="emoji">🤰</span> {{ _('تشخيص الحمل') }}</a>
-      <a href="{{ url_for('repro.sonar_list') }}"><span class="emoji">📟</span> {{ _('فحص السونار') }}</a>
-      <a href="{{ url_for('repro.programs_list') }}"><span class="emoji">🐣</span> {{ _('برامج التزامن') }}</a>
+      <a style="background:var(--t-repro); color:#fff;" href="{{ url_for('repro.matings_list') }}"><span class="emoji">🐑</span> {{ _('التقريع') }}</a>
+      <a style="background:var(--t-repro); color:#fff;" href="{{ url_for('repro.pregnancies_list') }}"><span class="emoji">🤰</span> {{ _('تشخيص الحمل') }}</a>
+      <a style="background:var(--t-repro); color:#fff;" href="{{ url_for('repro.sonar_list') }}"><span class="emoji">📟</span> {{ _('فحص السونار') }}</a>
+      <a style="background:var(--t-repro); color:#fff;" href="{{ url_for('repro.programs_list') }}"><span class="emoji">🐣</span> {{ _('برامج التزامن') }}</a>
     </div>
   </div>
   {% endif %}
@@ -130,15 +155,15 @@
     <div class="quick-group-title">{{ _('العلف والمالية والتقارير') }}</div>
     <div class="quick">
       {% if user.has_permission('feed.view') %}
-      <a href="{{ url_for('feed.calculator') }}"><span class="emoji">🌾</span> {{ _('العلف') }}</a>
+      <a style="background:var(--t-feed); color:#fff;" href="{{ url_for('feed.calculator') }}"><span class="emoji">🌾</span> {{ _('العلف') }}</a>
       {% endif %}
       {% if user.has_permission('finance.full.manage') %}
-      <a href="{{ url_for('finance.finance_list') }}"><span class="emoji">💰</span> {{ _('المالية') }}</a>
+      <a style="background:var(--t-finance); color:#fff;" href="{{ url_for('finance.finance_list') }}"><span class="emoji">💰</span> {{ _('المالية') }}</a>
       {% elif user.has_permission('finance.health.view') %}
-      <a href="{{ url_for('finance.finance_health_view') }}"><span class="emoji">💰</span> {{ _('مالية الصحة') }}</a>
+      <a style="background:var(--t-finance); color:#fff;" href="{{ url_for('finance.finance_health_view') }}"><span class="emoji">💰</span> {{ _('مالية الصحة') }}</a>
       {% endif %}
       {% if user.has_permission('analytics.view') %}
-      <a href="{{ url_for('reports.overview') }}"><span class="emoji">📊</span> {{ _('التقارير') }}</a>
+      <a style="background:var(--t-reports); color:#fff;" href="{{ url_for('reports.overview') }}"><span class="emoji">📊</span> {{ _('التقارير') }}</a>
       {% endif %}
     </div>
   </div>
@@ -149,10 +174,10 @@
     <div class="quick-group-title">{{ _('النظام') }}</div>
     <div class="quick">
       {% if user.has_permission('assistant.use') %}
-      <a href="{{ url_for('assistant.chat') }}"><span class="emoji">🤖</span> {{ _('المساعد الذكي') }}</a>
+      <a style="background:var(--t-ai); color:#fff;" href="{{ url_for('assistant.chat') }}"><span class="emoji">🤖</span> {{ _('المساعد الذكي') }}</a>
       {% endif %}
       {% if user.has_permission('settings.manage') %}
-      <a href="{{ url_for('core.settings_home') }}"><span class="emoji">⚙️</span> {{ _('الإعدادات') }}</a>
+      <a style="background:var(--t-settings); color:#fff;" href="{{ url_for('core.settings_home') }}"><span class="emoji">⚙️</span> {{ _('الإعدادات') }}</a>
       {% endif %}
     </div>
   </div>
