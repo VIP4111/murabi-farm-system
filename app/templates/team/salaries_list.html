@@ -48,6 +48,7 @@
       <div><label style="margin:0 0 4px;">{{ _('الجنسية') }}</label><input name="nationality" value="{{ m.nationality or '' }}" style="width:110px; margin:0;"></div>
       <div><label style="margin:0 0 4px;">{{ _('رقم الجواز') }}</label><input name="passport_number" value="{{ m.passport_number or '' }}" style="width:130px; margin:0;"></div>
       <div><label style="margin:0 0 4px;">{{ _('رقم الحدود') }}</label><input name="border_number" value="{{ m.border_number or '' }}" style="width:130px; margin:0;"></div>
+      <div><label style="margin:0 0 4px;">{{ _('المسمى الوظيفي') }} {{ tip(_('يُستخدم لاختيار نموذج بنود العقد المناسب وقت طباعة اتفاقية العمل (سائق، عامل زراعي، عامل منزلي، عامل مقاولات...) — عدّل النماذج من الإعدادات.')) }}</label><input name="job_title" value="{{ m.job_title or '' }}" placeholder="{{ _('مثال: عامل زراعي / راعي') }}" style="width:170px; margin:0;"></div>
     </div>
 
     <p style="color:var(--muted); font-size:11.5px; font-weight:700; margin:12px 0 4px;">🧑‍💼 {{ _('بيانات الكفيل (اختياري)') }} {{ tip(_('فاضي = يظهر صاحب الحلال تلقائياً كصاحب عمل بمسير راتب هذا العامل (نفس السلوك الافتراضي). عبّيها بس لو هذا العامل مكفول فعلياً على شخص أو منشأة ثانية غير صاحب الحلال — تحل محلها بمسير راتبه هو بالذات، بدون ما تأثر على بقية الفريق.')) }}</p>
@@ -70,6 +71,8 @@
     </form>
     <a class="btn light" href="{{ url_for('team.travel_history', user_id=m.id) }}" style="padding:6px 12px; font-size:12px;">📋 {{ _('سجل السفر') }}</a>
     {{ tip(_('"تسجيل سفر" يوقف احتساب أيام حضوره بالراتب المتناسب لحد ما تسجّل "تسجيل عودة" — استخدمها وقت الإجازات الطويلة.')) }}
+    <a class="btn light" href="{{ url_for('core.member_contract_print', user_id=m.id) }}" style="padding:6px 12px; font-size:12px;">📄 {{ _('طباعة اتفاقية عمل') }}</a>
+    <a class="btn light" href="{{ url_for('core.member_settlement_print', user_id=m.id) }}" style="padding:6px 12px; font-size:12px;">✍️ {{ _('طباعة مخالصة نهائية') }} {{ tip(_('استخدمها لما تختار سفر العامل بشكل نهائي — إقرار باستلام كامل مستحقاته وموافقته على تنظيف بياناته من النظام.')) }}</a>
     {% if m.saudi_arrival_date %}
     <span style="color:var(--muted); font-size:12px;">{{ _('راتبه يُحسب متناسباً حسب أيام الحضور الفعلية كل شهر.') }}</span>
     {% endif %}

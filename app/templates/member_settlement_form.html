@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ _('طباعة إقرار المخالصة النهائية') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('team.salaries_list') }}" style="font-size:12px; padding:6px 12px;">← {{ _('إعداد الرواتب') }}</a>
+  <h2 style="margin-top:12px;">✍️ {{ _('إقرار المخالصة النهائية') }} — {{ member.name }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('يستخدَم لما تختار سفر العامل بشكل نهائي — إقرار بأنه استلم كامل مستحقاته ولا مطالبة له، مع موافقته على تنظيف بياناته من النظام. عبّي المبالغ يدوياً حسب اتفاقك معه.') }}</p>
+</div>
+
+<div class="card">
+  <form method="post" action="{{ url_for('core.member_settlement_print', user_id=member.id) }}" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('آخر يوم عمل فعلي') }}</label>
+    <input type="date" name="last_work_day">
+    <label>{{ _('سبب إنهاء الخدمة') }}</label>
+    <input name="reason" placeholder="{{ _('مثال: سفر نهائي — عدم رغبة بتجديد العقد') }}">
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+      <div><label>{{ _('راتب الشهر الأخير') }}</label><input type="number" step="0.01" min="0" name="final_salary" value="{{ member.base_salary if member.base_salary is not none else '' }}" style="width:150px;"></div>
+      <div><label>{{ _('مكافأة نهاية الخدمة') }}</label><input type="number" step="0.01" min="0" name="end_of_service" value="0" style="width:150px;"></div>
+      <div><label>{{ _('بدل إجازة غير مستخدمة') }}</label><input type="number" step="0.01" min="0" name="leave_balance" value="0" style="width:150px;"></div>
+      <div><label>{{ _('خصومات') }}</label><input type="number" step="0.01" min="0" name="deductions" value="0" style="width:150px;"></div>
+    </div>
+    <button class="btn" type="submit" style="margin-top:12px;">📄 {{ _('طباعة إقرار المخالصة') }}</button>
+  </form>
+</div>
+{% endblock %}

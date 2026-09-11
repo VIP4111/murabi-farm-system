@@ -226,6 +226,9 @@ def salary_update(user_id):
     user.sponsor_name = request.form.get("sponsor_name") or None
     user.sponsor_national_id = request.form.get("sponsor_national_id") or None
     user.sponsor_phone = request.form.get("sponsor_phone") or None
+    # المسمى الوظيفي الفعلي (بند إصلاح — طلبك: "كل مسمى وظيفي له بنود
+    # تختلف") — يُستخدم لاختيار نموذج بنود العقد المناسب وقت الطباعة.
+    user.job_title = request.form.get("job_title") or None
     # تاريخ وصول العامل للسعودية (بند إضافي 247) — أساس الراتب المتناسب.
     arrival_raw = (request.form.get("saudi_arrival_date") or "").strip()
     if arrival_raw:

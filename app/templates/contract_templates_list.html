@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ _('نماذج بنود العقد') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('core.settings_home') }}" style="font-size:12px; padding:6px 12px;">← {{ _('الإعدادات') }}</a>
+  <h2 style="margin-top:12px;">📄 {{ _('نماذج بنود العقد حسب المسمى الوظيفي') }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('كل مسمى وظيفي (سائق، عامل زراعي، عامل مقاولات...) له بنود مختلفة تناسب طبيعة عمله — عدّل أو أضف أو احذف حسب حاجتك. هذي النصوص مسودة عامة، راجعها مع محامٍ/مستشار موارد بشرية قبل الاستخدام الفعلي.') }}</p>
+</div>
+
+<div class="card">
+  <h3 style="font-size:14px;">➕ {{ _('نموذج جديد') }}</h3>
+  <form method="post" action="{{ url_for('core.contract_templates_new') }}" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('المسمى الوظيفي') }}</label>
+    <input name="job_title" placeholder="{{ _('مثال: عامل مخازن') }}" required>
+    <label>{{ _('بنود العقد (سطر لكل بند)') }}</label>
+    <textarea name="clauses_text" rows="8" required placeholder="{{ _('يعمل الطرف الثاني لدى الطرف الأول بوظيفة...') }}"></textarea>
+    <button class="btn" type="submit">{{ _('إضافة النموذج') }}</button>
+  </form>
+</div>
+
+{% for t in templates %}
+<div class="card">
+  <form method="post" action="{{ url_for('core.contract_templates_edit', template_id=t.id) }}" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>{{ _('المسمى الوظيفي') }}</label>
+    <input name="job_title" value="{{ t.job_title }}" required>
+    <label>{{ _('بنود العقد (سطر لكل بند)') }}</label>
+    <textarea name="clauses_text" rows="8" required>{{ t.clauses_text }}</textarea>
+    <div style="display:flex; gap:8px; margin-top:8px;">
+      <button class="btn" type="submit">{{ _('حفظ التعديل') }}</button>
+    </div>
+  </form>
+  <form method="post" action="{{ url_for('core.contract_templates_delete', template_id=t.id) }}" style="margin-top:8px;" onsubmit="return confirm('{{ _('تأكيد حذف هذا النموذج؟') }}');" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn danger" type="submit" style="padding:6px 12px; font-size:12px;">{{ _('حذف النموذج') }}</button>
+  </form>
+</div>
+{% else %}
+<div class="card"><p style="color:#888;">{{ _('ما فيه أي نموذج بعد.') }}</p></div>
+{% endfor %}
+{% endblock %}

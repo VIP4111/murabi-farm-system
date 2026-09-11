@@ -106,6 +106,15 @@ class User(UserMixin, db.Model):
     # الموحَّد المستخدَم أصلاً لصور البلاغات/الدردشة.
     photo_url = db.Column(db.String(500), nullable=True)
 
+    # المسمى الوظيفي الفعلي بعقد العمل (بند إصلاح — طلبك الصريح: "كل
+    # مسمى وظيفي له بنود تختلف... سائق/عامل منزلي/عامل زراعي/راعي/
+    # عامل مقاولات نجار أو بناء أو حداد") — مستقل تماماً عن `role_id`
+    # (اللي يتحكم بصلاحيات النظام فقط، مو طبيعة العمل الفعلية). يُستخدم
+    # لاختيار نموذج بنود العقد المناسب (`ContractTemplate.job_title`)
+    # وقت طباعة اتفاقية العمل. اختياري — فاضي يعني ما فيه مسمى محدَّد
+    # بعد، شاشة الطباعة تطلب اختيار نموذج يدوياً بهذي الحالة.
+    job_title = db.Column(db.String(120), nullable=True)
+
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)
 

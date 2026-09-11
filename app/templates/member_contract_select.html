@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ _('طباعة اتفاقية عمل') }}{% endblock %}
+{% block content %}
+<div class="card">
+  <a class="btn light" href="{{ url_for('team.salaries_list') }}" style="font-size:12px; padding:6px 12px;">← {{ _('إعداد الرواتب') }}</a>
+  <h2 style="margin-top:12px;">📄 {{ _('طباعة اتفاقية عمل') }} — {{ member.name }}</h2>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 0;">{{ _('اختر نموذج البنود المناسب للمسمى الوظيفي، عدّل أو أضف نماذج جديدة من') }} <a href="{{ url_for('core.contract_templates_list') }}">{{ _('نماذج بنود العقد') }}</a>.</p>
+</div>
+
+<div class="card">
+  {% if not templates %}
+  <p style="color:#888;">{{ _('ما فيه أي نموذج بنود مضاف بعد.') }} <a href="{{ url_for('core.contract_templates_list') }}">{{ _('أضف نموذج الآن') }}</a>.</p>
+  {% else %}
+  <div style="display:flex; flex-wrap:wrap; gap:8px;">
+    {% for t in templates %}
+    <a class="btn{{ ' light' if member.job_title and member.job_title != t.job_title else '' }}" href="{{ url_for('core.member_contract_print', user_id=member.id, template_id=t.id) }}">
+      {{ '⭐ ' if member.job_title == t.job_title }}{{ t.job_title }}
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

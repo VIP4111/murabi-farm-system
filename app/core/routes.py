@@ -1386,7 +1386,7 @@ def animal_isolation_enter(animal_id):
 def animal_isolation_exit(animal_id):
     """خروج من العزل (بند إضافي 148) — خروج مبكر يحتاج تأكيد فحص بيطري
     وتحصين، وإلا تُرفض العملية (`isolation_service.IsolationExitBlocked`)."""
-    from app.models import FarmSettings
+    from app.models import FarmSettings, User
 
     animal = Animal.query.get_or_404(animal_id)
     target_barns = Barn.query.filter(Barn.barn_type != "عزل").order_by(Barn.barn_name).all()
@@ -1893,7 +1893,7 @@ def barns_edit(barn_id):
 @login_required
 @require_permission("settings.manage")
 def settings_home():
-    from app.models import FarmSettings
+    from app.models import FarmSettings, User
     services = ServiceToggle.query.order_by(ServiceToggle.name).all()
     roles = Role.query.order_by(Role.id).all()
     fs = FarmSettings.get()
@@ -1939,7 +1939,7 @@ def farm_settings_save():
     care_service`/`barn_physiology_service` بالكامل). صار يتحقق من كل
     القيم أولاً (رقم صحيح موجب أو صفر) قبل أي `setattr`، ويرفض العملية
     كاملة (بدون حفظ جزئي) برسالة تحدّد اسم الحقل المسبِّب لو فشل شي."""
-    from app.models import FarmSettings
+    from app.models import FarmSettings, User
     fs = FarmSettings.get()
     int_fields = (
         "gestation_days", "sponge_duration_days", "ram_entry_after_sponge_days",
@@ -2016,7 +2016,7 @@ def farm_settings_save():
 @require_permission("settings.manage")
 def intake_medicine_settings_save():
     """دواء استقبال الرأس الجديد الافتراضي (بند إضافي 283)."""
-    from app.models import FarmSettings
+    from app.models import FarmSettings, User
     fs = FarmSettings.get()
     fs.default_intake_spray_pharmacy_id = request.form.get("default_intake_spray_pharmacy_id") or None
     fs.default_intake_vaccine_pharmacy_id = request.form.get("default_intake_vaccine_pharmacy_id") or None
@@ -2076,7 +2076,7 @@ def factory_reset():
 def farm_identity_save():
     """بيانات هوية المزرعة لرأس فاتورة البيع (بند إضافي 75) — منفصلة عمداً
     عن farm_settings_save لأنها نصوص حرة، مو أرقام تُحوَّل بـint()/float()."""
-    from app.models import FarmSettings
+    from app.models import FarmSettings, User
     fs = FarmSettings.get()
     fs.farm_name = request.form.get("farm_name") or None
     fs.farm_phone = request.form.get("farm_phone") or None
@@ -2479,4 +2479,168 @@ def family_view():
     return render_template(
         "family_view.html", tasks_by_role=tasks_by_role, family_view_roles=FAMILY_VIEW_ROLES,
         feed_items=feed_items, pharmacy_items=pharmacy_items, equipment_items=equipment_items, today=today,
+    )
+
+
+# ---------- نماذج بنود عقد العمل حسب المسمى الوظيفي (بند إصلاح —
+# طلبك الصريح: "كل مسمى وظيفي له بنود تختلف" ثم "ابيك تبنيها وتعطيني
+# صلاحيه في تعديل على البنود فيما بعد") ----------
+
+DEFAULT_CONTRACT_TEMPLATES = {
+    _l("عامل زراعي / راعي"): _l(
+        "يعمل الطرف الثاني لدى الطرف الأول براعي/عامل زراعي، وتشمل مهامه العناية اليومية بالقطيع (علف، ماء، نظافة الحظائر ومتابعة صحة الحيوانات الظاهرية) وأي أعمال زراعية مشابهة يكلَّف بها.\n"
+        "يلتزم الطرف الثاني بمراعاة مواعيد رعاية القطيع اليومية (صباحاً/مساءً) بغض النظر عن الظروف الجوية، ما لم يوجد عذر مقبول.\n"
+        "يلتزم الطرف الثاني بإبلاغ الطرف الأول فوراً عن أي حالة مرضية أو نفوق يلاحظها بالقطيع.\n"
+        "يوفّر الطرف الأول أدوات ولوازم العمل الأساسية (أدوات العلف، معدات النظافة) على نفقته الخاصة."
+    ),
+    _l("سائق"): _l(
+        "يعمل الطرف الثاني لدى الطرف الأول بوظيفة سائق، ويلتزم بالحصول على رخصة قيادة سعودية سارية طوال مدة العقد وتجديدها على نفقته الخاصة.\n"
+        "يلتزم الطرف الثاني بقواعد المرور النظامية، ويتحمّل أي مخالفة مرورية ناتجة عن تقصيره الشخصي.\n"
+        "يلتزم الطرف الأول بصيانة المركبة دورياً وتوفير تأمين ساري المفعول عليها.\n"
+        "في حال وقوع حادث مروري أثناء أداء العمل الرسمي، يُتَّبع إجراء المطالبة عبر شركة التأمين، ولا يتحمّل الطرف الثاني أي تبعة مالية إلا في حال ثبوت إهمال جسيم أو مخالفة صريحة منه."
+    ),
+    _l("عامل منزلي"): _l(
+        "يعمل الطرف الثاني لدى الطرف الأول بأعمال الخدمة المنزلية المتعلقة بسكن العمال بالمزرعة (نظافة، ترتيب، إعداد وجبات) — لا تشمل أي عمل خارج نطاق سكن المزرعة إلا بموافقة الطرف الثاني الصريحة.\n"
+        "يلتزم الطرف الأول بتوفير بيئة سكن آمنة ولائقة، وساعات راحة يومية كافية.\n"
+        "تخضع هذه الاتفاقية لأحكام نظام العمالة المنزلية وما في حكمهم النافذ بالمملكة العربية السعودية، وليس نظام العمل العام."
+    ),
+    _l("عامل مقاولات (نجار/بنّاء/حداد)"): _l(
+        "يعمل الطرف الثاني لدى الطرف الأول بأعمال المقاولات المتعلقة بمنشآت المزرعة (نجارة/بناء/حدادة حسب التخصص المذكور بالمسمى الوظيفي أعلاه).\n"
+        "يلتزم الطرف الأول بتوفير معدات السلامة المهنية الأساسية (قفازات، نظارات واقية، خوذة عند الحاجة) واشتراطات السلامة بموقع العمل.\n"
+        "يتحمّل الطرف الأول المسؤولية عن أي إصابة عمل تقع أثناء أداء المهام الرسمية المكلَّف بها، وفق نظام العمل والتأمينات الاجتماعية النافذ.\n"
+        "يلتزم الطرف الثاني باستخدام معدات وأدوات العمل بعناية والمحافظة عليها من التلف الناتج عن سوء الاستخدام."
+    ),
+}
+
+
+@core_bp.route("/settings/contract-templates")
+@login_required
+@require_permission("settings.manage")
+def contract_templates_list():
+    from app.models import ContractTemplate
+
+    def _seed_default_contract_templates():
+        for job_title, clauses in DEFAULT_CONTRACT_TEMPLATES.items():
+            if not ContractTemplate.query.filter_by(job_title=str(job_title)).first():
+                db.session.add(ContractTemplate(job_title=str(job_title), clauses_text=str(clauses)))
+        db.session.commit()
+
+    run_once_per_app("contract_templates_seeded", _seed_default_contract_templates)
+    templates = ContractTemplate.query.order_by(ContractTemplate.job_title).all()
+    return render_template("contract_templates_list.html", templates=templates)
+
+
+@core_bp.route("/settings/contract-templates/new", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def contract_templates_new():
+    from app.models import ContractTemplate
+    job_title = (request.form.get("job_title") or "").strip()
+    clauses_text = (request.form.get("clauses_text") or "").strip()
+    if not job_title or not clauses_text:
+        flash(_("لازم تكتب المسمى الوظيفي وبنود العقد"), "error")
+        return redirect(url_for("core.contract_templates_list"))
+    tmpl = ContractTemplate(job_title=job_title, clauses_text=clauses_text)
+    db.session.add(tmpl)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        flash(_('نموذج للمسمى الوظيفي "%(job_title)s" موجود من قبل', job_title=job_title), "error")
+        return redirect(url_for("core.contract_templates_list"))
+    flash(_("تمت إضافة نموذج بنود جديد"), "success")
+    return redirect(url_for("core.contract_templates_list"))
+
+
+@core_bp.route("/settings/contract-templates/<int:template_id>/edit", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def contract_templates_edit(template_id):
+    from app.models import ContractTemplate
+    tmpl = ContractTemplate.query.get_or_404(template_id)
+    job_title = (request.form.get("job_title") or "").strip()
+    clauses_text = (request.form.get("clauses_text") or "").strip()
+    if not job_title or not clauses_text:
+        flash(_("لازم تكتب المسمى الوظيفي وبنود العقد"), "error")
+        return redirect(url_for("core.contract_templates_list"))
+    tmpl.job_title = job_title
+    tmpl.clauses_text = clauses_text
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        flash(_('نموذج للمسمى الوظيفي "%(job_title)s" موجود من قبل', job_title=job_title), "error")
+        return redirect(url_for("core.contract_templates_list"))
+    flash(_("تم تعديل النموذج"), "success")
+    return redirect(url_for("core.contract_templates_list"))
+
+
+@core_bp.route("/settings/contract-templates/<int:template_id>/delete", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def contract_templates_delete(template_id):
+    from app.models import ContractTemplate
+    tmpl = ContractTemplate.query.get_or_404(template_id)
+    db.session.delete(tmpl)
+    db.session.commit()
+    flash(_("تم حذف النموذج"), "success")
+    return redirect(url_for("core.contract_templates_list"))
+
+
+# ---------- طباعة اتفاقية العمل وإقرار المخالصة النهائية (بند إصلاح
+# — طلبك: "طباعة اتفاقية عمل" و"مخالصة في حال اختيار السفر بشكل
+# نهائي") ----------
+
+@core_bp.route("/team/members/<int:user_id>/contract/print")
+@login_required
+@require_permission("team.manage_salary")
+def member_contract_print(user_id):
+    from flask import Response
+    from app.models import ContractTemplate, FarmSettings, User
+    from app.reports import export_service as ex
+    member = User.query.get_or_404(user_id)
+    template_id = request.args.get("template_id", type=int)
+    templates = ContractTemplate.query.order_by(ContractTemplate.job_title).all()
+    if not template_id:
+        return render_template(
+            "member_contract_select.html", member=member, templates=templates,
+        )
+    tmpl = ContractTemplate.query.get_or_404(template_id)
+    buf = ex.build_employment_contract_pdf(member, tmpl, FarmSettings.get())
+    return Response(
+        buf.read(), mimetype="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=contract_{member.id}.pdf"},
+    )
+
+
+@core_bp.route("/team/members/<int:user_id>/settlement/print", methods=["GET", "POST"])
+@login_required
+@require_permission("team.manage_salary")
+def member_settlement_print(user_id):
+    from flask import Response
+    from app.models import FarmSettings, User
+    from app.reports import export_service as ex
+    member = User.query.get_or_404(user_id)
+    if request.method != "POST":
+        return render_template("member_settlement_form.html", member=member)
+
+    def _num(name):
+        raw = (request.form.get(name) or "0").strip()
+        try:
+            return float(raw) if raw else 0.0
+        except ValueError:
+            return 0.0
+
+    context = {
+        "last_work_day": request.form.get("last_work_day") or "",
+        "reason": request.form.get("reason") or "",
+        "final_salary": _num("final_salary"),
+        "end_of_service": _num("end_of_service"),
+        "leave_balance": _num("leave_balance"),
+        "deductions": _num("deductions"),
+    }
+    buf = ex.build_settlement_pdf(member, context, FarmSettings.get())
+    return Response(
+        buf.read(), mimetype="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=settlement_{member.id}.pdf"},
     )

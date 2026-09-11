@@ -404,3 +404,230 @@ def build_payroll_receipt_pdf(payroll, farm_settings) -> io.BytesIO:
     c.save()
     buf.seek(0)
     return buf
+
+
+def _wrap_ar_lines(c, text: str, font: str, size: float, max_width: float) -> list[str]:
+    """يلف نص عربي طويل على عدة أسطر تناسب عرض معيّن (بند إصلاح —
+    build_pdf/build_payroll_receipt_pdf ما يحتاجوا هذا لأن كل قيمة
+    فيهم سطر واحد قصير أصلاً؛ بنود العقد فقرات طويلة تحتاج التفاف
+    حقيقي حسب عرض الصفحة). يلف بالكلمة الكاملة (مو بالحرف) عشان ما
+    تنقطع كلمة عربية بمنتصفها."""
+    words = text.split()
+    lines, current = [], ""
+    for word in words:
+        candidate = f"{current} {word}".strip()
+        if c.stringWidth(ar(candidate), font, size) <= max_width or not current:
+            current = candidate
+        else:
+            lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    return lines
+
+
+def build_employment_contract_pdf(user, template, farm_settings) -> io.BytesIO:
+    """اتفاقية عمل رسمية (بند إصلاح — طلبك: "طباعة اتفاقية عمل"، ثم
+    "كل مسمى وظيفي له بنود تختلف... ابيك تبنيها وتعطيني صلاحيه في
+    تعديل على البنود فيما بعد") — الطرف الأول يُحدَّد بنفس منطق
+    `resolve_payslip_employer` (كفيل العامل نفسه لو مسجَّل، وإلا صاحب
+    الحلال تلقائياً)، والبنود تُقرأ حرفياً من `template.clauses_text`
+    القابل للتعديل الكامل من شاشة الإعدادات. **ملاحظة قانونية**: هذي
+    مسودة عامة تحتاج مراجعة محامٍ/مستشار موارد بشرية قبل الاستخدام
+    الفعلي — نفس التحذير المعروض بشاشة الطباعة."""
+    _ensure_font()
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=A4)
+    width, height = A4
+    right_margin = width - 20 * mm
+    left_margin = 20 * mm
+    usable_width = right_margin - left_margin
+    y = height - 25 * mm
+
+    employer_name, employer_national_id, employer_phone = resolve_payslip_employer(user, farm_settings)
+
+    c.setFont("Arabic", 18)
+    c.drawRightString(right_margin, y, ar("اتفاقية عمل"))
+    y -= 10 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(f"المسمى الوظيفي: {template.job_title}"))
+    y -= 12 * mm
+
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("الطرف الأول (صاحب العمل)"))
+    y -= 6 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(employer_name))
+    y -= 5.5 * mm
+    if employer_national_id:
+        c.drawRightString(right_margin, y, ar(f"رقم الهوية: {employer_national_id}"))
+        y -= 5.5 * mm
+    if employer_phone:
+        c.drawRightString(right_margin, y, ar(f"رقم الجوال: {employer_phone}"))
+        y -= 5.5 * mm
+
+    y -= 6 * mm
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("الطرف الثاني (العامل)"))
+    y -= 6 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(f"الاسم: {user.name}"))
+    y -= 5.5 * mm
+    if user.nationality:
+        c.drawRightString(right_margin, y, ar(f"الجنسية: {user.nationality}"))
+        y -= 5.5 * mm
+    if user.passport_number:
+        c.drawRightString(right_margin, y, ar(f"رقم الجواز: {user.passport_number}"))
+        y -= 5.5 * mm
+    if user.border_number:
+        c.drawRightString(right_margin, y, ar(f"رقم الحدود: {user.border_number}"))
+        y -= 5.5 * mm
+
+    y -= 10 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar("بنود الاتفاقية"))
+    y -= 8 * mm
+
+    clauses = [ln.strip() for ln in template.clauses_text.splitlines() if ln.strip()]
+    c.setFont("Arabic", 9.5)
+    for i, clause in enumerate(clauses, start=1):
+        clause_text = f"{i}. {clause}"
+        lines = _wrap_ar_lines(c, clause_text, "Arabic", 9.5, usable_width)
+        for line in lines:
+            if y < 30 * mm:
+                c.showPage()
+                c.setFont("Arabic", 9.5)
+                y = height - 20 * mm
+            c.drawRightString(right_margin, y, ar(line))
+            y -= 5.5 * mm
+        y -= 2 * mm
+
+    if y < 55 * mm:
+        c.showPage()
+        y = height - 25 * mm
+
+    y -= 20 * mm
+    c.setFont("Arabic", 10)
+    col_left_sig = left_margin + 40 * mm
+    col_right_sig = right_margin
+    c.drawRightString(col_right_sig, y, ar("توقيع الطرف الثاني (العامل): ......................"))
+    c.drawRightString(col_left_sig, y, ar("توقيع الطرف الأول: ......................"))
+
+    c.setFont("Arabic", 7.5)
+    c.drawCentredString(width / 2, 12 * mm, ar(
+        "مستند مُولَّد من نظام مراح بو علي — مسودة عامة تحتاج مراجعة محامٍ/مستشار موارد بشرية قبل الاستخدام الرسمي."
+    ))
+
+    c.save()
+    buf.seek(0)
+    return buf
+
+
+def build_settlement_pdf(user, context, farm_settings) -> io.BytesIO:
+    """إقرار وتعهد بالمخالصة النهائية (بند إصلاح — طلبك: "مخالصه في
+    حال اختيار السفر بشكل نهائي"، ثم وضّحت: "ابيه يكون تعهد بان
+    العامل يتعهد بستلام كافة رواتبه وحقوقه وتنظيف بياناته من النظام").
+    نص الإقرار ثابت (مو حسب مسمى وظيفي — طبيعة الإقرار المالي واحدة
+    لكل العمال)، والمبالغ تُدخَل يدوياً وقت الطباعة (`context`) بدل
+    حساب تلقائي لمكافأة نهاية الخدمة — بطلبك الصريح."""
+    _ensure_font()
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=A4)
+    width, height = A4
+    right_margin = width - 20 * mm
+    left_margin = 20 * mm
+    usable_width = right_margin - left_margin
+    y = height - 25 * mm
+
+    employer_name, employer_national_id, employer_phone = resolve_payslip_employer(user, farm_settings)
+
+    c.setFont("Arabic", 17)
+    c.drawRightString(right_margin, y, ar("إقرار وتعهد بالمخالصة النهائية"))
+    y -= 10 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(right_margin, y, ar(f"اسم العامل: {user.name}"))
+    y -= 5.5 * mm
+    if context.get("last_work_day"):
+        c.drawRightString(right_margin, y, ar(f"آخر يوم عمل فعلي: {context['last_work_day']}"))
+        y -= 5.5 * mm
+    if context.get("reason"):
+        c.drawRightString(right_margin, y, ar(f"سبب إنهاء الخدمة: {context['reason']}"))
+        y -= 5.5 * mm
+    y -= 6 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 10 * mm
+
+    total = (
+        context.get("final_salary", 0) + context.get("end_of_service", 0)
+        + context.get("leave_balance", 0) - context.get("deductions", 0)
+    )
+    rows = [
+        ("راتب الشهر الأخير", context.get("final_salary", 0)),
+        ("مكافأة نهاية الخدمة", context.get("end_of_service", 0)),
+        ("بدل إجازة سنوية غير مستخدمة", context.get("leave_balance", 0)),
+        ("خصومات", -context.get("deductions", 0)),
+    ]
+    col_item = right_margin
+    col_amount = left_margin + 30 * mm
+    c.setFont("Arabic", 10)
+    c.drawRightString(col_item, y, ar("البند"))
+    c.drawRightString(col_amount, y, ar("المبلغ (ريال)"))
+    y -= 3 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 7 * mm
+    for label, amount in rows:
+        c.drawRightString(col_item, y, ar(label))
+        c.drawRightString(col_amount, y, ar(f"{amount:,.2f}"))
+        y -= 6 * mm
+    y -= 2 * mm
+    c.line(left_margin, y, right_margin, y)
+    y -= 8 * mm
+    c.setFont("Arabic", 12)
+    c.drawRightString(right_margin, y, ar(f"إجمالي المستلَم: {total:,.2f} ريال"))
+    y -= 14 * mm
+
+    pledge = (
+        f"أقرّ أنا الموقّع أدناه ({user.name}) بأنني استلمت من الكفيل/صاحب العمل ({employer_name}) "
+        f"كامل مستحقاتي المالية المذكورة أعلاه (الراتب ومكافأة نهاية الخدمة وأي بدلات مستحقة) عن كامل "
+        f"مدة عملي، وأنه لا يوجد لي أي مطالبة مالية أو حقوقية أخرى تجاه صاحب العمل بأي صفة كانت، سواء "
+        f"بشكل حالي أو مستقبلي، وذلك اعتباراً من تاريخ توقيعي على هذا الإقرار."
+    )
+    pledge_2 = (
+        "كما أوافق وأتعهد بموافقتي الصريحة على قيام إدارة نظام \"مراح بو علي\" بحذف/تنظيف كافة بياناتي "
+        "الشخصية المسجَّلة بالنظام (بيانات الهوية، السجلات المالية المرتبطة بي، أي مستند مرفوع باسمي) "
+        "بعد إتمام هذا الإقرار ومغادرتي النهائية، ولا يحق لي أي اعتراض على ذلك لاحقاً."
+    )
+    c.setFont("Arabic", 9.5)
+    for para in (pledge, pledge_2):
+        for line in _wrap_ar_lines(c, para, "Arabic", 9.5, usable_width):
+            if y < 40 * mm:
+                c.showPage()
+                c.setFont("Arabic", 9.5)
+                y = height - 25 * mm
+            c.drawRightString(right_margin, y, ar(line))
+            y -= 5.5 * mm
+        y -= 4 * mm
+
+    y -= 20 * mm
+    if y < 30 * mm:
+        c.showPage()
+        y = height - 40 * mm
+    c.setFont("Arabic", 10)
+    col_left_sig = left_margin + 40 * mm
+    c.drawRightString(right_margin, y, ar("توقيع العامل: ......................"))
+    c.drawRightString(col_left_sig, y, ar(f"توقيع واعتماد صاحب العمل ({employer_name}): ......................"))
+
+    c.setFont("Arabic", 7.5)
+    c.drawCentredString(width / 2, 12 * mm, ar(
+        "مستند مُولَّد من نظام مراح بو علي — مسودة عامة تحتاج مراجعة محامٍ/مستشار موارد بشرية قبل الاستخدام الرسمي."
+    ))
+
+    c.save()
+    buf.seek(0)
+    return buf
