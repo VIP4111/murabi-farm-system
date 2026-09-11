@@ -1,6 +1,39 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "اختار لي صفحة أخرى نعدل عليها" ← سجل
+   الحيوانات، ثم "طبّق هذا التصميم") — فلاتر ملوّنة + شارات حالة
+   دلالية + تفاعل حقيقي (hover/ضغط/focus)، بنفس أسلوب النموذج التجريبي
+   المعتمَد. عمداً CSS مستقل بهذي الصفحة بس (كلاسات جديدة، صفر تعديل
+   على `.tab-btn`/`.badge` العامة المستخدمة بعشرات الشاشات الثانية). #}
+<style>
+.filter-chip{
+  flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; padding:9px 15px; border-radius:999px;
+  font-size:12.5px; font-weight:800; text-decoration:none; white-space:nowrap; cursor:pointer;
+  border:1.5px solid var(--chip-color); color:var(--chip-color); background:transparent;
+  transition:transform .1s ease, box-shadow .1s ease, background .12s ease, color .12s ease;
+}
+.filter-chip:hover{background:color-mix(in srgb, var(--chip-color) 14%, transparent);}
+.filter-chip:active{transform:scale(.95);}
+.filter-chip:focus-visible{outline:2.5px solid var(--chip-color); outline-offset:2px;}
+.filter-chip.active{background:var(--chip-color); color:#fff; box-shadow:0 4px 10px -4px var(--chip-color);}
+.filter-chip.active:hover{background:color-mix(in srgb, var(--chip-color) 88%, #000);}
+.filter-row{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px;}
+
+.status-chip{display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:7px; font-size:11.5px; font-weight:700; color:#fff;}
+.stage-chip, .safe-chip, .alert-chip{
+  transition:transform .1s ease, filter .1s ease; cursor:pointer;
+}
+.stage-chip:hover, .safe-chip:hover, .alert-chip:hover{filter:brightness(1.15);}
+.stage-chip:active, .safe-chip:active, .alert-chip:active{transform:scale(.93);}
+.stage-chip:focus-visible, .safe-chip:focus-visible, .alert-chip:focus-visible{outline:2.5px solid var(--text); outline-offset:2px;}
+.animal-no-chip{transition:transform .1s ease, filter .1s ease;}
+.animal-no-chip:hover{filter:brightness(1.15);}
+.animal-no-chip:active{transform:scale(.93);}
+tbody tr{transition:background .1s ease;}
+tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
+
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>{{ _('الإجراء الجماعي') if bulk_mode else _('سجل الحيوانات') }}</h2>
@@ -17,9 +50,16 @@
   </div>
 </div>
 
-<div class="tabs">
+{% set filter_colors = {
+  'all': 'var(--t-team, #3568a0)', 'lambs': 'var(--t-repro, #d68f2a)', 'males': 'var(--t-vax, #2f8fae)',
+  'females': 'var(--t-health, #d0533f)', 'near_birth': 'var(--t-animals, #2f8f5a)', 'mated': 'var(--t-repro, #d68f2a)',
+  'productive': 'var(--t-animals, #2f8f5a)', 'unproductive': 'var(--muted)', 'nursing': 'var(--t-pharmacy, #8552b5)',
+  'fattening': 'var(--t-feed, #7fa030)', 'dead': 'var(--muted)', 'ready_to_mate': 'var(--t-repro, #d68f2a)',
+  'ostrich': 'var(--t-settings, #75695a)',
+} %}
+<div class="filter-row">
   {% for key, (label, _f) in filters.items() %}
-  <a class="tab-btn {{ 'active' if key == active_filter }}" href="{{ url_for('core.animals_list', filter=key, barn_id=active_barn_id) }}">{{ label }} ({{ counts[key] }})</a>
+  <a class="filter-chip {{ 'active' if key == active_filter }}" style="--chip-color:{{ filter_colors.get(key, 'var(--primary)') }};" href="{{ url_for('core.animals_list', filter=key, barn_id=active_barn_id) }}">{{ label }} <span style="opacity:.85; font-weight:900;">({{ counts[key] }})</span></a>
   {% endfor %}
 </div>
 
@@ -104,22 +144,22 @@
       {% for a in animals %}
       <tr>
         {% if can_bulk %}<td><input type="checkbox" class="animalChk" name="animal_ids" value="{{ a.id }}" style="width:auto; margin:0;"></td>{% endif %}
-        <td><a class="btn" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
+        <td><a class="btn animal-no-chip" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_detail', animal_id=a.id) }}">{{ a.animal_no }}</a></td>
         <td>{{ a.name or '-' }}</td>
         <td>{{ source_labels.get(a.source.value, a.source.value) }}</td>
         <td>{{ a.barn.display_name() if a.barn else '-' }}</td>
-        <td>{{ a.status|ar_status }}</td>
-        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">{{ _('نعام — بدون دورة') }}</span>{% else %}<a class="btn green" style="padding:4px 10px; font-size:13px;" href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
+        <td><span class="status-chip" style="background:{{ 'var(--t-animals, #2f8f5a)' if a.status == 'active' else 'var(--muted)' }};">{{ a.status|ar_status }}</span></td>
+        <td>{% if a.species == 'ostrich' %}<span style="color:var(--muted);">{{ _('نعام — بدون دورة') }}</span>{% else %}<a class="btn stage-chip" style="padding:4px 10px; font-size:13px; background:var(--t-vax, #2f8fae);" href="{{ url_for('core.animal_workflow', animal_id=a.id) }}">{{ a.lifecycle_stage or '-' }}</a>{% endif %}</td>
         <td>
           <a href="{{ url_for('core.animal_detail', animal_id=a.id) }}" style="text-decoration:none;">
           {% if withdrawal_map.get(a.id) %}
-          <span class="badge off" title="{{ _('ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس') }}">{{ _('حتى') }} {{ withdrawal_map[a.id] }} ({{ _('باقي %(n)s يوم', n=(withdrawal_map[a.id] - today).days) }})</span>
-          {% else %}<span class="badge on" title="{{ _('اضغط لتفاصيل الرأس') }}">{{ _('آمن') }}</span>{% endif %}
+          <span class="status-chip safe-chip" style="background:var(--t-health, #d0533f);" title="{{ _('ممنوع البيع/الذبح — يُرفع تلقائياً — اضغط لتفاصيل الرأس') }}">{{ _('حتى') }} {{ withdrawal_map[a.id] }} ({{ _('باقي %(n)s يوم', n=(withdrawal_map[a.id] - today).days) }})</span>
+          {% else %}<span class="status-chip safe-chip" style="background:var(--t-animals, #2f8f5a);" title="{{ _('اضغط لتفاصيل الرأس') }}">{{ _('آمن') }}</span>{% endif %}
           </a>
         </td>
         <td>
           {% if alert_counts.get(a.id) %}
-          <a class="badge off" href="{{ url_for('core.animal_detail', animal_id=a.id) }}#alerts" title="{{ _('اضغط لعرض كل تنبيهات هذا الرأس') }}">⚠️ {{ alert_counts[a.id] }}</a>
+          <a class="status-chip alert-chip" style="background:var(--t-health, #d0533f); text-decoration:none;" href="{{ url_for('core.animal_detail', animal_id=a.id) }}#alerts" title="{{ _('اضغط لعرض كل تنبيهات هذا الرأس') }}">⚠️ {{ alert_counts[a.id] }}</a>
           {% else %}<span style="color:var(--muted);">-</span>{% endif %}
         </td>
       </tr>

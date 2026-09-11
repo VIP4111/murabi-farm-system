@@ -1,6 +1,13 @@
 """بند إضافي 140 — رقم الحيوان والمرحلة بسجل الحيوانات صارا أزرار
 (بدل نص/رابط عادي)، بألوان مميّزة (طلبك: "لو تلونها تكون أفضل") —
-رقم الحيوان بلون العلامة الأساسي، المرحلة بالأخضر."""
+رقم الحيوان بلون العلامة الأساسي، المرحلة بالأخضر.
+
+بند إصلاح لاحق (تصميم — طلبك: "طبّق هذا التصميم" على سجل الحيوانات
+بعد نموذج تجريبي) — الزرّين صار عندهم كلاس تفاعل إضافي
+(animal-no-chip/stage-chip: hover/ضغط/focus) وزر المرحلة صار بلون
+--t-vax الثابت (بدل .btn.green العام) عشان يتماشى مع نظام الألوان
+الجديد لكل قسم — التحديث هنا يعكس الشكل الفعلي الحالي بدل الشكل
+القديم."""
 from datetime import date
 
 from app.extensions import db
@@ -15,6 +22,7 @@ def test_animal_number_and_stage_render_as_colored_buttons(logged_in_client):
     resp = logged_in_client.get("/animals")
     body = resp.get_data(as_text=True)
     assert resp.status_code == 200
-    assert f'class="btn" style="padding:4px 10px; font-size:13px;" href="/animals/{a.id}"' in body
-    assert 'class="btn green"' in body
+    assert f'href="/animals/{a.id}"' in body
+    assert 'class="btn animal-no-chip"' in body
+    assert 'class="btn stage-chip"' in body
     assert "الحجر والفحص" in body
