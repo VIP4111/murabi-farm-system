@@ -156,9 +156,16 @@
       box-shadow:0 8px 22px rgba(70,45,25,.08); color:var(--text); text-decoration:none;
       font-weight:700; font-size:13px; display:flex; flex-direction:column;
       align-items:center; justify-content:center; gap:8px; text-align:center;
-      transition:transform .08s ease, box-shadow .08s ease;
+      transition:transform .08s ease, box-shadow .08s ease, filter .08s ease;
     }
+    /* تفاعل حقيقي على البلاطات الملوّنة (بند إصلاح — طلبك: "طبّق هذا
+       التصميم على الشاشة الرئيسية" بعد نموذج شاشة الحيوانات) — hover
+       واضح لمستخدم الفأرة (سطح مكتب)، ضغطة فعلية على اللمس، وحلقة
+       focus واضحة للتنقّل بلوحة المفاتيح — نفس مبدأ رقاقات نموذج
+       "سجل الحيوانات" التجريبي، مطبَّق هنا على العناصر الحقيقية. */
+    .quick a:hover{filter:brightness(1.06); box-shadow:0 10px 26px rgba(70,45,25,.14);}
     .quick a:active{transform:translateY(1px) scale(.97); box-shadow:0 3px 10px rgba(70,45,25,.10);}
+    .quick a:focus-visible{outline:2.5px solid var(--primary); outline-offset:2px;}
     .quick .emoji{font-size:26px;}
 
     /* فقعتا تنبيه ملوّنتان فوق زر إجراء سريع (بند إضافي 210) — متأخر
@@ -189,7 +196,11 @@
       flex:1 1 0; min-width:110px; padding:9px 10px; border-radius:14px; color:#fff;
       display:flex; flex-direction:column; align-items:center; justify-content:center;
       gap:2px; text-align:center; text-decoration:none;
+      transition:transform .08s ease, filter .08s ease;
     }
+    .home-stats .stat-chip:hover{filter:brightness(1.08);}
+    .home-stats .stat-chip:active{transform:scale(.96);}
+    .home-stats .stat-chip:focus-visible{outline:2.5px solid var(--primary); outline-offset:2px;}
     .home-stats .stat-chip .emoji{font-size:14px; line-height:1; opacity:.95;}
     .home-stats .stat-chip .num{font-weight:800; font-size:16px; line-height:1.15;}
     .home-stats .stat-chip .cap{font-size:10.5px; opacity:.9; line-height:1.15;}
