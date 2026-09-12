@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "١و٢و٣" شاشات المالية/الصيدلية/التقريع)
+   — رقم الأنثى والفحل صارا شارات ملوّنة (تمييز بصري بين الطرفين) بدل
+   نص عادي، + تظليل صفوف الجدول عند مرور الماوس. CSS محلي بهذي
+   الصفحة بس. #}
+<style>
+.mate-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:800; font-size:12px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('التقريع') }} {{ tip(_('كل عملية تقريع مسجَّلة هنا. الخطوة اللي بعدها هي "فحوصات السونار" لتأكيد الحمل، وبعدين "تشخيص الحمل" لمتابعته لحد الولادة.')) }}</h2>
@@ -16,8 +25,8 @@
     {% for r in rows %}
     <tr>
       <td>{{ r.date }}</td>
-      <td>{{ r.female.animal_no }}</td>
-      <td>{{ r.male.animal_no if r.male else (r.male_note or '-') }}</td>
+      <td><span class="mate-chip" style="background:var(--t-health, #d0533f);">{{ r.female.animal_no }}</span></td>
+      <td>{% if r.male %}<span class="mate-chip" style="background:var(--t-vax, #2f8fae);">{{ r.male.animal_no }}</span>{% else %}{{ r.male_note or '-' }}{% endif %}</td>
       <td>{{ r.barn.barn_name if r.barn else '-' }}</td>
     </tr>
     {% else %}

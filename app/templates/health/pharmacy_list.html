@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "١و٢و٣" شاشات المالية/الصيدلية/التقريع)
+   — عمود "الحالة" وعمود "نفاد متوقع" صارا شارات ملوّنة بدل نص عادي،
+   + تظليل صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.pharm-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('الصيدلية') }}</h2>
@@ -18,13 +26,17 @@
       <td>{{ i.category or '-' }}</td>
       <td>{{ medicine_class_labels.get(i.medicine_class, '-') if i.medicine_class else '-' }}{% if not i.medicine_class %} <span class="badge off" title="{{ _('بدون فئة دواء — لازم لتفعيل حارس منع تكرار جرعة الطفيليات') }}">⚠️</span>{% endif %}</td>
       <td>{{ i.available_qty }} {{ i.unit or '' }}</td>
-      <td>{% if stockout.get(i.id) %}~{{ stockout[i.id] }} {{ _('يوم') }}{% else %}-{% endif %}</td>
+      <td>
+        {% if stockout.get(i.id) %}
+        <span class="pharm-chip" style="background:{{ 'var(--t-health, #d0533f)' if stockout[i.id] <= 14 else 'var(--t-animals, #2f8f5a)' }};">~{{ stockout[i.id] }} {{ _('يوم') }}</span>
+        {% else %}-{% endif %}
+      </td>
       <td>{{ i.unit_price if i.unit_price is not none else '-' }}</td>
       <td>{{ i.expiry_date if i.expiry_date else '-' }}{% if i.expiry_date and i.expiry_date <= today %} <span class="badge off" title="{{ _('منتهي الصلاحية') }}">⛔ {{ _('منتهي') }}</span>{% endif %}</td>
       <td>{{ i.withdrawal_days }}</td>
       <td>{{ i.withdrawal_days_milk }}</td>
       <td>{{ i.usage_method or '-' }}{% if i.standard_dosage_note %} <span title="{{ i.standard_dosage_note }}">ℹ️</span>{% endif %}</td>
-      <td>{{ i.status|ar_status }}</td>
+      <td><span class="pharm-chip" style="background:{{ 'var(--t-animals, #2f8f5a)' if i.status == 'active' else 'var(--muted)' }};">{{ i.status|ar_status }}</span></td>
       <td class="actions-col">
         {% if current_user.has_permission('pharmacy.manage') %}
         <a href="{{ url_for('health.pharmacy_edit', pharmacy_id=i.id) }}">✏️ {{ _('تعديل') }}</a>
