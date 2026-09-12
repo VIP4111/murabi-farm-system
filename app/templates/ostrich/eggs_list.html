@@ -26,7 +26,7 @@
     <tr>
       <td>{% if e.mother %}<a href="{{ url_for('core.animal_detail', animal_id=e.mother.id) }}">{{ e.mother.animal_no }}</a>{% else %}-{% endif %}</td>
       <td>{{ e.lay_date }}</td>
-      <td>{{ e.quality or '-' }}</td>
+      <td>{{ _(e.quality) if e.quality else '-' }}</td>
       <td>{{ e.incubator.code if e.incubator else '-' }}</td>
       <td>{{ e.incubation_start_date or '-' }}</td>
       <td>{{ expected[e.id] or '-' }}</td>

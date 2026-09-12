@@ -36,7 +36,7 @@
   <h3 style="font-size:15px;">{{ _('النتيجة') }}</h3>
   <div class="table-scroll">
 <table class="compact-table">
-    <tr><td>{{ _('الحالة المستخدمة') }}</td><td>{{ result.state }}</td></tr>
+    <tr><td>{{ _('الحالة المستخدمة') }}</td><td>{{ state_labels.get(result.state, result.state) }}</td></tr>
     <tr><td>{{ _('احتياج المادة الجافة اليومي') }}</td><td>{{ result.daily_dry_matter_kg }} {{ _('كجم') }}</td></tr>
     <tr><td>{{ _('هدف بروتين خام') }}</td><td>{{ result.target_protein_percent }}%</td></tr>
     <tr><td>{{ _('هدف طاقة ممثلة') }}</td><td>{{ result.target_energy_kcal_per_kg }} {{ _('كيلوكالوري/كجم') }}</td></tr>
