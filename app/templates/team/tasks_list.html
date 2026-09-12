@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% from "_macros.html" import status_badge, tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "شاشة المهام/البلاغات" بعد سلسلة تعديلات
+   الواجهات السابقة) — تبويبات فلترة الدور بقسم "مهام مقترحة بانتظار
+   الاعتماد" صارت رقاقات ملوّنة (كل دور بلونه الثابت: مالك/دكتور/
+   ممرض/عامل) بدل تبويبات رمادية موحّدة، بنفس أسلوب فلاتر سجل
+   الحيوانات. + تظليل صفوف الجداول عند مرور الماوس. CSS محلي بهذي
+   الصفحة بس. #}
+<style>
+.role-filter-chip{
+  display:inline-flex; align-items:center; padding:7px 14px; border-radius:999px;
+  font-size:12.5px; font-weight:800; text-decoration:none;
+  border:1.5px solid var(--chip-color); color:var(--chip-color); background:transparent;
+  transition:transform .1s ease, background .12s ease, color .12s ease;
+}
+.role-filter-chip:hover{background:color-mix(in srgb, var(--chip-color) 14%, transparent);}
+.role-filter-chip:active{transform:scale(.95);}
+.role-filter-chip.active{background:var(--chip-color); color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('المهام') }}</h2>
@@ -102,9 +121,10 @@
   <h3 style="font-size:15px;">{{ _('مهام مقترحة بانتظار الاعتماد') }}</h3>
   <p style="color:var(--muted); font-size:12px; margin:-4px 0 12px;">{{ _('مهام تولّدت تلقائياً من محركات النظام (تحصين/تكاثر/رعاية يومية...) — تحتاج اعتمادك قبل ما توصل للمكلَّف بها فعلياً.') }}</p>
   <p style="color:var(--muted); font-size:11.5px; margin:0 0 6px;">{{ tip(_('فلترة الجدول تحت حسب الدور المستهدَف بالمهمة — اضغط أي تبويب لتشوف بس المهام المقترحة لذاك الدور، أو "الكل" لعرضها جميعاً.')) }} {{ _('اختر تبويب لفلترة القائمة حسب الدور.') }}</p>
+  {% set role_chip_palette = ['var(--t-team, #3568a0)', 'var(--t-health, #d0533f)', 'var(--t-vax, #2f8fae)', 'var(--t-repro, #d68f2a)', 'var(--t-animals, #2f8f5a)', 'var(--t-pharmacy, #8552b5)'] %}
   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
     {% for key, label in role_tabs %}
-    <a class="tab-btn {{ 'active' if key == active_role }}" href="{{ url_for('team.tasks_list', role=key) }}">{{ label }}</a>
+    <a class="role-filter-chip {{ 'active' if key == active_role }}" style="--chip-color:{{ role_chip_palette[loop.index0 % role_chip_palette|length] }};" href="{{ url_for('team.tasks_list', role=key) }}">{{ label }}</a>
     {% endfor %}
   </div>
   <div class="table-scroll">

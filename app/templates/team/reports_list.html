@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% from "_macros.html" import status_badge, tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "شاشة المهام/البلاغات") — تظليل صفوف
+   الجداول عند مرور الماوس (نفس أسلوب سجل الحيوانات/التطعيمات)، ورقم
+   البلاغ صار شارة ملوّنة بدل رابط نص عادي. CSS محلي بهذي الصفحة بس. #}
+<style>
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+.report-id-chip{
+  display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:800; font-size:12px;
+  background:var(--t-team, #3568a0); color:#fff; text-decoration:none;
+  transition:transform .1s ease, filter .1s ease;
+}
+.report-id-chip:hover{filter:brightness(1.15);}
+.report-id-chip:active{transform:scale(.93);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('البلاغات') }}</h2>
@@ -10,7 +24,7 @@
 
 {% macro report_row(r) %}
 <tr>
-  <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
+  <td><a class="report-id-chip" href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
   <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
   <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
   <td>{{ r.reporter.name }}</td>
@@ -64,7 +78,7 @@
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in my_reports %}
     <tr>
-      <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
+      <td><a class="report-id-chip" href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
       <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
       <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
       <td>{{ status_badge(r.status|status_badge_state, r.status|ar_status) }}</td>
@@ -85,7 +99,7 @@
     <tr><th>#</th><th>{{ _('النوع') }}</th><th>{{ _('الوصف') }}</th><th>{{ _('رفعه') }}</th><th>{{ _('سبب الإلغاء') }}</th></tr>
     {% for r in cancelled %}
     <tr>
-      <td><a href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
+      <td><a class="report-id-chip" href="{{ url_for('team.report_detail', report_id=r.id) }}">#{{ r.id }}</a></td>
       <td>{{ (r.report_type|ar_report_type) if r.report_type else '-' }}</td>
       <td>{{ r.description[:40] }}{{ '…' if r.description|length > 40 else '' }}</td>
       <td>{{ r.reporter.name }}</td>
