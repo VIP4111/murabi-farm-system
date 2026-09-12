@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "شاشة الصحة (التطعيمات/الأمراض)" بعد
+   نموذج "سجل الحيوانات" المعتمَد) — عمود حالة ملوّن (متأخر/قادم) بدل
+   عمود تاريخ خام بدون أي تمييز بصري، بنفس ألوان --t-* المستخدمة
+   بالصفحة الرئيسية وسجل الحيوانات. CSS محلي بهذي الصفحة بس. #}
+<style>
+.vax-status-chip{display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:7px; font-size:11.5px; font-weight:700; color:#fff;}
+tbody tr{transition:background .1s ease;}
+tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('التطعيمات') }}</h2>
@@ -8,11 +17,19 @@
   </div>
   <div class="table-scroll">
 <table>
-    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الموعد القادم') }} {{ tip(_('يُحسب تلقائياً من تاريخ هذا التحصين + مدة الحماية المسجَّلة على اللقاح بالصيدلية — فاضي يعني اللقاح ما له مدة حماية محدَّدة.')) }}</th></tr>
+    <tr><th>{{ _('التاريخ') }}</th><th>{{ _('الحيوان') }}</th><th>{{ _('اللقاح') }}</th><th>{{ _('الموعد القادم') }} {{ tip(_('يُحسب تلقائياً من تاريخ هذا التحصين + مدة الحماية المسجَّلة على اللقاح بالصيدلية — فاضي يعني اللقاح ما له مدة حماية محدَّدة.')) }}</th><th>{{ _('الحالة') }}</th></tr>
     {% for r in rows %}
-    <tr><td>{{ r.date }}</td><td>{{ r.animal.animal_no }}</td><td>{{ r.vaccine_name }}</td><td>{{ r.next_due_date or '-' }}</td></tr>
+    <tr>
+      <td>{{ r.date }}</td><td>{{ r.animal.animal_no }}</td><td>{{ r.vaccine_name }}</td><td>{{ r.next_due_date or '-' }}</td>
+      <td>
+        {% if not r.next_due_date %}<span style="color:var(--muted);">-</span>
+        {% elif r.next_due_date < today %}<span class="vax-status-chip" style="background:var(--t-health, #d0533f);">⚠️ {{ _('متأخر') }}</span>
+        {% else %}<span class="vax-status-chip" style="background:var(--t-animals, #2f8f5a);">✅ {{ _('قادم') }}</span>
+        {% endif %}
+      </td>
+    </tr>
     {% else %}
-    <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد تطعيمات مسجّلة بعد.') }}</td></tr>
+    <tr><td colspan="5" style="color:#888;">{{ _('لا يوجد تطعيمات مسجّلة بعد.') }}</td></tr>
     {% endfor %}
   </table>
 </div>

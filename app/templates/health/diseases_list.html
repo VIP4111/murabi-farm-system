@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import status_badge, tip %}
 {% block content %}
+{# بند إصلاح (تصميم — طلبك: "شاشة الصحة (التطعيمات/الأمراض)") — عمود
+   "الشدة" صار شارة ملوّنة (بدل نص عادي)، وصفوف الجدول تتفاعل بنفس
+   أسلوب سجل الحيوانات. #}
+<style>
+.severity-chip{display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:7px; font-size:11.5px; font-weight:700; color:#fff;}
+tbody tr{transition:background .1s ease;}
+tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('الأمراض') }}</h2>
@@ -15,7 +23,13 @@
     {% for d in diseases %}
     <tr>
       <td>{{ d.date }}</td><td>{{ d.animal.animal_no }}</td><td>{{ d.disease_name }}</td>
-      <td>{{ d.severity|ar_severity if d.severity else '-' }}</td><td>{{ status_badge(d.status|status_badge_state, d.status|ar_status) }}</td>
+      <td>
+        {% if d.severity == 'severe' %}<span class="severity-chip" style="background:var(--t-health, #d0533f);">🔴 {{ d.severity|ar_severity }}</span>
+        {% elif d.severity == 'medium' %}<span class="severity-chip" style="background:var(--t-repro, #d68f2a);">🟠 {{ d.severity|ar_severity }}</span>
+        {% elif d.severity == 'light' %}<span class="severity-chip" style="background:var(--t-animals, #2f8f5a);">🟢 {{ d.severity|ar_severity }}</span>
+        {% else %}<span style="color:var(--muted);">-</span>{% endif %}
+      </td>
+      <td>{{ status_badge(d.status|status_badge_state, d.status|ar_status) }}</td>
       <td>{% if d.withdrawal_until %}<span class="badge off">{{ d.withdrawal_until }}</span>{% else %}-{% endif %}</td>
       <td>
         {% if d.status == 'active' and current_user.has_permission('health.manage') %}

@@ -1005,7 +1005,7 @@ def disease_close(disease_id):
 @require_permission("health.view")
 def vaccinations_list():
     rows = Vaccination.query.order_by(Vaccination.date.desc()).all()
-    return render_template("health/vaccinations_list.html", rows=rows)
+    return render_template("health/vaccinations_list.html", rows=rows, today=date.today())
 
 
 @health_bp.route("/vaccinations/new", methods=["GET", "POST"])
