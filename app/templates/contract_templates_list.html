@@ -19,6 +19,17 @@
   </form>
 </div>
 
+{% set default_pledge_placeholder = "أقرّ أنا الموقّع أدناه ({اسم_العامل}) بأنني استلمت من الكفيل/صاحب العمل ({اسم_الكفيل})..." %}
+<div class="card">
+  <h3 style="font-size:14px;">✍️ {{ _('نص إقرار المخالصة النهائية') }}</h3>
+  <p style="color:var(--muted); font-size:12.5px; margin:4px 0 8px;">{{ _('نص التعهد اللي يظهر بمستند "طباعة مخالصة نهائية" — نفس النص لكل العمال (مو حسب مسمى وظيفي). استخدم {اسم_العامل} و{اسم_الكفيل} داخل النص، ويستبدلان تلقائياً باسم العامل الفعلي والكفيل الصحيح وقت الطباعة. اتركه فاضياً للرجوع للنص الافتراضي.') }}</p>
+  <form method="post" action="{{ url_for('core.settlement_pledge_save') }}" data-offline>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <textarea name="settlement_pledge_text" rows="6" placeholder="{{ default_pledge_placeholder }}">{{ fs.settlement_pledge_text or '' }}</textarea>
+    <button class="btn light" type="submit">{{ _('حفظ نص الإقرار') }}</button>
+  </form>
+</div>
+
 {% for t in templates %}
 <div class="card">
   <form method="post" action="{{ url_for('core.contract_templates_edit', template_id=t.id) }}" data-offline>

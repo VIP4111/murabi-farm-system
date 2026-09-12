@@ -220,6 +220,17 @@ class FarmSettings(db.Model):
     # عمداً، عشان فشل قناة وحدة ما يوقف الثانية.
     last_daily_telegram_report_sent = db.Column(db.Date, nullable=True)
 
+    # نص إقرار المخالصة النهائية (بند إصلاح — طلبك: "النصوص القانونية
+    # مسودة عامة. هل هاذي قابله لتعديل عن طريق البرنامج ولا ثابته" ثم
+    # "نعم خليه قابل لتعديل") — كان ثابتاً بالكود بـ
+    # `export_service.build_settlement_pdf`، صار قابلاً للتعديل الكامل
+    # من شاشة الإعدادات. فاضي = يُستخدم النص الافتراضي المعرَّف
+    # بـ`export_service.DEFAULT_SETTLEMENT_PLEDGE_TEXT` (سلوك ما قبل
+    # هذا البند، صفر كسر). يدعم Placeholder نصي بسيط
+    # `{اسم_العامل}`/`{اسم_الكفيل}` يُستبدَل تلقائياً وقت الطباعة —
+    # مو قالب Jinja كامل (تفادي أي تعقيد أو مخاطرة تنفيذ كود بنص حر).
+    settlement_pledge_text = db.Column(db.Text, nullable=True)
+
     updated_at = db.Column(db.DateTime, default=_now, onupdate=_now)
 
     @classmethod

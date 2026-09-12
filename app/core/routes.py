@@ -2527,7 +2527,7 @@ def contract_templates_list():
 
     run_once_per_app("contract_templates_seeded", _seed_default_contract_templates)
     templates = ContractTemplate.query.order_by(ContractTemplate.job_title).all()
-    return render_template("contract_templates_list.html", templates=templates)
+    return render_template("contract_templates_list.html", templates=templates, fs=FarmSettings.get())
 
 
 @core_bp.route("/settings/contract-templates/new", methods=["POST"])
@@ -2644,3 +2644,18 @@ def member_settlement_print(user_id):
         buf.read(), mimetype="application/pdf",
         headers={"Content-Disposition": f"attachment; filename=settlement_{member.id}.pdf"},
     )
+
+
+@core_bp.route("/settings/settlement-pledge/save", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def settlement_pledge_save():
+    """تعديل نص إقرار المخالصة النهائية (بند إصلاح — طلبك: "النصوص
+    القانونية مسودة عامة. هل هاذي قابله لتعديل عن طريق البرنامج ولا
+    ثابته" ثم "نعم خليه قابل لتعديل"). فاضي = يرجع للنص الافتراضي
+    `export_service.DEFAULT_SETTLEMENT_PLEDGE_TEXT` تلقائياً."""
+    fs = FarmSettings.get()
+    fs.settlement_pledge_text = (request.form.get("settlement_pledge_text") or "").strip() or None
+    db.session.commit()
+    flash(_("تم حفظ نص إقرار المخالصة"), "success")
+    return redirect(url_for("core.contract_templates_list"))
