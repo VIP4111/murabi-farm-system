@@ -74,6 +74,34 @@ def test_push_test_sends_via_fake_subscription(logged_in_client, monkeypatch):
     assert data["sent"] == 1
 
 
+def test_send_push_treats_vapid_key_mismatch_as_invalid_subscription(monkeypatch):
+    """إصلاح — بلاغ مستخدم حقيقي بعد تدوير مفاتيح VAPID: اشتراك بمفتاح
+    عام قديم يفشل بصمت بخطأ "VapidPkHashMismatch" (400) من خادم الدفع
+    — نفس فئة اشتراك منتهي/ملغى (404/410)، يرجع False بدل ما يرفع
+    الاستثناء، عشان الطرف المستدعي يحذف الاشتراك الميت بدل ما يعيد
+    محاولته للأبد."""
+    from pywebpush import WebPushException
+
+    class FakeResponse:
+        status_code = 400
+        text = '{"reason":"VapidPkHashMismatch"}'
+
+    def fake_webpush(**kwargs):
+        raise WebPushException("Push failed: 400 Bad Request", response=FakeResponse())
+
+    monkeypatch.setenv("VAPID_PRIVATE_KEY_B64URL", "fake-private-key")
+    monkeypatch.setenv("VAPID_PUBLIC_KEY_B64URL", "fake-public-key")
+    monkeypatch.setattr(push_service, "webpush", fake_webpush)
+
+    class FakeSub:
+        endpoint = "https://push.example.com/x"
+        p256dh = "p"
+        auth = "a"
+
+    result = push_service.send_push(FakeSub(), {"title": "t", "body": "b"})
+    assert result is False
+
+
 def test_alert_check_does_not_resend_same_alert_twice(app, owner, monkeypatch):
     """نفس التنبيه (alert_key ثابت) ما يُرسَل مرتين — لولا `SentPushAlert`
     كل فحص دوري كان يرسل كل التنبيهات النشطة من جديد."""

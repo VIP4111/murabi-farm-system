@@ -171,7 +171,13 @@ def send_push(subscription, payload: dict) -> bool:
         return True
     except WebPushException as e:
         status = e.response.status_code if e.response is not None else None
-        if status in (404, 410):
+        # إصلاح — بلاغ مستخدم حقيقي بعد تدوير مفاتيح VAPID (خلل صيغة
+        # سابق بهذا الملف): أي اشتراك انسجّل بمفتاح عام قديم يفشل بصمت
+        # بـ400 "VapidPkHashMismatch" من خادم الدفع — الاشتراك نفسه
+        # صار غير صالح نهائياً (مربوط تشفيرياً بمفتاح قديم)، بنفس فئة
+        # 404/410 (اشتراك منتهي/ملغى)، لا خطأ عابر يستاهل إعادة محاولة.
+        body_text = e.response.text if e.response is not None else ""
+        if status in (404, 410) or (status == 400 and "VapidPkHashMismatch" in body_text):
             return False
         current_app.logger.warning("push_service: webpush failed (status=%s): %s", status, e)
         raise

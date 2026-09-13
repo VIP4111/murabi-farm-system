@@ -20,6 +20,20 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
+// إصلاح — بلاغ مستخدم حقيقي: بعد ما غيّرنا مفاتيح VAPID (بسبب خلل
+// صيغة سابق)، أي جهاز كان مشترك بالمفتاح القديم صار يفشل بخطأ
+// "VapidPkHashMismatch" من خادم الدفع (Google/Mozilla) — الاشتراك
+// نفسه مربوط تشفيرياً بالمفتاح العام اللي استُخدم وقت الاشتراك، ما
+// يتغيّر تلقائياً لو الخادم غيّر مفاتيحه بعدين. دالة صرفة تقارن مفتاح
+// الاشتراك المحلي الحالي بالمفتاح العام الحالي من الخادم — أي فرق
+// يعني لازم إلغاء الاشتراك القديم واشتراك جديد بالمفتاح الصحيح.
+function arrayBufferToBase64Url(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
 function pushNotificationsSupported() {
   return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
 }
@@ -83,6 +97,10 @@ async function enablePushNotifications(banner) {
   }
 }
 
+// محصور ببيئة متصفح حقيقية بس (نفس نمط sw.js) — يخلي هذا الملف قابل
+// لـ`require()` وقت اختبارات Node.js للدوال الصرفة فوق، بدون خطأ
+// "document is not defined" عند التحميل.
+if (typeof document !== "undefined" && typeof document.addEventListener === "function") {
 document.addEventListener("DOMContentLoaded", function () {
   const banner = document.querySelector("[data-push-banner]");
   if (!banner || !pushNotificationsSupported()) return;
@@ -104,8 +122,25 @@ document.addEventListener("DOMContentLoaded", function () {
         banner.style.display = "flex";
         return;
       }
-      syncSubscriptionWithServer(existing).then(function (resp) {
-        if (!resp.ok) banner.style.display = "flex";
+      // إصلاح — بلاغ مستخدم حقيقي بعد تغيير مفاتيح VAPID: اشتراك
+      // بالمفتاح القديم يفشل بصمت بخطأ "VapidPkHashMismatch" عند كل
+      // إرسال، وSyncSubscriptionWithServer العادي ما يكتشف هذا —
+      // بيحفظه بنجاح بالخادم لأنه بس يخزّن القيم، ما يتحقق من تطابق
+      // المفتاح. نقارن هنا صراحة قبل المزامنة: لو المفتاح تغيّر،
+      // نلغي الاشتراك القديم ونطلع الشريط من جديد عشان يشترك بالمفتاح
+      // الصحيح الحالي.
+      fetch("/push/vapid-public-key").then(function (keyResp) {
+        if (!keyResp.ok) { banner.style.display = "flex"; return; }
+        keyResp.json().then(function (data) {
+          const currentKey = arrayBufferToBase64Url(existing.options.applicationServerKey);
+          if (currentKey !== data.public_key) {
+            existing.unsubscribe().finally(function () { banner.style.display = "flex"; });
+            return;
+          }
+          syncSubscriptionWithServer(existing).then(function (resp) {
+            if (!resp.ok) banner.style.display = "flex";
+          }).catch(function () { banner.style.display = "flex"; });
+        });
       }).catch(function () { banner.style.display = "flex"; });
     });
   });
@@ -123,7 +158,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (sessionStorage.getItem("murabi_push_banner_dismissed") === "1") banner.style.display = "none";
   } catch (e) {}
 });
+}
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { urlBase64ToUint8Array, pushNotificationsSupported };
+  module.exports = { urlBase64ToUint8Array, pushNotificationsSupported, arrayBufferToBase64Url };
 }
