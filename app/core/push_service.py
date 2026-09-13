@@ -7,9 +7,21 @@
 
 مفاتيح VAPID (توقيع يثبت لخادم الدفع إن الإشعار فعلاً من هذا الموقع)
 تُقرأ من متغيرات بيئة (نفس نمط `TELEGRAM_BOT_TOKEN` — سر لا يُخزَّن
-بقاعدة البيانات ولا بالكود): `VAPID_PRIVATE_KEY_PEM_B64` و
+بقاعدة البيانات ولا بالكود): `VAPID_PRIVATE_KEY_B64URL` و
 `VAPID_PUBLIC_KEY_B64URL`. تُولَّد مرة وحدة بأمر `flask generate-vapid-keys`
 (راجع app/cli.py) وتُحفظ بمتغيرات بيئة Render.
+
+إصلاح — بلاغ مستخدم حقيقي بعد تجربة حية: "فشل الإرسال — تأكد إن
+مفاتيح VAPID مضبوطة". السبب الفعلي: `pywebpush.webpush()` يمرّر
+`vapid_private_key` لـ`py_vapid.Vapid.from_string()`، اللي يتوقّع نص
+Base64URL خام (32 بايت مفتاح خاص، أو DER مُرمَّز) بدون أي رؤوس PEM —
+هو نفسه يحذف فواصل الأسطر بس **يبقي** سطري `-----BEGIN/END-----`
+كنص، فيفسد فك الترميز بالكامل ("ASN.1 parsing error: invalid
+length"). التخزين السابق (PEM كامل مُرمَّز Base64) كان صحيحاً كـPEM
+حقيقي لكنه **صيغة خاطئة لما تتوقعه py_vapid تحديداً** — تم تأكيده
+بإعادة إنتاج نفس الخطأ محلياً بنفس القيمة اللي ولّدها الأمر القديم.
+الحل: تخزين المفتاح الخاص كـDER مُرمَّز Base64URL مباشرة (نفس الصيغة
+اللي يتوقعها `Vapid.from_der()` داخلياً)، بدون أي تغليف PEM إضافي.
 """
 import base64
 import json
@@ -19,7 +31,7 @@ from pywebpush import webpush, WebPushException
 
 
 def vapid_configured() -> bool:
-    return bool(os.environ.get("VAPID_PRIVATE_KEY_PEM_B64")) and bool(os.environ.get("VAPID_PUBLIC_KEY_B64URL"))
+    return bool(os.environ.get("VAPID_PRIVATE_KEY_B64URL")) and bool(os.environ.get("VAPID_PUBLIC_KEY_B64URL"))
 
 
 def get_vapid_public_key() -> str | None:
@@ -28,27 +40,34 @@ def get_vapid_public_key() -> str | None:
     return os.environ.get("VAPID_PUBLIC_KEY_B64URL")
 
 
-def _private_key_pem() -> bytes | None:
-    raw = os.environ.get("VAPID_PRIVATE_KEY_PEM_B64")
-    if not raw:
-        return None
-    return base64.b64decode(raw)
+def _private_key_str() -> str | None:
+    """نص Base64URL خام (DER) جاهز يُمرَّر مباشرة لـ`pywebpush.webpush()`
+    — بدون أي فك/إعادة ترميز هنا، لأن py_vapid نفسه يتولى فك الترميز
+    داخلياً (`Vapid.from_string`)."""
+    return os.environ.get("VAPID_PRIVATE_KEY_B64URL") or None
 
 
 def generate_vapid_keys() -> tuple[str, str]:
     """يولّد زوج مفاتيح VAPID جديد ويرجّعهم كنصوص جاهزة للصق بمتغيرات
-    بيئة Render — لا يحفظهم بأي مكان (المفتاح الخاص سرّي)."""
+    بيئة Render — لا يحفظهم بأي مكان (المفتاح الخاص سرّي). المفتاح
+    الخاص بصيغة DER مُرمَّز Base64URL (بدون رؤوس PEM) — نفس الصيغة
+    اللي يتوقعها `py_vapid.Vapid.from_string()` داخل `pywebpush`."""
     from py_vapid import Vapid02
-    from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+    from cryptography.hazmat.primitives.serialization import (
+        Encoding, PublicFormat, PrivateFormat, NoEncryption,
+    )
 
     vapid = Vapid02()
     vapid.generate_keys()
-    private_pem_b64 = base64.b64encode(vapid.private_pem()).decode()
+    private_der = vapid.private_key.private_bytes(
+        encoding=Encoding.DER, format=PrivateFormat.PKCS8, encryption_algorithm=NoEncryption(),
+    )
+    private_b64url = base64.urlsafe_b64encode(private_der).decode().rstrip("=")
     public_raw = vapid.public_key.public_bytes(
         encoding=Encoding.X962, format=PublicFormat.UncompressedPoint,
     )
     public_b64url = base64.urlsafe_b64encode(public_raw).decode().rstrip("=")
-    return private_pem_b64, public_b64url
+    return private_b64url, public_b64url
 
 
 PUSH_ALERT_CHECK_INTERVAL_MINUTES = 15
@@ -134,8 +153,8 @@ def send_push(subscription, payload: dict) -> bool:
     """
     from flask import current_app
 
-    private_pem = _private_key_pem()
-    if not private_pem:
+    private_key_str = _private_key_str()
+    if not private_key_str:
         current_app.logger.warning("push_service: VAPID keys not configured, skipping send")
         return False
 
@@ -146,7 +165,7 @@ def send_push(subscription, payload: dict) -> bool:
                 "keys": {"p256dh": subscription.p256dh, "auth": subscription.auth},
             },
             data=json.dumps(payload, ensure_ascii=False),
-            vapid_private_key=private_pem.decode(),
+            vapid_private_key=private_key_str,
             vapid_claims={"sub": "mailto:support@murabi-boali.app"},
         )
         return True
