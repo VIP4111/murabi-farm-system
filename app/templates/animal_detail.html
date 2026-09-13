@@ -337,7 +337,7 @@
 <table class="compact-table">
       <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنة') }}</th></tr>
       {% for s in sonar_results %}
-      <tr><td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td><td>{{ s.embryo_count or '-' }}</td></tr>
+      <tr><td>{{ s.exam_date }}</td><td>{{ _(s.result) if s.result else '-' }}</td><td>{{ s.embryo_count or '-' }}</td></tr>
       {% else %}<tr><td colspan="3" style="color:#888;">{{ _('لا يوجد فحوصات سونار مسجّلة.') }}</td></tr>{% endfor %}
     </table>
 </div>

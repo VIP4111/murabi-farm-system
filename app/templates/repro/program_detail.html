@@ -115,7 +115,7 @@
     <tr><th>{{ _('التاريخ') }}</th><th>{{ _('النتيجة') }}</th><th>{{ _('عدد الأجنّة') }}</th><th>{{ _('نبض') }}</th></tr>
     {% for s in p.sonar_results %}
     <tr>
-      <td>{{ s.exam_date }}</td><td>{{ s.result or '-' }}</td>
+      <td>{{ s.exam_date }}</td><td>{{ _(s.result) if s.result else '-' }}</td>
       <td>{{ s.embryo_count or '-' }}</td>
       <td>{% if s.heartbeat %}{{ status_badge('active', _('نعم')) }}{% else %}-{% endif %}</td>
     </tr>

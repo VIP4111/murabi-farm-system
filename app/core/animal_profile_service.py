@@ -221,7 +221,7 @@ def get_profile(animal: Animal) -> dict:
     for s in sonar_results:
         timeline.append({
             "date": s.exam_date, "category": _("فحص سونار"), "icon": "📡",
-            "label": s.result or _("فحص سونار"),
+            "label": _(s.result) if s.result else _("فحص سونار"),
             "detail": _("عدد الأجنة: %(n)s", n=s.embryo_count) if s.embryo_count else "",
         })
 
