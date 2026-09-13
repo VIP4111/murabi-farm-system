@@ -210,7 +210,7 @@
   document.getElementById('push-test-btn').addEventListener('click', function () {
     var resultEl = document.getElementById('push-test-result');
     resultEl.textContent = {{ _('جاري الإرسال...')|tojson }};
-    fetch('/push/test', { method: 'POST' })
+    fetch('/push/test', { method: 'POST', headers: { 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content') } })
       .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
       .then(function (res) {
         if (res.ok && res.data.ok) {

@@ -24,6 +24,18 @@ function pushNotificationsSupported() {
   return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
 }
 
+// إصلاح — بلاغ مباشر أثناء الاختبار الحي: "صار خطأ أثناء الإرسال" مكان
+// رسالة واضحة، اتضح إن Flask-WTF (بند إضافي 93 — حماية CSRF بكل فورم
+// بالمشروع) يرفض أي POST بلا رمز CSRF بـ400 "The CSRF token is
+// missing" — كل فورم عادي بالمشروع يحمل حقل مخفي `csrf_token`، لكن
+// طلبات fetch() هذي JSON خالص بدون فورم. الحل القياسي: رمز الصفحة
+// نفسها موجود بالفعل بـ`<meta name="csrf-token">` (base.html)، يُرسَل
+// كترويسة X-CSRFToken — نفس ما تتوقعه Flask-WTF افتراضياً.
+function csrfToken() {
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  return meta ? meta.getAttribute("content") : "";
+}
+
 async function enablePushNotifications(banner) {
   const btn = banner.querySelector("[data-push-enable-btn]");
   const statusEl = banner.querySelector("[data-push-status]");
@@ -46,7 +58,7 @@ async function enablePushNotifications(banner) {
     });
     await fetch("/push/subscribe", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-CSRFToken": csrfToken() },
       body: JSON.stringify(subscription.toJSON()),
     });
     banner.style.display = "none";

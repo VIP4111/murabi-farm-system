@@ -97,3 +97,48 @@ def test_ajax_task_start_without_csrf_header_is_rejected(csrf_client, csrf_app):
         headers={"X-Requested-With": "XMLHttpRequest"},
     )
     assert resp.status_code == 400
+
+
+def _login_and_get_csrf_token(csrf_client):
+    page = csrf_client.get("/login")
+    html = page.data.decode()
+    start = html.index('name="csrf_token" value="') + len('name="csrf_token" value="')
+    token = html[start:html.index('"', start)]
+    csrf_client.post("/login", data={"phone": "0500000009", "password": "pass1234", "csrf_token": token})
+    home = csrf_client.get("/")
+    home_html = home.data.decode()
+    meta_start = home_html.index('name="csrf-token" content="') + len('name="csrf-token" content="')
+    return home_html[meta_start:home_html.index('"', meta_start)]
+
+
+# إصلاح — بلاغ مباشر بتجربة حية على الموقع الفعلي: زر "إرسال إشعار Push
+# تجريبي" (وقبله /push/subscribe) كانا يفشلان بـ400 "CSRF token missing"
+# بالإنتاج الحقيقي، رغم إن كل اختبارات tests/test_push_notifications.py
+# نجحت محلياً — السبب: تلك الاختبارات تستخدم `logged_in_client` اللي
+# يعتمد على TestConfig العادي (WTF_CSRF_ENABLED=False)، فما كانت تكتشف
+# هذا الخلل إطلاقاً. الإصلاح: push_notifications.js وزر الاختبار
+# بـsettings.html صارا يرسلان ترويسة X-CSRFToken من `<meta name="csrf-
+# token">` (base.html) — نفس آلية Flask-WTF الافتراضية.
+def test_push_subscribe_without_csrf_header_is_rejected(csrf_client):
+    _login_and_get_csrf_token(csrf_client)
+    resp = csrf_client.post("/push/subscribe", json={
+        "endpoint": "https://push.example.com/csrf-test",
+        "keys": {"p256dh": "p", "auth": "a"},
+    })
+    assert resp.status_code == 400
+
+
+def test_push_subscribe_with_csrf_header_succeeds(csrf_client):
+    token = _login_and_get_csrf_token(csrf_client)
+    resp = csrf_client.post(
+        "/push/subscribe",
+        json={"endpoint": "https://push.example.com/csrf-test-2", "keys": {"p256dh": "p", "auth": "a"}},
+        headers={"X-CSRFToken": token},
+    )
+    assert resp.status_code == 200
+
+
+def test_push_test_without_csrf_header_is_rejected(csrf_client):
+    _login_and_get_csrf_token(csrf_client)
+    resp = csrf_client.post("/push/test")
+    assert resp.status_code == 400
