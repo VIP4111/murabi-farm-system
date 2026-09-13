@@ -36,6 +36,14 @@ function csrfToken() {
   return meta ? meta.getAttribute("content") : "";
 }
 
+function syncSubscriptionWithServer(subscription) {
+  return fetch("/push/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": csrfToken() },
+    body: JSON.stringify(subscription.toJSON()),
+  });
+}
+
 async function enablePushNotifications(banner) {
   const btn = banner.querySelector("[data-push-enable-btn]");
   const statusEl = banner.querySelector("[data-push-status]");
@@ -63,11 +71,7 @@ async function enablePushNotifications(banner) {
     // وهو فعلياً غير مسجَّل. الآن نتحقق من `response.ok` قبل إخفاء
     // الشريط — فشل الحفظ يبقي الشريط ظاهراً مع رسالة خطأ واضحة بدل
     // نجاح وهمي صامت.
-    const subscribeResp = await fetch("/push/subscribe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-CSRFToken": csrfToken() },
-      body: JSON.stringify(subscription.toJSON()),
-    });
+    const subscribeResp = await syncSubscriptionWithServer(subscription);
     if (!subscribeResp.ok) {
       statusEl.textContent = window.PUSH_ERROR_MESSAGE || "";
       return;
@@ -84,10 +88,25 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!banner || !pushNotificationsSupported()) return;
   if (Notification.permission === "denied") return;
 
+  // إصلاح — بلاغ مستخدم حقيقي: "ما طلعت لي تنبيه يطلب التفعيل" —
+  // بعد محاولة سابقة فشل فيها حفظ الاشتراك بالخادم (خلل الـCSRF
+  // المُصلَح سابقاً)، المتصفح نفسه كان يحمل اشتراك محلي فعلي (created
+  // بنجاح بجهة المتصفح) رغم إن الخادم ما سجّله إطلاقاً — فـ`getSubscription()`
+  // ترجّع اشتراكاً "موجوداً"، والشريط يختفي للأبد بدون ما يعيد المحاولة
+  // ولا يعطي المستخدم أي طريقة يرجّعه. الحل: أي اشتراك محلي موجود
+  // يُعاد مزامنته مع الخادم بصمت أول ما تفتح الصفحة (idempotent —
+  // نفس endpoint يحدّث الصف بدل تكراره) — لو المزامنة نجحت، الشريط
+  // يبقى مخفياً (الحالة سليمة فعلاً). لو فشلت، الشريط يطلع من جديد
+  // عشان المستخدم يقدر يعيد المحاولة، بدل ما يبقى عالقاً بصمت.
   navigator.serviceWorker.ready.then(function (registration) {
     registration.pushManager.getSubscription().then(function (existing) {
-      if (existing) return; // مشترك أصلاً بهذا الجهاز
-      banner.style.display = "flex";
+      if (!existing) {
+        banner.style.display = "flex";
+        return;
+      }
+      syncSubscriptionWithServer(existing).then(function (resp) {
+        if (!resp.ok) banner.style.display = "flex";
+      }).catch(function () { banner.style.display = "flex"; });
     });
   });
 
