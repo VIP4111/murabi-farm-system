@@ -1258,6 +1258,8 @@
        الأدوار والشاشات. #}
     {% from "_offline_widgets.html" import offline_status_banner %}
     {{ offline_status_banner() }}
+    {% from "_push_widgets.html" import push_notification_banner %}
+    {{ push_notification_banner() }}
     {% endif %}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% for category, message in messages %}

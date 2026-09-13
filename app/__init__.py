@@ -128,6 +128,19 @@ def create_app(config_class=Config):
                 from app.extensions import db
                 db.session.rollback()
 
+            # إشعارات Push (بند إضافي، طلبك الصريح عن إشعارات مثل
+            # الواتساب) — نفس نمط التدارك أعلاه بالضبط ونفس التبرير
+            # (Render المجاني نايم، فالاعتماد على BackgroundScheduler
+            # وحده غير كافٍ). محكوم بحارس زمني داخلي (15 دقيقة) فما
+            # يعيد الحساب كل طلب.
+            try:
+                from app.core.push_service import check_and_send_alert_push_notifications
+                check_and_send_alert_push_notifications()
+            except Exception as e:
+                app.logger.warning("check_and_send_alert_push_notifications failed: %s", e)
+                from app.extensions import db
+                db.session.rollback()
+
     # قيم `_l()` بدل نص عربي خام (بند إضافي 74، 2026-07-31) — عشان
     # ar_status/ar_task_type تترجم فعلياً للأمهرية/الهندية/الإنجليزية
     # بشاشات العامل المترجمة (كانت قبل كذا تطلع عربي دايماً بغض النظر

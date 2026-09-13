@@ -7,7 +7,7 @@ const assert = require("node:assert/strict");
 const {
   isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
   raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
-  buildStaleReloadMessage, notifyClientsOfFreshData,
+  buildStaleReloadMessage, notifyClientsOfFreshData, parsePushPayload,
 } = require("../../app/static/sw.js");
 
 const ORIGIN = "https://murabi-farm-system.onrender.com";
@@ -117,4 +117,25 @@ test("notifyClientsOfFreshData: posts the reload message to every open window cl
 test("notifyClientsOfFreshData: no open clients → resolves without throwing", async () => {
   const result = await notifyClientsOfFreshData("https://x.test/animals/5", () => Promise.resolve([]));
   assert.deepEqual(result, []);
+});
+
+test("parsePushPayload: valid JSON → title/body/url extracted", () => {
+  const raw = JSON.stringify({ title: "💉 تحصين", body: "رأس A-01 متأخر", url: "/today" });
+  const parsed = parsePushPayload(raw);
+  assert.equal(parsed.title, "💉 تحصين");
+  assert.equal(parsed.options.body, "رأس A-01 متأخر");
+  assert.equal(parsed.options.data.url, "/today");
+});
+
+test("parsePushPayload: missing fields → safe defaults, never throws", () => {
+  const parsed = parsePushPayload(JSON.stringify({}));
+  assert.equal(parsed.title, "مراح بو علي");
+  assert.equal(parsed.options.body, "");
+  assert.equal(parsed.options.data.url, "/");
+});
+
+test("parsePushPayload: malformed JSON → falls back to raw text, never throws", () => {
+  const parsed = parsePushPayload("not json at all");
+  assert.equal(parsed.title, "مراح بو علي");
+  assert.equal(parsed.options.body, "not json at all");
 });

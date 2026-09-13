@@ -1,0 +1,22 @@
+{# شريط تفعيل إشعارات Push (بند إضافي، طلبك الصريح: "ابيك تصير مثل
+   الواتساب... يجيني تنبيه والجوال بجيبي") — يظهر لأي مستخدم مسجّل
+   دخول لسا ما فعّل الإشعارات بهذا الجهاز تحديداً (كل جهاز/متصفح
+   يحتاج تفعيل مستقل، push_notifications.js يتحقق فعلياً وقت التحميل
+   ويخفيه لو مفعّل أصلاً أو المتصفح ما يدعم). #}
+{% macro push_notification_banner() %}
+<div data-push-banner class="notice" style="display:none; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+  <span>🔔 {{ _('فعّل إشعارات هذا الجهاز عشان توصلك تنبيهات مراح بو علي حتى لو التطبيق مسكّر (زي واتساب).') }}
+    <span data-push-status style="color:var(--danger,#a32d2d); font-size:12.5px;"></span>
+  </span>
+  <span style="display:flex; gap:8px; flex:0 0 auto;">
+    <button type="button" class="btn" data-push-enable-btn style="padding:6px 12px; font-size:12.5px;">{{ _('فعّل الإشعارات') }}</button>
+    <button type="button" class="btn light" data-push-dismiss-btn style="padding:6px 12px; font-size:12.5px;">{{ _('لاحقاً') }}</button>
+  </span>
+</div>
+<script>
+  window.PUSH_DENIED_MESSAGE = {{ _('رفضت إذن الإشعارات بالمتصفح — لازم تفعّله من إعدادات المتصفح نفسه.')|tojson }};
+  window.PUSH_NOT_CONFIGURED_MESSAGE = {{ _('إشعارات Push غير مفعّلة بعد على السيرفر — تواصل مع مدير النظام.')|tojson }};
+  window.PUSH_ERROR_MESSAGE = {{ _('صار خطأ أثناء التفعيل — جرّب مرة ثانية.')|tojson }};
+</script>
+<script src="{{ url_for('static', filename='push_notifications.js') }}"></script>
+{% endmacro %}

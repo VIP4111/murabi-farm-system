@@ -2659,3 +2659,85 @@ def settlement_pledge_save():
     db.session.commit()
     flash(_("تم حفظ نص إقرار المخالصة"), "success")
     return redirect(url_for("core.contract_templates_list"))
+
+
+# ---------- إشعارات Push (بند إضافي، طلبك الصريح: "ابيك تصير مثل
+# الواتساب... يجيني تنبيه والجوال بجيبي") ----------
+
+@core_bp.route("/push/vapid-public-key")
+@login_required
+def push_vapid_public_key():
+    """المفتاح العام تحتاجه صفحة الإعدادات وقت `pushManager.subscribe()`
+    بجافاسكربت — يرجّع 404 لو المفاتيح غير مضبوطة بعد بمتغيرات بيئة
+    Render (`flask generate-vapid-keys` يولّدها)."""
+    from app.core import push_service
+    key = push_service.get_vapid_public_key()
+    if not key:
+        return jsonify({"error": "vapid_not_configured"}), 404
+    return jsonify({"public_key": key})
+
+
+@core_bp.route("/push/subscribe", methods=["POST"])
+@login_required
+def push_subscribe():
+    """يحفظ اشتراك هذا الجهاز/المتصفح (endpoint + مفاتيح تشفير يرجعها
+    المتصفح نفسه) — نفس `endpoint` ممكن يوصل مرة ثانية (المستخدم فتح
+    الصفحة بجهاز سبق واشترك فيه)، فنحدّثه بدل تكرار الصف."""
+    from app.models import PushSubscription
+    data = request.get_json(silent=True) or {}
+    endpoint = data.get("endpoint")
+    keys = data.get("keys") or {}
+    p256dh, auth = keys.get("p256dh"), keys.get("auth")
+    if not endpoint or not p256dh or not auth:
+        return jsonify({"error": "invalid_subscription"}), 400
+
+    sub = PushSubscription.query.filter_by(endpoint=endpoint).first()
+    if sub is None:
+        sub = PushSubscription(endpoint=endpoint, user_id=current_user.id, p256dh=p256dh, auth=auth)
+        db.session.add(sub)
+    else:
+        sub.user_id = current_user.id
+        sub.p256dh = p256dh
+        sub.auth = auth
+    db.session.commit()
+    return jsonify({"ok": True})
+
+
+@core_bp.route("/push/unsubscribe", methods=["POST"])
+@login_required
+def push_unsubscribe():
+    from app.models import PushSubscription
+    data = request.get_json(silent=True) or {}
+    endpoint = data.get("endpoint")
+    if endpoint:
+        PushSubscription.query.filter_by(endpoint=endpoint, user_id=current_user.id).delete()
+        db.session.commit()
+    return jsonify({"ok": True})
+
+
+@core_bp.route("/push/test", methods=["POST"])
+@login_required
+def push_test():
+    """زر "أرسل إشعار تجريبي" بشاشة الإعدادات — يتأكد المستخدم إن
+    الإشعار فعلاً يوصل جهازه قبل ما يعتمد عليه."""
+    from app.models import PushSubscription
+    from app.core import push_service
+    subs = PushSubscription.query.filter_by(user_id=current_user.id).all()
+    if not subs:
+        return jsonify({"error": "no_subscription"}), 400
+    sent = 0
+    for sub in subs:
+        try:
+            ok = push_service.send_push(sub, {
+                "title": "مراح بو علي",
+                "body": _("إشعار تجريبي — لو وصلك هذا، الإشعارات شغّالة تمام."),
+                "url": url_for("core.home"),
+            })
+            if ok:
+                sent += 1
+            else:
+                db.session.delete(sub)
+                db.session.commit()
+        except Exception as e:
+            current_app.logger.warning("push_test failed: %s", e)
+    return jsonify({"ok": sent > 0, "sent": sent})

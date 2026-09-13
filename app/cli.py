@@ -602,6 +602,21 @@ def register_cli(app):
         for c in chats:
             click.echo(f"{c['name']}: {c['chat_id']}")
 
+    @app.cli.command("generate-vapid-keys")
+    def generate_vapid_keys():
+        """يولّد زوج مفاتيح VAPID جديد لإشعارات Push (بند إضافي، طلبك
+        الصريح: إشعارات مثل الواتساب) — شغّلها مرة وحدة من Shell بلوحة
+        Render، وحط الناتجين كمتغيرات بيئة `VAPID_PRIVATE_KEY_PEM_B64`
+        و`VAPID_PUBLIC_KEY_B64URL` (نفس أسلوب `TELEGRAM_BOT_TOKEN`).
+        المفتاح الخاص سرّي — لا تشاركه ولا تحطه بأي مكان غير متغيرات
+        بيئة Render."""
+        from app.core.push_service import generate_vapid_keys as _generate
+        private_b64, public_b64url = _generate()
+        click.echo("انسخ هذين المتغيرين لإعدادات بيئة Render (Environment):\n")
+        click.echo(f"VAPID_PRIVATE_KEY_PEM_B64={private_b64}")
+        click.echo(f"VAPID_PUBLIC_KEY_B64URL={public_b64url}")
+        click.echo("\n⚠️ المتغير الأول سرّي (خاص) — لا تشاركه مع أحد. الثاني عام وآمن للمشاركة.")
+
     @app.cli.command("telegram-status")
     def telegram_status():
         """تشخيص مباشر لسبب توقف/فشل إرسال تيليجرام (بند إضافي 232) —

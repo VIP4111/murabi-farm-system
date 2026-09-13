@@ -131,6 +131,28 @@ function notifyClientsOfFreshData(url, matchAllFn) {
   });
 }
 
+// إشعارات Push (بند إضافي، طلبك الصريح: "ابيك تصير مثل الواتساب...
+// يجيني تنبيه والجوال بجيبي") — دالة صرفة (نفس نمط isCacheablePath)
+// تحوّل جسم رسالة الدفع (JSON من الخادم، راجع push_service.py) لخيارات
+// `showNotification` — لو الجسم مو JSON صالح (خطأ نادر)، نرجّع رسالة
+// عامة بدل ما يفشل الحدث كله بصمت.
+function parsePushPayload(rawText) {
+  try {
+    var data = JSON.parse(rawText);
+    return {
+      title: data.title || "مراح بو علي",
+      options: {
+        body: data.body || "",
+        icon: "/static/icons/icon-192.png",
+        badge: "/static/icons/icon-192.png",
+        data: { url: data.url || "/" },
+      },
+    };
+  } catch (e) {
+    return { title: "مراح بو علي", options: { body: rawText || "", data: { url: "/" } } };
+  }
+}
+
 // تسجيل الأحداث محصور ببيئة Service Worker حقيقية بس (بند إضافي 83) —
 // `self.addEventListener` غير موجود بـNode.js، وهذا الشرط يخلي نفس
 // الملف قابل لـ`require()` وقت الاختبار بدون أي خطأ عند التحميل.
@@ -188,6 +210,25 @@ if (typeof self !== "undefined" && typeof self.addEventListener === "function") 
       })
     );
   });
+
+  self.addEventListener("push", (event) => {
+    const raw = event.data ? event.data.text() : "";
+    const parsed = parsePushPayload(raw);
+    event.waitUntil(self.registration.showNotification(parsed.title, parsed.options));
+  });
+
+  self.addEventListener("notificationclick", (event) => {
+    event.notification.close();
+    const url = (event.notification.data && event.notification.data.url) || "/";
+    event.waitUntil(
+      self.clients.matchAll({ type: "window" }).then((clientList) => {
+        for (const client of clientList) {
+          if (client.url.indexOf(url) !== -1 && "focus" in client) return client.focus();
+        }
+        if (self.clients.openWindow) return self.clients.openWindow(url);
+      })
+    );
+  });
 }
 
 // تصدير للاختبار بـNode.js (بند إضافي 83) — بلا أثر بالمتصفح الفعلي،
@@ -196,6 +237,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     isCacheablePath, EXCLUDED_PATH_PREFIXES, keysToEvict, MAX_CACHE_ENTRIES,
     raceNetworkWithTimeout, NETWORK_TIMEOUT_MS, shouldCacheResponse,
-    buildStaleReloadMessage, notifyClientsOfFreshData,
+    buildStaleReloadMessage, notifyClientsOfFreshData, parsePushPayload,
   };
 }

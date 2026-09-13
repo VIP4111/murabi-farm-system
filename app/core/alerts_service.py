@@ -980,6 +980,26 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
     return alerts
 
 
+def get_alerts_for_user(user) -> list[dict]:
+    """نفس تفريعة `animals.view` مقابل حظائر العامل المسؤول، مكرَّرة
+    3 مرات بـ`core/routes.py` (`_today_counts`, `alerts_mine`, `today`)
+    — استُخرجت هنا (بند إضافي، إشعارات Push) عشان مهمة الفحص الدورية
+    لإشعارات Push تستخدم نفس نطاق التنبيهات بالضبط اللي يشوفها كل
+    مستخدم بشاشاته العادية، بدون تكرار المنطق مرة رابعة."""
+    if user.has_permission("animals.view"):
+        return get_alerts()
+    from app.models import Barn
+    my_barn_ids = [b.id for b in Barn.query.filter_by(responsible_worker_id=user.id).all()]
+    return get_alerts(barn_ids=my_barn_ids)
+
+
+def alert_key(alert: dict) -> str:
+    """مفتاح ثابت لتجنّب إرسال نفس تنبيه Push مرتين — يعتمد فقط على
+    الفئة (`category_key`) والحيوان المرتبط (لو وجد)، مو النص المترجَم
+    (`label`/`detail`) اللي يتغيّر حسب لغة المستخدم."""
+    return f"{alert.get('category_key')}:{alert.get('animal_id') or ''}:{alert.get('label')}"
+
+
 # رابط "حل المشكلة" لكل فئة تنبيه (بند إضافي 222) — بطلبك الصريح:
 # "زر يحولني لموقع كل مشكلة على حدا". مو كل فئة عندها شاشة حل مباشرة
 # (بعضها معلوماتي بحت زي "فترة سحب" — تنتهي لحالها، ما فيه إجراء)،

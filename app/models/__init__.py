@@ -7,6 +7,7 @@ from app.models.settings import ServiceToggle
 from app.models.audit import AuditLog
 from app.models.rate_limit import RateLimitHit
 from app.models.telegram_update import ProcessedTelegramUpdate
+from app.models.push_subscription import PushSubscription, SentPushAlert
 from app.models.pharmacy import Pharmacy, PharmacyBatch
 from app.models.pharmacy_dose_rule import PharmacyDoseRule
 from app.models.usage_route import UsageRoute
@@ -70,6 +71,8 @@ __all__ = [
     "Warehouse", "FeedWarehouseStock", "PharmacyWarehouseStock",
     "Equipment", "EquipmentMovement",
     "ProcessedTelegramUpdate",
+    "PushSubscription",
+    "SentPushAlert",
     "ChecklistItem", "ChecklistCompletion",
     "Asset", "AssetMaintenanceLog", "UtilityReading",
     "SalesLot", "SalesLotItem",

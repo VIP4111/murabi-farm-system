@@ -220,6 +220,10 @@ class FarmSettings(db.Model):
     # عمداً، عشان فشل قناة وحدة ما يوقف الثانية.
     last_daily_telegram_report_sent = db.Column(db.Date, nullable=True)
 
+    # آخر مرة انفحصت التنبيهات لإشعارات Push (بند إضافي، إشعارات مثل
+    # الواتساب) — DateTime لا Date (الفحص كل ~15 دقيقة، مو مرة باليوم).
+    last_push_alert_check = db.Column(db.DateTime, nullable=True)
+
     # نص إقرار المخالصة النهائية (بند إصلاح — طلبك: "النصوص القانونية
     # مسودة عامة. هل هاذي قابله لتعديل عن طريق البرنامج ولا ثابته" ثم
     # "نعم خليه قابل لتعديل") — كان ثابتاً بالكود بـ
