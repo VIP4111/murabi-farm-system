@@ -56,11 +56,22 @@ async function enablePushNotifications(banner) {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(public_key),
     });
-    await fetch("/push/subscribe", {
+    // إصلاح — بلاغ مستخدم حقيقي: "فعّلته واختفى، ونفس إرساله تطلع [ما
+    // فيه اشتراك]". السبب: هذا الطلب ما كان يتحقق من نجاحه إطلاقاً —
+    // الشريط كان يختفي (يبان كإنه نجح) حتى لو فشل حفظ الاشتراك بالخادم
+    // (خطأ سيرفر، انقطاع شبكة لحظي...)، فالمستخدم يفتكر إنه مفعّل
+    // وهو فعلياً غير مسجَّل. الآن نتحقق من `response.ok` قبل إخفاء
+    // الشريط — فشل الحفظ يبقي الشريط ظاهراً مع رسالة خطأ واضحة بدل
+    // نجاح وهمي صامت.
+    const subscribeResp = await fetch("/push/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRFToken": csrfToken() },
       body: JSON.stringify(subscription.toJSON()),
     });
+    if (!subscribeResp.ok) {
+      statusEl.textContent = window.PUSH_ERROR_MESSAGE || "";
+      return;
+    }
     banner.style.display = "none";
     try { localStorage.setItem("murabi_push_enabled", "1"); } catch (e) {}
   } catch (e) {
