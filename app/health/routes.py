@@ -10,7 +10,7 @@ from app.models import (
     Pharmacy, PharmacyBatch, PharmacyDoseRule, UsageRoute, DrugCatalogEntry, VaccinationSchedule, Doctor, VetVisit,
     Disease, Vaccination, Animal, AuditLog, Barn,
     DiseaseType, Symptom, FarmSettings, Task, TreatmentProtocol, TreatmentProtocolStep,
-    ProtocolApplication, DiseaseSymptomLink, EmergencySymptom,
+    DiseaseSymptomLink, EmergencySymptom,
 )
 from app.models.usage_route import USAGE_ROUTE_LABELS_EN
 from app.health import health_service

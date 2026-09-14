@@ -6,7 +6,7 @@ from flask_login import login_required, current_user
 from app.warehouses import warehouses_bp
 from app.core import warehouse_service as wsvc
 from app.core import inventory_count_service as csvc
-from app.models import Warehouse, Feed, Pharmacy, Equipment, InventoryCount
+from app.models import Warehouse, Feed, Pharmacy, InventoryCount
 
 
 def _require_feed_or_pharmacy_manage():
