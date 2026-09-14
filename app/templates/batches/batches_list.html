@@ -2,7 +2,16 @@
 {% from "_macros.html" import tip %}
 {% block content %}
 {% set stage_labels = {1: _('حجر صحي وأوليات'), 2: _('ترقيم وفحص سلامة'), 3: _('موزَّعة (مكتملة)')} %}
+{% set stage_colors = {1: 'var(--t-health, #d0533f)', 2: 'var(--t-repro, #d68f2a)', 3: 'var(--t-animals, #2f8f5a)'} %}
 {% set source_labels = {'purchase': _('شراء'), 'gift': _('هدية/دعم')} %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "المرحلة" صار شارة ملوّنة بدل badge عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.batch-stage-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('دفعات استقبال قطيع جديد') }}</h2>
@@ -19,7 +28,7 @@
       <td>{{ source_labels.get(b.source, b.source) }}</td>
       <td>{{ b.arrival_date }}</td>
       <td>{{ b.animals|length }}</td>
-      <td><span class="badge {{ 'on' if b.stage == 3 else '' }}">{{ stage_labels.get(b.stage, b.stage) }}</span></td>
+      <td><span class="batch-stage-chip" style="background:{{ stage_colors.get(b.stage, 'var(--muted, #8a8580)') }};">{{ stage_labels.get(b.stage, b.stage) }}</span></td>
       <td><a class="btn light" style="padding:6px 12px; font-size:12px;" href="{{ url_for('batches.batch_detail', batch_id=b.id) }}">{{ _('تفاصيل') }} ←</a></td>
     </tr>
     {% else %}<tr><td colspan="6" style="color:#888;">{{ _('لا يوجد دفعات مسجَّلة بعد.') }}</td></tr>{% endfor %}

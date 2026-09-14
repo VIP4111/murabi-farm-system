@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمودا "مؤكّد" و"النتيجة" صارا شارتين ملوّنتين بدل
+   badge عادي، + تظليل صفوف الجدول عند مرور الماوس. CSS محلي بهذي
+   الصفحة بس. #}
+<style>
+.pregnancy-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('تشخيص الحمل') }}</h2>
@@ -13,11 +22,11 @@
     <tr>
       <td>{{ r.date }}</td>
       <td>{{ r.female.animal_no }}</td>
-      <td>{% if r.confirmed %}<span class="badge on">{{ _('نعم') }}</span>{% else %}<span class="badge off">{{ _('لا') }}</span>{% endif %}</td>
+      <td>{% if r.confirmed %}<span class="pregnancy-chip" style="background:var(--t-animals, #2f8f5a);">{{ _('نعم') }}</span>{% else %}<span class="pregnancy-chip" style="background:var(--muted, #8a8580);">{{ _('لا') }}</span>{% endif %}</td>
       <td>{{ r.sonar_date or '-' }}</td>
       <td>{{ r.embryo_count or '-' }}</td>
       <td>{{ expected_birth[r.id] }}</td>
-      <td>{% if r.outcome == 'abortion' %}<span class="badge off">⛔ {{ _('إجهاض') }} {{ r.outcome_date }}</span>{% else %}-{% endif %}</td>
+      <td>{% if r.outcome == 'abortion' %}<span class="pregnancy-chip" style="background:var(--t-health, #d0533f);">⛔ {{ _('إجهاض') }} {{ r.outcome_date }}</span>{% else %}-{% endif %}</td>
       <td>
         {% if current_user.has_permission('repro.manage') and not r.confirmed and not r.outcome %}
         <form method="post" action="{{ url_for('repro.pregnancies_confirm', pregnancy_id=r.id) }}" style="display:inline;">

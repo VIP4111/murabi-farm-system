@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "فئة العلف" صار شارة ملوّنة بدل نص عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.feed-class-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('مكوّنات العلف') }}</h2>
@@ -16,7 +24,8 @@
     <tr>
       <td>{{ i.name }}{% if i.contains_high_copper %} <span class="badge off" title="{{ _('يحتوي نحاساً مرتفعاً') }}">⚠️Cu</span>{% endif %}</td>
       <td>{{ i.category or '-' }}</td>
-      <td>{{ feed_class_labels.get(i.feed_class, '-') if i.feed_class else '-' }}</td>
+      {% set feed_class_colors = {'concentrate':'var(--t-repro, #d68f2a)', 'roughage':'var(--t-animals, #2f8f5a)', 'mineral':'var(--t-vax, #2f8fae)', 'other':'var(--muted, #8a8580)'} %}
+      <td>{% if i.feed_class %}<span class="feed-class-chip" style="background:{{ feed_class_colors.get(i.feed_class, 'var(--muted, #8a8580)') }};">{{ feed_class_labels.get(i.feed_class, i.feed_class) }}</span>{% else %}-{% endif %}</td>
       <td>{{ i.protein_percent or '-' }}</td>
       <td>{{ i.energy_kcal_per_kg or '-' }}</td>
       <td>
