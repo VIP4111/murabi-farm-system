@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "النوع" صار شارة ملوّنة بدل badge عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.symptom-type-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('الأعراض (شجرة التشخيص)') }}</h2>
@@ -21,7 +29,7 @@
     {% for s in symptoms %}
     <tr>
       <td>{{ s.name }}{% if s.name_en %} <span style="color:var(--muted); font-size:11.5px;" dir="ltr">({{ s.name_en }})</span>{% endif %}</td>
-      <td>{% if s.is_primary %}<span class="badge on">{{ _('رئيسي') }}</span>{% else %}<span class="badge">{{ _('متابعة') }}</span>{% endif %}</td>
+      <td><span class="symptom-type-chip" style="background:{{ 'var(--t-health, #d0533f)' if s.is_primary else 'var(--t-vax, #2f8fae)' }};">{{ _('رئيسي') if s.is_primary else _('متابعة') }}</span></td>
     </tr>
     {% else %}
     <tr><td colspan="2" style="color:#888;">{{ _('القائمة فاضية.') }}</td></tr>

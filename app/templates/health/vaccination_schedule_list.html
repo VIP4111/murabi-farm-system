@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "الحالة" بالجدول السابق صار شارة ملوّنة بدل نص
+   عادي، + تظليل صفوف الجدولين عند مرور الماوس. CSS محلي بهذي
+   الصفحة بس. #}
+<style>
+.vax-sched-status-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('تقويم التحصينات') }}</h2>
@@ -60,7 +69,7 @@
       <td>{{ s.barn.barn_name }}</td>
       <td>{{ s.pharmacy.name }}</td>
       <td>{{ s.planned_date }}</td>
-      <td>{{ (_('مكتملة') + ' ✅') if s.status == 'completed' else (_('ملغاة') + ' ❌') }}</td>
+      <td><span class="vax-sched-status-chip" style="background:{{ 'var(--t-animals, #2f8f5a)' if s.status == 'completed' else 'var(--t-health, #d0533f)' }};">{{ (_('مكتملة') + ' ✅') if s.status == 'completed' else (_('ملغاة') + ' ❌') }}</span></td>
     </tr>
     {% else %}
     <tr><td colspan="4" style="color:#888;">{{ _('لا يوجد سجل سابق.') }}</td></tr>
