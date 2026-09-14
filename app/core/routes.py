@@ -2741,3 +2741,27 @@ def push_test():
         except Exception as e:
             current_app.logger.warning("push_test failed: %s", e)
     return jsonify({"ok": sent > 0, "sent": sent})
+
+
+@core_bp.route("/push/preferences", methods=["GET", "POST"])
+@login_required
+def push_preferences():
+    """تفضيل شخصي (بند إضافي، طلبك: "نخلي اختيار التنبيهات المراقَب
+    فيها عن طريق الإعدادات") — كل مستخدم يختار أنواع التنبيهات اللي
+    يبي إشعار Push فعلي لها بجهازه، بدون صلاحية خاصة (نفس فلسفة تفضيل
+    اللغة/الوضع الليلي الشخصي — لا علاقة بصلاحيات settings.manage)."""
+    if request.method == "POST":
+        enabled_keys = set(request.form.getlist("enabled_categories"))
+        all_keys = {k for k, _label in alerts_service.alert_category_choices()}
+        muted_keys = all_keys - enabled_keys
+        current_user.push_muted_categories = ",".join(sorted(muted_keys)) if muted_keys else None
+        db.session.commit()
+        flash(_("تم حفظ تفضيلات الإشعارات"), "success")
+        return redirect(url_for("core.push_preferences"))
+
+    muted = current_user.muted_push_categories()
+    categories = [
+        {"key": k, "label": label, "enabled": k not in muted}
+        for k, label in alerts_service.alert_category_choices()
+    ]
+    return render_template("push_preferences.html", categories=categories)

@@ -35,12 +35,55 @@
 import calendar
 from datetime import date, datetime, timedelta
 from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _l
 from app.models import (
     Animal, Barn, Vaccination, ReproDevice, Disease, ProductionWorkflow, Report, FarmSettings, Pharmacy,
     AnimalWeight, Task, Feed, FeedMovement,
 )
 
 PAYROLL_MONTH_END_REMINDER_DAYS = 3
+
+# بند إضافي (طلبك: "نخلي اختيار التنبيهات المراقَب فيها عن طريق
+# الإعدادات") — نسخة مركزية من تسمية كل `category_key` تستخدمها شاشة
+# تفضيلات إشعارات Push الشخصية (`core.push_preferences`) — كل مستخدم
+# يختار أنواع التنبيهات اللي يبيها Push فعلياً لجهازه بس، بدل كل
+# التنبيهات تلقائياً. القيم `_l()` (كسولة) لأن هذا القاموس يُبنى وقت
+# استيراد الوحدة، قبل أي طلب/سياق ترجمة فعلي.
+ALERT_CATEGORY_LABELS = {
+    "vaccination_due": _l("تحصين"),
+    "withdrawal_ending": _l("فترة سحب"),
+    "milk_withdrawal_ending": _l("فترة سحب حليب"),
+    "near_birth": _l("ولادة متوقعة"),
+    "repro_device_removal": _l("جهاز تكاثر"),
+    "open_disease": _l("مرض مفتوح"),
+    "out_of_order_cycle": _l("ترتيب غير منتظم"),
+    "stalled_workflow": _l("توقّف بدورة الإنتاج"),
+    "stale_report": _l("بلاغ منتظر"),
+    "ready_to_sell": _l("جاهز للبيع"),
+    "delayed_estrus": _l("تأخر شياع"),
+    "incomplete_animal_data": _l("بيانات ناقصة"),
+    "barn_without_worker": _l("حظيرة بدون مسؤول"),
+    "vaccination_stock_shortage": _l("نقص مخزون تحصين مجدول"),
+    "vaccination_schedule_reminder": _l("تذكير تحصين مجدول"),
+    "task_completed_late": _l("مهمة أُنجزت متأخرة عن موعدها"),
+    "task_overdue": _l("مهمة متأخرة عن موعدها"),
+    "equipment_needs_maintenance": _l("معدة تحتاج صيانة"),
+    "payroll_month_end": _l("تذكير رواتب نهاية الشهر"),
+    "medicine_expiring": _l("قرب انتهاء صلاحية دواء"),
+    "target_barn_missing": _l("حظيرة هدف ناقصة"),
+    "isolation_without_barn": _l("عزل بدون حظيرة مصنّفة"),
+    "feed_distribution_shortage": _l("توزيع علف ناقص"),
+    "feed_depletion_forecast": _l("توقّع نفاد علف"),
+    "failed_task_pending_review": _l("مهمة متعذّرة بانتظار المراجعة"),
+    "suggested_task_pending_approval": _l("مهمة مقترحة بانتظار الاعتماد"),
+    "weight_gain_underperformer": _l("تباطؤ نمو مشبوه"),
+}
+
+
+def alert_category_choices() -> list[tuple[str, str]]:
+    """(المفتاح، التسمية المترجَمة) مرتَّبة أبجدياً — لشاشة تفضيلات
+    إشعارات Push."""
+    return sorted(((k, str(v)) for k, v in ALERT_CATEGORY_LABELS.items()), key=lambda kv: kv[1])
 
 
 def _vaccinations_due(fs: FarmSettings) -> list[dict]:

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>🔔 {{ _('تفضيلات إشعارات Push') }}</h2>
+  <p style="color:var(--muted); font-size:13px;">{{ _('اختر أنواع التنبيهات اللي تبي توصلك كإشعار Push بجهازك. هذا تفضيل شخصي لحسابك بس — ما يأثر على باقي أعضاء الفريق. غير محدَّد = ما توصلك.') }}</p>
+  <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px;">
+      <button type="button" class="btn light" style="padding:6px 12px; font-size:12.5px;" onclick="document.querySelectorAll('.push-cat-check').forEach(c => c.checked = true);">{{ _('تحديد الكل') }}</button>
+      <button type="button" class="btn light" style="padding:6px 12px; font-size:12.5px;" onclick="document.querySelectorAll('.push-cat-check').forEach(c => c.checked = false);">{{ _('إلغاء الكل') }}</button>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:8px;">
+      {% for c in categories %}
+      <label style="display:flex; gap:10px; align-items:center; font-size:13.5px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--card);">
+        <input type="checkbox" class="push-cat-check" name="enabled_categories" value="{{ c.key }}" {% if c.enabled %}checked{% endif %} style="flex:0 0 auto;">
+        <span>{{ c.label }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn" style="margin-top:14px;">{{ _('حفظ التفضيلات') }}</button>
+  </form>
+</div>
+{% endblock %}

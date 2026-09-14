@@ -116,6 +116,17 @@ def check_and_send_alert_push_notifications() -> None:
             continue
         if not alerts:
             continue
+        # بند إضافي (طلبك: "نخلي اختيار التنبيهات المراقَب فيها عن
+        # طريق الإعدادات") — كل مستخدم يقدر يلغي أنواع تنبيهات معيّنة
+        # لنفسه بس (User.push_muted_categories). تُستبعَد هنا قبل
+        # حساب الجديد/المُرسَل سابقاً، فما تُسجَّل بـSentPushAlert
+        # أصلاً — لو المستخدم فعّلها لاحقاً، يوصله التنبيه وقتها عادي.
+        muted = user.muted_push_categories()
+        if muted:
+            alerts = [a for a in alerts if a.get("category_key") not in muted]
+        if not alerts:
+            continue
+
         already_sent = {
             row[0] for row in
             db.session.query(SentPushAlert.alert_key).filter_by(user_id=user.id).all()

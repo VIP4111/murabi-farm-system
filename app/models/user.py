@@ -28,6 +28,18 @@ class User(UserMixin, db.Model):
     # مستخدم لنفسه من قائمة الإعدادات الجانبية بدون صلاحية خاصة.
     theme = db.Column(db.String(8), default="light", nullable=False)
 
+    # أنواع تنبيهات إشعارات Push اللي ألغاها هذا المستخدم لنفسه (بند
+    # إضافي، طلبك: "نخلي اختيار التنبيهات المراقَب فيها عن طريق
+    # الإعدادات") — نفس فلسفة `theme`/`language` بالضبط: تفضيل شخصي
+    # لكل حساب. قائمة `category_key` مفصولة بفواصل، فاضي/None = كل
+    # الأنواع مفعّلة (السلوك الافتراضي قبل هذا البند).
+    push_muted_categories = db.Column(db.Text, nullable=True)
+
+    def muted_push_categories(self) -> set[str]:
+        if not self.push_muted_categories:
+            return set()
+        return {c for c in self.push_muted_categories.split(",") if c}
+
     # مستوى تبسيط الواجهة (بند إضافي 225) — نفس فلسفة `theme`/`language`
     # بالضبط: تفضيل شخصي محفوظ لكل حساب. "normal" = اللوحة الكاملة
     # الحالية. "simple" = واجهة "بسيط جداً" (أزرار كبيرة، سؤال وحد
