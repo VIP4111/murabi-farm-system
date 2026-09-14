@@ -537,23 +537,35 @@ def members_toggle(user_id):
 
 # ---------- البلاغات ----------
 
+
+# بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") — نفس فئة خلل
+# N+1 المُصلَح بـ`_TASK_ROW_EAGER_LOAD` أعلاه بالضبط، بس هنا لشاشة
+# "البلاغات": القالب يوصل `r.reporter.name` لكل صف بكل قوائم البلاغات
+# الخمس تحت (inbox/my_accepted/my_executor_tasks/my_reports/cancelled)
+# بدون أي تحميل مسبق — استعلام منفصل لكل بلاغ يُعرض.
+_REPORT_ROW_EAGER_LOAD = (joinedload(Report.reporter),)
+
+
 @team_bp.route("/reports")
 @login_required
 def reports_list():
     inbox = my_accepted = my_executor_tasks = my_reports = cancelled = []
     if current_user.has_permission("reports.manage"):
-        inbox = Report.query.filter_by(status="new").order_by(Report.created_at).all()
-        my_accepted = (Report.query
+        inbox = (Report.query.options(*_REPORT_ROW_EAGER_LOAD)
+                  .filter_by(status="new").order_by(Report.created_at).all())
+        my_accepted = (Report.query.options(*_REPORT_ROW_EAGER_LOAD)
                        .filter(Report.manager_id == current_user.id,
                                Report.status.in_(["accepted", "executed_pending_review"]))
                        .order_by(Report.accepted_at).all())
-    my_executor_tasks = (Report.query
+    my_executor_tasks = (Report.query.options(*_REPORT_ROW_EAGER_LOAD)
                          .filter_by(executor_id=current_user.id, status="accepted")
                          .order_by(Report.transferred_at).all())
     if current_user.has_permission("reports.submit"):
-        my_reports = Report.query.filter_by(reporter_id=current_user.id).order_by(Report.created_at.desc()).limit(30).all()
+        my_reports = (Report.query.options(*_REPORT_ROW_EAGER_LOAD)
+                      .filter_by(reporter_id=current_user.id).order_by(Report.created_at.desc()).limit(30).all())
     if current_user.has_permission("reports.delete_final"):
-        cancelled = Report.query.filter_by(status="cancelled").order_by(Report.created_at.desc()).all()
+        cancelled = (Report.query.options(*_REPORT_ROW_EAGER_LOAD)
+                     .filter_by(status="cancelled").order_by(Report.created_at.desc()).all())
 
     return render_template(
         "team/reports_list.html",

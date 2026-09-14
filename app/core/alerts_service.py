@@ -408,7 +408,13 @@ def _late_time_critical_tasks(fs: FarmSettings, *, now: datetime | None = None) 
     now = now or datetime.now()
     today = now.date()
     grace = timedelta(minutes=fs.task_late_grace_minutes)
-    tasks = Task.query.filter(
+    # بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") — الحلقة تحت
+    # توصل `t.accepted_by.name`/`t.assignee.name` لكل مهمة — بدون تحميل
+    # مسبق، هذا استعلام إضافي منفصل لكل مهمة عندها موعد وقت محدد اليوم.
+    from sqlalchemy.orm import joinedload
+    tasks = Task.query.options(
+        joinedload(Task.accepted_by), joinedload(Task.assignee),
+    ).filter(
         Task.due_date == today, Task.due_time.isnot(None),
         Task.status.notin_(["cancelled", "deleted_pending_review", "postponed"]),
     ).all()
@@ -447,7 +453,13 @@ def _equipment_needs_maintenance() -> list[dict]:
     items = Equipment.query.filter_by(needs_maintenance=True).all()
     alerts = []
     for item in items:
-        last = (EquipmentMovement.query.filter_by(equipment_id=item.id)
+        # بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") —
+        # `last.borrowed_by.name` تحت كانت تسوي استعلام مستخدم إضافي
+        # منفصل لكل صنف معدة (فوق استعلام "آخر حركة" نفسه، غير مُجدٍ
+        # تجميعه لأن حالة "تحتاج صيانة" نادرة أصلاً بعدد الأصناف).
+        from sqlalchemy.orm import joinedload
+        last = (EquipmentMovement.query.options(joinedload(EquipmentMovement.borrowed_by))
+                .filter_by(equipment_id=item.id)
                 .filter(db.or_(EquipmentMovement.condition_at_handout == "needs_maintenance",
                                 EquipmentMovement.condition_at_return == "needs_maintenance"))
                 .order_by(EquipmentMovement.created_at.desc()).first())
@@ -517,6 +529,17 @@ def _payroll_month_end_reminder() -> list[dict]:
 
     alerts = []
     workers = User.query.filter(User.is_active_account == True, User.base_salary.isnot(None)).all()  # noqa: E712
+    # بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") — كانت
+    # `Payroll.query.filter_by(...).first()` تُستدعى داخل حلقة مزدوجة
+    # (كل عامل × كل شهر يُفحص) — عدد استعلامات = عدد العمال × عدد
+    # الأشهر بكل مرة تُحسب فيها التنبيهات. استعلام واحد مجمَّع يجيب كل
+    # صفوف Payroll المرشَّحة دفعة وحدة، ونبني منها قاموس بحث بالذاكرة.
+    worker_ids = [w.id for w in workers]
+    payrolls_by_key: dict[tuple[int, int, int], Payroll] = {}
+    if worker_ids and months_to_check:
+        years = {y for y, _m in months_to_check}
+        for p in Payroll.query.filter(Payroll.user_id.in_(worker_ids), Payroll.year.in_(years)).all():
+            payrolls_by_key[(p.user_id, p.year, p.month)] = p
     for w in workers:
         # ما نطالب عامل براتب شهر قبل ما أصلاً كان له حساب بالنظام —
         # `created_at` تاريخ إنشاء حسابه.
@@ -524,7 +547,7 @@ def _payroll_month_end_reminder() -> list[dict]:
         for (y, m) in months_to_check:
             if (y, m) < (joined.year, joined.month):
                 continue
-            payroll = Payroll.query.filter_by(user_id=w.id, year=y, month=m).first()
+            payroll = payrolls_by_key.get((w.id, y, m))
             if payroll and payroll.status == "confirmed":
                 continue
             is_current_month = (y, m) == (today.year, today.month)
@@ -563,9 +586,16 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
     today = date.today()
     window_end = today + timedelta(days=fs.alert_before_days)
 
+    # بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") — الحلقة تحت
+    # كانت تعيد استعلام `Pharmacy.query.get(pharmacy_id)` من الصفر لكل
+    # دواء، رغم إن أدوية هذي الحلقة الأولى محمَّلة فعلاً بالذاكرة —
+    # نخزّنها بقاموس `pharmacies_by_id` ونعيد استخدامها، بدل استعلام
+    # مكرَّر بلا فائدة لنفس الصف.
     earliest_expiry: dict[int, date] = {}
+    pharmacies_by_id: dict[int, Pharmacy] = {}
     for p in Pharmacy.query.filter(Pharmacy.status == "active", Pharmacy.expiry_date.isnot(None)).all():
         earliest_expiry[p.id] = p.expiry_date
+        pharmacies_by_id[p.id] = p
 
     for b in PharmacyBatch.query.filter(PharmacyBatch.remaining_qty > 0, PharmacyBatch.expiry_date.isnot(None)).all():
         prev = earliest_expiry.get(b.pharmacy_id)
@@ -576,7 +606,7 @@ def _medicine_expiring_soon(fs: FarmSettings) -> list[dict]:
     for pharmacy_id, expiry in earliest_expiry.items():
         if expiry > window_end:
             continue
-        p = Pharmacy.query.get(pharmacy_id)
+        p = pharmacies_by_id.get(pharmacy_id) or Pharmacy.query.get(pharmacy_id)
         if not p or p.status != "active":
             continue
         expired = expiry < today
