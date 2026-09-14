@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "الحالة" صار شارة ملوّنة بدل badge عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.incubator-status-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('الحاضنات') }}</h2>
@@ -17,7 +25,7 @@
       <td>{{ inc.code }}</td>
       <td>{{ inc.name or '-' }}</td>
       <td>{{ inc.capacity or '-' }}</td>
-      <td><span class="badge {{ 'on' if inc.status == 'active' else 'off' }}">{{ _('نشطة') if inc.status == 'active' else _('غير نشطة') }}</span></td>
+      <td><span class="incubator-status-chip" style="background:{{ 'var(--t-animals, #2f8f5a)' if inc.status == 'active' else 'var(--muted, #8a8580)' }};">{{ _('نشطة') if inc.status == 'active' else _('غير نشطة') }}</span></td>
       <td>{{ inc.notes or '-' }}</td>
     </tr>
     {% else %}

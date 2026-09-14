@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "الحالة" صار شارة ملوّنة بدل badge عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.egg-status-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>{{ _('سجل النعام — البيض والتفقيس') }}</h2>
@@ -31,9 +39,9 @@
       <td>{{ e.incubation_start_date or '-' }}</td>
       <td>{{ expected[e.id] or '-' }}</td>
       <td>
-        {% if e.hatch_result == 'pending' %}<span class="badge">{{ _('بانتظار') }}</span>
-        {% elif e.hatch_result == 'hatched' %}<span class="badge on">{{ _('فقست') }} — {{ e.hatched_animal.animal_no if e.hatched_animal else '' }}</span>
-        {% else %}<span class="badge off">{{ _('فشلت') }}</span>{% endif %}
+        {% if e.hatch_result == 'pending' %}<span class="egg-status-chip" style="background:var(--t-vax, #2f8fae);">{{ _('بانتظار') }}</span>
+        {% elif e.hatch_result == 'hatched' %}<span class="egg-status-chip" style="background:var(--t-animals, #2f8f5a);">{{ _('فقست') }} — {{ e.hatched_animal.animal_no if e.hatched_animal else '' }}</span>
+        {% else %}<span class="egg-status-chip" style="background:var(--t-health, #d0533f);">{{ _('فشلت') }}</span>{% endif %}
       </td>
       <td>
         {% if current_user.has_permission('repro.manage') and e.hatch_result == 'pending' %}
