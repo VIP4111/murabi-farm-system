@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "الحالة" صار شارة ملوّنة بدل badge عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.payroll-status-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
     <h2>💰 {{ _('رواتب الشهر') }}</h2>
@@ -27,11 +35,11 @@
       <td>{{ member.base_salary if member.base_salary is not none else '-' }}</td>
       <td>
         {% if not p %}
-        <span class="badge off">{{ _('ما تجهّز بعد') }}</span>
+        <span class="payroll-status-chip" style="background:var(--muted, #8a8580);">{{ _('ما تجهّز بعد') }}</span>
         {% elif p.status == 'confirmed' %}
-        <span class="badge on">✅ {{ _('مؤكَّد') }}</span>
+        <span class="payroll-status-chip" style="background:var(--t-animals, #2f8f5a);">✅ {{ _('مؤكَّد') }}</span>
         {% else %}
-        <span class="badge off">📝 {{ _('مسودة') }}</span>
+        <span class="payroll-status-chip" style="background:var(--t-finance, #c99a1e);">📝 {{ _('مسودة') }}</span>
         {% endif %}
       </td>
       <td>{{ '%.2f'|format(p.net_amount) if p else '-' }}</td>

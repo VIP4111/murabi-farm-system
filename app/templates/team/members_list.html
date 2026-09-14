@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "الدور" صار شارة ملوّنة بدل نص عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. الأدوار ديناميكية (تُنشأ من الإعدادات)
+   فالتلوين بالتدوير على لوحة ثابتة، لا خرائط اسم←لون ثابتة (نفس
+   أسلوب role-filter-chip بشاشة المهام). CSS محلي بهذي الصفحة بس. #}
+<style>
+.member-role-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('أعضاء الفريق') }}</h2>
@@ -9,6 +19,7 @@
   <div class="table-scroll">
 <table>
     <tr><th></th><th>{{ _('الاسم') }}</th><th>{{ _('الجوال') }}</th><th>{{ _('الدور') }}</th><th>{{ _('اللغة') }}</th><th>{{ _('الحالة') }} {{ tip(_('"تعطيل" يمنعه من تسجيل الدخول فوراً بدون حذف بياناته أو سجلاته التاريخية — استخدمها بدل الحذف لموظف ترك العمل، تقدر تعيد تفعيله لاحقاً.')) }}</th><th></th></tr>
+    {% set role_chip_palette = ['var(--t-team, #3568a0)', 'var(--t-health, #d0533f)', 'var(--t-vax, #2f8fae)', 'var(--t-repro, #d68f2a)', 'var(--t-animals, #2f8f5a)', 'var(--t-pharmacy, #8552b5)'] %}
     {% for m in members %}
     <tr>
       <td>
@@ -20,7 +31,7 @@
       </td>
       <td>{{ m.name }}</td>
       <td>{{ m.phone }}</td>
-      <td>{{ m.role.display_label() if m.role else '-' }}</td>
+      <td><span class="member-role-chip" style="background:{{ role_chip_palette[(m.role.id if m.role else 0) % role_chip_palette|length] }};">{{ m.role.display_label() if m.role else '-' }}</span></td>
       <td>{{ m.language }}</td>
       <td>{% if m.is_active_account %}<span class="badge on">{{ _('نشط') }}</span>{% else %}<span class="badge off">{{ _('معطّل') }}</span>{% endif %}</td>
       <td style="display:flex; gap:6px;">
