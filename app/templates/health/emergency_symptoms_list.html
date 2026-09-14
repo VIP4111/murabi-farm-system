@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+{# بند إصلاح (تصميم "بلاطات مراح" — طلبك: "استمر حتى تغطي كل
+   الشاشات") — عمود "الخطورة" صار شارة ملوّنة بدل badge عادي، + تظليل
+   صفوف الجدول عند مرور الماوس. CSS محلي بهذي الصفحة بس. #}
+<style>
+.emergency-severity-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <h2>{{ _('قائمة أعراض الطوارئ') }}</h2>
   <p style="color:var(--muted); font-size:13px;">
@@ -15,7 +23,7 @@
     {% for e in entries %}
     <tr>
       <td>{{ e.symptom.name }}</td>
-      <td><span class="badge {{ 'off' if e.severity == 'حرجة' else 'on' }}">{{ _('حرجة') if e.severity == 'حرجة' else (_('شديدة') if e.severity == 'شديدة' else e.severity) }}</span></td>
+      <td><span class="emergency-severity-chip" style="background:{{ 'var(--t-health, #d0533f)' if e.severity == 'حرجة' else 'var(--t-repro, #d68f2a)' }};">{{ _('حرجة') if e.severity == 'حرجة' else (_('شديدة') if e.severity == 'شديدة' else e.severity) }}</span></td>
       <td style="font-size:12.5px;">{{ e.differential }}</td>
       <td style="font-size:12.5px;">{{ e.advice }}</td>
       <td>
