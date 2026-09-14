@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (فحص عميق إضافي — طلبك: "ارجع افحص ولي ما طبقت عليها
+   طبقها") — اتضح إن r.purpose مجموعة ثابتة (راجع القائمة المنسدلة
+   بـration_form.html)، مو نص حر زي ما افترضته أول فحص — كانت تُعرض
+   خام بدون ترجمة (وبقيمة "حمل_متأخر" بشرطة سفلية مختلفة عن نص
+   العرض "حمل متأخر")، + تحتاج شارة ملوّنة بنفس نمط "بلاطات مراح".
+   CSS محلي بهذي الصفحة بس. #}
+<style>
+.ration-purpose-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table.compact-table tbody tr{transition:background .1s ease;}
+table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('وصفات العلف') }} {{ tip(_('خلطة من عدة مكوّنات علف بنسب محدَّدة — تُبنى مرة وحدة هنا، وتُستخدم لاحقاً بخطط تغذية الحظائر بدل ما تحسب النسب كل مرة يدوياً.')) }}</h2>
@@ -12,7 +23,9 @@
     {% for r in rations %}
     <tr>
       <td><a href="{{ url_for('feed.ration_detail', ration_id=r.id) }}">{{ r.name }}</a></td>
-      <td>{{ r.purpose or '-' }}</td>
+      {% set purpose_labels = {'نمو': _('نمو'), 'نفاس': _('نفاس'), 'حمل_متأخر': _('حمل متأخر'), 'تسمين': _('تسمين'), 'صيانة': _('صيانة')} %}
+      {% set purpose_colors = {'نمو':'var(--t-animals, #2f8f5a)', 'نفاس':'var(--t-pharmacy, #8552b5)', 'حمل_متأخر':'var(--t-repro, #d68f2a)', 'تسمين':'var(--t-feed, #7fa030)', 'صيانة':'var(--muted, #8a8580)'} %}
+      <td>{% if r.purpose %}<span class="ration-purpose-chip" style="background:{{ purpose_colors.get(r.purpose, 'var(--muted, #8a8580)') }};">{{ purpose_labels.get(r.purpose, r.purpose) }}</span>{% else %}-{% endif %}</td>
       <td>{{ profiles[r.id].protein_percent if r.id in profiles else '-' }}</td>
       <td>{{ profiles[r.id].energy_kcal_per_kg if r.id in profiles else '-' }}</td>
       <td>{{ profiles[r.id].cost_per_kg if r.id in profiles else '-' }}</td>

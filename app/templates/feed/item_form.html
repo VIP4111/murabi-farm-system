@@ -7,8 +7,8 @@
     <label>{{ _('الاسم') }}</label><input name="name" required placeholder="{{ _('مثال: برسيم دريس') }}" value="{{ item.name if item else '' }}">
     <label>{{ _('الفئة') }}</label>
     <select name="category">
-      {% for c in ["مركّز","دريس","تبن","سيلاج","إضافات"] %}
-      <option value="{{ c }}" {{ 'selected' if item and item.category == c }}>{{ _(c) }}</option>
+      {% for c, label in category_labels.items() %}
+      <option value="{{ c }}" {{ 'selected' if item and item.category == c }}>{{ label }}</option>
       {% endfor %}
     </select>
     <label>{{ _('فئة العلف (لحارس منع الزيادة المفاجئة للمركزات)') }}</label>

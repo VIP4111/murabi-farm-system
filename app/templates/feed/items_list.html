@@ -23,7 +23,8 @@ table.compact-table tbody tr:hover{background:color-mix(in srgb, var(--primary) 
     {% for i in items %}
     <tr>
       <td>{{ i.name }}{% if i.contains_high_copper %} <span class="badge off" title="{{ _('يحتوي نحاساً مرتفعاً') }}">⚠️Cu</span>{% endif %}</td>
-      <td>{{ i.category or '-' }}</td>
+      {% set item_category_colors = {'مركّز':'var(--t-repro, #d68f2a)', 'دريس':'var(--t-animals, #2f8f5a)', 'تبن':'var(--t-feed, #7fa030)', 'سيلاج':'var(--t-vax, #2f8fae)', 'إضافات':'var(--t-pharmacy, #8552b5)'} %}
+      <td>{% if i.category %}<span class="feed-class-chip" style="background:{{ item_category_colors.get(i.category, 'var(--muted, #8a8580)') }};">{{ category_labels.get(i.category, i.category) }}</span>{% else %}-{% endif %}</td>
       {% set feed_class_colors = {'concentrate':'var(--t-repro, #d68f2a)', 'roughage':'var(--t-animals, #2f8f5a)', 'mineral':'var(--t-vax, #2f8fae)', 'other':'var(--muted, #8a8580)'} %}
       <td>{% if i.feed_class %}<span class="feed-class-chip" style="background:{{ feed_class_colors.get(i.feed_class, 'var(--muted, #8a8580)') }};">{{ feed_class_labels.get(i.feed_class, i.feed_class) }}</span>{% else %}-{% endif %}</td>
       <td>{{ i.protein_percent or '-' }}</td>

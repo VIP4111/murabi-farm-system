@@ -22,7 +22,7 @@ def items_list():
     stockout = {f.id: svc.days_until_stockout(f) for f in items}
     return render_template(
         "feed/items_list.html", items=items, stockout=stockout,
-        feed_class_labels=Feed.FEED_CLASS_LABELS_AR,
+        feed_class_labels=Feed.FEED_CLASS_LABELS_AR, category_labels=Feed.FEED_ITEM_CATEGORY_LABELS_AR,
     )
 
 
@@ -67,6 +67,7 @@ def items_new():
     return render_template(
         "feed/item_form.html",
         feed_classes=Feed.FEED_CLASSES, feed_class_labels=Feed.FEED_CLASS_LABELS_AR, units=Feed.UNITS,
+        category_labels=Feed.FEED_ITEM_CATEGORY_LABELS_AR,
     )
 
 
@@ -104,6 +105,7 @@ def items_edit(item_id):
     return render_template(
         "feed/item_form.html", item=item,
         feed_classes=Feed.FEED_CLASSES, feed_class_labels=Feed.FEED_CLASS_LABELS_AR, units=Feed.UNITS,
+        category_labels=Feed.FEED_ITEM_CATEGORY_LABELS_AR,
     )
 
 

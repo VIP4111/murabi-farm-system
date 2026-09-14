@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% from "_macros.html" import tip %}
 {% block content %}
+{# بند إصلاح (فحص عميق إضافي — طلبك: "ارجع افحص ولي ما طبقت عليها
+   طبقها") — اتضح إن barn_type مجموعة ثابتة بـ7 قيم بالضبط (راجع
+   القائمة المنسدلة بـbarn_form.html)، مو نص حر زي ما افترضته أول
+   فحص — تحتاج ترجمة عند العرض (كانت خام بدون gettext) + شارة ملوّنة
+   بنفس نمط "بلاطات مراح". CSS محلي بهذي الصفحة بس. #}
+<style>
+.barn-type-chip{display:inline-flex; padding:3px 10px; border-radius:7px; font-weight:700; font-size:11.5px; color:#fff;}
+table tbody tr{transition:background .1s ease;}
+table tbody tr:hover{background:color-mix(in srgb, var(--primary) 6%, transparent);}
+</style>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2>{{ _('الحظائر') }}</h2>
@@ -13,7 +23,8 @@
     <tr>
       <td>{{ b.barn_no }}</td>
       <td>{{ b.display_name() }}</td>
-      <td>{{ b.barn_type or '-' }}</td>
+      {% set barn_type_colors = {'عادية':'var(--muted, #8a8580)', 'عزل':'var(--t-health, #d0533f)', 'نفاس':'var(--t-pharmacy, #8552b5)', 'نمو':'var(--t-animals, #2f8f5a)', 'حامل - الشهور الأخيرة':'var(--t-repro, #d68f2a)', 'رضاعة':'var(--t-vax, #2f8fae)', 'عام':'var(--t-team, #3568a0)'} %}
+      <td>{% if b.barn_type %}<span class="barn-type-chip" style="background:{{ barn_type_colors.get(b.barn_type, 'var(--muted, #8a8580)') }};">{{ _(b.barn_type) }}</span>{% else %}-{% endif %}</td>
       <td>{{ b.capacity or '-' }}</td>
       <td>{{ b.responsible_worker.name if b.responsible_worker else '-' }}</td>
       <td>{{ b.animals|length }}</td>
