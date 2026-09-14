@@ -43,6 +43,12 @@ from app.models import (
 
 PAYROLL_MONTH_END_REMINDER_DAYS = 3
 
+# بند إصلاح (فحص أداء) — أقصر من حارس فحص إشعارات Push (15 دقيقة)
+# عمداً، عشان اكتشاف مهمة مستحقة جديدة يبقى شبه فوري لمستخدم يفتح
+# الشاشة بنفسه، بس يمنع تكرار الفحص الكامل كل بضع ثوانٍ لو تنقّل
+# المستخدم بسرعة بين عدة صفحات.
+ALERT_GENERATORS_THROTTLE_MINUTES = 5
+
 # بند إضافي (طلبك: "نخلي اختيار التنبيهات المراقَب فيها عن طريق
 # الإعدادات") — نسخة مركزية من تسمية كل `category_key` تستخدمها شاشة
 # تفضيلات إشعارات Push الشخصية (`core.push_preferences`) — كل مستخدم
@@ -990,48 +996,74 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
     """
     fs = FarmSettings.get()
 
-    # محرك القواعد الطبية/التغذوية الذكي (بند إضافي 51) — نفس فلسفة
-    # هذا الملف بالضبط (فحص حي عند فتح الشاشة، بدون Cron)، بس هذين
-    # الاثنين ينشئان صف Task فعلي (مو تنبيهاً عابراً) عند الاستحقاق.
-    from app.core import pregnancy_care_service
-    pregnancy_care_service.generate_late_pregnancy_tasks()
-    # كشف حمل ضمني (بند إضافي 236) — نفس نقطة الاستدعاء بالضبط.
-    pregnancy_care_service.detect_implicit_pregnancies()
+    # بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") — الكتلة
+    # تحت تشغّل 9 دوال توليد مهام، كل وحدة تفحص جدول كامل (حيوانات/
+    # تطعيمات/أوزان/أصول...) وقد تكتب صفوف Task جديدة — كانت تشتغل
+    # بلا أي حارس زمني بكل استدعاء لـ`get_alerts()`، اللي يُستدعى
+    # عملياً بكل فتحة صفحة رئيسية/تنبيهات (`home`/`today`/`alerts_list`)
+    # **وصار الآن أيضاً كل ~15 دقيقة من فحص إشعارات Push الدوري**
+    # (`push_service.check_and_send_alert_push_notifications`). كل
+    # دالة توليد بالذات idempotent فعلاً (تتأكد "فيه مهمة مفتوحة من
+    # نفس المصدر أصلاً؟" قبل الإنشاء) — الحارس هنا ما يغيّر أي سلوك
+    # وظيفي، بس يمنع إعادة نفس الفحوصات الكاملة التسعة كل بضع ثوانٍ
+    # لو المستخدم يتنقّل بين الصفحات بسرعة. حارس زمني قصير (٥ دقائق،
+    # أقصر من حارس إشعارات Push نفسه) — يكفي لمنع التكرار المفرط بدون
+    # تأخير ملموس باكتشاف مهمة جديدة مستحقة.
+    from datetime import timedelta, timezone as _tz
+    from app.extensions import db
+    _now_utc = now or datetime.now(_tz.utc)
+    _last_run = fs.last_alert_generators_run
+    _should_run_generators = (
+        _last_run is None
+        or (_now_utc - (_last_run if _last_run.tzinfo else _last_run.replace(tzinfo=_tz.utc))
+            >= timedelta(minutes=ALERT_GENERATORS_THROTTLE_MINUTES))
+    )
+    if _should_run_generators:
+        fs.last_alert_generators_run = _now_utc
+        db.session.commit()
 
-    # مهام يومية تلقائية (بند إضافي 55.1) — نفس الفلسفة بالضبط.
-    # بند إصلاح (مراجعة "أكواد الخلفية") — `farm_now_naive()` بدل ترك
-    # الدالة تستخدم `datetime.now()` الخام (وقت UTC بالسيرفر)، عشان
-    # ميزة "توليد مهام الغد من الساعة 6 مساءً" تشتغل بتوقيت السعودية
-    # الفعلي، مو متأخرة 3 ساعات.
-    from app.core import daily_task_service
-    from app.extensions import farm_now_naive
-    daily_task_service.generate_daily_husbandry_tasks(now=farm_now_naive())
+        # محرك القواعد الطبية/التغذوية الذكي (بند إضافي 51) — نفس فلسفة
+        # هذا الملف بالضبط (فحص حي عند فتح الشاشة، بدون Cron)، بس هذين
+        # الاثنين ينشئان صف Task فعلي (مو تنبيهاً عابراً) عند الاستحقاق.
+        from app.core import pregnancy_care_service
+        pregnancy_care_service.generate_late_pregnancy_tasks()
+        # كشف حمل ضمني (بند إضافي 236) — نفس نقطة الاستدعاء بالضبط.
+        pregnancy_care_service.detect_implicit_pregnancies()
 
-    # مهام وجبات العلف حسب جدول كل حظيرة (بند إضافي 131) — نفس الفلسفة.
-    from app.core import feeding_schedule_service
-    feeding_schedule_service.generate_feeding_tasks()
+        # مهام يومية تلقائية (بند إضافي 55.1) — نفس الفلسفة بالضبط.
+        # بند إصلاح (مراجعة "أكواد الخلفية") — `farm_now_naive()` بدل ترك
+        # الدالة تستخدم `datetime.now()` الخام (وقت UTC بالسيرفر)، عشان
+        # ميزة "توليد مهام الغد من الساعة 6 مساءً" تشتغل بتوقيت السعودية
+        # الفعلي، مو متأخرة 3 ساعات.
+        from app.core import daily_task_service
+        from app.extensions import farm_now_naive
+        daily_task_service.generate_daily_husbandry_tasks(now=farm_now_naive())
 
-    # فرز الحظائر حسب الحالة الفسيولوجية (بند إضافي 133) — نفس الفلسفة.
-    from app.core import barn_physiology_service
-    barn_physiology_service.generate_barn_move_tasks()
+        # مهام وجبات العلف حسب جدول كل حظيرة (بند إضافي 131) — نفس الفلسفة.
+        from app.core import feeding_schedule_service
+        feeding_schedule_service.generate_feeding_tasks()
 
-    # بيانات ناقصة (بند إضافي 135) — نفس الفلسفة.
-    from app.core import data_completeness_service
-    data_completeness_service.generate_completion_tasks()
+        # فرز الحظائر حسب الحالة الفسيولوجية (بند إضافي 133) — نفس الفلسفة.
+        from app.core import barn_physiology_service
+        barn_physiology_service.generate_barn_move_tasks()
 
-    # مهام ذكية من مصادر ثانية غير العزل — تطعيمات مستحقة عامة وأوزان
-    # متأخرة (بند إضافي 149) — نفس الفلسفة.
-    from app.core import scheduled_care_service
-    scheduled_care_service.generate_vaccination_due_tasks()
-    scheduled_care_service.generate_overdue_weight_tasks()
+        # بيانات ناقصة (بند إضافي 135) — نفس الفلسفة.
+        from app.core import data_completeness_service
+        data_completeness_service.generate_completion_tasks()
 
-    # صيانة أصول مستحقة (بند إضافي 186) — نفس الفلسفة.
-    from app.core import asset_maintenance_service
-    asset_maintenance_service.generate_maintenance_due_tasks()
+        # مهام ذكية من مصادر ثانية غير العزل — تطعيمات مستحقة عامة وأوزان
+        # متأخرة (بند إضافي 149) — نفس الفلسفة.
+        from app.core import scheduled_care_service
+        scheduled_care_service.generate_vaccination_due_tasks()
+        scheduled_care_service.generate_overdue_weight_tasks()
 
-    # رادار كشف تكرار الحالات المرضية بالحظيرة (بند إضافي 188) — نفس الفلسفة.
-    from app.core import outbreak_service
-    outbreak_service.detect_barn_clusters()
+        # صيانة أصول مستحقة (بند إضافي 186) — نفس الفلسفة.
+        from app.core import asset_maintenance_service
+        asset_maintenance_service.generate_maintenance_due_tasks()
+
+        # رادار كشف تكرار الحالات المرضية بالحظيرة (بند إضافي 188) — نفس الفلسفة.
+        from app.core import outbreak_service
+        outbreak_service.detect_barn_clusters()
 
     alerts = (
         _vaccinations_due(fs) + _withdrawal_ending_soon(fs) + _milk_withdrawal_ending_soon(fs) + _near_births()

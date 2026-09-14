@@ -225,6 +225,12 @@ class FarmSettings(db.Model):
     # مستقلة بحارسها الخاص.
     last_daily_push_report_sent = db.Column(db.Date, nullable=True)
 
+    # حارس زمني قصير (بند إصلاح — فحص أداء، طلبك: "فحص أداء/سرعة
+    # الموقع") — يمنع `alerts_service.get_alerts()` من إعادة تشغيل
+    # 9 دوال توليد مهام (كل وحدة فحص جدول كامل) بكل استدعاء؛ راجع
+    # `ALERT_GENERATORS_THROTTLE_MINUTES` بذلك الملف.
+    last_alert_generators_run = db.Column(db.DateTime, nullable=True)
+
     # آخر مرة انفحصت التنبيهات لإشعارات Push (بند إضافي، إشعارات مثل
     # الواتساب) — DateTime لا Date (الفحص كل ~15 دقيقة، مو مرة باليوم).
     last_push_alert_check = db.Column(db.DateTime, nullable=True)
