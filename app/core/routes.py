@@ -2743,6 +2743,24 @@ def push_test():
     return jsonify({"ok": sent > 0, "sent": sent})
 
 
+@core_bp.route("/push/test-digest", methods=["POST"])
+@login_required
+@require_permission("settings.manage")
+def push_test_digest():
+    """زر "إرسال ملخص تجريبي الآن" بشاشة الإعدادات (بند إضافي، طلبك:
+    "نعم ظيفها") — يرسل نفس محتوى الملخص اليومي فوراً بدون انتظار
+    دورة اليوم التالي، عشان تتأكد من شكله ووصوله قبل ما تعتمد عليه."""
+    from app.core import daily_push_report_service
+    try:
+        ok = daily_push_report_service.send_test_digest_to(current_user)
+    except Exception as e:
+        current_app.logger.warning("push_test_digest failed: %s", e)
+        return jsonify({"ok": False}), 500
+    if not ok:
+        return jsonify({"error": "no_subscription"}), 400
+    return jsonify({"ok": True})
+
+
 @core_bp.route("/push/preferences", methods=["GET", "POST"])
 @login_required
 def push_preferences():

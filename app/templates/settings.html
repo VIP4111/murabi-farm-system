@@ -203,8 +203,10 @@
     <a class="btn light" href="{{ url_for('core.checkup_items_list') }}">🩺 {{ _('بنود الفحص') }}</a>
     <a class="btn light" href="{{ url_for('core.contract_templates_list') }}">📄 {{ _('نماذج بنود العقد') }}</a>
     <button type="button" class="btn light" id="push-test-btn">🔔 {{ _('إرسال إشعار Push تجريبي لهذا الجهاز') }}</button>
+    <button type="button" class="btn light" id="push-test-digest-btn">📊 {{ _('إرسال ملخص تجريبي الآن') }}</button>
   </div>
   <p id="push-test-result" style="font-size:12.5px; color:var(--muted); margin:8px 0 0;"></p>
+  <p id="push-test-digest-result" style="font-size:12.5px; color:var(--muted); margin:4px 0 0;"></p>
 </div>
 <script>
   document.getElementById('push-test-btn').addEventListener('click', function () {
@@ -215,6 +217,23 @@
       .then(function (res) {
         if (res.ok && res.data.ok) {
           resultEl.textContent = {{ _('تم الإرسال — لو ما وصلك إشعار خلال ثوانٍ، تأكد إنك فعّلت الإشعارات بهذا الجهاز أول.')|tojson }};
+        } else if (res.data.error === 'no_subscription') {
+          resultEl.textContent = {{ _('ما فيه اشتراك مسجّل بهذا الجهاز — فعّل الإشعارات أول من الشريط العلوي.')|tojson }};
+        } else {
+          resultEl.textContent = {{ _('فشل الإرسال — تأكد إن مفاتيح VAPID مضبوطة بمتغيرات بيئة السيرفر.')|tojson }};
+        }
+      })
+      .catch(function () { resultEl.textContent = {{ _('صار خطأ أثناء الإرسال.')|tojson }}; });
+  });
+
+  document.getElementById('push-test-digest-btn').addEventListener('click', function () {
+    var resultEl = document.getElementById('push-test-digest-result');
+    resultEl.textContent = {{ _('جاري الإرسال...')|tojson }};
+    fetch('/push/test-digest', { method: 'POST', headers: { 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content') } })
+      .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+      .then(function (res) {
+        if (res.ok && res.data.ok) {
+          resultEl.textContent = {{ _('تم إرسال الملخص التجريبي — لو ما وصلك خلال ثوانٍ، تأكد إنك فعّلت الإشعارات بهذا الجهاز أول.')|tojson }};
         } else if (res.data.error === 'no_subscription') {
           resultEl.textContent = {{ _('ما فيه اشتراك مسجّل بهذا الجهاز — فعّل الإشعارات أول من الشريط العلوي.')|tojson }};
         } else {

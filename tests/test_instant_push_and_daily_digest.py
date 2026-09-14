@@ -56,6 +56,28 @@ def test_transfer_report_sends_instant_push_to_executor(app, owner, monkeypatch)
     assert "بلاغ" in calls[0]["title"]
 
 
+def test_push_test_digest_endpoint_sends_immediately(logged_in_client, owner, monkeypatch):
+    """زر "إرسال ملخص تجريبي الآن" بشاشة الإعدادات (بند إضافي، طلبك:
+    "نعم ظيفها") — يرسل فوراً بدون انتظار دورة اليوم التالي ولا فحص
+    صلاحية reports.manage (اختبار تقني بس، الزر نفسه محمي أصلاً)."""
+    _subscribe(owner)
+    calls = []
+    monkeypatch.setattr(push_service, "send_push", lambda sub, payload: calls.append(payload) or True)
+    monkeypatch.setattr(push_service, "vapid_configured", lambda: True)
+
+    resp = logged_in_client.post("/push/test-digest")
+    assert resp.status_code == 200
+    assert resp.get_json()["ok"] is True
+    assert len(calls) == 1
+    assert "ملخص" in calls[0]["title"]
+
+
+def test_push_test_digest_endpoint_without_subscription_fails(logged_in_client):
+    resp = logged_in_client.post("/push/test-digest")
+    assert resp.status_code == 400
+    assert resp.get_json()["error"] == "no_subscription"
+
+
 def test_daily_push_digest_sent_once_per_day(app, owner, monkeypatch):
     from app.core import daily_push_report_service
     from app.models import FarmSettings

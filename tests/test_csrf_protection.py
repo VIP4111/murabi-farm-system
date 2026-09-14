@@ -142,3 +142,9 @@ def test_push_test_without_csrf_header_is_rejected(csrf_client):
     _login_and_get_csrf_token(csrf_client)
     resp = csrf_client.post("/push/test")
     assert resp.status_code == 400
+
+
+def test_push_test_digest_without_csrf_header_is_rejected(csrf_client):
+    _login_and_get_csrf_token(csrf_client)
+    resp = csrf_client.post("/push/test-digest")
+    assert resp.status_code == 400
