@@ -120,7 +120,7 @@
       <div>
         <div class="task-title">{{ task_display_title(t) }}</div>
         {% if t.completion_note %}<div class="task-note">{{ t.completion_note }}</div>{% endif %}
-        {% if t.failure_reason %}<div class="task-note">{{ _('السبب:') }} {{ t.failure_reason }}</div>{% endif %}
+        {% if t.failure_reason %}<div class="task-note">{{ _('السبب:') }} {{ failure_reason_labels.get(t.failure_reason, t.failure_reason) }}</div>{% endif %}
       </div>
     </div>
     {% endfor %}

@@ -2411,9 +2411,9 @@ def simulation_data_run():
 # ---------- شاشة متابعة مبسّطة (بند إضافي 106) ----------
 
 FAMILY_VIEW_ROLES = [
-    ("owner", "مهام صاحب الحلال"),
-    ("doctor", "مهام الطبيب"),
-    ("worker", "مهام العامل"),
+    ("owner", _l("مهام صاحب الحلال")),
+    ("doctor", _l("مهام الطبيب")),
+    ("worker", _l("مهام العامل")),
 ]
 
 
@@ -2476,9 +2476,11 @@ def family_view():
         for e in Equipment.query.filter_by(status="active").order_by(Equipment.name).all()
     ]
 
+    from app.team.task_service import FAILURE_REASON_LABELS
     return render_template(
         "family_view.html", tasks_by_role=tasks_by_role, family_view_roles=FAMILY_VIEW_ROLES,
         feed_items=feed_items, pharmacy_items=pharmacy_items, equipment_items=equipment_items, today=today,
+        failure_reason_labels=FAILURE_REASON_LABELS,
     )
 
 

@@ -20,8 +20,8 @@ def dashboard():
         created_tasks = svc.generate_heat_checklists(forecast["readings"])
         if created_tasks:
             flash(
-                f"⚠️ توقّع إجهاد حراري — تولّدت {len(created_tasks)} مهمة تفقّد مقترحة "
-                f"بانتظار مراجعة الدكتور.",
+                _("⚠️ توقّع إجهاد حراري — تولّدت %(n)s مهمة تفقّد مقترحة بانتظار مراجعة الدكتور.",
+                  n=len(created_tasks)),
                 "warning",
             )
 
