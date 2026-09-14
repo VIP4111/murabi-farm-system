@@ -224,6 +224,21 @@
        يمنع تمدّد الصفحة كلها أفقياً (تجربة سيئة على اللمس)، الجدول
        نفسه يتمرّر لحاله داخل حدوده. */
     .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+    /* توسيع أزرار/روابط الإجراءات داخل الجداول على الجوال (فحص تجربة
+       الجوال) — كثير من القوالب تحدد padding صغير جداً (4-6px) وخط
+       صغير (12-13px) بأسلوب inline مباشر على عناصر .btn داخل الجداول،
+       فيصير ارتفاع الهدف الفعلي أقل من ~26px — أصغر بكثير من الحد
+       الأدنى الموصى به للمس (~44px)، وبصف مزدحم بجوال هذا يعني ضغط
+       خاطئ متكرر (مثلاً "تعطيل" بدل "تعديل"). لازم !important لأن
+       الـ inline style على كل عنصر أقوى من أي محدد CSS عادي؛ الأثر
+       مقصور على الجوال فقط عشان ما يغيّر شكل الجداول على الشاشة
+       الكبيرة اللي ما فيها مشكلة لمس أصلاً. */
+    @media(max-width:640px){
+      table a.btn, table button.btn{
+        padding:12px 14px !important; font-size:14px !important;
+        min-height:44px; display:inline-flex; align-items:center; justify-content:center;
+      }
+    }
     th{text-align:right; color:var(--muted); font-size:12px; padding:4px 9px; font-weight:700;}
     td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px 9px; vertical-align:middle;}
     td:first-child{border-right:1px solid var(--line); border-radius:0 14px 14px 0;}
