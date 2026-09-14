@@ -79,12 +79,16 @@ def assign_task(*, actor, title, task_type="custom", assignee_id=None, barn_id=N
     # (`force_locale`)، مو لغة الفاعل (الدكتور) اللي وزّع المهمة.
     if task.assignee_id:
         from flask_babel import force_locale
-        from app.core import telegram_service
+        from app.core import telegram_service, push_service
         with force_locale(task.assignee.language or "ar"):
             text = _("📋 مهمة جديدة: %(title)s", title=task.title)
             if task.due_date:
                 text += "\n" + _("الموعد: %(date)s", date=task.due_date)
+            push_title = _("📋 مهمة جديدة")
         telegram_service.notify_user(task.assignee, text)
+        # إشعار Push فوري (بند إضافي، طلبك: "إشعار فوري لمهمة/بلاغ
+        # معيّن لك شخصياً") — نفس مسار تيليجرام بالضبط، قناة موازية.
+        push_service.notify_user(task.assignee, push_title, task.title, url="/team/tasks")
     return task
 
 
@@ -133,12 +137,16 @@ def approve_suggested_task(task: Task, *, actor) -> Task:
 
     if task.assignee_id:
         from flask_babel import force_locale
-        from app.core import telegram_service
+        from app.core import telegram_service, push_service
         with force_locale(task.assignee.language or "ar"):
             text = _("📋 مهمة جديدة: %(title)s", title=task.title)
             if task.due_date:
                 text += "\n" + _("الموعد: %(date)s", date=task.due_date)
+            push_title = _("📋 مهمة جديدة")
         telegram_service.notify_user(task.assignee, text)
+        # إشعار Push فوري (بند إضافي، طلبك: "إشعار فوري لمهمة/بلاغ
+        # معيّن لك شخصياً") — نفس مسار تيليجرام بالضبط، قناة موازية.
+        push_service.notify_user(task.assignee, push_title, task.title, url="/team/tasks")
     return task
 
 

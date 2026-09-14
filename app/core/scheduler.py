@@ -89,6 +89,17 @@ def _generate_if_needed_today():
         current_app.logger.warning("daily_telegram_report_service failed: %s", e)
         db.session.rollback()
 
+    # ملخص يومي موحّد بإشعار Push (بند إضافي، طلبك: "ملخص يومي واحد
+    # بإشعار") — نفس الحارس والفلسفة، قناة مستقلة (حارسها الخاص
+    # last_daily_push_report_sent).
+    from app.core import daily_push_report_service
+    try:
+        daily_push_report_service.generate_daily_push_report_if_needed()
+    except Exception as e:
+        from flask import current_app
+        current_app.logger.warning("daily_push_report_service failed: %s", e)
+        db.session.rollback()
+
 
 def _run_daily_tasks_job(app):
     with app.app_context():

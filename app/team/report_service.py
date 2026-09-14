@@ -78,7 +78,7 @@ def submit_report(*, reporter, description, report_type=None, animal_id=None, ba
     # مقدّم البلاغ حسابه عربي. الحل: نبني نسخة نص منفصلة لكل لغة موجودة
     # فعلياً بين المستلمين عبر `force_locale`، بدل نسخة واحدة للجميع.
     from flask_babel import force_locale
-    from app.core import telegram_service, email_service
+    from app.core import telegram_service, email_service, push_service
     from app.models import User
 
     recipients = [
@@ -96,6 +96,10 @@ def submit_report(*, reporter, description, report_type=None, animal_id=None, ba
                 telegram_service.notify_user(user, text)
             if user.email:
                 email_service.notify_user(user, prefix, text)
+            # إشعار Push فوري (بند إضافي، طلبك: "إشعار فوري لمهمة/بلاغ
+            # معيّن لك شخصياً") — قناة موازية، ما تعتمد على تسجيل
+            # Chat ID تيليجرام ولا بريد.
+            push_service.notify_user(user, prefix, f"{reporter.name}: {description}", url="/team/reports")
 
     return report
 
@@ -185,10 +189,13 @@ def transfer_report(report: Report, *, actor, executor, note: str) -> Report:
 
     # إشعار فوري مجاني عبر تيليجرام للمنفّذ المحوَّل له البلاغ (بند إضافي
     # 157) — صار البلاغ "موجَّه له" شخصياً، يحتاج يعرف فوراً.
-    from app.core import telegram_service
+    from app.core import telegram_service, push_service
     telegram_service.notify_user(
         executor, f"📋 بلاغ محوَّل لك للتنفيذ\n{note}",
     )
+    # إشعار Push فوري (بند إضافي، طلبك: "إشعار فوري لمهمة/بلاغ معيّن
+    # لك شخصياً") — نفس مسار تيليجرام بالضبط.
+    push_service.notify_user(executor, _("📋 بلاغ محوَّل لك للتنفيذ"), note or "", url="/team/reports")
 
     return report
 

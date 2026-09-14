@@ -220,6 +220,11 @@ class FarmSettings(db.Model):
     # عمداً، عشان فشل قناة وحدة ما يوقف الثانية.
     last_daily_telegram_report_sent = db.Column(db.Date, nullable=True)
 
+    # ملخص يومي موحّد بإشعار Push (بند إضافي، طلبك: "ملخص يومي واحد
+    # بإشعار") — نفس نمط last_daily_telegram_report_sent بالضبط، قناة
+    # مستقلة بحارسها الخاص.
+    last_daily_push_report_sent = db.Column(db.Date, nullable=True)
+
     # آخر مرة انفحصت التنبيهات لإشعارات Push (بند إضافي، إشعارات مثل
     # الواتساب) — DateTime لا Date (الفحص كل ~15 دقيقة، مو مرة باليوم).
     last_push_alert_check = db.Column(db.DateTime, nullable=True)

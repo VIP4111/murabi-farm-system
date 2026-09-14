@@ -192,3 +192,32 @@ def send_push(subscription, payload: dict) -> bool:
             return False
         current_app.logger.warning("push_service: webpush failed (status=%s): %s", status, e)
         raise
+
+
+def notify_user(user, title: str, body: str, url: str | None = None) -> bool:
+    """إشعار Push فوري لمستخدم محدَّد — لأحداث شخصية (بند إضافي، طلبك:
+    "إشعار فوري لمهمة/بلاغ معيّن لك شخصياً") — نفس فلسفة
+    `telegram_service.notify_user()` بالضبط: يتجاهل بصمت لو المستخدم
+    ما عنده أي اشتراك مسجَّل أو مفاتيح VAPID غير مضبوطة (صفر كسر
+    لمسار الاستدعاء الأصلي — توزيع مهمة/بلاغ ينجح بغض النظر عن حالة
+    إشعارات Push). يرجّع True لو نجح إرسال إشعار واحد فعلاً على الأقل
+    (المستخدم قد يكون له أكثر من جهاز مسجَّل)."""
+    from app.extensions import db
+    from app.models import PushSubscription
+
+    if not vapid_configured():
+        return False
+    subs = PushSubscription.query.filter_by(user_id=user.id).all()
+    if not subs:
+        return False
+    sent = False
+    for sub in subs:
+        try:
+            if send_push(sub, {"title": title, "body": body, "url": url or "/today"}):
+                sent = True
+            else:
+                db.session.delete(sub)
+        except Exception:
+            continue
+    db.session.commit()
+    return sent
