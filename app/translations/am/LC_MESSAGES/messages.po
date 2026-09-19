@@ -15288,6 +15288,29 @@ msgstr "የተቆጠረው መጠን (%(actual)s) ለዚህ እቃ በተሰየ�
 msgid "نوع مستودع غير معروف."
 msgstr "የማይታወቅ የመጋዘን አይነት።"
 
+#: app/repro/routes.py:348
+#, python-format
+msgid "تم تسجيل الإجهاض لـ%(no)s %(isolation_msg)s. تولّدت مهمة سحب عيّنات + %(n)s مهمة مراقبة حرارة لبقية الحظيرة."
+msgstr "ውርጃ ለ%(no)s %(isolation_msg)s ተመዝግቧል። የናሙና አሰባሰብ ተግባር እና %(n)s የቀሪው ጎተራ የሙቀት ክትትል ተግባራት ተፈጥረዋል።"
+
+#: app/repro/routes.py:293 app/repro/routes.py:405
+#, python-format
+msgid "عدد الأجنة لازم يكون بين 0 و%(max)s."
+msgstr "የፅንስ ብዛት ከ0 እስከ %(max)s መካከል መሆን አለበት።"
+
+#: app/repro/routes.py:402
+#, python-format
+msgid "عمر الحمل بالأيام لازم يكون بين 0 و%(max)s."
+msgstr "የእርግዝና ዕድሜ በቀናት ከ0 እስከ %(max)s መካከል መሆን አለበት።"
+
+#: app/repro/routes.py:345
+msgid "وتم نقلها لحظيرة العزل الطبي"
+msgstr "እና ወደ የሕክምና ማግለያ ጎተራ ተዛውሯል"
+
+#: app/repro/routes.py:346
+msgid "⚠️ ما فيه حظيرة عزل معرَّفة بالنظام — راجع الإعدادات"
+msgstr "⚠️ በስርዓቱ ውስጥ ምንም የማግለያ ጎተራ አልተገለጸም — ቅንብሮችን ይመልከቱ"
+
 #~ msgid "التكاثر"
 #~ msgstr "መራባት"
 

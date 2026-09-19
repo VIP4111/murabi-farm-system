@@ -15288,6 +15288,29 @@ msgstr "The counted quantity (%(actual)s) is less than the amount already alloca
 msgid "نوع مستودع غير معروف."
 msgstr "Unknown warehouse type."
 
+#: app/repro/routes.py:348
+#, python-format
+msgid "تم تسجيل الإجهاض لـ%(no)s %(isolation_msg)s. تولّدت مهمة سحب عيّنات + %(n)s مهمة مراقبة حرارة لبقية الحظيرة."
+msgstr "Abortion recorded for %(no)s %(isolation_msg)s. A sample-collection task and %(n)s temperature-monitoring tasks for the rest of the barn were generated."
+
+#: app/repro/routes.py:293 app/repro/routes.py:405
+#, python-format
+msgid "عدد الأجنة لازم يكون بين 0 و%(max)s."
+msgstr "Embryo count must be between 0 and %(max)s."
+
+#: app/repro/routes.py:402
+#, python-format
+msgid "عمر الحمل بالأيام لازم يكون بين 0 و%(max)s."
+msgstr "Gestation age in days must be between 0 and %(max)s."
+
+#: app/repro/routes.py:345
+msgid "وتم نقلها لحظيرة العزل الطبي"
+msgstr "and it was moved to the medical isolation barn"
+
+#: app/repro/routes.py:346
+msgid "⚠️ ما فيه حظيرة عزل معرَّفة بالنظام — راجع الإعدادات"
+msgstr "⚠️ No isolation barn is defined in the system — check settings"
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 

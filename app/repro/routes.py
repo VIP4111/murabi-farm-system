@@ -2,15 +2,22 @@ from datetime import date
 from flask import render_template, request, redirect, url_for, flash
 from flask_babel import gettext as _
 from flask_login import login_required, current_user
+from sqlalchemy.orm import joinedload
 
 from app.repro import repro_bp
 from app.auth.decorators import require_permission
-from app.extensions import db
+from app.extensions import db, farm_today
 from app.models import (
     Animal, Barn, Doctor, AuditLog, FarmSettings,
     Mating, Pregnancy, SonarResult,
     TwinEstrusProgram, TwinEstrusAttempt, ReproDevice, HormoneInjection,
 )
+
+# بند إصلاح (فحص شامل سطر بسطر — ميزة التكاثر) — حدود منطقية واسعة
+# عمداً لعدد الأجنة/عمر الحمل بالأيام، نفس فلسفة validation_service
+# (تمنع خطأ كتابة واضح، مو ترفض حالة نادرة لكن ممكنة).
+MAX_EMBRYO_COUNT = 6
+MAX_GESTATION_AGE_DAYS = 165
 
 
 def _females():
@@ -20,7 +27,7 @@ def _females():
 def _age_days(animal: Animal) -> int | None:
     if not animal.birth_date:
         return None
-    return (date.today() - animal.birth_date).days
+    return (farm_today() - animal.birth_date).days
 
 
 def _males():
@@ -102,7 +109,10 @@ def sires_list():
 @login_required
 @require_permission("repro.view")
 def matings_list():
-    rows = Mating.query.order_by(Mating.date.desc()).all()
+    # بند إصلاح (فحص شامل سطر بسطر) — القالب يعرض female/male/barn لكل
+    # صف بدون تحميل مسبق كان يسبب استعلامات منفصلة لكل صف.
+    rows = (Mating.query.options(joinedload(Mating.female), joinedload(Mating.male), joinedload(Mating.barn))
+            .order_by(Mating.date.desc()).all())
     return render_template("repro/matings_list.html", rows=rows)
 
 
@@ -115,7 +125,8 @@ def matings_export():
     from flask import Response
     from flask_babel import gettext as _
     from app.reports import export_service as ex
-    rows = Mating.query.order_by(Mating.date.desc()).all()
+    rows = (Mating.query.options(joinedload(Mating.female), joinedload(Mating.male), joinedload(Mating.barn))
+            .order_by(Mating.date.desc()).all())
     # بند إصلاح (فحص عميق — طلبك: "ابدا بند التصدير") — الأعمدة كانت
     # عربي بحت بغض النظر عن لغة المستخدم؛ الحظيرة تُترجم عبر
     # `Barn.display_label()` الموجودة أصلاً (نفس مبدأ بقية التصدير).
@@ -256,14 +267,15 @@ def pregnancies_list():
     from datetime import timedelta
     from app.models import FarmSettings
 
-    rows = Pregnancy.query.order_by(Pregnancy.date.desc()).all()
+    rows = (Pregnancy.query.options(joinedload(Pregnancy.female), joinedload(Pregnancy.mating))
+            .order_by(Pregnancy.date.desc()).all())
     gestation_days = FarmSettings.get().gestation_days
     expected_birth = {
         r.id: (r.mating.date if r.mating else r.date) + timedelta(days=gestation_days)
         for r in rows
     }
     return render_template(
-        "repro/pregnancies_list.html", rows=rows, expected_birth=expected_birth, today=date.today().isoformat(),
+        "repro/pregnancies_list.html", rows=rows, expected_birth=expected_birth, today=farm_today().isoformat(),
     )
 
 
@@ -272,13 +284,23 @@ def pregnancies_list():
 @require_permission("repro.manage")
 def pregnancies_new():
     if request.method == "POST":
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة التكاثر) — عدد الأجنة ما
+        # كان يُفحَص إطلاقاً (رقم سالب أو غير منطقي — >6 لأغنام/ماعز —
+        # كان يُحفَظ بصمت)، ورقم غير صالح كان يسقط بخطأ 500 مباشر.
+        try:
+            embryo_count = int(request.form["embryo_count"]) if request.form.get("embryo_count") else None
+            if embryo_count is not None and not (0 <= embryo_count <= MAX_EMBRYO_COUNT):
+                raise ValueError(_("عدد الأجنة لازم يكون بين 0 و%(max)s.", max=MAX_EMBRYO_COUNT))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("repro.pregnancies_new"))
         row = Pregnancy(
             female_id=int(request.form["female_id"]),
             mating_id=request.form.get("mating_id") or None,
             date=date.fromisoformat(request.form["date"]),
             confirmed=bool(request.form.get("confirmed")),
             sonar_date=date.fromisoformat(request.form["sonar_date"]) if request.form.get("sonar_date") else None,
-            embryo_count=int(request.form["embryo_count"]) if request.form.get("embryo_count") else None,
+            embryo_count=embryo_count,
             notes=request.form.get("notes"),
         )
         db.session.add(row)
@@ -314,14 +336,18 @@ def pregnancies_abort(pregnancy_id):
 
     result = record_abortion(
         pregnancy=pregnancy,
-        outcome_date=date.fromisoformat(request.form["outcome_date"]) if request.form.get("outcome_date") else date.today(),
+        outcome_date=date.fromisoformat(request.form["outcome_date"]) if request.form.get("outcome_date") else farm_today(),
         notes=request.form.get("notes"),
         actor_user_id=current_user.id,
     )
-    isolation_msg = "وتم نقلها لحظيرة العزل الطبي" if result["isolated"] else "⚠️ ما فيه حظيرة عزل معرَّفة بالنظام — راجع الإعدادات"
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة التكاثر) — هذي الرسالة كانت
+    # f-string خام بدون _()، عكس كل رسالة flash ثانية بنفس الملف.
+    isolation_msg = (_("وتم نقلها لحظيرة العزل الطبي") if result["isolated"]
+                      else _("⚠️ ما فيه حظيرة عزل معرَّفة بالنظام — راجع الإعدادات"))
     flash(
-        f"تم تسجيل الإجهاض لـ{result['animal'].animal_no} {isolation_msg}. "
-        f"تولّدت مهمة سحب عيّنات + {len(result['monitor_tasks'])} مهمة مراقبة حرارة لبقية الحظيرة.",
+        _("تم تسجيل الإجهاض لـ%(no)s %(isolation_msg)s. تولّدت مهمة سحب عيّنات + "
+          "%(n)s مهمة مراقبة حرارة لبقية الحظيرة.",
+          no=result['animal'].animal_no, isolation_msg=isolation_msg, n=len(result['monitor_tasks'])),
         "warning",
     )
     return redirect(url_for("repro.pregnancies_list"))
@@ -357,7 +383,8 @@ def pregnancies_confirm(pregnancy_id):
 @login_required
 @require_permission("repro.view")
 def sonar_list():
-    rows = SonarResult.query.order_by(SonarResult.exam_date.desc()).all()
+    rows = (SonarResult.query.options(joinedload(SonarResult.ewe), joinedload(SonarResult.program))
+            .order_by(SonarResult.exam_date.desc()).all())
     return render_template("repro/sonar_list.html", rows=rows)
 
 
@@ -366,13 +393,26 @@ def sonar_list():
 @require_permission("repro.manage")
 def sonar_new():
     if request.method == "POST":
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة التكاثر) — نفس فجوة عدد
+        # الأجنة أعلاه، بالإضافة لعمر الحمل بالأيام (سالب أو أكبر من
+        # مدة الحمل الكاملة كان يُحفَظ بصمت).
+        try:
+            gestation_age_days = int(request.form["gestation_age_days"]) if request.form.get("gestation_age_days") else None
+            if gestation_age_days is not None and not (0 <= gestation_age_days <= MAX_GESTATION_AGE_DAYS):
+                raise ValueError(_("عمر الحمل بالأيام لازم يكون بين 0 و%(max)s.", max=MAX_GESTATION_AGE_DAYS))
+            embryo_count = int(request.form["embryo_count"]) if request.form.get("embryo_count") else None
+            if embryo_count is not None and not (0 <= embryo_count <= MAX_EMBRYO_COUNT):
+                raise ValueError(_("عدد الأجنة لازم يكون بين 0 و%(max)s.", max=MAX_EMBRYO_COUNT))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("repro.sonar_new"))
         row = SonarResult(
             ewe_id=int(request.form["ewe_id"]),
             program_id=request.form.get("program_id") or None,
             exam_date=date.fromisoformat(request.form["exam_date"]),
-            gestation_age_days=int(request.form["gestation_age_days"]) if request.form.get("gestation_age_days") else None,
+            gestation_age_days=gestation_age_days,
             result=request.form.get("result"),
-            embryo_count=int(request.form["embryo_count"]) if request.form.get("embryo_count") else None,
+            embryo_count=embryo_count,
             heartbeat=bool(request.form.get("heartbeat")),
             doctor_id=request.form.get("doctor_id") or None,
             recheck_date=date.fromisoformat(request.form["recheck_date"]) if request.form.get("recheck_date") else None,
@@ -414,7 +454,9 @@ def sonar_new():
 @login_required
 @require_permission("repro.view")
 def programs_list():
-    rows = TwinEstrusProgram.query.order_by(TwinEstrusProgram.start_date.desc()).all()
+    rows = (TwinEstrusProgram.query
+            .options(joinedload(TwinEstrusProgram.ewe), joinedload(TwinEstrusProgram.supervising_doctor))
+            .order_by(TwinEstrusProgram.start_date.desc()).all())
     return render_template("repro/programs_list.html", rows=rows)
 
 
@@ -522,7 +564,7 @@ def program_device_new(program_id):
 @require_permission("repro.manage")
 def program_device_remove(program_id, device_id):
     device = ReproDevice.query.filter_by(id=device_id, program_id=program_id).first_or_404()
-    device.actual_remove_at = date.fromisoformat(request.form["actual_remove_at"]) if request.form.get("actual_remove_at") else date.today()
+    device.actual_remove_at = date.fromisoformat(request.form["actual_remove_at"]) if request.form.get("actual_remove_at") else farm_today()
     device.early_loss = bool(request.form.get("early_loss"))
     _log("repro_device.remove", "ReproDevice", device.id, f"program={program_id}")
     db.session.commit()
@@ -536,10 +578,22 @@ def program_device_remove(program_id, device_id):
 def program_injection_new(program_id):
     program = TwinEstrusProgram.query.get_or_404(program_id)
     if request.method == "POST":
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة التكاثر) — الجرعة كانت
+        # تُحفَظ مباشرة بلا أي فحص قيمة سالبة، ونفس مسار كتابة رقم غير
+        # صالح كان يسقط بخطأ 500 بدل رسالة واضحة (نفس نمط ناقص بميزات
+        # ثانية هذي الجلسة).
+        try:
+            dose_value = float(request.form["dose_value"]) if request.form.get("dose_value") else None
+            if dose_value is not None:
+                from app.core import validation_service
+                validation_service.validate_price(dose_value, field_label=_("الجرعة"))
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for("repro.program_injection_new", program_id=program_id))
         row = HormoneInjection(
             program_id=program.id,
             hormone_name=request.form["hormone_name"],
-            dose_value=float(request.form["dose_value"]) if request.form.get("dose_value") else None,
+            dose_value=dose_value,
             dose_unit=request.form.get("dose_unit"),
             route=request.form.get("route"),
             planned_at=date.fromisoformat(request.form["planned_at"]) if request.form.get("planned_at") else None,
@@ -554,7 +608,7 @@ def program_injection_new(program_id):
 
         from app.core.cycle_engine import record_cycle_event
         record_cycle_event(program.ewe, "hormone_injection", source_type="HormoneInjection",
-                            source_id=row.id, event_date=row.actual_at or row.planned_at or date.today())
+                            source_id=row.id, event_date=row.actual_at or row.planned_at or farm_today())
 
         flash(_("تم تسجيل الحقنة الهرمونية"), "success")
         return redirect(url_for("repro.program_detail", program_id=program.id))
