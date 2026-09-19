@@ -76,7 +76,14 @@
 </div>
 {% endif %}
 
-{% if user.role.name == 'doctor' %}
+{% if user.has_permission('health.view') %}
+{# بند إصلاح (فحص شامل سطر بسطر — الصفحة الرئيسية) — كان الفحص بالاسم
+   الحرفي `role.name == 'doctor'`، فأي دور مخصَّص يملك صلاحية
+   `health.view` فعلياً (نفس الصلاحية اللي يتطلبها `health.dashboard`
+   نفسه) بدون ما يكون اسمه بالضبط "doctor" (زي ممرض/دور طبي مخصَّص) ما
+   كان يشوف هذي البطاقة أبداً، رغم إن الرابط تحتها يفتح له بدون أي
+   مشكلة لو وصله بطريقة ثانية — نفس النمط اللي انصلح قبل بـ
+   worker_home.html (بند إضافي 295)، فقط انفلت هنا. #}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
     <div>

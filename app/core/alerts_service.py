@@ -994,6 +994,29 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
     فلترة لتنبيهات حظائر محددة بس — أساس شاشة "تنبيهاتي" للعامل
     المسؤول عن حظيرة (`core.alerts_mine`).
     """
+    # بند إصلاح (فحص شامل سطر بسطر — الصفحة الرئيسية/اليوم) — الرئيسية
+    # وحدها تستدعي هذي الدالة الثقيلة (24 دالة توليد/تجميع تفحص جداول
+    # كاملة) مرتين بنفس الطلب: مرة عبر `_today_counts()` ومرة ثانية عبر
+    # `alert_counts_by_animal()`. حارس التوليد فوق (`ALERT_GENERATORS_
+    # THROTTLE_MINUTES`) يمنع الكتابة المكرَّرة، لكن كتلة **القراءة/
+    # التجميع** تحت (24 استعلام) كانت تُعاد بالكامل بلا أي حارس. صار
+    # فيها تخزين مؤقت لعمر الطلب الواحد فقط (`flask.g`) — نفس النتيجة
+    # بالضبط لو استُدعيت بنفس `barn_ids`/`now` أكثر من مرة بنفس الطلب،
+    # بدون أي تأثير بين طلبات مختلفة (يُهمَل تلقائياً لأنه على `g`).
+    # نُرجع نسخة سطحية من كل تنبيه (`dict(a)`) عشان أي كود يعدّل حقلاً
+    # بعد الاستدعاء (زي `alert_action_url`) ما يسرّب التعديل لمستدعٍ ثانٍ
+    # يشارك نفس النتيجة المخزَّنة مؤقتاً.
+    from flask import g, has_request_context
+    _cache_key = (tuple(sorted(barn_ids)) if barn_ids is not None else None, now)
+    _in_request = has_request_context()
+    if _in_request:
+        _cache = getattr(g, "_alerts_cache", None)
+        if _cache is None:
+            _cache = {}
+            g._alerts_cache = _cache
+        if _cache_key in _cache:
+            return [dict(a) for a in _cache[_cache_key]]
+
     fs = FarmSettings.get()
 
     # بند إصلاح (فحص أداء — طلبك: "فحص أداء/سرعة الموقع") — الكتلة
@@ -1082,6 +1105,8 @@ def get_alerts(barn_ids: list[int] | None = None, *, now: datetime | None = None
         allowed = set(barn_ids)
         alerts = [a for a in alerts if a.get("barn_id") in allowed]
     alerts.sort(key=lambda a: not a["urgent"])
+    if _in_request:
+        _cache[_cache_key] = alerts
     return alerts
 
 
