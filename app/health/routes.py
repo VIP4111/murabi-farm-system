@@ -33,23 +33,34 @@ def dashboard():
     موسوعة مرجعية سريعة (روابط لكل الأدلة العامة الموجودة أصلاً بالنظام
     — أمراض شائعة، حقن، بروتوكولات، تشخيص، أعراض طوارئ) — بدون تكرار
     أي منطق موجود، مجرد واجهة تجميع."""
+    from sqlalchemy.orm import joinedload
+    from app.core import alerts_service
+
     today = date.today()
+    # بند إصلاح (فحص شامل سطر بسطر — مركز الطبيب) — joinedload(Disease.animal)
+    # يمنع استعلام Animal منفصل لكل صف بالقالب (كان N+1 حقيقي على عدد
+    # الحالات النشطة + المغلقة حديثاً معاً).
     active_cases = (
-        Disease.query.filter_by(status="active")
+        Disease.query.options(joinedload(Disease.animal)).filter_by(status="active")
         .order_by(Disease.date.desc()).all()
     )
     recent_closed = (
-        Disease.query.filter_by(status="closed")
+        Disease.query.options(joinedload(Disease.animal)).filter_by(status="closed")
         .order_by(Disease.closed_at.desc()).limit(8).all()
     )
-    upcoming_vaccinations = (
-        Vaccination.query.filter(
-            Vaccination.next_due_date.isnot(None),
-            Vaccination.next_due_date <= today + timedelta(days=7),
-        )
-        .join(Animal).filter(Animal.status == "active")
-        .order_by(Vaccination.next_due_date).limit(15).all()
-    )
+    # بند إصلاح (فحص شامل سطر بسطر — مركز الطبيب) — كانت هذي الكتلة
+    # تبني "التحصينات المستحقة" بمنطق مستقل (بدون تجميع "آخر سجل لكل
+    # رأس") عن alerts_service._vaccinations_due، فممكن رأس عنده سجل
+    # تحصين قديم بـnext_due_date غير محدَّث يظهر هنا رغم إن alerts_service
+    # يتجاهله صح (يعتمد فقط على آخر سجل). صار يستخدم نفس نقطة الحقيقة
+    # المشتركة (latest_vaccinations_by_animal) بدل بناء منطقه الخاص.
+    window_end = today + timedelta(days=7)
+    latest_by_animal = alerts_service.latest_vaccinations_by_animal()
+    upcoming_vaccinations = sorted(
+        (v for v in latest_by_animal.values()
+         if v.next_due_date <= window_end and v.animal and v.animal.status == "active"),
+        key=lambda v: v.next_due_date,
+    )[:15]
     return render_template(
         "health/dashboard.html",
         active_cases=active_cases, recent_closed=recent_closed,

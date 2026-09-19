@@ -57,7 +57,11 @@
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h3 style="font-size:15px; margin:0;">{{ _('التحصينات المستحقة خلال 7 أيام') }}</h3>
-    <a class="btn light" href="{{ url_for('health.vaccination_schedule_list') }}" style="font-size:12px; padding:4px 10px;">{{ _('تقويم التحصينات الكامل') }} ←</a>
+    {# بند إصلاح (فحص شامل سطر بسطر — مركز الطبيب) — كان الرابط يودّي
+       لـvaccination_schedule_list (جدول تحصينات دفعية بالحظيرة، جدول
+       مختلف كلياً عن Vaccination الفردي المُلخَّص فوق) بدل vaccinations_list
+       الفعلية — الضغط كان يوصل لشاشة ما فيها نفس الصفوف المذكورة هنا. #}
+    <a class="btn light" href="{{ url_for('health.vaccinations_list') }}" style="font-size:12px; padding:4px 10px;">{{ _('كل سجلات التحصين') }} ←</a>
   </div>
   <div class="table-scroll">
 <table class="compact-table">

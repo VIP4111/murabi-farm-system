@@ -92,15 +92,28 @@ def alert_category_choices() -> list[tuple[str, str]]:
     return sorted(((k, str(v)) for k, v in ALERT_CATEGORY_LABELS.items()), key=lambda kv: kv[1])
 
 
-def _vaccinations_due(fs: FarmSettings) -> list[dict]:
-    today = date.today()
-    window_end = today + timedelta(days=fs.alert_before_days)
-    rows = Vaccination.query.filter(Vaccination.next_due_date.isnot(None)).all()
+def latest_vaccinations_by_animal() -> dict:
+    """آخر سجل تحصين لكل حيوان (بحسب Vaccination.date) — نقطة حقيقة
+    واحدة مشتركة لأي شاشة تحتاج "متى آخر/القادم تحصين لهذا الرأس"،
+    بدل ما يبني كل مستهلك (get_alerts، مركز الطبيب...) نفس منطق التجميع
+    بنفسه بشكل مستقل ويختلف بالنتيجة لو صار سجل تحصين قديم بـnext_due_date
+    غير محدَّث بعد سجل أحدث لنفس الرأس (بند إصلاح — فحص شامل سطر بسطر
+    لمركز الطبيب)."""
+    from sqlalchemy.orm import joinedload
+    rows = (Vaccination.query.options(joinedload(Vaccination.animal))
+            .filter(Vaccination.next_due_date.isnot(None)).all())
     latest_by_animal = {}
     for v in rows:
         prev = latest_by_animal.get(v.animal_id)
         if prev is None or v.date > prev.date:
             latest_by_animal[v.animal_id] = v
+    return latest_by_animal
+
+
+def _vaccinations_due(fs: FarmSettings) -> list[dict]:
+    today = date.today()
+    window_end = today + timedelta(days=fs.alert_before_days)
+    latest_by_animal = latest_vaccinations_by_animal()
 
     alerts = []
     for v in latest_by_animal.values():
