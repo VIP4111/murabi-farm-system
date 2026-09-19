@@ -97,7 +97,13 @@ def average_head_count_between(start: date, end: date, *, maps: tuple[dict, dict
 
 
 def monthly_cost_per_head(*, months: int = 12) -> list[dict]:
-    today = date.today()
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة المالية) — كانت تستخدم
+    # date.today() الخام (UTC)، بدل farm_today() المستخدَمة بكل مكان
+    # ثانٍ حسّاس للتاريخ بنفس الميزة (finance_list)، فآخر 3 ساعات من كل
+    # يوم سعودي (21:00-23:59 بتوقيت السعودية = بعد منتصف الليل UTC)
+    # تختار "الشهر الحالي" الخطأ، وتزيح نافذة الـ12 شهر كاملة يوماً.
+    from app.extensions import farm_today
+    today = farm_today()
     entries, exits = build_entry_exit_maps()
 
     results = []

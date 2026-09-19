@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 
 from app.finance import finance_bp
 from app.auth.decorators import require_permission
+from sqlalchemy.orm import selectinload
 from app.extensions import db
 from app.models import Finance, Animal, AuditLog, VetVisit, Disease
 
@@ -88,7 +89,11 @@ def finance_export():
     (`export_service.build_excel`)، بدون بناء آلية موازية."""
     from flask import Response
     from app.reports import export_service as ex
-    rows = Finance.query.order_by(Finance.date.desc()).all()
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة المالية) — عمود "الرأس المرتبط"
+    # تحت يعرض r.related_animal لكل صف بدون تحميل مسبق — على "التصدير
+    # الكامل" (كل السجلات، بلا فلتر شهر) هذا استعلام إضافي لكل سجل له
+    # رأس مرتبط.
+    rows = Finance.query.options(selectinload(Finance.related_animal)).order_by(Finance.date.desc()).all()
     # بند إصلاح (فحص عميق — طلبك: "ابدا بند التصدير") — كل عمود وقيمة هنا
     # كانت عربي بحت بغض النظر عن لغة المستخدم الحالي. القيمة الخام
     # بقاعدة البيانات (Finance.category/operation_type) ما تتغيّر أبداً —
@@ -192,7 +197,10 @@ def seasonal_price_analysis():
 @require_permission("finance.full.manage")
 def lots_list():
     from app.models import SalesLot
-    lots = SalesLot.query.order_by(SalesLot.created_at.desc()).all()
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة المالية) — القالب يعرض
+    # lot.items|length لكل دفعة، بدون تحميل مسبق كان يسبب استعلام
+    # منفصل لكل دفعة.
+    lots = SalesLot.query.options(selectinload(SalesLot.items)).order_by(SalesLot.created_at.desc()).all()
     return render_template("finance/lots_list.html", lots=lots)
 
 
@@ -215,9 +223,23 @@ def lots_new():
             flash(_("لازم تختار رأساً واحداً على الأقل"), "error")
             return redirect(url_for("finance.lots_new"))
 
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة المالية) — target_amount
+        # كان يُحفَظ بلا أي فحص؛ قيمة سالبة تخلي suggest_lot_for_target
+        # يرجّع اقتراحاً فاضياً بصمت (الشرط total >= target يتحقق فوراً
+        # عند صفر)، بدون أي رسالة توضّح للمستخدم إن الرقم غير منطقي.
+        from app.core import validation_service
+        target_raw = request.form.get("target_amount")
+        target_amount_val = None
+        if target_raw:
+            try:
+                target_amount_val = float(target_raw)
+                validation_service.validate_price(target_amount_val, field_label=_("المبلغ المستهدف"))
+            except ValueError as e:
+                flash(str(e), "error")
+                return redirect(url_for("finance.lots_new"))
         lot = SalesLot(
             name=name, notes=request.form.get("notes") or None,
-            target_amount=float(request.form["target_amount"]) if request.form.get("target_amount") else None,
+            target_amount=target_amount_val,
             created_by_id=current_user.id,
         )
         db.session.add(lot)
