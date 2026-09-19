@@ -17,10 +17,9 @@ def items_list():
     items = Equipment.query.order_by(Equipment.name).all()
     # بند إضافي 276 — طلبك الصريح "ما بين عندي مين اخذ المعدة": نعرض
     # "آخر من أخذها" مباشرة بالقائمة، بدون ما تدخل حركة كل صنف لحاله.
-    holders = {}
-    for item in items:
-        open_borrows = svc.outstanding_borrows(item)
-        holders[item.id] = open_borrows[0].borrowed_by if open_borrows else None
+    # بند إصلاح (فحص شامل سطر بسطر) — استعلام واحد مجمَّع بدل استعلام
+    # منفصل لكل صنف.
+    holders = svc.outstanding_borrows_bulk(items)
     return render_template("equipment/items_list.html", items=items, holders=holders)
 
 
@@ -36,6 +35,10 @@ def items_new():
         try:
             validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
             validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+            # بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — سعر الوحدة
+            # كان يُحفَظ بلا أي فحص، نفس الفجوة المُصلَحة بمكوّنات العلف.
+            if request.form.get("unit_price"):
+                validation_service.validate_price(float(request.form["unit_price"]), field_label=_("سعر الوحدة"))
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("equipment.items_new"))
@@ -65,6 +68,8 @@ def items_edit(item_id):
         try:
             validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
             validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+            if request.form.get("unit_price"):
+                validation_service.validate_price(float(request.form["unit_price"]), field_label=_("سعر الوحدة"))
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("equipment.items_edit", item_id=item.id))
@@ -100,7 +105,12 @@ def purchase_new():
     if request.method == "POST":
         item = Equipment.query.get_or_404(int(request.form["equipment_id"]))
         try:
+            from app.core import validation_service
             from app.core.stock_purchase_service import record_purchase
+            # بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — الكمية
+            # والسعر كانا يُمرَّران مباشرة بلا أي فحص قبل record_purchase.
+            validation_service.validate_price(float(request.form["quantity"]), field_label=_("الكمية"))
+            validation_service.validate_price(float(request.form["unit_price"]), field_label=_("سعر الوحدة"))
             record_purchase(
                 kind="equipment", item=item,
                 quantity=float(request.form["quantity"]),
@@ -132,9 +142,18 @@ def items_movement(item_id):
             flash(_("لازم تحدد مين يستلم القطعة قبل تسجيل الصرف."), "error")
             return redirect(url_for("equipment.items_movement", item_id=item.id))
         try:
+            # بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — الكمية ما
+            # كانت تُفحَص قبل الوصول لـrecord_movement — كمية سالبة
+            # بحركة "صادر" كانت تزيد الرصيد فعلياً بدل ما تنقصه
+            # (deduct_stock بكمية سالبة = إضافة).
+            from app.core import validation_service
+            quantity_val = float(request.form["quantity"])
+            validation_service.validate_price(quantity_val, field_label=_("الكمية"))
+            if quantity_val <= 0:
+                raise ValueError(_("الكمية لازم تكون أكبر من صفر."))
             svc.record_movement(
                 item=item, movement_type=movement_type,
-                quantity=float(request.form["quantity"]),
+                quantity=quantity_val,
                 barn_id=request.form.get("barn_id") or None,
                 note=request.form.get("note"), created_by_id=current_user.id,
                 borrowed_by_id=request.form.get("borrowed_by_id") or None,
@@ -241,8 +260,17 @@ def movement_return(movement_id):
 @login_required
 @require_permission("equipment.view")
 def assets_list():
-    assets = Asset.query.filter_by(status="active").order_by(Asset.name).all()
-    today = date.today()
+    from sqlalchemy.orm import joinedload
+    from app.extensions import farm_today
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — joinedload(Asset.barn)
+    # يمنع استعلام Barn منفصل لكل صف (القالب يعرض a.barn.barn_name).
+    assets = (Asset.query.options(joinedload(Asset.barn))
+              .filter_by(status="active").order_by(Asset.name).all())
+    # بند إصلاح — كانت date.today() (UTC خام) بدل farm_today() المستخدَمة
+    # بمولّد مهام الصيانة الخلفي (asset_maintenance_service.py) — قرب
+    # منتصف الليل بتوقيت الرياض ممكن الشاشة تقول "مو مستحقة بعد" رغم إن
+    # مهمة صيانة اتولّدت فعلاً خلف الكواليس لنفس الأصل.
+    today = farm_today()
     for a in assets:
         if a.maintenance_interval_days:
             reference = a.last_maintenance_date or a.created_at.date()
@@ -260,10 +288,23 @@ def assets_list():
 @require_permission("equipment.manage")
 def assets_new():
     if request.method == "POST":
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — فترة الصيانة
+        # ما كانت تُفحَص؛ صفر أو رقم سالب يخلي next_due يبقى "مستحقة"
+        # دايماً (أو بتاريخ ماضٍ فوراً) بلا أي معنى منطقي.
+        interval_raw = request.form.get("maintenance_interval_days")
+        interval_val = None
+        if interval_raw is not None and interval_raw != "":
+            interval_val = int(interval_raw)
+            # صفر قيمة صحيحة ومقصودة (تعني "بدون صيانة دورية مجدولة" —
+            # راجع تعليق Asset.maintenance_interval_days بالنموذج)،
+            # المرفوض هنا رقم سالب بس.
+            if interval_val < 0:
+                flash(_("فترة الصيانة ما يقدر تكون رقماً سالباً."), "error")
+                return redirect(url_for("equipment.assets_new"))
         asset = Asset(
             name=request.form["name"], category=request.form.get("category") or "other",
             barn_id=request.form.get("barn_id") or None,
-            maintenance_interval_days=int(request.form["maintenance_interval_days"]) if request.form.get("maintenance_interval_days") else None,
+            maintenance_interval_days=interval_val,
             notes=request.form.get("notes"),
         )
         db.session.add(asset)
@@ -323,10 +364,17 @@ def utilities_new():
         if cost is not None and cost < 0:
             flash(_("التكلفة ما يقدر تكون رقماً سالباً."), "error")
             return redirect(url_for("equipment.utilities_new"))
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — قراءة الكمية
+        # (كيلوواط/متر مكعب) ما كانت تُفحَص إطلاقاً، عكس التكلفة المصلَحة
+        # فوق — نفس النمط الناقص جزئياً بميزات ثانية.
+        quantity_val = float(request.form["quantity"])
+        if quantity_val < 0:
+            flash(_("الكمية ما يقدر تكون رقماً سالباً."), "error")
+            return redirect(url_for("equipment.utilities_new"))
         finance_id = svc.record_utility_cost(utility_type=utility_type, cost=cost, date_=reading_date)
         db.session.add(UtilityReading(
             utility_type=utility_type, date=reading_date,
-            quantity=float(request.form["quantity"]), unit=request.form.get("unit"),
+            quantity=quantity_val, unit=request.form.get("unit"),
             cost=cost, notes=request.form.get("notes"), finance_id=finance_id,
         ))
         db.session.commit()

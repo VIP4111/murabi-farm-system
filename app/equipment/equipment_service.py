@@ -116,6 +116,27 @@ def return_item(movement: EquipmentMovement, *, condition_at_return=None) -> Equ
     return movement
 
 
+def outstanding_borrows_bulk(items) -> dict:
+    """بند إصلاح (فحص شامل سطر بسطر — ميزة المعدات) — شاشة "الأصناف"
+    كانت تستدعي outstanding_borrows() مرة لكل صنف (استعلام منفصل لكل
+    صف بس عشان تعرف "مين آخر من أخذه") — استعلام واحد يجيب كل الحركات
+    المفتوحة لكل الأصناف معاً، بدل استعلام لكل صنف."""
+    if not items:
+        return {}
+    from sqlalchemy.orm import joinedload
+    item_ids = [i.id for i in items]
+    rows = (EquipmentMovement.query.options(joinedload(EquipmentMovement.borrowed_by))
+            .filter(EquipmentMovement.equipment_id.in_(item_ids),
+                    EquipmentMovement.returned_at.is_(None),
+                    EquipmentMovement.no_return_expected.is_(False),
+                    EquipmentMovement.borrowed_by_id.isnot(None))
+            .order_by(EquipmentMovement.created_at.desc()).all())
+    latest_holder = {}
+    for mv in rows:
+        latest_holder.setdefault(mv.equipment_id, mv.borrowed_by)
+    return latest_holder
+
+
 def outstanding_borrows(item):
     """قطع مستعارة لسا ما رجعت (بند إضافي 110) — تُستخدم بشاشة والدك
     المبسّطة عشان يشوف مين مستلم شنو بدون ما يفتح شاشة الحركات الكاملة.
