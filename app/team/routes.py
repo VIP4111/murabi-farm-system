@@ -60,7 +60,10 @@ WORKER_REPORT_CATEGORIES = {
 @login_required
 @require_permission("users.manage")
 def members_list():
-    members = User.query.order_by(User.created_at.desc()).all()
+    # بند إصلاح (فحص شامل سطر بسطر — شاشة أعضاء الفريق) — القالب يعرض
+    # m.role.id/m.role.display_label() لكل عضو (لون الشارة + التسمية)
+    # بدون تحميل مسبق للعلاقة، فكان يسبب استعلام Role منفصل لكل صف.
+    members = User.query.options(joinedload(User.role)).order_by(User.created_at.desc()).all()
     return render_template("team/members_list.html", members=members)
 
 
@@ -209,6 +212,14 @@ def salaries_owner_identity_update():
 @require_permission("team.manage_salary")
 def salary_update(user_id):
     user = User.query.get_or_404(user_id)
+    # بند إصلاح (فحص شامل سطر بسطر — شاشة أعضاء الفريق) — `team.manage_salary`
+    # صلاحية أخف من "صاحب الحلال" (يمكن تُمنح لدور "محاسب")، وهذا المسار
+    # ما كان فيه أي حماية لدور المالك — حامل الصلاحية يقدر يغيّر راتب/
+    # بيانات هوية المالك نفسه. بيانات هوية المالك لها مسار مخصَّص أصلاً
+    # (`salaries_owner_identity_update` فوق)، فتعديله هنا مو مبرَّر.
+    if user.role and user.role.name == "owner" and current_user.role.name != "owner":
+        flash(_("بيانات صاحب الحلال تُعدَّل من نموذجه المخصَّص فوق الجدول، مو من هنا."), "error")
+        return redirect(url_for("team.salaries_list"))
     raw = request.form.get("base_salary", "").strip()
     try:
         user.base_salary = float(raw) if raw else None
@@ -525,6 +536,14 @@ def members_toggle(user_id):
     user = User.query.get_or_404(user_id)
     if user.id == current_user.id:
         flash(_("ما تقدر تعطّل حسابك أنت"), "error")
+        return redirect(url_for("team.members_list"))
+    # بند إصلاح (فحص شامل سطر بسطر — شاشة أعضاء الفريق) — `users.manage`
+    # صلاحية أخف من "صاحب الحلال" (يمكن تُمنح لدور "موارد بشرية")، وهذا
+    # المسار ما كان فيه أي حماية لدور المالك — حامل الصلاحية يقدر يعطّل
+    # حساب المالك نفسه ويقفله خارج النظام. نفس مبدأ الحماية المطبَّق
+    # أصلاً بـmembers_new/members_edit لتغيير الدور.
+    if user.role and user.role.name == "owner" and current_user.role.name != "owner":
+        flash(_("ما تقدر تعطّل/تفعّل حساب صاحب الحلال — هذا الإجراء حصري له."), "error")
         return redirect(url_for("team.members_list"))
     user.is_active_account = not user.is_active_account
     db.session.add(AuditLog(actor_user_id=current_user.id, action="user.toggle",
