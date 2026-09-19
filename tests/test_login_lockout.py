@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta, timezone
 
 from app.extensions import db
-from app.models import User
+from app.models import User, ServiceToggle
 
 
 def _fail_login(client, phone, password="wrong-password"):
@@ -66,3 +66,46 @@ def test_lockout_message_reflects_actual_configured_minutes(client, owner):
 def test_unknown_phone_number_does_not_error(client):
     resp = _fail_login(client, "0599999999")
     assert resp.status_code == 200
+
+
+def test_attempt_on_locked_account_does_not_extend_failed_counter(client, owner):
+    """بند إصلاح (فحص شامل لصفحة الدخول 2026-09) — إصلاح فرع "الحساب
+    مقفل" (راجع الاختبار التالي) استلزم تحويله من `return` مبكّر إلى
+    تكملة نفس تدفق الدالة (عشان يوصل لتذييل عرض خيارات الدخول السريع
+    بالأسفل). هذا الاختبار يمنع رجوع خلل مستقبلي مرتبط بنفس التعديل:
+    التأكد إن محاولة إضافية على حساب مقفل أصلاً (حتى بكلمة مرور صحيحة)
+    ما تُسجَّل "فشل" جديد فوق القفل ولا تظهر رسالتان متعارضتان معاً."""
+    for _ in range(User.LOCKOUT_THRESHOLD):
+        _fail_login(client, owner.phone)
+    db.session.refresh(owner)
+    assert owner.failed_login_attempts == User.LOCKOUT_THRESHOLD
+
+    # محاولة إضافية بكلمة مرور صحيحة أثناء القفل — يُفترض تُرفض بدون
+    # ما تزيد عدّاد المحاولات الفاشلة.
+    resp = client.post("/login", data={"phone": owner.phone, "password": "pass1234"}, follow_redirects=True)
+    db.session.refresh(owner)
+    assert owner.failed_login_attempts == User.LOCKOUT_THRESHOLD, \
+        "محاولة على حساب مقفل ما لازم تزيد عدّاد المحاولات الفاشلة"
+
+    # رسالة القفل فقط تظهر، مو رسالة "كلمة المرور غير صحيحة" معها
+    assert "مقفل مؤقتاً".encode() in resp.data
+    assert resp.data.count("رقم الجوال أو كلمة المرور غير صحيحة".encode()) == 0
+
+
+def test_quick_login_box_still_shows_when_account_is_locked(client, owner):
+    """بند إصلاح (فحص شامل لصفحة الدخول 2026-09) — كان فرع "الحساب
+    مقفل" يرجّع `render_template("login.html")` مباشرة بدون تمرير
+    `quick_login_accounts`، فلو وضع "الدخول السريع" مفعَّل من الإعدادات،
+    صندوقه يختفي بصمت بالضبط باللحظة اللي فيها القفل — تناقض مع كل
+    مسار ثاني بنفس الصفحة اللي يعرضه دايماً. صار الفرع يكمل لنفس تذييل
+    الدالة اللي يجهّز `quick_login_accounts` بدل الرجوع المبكر."""
+    toggle = ServiceToggle(key="dev_quick_login", name="تسجيل دخول سريع (وضع تجربة)", is_enabled=True)
+    db.session.add(toggle)
+    db.session.commit()
+
+    for _ in range(User.LOCKOUT_THRESHOLD):
+        _fail_login(client, owner.phone)
+
+    resp = client.post("/login", data={"phone": owner.phone, "password": "pass1234"}, follow_redirects=True)
+    assert "مقفل مؤقتاً".encode() in resp.data
+    assert owner.name.encode() in resp.data, "صندوق الدخول السريع لازم يظل ظاهراً حتى لو الحساب المطلوب مقفل"

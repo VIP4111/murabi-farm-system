@@ -11,7 +11,7 @@
 </div>
 <div class="card" style="max-width:340px; margin:20px auto 60px;">
   <h2 style="text-align:center;">{{ _('تسجيل الدخول') }}</h2>
-  <form method="post">
+  <form method="post" id="loginForm">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label>{{ _('رقم الجوال') }}</label>
     {# فحص "مقاسات الجوال" — الحقل كان type="text" فيطلع لوحة مفاتيح
@@ -20,8 +20,19 @@
     <input type="tel" inputmode="numeric" name="phone" required>
     <label>{{ _('كلمة المرور') }}</label>
     <input type="password" name="password" required>
-    <button class="btn" style="width:100%;" type="submit">{{ _('دخول') }}</button>
+    <button class="btn" style="width:100%;" type="submit" id="loginSubmitBtn">{{ _('دخول') }}</button>
   </form>
+  <script>
+    // فحص شامل لصفحة الدخول — ضغطتين سريعتين على "دخول" (شبكة بطيئة
+    // بمزرعة، أو مجرد استعجال) كانتا ترسلان طلبين منفصلين، وكل طلب
+    // بكلمة مرور غلط يُحتسَب "محاولة فاشلة" مستقلة — يعني المستخدم
+    // يقفل حسابه بـ3 ضغطات بدل 5 محاولات فعلية. تعطيل الزر فور
+    // الإرسال (بعد ما المتصفح يبدأ الإرسال فعلياً) يمنع هذا بدون أي
+    // تأثير على الإرسال نفسه.
+    document.getElementById('loginForm').addEventListener('submit', function () {
+      document.getElementById('loginSubmitBtn').disabled = true;
+    });
+  </script>
 </div>
 
 {% if quick_login_accounts %}

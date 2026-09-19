@@ -47,9 +47,8 @@ def login():
             # المدة (زي طلبك: صارت دقيقة وحدة) تبقى الرسالة تقول رقماً
             # غلطاً. صارت تقرأ القيمة الحقيقية من الثابت نفسه.
             flash(_("الحساب مقفل مؤقتاً بسبب محاولات دخول فاشلة متكررة — حاول بعد %(n)s دقيقة.", n=User.LOCKOUT_MINUTES), "error")
-            return render_template("login.html")
 
-        if user and user.is_active_account and user.check_password(password):
+        elif user and user.is_active_account and user.check_password(password):
             user.register_successful_login()
             # بند إضافي 113 — قبل هذا، اختيار اللغة بشاشة الدخول
             # (`session['lang']`) كان يتغيّر شكل شاشة الدخول نفسها بس،
@@ -71,11 +70,22 @@ def login():
             login_user(user, remember=True)
             return redirect(url_for("core.home"))
 
-        if user and user.is_active_account:
+        elif user and user.is_active_account:
+            # بند إصلاح (فحص شامل لصفحة الدخول) — كان هذا الشرط منفصلاً
+            # (`if` وليس `elif`) عن فحص القفل فوق، فلو الحساب مقفل أصلاً
+            # كان يسجَّل عليه "محاولة فاشلة" إضافية فوق القفل (يمدّد مدة
+            # القفل بلا داعٍ) وتظهر رسالتان متعارضتان معاً: "الحساب مقفل"
+            # ثم "رقم الجوال أو كلمة المرور غير صحيحة" بنفس الاستجابة.
             user.register_failed_login()
             db.session.commit()
+            flash(_("رقم الجوال أو كلمة المرور غير صحيحة"), "error")
 
-        flash(_("رقم الجوال أو كلمة المرور غير صحيحة"), "error")
+        else:
+            # يشمل: رقم جوال غير مسجَّل، أو حساب موجود لكن معطَّل
+            # (`is_active_account=False`) — بدون تمييز الرسالة عن كلمة
+            # مرور غلط، عمداً، عشان ما نسرّب أي معلومة عن وجود الرقم
+            # من عدمه لمهاجم يجرّب أرقاماً.
+            flash(_("رقم الجوال أو كلمة المرور غير صحيحة"), "error")
 
     quick_login_accounts = []
     if _quick_login_enabled():
