@@ -27,6 +27,9 @@
 """
 from datetime import date, timedelta
 from flask_babel import lazy_gettext as _l
+from sqlalchemy import func
+from sqlalchemy.orm import joinedload
+from app.extensions import db
 from app.models import Animal, Mating, Pregnancy, Disease, FarmSettings
 
 LAMB_MAX_AGE_DAYS = 180
@@ -43,7 +46,12 @@ def _age_days(animal: Animal) -> int | None:
 
 
 def _active_query():
-    return Animal.query.filter_by(status="active")
+    # بند إصلاح (فحص شامل سطر بسطر — قائمة الحيوانات) — `Animal.barn`
+    # علاقة بدون `lazy="joined"`، والقالب يعرض `a.barn.display_name()`
+    # لكل صف، فكل فلتر مبني على هذا الاستعلام كان يسبّب استعلام حظيرة
+    # منفصل لكل رأس (N+1 حقيقي، يكبر مع عدد الحيوانات). تحميل مسبق واحد
+    # يجيب كل الحظائر بضربة وحدة بدل استعلام لكل صف.
+    return Animal.query.options(joinedload(Animal.barn)).filter_by(status="active")
 
 
 def _ruminant_query():
@@ -76,7 +84,8 @@ def _fattening():
 
 
 def _dead():
-    return Animal.query.filter_by(status="dead").order_by(Animal.animal_no).all()
+    return (Animal.query.options(joinedload(Animal.barn))
+            .filter_by(status="dead").order_by(Animal.animal_no).all())
 
 
 def _mated():
@@ -122,13 +131,24 @@ def _breeding_adult_females():
 
 
 def _productive_split():
+    # بند إصلاح (فحص شامل سطر بسطر — قائمة الحيوانات) — كان استعلام
+    # "عندها ولادة حديثة؟" يُنفَّذ لكل أنثى بالغة على حدة داخل حلقة
+    # Python (استعلام واحد لكل رأس) — على مزرعة فيها مئات الإناث
+    # البالغة، هذا يعني مئات الاستعلامات لبطاقتي "دافع/غير دافع" وحدهما
+    # بكل تحميل للصفحة. استعلام واحد مجمَّع (GROUP BY mother_id) يجيب
+    # كل الأمهات اللي عندهن ولادة حديثة بضربة وحدة، بدل استعلام لكل رأس.
     since = date.today() - timedelta(days=PRODUCTIVE_WINDOW_DAYS)
-    productive, unproductive = [], []
-    for female in _breeding_adult_females():
-        has_recent_birth = Animal.query.filter(
-            Animal.mother_id == female.id, Animal.birth_date >= since,
-        ).count() > 0
-        (productive if has_recent_birth else unproductive).append(female)
+    adults = _breeding_adult_females()
+    if not adults:
+        return [], []
+    adult_ids = [a.id for a in adults]
+    mothers_with_recent_birth = {
+        row[0] for row in db.session.query(Animal.mother_id)
+        .filter(Animal.mother_id.in_(adult_ids), Animal.birth_date >= since)
+        .distinct().all()
+    }
+    productive = [a for a in adults if a.id in mothers_with_recent_birth]
+    unproductive = [a for a in adults if a.id not in mothers_with_recent_birth]
     return productive, unproductive
 
 
@@ -156,26 +176,61 @@ def _has_active_mating(female: Animal) -> bool:
 
 
 def _ready_to_mate():
+    # بند إصلاح (فحص شامل سطر بسطر — قائمة الحيوانات) — كانت هذي الدالة
+    # تسوي حتى 4 استعلامات منفصلة *لكل أنثى مرشَّحة* داخل حلقة Python
+    # (حمل حالي، تقريع نشط، آخر مولود، أمراض مفتوحة) — على مزرعة فيها
+    # مئات الإناث هذا مئات الاستعلامات لتبويب واحد. صارت 4 استعلامات
+    # مجمَّعة (GROUP BY/DISTINCT) بس لكل المرشَّحات معاً، بدل استعلام
+    # لكل رأس على حدة — نفس المنطق بالضبط، بس دفعة واحدة.
     fs = FarmSettings.get()
     today = date.today()
+    gestation_cutoff = today - timedelta(days=fs.gestation_days)
+
+    candidates = [
+        f for f in _ruminant_query().filter_by(gender="أنثى").all()
+        if (age := _age_days(f)) is not None and age >= fs.min_breeding_age_days
+    ]
+    if not candidates:
+        return []
+    candidate_ids = [f.id for f in candidates]
+
+    last_pregnancy_date = dict(
+        db.session.query(Pregnancy.female_id, func.max(Pregnancy.date))
+        .filter(Pregnancy.female_id.in_(candidate_ids), Pregnancy.confirmed.is_(True))
+        .group_by(Pregnancy.female_id).all()
+    )
+    last_birth_date = dict(
+        db.session.query(Animal.mother_id, func.max(Animal.birth_date))
+        .filter(Animal.mother_id.in_(candidate_ids))
+        .group_by(Animal.mother_id).all()
+    )
+    active_mating_female_ids = {
+        row[0] for row in db.session.query(Mating.female_id)
+        .filter(Mating.female_id.in_(candidate_ids), Mating.date >= gestation_cutoff)
+        .distinct().all()
+    }
+    diseased_female_ids = {
+        row[0] for row in db.session.query(Disease.animal_id)
+        .filter(Disease.animal_id.in_(candidate_ids), Disease.status == "active")
+        .distinct().all()
+    }
+
     result = []
-    for female in _ruminant_query().filter_by(gender="أنثى").all():
-        age = _age_days(female)
-        if age is None or age < fs.min_breeding_age_days:
+    for female in candidates:
+        if female.id in active_mating_female_ids:
             continue
-        if _is_currently_pregnant(female):
+        preg_date = last_pregnancy_date.get(female.id)
+        birth_date_ = last_birth_date.get(female.id)
+        # نفس منطق _is_currently_pregnant الأصلي: آخر حمل مؤكد بدون
+        # ولادة بعده يعني حامل حالياً.
+        is_currently_pregnant = preg_date is not None and (birth_date_ is None or birth_date_ < preg_date)
+        if is_currently_pregnant:
             continue
-        if _has_active_mating(female):
-            continue
-        last_child = (
-            Animal.query.filter_by(mother_id=female.id)
-            .order_by(Animal.birth_date.desc()).first()
-        )
-        if last_child and last_child.birth_date:
-            rest_days = (today - last_child.birth_date).days
+        if birth_date_:
+            rest_days = (today - birth_date_).days
             if rest_days < fs.min_rest_after_birth_days:
                 continue
-        if Disease.query.filter_by(animal_id=female.id, status="active").count() > 0:
+        if female.id in diseased_female_ids:
             continue
         result.append(female)
     return result
