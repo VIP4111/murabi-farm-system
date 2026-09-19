@@ -37,6 +37,20 @@ def validate_price(price: float | None, *, field_label: str = None) -> None:
         raise ValueError(_("%(field)s ما يقدر يكون رقماً سالباً.", field=field_label))
 
 
+def validate_percent(value: float | None, *, field_label: str = None) -> None:
+    """بند إصلاح (فحص شامل سطر بسطر — ميزة العلف) — حقول نسبة مئوية
+    (بروتين/ألياف/كالسيوم/فوسفور بمكوّن علف) كانت تُحفَظ مباشرة من
+    النموذج بدون أي فحص، فرقم سالب أو أكبر من 100 يُحفظ بصمت ويكسر
+    حسابات الحاسبة الغذائية ومُحسِّن الخلطات لاحقاً (النسبة تُقسَّم على
+    100 مباشرة بمعادلاتها — رقم غير منطقي يفسد النتيجة بصمت)."""
+    if value is None:
+        return
+    if field_label is None:
+        field_label = _("النسبة")
+    if value < 0 or value > 100:
+        raise ValueError(_("%(field)s لازم تكون بين 0 و100.", field=field_label))
+
+
 MAX_MILK_LITERS_PER_SESSION = 15
 
 

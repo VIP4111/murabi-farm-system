@@ -644,3 +644,29 @@ def days_until_stockout(feed: Feed, lookback_days: int = 14) -> float | None:
     if avg_daily <= 0:
         return None
     return round((feed.available_qty or 0) / avg_daily, 1)
+
+
+def days_until_stockout_bulk(feeds: list, lookback_days: int = 14) -> dict:
+    """بند إصلاح (فحص شامل سطر بسطر — ميزة العلف) — شاشة "مكوّنات العلف"
+    كانت تستدعي `days_until_stockout()` مرة لكل صف (استعلام تجميع
+    منفصل لكل مكوّن) — استعلام واحد مجمَّع (GROUP BY feed_id) يجيب
+    مجموع الاستهلاك لكل المكوّنات معاً بضربة وحدة، بدل استعلام لكل صف."""
+    if not feeds:
+        return {}
+    since = date.today() - timedelta(days=lookback_days)
+    feed_ids = [f.id for f in feeds]
+    consumed_by_feed = dict(
+        db.session.query(FeedMovement.feed_id, db.func.coalesce(db.func.sum(FeedMovement.quantity), 0))
+        .filter(FeedMovement.feed_id.in_(feed_ids), FeedMovement.movement_type == "out",
+                FeedMovement.created_at >= since)
+        .group_by(FeedMovement.feed_id).all()
+    )
+    result = {}
+    for feed in feeds:
+        consumed = consumed_by_feed.get(feed.id)
+        if not consumed:
+            result[feed.id] = None
+            continue
+        avg_daily = consumed / lookback_days
+        result[feed.id] = round((feed.available_qty or 0) / avg_daily, 1) if avg_daily > 0 else None
+    return result

@@ -19,7 +19,7 @@ RATION_INGREDIENT_SLOTS = 6
 @require_permission("feed.view")
 def items_list():
     items = Feed.query.order_by(Feed.name).all()
-    stockout = {f.id: svc.days_until_stockout(f) for f in items}
+    stockout = svc.days_until_stockout_bulk(items)
     return render_template(
         "feed/items_list.html", items=items, stockout=stockout,
         feed_class_labels=Feed.FEED_CLASS_LABELS_AR, category_labels=Feed.FEED_ITEM_CATEGORY_LABELS_AR,
@@ -41,6 +41,21 @@ def items_new():
         try:
             validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
             validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+            # بند إصلاح (فحص شامل سطر بسطر — ميزة العلف) — كانت هذي
+            # الحقول تُحفَظ بلا أي فحص، وقيمة سالبة/غير منطقية بأي وحدة
+            # فيها تُفسد بصمت حسابات مُحسِّن الخلطات والحاسبة الغذائية
+            # (تكلفة سالبة = "ربح مجاني" وهمي بمعادلة المُحسِّن، ونسبة
+            # خارج 0-100 تكسر أي حساب لاحق يعتمد عليها).
+            if request.form.get("unit_price"):
+                validation_service.validate_price(float(request.form["unit_price"]), field_label=_("سعر الوحدة"))
+            if request.form.get("unit_weight_kg"):
+                validation_service.validate_price(float(request.form["unit_weight_kg"]), field_label=_("وزن الوحدة"))
+            if request.form.get("energy_kcal_per_kg"):
+                validation_service.validate_price(float(request.form["energy_kcal_per_kg"]), field_label=_("الطاقة"))
+            for field, label in (("protein_percent", _("نسبة البروتين")), ("fiber_percent", _("نسبة الألياف")),
+                                  ("calcium_percent", _("نسبة الكالسيوم")), ("phosphorus_percent", _("نسبة الفوسفور"))):
+                if request.form.get(field):
+                    validation_service.validate_percent(float(request.form[field]), field_label=label)
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("feed.items_new"))
@@ -81,6 +96,16 @@ def items_edit(item_id):
         try:
             validation_service.validate_price(float(request.form.get("available_qty") or 0), field_label=_("الكمية المتوفرة"))
             validation_service.validate_price(float(request.form.get("min_stock_qty") or 0), field_label=_("الحد الأدنى للمخزون"))
+            if request.form.get("unit_price"):
+                validation_service.validate_price(float(request.form["unit_price"]), field_label=_("سعر الوحدة"))
+            if request.form.get("unit_weight_kg"):
+                validation_service.validate_price(float(request.form["unit_weight_kg"]), field_label=_("وزن الوحدة"))
+            if request.form.get("energy_kcal_per_kg"):
+                validation_service.validate_price(float(request.form["energy_kcal_per_kg"]), field_label=_("الطاقة"))
+            for field, label in (("protein_percent", _("نسبة البروتين")), ("fiber_percent", _("نسبة الألياف")),
+                                  ("calcium_percent", _("نسبة الكالسيوم")), ("phosphorus_percent", _("نسبة الفوسفور"))):
+                if request.form.get(field):
+                    validation_service.validate_percent(float(request.form[field]), field_label=label)
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("feed.items_edit", item_id=item.id))
