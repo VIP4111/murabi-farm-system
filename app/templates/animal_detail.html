@@ -125,7 +125,9 @@
   <button class="tab-btn {{ 'active' if active_tab=='vet' }}" data-tab="vet" onclick="showTab('vet')">{{ _('سجل بيطري') }}</button>
   <button class="tab-btn {{ 'active' if active_tab=='diseases' }}" data-tab="diseases" onclick="showTab('diseases')">{{ _('الأمراض') }}</button>
   <button class="tab-btn {{ 'active' if active_tab=='vaccinations' }}" data-tab="vaccinations" onclick="showTab('vaccinations')">{{ _('التحصينات') }}</button>
+  {% if animal.species != 'ostrich' %}
   <button class="tab-btn {{ 'active' if active_tab=='repro' }}" data-tab="repro" onclick="showTab('repro')">{{ _('التكاثر') }}</button>
+  {% endif %}
   <button class="tab-btn {{ 'active' if active_tab=='births' }}" data-tab="births" onclick="showTab('births')">{{ _('الولادات') }}</button>
   <button class="tab-btn {{ 'active' if active_tab=='weights' }}" data-tab="weights" onclick="showTab('weights')">{{ _('الأوزان') }}</button>
   <button class="tab-btn {{ 'active' if active_tab=='milk' }}" data-tab="milk" onclick="showTab('milk')">{{ _('الحليب') }}</button>
@@ -304,6 +306,7 @@
   </div>
 </div>
 
+{% if animal.species != 'ostrich' %}
 <div class="tab-panel {{ 'active' if active_tab=='repro' }}" data-tab="repro">
   <div class="card">
     <h3 style="font-size:15px;">{{ _('التقريع') }}</h3>
@@ -356,6 +359,7 @@
   </div>
   {% endif %}
 </div>
+{% endif %}
 
 <div class="tab-panel {{ 'active' if active_tab=='births' }}" data-tab="births">
   <div class="card">
