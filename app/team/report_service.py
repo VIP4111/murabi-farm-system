@@ -109,6 +109,20 @@ def _require_manage(actor):
         raise ReportPermissionError(_("ما تملك صلاحية إدارة البلاغات."))
 
 
+def _notify_reporter_if_others(report: Report, actor, title: str, body: str) -> None:
+    """إشعار مقدّم البلاغ عند قبول/تأجيل/إغلاق بلاغه (بند إصلاح — فحص
+    شامل سطر بسطر لميزة البلاغات) — بدون إشعار لو الفاعل نفسه هو مقدّم
+    البلاغ (بلاغ سوّاه لنفسه، حالة نادرة بس ممكنة). قناة Push فقط، نفس
+    فلسفة إشعارات submit_report/transfer_report — تتجاهل بصمت لو
+    المستخدم بدون اشتراك مسجَّل."""
+    if not report.reporter_id or report.reporter_id == actor.id:
+        return
+    from app.core import push_service
+    reporter = report.reporter
+    if reporter and reporter.is_active_account:
+        push_service.notify_user(reporter, title, body, url="/team/reports")
+
+
 def accept_report(report: Report, *, actor) -> Report:
     _require_manage(actor)
     if report.status != "new":
@@ -119,6 +133,14 @@ def accept_report(report: Report, *, actor) -> Report:
     db.session.add(AuditLog(actor_user_id=actor.id, action="report.accept",
                              entity_type="Report", entity_id=report.id))
     db.session.commit()
+
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة البلاغات) — مقدّم البلاغ ما
+    # كان يوصله أي إشعار عند قبول بلاغه، رغم إن submit_report/
+    # transfer_report يشعّران الطرف المعني فوراً — يبقى مضطر يفتح
+    # التطبيق ويشيّك يدوياً هل حد استلم بلاغه أو لا.
+    _notify_reporter_if_others(report, actor,
+                                _("✅ تم استلام بلاغك"),
+                                _("%(name)s استلم بلاغك وبيتابعه.", name=actor.name))
     return report
 
 
@@ -133,6 +155,10 @@ def postpone_report(report: Report, *, actor, reason: str) -> Report:
     db.session.add(AuditLog(actor_user_id=actor.id, action="report.postpone",
                              entity_type="Report", entity_id=report.id, details=reason))
     db.session.commit()
+
+    _notify_reporter_if_others(report, actor,
+                                _("⏸️ تأجَّل بلاغك مؤقتاً"),
+                                reason or "")
     return report
 
 
@@ -232,6 +258,10 @@ def close_report(report: Report, *, actor, note=None) -> Report:
     db.session.add(AuditLog(actor_user_id=actor.id, action="report.close",
                              entity_type="Report", entity_id=report.id))
     db.session.commit()
+
+    _notify_reporter_if_others(report, actor,
+                                _("✅ تم إغلاق بلاغك"),
+                                note or "")
     return report
 
 

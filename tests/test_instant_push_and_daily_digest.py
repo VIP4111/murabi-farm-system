@@ -48,12 +48,16 @@ def test_transfer_report_sends_instant_push_to_executor(app, owner, monkeypatch)
     monkeypatch.setattr(push_service, "vapid_configured", lambda: True)
 
     report = submit_report(reporter=executor, description="بلاغ اختبار")
-    calls.clear()  # نتجاهل إشعار "بلاغ جديد" للمدراء، نركّز على التحويل
+    calls.clear()  # نتجاهل إشعار "بلاغ جديد" للمدراء، نركّز على القبول والتحويل
     accept_report(report, actor=owner)
     transfer_report(report, actor=owner, executor=executor, note="نفّذ من فضلك")
 
-    assert len(calls) == 1
-    assert "بلاغ" in calls[0]["title"]
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة البلاغات) — صار مقدّم البلاغ
+    # (هنا نفس الشخص المنفّذ لاحقاً) يستلم إشعار قبول أيضاً، فوق إشعار
+    # التحويل الأصلي — 2 بدل 1.
+    assert len(calls) == 2
+    assert "استلام" in calls[0]["title"]
+    assert "بلاغ" in calls[1]["title"]
 
 
 def test_push_test_digest_endpoint_sends_immediately(logged_in_client, owner, monkeypatch):
