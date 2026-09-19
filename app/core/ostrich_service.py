@@ -20,7 +20,31 @@ def register_egg(*, mother_id: int, lay_date: date, quality: str | None = None,
     return egg
 
 
+class OstrichIncubatorFullError(ValueError):
+    """بند إصلاح (فحص شامل سطر بسطر — ميزة النعام) — سعة الحاضنة ما
+    كانت مفروضة إطلاقاً (موثَّق صراحة بنص الشاشة نفسها: "النظام ما
+    يمنعك تدخل بيض أكثر منها") — صار يُفرض فعلياً الآن، نفس مبدأ
+    OstrichEggAlreadyProcessedError."""
+
+
 def place_in_incubator(egg: OstrichEgg, *, incubator_id: int, incubation_start_date: date) -> OstrichEgg:
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة النعام) — ما فيه حارس ضد
+    # إعادة إدخال بيضة مسجَّلة نتيجتها أصلاً (فقست/فشلت) أو موجودة
+    # بحاضنة ثانية فعلاً — نفس نمط الحارس الموجود بـrecord_hatch_*.
+    if egg.hatch_result != "pending":
+        raise OstrichEggAlreadyProcessedError(_("هذي البيضة مسجَّلة لها نتيجة فقس مسبقاً."))
+    if egg.incubator_id and egg.incubator_id != incubator_id:
+        raise ValueError(_("هذي البيضة موجودة بحاضنة ثانية أصلاً."))
+    incubator = Incubator.query.get(incubator_id)
+    if incubator and incubator.capacity:
+        current_count = OstrichEgg.query.filter(
+            OstrichEgg.incubator_id == incubator_id, OstrichEgg.id != egg.id,
+            OstrichEgg.hatch_result == "pending",
+        ).count()
+        if current_count >= incubator.capacity:
+            raise OstrichIncubatorFullError(
+                _("الحاضنة %(code)s وصلت سعتها الكاملة (%(cap)s بيضة).", code=incubator.code, cap=incubator.capacity)
+            )
     egg.incubator_id = incubator_id
     egg.incubation_start_date = incubation_start_date
     db.session.add(egg)

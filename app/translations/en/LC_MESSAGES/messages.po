@@ -15323,6 +15323,27 @@ msgstr "Invalid weight or price value — make sure they are numbers."
 msgid "هذا الرأس تقدّمت لهذي المرحلة من قبل — ما تحتاج إلحاق."
 msgstr "This animal has already progressed to this stage — no catch-up needed."
 
+#: app/ostrich/routes.py:52
+msgid "الأم المحدَّدة غير صالحة — لازم تكون أنثى نعام نشطة."
+msgstr "The selected mother is invalid — must be an active female ostrich."
+
+#: app/core/ostrich_service.py:46
+#, python-format
+msgid "الحاضنة %(code)s وصلت سعتها الكاملة (%(cap)s بيضة)."
+msgstr "Incubator %(code)s has reached its full capacity (%(cap)s eggs)."
+
+#: app/ostrich/routes.py:145
+msgid "سعة الحاضنة لازم تكون رقماً موجباً أكبر من صفر."
+msgstr "Incubator capacity must be a positive number greater than zero."
+
+#: app/core/ostrich_service.py:37
+msgid "هذي البيضة موجودة بحاضنة ثانية أصلاً."
+msgstr "This egg is already in another incubator."
+
+#: app/ostrich/routes.py:55
+msgid "وزن البيضة"
+msgstr "Egg weight"
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 
