@@ -404,9 +404,21 @@ def _claim_if_unassigned(task: Task, actor) -> None:
     """مهمة يومية مشتركة بلا عامل محدد (بند إضافي 107 — تولّد بدون
     `assignee_id`، تظهر لكل عمال نفس الدور عبر `target_role`) تُنسب
     تلقائياً لأول عامل يبدأها فعلياً — نفس منطق لوحة مهام مشتركة، أول
-    وحد يمسكها يصير مسؤولها."""
-    if task.assignee_id is None:
-        task.assignee_id = actor.id
+    وحد يمسكها يصير مسؤولها.
+
+    بند إصلاح (فحص شامل سطر بسطر — ميزة المهام): كان `target_role`
+    يُستخدَم فقط لفلترة العرض بشاشة القائمة (`tasks_list`)، بدون أي
+    تحقق فعلي هنا عند "المسك" — يعني أي مستخدم مسجّل دخول، بغض النظر
+    عن دوره، يقدر يرسل POST مباشر لـ/tasks/<id>/start (أو complete/fail)
+    لمهمة غير معيَّنة وموجَّهة لدور ثانٍ تماماً (مثلاً مهمة دكتور)
+    فتُنسب له تلقائياً وتنتقل حالتها — تجاوز كامل لتصنيف الأدوار. صار
+    التحقق الفعلي هنا: مهمة موجَّهة لدور محدَّد لا يقدر يمسكها إلا من
+    نفس الدور."""
+    if task.assignee_id is not None:
+        return
+    if task.target_role and (not actor.role or actor.role.name != task.target_role):
+        raise TaskPermissionError(_("هذي المهمة موجَّهة لدور ثانٍ."))
+    task.assignee_id = actor.id
 
 
 def start_task(task: Task, *, actor) -> Task:
