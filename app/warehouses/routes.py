@@ -6,6 +6,7 @@ from flask_login import login_required, current_user
 from app.warehouses import warehouses_bp
 from app.core import warehouse_service as wsvc
 from app.core import inventory_count_service as csvc
+from app.extensions import farm_today
 from app.models import Warehouse, Feed, Pharmacy, InventoryCount
 
 
@@ -39,9 +40,17 @@ def warehouses_list():
 def warehouses_new():
     _require_feed_or_pharmacy_manage()
     if request.method == "POST":
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة المستودعات) — warehouse_type
+        # ما كان يُفحَص مقابل القيم المسموحة، فطلب POST مباشر بقيمة
+        # عشوائية كان يُحفَظ بصمت وينشئ مستودعاً "يتيماً" ما يطابق أي
+        # فلتر kind لاحقاً (feed/pharmacy/mixed).
+        warehouse_type = request.form.get("warehouse_type")
+        if warehouse_type not in Warehouse.WAREHOUSE_TYPES:
+            flash(_("نوع مستودع غير معروف."), "error")
+            return redirect(url_for("warehouses.warehouses_new"))
         warehouse = Warehouse(
             name=request.form["name"],
-            warehouse_type=request.form["warehouse_type"],
+            warehouse_type=warehouse_type,
             location_note=request.form.get("location_note") or None,
         )
         from app.extensions import db
@@ -58,6 +67,13 @@ def warehouses_new():
 @warehouses_bp.route("/item/<kind>/<int:item_id>")
 @login_required
 def item_breakdown(kind, item_id):
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة المستودعات) — `_require_kind_manage`
+    # يقبل kind="equipment" (صلاحية equipment.manage صالحة)، لكن طبقة
+    # المستودعات المسمّاة (`warehouse_service._MODELS`/`_DEFAULT_NAMES`)
+    # ما تدعم "equipment" إطلاقاً — الوصول المباشر لهذا الرابط بـ
+    # kind=equipment كان يسقط بخطأ 500 (KeyError) بدل رسالة واضحة.
+    if kind not in ("feed", "pharmacy"):
+        abort(404)
     _require_kind_manage(kind)
     Model = Feed if kind == "feed" else Pharmacy
     item = Model.query.get_or_404(item_id)
@@ -74,6 +90,8 @@ def item_breakdown(kind, item_id):
 @warehouses_bp.route("/item/<kind>/<int:item_id>/transfer", methods=["POST"])
 @login_required
 def item_transfer(kind, item_id):
+    if kind not in ("feed", "pharmacy"):
+        abort(404)
     _require_kind_manage(kind)
     try:
         wsvc.transfer_stock(
@@ -120,7 +138,7 @@ def item_count(kind, item_id):
         return redirect(url_for("warehouses.inventory_counts_list"))
     return render_template(
         "warehouses/item_count_form.html", item=item, kind=kind,
-        kind_label=csvc.KIND_LABELS_AR[kind], today=date.today().isoformat(),
+        kind_label=csvc.KIND_LABELS_AR[kind], today=farm_today().isoformat(),
     )
 
 

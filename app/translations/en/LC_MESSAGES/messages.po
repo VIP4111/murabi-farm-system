@@ -15279,6 +15279,15 @@ msgstr "Quantity cannot be a negative number."
 msgid "فترة الصيانة ما يقدر تكون رقماً سالباً."
 msgstr "The maintenance interval cannot be a negative number."
 
+#: app/core/inventory_count_service.py:51
+#, python-format
+msgid "الكمية المجرودة (%(actual)s) أقل من المجموع الموزَّع فعلياً على مستودعات مسمّاة لهذا الصنف (%(named)s) — راجع توزيع المستودعات قبل تسجيل الجرد."
+msgstr "The counted quantity (%(actual)s) is less than the amount already allocated to named warehouses for this item (%(named)s) — review the warehouse distribution before recording this count."
+
+#: app/warehouses/routes.py:49
+msgid "نوع مستودع غير معروف."
+msgstr "Unknown warehouse type."
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 

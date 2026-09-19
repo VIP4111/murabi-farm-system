@@ -4,7 +4,6 @@
 المشروع... تقول قيمة الهالك بسعر الكيس الأصلي، تضيف الخسارة على سعر
 الخراف [موزَّعة على كل الرؤوس]." الدالة هنا نقطة دخول واحدة تغطي
 العلف/الدواء/المعدات الثلاثة (نفس نمط `stock_purchase_service.kind`)."""
-from datetime import date
 from flask_babel import gettext as _
 from flask_babel import lazy_gettext as _l
 
@@ -33,7 +32,29 @@ def record_count(*, kind: str, item, actual_qty: float, count_date=None, note=No
     if actual_qty is None or actual_qty < 0:
         raise ValueError(_("الكمية الفعلية المجرودة لازم تكون رقماً موجباً (أو صفر)."))
 
-    count_date = count_date or date.today()
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة المستودعات) — هذي الدالة
+    # تفترض الجرد يغطي كل رصيد الصنف دفعة وحدة (available_qty كاملاً)،
+    # بدون أي وعي بالمستودعات المسمّاة (`warehouse_breakdown`). لو صنف
+    # عنده كمية موزَّعة فعلياً على مستودع مسمّى، وجاء جرد بكمية أقل من
+    # هذا الموزَّع، كان يُحفَظ بصمت ويخلي المستودع الافتراضي المحسوب
+    # سالباً (يُقصّ لصفر) — يعني مجموع البطاقة المعروضة يصير أكبر من
+    # الرصيد الفعلي الجديد، مخالفة صريحة للقاعدة الموثَّقة "مجموع
+    # المستودعات = الرصيد الإجمالي دائماً". صار يُرفض صراحة بدل ما يُحفظ
+    # فاسداً، ويطلب مراجعة توزيع المستودعات أولاً.
+    if kind in ("feed", "pharmacy"):
+        from app.core import warehouse_service
+        named_total = sum(
+            row["qty"] for row in warehouse_service.warehouse_breakdown(item, kind) if not row["is_default"]
+        )
+        if named_total > 0 and actual_qty < named_total:
+            raise ValueError(_(
+                "الكمية المجرودة (%(actual)s) أقل من المجموع الموزَّع فعلياً على "
+                "مستودعات مسمّاة لهذا الصنف (%(named)s) — راجع توزيع المستودعات "
+                "قبل تسجيل الجرد.", actual=actual_qty, named=named_total,
+            ))
+
+    from app.extensions import farm_today
+    count_date = count_date or farm_today()
     expected_qty = item.available_qty or 0
     diff_qty = actual_qty - expected_qty
 
