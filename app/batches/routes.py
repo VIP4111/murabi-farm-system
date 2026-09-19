@@ -7,7 +7,7 @@ from app.batches import batches_bp
 from app.auth.decorators import require_permission
 from app.core import batch_service
 from app.models import AnimalBatch, Animal, Barn, AnimalColor, Breed
-from app.extensions import run_once_per_app
+from app.extensions import run_once_per_app, farm_today
 
 BATCH_ENTRY_SLOTS = range(20)
 
@@ -16,7 +16,12 @@ BATCH_ENTRY_SLOTS = range(20)
 @login_required
 @require_permission("animals.view")
 def batches_list():
-    batches = AnimalBatch.query.order_by(AnimalBatch.created_at.desc()).all()
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة الدفعات) — القالب يعرض
+    # b.animals|length لكل دفعة، بدون تحميل مسبق كان يسبب استعلام
+    # منفصل لكل دفعة.
+    from sqlalchemy.orm import selectinload
+    batches = (AnimalBatch.query.options(selectinload(AnimalBatch.animals))
+               .order_by(AnimalBatch.created_at.desc()).all())
     return render_template("batches/batches_list.html", batches=batches)
 
 
@@ -25,19 +30,28 @@ def batches_list():
 @require_permission("animals.manage")
 def batches_new():
     if request.method == "POST":
-        entries = []
-        for i in BATCH_ENTRY_SLOTS:
-            gender = request.form.get(f"gender_{i}")
-            if not gender:
-                continue
-            entries.append({
-                "animal_no": request.form.get(f"animal_no_{i}") or None,
-                "gender": gender,
-                "color": request.form.get(f"color_{i}") or None,
-                "weight": float(request.form[f"weight_{i}"]) if request.form.get(f"weight_{i}") else None,
-                "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
-                "breed": request.form.get(f"breed_{i}") or None,
-            })
+        # بند إصلاح (فحص شامل سطر بسطر — ميزة الدفعات) — float() كان
+        # يُستدعى مباشرة على قيمة الوزن/السعر الخام قبل حتى الوصول
+        # لـcreate_batch (اللي فيها الفحص المنطقي الصحيح أصلاً) — رقم
+        # غير صالح مكتوب بالغلط كان يسقط بخطأ 500 مباشر بدل رسالة
+        # واضحة، نفس نمط ناقص بميزات ثانية هذي الجلسة.
+        try:
+            entries = []
+            for i in BATCH_ENTRY_SLOTS:
+                gender = request.form.get(f"gender_{i}")
+                if not gender:
+                    continue
+                entries.append({
+                    "animal_no": request.form.get(f"animal_no_{i}") or None,
+                    "gender": gender,
+                    "color": request.form.get(f"color_{i}") or None,
+                    "weight": float(request.form[f"weight_{i}"]) if request.form.get(f"weight_{i}") else None,
+                    "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
+                    "breed": request.form.get(f"breed_{i}") or None,
+                })
+        except ValueError:
+            flash(_("قيمة وزن أو سعر غير صالحة — تأكد إنها أرقام."), "error")
+            return redirect(url_for("batches.batches_new"))
         if not entries:
             flash(_("لازم رأس واحدة على الأقل بالدفعة — حدد الجنس على الأقل لكل صف."), "error")
             return redirect(url_for("batches.batches_new"))
@@ -63,7 +77,7 @@ def batches_new():
     return render_template(
         "batches/batch_form.html", entry_slots=BATCH_ENTRY_SLOTS,
         sources=AnimalBatch.SOURCES, breeds=Breed.query.order_by(Breed.name).all(),
-        today=date.today().isoformat(),
+        today=farm_today().isoformat(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
     )
 
@@ -72,7 +86,15 @@ def batches_new():
 @login_required
 @require_permission("animals.view")
 def batch_detail(batch_id):
-    batch = AnimalBatch.query.get_or_404(batch_id)
+    # بند إصلاح (فحص شامل سطر بسطر — ميزة الدفعات) — القالب يعرض
+    # a.barn.barn_name لكل حيوان بالدفعة بدون تحميل مسبق.
+    from sqlalchemy.orm import selectinload, joinedload
+    batch = (AnimalBatch.query
+             .options(selectinload(AnimalBatch.animals).joinedload(Animal.barn))
+             .filter_by(id=batch_id).first())
+    if batch is None:
+        from flask import abort
+        abort(404)
     permanent_barns = Barn.query.filter(Barn.barn_type != "عزل").order_by(Barn.barn_name).all()
     return render_template(
         "batches/batch_detail.html", batch=batch, permanent_barns=permanent_barns,
@@ -100,11 +122,15 @@ def batch_advance(batch_id):
 @require_permission("gates.approve")
 def batch_distribute(batch_id):
     batch = AnimalBatch.query.get_or_404(batch_id)
-    assignments = {}
-    for animal in batch.animals:
-        barn_id = request.form.get(f"barn_id_{animal.id}")
-        if barn_id:
-            assignments[animal.id] = int(barn_id)
+    try:
+        assignments = {}
+        for animal in batch.animals:
+            barn_id = request.form.get(f"barn_id_{animal.id}")
+            if barn_id:
+                assignments[animal.id] = int(barn_id)
+    except ValueError:
+        flash(_("رقم حظيرة غير صالح."), "error")
+        return redirect(url_for("batches.batch_detail", batch_id=batch.id))
     try:
         created = batch_service.distribute_batch(batch, assignments=assignments, actor_user_id=current_user.id)
     except ValueError as e:

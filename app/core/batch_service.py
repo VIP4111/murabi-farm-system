@@ -14,7 +14,7 @@
 """
 from datetime import date
 from flask_babel import gettext as _
-from app.extensions import db
+from app.extensions import db, farm_today
 from app.models import AnimalBatch, Animal, Barn, AuditLog
 from app.models.animal import AnimalSource
 from app.core.animal_service import create_animal, create_intake_care_tasks
@@ -113,7 +113,7 @@ def _apply_stage2_tagging(batch: AnimalBatch, animal: Animal):
     return task_service.create_suggested_task(
         title=f"🏷️ ترقيم وفحص سلامة فردي — {animal.animal_no} (دفعة {batch.batch_no})",
         task_type="batch_tagging_check", barn_id=animal.barn_id, animal_id=animal.id,
-        due_date=date.today(), source_type="AnimalBatch", source_id=batch.id,
+        due_date=farm_today(), source_type="AnimalBatch", source_id=batch.id,
         notes="توليد رقم تسلسلي/شريحة دائم + تسجيل فردي + فحص سلامة قبل التوزيع على الحظائر الدائمة.",
     )
 
@@ -124,7 +124,7 @@ def _apply_stage3_distribution(batch: AnimalBatch, animal: Animal, barn_id: int)
     return task_service.create_suggested_task(
         title=f"🌾 ربط عليقة الحظيرة — {animal.animal_no} (دفعة {batch.batch_no})",
         task_type="batch_feed_link", barn_id=barn_id, animal_id=animal.id,
-        due_date=date.today(), source_type="AnimalBatch", source_id=batch.id,
+        due_date=farm_today(), source_type="AnimalBatch", source_id=batch.id,
         notes="تأكد من ربط هذي الحظيرة بخطة تغذية مناسبة (FeedBarnPlan) لو ما فيه خطة فعّالة أصلاً.",
     )
 
@@ -200,6 +200,20 @@ def release_hold(animal: Animal, *, actor_user_id: int) -> Animal:
     return animal
 
 
+def _already_caught_up(batch: AnimalBatch, animal: Animal, task_type: str) -> bool:
+    """بند إصلاح (فحص شامل سطر بسطر — ميزة الدفعات) — زر "إلحاق بمرحلة
+    الدفعة" كان يظهر لأي رأس نشطة غير مستبعدة بغض النظر لو هي أصلاً
+    تقدّمت مع بقية الدفعة (بالتقدّم الجماعي) أو لا — ضغطه مرة ثانية على
+    رأس تقدّمت أصلاً كان يولّد مهمة مكرَّرة، وبمرحلة التوزيع يعيد كتابة
+    `animal.barn_id` بصمت في كل ضغطة. الفحص هنا: هل فيه أصلاً مهمة
+    مسجَّلة بنفس المصدر (الدفعة) ونفس الرأس ونفس نوع المرحلة؟ لو فيه،
+    يعني الرأس تقدّمت من قبل (جماعياً أو فردياً)، ما تحتاج تكرار."""
+    from app.models import Task
+    return Task.query.filter_by(
+        source_type="AnimalBatch", source_id=batch.id, animal_id=animal.id, task_type=task_type,
+    ).first() is not None
+
+
 def advance_single_animal(batch: AnimalBatch, animal: Animal, *, actor_user_id: int, barn_id: int | None = None):
     """لحاق فردي لرأس كانت مستبعدة (بعد تحرير الاستبعاد) بمرحلة دفعتها
     الحالية — يطبّق فقط فعل المرحلة اللي فاتتها، بدون أي تأثير على بقية
@@ -210,10 +224,14 @@ def advance_single_animal(batch: AnimalBatch, animal: Animal, *, actor_user_id: 
         raise ValueError(_("لازم تحرّر الاستبعاد أولاً قبل التقدّم الفردي."))
 
     if batch.stage == AnimalBatch.STAGE_TAGGING:
+        if _already_caught_up(batch, animal, "batch_tagging_check"):
+            raise ValueError(_("هذا الرأس تقدّمت لهذي المرحلة من قبل — ما تحتاج إلحاق."))
         task = _apply_stage2_tagging(batch, animal)
     elif batch.stage == AnimalBatch.STAGE_DISTRIBUTED:
         if not barn_id:
             raise ValueError(_("لازم تحدد حظيرة دائمة لهذا الرأس."))
+        if _already_caught_up(batch, animal, "batch_feed_link"):
+            raise ValueError(_("هذا الرأس تقدّمت لهذي المرحلة من قبل — ما تحتاج إلحاق."))
         task = _apply_stage3_distribution(batch, animal, barn_id)
     else:
         raise ValueError(_("الدفعة لسا بمرحلة الحجر — ما فيه إجراء فردي إضافي مطلوب حالياً."))
