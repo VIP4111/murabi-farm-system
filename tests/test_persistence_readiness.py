@@ -9,15 +9,15 @@ from app.config import _normalize_database_url
 def test_normalize_database_url_converts_legacy_postgres_scheme():
     assert (
         _normalize_database_url("postgres://user:pass@host/db")
-        == "postgresql://user:pass@host/db"
+        == "postgresql+psycopg2://user:pass@host/db"
     )
 
 
 def test_normalize_database_url_leaves_other_schemes_untouched():
     assert _normalize_database_url("sqlite:///farm_system.db") == "sqlite:///farm_system.db"
     assert (
-        _normalize_database_url("postgresql://user:pass@host/db")
-        == "postgresql://user:pass@host/db"
+        _normalize_database_url("postgresql+pg8000://user:pass@host/db")
+        == "postgresql+pg8000://user:pass@host/db"
     )
 
 
@@ -52,3 +52,12 @@ class _FakeFileStorage:
     def save(self, path):
         with open(path, "wb") as f:
             f.write(self.stream.getvalue())
+
+
+def test_postgres_urls_are_pinned_to_the_installed_psycopg2_driver():
+    from app.config import _normalize_database_url
+    tail = "u:p@h/db?sslmode=require&channel_binding=require"
+    for scheme in ("postgres://", "postgresql://", "postgresql+psycopg://"):
+        assert _normalize_database_url(scheme + tail) == "postgresql+psycopg2://" + tail
+    assert _normalize_database_url("postgresql+psycopg2://" + tail) == "postgresql+psycopg2://" + tail
+    assert _normalize_database_url("sqlite:///farm_system.db") == "sqlite:///farm_system.db"

@@ -2,12 +2,16 @@ import os
 
 
 def _normalize_database_url(url: str) -> str:
-    """Render/Heroku يعطون رابط Postgres بصيغة قديمة `postgres://` —
-    SQLAlchemy 1.4+ يرفضها ويطلب `postgresql://` صراحة. بدون هذا
-    التطبيع، ربط قاعدة بيانات حقيقية يفشل بخطأ غامض عند أول طلب،
-    بدل ما يشتغل مباشرة (بند إضافي 77، 2026-08-01)."""
-    if url.startswith("postgres://"):
-        return "postgresql://" + url[len("postgres://"):]
+    """نثبّت مشغّل Postgres صراحة على `psycopg2` — الوحيد المثبَّت
+    (psycopg2-binary). SQLAlchemy 2.1 غيّر الافتراضي لـ`postgresql://`
+    إلى psycopg v3، فنشر بدون ما نحدد المشغّل صار يفشل بـ
+    `ModuleNotFoundError: No module named 'psycopg'` ويطيّح كل أوامر
+    flask. نغطي صيغ Render/Heroku/Neon الشائعة (`postgres://` القديمة،
+    `postgresql://`، `postgresql+psycopg://`)؛ أي مشغّل صريح ثاني
+    (مثل `+psycopg2` أو `+pg8000`) نتركه كما هو."""
+    for prefix in ("postgres://", "postgresql+psycopg://", "postgresql://"):
+        if url.startswith(prefix):
+            return "postgresql+psycopg2://" + url[len(prefix):]
     return url
 
 

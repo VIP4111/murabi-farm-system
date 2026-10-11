@@ -458,6 +458,15 @@ def answer(user, message_text: str, lang: str | None = None) -> dict:
     هل المساعد بعدة لغات) — افتراضياً `user.language` (نفس حقل اللغة
     المستخدم أصلاً بـ8 شاشات ميدانية)، مقيّد بـ{ar, en, am, hi}."""
     lang = lang or lang_for(user)
+
+    # وكيل Claude المتكامل (قراءة + بحث + تنفيذ بمحادثة فورية) — الأولوية
+    # الأولى لو ANTHROPIC_API_KEY مفعَّل؛ لو فشل يكمل المسار المحلي.
+    from app.assistant import claude_agent
+    if claude_agent.is_configured():
+        agent_reply = claude_agent.run(user, message_text, lang=lang)
+        if agent_reply:
+            return {"reply": agent_reply, "intent_code": None, "answered_by": "claude_agent"}
+
     normalized = normalize(message_text)
 
     # سؤال إجراء/إعداد ("كيف أسجل...؟"، "هل اقدر أضيف...؟") وفيه بند
@@ -529,11 +538,17 @@ def ask_and_record(user, message_text: str) -> AssistantMessage:
 
 
 def answer_with_image(user, message_text: str, image_bytes: bytes, mime_type: str,
-                       lang: str | None = None) -> dict:
+                       lang: str | None = None, image_url: str | None = None) -> dict:
     """بند إضافي 305 — صورة مرفقة تروح مباشرة لـGemini بالرؤية، بدون
     محرك النيات المحلي أو قاعدة المعرفة (كلاهما نص بس، ما يفهمان صوراً
     أصلاً). لو Gemini غير مفعَّل، رسالة واضحة بدل fallback عام مضلِّل."""
     lang = lang or lang_for(user)
+    from app.assistant import claude_agent
+    if claude_agent.is_configured():
+        agent_reply = claude_agent.run(user, message_text, lang=lang, image_bytes=image_bytes,
+                                       image_mime=mime_type, image_url=image_url)
+        if agent_reply:
+            return {"reply": agent_reply, "intent_code": None, "answered_by": "claude_agent"}
     reply = llm_bridge.ask_with_image(message_text, image_bytes, mime_type, lang=lang)
     if reply:
         return {"reply": reply, "intent_code": None, "answered_by": "llm_vision"}
@@ -553,7 +568,7 @@ def ask_and_record_with_image(user, message_text: str, image_bytes: bytes, mime_
                                  image_url=image_url)
     db.session.add(user_msg)
 
-    result = answer_with_image(user, message_text, image_bytes, mime_type)
+    result = answer_with_image(user, message_text, image_bytes, mime_type, image_url=image_url)
     assistant_msg = AssistantMessage(
         user_id=user.id, role="assistant", content=result["reply"],
         intent_code=result["intent_code"], answered_by=result["answered_by"],
