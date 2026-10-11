@@ -205,6 +205,43 @@ def drafts_new_voice():
     return redirect(url_for("assistant.chat", tab="drafts"))
 
 
+INVOICE_MAX_BYTES = 8 * 1024 * 1024
+INVOICE_ALLOWED_MIME = {"image/jpeg", "image/png", "image/webp", "application/pdf"}
+
+
+@assistant_bp.route("/drafts/new-invoice", methods=["POST"])
+@login_required
+@require_permission("assistant.draft_actions.confirm")
+@require_permission("finance.full.manage")
+@rate_limited("draft_action_propose", max_calls=20, window_seconds=300)
+def drafts_new_invoice():
+    invoice_file = request.files.get("invoice")
+    if not invoice_file or not invoice_file.filename:
+        flash(_("لازم ترفع صورة أو ملف PDF للفاتورة."), "error")
+        return redirect(url_for("assistant.chat", tab="drafts"))
+    mime = (invoice_file.mimetype or "").lower()
+    if mime not in INVOICE_ALLOWED_MIME:
+        flash(_("نوع الملف غير مدعوم — ارفع صورة (JPG/PNG/WEBP) أو PDF."), "error")
+        return redirect(url_for("assistant.chat", tab="drafts"))
+    invoice_file.stream.seek(0)
+    file_bytes = invoice_file.stream.read(INVOICE_MAX_BYTES + 1)
+    if len(file_bytes) > INVOICE_MAX_BYTES:
+        flash(_("حجم الملف أكبر من 8 ميجا."), "error")
+        return redirect(url_for("assistant.chat", tab="drafts"))
+    invoice_file.stream.seek(0)
+    from app.finance.finance_service import save_invoice_file
+    invoice_url = save_invoice_file(invoice_file)
+
+    draft = draft_action_service.propose_from_invoice(
+        file_bytes, mime, created_by=current_user, invoice_file_url=invoice_url,
+    )
+    if draft.status == "auto_rejected":
+        flash(_("ما قدرت أقرأ الفاتورة بوضوح — سجّلها يدوياً من شاشة المالية."), "error")
+    else:
+        flash(_("قرأت الفاتورة — راجع المسودة أدناه واعتمدها لو صحيحة."), "success")
+    return redirect(url_for("assistant.chat", tab="drafts"))
+
+
 @assistant_bp.route("/drafts/<int:draft_id>/confirm", methods=["POST"])
 @login_required
 @require_permission("assistant.draft_actions.confirm")

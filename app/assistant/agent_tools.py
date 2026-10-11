@@ -252,6 +252,17 @@ def alerts_summary(limit: int = 5) -> dict:
     return context_service.alerts_summary(limit=limit)
 
 
+def web_research(question: str) -> dict:
+    """بحث بالإنترنت لمعلومة عامة خارجية فقط (خلطات علف، ممارسات تربية،
+    أسعار سوق، معلومة بيطرية عامة). لا تستخدمها أبداً لبيانات مزرعة
+    المربي نفسها. النتيجة معلومة عامة بمصادرها، مو قراراً على قطيعه."""
+    from app.assistant import llm_bridge
+    result = llm_bridge.grounded_search(question)
+    if not result:
+        return {"status": "unavailable", "message": "البحث الخارجي غير متاح حالياً."}
+    return {"status": "ok", "origin": "external_web", "answer": result["answer"], "sources": result["sources"]}
+
+
 def _bind_my_tasks_summary(user):
     def my_tasks_summary() -> dict:
         """مهام المستخدم الحالي المفتوحة حالياً: العدد، عدد المقفلة
@@ -274,6 +285,7 @@ _TOOL_PERMISSIONS = {
     feed_status_summary: "feed.view",
     ostrich_status_summary: "repro.view",
     alerts_summary: "animals.view",
+    web_research: "assistant.use",
 }
 
 

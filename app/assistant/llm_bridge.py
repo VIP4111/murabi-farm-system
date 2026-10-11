@@ -66,6 +66,7 @@ GEMINI_SYSTEM_PROMPT_TEMPLATE = """أنت المساعد الذكي لنظام "
 - لو أي أداة رجعت "status": "ambiguous" (تعدد نتائج، مهما كانت الأداة)، توقف فوراً واسأل المستخدم يحدد المقصود بوضوح — ممنوع تخمين أول نتيجة أو أقربها.
 - كل الأدوات المتاحة لك "قراءة" بس — ممنوع الادّعاء إنك سجّلت أو عدّلت أو حذفت أي شي بقاعدة البيانات، حتى لو طلب المستخدم ذلك؛ وضّح إنه هذي الميزة قادمة قريباً وتحتاج تأكيده الصريح أول.
 - المساعد قرار مو طبيب: ممنوع اقتراح جرعة دواء أو تشخيص طبي نهائي لحيوان معيّن. أي قرار علاجي نهائي يحتاج الطبيب البيطري حصراً.
+- أداة web_research للمعلومات العامة الخارجية فقط (خلطات علف، ممارسات تربية، أسعار سوق، معلومة بيطرية عامة) — **ممنوع** تستخدمها لأي رقم أو حالة تخص مزرعة المربي نفسها (هذي من أدوات المزرعة حصراً). وأي جواب مصدره web_research لازم تبدأه بعبارة "حسب مصادر خارجية:" وتذكر المصادر باختصار، وتوضّح إنه معلومة عامة مو قراراً على قطيعه بالذات.
 - لو السؤال خارج نطاق إدارة المزرعة تماماً، وضّح بأدب أنك مختص بشؤون المزرعة فقط.
 - ممنوع استخدام أي رموز تنسيق ماركداون إطلاقاً (لا **نجوم** للعريض، لا #، لا `أكواد`) — واجهة المحادثة تعرض ردّك كنص عادي فقط والرموز تظهر حرفياً وتخرّب القراءة. للتعداد استخدم أرقام عادية بصيغة "1." بدون نجوم قبلها أو بعدها.
 """
@@ -161,7 +162,18 @@ def embed_text(text: str) -> list[float] | None:
 # نفس القائمة بالضبط لازم تطابق `draft_action_service.ALLOWED_ACTION_TYPES`
 # (فحص تطابق موجود باختبار مخصَّص). أي نوع إجراء مو بهذي القائمة يُرفض
 # قطعياً، بغض النظر عمّا يحاول النموذج يقترحه.
-ALLOWED_DRAFT_ACTION_TYPES = ("register_birth", "record_weight", "assign_task")
+# أنواع الإدخال النصي/الصوتي الحر فقط (تظهر للنموذج بأداة propose_draft_action).
+TEXT_DRAFT_ACTION_TYPES = ("register_birth", "record_weight", "assign_task")
+
+# كل الأنواع المسموحة فعلاً. `record_expense` يجي حصراً من مسار الفاتورة
+# المخصَّص (`parse_invoice`) — مو من النص الحر، عشان جملة عادية ما تقدر
+# تنشئ مسودة مصروف بالغلط.
+ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + ("record_expense",)
+
+# أقصى مبلغ مقبول لفاتورة واحدة بمسودة تلقائية — حاجز صلب ضد خطأ قراءة
+# (فاصلة بمكان غلط/صفر زايد). أعلى منه يُرفض ويُدخَل يدوياً بشاشة المالية.
+MAX_INVOICE_AMOUNT = 500000
+INVOICE_CATEGORIES = ("أعلاف", "أدوية", "معدات", "صيانة معدات", "فاتورة كهرباء", "فاتورة ماء", "بدون تصنيف")
 
 # بند إضافي 299، تحسينك الرابع المعتمد — حاجز صلب صريح، مستقل تماماً عن
 # تعليمات النظام النصية للنموذج (اللي ممكن يُخترق أو يُتجاوَز بصياغة
@@ -181,6 +193,19 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
     `auto_rejected` للتوثيق بس، وما يظهر كمسودة قابلة للاعتماد إطلاقاً."""
     if action_type not in ALLOWED_DRAFT_ACTION_TYPES:
         return f"نوع إجراء غير مسموح باقتراحه تلقائياً: {action_type}"
+    if action_type == "record_expense":
+        # فاتورة مورّد لدواء/علاج مصروف مشروع تماماً — كلمات الحظر أدناه
+        # (جرعة/حذف/دواء) مخصَّصة لحماية الإدخال الحر، مو لاسم صنف
+        # بفاتورة. هنا نفحص المبلغ والتاريخ بدلها.
+        try:
+            amount = float(payload.get("total_amount"))
+        except (TypeError, ValueError):
+            return "مبلغ الفاتورة غير مقروء."
+        if amount <= 0:
+            return "مبلغ الفاتورة لازم يكون أكبر من صفر."
+        if amount > MAX_INVOICE_AMOUNT:
+            return f"مبلغ الفاتورة ({amount:g}) أكبر من الحد المسموح للإدخال التلقائي — سجّلها يدوياً."
+        return None
     blob = f"{action_type} {' '.join(str(v) for v in payload.values())}".lower()
     for kw in BLOCKED_DRAFT_KEYWORDS:
         if kw.lower() in blob:
@@ -220,7 +245,7 @@ def _draft_action_tool(lang: str = "ar"):
         parameters={
             "type": "OBJECT",
             "properties": {
-                "action_type": {"type": "STRING", "enum": list(ALLOWED_DRAFT_ACTION_TYPES)},
+                "action_type": {"type": "STRING", "enum": list(TEXT_DRAFT_ACTION_TYPES)},
                 "target_animal_no": {"type": "STRING", "description": "رقم الحيوان المذكور"},
                 "payload_json": {"type": "STRING", "description": "بقية الحقول كنص JSON صالح"},
                 "summary_ar": {"type": "STRING", "description": summary_desc},
@@ -311,6 +336,126 @@ def parse_draft_action_from_audio(audio_bytes: bytes, mime_type: str, lang: str 
         try:
             from flask import current_app
             current_app.logger.warning("llm_bridge.parse_draft_action_from_audio failed: %s", e)
+        except Exception:
+            pass
+        return None
+
+
+INVOICE_TOOL_NAME = "propose_invoice"
+
+INVOICE_SYSTEM_PROMPT = """أنت مساعد استخراج بيانات بس لنظام "مربي" لإدارة مزرعة. أمامك صورة أو ملف PDF لفاتورة مورّد، ومهمتك تقرأ بياناتها عبر الأداة propose_invoice — لا تنفّذ أي شي بنفسك.
+
+قواعد صارمة:
+- استخدم الأداة فقط لو المرفق فاتورة أو إيصال شراء فعلاً وقدرت تقرأ المبلغ الإجمالي بوضوح.
+- total_amount هو **الإجمالي النهائي شامل الضريبة** المكتوب بالفاتورة، كرقم فقط. لا تحسبه من البنود ولا تخمّنه.
+- invoice_date بصيغة YYYY-MM-DD. لو التاريخ غير واضح اتركه فاضي.
+- supplier اسم المورّد/المحل كما هو مكتوب.
+- category اختر الأقرب من القائمة، وإلا "بدون تصنيف".
+- لو المرفق مو فاتورة أو غير مقروء، لا تستخدم الأداة — اكتب سطراً نصياً يوضّح السبب.
+"""
+
+
+def _invoice_tool(lang: str = "ar"):
+    from google.genai import types
+    lang_name = _TARGET_LANG_NAMES.get(lang, _TARGET_LANG_NAMES["ar"])
+    return types.Tool(function_declarations=[types.FunctionDeclaration(
+        name=INVOICE_TOOL_NAME,
+        description="اقتراح تسجيل فاتورة مورّد كمصروف — يحتاج اعتماد بشري قبل أي تنفيذ فعلي.",
+        parameters={
+            "type": "OBJECT",
+            "properties": {
+                "supplier": {"type": "STRING", "description": "اسم المورّد"},
+                "invoice_date": {"type": "STRING", "description": "تاريخ الفاتورة YYYY-MM-DD"},
+                "total_amount": {"type": "NUMBER", "description": "الإجمالي النهائي شامل الضريبة"},
+                "category": {"type": "STRING", "enum": list(INVOICE_CATEGORIES)},
+                "description": {"type": "STRING", "description": "وصف مختصر للأصناف"},
+                "summary_ar": {"type": "STRING", "description": f"ملخص قصير للتأكيد بلغة {lang_name} حصراً"},
+            },
+            "required": ["total_amount", "category", "summary_ar"],
+        },
+    )])
+
+
+def _extract_invoice_call(response) -> dict | None:
+    for candidate in response.candidates or []:
+        for part in (candidate.content.parts or []):
+            fc = getattr(part, "function_call", None)
+            if fc and fc.name == INVOICE_TOOL_NAME:
+                args = dict(fc.args)
+                summary = args.pop("summary_ar", None) or "فاتورة مورّد"
+                return {"action_type": "record_expense", "payload": args, "summary_ar": summary}
+    return None
+
+
+def parse_invoice(file_bytes: bytes, mime_type: str, lang: str = "ar") -> dict | None:
+    """يقرأ صورة/PDF فاتورة ويرجع `{"action_type": "record_expense",
+    "payload", "summary_ar"}`، أو None لو غير مفعَّل/غير مقروء/فشل. نفس
+    فلسفة `parse_draft_action*` بالضبط: قراءة بس، التنفيذ الفعلي حصراً
+    بعد اعتماد بشري بـ`draft_action_service.confirm_draft`."""
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL,
+            contents=[types.Part.from_bytes(data=file_bytes, mime_type=mime_type)],
+            config=types.GenerateContentConfig(system_instruction=INVOICE_SYSTEM_PROMPT,
+                                                tools=[_invoice_tool(lang)]),
+        )
+        return _extract_invoice_call(response)
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.parse_invoice failed: %s", e)
+        except Exception:
+            pass
+        return None
+
+
+def grounded_search(question: str, lang: str = "ar") -> dict | None:
+    """بحث إنترنت عبر أداة `google_search` المدمجة بـGemini (grounding).
+    يرجع `{"answer", "sources": [{"title", "url"}]}` أو None لو غير
+    مفعَّل/فشل. لا يلمس بيانات المزرعة ولا يكتب شي — قراءة خارجية بس."""
+    if not is_gemini_configured():
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+    except ImportError:
+        return None
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        language_instruction = _LANGUAGE_INSTRUCTIONS.get(lang, _LANGUAGE_INSTRUCTIONS["ar"])
+        response = client.models.generate_content(
+            model=DEFAULT_GEMINI_MODEL,
+            contents=question,
+            config=types.GenerateContentConfig(
+                system_instruction=f"{language_instruction} أجب بإيجاز وبدقة من نتائج البحث فقط، بدون تنسيق ماركداون.",
+                tools=[types.Tool(google_search=types.GoogleSearch())],
+            ),
+        )
+        answer = (response.text or "").strip()
+        if not answer:
+            return None
+        sources, seen = [], set()
+        for candidate in response.candidates or []:
+            meta = getattr(candidate, "grounding_metadata", None)
+            for chunk in (getattr(meta, "grounding_chunks", None) or []):
+                web = getattr(chunk, "web", None)
+                url = getattr(web, "uri", None) if web else None
+                if url and url not in seen:
+                    seen.add(url)
+                    sources.append({"title": getattr(web, "title", None) or url, "url": url})
+        return {"answer": answer, "sources": sources[:5]}
+    except Exception as e:
+        try:
+            from flask import current_app
+            current_app.logger.warning("llm_bridge.grounded_search failed: %s", e)
         except Exception:
             pass
         return None

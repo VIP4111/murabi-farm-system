@@ -170,6 +170,10 @@
       {{ tip(_('اكتب جملة حرة عن حدث صار فعلاً — المساعد يقترح إجراءً مناسباً (تسجيل ولادة/وزن/توزيع مهمة)، وينتظر اعتمادك قبل أي تنفيذ.')) }}
       <button type="button" class="btn light" onclick="document.getElementById('newVoiceDraftModal').classList.add('open')">🎤 {{ _('إرسال مقطع صوتي') }}</button>
       {{ tip(_('نفس فكرة "إرسال نص" — بس تسجّل صوتك بدل ما تكتب، ومناسب لو يديك مشغولة بالحظيرة.')) }}
+      {% if current_user.has_permission('finance.full.manage') %}
+      <button type="button" class="btn light" onclick="document.getElementById('newInvoiceDraftModal').classList.add('open')">🧾 {{ _('إرسال فاتورة') }}</button>
+      {{ tip(_('صوّر الفاتورة أو ارفع PDF — المساعد يقرأ المورّد والتاريخ والمبلغ ويقترح تسجيلها كمصروف، وما تنحفظ إلا بعد اعتمادك.')) }}
+      {% endif %}
     </div>
   </div>
   <p style="color:var(--muted); font-size:13.5px;">
@@ -193,6 +197,18 @@
         <div style="color:var(--muted); font-size:12.5px; margin-top:4px;">
           "{{ d.raw_text }}" — {{ d.created_by.name if d.created_by else '-' }} — {{ d.created_at.strftime('%Y-%m-%d %H:%M') if d.created_at else '' }}
         </div>
+        {% if d.parsed_action_type == 'record_expense' %}
+        {% set inv = d.get_payload() %}
+        <div class="table-scroll">
+        <table class="compact-table" style="margin-top:8px; font-size:13px;">
+          <tr><td>{{ _('المورّد') }}</td><td>{{ inv.get('supplier') or '-' }}</td></tr>
+          <tr><td>{{ _('التاريخ') }}</td><td>{{ inv.get('invoice_date') or _('اليوم') }}</td></tr>
+          <tr><td>{{ _('المبلغ') }}</td><td style="font-weight:700;">{{ inv.get('total_amount') }}</td></tr>
+          <tr><td>{{ _('الفئة') }}</td><td>{{ inv.get('category') or '-' }}</td></tr>
+        </table>
+        </div>
+        {% if inv.get('invoice_file_url') %}<a href="{{ inv.get('invoice_file_url') }}" target="_blank" rel="noopener" style="font-size:12.5px;">{{ _('عرض الفاتورة المرفوعة') }}</a>{% endif %}
+        {% endif %}
         {% if d.audio_url %}<audio controls src="{{ d.audio_url }}" style="height:32px; margin-top:6px;"></audio>{% endif %}
       </div>
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -249,6 +265,19 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <textarea name="raw_text" required rows="2" placeholder="{{ _('مثال: سجلت ولادة اليوم لشاة رقم 405') }}"></textarea>
       <button type="submit" class="btn">✍️ {{ _('إرسال نص') }}</button>
+    </form>
+  </div>
+</div>
+
+{# ---- Modal: فاتورة جديدة ---- #}
+<div class="modal-overlay" id="newInvoiceDraftModal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="document.getElementById('newInvoiceDraftModal').classList.remove('open')">✕</button>
+    <h3 style="margin-top:0;">🧾 {{ _('إرسال فاتورة') }}</h3>
+    <form method="post" action="{{ url_for('assistant.drafts_new_invoice') }}" enctype="multipart/form-data" style="display:grid; gap:8px;">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="file" name="invoice" accept="image/*,application/pdf" capture="environment" required>
+      <button type="submit" class="btn">🧾 {{ _('قراءة الفاتورة') }}</button>
     </form>
   </div>
 </div>

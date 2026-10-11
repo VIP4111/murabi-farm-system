@@ -15344,6 +15344,58 @@ msgstr "This egg is already in another incubator."
 msgid "وزن البيضة"
 msgstr "Egg weight"
 
+#: app/templates/assistant/chat.html:174 app/templates/assistant/chat.html:274
+msgid "إرسال فاتورة"
+msgstr "Send an invoice"
+
+#: app/templates/assistant/chat.html:203
+msgid "المورّد"
+msgstr "Supplier"
+
+#: app/assistant/draft_action_service.py:132
+msgid "تاريخ الفاتورة"
+msgstr "Invoice date"
+
+#: app/assistant/routes.py:229
+msgid "حجم الملف أكبر من 8 ميجا."
+msgstr "The file is larger than 8 MB."
+
+#: app/templates/assistant/chat.html:175
+msgid "صوّر الفاتورة أو ارفع PDF — المساعد يقرأ المورّد والتاريخ والمبلغ ويقترح تسجيلها كمصروف، وما تنحفظ إلا بعد اعتمادك."
+msgstr "Photograph the invoice or upload a PDF — the assistant reads the supplier, date and amount and proposes recording it as an expense. Nothing is saved until you approve."
+
+#: app/templates/assistant/chat.html:208
+msgid "عرض الفاتورة المرفوعة"
+msgstr "View the uploaded invoice"
+
+#: app/assistant/routes.py:241
+msgid "قرأت الفاتورة — راجع المسودة أدناه واعتمدها لو صحيحة."
+msgstr "Invoice read — review the draft below and approve it if correct."
+
+#: app/templates/assistant/chat.html:278
+msgid "قراءة الفاتورة"
+msgstr "Read the invoice"
+
+#: app/assistant/routes.py:220
+msgid "لازم ترفع صورة أو ملف PDF للفاتورة."
+msgstr "You must upload an image or a PDF of the invoice."
+
+#: app/assistant/routes.py:239
+msgid "ما قدرت أقرأ الفاتورة بوضوح — سجّلها يدوياً من شاشة المالية."
+msgstr "I couldn't read the invoice clearly — record it manually from the Finance screen."
+
+#: app/assistant/draft_action_service.py:120
+msgid "مبلغ الفاتورة غير مقروء — سجّلها يدوياً من شاشة المالية."
+msgstr "The invoice amount is unreadable — record it manually from the Finance screen."
+
+#: app/assistant/draft_action_service.py:123
+msgid "مبلغ الفاتورة لازم يكون أكبر من صفر."
+msgstr "The invoice amount must be greater than zero."
+
+#: app/assistant/routes.py:224
+msgid "نوع الملف غير مدعوم — ارفع صورة (JPG/PNG/WEBP) أو PDF."
+msgstr "Unsupported file type — upload an image (JPG/PNG/WEBP) or a PDF."
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 

@@ -106,6 +106,44 @@ def _execute_assign_task(payload: dict, *, actor, assignee_id=None):
     )
 
 
+def _execute_record_expense(payload: dict, *, actor, assignee_id=None):
+    """تسجيل فاتورة مورّد كمصروف — نفس شروط `finance.finance_new` (مبلغ
+    غير سالب، تاريخ مو بالمستقبل). التنفيذ الوحيد: صف `Finance` من نوع
+    expense؛ ما يلمس المخزون (شراء علف/دواء بالمخزون له شاشة الشراء
+    المخصَّصة لأنها تزيد الرصيد فعلياً)."""
+    from app.core import validation_service
+    from app.models import Finance, AuditLog
+
+    try:
+        amount = float(payload.get("total_amount"))
+    except (TypeError, ValueError):
+        raise ValueError(_("مبلغ الفاتورة غير مقروء — سجّلها يدوياً من شاشة المالية."))
+    validation_service.validate_price(amount, field_label=_("المبلغ"))
+    if amount <= 0:
+        raise ValueError(_("مبلغ الفاتورة لازم يكون أكبر من صفر."))
+
+    entry_date = date.today()
+    raw_date = payload.get("invoice_date")
+    if raw_date:
+        try:
+            entry_date = date.fromisoformat(raw_date)
+        except ValueError:
+            entry_date = date.today()
+    validation_service.validate_not_future_date(entry_date, field_label=_("تاريخ الفاتورة"))
+
+    category = payload.get("category") or "بدون تصنيف"
+    row = Finance(
+        date=entry_date, operation_type="expense", category=category,
+        item=(payload.get("supplier") or None), description=(payload.get("description") or None),
+        amount=amount, invoice_file_url=payload.get("invoice_file_url") or None,
+    )
+    db.session.add(row)
+    db.session.add(AuditLog(actor_user_id=actor.id, action="assistant.invoice_expense",
+                             entity_type="Finance", details=f"{amount:g} — {payload.get('supplier') or '-'}"))
+    db.session.commit()
+    return row
+
+
 # **مصدر الحقيقة الوحيد لما يُنفَّذ فعلياً** — لازم يطابق
 # `llm_bridge.ALLOWED_DRAFT_ACTION_TYPES` تماماً (اختبار مخصَّص يتحقق
 # من هذا التطابق). أي إجراء مو هنا يستحيل تنفيذه حتى لو تجاوز الحاجز
@@ -127,6 +165,8 @@ ALLOWED_ACTION_TYPES = {
                        "required_permission": "animals.manage"},
     "assign_task": {"label": "توزيع مهمة", "execute": _execute_assign_task,
                      "required_permission": "tasks.assign_any"},
+    "record_expense": {"label": "تسجيل فاتورة كمصروف", "execute": _execute_record_expense,
+                        "required_permission": "finance.full.manage"},
 }
 
 
@@ -150,6 +190,19 @@ def propose_from_audio(audio_bytes: bytes, mime_type: str, *, created_by, audio_
     lang = lang_for(created_by) if created_by else "ar"
     parsed = llm_bridge.parse_draft_action_from_audio(audio_bytes, mime_type, lang)
     return _save_proposal("(مقطع صوتي)", parsed, created_by=created_by, input_source="voice", audio_url=audio_url)
+
+
+def propose_from_invoice(file_bytes: bytes, mime_type: str, *, created_by,
+                         invoice_file_url: str | None = None) -> AssistantDraftAction:
+    """فاتورة (صورة/PDF) ← مسودة مصروف تنتظر اعتمادك. `invoice_file_url`
+    رابط دائم للفاتورة نفسها (نفس `finance_service.save_invoice_file`)
+    يُحفظ مع السجل المالي عند الاعتماد كدليل."""
+    from app.assistant.translations import lang_for
+    lang = lang_for(created_by) if created_by else "ar"
+    parsed = llm_bridge.parse_invoice(file_bytes, mime_type, lang)
+    if parsed and invoice_file_url:
+        parsed["payload"]["invoice_file_url"] = invoice_file_url
+    return _save_proposal("(فاتورة مرفوعة)", parsed, created_by=created_by, input_source="invoice")
 
 
 def _save_proposal(raw_text: str, parsed: dict | None, *, created_by, input_source: str,
