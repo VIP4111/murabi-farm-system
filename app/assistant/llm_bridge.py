@@ -168,11 +168,19 @@ TEXT_DRAFT_ACTION_TYPES = ("register_birth", "record_weight", "assign_task")
 # كل الأنواع المسموحة فعلاً. `record_expense` يجي حصراً من مسار الفاتورة
 # المخصَّص (`parse_invoice`) — مو من النص الحر، عشان جملة عادية ما تقدر
 # تنشئ مسودة مصروف بالغلط.
-ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + ("record_expense",)
+# أنواع ينفّذها وكيل Claude داخل المحادثة فقط — **ليست** بأداة محلل النص
+# الحر أعلاه (enum أدناه يبقى TEXT_DRAFT_ACTION_TYPES). كلها تمر بنفس
+# صلاحيات الشاشات اليدوية وبدوالها الرسمية، بدون أي حذف أو جرعات.
+AGENT_ONLY_ACTION_TYPES = (
+    "record_expense", "move_animal", "add_animal_note", "add_farm_note",
+    "complete_task", "record_vaccination", "record_sale", "record_death",
+)
+ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + AGENT_ONLY_ACTION_TYPES
 
 # أقصى مبلغ مقبول لفاتورة واحدة بمسودة تلقائية — حاجز صلب ضد خطأ قراءة
 # (فاصلة بمكان غلط/صفر زايد). أعلى منه يُرفض ويُدخَل يدوياً بشاشة المالية.
 MAX_INVOICE_AMOUNT = 500000
+MAX_SALE_PRICE = 100000  # رأس واحد — فوق هذا يُسجَّل يدوياً
 INVOICE_CATEGORIES = ("أعلاف", "أدوية", "معدات", "صيانة معدات", "فاتورة كهرباء", "فاتورة ماء", "بدون تصنيف")
 
 # بند إضافي 299، تحسينك الرابع المعتمد — حاجز صلب صريح، مستقل تماماً عن
@@ -205,6 +213,23 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
             return "مبلغ الفاتورة لازم يكون أكبر من صفر."
         if amount > MAX_INVOICE_AMOUNT:
             return f"مبلغ الفاتورة ({amount:g}) أكبر من الحد المسموح للإدخال التلقائي — سجّلها يدوياً."
+        return None
+    if action_type in AGENT_ONLY_ACTION_TYPES:
+        # كلمات الحظر مخصَّصة لحماية الإدخال الحر النصي؛ هذي الأنواع
+        # منظَّمة الحقول ومحدودة الأثر (لا جرعات ولا حذف أصلاً)، فنفحص
+        # الحقول الأساسية بدل الكلمات.
+        if action_type == "record_sale":
+            try:
+                price = float(payload.get("price"))
+            except (TypeError, ValueError):
+                return "سعر البيع غير واضح."
+            if price <= 0:
+                return "سعر البيع لازم يكون أكبر من صفر."
+            if price > MAX_SALE_PRICE:
+                return f"سعر البيع ({price:g}) أكبر من الحد المسموح للإدخال التلقائي — سجّله يدوياً."
+        needs_animal = ("move_animal", "add_animal_note", "record_vaccination", "record_sale", "record_death")
+        if action_type in needs_animal and not str(payload.get("target_animal_no") or "").strip():
+            return "رقم الحيوان غير محدَّد."
         return None
     blob = f"{action_type} {' '.join(str(v) for v in payload.values())}".lower()
     for kw in BLOCKED_DRAFT_KEYWORDS:

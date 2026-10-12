@@ -192,3 +192,131 @@ def test_send_route_passes_voice_flag_only_when_requested(app, logged_in_client,
 def test_chat_page_has_voice_button_and_loop(app, logged_in_client):
     html = logged_in_client.get("/assistant/").get_data(as_text=True)
     assert 'id="voiceBtn"' in html and "SpeechRecognition" in html and "speechSynthesis" in html
+
+
+# ---------------- الإجراءات الموسَّعة ----------------
+
+def test_move_animal_executes_immediately_by_barn_name(app, owner):
+    from factories import make_barn
+    barn = make_barn("B-31", "حظيرة الشمال")
+    animal = make_animal("A-31")
+    out = claude_agent._tool_move_animal(claude_agent._Ctx(owner, "x"),
+                                         {"animal_no": "A-31", "barn_name": "حظيرة الشمال"})
+    assert out["status"] == "done"
+    db.session.refresh(animal)
+    assert animal.barn_id == barn.id
+
+
+def test_move_animal_unknown_barn_reports_error_and_changes_nothing(app, owner):
+    animal = make_animal("A-32")
+    out = claude_agent._tool_move_animal(claude_agent._Ctx(owner, "x"),
+                                         {"animal_no": "A-32", "barn_name": "غير موجودة"})
+    assert out["status"] == "error"
+    db.session.refresh(animal)
+    assert animal.barn_id is None
+
+
+def test_animal_note_and_farm_note_execute_immediately(app, owner):
+    from app.models import AnimalNote, FarmNote
+    make_animal("A-33")
+    assert claude_agent._tool_add_animal_note(claude_agent._Ctx(owner, "x"),
+                                              {"animal_no": "A-33", "note": "عرجان بسيط"})["status"] == "done"
+    assert AnimalNote.query.one().note == "عرجان بسيط"
+    assert claude_agent._tool_add_farm_note(claude_agent._Ctx(owner, "x"),
+                                            {"body": "الحظيرة 2 تحتاج تنظيف", "title": "تنظيف"})["status"] == "done"
+    assert FarmNote.query.one().body == "الحظيرة 2 تحتاج تنظيف"
+
+
+def _force_stage_10(monkeypatch, animal):
+    from app.core import cycle_engine
+    cycle_engine.get_or_create_workflow(animal)
+
+    def fake(a):
+        wf = a.workflow
+        wf.current_stage, wf.stage_name, wf.status = 10, "قرار المصير", "complete"
+        return {"route": wf.route, "allowed_stage": 10, "completed_through": 10,
+                "first_blocked_stage": None, "cycle_status": "complete",
+                "missing_items": None, "out_of_order_count": 0}
+    monkeypatch.setattr(cycle_engine, "evaluate", fake)
+
+
+def test_sale_of_animal_not_at_exit_stage_is_blocked_by_cycle_gate(app, owner):
+    animal = make_animal("A-39")
+    first = claude_agent._tool_record_sale(claude_agent._Ctx(owner, "x"), {"animal_no": "A-39", "price": 900})
+    done = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": first["draft_id"]})
+    assert done["status"] == "error" and "قرار المصير" in done["message"]
+    db.session.refresh(animal)
+    assert animal.status == "active" and Finance.query.count() == 0
+
+
+def test_sale_needs_confirmation_then_sells_and_writes_finance(app, owner, monkeypatch):
+    animal = make_animal("A-34")
+    _force_stage_10(monkeypatch, animal)
+    ctx = claude_agent._Ctx(owner, "بيع A-34 بـ 900")
+    first = claude_agent._tool_record_sale(ctx, {"animal_no": "A-34", "price": 900})
+    assert first["status"] == "needs_confirmation"
+    db.session.refresh(animal)
+    assert animal.status == "active" and Finance.query.count() == 0
+
+    done = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": first["draft_id"]})
+    assert done["status"] == "done", done
+    db.session.refresh(animal)
+    assert animal.status == "sold"
+    sale = Finance.query.filter_by(operation_type="sale").one()
+    assert sale.amount == 900
+
+
+def test_sale_guardrails_reject_missing_or_absurd_price(app, owner):
+    make_animal("A-35")
+    ctx = claude_agent._Ctx(owner, "x")
+    assert claude_agent._tool_record_sale(ctx, {"animal_no": "A-35", "price": 0})["status"] == "rejected"
+    assert claude_agent._tool_record_sale(ctx, {"animal_no": "A-35", "price": 9_999_999})["status"] == "rejected"
+    assert claude_agent._tool_record_sale(ctx, {"animal_no": "", "price": 500})["status"] == "rejected"
+    assert AssistantDraftAction.query.count() == 0
+
+
+def test_death_and_vaccination_need_confirmation(app, owner):
+    from app.models import Vaccination
+    animal = make_animal("A-36")
+    ctx = claude_agent._Ctx(owner, "x")
+    dead = claude_agent._tool_record_death(ctx, {"animal_no": "A-36", "reason": "مرض"})
+    vacc = claude_agent._tool_record_vaccination(ctx, {"animal_no": "A-36", "vaccine_name": "جدري"})
+    assert dead["status"] == vacc["status"] == "needs_confirmation"
+    db.session.refresh(animal)
+    assert animal.status == "active" and Vaccination.query.count() == 0
+
+    yes = claude_agent._Ctx(owner, "نعم")
+    assert claude_agent._tool_confirm_action(yes, {"draft_id": vacc["draft_id"]})["status"] == "done"
+    assert Vaccination.query.one().vaccine_name == "جدري"
+    assert claude_agent._tool_confirm_action(yes, {"draft_id": dead["draft_id"]})["status"] == "done"
+    db.session.refresh(animal)
+    assert animal.status == "dead"
+
+
+def test_sold_or_dead_animal_cannot_be_moved_or_sold_again(app, owner):
+    animal = make_animal("A-37", status="sold")
+    ctx = claude_agent._Ctx(owner, "x")
+    out = claude_agent._tool_record_sale(ctx, {"animal_no": "A-37", "price": 500})
+    assert out["status"] == "needs_confirmation"  # المسودة تُحفظ، والتنفيذ يرفض
+    done = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": out["draft_id"]})
+    assert done["status"] == "error" and Finance.query.count() == 0
+
+
+def test_complete_task_finishes_only_own_open_task(app, owner, worker):
+    from app.models import Task
+    from app.team import task_service
+    mine = task_service.assign_task(actor=owner, title="تنظيف المعالف", assignee_id=owner.id)
+    other = task_service.assign_task(actor=owner, title="فحص الماء", assignee_id=worker.id)
+    ctx = claude_agent._Ctx(owner, "x")
+    assert claude_agent._tool_complete_task(ctx, {"task_title": "تنظيف المعالف"})["status"] == "done"
+    assert Task.query.get(mine.id).status == "done"
+    miss = claude_agent._tool_complete_task(ctx, {"task_title": "فحص الماء"})
+    assert miss["status"] == "error" and Task.query.get(other.id).status != "done"
+
+
+def test_worker_cannot_sell_or_move(app, worker):
+    make_animal("A-38")
+    ctx = claude_agent._Ctx(worker, "x")
+    assert claude_agent._tool_record_sale(ctx, {"animal_no": "A-38", "price": 500})["status"] == "forbidden"
+    assert claude_agent._tool_move_animal(ctx, {"animal_no": "A-38", "barn_name": "س"})["status"] == "forbidden"
+    assert not claude_agent._write_tool_allowed(worker, "record_sale")

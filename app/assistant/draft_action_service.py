@@ -144,6 +144,122 @@ def _execute_record_expense(payload: dict, *, actor, assignee_id=None):
     return row
 
 
+def _animal_or_error(animal_no):
+    animal_no = str(animal_no or "").strip()
+    animal = Animal.query.filter_by(animal_no=animal_no).first()
+    if not animal:
+        raise ValueError(_("ما فيه حيوان برقم \"%(no)s\".", no=animal_no))
+    return animal
+
+
+def _active_animal_or_error(animal_no):
+    animal = _animal_or_error(animal_no)
+    if animal.status != "active":
+        raise ValueError(_("الحيوان \"%(no)s\" مو نشط (مباع أو نافق).", no=animal.animal_no))
+    return animal
+
+
+def _execute_move_animal(payload: dict, *, actor, assignee_id=None):
+    from app.models import Barn
+    from app.core import bulk_service
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    name = str(payload.get("barn_name") or "").strip()
+    if not name:
+        raise ValueError(_("اسم الحظيرة غير محدَّد."))
+    barns = Barn.query.filter(Barn.barn_name == name).all() or \
+        Barn.query.filter(Barn.barn_name.contains(name)).all()
+    if not barns:
+        raise ValueError(_("ما لقيت حظيرة باسم \"%(name)s\".", name=name))
+    if len(barns) > 1:
+        raise ValueError(_("فيه أكثر من حظيرة باسم يشبه \"%(name)s\" — حدّد الاسم الكامل.", name=name))
+    barn = barns[0]
+    if animal.barn_id == barn.id:
+        raise ValueError(_("الحيوان موجود أصلاً في هذي الحظيرة."))
+    bulk_service.apply_bulk_barn_move(animal_ids=[animal.id], barn_id=barn.id, actor_user_id=actor.id)
+    return animal
+
+
+def _execute_add_animal_note(payload: dict, *, actor, assignee_id=None):
+    animal = _animal_or_error(payload.get("target_animal_no"))
+    note = str(payload.get("note") or "").strip()
+    if not note:
+        raise ValueError(_("نص الملاحظة غير محدَّد."))
+    return animal_service.add_note(animal=animal, note_date=date.today(), note=note, created_by_id=actor.id)
+
+
+def _execute_add_farm_note(payload: dict, *, actor, assignee_id=None):
+    from app.assistant import farm_note_service
+    body = str(payload.get("body") or "").strip()
+    if not body:
+        raise ValueError(_("نص الملاحظة غير محدَّد."))
+    return farm_note_service.create_note(body=body, created_by=actor, title=(payload.get("title") or None))
+
+
+def _execute_complete_task(payload: dict, *, actor, assignee_id=None):
+    from app.models import Task
+    from app.team import task_service
+    title = str(payload.get("task_title") or "").strip()
+    if not title:
+        raise ValueError(_("عنوان المهمة غير محدَّد."))
+    rows = Task.query.filter(Task.assignee_id == actor.id, Task.status.in_(("pending", "in_progress"))).all()
+    exact = [t for t in rows if t.display_title() == title]
+    matches = exact or [t for t in rows if title in t.display_title()]
+    if not matches:
+        raise ValueError(_("ما لقيت مهمة مفتوحة عندك بعنوان يشبه \"%(title)s\".", title=title))
+    if len(matches) > 1:
+        raise ValueError(_("أكثر من مهمة تشبه \"%(title)s\" — حدّد العنوان بدقة.", title=title))
+    return task_service.complete_task(matches[0], actor=actor, note=(payload.get("note") or None))
+
+
+def _execute_record_vaccination(payload: dict, *, actor, assignee_id=None):
+    from app.health import health_service
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    vaccine = str(payload.get("vaccine_name") or "").strip()
+    if not vaccine:
+        raise ValueError(_("اسم اللقاح غير محدَّد."))
+    next_due = None
+    if payload.get("next_due_date"):
+        try:
+            next_due = date.fromisoformat(payload["next_due_date"])
+        except ValueError:
+            next_due = None
+    return health_service.record_vaccination(
+        actor_user_id=actor.id, animal_id=animal.id, vaccine_name=vaccine,
+        date_=date.today(), next_due_date=next_due,
+    )
+
+
+def _execute_record_sale(payload: dict, *, actor, assignee_id=None):
+    from app.core import cycle_engine, validation_service
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    try:
+        price = float(payload.get("price"))
+    except (TypeError, ValueError):
+        raise ValueError(_("سعر البيع غير واضح."))
+    validation_service.validate_price(price, field_label=_("سعر البيع"))
+    sale_date = date.today()
+    if payload.get("sale_date"):
+        try:
+            sale_date = date.fromisoformat(payload["sale_date"])
+        except ValueError:
+            sale_date = date.today()
+    validation_service.validate_not_future_date(sale_date, field_label=_("تاريخ البيع"))
+    try:
+        cycle_engine.sell_animal(animal, sale_price=price, actor_user_id=actor.id, sale_date=sale_date,
+                                 notes=(payload.get("buyer_note") or None))
+    except cycle_engine.CycleExitBlocked as e:
+        raise ValueError(str(e))
+    return animal
+
+
+def _execute_record_death(payload: dict, *, actor, assignee_id=None):
+    from app.core import cycle_engine
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    cycle_engine.mark_animal_dead(animal, actor_user_id=actor.id, reason=(payload.get("reason") or None),
+                                  death_date=date.today())
+    return animal
+
+
 # **مصدر الحقيقة الوحيد لما يُنفَّذ فعلياً** — لازم يطابق
 # `llm_bridge.ALLOWED_DRAFT_ACTION_TYPES` تماماً (اختبار مخصَّص يتحقق
 # من هذا التطابق). أي إجراء مو هنا يستحيل تنفيذه حتى لو تجاوز الحاجز
@@ -167,6 +283,21 @@ ALLOWED_ACTION_TYPES = {
                      "required_permission": "tasks.assign_any"},
     "record_expense": {"label": "تسجيل فاتورة كمصروف", "execute": _execute_record_expense,
                         "required_permission": "finance.full.manage"},
+    # أنواع وكيل Claude (محادثة فورية) — نفس صلاحيات الشاشات اليدوية بالضبط.
+    "move_animal": {"label": "نقل حيوان لحظيرة", "execute": _execute_move_animal,
+                     "required_permission": "animals.manage"},
+    "add_animal_note": {"label": "ملاحظة على حيوان", "execute": _execute_add_animal_note,
+                         "required_permission": "animals.manage"},
+    "add_farm_note": {"label": "ملاحظة بدفتر المزرعة", "execute": _execute_add_farm_note,
+                       "required_permission": "farm_notes.manage"},
+    "complete_task": {"label": "إنهاء مهمة", "execute": _execute_complete_task,
+                       "required_permission": "tasks.view_own"},
+    "record_vaccination": {"label": "تسجيل تحصين", "execute": _execute_record_vaccination,
+                            "required_permission": "health.manage"},
+    "record_sale": {"label": "تسجيل بيع رأس", "execute": _execute_record_sale,
+                     "required_permission": "animals.manage"},
+    "record_death": {"label": "تسجيل نفوق", "execute": _execute_record_death,
+                      "required_permission": "animals.manage"},
 }
 
 

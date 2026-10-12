@@ -4,14 +4,15 @@
 فشل أو غير مفعَّل يرجع `run()` بـNone فيكمل المسار المحلي القديم كما كان.
 
 **سياسة التنفيذ (مفروضة بالخادم، مو بثقة النموذج)**:
-- وزن، توزيع مهمة: ينفَّذان فوراً داخل المحادثة.
-- فاتورة (مصروف)، ولادة: الأداة تحفظ مسودة وترجع `needs_confirmation`،
+- فوري داخل المحادثة: وزن، توزيع مهمة، نقل حيوان لحظيرة، ملاحظة على حيوان،
+  ملاحظة بدفتر المزرعة، إنهاء مهمة.
+- فاتورة (مصروف)، ولادة، تحصين، بيع، نفوق: الأداة تحفظ مسودة وترجع `needs_confirmation`،
   والوكيل يسألك سؤالاً واحداً؛ التنفيذ يتم فقط بأداة `confirm_action`
   وبشرط أن رسالتك الحالية تأكيد صريح ("نعم"...) ومسودتك أنت، عمرها
   أقل من 30 دقيقة.
 - كل تنفيذ يمر بنفس حواجز المسودات: صلاحية النوع، `draft_guardrail_reason`،
   وسجل `AssistantDraftAction` للتدقيق.
-- ممنوع دائماً: جرعات الأدوية، الحذف، البيع (لا توجد أداة لها أصلاً).
+- ممنوع دائماً: جرعات الأدوية والحذف (لا توجد أداة لها أصلاً).
 """
 import inspect
 import json
@@ -23,7 +24,10 @@ MAX_TURNS = 8
 MAX_OUTPUT_TOKENS = 4096
 HISTORY_MESSAGES = 12
 CONFIRM_WINDOW_MINUTES = 30
-CONFIRM_REQUIRED_TYPES = ("record_expense", "register_birth")
+# مال أو تغيير لا رجعة فيه (بيع، نفوق) أو يخلق سجلاً جديداً (ولادة، فاتورة،
+# تحصين) ← تأكيد صريح؛ الباقي خفيف وقابل للتصحيح ← فوري.
+CONFIRM_REQUIRED_TYPES = ("record_expense", "register_birth", "record_vaccination",
+                          "record_sale", "record_death")
 
 DEFAULT_MODEL = os.environ.get("ANTHROPIC_AGENT_MODEL", "claude-sonnet-5-5")
 
@@ -34,11 +38,14 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 - بإيجاز ووضوح، بدون مقدمات. ممنوع تنسيق ماركداون (لا نجوم، لا #). للتعداد استخدم "1." عادية.
 - أي رقم أو حالة تخص المزرعة تأخذها من الأدوات فقط. ممنوع تخترع أرقاماً أو أسماء حيوانات.
 - لو الأداة رجعت status "ambiguous" (نتائج متعددة) اسأل المستخدم يحدد، ممنوع تخمّن.
-- للإجراءات: استخدم أدوات record_weight و assign_task و register_birth و record_expense. record_weight و assign_task تنفّذ فوراً؛ قل "تم" مع التفاصيل. register_birth و record_expense ترجع needs_confirmation: اعرض التفاصيل بسطر واحد واسأل "أسجّلها؟" وانتظر. لما يرد المستخدم بتأكيد صريح (نعم/أكّد) استدعِ confirm_action بنفس draft_id. لو رفض أو ما أكّد لا تستدعها.
+- للإجراءات الفورية: record_weight، assign_task، move_animal، add_animal_note، add_farm_note، complete_task — تنفّذ مباشرة؛ قل "تم" مع التفاصيل.
+- للإجراءات الحساسة: register_birth، record_expense، record_vaccination، record_sale، record_death — ترجع needs_confirmation: اعرض التفاصيل بسطر واحد (للبيع اذكر الرقم والسعر) واسأل "أسجّلها؟" وانتظر. لما يرد المستخدم بتأكيد صريح (نعم/أكّد) استدعِ confirm_action بنفس draft_id. لو رفض أو ما أكّد لا تستدعها.
+- رقم الحيوان واسم الحظيرة واللقاح والسعر يجيبها المستخدم؛ لو ناقصة اسأله، ممنوع تخمّن. السعر لا تخترعه أبداً.
+- complete_task تنهي مهمة مفتوحة مكلَّف بها المستخدم نفسه بعنوانها (من my_tasks_summary).
 - assign_task تحتاج اسم عضو الفريق المكلَّف من المستخدم؛ لو ما ذكره اسأله، ممنوع تختاره بنفسك.
 - لو أرفق المستخدم صورة فاتورة: اقرأها (المورّد، التاريخ، الإجمالي النهائي شامل الضريبة، الفئة) ثم استدعِ record_expense. لو الإجمالي غير واضح اسأله بدل التخمين.
 - أداة web_search للمعلومات العامة الخارجية فقط (علف، ممارسات تربية، أسعار سوق). ابدأ أي جواب منها بـ"حسب مصادر خارجية:" واذكر المصادر باختصار، ووضّح إنها معلومة عامة مو قراراً على قطيعه. لا تستخدمها لبيانات مزرعته.
-- ممنوع تقترح جرعة دواء أو تشخيصاً نهائياً أو حذف سجلات أو بيع حيوان؛ وجّه المستخدم للطبيب أو للشاشة المخصَّصة.
+- ممنوع تقترح جرعة دواء أو تشخيصاً نهائياً أو حذف أي سجل؛ وجّه المستخدم للطبيب أو للشاشة المخصَّصة.
 - لو السؤال خارج نطاق المزرعة تماماً، اعتذر بأدب وإنك مختص بالمزرعة.
 
 اليوم: {today}
@@ -146,6 +153,43 @@ _WRITE_TOOL_DEFS = [
                       "enum": ["أعلاف", "أدوية", "معدات", "صيانة معدات", "فاتورة كهرباء", "فاتورة ماء", "بدون تصنيف"]},
          "description": {"type": "string"}},
          "required": ["total_amount", "category"]}},
+    {"name": "move_animal",
+     "description": "نقل حيوان لحظيرة (باسمها). ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "barn_name": {"type": "string"}},
+         "required": ["animal_no", "barn_name"]}},
+    {"name": "add_animal_note",
+     "description": "إضافة ملاحظة نصية على سجل حيوان. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "note": {"type": "string"}},
+         "required": ["animal_no", "note"]}},
+    {"name": "add_farm_note",
+     "description": "حفظ ملاحظة عامة بدفتر المزرعة. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "body": {"type": "string"}, "title": {"type": "string", "description": "اختياري"}},
+         "required": ["body"]}},
+    {"name": "complete_task",
+     "description": "إنهاء مهمة مفتوحة للمستخدم بعنوانها. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "task_title": {"type": "string"}, "note": {"type": "string", "description": "اختياري"}},
+         "required": ["task_title"]}},
+    {"name": "record_vaccination",
+     "description": "تسجيل تحصين لحيوان بتاريخ اليوم. يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "vaccine_name": {"type": "string"},
+         "next_due_date": {"type": "string", "description": "اختياري YYYY-MM-DD"}},
+         "required": ["animal_no", "vaccine_name"]}},
+    {"name": "record_sale",
+     "description": "تسجيل بيع رأس بسعر يحدده المستخدم. يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "price": {"type": "number", "description": "سعر البيع بالريال"},
+         "sale_date": {"type": "string", "description": "اختياري YYYY-MM-DD"}},
+         "required": ["animal_no", "price"]}},
+    {"name": "record_death",
+     "description": "تسجيل نفوق رأس. يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "reason": {"type": "string", "description": "اختياري"}},
+         "required": ["animal_no"]}},
     {"name": "confirm_action",
      "description": "تنفيذ إجراء معلَّق بعد تأكيد المستخدم الصريح بآخر رسالة له.",
      "input_schema": {"type": "object", "properties": {"draft_id": {"type": "integer"}},
@@ -251,6 +295,54 @@ def _tool_record_expense(ctx, args):
                            execute_now=False)
 
 
+def _tool_move_animal(ctx, args):
+    return _record_and_run(
+        ctx, "move_animal",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "barn_name": args.get("barn_name")},
+        f"نقل الرأس {args.get('animal_no')} إلى حظيرة {args.get('barn_name')}", execute_now=True)
+
+
+def _tool_add_animal_note(ctx, args):
+    return _record_and_run(
+        ctx, "add_animal_note",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "note": args.get("note")},
+        f"ملاحظة على الرأس {args.get('animal_no')}", execute_now=True)
+
+
+def _tool_add_farm_note(ctx, args):
+    return _record_and_run(ctx, "add_farm_note", {"body": args.get("body"), "title": args.get("title")},
+                           "ملاحظة بدفتر المزرعة", execute_now=True)
+
+
+def _tool_complete_task(ctx, args):
+    return _record_and_run(ctx, "complete_task",
+                           {"task_title": args.get("task_title"), "note": args.get("note")},
+                           f"إنهاء مهمة: {args.get('task_title')}", execute_now=True)
+
+
+def _tool_record_vaccination(ctx, args):
+    return _record_and_run(
+        ctx, "record_vaccination",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "vaccine_name": args.get("vaccine_name"),
+         "next_due_date": args.get("next_due_date") or None},
+        f"تحصين {args.get('vaccine_name')} للرأس {args.get('animal_no')}", execute_now=False)
+
+
+def _tool_record_sale(ctx, args):
+    return _record_and_run(
+        ctx, "record_sale",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "price": args.get("price"),
+         "sale_date": args.get("sale_date") or None},
+        f"بيع الرأس {args.get('animal_no')} بسعر {args.get('price')}", execute_now=False)
+
+
+def _tool_record_death(ctx, args):
+    return _record_and_run(
+        ctx, "record_death",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "reason": args.get("reason") or None},
+        f"تسجيل نفوق الرأس {args.get('animal_no')}", execute_now=False)
+
+
 def _tool_confirm_action(ctx, args):
     from app.models import AssistantDraftAction
     if not is_affirmative(ctx.message_text):
@@ -272,6 +364,10 @@ def _tool_confirm_action(ctx, args):
 _WRITE_TOOLS = {
     "record_weight": _tool_record_weight, "assign_task": _tool_assign_task,
     "register_birth": _tool_register_birth, "record_expense": _tool_record_expense,
+    "move_animal": _tool_move_animal, "add_animal_note": _tool_add_animal_note,
+    "add_farm_note": _tool_add_farm_note, "complete_task": _tool_complete_task,
+    "record_vaccination": _tool_record_vaccination, "record_sale": _tool_record_sale,
+    "record_death": _tool_record_death,
     "confirm_action": _tool_confirm_action,
 }
 
