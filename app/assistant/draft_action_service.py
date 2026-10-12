@@ -159,11 +159,9 @@ def _active_animal_or_error(animal_no):
     return animal
 
 
-def _execute_move_animal(payload: dict, *, actor, assignee_id=None):
+def _barn_or_error(barn_name):
     from app.models import Barn
-    from app.core import bulk_service
-    animal = _active_animal_or_error(payload.get("target_animal_no"))
-    name = str(payload.get("barn_name") or "").strip()
+    name = str(barn_name or "").strip()
     if not name:
         raise ValueError(_("اسم الحظيرة غير محدَّد."))
     barns = Barn.query.filter(Barn.barn_name == name).all() or \
@@ -172,7 +170,82 @@ def _execute_move_animal(payload: dict, *, actor, assignee_id=None):
         raise ValueError(_("ما لقيت حظيرة باسم \"%(name)s\".", name=name))
     if len(barns) > 1:
         raise ValueError(_("فيه أكثر من حظيرة باسم يشبه \"%(name)s\" — حدّد الاسم الكامل.", name=name))
-    barn = barns[0]
+    return barns[0]
+
+
+def _execute_create_animal(payload: dict, *, actor, assignee_id=None):
+    """إضافة رأس جديد (شراء/هدية/رصيد افتتاحي) بنفس دالة الشاشة اليدوية
+    `animal_service.create_animal` وبنفس شروطها (حظيرة ولون ورقم إلزامية).
+    المواليد لها مسارها (`register_birth`) لأن إشعار الولادة وخطة العزل
+    مرتبطان به."""
+    from sqlalchemy.exc import IntegrityError
+    from app.models import AuditLog, SpeciesType
+    from app.models.animal import AnimalSource
+
+    source_map = {"purchase": AnimalSource.PURCHASE, "gift": AnimalSource.GIFT,
+                  "opening_balance": AnimalSource.OPENING_BALANCE}
+    source_key = str(payload.get("source") or "").strip()
+    if source_key == "birth":
+        raise ValueError(_("المواليد تُسجَّل بأداة تسجيل الولادة مو بإضافة رأس جديد."))
+    if source_key not in source_map:
+        raise ValueError(_("مصدر الرأس لازم يكون: شراء أو هدية أو رصيد افتتاحي."))
+
+    animal_no = str(payload.get("new_animal_no") or "").strip()
+    if not animal_no:
+        raise ValueError(_("رقم الحيوان مطلوب."))
+    if Animal.query.filter_by(animal_no=animal_no).first():
+        raise ValueError(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=animal_no))
+    gender = str(payload.get("gender") or "").strip()
+    if gender not in ("ذكر", "أنثى"):
+        raise ValueError(_("جنس الحيوان لازم يكون ذكر أو أنثى."))
+    color = str(payload.get("color") or "").strip()
+    if not color:
+        raise ValueError(_("اللون مطلوب"))
+    barn = _barn_or_error(payload.get("barn_name"))
+
+    species = str(payload.get("species") or "sheep_goat").strip() or "sheep_goat"
+    if species != "sheep_goat" and not SpeciesType.query.filter_by(code=species).first():
+        raise ValueError(_("الفصيلة \"%(code)s\" غير معرَّفة بالنظام.", code=species))
+
+    def _num(key):
+        raw = payload.get(key)
+        if raw in (None, ""):
+            return None
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            raise ValueError(_("قيمة %(field)s غير واضحة.", field=key))
+
+    mother = _animal_or_error(payload.get("mother_no")) if str(payload.get("mother_no") or "").strip() else None
+    father = _animal_or_error(payload.get("father_no")) if str(payload.get("father_no") or "").strip() else None
+    purpose = payload.get("purpose") or None
+    if purpose and purpose not in ("تربية", "تسمين", "بيع"):
+        raise ValueError(_("الغرض لازم يكون: تربية أو تسمين أو بيع."))
+
+    try:
+        animal = animal_service.create_animal(
+            animal_no=animal_no, source=source_map[source_key], gender=gender, species=species,
+            barn_id=barn.id, mother_id=mother.id if mother else None, father_id=father.id if father else None,
+            birth_date=_parse_iso_date(payload.get("birth_date")),
+            purchase_date=_parse_iso_date(payload.get("purchase_date")),
+            weight=_num("weight"), price=_num("price"), purpose=purpose, color=color,
+            name=(payload.get("name") or None), breed=(payload.get("breed") or None),
+            is_pregnant_at_intake=bool(payload.get("is_pregnant")),
+        )
+    except IntegrityError:
+        db.session.rollback()
+        raise ValueError(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=animal_no))
+    db.session.add(AuditLog(actor_user_id=actor.id, action="animal.create", entity_type="Animal",
+                            entity_id=animal.id, details=f"source={source_key}; via=assistant"))
+    db.session.commit()
+    return animal
+
+
+def _execute_move_animal(payload: dict, *, actor, assignee_id=None):
+    from app.models import Barn
+    from app.core import bulk_service
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    barn = _barn_or_error(payload.get("barn_name"))
     if animal.barn_id == barn.id:
         raise ValueError(_("الحيوان موجود أصلاً في هذي الحظيرة."))
     bulk_service.apply_bulk_barn_move(animal_ids=[animal.id], barn_id=barn.id, actor_user_id=actor.id)
@@ -467,6 +540,8 @@ ALLOWED_ACTION_TYPES = {
                            "required_permission": "repro.manage"},
     "record_abortion": {"label": "تسجيل إجهاض", "execute": _execute_record_abortion,
                          "required_permission": "repro.manage"},
+    "create_animal": {"label": "إضافة رأس جديد", "execute": _execute_create_animal,
+                       "required_permission": "animals.manage"},
 }
 
 

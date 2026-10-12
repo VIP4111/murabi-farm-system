@@ -31,7 +31,7 @@ CONFIRM_WINDOW_MINUTES = 30
 SENSITIVE_TYPES = ("record_expense", "register_birth", "record_vaccination",
                    "record_sale", "record_death", "set_purpose", "send_to_market",
                    "record_disease", "record_mating", "record_pregnancy", "confirm_pregnancy",
-                   "record_abortion")
+                   "record_abortion", "create_animal")
 ROUTINE_TYPES = ("record_weight", "assign_task", "move_animal", "add_animal_note", "add_farm_note",
                  "complete_task", "start_task", "record_milk", "request_checkup", "return_from_market")
 ALL_WRITE_TYPES = SENSITIVE_TYPES + ROUTINE_TYPES
@@ -61,6 +61,7 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 - لو الأداة رجعت status "ambiguous" (نتائج متعددة) اسأل المستخدم يحدد، ممنوع تخمّن.
 {policy}
 - رقم الحيوان واسم الحظيرة واللقاح والسعر يجيبها المستخدم؛ لو ناقصة اسأله، ممنوع تخمّن. السعر لا تخترعه أبداً.
+- create_animal (إضافة رأس جديد بالصوت) يحتاج: الرقم، الجنس، الحظيرة، اللون، والمصدر (شراء purchase / هدية gift / رصيد افتتاحي opening_balance). اسأل عن الناقص واحداً واحداً بإيجاز، والسعر لا تخترعه (يمكن تركه لو ما ذكره)، والوزن والسلالة والاسم اختيارية. المواليد لها register_birth وليس create_animal.
 - request_checkup يحتاج اسم عضو الفريق من المستخدم (مثل assign_task). record_milk يحتاج الحلبة (صباح/مساء) والكمية باللتر. record_disease لتسجيل اسم المرض فقط بدون أي علاج أو جرعة.
 - record_mating: رقم الأنثى + رقم الفحل (أو وصفه لو خارجي). التقريع بين أقارب وراثياً يُرفض ويُوجَّه المستخدم لشاشة التقريع. record_pregnancy: مؤكَّد (confirmed=true) فقط لو المستخدم قال سونار/مؤكد، وإلا غير مؤكد. confirm_pregnancy يؤكد آخر حمل غير مؤكد للأنثى.
 - record_abortion يسجّل إجهاض آخر حمل مفتوح للأنثى ويشغّل بروتوكول العزل (نقلها لحظيرة العزل ومهام عيّنات ومراقبة). اذكر في ردك أنه شغّل بروتوكول العزل.
@@ -281,6 +282,22 @@ _WRITE_TOOL_DEFS = [
      "input_schema": {"type": "object", "properties": {
          "female_no": {"type": "string"}, "notes": {"type": "string", "description": "اختياري"}},
          "required": ["female_no"]}},
+    {"name": "create_animal",
+     "description": "إضافة رأس جديد للمزرعة (شراء أو هدية أو رصيد افتتاحي). الشراء بسعر يسجّل مصروف شراء تلقائياً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string", "description": "رقم/رقعة الحيوان الجديد"},
+         "gender": {"type": "string", "enum": ["ذكر", "أنثى"]},
+         "source": {"type": "string", "enum": ["purchase", "gift", "opening_balance"]},
+         "barn_name": {"type": "string"}, "color": {"type": "string"},
+         "weight": {"type": "number", "description": "اختياري كجم"},
+         "price": {"type": "number", "description": "سعر الشراء، اختياري"},
+         "breed": {"type": "string", "description": "اختياري"}, "name": {"type": "string", "description": "اختياري"},
+         "purpose": {"type": "string", "enum": ["تربية", "تسمين", "بيع"], "description": "اختياري"},
+         "species": {"type": "string", "description": "اختياري، الافتراضي sheep_goat"},
+         "mother_no": {"type": "string", "description": "اختياري"}, "father_no": {"type": "string", "description": "اختياري"},
+         "purchase_date": {"type": "string", "description": "اختياري YYYY-MM-DD"},
+         "is_pregnant": {"type": "boolean", "description": "أنثى مشتراة حامل"}},
+         "required": ["animal_no", "gender", "source", "barn_name", "color"]}},
     {"name": "confirm_action",
      "description": "تنفيذ إجراء معلَّق بعد تأكيد المستخدم الصريح بآخر رسالة له.",
      "input_schema": {"type": "object", "properties": {"draft_id": {"type": "integer"}},
@@ -537,6 +554,23 @@ def _tool_record_abortion(ctx, args):
         f"تسجيل إجهاض للأنثى {args.get('female_no')} (يشغّل بروتوكول العزل)", execute_now=_immediate("record_abortion"))
 
 
+def _tool_create_animal(ctx, args):
+    payload = {
+        "new_animal_no": str(args.get("animal_no", "")).strip(), "gender": args.get("gender"),
+        "source": args.get("source"), "barn_name": args.get("barn_name"), "color": args.get("color"),
+        "weight": args.get("weight"), "price": args.get("price"), "breed": args.get("breed") or None,
+        "name": args.get("name") or None, "purpose": args.get("purpose") or None,
+        "species": args.get("species") or None, "mother_no": args.get("mother_no") or None,
+        "father_no": args.get("father_no") or None, "purchase_date": args.get("purchase_date") or None,
+        "is_pregnant": bool(args.get("is_pregnant")),
+    }
+    extra = f" بسعر {args.get('price')}" if args.get("price") not in (None, "") else ""
+    return _record_and_run(
+        ctx, "create_animal", payload,
+        f"إضافة رأس جديد {args.get('animal_no')} ({args.get('gender')}، {args.get('color')}) لحظيرة {args.get('barn_name')}{extra}",
+        execute_now=_immediate("create_animal"))
+
+
 def _tool_confirm_action(ctx, args):
     from app.models import AssistantDraftAction
     if not is_affirmative(ctx.message_text):
@@ -568,6 +602,7 @@ _WRITE_TOOLS = {
     "record_disease": _tool_record_disease,
     "record_mating": _tool_record_mating, "record_pregnancy": _tool_record_pregnancy,
     "confirm_pregnancy": _tool_confirm_pregnancy, "record_abortion": _tool_record_abortion,
+    "create_animal": _tool_create_animal,
     "confirm_action": _tool_confirm_action,
 }
 

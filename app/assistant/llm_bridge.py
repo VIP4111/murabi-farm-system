@@ -232,6 +232,7 @@ AGENT_ONLY_ACTION_TYPES = (
     "record_milk", "start_task", "request_checkup", "set_purpose",
     "send_to_market", "return_from_market", "record_disease",
     "record_mating", "record_pregnancy", "confirm_pregnancy", "record_abortion",
+    "create_animal",
 )
 ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + AGENT_ONLY_ACTION_TYPES
 
@@ -285,6 +286,17 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
                 return "سعر البيع لازم يكون أكبر من صفر."
             if price > MAX_SALE_PRICE:
                 return f"سعر البيع ({price:g}) أكبر من الحد المسموح للإدخال التلقائي — سجّله يدوياً."
+        if action_type == "create_animal":
+            if not str(payload.get("new_animal_no") or "").strip():
+                return "رقم الحيوان الجديد غير محدَّد."
+            if payload.get("price") not in (None, ""):
+                try:
+                    price = float(payload["price"])
+                except (TypeError, ValueError):
+                    return "سعر الشراء غير واضح."
+                if price < 0 or price > MAX_SALE_PRICE:
+                    return f"سعر الرأس ({price:g}) خارج الحد المسموح للإدخال التلقائي — سجّله يدوياً."
+            return None
         needs_animal = ("move_animal", "add_animal_note", "record_vaccination", "record_sale", "record_death",
                         "record_milk", "request_checkup", "set_purpose", "send_to_market",
                         "return_from_market", "record_disease",

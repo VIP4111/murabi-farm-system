@@ -590,3 +590,71 @@ def test_none_switch_makes_everything_immediate_and_hides_confirm_tool(app, owne
     _use_client(monkeypatch, fake)
     claude_agent.run(owner, "x")
     assert "confirm_action" not in [t["name"] for t in fake.calls[0]["tools"]]
+
+
+# ---------------- إضافة رأس بالصوت ----------------
+
+def _create(owner, **overrides):
+    args = {"animal_no": "N-501", "gender": "أنثى", "source": "purchase", "barn_name": "حظيرة الأمهات",
+            "color": "بني"}
+    args.update(overrides)
+    return _yes(owner, "_tool_create_animal", args)
+
+
+def test_create_animal_purchase_with_price_records_purchase_expense(app, owner):
+    from app.models import Animal, AuditLog
+    from factories import make_barn
+    barn = make_barn("B-91", "حظيرة الأمهات")
+    first, done = _create(owner, weight=34, price=900, breed="نجدي")
+    assert done["status"] == "done"
+    animal = Animal.query.filter_by(animal_no="N-501").one()
+    assert animal.barn_id == barn.id and animal.gender == "أنثى" and animal.color == "بني"
+    assert animal.price == 900 and animal.weight == 34 and animal.breed == "نجدي"
+    purchase = Finance.query.filter_by(operation_type="purchase").one()
+    assert purchase.amount == 900 and purchase.related_animal_id == animal.id
+    assert AuditLog.query.filter_by(action="animal.create", entity_id=animal.id).count() == 1
+
+
+def test_create_animal_requires_known_barn_color_and_gender(app, owner):
+    from app.models import Animal
+    from factories import make_barn
+    make_barn("B-92", "حظيرة الأمهات")
+    for overrides in ({"barn_name": "حظيرة وهمية"}, {"color": ""}, {"gender": "غير معروف"}):
+        _, out = _create(owner, **overrides)
+        assert out["status"] == "error", overrides
+    assert Animal.query.filter_by(animal_no="N-501").count() == 0
+
+
+def test_create_animal_blocks_duplicate_number_and_birth_source(app, owner):
+    from factories import make_barn
+    make_barn("B-93", "حظيرة الأمهات")
+    make_animal("N-501")
+    _, dup = _create(owner)
+    assert dup["status"] == "error" and "مستخدم" in dup["message"]
+    _, birth = _create(owner, animal_no="N-502", source="birth")
+    assert birth["status"] == "error"
+
+
+def test_create_animal_price_guardrail_and_permission(app, owner, worker):
+    from factories import make_barn
+    make_barn("B-94", "حظيرة الأمهات")
+    out = claude_agent._tool_create_animal(
+        claude_agent._Ctx(owner, "x"),
+        {"animal_no": "N-503", "gender": "ذكر", "source": "purchase", "barn_name": "حظيرة الأمهات",
+         "color": "أبيض", "price": 9_999_999})
+    assert out["status"] == "rejected"
+    denied = claude_agent._tool_create_animal(
+        claude_agent._Ctx(worker, "x"),
+        {"animal_no": "N-504", "gender": "ذكر", "source": "gift", "barn_name": "حظيرة الأمهات", "color": "أبيض"})
+    assert denied["status"] == "forbidden"
+    assert not claude_agent._write_tool_allowed(worker, "create_animal")
+
+
+def test_create_animal_gift_has_no_finance_effect(app, owner):
+    from app.models import Animal
+    from factories import make_barn
+    make_barn("B-95", "حظيرة الأمهات")
+    _, done = _create(owner, animal_no="N-505", source="gift", gender="ذكر")
+    assert done["status"] == "done"
+    assert Animal.query.filter_by(animal_no="N-505").count() == 1
+    assert Finance.query.count() == 0
