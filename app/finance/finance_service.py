@@ -15,6 +15,24 @@ ALLOWED_INVOICE_EXTENSIONS = {"jpg", "jpeg", "png", "webp", "pdf"}
 MAX_INVOICE_BYTES = 8 * 1024 * 1024
 
 
+def cancel_entry(row: Finance, *, actor_user_id: int, reason: str = "") -> Finance:
+    """إلغاء عملية مالية مع سبب — لا حذف نهائي للسجلات المالية أبداً، السجل
+    يضل موجود للتدقيق. لو كانت بيع رأس، الرأس يرجع نشطاً ودورته تُعاد
+    اشتقاقها. نفس منطق راوت `finance_cancel` بالضبط (مشترك مع وكيل المحادثة)."""
+    from app.models import AuditLog
+
+    row.is_cancelled = True
+    row.cancel_reason = reason or ""
+    db.session.add(AuditLog(actor_user_id=actor_user_id, action="finance.cancel",
+                             entity_type="Finance", entity_id=row.id, details=row.cancel_reason))
+    db.session.commit()
+
+    if row.operation_type == "sale" and row.related_animal_id and row.related_animal.status == "sold":
+        from app.core.cycle_engine import restore_animal_after_sale_cancel
+        restore_animal_after_sale_cancel(row.related_animal, actor_user_id=actor_user_id)
+    return row
+
+
 def save_invoice_file(file_storage) -> str | None:
     """حفظ فاتورة مورّد مرفوعة (صورة أو PDF) — سحابياً (Cloudinary، بند
     إضافي 151) لو مضبوط، وإلا محلياً كما كان. إرفاق الفاتورة اختياري أصلاً."""

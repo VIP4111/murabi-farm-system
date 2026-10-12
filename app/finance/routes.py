@@ -394,16 +394,9 @@ def finance_new():
 @require_permission("finance.full.manage")
 def finance_cancel(row_id):
     """لا حذف نهائي للسجلات المالية أبداً — بس إلغاء مع سبب، والسجل يضل موجود للتدقيق."""
+    from app.finance import finance_service
     row = Finance.query.get_or_404(row_id)
-    row.is_cancelled = True
-    row.cancel_reason = request.form.get("reason", "")
-    db.session.add(AuditLog(actor_user_id=current_user.id, action="finance.cancel",
-                             entity_type="Finance", entity_id=row.id, details=row.cancel_reason))
-    db.session.commit()
-
-    if row.operation_type == "sale" and row.related_animal_id and row.related_animal.status == "sold":
-        from app.core.cycle_engine import restore_animal_after_sale_cancel
-        restore_animal_after_sale_cancel(row.related_animal, actor_user_id=current_user.id)
+    finance_service.cancel_entry(row, actor_user_id=current_user.id, reason=request.form.get("reason", ""))
 
     flash(_("تم إلغاء العملية (السجل باقٍ للتدقيق)"), "success")
     return redirect(url_for("finance.finance_list"))
