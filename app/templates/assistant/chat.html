@@ -84,11 +84,16 @@
       📷 <span id="imagePreviewName"></span>
       <button type="button" onclick="clearImage()" style="border:none; background:none; color:var(--danger,#c0392b); cursor:pointer; font-size:12.5px;">✖ {{ _('إزالة') }}</button>
     </div>
+    <div id="voiceStatus" style="display:none; align-items:center; gap:8px; padding:0 0 8px; font-size:13px; color:var(--primary);">
+      <span id="voiceStatusText"></span>
+      <button type="button" id="voiceStopBtn" style="border:none; background:none; color:var(--danger,#c0392b); cursor:pointer; font-size:12.5px;">⏹ {{ _('إيقاف المحادثة الصوتية') }}</button>
+    </div>
     <form class="chat-form" id="chatForm" method="post" action="{{ url_for('assistant.send') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="file" id="chatImageInput" accept="image/*" style="display:none;">
       <button type="button" class="btn light" style="height:44px; padding:0 12px;" onclick="document.getElementById('chatImageInput').click();" title="{{ _('إرفاق صورة') }}">📷</button>
       {{ tip(_('أرفق صورة (مرض جلدي، ملصق دواء، مشكلة بالحظيرة...) مع سؤالك — المساعد يحلّلها ضمن رده.')) }}
+      <button type="button" class="btn light" id="voiceBtn" style="height:44px; padding:0 12px; display:none;" title="{{ _('محادثة صوتية — اضغط وتكلّم، يرد عليك بصوت') }}">🎙️</button>
       <textarea id="chatInput" name="message" placeholder="{{ _('اكتب سؤالك هنا...') }}"></textarea>
       <button type="submit" class="btn">{{ _('إرسال') }}</button>
     </form>
@@ -397,7 +402,7 @@
       fetchOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content },
-        body: JSON.stringify({message: text}),
+        body: JSON.stringify({message: text, voice: voiceMode}),
       };
     }
     clearImage();
@@ -417,6 +422,7 @@
         addBubble('assistant', {{ _('صار خطأ:')|tojson }} + ' ' + data.error, '');
       } else {
         addBubble('assistant', data.reply, (data.created_at || '').slice(11,16));
+        voiceReply = data.reply;
       }
     }).catch(function(err){
       typing.remove();
@@ -427,9 +433,132 @@
     }).finally(function(){
       clearTimeout(timeoutId);
       chatInput.disabled = false;
-      chatInput.focus();
+      if(!voiceMode){ chatInput.focus(); }
+      voiceAfterReply();
     });
   });
+
+
+  // ===== محادثة صوتية: تتكلم ← يُرسَل ← يرد بصوت ← يسمعك مرة ثانية =====
+  // كلها بالمتصفح (Web Speech API) — بدون خدمة صوت مدفوعة. الحلقة تقف
+  // بأي وقت بزر الإيقاف، ولو المتصفح ما يدعم الصوت يبقى الزر مخفي.
+  var voiceMode = false, voiceReply = null, voiceBusy = false, voiceSpeaking = false, recog = null;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var voiceLang = {{ ({'ar':'ar-SA','en':'en-US','am':'am-ET','hi':'hi-IN'}.get(current_user.language or 'ar', 'ar-SA'))|tojson }};
+  var voiceBtn = document.getElementById('voiceBtn');
+  var voiceStatus = document.getElementById('voiceStatus');
+  var voiceStatusText = document.getElementById('voiceStatusText');
+  var voiceStopBtn = document.getElementById('voiceStopBtn');
+  var VOICE_TXT = {
+    listening: {{ _('🎙️ أسمعك... تكلّم')|tojson }},
+    thinking: {{ _('⏳ أفكّر...')|tojson }},
+    speaking: {{ _('🔊 أتكلّم...')|tojson }},
+    denied: {{ _('المايك غير مسموح — فعّله لهذا الموقع من إعدادات المتصفح ثم جرّب مرة ثانية.')|tojson }}
+  };
+
+  if(SR && window.speechSynthesis){ voiceBtn.style.display = ''; }
+
+  function setVoiceStatus(key){
+    if(!voiceMode){ voiceStatus.style.display = 'none'; return; }
+    voiceStatus.style.display = 'flex';
+    voiceStatusText.textContent = VOICE_TXT[key] || '';
+  }
+
+  function stopVoice(){
+    voiceMode = false; voiceBusy = false; voiceSpeaking = false;
+    try{ if(recog){ recog.onend = null; recog.abort(); } }catch(e){}
+    try{ window.speechSynthesis.cancel(); }catch(e){}
+    voiceBtn.style.background = '';
+    setVoiceStatus('');
+  }
+
+  function startVoice(){
+    voiceMode = true;
+    voiceBtn.style.background = 'var(--primary)';
+    // فتح الصوت بإيماءة المستخدم (iOS يمنع النطق التلقائي بدونها)
+    try{ var u = new SpeechSynthesisUtterance(' '); u.volume = 0; window.speechSynthesis.speak(u); }catch(e){}
+    listenOnce();
+  }
+
+  function listenOnce(){
+    if(!voiceMode || voiceBusy || voiceSpeaking) return;
+    setVoiceStatus('listening');
+    var heard = '';
+    recog = new SR();
+    recog.lang = voiceLang;
+    recog.interimResults = true;
+    recog.continuous = false;
+    recog.onresult = function(ev){
+      var t = '';
+      for(var i = ev.resultIndex; i < ev.results.length; i++){ t += ev.results[i][0].transcript; }
+      heard = t.trim();
+      chatInput.value = heard;
+    };
+    recog.onerror = function(ev){
+      if(ev.error === 'not-allowed' || ev.error === 'service-not-allowed'){
+        stopVoice();
+        addBubble('assistant', VOICE_TXT.denied, '');
+      }
+    };
+    recog.onend = function(){
+      if(!voiceMode) return;
+      if(heard){
+        voiceBusy = true;
+        setVoiceStatus('thinking');
+        chatInput.value = heard;
+        chatForm.requestSubmit ? chatForm.requestSubmit() : chatForm.submit();
+      } else {
+        setTimeout(listenOnce, 250);   // سكوت — نعيد الاستماع
+      }
+    };
+    try{ recog.start(); }catch(e){ setTimeout(listenOnce, 500); }
+  }
+
+  function speakText(text, done){
+    var clean = String(text || '').replace(/\*\*/g, '').replace(/[#*_`>]/g, ' ')
+      .replace(/\n+/g, '. ').replace(/\s+/g, ' ').trim();
+    if(!clean){ done(); return; }
+    // المتصفح يقطع النطق الطويل — نقسم لجمل قصيرة تُنطق بالتتابع
+    var parts = clean.match(/[^.!؟?،;]+[.!؟?،;]?/g) || [clean];
+    var chunks = [], cur = '';
+    parts.forEach(function(p){
+      if((cur + p).length > 160 && cur){ chunks.push(cur); cur = p; } else { cur += p; }
+    });
+    if(cur) chunks.push(cur);
+    var voices = window.speechSynthesis.getVoices() || [];
+    var short = voiceLang.slice(0, 2);
+    var voice = voices.filter(function(v){ return v.lang === voiceLang; })[0]
+      || voices.filter(function(v){ return (v.lang || '').slice(0, 2) === short; })[0];
+    var i = 0;
+    (function next(){
+      if(!voiceMode || i >= chunks.length){ done(); return; }
+      var u = new SpeechSynthesisUtterance(chunks[i++]);
+      u.lang = voiceLang;
+      if(voice) u.voice = voice;
+      u.onend = next;
+      u.onerror = function(){ done(); };
+      window.speechSynthesis.speak(u);
+    })();
+  }
+
+  // تُستدعى بعد كل رد (نجاح أو فشل) — بوضع الصوت تنطق الرد ثم تسمع من جديد
+  function voiceAfterReply(){
+    if(!voiceMode) return;
+    var reply = voiceReply;
+    voiceReply = null;
+    voiceBusy = false;
+    if(!reply){ setTimeout(listenOnce, 300); return; }
+    voiceSpeaking = true;
+    setVoiceStatus('speaking');
+    speakText(reply, function(){
+      voiceSpeaking = false;
+      listenOnce();
+    });
+  }
+
+  voiceBtn.addEventListener('click', function(){ voiceMode ? stopVoice() : startVoice(); });
+  voiceStopBtn.addEventListener('click', stopVoice);
+  window.addEventListener('beforeunload', stopVoice);
 
   chatInput.addEventListener('keydown', function(e){
     if(e.key === 'Enter' && !e.shiftKey){

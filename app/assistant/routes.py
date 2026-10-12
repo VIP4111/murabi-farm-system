@@ -61,6 +61,7 @@ def chat():
 @rate_limited("assistant_send", max_calls=30, window_seconds=300)
 def send():
     image_file = request.files.get("image") if not request.is_json else None
+    voice = bool((request.get_json(silent=True) or {}).get("voice")) if request.is_json else False
     message_text = (request.get_json(silent=True) or {}).get("message", "").strip() if request.is_json \
         else request.form.get("message", "").strip()
 
@@ -87,7 +88,7 @@ def send():
             current_user, message_text, image_bytes, image_file.mimetype or "image/jpeg", image_url,
         )
     else:
-        reply = svc.ask_and_record(current_user, message_text)
+        reply = svc.ask_and_record(current_user, message_text, **({"voice": True} if voice else {}))
 
     if request.is_json or image_file:
         return jsonify({

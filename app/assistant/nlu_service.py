@@ -450,7 +450,7 @@ def _build_llm_context(user) -> str:
     return "\n".join(parts) if parts else "لا توجد بيانات متاحة لصلاحيات هذا المستخدم."
 
 
-def answer(user, message_text: str, lang: str | None = None) -> dict:
+def answer(user, message_text: str, lang: str | None = None, voice: bool = False) -> dict:
     """المنطق الصافي بدون أي حفظ بقاعدة البيانات — يرجع
     {"reply", "intent_code", "answered_by"}.
 
@@ -463,7 +463,7 @@ def answer(user, message_text: str, lang: str | None = None) -> dict:
     # الأولى لو ANTHROPIC_API_KEY مفعَّل؛ لو فشل يكمل المسار المحلي.
     from app.assistant import claude_agent
     if claude_agent.is_configured():
-        agent_reply = claude_agent.run(user, message_text, lang=lang)
+        agent_reply = claude_agent.run(user, message_text, lang=lang, voice=voice)
         if agent_reply:
             return {"reply": agent_reply, "intent_code": None, "answered_by": "claude_agent"}
 
@@ -522,12 +522,12 @@ def answer(user, message_text: str, lang: str | None = None) -> dict:
     return {"reply": FALLBACK_MSG(lang), "intent_code": None, "answered_by": "local"}
 
 
-def ask_and_record(user, message_text: str) -> AssistantMessage:
+def ask_and_record(user, message_text: str, voice: bool = False) -> AssistantMessage:
     """يسجّل رسالة المستخدم والرد بجدول `AssistantMessage` ويرجع صف الرد."""
     user_msg = AssistantMessage(user_id=user.id, role="user", content=message_text)
     db.session.add(user_msg)
 
-    result = answer(user, message_text)
+    result = answer(user, message_text, **({"voice": True} if voice else {}))
     assistant_msg = AssistantMessage(
         user_id=user.id, role="assistant", content=result["reply"],
         intent_code=result["intent_code"], answered_by=result["answered_by"],

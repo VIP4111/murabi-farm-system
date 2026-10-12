@@ -165,3 +165,30 @@ def test_nlu_answer_uses_agent_then_falls_back(app, owner, configured, monkeypat
     monkeypatch.setattr(claude_agent, "run", lambda *a, **k: None)
     out = nlu_service.answer(owner, "كم راس عندنا")
     assert out["answered_by"] != "claude_agent"
+
+
+def test_voice_mode_adds_short_spoken_reply_instruction(app, owner, configured, monkeypatch):
+    fake = FakeClient([_resp([_text("عندك اثنا عشر رأساً.")]), _resp([_text("ok")])])
+    _use_client(monkeypatch, fake)
+    claude_agent.run(owner, "كم راس؟", voice=True)
+    claude_agent.run(owner, "كم راس؟")
+    assert "وضع الصوت" in fake.calls[0]["system"]
+    assert "وضع الصوت" not in fake.calls[1]["system"]
+
+
+def test_send_route_passes_voice_flag_only_when_requested(app, logged_in_client, configured, monkeypatch):
+    seen = []
+
+    def fake_run(user, text, **kwargs):
+        seen.append(kwargs.get("voice", False))
+        return "تمام"
+    monkeypatch.setattr(claude_agent, "run", fake_run)
+    for payload in ({"message": "كم راس"}, {"message": "كم راس", "voice": True}):
+        r = logged_in_client.post("/assistant/send", json=payload)
+        assert r.status_code == 200 and r.get_json()["reply"] == "تمام"
+    assert seen == [False, True]
+
+
+def test_chat_page_has_voice_button_and_loop(app, logged_in_client):
+    html = logged_in_client.get("/assistant/").get_data(as_text=True)
+    assert 'id="voiceBtn"' in html and "SpeechRecognition" in html and "speechSynthesis" in html

@@ -44,6 +44,9 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 اليوم: {today}
 """
 
+VOICE_ADDENDUM = """
+وضع الصوت مفعَّل: المستخدم يكلّمك بالصوت وردّك سيُقرأ بصوت عالٍ. اجعل الرد جملتين أو ثلاثاً كحدّ أقصى، بلا جداول ولا قوائم طويلة ولا رموز أو إيموجي، والأرقام تُقال كلاماً طبيعياً. في الإجراءات التي تحتاج تأكيداً اسأل سؤالاً قصيراً واحداً فقط ("أسجّلها؟")."""
+
 _LANGUAGE_INSTRUCTIONS = {
     "ar": "جاوب بالعربي دايماً.",
     "en": "Always answer in English.",
@@ -289,7 +292,7 @@ def _history_messages(user, message_text: str) -> list[dict]:
 
 
 def run(user, message_text: str, *, lang: str = "ar", image_bytes: bytes | None = None,
-        image_mime: str | None = None, image_url: str | None = None) -> str | None:
+        image_mime: str | None = None, image_url: str | None = None, voice: bool = False) -> str | None:
     """يرجع نص رد الوكيل، أو None لو غير مفعَّل/فشل (والمتصل يكمل المسار
     المحلي). لا يرفع أي استثناء."""
     if not is_configured():
@@ -304,7 +307,7 @@ def run(user, message_text: str, *, lang: str = "ar", image_bytes: bytes | None 
         system = SYSTEM_PROMPT.format(
             language_instruction=_LANGUAGE_INSTRUCTIONS.get(lang, _LANGUAGE_INSTRUCTIONS["ar"]),
             today=date.today().isoformat(),
-        )
+        ) + (VOICE_ADDENDUM if voice else "")
         messages = _history_messages(user, message_text)
         content = []
         if image_bytes:
