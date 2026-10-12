@@ -35,6 +35,13 @@ class FakeClient:
         return self._responses.pop(0)
 
 
+@pytest.fixture(autouse=True)
+def _legacy_policy(monkeypatch):
+    """الاختبارات القديمة كُتبت لسياسة "الخفيف فوري/الحساس بتأكيد"؛ الافتراضي
+    الحالي (استشارة لكل إجراء) له اختبارات مخصَّصة آخر الملف."""
+    monkeypatch.setenv("AGENT_CONFIRM_TYPES", ",".join(claude_agent.SENSITIVE_TYPES))
+
+
 @pytest.fixture()
 def configured(monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
@@ -536,3 +543,50 @@ def test_milk_summary_totals_today_and_is_exposed_as_read_tool(app, owner):
     assert "barn_summary" in names and "milk_summary" in names
     milk_def = next(d for d in defs if d["name"] == "milk_summary")
     assert milk_def["input_schema"]["properties"]["days"]["type"] == "integer"
+
+
+# ---------------- الافتراضي: يستشيرك قبل أي تنفيذ ----------------
+
+def test_default_policy_consults_even_for_routine_actions(app, owner, monkeypatch):
+    monkeypatch.delenv("AGENT_CONFIRM_TYPES", raising=False)
+    make_animal("A-81")
+    ctx = claude_agent._Ctx(owner, "سجل وزن A-81 40")
+    first = claude_agent._tool_record_weight(ctx, {"animal_no": "A-81", "weight": 40})
+    assert first["status"] == "needs_confirmation"
+    assert AnimalWeight.query.count() == 0
+
+    refused = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "كمّل"), {"draft_id": first["draft_id"]})
+    assert refused["status"] == "refused" and AnimalWeight.query.count() == 0
+
+    done = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": first["draft_id"]})
+    assert done["status"] == "done" and AnimalWeight.query.one().weight == 40
+
+
+def test_default_policy_assign_task_keeps_assignee_through_confirmation(app, owner, worker, monkeypatch):
+    monkeypatch.delenv("AGENT_CONFIRM_TYPES", raising=False)
+    ctx = claude_agent._Ctx(owner, "وزّع مهمة")
+    first = claude_agent._tool_assign_task(ctx, {"task_title": "فحص الماء", "assignee_name": worker.name})
+    assert first["status"] == "needs_confirmation" and Task.query.count() == 0
+    done = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": first["draft_id"]})
+    assert done["status"] == "done"
+    assert Task.query.one().assignee_id == worker.id
+
+
+def test_default_policy_prompt_and_tools_tell_model_to_consult(app, owner, configured, monkeypatch):
+    monkeypatch.delenv("AGENT_CONFIRM_TYPES", raising=False)
+    fake = FakeClient([_resp([_text("أسجّلها؟")])])
+    _use_client(monkeypatch, fake)
+    claude_agent.run(owner, "سجل وزن")
+    assert "confirm_action" in [t["name"] for t in fake.calls[0]["tools"]]
+    assert "needs_confirmation" in fake.calls[0]["system"] and "تستشيره" in fake.calls[0]["system"]
+
+
+def test_none_switch_makes_everything_immediate_and_hides_confirm_tool(app, owner, configured, monkeypatch):
+    monkeypatch.setenv("AGENT_CONFIRM_TYPES", "none")
+    make_animal("A-82")
+    out = claude_agent._tool_record_weight(claude_agent._Ctx(owner, "x"), {"animal_no": "A-82", "weight": 33})
+    assert out["status"] == "done" and AnimalWeight.query.one().weight == 33
+    fake = FakeClient([_resp([_text("تم")])])
+    _use_client(monkeypatch, fake)
+    claude_agent.run(owner, "x")
+    assert "confirm_action" not in [t["name"] for t in fake.calls[0]["tools"]]

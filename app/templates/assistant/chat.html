@@ -86,6 +86,7 @@
     </div>
     <div id="voiceStatus" style="display:none; align-items:center; gap:8px; padding:0 0 8px; font-size:13px; color:var(--primary);">
       <span id="voiceStatusText"></span>
+      <button type="button" id="voiceChangeBtn" style="border:none; background:none; color:var(--primary); cursor:pointer; font-size:12.5px;">🔁 {{ _('غيّر الصوت') }}</button>
       <button type="button" id="voiceStopBtn" style="border:none; background:none; color:var(--danger,#c0392b); cursor:pointer; font-size:12.5px;">⏹ {{ _('إيقاف المحادثة الصوتية') }}</button>
     </div>
     <form class="chat-form" id="chatForm" method="post" action="{{ url_for('assistant.send') }}">
@@ -514,6 +515,52 @@
     try{ recog.start(); }catch(e){ setTimeout(listenOnce, 500); }
   }
 
+  // أصوات المتصفح ما تحمل حقل "جنس" — نستدل بالاسم (macOS/iOS: Laila/Zeina،
+  // Edge: Hoda/Salma/Zariyah، أندرويد/كروم: "Google العربية").
+  var FEMALE_HINTS = ['laila','layla','zeina','zariyah','hoda','salma','amira','mariam','noura','sara','zira',
+    'female','woman','ليلى','زينة','هدى','سلمى','مريم','نورة','سارة','google'];
+  var MALE_HINTS = ['maged','majed','tarik','tarek','hamed','shakir','naayf','male ','man ','مجد','طارق','حامد','شاكر','نايف'];
+  function voiceIsFemale(v){
+    if(!v) return false;
+    var n = (v.name || '').toLowerCase();
+    if(MALE_HINTS.some(function(h){ return n.indexOf(h) !== -1; })) return false;
+    return FEMALE_HINTS.some(function(h){ return n.indexOf(h) !== -1; });
+  }
+  function langVoices(){
+    var voices = window.speechSynthesis.getVoices() || [];
+    var short = voiceLang.slice(0, 2);
+    var list = voices.filter(function(v){ return (v.lang || '').replace('_','-').slice(0, 2) === short; });
+    // الأنثوية أولاً، ثم غير الذكورية، ثم الباقي
+    return list.sort(function(a, b){
+      function rank(v){ return voiceIsFemale(v) ? 0 : (MALE_HINTS.some(function(h){ return (v.name||'').toLowerCase().indexOf(h) !== -1; }) ? 2 : 1); }
+      return rank(a) - rank(b);
+    });
+  }
+  function pickVoice(){
+    var list = langVoices();
+    var saved = null;
+    try{ saved = localStorage.getItem('assistantVoiceName'); }catch(e){}
+    if(saved){
+      var hit = list.filter(function(v){ return v.name === saved; })[0];
+      if(hit) return hit;
+    }
+    return list[0] || null;
+  }
+  function cycleVoice(){
+    var list = langVoices();
+    if(!list.length) return;
+    var current = pickVoice();
+    var idx = list.indexOf(current);
+    var next = list[(idx + 1) % list.length];
+    try{ localStorage.setItem('assistantVoiceName', next.name); }catch(e){}
+    try{
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance({{ _('تم')|tojson }});
+      u.lang = voiceLang; u.voice = next; u.pitch = voiceIsFemale(next) ? 1.0 : 1.3;
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
   function speakText(text, done){
     var clean = String(text || '').replace(/\*\*/g, '').replace(/[#*_`>]/g, ' ')
       .replace(/\n+/g, '. ').replace(/\s+/g, ' ').trim();
@@ -525,16 +572,16 @@
       if((cur + p).length > 160 && cur){ chunks.push(cur); cur = p; } else { cur += p; }
     });
     if(cur) chunks.push(cur);
-    var voices = window.speechSynthesis.getVoices() || [];
-    var short = voiceLang.slice(0, 2);
-    var voice = voices.filter(function(v){ return v.lang === voiceLang; })[0]
-      || voices.filter(function(v){ return (v.lang || '').slice(0, 2) === short; })[0];
+    var voice = pickVoice();
     var i = 0;
     (function next(){
       if(!voiceMode || i >= chunks.length){ done(); return; }
       var u = new SpeechSynthesisUtterance(chunks[i++]);
       u.lang = voiceLang;
       if(voice) u.voice = voice;
+      // المتصفح ما يكشف جنس الصوت: لو ما لقينا صوتاً نسائياً نرفع النبرة
+      // لتقريبه (وقد يبقى أقل طبيعية من صوت نسائي حقيقي).
+      u.pitch = voiceIsFemale(voice) ? 1.0 : 1.3;
       u.onend = next;
       u.onerror = function(){ done(); };
       window.speechSynthesis.speak(u);
@@ -558,6 +605,8 @@
 
   voiceBtn.addEventListener('click', function(){ voiceMode ? stopVoice() : startVoice(); });
   voiceStopBtn.addEventListener('click', stopVoice);
+  document.getElementById('voiceChangeBtn').addEventListener('click', cycleVoice);
+  if(window.speechSynthesis){ window.speechSynthesis.onvoiceschanged = function(){}; }
   window.addEventListener('beforeunload', stopVoice);
 
   chatInput.addEventListener('keydown', function(e){
