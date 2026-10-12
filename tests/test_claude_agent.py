@@ -403,3 +403,83 @@ def test_record_disease_needs_confirmation_and_creates_record(app, owner):
                                              {"draft_id": first["draft_id"]})["status"] == "done"
     d = Disease.query.one()
     assert d.disease_name == "عرجان" and d.severity == "light"
+
+
+# ---------------- التلقيح والحمل ----------------
+
+def _yes(owner, tool, args):
+    ctx = claude_agent._Ctx(owner, "x")
+    first = getattr(claude_agent, tool)(ctx, args)
+    assert first["status"] == "needs_confirmation", first
+    return first, claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": first["draft_id"]})
+
+
+def test_mating_needs_confirmation_then_creates_row_and_cycle_event(app, owner):
+    from app.models import Mating
+    female = make_animal("F-51", gender="أنثى")
+    male = make_animal("M-51", gender="ذكر")
+    first, done = _yes(owner, "_tool_record_mating", {"female_no": "F-51", "male_no": "M-51"})
+    assert done["status"] == "done"
+    row = Mating.query.one()
+    assert row.female_id == female.id and row.male_id == male.id
+
+
+def test_mating_blocked_for_close_relatives_and_wrong_sex(app, owner):
+    from app.models import Mating
+    male = make_animal("M-52", gender="ذكر")
+    female = make_animal("F-52", gender="أنثى")
+    female.father_id = male.id
+    db.session.commit()
+    _, rel = _yes(owner, "_tool_record_mating", {"female_no": "F-52", "male_no": "M-52"})
+    assert rel["status"] == "error" and "قرابة" in rel["message"]
+
+    make_animal("F-53", gender="أنثى")
+    _, wrong = _yes(owner, "_tool_record_mating", {"female_no": "M-52", "male_no": "F-53"})
+    assert wrong["status"] == "error"
+    assert Mating.query.count() == 0
+
+
+def test_mating_requires_a_male_or_external_description(app, owner):
+    make_animal("F-54", gender="أنثى")
+    _, out = _yes(owner, "_tool_record_mating", {"female_no": "F-54"})
+    assert out["status"] == "error"
+    _, ok = _yes(owner, "_tool_record_mating", {"female_no": "F-54", "male_note": "فحل جار"})
+    assert ok["status"] == "done"
+
+
+def test_pregnancy_links_latest_mating_and_blocks_duplicate_open_pregnancy(app, owner):
+    from app.models import Pregnancy
+    make_animal("F-55", gender="أنثى")
+    make_animal("M-55", gender="ذكر")
+    _yes(owner, "_tool_record_mating", {"female_no": "F-55", "male_no": "M-55"})
+    _, done = _yes(owner, "_tool_record_pregnancy", {"female_no": "F-55", "confirmed": False, "embryo_count": 2})
+    assert done["status"] == "done"
+    p = Pregnancy.query.one()
+    assert p.mating_id is not None and p.confirmed is False and p.embryo_count == 2
+    _, dup = _yes(owner, "_tool_record_pregnancy", {"female_no": "F-55"})
+    assert dup["status"] == "error" and Pregnancy.query.count() == 1
+
+
+def test_pregnancy_embryo_count_is_bounded(app, owner):
+    from app.models import Pregnancy
+    make_animal("F-56", gender="أنثى")
+    _, out = _yes(owner, "_tool_record_pregnancy", {"female_no": "F-56", "embryo_count": 12})
+    assert out["status"] == "error" and Pregnancy.query.count() == 0
+
+
+def test_confirm_pregnancy_flips_flag_once(app, owner):
+    from app.models import Pregnancy
+    make_animal("F-57", gender="أنثى")
+    _yes(owner, "_tool_record_pregnancy", {"female_no": "F-57", "confirmed": False})
+    assert Pregnancy.query.one().confirmed is False
+    _, done = _yes(owner, "_tool_confirm_pregnancy", {"female_no": "F-57"})
+    assert done["status"] == "done" and Pregnancy.query.one().confirmed is True
+    _, again = _yes(owner, "_tool_confirm_pregnancy", {"female_no": "F-57"})
+    assert again["status"] == "error"
+
+
+def test_repro_tools_hidden_and_forbidden_without_repro_manage(app, worker):
+    make_animal("F-58", gender="أنثى")
+    assert not claude_agent._write_tool_allowed(worker, "record_mating")
+    out = claude_agent._tool_record_pregnancy(claude_agent._Ctx(worker, "x"), {"female_no": "F-58"})
+    assert out["status"] == "forbidden"

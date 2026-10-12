@@ -16,8 +16,7 @@ from app.models import (
 # بند إصلاح (فحص شامل سطر بسطر — ميزة التكاثر) — حدود منطقية واسعة
 # عمداً لعدد الأجنة/عمر الحمل بالأيام، نفس فلسفة validation_service
 # (تمنع خطأ كتابة واضح، مو ترفض حالة نادرة لكن ممكنة).
-MAX_EMBRYO_COUNT = 6
-MAX_GESTATION_AGE_DAYS = 165
+from app.core.repro_service import MAX_EMBRYO_COUNT, MAX_GESTATION_AGE_DAYS  # noqa: E402 — مصدر واحد للحدود
 
 
 def _females():
@@ -204,22 +203,13 @@ def matings_new():
             flash(_("تم إرسال طلب التجاوز لصاحب الحلال للتأكيد — بينتظر رده قبل ما يتسجّل التقريع"), "success")
             return redirect(url_for("repro.matings_list"))
 
-        row = Mating(
-            female_id=female_id,
-            date=date.fromisoformat(request.form["date"]),
-            male_id=male_id,
-            male_note=request.form.get("male_note"),
-            barn_id=request.form.get("barn_id") or None,
-            notes=request.form.get("notes"),
+        from app.core import repro_service
+        repro_service.create_mating_row(
+            female_id=female_id, mating_date=date.fromisoformat(request.form["date"]), male_id=male_id,
+            male_note=request.form.get("male_note"), barn_id=request.form.get("barn_id") or None,
+            notes=request.form.get("notes"), actor_user_id=current_user.id,
+            relation_confirmed=bool(relation),
         )
-        db.session.add(row)
-        db.session.flush()
-        _log("mating.create", "Mating", row.id,
-             details="تم التأكيد رغم تحذير قرابة وراثية" if relation else "")
-        db.session.commit()
-
-        from app.core.cycle_engine import record_cycle_event
-        record_cycle_event(row.female, "mating", source_type="Mating", source_id=row.id, event_date=row.date)
 
         flash(_("تم تسجيل التقريع"), "success")
         return redirect(url_for("repro.matings_list"))
@@ -294,22 +284,15 @@ def pregnancies_new():
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for("repro.pregnancies_new"))
-        row = Pregnancy(
+        from app.core import repro_service
+        repro_service.create_pregnancy_row(
             female_id=int(request.form["female_id"]),
             mating_id=request.form.get("mating_id") or None,
-            date=date.fromisoformat(request.form["date"]),
+            pregnancy_date=date.fromisoformat(request.form["date"]),
             confirmed=bool(request.form.get("confirmed")),
             sonar_date=date.fromisoformat(request.form["sonar_date"]) if request.form.get("sonar_date") else None,
-            embryo_count=embryo_count,
-            notes=request.form.get("notes"),
+            embryo_count=embryo_count, notes=request.form.get("notes"), actor_user_id=current_user.id,
         )
-        db.session.add(row)
-        db.session.flush()
-        _log("pregnancy.create", "Pregnancy", row.id)
-        db.session.commit()
-
-        from app.core.cycle_engine import record_cycle_event
-        record_cycle_event(row.female, "pregnancy", source_type="Pregnancy", source_id=row.id, event_date=row.date)
 
         flash(_("تم تسجيل تشخيص الحمل"), "success")
         return redirect(url_for("repro.pregnancies_list"))
@@ -363,16 +346,13 @@ def pregnancies_confirm(pregnancy_id):
     من الصفر. `confirmed=False` كان يعني الحمل يبقى غايباً للأبد عن
     "كم رأس حوامل لدينا" (context_service.pregnant_summary تفحص
     confirmed=True حصراً) — تأكيده هنا هو اللي يُدخله فعلياً بالعدّاد."""
+    from app.core import repro_service
     pregnancy = Pregnancy.query.get_or_404(pregnancy_id)
-    if pregnancy.confirmed:
-        flash(_("هذا الحمل مؤكَّد أصلاً."), "error")
+    try:
+        repro_service.confirm_pregnancy(pregnancy, actor_user_id=current_user.id)
+    except ValueError as e:
+        flash(str(e), "error")
         return redirect(url_for("repro.pregnancies_list"))
-    if pregnancy.outcome:
-        flash(_("هذا الحمل مسجَّل له نتيجة إجهاض — ما ينفع يُأكَّد."), "error")
-        return redirect(url_for("repro.pregnancies_list"))
-    pregnancy.confirmed = True
-    _log("pregnancy.confirm", "Pregnancy", pregnancy.id)
-    db.session.commit()
     flash(_("تم تأكيد حمل %(no)s — صارت تظهر ضمن عدد الحوامل.", no=pregnancy.female.animal_no), "success")
     return redirect(url_for("repro.pregnancies_list"))
 

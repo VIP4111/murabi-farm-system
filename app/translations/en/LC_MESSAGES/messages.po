@@ -15490,6 +15490,43 @@ msgstr "The purpose must be: breeding, fattening or sale."
 msgid "اسم المرض غير محدَّد."
 msgstr "The disease name is not specified."
 
+#: app/assistant/draft_action_service.py:315
+msgid "عدد الأجنة غير واضح."
+msgstr "The embryo count is unclear."
+
+#: app/assistant/draft_action_service.py:329
+#, python-format
+msgid "ما فيه حمل مسجَّل للأنثى \"%(no)s\" يحتاج تأكيد."
+msgstr "There is no recorded pregnancy for female \"%(no)s\" that needs confirmation."
+
+#: app/core/repro_service.py:29
+#, python-format
+msgid "بين الأنثى والفحل قرابة وراثية (%(label)s) — سجّل التقريع يدوياً من شاشة التقريع بعد المراجعة."
+msgstr "The female and the male are genetically related (%(label)s) — record the mating manually from the Mating screen after review."
+
+#: app/core/repro_service.py:72 app/core/repro_service.py:126
+#, python-format
+msgid "الرأس \"%(no)s\" مو أنثى."
+msgstr "The animal \"%(no)s\" is not a female."
+
+#: app/core/repro_service.py:80
+#, python-format
+msgid "الرأس \"%(no)s\" مو ذكر."
+msgstr "The animal \"%(no)s\" is not a male."
+
+#: app/core/repro_service.py:91
+msgid "حدّد رقم الفحل أو اكتب وصفه إن كان خارجياً."
+msgstr "Specify the male's number, or describe him if he is external."
+
+#: app/core/repro_service.py:130
+msgid "تاريخ تشخيص الحمل"
+msgstr "Pregnancy diagnosis date"
+
+#: app/core/repro_service.py:135
+#, python-format
+msgid "للأنثى \"%(no)s\" حمل مسجَّل أصلاً — استخدم تأكيد الحمل بدل تسجيل جديد."
+msgstr "Female \"%(no)s\" already has a recorded pregnancy — use pregnancy confirmation instead of a new record."
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 

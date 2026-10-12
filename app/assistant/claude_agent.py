@@ -28,7 +28,7 @@ CONFIRM_WINDOW_MINUTES = 30
 # تحصين) ← تأكيد صريح؛ الباقي خفيف وقابل للتصحيح ← فوري.
 CONFIRM_REQUIRED_TYPES = ("record_expense", "register_birth", "record_vaccination",
                           "record_sale", "record_death", "set_purpose", "send_to_market",
-                          "record_disease")
+                          "record_disease", "record_mating", "record_pregnancy", "confirm_pregnancy")
 
 DEFAULT_MODEL = os.environ.get("ANTHROPIC_AGENT_MODEL", "claude-sonnet-5-5")
 
@@ -40,9 +40,10 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 - أي رقم أو حالة تخص المزرعة تأخذها من الأدوات فقط. ممنوع تخترع أرقاماً أو أسماء حيوانات.
 - لو الأداة رجعت status "ambiguous" (نتائج متعددة) اسأل المستخدم يحدد، ممنوع تخمّن.
 - للإجراءات الفورية: record_weight، assign_task، move_animal، add_animal_note، add_farm_note، complete_task، start_task، record_milk، request_checkup، return_from_market — تنفّذ مباشرة؛ قل "تم" مع التفاصيل.
-- للإجراءات الحساسة: register_birth، record_expense، record_vaccination، record_sale، record_death، set_purpose، send_to_market، record_disease — ترجع needs_confirmation: اعرض التفاصيل بسطر واحد (للبيع اذكر الرقم والسعر) واسأل "أسجّلها؟" وانتظر. لما يرد المستخدم بتأكيد صريح (نعم/أكّد) استدعِ confirm_action بنفس draft_id. لو رفض أو ما أكّد لا تستدعها.
+- للإجراءات الحساسة: register_birth، record_expense، record_vaccination، record_sale، record_death، set_purpose، send_to_market، record_disease، record_mating، record_pregnancy، confirm_pregnancy — ترجع needs_confirmation: اعرض التفاصيل بسطر واحد (للبيع اذكر الرقم والسعر) واسأل "أسجّلها؟" وانتظر. لما يرد المستخدم بتأكيد صريح (نعم/أكّد) استدعِ confirm_action بنفس draft_id. لو رفض أو ما أكّد لا تستدعها.
 - رقم الحيوان واسم الحظيرة واللقاح والسعر يجيبها المستخدم؛ لو ناقصة اسأله، ممنوع تخمّن. السعر لا تخترعه أبداً.
 - request_checkup يحتاج اسم عضو الفريق من المستخدم (مثل assign_task). record_milk يحتاج الحلبة (صباح/مساء) والكمية باللتر. record_disease لتسجيل اسم المرض فقط بدون أي علاج أو جرعة.
+- record_mating: رقم الأنثى + رقم الفحل (أو وصفه لو خارجي). التقريع بين أقارب وراثياً يُرفض ويُوجَّه المستخدم لشاشة التقريع. record_pregnancy: مؤكَّد (confirmed=true) فقط لو المستخدم قال سونار/مؤكد، وإلا غير مؤكد. confirm_pregnancy يؤكد آخر حمل غير مؤكد للأنثى.
 - complete_task تنهي مهمة مفتوحة مكلَّف بها المستخدم نفسه بعنوانها (من my_tasks_summary).
 - assign_task تحتاج اسم عضو الفريق المكلَّف من المستخدم؛ لو ما ذكره اسأله، ممنوع تختاره بنفسك.
 - لو أرفق المستخدم صورة فاتورة: اقرأها (المورّد، التاريخ، الإجمالي النهائي شامل الضريبة، الفئة) ثم استدعِ record_expense. لو الإجمالي غير واضح اسأله بدل التخمين.
@@ -232,6 +233,28 @@ _WRITE_TOOL_DEFS = [
          "severity": {"type": "string", "enum": ["light", "medium", "severe"],
                       "description": "بسيطة/متوسطة/شديدة"}},
          "required": ["animal_no", "disease_name"]}},
+    {"name": "record_mating",
+     "description": "تسجيل تقريع/تلقيح لأنثى بتاريخ اليوم (أو تاريخ يحدده المستخدم). يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "female_no": {"type": "string"}, "male_no": {"type": "string", "description": "رقم الفحل المسجَّل"},
+         "male_note": {"type": "string", "description": "وصف الفحل لو خارجي/غير مسجَّل"},
+         "mating_date": {"type": "string", "description": "اختياري YYYY-MM-DD"},
+         "notes": {"type": "string", "description": "اختياري"}},
+         "required": ["female_no"]}},
+    {"name": "record_pregnancy",
+     "description": "تسجيل تشخيص حمل لأنثى. يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "female_no": {"type": "string"},
+         "confirmed": {"type": "boolean", "description": "true فقط لو الحمل مؤكَّد (سونار/فحص)"},
+         "embryo_count": {"type": "integer", "description": "اختياري"},
+         "sonar_date": {"type": "string", "description": "اختياري YYYY-MM-DD"},
+         "pregnancy_date": {"type": "string", "description": "اختياري YYYY-MM-DD، الافتراضي اليوم"},
+         "notes": {"type": "string", "description": "اختياري"}},
+         "required": ["female_no"]}},
+    {"name": "confirm_pregnancy",
+     "description": "تأكيد آخر حمل غير مؤكَّد مسجَّل لأنثى (يدخلها بعدّاد الحوامل). يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {"female_no": {"type": "string"}},
+                      "required": ["female_no"]}},
     {"name": "confirm_action",
      "description": "تنفيذ إجراء معلَّق بعد تأكيد المستخدم الصريح بآخر رسالة له.",
      "input_schema": {"type": "object", "properties": {"draft_id": {"type": "integer"}},
@@ -454,6 +477,33 @@ def _tool_record_disease(ctx, args):
         f"تسجيل مرض {args.get('disease_name')} للرأس {args.get('animal_no')}", execute_now=False)
 
 
+def _tool_record_mating(ctx, args):
+    male = str(args.get("male_no") or "").strip() or None
+    return _record_and_run(
+        ctx, "record_mating",
+        {"target_animal_no": str(args.get("female_no", "")).strip(), "male_no": male,
+         "male_note": args.get("male_note") or None, "mating_date": args.get("mating_date") or None,
+         "notes": args.get("notes") or None},
+        f"تقريع الأنثى {args.get('female_no')} مع " + (f"الفحل {male}" if male else f"فحل خارجي ({args.get('male_note') or '-'})"),
+        execute_now=False)
+
+
+def _tool_record_pregnancy(ctx, args):
+    state = "مؤكَّد" if args.get("confirmed") else "غير مؤكَّد"
+    return _record_and_run(
+        ctx, "record_pregnancy",
+        {"target_animal_no": str(args.get("female_no", "")).strip(), "confirmed": bool(args.get("confirmed")),
+         "embryo_count": args.get("embryo_count"), "sonar_date": args.get("sonar_date") or None,
+         "pregnancy_date": args.get("pregnancy_date") or None, "notes": args.get("notes") or None},
+        f"تشخيص حمل {state} للأنثى {args.get('female_no')}", execute_now=False)
+
+
+def _tool_confirm_pregnancy(ctx, args):
+    return _record_and_run(
+        ctx, "confirm_pregnancy", {"target_animal_no": str(args.get("female_no", "")).strip()},
+        f"تأكيد حمل الأنثى {args.get('female_no')}", execute_now=False)
+
+
 def _tool_confirm_action(ctx, args):
     from app.models import AssistantDraftAction
     if not is_affirmative(ctx.message_text):
@@ -483,6 +533,8 @@ _WRITE_TOOLS = {
     "request_checkup": _tool_request_checkup, "set_purpose": _tool_set_purpose,
     "send_to_market": _tool_send_to_market, "return_from_market": _tool_return_from_market,
     "record_disease": _tool_record_disease,
+    "record_mating": _tool_record_mating, "record_pregnancy": _tool_record_pregnancy,
+    "confirm_pregnancy": _tool_confirm_pregnancy,
     "confirm_action": _tool_confirm_action,
 }
 

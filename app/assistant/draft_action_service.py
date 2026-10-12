@@ -12,7 +12,7 @@
 from datetime import date, datetime, timezone, timedelta
 from flask_babel import gettext as _
 
-from app.extensions import db
+from app.extensions import db, farm_today
 from app.models import AssistantDraftAction, Animal, User
 from app.assistant import llm_bridge
 from app.core import animal_service
@@ -48,7 +48,7 @@ def _execute_record_weight(payload: dict, *, actor, assignee_id=None):
     if weight in (None, ""):
         raise ValueError(_("الوزن غير محدَّد بالملاحظة — عدّلها وسجّل الوزن يدوياً."))
     record = animal_service.add_weight_record(
-        animal=animal, record_date=date.today(), weight=float(weight), recorded_by_id=actor.id,
+        animal=animal, record_date=farm_today(), weight=float(weight), recorded_by_id=actor.id,
     )
     # بند إضافي 310 — فجوة تدقيق حقيقية: الراوت اليدوي لتسجيل الوزن
     # (core/routes.py) يستدعي `cycle_engine.evaluate(animal)` دايماً
@@ -122,13 +122,13 @@ def _execute_record_expense(payload: dict, *, actor, assignee_id=None):
     if amount <= 0:
         raise ValueError(_("مبلغ الفاتورة لازم يكون أكبر من صفر."))
 
-    entry_date = date.today()
+    entry_date = farm_today()
     raw_date = payload.get("invoice_date")
     if raw_date:
         try:
             entry_date = date.fromisoformat(raw_date)
         except ValueError:
-            entry_date = date.today()
+            entry_date = farm_today()
     validation_service.validate_not_future_date(entry_date, field_label=_("تاريخ الفاتورة"))
 
     category = payload.get("category") or "بدون تصنيف"
@@ -184,7 +184,7 @@ def _execute_add_animal_note(payload: dict, *, actor, assignee_id=None):
     note = str(payload.get("note") or "").strip()
     if not note:
         raise ValueError(_("نص الملاحظة غير محدَّد."))
-    return animal_service.add_note(animal=animal, note_date=date.today(), note=note, created_by_id=actor.id)
+    return animal_service.add_note(animal=animal, note_date=farm_today(), note=note, created_by_id=actor.id)
 
 
 def _execute_add_farm_note(payload: dict, *, actor, assignee_id=None):
@@ -233,7 +233,7 @@ def _execute_record_milk(payload: dict, *, actor, assignee_id=None):
     except (TypeError, ValueError):
         raise ValueError(_("كمية الحليب غير واضحة."))
     return animal_service.add_milk_record(
-        animal=animal, record_date=date.today(), session=session, quantity_liters=liters,
+        animal=animal, record_date=farm_today(), session=session, quantity_liters=liters,
         recorded_by_id=actor.id,
     )
 
@@ -283,6 +283,53 @@ def _execute_return_from_market(payload: dict, *, actor, assignee_id=None):
     return animal
 
 
+def _parse_iso_date(raw):
+    if not raw:
+        return None
+    try:
+        return date.fromisoformat(str(raw))
+    except ValueError:
+        return None
+
+
+def _execute_record_mating(payload: dict, *, actor, assignee_id=None):
+    from app.core import repro_service
+    female = _animal_or_error(payload.get("target_animal_no"))
+    male = None
+    if str(payload.get("male_no") or "").strip():
+        male = _animal_or_error(payload.get("male_no"))
+    return repro_service.record_mating_checked(
+        female=female, male=male, male_note=payload.get("male_note"),
+        mating_date=_parse_iso_date(payload.get("mating_date")), notes=payload.get("notes"),
+        actor_user_id=actor.id,
+    )
+
+
+def _execute_record_pregnancy(payload: dict, *, actor, assignee_id=None):
+    from app.core import repro_service
+    female = _animal_or_error(payload.get("target_animal_no"))
+    embryo = payload.get("embryo_count")
+    try:
+        embryo = int(embryo) if embryo not in (None, "") else None
+    except (TypeError, ValueError):
+        raise ValueError(_("عدد الأجنة غير واضح."))
+    return repro_service.record_pregnancy_checked(
+        female=female, confirmed=bool(payload.get("confirmed")), embryo_count=embryo,
+        sonar_date=_parse_iso_date(payload.get("sonar_date")),
+        pregnancy_date=_parse_iso_date(payload.get("pregnancy_date")), notes=payload.get("notes"),
+        actor_user_id=actor.id,
+    )
+
+
+def _execute_confirm_pregnancy(payload: dict, *, actor, assignee_id=None):
+    from app.core import repro_service
+    female = _animal_or_error(payload.get("target_animal_no"))
+    pregnancy = repro_service.latest_open_pregnancy(female)
+    if not pregnancy:
+        raise ValueError(_("ما فيه حمل مسجَّل للأنثى \"%(no)s\" يحتاج تأكيد.", no=female.animal_no))
+    return repro_service.confirm_pregnancy(pregnancy, actor_user_id=actor.id)
+
+
 def _execute_record_disease(payload: dict, *, actor, assignee_id=None):
     from app.health import health_service
     animal = _active_animal_or_error(payload.get("target_animal_no"))
@@ -294,7 +341,7 @@ def _execute_record_disease(payload: dict, *, actor, assignee_id=None):
         severity = "medium"
     return health_service.record_disease(
         actor_user_id=actor.id, animal_id=animal.id, disease_name=name,
-        date_=date.today(), severity=severity,
+        date_=farm_today(), severity=severity,
     )
 
 
@@ -312,7 +359,7 @@ def _execute_record_vaccination(payload: dict, *, actor, assignee_id=None):
             next_due = None
     return health_service.record_vaccination(
         actor_user_id=actor.id, animal_id=animal.id, vaccine_name=vaccine,
-        date_=date.today(), next_due_date=next_due,
+        date_=farm_today(), next_due_date=next_due,
     )
 
 
@@ -324,12 +371,12 @@ def _execute_record_sale(payload: dict, *, actor, assignee_id=None):
     except (TypeError, ValueError):
         raise ValueError(_("سعر البيع غير واضح."))
     validation_service.validate_price(price, field_label=_("سعر البيع"))
-    sale_date = date.today()
+    sale_date = farm_today()
     if payload.get("sale_date"):
         try:
             sale_date = date.fromisoformat(payload["sale_date"])
         except ValueError:
-            sale_date = date.today()
+            sale_date = farm_today()
     validation_service.validate_not_future_date(sale_date, field_label=_("تاريخ البيع"))
     try:
         cycle_engine.sell_animal(animal, sale_price=price, actor_user_id=actor.id, sale_date=sale_date,
@@ -343,7 +390,7 @@ def _execute_record_death(payload: dict, *, actor, assignee_id=None):
     from app.core import cycle_engine
     animal = _active_animal_or_error(payload.get("target_animal_no"))
     cycle_engine.mark_animal_dead(animal, actor_user_id=actor.id, reason=(payload.get("reason") or None),
-                                  death_date=date.today())
+                                  death_date=farm_today())
     return animal
 
 
@@ -399,6 +446,12 @@ ALLOWED_ACTION_TYPES = {
                             "required_permission": "animals.manage"},
     "record_disease": {"label": "تسجيل مرض", "execute": _execute_record_disease,
                         "required_permission": "health.manage"},
+    "record_mating": {"label": "تسجيل تقريع/تلقيح", "execute": _execute_record_mating,
+                       "required_permission": "repro.manage"},
+    "record_pregnancy": {"label": "تسجيل تشخيص حمل", "execute": _execute_record_pregnancy,
+                          "required_permission": "repro.manage"},
+    "confirm_pregnancy": {"label": "تأكيد حمل", "execute": _execute_confirm_pregnancy,
+                           "required_permission": "repro.manage"},
 }
 
 
