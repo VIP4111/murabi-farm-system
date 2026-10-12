@@ -53,6 +53,61 @@ def is_configured() -> bool:
     return bool(os.environ.get("ANTHROPIC_API_KEY"))
 
 
+# مسارات Claude للمهام الأحادية (ترجمة، قراءة فاتورة/روشتة، مسودة نصية):
+# المالك طلب صراحة Claude بدل Gemini؛ لذلك لو ANTHROPIC_API_KEY مضبوط
+# يُجرَّب Claude أولاً، ولو رجع None/فشل يتراجع كل شيء لمسار Gemini القديم
+# كما هو. نموذج سريع رخيص للترجمة، وأدق للرؤية/الاستخراج.
+CLAUDE_FAST_MODEL = os.environ.get("ANTHROPIC_FAST_MODEL", "claude-haiku-4-5")
+CLAUDE_VISION_MODEL = os.environ.get("ANTHROPIC_VISION_MODEL", "claude-sonnet-5-5")
+
+
+def _log_warning(message: str, err) -> None:
+    try:
+        from flask import current_app
+        current_app.logger.warning("%s: %s", message, err)
+    except Exception:
+        pass
+
+
+def _claude_message(*, system: str, content, model: str, tools=None, max_tokens: int = 1024):
+    """نداء Claude واحد (بدون حلقة). يرجع الاستجابة أو None عند أي فشل."""
+    if not is_configured():
+        return None
+    try:
+        import anthropic
+        kwargs = dict(model=model, max_tokens=max_tokens, system=system,
+                      messages=[{"role": "user", "content": content}])
+        if tools:
+            kwargs["tools"] = tools
+        return anthropic.Anthropic().messages.create(**kwargs)
+    except Exception as e:
+        _log_warning("llm_bridge claude call failed", e)
+        return None
+
+
+def _claude_text_of(response) -> str | None:
+    if response is None:
+        return None
+    text = "".join(getattr(b, "text", "") for b in response.content if getattr(b, "type", "") == "text").strip()
+    return text or None
+
+
+def _claude_tool_input(response, tool_name: str) -> dict | None:
+    if response is None:
+        return None
+    for block in response.content:
+        if getattr(block, "type", "") == "tool_use" and block.name == tool_name:
+            return dict(block.input)
+    return None
+
+
+def _claude_file_block(file_bytes: bytes, mime_type: str) -> dict:
+    import base64
+    block_type = "document" if mime_type == "application/pdf" else "image"
+    return {"type": block_type, "source": {
+        "type": "base64", "media_type": mime_type, "data": base64.b64encode(file_bytes).decode()}}
+
+
 # بند إضافي 297 — نظام Gemini بأدوات القراءة. نفس تعليمات
 # SYSTEM_PROMPT_TEMPLATE أعلاه + تعليمتين إضافيتين حاسمتين للأدوات:
 # (1) توضيح اللبس (تحسينك الأول المعتمد) — لا تخمين عند تعدد النتائج،
@@ -317,6 +372,31 @@ def parse_draft_action(raw_text: str, lang: str = "ar") -> dict | None:
     مُنشئ المسودة (نفس من يراجع بطاقة الاعتماد غالباً)، تُستخدم بس
     لطلب الملخص القصير باللغة الصحيحة — النص الأصلي والتحليل نفسه ما
     يتأثران."""
+    if is_configured():
+        lang_name = _TARGET_LANG_NAMES.get(lang, _TARGET_LANG_NAMES["ar"])
+        response = _claude_message(
+            system=DRAFT_ACTION_SYSTEM_PROMPT, model=CLAUDE_VISION_MODEL, content=raw_text,
+            tools=[{
+                "name": DRAFT_ACTION_TOOL_NAME,
+                "description": "اقتراح مسودة إجراء منظَّم — يحتاج اعتماد بشري قبل أي تنفيذ فعلي.",
+                "input_schema": {"type": "object", "properties": {
+                    "action_type": {"type": "string", "enum": list(TEXT_DRAFT_ACTION_TYPES)},
+                    "target_animal_no": {"type": "string", "description": "رقم الحيوان المذكور"},
+                    "payload_json": {"type": "string", "description": "بقية الحقول كنص JSON صالح"},
+                    "summary_ar": {"type": "string",
+                                   "description": f"ملخص قصير واحد للتأكيد، مكتوب بلغة {lang_name} حصراً"},
+                }, "required": ["action_type", "target_animal_no", "payload_json", "summary_ar"]},
+            }])
+        args = _claude_tool_input(response, DRAFT_ACTION_TOOL_NAME)
+        if args:
+            import json
+            try:
+                payload = json.loads(args.get("payload_json") or "{}")
+            except (ValueError, TypeError):
+                payload = {}
+            payload["target_animal_no"] = args.get("target_animal_no")
+            return {"action_type": args.get("action_type"), "payload": payload,
+                    "summary_ar": args.get("summary_ar") or raw_text}
     if not is_gemini_configured():
         return None
     try:
@@ -423,6 +503,29 @@ def parse_invoice(file_bytes: bytes, mime_type: str, lang: str = "ar") -> dict |
     "payload", "summary_ar"}`، أو None لو غير مفعَّل/غير مقروء/فشل. نفس
     فلسفة `parse_draft_action*` بالضبط: قراءة بس، التنفيذ الفعلي حصراً
     بعد اعتماد بشري بـ`draft_action_service.confirm_draft`."""
+    if is_configured():
+        lang_name = _TARGET_LANG_NAMES.get(lang, _TARGET_LANG_NAMES["ar"])
+        response = _claude_message(
+            system=INVOICE_SYSTEM_PROMPT, model=CLAUDE_VISION_MODEL,
+            content=[_claude_file_block(file_bytes, mime_type),
+                     {"type": "text", "text": "اقرأ هذي الفاتورة حسب التعليمات."}],
+            tools=[{
+                "name": INVOICE_TOOL_NAME,
+                "description": "اقتراح تسجيل فاتورة مورّد كمصروف — يحتاج اعتماد بشري قبل أي تنفيذ فعلي.",
+                "input_schema": {"type": "object", "properties": {
+                    "supplier": {"type": "string", "description": "اسم المورّد"},
+                    "invoice_date": {"type": "string", "description": "تاريخ الفاتورة YYYY-MM-DD"},
+                    "total_amount": {"type": "number", "description": "الإجمالي النهائي شامل الضريبة"},
+                    "category": {"type": "string", "enum": list(INVOICE_CATEGORIES)},
+                    "description": {"type": "string", "description": "وصف مختصر للأصناف"},
+                    "summary_ar": {"type": "string",
+                                   "description": f"ملخص قصير للتأكيد بلغة {lang_name} حصراً"},
+                }, "required": ["total_amount", "category", "summary_ar"]},
+            }], max_tokens=1500)
+        args = _claude_tool_input(response, INVOICE_TOOL_NAME)
+        if args:
+            summary = args.pop("summary_ar", None) or "فاتورة مورّد"
+            return {"action_type": "record_expense", "payload": args, "summary_ar": summary}
     if not is_gemini_configured():
         return None
     try:
@@ -663,6 +766,11 @@ def translate_to_arabic(text: str) -> str | None:
     اليومي... هو يرسله بلغته وأنا يوصلني بالعربي"). ترجع None بصمت لنص
     فاضٍ أو Gemini غير مفعَّل أو أي فشل — المتصل (`daily_report_service`)
     يتراجع لعرض النص الأصلي بدل ما يفشل حفظ التقرير كامل."""
+    if text and is_configured():
+        translated = _claude_text_of(_claude_message(
+            system=ARABIC_TRANSLATE_SYSTEM_PROMPT, model=CLAUDE_FAST_MODEL, content=text, max_tokens=1500))
+        if translated:
+            return translated
     if not text or not is_gemini_configured():
         return None
     try:
@@ -694,6 +802,12 @@ def translate_text(text: str, target_lang: str) -> str | None:
     أو غير مدعومة، يرجع None فوراً (صفر استدعاء شبكة غير ضروري)."""
     if target_lang == "ar" or target_lang not in _TARGET_LANG_NAMES or not text:
         return None
+    if is_configured():
+        translated = _claude_text_of(_claude_message(
+            system=TRANSLATE_SYSTEM_PROMPT.format(target_lang_name=_TARGET_LANG_NAMES[target_lang]),
+            model=CLAUDE_FAST_MODEL, content=text, max_tokens=1000))
+        if translated:
+            return translated
     if not is_gemini_configured():
         return None
     try:
@@ -750,25 +864,33 @@ def parse_pharmacy_prescription_image(image_bytes: bytes, mime_type: str) -> dic
     أي فشل/غياب مفتاح (نفس فلسفة باقي دوال هذا الملف). **حاجز حقيقي**:
     أي `medicine_class` مرجوعة مو من القيم المسموحة تُرفض هنا نفسها —
     حتى لو النموذج تجاهل التعليمات، ما توصل أبداً كقيمة قابلة للتعبئة."""
-    if not is_gemini_configured():
+    text = None
+    if is_configured():
+        text = _claude_text_of(_claude_message(
+            system=PRESCRIPTION_IMAGE_SYSTEM_PROMPT, model=CLAUDE_VISION_MODEL, max_tokens=1200,
+            content=[_claude_file_block(image_bytes, mime_type),
+                     {"type": "text", "text": "استخرج بيانات هذا الدواء حسب التعليمات."}]))
+    if text is None and not is_gemini_configured():
         return None
-    try:
-        from google import genai
-        from google.genai import types
-    except ImportError:
-        return None
+    if text is None:
+        try:
+            from google import genai
+            from google.genai import types
+        except ImportError:
+            return None
     try:
         import json
-        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-        response = client.models.generate_content(
-            model=DEFAULT_GEMINI_MODEL,
-            contents=[
-                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
-                "استخرج بيانات هذا الدواء حسب التعليمات.",
-            ],
-            config=types.GenerateContentConfig(system_instruction=PRESCRIPTION_IMAGE_SYSTEM_PROMPT),
-        )
-        text = (response.text or "").strip()
+        if text is None:
+            client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+            response = client.models.generate_content(
+                model=DEFAULT_GEMINI_MODEL,
+                contents=[
+                    types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+                    "استخرج بيانات هذا الدواء حسب التعليمات.",
+                ],
+                config=types.GenerateContentConfig(system_instruction=PRESCRIPTION_IMAGE_SYSTEM_PROMPT),
+            )
+            text = (response.text or "").strip()
         text = text.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
         data = json.loads(text)
 
