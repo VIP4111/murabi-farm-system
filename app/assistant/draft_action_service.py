@@ -330,6 +330,19 @@ def _execute_confirm_pregnancy(payload: dict, *, actor, assignee_id=None):
     return repro_service.confirm_pregnancy(pregnancy, actor_user_id=actor.id)
 
 
+def _execute_record_abortion(payload: dict, *, actor, assignee_id=None):
+    from app.core import repro_service
+    from app.core.isolation_service import record_abortion
+    female = _animal_or_error(payload.get("target_animal_no"))
+    pregnancy = repro_service.latest_open_pregnancy(female)
+    if not pregnancy:
+        raise ValueError(_("ما فيه حمل مسجَّل مفتوح للأنثى \"%(no)s\".", no=female.animal_no))
+    return record_abortion(
+        pregnancy=pregnancy, outcome_date=farm_today(), notes=(payload.get("notes") or None),
+        actor_user_id=actor.id,
+    )
+
+
 def _execute_record_disease(payload: dict, *, actor, assignee_id=None):
     from app.health import health_service
     animal = _active_animal_or_error(payload.get("target_animal_no"))
@@ -452,6 +465,8 @@ ALLOWED_ACTION_TYPES = {
                           "required_permission": "repro.manage"},
     "confirm_pregnancy": {"label": "تأكيد حمل", "execute": _execute_confirm_pregnancy,
                            "required_permission": "repro.manage"},
+    "record_abortion": {"label": "تسجيل إجهاض", "execute": _execute_record_abortion,
+                         "required_permission": "repro.manage"},
 }
 
 

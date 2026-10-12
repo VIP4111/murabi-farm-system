@@ -176,7 +176,7 @@ AGENT_ONLY_ACTION_TYPES = (
     "complete_task", "record_vaccination", "record_sale", "record_death",
     "record_milk", "start_task", "request_checkup", "set_purpose",
     "send_to_market", "return_from_market", "record_disease",
-    "record_mating", "record_pregnancy", "confirm_pregnancy",
+    "record_mating", "record_pregnancy", "confirm_pregnancy", "record_abortion",
 )
 ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + AGENT_ONLY_ACTION_TYPES
 
@@ -233,7 +233,7 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
         needs_animal = ("move_animal", "add_animal_note", "record_vaccination", "record_sale", "record_death",
                         "record_milk", "request_checkup", "set_purpose", "send_to_market",
                         "return_from_market", "record_disease",
-                        "record_mating", "record_pregnancy", "confirm_pregnancy")
+                        "record_mating", "record_pregnancy", "confirm_pregnancy", "record_abortion")
         if action_type in needs_animal and not str(payload.get("target_animal_no") or "").strip():
             return "رقم الحيوان غير محدَّد."
         return None

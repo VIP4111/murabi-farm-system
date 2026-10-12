@@ -483,3 +483,56 @@ def test_repro_tools_hidden_and_forbidden_without_repro_manage(app, worker):
     assert not claude_agent._write_tool_allowed(worker, "record_mating")
     out = claude_agent._tool_record_pregnancy(claude_agent._Ctx(worker, "x"), {"female_no": "F-58"})
     assert out["status"] == "forbidden"
+
+
+# ---------------- إجهاض + أدوات قراءة جديدة ----------------
+
+def test_abortion_needs_confirmation_and_runs_isolation_protocol(app, owner):
+    from app.models import Pregnancy
+    from factories import make_barn
+    isolation = make_barn("ISO-1", "حظيرة العزل", barn_type="عزل")
+    female = make_animal("F-61", gender="أنثى")
+    _yes(owner, "_tool_record_pregnancy", {"female_no": "F-61", "confirmed": True})
+    first, done = _yes(owner, "_tool_record_abortion", {"female_no": "F-61", "notes": "تعثرت"})
+    assert done["status"] == "done"
+    p = Pregnancy.query.one()
+    assert p.outcome == "abortion"
+    db.session.refresh(female)
+    assert female.barn_id == isolation.id
+
+
+def test_abortion_without_open_pregnancy_is_rejected(app, owner):
+    make_animal("F-62", gender="أنثى")
+    _, out = _yes(owner, "_tool_record_abortion", {"female_no": "F-62"})
+    assert out["status"] == "error"
+
+
+def test_barn_summary_counts_and_ambiguity(app, owner):
+    from app.assistant import agent_tools
+    from factories import make_barn
+    barn = make_barn("B-71", "حظيرة الأمهات")
+    make_barn("B-72", "حظيرة الأمهات الجديدة")
+    a1 = make_animal("A-71", gender="أنثى")
+    a2 = make_animal("A-72", gender="ذكر")
+    a1.barn_id = a2.barn_id = barn.id
+    db.session.commit()
+    assert agent_tools.barn_summary("حظيرة الأمهات") == {
+        "status": "found", "barn_no": "B-71", "barn_name": "حظيرة الأمهات",
+        "active_count": 2, "males": 1, "females": 1, "capacity": None}
+    assert agent_tools.barn_summary("الأمهات")["status"] == "ambiguous"
+    assert agent_tools.barn_summary("غير موجودة")["status"] == "not_found"
+
+
+def test_milk_summary_totals_today_and_is_exposed_as_read_tool(app, owner):
+    from app.assistant import agent_tools
+    make_animal("A-73")
+    ctx = claude_agent._Ctx(owner, "x")
+    claude_agent._tool_record_milk(ctx, {"animal_no": "A-73", "session": "صباح", "liters": 2})
+    claude_agent._tool_record_milk(ctx, {"animal_no": "A-73", "session": "مساء", "liters": 1.5})
+    out = agent_tools.milk_summary(1)
+    assert out["total_liters"] == 3.5 and out["records"] == 2
+    defs, registry = claude_agent._read_tool_defs(owner)
+    names = [d["name"] for d in defs]
+    assert "barn_summary" in names and "milk_summary" in names
+    milk_def = next(d for d in defs if d["name"] == "milk_summary")
+    assert milk_def["input_schema"]["properties"]["days"]["type"] == "integer"

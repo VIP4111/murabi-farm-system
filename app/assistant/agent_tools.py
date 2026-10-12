@@ -263,6 +263,65 @@ def web_research(question: str) -> dict:
     return {"status": "ok", "origin": "external_web", "answer": result["answer"], "sources": result["sources"]}
 
 
+def barn_summary(barn_name: str) -> dict:
+    """عدد الرؤوس النشطة بحظيرة معيّنة (ذكور/إناث) وسعتها. يرجع نتيجة
+    واحدة مؤكدة، أو قائمة مرشَّحين لو تعددت المطابقات (اسأل المستخدم
+    يحدد، لا تخمّن).
+
+    Args:
+        barn_name: اسم الحظيرة أو رقمها أو جزء منه كما ذكره المستخدم.
+    """
+    q = (barn_name or "").strip()
+    if not q:
+        return {"status": "not_found", "message": "لم يُذكر اسم حظيرة."}
+    barns = (Barn.query.filter((Barn.barn_name.ilike(f"%{q}%")) | (Barn.barn_no.ilike(f"%{q}%")))
+             .limit(MAX_SEARCH_CANDIDATES + 1).all())
+    if not barns:
+        return {"status": "not_found", "message": f"ما فيه حظيرة تطابق \"{q}\"."}
+    exact = [b for b in barns if (b.barn_name or "").lower() == q.lower() or b.barn_no.lower() == q.lower()]
+    if len(exact) == 1:
+        barns = exact
+    if len(barns) > 1:
+        return {"status": "ambiguous",
+                "message": "تعددت النتائج — اسأل المستخدم يحدد، لا تخمّن.",
+                "candidates": [{"barn_no": b.barn_no, "barn_name": b.barn_name} for b in barns[:MAX_SEARCH_CANDIDATES]]}
+    barn = barns[0]
+    animals = Animal.query.filter_by(barn_id=barn.id, status="active").all()
+    return {
+        "status": "found", "barn_no": barn.barn_no, "barn_name": barn.barn_name,
+        "active_count": len(animals),
+        "males": sum(1 for a in animals if a.gender == "ذكر"),
+        "females": sum(1 for a in animals if a.gender == "أنثى"),
+        "capacity": barn.capacity,
+    }
+
+
+def milk_summary(days: int = 1) -> dict:
+    """إنتاج الحليب الإجمالي باللتر لآخر عدد أيام (1 = اليوم فقط)، مع
+    تفصيل يومي. الحد الأقصى 31 يوماً.
+
+    Args:
+        days: عدد الأيام شاملاً اليوم (1 لليوم، 7 لأسبوع، 30 لشهر).
+    """
+    from datetime import timedelta
+    from app.extensions import farm_today
+    from app.models import MilkRecord
+
+    days = max(1, min(int(days or 1), 31))
+    end = farm_today()
+    start = end - timedelta(days=days - 1)
+    rows = MilkRecord.query.filter(MilkRecord.date >= start, MilkRecord.date <= end).all()
+    by_day: dict = {}
+    for r in rows:
+        by_day[r.date] = by_day.get(r.date, 0) + (r.quantity_liters or 0)
+    return {
+        "from": start, "to": end, "days": days,
+        "records": len(rows),
+        "total_liters": round(sum(by_day.values()), 2),
+        "by_day": [{"date": d, "liters": round(v, 2)} for d, v in sorted(by_day.items())],
+    }
+
+
 def _bind_my_tasks_summary(user):
     def my_tasks_summary() -> dict:
         """مهام المستخدم الحالي المفتوحة حالياً: العدد، عدد المقفلة
@@ -286,6 +345,8 @@ _TOOL_PERMISSIONS = {
     ostrich_status_summary: "repro.view",
     alerts_summary: "animals.view",
     web_research: "assistant.use",
+    barn_summary: "animals.view",
+    milk_summary: "animals.view",
 }
 
 
