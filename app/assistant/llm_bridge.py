@@ -174,6 +174,8 @@ TEXT_DRAFT_ACTION_TYPES = ("register_birth", "record_weight", "assign_task")
 AGENT_ONLY_ACTION_TYPES = (
     "record_expense", "move_animal", "add_animal_note", "add_farm_note",
     "complete_task", "record_vaccination", "record_sale", "record_death",
+    "record_milk", "start_task", "request_checkup", "set_purpose",
+    "send_to_market", "return_from_market", "record_disease",
 )
 ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + AGENT_ONLY_ACTION_TYPES
 
@@ -227,7 +229,9 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
                 return "سعر البيع لازم يكون أكبر من صفر."
             if price > MAX_SALE_PRICE:
                 return f"سعر البيع ({price:g}) أكبر من الحد المسموح للإدخال التلقائي — سجّله يدوياً."
-        needs_animal = ("move_animal", "add_animal_note", "record_vaccination", "record_sale", "record_death")
+        needs_animal = ("move_animal", "add_animal_note", "record_vaccination", "record_sale", "record_death",
+                        "record_milk", "request_checkup", "set_purpose", "send_to_market",
+                        "return_from_market", "record_disease")
         if action_type in needs_animal and not str(payload.get("target_animal_no") or "").strip():
             return "رقم الحيوان غير محدَّد."
         return None

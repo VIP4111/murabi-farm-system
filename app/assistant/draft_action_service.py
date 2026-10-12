@@ -198,7 +198,13 @@ def _execute_add_farm_note(payload: dict, *, actor, assignee_id=None):
 def _execute_complete_task(payload: dict, *, actor, assignee_id=None):
     from app.models import Task
     from app.team import task_service
-    title = str(payload.get("task_title") or "").strip()
+    task = _my_open_task_or_error(actor, payload.get("task_title"))
+    return task_service.complete_task(task, actor=actor, note=(payload.get("note") or None))
+
+
+def _my_open_task_or_error(actor, title):
+    from app.models import Task
+    title = str(title or "").strip()
     if not title:
         raise ValueError(_("عنوان المهمة غير محدَّد."))
     rows = Task.query.filter(Task.assignee_id == actor.id, Task.status.in_(("pending", "in_progress"))).all()
@@ -208,7 +214,88 @@ def _execute_complete_task(payload: dict, *, actor, assignee_id=None):
         raise ValueError(_("ما لقيت مهمة مفتوحة عندك بعنوان يشبه \"%(title)s\".", title=title))
     if len(matches) > 1:
         raise ValueError(_("أكثر من مهمة تشبه \"%(title)s\" — حدّد العنوان بدقة.", title=title))
-    return task_service.complete_task(matches[0], actor=actor, note=(payload.get("note") or None))
+    return matches[0]
+
+
+def _execute_start_task(payload: dict, *, actor, assignee_id=None):
+    from app.team import task_service
+    task = _my_open_task_or_error(actor, payload.get("task_title"))
+    return task_service.start_task(task, actor=actor)
+
+
+def _execute_record_milk(payload: dict, *, actor, assignee_id=None):
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    session = str(payload.get("session") or "").strip()
+    if session not in ("صباح", "مساء"):
+        raise ValueError(_("لازم تحدد الحلبة: صباح أو مساء."))
+    try:
+        liters = float(payload.get("liters"))
+    except (TypeError, ValueError):
+        raise ValueError(_("كمية الحليب غير واضحة."))
+    return animal_service.add_milk_record(
+        animal=animal, record_date=date.today(), session=session, quantity_liters=liters,
+        recorded_by_id=actor.id,
+    )
+
+
+def _execute_request_checkup(payload: dict, *, actor, assignee_id=None):
+    from app.team import task_service
+    if not assignee_id:
+        raise ValueError(_("لازم تختار عضو الفريق المكلَّف قبل الاعتماد."))
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    items = [str(i).strip() for i in (payload.get("items") or []) if str(i).strip()]
+    if not items:
+        raise ValueError(_("لازم تحدد بند فحص واحد على الأقل."))
+    due = None
+    if payload.get("due_date"):
+        try:
+            due = date.fromisoformat(payload["due_date"])
+        except ValueError:
+            due = None
+    return task_service.assign_animal_checkup(actor=actor, animal=animal, items=items,
+                                              assignee_id=assignee_id, due_date=due)
+
+
+def _execute_set_purpose(payload: dict, *, actor, assignee_id=None):
+    from app.core import bulk_service
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    purpose = str(payload.get("purpose") or "").strip()
+    if purpose not in ("تربية", "تسمين", "بيع"):
+        raise ValueError(_("الغرض لازم يكون: تربية أو تسمين أو بيع."))
+    bulk_service.apply_bulk_purpose(animal_ids=[animal.id], purpose=purpose, actor_user_id=actor.id)
+    return animal
+
+
+def _execute_send_to_market(payload: dict, *, actor, assignee_id=None):
+    from app.core import cycle_engine
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    try:
+        cycle_engine.send_to_market(animal, actor_user_id=actor.id, note=(payload.get("note") or None))
+    except cycle_engine.CycleExitBlocked as e:
+        raise ValueError(str(e))
+    return animal
+
+
+def _execute_return_from_market(payload: dict, *, actor, assignee_id=None):
+    from app.core import cycle_engine
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    cycle_engine.return_from_market(animal, actor_user_id=actor.id, note=(payload.get("note") or None))
+    return animal
+
+
+def _execute_record_disease(payload: dict, *, actor, assignee_id=None):
+    from app.health import health_service
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    name = str(payload.get("disease_name") or "").strip()
+    if not name:
+        raise ValueError(_("اسم المرض غير محدَّد."))
+    severity = payload.get("severity") or "medium"
+    if severity not in ("light", "medium", "severe"):
+        severity = "medium"
+    return health_service.record_disease(
+        actor_user_id=actor.id, animal_id=animal.id, disease_name=name,
+        date_=date.today(), severity=severity,
+    )
 
 
 def _execute_record_vaccination(payload: dict, *, actor, assignee_id=None):
@@ -298,6 +385,20 @@ ALLOWED_ACTION_TYPES = {
                      "required_permission": "animals.manage"},
     "record_death": {"label": "تسجيل نفوق", "execute": _execute_record_death,
                       "required_permission": "animals.manage"},
+    "record_milk": {"label": "تسجيل حليب", "execute": _execute_record_milk,
+                     "required_permission": "animals.manage"},
+    "start_task": {"label": "بدء مهمة", "execute": _execute_start_task,
+                    "required_permission": "tasks.view_own"},
+    "request_checkup": {"label": "طلب فحص من عضو فريق", "execute": _execute_request_checkup,
+                         "required_permission": "tasks.assign_any"},
+    "set_purpose": {"label": "تحديد غرض رأس", "execute": _execute_set_purpose,
+                     "required_permission": "animals.manage"},
+    "send_to_market": {"label": "إطلاع رأس للسوق", "execute": _execute_send_to_market,
+                        "required_permission": "animals.manage"},
+    "return_from_market": {"label": "إرجاع رأس من السوق", "execute": _execute_return_from_market,
+                            "required_permission": "animals.manage"},
+    "record_disease": {"label": "تسجيل مرض", "execute": _execute_record_disease,
+                        "required_permission": "health.manage"},
 }
 
 

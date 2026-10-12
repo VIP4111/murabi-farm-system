@@ -320,3 +320,86 @@ def test_worker_cannot_sell_or_move(app, worker):
     assert claude_agent._tool_record_sale(ctx, {"animal_no": "A-38", "price": 500})["status"] == "forbidden"
     assert claude_agent._tool_move_animal(ctx, {"animal_no": "A-38", "barn_name": "س"})["status"] == "forbidden"
     assert not claude_agent._write_tool_allowed(worker, "record_sale")
+
+
+# ---------------- الدفعة الثالثة ----------------
+
+def test_milk_record_immediate_and_validates_session_and_amount(app, owner):
+    from app.models import MilkRecord
+    make_animal("A-41")
+    ctx = claude_agent._Ctx(owner, "x")
+    ok = claude_agent._tool_record_milk(ctx, {"animal_no": "A-41", "session": "صباح", "liters": 2})
+    assert ok["status"] == "done" and MilkRecord.query.one().quantity_liters == 2
+    bad_session = claude_agent._tool_record_milk(ctx, {"animal_no": "A-41", "session": "ظهر", "liters": 2})
+    bad_amount = claude_agent._tool_record_milk(ctx, {"animal_no": "A-41", "session": "مساء", "liters": 250})
+    assert bad_session["status"] == bad_amount["status"] == "error"
+    assert MilkRecord.query.count() == 1
+
+
+def test_start_task_only_for_own_pending_task(app, owner, worker):
+    from app.models import Task
+    from app.team import task_service
+    mine = task_service.assign_task(actor=owner, title="رش الحظيرة", assignee_id=owner.id)
+    out = claude_agent._tool_start_task(claude_agent._Ctx(owner, "x"), {"task_title": "رش الحظيرة"})
+    assert out["status"] == "done" and Task.query.get(mine.id).status == "in_progress"
+    miss = claude_agent._tool_start_task(claude_agent._Ctx(owner, "x"), {"task_title": "غير موجودة"})
+    assert miss["status"] == "error"
+
+
+def test_request_checkup_needs_named_assignee_and_creates_tasks(app, owner, worker):
+    from app.models import Task
+    make_animal("A-42")
+    ctx = claude_agent._Ctx(owner, "x")
+    nobody = claude_agent._tool_request_checkup(ctx, {"animal_no": "A-42", "items": ["قياس الحرارة"],
+                                                      "assignee_name": "شخص غير موجود"})
+    assert nobody["status"] == "error" and Task.query.count() == 0
+    ok = claude_agent._tool_request_checkup(ctx, {"animal_no": "A-42", "items": ["قياس الحرارة", "فحص العين"],
+                                                  "assignee_name": worker.name})
+    assert ok["status"] == "done"
+    assert Task.query.filter_by(task_type="animal_checkup").count() == 2
+
+
+def test_set_purpose_needs_confirmation_and_validates_value(app, owner):
+    animal = make_animal("A-43")
+    ctx = claude_agent._Ctx(owner, "x")
+    first = claude_agent._tool_set_purpose(ctx, {"animal_no": "A-43", "purpose": "تسمين"})
+    assert first["status"] == "needs_confirmation"
+    db.session.refresh(animal)
+    assert animal.purpose is None
+    assert claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"),
+                                             {"draft_id": first["draft_id"]})["status"] == "done"
+    db.session.refresh(animal)
+    assert animal.purpose == "تسمين"
+    bad = claude_agent._tool_set_purpose(ctx, {"animal_no": "A-43", "purpose": "ذبح"})
+    done = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": bad["draft_id"]})
+    assert done["status"] == "error"
+
+
+def test_send_to_market_is_gated_and_return_is_immediate(app, owner, monkeypatch):
+    animal = make_animal("A-44")
+    first = claude_agent._tool_send_to_market(claude_agent._Ctx(owner, "x"), {"animal_no": "A-44"})
+    blocked = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"), {"draft_id": first["draft_id"]})
+    assert blocked["status"] == "error" and "قرار المصير" in blocked["message"]
+
+    _force_stage_10(monkeypatch, animal)
+    second = claude_agent._tool_send_to_market(claude_agent._Ctx(owner, "x"), {"animal_no": "A-44", "note": "سوق الخميس"})
+    assert claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"),
+                                             {"draft_id": second["draft_id"]})["status"] == "done"
+    db.session.refresh(animal)
+    assert animal.market_trip_started_at is not None
+    back = claude_agent._tool_return_from_market(claude_agent._Ctx(owner, "x"), {"animal_no": "A-44"})
+    assert back["status"] == "done"
+    db.session.refresh(animal)
+    assert animal.market_trip_started_at is None
+
+
+def test_record_disease_needs_confirmation_and_creates_record(app, owner):
+    from app.models import Disease
+    make_animal("A-45")
+    ctx = claude_agent._Ctx(owner, "x")
+    first = claude_agent._tool_record_disease(ctx, {"animal_no": "A-45", "disease_name": "عرجان", "severity": "light"})
+    assert first["status"] == "needs_confirmation" and Disease.query.count() == 0
+    assert claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "نعم"),
+                                             {"draft_id": first["draft_id"]})["status"] == "done"
+    d = Disease.query.one()
+    assert d.disease_name == "عرجان" and d.severity == "light"

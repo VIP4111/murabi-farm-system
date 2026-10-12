@@ -27,7 +27,8 @@ CONFIRM_WINDOW_MINUTES = 30
 # مال أو تغيير لا رجعة فيه (بيع، نفوق) أو يخلق سجلاً جديداً (ولادة، فاتورة،
 # تحصين) ← تأكيد صريح؛ الباقي خفيف وقابل للتصحيح ← فوري.
 CONFIRM_REQUIRED_TYPES = ("record_expense", "register_birth", "record_vaccination",
-                          "record_sale", "record_death")
+                          "record_sale", "record_death", "set_purpose", "send_to_market",
+                          "record_disease")
 
 DEFAULT_MODEL = os.environ.get("ANTHROPIC_AGENT_MODEL", "claude-sonnet-5-5")
 
@@ -38,9 +39,10 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 - بإيجاز ووضوح، بدون مقدمات. ممنوع تنسيق ماركداون (لا نجوم، لا #). للتعداد استخدم "1." عادية.
 - أي رقم أو حالة تخص المزرعة تأخذها من الأدوات فقط. ممنوع تخترع أرقاماً أو أسماء حيوانات.
 - لو الأداة رجعت status "ambiguous" (نتائج متعددة) اسأل المستخدم يحدد، ممنوع تخمّن.
-- للإجراءات الفورية: record_weight، assign_task، move_animal، add_animal_note، add_farm_note، complete_task — تنفّذ مباشرة؛ قل "تم" مع التفاصيل.
-- للإجراءات الحساسة: register_birth، record_expense، record_vaccination، record_sale، record_death — ترجع needs_confirmation: اعرض التفاصيل بسطر واحد (للبيع اذكر الرقم والسعر) واسأل "أسجّلها؟" وانتظر. لما يرد المستخدم بتأكيد صريح (نعم/أكّد) استدعِ confirm_action بنفس draft_id. لو رفض أو ما أكّد لا تستدعها.
+- للإجراءات الفورية: record_weight، assign_task، move_animal، add_animal_note، add_farm_note، complete_task، start_task، record_milk، request_checkup، return_from_market — تنفّذ مباشرة؛ قل "تم" مع التفاصيل.
+- للإجراءات الحساسة: register_birth، record_expense، record_vaccination، record_sale، record_death، set_purpose، send_to_market، record_disease — ترجع needs_confirmation: اعرض التفاصيل بسطر واحد (للبيع اذكر الرقم والسعر) واسأل "أسجّلها؟" وانتظر. لما يرد المستخدم بتأكيد صريح (نعم/أكّد) استدعِ confirm_action بنفس draft_id. لو رفض أو ما أكّد لا تستدعها.
 - رقم الحيوان واسم الحظيرة واللقاح والسعر يجيبها المستخدم؛ لو ناقصة اسأله، ممنوع تخمّن. السعر لا تخترعه أبداً.
+- request_checkup يحتاج اسم عضو الفريق من المستخدم (مثل assign_task). record_milk يحتاج الحلبة (صباح/مساء) والكمية باللتر. record_disease لتسجيل اسم المرض فقط بدون أي علاج أو جرعة.
 - complete_task تنهي مهمة مفتوحة مكلَّف بها المستخدم نفسه بعنوانها (من my_tasks_summary).
 - assign_task تحتاج اسم عضو الفريق المكلَّف من المستخدم؛ لو ما ذكره اسأله، ممنوع تختاره بنفسك.
 - لو أرفق المستخدم صورة فاتورة: اقرأها (المورّد، التاريخ، الإجمالي النهائي شامل الضريبة، الفئة) ثم استدعِ record_expense. لو الإجمالي غير واضح اسأله بدل التخمين.
@@ -190,6 +192,46 @@ _WRITE_TOOL_DEFS = [
      "input_schema": {"type": "object", "properties": {
          "animal_no": {"type": "string"}, "reason": {"type": "string", "description": "اختياري"}},
          "required": ["animal_no"]}},
+    {"name": "start_task",
+     "description": "بدء مهمة مفتوحة للمستخدم بعنوانها. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {"task_title": {"type": "string"}},
+                      "required": ["task_title"]}},
+    {"name": "record_milk",
+     "description": "تسجيل حلبة حليب لحيوان بتاريخ اليوم. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "session": {"type": "string", "enum": ["صباح", "مساء"]},
+         "liters": {"type": "number", "description": "الكمية باللتر"}},
+         "required": ["animal_no", "session", "liters"]}},
+    {"name": "request_checkup",
+     "description": "طلب فحص لحيوان من عضو فريق (دكتور مثلاً). اسم المكلَّف لازم يجي من المستخدم. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"},
+         "items": {"type": "array", "items": {"type": "string"}, "description": "بنود الفحص المطلوبة"},
+         "assignee_name": {"type": "string"},
+         "due_date": {"type": "string", "description": "اختياري YYYY-MM-DD"}},
+         "required": ["animal_no", "items", "assignee_name"]}},
+    {"name": "set_purpose",
+     "description": "تحديد غرض رأس: تربية أو تسمين أو بيع. يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "purpose": {"type": "string", "enum": ["تربية", "تسمين", "بيع"]}},
+         "required": ["animal_no", "purpose"]}},
+    {"name": "send_to_market",
+     "description": "تسجيل إطلاع رأس للسوق (يمر ببوابة البيع). يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "note": {"type": "string", "description": "اختياري"}},
+         "required": ["animal_no"]}},
+    {"name": "return_from_market",
+     "description": "تسجيل رجوع رأس من السوق بدون بيع. ينفَّذ فوراً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "note": {"type": "string", "description": "اختياري"}},
+         "required": ["animal_no"]}},
+    {"name": "record_disease",
+     "description": "تسجيل مرض لحيوان (اسم المرض فقط، بدون أدوية أو جرعات). يحتاج تأكيد المستخدم عبر confirm_action.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "disease_name": {"type": "string"},
+         "severity": {"type": "string", "enum": ["light", "medium", "severe"],
+                      "description": "بسيطة/متوسطة/شديدة"}},
+         "required": ["animal_no", "disease_name"]}},
     {"name": "confirm_action",
      "description": "تنفيذ إجراء معلَّق بعد تأكيد المستخدم الصريح بآخر رسالة له.",
      "input_schema": {"type": "object", "properties": {"draft_id": {"type": "integer"}},
@@ -258,14 +300,24 @@ def _tool_record_weight(ctx, args):
                            f"تسجيل وزن {args.get('weight')} كجم للرأس {args.get('animal_no')}", execute_now=True)
 
 
-def _tool_assign_task(ctx, args):
+def _find_assignee(name):
+    """يرجع (المستخدم, None) أو (None, ردّ_خطأ) — اسم الدكتور/العامل يجي
+    من المستخدم حرفياً، ولو غامض نرجّع القائمة بدل التخمين."""
     from app.models import User
-    name = str(args.get("assignee_name", "")).strip()
+    name = str(name or "").strip()
     matches = [u for u in User.query.filter_by(is_active_account=True).all() if name and name in (u.name or "")]
     if not matches:
-        return {"status": "error", "message": f'ما لقيت عضو فريق باسم "{name}".'}
+        return None, {"status": "error", "message": f'ما لقيت عضو فريق باسم "{name}".'}
     if len(matches) > 1:
-        return {"status": "ambiguous", "candidates": [u.name for u in matches[:6]]}
+        return None, {"status": "ambiguous", "candidates": [u.name for u in matches[:6]]}
+    return matches[0], None
+
+
+def _tool_assign_task(ctx, args):
+    assignee, err = _find_assignee(args.get("assignee_name"))
+    if err:
+        return err
+    matches = [assignee]
     payload = {"task_title": args.get("task_title"), "due_date": args.get("due_date") or None,
                "target_animal_no": (args.get("animal_no") or None)}
     draft_result = _record_and_run(ctx, "assign_task", payload,
@@ -343,6 +395,65 @@ def _tool_record_death(ctx, args):
         f"تسجيل نفوق الرأس {args.get('animal_no')}", execute_now=False)
 
 
+def _tool_start_task(ctx, args):
+    return _record_and_run(ctx, "start_task", {"task_title": args.get("task_title")},
+                           f"بدء مهمة: {args.get('task_title')}", execute_now=True)
+
+
+def _tool_record_milk(ctx, args):
+    return _record_and_run(
+        ctx, "record_milk",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "session": args.get("session"),
+         "liters": args.get("liters")},
+        f"حليب {args.get('liters')} لتر ({args.get('session')}) للرأس {args.get('animal_no')}", execute_now=True)
+
+
+def _tool_request_checkup(ctx, args):
+    assignee, err = _find_assignee(args.get("assignee_name"))
+    if err:
+        return err
+    items = args.get("items") or []
+    draft_result = _record_and_run(
+        ctx, "request_checkup",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "items": items,
+         "due_date": args.get("due_date") or None},
+        f"طلب فحص ({'، '.join(map(str, items))}) للرأس {args.get('animal_no')} من {assignee.name}",
+        execute_now=False)
+    if draft_result.get("status") != "needs_confirmation":
+        return draft_result
+    from app.models import AssistantDraftAction
+    return _execute(ctx, AssistantDraftAction.query.get(draft_result["draft_id"]), assignee_id=assignee.id)
+
+
+def _tool_set_purpose(ctx, args):
+    return _record_and_run(
+        ctx, "set_purpose",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "purpose": args.get("purpose")},
+        f"تحديد غرض الرأس {args.get('animal_no')}: {args.get('purpose')}", execute_now=False)
+
+
+def _tool_send_to_market(ctx, args):
+    return _record_and_run(
+        ctx, "send_to_market",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "note": args.get("note") or None},
+        f"إطلاع الرأس {args.get('animal_no')} للسوق", execute_now=False)
+
+
+def _tool_return_from_market(ctx, args):
+    return _record_and_run(
+        ctx, "return_from_market",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "note": args.get("note") or None},
+        f"رجوع الرأس {args.get('animal_no')} من السوق", execute_now=True)
+
+
+def _tool_record_disease(ctx, args):
+    return _record_and_run(
+        ctx, "record_disease",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "disease_name": args.get("disease_name"),
+         "severity": args.get("severity") or "medium"},
+        f"تسجيل مرض {args.get('disease_name')} للرأس {args.get('animal_no')}", execute_now=False)
+
+
 def _tool_confirm_action(ctx, args):
     from app.models import AssistantDraftAction
     if not is_affirmative(ctx.message_text):
@@ -368,6 +479,10 @@ _WRITE_TOOLS = {
     "add_farm_note": _tool_add_farm_note, "complete_task": _tool_complete_task,
     "record_vaccination": _tool_record_vaccination, "record_sale": _tool_record_sale,
     "record_death": _tool_record_death,
+    "start_task": _tool_start_task, "record_milk": _tool_record_milk,
+    "request_checkup": _tool_request_checkup, "set_purpose": _tool_set_purpose,
+    "send_to_market": _tool_send_to_market, "return_from_market": _tool_return_from_market,
+    "record_disease": _tool_record_disease,
     "confirm_action": _tool_confirm_action,
 }
 
