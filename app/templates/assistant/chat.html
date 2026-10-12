@@ -53,7 +53,7 @@
     </form>
   </div>
 
-  {% if not claude_configured %}
+  {% if not claude_configured and not gemini_configured %}
   <div class="badge off" style="display:block; margin:0 0 8px; white-space:normal;">
     ⚠️ {{ _('وكيل Claude غير مفعَّل — المتغير ANTHROPIC_API_KEY غير موجود في Render، فالردود حالياً من المساعد القديم (قراءة فقط، بدون تنفيذ).') }}
   </div>

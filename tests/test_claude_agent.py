@@ -910,3 +910,10 @@ def test_delete_barn_only_when_empty(app, owner):
 def test_destructive_tools_hidden_without_permission(app, worker):
     for name in ("delete_animal", "cancel_finance_entry", "cancel_task", "delete_barn"):
         assert not claude_agent._write_tool_allowed(worker, name), name
+
+
+def test_chat_page_hides_warning_when_gemini_is_the_chosen_engine(app, logged_in_client, monkeypatch):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    html = logged_in_client.get("/assistant/").get_data(as_text=True)
+    assert "وكيل Claude غير مفعَّل" not in html
