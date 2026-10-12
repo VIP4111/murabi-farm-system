@@ -52,6 +52,7 @@ def chat():
         "assistant/chat.html", messages=messages, active_tab=active_tab,
         notes=notes, barns=barns, pending=pending, history=history, assignable_users=assignable_users,
         gemini_configured=svc.llm_bridge.is_gemini_configured(),
+        claude_configured=svc.claude_agent_configured(),
     )
 
 

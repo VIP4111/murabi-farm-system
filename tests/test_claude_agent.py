@@ -157,11 +157,88 @@ def test_affirmative_detection():
         assert not claude_agent.is_affirmative(no), no
 
 
-def test_api_failure_returns_none(app, owner, configured, monkeypatch):
+def test_api_failure_returns_visible_error_not_silent_none(app, owner, configured, monkeypatch):
     def boom():
         raise RuntimeError("down")
     monkeypatch.setattr(claude_agent, "_client", boom)
-    assert claude_agent.run(owner, "كم راس؟") is None
+    out = claude_agent.run(owner, "كم راس؟")
+    assert out.startswith(claude_agent.ERROR_PREFIX) and "RuntimeError" in out
+
+
+def _status_error(cls, status, message):
+    import httpx
+    request = httpx.Request("POST", "https://api.anthropic.com/v1/messages")
+    response = httpx.Response(status, request=request, json={"error": {"message": message}})
+    return cls(message, response=response, body={"error": {"message": message}})
+
+
+class RaisingClient:
+    def __init__(self, errors, then):
+        self._errors = list(errors)
+        self._then = then
+        self.calls = []
+        self.messages = SimpleNamespace(create=self._create)
+
+    def _create(self, **kwargs):
+        self.calls.append(kwargs)
+        if self._errors:
+            raise self._errors.pop(0)
+        return self._then
+
+
+def test_auth_error_is_explained_to_user(app, owner, configured, monkeypatch):
+    import anthropic
+    err = _status_error(anthropic.AuthenticationError, 401, "invalid x-api-key")
+    _use_client(monkeypatch, RaisingClient([err], None))
+    out = claude_agent.run(owner, "كم راس؟")
+    assert out.startswith(claude_agent.ERROR_PREFIX) and "ANTHROPIC_API_KEY" in out
+
+
+def test_credit_balance_message_is_surfaced(app, owner, configured, monkeypatch):
+    import anthropic
+    err = _status_error(anthropic.BadRequestError, 400, "Your credit balance is too low to access the API")
+    _use_client(monkeypatch, RaisingClient([err, err, err], None))
+    out = claude_agent.run(owner, "كم راس؟")
+    assert "credit balance" in out
+
+
+def test_bad_request_degrades_web_search_then_effort_and_still_answers(app, owner, configured, monkeypatch):
+    import anthropic
+    err = _status_error(anthropic.BadRequestError, 400, "web_search is not enabled for this organization")
+    client = RaisingClient([err, err], _resp([_text("عندك 12 راس.")]))
+    _use_client(monkeypatch, client)
+    assert claude_agent.run(owner, "كم راس؟") == "عندك 12 راس."
+    names = lambda call: [t.get("name") for t in call["tools"]]
+    assert "web_search" in names(client.calls[0]) and "output_config" in client.calls[0]
+    assert "web_search" not in names(client.calls[1]) and "output_config" in client.calls[1]
+    assert "web_search" not in names(client.calls[2]) and "output_config" not in client.calls[2]
+
+
+def test_time_budget_stops_runaway_loops_with_clear_message(app, owner, configured, monkeypatch):
+    fake = FakeClient([_resp([_tool_use("herd_summary", {})], "tool_use")] * 3)
+    _use_client(monkeypatch, fake)
+    monkeypatch.setattr(claude_agent, "TIME_BUDGET_SECONDS", -1)
+    out = claude_agent.run(owner, "كم راس؟")
+    assert out.startswith(claude_agent.ERROR_PREFIX) and "مهلة" in out
+    assert fake.calls == []
+
+
+def test_error_rows_are_excluded_from_model_history(app, owner):
+    from app.models import AssistantMessage
+    db.session.add_all([
+        AssistantMessage(user_id=owner.id, role="user", content="سؤال قديم"),
+        AssistantMessage(user_id=owner.id, role="assistant", content="⚠️ وكيل Claude تعذّر", answered_by="claude_error"),
+        AssistantMessage(user_id=owner.id, role="assistant", content="رد سليم", answered_by="claude_agent"),
+    ])
+    db.session.commit()
+    texts = [m["content"] for m in claude_agent._history_messages(owner, "جديد")]
+    assert "رد سليم" in texts and not any("تعذّر" in t for t in texts)
+
+
+def test_nlu_tags_agent_errors_as_claude_error(app, owner, configured, monkeypatch):
+    monkeypatch.setattr(claude_agent, "run", lambda *a, **k: claude_agent.ERROR_PREFIX + " تعذّر عليه الرد")
+    out = nlu_service.answer(owner, "كم راس")
+    assert out["answered_by"] == "claude_error"
 
 
 def test_nlu_answer_uses_agent_then_falls_back(app, owner, configured, monkeypatch):
@@ -726,3 +803,12 @@ def test_stock_purchase_guardrails_and_permissions(app, owner, worker):
     denied = claude_agent._tool_record_stock_purchase(
         claude_agent._Ctx(worker, "x"), {"kind": "feed", "item_name": "ذرة", "quantity": 5, "unit_price": 2})
     assert denied["status"] == "forbidden"
+
+
+def test_chat_page_warns_when_claude_agent_not_configured(app, logged_in_client, monkeypatch):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    html = logged_in_client.get("/assistant/").get_data(as_text=True)
+    assert "ANTHROPIC_API_KEY" in html and "وكيل Claude غير مفعَّل" in html
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "x")
+    html = logged_in_client.get("/assistant/").get_data(as_text=True)
+    assert "وكيل Claude غير مفعَّل" not in html

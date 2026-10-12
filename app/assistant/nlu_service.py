@@ -465,7 +465,9 @@ def answer(user, message_text: str, lang: str | None = None, voice: bool = False
     if claude_agent.is_configured():
         agent_reply = claude_agent.run(user, message_text, lang=lang, voice=voice)
         if agent_reply:
-            return {"reply": agent_reply, "intent_code": None, "answered_by": "claude_agent"}
+            failed = agent_reply.startswith(claude_agent.ERROR_PREFIX)
+            return {"reply": agent_reply, "intent_code": None,
+                    "answered_by": "claude_error" if failed else "claude_agent"}
 
     normalized = normalize(message_text)
 
@@ -522,6 +524,11 @@ def answer(user, message_text: str, lang: str | None = None, voice: bool = False
     return {"reply": FALLBACK_MSG(lang), "intent_code": None, "answered_by": "local"}
 
 
+def claude_agent_configured() -> bool:
+    from app.assistant import claude_agent
+    return claude_agent.is_configured()
+
+
 def ask_and_record(user, message_text: str, voice: bool = False) -> AssistantMessage:
     """يسجّل رسالة المستخدم والرد بجدول `AssistantMessage` ويرجع صف الرد."""
     user_msg = AssistantMessage(user_id=user.id, role="user", content=message_text)
@@ -548,7 +555,9 @@ def answer_with_image(user, message_text: str, image_bytes: bytes, mime_type: st
         agent_reply = claude_agent.run(user, message_text, lang=lang, image_bytes=image_bytes,
                                        image_mime=mime_type, image_url=image_url)
         if agent_reply:
-            return {"reply": agent_reply, "intent_code": None, "answered_by": "claude_agent"}
+            failed = agent_reply.startswith(claude_agent.ERROR_PREFIX)
+            return {"reply": agent_reply, "intent_code": None,
+                    "answered_by": "claude_error" if failed else "claude_agent"}
     reply = llm_bridge.ask_with_image(message_text, image_bytes, mime_type, lang=lang)
     if reply:
         return {"reply": reply, "intent_code": None, "answered_by": "llm_vision"}

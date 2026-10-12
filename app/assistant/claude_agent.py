@@ -20,9 +20,18 @@ import inspect
 import json
 import os
 import re
+import time
 from datetime import datetime, timedelta, timezone
 
 MAX_TURNS = 8
+# مهلة صلبة: الواجهة تتوقف عن الانتظار بعد 45 ثانية وgunicorn يقتل العامل
+# عند 60، فلازم الوكيل يخلص (أو يعتذر بسبب واضح) قبلها — بدل ما يعلّق
+# الطلب وتطلع للمستخدم رسالة "تعذّر الاتصال" بلا أي تفسير.
+CLIENT_TIMEOUT_SECONDS = 30.0
+TIME_BUDGET_SECONDS = 38.0
+# بادئة رسائل الأعطال — nlu_service يسجّلها answered_by="claude_error" فلا
+# تدخل ذاكرة المحادثة المرسلة للنموذج.
+ERROR_PREFIX = "⚠️ وكيل Claude"
 MAX_OUTPUT_TOKENS = 4096
 HISTORY_MESSAGES = 12
 CONFIRM_WINDOW_MINUTES = 30
@@ -98,7 +107,43 @@ def is_configured() -> bool:
 
 def _client():
     import anthropic
-    return anthropic.Anthropic()
+    return anthropic.Anthropic(timeout=CLIENT_TIMEOUT_SECONDS, max_retries=1)
+
+
+def _describe_error(e: Exception) -> str:
+    """سبب عربي مقروء لعطل نداء Claude — بلا أسرار (رسالة الخدمة فقط)."""
+    try:
+        import anthropic
+    except ImportError:
+        return "حزمة anthropic غير مثبّتة على الخادم."
+    detail = ""
+    try:
+        body = getattr(e, "body", None) or {}
+        detail = (body.get("error", {}).get("message") if isinstance(body, dict) else "") or ""
+    except Exception:
+        detail = ""
+    detail = (detail or str(e) or "").strip().replace("\n", " ")[:180]
+    if isinstance(e, anthropic.AuthenticationError):
+        return "مفتاح ANTHROPIC_API_KEY غير صالح أو منتهي — راجع المتغير في Render."
+    if isinstance(e, anthropic.PermissionDeniedError):
+        return f"المفتاح ما عنده صلاحية لهذا النموذج أو الميزة ({detail})."
+    if isinstance(e, anthropic.NotFoundError):
+        return f"النموذج غير موجود — راجع ANTHROPIC_AGENT_MODEL ({detail})."
+    if isinstance(e, anthropic.RateLimitError):
+        return "تجاوز حد الاستخدام أو الرصيد — جرّب بعد لحظات أو راجع الرصيد في Anthropic."
+    if isinstance(e, anthropic.APITimeoutError):
+        return "انتهت مهلة الرد من خدمة Claude — جرّب مرة ثانية."
+    if isinstance(e, anthropic.APIConnectionError):
+        return "تعذّر الاتصال بخدمة Claude من الخادم."
+    if isinstance(e, anthropic.BadRequestError):
+        return f"الطلب رُفض من الخدمة: {detail}"
+    if isinstance(e, anthropic.APIStatusError):
+        return f"خطأ من خدمة Claude ({getattr(e, 'status_code', '?')}): {detail}"
+    return f"خطأ غير متوقع ({type(e).__name__}): {detail}"
+
+
+def _error_text(reason: str) -> str:
+    return f"{ERROR_PREFIX} تعذّر عليه الرد الآن: {reason}"
 
 
 def is_affirmative(text: str) -> bool:
@@ -688,7 +733,8 @@ def _history_messages(user, message_text: str) -> list[dict]:
     rows.reverse()
     if rows and rows[-1].role == "user" and (rows[-1].content or "").strip() in (message_text.strip(), "📷 صورة"):
         rows = rows[:-1]
-    messages = [{"role": r.role, "content": r.content} for r in rows if r.content]
+    messages = [{"role": r.role, "content": r.content} for r in rows
+                if r.content and getattr(r, "answered_by", None) != "claude_error"]
     while messages and messages[0]["role"] != "user":
         messages.pop(0)
     return messages
@@ -696,18 +742,23 @@ def _history_messages(user, message_text: str) -> list[dict]:
 
 def run(user, message_text: str, *, lang: str = "ar", image_bytes: bytes | None = None,
         image_mime: str | None = None, image_url: str | None = None, voice: bool = False) -> str | None:
-    """يرجع نص رد الوكيل، أو None لو غير مفعَّل/فشل (والمتصل يكمل المسار
-    المحلي). لا يرفع أي استثناء."""
+    """يرجع نص رد الوكيل. None فقط لو الوكيل غير مفعَّل (والمتصل يكمل المسار
+    القديم). لو مفعَّل وفشل يرجع رسالة عطل واضحة السبب (تبدأ بـERROR_PREFIX)
+    بدل السقوط الصامت لمسار قديم يعطي ردوداً مضلِّلة. لا يرفع أي استثناء."""
     if not is_configured():
         return None
+    started = time.monotonic()
     try:
         import base64
         from datetime import date
+        import anthropic
+
         client = _client()
         read_defs, read_registry = _read_tool_defs(user)
         write_defs = [d for d in _WRITE_TOOL_DEFS if _write_tool_allowed(user, d["name"])
                       and (d["name"] != "confirm_action" or _confirm_types())]
-        tools = read_defs + write_defs + [{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
+        base_tools = read_defs + write_defs
+        web_tool = {"type": "web_search_20260209", "name": "web_search", "max_uses": 3}
         system = SYSTEM_PROMPT.format(
             language_instruction=_LANGUAGE_INSTRUCTIONS.get(lang, _LANGUAGE_INSTRUCTIONS["ar"]),
             today=date.today().isoformat(), policy=_policy_text(),
@@ -721,19 +772,36 @@ def run(user, message_text: str, *, lang: str = "ar", image_bytes: bytes | None 
         content.append({"type": "text", "text": message_text or "اقرأ هذي الصورة."})
         messages.append({"role": "user", "content": content})
 
+        # تدرّج توافق: لو الخدمة رفضت البحث المدمج (غير مفعَّل بحساب Anthropic)
+        # أو معامل الجهد، نكمل بدونه بدل ما يموت الوكيل كله.
+        variants = [(True, True), (False, True), (False, False)]
+        variant_idx = 0
+
         ctx = _Ctx(user, message_text, image_url=image_url)
         for _ in range(MAX_TURNS):
-            response = client.messages.create(
-                model=DEFAULT_MODEL, max_tokens=MAX_OUTPUT_TOKENS, system=system,
-                tools=tools, messages=messages, output_config={"effort": "medium"},
-            )
+            if time.monotonic() - started > TIME_BUDGET_SECONDS:
+                return _error_text("انتهت مهلة الرد — جرّب سؤالاً أقصر.")
+            while True:
+                use_web, use_effort = variants[variant_idx]
+                kwargs = dict(model=DEFAULT_MODEL, max_tokens=MAX_OUTPUT_TOKENS, system=system,
+                              tools=base_tools + ([web_tool] if use_web else []), messages=messages)
+                if use_effort:
+                    kwargs["output_config"] = {"effort": "medium"}
+                try:
+                    response = client.messages.create(**kwargs)
+                    break
+                except anthropic.BadRequestError:
+                    if variant_idx + 1 < len(variants):
+                        variant_idx += 1
+                        continue
+                    raise
             if response.stop_reason == "pause_turn":
                 messages.append({"role": "assistant", "content": response.content})
                 continue
             tool_uses = [b for b in response.content if b.type == "tool_use"]
             if response.stop_reason != "tool_use" or not tool_uses:
                 text = "".join(b.text for b in response.content if b.type == "text").strip()
-                return text or None
+                return text or _error_text("ما قدر يجهّز رداً — جرّب صياغة ثانية.")
             messages.append({"role": "assistant", "content": response.content})
             results = []
             for block in tool_uses:
@@ -749,11 +817,11 @@ def run(user, message_text: str, *, lang: str = "ar", image_bytes: bytes | None 
                 results.append({"type": "tool_result", "tool_use_id": block.id,
                                 "content": json.dumps(out, ensure_ascii=False, default=str)})
             messages.append({"role": "user", "content": results})
-        return None
+        return _error_text("تجاوز عدد الخطوات المسموح لسؤال واحد — جرّب تقسيم الطلب.")
     except Exception as e:
         try:
             from flask import current_app
-            current_app.logger.warning("claude_agent.run failed: %s", e)
+            current_app.logger.warning("claude_agent.run failed: %s: %s", type(e).__name__, e)
         except Exception:
             pass
-        return None
+        return _error_text(_describe_error(e))
