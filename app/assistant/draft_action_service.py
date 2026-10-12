@@ -241,6 +241,103 @@ def _execute_create_animal(payload: dict, *, actor, assignee_id=None):
     return animal
 
 
+def _execute_edit_animal(payload: dict, *, actor, assignee_id=None):
+    """تعديل محدود وآمن لبيانات رأس: الرقم (أهم استخدام: استبدال رقم مؤقت
+    TEMP-... بالرقم الدائم)، الاسم، اللون، السلالة. الجنس/الغرض/الحظيرة/المصدر
+    لها أدواتها المخصَّصة لأن تغييرها يمس دورة الإنتاج والمالية."""
+    from sqlalchemy.exc import IntegrityError
+    from app.models import AuditLog
+
+    animal = _animal_or_error(payload.get("target_animal_no"))
+    changes = {}
+    new_no = str(payload.get("new_animal_no") or "").strip()
+    if new_no and new_no != animal.animal_no:
+        if Animal.query.filter_by(animal_no=new_no).first():
+            raise ValueError(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=new_no))
+        changes["animal_no"] = (animal.animal_no, new_no)
+        animal.animal_no = new_no
+    for field in ("name", "color", "breed"):
+        value = str(payload.get(field) or "").strip()
+        if value and value != (getattr(animal, field) or ""):
+            changes[field] = (getattr(animal, field), value)
+            setattr(animal, field, value)
+    if not changes:
+        raise ValueError(_("ما فيه تغيير مطلوب على بيانات الحيوان."))
+    db.session.add(animal)
+    db.session.add(AuditLog(
+        actor_user_id=actor.id, action="animal.edit", entity_type="Animal", entity_id=animal.id,
+        details="; ".join(f"{k}: {old} -> {new}" for k, (old, new) in changes.items()) + "; via=assistant"))
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        raise ValueError(_("رقم الحيوان \"%(no)s\" مستخدم من قبل", no=new_no))
+    return animal
+
+
+_STOCK_KIND_PERMISSION = {"feed": "feed.manage", "equipment": "equipment.manage", "pharmacy": "pharmacy.manage"}
+
+
+def _stock_item_or_error(kind, name):
+    from app.models import Feed, Equipment, Pharmacy
+    model = {"feed": Feed, "equipment": Equipment, "pharmacy": Pharmacy}[kind]
+    name = str(name or "").strip()
+    if not name:
+        raise ValueError(_("اسم الصنف غير محدَّد."))
+    rows = model.query.filter(model.name == name).all() or model.query.filter(model.name.contains(name)).all()
+    if not rows:
+        raise ValueError(_("ما لقيت صنفاً باسم \"%(name)s\".", name=name))
+    if len(rows) > 1:
+        raise ValueError(_("فيه أكثر من صنف باسم يشبه \"%(name)s\" — حدّد الاسم الكامل.", name=name))
+    return rows[0]
+
+
+def _execute_record_stock_purchase(payload: dict, *, actor, assignee_id=None):
+    """شراء علف/معدات/دواء للمخزون — نفس `stock_purchase_service.record_purchase`
+    اللي تستخدمه شاشات الشراء (يزيد المخزون ويسجّل العملية المالية)، وبنفس
+    صلاحياتها: صلاحية إدارة الصنف + المالية لو فيه سعر."""
+    from app.core import validation_service
+    from app.core.stock_purchase_service import record_purchase
+    from app.models import AuditLog
+
+    kind = str(payload.get("kind") or "").strip()
+    if kind not in _STOCK_KIND_PERMISSION:
+        raise ValueError(_("نوع الشراء لازم يكون: علف أو معدات أو دواء."))
+    perm = _STOCK_KIND_PERMISSION[kind]
+    if not actor.has_permission(perm):
+        raise PermissionError(_('تحتاج صلاحية "%(perm)s" لتسجيل هذا الشراء.', perm=perm))
+    try:
+        quantity = float(payload.get("quantity"))
+    except (TypeError, ValueError):
+        raise ValueError(_("الكمية غير واضحة."))
+    if quantity <= 0:
+        raise ValueError(_("الكمية لازم تكون أكبر من صفر."))
+    validation_service.validate_price(quantity, field_label=_("الكمية"))
+    unit_price = None
+    if payload.get("unit_price") not in (None, ""):
+        try:
+            unit_price = float(payload["unit_price"])
+        except (TypeError, ValueError):
+            raise ValueError(_("سعر الوحدة غير واضح."))
+        validation_service.validate_price(unit_price, field_label=_("سعر الوحدة"))
+    if unit_price is None and kind != "pharmacy":
+        raise ValueError(_("سعر الوحدة مطلوب لشراء العلف والمعدات."))
+    if unit_price is not None and not actor.has_permission("finance.full.manage"):
+        raise PermissionError(_("تحتاج صلاحية إدارة المالية كمان عشان تسجّل شراء بسعر (يُنشئ عملية مالية)."))
+
+    item = _stock_item_or_error(kind, payload.get("item_name"))
+    movement, fin = record_purchase(
+        kind=kind, item=item, quantity=quantity, unit_price=unit_price, purchase_date=farm_today(),
+        note=(payload.get("note") or None), created_by_id=actor.id,
+        expiry_date=_parse_iso_date(payload.get("expiry_date")),
+    )
+    db.session.add(AuditLog(actor_user_id=actor.id, action="assistant.stock_purchase",
+                            entity_type=type(item).__name__, entity_id=item.id,
+                            details=f"+{quantity:g} {item.name} ({kind})"))
+    db.session.commit()
+    return fin or movement
+
+
 def _execute_move_animal(payload: dict, *, actor, assignee_id=None):
     from app.models import Barn
     from app.core import bulk_service
@@ -542,6 +639,11 @@ ALLOWED_ACTION_TYPES = {
                          "required_permission": "repro.manage"},
     "create_animal": {"label": "إضافة رأس جديد", "execute": _execute_create_animal,
                        "required_permission": "animals.manage"},
+    "edit_animal": {"label": "تعديل بيانات رأس", "execute": _execute_edit_animal,
+                     "required_permission": "animals.manage"},
+    # الصلاحية الفعلية حسب نوع الصنف تُفحص داخل المنفِّذ (علف/معدات/دواء).
+    "record_stock_purchase": {"label": "شراء للمخزون", "execute": _execute_record_stock_purchase,
+                               "required_permission": "assistant.use"},
 }
 
 

@@ -31,7 +31,7 @@ CONFIRM_WINDOW_MINUTES = 30
 SENSITIVE_TYPES = ("record_expense", "register_birth", "record_vaccination",
                    "record_sale", "record_death", "set_purpose", "send_to_market",
                    "record_disease", "record_mating", "record_pregnancy", "confirm_pregnancy",
-                   "record_abortion", "create_animal")
+                   "record_abortion", "create_animal", "edit_animal", "record_stock_purchase")
 ROUTINE_TYPES = ("record_weight", "assign_task", "move_animal", "add_animal_note", "add_farm_note",
                  "complete_task", "start_task", "record_milk", "request_checkup", "return_from_market")
 ALL_WRITE_TYPES = SENSITIVE_TYPES + ROUTINE_TYPES
@@ -62,6 +62,7 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 {policy}
 - رقم الحيوان واسم الحظيرة واللقاح والسعر يجيبها المستخدم؛ لو ناقصة اسأله، ممنوع تخمّن. السعر لا تخترعه أبداً.
 - create_animal (إضافة رأس جديد بالصوت) يحتاج: الرقم، الجنس، الحظيرة، اللون، والمصدر (شراء purchase / هدية gift / رصيد افتتاحي opening_balance). اسأل عن الناقص واحداً واحداً بإيجاز، والسعر لا تخترعه (يمكن تركه لو ما ذكره)، والوزن والسلالة والاسم اختيارية. المواليد لها register_birth وليس create_animal.
+- edit_animal يعدّل الرقم (مثل استبدال TEMP-... بالرقم الدائم) أو الاسم أو اللون أو السلالة؛ الغرض والحظيرة والجنس لها أدواتها. record_stock_purchase لشراء علف (feed) أو دواء (pharmacy) أو معدات (equipment) للمخزون باسم الصنف والكمية وسعر الوحدة (السعر مطلوب للعلف والمعدات، والسعر لا تخترعه).
 - request_checkup يحتاج اسم عضو الفريق من المستخدم (مثل assign_task). record_milk يحتاج الحلبة (صباح/مساء) والكمية باللتر. record_disease لتسجيل اسم المرض فقط بدون أي علاج أو جرعة.
 - record_mating: رقم الأنثى + رقم الفحل (أو وصفه لو خارجي). التقريع بين أقارب وراثياً يُرفض ويُوجَّه المستخدم لشاشة التقريع. record_pregnancy: مؤكَّد (confirmed=true) فقط لو المستخدم قال سونار/مؤكد، وإلا غير مؤكد. confirm_pregnancy يؤكد آخر حمل غير مؤكد للأنثى.
 - record_abortion يسجّل إجهاض آخر حمل مفتوح للأنثى ويشغّل بروتوكول العزل (نقلها لحظيرة العزل ومهام عيّنات ومراقبة). اذكر في ردك أنه شغّل بروتوكول العزل.
@@ -298,6 +299,23 @@ _WRITE_TOOL_DEFS = [
          "purchase_date": {"type": "string", "description": "اختياري YYYY-MM-DD"},
          "is_pregnant": {"type": "boolean", "description": "أنثى مشتراة حامل"}},
          "required": ["animal_no", "gender", "source", "barn_name", "color"]}},
+    {"name": "edit_animal",
+     "description": "تعديل رقم/اسم/لون/سلالة رأس موجود (أهم استخدام: استبدال الرقم المؤقت TEMP-... بالدائم).",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string", "description": "الرقم الحالي للرأس"},
+         "new_animal_no": {"type": "string", "description": "الرقم الجديد"},
+         "name": {"type": "string"}, "color": {"type": "string"}, "breed": {"type": "string"}},
+         "required": ["animal_no"]}},
+    {"name": "record_stock_purchase",
+     "description": "تسجيل شراء علف أو دواء أو معدات للمخزون: يزيد الكمية ويسجّل العملية المالية بسعر الوحدة.",
+     "input_schema": {"type": "object", "properties": {
+         "kind": {"type": "string", "enum": ["feed", "pharmacy", "equipment"]},
+         "item_name": {"type": "string", "description": "اسم الصنف كما هو بالمخزون"},
+         "quantity": {"type": "number"},
+         "unit_price": {"type": "number", "description": "سعر الوحدة بالريال، مطلوب للعلف والمعدات"},
+         "expiry_date": {"type": "string", "description": "اختياري للدواء YYYY-MM-DD"},
+         "note": {"type": "string", "description": "اختياري"}},
+         "required": ["kind", "item_name", "quantity"]}},
     {"name": "confirm_action",
      "description": "تنفيذ إجراء معلَّق بعد تأكيد المستخدم الصريح بآخر رسالة له.",
      "input_schema": {"type": "object", "properties": {"draft_id": {"type": "integer"}},
@@ -571,6 +589,36 @@ def _tool_create_animal(ctx, args):
         execute_now=_immediate("create_animal"))
 
 
+def _tool_edit_animal(ctx, args):
+    changes = [k for k in ("new_animal_no", "name", "color", "breed") if args.get(k)]
+    return _record_and_run(
+        ctx, "edit_animal",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "new_animal_no": args.get("new_animal_no") or None,
+         "name": args.get("name") or None, "color": args.get("color") or None, "breed": args.get("breed") or None},
+        f"تعديل بيانات الرأس {args.get('animal_no')}: " + "، ".join(
+            f"{k}={args.get(k)}" for k in changes), execute_now=_immediate("edit_animal"))
+
+
+def _tool_record_stock_purchase(ctx, args):
+    from app.assistant import draft_action_service
+    kind = str(args.get("kind") or "").strip()
+    perm = draft_action_service._STOCK_KIND_PERMISSION.get(kind)
+    if perm and not ctx.user.has_permission(perm):
+        return {"status": "forbidden", "message": f"ما عندك صلاحية: {perm}"}
+    price = args.get("unit_price")
+    if price not in (None, "") and not ctx.user.has_permission("finance.full.manage"):
+        return {"status": "forbidden", "message": "ما عندك صلاحية: finance.full.manage"}
+    labels = {"feed": "علف", "pharmacy": "دواء", "equipment": "معدات"}
+    price_txt = f" بسعر {price} للوحدة" if price not in (None, "") else ""
+    return _record_and_run(
+        ctx, "record_stock_purchase",
+        {"kind": kind, "item_name": args.get("item_name"), "quantity": args.get("quantity"),
+         "unit_price": price if price not in ("",) else None, "expiry_date": args.get("expiry_date") or None,
+         "note": args.get("note") or None},
+        f"شراء {labels.get(kind, kind)}: {args.get('item_name')} × {args.get('quantity')}{price_txt}",
+        execute_now=_immediate("record_stock_purchase"))
+
+
 def _tool_confirm_action(ctx, args):
     from app.models import AssistantDraftAction
     if not is_affirmative(ctx.message_text):
@@ -602,7 +650,8 @@ _WRITE_TOOLS = {
     "record_disease": _tool_record_disease,
     "record_mating": _tool_record_mating, "record_pregnancy": _tool_record_pregnancy,
     "confirm_pregnancy": _tool_confirm_pregnancy, "record_abortion": _tool_record_abortion,
-    "create_animal": _tool_create_animal,
+    "create_animal": _tool_create_animal, "edit_animal": _tool_edit_animal,
+    "record_stock_purchase": _tool_record_stock_purchase,
     "confirm_action": _tool_confirm_action,
 }
 

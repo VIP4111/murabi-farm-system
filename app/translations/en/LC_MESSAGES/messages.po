@@ -15562,6 +15562,45 @@ msgstr "The species \"%(code)s\" is not defined in the system."
 msgid "قيمة %(field)s غير واضحة."
 msgstr "The value of %(field)s is unclear."
 
+#: app/assistant/draft_action_service.py:265
+msgid "ما فيه تغيير مطلوب على بيانات الحيوان."
+msgstr "There is no requested change to the animal's data."
+
+#: app/assistant/draft_action_service.py:286
+msgid "اسم الصنف غير محدَّد."
+msgstr "The item name is not specified."
+
+#: app/assistant/draft_action_service.py:289
+#, python-format
+msgid "ما لقيت صنفاً باسم \"%(name)s\"."
+msgstr "I couldn't find an item named \"%(name)s\"."
+
+#: app/assistant/draft_action_service.py:291
+#, python-format
+msgid "فيه أكثر من صنف باسم يشبه \"%(name)s\" — حدّد الاسم الكامل."
+msgstr "More than one item matches \"%(name)s\" — give the full name."
+
+#: app/assistant/draft_action_service.py:305
+msgid "نوع الشراء لازم يكون: علف أو معدات أو دواء."
+msgstr "The purchase type must be: feed, equipment or medicine."
+
+#: app/assistant/draft_action_service.py:308
+#, python-format
+msgid "تحتاج صلاحية \"%(perm)s\" لتسجيل هذا الشراء."
+msgstr "You need the \"%(perm)s\" permission to record this purchase."
+
+#: app/assistant/draft_action_service.py:312
+msgid "الكمية غير واضحة."
+msgstr "The quantity is unclear."
+
+#: app/assistant/draft_action_service.py:321
+msgid "سعر الوحدة غير واضح."
+msgstr "The unit price is unclear."
+
+#: app/assistant/draft_action_service.py:324
+msgid "سعر الوحدة مطلوب لشراء العلف والمعدات."
+msgstr "The unit price is required for feed and equipment purchases."
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 

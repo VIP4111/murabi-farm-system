@@ -658,3 +658,71 @@ def test_create_animal_gift_has_no_finance_effect(app, owner):
     assert done["status"] == "done"
     assert Animal.query.filter_by(animal_no="N-505").count() == 1
     assert Finance.query.count() == 0
+
+
+# ---------------- تعديل رأس + شراء مخزون ----------------
+
+def test_edit_animal_replaces_temp_number_and_logs_audit(app, owner):
+    from app.models import Animal, AuditLog
+    make_animal("TEMP-405-1")
+    _, done = _yes(owner, "_tool_edit_animal", {"animal_no": "TEMP-405-1", "new_animal_no": "530", "color": "أسود"})
+    assert done["status"] == "done"
+    animal = Animal.query.filter_by(animal_no="530").one()
+    assert animal.color == "أسود"
+    assert Animal.query.filter_by(animal_no="TEMP-405-1").count() == 0
+    log = AuditLog.query.filter_by(action="animal.edit", entity_id=animal.id).one()
+    assert "TEMP-405-1 -> 530" in log.details
+
+
+def test_edit_animal_rejects_duplicate_number_and_empty_change(app, owner):
+    make_animal("E-1")
+    make_animal("E-2")
+    _, dup = _yes(owner, "_tool_edit_animal", {"animal_no": "E-1", "new_animal_no": "E-2"})
+    assert dup["status"] == "error"
+    _, nothing = _yes(owner, "_tool_edit_animal", {"animal_no": "E-1"})
+    assert nothing["status"] == "error"
+
+
+def test_feed_purchase_increases_stock_and_records_finance(app, owner):
+    from factories import make_feed
+    feed = make_feed("شعير", available_qty=100)
+    _, done = _yes(owner, "_tool_record_stock_purchase",
+                   {"kind": "feed", "item_name": "شعير", "quantity": 20, "unit_price": 3.5})
+    assert done["status"] == "done"
+    db.session.refresh(feed)
+    assert feed.available_qty == 120
+    fin = Finance.query.filter_by(operation_type="purchase").one()
+    assert fin.amount == 70 and fin.category == "أعلاف" and fin.item == "شعير"
+
+
+def test_stock_purchase_requires_price_for_feed_and_known_item(app, owner):
+    from factories import make_feed
+    make_feed("برسيم")
+    _, no_price = _yes(owner, "_tool_record_stock_purchase", {"kind": "feed", "item_name": "برسيم", "quantity": 5})
+    assert no_price["status"] == "error"
+    _, missing = _yes(owner, "_tool_record_stock_purchase",
+                      {"kind": "feed", "item_name": "ما له وجود", "quantity": 5, "unit_price": 2})
+    assert missing["status"] == "error"
+    assert Finance.query.count() == 0
+
+
+def test_pharmacy_purchase_without_price_is_stock_only(app, owner):
+    from factories import make_pharmacy
+    item = make_pharmacy("فيتامين", available_qty=2)
+    _, done = _yes(owner, "_tool_record_stock_purchase", {"kind": "pharmacy", "item_name": "فيتامين", "quantity": 4})
+    assert done["status"] == "done"
+    db.session.refresh(item)
+    assert item.available_qty == 6 and Finance.query.count() == 0
+
+
+def test_stock_purchase_guardrails_and_permissions(app, owner, worker):
+    from factories import make_feed
+    make_feed("ذرة")
+    ctx = claude_agent._Ctx(owner, "x")
+    assert claude_agent._tool_record_stock_purchase(
+        ctx, {"kind": "feed", "item_name": "ذرة", "quantity": 100000, "unit_price": 100})["status"] == "rejected"
+    assert claude_agent._tool_record_stock_purchase(
+        ctx, {"kind": "feed", "item_name": "ذرة", "quantity": 0, "unit_price": 1})["status"] == "rejected"
+    denied = claude_agent._tool_record_stock_purchase(
+        claude_agent._Ctx(worker, "x"), {"kind": "feed", "item_name": "ذرة", "quantity": 5, "unit_price": 2})
+    assert denied["status"] == "forbidden"
