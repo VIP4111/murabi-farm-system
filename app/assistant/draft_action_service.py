@@ -338,6 +338,77 @@ def _execute_record_stock_purchase(payload: dict, *, actor, assignee_id=None):
     return fin or movement
 
 
+def _execute_delete_animal(payload: dict, *, actor, assignee_id=None):
+    """حذف رأس = أرشفته بنفس دالة الشاشة اليدوية (`cycle_engine.delete_animal`):
+    حالته "deleted" وسجله يبقى للتدقيق، وتُلغى مهامه المفتوحة. نفس بوابة
+    الخروج (مرحلة قرار المصير + فترة التحريم)، ولو مرتبط بعمليات مالية يُرفض
+    إلا لو `force` صريح من المستخدم."""
+    from app.core import cycle_engine
+    animal = _active_animal_or_error(payload.get("target_animal_no"))
+    try:
+        cycle_engine.delete_animal(animal, actor_user_id=actor.id, force=bool(payload.get("force")),
+                                   reason=(payload.get("reason") or None))
+    except cycle_engine.CycleExitBlocked as e:
+        raise ValueError(str(e))
+    return animal
+
+
+def _execute_cancel_finance_entry(payload: dict, *, actor, assignee_id=None):
+    """إلغاء عملية مالية (لا حذف نهائي — السجل يبقى للتدقيق) بنفس
+    `finance_service.cancel_entry` اللي يستخدمها زر الإلغاء اليدوي."""
+    from app.finance import finance_service
+    from app.models import Finance
+
+    query = Finance.query.filter_by(is_cancelled=False)
+    amount = payload.get("amount")
+    if amount in (None, ""):
+        raise ValueError(_("لازم تحدد مبلغ العملية المراد إلغاؤها."))
+    try:
+        query = query.filter(Finance.amount == float(amount))
+    except (TypeError, ValueError):
+        raise ValueError(_("مبلغ العملية غير واضح."))
+    day = _parse_iso_date(payload.get("entry_date"))
+    if day:
+        query = query.filter(Finance.date == day)
+    text = str(payload.get("text") or "").strip()
+    if text:
+        like = f"%{text}%"
+        query = query.filter(Finance.item.ilike(like) | Finance.description.ilike(like)
+                             | Finance.category.ilike(like))
+    rows = query.order_by(Finance.date.desc(), Finance.id.desc()).limit(6).all()
+    if not rows:
+        raise ValueError(_("ما لقيت عملية مالية فعّالة بهذا المبلغ والوصف."))
+    if len(rows) > 1:
+        raise ValueError(_("أكثر من عملية تطابق الوصف — حدّد التاريخ أو الوصف بدقة (%(n)s نتائج).", n=len(rows)))
+    reason = str(payload.get("reason") or "").strip() or "أُلغيت عبر المساعد الذكي"
+    return finance_service.cancel_entry(rows[0], actor_user_id=actor.id, reason=reason)
+
+
+def _execute_cancel_task(payload: dict, *, actor, assignee_id=None):
+    """إلغاء مهمة مفتوحة (pending/in_progress) بنفس `task_service.cancel_active_task`
+    — صلاحية توزيع المهام مطلوبة، وأي حالة ثانية ترفضها الدالة نفسها."""
+    from app.models import Task
+    from app.team import task_service
+
+    title = str(payload.get("task_title") or "").strip()
+    if not title:
+        raise ValueError(_("عنوان المهمة غير محدَّد."))
+    rows = Task.query.filter(Task.status.in_(("pending", "in_progress"))).all()
+    exact = [t for t in rows if t.display_title() == title]
+    matches = exact or [t for t in rows if title in t.display_title()]
+    if not matches:
+        raise ValueError(_("ما لقيت مهمة مفتوحة بعنوان يشبه \"%(title)s\".", title=title))
+    if len(matches) > 1:
+        raise ValueError(_("أكثر من مهمة تشبه \"%(title)s\" — حدّد العنوان بدقة.", title=title))
+    return task_service.cancel_active_task(matches[0], actor=actor, reason=(payload.get("reason") or None))
+
+
+def _execute_delete_barn(payload: dict, *, actor, assignee_id=None):
+    from app.core import barn_service
+    barn = _barn_or_error(payload.get("barn_name"))
+    return barn_service.delete_barn(barn, actor_user_id=actor.id)
+
+
 def _execute_move_animal(payload: dict, *, actor, assignee_id=None):
     from app.models import Barn
     from app.core import bulk_service
@@ -641,6 +712,15 @@ ALLOWED_ACTION_TYPES = {
                        "required_permission": "animals.manage"},
     "edit_animal": {"label": "تعديل بيانات رأس", "execute": _execute_edit_animal,
                      "required_permission": "animals.manage"},
+    # حذف/إلغاء بقواعد التطبيق نفسها (أرشفة، إلغاء مع بقاء السجل، حظيرة فاضية فقط).
+    "delete_animal": {"label": "حذف (أرشفة) رأس", "execute": _execute_delete_animal,
+                       "required_permission": "animals.manage"},
+    "cancel_finance_entry": {"label": "إلغاء عملية مالية", "execute": _execute_cancel_finance_entry,
+                              "required_permission": "finance.full.manage"},
+    "cancel_task": {"label": "إلغاء مهمة", "execute": _execute_cancel_task,
+                     "required_permission": "tasks.assign_any"},
+    "delete_barn": {"label": "حذف حظيرة", "execute": _execute_delete_barn,
+                     "required_permission": "barns.manage"},
     # الصلاحية الفعلية حسب نوع الصنف تُفحص داخل المنفِّذ (علف/معدات/دواء).
     "record_stock_purchase": {"label": "شراء للمخزون", "execute": _execute_record_stock_purchase,
                                "required_permission": "assistant.use"},

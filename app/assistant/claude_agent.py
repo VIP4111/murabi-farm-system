@@ -14,7 +14,10 @@
 - الحواجز الصلبة دايماً بغض النظر: صلاحية كل نوع، `draft_guardrail_reason`
   (حدود المبالغ/الأسعار)، بوابة دورة الإنتاج وفترة التحريم عند البيع، منع
   القرابة الوراثية، وسجل `AssistantDraftAction` + AuditLog لكل تنفيذ.
-- ممنوع دائماً: جرعات الأدوية والحذف (لا توجد أداة لها أصلاً).
+- الحذف/الإلغاء (حيوان، عملية مالية، مهمة، حظيرة): تأكيد صريح إلزامي دايماً
+  حتى لو `AGENT_CONFIRM_TYPES=none`، وبقواعد التطبيق نفسها (أرشفة لا محو،
+  إلغاء مع بقاء السجل، حظيرة فاضية فقط).
+- ممنوع دائماً: جرعات الأدوية (لا توجد أداة لها أصلاً).
 """
 import inspect
 import json
@@ -43,16 +46,20 @@ SENSITIVE_TYPES = ("record_expense", "register_birth", "record_vaccination",
                    "record_abortion", "create_animal", "edit_animal", "record_stock_purchase")
 ROUTINE_TYPES = ("record_weight", "assign_task", "move_animal", "add_animal_note", "add_farm_note",
                  "complete_task", "start_task", "record_milk", "request_checkup", "return_from_market")
-ALL_WRITE_TYPES = SENSITIVE_TYPES + ROUTINE_TYPES
+# حذف/إلغاء: تأكيد صريح إلزامي دايماً — لا يلغيه أي إعداد بيئة (حتى "none").
+DESTRUCTIVE_TYPES = ("delete_animal", "cancel_finance_entry", "cancel_task", "delete_barn")
+ALL_WRITE_TYPES = SENSITIVE_TYPES + ROUTINE_TYPES + DESTRUCTIVE_TYPES
 
 
 def _confirm_types() -> tuple:
     raw = (os.environ.get("AGENT_CONFIRM_TYPES") or "").strip()
     if not raw or raw.lower() == "all":
-        return ALL_WRITE_TYPES
-    if raw.lower() == "none":
-        return ()
-    return tuple(t for t in (x.strip() for x in raw.split(",")) if t in ALL_WRITE_TYPES)
+        chosen = ALL_WRITE_TYPES
+    elif raw.lower() == "none":
+        chosen = ()
+    else:
+        chosen = tuple(t for t in (x.strip() for x in raw.split(",")) if t in ALL_WRITE_TYPES)
+    return tuple(dict.fromkeys(chosen + DESTRUCTIVE_TYPES))
 
 
 def _immediate(action_type: str) -> bool:
@@ -80,7 +87,8 @@ SYSTEM_PROMPT = """أنت وكيل المزرعة الذكي لنظام "مرب�
 - assign_task تحتاج اسم عضو الفريق المكلَّف من المستخدم؛ لو ما ذكره اسأله، ممنوع تختاره بنفسك.
 - لو أرفق المستخدم صورة فاتورة: اقرأها (المورّد، التاريخ، الإجمالي النهائي شامل الضريبة، الفئة) ثم استدعِ record_expense. لو الإجمالي غير واضح اسأله بدل التخمين.
 - أداة web_search للمعلومات العامة الخارجية فقط (علف، ممارسات تربية، أسعار سوق). ابدأ أي جواب منها بـ"حسب مصادر خارجية:" واذكر المصادر باختصار، ووضّح إنها معلومة عامة مو قراراً على قطيعه. لا تستخدمها لبيانات مزرعته.
-- ممنوع تقترح جرعة دواء أو تشخيصاً نهائياً أو حذف أي سجل؛ وجّه المستخدم للطبيب أو للشاشة المخصَّصة.
+- الحذف: delete_animal يؤرشف الرأس (السجل يبقى للتدقيق ويُرفض لو الرأس ما وصل مرحلة قرار المصير أو عليه فترة تحريم)، cancel_finance_entry يلغي عملية مالية بالمبلغ والوصف مع بقاء السجل (حدّد المبلغ وإن أمكن التاريخ والوصف)، cancel_task يلغي مهمة مفتوحة بعنوانها، delete_barn يحذف حظيرة فاضية فقط. كلها تحتاج تأكيداً صريحاً دايماً، واذكر في سؤال التأكيد ماذا سيُحذف بالضبط.
+- ممنوع تقترح جرعة دواء أو تشخيصاً نهائياً؛ وجّه المستخدم للطبيب أو للشاشة المخصَّصة.
 - لو السؤال خارج نطاق المزرعة تماماً، اعتذر بأدب وإنك مختص بالمزرعة.
 
 اليوم: {today}
@@ -361,6 +369,28 @@ _WRITE_TOOL_DEFS = [
          "expiry_date": {"type": "string", "description": "اختياري للدواء YYYY-MM-DD"},
          "note": {"type": "string", "description": "اختياري"}},
          "required": ["kind", "item_name", "quantity"]}},
+    {"name": "delete_animal",
+     "description": "حذف رأس = أرشفته (يبقى سجله للتدقيق). يحتاج تأكيداً صريحاً دايماً.",
+     "input_schema": {"type": "object", "properties": {
+         "animal_no": {"type": "string"}, "reason": {"type": "string", "description": "اختياري"},
+         "force": {"type": "boolean", "description": "true فقط لو المستخدم أكّد صراحة رغم وجود عمليات مالية مرتبطة"}},
+         "required": ["animal_no"]}},
+    {"name": "cancel_finance_entry",
+     "description": "إلغاء عملية مالية فعّالة (السجل يبقى للتدقيق). حدّد المبلغ بدقة، ويفضّل التاريخ والوصف. يحتاج تأكيداً صريحاً دايماً.",
+     "input_schema": {"type": "object", "properties": {
+         "amount": {"type": "number"}, "entry_date": {"type": "string", "description": "اختياري YYYY-MM-DD"},
+         "text": {"type": "string", "description": "جزء من البند أو الوصف أو الفئة"},
+         "reason": {"type": "string", "description": "سبب الإلغاء"}},
+         "required": ["amount"]}},
+    {"name": "cancel_task",
+     "description": "إلغاء مهمة مفتوحة بعنوانها (تحتاج صلاحية توزيع المهام). يحتاج تأكيداً صريحاً دايماً.",
+     "input_schema": {"type": "object", "properties": {
+         "task_title": {"type": "string"}, "reason": {"type": "string", "description": "اختياري"}},
+         "required": ["task_title"]}},
+    {"name": "delete_barn",
+     "description": "حذف حظيرة نهائياً — فقط لو ما فيها أي رأس وبلا سجلات مرتبطة. يحتاج تأكيداً صريحاً دايماً.",
+     "input_schema": {"type": "object", "properties": {"barn_name": {"type": "string"}},
+                      "required": ["barn_name"]}},
     {"name": "confirm_action",
      "description": "تنفيذ إجراء معلَّق بعد تأكيد المستخدم الصريح بآخر رسالة له.",
      "input_schema": {"type": "object", "properties": {"draft_id": {"type": "integer"}},
@@ -664,6 +694,36 @@ def _tool_record_stock_purchase(ctx, args):
         execute_now=_immediate("record_stock_purchase"))
 
 
+def _tool_delete_animal(ctx, args):
+    return _record_and_run(
+        ctx, "delete_animal",
+        {"target_animal_no": str(args.get("animal_no", "")).strip(), "reason": args.get("reason") or None,
+         "force": bool(args.get("force"))},
+        f"حذف (أرشفة) الرأس {args.get('animal_no')}" + (" مع تجاوز العمليات المالية المرتبطة" if args.get("force") else ""),
+        execute_now=_immediate("delete_animal"))
+
+
+def _tool_cancel_finance_entry(ctx, args):
+    return _record_and_run(
+        ctx, "cancel_finance_entry",
+        {"amount": args.get("amount"), "entry_date": args.get("entry_date") or None,
+         "text": args.get("text") or None, "reason": args.get("reason") or None},
+        f"إلغاء عملية مالية بمبلغ {args.get('amount')}" + (f" ({args.get('text')})" if args.get("text") else ""),
+        execute_now=_immediate("cancel_finance_entry"))
+
+
+def _tool_cancel_task(ctx, args):
+    return _record_and_run(
+        ctx, "cancel_task", {"task_title": args.get("task_title"), "reason": args.get("reason") or None},
+        f"إلغاء مهمة: {args.get('task_title')}", execute_now=_immediate("cancel_task"))
+
+
+def _tool_delete_barn(ctx, args):
+    return _record_and_run(
+        ctx, "delete_barn", {"barn_name": args.get("barn_name")},
+        f"حذف حظيرة {args.get('barn_name')} نهائياً", execute_now=_immediate("delete_barn"))
+
+
 def _tool_confirm_action(ctx, args):
     from app.models import AssistantDraftAction
     if not is_affirmative(ctx.message_text):
@@ -696,6 +756,8 @@ _WRITE_TOOLS = {
     "record_mating": _tool_record_mating, "record_pregnancy": _tool_record_pregnancy,
     "confirm_pregnancy": _tool_confirm_pregnancy, "record_abortion": _tool_record_abortion,
     "create_animal": _tool_create_animal, "edit_animal": _tool_edit_animal,
+    "delete_animal": _tool_delete_animal, "cancel_finance_entry": _tool_cancel_finance_entry,
+    "cancel_task": _tool_cancel_task, "delete_barn": _tool_delete_barn,
     "record_stock_purchase": _tool_record_stock_purchase,
     "confirm_action": _tool_confirm_action,
 }

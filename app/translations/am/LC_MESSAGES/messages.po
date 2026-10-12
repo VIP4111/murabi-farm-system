@@ -15605,6 +15605,28 @@ msgstr "ለመኖና ለመሣሪያ ግዢ የአንዱ ዋጋ ያስፈልጋ�
 msgid "وكيل Claude غير مفعَّل — المتغير ANTHROPIC_API_KEY غير موجود في Render، فالردود حالياً من المساعد القديم (قراءة فقط، بدون تنفيذ)."
 msgstr "የClaude ወኪል አልነቃም — ANTHROPIC_API_KEY ተለዋዋጭ በRender ውስጥ የለም፣ ስለዚህ አሁን ያሉት መልሶች ከቀድሞው ረዳት ናቸው (ማንበብ ብቻ፣ ድርጊት የለም)።"
 
+#: app/assistant/draft_action_service.py:365
+msgid "لازم تحدد مبلغ العملية المراد إلغاؤها."
+msgstr "ሊሰረዝ የሚፈለገውን የግብይት መጠን መግለጽ አለብዎት።"
+
+#: app/assistant/draft_action_service.py:369
+msgid "مبلغ العملية غير واضح."
+msgstr "የግብይቱ መጠን ግልጽ አይደለም።"
+
+#: app/assistant/draft_action_service.py:380
+msgid "ما لقيت عملية مالية فعّالة بهذا المبلغ والوصف."
+msgstr "በዚህ መጠንና መግለጫ ንቁ የፋይናንስ ግብይት አላገኘሁም።"
+
+#: app/assistant/draft_action_service.py:382
+#, python-format
+msgid "أكثر من عملية تطابق الوصف — حدّد التاريخ أو الوصف بدقة (%(n)s نتائج)."
+msgstr "ከአንድ በላይ ግብይቶች ይመሳሰላሉ — ቀኑን ወይም መግለጫውን በትክክል ይግለጹ (%(n)s ውጤቶች)።"
+
+#: app/assistant/draft_action_service.py:400
+#, python-format
+msgid "ما لقيت مهمة مفتوحة بعنوان يشبه \"%(title)s\"."
+msgstr "\"%(title)s\" የሚመስል ርዕስ ያለው ክፍት ተግባር አላገኘሁም።"
+
 #~ msgid "التكاثر"
 #~ msgstr "መራባት"
 

@@ -15605,6 +15605,28 @@ msgstr "The unit price is required for feed and equipment purchases."
 msgid "وكيل Claude غير مفعَّل — المتغير ANTHROPIC_API_KEY غير موجود في Render، فالردود حالياً من المساعد القديم (قراءة فقط، بدون تنفيذ)."
 msgstr "The Claude agent is not enabled — the ANTHROPIC_API_KEY variable is missing in Render, so replies currently come from the older assistant (read-only, no actions)."
 
+#: app/assistant/draft_action_service.py:365
+msgid "لازم تحدد مبلغ العملية المراد إلغاؤها."
+msgstr "You must specify the amount of the transaction to cancel."
+
+#: app/assistant/draft_action_service.py:369
+msgid "مبلغ العملية غير واضح."
+msgstr "The transaction amount is unclear."
+
+#: app/assistant/draft_action_service.py:380
+msgid "ما لقيت عملية مالية فعّالة بهذا المبلغ والوصف."
+msgstr "I couldn't find an active financial transaction with this amount and description."
+
+#: app/assistant/draft_action_service.py:382
+#, python-format
+msgid "أكثر من عملية تطابق الوصف — حدّد التاريخ أو الوصف بدقة (%(n)s نتائج)."
+msgstr "More than one transaction matches — specify the date or description precisely (%(n)s results)."
+
+#: app/assistant/draft_action_service.py:400
+#, python-format
+msgid "ما لقيت مهمة مفتوحة بعنوان يشبه \"%(title)s\"."
+msgstr "I couldn't find an open task titled like \"%(title)s\"."
+
 #~ msgid "التكاثر"
 #~ msgstr "Breeding"
 

@@ -15605,6 +15605,28 @@ msgstr "चारा और उपकरण की खरीद के लिए
 msgid "وكيل Claude غير مفعَّل — المتغير ANTHROPIC_API_KEY غير موجود في Render، فالردود حالياً من المساعد القديم (قراءة فقط، بدون تنفيذ)."
 msgstr "Claude एजेंट सक्रिय नहीं है — Render में ANTHROPIC_API_KEY वेरिएबल नहीं मिला, इसलिए अभी के उत्तर पुराने सहायक से हैं (केवल पढ़ना, कोई कार्रवाई नहीं)।"
 
+#: app/assistant/draft_action_service.py:365
+msgid "لازم تحدد مبلغ العملية المراد إلغاؤها."
+msgstr "रद्द किए जाने वाले लेन-देन की राशि बतानी होगी।"
+
+#: app/assistant/draft_action_service.py:369
+msgid "مبلغ العملية غير واضح."
+msgstr "लेन-देन की राशि स्पष्ट नहीं है।"
+
+#: app/assistant/draft_action_service.py:380
+msgid "ما لقيت عملية مالية فعّالة بهذا المبلغ والوصف."
+msgstr "इस राशि और विवरण वाला कोई सक्रिय वित्तीय लेन-देन नहीं मिला।"
+
+#: app/assistant/draft_action_service.py:382
+#, python-format
+msgid "أكثر من عملية تطابق الوصف — حدّد التاريخ أو الوصف بدقة (%(n)s نتائج)."
+msgstr "एक से अधिक लेन-देन मेल खाते हैं — तारीख या विवरण सटीक बताएँ (%(n)s परिणाम)।"
+
+#: app/assistant/draft_action_service.py:400
+#, python-format
+msgid "ما لقيت مهمة مفتوحة بعنوان يشبه \"%(title)s\"."
+msgstr "\"%(title)s\" जैसे शीर्षक वाला कोई खुला कार्य नहीं मिला।"
+
 #~ msgid "التكاثر"
 #~ msgstr "प्रजनन"
 

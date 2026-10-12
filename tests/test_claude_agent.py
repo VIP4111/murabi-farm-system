@@ -666,7 +666,9 @@ def test_none_switch_makes_everything_immediate_and_hides_confirm_tool(app, owne
     fake = FakeClient([_resp([_text("تم")])])
     _use_client(monkeypatch, fake)
     claude_agent.run(owner, "x")
-    assert "confirm_action" not in [t["name"] for t in fake.calls[0]["tools"]]
+    # الحذف/الإلغاء يبقى بتأكيد دايماً، فأداة التأكيد تبقى معروضة حتى مع none
+    assert "confirm_action" in [t["name"] for t in fake.calls[0]["tools"]]
+    assert set(claude_agent._confirm_types()) == set(claude_agent.DESTRUCTIVE_TYPES)
 
 
 # ---------------- إضافة رأس بالصوت ----------------
@@ -812,3 +814,99 @@ def test_chat_page_warns_when_claude_agent_not_configured(app, logged_in_client,
     monkeypatch.setenv("ANTHROPIC_API_KEY", "x")
     html = logged_in_client.get("/assistant/").get_data(as_text=True)
     assert "وكيل Claude غير مفعَّل" not in html
+
+
+# ---------------- الحذف/الإلغاء (تأكيد دايماً + قواعد التطبيق) ----------------
+
+def test_destructive_actions_always_need_confirmation_even_when_none(app, owner, monkeypatch):
+    monkeypatch.setenv("AGENT_CONFIRM_TYPES", "none")
+    make_animal("D-1")
+    out = claude_agent._tool_delete_animal(claude_agent._Ctx(owner, "x"), {"animal_no": "D-1"})
+    assert out["status"] == "needs_confirmation"
+    refused = claude_agent._tool_confirm_action(claude_agent._Ctx(owner, "ماشي"), {"draft_id": out["draft_id"]})
+    assert refused["status"] == "refused"
+
+
+def test_delete_animal_archives_when_at_exit_stage_and_keeps_record(app, owner, monkeypatch):
+    from app.models import AuditLog
+    animal = make_animal("D-2")
+    _force_stage_10(monkeypatch, animal)
+    _, done = _yes(owner, "_tool_delete_animal", {"animal_no": "D-2", "reason": "إدخال خاطئ"})
+    assert done["status"] == "done"
+    db.session.refresh(animal)
+    assert animal.status == "deleted"
+    assert AuditLog.query.filter_by(action="animal.delete", entity_id=animal.id).count() == 1
+
+
+def test_delete_animal_blocked_by_cycle_gate_and_by_linked_finance(app, owner, monkeypatch):
+    fresh = make_animal("D-3")
+    _, gate = _yes(owner, "_tool_delete_animal", {"animal_no": "D-3"})
+    assert gate["status"] == "error" and "قرار المصير" in gate["message"]
+    db.session.refresh(fresh)
+    assert fresh.status == "active"
+
+    linked = make_animal("D-4")
+    _force_stage_10(monkeypatch, linked)
+    db.session.add(Finance(date=__import__("datetime").date.today(), operation_type="expense",
+                           category="علاج", amount=50, related_animal_id=linked.id))
+    db.session.commit()
+    _, blocked = _yes(owner, "_tool_delete_animal", {"animal_no": "D-4"})
+    assert blocked["status"] == "error"
+    _, forced = _yes(owner, "_tool_delete_animal", {"animal_no": "D-4", "force": True})
+    assert forced["status"] == "done"
+
+
+def test_cancel_finance_entry_keeps_row_and_restores_sold_animal(app, owner, monkeypatch):
+    animal = make_animal("D-5")
+    _force_stage_10(monkeypatch, animal)
+    _yes(owner, "_tool_record_sale", {"animal_no": "D-5", "price": 700})
+    db.session.refresh(animal)
+    assert animal.status == "sold"
+    _, done = _yes(owner, "_tool_cancel_finance_entry", {"amount": 700, "text": "D-5", "reason": "خطأ سعر"})
+    assert done["status"] == "done"
+    row = Finance.query.filter_by(operation_type="sale").one()
+    assert row.is_cancelled is True and row.cancel_reason == "خطأ سعر"
+    db.session.refresh(animal)
+    assert animal.status == "active"
+
+
+def test_cancel_finance_entry_requires_unique_match(app, owner):
+    import datetime
+    for i in range(2):
+        db.session.add(Finance(date=datetime.date.today(), operation_type="expense", category="أعلاف",
+                               amount=120, item="شعير"))
+    db.session.commit()
+    _, ambiguous = _yes(owner, "_tool_cancel_finance_entry", {"amount": 120})
+    assert ambiguous["status"] == "error"
+    _, missing = _yes(owner, "_tool_cancel_finance_entry", {"amount": 999})
+    assert missing["status"] == "error"
+    assert Finance.query.filter_by(is_cancelled=True).count() == 0
+
+
+def test_cancel_task_uses_task_service_rules(app, owner, worker):
+    from app.models import Task
+    from app.team import task_service
+    t = task_service.assign_task(actor=owner, title="غسل المعالف", assignee_id=worker.id)
+    _, done = _yes(owner, "_tool_cancel_task", {"task_title": "غسل المعالف", "reason": "ما عاد لازم"})
+    assert done["status"] == "done" and Task.query.get(t.id).status == "cancelled"
+    _, again = _yes(owner, "_tool_cancel_task", {"task_title": "غسل المعالف"})
+    assert again["status"] == "error"
+
+
+def test_delete_barn_only_when_empty(app, owner):
+    from app.models import Barn
+    from factories import make_barn
+    full = make_barn("DB-1", "حظيرة ممتلئة")
+    a = make_animal("D-6")
+    a.barn_id = full.id
+    empty = make_barn("DB-2", "حظيرة فاضية")
+    db.session.commit()
+    _, blocked = _yes(owner, "_tool_delete_barn", {"barn_name": "حظيرة ممتلئة"})
+    assert blocked["status"] == "error" and Barn.query.filter_by(barn_no="DB-1").count() == 1
+    _, done = _yes(owner, "_tool_delete_barn", {"barn_name": "حظيرة فاضية"})
+    assert done["status"] == "done" and Barn.query.filter_by(barn_no="DB-2").count() == 0
+
+
+def test_destructive_tools_hidden_without_permission(app, worker):
+    for name in ("delete_animal", "cancel_finance_entry", "cancel_task", "delete_barn"):
+        assert not claude_agent._write_tool_allowed(worker, name), name

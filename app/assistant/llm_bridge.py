@@ -233,6 +233,7 @@ AGENT_ONLY_ACTION_TYPES = (
     "send_to_market", "return_from_market", "record_disease",
     "record_mating", "record_pregnancy", "confirm_pregnancy", "record_abortion",
     "create_animal", "edit_animal", "record_stock_purchase",
+    "delete_animal", "cancel_finance_entry", "cancel_task", "delete_barn",
 )
 ALLOWED_DRAFT_ACTION_TYPES = TEXT_DRAFT_ACTION_TYPES + AGENT_ONLY_ACTION_TYPES
 
@@ -286,6 +287,22 @@ def draft_guardrail_reason(action_type: str, payload: dict) -> str | None:
                 return "سعر البيع لازم يكون أكبر من صفر."
             if price > MAX_SALE_PRICE:
                 return f"سعر البيع ({price:g}) أكبر من الحد المسموح للإدخال التلقائي — سجّله يدوياً."
+        if action_type == "delete_animal":
+            if not str(payload.get("target_animal_no") or "").strip():
+                return "رقم الحيوان غير محدَّد."
+            return None
+        if action_type == "cancel_finance_entry":
+            if payload.get("amount") in (None, ""):
+                return "مبلغ العملية المراد إلغاؤها غير محدَّد."
+            return None
+        if action_type == "cancel_task":
+            if not str(payload.get("task_title") or "").strip():
+                return "عنوان المهمة غير محدَّد."
+            return None
+        if action_type == "delete_barn":
+            if not str(payload.get("barn_name") or "").strip():
+                return "اسم الحظيرة غير محدَّد."
+            return None
         if action_type == "edit_animal":
             if not str(payload.get("target_animal_no") or "").strip():
                 return "رقم الحيوان غير محدَّد."
