@@ -284,6 +284,8 @@ def create_app(config_class=Config):
         return f"{label} — {ref}" if ref else label
 
     app.jinja_env.globals["task_display_title"] = task_display_title
+    from app.core.tag_badge import tag_badge
+    app.jinja_env.globals["tag_badge"] = tag_badge
 
     # أنواع بلاغ معروفة (بند إضافي 74) — نفس القيم الفعلية المستخدمة عبر
     # WORKER_REPORT_CATEGORIES (app/team/routes.py) وقائمة report_form.html

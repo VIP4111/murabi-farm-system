@@ -58,6 +58,30 @@ class Animal(db.Model):
 
     gender = db.Column(db.String(16))
     color = db.Column(db.String(60))
+
+    # رقعة الأذن (بند إضافي 211) — أرقام الحلال عند المربّي بنظام لون + شكل
+    # (مثلث/مربع/دائرة/مستطيل). اللون هو `color` أعلاه (نفس سلسلة الألوان
+    # الموجودة)، وهذي الحقول تكمّله: الشكل + حرف اختياري عربي/إنجليزي.
+    # قوائم ثابتة عمداً (نفس مبدأ بند 202): نص حر يكسر التجميع والعرض.
+    # الأربعة الأولى أشكالك أنت، والباقي أضفتها أنا (قرارك: "اختار الشكل
+    # الأفضل") — الأكثر شيوعاً برقع الأذن التجارية وكلها واضحة التمييز
+    # بالنظر. الأسماء المعروضة (مترجمة) بـ`core/tag_badge.py`.
+    TAG_SHAPES = ["circle", "square", "rectangle", "triangle", "diamond", "oval", "star"]
+    TAG_LETTERS = list("أبتثجحخدذرزسشصضطظعغفقكلمنهوي") + [chr(c) for c in range(ord("A"), ord("Z") + 1)]
+    tag_shape = db.Column(db.String(16), nullable=True)
+    tag_letter = db.Column(db.String(2), nullable=True)
+
+    @classmethod
+    def clean_tag_shape(cls, value):
+        """قيمة خارج القائمة (طلب مباشر للسيرفر) → فاضي، بدل تخزين نص تعسفي."""
+        return value if value in cls.TAG_SHAPES else None
+
+    @classmethod
+    def clean_tag_letter(cls, value):
+        value = (value or "").strip()
+        value = value.upper() if value.isascii() else value
+        return value if value in cls.TAG_LETTERS else None
+
     name = db.Column(db.String(120))
     image_url = db.Column(db.String(255))
 

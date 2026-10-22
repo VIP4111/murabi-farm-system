@@ -495,6 +495,35 @@ ENTRIES: list[KBEntry] = [
         },
     ),
     KBEntry(
+        code="howto_animal_ear_tag",
+        title="كيف أسجّل رقعة الأذن (شكل + لون + حرف) للرأس؟",
+        keywords=[
+            "شكل الرقعه", "شكل رقعه", "رقعه الاذن", "رقعة الاذن", "لون وشكل", "شكل مثلث", "شكل مربع",
+            "شكل دائره", "شكل مستطيل", "حرف الرقعه", "ارقام الحلال بالالوان",
+        ],
+        body=(
+            "رقعة الأذن بالنظام = لون + شكل + حرف اختياري، بنفس نظامك الميداني. من شاشة إضافة/تعديل الرأس:\n"
+            "• 'اللون': اختاره من الفقاعات الملوّنة (نفس لون رقعة الأذن الفعلي).\n"
+            "• 'شكل الرقعة': مثلث، مربع، دائرة، مستطيل — وأضفت معهم معيّن، بيضاوي، نجمة. اضغط الشكل مرة ثانية لإلغائه.\n"
+            "• 'حرف الرقعة': اختياري، عربي (أ، ب، ت...) أو إنجليزي (A–Z).\n"
+            "بعد الحفظ تطلع الرقعة كرسم ملوّن بنفس شكلها الحقيقي جنب رقم الرأس بقائمة الحيوانات وبصفحة تفاصيله، "
+            "عشان تتعرّف عليها بالنظر. كلها اختيارية — الرؤوس القديمة تبقى كما هي."
+        ),
+        translations={
+            "en": {
+                "title": "How do I record an ear tag (shape + color + letter) for an animal?",
+                "body": (
+                    "The ear tag in the system = a color + a shape + an optional letter, matching your field system. From the add/edit animal screen:\n"
+                    "• 'Color': pick it from the colored bubbles (the same color as the physical ear tag).\n"
+                    "• 'Tag shape': triangle, square, circle, rectangle — plus diamond, oval and star. Tap a shape again to clear it.\n"
+                    "• 'Tag letter': optional, Arabic (أ, ب, ت...) or English (A–Z).\n"
+                    "After saving, the tag shows as a colored drawing in its real shape next to the animal's number in the animals list and on its details page, "
+                    "so you can recognize it at a glance. Everything is optional — existing animals stay as they are."
+                ),
+            },
+        },
+    ),
+    KBEntry(
         code="howto_add_animal",
         title="كيف أضيف رأس جديد؟",
         keywords=[

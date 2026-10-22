@@ -53,6 +53,47 @@
     </script>
     <p style="color:var(--muted); font-size:12px; margin:6px 0 10px;">{{ _('الرقم واللون مع بعض هوية الرأس الميدانية — لازم تختار الاثنين.') }}</p>
 
+    {# شكل الرقعة + حرف اختياري (بند إضافي 211) — اختياري تماماً، الحيوانات القديمة بدونهم تبقى كما هي #}
+    <label>{{ _('شكل الرقعة (اختياري)') }}</label>
+    <div id="tagShapeChips" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+      {% for code, label in tag_shapes.items() %}
+      <button type="button" class="tagShapeChip" data-shape="{{ code }}" title="{{ _(label) }}" aria-label="{{ _(label) }}"
+              style="display:flex; flex-direction:column; align-items:center; gap:2px; padding:4px 6px; min-width:54px; background:var(--card); color:var(--text); border:2px solid var(--line); border-radius:12px; cursor:pointer; font-size:11px;">
+        {{ tag_badge({'tag_shape': code, 'color': 'رمادي'}, 30) }}<span>{{ _(label) }}</span>
+      </button>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="tag_shape" id="tagShapeInput" value="{{ animal.tag_shape if animal and animal.tag_shape else '' }}">
+    <label>{{ _('حرف الرقعة (اختياري)') }}</label>
+    <select name="tag_letter">
+      <option value="">{{ _('بدون حرف') }}</option>
+      <optgroup label="{{ _('عربي') }}">
+        {% for l in tag_letters if not l.isascii() %}<option value="{{ l }}" {{ 'selected' if animal and animal.tag_letter == l }}>{{ l }}</option>{% endfor %}
+      </optgroup>
+      <optgroup label="English">
+        {% for l in tag_letters if l.isascii() %}<option value="{{ l }}" {{ 'selected' if animal and animal.tag_letter == l }}>{{ l }}</option>{% endfor %}
+      </optgroup>
+    </select>
+    <p style="color:var(--muted); font-size:12px; margin:-6px 0 10px;">{{ _('اضغط الشكل مرة ثانية لإلغائه. لون الرقعة هو نفس اللون اللي اخترته فوق.') }}</p>
+    <script>
+    (function(){
+      var chips = document.querySelectorAll('.tagShapeChip');
+      var input = document.getElementById('tagShapeInput');
+      function paint(){
+        chips.forEach(function(c){
+          c.style.borderColor = (c.dataset.shape === input.value) ? 'var(--primary)' : 'var(--line)';
+        });
+      }
+      chips.forEach(function(c){
+        c.addEventListener('click', function(){
+          input.value = (input.value === c.dataset.shape) ? '' : c.dataset.shape;
+          paint();
+        });
+      });
+      paint();
+    })();
+    </script>
+
     <label>{{ _('الفصيلة') }}</label>
     <div style="display:flex; gap:6px; align-items:center;">
       <select name="species" id="speciesSelect" {{ 'disabled' if animal }} style="flex:1; margin-bottom:0;">

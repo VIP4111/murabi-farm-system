@@ -21,6 +21,7 @@ from app.extensions import db, run_once_per_app
 from app.models import Animal, Barn, BarnFeedingSchedule, ServiceToggle, Role, Permission, AuditLog, CycleEvent, FarmSettings, Finance
 from app.models import SpeciesType, Breed, AnimalColor, Task, Report
 from app.models.animal import AnimalSource
+from app.core.tag_badge import SHAPE_LABELS
 from app.permissions_registry import PERMISSIONS, PERMISSIONS_EN
 
 
@@ -957,6 +958,8 @@ def animals_new():
                 price=float(request.form["price"]) if request.form.get("price") else None,
                 purpose=request.form.get("purpose") or None,
                 color=request.form.get("color") or None,
+                tag_shape=request.form.get("tag_shape"),
+                tag_letter=request.form.get("tag_letter"),
                 name=request.form.get("name") or None,
                 image_url=request.form.get("image_url") or None,
                 breed=request.form.get("breed") or None,
@@ -1016,6 +1019,7 @@ def animals_new():
         breeds=Breed.query.order_by(Breed.name).all(),
         species_types=SpeciesType.query.order_by(SpeciesType.label_ar).all(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
+        tag_shapes=SHAPE_LABELS, tag_letters=Animal.TAG_LETTERS,
         # بند إضافي (2026-08-31، طلبك المباشر: "تسهيل شاشات الإدخال
         # اليومي... نماذج سريعة وبسيطة تقلل عدد الحقول") — رابط اختصار
         # "تسجيل مولود جديد" بالرئيسية يفتح نفس الفورم بـ?source=birth،
@@ -1062,6 +1066,8 @@ def animals_edit(animal_id):
         animal.name = request.form.get("name") or None
         animal.gender = request.form["gender"]
         animal.color = request.form.get("color") or None
+        animal.tag_shape = Animal.clean_tag_shape(request.form.get("tag_shape"))
+        animal.tag_letter = Animal.clean_tag_letter(request.form.get("tag_letter"))
         animal.purpose = request.form.get("purpose") or None
         animal.breed = request.form.get("breed") or "عام/غير محدد"
         animal.barn_id = request.form.get("barn_id") or None
@@ -1108,6 +1114,7 @@ def animals_edit(animal_id):
         barns=Barn.query.order_by(Barn.barn_name).all(),
         breeds=Breed.query.order_by(Breed.name).all(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
+        tag_shapes=SHAPE_LABELS, tag_letters=Animal.TAG_LETTERS,
     )
 
 
