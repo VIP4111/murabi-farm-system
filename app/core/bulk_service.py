@@ -318,6 +318,7 @@ def apply_bulk_purchase(*, rows: list[dict], barn_id: int | None, purchase_date:
                 animal_no=animal_no, source=AnimalSource.PURCHASE, gender=row["gender"],
                 species=species, barn_id=barn_id, purchase_date=purchase_date,
                 weight=row.get("weight"), price=row.get("price"), color=row.get("color"),
+                tag_shape=row.get("tag_shape"), tag_letter=row.get("tag_letter"),
             )
         except ValueError as e:
             results[animal_no] = f"مرفوض — {e}"

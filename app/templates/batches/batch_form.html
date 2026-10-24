@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_tag_fields.html" import tag_selects with context %}
 {% block content %}
 {% set source_labels = {'purchase': _('شراء'), 'gift': _('هدية/دعم')} %}
 <div class="card" style="max-width:760px;">
@@ -37,6 +38,7 @@
         {% endfor %}
       </div>
       <input type="hidden" name="color_{{ i }}" class="colorInput">
+      {{ tag_selects(i, 104) }}
       <input name="weight_{{ i }}" type="number" step="0.1" placeholder="{{ _('الوزن (كجم)') }}" style="width:110px;">
       <input name="price_{{ i }}" type="number" step="0.01" placeholder="{{ _('السعر (لو شراء)') }}" style="width:130px;">
     </div>

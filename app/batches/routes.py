@@ -8,6 +8,7 @@ from app.auth.decorators import require_permission
 from app.core import batch_service
 from app.models import AnimalBatch, Animal, Barn, AnimalColor, Breed
 from app.extensions import run_once_per_app, farm_today
+from app.core.tag_badge import SHAPE_LABELS
 
 BATCH_ENTRY_SLOTS = range(20)
 
@@ -45,6 +46,8 @@ def batches_new():
                     "animal_no": request.form.get(f"animal_no_{i}") or None,
                     "gender": gender,
                     "color": request.form.get(f"color_{i}") or None,
+                    "tag_shape": request.form.get(f"tag_shape_{i}"),
+                    "tag_letter": request.form.get(f"tag_letter_{i}"),
                     "weight": float(request.form[f"weight_{i}"]) if request.form.get(f"weight_{i}") else None,
                     "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
                     "breed": request.form.get(f"breed_{i}") or None,
@@ -79,6 +82,7 @@ def batches_new():
         sources=AnimalBatch.SOURCES, breeds=Breed.query.order_by(Breed.name).all(),
         today=farm_today().isoformat(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
+        tag_shapes=SHAPE_LABELS, tag_letters=Animal.TAG_LETTERS,
     )
 
 

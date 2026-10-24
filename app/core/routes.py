@@ -741,6 +741,8 @@ def animals_bulk_purchase():
                 "animal_no": animal_no,
                 "gender": request.form.get(f"gender_{i}"),
                 "color": request.form.get(f"color_{i}") or None,
+                "tag_shape": request.form.get(f"tag_shape_{i}"),
+                "tag_letter": request.form.get(f"tag_letter_{i}"),
                 "weight": float(request.form[f"weight_{i}"]) if request.form.get(f"weight_{i}") else None,
                 "price": float(request.form[f"price_{i}"]) if request.form.get(f"price_{i}") else None,
             })
@@ -772,6 +774,7 @@ def animals_bulk_purchase():
         "animals_bulk_purchase.html",
         barns=Barn.query.order_by(Barn.barn_name).all(),
         colors=AnimalColor.query.order_by(AnimalColor.name).all(),
+        tag_shapes=SHAPE_LABELS, tag_letters=Animal.TAG_LETTERS,
         today=date.today().isoformat(),
     )
 

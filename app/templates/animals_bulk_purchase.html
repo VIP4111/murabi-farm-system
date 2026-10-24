@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_tag_fields.html" import tag_selects with context %}
 {% block content %}
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -34,7 +35,7 @@
 
     <div class="table-scroll">
 <table id="rowsTable" style="margin-top:14px;">
-      <tr><th>{{ _('رقم الحيوان') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('اللون') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('سعر الشراء') }}</th></tr>
+      <tr><th>{{ _('رقم الحيوان') }}</th><th>{{ _('الجنس') }}</th><th>{{ _('اللون') }}</th><th>{{ _('شكل وحرف الرقعة') }}</th><th>{{ _('الوزن (كجم)') }}</th><th>{{ _('سعر الشراء') }}</th></tr>
       {% for i in range(8) %}
       <tr>
         <td><input name="animal_no_{{ i }}"></td>
@@ -53,6 +54,7 @@
           </div>
           <input type="hidden" name="color_{{ i }}" class="colorInput">
         </td>
+        <td style="white-space:nowrap;">{{ tag_selects(i) }}</td>
         <td><input name="weight_{{ i }}" type="number" step="0.01"></td>
         <td><input name="price_{{ i }}" type="number" step="0.01"></td>
       </tr>
@@ -77,6 +79,7 @@
     var addBtn = document.getElementById('addRowBtn');
     var MALE_LABEL = {{ _('ذكر')|tojson }};
     var FEMALE_LABEL = {{ _('أنثى')|tojson }};
+    var TAG_CELL_HTML = {{ tag_selects('__I__')|tojson }};
     var COLOR_OPTIONS = {{ colors|map(attribute='name')|list|tojson }};
     function chipHtml(name){
       return '<button type="button" class="colorChip" data-color="' + name + '" title="' + name + '" ' +
@@ -92,6 +95,7 @@
         '<td><select name="gender_' + i + '"><option value="ذكر">' + MALE_LABEL + '</option><option value="أنثى">' + FEMALE_LABEL + '</option></select></td>' +
         '<td><div class="colorChips" style="display:flex; gap:3px; flex-wrap:wrap; max-width:140px;">' + colorChipsHtml + '</div>' +
           '<input type="hidden" name="color_' + i + '" class="colorInput"></td>' +
+        '<td style="white-space:nowrap;">' + TAG_CELL_HTML.split('__I__').join(i) + '</td>' +
         '<td><input name="weight_' + i + '" type="number" step="0.01"></td>' +
         '<td><input name="price_' + i + '" type="number" step="0.01"></td>';
       table.appendChild(tr);

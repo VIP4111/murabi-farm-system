@@ -1,0 +1,13 @@
+{# حقلا رقعة الأذن (بند إضافي 211) لصفوف الإدخال الجماعي — شكل + حرف، اختياريان. #}
+{# الاستخدام: {% from "_tag_fields.html" import tag_selects with context %} ثم {{ tag_selects(i) }} #}
+{% macro tag_selects(i, width=108) %}
+<select name="tag_shape_{{ i }}" style="width:{{ width }}px; padding-inline:6px;" aria-label="{{ _('شكل الرقعة (اختياري)') }}">
+  <option value="">{{ _('الشكل -') }}</option>
+  {% for code, label in tag_shapes.items() %}<option value="{{ code }}">{{ label }}</option>{% endfor %}
+</select>
+<select name="tag_letter_{{ i }}" style="width:{{ width - 24 }}px; padding-inline:6px;" aria-label="{{ _('حرف الرقعة (اختياري)') }}">
+  <option value="">{{ _('الحرف -') }}</option>
+  <optgroup label="{{ _('عربي') }}">{% for l in tag_letters if not l.isascii() %}<option value="{{ l }}">{{ l }}</option>{% endfor %}</optgroup>
+  <optgroup label="English">{% for l in tag_letters if l.isascii() %}<option value="{{ l }}">{{ l }}</option>{% endfor %}</optgroup>
+</select>
+{% endmacro %}
