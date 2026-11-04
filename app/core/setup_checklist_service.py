@@ -36,6 +36,9 @@ def get_setup_checklist_items(current_user=None) -> list[dict]:
         "description": _("اسم المزرعة وجوالها وعنوانها — تظهر برأس فاتورة البيع لاحقاً."),
         "done": bool(fs and fs.farm_name),
         "endpoint": "core.settings_home",
+        # بند إضافي 213 — ينزّل مباشرة على نموذج بيانات المزرعة بدل ما يفتح
+        # صفحة الإعدادات الطويلة من أولها ويضطر المستخدم يدوّر عليه.
+        "endpoint_kwargs": {"_anchor": "farm-identity"},
     })
 
     items += [
@@ -74,10 +77,10 @@ def get_setup_checklist_items(current_user=None) -> list[dict]:
         {
             "code": "first_feed",
             "icon": "🌾",
-            "label": _("سجّل أول حركة علف (شراء/استهلاك)"),
-            "description": _("مكتبة أصناف العلف معبّاة مسبقاً بأسماء شائعة — هذا البند يتحقق من إنك فعلاً سجّلت حركة علف حقيقية لمزرعتك (شراء أو صرف)، مو بس وجود القائمة المرجعية الجاهزة."),
+            "label": _("سجّل أول شراء علف"),
+            "description": _("ابدأ بالشراء (وارد) عشان يصير عندك مخزون يتخصم منه الصرف بعدين. مكتبة أصناف العلف معبّاة مسبقاً بأسماء شائعة — هذا البند يتحقق من إنك فعلاً سجّلت حركة علف حقيقية لمزرعتك، مو بس وجود القائمة المرجعية الجاهزة."),
             "done": FeedMovement.query.first() is not None,
-            "endpoint": "feed.movements_new",
+            "endpoint": "feed.purchase_new",
         },
         {
             "code": "first_backup",

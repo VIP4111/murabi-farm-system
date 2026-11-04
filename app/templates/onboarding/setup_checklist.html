@@ -31,7 +31,7 @@
       <p style="color:var(--muted); font-size:12.5px; margin:2px 0 0;">{{ item.description }}</p>
     </div>
     {% if not item.done %}
-    <a class="btn light" style="flex:0 0 auto; font-size:12.5px; padding:6px 12px; white-space:nowrap;" href="{{ item.url }}">{{ _('سوّها الآن') }} ←</a>
+    <a class="btn light" style="flex:0 0 auto; font-size:12.5px; padding:6px 12px; white-space:nowrap;" href="{{ item.go_url }}">{{ _('سوّها الآن') }} ←</a>
     {% endif %}
   </div>
   {% endfor %}

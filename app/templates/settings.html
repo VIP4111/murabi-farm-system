@@ -13,7 +13,7 @@
   <a class="btn light" href="{{ url_for('onboarding.setup_checklist_page') }}">{{ _('افتح القائمة') }} ←</a>
 </div>
 
-<div class="card">
+<div class="card" id="farm-identity" style="scroll-margin-top:80px;">
   <h2>{{ _('بيانات المزرعة') }}</h2>
   <p style="color:var(--muted); font-size:13px;">{{ _('تظهر برأس فاتورة البيع (بند إضافي 75) — كلها اختيارية.') }}</p>
   <form method="post" action="{{ url_for('core.farm_identity_save') }}">

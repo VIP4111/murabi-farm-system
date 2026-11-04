@@ -127,3 +127,65 @@ def test_worker_does_not_see_setup_checklist_banner(app, client, worker):
     client.post("/login", data={"phone": worker.phone, "password": "pass1234"})
     resp = client.get("/")
     assert "أساسيات بداية إنشاء المزرعة" not in resp.data.decode()
+
+
+def test_first_feed_item_points_to_purchase_screen_not_consumption_form(app, owner):
+    """بند إضافي 213 — اختبار تسلسل المستخدم الجديد: بند "أول حركة علف" كان
+    يودّي لنموذج "حركة مخزون" اللي افتراضيه "صادر" (توزيع) ومخزون 0 — مستخدم
+    جديد يعلق. الشراء (وارد) له شاشة مخصصة، فالبند يودّي لها مباشرة."""
+    items = setup_checklist_service.get_setup_checklist_items(owner)
+    feed_item = next(i for i in items if i["code"] == "first_feed")
+    assert feed_item["endpoint"] == "feed.purchase_new"
+    assert "شراء" in feed_item["label"]
+
+
+def test_saving_a_checklist_item_returns_to_the_checklist(logged_in_client, app):
+    """بند إضافي 213 — بعد الحفظ بنجاح من ضغطة "سوّها الآن" يرجع للقائمة
+    (كان يبقى بشاشة الحظيرة ويضطر يفتح القائمة من جديد لكل بند)."""
+    go = logged_in_client.get("/onboarding/setup-checklist/go/first_barn")
+    assert go.status_code == 302 and go.headers["Location"].endswith("/barns/new")
+
+    resp = logged_in_client.post("/barns/new", data={
+        "barn_no": "SC-01", "barn_name": "حظيرة القائمة", "meal_time": ["07:00"],
+    })
+    assert resp.status_code == 302
+    assert resp.headers["Location"].endswith("/onboarding/setup-checklist")
+
+
+def test_failed_save_does_not_return_to_the_checklist(logged_in_client, app):
+    """لو الحفظ فشل (رقم حظيرة مكرر) يبقى بالنموذج يصحّح — ما نرجّعه للقائمة."""
+    logged_in_client.post("/barns/new", data={"barn_no": "SC-02", "barn_name": "أولى", "meal_time": ["07:00"]})
+    logged_in_client.get("/onboarding/setup-checklist/go/first_barn")
+    resp = logged_in_client.post("/barns/new", data={"barn_no": "SC-02", "barn_name": "مكررة", "meal_time": ["07:00"]})
+    assert not resp.headers.get("Location", "").endswith("/onboarding/setup-checklist")
+
+
+def test_normal_save_without_checklist_click_is_unchanged(logged_in_client, app):
+    """من خارج القائمة (دخول عادي لشاشة الحظائر) الحفظ يسلك مساره المعتاد."""
+    resp = logged_in_client.post("/barns/new", data={"barn_no": "SC-03", "barn_name": "عادية", "meal_time": ["07:00"]})
+    assert resp.status_code == 302
+    assert not resp.headers["Location"].endswith("/onboarding/setup-checklist")
+
+
+def test_checklist_go_unknown_code_is_404(logged_in_client):
+    assert logged_in_client.get("/onboarding/setup-checklist/go/nope").status_code == 404
+
+
+def test_home_merges_tour_and_setup_banners_into_one_card_with_progress(logged_in_client, app):
+    """بند إضافي 213 — كان بنرين منفصلين (جولة + أساسيات الإنشاء) فوق بعض.
+    الحين كرت واحد فيه الاثنين، مع عدّاد التقدّم (X من Y مكتمل)."""
+    import re
+    html = logged_in_client.get("/").data.decode()
+    assert html.count("أول مرة تستخدم النظام") == 1
+    assert html.count("أساسيات بداية إنشاء المزرعة") == 1
+    assert re.search(r"\d+ من \d+ مكتمل", html)
+    # الاثنين داخل نفس الكرت: ما فيه </div> كرت منفصل بينهم (فاصل hr بدلاً منه)
+    assert 'border-top:1px solid var(--line)' in html
+
+
+def test_farm_identity_item_jumps_straight_to_its_form(logged_in_client, app):
+    """بند إضافي 213 — بند بيانات المزرعة يفتح الإعدادات على نموذجه مباشرة
+    (anchor) بدل الصفحة الطويلة من أولها."""
+    go = logged_in_client.get("/onboarding/setup-checklist/go/farm_identity")
+    assert go.status_code == 302 and go.headers["Location"].endswith("/settings#farm-identity")
+    assert 'id="farm-identity"' in logged_in_client.get("/settings").data.decode()

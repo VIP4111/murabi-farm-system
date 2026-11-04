@@ -199,10 +199,13 @@ def home():
     # فقط (settings.manage)، وتختفي لو ضغط "تجاهل" (نفس بند 2026-07-27
     # الأصلي) أو اكتملت كل بنودها فعلاً.
     show_setup_checklist_banner = False
+    setup_done_count = setup_total_count = 0
     if current_user.has_permission("settings.manage") and not FarmSettings.get().setup_checklist_dismissed:
         from app.core import setup_checklist_service
         pending_items = setup_checklist_service.get_setup_checklist_items(current_user)
         show_setup_checklist_banner = not setup_checklist_service.all_done(pending_items)
+        setup_total_count = len(pending_items)
+        setup_done_count = sum(1 for i in pending_items if i["done"])
 
     return render_template(
         "home.html", user=current_user,
@@ -211,6 +214,7 @@ def home():
         vaccinations_upcoming_count=vaccinations_upcoming_count,
         animals_alerts_count=animals_alerts_count,
         show_setup_checklist_banner=show_setup_checklist_banner,
+        setup_done_count=setup_done_count, setup_total_count=setup_total_count,
     )
 
 

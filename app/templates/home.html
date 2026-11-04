@@ -27,24 +27,28 @@
 </div>
 {% endif %}
 
-{% if not user.onboarding_completed_at %}
-<div class="card" style="background:var(--primary); color:#fff;">
-  <h3 style="margin:0; color:#fff;">👋 {{ _('أول مرة تستخدم النظام؟') }}</h3>
-  <p style="margin:8px 0 12px; color:rgba(255,255,255,.85); font-size:13px;">{{ _('جولة سريعة (دقيقتين) تعرّفك على دليلك اليومي — يتغيّر تلقائياً حسب حالة قطيعك.') }}</p>
-  <a class="btn light" href="{{ url_for('onboarding.welcome') }}">{{ _('ابدأ الجولة') }} ←</a>
-</div>
-{% endif %}
-
-{# بند إضافي (2026-09-01، طلبك المباشر: "احتاج صفحة خاصة فيها أساسيات
-   بداية إنشاء المزرعة") — بانر يظهر لصاحب الحلال بس، لما فيه بند ناقص
-   بأساسيات التشغيل. يختفي تلقائياً بعد اكتمال كل البنود، أو بضغطة
-   "تجاهل" الدائمة. #}
-{% if show_setup_checklist_banner %}
-<div class="card" style="background:var(--bg); border:2px solid var(--primary);">
+{# بند إضافي 213 — اختبار تسلسل المستخدم الجديد: كان يطلع بنرين (جولة +
+   أساسيات الإنشاء) فوق بعض بالإضافة لصفحة اليوم، ثلاثة كروت تتزاحم
+   وتحكي نفس الشي (إرشاد البداية). دمجناهم بكرت واحد "ابدأ من هنا"،
+   وأضفنا عدّاد التقدّم (5 من 8) عشان يعرف المستخدم وين وصل. #}
+{% set show_tour = not user.onboarding_completed_at %}
+{% if show_tour or show_setup_checklist_banner %}
+<div class="card" style="border:2px solid var(--primary);">
+  {% if show_tour %}
   <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-    <div>
+    <div style="flex:1; min-width:200px;">
+      <h3 style="margin:0;">👋 {{ _('أول مرة تستخدم النظام؟') }}</h3>
+      <p style="margin:4px 0 10px; color:var(--muted); font-size:13px;">{{ _('جولة سريعة (دقيقتين) تعرّفك على دليلك اليومي — يتغيّر تلقائياً حسب حالة قطيعك.') }}</p>
+    </div>
+    <a class="btn light" href="{{ url_for('onboarding.welcome') }}">{{ _('ابدأ الجولة') }} ←</a>
+  </div>
+  {% endif %}
+  {% if show_tour and show_setup_checklist_banner %}<hr style="border:0; border-top:1px solid var(--line); margin:14px 0;">{% endif %}
+  {% if show_setup_checklist_banner %}
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+    <div style="flex:1; min-width:200px;">
       <h3 style="margin:0;">🏁 {{ _('أساسيات بداية إنشاء المزرعة') }}</h3>
-      <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('فيه بنود ناقصة لسا — كل بند له زر يوديك مباشرة لإكماله.') }}</p>
+      <p style="color:var(--muted); font-size:13px; margin:4px 0 0;">{{ _('%(done)s من %(total)s مكتمل', done=setup_done_count, total=setup_total_count) }} — {{ _('فيه بنود ناقصة لسا — كل بند له زر يوديك مباشرة لإكماله.') }}</p>
     </div>
     <div style="display:flex; gap:8px; flex:0 0 auto;">
       <a class="btn" href="{{ url_for('onboarding.setup_checklist_page') }}">{{ _('افتح القائمة') }} ←</a>
@@ -54,6 +58,7 @@
       </form>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endif %}
 
