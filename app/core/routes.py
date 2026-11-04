@@ -2154,6 +2154,9 @@ def role_edit(role_id):
 @require_permission("settings.manage")
 def toggle_service(service_id):
     service = ServiceToggle.query.get_or_404(service_id)
+    if not service.is_built:
+        flash(_("خدمة %(name)s قيد البناء — تفعيلها لسا ما يغيّر شي بالنظام.") % {"name": service.name}, "warning")
+        return redirect(url_for("core.settings_home"))
     service.is_enabled = not service.is_enabled
     db.session.add(AuditLog(
         actor_user_id=current_user.id,

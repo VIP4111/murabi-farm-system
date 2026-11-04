@@ -149,11 +149,15 @@
       {% if s.requirements_note %}<div style="font-size:12px; color:#888;">{{ s.requirements_note }}</div>{% endif %}
     </div>
     <div style="display:flex; align-items:center; gap:10px;">
+      {% if s.is_built %}
       <span class="badge {{ 'on' if s.is_enabled else 'off' }}">{{ _('مفعّل') if s.is_enabled else _('غير مفعّل') }}</span>
       <form method="post" action="{{ url_for('core.toggle_service', service_id=s.id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button class="btn" type="submit">{{ _('تعطيل') if s.is_enabled else _('تفعيل') }}</button>
       </form>
+      {% else %}
+      <span class="badge off">{{ _('قيد البناء') }}</span>
+      {% endif %}
     </div>
   </div>
   {% endfor %}
